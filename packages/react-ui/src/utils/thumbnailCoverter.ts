@@ -74,8 +74,7 @@ export function createVideoThumbnail(file) {
       const video = document.createElement('video');
       video.src = file;
       video.crossOrigin = '*';
-      video.load();
-      video.addEventListener('loadeddata', function () {
+      video.addEventListener('seeked', function () {
         const canvas = document.createElement('canvas');
         // Get the current viewport dimensions
         let viewportWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -90,6 +89,7 @@ export function createVideoThumbnail(file) {
         // Resolve the Promise with the generated value
         resolve(thumbnailUrl);
       });
+      video.currentTime = 1;
     } catch (e) {
       reject(e);
       console.log(e);

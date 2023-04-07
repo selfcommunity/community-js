@@ -1,24 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {Button, CardActions, Box, Typography, Grid} from '@mui/material';
+import {Button, CardActions, Chip, Typography} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import LoyaltyProgramDialog from './LoyaltyProgramDialog';
+import {FormattedMessage} from 'react-intl';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
-import LoyaltyProgramDetail from '../LoyaltyProgramDetail';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
-
-const messages = defineMessages({
-  points: {
-    id: 'ui.loyaltyProgram.points',
-    defaultMessage: 'ui.loyaltyProgram.points'
-  }
-});
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCLoyaltyProgram';
 
@@ -34,16 +25,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.actions}`]: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  [`& .${classes.points}`]: {
-    color: theme.palette.common.white,
-    fontSize: '1rem'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface LoyaltyProgramProps {
   /**
@@ -56,11 +38,6 @@ export interface LoyaltyProgramProps {
    * @default null
    */
   className?: string;
-  /**
-   * Sets the type card for the component
-   * @default null
-   */
-  cardType?: boolean;
 }
 /**
  * > API documentation for the Community-JS Loyalty Program component. Learn about the available props and the CSS API.
@@ -94,7 +71,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
     name: PREFIX
   });
   // PROPS
-  const {autoHide, className, cardType} = props;
+  const {autoHide, className} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -102,17 +79,6 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
 
   // STATE
   const [points, setPoints] = useState<number>(null);
-  const [openLoyaltyProgramDialog, setOpenLoyaltyProgramDialog] = useState<boolean>(false);
-
-  // INTL
-  const intl = useIntl();
-
-  /**
-   * Handles dialog close
-   */
-  const handleClose = () => {
-    setOpenLoyaltyProgramDialog(false);
-  };
 
   /**
    * Fetches user loyalty points
@@ -145,32 +111,26 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
     return (
       <Root {...props} className={classNames(classes.root, className)}>
         <CardContent>
-          <Typography className={classes.title} variant="h5">
+          <Typography className={classes.title}>
             <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
           </Typography>
         </CardContent>
         <CardActions className={classes.actions}>
-          <Typography variant="body2" className={classes.points}>
-            {`${intl.formatMessage(messages.points, {total: points})}`}
+          <Typography className={classes.points}>
+            <Chip size={'medium'} component="span" label={points} />
+            <FormattedMessage id="ui.loyaltyProgram.points" defaultMessage="ui.loyaltyProgram.points" />
           </Typography>
-          {cardType ? (
-            <Button
-              variant="outlined"
-              size="small"
-              className={classes.discoverMore}
-              component={Link}
-              to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {LoyaltyProgramDetail})}>
-              <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
-            </Button>
-          ) : (
-            <Button variant="outlined" className={classes.discoverMore} onClick={() => setOpenLoyaltyProgramDialog(true)}>
-              <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
-            </Button>
-          )}
+          <Button
+            size="small"
+            variant="outlined"
+            className={classes.discoverMore}
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
+            <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+          </Button>
         </CardActions>
-        {openLoyaltyProgramDialog && <LoyaltyProgramDialog open={openLoyaltyProgramDialog} onClose={handleClose} points={points} />}
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }

@@ -232,7 +232,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
       {...getMouseEvents(mouseEvents.onMouseEnter, mouseEvents.onMouseLeave)}
       {...rest}
       secondaryAction={
-        isHovering &&
+        (isHovering || isMobile) &&
         showMenuIcon &&
         message.status !== 'hidden' && (
           <>

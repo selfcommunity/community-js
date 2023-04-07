@@ -129,9 +129,9 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     if (search === '') {
       return el;
     } else if (el.receiver.id === authUserId) {
-      return el.sender.username.toLowerCase().includes(search);
+      return el.sender.username.includes(search.toLowerCase());
     }
-    return el.receiver.username.toLowerCase().includes(search);
+    return el.receiver.username.includes(search.toLowerCase());
   });
   const messageReceiver = (item, loggedUserId) => {
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;

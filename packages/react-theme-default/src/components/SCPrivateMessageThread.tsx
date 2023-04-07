@@ -6,18 +6,21 @@ const Component = {
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
       [theme.breakpoints.down('md')]: {
-        minHeight: '90vh'
+        minHeight: 'calc(100vh - 7rem)'
       },
       [theme.breakpoints.up('sm')]: {
         height: theme.spacing(103.5),
         maxHeight: 'inherit'
       },
       '& .MuiCardContent-root': {
+        overflow: 'auto',
+        padding: theme.spacing(0),
         [theme.breakpoints.up('sm')]: {
           height: '100%',
-          maxHeight: `calc(100% - ${theme.spacing(6.25)})`,
-          overflow: 'auto',
-          padding: theme.spacing(0)
+          maxHeight: `calc(100% - ${theme.spacing(6.25)})`
+        },
+        [theme.breakpoints.down('md')]: {
+          maxHeight: 'calc(100vh - 7rem)'
         },
         '& .MuiAlert-root': {
           position: 'absolute',
