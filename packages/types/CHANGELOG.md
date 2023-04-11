@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.12...@selfcommunity/types@0.4.1-alpha.13) (2023-04-11)
+
+
+### Bug Fixes
+
+* Fix category autocomplete ([100822a](https://github.com/selfcommunity/community-js/commit/100822a44b30e9732c1f3a9832643b8671ac5115))
+
+
+
+
+
 ## [0.4.1-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.11...@selfcommunity/types@0.4.1-alpha.12) (2023-04-04)
 
 
