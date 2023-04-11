@@ -11,7 +11,7 @@ import {useSCFetchCategories} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {SCCategoryType} from '@selfcommunity/types/src/index';
 import {useThemeProps} from '@mui/system';
-import {ChipTypeMap} from '@mui/material/Chip';
+import {is} from 'date-fns/locale';
 
 const PREFIX = 'SCCategoryAutocomplete';
 
@@ -103,6 +103,12 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
   useEffect(() => {
     onChange && onChange(value);
   }, [value]);
+
+  useEffect(() => {
+    if (!isLoading && typeof value === 'string') {
+      setValue(multiple ? categories.filter((cat) => cat.id === Number(value)) : categories.find((cat) => cat.id === Number(value)));
+    }
+  }, [isLoading]);
 
   // Handlers
 
