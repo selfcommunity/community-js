@@ -12,7 +12,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof InlineComposer> = (args) => (
-  <div style={{width: 500}}>
+  <div style={{maxWidth: 500}}>
     <InlineComposer {...args} />
   </div>
 );
