@@ -1,10 +1,9 @@
 import React from 'react';
-import {MenuItem, TextField} from '@mui/material';
+import {FormControlLabel, MenuItem, TextField, TextFieldProps, Checkbox} from '@mui/material';
 import {SCMetadataType, SCMetadataTypeFieldType} from '@selfcommunity/types';
 import EmailTextField from '../EmailTextField';
 import UrlTextField from '../UrlTextField';
 import PhoneTextField from '../PhoneTextField';
-import {TextFieldProps} from '@mui/material/TextField';
 
 export type MetadataFieldProps = TextFieldProps & {
   metadata: SCMetadataType;
@@ -36,6 +35,16 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
             </MenuItem>
           ))}
         </TextField>
+      );
+      break;
+    case SCMetadataTypeFieldType.CHECKBOX:
+      const {value} = rest;
+      component = (
+        <FormControlLabel
+          className={className}
+          control={<Checkbox required={metadata?.mandatory} checked={Boolean(value)} />}
+          label={metadata.label}
+        />
       );
       break;
     default:

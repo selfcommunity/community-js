@@ -95,18 +95,21 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   // State
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(defaultValue);
+  const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
   const {categories, isLoading} = useSCFetchCategories();
 
   useEffect(() => {
+    if (value === null) {
+      return;
+    }
     onChange && onChange(value);
   }, [value]);
 
   useEffect(() => {
-    if (!isLoading && typeof value === 'string') {
-      setValue(multiple ? categories.filter((cat) => cat.id === Number(value)) : categories.find((cat) => cat.id === Number(value)));
+    if (!isLoading && typeof defaultValue === 'string') {
+      setValue(multiple ? categories.filter((cat) => cat.id === Number(defaultValue)) : categories.find((cat) => cat.id === Number(defaultValue)));
     }
   }, [isLoading]);
 
