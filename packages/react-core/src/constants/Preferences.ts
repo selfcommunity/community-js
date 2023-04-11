@@ -68,6 +68,14 @@ export const STAFF_STAFF_BADGE_LABEL = `${SCPreferenceSection.STAFF}.${SCPrefere
 export const LOYALTY_PRIZE_A_IMAGE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.PRIZE_A_IMAGE}`;
 export const LOYALTY_PRIZE_B_IMAGE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.PRIZE_B_IMAGE}`;
 export const LOYALTY_PRIZE_C_IMAGE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.PRIZE_C_IMAGE}`;
+export const POINTS_MAKE_DISCUSSION = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_MAKE_DISCUSSION}`;
+export const POINTS_MAKE_POST = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_MAKE_POST}`;
+export const POINTS_MAKE_COMMENT = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_MAKE_COMMENT}`;
+export const POINTS_RECEIVE_VOTE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_RECEIVE_VOTE}`;
+export const POINTS_CONNECTION_OR_FOLLOWER = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_CONNECTION_OR_FOLLOWER}`;
+export const POINTS_SOCIAL_SHARE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_SOCIAL_SHARE}`;
+export const POINTS_APP_USED = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_APP_USED}`;
+export const POINTS_DAILY_VISIT = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_DAILY_VISIT}`;
 
 /**
  * ADDONS
