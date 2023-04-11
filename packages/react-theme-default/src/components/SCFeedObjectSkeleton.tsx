@@ -1,7 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '&.SCFeedObjectSkeleton-preview, &.SCFeedObjectSkeleton-detail': {
+      '&.SCFeedObjectSkeleton-preview, &.SCFeedObjectSkeleton-detail, &.SCFeedObjectSkeleton-search': {
         border: `0 none`,
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         borderRadius: 0,

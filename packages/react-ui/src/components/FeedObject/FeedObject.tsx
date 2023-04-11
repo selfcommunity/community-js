@@ -460,7 +460,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
 
   // OBJECTS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
+  const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
 
   /**
@@ -727,7 +727,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL || template === SCFeedObjectTemplateType.SEARCH) {
+  if (!obj && error) {
+    objElement = (
+      <CardContent>
+        <FormattedMessage id="ui.feedObject.error" defaultMessage="ui.feedObject.error" />
+      </CardContent>
+    );
+  } else if (
+    template === SCFeedObjectTemplateType.PREVIEW ||
+    template === SCFeedObjectTemplateType.DETAIL ||
+    template === SCFeedObjectTemplateType.SEARCH
+  ) {
     objElement = (
       <React.Fragment>
         {obj ? (

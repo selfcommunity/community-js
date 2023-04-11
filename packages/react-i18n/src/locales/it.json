@@ -176,6 +176,7 @@
   "ui.editor.imagePluginResizer.width": "Larghezza",
   "ui.editor.imagePluginResizer.height": "Altezza",
 
+  "ui.feedObject.error": "Il contributo non è disponibile al momento",
   "ui.feedObject.comment": "Commenta",
   "ui.feedObject.visibleToAll": "Visibile a tutti",
   "ui.feedObject.comment.comment": "Commenta",

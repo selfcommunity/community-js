@@ -1,12 +1,12 @@
-import React from "react";
-import { styled } from "@mui/material/styles";
-import LazyLoad from "react-lazyload";
-import Box from "@mui/material/Box";
-import FeedObject from "../../../components/FeedObject";
-import { SCFeedObjectTemplateType } from "../../../types/feedObject";
-import { MAX_PRELOAD_OFFSET_VIEWPORT } from "../../../constants/LazyLoad";
-import FeedObjectSkeleton from "../../../components/FeedObject/Skeleton";
-import { CacheStrategies } from "@selfcommunity/utils";
+import React from 'react';
+import {styled} from '@mui/material/styles';
+import LazyLoad from 'react-lazyload';
+import Box from '@mui/material/Box';
+import FeedObject from '../../../components/FeedObject';
+import {SCFeedObjectTemplateType} from '../../../types/feedObject';
+import {MAX_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
+import FeedObjectSkeleton from '../../../components/FeedObject/Skeleton';
+import {CacheStrategies} from '@selfcommunity/utils';
 
 const PREFIX = 'SCPreviewMediaShare';
 
@@ -35,15 +35,15 @@ export default ({medias = [], adornment = null}: {medias: any[]; GridImageProps?
         <Root>
           {adornment}
           {medias.map((media, i) => (
-              <Box className={classes.sharePreview} key={i}>
-                <FeedObject
-                  feedObjectId={media.embed.metadata.id}
-                  feedObjectType={media.embed.metadata.type}
-                  variant={'outlined'}
-                  template={SCFeedObjectTemplateType.SHARE}
-                  cacheStrategy={CacheStrategies.CACHE_FIRST}
-                />
-              </Box>
+            <Box className={classes.sharePreview} key={i}>
+              <FeedObject
+                feedObjectId={media.embed.metadata.id}
+                feedObjectType={media.embed.metadata.type}
+                variant={'outlined'}
+                template={SCFeedObjectTemplateType.SHARE}
+                cacheStrategy={CacheStrategies.CACHE_FIRST}
+              />
+            </Box>
           ))}
         </Root>
       )}
