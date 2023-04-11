@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.102](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.101...@selfcommunity/react-theme-default@0.1.0-alpha.102) (2023-04-11)
+
+
+### Bug Fixes
+
+* Fix CategoryAutocomplete.tsx ([ab55ab7](https://github.com/selfcommunity/community-js/commit/ab55ab743c4200e79ec563bdff239ede89c5f1a5))
+
+
+
+
+
 # [0.1.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.100...@selfcommunity/react-theme-default@0.1.0-alpha.101) (2023-04-07)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.156](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.155...@selfcommunity/react-ui@0.7.0-alpha.156) (2023-04-11)
+
+
+### Bug Fixes
+
+* Fix CategoryAutocomplete.tsx ([ab55ab7](https://github.com/selfcommunity/community-js/commit/ab55ab743c4200e79ec563bdff239ede89c5f1a5))
+
+
+
+
+
 # [0.7.0-alpha.155](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.154...@selfcommunity/react-ui@0.7.0-alpha.155) (2023-04-07)
 
 
