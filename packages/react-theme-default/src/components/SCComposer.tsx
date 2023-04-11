@@ -227,6 +227,12 @@ const Component = {
               minHeight: '100%'
             }
           }
+        },
+        '& .SCCategoryAutocomplete-root': {
+          minWidth: 120,
+          '& .MuiFormControl-root': {
+            margin: 0
+          }
         }
       };
     }
