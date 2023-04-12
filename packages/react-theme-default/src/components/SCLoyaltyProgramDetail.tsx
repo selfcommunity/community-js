@@ -35,11 +35,6 @@ const Component = {
         }
       },
       '& .SCLoyaltyProgramDetail-prize-section': {
-        [theme.breakpoints.down('md')]: {
-          width: '100vw',
-          marginLeft: theme.spacing(-2),
-          marginTop: theme.spacing(1)
-        },
         '& .MuiGrid-item': {
           [theme.breakpoints.down('md')]: {
             marginBottom: theme.spacing(4)
