@@ -1,4 +1,4 @@
-import {EditorConfig, LexicalNode, NodeKey, SerializedTextNode, Spread, TextNode} from 'lexical';
+import {DOMExportOutput, EditorConfig, LexicalNode, NodeKey, SerializedTextNode, Spread, TextNode} from 'lexical';
 import {SCUserType} from '@selfcommunity/types';
 import {DOMConversionMap} from 'lexical/LexicalNode';
 
@@ -82,6 +82,14 @@ export class MentionNode extends TextNode {
       }),
       ...dom
     };
+  }
+
+  exportDOM(): DOMExportOutput {
+    const element = document.createElement('mention');
+    element.setAttribute('id', `${this.__user.id}`);
+    element.setAttribute('ext-id', `${this.__user.ext_id}`);
+    element.textContent = `@${this.__user.username}`;
+    return {element};
   }
 
   isTextEntity(): true {

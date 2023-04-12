@@ -6,6 +6,7 @@ import {
   CLICK_COMMAND,
   COMMAND_PRIORITY_LOW,
   DecoratorNode,
+  DOMExportOutput,
   EditorConfig,
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
@@ -330,6 +331,16 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       }),
       ...dom
     };
+  }
+
+  exportDOM(): DOMExportOutput {
+    const element = document.createElement('img');
+    element.setAttribute('src', this.__src);
+    element.setAttribute('alt', this.__altText);
+    element.setAttribute('width', `${this.__width}`);
+    element.setAttribute('height', `${this.__height}`);
+    element.setAttribute('style', `max-width: ${this.__maxWidth}px;`);
+    return {element};
   }
 
   decorate(): JSX.Element {
