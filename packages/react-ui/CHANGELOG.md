@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.158](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.157...@selfcommunity/react-ui@0.7.0-alpha.158) (2023-04-12)
+
+
+### Bug Fixes
+
+* Added export of ComposerIconButton ([b909127](https://github.com/selfcommunity/community-js/commit/b909127df8407eaabc06738ea272d0c7531a5fdf))
+* Fix feed object when not available ([11cc304](https://github.com/selfcommunity/community-js/commit/11cc304cb7debdcb28f9d67a8cde9177386a8d5b))
+* Fix stories ([911b4c8](https://github.com/selfcommunity/community-js/commit/911b4c89b829c5b842d337ca81813b72976f2c5b))
+* fixed loyalty program component ([0d1568d](https://github.com/selfcommunity/community-js/commit/0d1568df2d5a64278e673e1ee161d84b86aad97d))
+* fixed snippets simultaneous insert/update ([e08a41f](https://github.com/selfcommunity/community-js/commit/e08a41f499cb3599fbaed5e81d996abc566f8cd0))
+
+
+### Features
+
+* Added ComposerIconButton.tsx to toolbars ([368d38a](https://github.com/selfcommunity/community-js/commit/368d38aa80306d52ca85cfbc08a5775305dd94a6))
+
+
+### Performance Improvements
+
+* added points list section for loyalty program detail component ([9b089ce](https://github.com/selfcommunity/community-js/commit/9b089ce01365bb6353944954e4e8f013add59cb7))
+* Added toolbar to Editor, added possibility to editing link ([dd810cf](https://github.com/selfcommunity/community-js/commit/dd810cfb60705de629afb59a97a99baaae135738))
+* Update material-ui ([a57c8bf](https://github.com/selfcommunity/community-js/commit/a57c8bf6a3fde7b1728e1e95b663f2ca48eebf9e))
+
+
+
+
+
 # [0.7.0-alpha.157](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.156...@selfcommunity/react-ui@0.7.0-alpha.157) (2023-04-11)
 
 

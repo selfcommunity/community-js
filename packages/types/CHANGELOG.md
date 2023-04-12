@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.13...@selfcommunity/types@0.4.1-alpha.14) (2023-04-12)
+
+
+### Performance Improvements
+
+* added loyalty points dynamic preferences ([b55a8d9](https://github.com/selfcommunity/community-js/commit/b55a8d94ba7f8b5c624c6cd5dcd0754b03b2d91a))
+
+
+
+
+
 ## [0.4.1-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.12...@selfcommunity/types@0.4.1-alpha.13) (2023-04-11)
 
 

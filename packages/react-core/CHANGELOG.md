@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.15...@selfcommunity/react-core@0.4.0-alpha.16) (2023-04-12)
+
+
+### Performance Improvements
+
+* added loyalty points dynamic preferences ([994ec44](https://github.com/selfcommunity/community-js/commit/994ec442bd8a9a3aa5c0a4a4d20aa4282216c52a))
+* added loyalty program detail cache tool ([fc76edf](https://github.com/selfcommunity/community-js/commit/fc76edf83b607a54add414b4efb789566a79654c))
+* Update material-ui ([a57c8bf](https://github.com/selfcommunity/community-js/commit/a57c8bf6a3fde7b1728e1e95b663f2ca48eebf9e))
+
+
+
+
+
 # [0.4.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.14...@selfcommunity/react-core@0.4.0-alpha.15) (2023-04-11)
 
 **Note:** Version bump only for package @selfcommunity/react-core
