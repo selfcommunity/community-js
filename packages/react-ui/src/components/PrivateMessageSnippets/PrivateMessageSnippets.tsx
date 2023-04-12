@@ -184,6 +184,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
       const _snippets = newSnippets.filter((s) => messageReceiver(s, authUserId) !== message);
       updateSnippets(_snippets);
     } else {
+      let temp = [...data.snippets];
       message.map((m) => {
         const idx = newSnippets.findIndex((s) =>
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -191,12 +192,12 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
           Object.prototype.hasOwnProperty.call(s, 'thread_id') ? s.thread_id === m.thread_id : s.id === m.thread_id
         );
         if (idx !== -1) {
-          newSnippets[idx].headline = m.message;
-          newSnippets[idx].thread_status = m.status;
-          updateSnippets(newSnippets);
+          temp[idx].headline = m.message;
+          temp[idx].thread_status = m.status;
         } else {
-          updateSnippets([...data.snippets, m]);
+          temp = [...temp, m];
         }
+        updateSnippets(temp);
       });
     }
   }

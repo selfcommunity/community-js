@@ -61,6 +61,10 @@ const Component = {
               top: 0,
               left: 0
             },
+            '&.SCEditor-toolbar .SCEditor-placeholder': {
+              top: theme.spacing(6),
+              left: 0
+            },
             '& .SCEditor-actions': {
               bottom: theme.spacing(4),
               padding: theme.spacing(3, 0, 0, 0),

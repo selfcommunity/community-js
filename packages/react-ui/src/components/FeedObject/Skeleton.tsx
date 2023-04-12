@@ -5,6 +5,7 @@ import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import {Box, CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
+import classNames from 'classnames';
 
 const PREFIX = 'SCFeedObjectSkeleton';
 
@@ -114,8 +115,8 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
   }
 
   return (
-    <Root className={classes.root} {...rest}>
-      <Box className={`${PREFIX}-${template}`}>{obj}</Box>
+    <Root className={classNames(classes.root, `${PREFIX}-${template}`)} {...rest}>
+      {obj}
     </Root>
   );
 }

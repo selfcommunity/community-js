@@ -20,6 +20,7 @@ import {FormattedMessage} from 'react-intl';
 import NotificationMenu from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
+import ComposerIconButton from '../ComposerIconButton';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -31,6 +32,7 @@ const classes = {
   home: `${PREFIX}-home`,
   explore: `${PREFIX}-explore`,
   search: `${PREFIX}-search`,
+  composer: `${PREFIX}-composer`,
   profile: `${PREFIX}-profile`,
   notification: `${PREFIX}-notification`,
   messages: `${PREFIX}-messages`,
@@ -125,7 +127,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     value = '',
     className = '',
     SearchAutocompleteProps = {},
-    action = <NavigationSettingsIconButton size="small" className={classes.settings}></NavigationSettingsIconButton>,
+    action = <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>,
     children = null,
     ...rest
   } = props;
@@ -201,6 +203,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {scUserContext.user ? (
         <>
+          <ComposerIconButton className={classes.composer}></ComposerIconButton>
           <Tooltip title={scUserContext.user.username}>
             <IconButton
               component={Link}
