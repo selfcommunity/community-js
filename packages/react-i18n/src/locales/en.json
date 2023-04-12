@@ -179,6 +179,7 @@
   "ui.editor.imagePluginResizer.width": "Width",
   "ui.editor.imagePluginResizer.height": "Height",
 
+  "ui.feedObject.error": "The contribution is not available at the moment",
   "ui.feedObject.comment": "Comment",
   "ui.feedObject.visibleToAll": "Visible to all",
   "ui.feedObject.comment.comment": "Comment",
