@@ -71,7 +71,7 @@ export interface UserActionIconButtonProps extends IconButtonProps {
  #### Import
 
  ```jsx
- import {NavigationSettingsIconButton} from '@selfcommunity/react-ui';
+ import {UserActionIconButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name

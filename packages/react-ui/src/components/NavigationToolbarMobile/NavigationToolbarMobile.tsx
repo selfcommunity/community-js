@@ -19,6 +19,7 @@ import {FormattedMessage} from 'react-intl';
 import {SearchAutocompleteProps} from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
 import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
+import ComposerIconButton from '../ComposerIconButton';
 
 const PREFIX = 'SCNavigationToolbarMobile';
 
@@ -27,6 +28,7 @@ const classes = {
   logo: `${PREFIX}-logo`,
   search: `${PREFIX}-search`,
   searchDialog: `${PREFIX}-search-dialog`,
+  composer: `${PREFIX}-composer`,
   settings: `${PREFIX}-settings`,
   settingsDialog: `${PREFIX}-settings-dialog`,
   login: `${PREFIX}-login`
@@ -93,7 +95,12 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     disableSearch = false,
     SearchAutocompleteProps = {},
     children = null,
-    action = <NavigationSettingsIconButton size="small" className={classes.settings}></NavigationSettingsIconButton>,
+    action = (
+      <>
+        <ComposerIconButton className={classes.composer}></ComposerIconButton>
+        <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>
+      </>
+    ),
     ...rest
   } = props;
 

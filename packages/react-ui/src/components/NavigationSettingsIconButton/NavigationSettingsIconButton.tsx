@@ -89,7 +89,7 @@ const PREFERENCES = [
  #### Import
 
  ```jsx
- import {NavigationSettingsIconButton} from '@selfcommunity/react-ui';
+ import {ComposerIconButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
