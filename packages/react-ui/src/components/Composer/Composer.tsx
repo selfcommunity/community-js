@@ -62,7 +62,7 @@ import {random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
-import Editor from '../Editor';
+import Editor, {EditorProps} from '../Editor';
 import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link, Share} from '../../shared/Media';
 import MediasPreview from '../../shared/MediasPreview';
@@ -178,6 +178,11 @@ export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
        */
       mediaObjectTypes?: SCMediaObjectType[];
       /**
+       * Editor props
+       * @default {toolbar: false}
+       */
+      EditorProps?: EditorProps;
+      /**
        * Callback triggered on success contribution creation
        * @default null
        */
@@ -290,6 +295,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     defaultValue = {},
     view = MAIN_VIEW,
     mediaObjectTypes = [Image, Document, Link, Share],
+    EditorProps = null,
     onClose = null,
     onSuccess = null,
     ...rest
@@ -600,6 +606,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       .then(() => setIsSubmitting(false));
   };
 
+  // MEMO
+  const _EditorProps = useMemo(() => (EditorProps ? EditorProps : {toolbar: type === COMPOSER_TYPE_DISCUSSION}), [EditorProps, type]);
+
   // RENDER
   const theme: Theme = useTheme<SCThemeType>();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
@@ -837,6 +846,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </div>
           )}
           <Editor
+            {..._EditorProps}
             key={`${key}-editor`}
             className={classNames(classes.block, classes.editor)}
             onChange={handleChangeText}

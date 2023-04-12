@@ -1,24 +1,31 @@
 import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useImperativeHandle, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import {Box, Stack} from '@mui/material';
+import {Box, Stack, useTheme} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import nodes from './nodes';
-import {LexicalComposer} from '@lexical/react/LexicalComposer';
+import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-import {OnChangePlugin, AutoLinkPlugin, MentionsPlugin, ImagePlugin, EmojiPlugin, DefaultHtmlValuePlugin} from './plugins';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
-import {LexicalEditor} from 'lexical';
+import {EditorThemeClasses, LexicalEditor} from 'lexical';
+import ToolbarPlugin from './plugins/ToolbarPlugin';
+import {ListPlugin} from '@lexical/react/LexicalListPlugin';
+import CodeHighlightPlugin from './plugins/CodeGutterPlugin';
+import {SCThemeType} from '@selfcommunity/react-core';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
 
 const PREFIX = 'SCEditor';
 
 const classes = {
   root: `${PREFIX}-root`,
+  toolbar: `${PREFIX}-toolbar`,
   content: `${PREFIX}-content`,
   placeholder: `${PREFIX}-placeholder`,
   actions: `${PREFIX}-actions`
@@ -27,95 +34,45 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  boxSizing: 'border-box',
-  padding: theme.spacing(1, 2),
-  position: 'relative',
-  cursor: 'text',
-  [`& .${classes.content}`]: {
-    position: 'relative',
-    outline: 'none',
-    minHeight: 40,
-    paddingBottom: 20,
-    '& > p': {
-      margin: 0
-    },
-    '& img': {
-      margin: 0,
-      '&.focused': {
-        outline: '2px solid rgb(60, 132, 244)',
-        userSelect: 'none'
-      }
-    },
-    ['& mention']: {
-      backgroundColor: theme.palette.primary.light
-    }
-  },
-  [`& .${classes.placeholder}`]: {
-    position: 'absolute',
-    top: theme.spacing(1),
-    left: theme.spacing(2),
-    color: theme.palette.text.disabled
-  },
-  [`& .${classes.actions}`]: {
-    position: 'absolute',
-    bottom: 0,
-    right: theme.spacing(),
-    color: theme.palette.text.primary
-  },
-  '& .image-resizer': {
-    display: 'block',
-    width: 7,
-    height: 7,
-    position: 'absolute',
-    backgroundColor: 'rgb(60, 132, 244)',
-    border: '1px solid #fff',
-    '&.image-resizer-n': {
-      top: -6,
-      left: '48%',
-      cursor: 'n-resize'
-    },
-    '&.image-resizer-ne': {
-      top: -6,
-      right: -6,
-      cursor: 'ne-resize'
-    },
-    '&.image-resizer-e': {
-      top: '48%',
-      right: -6,
-      cursor: 'e-resize'
-    },
-    '&.image-resizer-se': {
-      bottom: -2,
-      right: -6,
-      cursor: 'se-resize'
-    },
-    '&.image-resizer-s': {
-      bottom: -2,
-      left: '48%',
-      cursor: 's-resize'
-    },
-    '&.image-resizer-sw': {
-      bottom: -2,
-      left: -6,
-      cursor: 'sw-resize'
-    },
-    '&.image-resizer-w': {
-      bottom: '48%',
-      left: -6,
-      cursor: 'w-resize'
-    },
-    '&.image-resizer-nw': {
-      top: -6,
-      left: -6,
-      cursor: 'nw-resize'
-    }
-  }
-}));
+  overridesResolver: (props, styles) => [styles.root, styles.toolbar]
+})(({theme}) => ({}));
 
 export type EditorRef = {
   focus: () => void;
+};
+
+const editorTheme: EditorThemeClasses = {
+  code: `${PREFIX}-code`,
+  heading: {
+    h1: `${PREFIX}-h1`,
+    h2: `${PREFIX}-h2`,
+    h3: `${PREFIX}-h3`,
+    h4: `${PREFIX}-h4`,
+    h5: `${PREFIX}-h5`,
+    h6: `${PREFIX}-h6`
+  },
+  link: `${PREFIX}-link`,
+  list: {
+    listitem: `${PREFIX}-listItem`,
+    nested: {
+      listitem: `${PREFIX}-nestedListItem`
+    },
+    olDepth: [`${PREFIX}-ol1`, `${PREFIX}-ol2`, `${PREFIX}-ol3`, `${PREFIX}-ol4`, `${PREFIX}-ol5`],
+    ul: `${PREFIX}-ul`
+  },
+  ltr: `${PREFIX}-ltr`,
+  paragraph: `${PREFIX}-paragraph`,
+  quote: `${PREFIX}-quote`,
+  rtl: `${PREFIX}-rtl`,
+  text: {
+    bold: `${PREFIX}-textBold`,
+    italic: `${PREFIX}-textItalic`,
+    strikethrough: `${PREFIX}-textStrikethrough`,
+    subscript: `${PREFIX}-textSubscript`,
+    superscript: `${PREFIX}-textSuperscript`,
+    underline: `${PREFIX}-textUnderline`,
+    underlineStrikethrough: `${PREFIX}-textUnderlineStrikethrough`
+  }
 };
 
 export interface EditorProps {
@@ -142,6 +99,12 @@ export interface EditorProps {
    * @default true
    */
   editable?: boolean;
+
+  /**
+   * Show the toolbar on top of the editor
+   * @default false
+   */
+  toolbar?: boolean;
 
   /**
    * Handler for change event of the editor
@@ -178,8 +141,12 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     props: inProps,
     name: PREFIX
   });
-  const {id = 'editor', className = null, defaultValue = '', editable = true, onChange = null} = props;
+  const {id = 'editor', className = null, defaultValue = '', toolbar = false, editable = true, onChange = null} = props;
   const apiRef = useRef<ApiRef>();
+
+  // MEMO
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // HANDLERS
   const handleChange = (value) => {
@@ -203,19 +170,27 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   // RENDER
 
-  const initialConfig = useMemo(
+  const initialConfig: InitialConfigType = useMemo(
     () => ({
       namespace: 'LexicalEditor',
       editable: editable,
       onError: handleError,
-      nodes: [...nodes]
+      nodes: [...nodes],
+      theme: editorTheme
     }),
     [editable]
   );
 
   return (
-    <Root id={id} className={classNames(classes.root, className)}>
+    <Root id={id} className={classNames(classes.root, className, {[classes.toolbar]: toolbar})}>
       <LexicalComposer initialConfig={initialConfig}>
+        {toolbar && (
+          <>
+            <ToolbarPlugin />
+            <ListPlugin />
+            <CodeHighlightPlugin />
+          </>
+        )}
         <RichTextPlugin
           contentEditable={<ContentEditable className={classes.content} />}
           placeholder={
@@ -231,6 +206,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <AutoLinkPlugin />
         <MentionsPlugin />
         <LinkPlugin />
+        {!isMobile && <FloatingLinkPlugin />}
         <Stack className={classes.actions} direction="row">
           <ImagePlugin />
           <EmojiPlugin />

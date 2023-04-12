@@ -93,6 +93,8 @@ import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
 import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
+import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
+import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
 
 /**
  * Style fragments - Imports - End
@@ -185,6 +187,8 @@ const theme = {
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCEditor,
+    SCEditorFloatingLinkPlugin,
+    SCEditorToolbarPlugin,
     SCFeed,
     SCFeedObject,
     SCFeedObjectDetailTemplate,

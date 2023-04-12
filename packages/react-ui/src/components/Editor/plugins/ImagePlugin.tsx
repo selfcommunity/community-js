@@ -10,7 +10,7 @@ import {
   LexicalEditor
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Icon, IconButton, IconButtonProps} from '@mui/material';
+import {Icon, IconButton, IconButtonProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints} from '@selfcommunity/api-services';
@@ -31,10 +31,14 @@ export interface InsertImagePayload {
 
 export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCommand();
 
+interface UploadButtonProps extends IconButtonProps {
+  progress?: number | null;
+}
+
 const UploadButton = asUploadButton(
-  forwardRef((props: IconButtonProps, ref: any) => (
-    <IconButton {...props} aria-label="upload image" ref={ref} color="inherit">
-      <Icon color="inherit">image</Icon>
+  forwardRef(({progress = null, ...rest}: UploadButtonProps, ref: any) => (
+    <IconButton {...rest} aria-label="upload image" ref={ref} color="inherit">
+      {progress ? <CircularProgress variant="determinate" value={progress} size="1rem" /> : <Icon color="inherit">image</Icon>}
     </IconButton>
   ))
 );
@@ -45,7 +49,7 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
   const scUserContext: SCUserContextType = useSCUser();
 
   // STATE
-  const [uploading, setUploading] = useState({});
+  const [uploading, setUploading] = useState<Record<string, SCMediaChunkType>>({});
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -99,7 +103,13 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
       accept="image/*"
       fileFilter={handleFileUploadFilter}>
       <MediaChunkUploader type="eimage" onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
-      <UploadButton className={className} extraProps={{disabled: Object.keys(uploading).length !== 0}} />
+      <UploadButton
+        className={className}
+        extraProps={{
+          disabled: Object.keys(uploading).length !== 0,
+          progress: Object.keys(uploading).length !== 0 ? Object.values(uploading)[0].completed : null
+        }}
+      />
     </ChunkedUploady>
   );
 }

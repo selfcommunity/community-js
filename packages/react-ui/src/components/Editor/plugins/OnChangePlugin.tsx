@@ -6,6 +6,7 @@ import {MentionNode} from '../nodes/MentionNode';
 import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {CodeNode} from '@lexical/code';
+import {$generateHtmlFromNodes} from '@lexical/html';
 
 const IS_BOLD = 1;
 const IS_ITALIC = 2;
@@ -67,7 +68,8 @@ const OnChangePlugin = (props): JSX.Element => {
 
   const handleChange = (editorState: EditorState, editor: LexicalEditor) => {
     editorState.read(() => {
-      onChange($toHtml($getRoot()));
+      const htmlString = $generateHtmlFromNodes(editor);
+      onChange(htmlString);
     });
   };
 
