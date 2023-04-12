@@ -49,7 +49,7 @@
   "peerDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.11.12",
+    "@mui/material": "^5.12.0",
     "notistack": "^2.0.8",
     "pdfjs-dist": "^3.5.141",
     "react": "^17.0.2 || 18",
