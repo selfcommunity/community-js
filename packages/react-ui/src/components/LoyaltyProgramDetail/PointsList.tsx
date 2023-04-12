@@ -25,11 +25,11 @@ const classes = {
 
 export function PointElement({message, points}: {message: React.ReactNode; points: number}): JSX.Element {
   return (
-    <Grid item sm={12} md={6}>
+    <Grid item xs={12} sm={12} md={6}>
       <Typography component={'div'} className={classes.element}>
         <Typography>{message}</Typography>
         <Typography>
-          + <FormattedMessage id="ui.loyaltyProgramDetail.points" defaultMessage="ui.loyaltyProgramDetail.points" values={{total: points}} />
+          +<FormattedMessage id="ui.loyaltyProgramDetail.points" defaultMessage="ui.loyaltyProgramDetail.points" values={{total: points}} />
         </Typography>
       </Typography>
       <Divider />

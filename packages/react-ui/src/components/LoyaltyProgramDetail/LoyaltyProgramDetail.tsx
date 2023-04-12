@@ -1,75 +1,45 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer} from 'react';
 import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import {http, Endpoints} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCCache, SCThemeType, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
-import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography} from '@mui/material';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
 import Chip from '@mui/material/Chip';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import LoyaltyProgramDetailSkeleton from './Skeleton';
-
-const messages = defineMessages({
-  points: {
-    id: 'ui.loyaltyProgramDetail.points',
-    defaultMessage: 'ui.loyaltyProgramDetail.points'
-  },
-  userPoints: {
-    id: 'ui.loyaltyProgramDetail.userPoints',
-    defaultMessage: 'ui.loyaltyProgramDetail.userPoints'
-  },
-  list: {
-    id: 'ui.loyaltyProgramDetail.list',
-    defaultMessage: 'ui.loyaltyProgramDetail.list'
-  }
-});
+import Skeleton from './Skeleton';
+import PointsList from './PointsList';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import Widget from '../Widget';
 
 const PREFIX = 'SCLoyaltyProgramDetail';
 
 const classes = {
   root: `${PREFIX}-root`,
-  header: `${PREFIX}-header`,
-  icon: `${PREFIX}-icon`,
-  card: `${PREFIX}-card`,
+  userPoints: `${PREFIX}-user-points`,
   title: `${PREFIX}-title`,
-  points: `${PREFIX}-points`,
-  description: `${PREFIX}-description`,
-  action: `${PREFIX}-action`,
-  chip: `${PREFIX}-chip`
+  sectionTitle: `${PREFIX}-section-title`,
+  sectionInfo: `${PREFIX}-section-info`,
+  pointsSection: `${PREFIX}-points-section`,
+  prizeSection: `${PREFIX}-prize-section`,
+  card: `${PREFIX}-card`,
+  cardContent: `${PREFIX}-card-content`,
+  prizePoints: `${PREFIX}-prize-points`,
+  actionButton: `${PREFIX}-card-action-button`,
+  notRequestable: `${PREFIX}-not-requestable`,
+  endSection: `${PREFIX}-end-section`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  boxShadow: 'none',
-  [`& .${classes.header}`]: {
-    backgroundColor: theme.palette.grey['A200'],
-    marginBottom: '20px'
-  },
-  [`& .${classes.title}`]: {
-    fontWeight: 'bold'
-  },
-  [`& .${classes.card}`]: {
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    margin: 1
-  },
-  [`& .${classes.action}`]: {
-    pointerEvents: 'all',
-    cursor: 'not-allowed'
-  },
-  [`& .${classes.chip}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface LoyaltyProgramDetailProps {
   /**
@@ -83,6 +53,11 @@ export interface LoyaltyProgramDetailProps {
    */
   className?: string;
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * user loyalty points
    * @default null
    */
@@ -91,12 +66,11 @@ export interface LoyaltyProgramDetailProps {
    * Sets the type card for the component
    * @default true
    */
-  cardType?: boolean;
-  /**
-   * Sets the type card for the component
-   * @default true
-   */
   requestable?: boolean;
+  /**
+   * Other props
+   */
+  [p: string]: any;
 }
 
 /**
@@ -110,130 +84,186 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, autoHide, points, cardType, requestable, ...rest} = props;
+  const {className, autoHide, points, requestable, cacheStrategy = CacheStrategies.NETWORK_ONLY, onHeightChange, onStateChange, ...rest} = props;
 
   // STATE
-  const [prizes, setPrizes] = useState([]);
-
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
+  // STATE
+  const [state, dispatch] = useReducer(
+    dataToolsReducer,
+    {
+      isLoadingNext: true,
+      next: `${Endpoints.GetPrizes.url()}?limit=10`,
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.LOYALTY_PROGRAM_DETAIL_PRIZES_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheStrategy
+    },
+    stateToolsInitializer
+  );
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
-  // INTL
-  const intl = useIntl();
-
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  // HANDLERS
+  const handleScrollUp = () => {
+    window.scrollTo({left: 0, top: 0, behavior: 'smooth'});
+  };
   /**
    * Fetches the list of available prizes
    */
-  function fetchPrizes() {
-    http
-      .request({
-        url: Endpoints.GetPrizes.url(null),
+  const fetchPrizes = useMemo(
+    () => () => {
+      return http.request({
+        url: state.next,
         method: Endpoints.GetPrizes.method
-      })
-      .then((res: any) => {
-        setPrizes(res.data.results);
-      })
-      .catch((error) => {
-        console.log(error);
       });
-  }
-
+    },
+    [dispatch, state.next, state.isLoadingNext]
+  );
+  useEffect(() => {
+    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, []);
   /**
    * On mount, fetches prizes
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      fetchPrizes();
+    let ignore = false;
+    if (state.next) {
+      fetchPrizes()
+        .then((res: HttpResponse<any>) => {
+          if (res.status < 300 && isMountedRef.current && !ignore) {
+            const data = res.data;
+            console.log(data);
+            dispatch({
+              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                results: data.results,
+                count: data.count,
+                next: data.next
+              }
+            });
+          }
+        })
+        .catch((error) => {
+          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+      return () => {
+        ignore = true;
+      };
     }
-  }, [scUserContext.user]);
+  }, [authUserId, state.next]);
 
   /**
-   * Renders loyalty program detail
+   * Renders loyalty program detail skeleton
    */
 
-  if (!prizes) {
-    return <LoyaltyProgramDetailSkeleton />;
+  if (state.isLoadingNext) {
+    return <Skeleton />;
   }
 
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide && scUserContext.user) {
+  if (!autoHide && authUserId) {
     return (
       <Root className={classNames(classes.root, className)} {...rest}>
-        {cardType && (
-          <Typography component="h3" align="left" className={classes.header}>
-            <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
+        {points && (
+          <Typography className={classes.title} variant="h5">
+            {!isMobile && <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />}
+            <Chip
+              className={classes.userPoints}
+              component="span"
+              label={
+                <FormattedMessage
+                  id="ui.loyaltyProgramDetail.userPoints"
+                  defaultMessage="ui.loyaltyProgramDetail.userPoints"
+                  values={{total: points}}
+                />
+              }
+            />
           </Typography>
         )}
-        {points && (
-          <Box className={classes.points}>
-            <Chip label={`${intl.formatMessage(messages.userPoints, {total: points})}`} />
-          </Box>
-        )}
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h6">
-              <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
-            </Typography>
-            <Typography component="div">
-              <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography>
-              <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
-            </Typography>
-            <ul style={{columnCount: 2}}>
-              {intl.formatMessage(messages.list, {
-                b: (chunks) => <strong>{chunks}</strong>,
-                li: (chunks) => <li>{chunks}</li>
-              })}
-            </ul>
-          </Grid>
-          <Grid item xs={12} sx={{mb: 2}}>
-            <Typography variant="h6">
-              <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
-            </Typography>
-            <Typography component="div">
-              <FormattedMessage id="ui.loyaltyProgramDetail.prizesIntro" defaultMessage="ui.loyaltyProgramDetail.prizesIntro" />
-            </Typography>
-            <Typography component="div">
-              <FormattedMessage id="ui.loyaltyProgramDetail.prizesContent" defaultMessage="ui.loyaltyProgramDetail.prizesContent" />
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} direction="row">
-          {prizes.map((prize: SCPrizeType, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card className={classes.card}>
-                <CardMedia component="img" height="140" image={prize.image} />
-                <Box className={classes.chip}>
-                  <Chip label={`${intl.formatMessage(messages.points, {total: prize.points})}`} />
-                </Box>
-                <CardContent>
-                  <Typography gutterBottom variant="body1" component="div" className={classes.title}>
-                    {prize.title}
-                  </Typography>
-                  <Typography variant="body2" className={classes.description}>
-                    {prize.description}
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{justifyContent: 'center'}}>
-                  <Button size="small" variant="outlined" disabled={requestable} className={classes.action}>
-                    {points >= prize.points ? (
-                      <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
-                    ) : (
-                      <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+        <Typography className={classes.sectionTitle}>
+          <FormattedMessage id="ui.loyaltyProgramDetail.community" defaultMessage="ui.loyaltyProgramDetail.community" />
+        </Typography>
+        <Typography className={classes.sectionInfo}>
+          <FormattedMessage id="ui.loyaltyProgramDetail.description" defaultMessage="ui.loyaltyProgramDetail.description" />
+        </Typography>
+        <Typography className={classes.sectionTitle}>
+          <FormattedMessage id="ui.loyaltyProgramDetail.listTitle" defaultMessage="ui.loyaltyProgramDetail.listTitle" />
+        </Typography>
+        <PointsList className={classes.pointsSection} />
+        <Typography className={classes.sectionTitle}>
+          <FormattedMessage id="ui.loyaltyProgramDetail.prizes" defaultMessage="ui.loyaltyProgramDetail.prizes" />
+        </Typography>
+        <Grid container spacing={!isMobile ? 6 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
+          {state.results.map((prize: SCPrizeType, index) => (
+            <>
+              <Grid item xs={12} sm={12} md={3} key={index}>
+                <Widget className={classes.card}>
+                  <CardMedia component="img" image={prize.image} />
+                  <Box className={classes.prizePoints}>
+                    <Chip
+                      className={points <= prize.points ? classes.notRequestable : null}
+                      label={
+                        <FormattedMessage
+                          id="ui.loyaltyProgramDetail.prize.points"
+                          defaultMessage="ui.loyaltyProgramDetail.prize.points"
+                          values={{total: prize.points}}
+                        />
+                      }
+                    />
+                  </Box>
+                  <CardContent>
+                    <Typography variant="body1" className={classes.sectionTitle}>
+                      {prize.title}
+                    </Typography>
+                    <Typography variant="body2" className={classes.cardContent}>
+                      {prize.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    {prize.link && (
+                      <Button size="medium" color="secondary" href={prize.link} target="_blank" className={classes.actionButton}>
+                        <FormattedMessage id="ui.loyaltyProgramDetail.button.more" defaultMessage="ui.loyaltyProgramDetail.button.more" />
+                      </Button>
                     )}
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
+                    {((!prize.link && prize.active && points >= prize.points) || (prize.active && points >= prize.points)) && (
+                      <Button size="small" variant="outlined" className={classes.actionButton} disabled={!requestable}>
+                        <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
+                      </Button>
+                    )}
+                  </CardActions>
+                </Widget>
+              </Grid>
+              {isMobile && state.count <= index + 1 && (
+                <Widget className={classes.endSection}>
+                  <CardContent>
+                    <Typography textAlign={'center'}>
+                      <FormattedMessage
+                        id="ui.loyaltyProgramDetail.content.end.message"
+                        defaultMessage="ui.loyaltyProgramDetail.content.end.message"
+                      />
+                      <Button color={'secondary'} onClick={handleScrollUp}>
+                        <FormattedMessage
+                          id="ui.loyaltyProgramDetail.content.end.button"
+                          defaultMessage="ui.loyaltyProgramDetail.content.end.button"
+                        />
+                      </Button>
+                    </Typography>
+                  </CardContent>
+                </Widget>
+              )}
+            </>
           ))}
         </Grid>
       </Root>
     );
   }
-  return null;
+  return <HiddenPlaceholder />;
 }
