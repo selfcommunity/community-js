@@ -1,3 +1,3 @@
-import ComposerIconButton, {NavigationSettingsIconButtonProps} from './ComposerIconButton';
+import ComposerIconButton, {ComposerIconButtonProps} from './ComposerIconButton';
 export default ComposerIconButton;
-export {NavigationSettingsIconButtonProps};
+export {ComposerIconButtonProps};

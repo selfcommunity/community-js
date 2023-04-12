@@ -17,6 +17,7 @@ import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
 import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
 import Composer, {ComposerProps, ComposerSkeleton} from './components/Composer';
+import ComposerIconButton, {ComposerIconButtonProps} from './components/ComposerIconButton';
 import {COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from './constants/Composer';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';
@@ -184,6 +185,8 @@ export {
   COMPOSER_TYPE_POST,
   ComposerProps,
   ComposerSkeleton,
+  ComposerIconButton,
+  ComposerIconButtonProps,
   Editor,
   EditorProps,
   EditorSkeleton,
