@@ -135,6 +135,8 @@
   "ui.loyaltyProgramDetail.prizes": "I premi per te",
   "ui.loyaltyProgramDetail.button.request": "Richiedi Ora",
   "ui.loyaltyProgramDetail.button.more": "Scopri di più",
+  "ui.loyaltyProgramDetail.content.end.message": "Non ci sono altri contenuti.",
+  "ui.loyaltyProgramDetail.content.end.button": "Torna su",
   "ui.composer.type.post": "Create Post",
   "ui.composer.type.discussion": "Create Discussion",
   "ui.composer.edit": "edit",
