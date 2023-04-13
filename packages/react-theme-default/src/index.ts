@@ -37,6 +37,7 @@ import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
 import SCFeedSkeleton from './components/SCFeedSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetail from './components/SCLoyaltyProgramDetail';
+import SCLoyaltyProgramDetailSkeleton from './components/SCLoyaltyProgramDetailSkeleton';
 import SCPrivateMessageComponent from './components/SCPrivateMessageComponent';
 import MuiDialog from './components/MuiDialog';
 import SCCategories from './components/SCCategories';
@@ -201,6 +202,7 @@ const theme = {
     SCLightbox,
     SCLoyaltyProgram,
     SCLoyaltyProgramDetail,
+    SCLoyaltyProgramDetailSkeleton,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarMobile,
