@@ -11,9 +11,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof LoyaltyProgramDetailSkeleton> = (args) => (
-  <div style={{width: 400}}>
     <LoyaltyProgramDetailSkeleton {...args} />
-  </div>
 );
 
 export const Base = Template.bind({});
