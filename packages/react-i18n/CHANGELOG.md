@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.7...@selfcommunity/react-i18n@0.5.0-alpha.8) (2023-04-12)
+
+
+### Bug Fixes
+
+* Fix feed object when not available ([11cc304](https://github.com/selfcommunity/community-js/commit/11cc304cb7debdcb28f9d67a8cde9177386a8d5b))
+
+
+### Performance Improvements
+
+* added loyalty program detail transl ([c7fb377](https://github.com/selfcommunity/community-js/commit/c7fb3771a7b287b2d43c2f07a03dd4e0ee5607d8))
+* Added toolbar to Editor, added possibility to editing link ([dd810cf](https://github.com/selfcommunity/community-js/commit/dd810cfb60705de629afb59a97a99baaae135738))
+* fixed loyalty program translations ([ddd2f68](https://github.com/selfcommunity/community-js/commit/ddd2f68e1922b1dd8210afb2583a8686114dc4b2))
+
+
+
+
+
 # [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.6...@selfcommunity/react-i18n@0.5.0-alpha.7) (2023-04-07)
 
 

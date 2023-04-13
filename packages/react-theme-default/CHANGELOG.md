@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.103...@selfcommunity/react-theme-default@0.1.0-alpha.104) (2023-04-12)
+
+
+### Bug Fixes
+
+* Fix feed object when not available ([11cc304](https://github.com/selfcommunity/community-js/commit/11cc304cb7debdcb28f9d67a8cde9177386a8d5b))
+* fixed loyalty program detail mobile margins ([3b793eb](https://github.com/selfcommunity/community-js/commit/3b793ebca07c3ecabfa1a28cf301ceaa3c50c9af))
+* fixed loyalty program detail theme ([f6af7b1](https://github.com/selfcommunity/community-js/commit/f6af7b1b24e4673e944bd250f0db0b538ec9a4da))
+
+
+### Performance Improvements
+
+* Added toolbar to Editor, added possibility to editing link ([dd810cf](https://github.com/selfcommunity/community-js/commit/dd810cfb60705de629afb59a97a99baaae135738))
+* Update material-ui ([a57c8bf](https://github.com/selfcommunity/community-js/commit/a57c8bf6a3fde7b1728e1e95b663f2ca48eebf9e))
+
+
+
+
+
 # [0.1.0-alpha.103](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.102...@selfcommunity/react-theme-default@0.1.0-alpha.103) (2023-04-11)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
