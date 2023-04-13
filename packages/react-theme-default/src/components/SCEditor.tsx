@@ -222,7 +222,7 @@ const Component = {
     }),
     toolbar: ({theme}: any) => ({
       '& .SCEditor-placeholder': {
-        top: theme.spacing(5),
+        top: theme.spacing(7),
         left: theme.spacing(2)
       }
     })
