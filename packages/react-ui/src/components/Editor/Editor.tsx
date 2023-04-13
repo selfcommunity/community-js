@@ -20,6 +20,7 @@ import CodeHighlightPlugin from './plugins/CodeGutterPlugin';
 import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
+import {shouldForwardProp} from '@mui/system/createStyled';
 
 const PREFIX = 'SCEditor';
 
@@ -34,7 +35,9 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root, styles.toolbar]
+  overridesResolver: (props, styles) => {
+    return [styles.root, props.className.includes(classes.toolbar) && styles.toolbar];
+  }
 })(({theme}) => ({}));
 
 export type EditorRef = {
