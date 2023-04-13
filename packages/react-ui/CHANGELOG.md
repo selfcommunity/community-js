@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.159...@selfcommunity/react-ui@0.7.0-alpha.160) (2023-04-13)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail skeleton ([33399db](https://github.com/selfcommunity/community-js/commit/33399db21b38fb4aff1f540d0d5a3bfc56529e4a))
+
+
+
+
+
 # [0.7.0-alpha.159](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.158...@selfcommunity/react-ui@0.7.0-alpha.159) (2023-04-13)
 
 

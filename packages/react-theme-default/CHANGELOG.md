@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.105...@selfcommunity/react-theme-default@0.1.0-alpha.106) (2023-04-13)
+
+
+### Performance Improvements
+
+* added loyalty program detail skeleton template ([46d7290](https://github.com/selfcommunity/community-js/commit/46d72907fcf5d82768b6909cdf62c2382186fcb9))
+
+
+
+
+
 # [0.1.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.104...@selfcommunity/react-theme-default@0.1.0-alpha.105) (2023-04-13)
 
 
