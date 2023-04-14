@@ -11,8 +11,8 @@ import CategoryAutocomplete, {CategoryAutocompleteProps} from './components/Cate
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
 import Categories, {CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps} from './components/Categories';
 import CategoriesFollowed, {CategoriesFollowedSkeleton} from './components/CategoriesFollowed';
-import CategoriesPopular, {CategoriesPopularSkeleton} from './components/CategoriesPopular';
-import CategoriesSuggestion, {CategoriesListProps, CategoriesSuggestionSkeleton} from './components/CategoriesSuggestion';
+import CategoriesPopularWidget, {CategoriesPopularWidgetSkeleton} from './components/CategoriesPopularWidget';
+import CategoriesSuggestionWidget, {CategoriesListProps, CategoriesSuggestionWidgetSkeleton} from './components/CategoriesSuggestionWidget';
 import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
 import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
@@ -28,11 +28,11 @@ import FollowCategoryButton, {FollowCategoryButtonProps} from './components/Foll
 import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
 import ConnectionUserButton from './components/ConnectionUserButton';
 import InlineComposer, {InlineComposerProps, InlineComposerSkeleton} from './components/InlineComposer';
-import PeopleSuggestion, {PeopleSuggestionProps, PeopleSuggestionSkeleton} from './components/PeopleSuggestion';
-import Platform, {PlatformProps, PlatformSkeleton} from './components/Platform';
+import PeopleSuggestionWidget, {PeopleSuggestionWidgetProps, PeopleSuggestionWidgetSkeleton} from './components/PeopleSuggestionWidget';
+import PlatformWidget, {PlatformWidgetProps, PlatformWidgetSkeleton} from './components/PlatformWidget';
 import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
 import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
-import LoyaltyProgram, {LoyaltyProgramProps, LoyaltyProgramSkeleton} from './components/LoyaltyProgram';
+import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
 import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
 import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
@@ -171,11 +171,11 @@ export {
   CategoriesSkeletonProps,
   CategoriesFollowed,
   CategoriesFollowedSkeleton,
-  CategoriesPopular,
-  CategoriesPopularSkeleton,
-  CategoriesSuggestion,
+  CategoriesPopularWidget,
+  CategoriesPopularWidgetSkeleton,
+  CategoriesSuggestionWidget,
   CategoriesListProps,
-  CategoriesSuggestionSkeleton,
+  CategoriesSuggestionWidgetSkeleton,
   ChangeCover,
   ChangePicture,
   ChangePictureProps,
@@ -226,17 +226,17 @@ export {
   Notification,
   NotificationProps,
   NotificationSkeleton,
-  PeopleSuggestion,
-  PeopleSuggestionProps,
-  PeopleSuggestionSkeleton,
-  Platform,
-  PlatformProps,
-  PlatformSkeleton,
+  PeopleSuggestionWidget,
+  PeopleSuggestionWidgetProps,
+  PeopleSuggestionWidgetSkeleton,
+  PlatformWidget,
+  PlatformWidgetProps,
+  PlatformWidgetSkeleton,
   LocationAutocomplete,
   LocationAutocompleteProps,
-  LoyaltyProgram,
-  LoyaltyProgramProps,
-  LoyaltyProgramSkeleton,
+  LoyaltyProgramWidget,
+  LoyaltyProgramWidgetProps,
+  LoyaltyProgramWidgetSkeleton,
   LoyaltyProgramDetail,
   LoyaltyProgramDetailSkeleton,
   LoyaltyProgramDetailProps,

@@ -1,13 +1,13 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import PeopleSuggestion from './index';
+import PeopleSuggestionWidget from './index';
 import {createTheme, ThemeProvider} from '@mui/material';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/People Suggestion',
-  component: PeopleSuggestion,
+  title: 'Design System/React UI/People Suggestion Widget',
+  component: PeopleSuggestionWidget,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -25,12 +25,12 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof PeopleSuggestion>;
+} as ComponentMeta<typeof PeopleSuggestionWidget>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof PeopleSuggestion> = (args) => (
+const Template: ComponentStory<typeof PeopleSuggestionWidget> = (args) => (
   <div style={{width: 400}}>
-    <PeopleSuggestion {...args} />
+    <PeopleSuggestionWidget {...args} />
   </div>
 );
 

@@ -47,7 +47,8 @@ import SCDateTimeAgo from './components/SCDateTimeAgo';
 import SCFeedRelevantActivities from './components/SCFeedRelevantActivities';
 import MuiIconButton from './components/MuiIconButton';
 import SCUser from './components/SCUser';
-import SCLoyaltyProgram from './components/SCLoyaltyProgram';
+import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
+import SCLoyaltyProgramWidgetSkeleton from './components/SCLoyaltyProgramWidgetSkeleton';
 import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
@@ -200,8 +201,9 @@ const theme = {
     SCFollowAction,
     SCInlineComposer,
     SCLightbox,
-    SCLoyaltyProgram,
+    SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetail,
+    SCLoyaltyProgramWidgetSkeleton,
     SCLoyaltyProgramDetailSkeleton,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,

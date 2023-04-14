@@ -10,8 +10,9 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import Skeleton from './Skeleton';
 
-const PREFIX = 'SCLoyaltyProgram';
+const PREFIX = 'SCLoyaltyProgramWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,7 +28,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface LoyaltyProgramProps {
+export interface LoyaltyProgramWidgetProps {
   /**
    * Hides this component
    * @default false
@@ -40,33 +41,33 @@ export interface LoyaltyProgramProps {
   className?: string;
 }
 /**
- * > API documentation for the Community-JS Loyalty Program component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Loyalty Program Widget component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {LoyaltyProgram} from '@selfcommunity/react-ui';
+ import {LoyaltyProgramWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCLoyaltyProgram` can be used when providing style overrides in the theme.
+ The name `SCLoyaltyProgramWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCLoyaltyProgram-root|Styles applied to the root element.|
- |title.SCLoyaltyProgram-title|Styles applied to the title element.|
- |actions|.SCLoyaltyProgram-actions|Styles applied to the actions section.|
- |points|.SCLoyaltyProgram-points|Styles applied to the points section.|
- |discoverMore|.SCLoyaltyProgram-discover-more|Styles applied to discover more button element.|
+ |root|.SCLoyaltyProgramWidget-root|Styles applied to the root element.|
+ |title.SCLoyaltyProgramWidget-title|Styles applied to the title element.|
+ |actions|.SCLoyaltyProgramWidget-actions|Styles applied to the actions section.|
+ |points|.SCLoyaltyProgramWidget-points|Styles applied to the points section.|
+ |discoverMore|.SCLoyaltyProgramWidget-discover-more|Styles applied to discover more button element.|
  *
  * @param inProps
  */
-export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Element {
-  const props: LoyaltyProgramProps = useThemeProps({
+export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps): JSX.Element {
+  const props: LoyaltyProgramWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -79,6 +80,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
 
   // STATE
   const [points, setPoints] = useState<number>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   /**
    * Fetches user loyalty points
@@ -91,8 +93,10 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
       })
       .then((res: HttpResponse<any>) => {
         setPoints(res.data.points);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }
@@ -106,7 +110,12 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
     }
   }, [scUserContext.user]);
 
-  // RENDER
+  if (loading) {
+    return <Skeleton />;
+  }
+  /**
+   * Rendering
+   */
   if (!autoHide && scUserContext.user) {
     return (
       <Root {...props} className={classNames(classes.root, className)}>

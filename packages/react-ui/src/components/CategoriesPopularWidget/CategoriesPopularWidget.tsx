@@ -8,7 +8,7 @@ import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import Category from '../Category';
-import {CategoriesListProps} from '../CategoriesSuggestion';
+import {CategoriesListProps} from '../CategoriesSuggestionWidget';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
@@ -28,7 +28,7 @@ import {
 } from '@selfcommunity/react-core';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
-const PREFIX = 'SCCategoriesPopular';
+const PREFIX = 'SCCategoriesPopularWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -46,7 +46,7 @@ const Root = styled(Widget, {
 }));
 
 /**
- > API documentation for the Community-JS Categories Popular component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Categories Popular widget component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
@@ -54,20 +54,20 @@ const Root = styled(Widget, {
  ```
 
  #### Component Name
- The name `SCCategoriesPopular` can be used when providing style overrides in the theme.
+ The name `SCCategoriesPopularWidget` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoriesPopular-root|Styles applied to the root element.|
- |title|.SCCategoriesPopular-title|Styles applied to the title element.|
- |noResults|.SCCategoriesPopular-no-results|Styles applied to no results section.|
- |showMore|.SCCategoriesPopular-show-more|Styles applied to show more button element.|
+ |root|.SCCategoriesPopularWidget-root|Styles applied to the root element.|
+ |title|.SCCategoriesPopularWidget-title|Styles applied to the title element.|
+ |noResults|.SCCategoriesPopularWidget-no-results|Styles applied to no results section.|
+ |showMore|.SCCategoriesPopularWidget-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
-export default function CategoriesPopular(inProps: CategoriesListProps): JSX.Element {
+export default function CategoriesPopularWidget(inProps: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
 

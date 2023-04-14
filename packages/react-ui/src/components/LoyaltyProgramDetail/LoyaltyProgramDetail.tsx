@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useMemo, useReducer} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse, UserService, LoyaltyService} from '@selfcommunity/api-services';
 import {SCCache, SCThemeType, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
 import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme} from '@mui/material';
@@ -16,6 +15,8 @@ import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import Widget from '../Widget';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCLoyaltyProgramDetail';
 
@@ -58,21 +59,41 @@ export interface LoyaltyProgramDetailProps {
    */
   cacheStrategy?: CacheStrategies;
   /**
-   * user loyalty points
-   * @default null
-   */
-  points?: number;
-  /**
-   * Sets the type card for the component
-   * @default true
-   */
-  requestable?: boolean;
-  /**
    * Other props
    */
   [p: string]: any;
 }
+/**
+ * > API documentation for the Community-JS Loyalty Program Detail component. Learn about the available props and the CSS API.
 
+ #### Import
+
+ ```jsx
+ import {LoyaltyProgramDetail} from '@selfcommunity/react-ui';
+ ```
+
+ #### Component Name
+
+ The name `SCLoyaltyProgramDetail` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCLoyaltyProgramDetail-root|Styles applied to the root element.|
+ |userPoints|.SCLoyaltyProgramDetail-user-points|Styles applied to the chip element.|
+ |title|.SCLoyaltyProgramDetail-title|Styles applied to the title element.|
+ |sectionTitle|.SCLoyaltyProgramDetail-section-title|Styles applied to the section title element.|
+ |sectionInfo|.SCLoyaltyProgramDetail-section-info|Styles applied to the section info element.|
+ |pointsSection|.SCLoyaltyProgramDetail-points-section|Styles applied to the points section.|
+ |prizeSection|.SCLoyaltyProgramDetail-prize-section|Styles applied to the prize section.|
+ |card|.SCLoyaltyProgramDetail-card|Styles applied to the card elements.|
+ |cardContent|.SCLoyaltyProgramDetail-card-content|Styles applied to the card content section.|
+ |prizePoints|.SCLoyaltyProgramDetail-prize-points|Styles applied to the prize points element.|
+ |actionButton|.SCLoyaltyProgramDetail-action-button|Styles applied to the action button element.|
+ |notRequestable|.SCLoyaltyProgramDetail-not-requestable|Styles applied to elements that are not requestable.|
+ |endSection|.SCLoyaltyProgramDetail-end-section|Styles applied to the card section visible only on mobile view.|
 /**
  *
  * @param inProps
@@ -84,7 +105,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, autoHide, points, requestable, cacheStrategy = CacheStrategies.NETWORK_ONLY, onHeightChange, onStateChange, ...rest} = props;
+  const {className, autoHide, cacheStrategy = CacheStrategies.NETWORK_ONLY, onHeightChange, onStateChange, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -102,6 +123,11 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     },
     stateToolsInitializer
   );
+  const [requested, setRequested] = useState<number>(null);
+  const [points, setPoints] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
+  const [prizeRequested, setPrizeRequested] = useState<number>(null);
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   // CONST
@@ -110,6 +136,46 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   const handleScrollUp = () => {
     window.scrollTo({left: 0, top: 0, behavior: 'smooth'});
   };
+
+  const requestPrize = (id: number) => {
+    return LoyaltyService.createPrizeRequest(id)
+      .then((data) => {
+        setPoints((prev) => prev - data.prize_points);
+        setRequested(data.prize.id);
+        setOpen(false);
+        let _snackBar = enqueueSnackbar(
+          <FormattedMessage id="ui.loyaltyProgramDetail.prize.request.success" defaultMessage="ui.loyaltyProgramDetail.prize.request.success" />,
+          {
+            variant: 'success',
+            autoHideDuration: 3000,
+            onClick: () => {
+              closeSnackbar(_snackBar);
+            }
+          }
+        );
+      })
+      .catch((error) => {
+        setOpen(false);
+        let _snackBar = enqueueSnackbar(
+          <FormattedMessage id="ui.loyaltyProgramDetail.prize.request.error" defaultMessage="ui.loyaltyProgramDetail.prize.request.error" />,
+          {
+            variant: 'error',
+            autoHideDuration: 3000,
+            onClick: () => {
+              closeSnackbar(_snackBar);
+            }
+          }
+        );
+        Logger.error(SCOPE_SC_UI, error);
+        console.log(error);
+      });
+  };
+
+  const handleOpenAlert = (id) => {
+    setPrizeRequested(id);
+    setOpen(true);
+  };
+
   /**
    * Fetches the list of available prizes
    */
@@ -122,11 +188,27 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     },
     [dispatch, state.next, state.isLoadingNext]
   );
+  /**
+   * On mount, fetches user loyalty points
+   */
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    UserService.getUserLoyaltyPoints(authUserId)
+      .then((data) => {
+        setPoints(data.points);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        console.log(error);
+      });
+  }, [authUserId]);
+
+  useEffect(() => {
+    if (!authUserId) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, []);
+  }, [authUserId]);
   /**
    * On mount, fetches prizes
    */
@@ -137,7 +219,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         .then((res: HttpResponse<any>) => {
           if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
-            console.log(data);
             dispatch({
               type: actionToolsTypes.LOAD_NEXT_SUCCESS,
               payload: {
@@ -156,7 +237,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         ignore = true;
       };
     }
-  }, [authUserId, state.next]);
+  }, [state.next]);
 
   /**
    * Renders loyalty program detail skeleton
@@ -234,8 +315,17 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                       </Button>
                     )}
                     {((!prize.link && prize.active && points >= prize.points) || (prize.active && points >= prize.points)) && (
-                      <Button size="small" variant="outlined" className={classes.actionButton} disabled={!requestable}>
-                        <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        className={classes.actionButton}
+                        disabled={requested === prize.id || points < prize.points}
+                        onClick={() => handleOpenAlert(prize.id)}>
+                        {requested ? (
+                          <FormattedMessage id="ui.loyaltyProgramDetail.button.requested" defaultMessage="ui.loyaltyProgramDetail.button.requested" />
+                        ) : (
+                          <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
+                        )}
                       </Button>
                     )}
                   </CardActions>
@@ -262,6 +352,15 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
             </>
           ))}
         </Grid>
+        {open && (
+          <ConfirmDialog
+            open={open}
+            title={<FormattedMessage id="ui.loyaltyProgramDetail.dialog.msg" defaultMessage="ui.loyaltyProgramDetail.dialog.msg" />}
+            btnConfirm={<FormattedMessage id="ui.loyaltyProgramDetail.dialog.confirm" defaultMessage="ui.loyaltyProgramDetail.dialog.confirm" />}
+            onConfirm={() => requestPrize(prizeRequested)}
+            onClose={() => setOpen(false)}
+          />
+        )}
       </Root>
     );
   }

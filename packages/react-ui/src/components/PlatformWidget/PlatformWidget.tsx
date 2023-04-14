@@ -11,7 +11,7 @@ import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
-const PREFIX = 'SCPlatform';
+const PREFIX = 'SCPlatformWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,7 +27,7 @@ const Root = styled(Widget, {
   padding: 20
 }));
 
-export interface PlatformProps extends VirtualScrollerItemProps {
+export interface PlatformWidgetProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false
@@ -46,32 +46,32 @@ export interface PlatformProps extends VirtualScrollerItemProps {
 }
 
 /**
- * > API documentation for the Community-JS Platform component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS PlatformWidget component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {Platform} from '@selfcommunity/react-ui';
+ import {PlatformWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCPlatform` can be used when providing style overrides in the theme.
+ The name `SCPlatformWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPlatform-root|Styles applied to the root element.|
- |title|.SCPlatform-title|Styles applied to the title element.|
+ |root|.SCPlatformWidget-root|Styles applied to the root element.|
+ |title|.SCPlatformWidget-title|Styles applied to the title element.|
 
  *
  * @param inProps
  */
-export default function Platform(inProps: PlatformProps): JSX.Element {
+export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Element {
   // PROPS
-  const props: PlatformProps = useThemeProps({
+  const props: PlatformWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });

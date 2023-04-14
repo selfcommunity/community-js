@@ -15,7 +15,7 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
-const PREFIX = 'SCCategoriesSuggestion';
+const PREFIX = 'SCCategoriesSuggestionWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -69,24 +69,24 @@ export interface CategoriesListProps extends VirtualScrollerItemProps {
  *
  #### Import
  ```jsx
- import {CategoriesSuggestion} from '@selfcommunity/react-ui';
+ import {CategoriesSuggestionWidget} from '@selfcommunity/react-ui';
  ```
  #### Component Name
- The name `SCCategoriesSuggestion` can be used when providing style overrides in the theme.
+ The name `SCCategoriesSuggestionWidget` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoriesSuggestion-root|Styles applied to the root element.|
- |title|.SCCategoriesSuggestion-title|Styles applied to the title element.|
- |noResults|.SCCategoriesSuggestion-no-results|Styles applied to no results section.|
- |showMore|.SCCategoriesSuggestion-show-more|Styles applied to show more button element.|
+ |root|.SCCategoriesSuggestionWidget-root|Styles applied to the root element.|
+ |title|.SCCategoriesSuggestionWidget-title|Styles applied to the title element.|
+ |noResults|.SCCategoriesSuggestionWidget-no-results|Styles applied to no results section.|
+ |showMore|.SCCategoriesSuggestionWidget-show-more|Styles applied to show more button element.|
 
 
  * @param inProps
  */
-export default function CategoriesSuggestion(inProps: CategoriesListProps): JSX.Element {
+export default function CategoriesSuggestionWidget(inProps: CategoriesListProps): JSX.Element {
   // CONST
   const limit = 3;
 

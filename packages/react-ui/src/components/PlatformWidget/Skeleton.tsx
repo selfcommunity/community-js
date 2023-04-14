@@ -2,7 +2,7 @@ import React from 'react';
 import {GenericSkeleton} from '../Skeleton';
 import {styled} from '@mui/material/styles';
 
-const PREFIX = 'SCPlatformSkeleton';
+const PREFIX = 'SCPlatformWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -19,21 +19,21 @@ const Root = styled(GenericSkeleton, {
  #### Import
 
  ```jsx
- import {PlatformSkeleton} from '@selfcommunity/react-ui';
+ import {PlatformWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCPlatformSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPlatformWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPlatformSkeleton-root|Styles applied to the root element.|
+ |root|.SCPlatformWidgetSkeleton-root|Styles applied to the root element.|
  *
  */
 
-export default function PlatformSkeleton(): JSX.Element {
+export default function PlatformWidgetSkeleton(): JSX.Element {
   return <Root className={classes.root} />;
 }
