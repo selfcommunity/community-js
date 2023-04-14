@@ -52,13 +52,19 @@ const Component = {
         justifyContent: 'center',
         alignItems: 'center',
         height: theme.spacing(53),
+        '& .SCLoyaltyProgramDetail-card-title': {
+          fontWeight: theme.typography.fontWeightBold,
+          fontSize: '1.143rem'
+        },
         '& .MuiCardContent-root': {
+          padding: theme.spacing(2),
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           '& .SCLoyaltyProgramDetail-card-content': {
-            height: theme.spacing(12.5),
+            padding: theme.spacing(1, 0, 0, 0),
+            maxHeight: theme.spacing(12.5),
             overflow: 'hidden',
             textOverflow: 'ellipsis'
           }
