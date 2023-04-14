@@ -189,10 +189,10 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     [dispatch, state.next, state.isLoadingNext]
   );
   /**
-   * On mount, fetches user loyalty points
+   * Fetches the list of user points
    */
-  useEffect(() => {
-    UserService.getUserLoyaltyPoints(authUserId)
+  const fetchUserPoints = () => {
+    return UserService.getUserLoyaltyPoints(authUserId)
       .then((data) => {
         setPoints(data.points);
       })
@@ -200,12 +200,18 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         Logger.error(SCOPE_SC_UI, error);
         console.log(error);
       });
+  };
+  /**
+   * On mount, fetches user loyalty points
+   */
+  useEffect(() => {
+    if (authUserId) {
+      fetchUserPoints();
+    }
   }, [authUserId]);
 
   useEffect(() => {
-    if (!authUserId) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (authUserId && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
@@ -214,7 +220,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
    */
   useEffect(() => {
     let ignore = false;
-    if (state.next) {
+    if (state.next && authUserId) {
       fetchPrizes()
         .then((res: HttpResponse<any>) => {
           if (res.status < 300 && isMountedRef.current && !ignore) {
@@ -237,7 +243,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         ignore = true;
       };
     }
-  }, [state.next]);
+  }, [authUserId, state.next]);
 
   /**
    * Renders loyalty program detail skeleton
@@ -284,8 +290,8 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         </Typography>
         <Grid container spacing={!isMobile ? 6 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
           {state.results.map((prize: SCPrizeType, index) => (
-            <>
-              <Grid item xs={12} sm={12} md={3} key={index}>
+            <React.Fragment key={index}>
+              <Grid item xs={12} sm={12} md={3} key={prize.id}>
                 <Widget className={classes.card}>
                   <CardMedia component="img" image={prize.image} />
                   <Box className={classes.prizePoints}>
@@ -349,7 +355,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                   </CardContent>
                 </Widget>
               )}
-            </>
+            </React.Fragment>
           ))}
         </Grid>
         {open && (
