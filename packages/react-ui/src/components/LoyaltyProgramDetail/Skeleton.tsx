@@ -43,9 +43,15 @@ const Root = styled(Box, {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCLoyaltyProgramDetailSkeleton-root|Styles applied to the root element.|
+ |title|.SCLoyaltyProgramDetailSkeleton-title|Styles applied to the title element.|
+ |sectionTitle|.SCLoyaltyProgramDetailSkeleton-section-title|Styles applied to the section title element.|
+ |subTitle|.SCLoyaltyProgramDetailSkeleton-subTitle|Styles applied to the subTitle element.|
  |content|.SCLoyaltyProgramDetailSkeleton-content|Styles applied to the card content section.|
- |list|.SCLoyaltyProgramDetailSkeleton-list|Styles applied to the list section.|
- |listItem|.SCLoyaltyProgramDetailSkeleton-list-item|Styles applied to the list item elements.|
+ |actions|.SCLoyaltyProgramDetailSkeleton-actions|Styles applied to the card actions section.|
+ |prizeSection|.SCLoyaltyProgramDetailSkeleton-prize-section|Styles applied to the prize card section.|
+ |prizeItem|.SCLoyaltyProgramDetailSkeleton-prize-item|Styles applied to the prize item element.|
+ |pointsList|.SCLoyaltyProgramDetailSkeleton-points-list|Styles applied to the points list section.|
+ |chip|.SCLoyaltyProgramDetailSkeleton-chip|Styles applied to the chip element.|
  *
  */
 export default function LoyaltyProgramDetailSkeleton(): JSX.Element {

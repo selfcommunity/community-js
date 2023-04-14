@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import Skeleton from './Skeleton';
 
 const PREFIX = 'SCLoyaltyProgram';
 
@@ -79,6 +80,7 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
 
   // STATE
   const [points, setPoints] = useState<number>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   /**
    * Fetches user loyalty points
@@ -91,8 +93,10 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
       })
       .then((res: HttpResponse<any>) => {
         setPoints(res.data.points);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }
@@ -106,7 +110,12 @@ export default function LoyaltyProgram(inProps: LoyaltyProgramProps): JSX.Elemen
     }
   }, [scUserContext.user]);
 
-  // RENDER
+  if (loading) {
+    return <Skeleton />;
+  }
+  /**
+   * Rendering
+   */
   if (!autoHide && scUserContext.user) {
     return (
       <Root {...props} className={classNames(classes.root, className)}>
