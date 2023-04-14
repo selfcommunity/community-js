@@ -249,6 +249,7 @@
   "ui.feedObject.activitiesMenu.followedCommentsDesc": "List of comments made by users followed.",
 
   "ui.feedObject.contributors.participants": "Participants",
+  "ui.feedObject.content.showMore": "Show more",
 
   "ui.feedUpdates.message": "There is an update for you!",
   "ui.feedUpdates.reload": "Reload",
