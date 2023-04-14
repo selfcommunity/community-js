@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import {
-  CategoriesSuggestion,
+  CategoriesSuggestionWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -10,9 +10,9 @@ import {
   FeedSidebarProps,
   FeedProps,
   InlineComposer,
-  LoyaltyProgram,
-  PeopleSuggestion,
-  Platform,
+  LoyaltyProgramWidget,
+  PeopleSuggestionWidget,
+  PlatformWidget,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
@@ -78,28 +78,28 @@ export interface MainFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: Platform,
+    component: PlatformWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: LoyaltyProgram,
+    component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesSuggestion,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: PeopleSuggestion,
+    component: PeopleSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 3
