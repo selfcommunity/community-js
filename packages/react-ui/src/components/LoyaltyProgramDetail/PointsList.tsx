@@ -23,9 +23,9 @@ const classes = {
   element: `${PREFIX}-element`
 };
 
-export function PointElement({message, points}: {message: React.ReactNode; points: number}): JSX.Element {
+export function PointElement({message, points, name}: {message: React.ReactNode; points: number; name: string}): JSX.Element {
   return (
-    <Grid item xs={12} sm={12} md={6}>
+    <Grid item xs={12} sm={12} md={6} key={name}>
       <Typography component={'div'} className={classes.element}>
         <Typography>{message}</Typography>
         <Typography>
@@ -77,34 +77,42 @@ export default function PointsList(inProps: PointsListProps): JSX.Element {
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.post" defaultMessage="ui.loyaltyProgramDetail.points.post" />}
         points={preferences[SCPreferences.POINTS_MAKE_POST]}
+        name={SCPreferences.POINTS_MAKE_POST}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.discussion" defaultMessage="ui.loyaltyProgramDetail.points.discussion" />}
         points={preferences[SCPreferences.POINTS_MAKE_DISCUSSION]}
+        name={SCPreferences.POINTS_MAKE_DISCUSSION}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.comment" defaultMessage="ui.loyaltyProgramDetail.points.comment" />}
         points={preferences[SCPreferences.POINTS_MAKE_COMMENT]}
+        name={SCPreferences.POINTS_MAKE_COMMENT}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.appreciation" defaultMessage="ui.loyaltyProgramDetail.points.appreciation" />}
         points={preferences[SCPreferences.POINTS_RECEIVE_VOTE]}
+        name={SCPreferences.POINTS_RECEIVE_VOTE}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.follower" defaultMessage="ui.loyaltyProgramDetail.points.follower" />}
         points={preferences[SCPreferences.POINTS_CONNECTION_OR_FOLLOWER]}
+        name={SCPreferences.POINTS_CONNECTION_OR_FOLLOWER}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.share" defaultMessage="ui.loyaltyProgramDetail.points.share" />}
         points={preferences[SCPreferences.POINTS_SOCIAL_SHARE]}
+        name={SCPreferences.POINTS_SOCIAL_SHARE}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.app" defaultMessage="ui.loyaltyProgramDetail.points.app" />}
         points={preferences[SCPreferences.POINTS_APP_USED]}
+        name={SCPreferences.POINTS_APP_USED}
       />
       <PointElement
         message={<FormattedMessage id="ui.loyaltyProgramDetail.points.visit" defaultMessage="ui.loyaltyProgramDetail.points.visit" />}
         points={preferences[SCPreferences.POINTS_DAILY_VISIT]}
+        name={SCPreferences.POINTS_DAILY_VISIT}
       />
     </Root>
   );
