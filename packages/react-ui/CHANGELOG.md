@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.161](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.160...@selfcommunity/react-ui@0.7.0-alpha.161) (2023-04-14)
+
+
+### Bug Fixes
+
+* fixed key warning ([423544f](https://github.com/selfcommunity/community-js/commit/423544f32adc6b7f740e1242f61edfb42a8303f7))
+* fixed loyalty components + skeletons ([c6602f6](https://github.com/selfcommunity/community-js/commit/c6602f6883f2054c4981ade5e94373f983767c77))
+
+
+### Performance Improvements
+
+* added suffix to ui components showed in main/explore/notification feed ([5d33d30](https://github.com/selfcommunity/community-js/commit/5d33d30714ca03d36dd3dc47a8c884c577b6ed82))
+
+
+
+
+
 # [0.7.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.159...@selfcommunity/react-ui@0.7.0-alpha.160) (2023-04-13)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.107](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.106...@selfcommunity/react-theme-default@0.1.0-alpha.107) (2023-04-14)
+
+
+### Bug Fixes
+
+* renamed components with suffix ([73d4140](https://github.com/selfcommunity/community-js/commit/73d41409f02169f5c9de8e783a2a866af5bd2932))
+
+
+### Performance Improvements
+
+* fixed loyalty component skeleton theme ([3e9e152](https://github.com/selfcommunity/community-js/commit/3e9e152e6d59f94f3892c6fed101f7fdba4cad5d))
+
+
+
+
+
 # [0.1.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.105...@selfcommunity/react-theme-default@0.1.0-alpha.106) (2023-04-13)
 
 
