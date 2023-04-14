@@ -29,6 +29,7 @@ const classes = {
   pointsSection: `${PREFIX}-points-section`,
   prizeSection: `${PREFIX}-prize-section`,
   card: `${PREFIX}-card`,
+  cardTitle: `${PREFIX}-card-title`,
   cardContent: `${PREFIX}-card-content`,
   prizePoints: `${PREFIX}-prize-points`,
   actionButton: `${PREFIX}-card-action-button`,
@@ -89,6 +90,7 @@ export interface LoyaltyProgramDetailProps {
  |pointsSection|.SCLoyaltyProgramDetail-points-section|Styles applied to the points section.|
  |prizeSection|.SCLoyaltyProgramDetail-prize-section|Styles applied to the prize section.|
  |card|.SCLoyaltyProgramDetail-card|Styles applied to the card elements.|
+ |cardTitle|.SCLoyaltyProgramDetail-card-title|Styles applied to the card title element.|
  |cardContent|.SCLoyaltyProgramDetail-card-content|Styles applied to the card content section.|
  |prizePoints|.SCLoyaltyProgramDetail-prize-points|Styles applied to the prize points element.|
  |actionButton|.SCLoyaltyProgramDetail-action-button|Styles applied to the action button element.|
@@ -307,7 +309,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                     />
                   </Box>
                   <CardContent>
-                    <Typography variant="body1" className={classes.sectionTitle}>
+                    <Typography variant="body1" className={classes.cardTitle}>
                       {prize.title}
                     </Typography>
                     <Typography variant="body2" className={classes.cardContent}>
