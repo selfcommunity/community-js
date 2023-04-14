@@ -4,15 +4,15 @@ const Component = {
       '& .MuiCardContent-root': {
         padding: theme.spacing(2, 3, 2, 3)
       },
-      '& .SCLoyaltyProgram-title': {
+      '& .SCLoyaltyProgramWidget-title': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.143rem'
       },
-      '& .SCLoyaltyProgram-actions': {
+      '& .SCLoyaltyProgramWidget-actions': {
         display: 'flex',
         justifyContent: 'space-between',
         padding: theme.spacing(0, 3, 2, 3),
-        '& .SCLoyaltyProgram-points': {
+        '& .SCLoyaltyProgramWidget-points': {
           fontSize: '1rem',
           fontWeight: theme.typography.fontWeightBold,
           textTransform: 'uppercase',

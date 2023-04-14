@@ -1,19 +1,19 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCLoyaltyProgramSkeleton-root, .MuiCardContent-root': {
+      '& .SCLoyaltyProgramWidgetSkeleton-root, .MuiCardContent-root': {
         padding: theme.spacing(2)
       },
-      '& .SCLoyaltyProgramSkeleton-actions, .MuiCardActions-root': {
+      '& .SCLoyaltyProgramWidgetSkeleton-actions, .MuiCardActions-root': {
         display: 'flex',
         justifyContent: 'space-between',
         padding: theme.spacing(0, 3, 2, 2),
-        '& .SCLoyaltyProgramSkeleton-points': {
+        '& .SCLoyaltyProgramWidgetSkeleton-points': {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
         },
-        '& .SCLoyaltyProgramSkeleton-chip': {
+        '& .SCLoyaltyProgramWidgetSkeleton-chip': {
           borderRadius: theme.shape.borderRadius,
           marginRight: theme.spacing(2)
         }
