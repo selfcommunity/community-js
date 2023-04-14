@@ -10,7 +10,7 @@ import Category from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {CategoriesListProps} from '../CategoriesSuggestion';
+import {CategoriesListProps} from '../CategoriesSuggestionWidget';
 import Skeleton from './Skeleton';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';

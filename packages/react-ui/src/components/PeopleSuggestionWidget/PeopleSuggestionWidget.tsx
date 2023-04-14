@@ -12,7 +12,7 @@ import {
   SCUserContextType,
   useIsComponentMountedRef
 } from '@selfcommunity/react-core';
-import PeopleSuggestionSkeleton from './Skeleton';
+import Skeleton from './Skeleton';
 import User, {UserProps} from '../User';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -23,7 +23,7 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 
-const PREFIX = 'SCPeopleSuggestion';
+const PREFIX = 'SCPeopleSuggestionWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -39,7 +39,7 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface PeopleSuggestionProps extends VirtualScrollerItemProps {
+export interface PeopleSuggestionWidgetProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false
@@ -68,37 +68,37 @@ export interface PeopleSuggestionProps extends VirtualScrollerItemProps {
 
 /**
  *
- > API documentation for the Community-JS People Suggestion component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS People Suggestion Widget component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {PeopleSuggestion} from '@selfcommunity/react-ui';
+ import {PeopleSuggestionWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCPeopleSuggestion` can be used when providing style overrides in the theme.
+ The name `SCPeopleSuggestionWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPeopleSuggestion-root|Styles applied to the root element.|
- |title|.SCPeopleSuggestion-title|Styles applied to the title element.|
- |suggestedUserItem|.SCPeopleSuggestion-suggested-user-item|Styles applied to the suggested user element.|
- |noResults|.SCPeopleSuggestion-no-results|Styles applied to the no results section.|
- |showMore|.SCPeopleSuggestion-show-more|Styles applied to show more button element.|
+ |root|.SCPeopleSuggestionWidget-root|Styles applied to the root element.|
+ |title|.SCPeopleSuggestionWidget-title|Styles applied to the title element.|
+ |suggestedUserItem|.SCPeopleSuggestionWidget-suggested-user-item|Styles applied to the suggested user element.|
+ |noResults|.SCPeopleSuggestionWidget-no-results|Styles applied to the no results section.|
+ |showMore|.SCPeopleSuggestionWidget-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
-export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.Element {
+export default function PeopleSuggestionWidget(inProps: PeopleSuggestionWidgetProps): JSX.Element {
   // CONST
   const limit = 3;
 
   // PROPS
-  const props: PeopleSuggestionProps = useThemeProps({
+  const props: PeopleSuggestionWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -207,7 +207,7 @@ export default function PeopleSuggestion(inProps: PeopleSuggestionProps): JSX.El
    * Renders people suggestion list
    */
   if (state.isLoadingNext && scUserContext.user) {
-    return <PeopleSuggestionSkeleton />;
+    return <Skeleton />;
   }
   /**
    * Renders root object (if results and if user is logged, otherwise component is hidden)

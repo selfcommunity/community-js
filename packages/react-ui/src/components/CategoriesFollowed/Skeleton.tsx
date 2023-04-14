@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoriesSuggestionSkeleton from '../CategoriesSuggestion/Skeleton';
+import CategoriesSuggestionWidgetSkeleton from '../CategoriesSuggestionWidget/Skeleton';
 import {styled} from '@mui/material/styles';
 
 const PREFIX = 'SCCategoriesFollowedSkeleton';
@@ -8,12 +8,12 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(CategoriesSuggestionSkeleton, {
+const Root = styled(CategoriesSuggestionWidgetSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }));
 /**
  * > API documentation for the Community-JS Categories Followed Skeleton component. Learn about the available props and the CSS API.

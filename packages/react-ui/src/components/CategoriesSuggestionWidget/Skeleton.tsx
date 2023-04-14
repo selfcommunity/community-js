@@ -5,7 +5,7 @@ import CategorySkeleton from '../Category/Skeleton';
 import Widget from '../Widget';
 import {CardContent, ListItem} from '@mui/material';
 
-const PREFIX = 'SCCategoriesSuggestionSkeleton';
+const PREFIX = 'SCCategoriesSuggestionWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -16,27 +16,27 @@ const Root = styled(Widget)(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
 /**
- * > API documentation for the Community-JS Categories Suggestion Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Categories Suggestion Widget Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {CategoriesSuggestionSkeleton} from '@selfcommunity/react-ui';
+ import {CategoriesSuggestionWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCCategoriesSuggestionSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoriesSuggestionWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoriesSuggestionSkeleton-root|Styles applied to the root element.|
- |list|.SCCategoriesSuggestionSkeleton-list|Styles applied to the list element.|
+ |root|.SCCategoriesSuggestionWidgetSkeleton-root|Styles applied to the root element.|
+ |list|.SCCategoriesSuggestionWidgetSkeleton-list|Styles applied to the list element.|
  *
  */
-export default function CategoriesSuggestionSkeleton(props): JSX.Element {
+export default function CategoriesSuggestionWidgetSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>

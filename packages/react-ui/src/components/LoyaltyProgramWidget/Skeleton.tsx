@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Button, CardActions, CardContent, Skeleton, Typography} from '@mui/material';
 import Widget from '../Widget';
 
-const PREFIX = 'SCLoyaltyProgramSkeleton';
+const PREFIX = 'SCLoyaltyProgramWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -20,31 +20,31 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 /**
- * > API documentation for the Community-JS Loyalty Program Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Loyalty Program Widget Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {LoyaltyProgramSkeleton} from '@selfcommunity/react-ui';
+ import {LoyaltyProgramWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCLoyaltyProgramSkeleton` can be used when providing style overrides in the theme.
+ The name `SCLoyaltyProgramWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCLoyaltyProgramSkeleton-root|Styles applied to the root element.|
- |title|.SCLoyaltyProgramSkeleton-title|Styles applied to the title element.|
- |content|.SCLoyaltyProgramSkeleton-content|Styles applied to the card content section.|
- |chip|.SCLoyaltyProgramSkeleton-chip|Styles applied to the card chip element.|
- |points|.SCLoyaltyProgramSkeleton-points|Styles applied to the card actions points element.|
- |actions|.SCLoyaltyProgramSkeleton-actions|Styles applied to the action section.|
+ |root|.SCLoyaltyProgramWidgetSkeleton-root|Styles applied to the root element.|
+ |title|.SCLoyaltyProgramWidgetSkeleton-title|Styles applied to the title element.|
+ |content|.SCLoyaltyProgramWidgetSkeleton-content|Styles applied to the card content section.|
+ |chip|.SCLoyaltyProgramWidgetSkeleton-chip|Styles applied to the card chip element.|
+ |points|.SCLoyaltyProgramWidgetSkeleton-points|Styles applied to the card actions points element.|
+ |actions|.SCLoyaltyProgramWidgetSkeleton-actions|Styles applied to the action section.|
  *
  */
-export default function LoyaltyProgramSkeleton(): JSX.Element {
+export default function LoyaltyProgramWidgetSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
       <CardContent className={classes.content}>

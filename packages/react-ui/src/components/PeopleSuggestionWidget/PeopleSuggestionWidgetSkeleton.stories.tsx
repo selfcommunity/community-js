@@ -1,18 +1,18 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import PlatformSkeleton from './Skeleton';
+import PeopleSuggestionWidgetSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Skeleton/Platform',
-  component: PlatformSkeleton
+  title: 'Design System/React UI/Skeleton/PeopleSuggestionWidget',
+  component: PeopleSuggestionWidgetSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof PlatformSkeleton>;
+} as ComponentMeta<typeof PeopleSuggestionWidgetSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof PlatformSkeleton> = (args) => (
+const Template: ComponentStory<typeof PeopleSuggestionWidgetSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <PlatformSkeleton {...args} />
+    <PeopleSuggestionWidgetSkeleton {...args} />
   </div>
 );
 

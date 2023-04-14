@@ -4,7 +4,7 @@ import UserSkeleton from '../User/Skeleton';
 import Widget from '../Widget';
 import {List, CardContent, ListItem} from '@mui/material';
 
-const PREFIX = 'SCPeopleSuggestionSkeleton';
+const PREFIX = 'SCPeopleSuggestionWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -19,22 +19,22 @@ const Root = styled(Widget)(({theme}) => ({}));
  #### Import
 
  ```jsx
- import {PeopleSuggestionSkeleton} from '@selfcommunity/react-ui';
+ import {PeopleSuggestionWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCPeopleSuggestionSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPeopleSuggestionWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPeopleSuggestionSkeleton-root|Styles applied to the root element.|
- |list|.SCPeopleSuggestionSkeleton-list|Styles applied to the list element.|
+ |root|.SCPeopleSuggestionWidgetSkeleton-root|Styles applied to the root element.|
+ |list|.SCPeopleSuggestionWidgetSkeleton-list|Styles applied to the list element.|
  *
  */
-function PeopleSuggestionSkeleton(props): JSX.Element {
+function PeopleSuggestionWidgetSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
@@ -50,4 +50,4 @@ function PeopleSuggestionSkeleton(props): JSX.Element {
   );
 }
 
-export default PeopleSuggestionSkeleton;
+export default PeopleSuggestionWidgetSkeleton;

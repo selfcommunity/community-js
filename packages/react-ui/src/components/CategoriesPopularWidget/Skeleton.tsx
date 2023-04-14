@@ -1,14 +1,14 @@
 import React from 'react';
-import CategoriesSuggestionSkeleton from '../CategoriesSuggestion/Skeleton';
+import CategoriesSuggestionWidgetSkeleton from '../CategoriesSuggestionWidget/Skeleton';
 import {styled} from '@mui/material/styles';
 
-const PREFIX = 'SCCategoriesPopularSkeleton';
+const PREFIX = 'SCCategoriesPopularWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(CategoriesSuggestionSkeleton, {
+const Root = styled(CategoriesSuggestionWidgetSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

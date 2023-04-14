@@ -1,39 +1,37 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import CategoriesSuggestionSkeleton from './index';
+import CategoriesPopularWidgetSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/CategoriesSuggestion',
-  component: CategoriesSuggestionSkeleton,
+  title: 'Design System/React UI/Skeleton/CategoriesPopularWidget',
+  component: CategoriesPopularWidgetSkeleton,
   argTypes: {
-    elevation: {
-      control: {type: 'number'},
-      description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
-    },
     variant: {
       options: ['elevation', 'outlined'],
       control: {type: 'select'},
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
       table: {defaultValue: {summary: 'elevation'}}
+    },
+    elevation: {
+      control: {type: 'number'},
+      description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
+      table: {defaultValue: {summary: 1}}
     }
   },
   args: {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof CategoriesSuggestionSkeleton>;
+} as ComponentMeta<typeof CategoriesPopularWidgetSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoriesSuggestionSkeleton> = (args) => (
+const Template: ComponentStory<typeof CategoriesPopularWidgetSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <CategoriesSuggestionSkeleton {...args} />
+    <CategoriesPopularWidgetSkeleton {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
-Base.args = {
-  /* the args you need here will depend on your component */
-};
+Base.args = {};
