@@ -134,7 +134,6 @@
   "ui.loyaltyProgramDetail.prize.points": "{total, plural, =0 {# pt.} one {# pt.} other {# pt.}}",
   "ui.loyaltyProgramDetail.prizes": "I premi per te",
   "ui.loyaltyProgramDetail.button.request": "Richiedi Ora",
-  "ui.loyaltyProgramDetail.button.requested": "Richiesto",
   "ui.loyaltyProgramDetail.button.more": "Scopri di più",
   "ui.loyaltyProgramDetail.content.end.message": "Non ci sono altri contenuti.",
   "ui.loyaltyProgramDetail.content.end.button": "Torna su",
