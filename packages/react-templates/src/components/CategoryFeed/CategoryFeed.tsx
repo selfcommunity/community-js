@@ -1,5 +1,5 @@
-import React, { useMemo, useRef } from 'react';
-import { styled } from '@mui/material/styles';
+import React, {useMemo, useRef} from 'react';
+import {styled} from '@mui/material/styles';
 import {
   Feed,
   FeedObject,
@@ -11,14 +11,14 @@ import {
   InlineComposer,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
-  TrendingFeed,
-  TrendingPeople,
+  TrendingFeedWidget,
+  TrendingPeopleWidget
 } from '@selfcommunity/react-ui';
-import { Endpoints } from '@selfcommunity/api-services';
-import { useSCFetchCategory } from '@selfcommunity/react-core';
-import { SCCategoryType, SCCustomAdvPosition } from '@selfcommunity/types';
-import { CategoryFeedSkeleton } from './index';
-import { useThemeProps } from '@mui/system';
+import {Endpoints} from '@selfcommunity/api-services';
+import {useSCFetchCategory} from '@selfcommunity/react-core';
+import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
+import {CategoryFeedSkeleton} from './index';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryFeedTemplate';
@@ -90,14 +90,14 @@ export interface CategoryFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: TrendingPeople,
+    component: TrendingPeopleWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: TrendingFeed,
+    component: TrendingFeedWidget,
     componentProps: {},
     column: 'right',
     position: 1

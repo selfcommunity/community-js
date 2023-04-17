@@ -8,8 +8,8 @@ import {
   FeedObject,
   FeedObjectProps,
   FeedSidebarProps,
-  RelatedFeedObjects,
-  RelatedFeedObjectsProps,
+  RelatedFeedObjectsWidget,
+  RelatedFeedObjectsWidgetProps,
   SCFeedObjectTemplateType,
   StickyBox
 } from '@selfcommunity/react-ui';
@@ -93,7 +93,7 @@ export interface FeedObjectDetailProps {
    * Props to spread to RelatedFeedObject
    * @default empty object
    */
-  RelatedFeedObjectProps?: RelatedFeedObjectsProps;
+  RelatedFeedObjectProps?: RelatedFeedObjectsWidgetProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
@@ -210,7 +210,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         <Grid item xs={12} md={5}>
           <Hidden mdDown>
             <StickyBox {...FeedSidebarProps}>
-              <RelatedFeedObjects key={`related_${obj.id}`} feedObject={obj} {...RelatedFeedObjectProps} />
+              <RelatedFeedObjectsWidget key={`related_${obj.id}`} feedObject={obj} {...RelatedFeedObjectProps} />
             </StickyBox>
           </Hidden>
         </Grid>

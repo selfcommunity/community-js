@@ -7,7 +7,7 @@ import {
   SCFeedObjectTemplateType,
   FeedSidebarProps,
   FeedProps,
-  FeedUpdates,
+  FeedUpdatesWidget,
   LoyaltyProgramWidget,
   Notification,
   NotificationProps,
@@ -79,7 +79,7 @@ export interface NotificationFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: FeedUpdates,
+    component: FeedUpdatesWidget,
     componentProps: {subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
     column: 'left',
     position: 0,
