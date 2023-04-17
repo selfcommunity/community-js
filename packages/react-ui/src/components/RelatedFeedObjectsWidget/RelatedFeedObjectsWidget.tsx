@@ -271,11 +271,11 @@ export default function RelatedFeedObjectsWidget(inProps: RelatedFeedObjectsWidg
   const d = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />
+        <FormattedMessage id="ui.relatedFeedObjectsWidget.title" defaultMessage="ui.relatedFeedObjectsWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.relatedFeedObjects.noResults" defaultMessage="ui.relatedFeedObjects.noResults" />
+          <FormattedMessage id="ui.relatedFeedObjectsWidget.noResults" defaultMessage="ui.relatedFeedObjectsWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -293,14 +293,14 @@ export default function RelatedFeedObjectsWidget(inProps: RelatedFeedObjectsWidg
           </List>
           {limit < state.count && (
             <Button className={classes.showMore} onClick={() => setOpenRelatedFeedObjectsDialog(true)}>
-              <FormattedMessage id="ui.relatedFeedObjects.button.showMore" defaultMessage="ui.relatedFeedObjects.button.showMore" />
+              <FormattedMessage id="ui.relatedFeedObjectsWidget.button.showMore" defaultMessage="ui.relatedFeedObjectsWidget.button.showMore" />
             </Button>
           )}
         </React.Fragment>
       )}
       {openRelatedFeedObjectsDialog && (
         <BaseDialog
-          title={<FormattedMessage id="ui.relatedFeedObjects.title" defaultMessage="ui.relatedFeedObjects.title" />}
+          title={<FormattedMessage id="ui.relatedFeedObjectsWidget.title" defaultMessage="ui.relatedFeedObjectsWidget.title" />}
           onClose={() => setOpenRelatedFeedObjectsDialog(false)}
           open={openRelatedFeedObjectsDialog}>
           {state.isLoadingNext ? (
@@ -315,7 +315,7 @@ export default function RelatedFeedObjectsWidget(inProps: RelatedFeedObjectsWidg
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.relatedFeedObjects.noMoreResults" defaultMessage="ui.relatedFeedObjects.noMoreResults" />
+                    <FormattedMessage id="ui.relatedFeedObjectsWidget.noMoreResults" defaultMessage="ui.relatedFeedObjectsWidget.noMoreResults" />
                   </b>
                 </p>
               }>

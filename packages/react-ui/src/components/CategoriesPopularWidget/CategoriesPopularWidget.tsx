@@ -195,11 +195,11 @@ export default function CategoriesPopularWidget(inProps: CategoriesListProps): J
   const c = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.categoriesPopular.title" defaultMessage="ui.categoriesPopular.title" />
+        <FormattedMessage id="ui.categoriesPopularWidget.title" defaultMessage="ui.categoriesPopularWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.categoriesPopular.noResults" defaultMessage="ui.categoriesPopular.noResults" />
+          <FormattedMessage id="ui.categoriesPopularWidget.noResults" defaultMessage="ui.categoriesPopularWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -212,14 +212,14 @@ export default function CategoriesPopularWidget(inProps: CategoriesListProps): J
           </List>
           {state.count > state.visibleItems && (
             <Button className={classes.showMore} onClick={() => setOpenPopularCategoriesDialog(true)}>
-              <FormattedMessage id="ui.categoriesPopular.button.showAll" defaultMessage="ui.categoriesPopular.button.showAll" />
+              <FormattedMessage id="ui.categoriesPopularWidget.button.showAll" defaultMessage="ui.categoriesPopularWidget.button.showAll" />
             </Button>
           )}
         </React.Fragment>
       )}
       {openPopularCategoriesDialog && (
         <BaseDialog
-          title={<FormattedMessage defaultMessage="ui.categoriesPopular.title" id="ui.categoriesPopular.title" />}
+          title={<FormattedMessage defaultMessage="ui.categoriesPopularWidget.title" id="ui.categoriesPopularWidget.title" />}
           onClose={() => setOpenPopularCategoriesDialog(false)}
           open={openPopularCategoriesDialog}>
           {state.isLoadingNext ? (
@@ -234,7 +234,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesListProps): J
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.categoriesPopular.noMoreResults" defaultMessage="ui.categoriesPopular.noMoreResults" />
+                    <FormattedMessage id="ui.categoriesPopularWidget.noMoreResults" defaultMessage="ui.categoriesPopularWidget.noMoreResults" />
                   </b>
                 </p>
               }>

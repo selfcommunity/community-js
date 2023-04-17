@@ -261,7 +261,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       <Root className={classNames(classes.root, className)} {...rest}>
         {points && (
           <Typography className={classes.title} variant="h5">
-            {!isMobile && <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />}
+            {!isMobile && <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />}
             <Chip
               className={classes.userPoints}
               component="span"

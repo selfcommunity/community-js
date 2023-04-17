@@ -229,11 +229,11 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   const c = (
     <CardContent>
       <Typography className={classes.title} variant={'h5'}>
-        <FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />
+        <FormattedMessage id="ui.incubatorSuggestionWidget.title" defaultMessage="ui.incubatorSuggestionWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.IncubatorSuggestion.noResults" defaultMessage="ui.IncubatorSuggestion.noResults" />
+          <FormattedMessage id="ui.incubatorSuggestionWidget.noResults" defaultMessage="ui.incubatorSuggestionWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -253,14 +253,14 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
           </List>
           {limit < state.count && (
             <Button className={classes.showMore} onClick={() => setOpenIncubatorsDialog(true)}>
-              <FormattedMessage id="ui.IncubatorSuggestion.ShowAll" defaultMessage="ui.IncubatorSuggestion.ShowAll" />
+              <FormattedMessage id="ui.incubatorSuggestionWidget.ShowAll" defaultMessage="ui.incubatorSuggestionWidget.ShowAll" />
             </Button>
           )}
         </React.Fragment>
       )}
       {openIncubatorsDialog && (
         <BaseDialog
-          title={<FormattedMessage id="ui.IncubatorSuggestion.title" defaultMessage="ui.IncubatorSuggestion.title" />}
+          title={<FormattedMessage id="ui.incubatorSuggestionWidget.title" defaultMessage="ui.incubatorSuggestionWidget.title" />}
           onClose={() => setOpenIncubatorsDialog(false)}
           open={openIncubatorsDialog}>
           {state.isLoadingNext ? (
@@ -275,7 +275,10 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.IncubatorSuggestion.noMoreIncubators" defaultMessage="ui.IncubatorSuggestion.noMoreIncubators" />
+                    <FormattedMessage
+                      id="ui.incubatorSuggestionWidget.noMoreIncubators"
+                      defaultMessage="ui.incubatorSuggestionWidget.noMoreIncubators"
+                    />
                   </b>
                 </p>
               }>

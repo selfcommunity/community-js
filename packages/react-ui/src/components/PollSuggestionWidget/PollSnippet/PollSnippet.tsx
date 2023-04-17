@@ -136,7 +136,10 @@ export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
               variant="text"
               color="secondary"
               size="small">
-              <FormattedMessage id="ui.pollSuggestion.pollSnippet.button.seeItem" defaultMessage="ui.pollSuggestion.pollSnippet.button.seeItem" />
+              <FormattedMessage
+                id="ui.pollSuggestionWidget.pollSnippet.button.seeItem"
+                defaultMessage="ui.pollSuggestionWidget.pollSnippet.button.seeItem"
+              />
             </Button>
           </Stack>
         }

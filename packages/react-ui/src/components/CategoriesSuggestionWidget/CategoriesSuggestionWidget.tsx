@@ -201,11 +201,11 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesListProps)
       ) : (
         <CardContent>
           <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.categoriesSuggestion.title" defaultMessage="ui.categoriesSuggestion.title" />
+            <FormattedMessage id="ui.categoriesSuggestionWidget.title" defaultMessage="ui.categoriesSuggestionWidget.title" />
           </Typography>
           {!state.count ? (
             <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.categoriesSuggestion.noResults" defaultMessage="ui.categoriesSuggestion.noResults" />
+              <FormattedMessage id="ui.categoriesSuggestionWidget.noResults" defaultMessage="ui.categoriesSuggestionWidget.noResults" />
             </Typography>
           ) : (
             <React.Fragment>
@@ -218,7 +218,10 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesListProps)
               </List>
               {state.visibleItems < state.results.length && (
                 <Button className={classes.showMore} onClick={() => loadCategories(2)}>
-                  <FormattedMessage id="ui.categoriesSuggestion.button.showMore" defaultMessage="ui.categoriesSuggestion.button.showMore" />
+                  <FormattedMessage
+                    id="ui.categoriesSuggestionWidget.button.showMore"
+                    defaultMessage="ui.categoriesSuggestionWidget.button.showMore"
+                  />
                 </Button>
               )}
             </React.Fragment>

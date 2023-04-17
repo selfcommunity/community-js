@@ -253,7 +253,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
     <CardContent>
       <Box className={classes.header}>
         <Typography className={classes.title} variant={'h5'}>
-          <FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />
+          <FormattedMessage id="ui.incubatorsListWidget.title" defaultMessage="ui.incubatorsListWidget.title" />
         </Typography>
         <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
           <Icon fontSize="small">help_outline</Icon>
@@ -269,7 +269,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
             }}>
             <Box sx={{p: '10px'}}>
               <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
-                <FormattedMessage id="ui.incubatorsList.popover" defaultMessage="ui.incubatorsList.popover" />
+                <FormattedMessage id="ui.incubatorsListWidget.popover" defaultMessage="ui.incubatorsListWidget.popover" />
               </Typography>
             </Box>
           </Popover>
@@ -277,7 +277,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
       </Box>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.incubatorsList.noResults" defaultMessage="ui.incubatorsList.noResults" />
+          <FormattedMessage id="ui.incubatorsListWidget.noResults" defaultMessage="ui.incubatorsListWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -298,18 +298,18 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
           <Box className={classes.actions}>
             {limit < state.count && (
               <Button size="small" onClick={() => setOpenIncubatorsDialog(true)}>
-                <FormattedMessage id="ui.incubatorsList.ShowAll" defaultMessage="ui.incubatorsList.ShowAll" />
+                <FormattedMessage id="ui.incubatorsListWidget.ShowAll" defaultMessage="ui.incubatorsListWidget.ShowAll" />
               </Button>
             )}
             <Button size="small" onClick={() => setOpenCreateIncubatorDialog(true)}>
-              <FormattedMessage id="ui.incubatorsList.SuggestNewTopic" defaultMessage="ui.incubatorsList.SuggestNewTopic" />
+              <FormattedMessage id="ui.incubatorsListWidget.SuggestNewTopic" defaultMessage="ui.incubatorsListWidget.SuggestNewTopic" />
             </Button>
           </Box>
         </React.Fragment>
       )}
       {openIncubatorsDialog && (
         <BaseDialog
-          title={<FormattedMessage id="ui.incubatorsList.title" defaultMessage="ui.incubatorsList.title" />}
+          title={<FormattedMessage id="ui.incubatorsListWidget.title" defaultMessage="ui.incubatorsListWidget.title" />}
           onClose={() => setOpenIncubatorsDialog(false)}
           open={openIncubatorsDialog}>
           {state.isLoadingNext ? (
@@ -324,7 +324,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.incubatorsList.noMoreIncubators" defaultMessage="ui.incubatorsList.noMoreIncubators" />
+                    <FormattedMessage id="ui.incubatorsListWidget.noMoreIncubators" defaultMessage="ui.incubatorsListWidget.noMoreIncubators" />
                   </b>
                 </p>
               }>

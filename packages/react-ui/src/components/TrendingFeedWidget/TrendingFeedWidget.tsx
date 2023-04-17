@@ -220,11 +220,11 @@ export default function TrendingFeedWidget(inProps: TrendingFeedWidgetProps): JS
   const f = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />
+        <FormattedMessage id="ui.trendingFeedWidget.title" defaultMessage="ui.trendingFeedWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.trendingFeed.noResults" defaultMessage="ui.trendingFeed.noResults" />
+          <FormattedMessage id="ui.trendingFeedWidget.noResults" defaultMessage="ui.trendingFeedWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -237,14 +237,14 @@ export default function TrendingFeedWidget(inProps: TrendingFeedWidgetProps): JS
           </List>
           {limit < state.count && (
             <Button className={classes.showMore} onClick={pageUrl ?? handleDialogOpening}>
-              <FormattedMessage id="ui.trendingFeed.button.showMore" defaultMessage="ui.trendingFeed.button.showMore" />
+              <FormattedMessage id="ui.trendingFeedWidget.button.showMore" defaultMessage="ui.trendingFeedWidget.button.showMore" />
             </Button>
           )}
         </React.Fragment>
       )}
       {openTrendingPostDialog && (
         <BaseDialog
-          title={<FormattedMessage id="ui.trendingFeed.title" defaultMessage="ui.trendingFeed.title" />}
+          title={<FormattedMessage id="ui.trendingFeedWidget.title" defaultMessage="ui.trendingFeedWidget.title" />}
           onClose={() => setOpenTrendingPostDialog(false)}
           open={openTrendingPostDialog}>
           {state.isLoadingNext ? (
@@ -259,7 +259,7 @@ export default function TrendingFeedWidget(inProps: TrendingFeedWidgetProps): JS
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.trendingFeed.noMoreResults" defaultMessage="ui.trendingFeed.noMoreResults" />
+                    <FormattedMessage id="ui.trendingFeedWidget.noMoreResults" defaultMessage="ui.trendingFeedWidget.noMoreResults" />
                   </b>
                 </p>
               }>

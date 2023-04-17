@@ -278,14 +278,14 @@ export default function UsersFollowedWidget(inProps: UsersFollowedWidgetProps): 
           </List>
           {limit < state.count && (
             <Button size="small" className={classes.showMore} onClick={() => setOpenUserFollowingsDialog(true)}>
-              <FormattedMessage id="ui.usersFollowed.button.showAll" defaultMessage="ui.usersFollowed.button.showAll" />
+              <FormattedMessage id="ui.usersFollowedWidget.button.showAll" defaultMessage="ui.usersFollowedWidget.button.showAll" />
             </Button>
           )}
           {openUserFollowingsDialog && (
             <BaseDialog
               title={
                 isMobile ? (
-                  <FormattedMessage id="ui.usersFollowed.modal.title" defaultMessage="ui.usersFollowed.modal.title" />
+                  <FormattedMessage id="ui.usersFollowedWidget.modal.title" defaultMessage="ui.usersFollowedWidget.modal.title" />
                 ) : (
                   `${intl.formatMessage(messages.title, {total: state.count})}`
                 )
@@ -304,7 +304,7 @@ export default function UsersFollowedWidget(inProps: UsersFollowedWidgetProps): 
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.usersFollowed.noMoreResults" defaultMessage="ui.usersFollowed.noMoreResults" />
+                        <FormattedMessage id="ui.usersFollowedWidget.noMoreResults" defaultMessage="ui.usersFollowedWidget.noMoreResults" />
                       </b>
                     </p>
                   }>

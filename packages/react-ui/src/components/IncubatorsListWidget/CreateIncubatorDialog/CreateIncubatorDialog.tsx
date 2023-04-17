@@ -133,8 +133,8 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
     dialogContent = (
       <Typography variant={'subtitle2'} className={classes.submittedMessage}>
         <FormattedMessage
-          id="ui.incubatorsList.createIncubatorDialog.propose.success"
-          defaultMessage="ui.incubatorsList.createIncubatorDialog.propose.success"
+          id="ui.incubatorsListWidget.createIncubatorDialog.propose.success"
+          defaultMessage="ui.incubatorsListWidget.createIncubatorDialog.propose.success"
         />
       </Typography>
     );
@@ -142,7 +142,10 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
     dialogContent = (
       <>
         <Typography component={'span'} className={classes.intro}>
-          <FormattedMessage id="ui.incubatorsList.createIncubatorDialog.intro" defaultMessage="ui.incubatorsList.createIncubatorDialog.intro" />
+          <FormattedMessage
+            id="ui.incubatorsListDialog.createIncubatorDialog.intro"
+            defaultMessage="ui.incubatorsListDialog.createIncubatorDialog.intro"
+          />
         </Typography>
         <FormGroup className={classes.form}>
           <TextField
@@ -165,7 +168,10 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
           />
         </FormGroup>
         <LoadingButton loading={isSubmitting} disabled={!name || Boolean(error)} variant="contained" onClick={handleSubmit}>
-          <FormattedMessage id="ui.incubatorsList.createIncubatorDialog.button" defaultMessage="ui.incubatorsList.createIncubatorDialog.button" />
+          <FormattedMessage
+            id="ui.incubatorsListWidget.createIncubatorDialog.button"
+            defaultMessage="ui.incubatorsListWidget.createIncubatorDialog.button"
+          />
         </LoadingButton>
       </>
     );
@@ -174,7 +180,12 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
   // RENDER
   return (
     <Root
-      title={<FormattedMessage id="ui.incubatorsList.createIncubatorDialog.title" defaultMessage="ui.incubatorsList.createIncubatorDialog.title" />}
+      title={
+        <FormattedMessage
+          id="ui.incubatorsListWidget.createIncubatorDialog.title"
+          defaultMessage="ui.incubatorsListWidget.createIncubatorDialog.title"
+        />
+      }
       open={open}
       onClose={onClose}
       className={classNames(classes.root, className)}

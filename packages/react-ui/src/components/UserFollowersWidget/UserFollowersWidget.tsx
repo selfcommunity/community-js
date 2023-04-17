@@ -272,14 +272,14 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
           </List>
           {limit < state.count && (
             <Button size="small" className={classes.showMore} onClick={() => setOpenUserFollowersDialog(true)}>
-              <FormattedMessage id="ui.userFollowers.button.showAll" defaultMessage="ui.userFollowers.button.showAll" />
+              <FormattedMessage id="ui.userFollowersWidget.button.showAll" defaultMessage="ui.userFollowersWidget.button.showAll" />
             </Button>
           )}
           {openUserFollowersDialog && (
             <BaseDialog
               title={
                 isMobile ? (
-                  <FormattedMessage id="ui.userFollowers.modal.title" defaultMessage="ui.userFollowers.modal.title" />
+                  <FormattedMessage id="ui.userFollowersWidget.modal.title" defaultMessage="ui.userFollowersWidget.modal.title" />
                 ) : (
                   `${intl.formatMessage(messages.title, {total: state.count})}`
                 )
@@ -298,7 +298,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.userFollowers.noMoreResults" defaultMessage="ui.userFollowers.noMoreResults" />
+                        <FormattedMessage id="ui.userFollowersWidget.noMoreResults" defaultMessage="ui.userFollowersWidget.noMoreResults" />
                       </b>
                     </p>
                   }>

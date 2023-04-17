@@ -239,11 +239,11 @@ export default function TrendingPeopleWidget(inProps: TrendingPeopleWidgetProps)
   const p = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.trendingPeople.title" defaultMessage="ui.trendingPeople.title" />
+        <FormattedMessage id="ui.trendingPeopleWidget.title" defaultMessage="ui.trendingPeopleWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.trendingPeople.noResults" defaultMessage="ui.trendingPeople.noResults" />
+          <FormattedMessage id="ui.trendingPeopleWidget.noResults" defaultMessage="ui.trendingPeopleWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -266,12 +266,12 @@ export default function TrendingPeopleWidget(inProps: TrendingPeopleWidgetProps)
       )}
       {limit < state.count && (
         <Button className={classes.showMore} onClick={() => setOpenTrendingPeopleDialog(true)}>
-          <FormattedMessage id="ui.trendingPeople.button.showAll" defaultMessage="ui.trendingPeople.button.showAll" />
+          <FormattedMessage id="ui.trendingPeopleWidget.button.showAll" defaultMessage="ui.trendingPeopleWidget.button.showAll" />
         </Button>
       )}
       {openTrendingPeopleDialog && (
         <BaseDialog
-          title={<FormattedMessage defaultMessage="ui.trendingPeople.title" id="ui.trendingPeople.title" />}
+          title={<FormattedMessage defaultMessage="ui.trendingPeopleWidget.title" id="ui.trendingPeopleWidget.title" />}
           onClose={() => setOpenTrendingPeopleDialog(false)}
           open={openTrendingPeopleDialog}>
           {state.isLoadingNext ? (
@@ -286,7 +286,7 @@ export default function TrendingPeopleWidget(inProps: TrendingPeopleWidgetProps)
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.trendingPeople.noMoreResults" defaultMessage="ui.trendingPeople.noMoreResults" />
+                    <FormattedMessage id="ui.trendingPeopleWidget.noMoreResults" defaultMessage="ui.trendingPeopleWidget.noMoreResults" />
                   </b>
                 </p>
               }>

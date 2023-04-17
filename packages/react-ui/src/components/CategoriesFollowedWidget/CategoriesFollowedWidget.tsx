@@ -212,14 +212,14 @@ export default function CategoriesFollowedWidget(inProps: CategoriesListProps): 
           </List>
           {limit < state.count && (
             <Button className={classes.showMore} onClick={() => setOpenCategoriesFollowedDialog(true)}>
-              <FormattedMessage id="ui.categoriesFollowed.button.showAll" defaultMessage="ui.categoriesFollowed.button.showAll" />
+              <FormattedMessage id="ui.categoriesFollowedWidget.button.showAll" defaultMessage="ui.categoriesFollowedWidget.button.showAll" />
             </Button>
           )}
           {openCategoriesFollowedDialog && (
             <BaseDialog
               title={
                 isMobile ? (
-                  <FormattedMessage id="ui.categoriesFollowed.modal.title" defaultMessage="ui.categoriesFollowed.modal.title" />
+                  <FormattedMessage id="ui.categoriesFollowedWidget.modal.title" defaultMessage="ui.categoriesFollowedWidget.modal.title" />
                 ) : (
                   `${intl.formatMessage(messages.title, {total: state.count})}`
                 )
@@ -238,7 +238,7 @@ export default function CategoriesFollowedWidget(inProps: CategoriesListProps): 
                   endMessage={
                     <p style={{textAlign: 'center'}}>
                       <b>
-                        <FormattedMessage id="ui.categoriesFollowed.noMoreResults" defaultMessage="ui.categoriesFollowed.noMoreResults" />
+                        <FormattedMessage id="ui.categoriesFollowedWidget.noMoreResults" defaultMessage="ui.categoriesFollowedWidget.noMoreResults" />
                       </b>
                     </p>
                   }>

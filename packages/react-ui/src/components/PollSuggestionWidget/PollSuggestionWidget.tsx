@@ -174,7 +174,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
   const p = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />
+        <FormattedMessage id="ui.pollSuggestionWidget.title" defaultMessage="ui.pollSuggestionWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
@@ -193,14 +193,14 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
           </List>
           {limit < state.count && (
             <Button className={classes.showMore} onClick={() => setOpenPollSuggestionDialog(true)}>
-              <FormattedMessage id="ui.pollSuggestion.button.showMore" defaultMessage="ui.pollSuggestion.button.showMore" />
+              <FormattedMessage id="ui.pollSuggestionWidget.button.showMore" defaultMessage="ui.pollSuggestionWidget.button.showMore" />
             </Button>
           )}
         </React.Fragment>
       )}
       {openPollSuggestionDialog && (
         <BaseDialog
-          title={<FormattedMessage id="ui.pollSuggestion.title" defaultMessage="ui.pollSuggestion.title" />}
+          title={<FormattedMessage id="ui.pollSuggestionWidget.title" defaultMessage="ui.pollSuggestionWidget.title" />}
           onClose={() => setOpenPollSuggestionDialog(false)}
           open={openPollSuggestionDialog}>
           {state.isLoadingNext ? (
@@ -215,7 +215,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
               endMessage={
                 <p style={{textAlign: 'center'}}>
                   <b>
-                    <FormattedMessage id="ui.pollSuggestion.noMoreResults" defaultMessage="ui.pollSuggestion.noMoreResults" />
+                    <FormattedMessage id="ui.pollSuggestionWidget.noMoreResults" defaultMessage="ui.pollSuggestionWidget.noMoreResults" />
                   </b>
                 </p>
               }>

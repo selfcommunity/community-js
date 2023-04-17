@@ -42,7 +42,7 @@ export interface FeedUpdatesWidgetProps extends VirtualScrollerItemProps {
 
   /**
    * Update message, rendered when no more feed item can be displayed
-   * @default <FormattedMessage id="ui.feedUpdates.message" defaultMessage="ui.feedUpdates.message" />
+   * @default <FormattedMessage id="ui.feedUpdatesWidget.message" defaultMessage="ui.feedUpdatesWidget.message" />
    */
   message?: ReactNode;
 
@@ -103,7 +103,7 @@ export default function FeedUpdatesWidget(inProps: FeedUpdatesWidgetProps): JSX.
   const {
     id = 'feed_updates',
     className = null,
-    message = <FormattedMessage id="ui.feedUpdates.message" defaultMessage="ui.feedUpdates.message" />,
+    message = <FormattedMessage id="ui.feedUpdatesWidget.message" defaultMessage="ui.feedUpdatesWidget.message" />,
     subscriptionChannel,
     subscriptionChannelUpdatesCallback = (msg, data) => true,
     publicationChannel = null,
@@ -158,7 +158,7 @@ export default function FeedUpdatesWidget(inProps: FeedUpdatesWidgetProps): JSX.
         {message}
         {publicationChannel && (
           <Button onClick={handleClick}>
-            <FormattedMessage id="ui.feedUpdates.reload" defaultMessage="ui.feedUpdates.reload" />
+            <FormattedMessage id="ui.feedUpdatesWidget.reload" defaultMessage="ui.feedUpdatesWidget.reload" />
           </Button>
         )}
       </CardContent>

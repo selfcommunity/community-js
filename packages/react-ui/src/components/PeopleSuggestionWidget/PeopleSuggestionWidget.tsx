@@ -219,11 +219,11 @@ export default function PeopleSuggestionWidget(inProps: PeopleSuggestionWidgetPr
     <Root className={classNames(classes.root, className)} {...rest}>
       <CardContent>
         <Typography className={classes.title} variant="h5">
-          <FormattedMessage id="ui.peopleSuggestion.title" defaultMessage="ui.peopleSuggestion.title" />
+          <FormattedMessage id="ui.peopleSuggestionWidget.title" defaultMessage="ui.peopleSuggestionWidget.title" />
         </Typography>
         {!state.count ? (
           <Typography className={classes.noResults} variant="body2">
-            <FormattedMessage id="ui.peopleSuggestion.subtitle.noResults" defaultMessage="ui.peopleSuggestion.subtitle.noResults" />
+            <FormattedMessage id="ui.peopleSuggestionWidget.subtitle.noResults" defaultMessage="ui.peopleSuggestionWidget.subtitle.noResults" />
           </Typography>
         ) : (
           <React.Fragment>
@@ -244,7 +244,7 @@ export default function PeopleSuggestionWidget(inProps: PeopleSuggestionWidgetPr
             </List>
             {state.visibleItems < state.results.length && (
               <Button className={classes.showMore} onClick={() => loadPeople(limit)}>
-                <FormattedMessage id="ui.peopleSuggestion.button.showMore" defaultMessage="ui.peopleSuggestion.button.showMore" />
+                <FormattedMessage id="ui.peopleSuggestionWidget.button.showMore" defaultMessage="ui.peopleSuggestionWidget.button.showMore" />
               </Button>
             )}
           </React.Fragment>
