@@ -45,6 +45,7 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 
+const MAX_SUMMARY_LENGTH = 150;
 const messages = defineMessages({
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
@@ -476,7 +477,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
-
+  const [expanded, setExpanded] = useState(false);
   // INTL
   const intl = useIntl();
 
@@ -815,9 +816,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     }}
                   />
                 ) : (
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
-                    <Typography component="div" gutterBottom className={classes.text} dangerouslySetInnerHTML={{__html: obj.summary}} />
-                  </Link>
+                  <Typography component="div" gutterBottom className={classes.text}>
+                    <Typography component="span" dangerouslySetInnerHTML={{__html: expanded ? obj.html : obj.summary}} />
+                    {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
+                      <Button size="small" variant="text" color="inherit" onClick={() => setExpanded(!expanded)}>
+                        <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+                      </Button>
+                    )}
+                  </Typography>
                 )}
               </Box>
               <Box className={classes.mediasSection}>
