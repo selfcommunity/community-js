@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.108](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.107...@selfcommunity/react-theme-default@0.1.0-alpha.108) (2023-04-14)
+
+
+### Bug Fixes
+
+* fixed paddings ([7b3acde](https://github.com/selfcommunity/community-js/commit/7b3acde199e8d9168b9fcd9aa44606fc717c4a4e))
+
+
+
+
+
 # [0.1.0-alpha.107](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.106...@selfcommunity/react-theme-default@0.1.0-alpha.107) (2023-04-14)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.162](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.161...@selfcommunity/react-ui@0.7.0-alpha.162) (2023-04-14)
+
+
+### Bug Fixes
+
+* added card title class ([7499ac1](https://github.com/selfcommunity/community-js/commit/7499ac14924e62f481c17175f14ec3eadf94bcda))
+* fixed unique key prop warning ([0d4c7c2](https://github.com/selfcommunity/community-js/commit/0d4c7c2fb999727877de23070fd94fa81cadd0c2))
+
+
+
+
+
 # [0.7.0-alpha.161](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.160...@selfcommunity/react-ui@0.7.0-alpha.161) (2023-04-14)
 
 
