@@ -10,7 +10,7 @@ import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {
   CategoriesSuggestionWidget,
-  InlineComposer,
+  InlineComposerWidget,
   CategoriesPopularWidget,
   PeopleSuggestionWidget,
   TrendingPeopleWidget,
@@ -92,7 +92,7 @@ Main.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   requireAuthentication: true,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const MainCache = Template.bind({});
@@ -115,7 +115,7 @@ MainCache.args = {
   },
   requireAuthentication: true,
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 
@@ -138,7 +138,7 @@ Explore.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.NETWORK_ONLY,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreCache = Template.bind({});
@@ -160,7 +160,7 @@ ExploreCache.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset2 = Template.bind({});
@@ -182,7 +182,7 @@ ExploreOffset2.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 2},
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 
@@ -206,7 +206,7 @@ ExploreOffset2Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 2},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset5 = Template.bind({});
@@ -228,7 +228,7 @@ ExploreOffset5.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 5},
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset5Cached = Template.bind({});
@@ -251,7 +251,7 @@ ExploreOffset5Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 5},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 
@@ -274,7 +274,7 @@ ExploreOffset20.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 20},
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset20Cached = Template.bind({});
@@ -297,7 +297,7 @@ ExploreOffset20Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 20},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExplorePrefetchedData = Template.bind({});
@@ -319,7 +319,7 @@ ExplorePrefetchedData.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5},
-  HeaderComponent: <InlineComposer />,
+  HeaderComponent: <InlineComposerWidget />,
   prefetchedData: exampleExploreData,
 };
 
@@ -342,7 +342,7 @@ ExplorePrefetchedDataCached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5},
-  HeaderComponent: <InlineComposer />,
+  HeaderComponent: <InlineComposerWidget />,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 
@@ -365,7 +365,7 @@ ExploreWithoutVirtualization.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.NETWORK_ONLY,
-  HeaderComponent: <InlineComposer />,
+  HeaderComponent: <InlineComposerWidget />,
   VirtualizedScrollerProps: {bypass: true}
 };
 

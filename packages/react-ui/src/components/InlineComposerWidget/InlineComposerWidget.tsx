@@ -12,7 +12,8 @@ import {
   SCUserContextType,
   UserUtils,
   useSCRouting,
-  Link, SCThemeType,
+  Link,
+  SCThemeType
 } from '@selfcommunity/react-core';
 import {Avatar, Box, Button, IconButton, CardProps, CardContent} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -27,7 +28,7 @@ import {useSnackbar} from 'notistack';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 
-const PREFIX = 'SCInlineComposer';
+const PREFIX = 'SCInlineComposerWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -74,7 +75,7 @@ export interface InlineComposerTypeMap<P = {}, D extends React.ElementType = 'di
   defaultComponent: D;
 }
 
-export type InlineComposerProps<D extends React.ElementType = InlineComposerTypeMap['defaultComponent'], P = {}> = OverrideProps<
+export type InlineComposerWidgetProps<D extends React.ElementType = InlineComposerTypeMap['defaultComponent'], P = {}> = OverrideProps<
   InlineComposerTypeMap<P, D>,
   D
 >;
@@ -96,27 +97,27 @@ const INITIAL_STATE = {
  *
  #### Import
  ```jsx
- import {InlineComposer} from '@selfcommunity/react-ui';
+ import {InlineComposerWidget} from '@selfcommunity/react-ui';
  ```
  #### Component Name
- The name `SCInlineComposer` can be used when providing style overrides in the theme.
+ The name `SCInlineComposerWidget` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCInlineComposer-root|Styles applied to the root element.|
- |content|.SCInlineComposer-content|Styles applied to the content element.|
- |input|.SCInlineComposer-input|Styles applied to the input element.|
- |actions|.SCInlineComposer-actions|Styles applied to the actions section.|
- |avatar|.SCInlineComposer-avatar|Styles applied to the avatar element.|
+ |root|.SCInlineComposerWidget-root|Styles applied to the root element.|
+ |content|.SCInlineComposerWidget-content|Styles applied to the content element.|
+ |input|.SCInlineComposerWidget-input|Styles applied to the input element.|
+ |actions|.SCInlineComposerWidget-actions|Styles applied to the actions section.|
+ |avatar|.SCInlineComposerWidget-avatar|Styles applied to the avatar element.|
 
 
  * @param inProps
  */
-export default function InlineComposer(inProps: InlineComposerProps): JSX.Element {
+export default function InlineComposerWidget(inProps: InlineComposerWidgetProps): JSX.Element {
   // PROPS
-  const props: InlineComposerProps = useThemeProps({
+  const props: InlineComposerWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });

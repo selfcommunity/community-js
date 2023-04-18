@@ -4,7 +4,7 @@ import Skeleton from '@mui/material/Skeleton';
 import {Box, Stack} from '@mui/material';
 import Widget from '../Widget';
 
-const PREFIX = 'SCInlineComposerSkeleton';
+const PREFIX = 'SCInlineComposerWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -39,25 +39,25 @@ const Root = styled(Widget, {
  #### Import
 
  ```jsx
- import {InlineComposerSkeleton} from '@selfcommunity/react-ui';
+ import {InlineComposerWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCInlineComposerSkeleton` can be used when providing style overrides in the theme.
+ The name `SCInlineComposerWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCInlineComposerSkeleton-root|Styles applied to the root element.|
- |input|.SCInlineComposerSkeleton-input|Styles applied to the input element.|
- |actions|.SCInlineComposerSkeleton-actions|Styles applied to the actions section.|
- |action|.SCInlineComposerSkeleton-action|Styles applied to the action section.|
- |avatar|.SCInlineComposerSkeleton-avatar|Styles applied to the avatar element.|
+ |root|.SCInlineComposerWidgetSkeleton-root|Styles applied to the root element.|
+ |input|.SCInlineComposerWidgetSkeleton-input|Styles applied to the input element.|
+ |actions|.SCInlineComposerWidgetSkeleton-actions|Styles applied to the actions section.|
+ |action|.SCInlineComposerWidgetSkeleton-action|Styles applied to the action section.|
+ |avatar|.SCInlineComposerWidgetSkeleton-avatar|Styles applied to the avatar element.|
  *
  */
-export default function InlineComposerSkeleton(): JSX.Element {
+export default function InlineComposerWidgetSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
       <Box className={classes.input}>

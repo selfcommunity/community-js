@@ -27,7 +27,7 @@ import FeedUpdatesWidget, {FeedUpdatesWidgetProps, FeedUpdatesWidgetSkeleton} fr
 import FollowCategoryButton, {FollowCategoryButtonProps} from './components/FollowCategoryButton';
 import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
 import ConnectionUserButton from './components/ConnectionUserButton';
-import InlineComposer, {InlineComposerProps, InlineComposerSkeleton} from './components/InlineComposer';
+import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import PeopleSuggestionWidget, {PeopleSuggestionWidgetProps, PeopleSuggestionWidgetSkeleton} from './components/PeopleSuggestionWidget';
 import PlatformWidget, {PlatformWidgetProps, PlatformWidgetSkeleton} from './components/PlatformWidget';
 import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
@@ -220,9 +220,9 @@ export {
   CommentsFeedObjectProps,
   CommentsFeedObjectSkeleton,
   ReplyComment,
-  InlineComposer,
-  InlineComposerProps,
-  InlineComposerSkeleton,
+  InlineComposerWidget,
+  InlineComposerWidgetProps,
+  InlineComposerWidgetSkeleton,
   Notification,
   NotificationProps,
   NotificationSkeleton,
