@@ -6,10 +6,16 @@ import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import SCNotification, {NotificationSkeleton} from '../Notification';
-import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {CategoriesSuggestion, InlineComposer, CategoriesPopular, PeopleSuggestion, TrendingPeople} from '../../index';
+import {
+  CategoriesSuggestionWidget,
+  InlineComposer,
+  CategoriesPopularWidget,
+  PeopleSuggestionWidget,
+  TrendingPeopleWidget,
+  FeedUpdatesWidget,
+} from '../../index';
 import {exampleExploreData} from './prefetchedData';
 import {Button} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -39,28 +45,28 @@ const Template: ComponentStory<typeof Feed> = (args) => {
 const _WIDGETS = [
   {
     type: 'widget',
-    component: TrendingPeople,
+    component: TrendingPeopleWidget,
     componentProps: {categoryId: 1},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesPopular,
+    component: CategoriesPopularWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesSuggestion,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: PeopleSuggestion,
+    component: PeopleSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 6
@@ -371,7 +377,7 @@ Notification.args = {
   widgets: [
     {
       type: 'widget',
-      component: FeedUpdates,
+      component: FeedUpdatesWidget,
       componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
       column: 'left',
       position: 0
@@ -402,7 +408,7 @@ NotificationCached.args = {
   widgets: [
     {
       type: 'widget',
-      component: FeedUpdates,
+      component: FeedUpdatesWidget,
       componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
       column: 'left',
       position: 0
