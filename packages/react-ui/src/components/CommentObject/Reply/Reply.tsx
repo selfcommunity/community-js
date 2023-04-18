@@ -28,7 +28,7 @@ const Root = styled(BaseItem, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface ReplyProps extends WidgetProps {
+export interface ReplyCommentObjectProps extends WidgetProps {
   /**
    * Bind focus on mount
    * @default false
@@ -77,9 +77,9 @@ export interface ReplyProps extends WidgetProps {
   [p: string]: any;
 }
 
-export default function Reply(inProps: ReplyProps): JSX.Element {
+export default function Reply(inProps: ReplyCommentObjectProps): JSX.Element {
   // PROPS
-  const props: ReplyProps = useThemeProps({
+  const props: ReplyCommentObjectProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
