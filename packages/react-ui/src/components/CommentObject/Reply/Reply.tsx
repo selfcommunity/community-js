@@ -1,31 +1,16 @@
-import React, {RefObject, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../../Widget';
-import {defineMessages, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {Avatar, Stack} from '@mui/material';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../../shared/BaseItem';
 
-const messages = defineMessages({
-  reply: {
-    id: 'ui.commentObject.replyComment.reply',
-    defaultMessage: 'ui.commentObject.replyComment.reply'
-  },
-  save: {
-    id: 'ui.commentObject.replyComment.save',
-    defaultMessage: 'ui.commentObject.replyComment.save'
-  },
-  cancel: {
-    id: 'ui.commentObject.replyComment.cancel',
-    defaultMessage: 'ui.commentObject.replyComment.cancel'
-  }
-});
-
-const PREFIX = 'SCReplyCommentObject';
+const PREFIX = 'SCCommentObjectReply';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -41,31 +26,9 @@ const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  padding: '1px',
-  overflow: 'visible',
-  [`&.${classes.root}`]: {
-    '& .SCBaseItem-content': {
-      alignItems: 'flex-start',
-      '& .SCBaseItem-text': {
-        marginTop: 0,
-        marginBottom: 0,
-        '& .SCBaseItem-secondary': {
-          overflow: 'visible'
-        }
-      }
-    }
-  },
-  [`& .${classes.comment}`]: {
-    overflow: 'visible'
-  },
-  [`& .${classes.actions}`]: {
-    marginLeft: theme.spacing(),
-    paddingBottom: theme.spacing()
-  }
-}));
+})(({theme}) => ({}));
 
-export interface ReplyCommentObjectProps extends WidgetProps {
+export interface ReplyProps extends WidgetProps {
   /**
    * Bind focus on mount
    * @default false
@@ -114,9 +77,9 @@ export interface ReplyCommentObjectProps extends WidgetProps {
   [p: string]: any;
 }
 
-export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JSX.Element {
+export default function Reply(inProps: ReplyProps): JSX.Element {
   // PROPS
-  const props: ReplyCommentObjectProps = useThemeProps({
+  const props: ReplyProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -134,8 +97,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   } = props;
 
   // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const intl = useIntl();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // RETRIEVE OBJECTS
   const [html, setHtml] = useState(text);
@@ -144,7 +106,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   let editor: RefObject<EditorRef> = useRef<EditorRef>();
 
   /**
-   * When ReplyCommentObject is mount
+   * When Reply is mount
    * if autoFocus === true focus on editor
    */
   useEffect(() => {
@@ -194,7 +156,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
   const isEditorEmpty = useMemo(
     () => (): boolean => {
       const _html = html.trim();
-      return _html === '' || _html === '<p></p>' || _html === '<p><br/></p>';
+      return _html === '' || _html === '<p class="SCEditor-paragraph"></p>' || _html === '<p class="SCEditor-paragraph"><br></p>';
     },
     [html]
   );
@@ -221,7 +183,7 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (
                 <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>
-                  {intl.formatMessage(messages.reply)}
+                  <FormattedMessage id="ui.commentObject.replyComment.reply" defaultMessage="ui.commentObject.replyComment.reply" />
                 </LoadingButton>
               )}
               {onSave && (
@@ -234,11 +196,11 @@ export default function ReplyCommentObject(inProps: ReplyCommentObjectProps): JS
                       disabled={!editable}
                       color="inherit"
                       className={classes.buttonCancel}>
-                      {intl.formatMessage(messages.cancel)}
+                      <FormattedMessage id="ui.commentObject.replyComment.cancel" defaultMessage="ui.commentObject.replyComment.cancel" />
                     </LoadingButton>
                   )}
                   <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={!editable} className={classes.buttonSave}>
-                    {intl.formatMessage(messages.save)}
+                    <FormattedMessage id="ui.commentObject.replyComment.save" defaultMessage="ui.commentObject.replyComment.save" />
                   </LoadingButton>
                 </>
               )}

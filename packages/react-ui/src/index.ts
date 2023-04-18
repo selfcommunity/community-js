@@ -57,7 +57,7 @@ import RelatedFeedObjectsWidget, {RelatedFeedObjectsWidgetProps, RelatedFeedObje
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
 import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton} from './components/CommentsFeedObject';
-import ReplyComment from './components/CommentObject/ReplyComment';
+import ReplyComment from './components/CommentObject/Reply';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
 import PrivateMessageSnippetItem, {PrivateMessageSnippetItemProps, PrivateMessageSnippetItemSkeleton} from './components/PrivateMessageSnippetItem';

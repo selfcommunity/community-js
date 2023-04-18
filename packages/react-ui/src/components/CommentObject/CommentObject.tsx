@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {SCCommentsOrderBy} from '../../types/comments';
-import ReplyCommentObject from './ReplyComment';
+import ReplyCommentObject from './Reply';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';

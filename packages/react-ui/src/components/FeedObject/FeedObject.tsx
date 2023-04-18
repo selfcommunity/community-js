@@ -23,7 +23,7 @@ import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import Activities, {ActivitiesProps} from './Activities';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/Reply';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
@@ -326,7 +326,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
 
   /**
    * ReplyCommentComponent component
-   * Usefull to override the single ReplyComment render component
+   * Usefull to override the single Reply render component
    * @default CommentObject
    */
   ReplyCommentComponent?: (inProps: ReplyCommentObjectProps) => JSX.Element;

@@ -81,7 +81,6 @@ import SCReactionAction from './components/SCReactionAction';
 import SCCommentAction from './components/SCCommentAction';
 import SCShareAction from './components/SCShareAction';
 import SCVoteAction from './components/SCVoteAction';
-import SCCommentObjectReactions from './components/SCCommentObjectReactions';
 import SCCommentObjectVotes from './components/SCCommentObjectVotes';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
@@ -97,6 +96,7 @@ import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
 import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
+import SCCommentObjectReply from './components/SCCommentObjectReply';
 
 /**
  * Style fragments - Imports - End
@@ -176,7 +176,7 @@ const theme = {
     SCCommentAction,
     SCCommentNotification,
     SCCommentObject,
-    SCCommentObjectReactions,
+    SCCommentObjectReply,
     SCCommentObjectSkeleton,
     SCCommentObjectVotes,
     SCCommentsFeedObject,
