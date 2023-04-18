@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.25...@selfcommunity/api-services@0.4.0-alpha.0) (2023-04-18)
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+
+
+
 ## [0.3.6-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.3.6-alpha.24...@selfcommunity/api-services@0.3.6-alpha.25) (2023-04-12)
 
 **Note:** Version bump only for package @selfcommunity/api-services

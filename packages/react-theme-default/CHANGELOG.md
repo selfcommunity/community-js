@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.108...@selfcommunity/react-theme-default@0.1.0-alpha.109) (2023-04-18)
+
+
+### Bug Fixes
+
+* Fix reply comment object button ([7adb3c8](https://github.com/selfcommunity/community-js/commit/7adb3c871b0468c874ae1b6c2000399f67f66dad))
+* Minor fixes to buttons ([56ef76a](https://github.com/selfcommunity/community-js/commit/56ef76af5193c4853b161594e8fe4301d899ae91))
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+### Performance Improvements
+
+* fixed inline composer theme after renaming ([ea5af06](https://github.com/selfcommunity/community-js/commit/ea5af06d12cdb729063d2765f69429f9f1640ffe))
+
+
+
+
+
 # [0.1.0-alpha.108](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.107...@selfcommunity/react-theme-default@0.1.0-alpha.108) (2023-04-14)
 
 

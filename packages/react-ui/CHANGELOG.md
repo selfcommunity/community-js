@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.163](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.162...@selfcommunity/react-ui@0.7.0-alpha.163) (2023-04-18)
+
+
+### Bug Fixes
+
+* added suffix to inline composer component ([26f9f69](https://github.com/selfcommunity/community-js/commit/26f9f69ddeffc9ed195d349808e4e59729ffcbc4))
+* Fix reply comment object button ([7adb3c8](https://github.com/selfcommunity/community-js/commit/7adb3c871b0468c874ae1b6c2000399f67f66dad))
+* Fix Vote reaction popover menu behaviour ([5857ce8](https://github.com/selfcommunity/community-js/commit/5857ce8c7cf92daa9b83010fb9f9fff43dd8ad8e))
+* fixed broken build ([526ace0](https://github.com/selfcommunity/community-js/commit/526ace0d7f7f8a6f551c87320029913f118c51af))
+* fixed build ([7d9b36e](https://github.com/selfcommunity/community-js/commit/7d9b36e4d812717c0399cc18bd5bd34d807a117d))
+* fixed translations ([b42d9d0](https://github.com/selfcommunity/community-js/commit/b42d9d04154b6d66bb8330643d46956f005836e1))
+* fixed ui components translations after refactoring ([c884cb8](https://github.com/selfcommunity/community-js/commit/c884cb87ae884423c8907bbb9183f3526c09fef2))
+* Minor fixes to buttons ([56ef76a](https://github.com/selfcommunity/community-js/commit/56ef76af5193c4853b161594e8fe4301d899ae91))
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+### Performance Improvements
+
+* Added show more button to feed obj content. Asana issue: https://app.asana.com/0/1202523699272956/1201911997047090/f ([71d212b](https://github.com/selfcommunity/community-js/commit/71d212bc7860ecfde7db0f1c9a9bc8c9890ae87a))
+* added suffix widget to react ui  components showed in feed templates ([c8a7d7e](https://github.com/selfcommunity/community-js/commit/c8a7d7e633c4664642675f2ef8ed8a131c2c90e3))
+* fixed inline composer translations after renaming ([0ad860b](https://github.com/selfcommunity/community-js/commit/0ad860b4fd4008a78b880b8b68120e59fbe6997c))
+
+
+
+
+
 # [0.7.0-alpha.162](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.161...@selfcommunity/react-ui@0.7.0-alpha.162) (2023-04-14)
 
 

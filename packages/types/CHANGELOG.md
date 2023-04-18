@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.14...@selfcommunity/types@0.5.0-alpha.0) (2023-04-18)
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+
+
+
 ## [0.4.1-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.13...@selfcommunity/types@0.4.1-alpha.14) (2023-04-12)
 
 

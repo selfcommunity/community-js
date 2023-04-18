@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.17...@selfcommunity/react-core@0.4.0-alpha.18) (2023-04-18)
+
+
+### Bug Fixes
+
+* Minor fixes to buttons ([56ef76a](https://github.com/selfcommunity/community-js/commit/56ef76af5193c4853b161594e8fe4301d899ae91))
+
+
+
+
+
 # [0.4.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.16...@selfcommunity/react-core@0.4.0-alpha.17) (2023-04-14)
 
 **Note:** Version bump only for package @selfcommunity/react-core

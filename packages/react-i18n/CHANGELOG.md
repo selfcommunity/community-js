@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.9...@selfcommunity/react-i18n@0.5.0-alpha.10) (2023-04-18)
+
+
+### Bug Fixes
+
+* fixed ui components translations after refactoring ([707c468](https://github.com/selfcommunity/community-js/commit/707c4680fe318dfc102744dcf6c9faf052450539))
+* removed loyalty program detail requested translations ([7792506](https://github.com/selfcommunity/community-js/commit/7792506901428dd3d1a0680a348d79945b38526e))
+
+
+### Performance Improvements
+
+* added translations for feedObj button ([b8b7209](https://github.com/selfcommunity/community-js/commit/b8b7209d3d8f7ab74d3d9e181eb4bbb22ece5f1e))
+* fixed inline composer translations after renaming ([cbb2353](https://github.com/selfcommunity/community-js/commit/cbb23532b2ed1dda0142e2b9fcf53a43c0f6075c))
+
+
+
+
+
 # [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.8...@selfcommunity/react-i18n@0.5.0-alpha.9) (2023-04-14)
 
 
