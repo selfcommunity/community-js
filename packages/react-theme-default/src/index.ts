@@ -6,7 +6,7 @@ import './fonts/community-icons.css';
  */
 import SCWidget from './components/SCWidget';
 import SCBaseDialog from './components/SCBaseDialog';
-import SCInlineComposer from './components/SCInlineComposer';
+import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCEditor from './components/SCEditor';
 import SCCommentsObject from './components/SCCommentsObject';
 import SCCommentsFeedObject from './components/SCCommentsFeedObject';
@@ -199,7 +199,7 @@ const theme = {
     SCFeedRelevantActivities,
     SCFeedSkeleton,
     SCFollowAction,
-    SCInlineComposer,
+    SCInlineComposerWidget,
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetail,

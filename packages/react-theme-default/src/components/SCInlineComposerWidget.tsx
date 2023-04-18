@@ -2,7 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       marginBottom: theme.spacing(2),
-      '& .SCInlineComposer-content, & .SCInlineComposer-content:last-child': {
+      '& .SCInlineComposerWidget-content, & .SCInlineComposerWidget-content:last-child': {
         padding: theme.spacing(0.5, 1),
         display: 'flex',
         flexDirection: 'row',
@@ -10,7 +10,7 @@ const Component = {
         [theme.breakpoints.up('sm')]: {
           padding: theme.spacing(0.5, 1, 0.5, 2)
         },
-        '& .SCInlineComposer-input': {
+        '& .SCInlineComposerWidget-input': {
           display: 'flex',
           flexGrow: 2,
           '& .MuiButton-root': {
@@ -28,7 +28,7 @@ const Component = {
             textTransform: 'none'
           }
         },
-        '& .SCInlineComposer-actions': {
+        '& .SCInlineComposerWidget-actions': {
           display: 'flex',
           '& .MuiIconButton-root': {
             [theme.breakpoints.up('sm')]: {
@@ -37,7 +37,7 @@ const Component = {
             }
           }
         },
-        '& .SCInlineComposer-avatar': {
+        '& .SCInlineComposerWidget-avatar': {
           display: 'flex',
           alignItems: 'center',
           [theme.breakpoints.up('sm')]: {
