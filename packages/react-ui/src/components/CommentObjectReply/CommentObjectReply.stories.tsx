@@ -1,11 +1,13 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import Footer from './index';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import CommentObjectReply from './index';
+import { SCContributionType } from '@selfcommunity/types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Footer',
-  component: Footer,
+  title: 'Design System/React UI/Comment Object Reply',
+  component: CommentObjectReply,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -20,19 +22,18 @@ export default {
     }
   },
   args: {
-    elevation: 1,
-    variant: 'elevation'
+    variant: 'outlined'
   }
-} as ComponentMeta<typeof Footer>;
+  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+} as ComponentMeta<typeof CommentObjectReply>;
 
-const Template: ComponentStory<typeof Footer> = (args) => (
-  <div style={{width: 1200}}>
-    <Footer {...args} />
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+const Template: ComponentStory<typeof CommentObjectReply> = (args) => (
+  <div style={{width: 500}}>
+    <CommentObjectReply {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
-Base.args = {
-  /* the args you need here will depend on your component */
-};
+Base.args = {};

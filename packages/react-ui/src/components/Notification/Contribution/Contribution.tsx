@@ -1,12 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Stack, Tooltip, Typography} from '@mui/material';
-import {
-  SCCommentType,
-  SCContributionType,
-  SCFeedObjectType,
-  SCNotificationContributionType,
-} from '@selfcommunity/types';
+import {Avatar, Stack, Typography} from '@mui/material';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCNotificationContributionType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -16,8 +11,6 @@ import {getContributionSnippet, getContributionType, getRouteData} from '../../.
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import Bullet from '../../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import VoteButton from '../../VoteButton';
 
 const messages = defineMessages({
@@ -102,7 +95,7 @@ export default function ContributionNotification(inProps: ContributionNotificati
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const contributionType = getContributionType(notificationObject);
+  const contributionType: SCContributionType = getContributionType(notificationObject);
 
   // INTL
   const intl = useIntl();

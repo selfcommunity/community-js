@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {SCCommentsOrderBy} from '../../types/comments';
-import ReplyCommentObject from './Reply';
+import CommentObjectReply from '../CommentObjectReply';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
@@ -143,10 +143,10 @@ export interface CommentObjectProps {
   CommentObjectSkeletonProps?: CardProps;
 
   /**
-   * Props to spread to single comment object ReplyCommentObject
+   * Props to spread to single comment object CommentObjectReply
    * @default {elevation: 0}
    */
-  ReplyCommentObjectProps?: CardProps;
+  CommentObjectReplyProps?: CardProps;
 
   /**
    * If datetime is linkable or not
@@ -221,7 +221,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     onVote,
     elevation = 0,
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
-    ReplyCommentObjectProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
+    CommentObjectReplyProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     ...rest
@@ -284,7 +284,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   }
 
   /**
-   * Render Reply action
+   * Render CommentObjectReply action
    * @param comment
    */
   function renderActionReply(comment) {
@@ -492,14 +492,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       <React.Fragment key={comment.id}>
         {editComment && editComment.id === comment.id ? (
           <Box className={classes.comment}>
-            <ReplyCommentObject
+            <CommentObjectReply
               text={comment.html}
               autoFocus
               id={`edit-${comment.id}`}
               onSave={handleSave}
               onCancel={handleCancel}
               editable={!isReplying || !isSavingComment}
-              {...ReplyCommentObjectProps}
+              {...CommentObjectReplyProps}
             />
           </Box>
         ) : (
@@ -565,14 +565,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         {comment.comment_count > 0 && <Box className={classes.nestedComments}>{renderLatestComment(comment)}</Box>}
         {scUserContext.user && replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
           <Box className={classes.nestedComments}>
-            <ReplyCommentObject
+            <CommentObjectReply
               text={`@${replyComment.author.username}, `}
               autoFocus
               key={`reply-${replyComment.id}`}
               id={`reply-${replyComment.id}`}
               onReply={handleReply}
               editable={!isReplying}
-              {...ReplyCommentObjectProps}
+              {...CommentObjectReplyProps}
             />
           </Box>
         )}

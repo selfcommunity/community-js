@@ -1,14 +1,14 @@
 import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Widget, {WidgetProps} from '../../Widget';
+import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
 import {Avatar, Stack} from '@mui/material';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import Editor, {EditorRef} from '../../Editor';
+import Editor, {EditorRef} from '../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import {useThemeProps} from '@mui/system';
-import BaseItem from '../../../shared/BaseItem';
+import BaseItem from '../../shared/BaseItem';
 
 const PREFIX = 'SCCommentObjectReply';
 
@@ -28,7 +28,7 @@ const Root = styled(BaseItem, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface ReplyCommentObjectProps extends WidgetProps {
+export interface CommentObjectReplyProps extends WidgetProps {
   /**
    * Bind focus on mount
    * @default false
@@ -77,9 +77,37 @@ export interface ReplyCommentObjectProps extends WidgetProps {
   [p: string]: any;
 }
 
-export default function Reply(inProps: ReplyCommentObjectProps): JSX.Element {
+/**
+ *> API documentation for the Community-JS Comment Object Reply component. Learn about the available props and the CSS API.
+
+ #### Import
+
+ ```jsx
+ import {CommentObjectReply} from '@selfcommunity/react-ui';
+ ```
+
+ #### Component Name
+
+ The name `CommentObjectReply` can be used when providing style overrides in the theme.
+
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.CommentObjectReply-root|Styles applied to the root element.|
+ |comment|.SCCommentObjectReply-comment|Styles applied to comment element.|
+ |avatar|.SCCommentObjectReply-avatar|Styles applied to the avatar element.|
+ |actions|.SCCommentObjectReply-actions|Styles applied to the actions section.|
+ |buttonReply|.SCCommentObjectReply-button-reply|Styles applied to reply button element.|
+ |buttonSave|.SCCommentObjectReply-button-save|Styles applied to save button element.|
+ |buttonCancel|.SCCommentObjectReply-button-cancel|Styles applied to the cancel button element.|
+
+ * @param inProps
+ */
+export default function CommentObjectReply(inProps: CommentObjectReplyProps): JSX.Element {
   // PROPS
-  const props: ReplyCommentObjectProps = useThemeProps({
+  const props: CommentObjectReplyProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -106,7 +134,7 @@ export default function Reply(inProps: ReplyCommentObjectProps): JSX.Element {
   let editor: RefObject<EditorRef> = useRef<EditorRef>();
 
   /**
-   * When Reply is mount
+   * When CommentObjectReply is mount
    * if autoFocus === true focus on editor
    */
   useEffect(() => {

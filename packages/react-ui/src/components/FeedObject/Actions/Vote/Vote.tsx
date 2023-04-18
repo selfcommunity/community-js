@@ -90,7 +90,7 @@ export default function Vote(inProps: VoteProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCContributionType.POST,
+    feedObjectType = null,
     withAudience = true,
     withAction = true,
     inlineAction = false,

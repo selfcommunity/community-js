@@ -41,7 +41,7 @@ export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof 
    * Type of the contribution object to vote
    * @default null
    */
-  contributionType: SCContributionType | any;
+  contributionType: SCContributionType;
   /**
    * Contribution object to vote
    * @default null
@@ -89,7 +89,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, contributionId = null, contributionType = null, contribution = null, onVote, ...rest} = props;
+  const {className, contributionId, contributionType, contribution = null, onVote, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

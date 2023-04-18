@@ -55,9 +55,10 @@ import UserSocialAssociation, {UserSocialAssociationProps} from './components/Us
 import UserFollowersWidget, {UserFollowersWidgetProps, UserFollowersWidgetSkeleton} from './components/UserFollowersWidget';
 import RelatedFeedObjectsWidget, {RelatedFeedObjectsWidgetProps, RelatedFeedObjectsWidgetSkeleton} from './components/RelatedFeedObjectsWidget';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
+import CommentObjectReply, {CommentObjectReplyProps} from './components/CommentObjectReply';
 import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
 import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton} from './components/CommentsFeedObject';
-import ReplyComment from './components/CommentObject/Reply';
+import ReplyComment from './components/CommentObjectReply';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
 import PrivateMessageSnippetItem, {PrivateMessageSnippetItemProps, PrivateMessageSnippetItemSkeleton} from './components/PrivateMessageSnippetItem';
@@ -212,6 +213,8 @@ export {
   CommentObjectProps,
   CommentsObjectSkeleton,
   CommentObjectSkeleton,
+  CommentObjectReply,
+  CommentObjectReplyProps,
   CommentsFeedObject,
   CommentsFeedObjectProps,
   CommentsFeedObjectSkeleton,

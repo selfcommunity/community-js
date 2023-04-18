@@ -23,6 +23,7 @@ import AccountService, {AccountApiClient, AccountApiClientInterface} from './ser
 import CategoryService, {CategoryApiClient, CategoryApiClientInterface} from './services/category';
 import CommentService, {CommentApiClient, CommentApiClientInterface} from './services/comment';
 import CustomAdvService, {CustomAdvApiClient, CustomAdvApiClientInterface} from './services/custom_adv';
+import CustomMenuService, {CustomMenuApiClient, CustomMenuApiClientInterface} from './services/custom_menu';
 import CustomPageService, {CustomPageApiClient, CustomPageApiClientInterface} from './services/custom_page';
 import DataPortabilityService, {DataPortabilityApiClient, DataPortabilityApiClientInterface} from './services/data_portability';
 import EmbedService, {EmbedApiClient, EmbedApiClientInterface} from './services/embed';
@@ -143,6 +144,9 @@ export {
   CustomAdvService,
   CustomAdvApiClient,
   CustomAdvApiClientInterface,
+  CustomMenuService,
+  CustomMenuApiClient,
+  CustomMenuApiClientInterface,
   CustomPageService,
   CustomPageApiClient,
   CustomPageApiClientInterface,

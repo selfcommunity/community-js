@@ -1,6 +1,6 @@
 import React from 'react';
 import {SCRoutes} from '@selfcommunity/react-core';
-import {SCCommentTypologyType, SCContributionType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 
 /**
@@ -14,8 +14,8 @@ export function getContributionType(obj) {
     ? SCContributionType.POST
     : SCContributionType.STATUS in obj
     ? SCContributionType.STATUS
-    : SCCommentTypologyType in obj
-    ? SCCommentTypologyType
+    : SCContributionType.COMMENT in obj
+    ? SCContributionType.COMMENT
     : null;
 }
 
@@ -30,8 +30,8 @@ export function getContribution(obj) {
     ? obj[SCContributionType.POST]
     : SCContributionType.STATUS in obj
     ? obj[SCContributionType.STATUS]
-    : SCCommentTypologyType in obj
-    ? obj[SCCommentTypologyType]
+    : SCContributionType.COMMENT in obj
+    ? obj[SCContributionType.COMMENT]
     : null;
 }
 
@@ -85,18 +85,18 @@ export function getRouteData(obj) {
     if (obj.type === SCContributionType.DISCUSSION || obj.type === SCContributionType.POST || obj.type === SCContributionType.STATUS) {
       data = {
         ...obj,
-        contribution_type: obj.type,
+        contributionType: obj.type,
         contribution_id: obj.id,
         contribution_slug: obj.slug
       };
-    } else if (obj.type === SCCommentTypologyType) {
-      const contribution_type = getContributionType(obj);
-      const isContributionTypeObj = obj[contribution_type] && typeof obj[contribution_type] === 'object';
+    } else if (obj.type === SCContributionType.COMMENT) {
+      const contributionType = getContributionType(obj);
+      const isContributionTypeObj = obj[contributionType] && typeof obj[contributionType] === 'object';
       data = {
         ...obj,
-        contribution_type,
-        contribution_id: isContributionTypeObj ? obj[contribution_type].id : obj[contribution_type],
-        contribution_slug: isContributionTypeObj ? obj[contribution_type].slug : contribution_type
+        contributionType,
+        contribution_id: isContributionTypeObj ? obj[contributionType].id : obj[contributionType],
+        contribution_slug: isContributionTypeObj ? obj[contributionType].slug : contributionType
       };
     }
   }

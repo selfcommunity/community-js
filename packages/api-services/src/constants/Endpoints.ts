@@ -961,6 +961,21 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   /**
+   * Custom Menu
+   */
+  GetCustomMenus: {
+    url: urlReplacer('/api/v2/custom_menu/'),
+    method: 'GET'
+  },
+  CustomMenu: {
+    url: urlReplacer('/api/v2/custom_menu/$(id)/'),
+    method: 'GET'
+  },
+  CustomMenuSearch: {
+    url: urlReplacer('/api/v2/custom_menu/search/'),
+    method: 'GET'
+  },
+  /**
    * Custom Page
    */
   GetCustomPages: {

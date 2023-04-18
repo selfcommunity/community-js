@@ -1,8 +1,7 @@
-import {alpha} from '@mui/system';
-
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      border: '0 none',
       '& .SCBaseItem-content': {
         alignItems: 'flex-start',
         '& .SCBaseItem-text': {
