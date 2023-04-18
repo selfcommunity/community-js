@@ -21,7 +21,6 @@ import {SCContextType, SCUserContextType} from '../types/context';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {UserUtils} from '../index';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 interface FetchVoteProps {
   /**
@@ -151,7 +150,7 @@ export default function useSCFetchVote({
     }
   }, [id, contributionType, scUserContext.user]);
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     if (contribution) {
       setObj(contribution);
     }

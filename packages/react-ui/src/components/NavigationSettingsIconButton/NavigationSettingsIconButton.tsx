@@ -348,6 +348,11 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
     }
   };
 
+  // RENDER
+  if (!scUserContext.user) {
+    return null;
+  }
+
   return (
     <>
       <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
