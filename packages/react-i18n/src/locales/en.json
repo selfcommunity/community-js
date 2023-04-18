@@ -177,8 +177,8 @@
   "ui.composer.edit.error.title": "Error loading content",
   "ui.composer.edit.error.content": "This contribution is unavailable for editing",
 
-  "ui.inlineComposer.label": "Create content...",
-  "ui.inlineComposer.success": "Creation succeed!",
+  "ui.inlineComposerWidget.label": "Create content...",
+  "ui.inlineComposerWidget.success": "Creation succeed!",
 
   "ui.editor.placeholder": "Write your text...",
   "ui.editor.imagePluginResizer.width": "Width",
