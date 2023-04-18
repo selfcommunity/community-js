@@ -2,11 +2,6 @@ import {SCUserType} from './user';
 import {SCReactionType} from './reaction';
 
 /**
- * Typology Comment
- */
-export const SCCommentTypologyType = 'comment';
-
-/**
  * Interface SCCommentType.
  * Comment Schema.
  */

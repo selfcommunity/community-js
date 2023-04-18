@@ -41,7 +41,7 @@ export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof 
    * Type of the contribution object to vote
    * @default null
    */
-  contributionType: SCContributionType | any;
+  contributionType: SCContributionType;
   /**
    * Contribution object to vote
    * @default null
@@ -89,7 +89,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, contributionId = null, contributionType = null, contribution = null, onVote, ...rest} = props;
+  const {className, contributionId, contributionType, contribution = null, onVote, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -103,9 +103,10 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   // HANDLERS
   const handleMouseEnter = (event) => {
     handleClearTimeout();
-    setTimeout(() => setAnchorEl(event.target), 1000);
+    timeoutRef.current = setTimeout(() => setAnchorEl(event.target), 1000);
   };
   const handleMouseLeave = (event) => {
+    handleClearTimeout();
     timeoutRef.current = setTimeout(() => setAnchorEl(null), 500);
   };
   const handleClearTimeout = () => {

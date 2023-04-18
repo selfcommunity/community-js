@@ -6,10 +6,16 @@ import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import SCNotification, {NotificationSkeleton} from '../Notification';
-import FeedUpdates from '../FeedUpdates';
 import BroadcastMessages from '../BroadcastMessages';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {CategoriesSuggestion, InlineComposer, CategoriesPopular, PeopleSuggestion, TrendingPeople} from '../../index';
+import {
+  CategoriesSuggestionWidget,
+  InlineComposerWidget,
+  CategoriesPopularWidget,
+  PeopleSuggestionWidget,
+  TrendingPeopleWidget,
+  FeedUpdatesWidget,
+} from '../../index';
 import {exampleExploreData} from './prefetchedData';
 import {Button} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -39,28 +45,28 @@ const Template: ComponentStory<typeof Feed> = (args) => {
 const _WIDGETS = [
   {
     type: 'widget',
-    component: TrendingPeople,
+    component: TrendingPeopleWidget,
     componentProps: {categoryId: 1},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesPopular,
+    component: CategoriesPopularWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesSuggestion,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: PeopleSuggestion,
+    component: PeopleSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 6
@@ -86,7 +92,7 @@ Main.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   requireAuthentication: true,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const MainCache = Template.bind({});
@@ -109,7 +115,7 @@ MainCache.args = {
   },
   requireAuthentication: true,
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 
@@ -132,7 +138,7 @@ Explore.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.NETWORK_ONLY,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreCache = Template.bind({});
@@ -154,7 +160,7 @@ ExploreCache.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset2 = Template.bind({});
@@ -176,7 +182,7 @@ ExploreOffset2.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 2},
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 
@@ -200,7 +206,7 @@ ExploreOffset2Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 2},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset5 = Template.bind({});
@@ -222,7 +228,7 @@ ExploreOffset5.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 5},
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset5Cached = Template.bind({});
@@ -245,7 +251,7 @@ ExploreOffset5Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 5},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 
@@ -268,7 +274,7 @@ ExploreOffset20.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 20},
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExploreOffset20Cached = Template.bind({});
@@ -291,7 +297,7 @@ ExploreOffset20Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 20},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposer />
+  HeaderComponent: <InlineComposerWidget />
 };
 
 export const ExplorePrefetchedData = Template.bind({});
@@ -313,7 +319,7 @@ ExplorePrefetchedData.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5},
-  HeaderComponent: <InlineComposer />,
+  HeaderComponent: <InlineComposerWidget />,
   prefetchedData: exampleExploreData,
 };
 
@@ -336,7 +342,7 @@ ExplorePrefetchedDataCached.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5},
-  HeaderComponent: <InlineComposer />,
+  HeaderComponent: <InlineComposerWidget />,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 
@@ -359,7 +365,7 @@ ExploreWithoutVirtualization.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.NETWORK_ONLY,
-  HeaderComponent: <InlineComposer />,
+  HeaderComponent: <InlineComposerWidget />,
   VirtualizedScrollerProps: {bypass: true}
 };
 
@@ -371,7 +377,7 @@ Notification.args = {
   widgets: [
     {
       type: 'widget',
-      component: FeedUpdates,
+      component: FeedUpdatesWidget,
       componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
       column: 'left',
       position: 0
@@ -402,7 +408,7 @@ NotificationCached.args = {
   widgets: [
     {
       type: 'widget',
-      component: FeedUpdates,
+      component: FeedUpdatesWidget,
       componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
       column: 'left',
       position: 0

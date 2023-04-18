@@ -116,29 +116,29 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center">
         <Grid item xs={12}>
           <Typography className={classes.title} component="h3" align="center">
-            <FormattedMessage id="ui.platformAccess.title" defaultMessage="ui.platformAccess.title" />
+            <FormattedMessage id="ui.platformWidget.title" defaultMessage="ui.platformWidget.title" />
             <Icon fontSize="small">lock</Icon>
           </Typography>
         </Grid>
         {isAdmin && (
           <Grid item xs="auto" style={{textAlign: 'center'}}>
             <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-              <FormattedMessage id="ui.platformAccess.adm" defaultMessage="ui.platformAccess.adm" />
+              <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
             </Button>
           </Grid>
         )}
         <Grid item xs="auto" style={{textAlign: 'center'}}>
           <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
             {isAdmin || isModerator ? (
-              <FormattedMessage id="ui.platformAccess.mod" defaultMessage="ui.platformAccess.mod" />
+              <FormattedMessage id="ui.platformWidget.mod" defaultMessage="ui.platformWidget.mod" />
             ) : (
-              <FormattedMessage id="ui.platformAccess.edt" defaultMessage="ui.platformAccess.edt" />
+              <FormattedMessage id="ui.platformWidget.edt" defaultMessage="ui.platformWidget.edt" />
             )}
           </Button>
         </Grid>
         <Grid item xs="auto" style={{textAlign: 'center'}}>
           <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
-            <FormattedMessage id="ui.platformAccess.hc" defaultMessage="ui.platformAccess.hc" />
+            <FormattedMessage id="ui.platformWidget.hc" defaultMessage="ui.platformWidget.hc" />
           </Button>
         </Grid>
       </Grid>

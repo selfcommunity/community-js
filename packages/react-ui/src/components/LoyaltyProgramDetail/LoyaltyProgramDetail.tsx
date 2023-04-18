@@ -125,7 +125,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     },
     stateToolsInitializer
   );
-  const [requested, setRequested] = useState<number>(null);
   const [points, setPoints] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [prizeRequested, setPrizeRequested] = useState<number>(null);
@@ -143,7 +142,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     return LoyaltyService.createPrizeRequest(id)
       .then((data) => {
         setPoints((prev) => prev - data.prize_points);
-        setRequested(data.prize.id);
         setOpen(false);
         let _snackBar = enqueueSnackbar(
           <FormattedMessage id="ui.loyaltyProgramDetail.prize.request.success" defaultMessage="ui.loyaltyProgramDetail.prize.request.success" />,
@@ -263,7 +261,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       <Root className={classNames(classes.root, className)} {...rest}>
         {points && (
           <Typography className={classes.title} variant="h5">
-            {!isMobile && <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />}
+            {!isMobile && <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />}
             <Chip
               className={classes.userPoints}
               component="span"
@@ -327,13 +325,9 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                         size="small"
                         variant="outlined"
                         className={classes.actionButton}
-                        disabled={requested === prize.id || points < prize.points}
+                        disabled={points < prize.points}
                         onClick={() => handleOpenAlert(prize.id)}>
-                        {requested ? (
-                          <FormattedMessage id="ui.loyaltyProgramDetail.button.requested" defaultMessage="ui.loyaltyProgramDetail.button.requested" />
-                        ) : (
-                          <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
-                        )}
+                        <FormattedMessage id="ui.loyaltyProgramDetail.button.request" defaultMessage="ui.loyaltyProgramDetail.button.request" />
                       </Button>
                     )}
                   </CardActions>

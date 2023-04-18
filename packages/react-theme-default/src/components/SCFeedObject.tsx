@@ -103,9 +103,9 @@ const Component = {
           '& .SCFeedObject-reply-content': {
             marginLeft: 0,
             background: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
-            '& .SCReplyCommentObject-root': {
+            '& .SCCommentObjectReply-root': {
               background: 'transparent',
-              '& .SCReplyCommentObject-comment': {
+              '& .SCCommentObjectReply-comment': {
                 background: 'transparent',
                 border: '0 none',
                 '& .SCEditor-root': {
@@ -153,8 +153,8 @@ const Component = {
               }
             }
           },
-          '& .SCReplyCommentObject-root': {
-            '& .SCReplyCommentObject-comment': {
+          '& .SCCommentObjectReply-root': {
+            '& .SCCommentObjectReply-comment': {
               marginBottom: '0 !important',
               border: `1px solid ${theme.palette.grey[300]}`,
               borderRadius: theme.shape.borderRadius,

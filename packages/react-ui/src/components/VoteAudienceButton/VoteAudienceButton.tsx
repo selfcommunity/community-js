@@ -45,7 +45,7 @@ export interface VoteAudienceButtonProps extends Pick<LoadingButtonProps, Exclud
    * Type of the contribution object to vote
    * @default null
    */
-  contributionType: SCContributionType | any;
+  contributionType: SCContributionType;
   /**
    * Contribution object to vote
    * @default null
@@ -89,7 +89,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className, contributionId = null, contributionType = null, contribution = null, ...rest} = props;
+  const {className, contributionId, contributionType, contribution = null, ...rest} = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);

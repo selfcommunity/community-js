@@ -9,7 +9,7 @@ import {
   SCFeedObjectTemplateType,
   FeedSidebarProps,
   FeedProps,
-  InlineComposer,
+  InlineComposerWidget,
   LoyaltyProgramWidget,
   PeopleSuggestionWidget,
   PlatformWidget,
@@ -163,7 +163,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposer />}
+      HeaderComponent={<InlineComposerWidget />}
       requireAuthentication={true}
       disablePaginationLinks={true}
       enabledCustomAdvPositions={[

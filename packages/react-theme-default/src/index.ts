@@ -6,7 +6,7 @@ import './fonts/community-icons.css';
  */
 import SCWidget from './components/SCWidget';
 import SCBaseDialog from './components/SCBaseDialog';
-import SCInlineComposer from './components/SCInlineComposer';
+import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCEditor from './components/SCEditor';
 import SCCommentsObject from './components/SCCommentsObject';
 import SCCommentsFeedObject from './components/SCCommentsFeedObject';
@@ -81,7 +81,6 @@ import SCReactionAction from './components/SCReactionAction';
 import SCCommentAction from './components/SCCommentAction';
 import SCShareAction from './components/SCShareAction';
 import SCVoteAction from './components/SCVoteAction';
-import SCCommentObjectReactions from './components/SCCommentObjectReactions';
 import SCCommentObjectVotes from './components/SCCommentObjectVotes';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
@@ -97,6 +96,8 @@ import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
 import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
+import SCCommentObjectReply from './components/SCCommentObjectReply';
+import SCFooter from './components/SCFooter';
 
 /**
  * Style fragments - Imports - End
@@ -176,7 +177,7 @@ const theme = {
     SCCommentAction,
     SCCommentNotification,
     SCCommentObject,
-    SCCommentObjectReactions,
+    SCCommentObjectReply,
     SCCommentObjectSkeleton,
     SCCommentObjectVotes,
     SCCommentsFeedObject,
@@ -199,7 +200,8 @@ const theme = {
     SCFeedRelevantActivities,
     SCFeedSkeleton,
     SCFollowAction,
-    SCInlineComposer,
+    SCFooter,
+    SCInlineComposerWidget,
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetail,

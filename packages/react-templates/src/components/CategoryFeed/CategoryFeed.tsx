@@ -1,5 +1,5 @@
-import React, { useMemo, useRef } from 'react';
-import { styled } from '@mui/material/styles';
+import React, {useMemo, useRef} from 'react';
+import {styled} from '@mui/material/styles';
 import {
   Feed,
   FeedObject,
@@ -8,17 +8,17 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
-  InlineComposer,
+  InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
-  TrendingFeed,
-  TrendingPeople,
+  TrendingFeedWidget,
+  TrendingPeopleWidget
 } from '@selfcommunity/react-ui';
-import { Endpoints } from '@selfcommunity/api-services';
-import { useSCFetchCategory } from '@selfcommunity/react-core';
-import { SCCategoryType, SCCustomAdvPosition } from '@selfcommunity/types';
-import { CategoryFeedSkeleton } from './index';
-import { useThemeProps } from '@mui/system';
+import {Endpoints} from '@selfcommunity/api-services';
+import {useSCFetchCategory} from '@selfcommunity/react-core';
+import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
+import {CategoryFeedSkeleton} from './index';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCCategoryFeedTemplate';
@@ -90,14 +90,14 @@ export interface CategoryFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: TrendingPeople,
+    component: TrendingPeopleWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: TrendingFeed,
+    component: TrendingFeedWidget,
     componentProps: {},
     column: 'right',
     position: 1
@@ -205,7 +205,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
       enabledCustomAdvPositions={[
         SCCustomAdvPosition.POSITION_FEED_SIDEBAR,

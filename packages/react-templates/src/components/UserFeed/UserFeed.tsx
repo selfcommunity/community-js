@@ -4,7 +4,7 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {
-  CategoriesFollowed,
+  CategoriesFollowedWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -13,10 +13,10 @@ import {
   FeedRef,
   FeedSidebarProps,
   FeedProps,
-  InlineComposer,
+  InlineComposerWidget,
   SCFeedWidgetType,
-  UserFollowers,
-  UsersFollowed
+  UserFollowersWidget,
+  UsersFollowedWidget
 } from '@selfcommunity/react-ui';
 import {UserFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
@@ -32,8 +32,7 @@ const Root = styled(Feed, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-}));
+})(({theme}) => ({}));
 
 export interface UserFeedProps {
   /**
@@ -62,7 +61,7 @@ export interface UserFeedProps {
 
   /**
    * Widgets to be rendered into the feed
-   * @default [CategoriesFollowed, UserFollowed]
+   * @default [CategoriesFollowedWidget, UsersFollowedWidget]
    */
   widgets?: SCFeedWidgetType[] | null;
 
@@ -92,21 +91,21 @@ export interface UserFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: CategoriesFollowed,
+    component: CategoriesFollowedWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UsersFollowed,
+    component: UsersFollowedWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserFollowers,
+    component: UserFollowersWidget,
     componentProps: {},
     column: 'right',
     position: 2
@@ -198,7 +197,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      {...(scUserContext.user ? {HeaderComponent: <InlineComposer onSuccess={handleComposerSuccess} />} : {})}
+      {...(scUserContext.user ? {HeaderComponent: <InlineComposerWidget onSuccess={handleComposerSuccess} />} : {})}
       FeedSidebarProps={FeedSidebarProps}
       {...FeedProps}
     />

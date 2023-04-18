@@ -1,6 +1,7 @@
 import {SCAuthTokenType} from './auth';
 import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from './broadcastMessage';
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
+import {SCCustomMenuItemType, SCCustomMenuType} from './customMenu';
 import {
   SCUserAutocompleteType,
   SCUserAvatarType,
@@ -31,7 +32,7 @@ import {SCChunkMediaType, SCMediaType} from './media';
 import {SCMetadataTypeFieldType, SCMetadataType} from './metadata';
 import {SCContributionLocation, SCLocalityType} from './location';
 import {SCPollChoiceType, SCPollType, SCPollVoteType} from './poll';
-import {SCCommentsOrderBy, SCCommentType, SCCommentTypologyType} from './comment';
+import {SCCommentsOrderBy, SCCommentType} from './comment';
 import {
   SCMessageFileType,
   SCPrivateMessageFileType,
@@ -87,7 +88,7 @@ import {
 import {SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType, SCWebhookEndpointType, SCWebhookEventsType} from './webhook';
 import {SCVoteType} from './vote';
 import {SCFlagModerationStatusType, SCFlagType, SCFlagTypeEnum} from './flag';
-import {SCCustomPageType} from './customPage';
+import {SCCustomPageTypeEnum, SCCustomPageType} from './customPage';
 import {SCDataPortabilityType} from './dataPortability';
 import {SCPreferenceSection, SCPreferenceName, SCPreferenceType} from './preference';
 import {SCFeatureType} from './feature';
@@ -145,6 +146,8 @@ export {
   SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
   SCCustomAdvType,
+  SCCustomMenuItemType,
+  SCCustomMenuType,
   SCEmbedType,
   SCMediaType,
   SCChunkMediaType,
@@ -166,7 +169,6 @@ export {
   SCFeedObjectHideStatusType,
   SCFeedObjectFollowingStatusType,
   SCCountByCategoryType,
-  SCCommentTypologyType,
   SCCommentsOrderBy,
   SCCommentType,
   SCPrivateMessageThreadType,
@@ -217,6 +219,7 @@ export {
   SCFlagType,
   SCFlagTypeEnum,
   SCFlagModerationStatusType,
+  SCCustomPageTypeEnum,
   SCCustomPageType,
   SCDataPortabilityType,
   SCPreferenceSection,

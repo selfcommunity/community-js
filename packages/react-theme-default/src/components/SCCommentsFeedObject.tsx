@@ -22,8 +22,8 @@ const Component = {
       '& .SCCommentsObjectSkeleton-root': {
         marginBottom: theme.spacing(0.5)
       },
-      '& .SCReplyCommentObject-root': {
-        '& .SCReplyCommentObject-comment': {
+      '& .SCCommentObjectReply-root': {
+        '& .SCCommentObjectReply-comment': {
           marginBottom: theme.spacing(4)
         }
       }

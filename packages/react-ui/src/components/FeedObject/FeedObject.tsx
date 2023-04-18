@@ -23,7 +23,7 @@ import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import Activities, {ActivitiesProps} from './Activities';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import CommentObjectReply, {CommentObjectReplyProps} from '../CommentObjectReply';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
@@ -45,6 +45,7 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 
+const MAX_SUMMARY_LENGTH = 150;
 const messages = defineMessages({
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
@@ -324,17 +325,17 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   PollObjectProps?: PollObjectProps;
 
   /**
-   * ReplyCommentComponent component
-   * Usefull to override the single ReplyComment render component
+   * CommentObjectReplyComponent component
+   * Usefull to override the single CommentObjectReply render component
    * @default CommentObject
    */
-  ReplyCommentComponent?: (inProps: ReplyCommentObjectProps) => JSX.Element;
+  CommentObjectReplyComponent?: (inProps: CommentObjectReplyProps) => JSX.Element;
 
   /**
    * Props to spread to single reply comment object
    * @default {variant: 'outlined'}
    */
-  ReplyCommentComponentProps?: ReplyCommentObjectProps;
+  CommentObjectReplyComponentProps?: CommentObjectReplyProps;
 
   /**
    * Props to spread to ContributorsFeedObject component
@@ -438,8 +439,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
-    ReplyCommentComponent = ReplyCommentObject,
-    ReplyCommentComponentProps = {WidgetProps: {variant: 'outlined'}},
+    CommentObjectReplyComponent = CommentObjectReply,
+    CommentObjectReplyComponentProps = {WidgetProps: {variant: 'outlined'}},
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ContributionActionsMenuProps = {},
@@ -476,7 +477,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
-
+  const [expanded, setExpanded] = useState(false);
   // INTL
   const intl = useIntl();
 
@@ -815,9 +816,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     }}
                   />
                 ) : (
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
-                    <Typography component="div" gutterBottom className={classes.text} dangerouslySetInnerHTML={{__html: obj.summary}} />
-                  </Link>
+                  <Typography component="div" gutterBottom className={classes.text}>
+                    <Typography component="span" dangerouslySetInnerHTML={{__html: expanded ? obj.html : obj.summary}} />
+                    {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
+                      <Button size="small" variant="text" color="inherit" onClick={() => setExpanded(!expanded)}>
+                        <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+                      </Button>
+                    )}
+                  </Typography>
                 )}
               </Box>
               <Box className={classes.mediasSection}>
@@ -842,6 +848,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             </CardContent>
             <CardActions className={classes.actionsSection}>
               <Actions
+                feedObjectId={feedObjectId}
+                feedObjectType={feedObjectType}
                 feedObject={obj}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
                 handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
@@ -850,11 +858,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               />
               {(template === SCFeedObjectTemplateType.DETAIL || expandedActivities) && (
                 <Box className={classes.replyContent}>
-                  <ReplyCommentComponent
+                  <CommentObjectReplyComponent
                     onReply={handleReply}
                     editable={!isReplying || Boolean(obj)}
                     key={Number(isReplying)}
-                    {...ReplyCommentComponentProps}
+                    {...CommentObjectReplyComponentProps}
                   />
                 </Box>
               )}

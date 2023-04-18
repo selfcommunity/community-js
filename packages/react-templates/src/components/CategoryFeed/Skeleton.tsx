@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {FeedObjectSkeleton, SCFeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerSkeleton} from '@selfcommunity/react-ui';
+import {FeedObjectSkeleton, SCFeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerWidgetSkeleton} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCCategoryFeedTemplateSkeleton';
 
@@ -46,7 +46,7 @@ export default function CategoryFeedSkeleton(): JSX.Element {
           <GenericSkeleton sx={{mb: 2}} />
         </React.Fragment>
       }>
-      <InlineComposerSkeleton />
+      <InlineComposerWidgetSkeleton />
       {Array.from({length: 5}).map((e, i) => (
         <FeedObjectSkeleton key={i} template={SCFeedObjectTemplateType.DETAIL} />
       ))}

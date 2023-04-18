@@ -1,32 +1,30 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, Typography} from '@mui/material';
+import {Box, Button, Grid, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCCustomAdvPosition, SCLegalPagePoliciesType} from '@selfcommunity/types';
+import {CustomMenuService, Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCCustomMenuItemType, SCCustomMenuType, SCLegalPagePoliciesType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import {
-  SCRoutes,
-  SCRoutingContextType,
   Link,
-  useSCRouting,
   SCPreferences,
   SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
   useSCPreferences,
-  SCUserContextType,
-  useSCUser
+  useSCRouting
 } from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FooterSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
-import CustomAdv from '../CustomAdv';
 
 const PREFIX = 'SCFooter';
 
 const classes = {
   root: `${PREFIX}-root`,
-  linkItem: `${PREFIX}-link-item`,
+  itemList: `${PREFIX}-item-list`,
+  item: `${PREFIX}-item`,
   copyright: `${PREFIX}-copyright`
 };
 
@@ -34,19 +32,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.copyright}`]: {
-    marginTop: theme.spacing(2)
-  },
-  [`& .${classes.linkItem}`]: {
-    color: 'inherit',
-    cursor: 'pointer',
-    '&:any-link': {
-      color: 'inherit',
-      textDecoration: 'none'
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface FooterProps {
   /**
@@ -54,6 +40,12 @@ export interface FooterProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Custom Menu object to render in the footer
+   * @default null
+   */
+  menu?: SCCustomMenuType;
 
   /**
    * Any other properties
@@ -88,51 +80,43 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, ...rest} = props;
-
-  // CONTEXT
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {className, menu = null, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const copyRight = useMemo(() => {
+  const copyright = useMemo(() => {
     return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in scPreferences.preferences
       ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value
       : null;
   }, [scPreferences.preferences]);
 
   // STATE
-  const [pages, setPages] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [_menu, setMenu] = useState<SCCustomMenuType>(menu);
+  const [loading, setLoading] = useState<boolean>(!menu);
 
   /**
    * Fetches custom pages
    */
-  function fetchCustomPages() {
+  function fetchMenu() {
     setLoading(true);
-    http
-      .request({
-        url: Endpoints.GetCustomPages.url(),
-        method: Endpoints.GetCustomPages.method,
-        params: {
-          visible_in_menu: true
-        }
-      })
-      .then((res: HttpResponse<any>) => {
-        setPages(res.data.results);
-        setLoading(false);
+    CustomMenuService.getBaseCustomMenu()
+      .then((menu: SCCustomMenuType) => {
+        setMenu(menu);
       })
       .catch((error) => {
-        setLoading(false);
         Logger.error(SCOPE_SC_UI, error);
-      });
+      })
+      .then(() => setLoading(false));
   }
 
   /**
    * On mount, fetches legal and custom pages
    */
   useEffect(() => {
-    fetchCustomPages();
+    if (_menu) {
+      return;
+    }
+    fetchMenu();
   }, []);
 
   /**
@@ -143,26 +127,15 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   }
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
-      <Grid container spacing={1} justifyContent="center">
-        {pages.map((page, index) => (
-          <Grid item key={index}>
-            <Link
-              className={classes.linkItem}
-              to={page.alternative_url ? page.alternative_url : scRoutingContext.url(SCRoutes.CUSTOM_PAGES_ROUTE_NAME, page)}>
-              <FormattedMessage id={`ui.footer.customPages.${page.slug}`} defaultMessage={`ui.footer.customPages.${page.slug}`} />
-            </Link>
-          </Grid>
+      <Box className={classes.itemList}>
+        {_menu.items.map((item: SCCustomMenuItemType, index) => (
+          <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
+            {item.label}
+          </Button>
         ))}
-        {Object.values(SCLegalPagePoliciesType).map((policy: string, index) => (
-          <Grid item key={index}>
-            <Link className={classes.linkItem} to={scRoutingContext.url(SCRoutes.LEGAL_PAGES_ROUTE_NAME, {policy: policy})}>
-              <FormattedMessage id={`ui.footer.legalPages.${policy}`} defaultMessage={`ui.footer.legalPages.${policy}`} />
-            </Link>
-          </Grid>
-        ))}
-      </Grid>
+      </Box>
       <Typography textAlign="center" className={classes.copyright} variant="subtitle2">
-        {copyRight}
+        {copyright}
       </Typography>
     </Root>
   );

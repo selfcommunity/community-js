@@ -93,7 +93,7 @@ const withProvider = (Story, context) => {
     },
     theme: mergeDeep(theme, {
       components: {
-        SCInlineComposer: {
+        SCInlineComposerWidget: {
           defaultProps: {
             mediaObjectTypes: [Image, Document, Link]
           }

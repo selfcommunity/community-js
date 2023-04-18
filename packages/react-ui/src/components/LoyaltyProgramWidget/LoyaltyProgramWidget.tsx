@@ -121,13 +121,13 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
       <Root {...props} className={classNames(classes.root, className)}>
         <CardContent>
           <Typography className={classes.title}>
-            <FormattedMessage id="ui.loyaltyProgram.title" defaultMessage="ui.loyaltyProgram.title" />
+            <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />
           </Typography>
         </CardContent>
         <CardActions className={classes.actions}>
           <Typography className={classes.points}>
             <Chip size={'medium'} component="span" label={points} />
-            <FormattedMessage id="ui.loyaltyProgram.points" defaultMessage="ui.loyaltyProgram.points" />
+            <FormattedMessage id="ui.loyaltyProgramWidget.points" defaultMessage="ui.loyaltyProgramWidget.points" />
           </Typography>
           <Button
             size="small"
@@ -135,7 +135,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
             className={classes.discoverMore}
             component={Link}
             to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
-            <FormattedMessage id="ui.loyaltyProgram.discover" defaultMessage="ui.loyaltyProgram.discover" />
+            <FormattedMessage id="ui.loyaltyProgramWidget.discover" defaultMessage="ui.loyaltyProgramWidget.discover" />
           </Button>
         </CardActions>
       </Root>

@@ -53,7 +53,7 @@ import {
   useSCFetchFeedObject,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCCommentType, SCCommentTypologyType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {
   DELETE_CONTRIBUTION,
   DELETE_CONTRIBUTION_SECTION,
@@ -485,10 +485,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       return http
         .request({
           url:
-            contributionType === SCCommentTypologyType
+            contributionType === SCContributionType.COMMENT
               ? Endpoints.DeleteComment.url({id: contributionObj.id})
               : Endpoints.DeleteFeedObject.url({type: contributionType, id: contributionObj.id}),
-          method: contributionType === SCCommentTypologyType ? Endpoints.DeleteComment.method : Endpoints.DeleteFeedObject.method
+          method: contributionType === SCContributionType.COMMENT ? Endpoints.DeleteComment.method : Endpoints.DeleteFeedObject.method
         })
         .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
@@ -509,10 +509,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       return http
         .request({
           url:
-            contributionType === SCCommentTypologyType
+            contributionType === SCContributionType.COMMENT
               ? Endpoints.RestoreComment.url({id: contributionObj.id})
               : Endpoints.RestoreFeedObject.url({type: contributionType, id: contributionObj.id}),
-          method: contributionType === SCCommentTypologyType ? Endpoints.RestoreComment.method : Endpoints.RestoreFeedObject.method
+          method: contributionType === SCContributionType.COMMENT ? Endpoints.RestoreComment.method : Endpoints.RestoreFeedObject.method
         })
         .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
@@ -1017,7 +1017,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function canSuspendNotificationContribution(): boolean {
     return (
-      scUserContext.user && scUserContext.user.id !== contributionObj.author.id && contributionObj && contributionObj.type !== SCCommentTypologyType
+      scUserContext.user &&
+      scUserContext.user.id !== contributionObj.author.id &&
+      contributionObj &&
+      contributionObj.type !== SCContributionType.COMMENT
     );
   }
 

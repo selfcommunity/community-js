@@ -10,7 +10,7 @@ import Category, {CategoryProps, CategorySkeleton} from './components/Category';
 import CategoryAutocomplete, {CategoryAutocompleteProps} from './components/CategoryAutocomplete';
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
 import Categories, {CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps} from './components/Categories';
-import CategoriesFollowed, {CategoriesFollowedSkeleton} from './components/CategoriesFollowed';
+import CategoriesFollowedWidget, {CategoriesFollowedWidgetSkeleton} from './components/CategoriesFollowedWidget';
 import CategoriesPopularWidget, {CategoriesPopularWidgetSkeleton} from './components/CategoriesPopularWidget';
 import CategoriesSuggestionWidget, {CategoriesListProps, CategoriesSuggestionWidgetSkeleton} from './components/CategoriesSuggestionWidget';
 import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
@@ -23,19 +23,19 @@ import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
 import User, {UserProps, UserSkeleton} from './components/User';
 import Feed, {FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton} from './components/Feed';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/FeedObject';
-import FeedUpdates, {FeedUpdatesProps, FeedUpdatesSkeleton} from './components/FeedUpdates';
+import FeedUpdatesWidget, {FeedUpdatesWidgetProps, FeedUpdatesWidgetSkeleton} from './components/FeedUpdatesWidget';
 import FollowCategoryButton, {FollowCategoryButtonProps} from './components/FollowCategoryButton';
 import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
 import ConnectionUserButton from './components/ConnectionUserButton';
-import InlineComposer, {InlineComposerProps, InlineComposerSkeleton} from './components/InlineComposer';
+import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import PeopleSuggestionWidget, {PeopleSuggestionWidgetProps, PeopleSuggestionWidgetSkeleton} from './components/PeopleSuggestionWidget';
 import PlatformWidget, {PlatformWidgetProps, PlatformWidgetSkeleton} from './components/PlatformWidget';
 import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
 import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
 import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
-import TrendingFeed, {TrendingFeedProps, TrendingFeedSkeleton} from './components/TrendingFeed';
-import TrendingPeople, {TrendingPeopleProps, TrendingPeopleSkeleton} from './components/TrendingPeople';
+import TrendingFeedWidget, {TrendingFeedWidgetProps, TrendingFeedWidgetSkeleton} from './components/TrendingFeedWidget';
+import TrendingPeopleWidget, {TrendingPeopleWidgetProps, TrendingPeopleWidgetSkeleton} from './components/TrendingPeopleWidget';
 import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
 import UserCounters, {UserCountersProps} from './components/UserCounters';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
@@ -50,14 +50,15 @@ import UserProfileEdit, {
   UserProfileEditSectionAccount,
   UserProfileEditSectionAccountProps
 } from './components/UserProfileEdit';
-import UsersFollowed, {UsersFollowedProps, UsersFollowedSkeleton} from './components/UsersFollowed';
+import UsersFollowedWidget, {UsersFollowedWidgetProps, UsersFollowedWidgetSkeleton} from './components/UsersFollowedWidget';
 import UserSocialAssociation, {UserSocialAssociationProps} from './components/UserSocialAssociation';
-import UserFollowers, {UserFollowersProps, UserFollowersSkeleton} from './components/UserFollowers';
-import RelatedFeedObjects, {RelatedFeedObjectsProps, RelatedFeedObjectsSkeleton} from './components/RelatedFeedObjects';
+import UserFollowersWidget, {UserFollowersWidgetProps, UserFollowersWidgetSkeleton} from './components/UserFollowersWidget';
+import RelatedFeedObjectsWidget, {RelatedFeedObjectsWidgetProps, RelatedFeedObjectsWidgetSkeleton} from './components/RelatedFeedObjectsWidget';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
+import CommentObjectReply, {CommentObjectReplyProps} from './components/CommentObjectReply';
 import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
 import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton} from './components/CommentsFeedObject';
-import ReplyComment from './components/CommentObject/ReplyComment';
+import ReplyComment from './components/CommentObjectReply';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
 import PrivateMessageSnippetItem, {PrivateMessageSnippetItemProps, PrivateMessageSnippetItemSkeleton} from './components/PrivateMessageSnippetItem';
@@ -97,13 +98,13 @@ import PhoneTextField from './shared/PhoneTextField';
 import StickyBox, {useStickyBox, StickyBoxProps, StickyBoxComponent, UseStickyBoxProps} from './shared/StickyBox';
 import TagChip, {TagChipProps} from './shared/TagChip';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
-import PollSuggestion, {PollSuggestionProps} from './components/PollSuggestion';
+import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/PollSuggestionWidget';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
 import Incubator, {IncubatorProps} from './components/Incubator';
-import IncubatorsList, {IncubatorsListProps} from './components/IncubatorsList';
+import IncubatorsListWidget, {IncubatorsListWidgetProps} from './components/IncubatorsListWidget';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
-import IncubatorSuggestion, {IncubatorSuggestionProps} from './components/IncubatorSuggestion';
+import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import Footer, {FooterProps} from './components/Footer';
 import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAutocomplete';
 import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
@@ -169,8 +170,8 @@ export {
   CategoriesProps,
   CategoriesSkeleton,
   CategoriesSkeletonProps,
-  CategoriesFollowed,
-  CategoriesFollowedSkeleton,
+  CategoriesFollowedWidget,
+  CategoriesFollowedWidgetSkeleton,
   CategoriesPopularWidget,
   CategoriesPopularWidgetSkeleton,
   CategoriesSuggestionWidget,
@@ -205,9 +206,9 @@ export {
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  FeedUpdates,
-  FeedUpdatesProps,
-  FeedUpdatesSkeleton,
+  FeedUpdatesWidget,
+  FeedUpdatesWidgetProps,
+  FeedUpdatesWidgetSkeleton,
   GenericSkeleton,
   AvatarGroupSkeleton,
   CommentObject,
@@ -216,13 +217,15 @@ export {
   CommentObjectProps,
   CommentsObjectSkeleton,
   CommentObjectSkeleton,
+  CommentObjectReply,
+  CommentObjectReplyProps,
   CommentsFeedObject,
   CommentsFeedObjectProps,
   CommentsFeedObjectSkeleton,
   ReplyComment,
-  InlineComposer,
-  InlineComposerProps,
-  InlineComposerSkeleton,
+  InlineComposerWidget,
+  InlineComposerWidgetProps,
+  InlineComposerWidgetSkeleton,
   Notification,
   NotificationProps,
   NotificationSkeleton,
@@ -240,15 +243,15 @@ export {
   LoyaltyProgramDetail,
   LoyaltyProgramDetailSkeleton,
   LoyaltyProgramDetailProps,
-  TrendingFeed,
-  TrendingFeedProps,
-  TrendingFeedSkeleton,
-  TrendingPeople,
-  TrendingPeopleProps,
-  TrendingPeopleSkeleton,
-  RelatedFeedObjects,
-  RelatedFeedObjectsProps,
-  RelatedFeedObjectsSkeleton,
+  TrendingFeedWidget,
+  TrendingFeedWidgetProps,
+  TrendingFeedWidgetSkeleton,
+  TrendingPeopleWidget,
+  TrendingPeopleWidgetProps,
+  TrendingPeopleWidgetSkeleton,
+  RelatedFeedObjectsWidget,
+  RelatedFeedObjectsWidgetProps,
+  RelatedFeedObjectsWidgetSkeleton,
   UserActionIconButton,
   UserActionIconButtonProps,
   UserCounters,
@@ -271,12 +274,12 @@ export {
   UserProfileEditSectionSettingsProps,
   UserProfileEditSectionAccount,
   UserProfileEditSectionAccountProps,
-  UsersFollowed,
-  UsersFollowedProps,
-  UsersFollowedSkeleton,
-  UserFollowers,
-  UserFollowersProps,
-  UserFollowersSkeleton,
+  UsersFollowedWidget,
+  UsersFollowedWidgetProps,
+  UsersFollowedWidgetSkeleton,
+  UserFollowersWidget,
+  UserFollowersWidgetProps,
+  UserFollowersWidgetSkeleton,
   UserSocialAssociation,
   UserSocialAssociationProps,
   SCUserSocialAssociations,
@@ -373,16 +376,16 @@ export {
   DEFAULT_PAGINATION_OFFSET,
   DEFAULT_PAGINATION_LIMIT,
   DEFAULT_WIDGETS_NUMBER,
-  PollSuggestion,
-  PollSuggestionProps,
+  PollSuggestionWidget,
+  PollSuggestionWidgetProps,
   Incubator,
   IncubatorProps,
-  IncubatorsList,
-  IncubatorsListProps,
+  IncubatorsListWidget,
+  IncubatorsListWidgetProps,
   IncubatorDetail,
   IncubatorDetailProps,
-  IncubatorSuggestion,
-  IncubatorSuggestionProps,
+  IncubatorSuggestionWidget,
+  IncubatorSuggestionWidgetProps,
   ContributionUtils,
   bytesToSize,
   MessageUploaderUtils,
