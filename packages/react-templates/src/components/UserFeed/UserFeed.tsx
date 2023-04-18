@@ -13,7 +13,7 @@ import {
   FeedRef,
   FeedSidebarProps,
   FeedProps,
-  InlineComposer,
+  InlineComposerWidget,
   SCFeedWidgetType,
   UserFollowersWidget,
   UsersFollowedWidget
@@ -197,7 +197,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      {...(scUserContext.user ? {HeaderComponent: <InlineComposer onSuccess={handleComposerSuccess} />} : {})}
+      {...(scUserContext.user ? {HeaderComponent: <InlineComposerWidget onSuccess={handleComposerSuccess} />} : {})}
       FeedSidebarProps={FeedSidebarProps}
       {...FeedProps}
     />

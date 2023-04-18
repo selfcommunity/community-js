@@ -8,7 +8,7 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
-  InlineComposer,
+  InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
   TrendingFeedWidget,
@@ -205,7 +205,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
       enabledCustomAdvPositions={[
         SCCustomAdvPosition.POSITION_FEED_SIDEBAR,

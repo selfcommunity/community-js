@@ -10,7 +10,7 @@ import {
   FeedRef,
   FeedSidebarProps,
   FeedProps,
-  InlineComposer,
+  InlineComposerWidget,
   LoyaltyProgramWidget,
   PeopleSuggestionWidget,
   PlatformWidget,
@@ -179,7 +179,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
       FeedSidebarProps={FeedSidebarProps}
       enabledCustomAdvPositions={[
         SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
