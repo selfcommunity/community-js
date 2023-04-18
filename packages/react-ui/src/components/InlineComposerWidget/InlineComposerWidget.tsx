@@ -169,7 +169,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     if (onSuccess) {
       onSuccess(feedObject);
     }
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposer.success" defaultMessage="ui.inlineComposer.success" />, {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
       variant: 'success',
       autoHideDuration: 3000
     });
@@ -182,7 +182,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
         <CardContent className={classes.content}>
           <Box className={classes.input}>
             <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth color="inherit">
-              <FormattedMessage id="ui.inlineComposer.label" defaultMessage="ui.inlineComposer.label" />
+              <FormattedMessage id="ui.inlineComposerWidget.label" defaultMessage="ui.inlineComposerWidget.label" />
             </Button>
           </Box>
           <Box className={classes.actions}>
