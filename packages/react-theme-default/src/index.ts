@@ -97,6 +97,7 @@ import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
 import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
 import SCCommentObjectReply from './components/SCCommentObjectReply';
+import SCFooter from './components/SCFooter';
 
 /**
  * Style fragments - Imports - End
@@ -199,6 +200,7 @@ const theme = {
     SCFeedRelevantActivities,
     SCFeedSkeleton,
     SCFollowAction,
+    SCFooter,
     SCInlineComposerWidget,
     SCLightbox,
     SCLoyaltyProgramWidget,

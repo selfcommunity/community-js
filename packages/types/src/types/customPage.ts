@@ -1,17 +1,23 @@
+export enum SCCustomPageTypeEnum {
+  NORMAL = 'normal',
+  LEGAL = 'legal'
+}
+
 /**
  * SCCustomPageType interface
  */
 export interface SCCustomPageType {
   id?: number;
+  type?: SCCustomPageTypeEnum;
   slug?: string;
-  label: string;
   title: string;
-  alternative_url?: string;
-  html_body?: string;
-  visible_in_menu?: boolean;
-  order?: number;
+  html_summary?: string | null;
+  html_body?: string | null;
+  valid_from: Date | string;
+  valid_to: Date | string;
   created_at?: Date | string;
-  lastmod_datetime?: Date | string;
+  updated_at?: Date | string | null;
   active?: boolean;
   created_by?: number;
+  updated_by?: number;
 }

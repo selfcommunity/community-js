@@ -108,9 +108,9 @@ export default function Actions(inProps: ActionsProps): JSX.Element {
   });
   const {
     className,
-    feedObjectId,
     feedObject,
-    feedObjectType = SCContributionType.POST,
+    feedObjectId = feedObject?.id,
+    feedObjectType = feedObject?.type,
     feedObjectTemplate = SCFeedObjectTemplateType.PREVIEW,
     hideVoteAction = false,
     hideShareAction = false,
