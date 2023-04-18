@@ -103,9 +103,10 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   // HANDLERS
   const handleMouseEnter = (event) => {
     handleClearTimeout();
-    setTimeout(() => setAnchorEl(event.target), 1000);
+    timeoutRef.current = setTimeout(() => setAnchorEl(event.target), 1000);
   };
   const handleMouseLeave = (event) => {
+    handleClearTimeout();
     timeoutRef.current = setTimeout(() => setAnchorEl(null), 500);
   };
   const handleClearTimeout = () => {
