@@ -22,12 +22,12 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const messages = defineMessages({
   title: {
-    id: 'ui.categoriesFollowed.title',
-    defaultMessage: 'ui.categoriesFollowed.title'
+    id: 'ui.categoriesFollowedWidget.title',
+    defaultMessage: 'ui.categoriesFollowedWidget.title'
   },
   noCategories: {
-    id: 'ui.categoriesFollowed.subtitle.noResults',
-    defaultMessage: 'ui.categoriesFollowed.subtitle.noResults'
+    id: 'ui.categoriesFollowedWidget.subtitle.noResults',
+    defaultMessage: 'ui.categoriesFollowedWidget.subtitle.noResults'
   }
 });
 

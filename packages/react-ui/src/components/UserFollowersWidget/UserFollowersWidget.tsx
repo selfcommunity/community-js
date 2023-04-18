@@ -31,12 +31,12 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const messages = defineMessages({
   title: {
-    id: 'ui.userFollowers.title',
-    defaultMessage: 'ui.userFollowers.title'
+    id: 'ui.userFollowersWidget.title',
+    defaultMessage: 'ui.userFollowersWidget.title'
   },
   noFollowers: {
-    id: 'ui.userFollowers.subtitle.noResults',
-    defaultMessage: 'ui.userFollowers.subtitle.noResults'
+    id: 'ui.userFollowersWidget.subtitle.noResults',
+    defaultMessage: 'ui.userFollowersWidget.subtitle.noResults'
   }
 });
 

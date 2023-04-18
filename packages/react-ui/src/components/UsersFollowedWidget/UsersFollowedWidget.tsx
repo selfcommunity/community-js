@@ -31,12 +31,12 @@ import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../u
 
 const messages = defineMessages({
   title: {
-    id: 'ui.usersFollowed.title',
-    defaultMessage: 'ui.usersFollowed.title'
+    id: 'ui.usersFollowedWidget.title',
+    defaultMessage: 'ui.usersFollowedWidget.title'
   },
   noUsers: {
-    id: 'ui.usersFollowed.subtitle.noResults',
-    defaultMessage: 'ui.usersFollowed.subtitle.noResults'
+    id: 'ui.usersFollowedWidget.subtitle.noResults',
+    defaultMessage: 'ui.usersFollowedWidget.subtitle.noResults'
   }
 });
 
