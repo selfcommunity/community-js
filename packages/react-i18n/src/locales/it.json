@@ -460,11 +460,10 @@
   "ui.privateMessage.snippets.button.newMessage": "Componi Nuovo Messaggio",
   "ui.privateMessage.snippets.searchBar.placeholder" : "Cerca tra i messaggi privati",
 
-  "ui.privateMessage.actionMenu.item.delete" : "Elimina",
-  "ui.privateMessage.actionDrawer.item.delete" : "Elimina",
+  "ui.privateMessageSettingsIconButton.item.delete" : "Elimina",
+  "ui.privateMessageSettingsIconButton.dialog.msg": "Sei sicuro di voler eliminare questa conversazione?",
+  "ui.privateMessageSettingsIconButton.dialog.confirm": "Sì",
 
-  "ui.privateMessage.component.delete.thread.dialog.msg": "Sei sicuro di voler eliminare questa conversazione?",
-  "ui.privateMessage.component.delete.thread.dialog.confirm": "Sì",
   "ui.privateMessage.component.delete.message.dialog.msg": "Sei sicuro di voler eliminare il messaggio selezionato?",
   "ui.privateMessage.component.delete.message.dialog.confirm": "Sì",
 

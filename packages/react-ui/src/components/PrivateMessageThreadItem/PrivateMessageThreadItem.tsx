@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {ListItem, Typography, IconButton, Box, useTheme, Button, Dialog, DialogContent} from '@mui/material';
+import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageThreadType, SCMessageFileType} from '@selfcommunity/types';
@@ -8,10 +8,9 @@ import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import PrivateMessageActionMenu from '../PrivateMessageActionMenu';
 import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import PrivateMessageActionDrawer from '../PrivateMessageActionDrawer';
+import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import {bytesToSize} from '../../utils/sizeCoverter';
 import BaseDialog from '../../shared/BaseDialog';
 import AutoPlayer from '../../shared/AutoPlayer';
@@ -139,8 +138,6 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const hasFile = message ? message.file : null;
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
@@ -149,15 +146,9 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
     onTouchStart: mouseEnter,
     onTouchMove: mouseLeave
   });
-  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+
   const handleMenuItemClick = () => {
     onMenuIconClick();
-    handleMenuClose();
   };
 
   const handleDownload = (fileUrl, fileName) => {
@@ -234,25 +225,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
       secondaryAction={
         (isHovering || isMobile) &&
         showMenuIcon &&
-        message.status !== 'hidden' && (
-          <>
-            <IconButton onClick={handleOpenMenu}>
-              <Icon fontSize="small">more_vert</Icon>
-            </IconButton>
-            {isMobile ? (
-              <PrivateMessageActionDrawer
-                anchor="bottom"
-                open={open}
-                onClick={handleMenuClose}
-                onOpen={handleOpenMenu}
-                onClose={handleMenuClose}
-                onMenuItemDeleteClick={handleMenuItemClick}
-              />
-            ) : (
-              <PrivateMessageActionMenu anchorEl={anchorEl} open={open} onClose={handleMenuClose} onMenuItemDeleteClick={handleMenuItemClick} />
-            )}
-          </>
-        )
+        message.status !== 'hidden' && <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} />
       }>
       <>
         {hasFile ? (

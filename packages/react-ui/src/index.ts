@@ -107,11 +107,7 @@ import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './compo
 import Footer, {FooterProps} from './components/Footer';
 import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAutocomplete';
 import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
-import PrivateMessageActionMenu, {PrivateMessageActionMenuProps, PrivateMessageActionMenuSkeleton} from './components/PrivateMessageActionMenu';
-import PrivateMessageActionDrawer, {
-  PrivateMessageActionDrawerProps,
-  PrivateMessageActionDrawerSkeleton
-} from './components/PrivateMessageActionDrawer';
+import PrivateMessageSettingsIconButton, {PrivateMessageSettingsIconButtonProps} from './components/PrivateMessageSettingsIconButton';
 import PrivateMessageComponent, {PrivateMessageComponentProps, PrivateMessageComponentSkeleton} from './components/PrivateMessageComponent';
 /**
  * Constants
@@ -301,15 +297,11 @@ export {
   PrivateMessageSnippets,
   PrivateMessageSnippetsProps,
   PrivateMessageSnippetsSkeleton,
-  PrivateMessageActionMenu,
-  PrivateMessageActionMenuProps,
-  PrivateMessageActionMenuSkeleton,
-  PrivateMessageActionDrawer,
-  PrivateMessageActionDrawerProps,
-  PrivateMessageActionDrawerSkeleton,
   PrivateMessageComponent,
   PrivateMessageComponentProps,
   PrivateMessageComponentSkeleton,
+  PrivateMessageSettingsIconButton,
+  PrivateMessageSettingsIconButtonProps,
   ToastNotifications,
   ToastNotificationsProps,
   ToastNotificationsSkeleton,

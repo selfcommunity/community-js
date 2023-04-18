@@ -452,11 +452,10 @@
   "ui.privateMessage.snippets.button.newMessage" : "Create New Message",
   "ui.privateMessage.snippets.searchBar.placeholder" : "Search on Private Messages",
 
-  "ui.privateMessage.actionMenu.item.delete" : "Delete",
-  "ui.privateMessage.actionDrawer.item.delete" : "Delete",
+  "ui.privateMessageSettingsIconButton.item.delete" : "Delete",
+  "ui.privateMessageSettingsIconButton.dialog.msg": "Are you sure you want to delete this conversation?",
+  "ui.privateMessageSettingsIconButton.dialog.confirm": "Yes",
 
-  "ui.privateMessage.component.delete.thread.dialog.msg": "Are you sure you want to delete this conversation?",
-  "ui.privateMessage.component.delete.thread.dialog.confirm": "Yes",
   "ui.privateMessage.component.delete.message.dialog.msg": "Are you sure you want to delete this message?",
   "ui.privateMessage.component.delete.message.dialog.confirm": "Yes",
 

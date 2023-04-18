@@ -1,19 +1,19 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import PrivateMessageActionMenu from './index';
+import PrivateMessageSettingsIconButton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/PrivateMessageActionMenu',
-  component: PrivateMessageActionMenu
+  title: 'Design System/React UI/PrivateMessageSettingsIconButton',
+  component: PrivateMessageSettingsIconButton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof PrivateMessageActionMenu>;
+} as ComponentMeta<typeof PrivateMessageSettingsIconButton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof PrivateMessageActionMenu> = (args) => (
+const Template: ComponentStory<typeof PrivateMessageSettingsIconButton> = (args) => (
   <div style={{width: 400}}>
-    <PrivateMessageActionMenu {...args} />
+    <PrivateMessageSettingsIconButton {...args} />
   </div>
 );
 
