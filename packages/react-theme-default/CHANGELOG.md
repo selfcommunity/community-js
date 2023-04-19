@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.110](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.109...@selfcommunity/react-theme-default@0.1.0-alpha.110) (2023-04-19)
+
+
+### Bug Fixes
+
+* fixed pm component functioning on mobile view ([5eae45c](https://github.com/selfcommunity/community-js/commit/5eae45c08b8c1587764d5ec84be5b4579402d45b))
+
+
+### Performance Improvements
+
+* added component to handle thread deletion ([756d747](https://github.com/selfcommunity/community-js/commit/756d747c1c22d9cea427cae4124e0e3a7900609d))
+
+
+
+
+
 # [0.1.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.108...@selfcommunity/react-theme-default@0.1.0-alpha.109) (2023-04-18)
 
 
