@@ -32,7 +32,10 @@ const Component = {
       '& .MuiListItemSecondaryAction-root': {
         position: 'absolute',
         top: theme.spacing(3),
-        right: theme.spacing(0.5)
+        right: theme.spacing(0.5),
+        '& .MuiButtonBase-root': {
+          fontSize: '1rem'
+        }
       }
     })
   }

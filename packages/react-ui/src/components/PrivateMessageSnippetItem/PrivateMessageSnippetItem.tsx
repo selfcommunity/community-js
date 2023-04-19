@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, IconButton, useTheme, ListItem} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, useTheme, ListItem} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageSnippetType} from '@selfcommunity/types';
@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import PrivateMessageActionMenu from '../PrivateMessageActionMenu';
 
 const PREFIX = 'SCPrivateMessageSnippetItem';
 
@@ -47,12 +46,14 @@ export interface PrivateMessageSnippetItemProps {
   autoHide?: boolean;
 
   /**
-   * Props to spread item actions
+   * Callback fired on item click
    */
-  actions?: {
-    onItemClick?: () => void;
-    onMenuClick?: () => void;
-  };
+  onItemClick?: () => void;
+
+  /**
+   * Item secondary action (visible only on mobile view)
+   */
+  secondaryAction?: React.ReactNode;
   /**
    * Any other properties
    */
@@ -92,7 +93,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = false, message = null, className = null, actions = {}, ...rest} = props;
+  const {autoHide = false, message = null, className = null, onItemClick = null, secondaryAction = null, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   // PREFERENCES
@@ -111,25 +112,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const isNew = message ? message.thread_status === 'new' : null;
   const hasBadge = message?.receiver.community_badge;
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
-  //HANDLERS
-
-  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-  const handleMenuItemClick = () => {
-    actions.onMenuClick();
-    handleMenuClose();
-  };
-
-  /**
-   *
-   */
   if (!message) {
     return <PrivateMessageSnippetItemSkeleton elevation={0} />;
   }
@@ -141,21 +124,8 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
     return <HiddenPlaceholder />;
   }
   return (
-    <Root
-      className={classNames(classes.root, className)}
-      {...rest}
-      secondaryAction={
-        !isMobile && (
-          <>
-            <IconButton size="small" onClick={handleOpenMenu}>
-              <Icon>more_vert</Icon>
-            </IconButton>
-            <PrivateMessageActionMenu anchorEl={anchorEl} open={open} onClose={handleMenuClose} onMenuItemDeleteClick={handleMenuItemClick} />
-          </>
-        )
-      }
-      disablePadding>
-      <ListItemButton onClick={actions.onItemClick}>
+    <Root className={classNames(classes.root, className)} {...rest} secondaryAction={!isMobile && secondaryAction} disablePadding>
+      <ListItemButton onClick={onItemClick}>
         <ListItemAvatar>
           {scUserContext?.user?.username === message.receiver.username ? (
             <Avatar alt={message.sender.username} src={message.sender.avatar} />

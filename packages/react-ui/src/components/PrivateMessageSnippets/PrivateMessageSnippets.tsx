@@ -12,6 +12,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserContext, SCUserContextType, useSCFetchPrivateMessageSnippets} from '@selfcommunity/react-core';
 import {CacheStrategies} from '@selfcommunity/utils';
+import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 
 const messages = defineMessages({
   placeholder: {
@@ -63,7 +64,7 @@ export interface PrivateMessageSnippetsProps {
   snippetActions?: {
     onSnippetClick?: (msg) => void;
     onNewMessageClick?: () => void;
-    onMenuItemClick?: (msg) => void;
+    onDeleteConfirm?: (msg) => void;
   };
   /**
    * Any other properties
@@ -151,7 +152,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   };
 
   const handleDeleteConversation = (msg) => {
-    snippetActions && snippetActions.onMenuItemClick(msg);
+    snippetActions && snippetActions.onDeleteConfirm(msg);
   };
 
   function handleOpenThread(msg) {
@@ -234,13 +235,13 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     const threadSubscriber = PubSub.subscribe('snippetsChannel', (msg, data) => {
       handleSnippetsUpdate(data);
     });
-    const pmComponentSubscriber = PubSub.subscribe('snippetsChannel2', (msg, data) => {
+    const snippetsSubscriber = PubSub.subscribe('snippetsChannelDelete', (msg, data) => {
       handleSnippetsUpdate(data, true);
     });
 
     return () => {
       PubSub.unsubscribe(threadSubscriber);
-      PubSub.unsubscribe(pmComponentSubscriber);
+      PubSub.unsubscribe(snippetsSubscriber);
     };
   }, [data.snippets]);
 
@@ -291,7 +292,13 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                   <PrivateMessageSnippetItem
                     message={message}
                     key={message.id}
-                    actions={{onItemClick: () => handleOpenThread(message), onMenuClick: () => handleDeleteConversation(message)}}
+                    onItemClick={() => handleOpenThread(message)}
+                    secondaryAction={
+                      <PrivateMessageSettingsIconButton
+                        threadToDelete={messageReceiver(message, authUserId)}
+                        onItemDeleteConfirm={() => handleDeleteConversation(messageReceiver(message, authUserId))}
+                      />
+                    }
                     selected={
                       userObj !== SCPrivateMessageStatusType.NEW &&
                       messageReceiver(message, authUserId) === (isObj ? messageReceiver(userObj, authUserId) : userObj)

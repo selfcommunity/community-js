@@ -1,24 +1,21 @@
 import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Grid, useTheme, useMediaQuery} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {PrivateMessageService} from '@selfcommunity/api-services';
 import {SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
-import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCPrivateMessageComponent';
 
 const classes = {
   root: `${PREFIX}-root`,
   snippetsBox: `${PREFIX}-snippets-box`,
-  threadBox: `${PREFIX}-thread-box`
+  threadBox: `${PREFIX}-thread-box`,
+  hide: `${PREFIX}-hide`
 };
 
 const Root = styled(Grid, {
@@ -80,6 +77,7 @@ export interface PrivateMessageComponentProps {
  |root|.SCPrivateMessageComponent-root|Styles applied to the root element.|
  |snippetsBox|.SCPrivateMessageComponent-snippets-box|Styles applied to the snippets box element.|
  |threadBox|.SCPrivateMessageComponent-thread-box|Styles applied to the thread box element.|
+ |hide|.SCPrivateMessageComponent-hide|Styles applied to the snippetBox or threadBox grid item element on mobile view.|
 
  * @param inProps
  */
@@ -96,8 +94,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   // STATE
   const theme = useTheme<SCThemeType>();
-  const [openDeleteThreadDialog, setOpenDeleteThreadDialog] = useState<boolean>(false);
-  const [deletingThread, setDeletingThread] = useState(null);
   const [clear, setClear] = useState<boolean>(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [layout, setLayout] = useState('default');
@@ -107,6 +103,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const mobileSnippetsView = (layout === 'default' && !id) || (layout === 'mobile' && id);
   const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
   const messageReceiver = (item, loggedUserId) => {
+    if (typeof item === 'number') {
+      return item;
+    }
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
   };
 
@@ -139,19 +138,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     isMobile && setLayout('mobile');
     id && setLayout('default');
   };
-  /**
-   * Handles delete thread dialog opening
-   */
-  function handleOpenDeleteThreadDialog(threadObj) {
-    setOpenDeleteThreadDialog(true);
-    setDeletingThread(messageReceiver(threadObj, authUserId));
-  }
-  /**
-   * Handles delete thread dialog close
-   */
-  const handleCloseDeleteThreadDialog = () => {
-    setOpenDeleteThreadDialog(false);
-  };
 
   /**
    * Handles Layout update when new message section gets closed
@@ -166,10 +152,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Handles state update when a new message is sent
    */
-  const handleOnNewMessageSent = (msg) => {
+  const handleOnNewMessageSent = (msg, single) => {
     if (openNewMessage) {
-      onItemClick && onItemClick(messageReceiver(msg, authUserId));
-      setObj(msg);
+      onItemClick && onItemClick(single ? messageReceiver(msg, authUserId) : '');
+      setObj(single ? msg : null);
       setOpenNewMessage(false);
     }
   };
@@ -177,22 +163,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Handles thread deletion
    */
-  function handleDeleteThread() {
-    PrivateMessageService.deleteAThread({user: deletingThread})
-      .then(() => {
-        if (layout === 'mobile') {
-          setLayout('default');
-        }
-        id && setLayout('mobile');
-        setOpenDeleteThreadDialog(false);
-        deletingThread === messageReceiver(obj, authUserId) && handleThreadClosing();
-        setClear(true);
-        PubSub.publish('snippetsChannel2', deletingThread);
-      })
-      .catch((error) => {
-        setOpenDeleteThreadDialog(false);
-        console.log(error);
-      });
+  function handleDeleteThread(deletingThread) {
+    deletingThread === messageReceiver(obj, authUserId) && handleThreadClosing();
+    setClear(true);
   }
 
   /**
@@ -200,35 +173,16 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderSnippets() {
     return (
-      <Grid item xs={12} md={5} className={classes.snippetsBox}>
+      <Grid item xs={12} md={5} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
         <PrivateMessageSnippets
           snippetActions={{
             onSnippetClick: handleThreadOpening,
             onNewMessageClick: handleOpenNewMessage,
-            onMenuItemClick: handleOpenDeleteThreadDialog
+            onDeleteConfirm: handleDeleteThread
           }}
           userObj={obj}
           clearSearch={clear}
         />
-        {openDeleteThreadDialog && (
-          <ConfirmDialog
-            open={openDeleteThreadDialog}
-            title={
-              <FormattedMessage
-                id="ui.privateMessage.component.delete.thread.dialog.msg"
-                defaultMessage="ui.privateMessage.component.delete.thread.dialog.msg"
-              />
-            }
-            btnConfirm={
-              <FormattedMessage
-                id="ui.privateMessage.component.delete.thread.dialog.confirm"
-                defaultMessage="ui.privateMessage.component.delete.thread.dialog.confirm"
-              />
-            }
-            onConfirm={handleDeleteThread}
-            onClose={handleCloseDeleteThreadDialog}
-          />
-        )}
       </Grid>
     );
   }
@@ -237,7 +191,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderThread() {
     return (
-      <Grid item xs={12} md={7} className={classes.threadBox}>
+      <Grid item xs={12} md={7} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
         <PrivateMessageThread
           userObj={obj}
           openNewMessage={openNewMessage}
@@ -257,17 +211,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   if (!autoHide) {
     return (
       <Root container {...rest} className={classNames(classes.root, className)}>
-        {isMobile ? (
-          <>
-            {mobileSnippetsView && <>{renderSnippets()}</>}
-            {mobileThreadView && <>{renderThread()}</>}
-          </>
-        ) : (
-          <>
-            {renderSnippets()}
-            {renderThread()}
-          </>
-        )}
+        {renderSnippets()}
+        {renderThread()}
       </Root>
     );
   }
