@@ -242,6 +242,11 @@ const Component = {
           '& .MuiFormControl-root': {
             margin: 0
           }
+        },
+        '& .MuiDialog-paperFullScreen': {
+          '& .SCComposer-actions > *:first-of-type': {
+            marginBottom: theme.spacing(2)
+          }
         }
       };
     }

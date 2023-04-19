@@ -213,7 +213,6 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
         view={view}
         mediaObjectTypes={mediaObjectTypes}
         defaultValue={defaultValue}
-        maxWidth="sm"
         fullWidth
         scroll="body"
         onClose={handleClose}

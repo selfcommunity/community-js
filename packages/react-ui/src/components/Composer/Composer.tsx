@@ -298,6 +298,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     EditorProps = null,
     onClose = null,
     onSuccess = null,
+    maxWidth,
     ...rest
   } = props;
 
@@ -807,11 +808,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               <Select value={type} onChange={handleChangeType} input={<TypeInput />} disabled={editMode}>
                 {composerTypes.map((t) => (
                   <MenuItem value={t} key={t}>
-                    {t === 'post' ? (
-                      <FormattedMessage id={'ui.composer.type.post'} defaultMessage={'ui.composer.type.post'} />
-                    ) : (
-                      <FormattedMessage id={'ui.composer.type.discussion'} defaultMessage={'ui.composer.type.discussion'} />
-                    )}
+                    <FormattedMessage id={`ui.composer.type.${t}`} defaultMessage={`ui.composer.type.${t}`} />
                   </MenuItem>
                 ))}
               </Select>
@@ -981,12 +978,20 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     );
   }
 
+  const _maxWidth = useMemo(() => (maxWidth ? maxWidth : type === COMPOSER_TYPE_DISCUSSION ? 'md' : 'sm'), [maxWidth, type]);
   if (!scAuthContext.user) {
     return null;
   }
 
   return (
-    <Root TransitionComponent={DialogTransition} keepMounted onClose={handleClose} {...rest} className={classes.root} fullScreen={fullScreen}>
+    <Root
+      maxWidth={_maxWidth}
+      TransitionComponent={DialogTransition}
+      keepMounted
+      onClose={handleClose}
+      {...rest}
+      className={classes.root}
+      fullScreen={fullScreen}>
       {child()}
     </Root>
   );

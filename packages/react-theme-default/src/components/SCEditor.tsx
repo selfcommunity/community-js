@@ -35,6 +35,7 @@ const Component = {
         bottom: 0,
         right: theme.spacing(),
         color: theme.palette.text.primary,
+        zIndex: 1,
         '& .MuiIcon-root': {
           fontSize: '1.143rem'
         }
@@ -125,31 +126,6 @@ const Component = {
         margin: 0,
         fontWeight: theme.typography.fontWeightLight,
         textTransform: 'uppercase'
-      },
-      '& .SCEditor-code': {
-        backgroundColor: 'rgb(240, 242, 245)',
-        fontFamily: 'monospace',
-        display: 'block',
-        padding: theme.spacing(1, 1, 1, 7),
-        lineHeight: 1.53,
-        fontSize: 13,
-        margin: theme.spacing(1, 0),
-        tabSize: 2,
-        overflowX: 'auto',
-        position: 'relative',
-        '&:before': {
-          content: 'attr(data-gutter)',
-          position: 'absolute',
-          backgroundColor: '#eee',
-          left: 0,
-          top: 0,
-          borderRight: '1px solid #ccc',
-          padding: theme.spacing(1),
-          color: '#777',
-          whiteSpace: 'pre-wrap',
-          textAlign: 'right',
-          minWidth: 25
-        }
       },
       '& .SCEditor-textBold': {
         fontWeight: 'bold'

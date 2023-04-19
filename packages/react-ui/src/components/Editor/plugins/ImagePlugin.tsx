@@ -10,7 +10,7 @@ import {
   LexicalEditor
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Icon, IconButton, IconButtonProps, CircularProgress} from '@mui/material';
+import {CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints} from '@selfcommunity/api-services';
@@ -37,7 +37,7 @@ interface UploadButtonProps extends IconButtonProps {
 
 const UploadButton = asUploadButton(
   forwardRef(({progress = null, ...rest}: UploadButtonProps, ref: any) => (
-    <IconButton {...rest} aria-label="upload image" ref={ref} color="inherit">
+    <IconButton {...rest} aria-label="upload image" ref={ref}>
       {progress ? <CircularProgress variant="determinate" value={progress} size="1rem" /> : <Icon color="inherit">image</Icon>}
     </IconButton>
   ))

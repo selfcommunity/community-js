@@ -100,7 +100,7 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
       <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      <Composer {...ComposerProps} open={open} maxWidth="sm" fullWidth scroll="body" onClose={handleClose} onSuccess={handleClose} />
+      <Composer {...ComposerProps} open={open} fullWidth scroll="body" onClose={handleClose} onSuccess={handleClose} />
     </>
   );
 }
