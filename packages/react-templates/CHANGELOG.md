@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.151](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.150...@selfcommunity/react-templates@0.3.0-alpha.151) (2023-04-18)
+
+
+### Bug Fixes
+
+* added suffix to inline composer component ([6f8d55d](https://github.com/selfcommunity/community-js/commit/6f8d55d6af3b3627bad4c10398bcd8b025ca048a))
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+### Performance Improvements
+
+* renamed components after ui refactoring ([754dfbc](https://github.com/selfcommunity/community-js/commit/754dfbc15be0128b7e62230fc0d176498cb1df37))
+
+
+
+
+
 # [0.3.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.149...@selfcommunity/react-templates@0.3.0-alpha.150) (2023-04-14)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
