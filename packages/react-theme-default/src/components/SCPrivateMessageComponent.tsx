@@ -20,6 +20,9 @@ const Component = {
             borderRadius: 0
           }
         }
+      },
+      '& .SCPrivateMessageComponent-hide': {
+        display: 'none'
       }
     })
   }

@@ -188,25 +188,20 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     },
     [dispatch, state.next, state.isLoadingNext]
   );
-  /**
-   * Fetches the list of user points
-   */
-  const fetchUserPoints = () => {
-    return UserService.getUserLoyaltyPoints(authUserId)
-      .then((data) => {
-        setPoints(data.points);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        console.log(error);
-      });
-  };
+
   /**
    * On mount, fetches user loyalty points
    */
   useEffect(() => {
     if (authUserId) {
-      fetchUserPoints();
+      UserService.getUserLoyaltyPoints(authUserId)
+        .then((data) => {
+          setPoints(data.points);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          console.log(error);
+        });
     }
   }, [authUserId]);
 

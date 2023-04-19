@@ -84,7 +84,7 @@ export interface PrivateMessageThreadProps {
    * Callback fired when new message is sent
    * @default null
    */
-  onNewMessageSent?: (msg) => void;
+  onNewMessageSent?: (msg: any, isSingle?: boolean) => void;
   /**
    * Callback fired when new message section is closed
    * @default null
@@ -367,7 +367,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           if (openNewMessage || singleMessageThread) {
             setSingleMessageThread(false);
             setRecipients([]);
-            onNewMessageSent(res.data[0]);
+            onNewMessageSent(res.data[0], single);
           }
         })
         .catch((error) => {

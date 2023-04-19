@@ -20,7 +20,7 @@ const Component = {
           maxHeight: `calc(100% - ${theme.spacing(6.25)})`
         },
         [theme.breakpoints.down('md')]: {
-          maxHeight: 'calc(100vh - 6rem)'
+          maxHeight: 'calc(100vh - 6.2rem)'
         },
         '& .MuiAlert-root': {
           position: 'absolute',

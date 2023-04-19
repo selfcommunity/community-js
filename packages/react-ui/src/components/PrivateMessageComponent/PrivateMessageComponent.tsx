@@ -14,7 +14,8 @@ const PREFIX = 'SCPrivateMessageComponent';
 const classes = {
   root: `${PREFIX}-root`,
   snippetsBox: `${PREFIX}-snippets-box`,
-  threadBox: `${PREFIX}-thread-box`
+  threadBox: `${PREFIX}-thread-box`,
+  hide: `${PREFIX}-hide`
 };
 
 const Root = styled(Grid, {
@@ -76,6 +77,7 @@ export interface PrivateMessageComponentProps {
  |root|.SCPrivateMessageComponent-root|Styles applied to the root element.|
  |snippetsBox|.SCPrivateMessageComponent-snippets-box|Styles applied to the snippets box element.|
  |threadBox|.SCPrivateMessageComponent-thread-box|Styles applied to the thread box element.|
+ |hide|.SCPrivateMessageComponent-hide|Styles applied to the snippetBox or threadBox grid item element on mobile view.|
 
  * @param inProps
  */
@@ -150,10 +152,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Handles state update when a new message is sent
    */
-  const handleOnNewMessageSent = (msg) => {
+  const handleOnNewMessageSent = (msg, single) => {
     if (openNewMessage) {
-      onItemClick && onItemClick(messageReceiver(msg, authUserId));
-      setObj(msg);
+      onItemClick && onItemClick(single ? messageReceiver(msg, authUserId) : '');
+      setObj(single ? msg : null);
       setOpenNewMessage(false);
     }
   };
@@ -171,7 +173,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderSnippets() {
     return (
-      <Grid item xs={12} md={5} className={classes.snippetsBox}>
+      <Grid item xs={12} md={5} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
         <PrivateMessageSnippets
           snippetActions={{
             onSnippetClick: handleThreadOpening,
@@ -189,7 +191,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderThread() {
     return (
-      <Grid item xs={12} md={7} className={classes.threadBox}>
+      <Grid item xs={12} md={7} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
         <PrivateMessageThread
           userObj={obj}
           openNewMessage={openNewMessage}
@@ -209,17 +211,8 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   if (!autoHide) {
     return (
       <Root container {...rest} className={classNames(classes.root, className)}>
-        {isMobile ? (
-          <>
-            {mobileSnippetsView && <>{renderSnippets()}</>}
-            {mobileThreadView && <>{renderThread()}</>}
-          </>
-        ) : (
-          <>
-            {renderSnippets()}
-            {renderThread()}
-          </>
-        )}
+        {renderSnippets()}
+        {renderThread()}
       </Root>
     );
   }

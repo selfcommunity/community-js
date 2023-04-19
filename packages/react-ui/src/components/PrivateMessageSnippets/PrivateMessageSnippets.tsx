@@ -235,13 +235,13 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     const threadSubscriber = PubSub.subscribe('snippetsChannel', (msg, data) => {
       handleSnippetsUpdate(data);
     });
-    const pmComponentSubscriber = PubSub.subscribe('snippetsChannelDelete', (msg, data) => {
+    const snippetsSubscriber = PubSub.subscribe('snippetsChannelDelete', (msg, data) => {
       handleSnippetsUpdate(data, true);
     });
 
     return () => {
       PubSub.unsubscribe(threadSubscriber);
-      PubSub.unsubscribe(pmComponentSubscriber);
+      PubSub.unsubscribe(snippetsSubscriber);
     };
   }, [data.snippets]);
 
