@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.165](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.164...@selfcommunity/react-ui@0.7.0-alpha.165) (2023-04-19)
+
+
+### Bug Fixes
+
+* Fix editor toolbar layout ([ab963a2](https://github.com/selfcommunity/community-js/commit/ab963a2166bf4d5eb65521536bec638c71ac2435))
+
+
+
+
+
 # [0.7.0-alpha.164](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.163...@selfcommunity/react-ui@0.7.0-alpha.164) (2023-04-19)
 
 
