@@ -206,7 +206,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
       }
       secondary={
         <Widget className={classes.comment} {...WidgetProps}>
-          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} />
+          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} uploadImage />
           {!isEditorEmpty() && (
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (

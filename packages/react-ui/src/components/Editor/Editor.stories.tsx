@@ -23,5 +23,6 @@ Base.args = {
   /* the args you need here will depend on your component */
   defaultValue: '<s>ciao</s> <mention id="1" ext-id="5">@username</mention>',
   onChange: (value) => console.log(value),
-  toolbar: false
+  toolbar: false,
+  uploadImage: false
 };

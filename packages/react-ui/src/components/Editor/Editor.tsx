@@ -16,11 +16,9 @@ import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
-import CodeHighlightPlugin from './plugins/CodeGutterPlugin';
 import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
-import {shouldForwardProp} from '@mui/system/createStyled';
 
 const PREFIX = 'SCEditor';
 
@@ -45,7 +43,6 @@ export type EditorRef = {
 };
 
 const editorTheme: EditorThemeClasses = {
-  code: `${PREFIX}-code`,
   heading: {
     h1: `${PREFIX}-h1`,
     h2: `${PREFIX}-h2`,
@@ -104,10 +101,16 @@ export interface EditorProps {
   editable?: boolean;
 
   /**
-   * Show the toolbar on top of the editor
+   * Show the toolbar on top of the editor, elsewhere show buttons at the bottom of the editor
    * @default false
    */
   toolbar?: boolean;
+
+  /**
+   * This editor can upload images and insert into the html dom
+   * @default false
+   */
+  uploadImage?: boolean;
 
   /**
    * Handler for change event of the editor
@@ -144,7 +147,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     props: inProps,
     name: PREFIX
   });
-  const {id = 'editor', className = null, defaultValue = '', toolbar = false, editable = true, onChange = null} = props;
+  const {id = 'editor', className = null, defaultValue = '', toolbar = false, uploadImage = false, editable = true, onChange = null} = props;
   const apiRef = useRef<ApiRef>();
 
   // MEMO
@@ -187,12 +190,16 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   return (
     <Root id={id} className={classNames(classes.root, className, {[classes.toolbar]: toolbar})}>
       <LexicalComposer initialConfig={initialConfig}>
-        {toolbar && (
+        {toolbar ? (
           <>
-            <ToolbarPlugin />
+            <ToolbarPlugin uploadImage={uploadImage} />
             <ListPlugin />
-            <CodeHighlightPlugin />
           </>
+        ) : (
+          <Stack className={classes.actions} direction="row">
+            {uploadImage && <ImagePlugin />}
+            <EmojiPlugin />
+          </Stack>
         )}
         <RichTextPlugin
           contentEditable={<ContentEditable className={classes.content} />}
@@ -210,10 +217,6 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <MentionsPlugin />
         <LinkPlugin />
         {!isMobile && <FloatingLinkPlugin />}
-        <Stack className={classes.actions} direction="row">
-          <ImagePlugin />
-          <EmojiPlugin />
-        </Stack>
         <ApiPlugin ref={apiRef} />
       </LexicalComposer>
     </Root>

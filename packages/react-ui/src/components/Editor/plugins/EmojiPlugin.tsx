@@ -1,7 +1,7 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {CONTROLLED_TEXT_INSERTION_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Fade, Icon, IconButton, Popover, useTheme, useMediaQuery} from '@mui/material';
+import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import BaseDrawer from '../../../shared/BaseDrawer';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -31,7 +31,7 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
 
   return (
     <>
-      <IconButton className={className} onClick={handleClick} color="inherit">
+      <IconButton className={className} onClick={handleClick}>
         <Icon>sentiment_satisfied_alt</Icon>
       </IconButton>
       {isMobile ? (
