@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.166](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.165...@selfcommunity/react-ui@0.7.0-alpha.166) (2023-04-20)
+
+
+### Bug Fixes
+
+* editor ([7ba1ad4](https://github.com/selfcommunity/community-js/commit/7ba1ad43ef293178aa99e3266cc6977af7f20747))
+
+
+### Performance Improvements
+
+* Added image upload in toolbar when is discussion ([12addc8](https://github.com/selfcommunity/community-js/commit/12addc85630ae5e1fb6fa6c49f43526c73f9a1af))
+
+
+
+
+
 # [0.7.0-alpha.165](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.164...@selfcommunity/react-ui@0.7.0-alpha.165) (2023-04-19)
 
 
