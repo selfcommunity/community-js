@@ -56,10 +56,91 @@ const Component = {
               padding: theme.spacing(0, 2, 2)
             },
             '& a': {
+              color: theme.palette.text.primary,
+              textDecoration: 'none',
               '&:hover': {
                 textDecoration: 'underline',
-                color: 'inherit'
+                cursor: 'pointer'
               }
+            },
+            '& blockquote': {
+              margin: 0,
+              marginLeft: theme.spacing(2),
+              marginBottom: theme.spacing(1),
+              color: theme.palette.text.secondary,
+              borderLeftColor: theme.palette.primary.main,
+              borderLeftWidth: theme.spacing(0.25),
+              borderLeftStyle: 'solid',
+              paddingLeft: theme.spacing(2)
+            },
+            '& h1': {
+              fontSize: '1.429rem',
+              color: theme.palette.text.primary,
+              fontWeight: theme.typography.fontWeightBold,
+              margin: 0
+            },
+            '& h2': {
+              fontSize: '1.143rem',
+              color: theme.palette.text.primary,
+              fontWeight: theme.typography.fontWeightBold,
+              margin: 0
+            },
+            '& h3': {
+              fontSize: '1rem',
+              color: theme.palette.text.primary,
+              fontWeight: theme.typography.fontWeightLight,
+              margin: 0
+            },
+            '& b': {
+              fontWeight: 'bold'
+            },
+            '& i': {
+              fontStyle: 'italic'
+            },
+            '& u': {
+              textDecoration: 'underline'
+            },
+            '& s': {
+              textDecoration: 'line-through'
+            },
+            '& sub': {
+              fontSize: '0.8em',
+              verticalAlign: 'sub !important'
+            },
+            '& sup': {
+              fontSize: '0.8em',
+              verticalAlign: 'super'
+            },
+            '& ol': {
+              padding: 0,
+              margin: 0
+            },
+            '& ol ol': {
+              padding: 0,
+              margin: 0,
+              listStyleType: 'upper-alpha'
+            },
+            '& ol ol ol': {
+              padding: 0,
+              margin: 0,
+              listStyleType: 'lower-alpha'
+            },
+            '& ol ol ol ol': {
+              padding: 0,
+              margin: 0,
+              listStyleType: 'upper-roman'
+            },
+            '& ol ol ol ol ol': {
+              padding: 0,
+              margin: 0,
+              listStyleType: 'lower-roman'
+            },
+            '& ul': {
+              padding: 0,
+              margin: 0
+            },
+            '& li': {
+              margin: '0 32px'
             }
           }
         },
