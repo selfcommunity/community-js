@@ -45,7 +45,7 @@ const Component = {
         width: 7,
         height: 7,
         position: 'absolute',
-        backgroundColor: 'rgb(60, 132, 244)',
+        backgroundColor: theme.palette.secondary.main,
         border: '1px solid #fff',
         '&.image-resizer-n': {
           top: -6,
@@ -86,6 +86,14 @@ const Component = {
           top: -6,
           left: -6,
           cursor: 'nw-resize'
+        }
+      },
+      '& hr': {
+        cursor: 'pointer',
+        margin: '1em 0',
+        '&.selected': {
+          outline: `2px solid ${theme.palette.secondary.main}`,
+          userSelect: 'none'
         }
       },
       '& .SCEditor-ltr': {

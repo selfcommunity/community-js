@@ -55,6 +55,9 @@ const Component = {
             '& > :first-of-type': {
               padding: theme.spacing(0, 2, 2)
             },
+            '& hr': {
+              margin: '1em 0'
+            },
             '& a': {
               color: theme.palette.text.primary,
               textDecoration: 'none',

@@ -204,6 +204,7 @@
   "ui.editor.toolbarPlugin.right": "Allinea a destra",
   "ui.editor.toolbarPlugin.center": "Allinea al centro",
   "ui.editor.toolbarPlugin.justify": "Giustifica",
+  "ui.editor.toolbarPlugin.horizontalRule": "Riga di separazione",
 
   "ui.feedObject.error": "Il contributo non è disponibile al momento",
   "ui.feedObject.comment": "Commenta",

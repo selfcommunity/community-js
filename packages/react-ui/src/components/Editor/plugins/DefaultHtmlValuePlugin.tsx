@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$createParagraphNode, $getRoot} from 'lexical';
+import {$getRoot, $insertNodes} from 'lexical';
 import {$generateNodesFromDOM} from '@lexical/html';
 
 function DefaultHtmlValuePlugin({defaultValue}) {
@@ -20,19 +20,10 @@ function DefaultHtmlValuePlugin({defaultValue}) {
       const nodes = $generateNodesFromDOM(editor, dom);
 
       // Select the root
-      const root = $getRoot();
-      // Select the root
-      root.select();
+      $getRoot().select();
 
-      // Add nodes
-      if (nodes.length <= 1) {
-        const paragraphNode = $createParagraphNode();
-        nodes.forEach((node) => paragraphNode.append(node));
-        root.getFirstChild().replace(paragraphNode);
-      } else {
-        root.getFirstChild().remove();
-        nodes.forEach((node) => root.append(node));
-      }
+      // Insert them at a selection.
+      $insertNodes(nodes);
     });
   }, []);
 

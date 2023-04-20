@@ -36,6 +36,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import ImagePlugin from './ImagePlugin';
 import EmojiPlugin from './EmojiPlugin';
+import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
 
 const blockTypeToBlockIcon = {
   h1: 'format_heading_1',
@@ -366,6 +367,15 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
       <IconButton disabled={!isEditable} onClick={clearFormatting}>
         <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.clear" defaultMessage="ui.editor.toolbarPlugin.clear" />}>
           <Icon>format_clear</Icon>
+        </Tooltip>
+      </IconButton>
+      <IconButton
+        disabled={!isEditable}
+        onClick={() => {
+          activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+        }}>
+        <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.horizontalRule" defaultMessage="ui.editor.toolbarPlugin.horizontalRule" />}>
+          <Icon>format_horizontal_rule</Icon>
         </Tooltip>
       </IconButton>
       {uploadImage && <ImagePlugin />}
