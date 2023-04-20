@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.11...@selfcommunity/react-i18n@0.5.0-alpha.12) (2023-04-19)
+
+
+### Bug Fixes
+
+* Fix editor toolbar layout ([ab963a2](https://github.com/selfcommunity/community-js/commit/ab963a2166bf4d5eb65521536bec638c71ac2435))
+
+
+
+
+
+# [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.10...@selfcommunity/react-i18n@0.5.0-alpha.11) (2023-04-19)
+
+
+### Performance Improvements
+
+* added component to handle thread deletion ([756d747](https://github.com/selfcommunity/community-js/commit/756d747c1c22d9cea427cae4124e0e3a7900609d))
+
+
+
+
+
 # [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.9...@selfcommunity/react-i18n@0.5.0-alpha.10) (2023-04-18)
 
 
