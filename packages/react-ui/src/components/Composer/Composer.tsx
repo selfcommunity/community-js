@@ -608,7 +608,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   // MEMO
-  const _EditorProps = useMemo(() => (EditorProps ? EditorProps : {toolbar: type === COMPOSER_TYPE_DISCUSSION}), [EditorProps, type]);
+  const _EditorProps = useMemo(
+    () => (EditorProps ? EditorProps : {toolbar: type === COMPOSER_TYPE_DISCUSSION, uploadImage: type === COMPOSER_TYPE_DISCUSSION}),
+    [EditorProps, type]
+  );
 
   // RENDER
   const theme: Theme = useTheme<SCThemeType>();
