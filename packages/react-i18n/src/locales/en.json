@@ -21,6 +21,10 @@
   "ui.confirmDialog.btnConfirm": "Yes",
   "ui.confirmDialog.btnCancel": "No",
 
+  "ui.webPushNotification.requestPermission": "This website would like to send push notification",
+  "ui.webPushNotification.allow": "Allow",
+  "ui.webPushNotification.block": "Block",
+
   "ui.baseDialog.button.close": "Close",
 
   "ui.broadcastMessages.message.chip": "INFO",

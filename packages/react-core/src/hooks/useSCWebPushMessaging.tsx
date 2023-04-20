@@ -1,15 +1,20 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {SCContextType, SCPreferencesContextType, SCUserContextType} from '../types';
 import {SCTagType} from '@selfcommunity/types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {Logger} from '@selfcommunity/utils';
+import Button from '@mui/material/Button';
 import {loadVersionBrowser, urlB64ToUint8Array} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
 import {SCPreferencesContext} from '../components/provider/SCPreferencesProvider';
+import {SnackbarKey, useSnackbar} from 'notistack';
 import * as SCPreferences from '../constants/Preferences';
+import {NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE} from '../constants/Notifications';
+import Cookies from 'js-cookie';
+import {useIntl} from 'react-intl';
 
 /**
  :::info
@@ -21,6 +26,8 @@ export default function useSCWebPushMessaging() {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const intl = useIntl();
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   // STATE
   const [wpSubscription, setWpSubscription] = useState(null);
@@ -40,6 +47,45 @@ export default function useSCWebPushMessaging() {
     scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
       ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
       : false;
+
+  /**
+   * Show custom Snackbar dialog to request permission
+   * User action required for some browser (ex. Safari)
+   */
+  const showCustomRequestNotificationSnackbar = () => {
+    if (!Cookies.get(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE)) {
+      enqueueSnackbar(
+        intl.formatMessage({id: 'ui.webPushNotification.requestPermission', defaultMessage: 'ui.webPushNotification.requestPermission'}),
+        {
+          action: (snackbarId: SnackbarKey) => (
+            <>
+              <Button size="small" onClick={() => requestNotificationPermission(snackbarId)}>
+                {intl.formatMessage({id: 'ui.webPushNotification.allow', defaultMessage: 'ui.webPushNotification.allow'})}
+              </Button>
+              <Button size="small" onClick={() => closeRequestNotificationSnackbar(snackbarId)}>
+                {intl.formatMessage({id: 'ui.webPushNotification.block', defaultMessage: 'ui.webPushNotification.block'})}
+              </Button>
+            </>
+          ),
+          variant: 'default',
+          anchorOrigin: {horizontal: 'center', vertical: 'bottom'},
+          preventDuplicate: true,
+        }
+      );
+    }
+  };
+
+  /**
+   * Close the SnackBar dialog if the request notification permission
+   * came from the custom dialog
+   * @param snackbarid
+   */
+  const closeRequestNotificationSnackbar = (snackbarId: SnackbarKey | null) => {
+    if (snackbarId) {
+      closeSnackbar(snackbarId);
+      Cookies.set(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE, '1');
+    }
+  };
 
   /**
    * perform update the Subscription
@@ -142,7 +188,9 @@ export default function useSCWebPushMessaging() {
    * Get subscription
    */
   const subscribe = () => {
-    navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+    navigator.serviceWorker.getRegistration().then(function (serviceWorkerRegistration) {
+      console.log(serviceWorkerRegistration);
+      console.log(serviceWorkerRegistration.pushManager);
       serviceWorkerRegistration.pushManager
         .subscribe({userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(applicationServerKey)})
         .then(function (subscription) {
@@ -153,6 +201,8 @@ export default function useSCWebPushMessaging() {
           }
         })
         .catch(function (e) {
+          console.log('Error on subscribe web push notification!');
+          console.log(e);
           if (Notification.permission === 'denied') {
             // The user denied the notification permission which
             // means we failed to subscribe and the user will need
@@ -177,35 +227,41 @@ export default function useSCWebPushMessaging() {
    * Request web push notification permission
    * @type {(function(): void)|*}
    */
-  const requestNotificationPermission = () => {
+  const requestNotificationPermission = (snackbarId: SnackbarKey | null) => {
     if (Notification.permission !== 'granted') {
-      Notification.requestPermission().then(function (permission) {
-        if (permission === 'granted') {
-          navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
-            // Do we already have a push message subscription?
-            serviceWorkerRegistration.pushManager
-              .getSubscription()
-              .then(function (subscription) {
-                // Enable any UI which subscribes / unsubscribes from
-                // push messages.
-                if (!subscription) {
-                  subscribe();
-                  return;
-                }
+      Notification.requestPermission()
+        .then(function (permission) {
+          if (permission === 'granted') {
+            navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+              // Do we already have a push message subscription?
+              serviceWorkerRegistration.pushManager
+                .getSubscription()
+                .then(function (subscription) {
+                  // Enable any UI which subscribes / unsubscribes from
+                  // push messages.
+                  if (!subscription) {
+                    subscribe();
+                    return;
+                  }
 
-                // Keep your server in sync with the latest subscription
-                updateSubscriptionOnServer(subscription, false);
-              })
-              .catch((err) => {
-                Logger.info(SCOPE_SC_CORE, 'Error during getSubscription()');
-                console.log(err);
-              });
-          });
-        } else {
-          Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
-        }
-      });
+                  // Keep your server in sync with the latest subscription
+                  updateSubscriptionOnServer(subscription, false);
+                })
+                .catch((err) => {
+                  Logger.info(SCOPE_SC_CORE, 'Error during getSubscription()');
+                  console.log(err);
+                });
+            });
+          } else {
+            Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Logger.info(SCOPE_SC_CORE, 'Request web push permission by a user generated gesture');
+        });
     }
+    closeRequestNotificationSnackbar(snackbarId);
   };
 
   /**
@@ -225,7 +281,7 @@ export default function useSCWebPushMessaging() {
      * so your development environment must serve content over HTTPS to match a production environment.
      * Check if push messaging is supported.
      */
-    if (!('PushManager' in window && 'serviceWorker' in navigator)) {
+    if (!('PushManager' in window && 'serviceWorker' in navigator && 'Notification' in window)) {
       Logger.info(SCOPE_SC_CORE, "Service Worker or Push messaging aren't supported.");
       return;
     }
@@ -239,8 +295,12 @@ export default function useSCWebPushMessaging() {
       return;
     } else {
       if (Notification.permission === 'default') {
-        Logger.info(SCOPE_SC_CORE, 'Request permission.');
-        requestNotificationPermission();
+        Logger.info(SCOPE_SC_CORE, 'Request permission');
+        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+          showCustomRequestNotificationSnackbar();
+        } else {
+          requestNotificationPermission(null);
+        }
       } else if (Notification.permission === 'granted') {
         subscribe();
       }
@@ -267,5 +327,5 @@ export default function useSCWebPushMessaging() {
     }
   }, [scUserContext.user, scContext.settings.notifications.webPushMessaging, wpSubscription]);
 
-  return {wpSubscription};
+  return {wpSubscription, requestNotificationPermission};
 }
