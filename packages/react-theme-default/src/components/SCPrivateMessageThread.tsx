@@ -6,7 +6,7 @@ const Component = {
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
       [theme.breakpoints.down('md')]: {
-        minHeight: 'calc(100vh - 7rem)'
+        minHeight: 'calc(100vh - 6.2rem)'
       },
       [theme.breakpoints.up('sm')]: {
         height: theme.spacing(103.5),
