@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.168](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.167...@selfcommunity/react-ui@0.7.0-alpha.168) (2023-04-21)
+
+
+### Bug Fixes
+
+* fixed feedObj mention when expanded ([ad86f00](https://github.com/selfcommunity/community-js/commit/ad86f000cc1410d91912e04e4b4f565a7938ebe4))
+* fixed style(removed inline style) ([cb0154c](https://github.com/selfcommunity/community-js/commit/cb0154c9da918faf576476cab306367f442d5119))
+* pm components bugfix(fixed message opening from notifications/user profile page) ([30fb141](https://github.com/selfcommunity/community-js/commit/30fb141c34fc0b9699cac704ff9e54f830c813fe))
+
+
+
+
+
 # [0.7.0-alpha.167](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.166...@selfcommunity/react-ui@0.7.0-alpha.167) (2023-04-21)
 
 
