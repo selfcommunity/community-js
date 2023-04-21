@@ -817,7 +817,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   />
                 ) : (
                   <Typography component="div" gutterBottom className={classes.text}>
-                    <Typography component="span" dangerouslySetInnerHTML={{__html: expanded ? obj.html : obj.summary}} />
+                    <Typography
+                      component="span"
+                      dangerouslySetInnerHTML={{__html: expanded ? getContributionHtml(obj, scRoutingContext.url) : obj.summary}}
+                    />
                     {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
                       <Button size="small" variant="text" color="inherit" onClick={() => setExpanded(!expanded)}>
                         <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
