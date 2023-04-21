@@ -313,11 +313,9 @@ export default function RelatedFeedObjectsWidget(inProps: RelatedFeedObjectsWidg
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.relatedFeedObjectsWidget.noMoreResults" defaultMessage="ui.relatedFeedObjectsWidget.noMoreResults" />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage id="ui.relatedFeedObjectsWidget.noMoreResults" defaultMessage="ui.relatedFeedObjectsWidget.noMoreResults" />
+                </Typography>
               }>
               <List>
                 {state.results.map((obj: SCFeedDiscussionType, index) => (

@@ -36,6 +36,11 @@ export interface PrivateMessageComponentProps {
    */
   onItemClick?: (id) => void;
   /**
+   * Handler on single message open
+   * @default null
+   */
+  onSingleMessageOpen?: (id) => void;
+  /**
    * Handler on thread back
    * @default null
    */
@@ -87,7 +92,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, onThreadBack = null, ...rest} = props;
+  const {id = null, autoHide = false, className = null, onItemClick = null, onThreadBack = null, onSingleMessageOpen = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -138,6 +143,12 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     isMobile && setLayout('mobile');
     id && setLayout('default');
   };
+  /**
+   * Handles new messages open from user profile page or notifications section
+   */
+  const handleSingleMessage = (open) => {
+    open && onSingleMessageOpen(SCPrivateMessageStatusType.NEW);
+  };
 
   /**
    * Handles Layout update when new message section gets closed
@@ -152,12 +163,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Handles state update when a new message is sent
    */
-  const handleOnNewMessageSent = (msg, single) => {
-    if (openNewMessage) {
-      onItemClick && onItemClick(single ? messageReceiver(msg, authUserId) : '');
-      setObj(single ? msg : null);
-      setOpenNewMessage(false);
-    }
+  const handleOnNewMessageSent = (msg, isOne) => {
+    onItemClick && onItemClick(isOne ? messageReceiver(msg, authUserId) : '');
+    setObj(isOne ? msg : null);
+    setOpenNewMessage(false);
   };
 
   /**
@@ -197,6 +206,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           openNewMessage={openNewMessage}
           onNewMessageClose={handleMessageBack}
           onNewMessageSent={handleOnNewMessageSent}
+          onSingleMessageOpen={handleSingleMessage}
         />
       </Grid>
     );

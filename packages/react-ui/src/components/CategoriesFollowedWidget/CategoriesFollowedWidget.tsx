@@ -236,22 +236,14 @@ export default function CategoriesFollowedWidget(inProps: CategoriesListProps): 
                   loaderNext={<CentralProgress size={30} />}
                   height={isMobile ? '100vh' : 400}
                   endMessage={
-                    <p style={{textAlign: 'center'}}>
-                      <b>
-                        <FormattedMessage id="ui.categoriesFollowedWidget.noMoreResults" defaultMessage="ui.categoriesFollowedWidget.noMoreResults" />
-                      </b>
-                    </p>
+                    <Typography variant="body2" align="center" fontWeight="bold">
+                      <FormattedMessage id="ui.categoriesFollowedWidget.noMoreResults" defaultMessage="ui.categoriesFollowedWidget.noMoreResults" />
+                    </Typography>
                   }>
                   <List>
                     {state.results.map((c) => (
                       <ListItem key={c.id}>
-                        <Category
-                          elevation={0}
-                          category={c}
-                          sx={{m: 0}}
-                          followCategoryButtonProps={{onFollow: handleOnFollowCategory}}
-                          {...CategoryProps}
-                        />
+                        <Category elevation={0} category={c} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
                       </ListItem>
                     ))}
                   </List>

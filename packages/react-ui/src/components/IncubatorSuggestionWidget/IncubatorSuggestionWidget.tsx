@@ -273,14 +273,12 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage
-                      id="ui.incubatorSuggestionWidget.noMoreIncubators"
-                      defaultMessage="ui.incubatorSuggestionWidget.noMoreIncubators"
-                    />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage
+                    id="ui.incubatorSuggestionWidget.noMoreIncubators"
+                    defaultMessage="ui.incubatorSuggestionWidget.noMoreIncubators"
+                  />
+                </Typography>
               }>
               <List>
                 {state.results.map((i) => (

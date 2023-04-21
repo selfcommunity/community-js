@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
 import {SCContributionType, SCFeedObjectType, SCUserType} from '@selfcommunity/types';
-import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import CentralProgress from '../../../shared/CentralProgress';
@@ -171,14 +171,12 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                         loaderNext={<CentralProgress size={30} />}
                         height={400}
                         endMessage={
-                          <p style={{textAlign: 'center'}}>
-                            <b>
-                              <FormattedMessage
-                                id="ui.feedObject.contributors.noOtherContributors"
-                                defaultMessage="ui.feedObject.contributors.noOtherContributors"
-                              />
-                            </b>
-                          </p>
+                          <Typography variant="body2" align="center" fontWeight="bold">
+                            <FormattedMessage
+                              id="ui.feedObject.contributors.noOtherContributors"
+                              defaultMessage="ui.feedObject.contributors.noOtherContributors"
+                            />
+                          </Typography>
                         }>
                         <List>
                           {contributorsObject.contributors.map((c, i) => (

@@ -14,7 +14,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const CPButton = styled(Button, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -92,20 +92,19 @@ export default function ChangePicture(inProps: ChangePictureProps): JSX.Element 
    */
   if (!autoHide) {
     return (
-      <React.Fragment>
-        <CPButton
+      <>
+        <Root
           className={classNames(classes.root, className)}
           size="small"
           variant="contained"
           onClick={() => setOpenChangePictureDialog(true)}
-          style={iconButton ? {padding: 6, borderRadius: 50, minWidth: 'auto'} : {}}
           {...rest}>
           {iconButton ? (
             <Icon>photo_camera</Icon>
           ) : (
             <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
           )}
-        </CPButton>
+        </Root>
         {openChangePictureDialog && (
           <ChangePictureDialog
             open={openChangePictureDialog}
@@ -113,7 +112,7 @@ export default function ChangePicture(inProps: ChangePictureProps): JSX.Element 
             onClose={() => setOpenChangePictureDialog(false)}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
   return null;

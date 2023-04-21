@@ -98,6 +98,9 @@ import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
 import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
 import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCFooter from './components/SCFooter';
+import SCPlatformWidget from './components/SCPlatformWidget';
+import SCChangePictureButton from './components/SCChangePictureButton';
+import SCChangePictureDialog from './components/SCChangePictureDialog';
 
 /**
  * Style fragments - Imports - End
@@ -241,7 +244,10 @@ const theme = {
     SCPrivateMessageEditor,
     SCPrivateMessageComponentSkeleton,
     SCPrivateMessageThreadSkeleton,
-    SCPrivateMessageThreadItemDialog
+    SCPrivateMessageThreadItemDialog,
+    SCPlatformWidget,
+    SCChangePictureButton,
+    SCChangePictureDialog
   },
   selfcommunity: {
     user: {

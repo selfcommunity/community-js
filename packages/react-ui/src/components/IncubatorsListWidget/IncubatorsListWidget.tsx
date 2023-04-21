@@ -322,11 +322,9 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.incubatorsListWidget.noMoreIncubators" defaultMessage="ui.incubatorsListWidget.noMoreIncubators" />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage id="ui.incubatorsListWidget.noMoreIncubators" defaultMessage="ui.incubatorsListWidget.noMoreIncubators" />
+                </Typography>
               }>
               <List>
                 {state.results.map((i) => (

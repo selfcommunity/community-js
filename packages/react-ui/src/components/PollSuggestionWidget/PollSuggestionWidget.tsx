@@ -213,11 +213,9 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.pollSuggestionWidget.noMoreResults" defaultMessage="ui.pollSuggestionWidget.noMoreResults" />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage id="ui.pollSuggestionWidget.noMoreResults" defaultMessage="ui.pollSuggestionWidget.noMoreResults" />
+                </Typography>
               }>
               <List>
                 {state.results.map((obj: SCFeedDiscussionType) => (

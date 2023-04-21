@@ -9,7 +9,8 @@ import {
   SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
-  UserUtils
+  UserUtils,
+  useSCFetchUser
 } from '@selfcommunity/react-core';
 import {
   SCNotificationTopicType,
@@ -91,6 +92,11 @@ export interface PrivateMessageThreadProps {
    */
   onNewMessageClose?: (dispatch: any) => void;
   /**
+   * Callback fired when a single message section is open
+   * @default null
+   */
+  onSingleMessageOpen?: (open: boolean) => void;
+  /**
    * Hides this component
    * @default false
    */
@@ -139,7 +145,16 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {userObj, openNewMessage = false, onNewMessageClose = null, onNewMessageSent = null, autoHide, className, ...rest} = props;
+  const {
+    userObj,
+    openNewMessage = false,
+    onNewMessageClose = null,
+    onNewMessageSent = null,
+    onSingleMessageOpen = null,
+    autoHide,
+    className,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -175,6 +190,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const refreshSubscription = useRef(null);
   // INTL
   const intl = useIntl();
+  // HOOKS
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  const {scUser} = useSCFetchUser({id: userObj, userObj});
 
   // UTILS
   const format = (item) =>
@@ -247,6 +266,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const fetchFollowers = useMemo(
     () => () => {
       let fetch;
+      //TODO: wait api mod and add getAllUsers for user with role
       if (followEnabled) {
         fetch = UserService.getUserFollowers(authUserId);
       } else {
@@ -256,8 +276,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         .then((data: any) => {
           setFollowers(data.results);
           setLoading(false);
-          const _user = data.results.find((o) => o.id === userObj);
-          setSingleMessageUser(_user);
         })
         .catch((error) => {
           setLoading(false);
@@ -272,6 +290,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches thread
    */
   function fetchThread() {
+    const _isFollower = scUser && scFollowersManager.isFollower(scUser);
     if (userObj && typeof userObj !== 'string') {
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       http
@@ -293,8 +312,14 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             }
             setSingleMessageThread(false);
           } else {
-            setSingleMessageThread(true);
-            setRecipients(_userObjId);
+            if (role || _isFollower) {
+              setSingleMessageThread(true);
+              setRecipients(_userObjId);
+              onSingleMessageOpen(true);
+              setSingleMessageUser(scUser);
+            } else {
+              setSingleMessageThread(false);
+            }
           }
           setLoadingMessageObjs(false);
         })
@@ -361,13 +386,14 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           }
         })
         .then((res: any) => {
-          const single = res.data.length <= 1;
-          single && setMessageObjs((prev) => [...prev, res.data[0]]);
+          const isOne = res.data.length <= 1;
+          isOne && setMessageObjs((prev) => [...prev, res.data[0]]);
           handleSnippetsUpdate(res.data);
           if (openNewMessage || singleMessageThread) {
             setSingleMessageThread(false);
+            onSingleMessageOpen(false);
             setRecipients([]);
-            onNewMessageSent(res.data[0], single);
+            onNewMessageSent(res.data[0], isOne);
           }
         })
         .catch((error) => {
@@ -381,10 +407,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches followers when a new message is selected
    */
   useEffect(() => {
-    if (isNew || singleMessageThread) {
+    if (isNew) {
       fetchFollowers();
     }
-  }, [isNew, singleMessageThread, authUserId]);
+  }, [isNew, authUserId]);
 
   /**
    * Checks is thread receiver is a user follower
@@ -400,7 +426,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    */
   useEffect(() => {
     userObj && fetchThread();
-  }, [userObj, authUserId]);
+  }, [userObj, authUserId, scUser]);
 
   /**
    * Notification subscriber

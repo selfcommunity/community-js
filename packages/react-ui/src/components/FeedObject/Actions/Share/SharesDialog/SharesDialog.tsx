@@ -114,10 +114,8 @@ export default function SharesDialog(props: ShareDialogProps): JSX.Element {
           loaderNext={<CentralProgress size={30} />}
           height={400}
           endMessage={
-            <Typography variant="body2" align="center">
-              <b>
-                <FormattedMessage id="ui.feedObject.sharesDialog.noOtherLikes" defaultMessage="ui.feedObject.sharesDialog.noOtherLikes" />
-              </b>
+            <Typography variant="body2" align="center" fontWeight="bold">
+              <FormattedMessage id="ui.feedObject.sharesDialog.noOtherLikes" defaultMessage="ui.feedObject.sharesDialog.noOtherLikes" />
             </Typography>
           }>
           <List>

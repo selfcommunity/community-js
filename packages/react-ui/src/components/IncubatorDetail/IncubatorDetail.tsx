@@ -369,14 +369,12 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
                 loaderNext={<CentralProgress size={30} />}
                 height={400}
                 endMessage={
-                  <p style={{textAlign: 'center'}}>
-                    <b>
-                      <FormattedMessage
-                        id="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
-                        defaultMessage="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
-                      />
-                    </b>
-                  </p>
+                  <Typography variant="body2" align="center" fontWeight="bold">
+                    <FormattedMessage
+                      id="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
+                      defaultMessage="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
+                    />
+                  </Typography>
                 }>
                 <List>
                   {subscribers.map((s, index) => (

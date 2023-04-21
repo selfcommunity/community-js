@@ -63,10 +63,13 @@ const Component = {
           justifyContent: 'center',
           alignItems: 'center',
           '& .SCLoyaltyProgramDetail-card-content': {
-            padding: theme.spacing(1, 0, 0, 0),
+            paddingTop: theme.spacing(1),
             maxHeight: theme.spacing(12.5),
             overflow: 'hidden',
-            textOverflow: 'ellipsis'
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            '-webkitBoxOrient': 'vertical',
+            '-webkitLineClamp': '4'
           }
         },
         '& .MuiCardActions-root': {

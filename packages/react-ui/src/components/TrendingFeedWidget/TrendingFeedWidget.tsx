@@ -257,11 +257,9 @@ export default function TrendingFeedWidget(inProps: TrendingFeedWidgetProps): JS
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.trendingFeedWidget.noMoreResults" defaultMessage="ui.trendingFeedWidget.noMoreResults" />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage id="ui.trendingFeedWidget.noMoreResults" defaultMessage="ui.trendingFeedWidget.noMoreResults" />
+                </Typography>
               }>
               <List>
                 {state.results.map((obj: SCFeedObjectType, index) => (
