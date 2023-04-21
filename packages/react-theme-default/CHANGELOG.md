@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.112...@selfcommunity/react-theme-default@0.1.0-alpha.113) (2023-04-21)
+
+
+### Bug Fixes
+
+* Fix copy paste in editor ([2ba5a9d](https://github.com/selfcommunity/community-js/commit/2ba5a9d2653a0daa86554c5765f469b58734b4d9))
+
+
+### Performance Improvements
+
+* Added horizontal rule to the editor ([a4c6e66](https://github.com/selfcommunity/community-js/commit/a4c6e66bcbcfa9b14f0009780be0cead9896480c))
+
+
+
+
+
 # [0.1.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.111...@selfcommunity/react-theme-default@0.1.0-alpha.112) (2023-04-20)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

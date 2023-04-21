@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.12...@selfcommunity/react-i18n@0.5.0-alpha.13) (2023-04-21)
+
+
+### Bug Fixes
+
+* iOS & MacOsx Safari web push notification (to test) ([832dc1d](https://github.com/selfcommunity/community-js/commit/832dc1d479a8b59072dcb24835200997312e3759))
+
+
+### Performance Improvements
+
+* Added horizontal rule to the editor ([a4c6e66](https://github.com/selfcommunity/community-js/commit/a4c6e66bcbcfa9b14f0009780be0cead9896480c))
+
+
+
+
+
 # [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.11...@selfcommunity/react-i18n@0.5.0-alpha.12) (2023-04-19)
 
 
