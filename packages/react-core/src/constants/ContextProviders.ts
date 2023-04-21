@@ -15,8 +15,8 @@ export const DEFAULT_CONTEXT_PROVIDERS: ((children) => JSX.Element)[] = [
   SCPreferencesProvider,
   SCRoutingProvider,
   SCUserProvider,
-  SCNotificationProvider,
-  SCThemeProvider,
   SCLocaleProvider,
+  SCThemeProvider,
   SCAlertMessagesProvider,
+  SCNotificationProvider,
 ];

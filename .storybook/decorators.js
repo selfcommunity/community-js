@@ -87,7 +87,7 @@ const withProvider = (Story, context) => {
         secure: true
       },
       webPushMessaging: {
-        disableToastMessage: true,
+        disableToastMessage: false,
         // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
       },
     },

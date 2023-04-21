@@ -21,6 +21,10 @@
   "ui.confirmDialog.btnConfirm": "Si",
   "ui.confirmDialog.btnCancel": "No",
 
+  "ui.webPushNotification.requestPermission": "Questo sito desidera inviarti notifiche push",
+  "ui.webPushNotification.allow": "Permetti",
+  "ui.webPushNotification.block": "Blocca",
+
   "ui.baseDialog.button.close": "Chiudi",
 
   "ui.broadcastMessages.message.chip": "INFO",
@@ -200,6 +204,7 @@
   "ui.editor.toolbarPlugin.right": "Allinea a destra",
   "ui.editor.toolbarPlugin.center": "Allinea al centro",
   "ui.editor.toolbarPlugin.justify": "Giustifica",
+  "ui.editor.toolbarPlugin.horizontalRule": "Riga di separazione",
 
   "ui.feedObject.error": "Il contributo non è disponibile al momento",
   "ui.feedObject.comment": "Commenta",

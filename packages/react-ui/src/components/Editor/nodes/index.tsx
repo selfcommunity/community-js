@@ -5,7 +5,20 @@ import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {ImageNode} from './ImageNode';
 import {MentionNode} from './MentionNode';
 import {TextNode} from 'lexical';
+import {HorizontalRuleNode} from '@lexical/react/LexicalHorizontalRuleNode';
 
-const nodes = [HeadingNode, ListNode, ListItemNode, QuoteNode, TextNode, HashtagNode, AutoLinkNode, LinkNode, ImageNode, MentionNode];
+const nodes = [
+  HorizontalRuleNode,
+  HeadingNode,
+  ListNode,
+  ListItemNode,
+  QuoteNode,
+  TextNode,
+  HashtagNode,
+  AutoLinkNode,
+  LinkNode,
+  ImageNode,
+  MentionNode
+];
 
 export default nodes;
