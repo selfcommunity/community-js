@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.20...@selfcommunity/react-core@0.4.0-alpha.21) (2023-04-21)
+
+
+### Bug Fixes
+
+* iOS & MacOsx Safari web push notification (to test) ([832dc1d](https://github.com/selfcommunity/community-js/commit/832dc1d479a8b59072dcb24835200997312e3759))
+
+
+
+
+
 # [0.4.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.19...@selfcommunity/react-core@0.4.0-alpha.20) (2023-04-19)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.167](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.166...@selfcommunity/react-ui@0.7.0-alpha.167) (2023-04-21)
+
+
+### Bug Fixes
+
+* Fix copy paste in editor ([2ba5a9d](https://github.com/selfcommunity/community-js/commit/2ba5a9d2653a0daa86554c5765f469b58734b4d9))
+* iOS & MacOsx Safari web push notification (to test) ([832dc1d](https://github.com/selfcommunity/community-js/commit/832dc1d479a8b59072dcb24835200997312e3759))
+
+
+### Performance Improvements
+
+* Added horizontal rule to the editor ([a4c6e66](https://github.com/selfcommunity/community-js/commit/a4c6e66bcbcfa9b14f0009780be0cead9896480c))
+
+
+
+
+
 # [0.7.0-alpha.166](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.165...@selfcommunity/react-ui@0.7.0-alpha.166) (2023-04-20)
 
 
