@@ -45,7 +45,7 @@ const Component = {
         width: 7,
         height: 7,
         position: 'absolute',
-        backgroundColor: 'rgb(60, 132, 244)',
+        backgroundColor: theme.palette.secondary.main,
         border: '1px solid #fff',
         '&.image-resizer-n': {
           top: -6,
@@ -88,6 +88,14 @@ const Component = {
           cursor: 'nw-resize'
         }
       },
+      '& hr': {
+        cursor: 'pointer',
+        margin: '1em 0',
+        '&.selected': {
+          outline: `2px solid ${theme.palette.secondary.main}`,
+          userSelect: 'none'
+        }
+      },
       '& .SCEditor-ltr': {
         textAlign: 'left'
       },
@@ -104,28 +112,27 @@ const Component = {
         marginBottom: theme.spacing(1),
         color: theme.palette.text.secondary,
         borderLeftColor: theme.palette.primary.main,
-        borderLeftWidth: theme.spacing(0.5),
+        borderLeftWidth: theme.spacing(0.25),
         borderLeftStyle: 'solid',
         paddingLeft: theme.spacing(2)
       },
       '& .SCEditor-h1': {
         fontSize: '1.429rem',
         color: theme.palette.text.primary,
-        fontWeight: theme.typography.fontWeightLight,
+        fontWeight: theme.typography.fontWeightBold,
         margin: 0
       },
       '& .SCEditor-h2': {
         fontSize: '1.143rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightBold,
-        margin: 0,
-        textTransform: 'uppercase'
+        margin: 0
       },
       '& .SCEditor-h3': {
         fontSize: '1rem',
-        margin: 0,
+        color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightLight,
-        textTransform: 'uppercase'
+        margin: 0
       },
       '& .SCEditor-textBold': {
         fontWeight: 'bold'
@@ -188,12 +195,6 @@ const Component = {
       },
       '& .SCEditor-listItem': {
         margin: '0 32px'
-      },
-      '& .SCEditor-nestedListItem': {
-        listStyleType: 'none'
-      },
-      '& .SCEditor-nestedListItem:before, & .SCEditor-nestedListItem:after': {
-        display: 'none'
       }
     }),
     toolbar: ({theme}: any) => ({
