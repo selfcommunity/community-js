@@ -22,10 +22,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  padding: 20
-}));
+})(({theme}) => ({}));
 
 export interface PlatformWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -112,37 +109,35 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
    * Renders platform card
    */
   const c = (
-    <React.Fragment>
-      <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center">
-        <Grid item xs={12}>
-          <Typography className={classes.title} component="h3" align="center">
-            <FormattedMessage id="ui.platformWidget.title" defaultMessage="ui.platformWidget.title" />
-            <Icon fontSize="small">lock</Icon>
-          </Typography>
-        </Grid>
-        {isAdmin && (
-          <Grid item xs="auto" style={{textAlign: 'center'}}>
-            <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-              <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
-            </Button>
-          </Grid>
-        )}
-        <Grid item xs="auto" style={{textAlign: 'center'}}>
-          <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-            {isAdmin || isModerator ? (
-              <FormattedMessage id="ui.platformWidget.mod" defaultMessage="ui.platformWidget.mod" />
-            ) : (
-              <FormattedMessage id="ui.platformWidget.edt" defaultMessage="ui.platformWidget.edt" />
-            )}
-          </Button>
-        </Grid>
-        <Grid item xs="auto" style={{textAlign: 'center'}}>
-          <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
-            <FormattedMessage id="ui.platformWidget.hc" defaultMessage="ui.platformWidget.hc" />
-          </Button>
-        </Grid>
+    <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center">
+      <Grid item xs={12}>
+        <Typography className={classes.title} component="h3" align="center">
+          <FormattedMessage id="ui.platformWidget.title" defaultMessage="ui.platformWidget.title" />
+          <Icon fontSize="small">lock</Icon>
+        </Typography>
       </Grid>
-    </React.Fragment>
+      {isAdmin && (
+        <Grid item xs="auto">
+          <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+            <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
+          </Button>
+        </Grid>
+      )}
+      <Grid item xs="auto">
+        <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+          {isAdmin || isModerator ? (
+            <FormattedMessage id="ui.platformWidget.mod" defaultMessage="ui.platformWidget.mod" />
+          ) : (
+            <FormattedMessage id="ui.platformWidget.edt" defaultMessage="ui.platformWidget.edt" />
+          )}
+        </Button>
+      </Grid>
+      <Grid item xs="auto">
+        <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
+          <FormattedMessage id="ui.platformWidget.hc" defaultMessage="ui.platformWidget.hc" />
+        </Button>
+      </Grid>
+    </Grid>
   );
 
   /**

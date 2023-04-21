@@ -232,11 +232,9 @@ export default function CategoriesPopularWidget(inProps: CategoriesListProps): J
               loaderNext={<CentralProgress size={30} />}
               height={isMobile ? '100vh' : 400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.categoriesPopularWidget.noMoreResults" defaultMessage="ui.categoriesPopularWidget.noMoreResults" />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage id="ui.categoriesPopularWidget.noMoreResults" defaultMessage="ui.categoriesPopularWidget.noMoreResults" />
+                </Typography>
               }>
               <List>
                 {state.results.map((c) => (

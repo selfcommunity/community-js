@@ -224,7 +224,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
-                <Typography>
+                <Typography variant="body2" align="center" fontWeight="bold">
                   <FormattedMessage id="ui.voteAudienceButton.dialog.end" defaultMessage="ui.voteAudienceButton.dialog.end" />
                 </Typography>
               }>

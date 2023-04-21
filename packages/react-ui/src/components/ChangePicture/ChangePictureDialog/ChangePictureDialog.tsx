@@ -2,13 +2,11 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, ImageListItemBar} from '@mui/material';
+import {Box, IconButton, ImageList, ImageListItem, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {Endpoints, UserService} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 import BaseDialog, {BaseDialogProps} from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
@@ -20,10 +18,10 @@ const PREFIX = 'SCChangePictureDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
-  actions: `${PREFIX}-actions`,
   upload: `${PREFIX}-upload`,
   imagesList: `${PREFIX}-images-list`,
-  imageItem: `${PREFIX}-image-item`
+  imageItem: `${PREFIX}-image-item`,
+  primary: `${PREFIX}-primary`
 };
 
 const Root = styled(BaseDialog, {
@@ -36,10 +34,6 @@ const Root = styled(BaseDialog, {
   },
   [`& .${classes.imagesList}`]: {
     maxHeight: 500
-  },
-  [`& .${classes.actions}`]: {
-    display: 'flex',
-    justifyContent: 'flex-end'
   }
 }));
 
@@ -231,7 +225,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
             </>
           )}
         </Button>
-        <Typography sx={{fontSize: 10}} color="text.secondary" gutterBottom>
+        <Typography fontSize="small" color="text.secondary" gutterBottom>
           <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
           <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
         </Typography>
@@ -239,12 +233,12 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
       <ImageList cols={3} rowHeight={'auto'} id="avatarsList" classes={{root: classes.imagesList}}>
         {avatars.map((avatar) => (
           <Box className={classes.imageItem} key={avatar.id}>
-            <ImageListItem key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)} sx={{border: primary === avatar.id ? 'solid' : null}}>
+            <ImageListItem className={primary === avatar.id ? classes.primary : ''} key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)}>
               <img src={avatar.avatar} loading="lazy" alt={'img'} />
               <ImageListItemBar
                 position="top"
                 actionIcon={
-                  <IconButton onClick={() => handleOpen(avatar.id)} size="small" sx={{color: 'rgba(255, 255, 255, 0.54)'}}>
+                  <IconButton onClick={() => handleOpen(avatar.id)} size="small">
                     <Icon>delete</Icon>
                   </IconButton>
                 }

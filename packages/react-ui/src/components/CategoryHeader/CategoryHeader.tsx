@@ -301,11 +301,9 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
               loaderNext={<CentralProgress size={30} />}
               height={400}
               endMessage={
-                <p style={{textAlign: 'center'}}>
-                  <b>
-                    <FormattedMessage id="ui.categoryHeader.noOtherFollowers" defaultMessage="ui.categoryHeader.noOtherFollowers" />
-                  </b>
-                </p>
+                <Typography variant="body2" align="center" fontWeight="bold">
+                  <FormattedMessage id="ui.categoryHeader.noOtherFollowers" defaultMessage="ui.categoryHeader.noOtherFollowers" />
+                </Typography>
               }>
               <List>
                 {followers.map((follower, index) => (
