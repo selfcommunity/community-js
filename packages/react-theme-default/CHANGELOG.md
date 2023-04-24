@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.115...@selfcommunity/react-theme-default@0.1.0-alpha.116) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix editor selection ([c7959f1](https://github.com/selfcommunity/community-js/commit/c7959f158d66cfae2afddeb56aa77f3110754baf))
+* Fix footer theme ([feb8333](https://github.com/selfcommunity/community-js/commit/feb833399d99641ded7173375585efe4eae55caa))
+
+
+
+
+
 # [0.1.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.114...@selfcommunity/react-theme-default@0.1.0-alpha.115) (2023-04-24)
 
 

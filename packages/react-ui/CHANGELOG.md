@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.169...@selfcommunity/react-ui@0.7.0-alpha.170) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix editor selection ([c7959f1](https://github.com/selfcommunity/community-js/commit/c7959f158d66cfae2afddeb56aa77f3110754baf))
+* Fix footer theme ([feb8333](https://github.com/selfcommunity/community-js/commit/feb833399d99641ded7173375585efe4eae55caa))
+
+
+
+
+
 # [0.7.0-alpha.169](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.168...@selfcommunity/react-ui@0.7.0-alpha.169) (2023-04-24)
 
 
