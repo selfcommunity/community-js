@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.114...@selfcommunity/react-theme-default@0.1.0-alpha.115) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix deps ([6ab40e0](https://github.com/selfcommunity/community-js/commit/6ab40e0a5240d1ed51ad665d498c62254b9b6acd))
+
+
+### Features
+
+* Added hashtags to the editor ([d64cd69](https://github.com/selfcommunity/community-js/commit/d64cd693f7bcfcf87d3a7d3271b1e03b3b317716))
+
+
+
+
+
 # [0.1.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.113...@selfcommunity/react-theme-default@0.1.0-alpha.114) (2023-04-21)
 
 
