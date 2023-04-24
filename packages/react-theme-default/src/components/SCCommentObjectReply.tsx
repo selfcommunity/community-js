@@ -2,6 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       border: '0 none',
+      marginBottom: theme.spacing(1),
       '& .SCBaseItem-content': {
         alignItems: 'flex-start',
         '& .SCBaseItem-text': {
@@ -13,7 +14,8 @@ const Component = {
         }
       },
       '& .SCCommentObjectReply-comment': {
-        overflow: 'visible'
+        overflow: 'visible',
+        borderRadius: theme.shape.borderRadius * 0.5
       },
       '& .SCCommentObjectReply-actions': {
         marginLeft: theme.spacing(),
