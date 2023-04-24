@@ -1,23 +1,14 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Grid, Typography} from '@mui/material';
+import {Box, Button, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {CustomMenuService, Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCCustomMenuItemType, SCCustomMenuType, SCLegalPagePoliciesType} from '@selfcommunity/types';
+import {CustomMenuService} from '@selfcommunity/api-services';
+import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
-import {
-  Link,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCRoutes,
-  SCRoutingContextType,
-  useSCPreferences,
-  useSCRouting
-} from '@selfcommunity/react-core';
+import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FooterSkeleton from './Skeleton';
-import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCFooter';
 

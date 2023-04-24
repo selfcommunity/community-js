@@ -9,7 +9,8 @@ const Component = {
         justifyContent: 'center',
         flexDirection: 'row',
         '& .SCFooter-item': {
-          padding: theme.spacing(0.5, 1)
+          padding: theme.spacing(0.5, 1),
+          color: theme.palette.text.primary
         }
       }
     })
