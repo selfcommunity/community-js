@@ -56,7 +56,6 @@ const Component = {
           '& .SCComposer-editor': {
             padding: 0,
             fontSize: '1rem',
-            minHeight: 'auto',
             '& .SCEditor-placeholder': {
               top: 0,
               left: 0

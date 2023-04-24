@@ -36,4 +36,7 @@ const Template: ComponentStory<typeof CommentObjectReply> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  onSave: null,
+  onReply: (comment) => console.log(comment)
+};

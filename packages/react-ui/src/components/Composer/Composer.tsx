@@ -74,6 +74,7 @@ import {OverrideProps} from '@mui/material/OverridableComponent';
 import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
+import {extractHashtags} from '../../utils/editor';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -558,11 +559,13 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       });
       return;
     }
+    // Extract hashtags and add to categories
+    const _categories: string[] = [...categories.map((c: SCCategoryType) => c.id), ...extractHashtags(text)];
     const data: any = {
       title,
       text,
       medias: medias.map((m) => m.id),
-      categories: categories.map((c) => c.id)
+      categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
     };
     if (preferences[SCPreferences.ADDONS_POLLS_ENABLED] && hasPoll()) {
       data.poll = poll;
@@ -880,15 +883,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleChangeView(AUDIENCE_VIEW)} />
               ))}
           </Stack>
-          <div className={classes.block}>
-            <CategoryAutocomplete
-              multiple
-              key={`${key}-categories`}
-              onChange={handleChange('categories')}
-              defaultValue={categories}
-              disabled={isSubmitting}
-            />
-          </div>
+          {type === COMPOSER_TYPE_DISCUSSION && (
+            <div className={classes.block}>
+              <CategoryAutocomplete
+                multiple
+                key={`${key}-categories`}
+                onChange={handleChange('categories')}
+                defaultValue={categories}
+                disabled={isSubmitting}
+              />
+            </div>
+          )}
           {error && (
             <Typography className={classes.block} color="error">
               {error}

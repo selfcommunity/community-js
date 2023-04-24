@@ -101,6 +101,8 @@ import SCFooter from './components/SCFooter';
 import SCPlatformWidget from './components/SCPlatformWidget';
 import SCChangePictureButton from './components/SCChangePictureButton';
 import SCChangePictureDialog from './components/SCChangePictureDialog';
+import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
+import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 
 /**
  * Style fragments - Imports - End
@@ -194,6 +196,8 @@ const theme = {
     SCDateTimeAgo,
     SCEditor,
     SCEditorFloatingLinkPlugin,
+    SCEditorHashtagPlugin,
+    SCEditorMentionPlugin,
     SCEditorToolbarPlugin,
     SCFeed,
     SCFeedObject,

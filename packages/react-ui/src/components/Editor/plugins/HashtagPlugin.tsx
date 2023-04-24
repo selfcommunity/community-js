@@ -16,39 +16,38 @@ import {
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {mergeRegister} from '@lexical/utils';
 import {createPortal} from 'react-dom';
-import {createMentionNode, MentionNode} from '../nodes/MentionNode';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserType} from '@selfcommunity/types';
+import {createHashtagNode, HashtagNode} from '../nodes/HashtagNode';
+import {CategoryService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCCategoryType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {Avatar} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
-type MentionMatch = {
+type HashtagMatch = {
   leadOffset: number;
   matchingString: string;
   replaceableString: string;
 };
 
 type Resolution = {
-  match: MentionMatch;
+  match: HashtagMatch;
   range: Range;
 };
 
 const PUNCTUATION = '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
 const NAME = '\\b[A-Z][^\\s' + PUNCTUATION + ']';
 
-const DocumentMentionsRegex = {
+const DocumentHashtagsRegex = {
   NAME,
   PUNCTUATION
 };
 
-const CapitalizedNameMentionsRegex = new RegExp('(^|[^#])((?:' + DocumentMentionsRegex.NAME + '{' + 1 + ',})$)');
+const CapitalizedNameHashtagsRegex = new RegExp('(^|[^#])((?:' + DocumentHashtagsRegex.NAME + '{' + 1 + ',})$)');
 
-const PUNC = DocumentMentionsRegex.PUNCTUATION;
+const PUNC = DocumentHashtagsRegex.PUNCTUATION;
 
-const TRIGGERS = ['@', '\\uff20'].join('');
+const TRIGGERS = ['#', '\\uff20'].join('');
 
-// Chars we expect to see in a mention (non-space, non-punctuation).
+// Chars we expect to see in a hashtag (non-space, non-punctuation).
 const VALID_CHARS = '[^' + TRIGGERS + PUNC + '\\s]';
 
 // Non-standard series of chars. Each series must be preceded and followed by
@@ -64,7 +63,7 @@ const VALID_JOINS =
 
 const LENGTH_LIMIT = 75;
 
-const AtSignMentionsRegex = new RegExp(
+const HashSignHashtagsRegex = new RegExp(
   '(^|\\s|\\()(' + '[' + TRIGGERS + ']' + '((?:' + VALID_CHARS + VALID_JOINS + '){0,' + LENGTH_LIMIT + '})' + ')$'
 );
 
@@ -72,20 +71,20 @@ const AtSignMentionsRegex = new RegExp(
 const ALIAS_LENGTH_LIMIT = 50;
 
 // Regex used to match alias.
-const AtSignMentionsRegexAliasRegex = new RegExp(
+const HashSignHashtagsRegexAliasRegex = new RegExp(
   '(^|\\s|\\()(' + '[' + TRIGGERS + ']' + '((?:' + VALID_CHARS + '){0,' + ALIAS_LENGTH_LIMIT + '})' + ')$'
 );
 
 // At most, 5 suggestions are shown in the popup.
 const SUGGESTION_LIST_LENGTH_LIMIT = 5;
 
-const mentionsCache = new Map();
+const hashtagsCache = new Map();
 
-function useMentionLookupService(mentionString) {
-  const [results, setResults] = useState<Array<SCUserType> | null>(null);
+function useHashtagLookupService(hashtagString) {
+  const [results, setResults] = useState<Array<SCCategoryType> | null>(null);
 
   useEffect(() => {
-    const cachedResults = mentionsCache.get(mentionString);
+    const cachedResults = hashtagsCache.get(hashtagString);
 
     if (cachedResults === null) {
       return;
@@ -94,23 +93,17 @@ function useMentionLookupService(mentionString) {
       return;
     }
 
-    mentionsCache.set(mentionString, null);
-    http
-      .request({
-        url: Endpoints.UserSearch.url(),
-        method: Endpoints.UserSearch.method,
-        params: {user: mentionString, limit: 5}
-      })
-      .then((res: HttpResponse<any>) => {
-        mentionsCache.set(mentionString, res.data.results);
-        setResults(res.data.results);
-      });
-  }, [mentionString]);
+    hashtagsCache.set(hashtagString, null);
+    CategoryService.searchCategory({search: hashtagString, limit: 5, active: true}).then((res: SCPaginatedResponse<SCCategoryType>) => {
+      hashtagsCache.set(hashtagString, res.results);
+      setResults(res.results);
+    });
+  }, [hashtagString]);
 
   return results;
 }
 
-function MentionsTypeaheadItem({
+function HashtagsTypeaheadItem({
   index,
   isHovered,
   isSelected,
@@ -125,7 +118,7 @@ function MentionsTypeaheadItem({
   onClick: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  result: SCUserType;
+  result: SCCategoryType;
 }) {
   const liRef = useRef(null);
   return (
@@ -140,12 +133,12 @@ function MentionsTypeaheadItem({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}>
-      <Avatar alt={result.username} src={result.avatar} /> {result.username}
+      {result.name}
     </li>
   );
 }
 
-function MentionsTypeahead({
+function HashtagsTypeahead({
   close,
   editor,
   resolution,
@@ -160,7 +153,7 @@ function MentionsTypeahead({
 }): JSX.Element {
   const divRef = useRef(null);
   const match = resolution.match;
-  const results = useMentionLookupService(match.matchingString);
+  const results = useHashtagLookupService(match.matchingString);
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -180,7 +173,7 @@ function MentionsTypeahead({
       div.style.top = `${relativePosTop + height + 7}px`;
       div.style.left = `${relativePosLeft - 14}px`;
       div.style.display = 'block';
-      rootElement.setAttribute('aria-controls', 'mentions-typeahead');
+      rootElement.setAttribute('aria-controls', 'hashtags-typeahead');
 
       return () => {
         div.style.display = 'none';
@@ -199,7 +192,7 @@ function MentionsTypeahead({
 
       close();
 
-      createMentionNodeFromSearchResult(editor, selectedEntry, match);
+      createHashtagNodeFromSearchResult(editor, selectedEntry, match);
     },
     [close, match, editor, results, selectedIndex]
   );
@@ -315,10 +308,10 @@ function MentionsTypeahead({
   }
 
   return (
-    <div className={className} aria-label="Suggested mentions" ref={divRef} role="listbox">
+    <div className={className} aria-label="Suggested hashtags" ref={divRef} role="listbox">
       <ul>
         {results.slice(0, SUGGESTION_LIST_LENGTH_LIMIT).map((result, i) => (
-          <MentionsTypeaheadItem
+          <HashtagsTypeaheadItem
             index={i}
             isHovered={i === hoveredIndex}
             isSelected={i === selectedIndex}
@@ -340,8 +333,8 @@ function MentionsTypeahead({
   );
 }
 
-function checkForCapitalizedNameMentions(text, minMatchLength): MentionMatch | null {
-  const match = CapitalizedNameMentionsRegex.exec(text);
+function checkForCapitalizedNameHashtags(text, minMatchLength): HashtagMatch | null {
+  const match = CapitalizedNameHashtagsRegex.exec(text);
   if (match !== null) {
     // The strategy ignores leading whitespace but we need to know it's
     // length to add it to the leadOffset
@@ -359,11 +352,11 @@ function checkForCapitalizedNameMentions(text, minMatchLength): MentionMatch | n
   return null;
 }
 
-function checkForAtSignMentions(text, minMatchLength): MentionMatch | null {
-  let match = AtSignMentionsRegex.exec(text);
+function checkForHashSignHashtags(text, minMatchLength): HashtagMatch | null {
+  let match = HashSignHashtagsRegex.exec(text);
 
   if (match === null) {
-    match = AtSignMentionsRegexAliasRegex.exec(text);
+    match = HashSignHashtagsRegexAliasRegex.exec(text);
   }
   if (match !== null) {
     // The strategy ignores leading whitespace but we need to know it's
@@ -382,9 +375,9 @@ function checkForAtSignMentions(text, minMatchLength): MentionMatch | null {
   return null;
 }
 
-function getPossibleMentionMatch(text): MentionMatch | null {
-  const match = checkForAtSignMentions(text, 1);
-  return match === null ? checkForCapitalizedNameMentions(text, 3) : match;
+function getPossibleHashtagMatch(text): HashtagMatch | null {
+  const match = checkForHashSignHashtags(text, 1);
+  return match === null ? checkForCapitalizedNameHashtags(text, 3) : match;
 }
 
 function getTextUpToAnchor(selection: RangeSelection): string | null {
@@ -393,7 +386,7 @@ function getTextUpToAnchor(selection: RangeSelection): string | null {
     return null;
   }
   const anchorNode = anchor.getNode();
-  // We should not be attempting to extract mentions out of nodes
+  // We should not be attempting to extract hashtags out of nodes
   // that are already being used for other core things. This is
   // especially true for immutable nodes, which can't be mutated at all.
   if (!anchorNode.isSimpleText()) {
@@ -403,7 +396,7 @@ function getTextUpToAnchor(selection: RangeSelection): string | null {
   return anchorNode.getTextContent().slice(0, anchorOffset);
 }
 
-function tryToPositionRange(match: MentionMatch, range: Range): boolean {
+function tryToPositionRange(match: HashtagMatch, range: Range): boolean {
   const domSelection = window.getSelection();
   if (domSelection === null || !domSelection.isCollapsed) {
     return false;
@@ -421,7 +414,7 @@ function tryToPositionRange(match: MentionMatch, range: Range): boolean {
   return true;
 }
 
-function getMentionsTextToSearch(editor: LexicalEditor): string | null {
+function getHashtagsTextToSearch(editor: LexicalEditor): string | null {
   let text = null;
   editor.getEditorState().read(() => {
     const selection = $getSelection();
@@ -441,7 +434,7 @@ function getMentionsTextToSearch(editor: LexicalEditor): string | null {
  * Replacing just the match would give us "Hello Sarah Sarah Smith".
  * Instead we find the string "Sarah Smit" and replace all of it.
  */
-function getMentionOffset(documentText: string, entryText: string, offset: number): number {
+function getHashtagOffset(documentText: string, entryText: string, offset: number): number {
   let triggerOffset = offset;
   for (let ii = triggerOffset; ii <= entryText.length; ii++) {
     if (documentText.substr(-ii) === entryText.substr(0, ii)) {
@@ -454,9 +447,9 @@ function getMentionOffset(documentText: string, entryText: string, offset: numbe
 
 /**
  * From a Typeahead Search Result, replace plain text from search offset and
- * render a newly created MentionNode.
+ * render a newly created HashtagNode.
  */
-function createMentionNodeFromSearchResult(editor: LexicalEditor, user: SCUserType, match: MentionMatch): void {
+function createHashtagNodeFromSearchResult(editor: LexicalEditor, category: SCCategoryType, match: HashtagMatch): void {
   editor.update(() => {
     const selection = $getSelection();
     if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
@@ -467,7 +460,7 @@ function createMentionNodeFromSearchResult(editor: LexicalEditor, user: SCUserTy
       return;
     }
     const anchorNode = anchor.getNode();
-    // We should not be attempting to extract mentions out of nodes
+    // We should not be attempting to extract hashtags out of nodes
     // that are already being used for other core things. This is
     // especially true for immutable nodes, which can't be mutated at all.
     if (!anchorNode.isSimpleText()) {
@@ -477,10 +470,10 @@ function createMentionNodeFromSearchResult(editor: LexicalEditor, user: SCUserTy
     const textContent = anchorNode.getTextContent().slice(0, selectionOffset);
     const characterOffset = match.replaceableString.length;
 
-    // Given a known offset for the mention match, look backward in the
+    // Given a known offset for the hashtag match, look backward in the
     // text to see if there's a longer match to replace.
-    const mentionOffset = getMentionOffset(textContent, user.username, characterOffset);
-    const startOffset = selectionOffset - mentionOffset;
+    const hashtagOffset = getHashtagOffset(textContent, category.name, characterOffset);
+    const startOffset = selectionOffset - hashtagOffset;
     if (startOffset < 0) {
       return;
     }
@@ -492,9 +485,9 @@ function createMentionNodeFromSearchResult(editor: LexicalEditor, user: SCUserTy
       [, nodeToReplace] = anchorNode.splitText(startOffset, selectionOffset);
     }
 
-    const mentionNode = createMentionNode(user);
-    nodeToReplace.replace(mentionNode);
-    mentionNode.select();
+    const hashtagNode = createHashtagNode(category);
+    nodeToReplace.replace(hashtagNode);
+    hashtagNode.select();
   });
 }
 
@@ -516,24 +509,24 @@ function isSelectionOnEntityBoundary(editor: LexicalEditor, offset: number): boo
   });
 }
 
-const PREFIX = 'SCEditorMentionPlugin';
+const PREFIX = 'SCEditorHashtagPlugin';
 
 const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(MentionsTypeahead, {
+const Root = styled(HashtagsTypeahead, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Element {
+function useHashtags(editor: LexicalEditor, containerSelector = null): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);
 
   useEffect(() => {
-    if (!editor.hasNodes([MentionNode])) {
-      throw new Error('MentionsPlugin: MentionNode not registered on editor');
+    if (!editor.hasNodes([HashtagNode])) {
+      throw new Error('HashtagsPlugin: HashtagNode not registered on editor');
     }
   }, [editor]);
 
@@ -546,7 +539,7 @@ function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Eleme
         return;
       }
       const range = activeRange;
-      const text = getMentionsTextToSearch(editor);
+      const text = getHashtagsTextToSearch(editor);
 
       if (text === previousText || range === null) {
         return;
@@ -556,7 +549,7 @@ function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Eleme
       if (text === null) {
         return;
       }
-      const match = getPossibleMentionMatch(text);
+      const match = getPossibleHashtagMatch(text);
       if (match !== null && !isSelectionOnEntityBoundary(editor, match.leadOffset)) {
         const isRangePositioned = tryToPositionRange(match, range);
         if (isRangePositioned !== null) {
@@ -597,7 +590,7 @@ function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Eleme
   );
 }
 
-export default function MentionsPlugin({containerSelector = 'body'}): JSX.Element {
+export default function HashtagsPlugin({containerSelector = 'body'}): JSX.Element {
   const [editor] = useLexicalComposerContext();
-  return useMentions(editor, containerSelector);
+  return useHashtags(editor, containerSelector);
 }

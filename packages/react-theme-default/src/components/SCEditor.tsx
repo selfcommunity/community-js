@@ -22,6 +22,9 @@ const Component = {
         },
         ['& mention']: {
           backgroundColor: theme.palette.primary.light
+        },
+        ['& hashtag']: {
+          backgroundColor: theme.palette.secondary.light
         }
       },
       '& .SCEditor-placeholder': {
