@@ -7,6 +7,9 @@ function DefaultHtmlValuePlugin({defaultValue}) {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
+    if (!defaultValue) {
+      return;
+    }
     editor.update(() => {
       // See:
       // https://github.com/facebook/lexical/issues/1834
@@ -26,10 +29,11 @@ function DefaultHtmlValuePlugin({defaultValue}) {
       if (nodes.length <= 1) {
         const paragraphNode = $createParagraphNode();
         nodes.forEach((node) => paragraphNode.append(node));
-        root.getFirstChild().replace(paragraphNode);
+        root.getFirstChild().replace(paragraphNode).selectEnd();
       } else {
         root.getFirstChild().remove();
         nodes.forEach((node) => root.append(node));
+        root.selectEnd();
       }
     });
   }, []);

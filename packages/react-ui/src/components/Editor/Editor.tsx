@@ -212,7 +212,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           }
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <DefaultHtmlValuePlugin defaultValue={defaultValue} />
+        {defaultValue && <DefaultHtmlValuePlugin defaultValue={defaultValue} />}
         <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />
         <AutoLinkPlugin />
