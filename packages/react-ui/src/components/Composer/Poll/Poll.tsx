@@ -14,6 +14,7 @@ import {SCFeedWidgetType} from '../../../types/feed';
 import {SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import {parseISO} from 'date-fns';
 
 const localeMap = {
   en: enLocale,
@@ -122,7 +123,7 @@ export default (inProps: PollProps): JSX.Element => {
   // STATE
   const [title, setTitle] = useState<string>(value !== null ? value.title : DEFAULT_POLL.title);
   const [multiple, setMultiple] = useState<boolean>(value !== null ? value.multiple_choices : DEFAULT_POLL.multiple_choices);
-  const [expiration, setExpiration] = React.useState<Date | null>(value !== null ? value.expiration_at : DEFAULT_POLL.expiration_at);
+  const [expiration, setExpiration] = React.useState<string | Date | null>(value !== null ? value.expiration_at : DEFAULT_POLL.expiration_at);
 
   const _choicesInitialState: SCPollChoiceType[] = [...(value !== null ? value.choices : DEFAULT_POLL.choices)];
   while (_choicesInitialState.length < COMPOSER_POLL_MIN_CHOICES) {
@@ -243,12 +244,12 @@ export default (inProps: PollProps): JSX.Element => {
           control={<Checkbox checked={multiple} onChange={handleChangeMultiple} />}
           label={<FormattedMessage id="ui.composer.poll.multiple" defaultMessage="ui.composer.poll.multiple" />}
         />
-        <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap[intl.locale]}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={localeMap[intl.locale]}>
           <DatePicker
             label={<FormattedMessage id="ui.composer.poll.expiration" defaultMessage="ui.composer.poll.expiration" />}
-            value={expiration}
+            value={typeof expiration === 'string' ? parseISO(expiration) : expiration}
             onChange={handleChangeExpiration}
-            renderInput={(params) => <TextField {...params} />}
+            slotProps={{textField: {variant: 'outlined'}}}
             minDate={minDate}
           />
         </LocalizationProvider>

@@ -77,8 +77,8 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     id = `${PREFIX}-autocomplete`,
     className,
     blurOnSelect,
-    onSearch = () => null,
-    onClear = () => null,
+    onSearch = null,
+    onClear = null,
     onSuggestionSelect = (suggestion: SCSuggestionType) => null,
     ...rest
   } = props;
@@ -190,7 +190,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
             className: classes.input,
             startAdornment: <Icon className={classes.icon}>search</Icon>,
             endAdornment: (
-              <Fade in={value.length > 0} appear={false}>
+              <Fade in={value.length > 0 || Boolean(onClear)} appear={false}>
                 <IconButton className={classes.clear} onClick={handleClear} size="small">
                   <Icon>close</Icon>
                 </IconButton>

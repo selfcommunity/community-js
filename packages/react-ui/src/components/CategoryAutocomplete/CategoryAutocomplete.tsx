@@ -11,7 +11,6 @@ import {useSCFetchCategories} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {SCCategoryType} from '@selfcommunity/types/src/index';
 import {useThemeProps} from '@mui/system';
-import {is} from 'date-fns/locale';
 
 const PREFIX = 'SCCategoryAutocomplete';
 

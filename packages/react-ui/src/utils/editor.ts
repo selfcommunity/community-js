@@ -16,3 +16,11 @@ export function getSelectedNode(selection: RangeSelection): TextNode | ElementNo
     return $isAtNodeEnd(anchor) ? anchorNode : focusNode;
   }
 }
+
+/**
+ * Extract id of hashtags from html text
+ * @param html
+ */
+export function extractHashtags(html): string[] {
+  return Array.from(html.matchAll(/<hashtag id="(?<id>[0-9]+)">#(?<name>[^<>]+)<\/hashtag>/g)).map((match: any) => match.groups.id);
+}

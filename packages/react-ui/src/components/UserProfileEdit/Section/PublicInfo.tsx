@@ -17,6 +17,7 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {parseISO} from 'date-fns';
 
 const messages = defineMessages({
   genderMale: {
@@ -107,7 +108,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   }, [scPreferences.preferences]);
 
   // STATE
-  const [user, setUser] = useState<SCUserType>(scUserContext.user);
+  const [user, setUser] = useState<SCUserType>({...scUserContext.user});
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([editingField] ?? []);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
@@ -119,10 +120,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   useDeepCompareEffectNoCheck(() => {
     setUser(scUserContext.user);
   }, [scUserContext.user]);
-
-  useEffect(() => {
-    scUserContext.updateUser(user);
-  }, [user]);
 
   // HANDLERS
   const handleEdit = (field: SCUserProfileFields) => {
@@ -222,21 +219,27 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                 id: `ui.userInfo.${camelCase(field)}`,
                 defaultMessage: `ui.userInfo.${field}`
               })}
-              value={user[field]}
+              value={parseISO(user[field])}
               onChange={(newValue) => {
+                console.log(newValue.toJSON().split('T')[0]);
                 setUser({...user, [field]: newValue.toJSON().split('T')[0]}); // FIX for ensuring API format
               }}
               disableFuture
               disabled={!isEditing || isSaving}
-              renderInput={(params) => {
-                const {InputProps, ...rest} = params;
-                InputProps.endAdornment = (
-                  <>
-                    {InputProps.endAdornment}
-                    {props.InputProps.endAdornment}
-                  </>
-                );
-                return <TextField {...rest} className={classes.field} fullWidth InputProps={InputProps} />;
+              slots={{
+                textField: (params) => {
+                  const {InputProps, ...rest} = params;
+                  InputProps.endAdornment = (
+                    <>
+                      {InputProps.endAdornment}
+                      {props.InputProps.endAdornment}
+                    </>
+                  );
+                  return <TextField {...rest} InputProps={InputProps} />;
+                }
+              }}
+              slotProps={{
+                textField: {className: classes.field, fullWidth: true, variant: 'outlined'}
               }}
             />
           </LocalizationProvider>

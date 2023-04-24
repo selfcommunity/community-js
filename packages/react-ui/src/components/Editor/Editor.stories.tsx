@@ -21,7 +21,7 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
-  defaultValue: '<s>ciao</s> <mention id="1" ext-id="5">@username</mention>',
+  defaultValue: '<p><s>ciao</s> <mention id="1" ext-id="5">@username</mention></p>',
   onChange: (value) => console.log(value),
   toolbar: false,
   uploadImage: false
