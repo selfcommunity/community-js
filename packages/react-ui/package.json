@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-ui",
-  "version": "0.7.0-alpha.170",
+  "version": "0.7.0-alpha.171",
   "description": "React UI Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -49,8 +49,8 @@
   "peerDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.12.2",
     "@mui/lab": "~5.0.0-alpha.128",
+    "@mui/material": "^5.12.2",
     "@mui/x-date-pickers": "^6.2.1",
     "@rpldy/chunked-sender": "^1.4.1",
     "@rpldy/chunked-uploady": "^1.4.1",
@@ -68,7 +68,7 @@
     "@lexical/html": "^0.10.0",
     "@lexical/react": "^0.10.0",
     "@selfcommunity/api-services": "^0.4.0-alpha.0",
-    "@selfcommunity/react-core": "^0.4.0-alpha.22",
+    "@selfcommunity/react-core": "^0.4.0-alpha.23",
     "@selfcommunity/react-i18n": "^0.5.0-alpha.13",
     "@selfcommunity/types": "^0.5.0-alpha.0",
     "@selfcommunity/utils": "^0.1.44-alpha.1",

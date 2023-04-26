@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.171](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.170...@selfcommunity/react-ui@0.7.0-alpha.171) (2023-04-26)
+
+
+### Bug Fixes
+
+* Fix editor default value ([63cadaa](https://github.com/selfcommunity/community-js/commit/63cadaaf537e2dc267859682904ce21aa76258aa))
+
+
+### Performance Improvements
+
+* Update notistack lib ([fd22a68](https://github.com/selfcommunity/community-js/commit/fd22a68106438cf106e9c542283efcd6498b853e))
+* Update notistack lib ([67ea3cc](https://github.com/selfcommunity/community-js/commit/67ea3cc9e1ea4b7c2ae431d5fd566faf39323f62))
+
+
+
+
+
 # [0.7.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.169...@selfcommunity/react-ui@0.7.0-alpha.170) (2023-04-24)
 
 

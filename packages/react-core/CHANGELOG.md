@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.22...@selfcommunity/react-core@0.4.0-alpha.23) (2023-04-26)
+
+
+### Performance Improvements
+
+* Update notistack lib ([67ea3cc](https://github.com/selfcommunity/community-js/commit/67ea3cc9e1ea4b7c2ae431d5fd566faf39323f62))
+
+
+
+
+
 # [0.4.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.21...@selfcommunity/react-core@0.4.0-alpha.22) (2023-04-24)
 
 
