@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.169...@selfcommunity/react-ui@0.7.0-alpha.170) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix editor selection ([c7959f1](https://github.com/selfcommunity/community-js/commit/c7959f158d66cfae2afddeb56aa77f3110754baf))
+* Fix footer theme ([feb8333](https://github.com/selfcommunity/community-js/commit/feb833399d99641ded7173375585efe4eae55caa))
+
+
+
+
+
+# [0.7.0-alpha.169](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.168...@selfcommunity/react-ui@0.7.0-alpha.169) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix deps ([6ab40e0](https://github.com/selfcommunity/community-js/commit/6ab40e0a5240d1ed51ad665d498c62254b9b6acd))
+* Fix SearchAutocomplete.tsx clear button ([7eb4cbd](https://github.com/selfcommunity/community-js/commit/7eb4cbdcb6f1ee81ae6daed4e64a6d418632486c))
+* rollback editor ([0374a06](https://github.com/selfcommunity/community-js/commit/0374a0641819ebd571cd5524b01fb3c227051d5e))
+
+
+### Features
+
+* Added hashtags to the editor ([d64cd69](https://github.com/selfcommunity/community-js/commit/d64cd693f7bcfcf87d3a7d3271b1e03b3b317716))
+
+
+### Performance Improvements
+
+* Update Editor Story ([6120c9b](https://github.com/selfcommunity/community-js/commit/6120c9b5532eea632d0ad4c9f647c0cf21d6c823))
+
+
+
+
+
+# [0.7.0-alpha.168](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.167...@selfcommunity/react-ui@0.7.0-alpha.168) (2023-04-21)
+
+
+### Bug Fixes
+
+* fixed feedObj mention when expanded ([ad86f00](https://github.com/selfcommunity/community-js/commit/ad86f000cc1410d91912e04e4b4f565a7938ebe4))
+* fixed style(removed inline style) ([cb0154c](https://github.com/selfcommunity/community-js/commit/cb0154c9da918faf576476cab306367f442d5119))
+* pm components bugfix(fixed message opening from notifications/user profile page) ([30fb141](https://github.com/selfcommunity/community-js/commit/30fb141c34fc0b9699cac704ff9e54f830c813fe))
+
+
+
+
+
 # [0.7.0-alpha.167](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.166...@selfcommunity/react-ui@0.7.0-alpha.167) (2023-04-21)
 
 

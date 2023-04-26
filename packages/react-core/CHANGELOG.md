@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.21...@selfcommunity/react-core@0.4.0-alpha.22) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix deps ([6ab40e0](https://github.com/selfcommunity/community-js/commit/6ab40e0a5240d1ed51ad665d498c62254b9b6acd))
+
+
+
+
+
 # [0.4.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.20...@selfcommunity/react-core@0.4.0-alpha.21) (2023-04-21)
 
 
