@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.172](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.171...@selfcommunity/react-ui@0.7.0-alpha.172) (2023-04-26)
+
+
+### Bug Fixes
+
+* Fix LoyaltyProgramWidget.tsx on anonymous users ([969309e](https://github.com/selfcommunity/community-js/commit/969309e4528e9305ac9c0b75eaba84c17502cc84))
+
+
+
+
+
 # [0.7.0-alpha.171](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.170...@selfcommunity/react-ui@0.7.0-alpha.171) (2023-04-26)
 
 
