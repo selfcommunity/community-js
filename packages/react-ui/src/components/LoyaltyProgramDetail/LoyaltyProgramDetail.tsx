@@ -148,8 +148,10 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           {
             variant: 'success',
             autoHideDuration: 3000,
-            onClick: () => {
-              closeSnackbar(_snackBar);
+            SnackbarProps: {
+              onClick: () => {
+                closeSnackbar(_snackBar);
+              }
             }
           }
         );
@@ -161,8 +163,10 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           {
             variant: 'error',
             autoHideDuration: 3000,
-            onClick: () => {
-              closeSnackbar(_snackBar);
+            SnackbarProps: {
+              onClick: () => {
+                closeSnackbar(_snackBar);
+              }
             }
           }
         );
