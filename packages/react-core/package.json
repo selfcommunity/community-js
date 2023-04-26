@@ -49,8 +49,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@mui/material": "^5.12.1",
-    "notistack": "^2.0.8",
+    "@mui/material": "^5.12.2",
+    "notistack": "^3.0.1",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18",
     "react-intl": "^5.25.0"
