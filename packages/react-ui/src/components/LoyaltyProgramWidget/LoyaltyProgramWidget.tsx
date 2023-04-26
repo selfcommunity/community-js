@@ -80,12 +80,13 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
 
   // STATE
   const [points, setPoints] = useState<number>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   /**
    * Fetches user loyalty points
    */
   function fetchLP() {
+    setLoading(true);
     http
       .request({
         url: Endpoints.GetUserLoyaltyPoints.url({id: scUserContext.user['id']}),
