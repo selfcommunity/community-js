@@ -347,8 +347,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           <FormattedMessage id="ui.privateMessage.thread.error.delete.msg" defaultMessage="ui.privateMessage.thread.error.delete.msg" />,
           {
             variant: 'error',
-            onClick: () => {
-              closeSnackbar(_snackBar);
+            SnackbarProps: {
+              onClick: () => {
+                closeSnackbar(_snackBar);
+              }
             }
           }
         );

@@ -18,18 +18,7 @@ const Root = styled(SnackbarContent, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: 370,
-  [theme.breakpoints.up('sm')]: {
-    minWidth: '345px !important'
-  },
-  [`& .${classes.close}`]: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1
-  }
-}));
+})(({theme}) => ({}));
 
 /**
  * Custom Snackbar for notistack messages

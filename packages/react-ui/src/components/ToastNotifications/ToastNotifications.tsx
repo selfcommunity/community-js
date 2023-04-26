@@ -1,10 +1,10 @@
 import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, BoxProps} from '@mui/material';
-import {SCContextType, SCNotification, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {SCContextType, SCNotification, SCUserContextType, useSCAlertMessages, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
-import {useSnackbar} from 'notistack';
+import {BaseVariant, useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
 import {SCBroadcastMessageTemplateType, SCNotificationObjectTemplateType} from '../../types';
 import CommentNotification from '../Notification/Comment';
@@ -30,12 +30,6 @@ const Root = styled(Box, {
 })(({theme}) => ({}));
 
 export interface ToastNotificationsProps extends BoxProps {
-  /**
-   * Props for toast message
-   * @default null
-   */
-  ToastMessageProps?: any;
-
   /**
    * Handle notification
    */
@@ -84,7 +78,7 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
     name: PREFIX
   });
 
-  const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;
+  const {handleNotification, disableToastNotification = false} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -95,6 +89,7 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
 
   // CONTEXT
   const {enqueueSnackbar} = useSnackbar();
+  const {options, setOptions} = useSCAlertMessages();
 
   /**
    * Render every single notification content
@@ -162,22 +157,17 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
        * - the enqueue message is persistent (it remains on the screen while the others replace each other) if type notification_banner
        */
       const messageKey = data.data.feed_serialization_id ? data.data.feed_serialization_id : data.data.id;
-      enqueueSnackbar(
-        null,
-        Object.assign(
-          {},
-          {
-            content: <CustomSnackMessage id={messageKey} message={getContent(data.data)} />,
-            preventDuplicate: true,
-            key: messageKey,
-            variant: 'default',
-            persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
-            anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
-            action: null
-          },
-          ToastMessageProps
-        )
-      );
+      enqueueSnackbar(getContent(data.data), {
+        preventDuplicate: true,
+        key: messageKey,
+        variant: 'notification' as BaseVariant,
+        persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
+        anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
+        action: null,
+        SnackbarProps: {
+          id: messageKey
+        }
+      });
     }
   };
 
@@ -190,6 +180,10 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
     return () => {
       PubSub.unsubscribe(notificationSubscription.current);
     };
+  }, [scUserContext.managers.settings.all]);
+
+  useEffect(() => {
+    setOptions({...options, Components: {...options?.Components, notification: CustomSnackMessage}});
   }, [scUserContext.managers.settings.all]);
 
   return <Root />;
