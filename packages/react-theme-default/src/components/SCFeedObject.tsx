@@ -189,6 +189,7 @@ const Component = {
             background: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
             '& .SCCommentObjectReply-root': {
               background: 'transparent',
+              marginBottom: 0,
               '& .SCCommentObjectReply-comment': {
                 background: 'transparent',
                 border: '0 none',
