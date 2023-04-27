@@ -103,6 +103,7 @@ import SCChangePictureButton from './components/SCChangePictureButton';
 import SCChangePictureDialog from './components/SCChangePictureDialog';
 import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
 import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
+import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
 
 /**
  * Style fragments - Imports - End
@@ -175,6 +176,7 @@ const theme = {
     SCCategoriesSkeleton,
     SCCategory,
     SCCategoryFeedTemplate,
+    SCCategoryFollowersButton,
     SCCategoryHeader,
     SCCategoryTemplate,
     SCCategoryTemplateSkeleton,

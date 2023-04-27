@@ -7,7 +7,8 @@ import {
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
-  SCFollowedCategoriesManagerType
+  SCFollowedCategoriesManagerType,
+  useSCUser
 } from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -28,7 +29,7 @@ const FollowButton = styled(LoadingButton, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface FollowCategoryButtonProps {
+export interface CategoryFollowButtonProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -65,7 +66,7 @@ export interface FollowCategoryButtonProps {
  #### Import
 
  ```jsx
- import {FollowCategoryButton} from '@selfcommunity/react-ui';
+ import {CategoryFollowButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -81,9 +82,9 @@ export interface FollowCategoryButtonProps {
 
  * @param inProps
  */
-export default function FollowCategoryButton(inProps: FollowCategoryButtonProps): JSX.Element {
+export default function CategoryFollowButton(inProps: CategoryFollowButtonProps): JSX.Element {
   // PROPS
-  const props: FollowCategoryButtonProps = useThemeProps({
+  const props: CategoryFollowButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -95,7 +96,7 @@ export default function FollowCategoryButton(inProps: FollowCategoryButtonProps)
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scUserContext: SCUserContextType = useSCUser();
   const scCategoriesManager: SCFollowedCategoriesManagerType = scUserContext.managers.categories;
 
   useEffect(() => {

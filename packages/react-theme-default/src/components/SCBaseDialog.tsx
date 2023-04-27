@@ -5,16 +5,6 @@ const Component = {
       [theme.breakpoints.up(500)]: {
         minWidth: 500
       },
-      '& h2': {
-        fontSize: '1.286rem',
-        fontWeight: theme.typography.fontWeightBold,
-        padding: theme.spacing(2, 3),
-        '& .MuiIconButton-root': {
-          right: theme.spacing(3),
-          top: theme.spacing(2),
-          fontSize: '1rem'
-        }
-      },
       '& .MuiDialogContent-root': {
         paddingLeft: 0,
         paddingRight: 0,
@@ -23,17 +13,20 @@ const Component = {
         [theme.breakpoints.only('xs')]: {
           padding: 0
         },
-        '& .infinite-scroll-component': {
-          ' > .': {
-            marginBottom: theme.spacing(2.5)
-          },
-          '& .MuiList-root': {
-            paddingTop: 0,
-            paddingBottom: 0,
-            '& .MuiListItem-root': {
-              paddingLeft: 0,
-              '& .SCBaseItemButton-root': {
-                borderRadius: 0
+        '& .infinite-scroll-component__outerdiv': {
+          height: '100%',
+          '& .infinite-scroll-component': {
+            ' > .': {
+              marginBottom: theme.spacing(2.5)
+            },
+            '& .MuiList-root': {
+              paddingTop: 0,
+              paddingBottom: 0,
+              '& .MuiListItem-root': {
+                paddingLeft: 0,
+                '& .SCBaseItemButton-root': {
+                  borderRadius: 0
+                }
               }
             }
           }
@@ -41,6 +34,26 @@ const Component = {
       },
       '& .MuiDialogActions-spacing': {
         padding: theme.spacing(2, 3)
+      }
+    }),
+    titleRoot: ({theme}: any) => ({
+      display: 'flex',
+      flexDirection: 'row-reverse',
+      alignItems: 'start',
+      justifyContent: 'flex-end',
+      fontSize: '1.286rem',
+      fontWeight: theme.typography.fontWeightBold,
+      padding: theme.spacing(2, 3),
+      [theme.breakpoints.up('md')]: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      },
+      '& .MuiIconButton-root': {
+        fontSize: '1rem',
+        marginRight: theme.spacing(1),
+        [theme.breakpoints.up('md')]: {
+          marginRight: 0
+        }
       }
     })
   }

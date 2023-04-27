@@ -109,8 +109,8 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({url: Endpoints.CategoryFollowers.url({id}), method: Endpoints.CategoryFollowers.method, ...config});
+  static getCategoryFollowers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({url: Endpoints.CategoryFollowers.url({id}), method: Endpoints.CategoryFollowers.method, params, ...config});
   }
 
   /**
@@ -118,8 +118,8 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest({url: Endpoints.CategoryFeed.url({id}), method: Endpoints.CategoryFeed.method, ...config});
+  static getCategoryFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest({url: Endpoints.CategoryFeed.url({id}), method: Endpoints.CategoryFeed.method, params, ...config});
   }
 
   /**
@@ -252,12 +252,20 @@ export default class CategoryService {
     return CategoryApiClient.getCategoryAudience(id, config);
   }
 
-  static async getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return CategoryApiClient.getCategoryFollowers(id, config);
+  static async getCategoryFollowers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return CategoryApiClient.getCategoryFollowers(id, params, config);
   }
 
-  static async getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return CategoryApiClient.getCategoryFeed(id, config);
+  static async getCategoryFeed(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return CategoryApiClient.getCategoryFeed(id, params, config);
   }
 
   static async getCategoryTrendingFeed(

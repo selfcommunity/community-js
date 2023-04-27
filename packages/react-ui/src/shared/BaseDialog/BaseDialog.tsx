@@ -4,15 +4,40 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent, {DialogContentProps} from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Title from './title';
 import classNames from 'classnames';
 import {useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
+import MuiDialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCBaseDialog';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  titleRoot: `${PREFIX}-title-root`
+};
+
+const DialogTitleRoot = styled(MuiDialogTitle, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.titleRoot
+})(({theme}) => ({}));
+
+const DialogTitle = ({children = null, onClose = null}): JSX.Element => {
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+
+  return (
+    <DialogTitleRoot className={classes.titleRoot}>
+      <span>{children}</span>
+      {onClose ? (
+        <IconButton aria-label="close" onClick={onClose}>
+          <Icon>{isMobile ? 'arrow_back' : 'close'}</Icon>
+        </IconButton>
+      ) : null}
+    </DialogTitleRoot>
+  );
 };
 
 const Root = styled(Dialog, {
@@ -63,9 +88,12 @@ export interface BaseDialogProps {
 }
 
 export default function BaseDialog(props: BaseDialogProps) {
-  // PROPS
+  // OPTIONS
   const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+  const fullScreen = isMobile;
+
+  // PROPS
   const {
     className = '',
     title = '',
@@ -75,11 +103,9 @@ export default function BaseDialog(props: BaseDialogProps) {
     onClose = null,
     actions = null,
     children,
+    maxWidth = 'sm',
     ...rest
   } = props;
-
-  // OPTIONS
-  const fullScreen = useMediaQuery((theme) => theme['breakpoints'].down('sm'), {noSsr: typeof window !== 'undefined'});
 
   /**
    * Renders root object
@@ -91,9 +117,10 @@ export default function BaseDialog(props: BaseDialogProps) {
       fullWidth
       open={open}
       onClose={onClose}
-      maxWidth={rest.maxWidth ? rest.maxWidth : 'sm'}
-      scroll="body">
-      <Title onClose={onClose}>{title}</Title>
+      maxWidth={maxWidth}
+      scroll="body"
+      {...rest}>
+      <DialogTitle onClose={onClose}>{title}</DialogTitle>
       {subtitle && subtitle}
       <DialogContent {...DialogContentProps}>{children}</DialogContent>
       {actions && <DialogActions>{actions}</DialogActions>}
