@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.173](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.172...@selfcommunity/react-ui@0.7.0-alpha.173) (2023-04-28)
+
+
+### Bug Fixes
+
+* Fix CategoryHeader.tsx ([f8f1efd](https://github.com/selfcommunity/community-js/commit/f8f1efdae735fa7416af10f94267ed00915d5391))
+
+
+### Performance Improvements
+
+* integrated new pm endpoint search user, fixed pm component heights ([f6fe0a1](https://github.com/selfcommunity/community-js/commit/f6fe0a14bd2448f0f5d07e7a69b9703bfc71fe6a))
+
+
+
+
+
 # [0.7.0-alpha.172](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.171...@selfcommunity/react-ui@0.7.0-alpha.172) (2023-04-26)
 
 

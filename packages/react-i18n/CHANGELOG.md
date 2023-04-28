@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.13...@selfcommunity/react-i18n@0.5.0-alpha.14) (2023-04-28)
+
+
+### Bug Fixes
+
+* Fix CategoryHeader.tsx ([f8f1efd](https://github.com/selfcommunity/community-js/commit/f8f1efdae735fa7416af10f94267ed00915d5391))
+
+
+
+
+
 # [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.12...@selfcommunity/react-i18n@0.5.0-alpha.13) (2023-04-21)
 
 

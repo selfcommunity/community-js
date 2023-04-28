@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.118...@selfcommunity/react-theme-default@0.1.0-alpha.119) (2023-04-28)
+
+
+### Bug Fixes
+
+* Fix CategoryHeader.tsx ([f8f1efd](https://github.com/selfcommunity/community-js/commit/f8f1efdae735fa7416af10f94267ed00915d5391))
+
+
+### Performance Improvements
+
+* integrated new pm endpoint search user, fixed pm component heights ([f6fe0a1](https://github.com/selfcommunity/community-js/commit/f6fe0a14bd2448f0f5d07e7a69b9703bfc71fe6a))
+
+
+
+
+
 # [0.1.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.117...@selfcommunity/react-theme-default@0.1.0-alpha.118) (2023-04-26)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
