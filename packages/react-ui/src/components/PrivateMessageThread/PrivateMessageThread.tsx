@@ -1,17 +1,8 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
-import {Endpoints, http, HttpResponse, PrivateMessageService, UserService} from '@selfcommunity/api-services';
-import {
-  SCFollowersManagerType,
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCUserContext,
-  SCUserContextType,
-  UserUtils,
-  useSCFetchUser
-} from '@selfcommunity/react-core';
+import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
+import {SCFollowersManagerType, SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {
   SCNotificationTopicType,
   SCNotificationTypologyType,
@@ -159,16 +150,13 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const role = UserUtils.getUserRole(scUserContext['user']);
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
 
   // STATE
   const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
+  const [value, setValue] = useState<string>('');
   const [messageObjs, setMessageObjs] = useState<any[]>([]);
   const [loadingMessageObjs, setLoadingMessageObjs] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState({});
   const [followers, setFollowers] = useState<any[]>([]);
   const [isFollower, setIsFollower] = useState<boolean>(false);
@@ -224,14 +212,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       return {...prevState, [index]: false};
     });
   };
-  /**
-   * Handles autocomplete recipients selection
-   * @param event
-   * @param recipient
-   */
-  const handleRecipientSelect = (event, recipient) => {
-    setRecipients(recipient);
-  };
 
   /**
    * Handles delete message dialog opening
@@ -260,37 +240,68 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     return [recipients];
   }, [recipients]);
 
-  /**
-   * Memoized fetchFollowers
-   */
-  const fetchFollowers = useMemo(
-    () => () => {
-      let fetch;
-      //TODO: wait api mod and add getAllUsers for user with role
-      if (followEnabled) {
-        fetch = UserService.getUserFollowers(authUserId);
-      } else {
-        fetch = UserService.getUserConnections(authUserId);
-      }
-      return fetch
-        .then((data: any) => {
-          setFollowers(data.results);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
-          Logger.error(SCOPE_SC_UI, {error});
-        });
-    },
-    []
-  );
+  function fetchResults() {
+    setLoading(true);
+    PrivateMessageService.searchUser(value)
+      .then((data) => {
+        setLoading(false);
+        setFollowers(data.results);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }
+  useEffect(() => {
+    if (value) {
+      fetchResults();
+    }
+  }, [value]);
 
+  const handleInputChange = (event, value, reason) => {
+    switch (reason) {
+      case 'input':
+        setValue(value);
+        !value && setFollowers([]);
+        break;
+      case 'reset':
+        setValue(value);
+        break;
+    }
+  };
+
+  const handleChange = (event, value, reason) => {
+    event.preventDefault();
+    event.stopPropagation();
+    switch (reason) {
+      case 'selectOption':
+        handleClear(event);
+        setRecipients(value);
+        break;
+      case 'removeOption':
+        handleClear(event, value);
+        break;
+    }
+    return false;
+  };
+
+  const handleClear = (event?, value?) => {
+    setValue('');
+    setFollowers([]);
+    setRecipients(value ?? []);
+  };
+
+  const handleNewMessageClose = () => {
+    handleClear();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    onNewMessageClose && onNewMessageClose();
+  };
   /**
    * Fetches thread
    */
   function fetchThread() {
-    const _isFollower = scUser && scFollowersManager.isFollower(scUser);
+    const _isFollower = (scUser && scFollowersManager.isFollower(scUser)) || (scUser && scUser.community_badge);
     if (userObj && typeof userObj !== 'string') {
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       http
@@ -406,20 +417,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   }
 
   /**
-   * Fetches followers when a new message is selected
-   */
-  useEffect(() => {
-    if (isNew) {
-      fetchFollowers();
-    }
-  }, [isNew, authUserId]);
-
-  /**
    * Checks is thread receiver is a user follower
    */
   useEffect(() => {
     if (receiver) {
-      setIsFollower(scFollowersManager.isFollower(receiver));
+      !receiver.community_badge ? setIsFollower(scFollowersManager.isFollower(receiver)) : setIsFollower(true);
     }
   });
 
@@ -544,6 +546,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   limitTags={3}
                   freeSolo
                   options={followers}
+                  onChange={handleChange}
+                  onInputChange={handleInputChange}
+                  inputValue={value}
                   value={singleMessageUser ?? recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
@@ -558,11 +563,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                     />
                   )}
                   classes={{popper: classes.autocompleteDialog}}
-                  onChange={handleRecipientSelect}
-                  disabled={!followers || Boolean(singleMessageUser)}
+                  disabled={Boolean(singleMessageUser)}
                 />
               </Box>
-              <IconButton size="small" onClick={onNewMessageClose}>
+              <IconButton size="small" onClick={handleNewMessageClose}>
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>

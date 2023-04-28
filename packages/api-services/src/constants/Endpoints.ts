@@ -855,6 +855,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/pm/'),
     method: 'DELETE'
   },
+  PrivateMessageSearchUser: {
+    url: urlReplacer('/api/v2/pm/search/?user=$(search)'),
+    method: 'GET'
+  },
 
   /**
    * Device

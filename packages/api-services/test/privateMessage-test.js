@@ -6,6 +6,7 @@ describe('Private Message Service Test', () => {
   let threadId;
   let message;
   let receiverId;
+  let receiverUsername;
   test('Get all snippets', () => {
     return PrivateMessageService.getAllSnippets().then((data) => {
       if (data.count !== 0) {
@@ -38,8 +39,19 @@ describe('Private Message Service Test', () => {
     return UserService.getUserFollowers(loggedUser).then((data) => {
       if (data.count !== 0) {
         receiverId = data.results[0].id;
+        receiverUsername = data.results[0].username;
       }
     });
+  });
+  test('Search User', () => {
+    if (receiverUsername) {
+      return PrivateMessageService.searchUser(receiverUsername).then((data) => {
+        expect(data.results).toBeInstanceOf(Array);
+        console.log(data, receiverUsername);
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Send a message', () => {
     if (receiverId) {

@@ -5,22 +5,17 @@ const Component = {
     root: ({theme}: any) => ({
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
       position: 'relative',
-      [theme.breakpoints.down('md')]: {
-        minHeight: 'calc(100vh - 6.2rem)'
-      },
       [theme.breakpoints.up('sm')]: {
-        height: theme.spacing(103.5),
-        maxHeight: 'inherit'
+        height: '100vh',
+        maxHeight: theme.breakpoints.values['md']
       },
       '& .MuiCardContent-root': {
         overflow: 'auto',
         padding: theme.spacing(0),
+        height: 'calc(100vh - 6.2rem)',
         [theme.breakpoints.up('sm')]: {
-          height: '100%',
-          maxHeight: `calc(100% - ${theme.spacing(6.25)})`
-        },
-        [theme.breakpoints.down('md')]: {
-          maxHeight: 'calc(100vh - 6.2rem)'
+          height: `calc(100% - ${theme.spacing(6.25)})`,
+          maxHeight: theme.breakpoints.values['md']
         },
         '& .MuiAlert-root': {
           position: 'absolute',

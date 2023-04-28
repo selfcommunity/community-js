@@ -14,7 +14,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SCMessageChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
-import {createThumbnail, createVideoThumbnail, dataURLtoFile, pdfToPng} from '../../utils/thumbnailCoverter';
+import {createThumbnail, createVideoThumbnail, dataURLtoFile, pdfToJpeg} from '../../utils/thumbnailCoverter';
 
 export interface MessageChunkUploaderProps {
   /**
@@ -138,7 +138,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   useItemFinishListener((item) => {
     const callBack = item.file.type.startsWith(SCMessageFileType.DOCUMENT)
-      ? pdfToPng
+      ? pdfToJpeg
       : item.file.type.startsWith(SCMessageFileType.VIDEO)
       ? createVideoThumbnail
       : createThumbnail;

@@ -27,12 +27,8 @@ const Component = {
       '& .SCPrivateMessageThreadItem-img': {
         display: 'flex',
         alignItems: 'center',
-        height: theme.spacing(52),
         objectFit: 'cover',
         flex: '0 0 95%',
-        [theme.breakpoints.down('md')]: {
-          height: theme.spacing(22)
-        },
         '& img': {
           width: '100%',
           height: '100%'
@@ -56,15 +52,9 @@ const Component = {
       },
       '& .SCPrivateMessageThreadItem-document': {
         width: theme.spacing(32.5),
-        [theme.breakpoints.down('md')]: {
-          width: theme.spacing(22)
-        },
         '& img': {
-          height: theme.spacing(40),
-          width: '100%',
-          [theme.breakpoints.down('md')]: {
-            height: theme.spacing(22)
-          }
+          height: '100%',
+          width: '100%'
         },
         '& .MuiButtonBase-root': {
           width: 'inherit',
@@ -79,9 +69,6 @@ const Component = {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             marginLeft: theme.spacing(0.5)
-          },
-          [theme.breakpoints.down('md')]: {
-            bottom: '15%'
           }
         }
       }
