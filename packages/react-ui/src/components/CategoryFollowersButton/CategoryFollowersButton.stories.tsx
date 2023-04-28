@@ -1,12 +1,12 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import CategoryHeader from './index';
+import CategoryFollowersButton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Category Header ',
-  component: CategoryHeader,
+  title: 'Design System/React UI/Category Followers Button ',
+  component: CategoryFollowersButton,
   argTypes: {
     categoryId: {
       control: {type: 'number'},
@@ -17,12 +17,12 @@ export default {
   args: {
     categoryId: 1
   }
-} as ComponentMeta<typeof CategoryHeader>;
+} as ComponentMeta<typeof CategoryFollowersButton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoryHeader> = (args) => (
+const Template: ComponentStory<typeof CategoryFollowersButton> = (args) => (
   <div style={{width: '100%'}}>
-    <CategoryHeader {...args} />
+    <CategoryFollowersButton {...args} />
   </div>
 );
 

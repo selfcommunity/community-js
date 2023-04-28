@@ -8,6 +8,7 @@ import BottomNavigation, {BottomNavigationProps} from './components/BottomNaviga
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
 import CategoryAutocomplete, {CategoryAutocompleteProps} from './components/CategoryAutocomplete';
+import CategoryFollowersButton, {CategoryFollowersButtonProps} from './components/CategoryFollowersButton';
 import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
 import Categories, {CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps} from './components/Categories';
 import CategoriesFollowedWidget, {CategoriesFollowedWidgetSkeleton} from './components/CategoriesFollowedWidget';
@@ -24,7 +25,7 @@ import User, {UserProps, UserSkeleton} from './components/User';
 import Feed, {FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton} from './components/Feed';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/FeedObject';
 import FeedUpdatesWidget, {FeedUpdatesWidgetProps, FeedUpdatesWidgetSkeleton} from './components/FeedUpdatesWidget';
-import FollowCategoryButton, {FollowCategoryButtonProps} from './components/FollowCategoryButton';
+import FollowCategoryButton, {CategoryFollowButtonProps} from './components/CategoryFollowButton';
 import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
 import ConnectionUserButton from './components/ConnectionUserButton';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
@@ -159,6 +160,8 @@ export {
   CategorySkeleton,
   CategoryAutocomplete,
   CategoryAutocompleteProps,
+  CategoryFollowersButton,
+  CategoryFollowersButtonProps,
   CategoryHeader,
   CategoryHeaderProps,
   CategoryHeaderSkeleton,
@@ -195,7 +198,7 @@ export {
   FeedSidebarProps,
   FeedSkeleton,
   FollowCategoryButton,
-  FollowCategoryButtonProps,
+  CategoryFollowButtonProps,
   FollowUserButton,
   FollowUserButtonProps,
   ConnectionUserButton,

@@ -352,9 +352,10 @@
   "ui.userFollowersWidget.button.showAll": "Vedi di più",
   "ui.userFollowersWidget.noMoreResults": "Nient'altro da mostrare",
 
+  "ui.categoryFollowersButton.dialogTitle": "Followers ({total})",
+  "ui.categoryFollowersButton.noOtherFollowers": "Non ci sono altri followers.",
+
   "ui.categoryHeader.followedBy": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
-  "ui.categoryHeader.followers": "Followers",
-  "ui.categoryHeader.noOtherFollowers": "Non ci sono altri followers.",
 
   "ui.feed.refreshRelease": "&#8593; Rilascia per ricaricare",
   "ui.feed.noFeedObject": "Al momento non ci sono contributi da vedere",

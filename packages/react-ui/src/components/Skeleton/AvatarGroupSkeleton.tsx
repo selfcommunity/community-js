@@ -13,18 +13,8 @@ const Root = styled(AvatarGroup, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  justifyContent: 'flex-end',
-  ['& .MuiAvatar-root']: {
-    marginLeft: -6,
-    backgroundColor: '#d5d5d5',
-    border: 'none',
-    color: '#FFF',
-    fontSize: '0.85rem',
-    width: 24,
-    height: 24
-  }
-}));
+})(({theme}) => ({}));
+
 /**
  * > API documentation for the Community-JS Avatar Group Skeleton component. Learn about the available props and the CSS API.
 

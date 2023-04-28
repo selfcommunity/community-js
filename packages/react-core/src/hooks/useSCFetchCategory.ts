@@ -5,6 +5,7 @@ import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getCategoryObjectCacheKey} from '../constants/Cache';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 
 /**
  :::info
@@ -75,12 +76,8 @@ export default function useSCFetchCategory({
 
   useDeepCompareEffectNoCheck(() => {
     if (category) {
-      if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-        setSCCategory(category);
-        LRUCache.set(__categoryCacheKey, category);
-      } else {
-        setSCCategory(LRUCache.get(__categoryCacheKey, category));
-      }
+      setSCCategory(category);
+      LRUCache.set(__categoryCacheKey, category);
     }
   }, [category]);
 
