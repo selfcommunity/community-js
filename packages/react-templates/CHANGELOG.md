@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.159...@selfcommunity/react-templates@0.3.0-alpha.160) (2023-04-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.159](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.158...@selfcommunity/react-templates@0.3.0-alpha.159) (2023-04-26)
+
+
+### Performance Improvements
+
+* Update notistack lib ([67ea3cc](https://github.com/selfcommunity/community-js/commit/67ea3cc9e1ea4b7c2ae431d5fd566faf39323f62))
+
+
+
+
+
 # [0.3.0-alpha.158](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.157...@selfcommunity/react-templates@0.3.0-alpha.158) (2023-04-24)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

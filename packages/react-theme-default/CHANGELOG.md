@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.117...@selfcommunity/react-theme-default@0.1.0-alpha.118) (2023-04-26)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.117](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.116...@selfcommunity/react-theme-default@0.1.0-alpha.117) (2023-04-26)
+
+
+### Bug Fixes
+
+* Fix editor default value ([63cadaa](https://github.com/selfcommunity/community-js/commit/63cadaaf537e2dc267859682904ce21aa76258aa))
+
+
+### Performance Improvements
+
+* Update notistack lib ([fd22a68](https://github.com/selfcommunity/community-js/commit/fd22a68106438cf106e9c542283efcd6498b853e))
+* Update notistack lib ([67ea3cc](https://github.com/selfcommunity/community-js/commit/67ea3cc9e1ea4b7c2ae431d5fd566faf39323f62))
+
+
+
+
+
 # [0.1.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.115...@selfcommunity/react-theme-default@0.1.0-alpha.116) (2023-04-24)
 
 
