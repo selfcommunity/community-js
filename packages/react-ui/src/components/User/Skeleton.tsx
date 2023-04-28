@@ -53,7 +53,7 @@ export default function UserSkeleton(props: WidgetProps): JSX.Element {
       secondary={<Skeleton animation="wave" height={10} width={70} style={{marginBottom: 10}} />}
       actions={
         <Button size="small" variant="outlined" disabled>
-          <Skeleton animation="wave" height={10} width={50} style={{marginTop: 5, marginBottom: 5}} />
+          <Skeleton animation="wave" height={10} width={30} style={{marginTop: 5, marginBottom: 5}} />
         </Button>
       }
     />

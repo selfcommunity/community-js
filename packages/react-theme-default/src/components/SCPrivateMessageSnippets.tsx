@@ -4,8 +4,8 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       [theme.breakpoints.up('sm')]: {
-        height: theme.spacing(103.5),
-        maxHeight: 'inherit',
+        height: '100vh',
+        maxHeight: theme.breakpoints.values['md'],
         overflow: 'auto'
       },
       '& .MuiCardContent-root': {

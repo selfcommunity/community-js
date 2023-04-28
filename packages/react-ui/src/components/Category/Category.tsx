@@ -4,7 +4,7 @@ import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
-import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
+import FollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -61,7 +61,7 @@ export interface CategoryProps extends WidgetProps {
    * Props to spread to follow button
    * @default {}
    */
-  followCategoryButtonProps?: FollowCategoryButtonProps;
+  followCategoryButtonProps?: CategoryFollowButtonProps;
   /**
    * Prop to show category followers as secondary text
    * @default true

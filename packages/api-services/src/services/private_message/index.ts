@@ -15,7 +15,8 @@ import {
   SCPrivateMessageThreadType,
   SCPrivateMessageUploadMediaChunkType,
   SCPrivateMessageUploadMediaType,
-  SCPrivateMessageUploadThumbnailType
+  SCPrivateMessageUploadThumbnailType,
+  SCUserType
 } from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
@@ -31,6 +32,7 @@ export interface PrivateMessageApiClientInterface {
   uploadThumbnail(data: MessageThumbnailUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadThumbnailType>;
   uploadMediaInChunks(data: MessageMediaChunksParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaChunkType>;
   chunkUploadDone(data: MessageChunkUploadDoneParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType>;
+  searchUser(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 }
 /**
  * Contains all the endpoints needed to manage private messages.
@@ -142,6 +144,18 @@ export class PrivateMessageApiClient {
       data: data
     });
   }
+  /**
+   * This endpoint performs users search.
+   * @param search
+   * @param config
+   */
+  static searchUser(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.PrivateMessageSearchUser.url({search}),
+      method: Endpoints.PrivateMessageSearchUser.method
+    });
+  }
 }
 
 /**
@@ -209,5 +223,8 @@ export default class PrivateMessageService {
   }
   static async chunkUploadDone(data: MessageChunkUploadDoneParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType> {
     return PrivateMessageApiClient.chunkUploadDone(data, config);
+  }
+  static async searchUser(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return PrivateMessageApiClient.searchUser(search, config);
   }
 }

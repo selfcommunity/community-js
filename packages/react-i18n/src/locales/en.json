@@ -344,9 +344,10 @@
   "ui.userFollowersWidget.button.showAll": "Show All",
   "ui.userFollowersWidget.noMoreResults": "No more results",
 
+  "ui.categoryHeader.dialogTitle": "Followers ({total})",
+  "ui.categoryFollowersButton.noOtherFollowers": "No other followers.",
+
   "ui.categoryHeader.followedBy": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
-  "ui.categoryHeader.followers": "Followers",
-  "ui.categoryHeader.noOtherFollowers": "No other followers.",
 
   "ui.feed.refreshRelease": "&#8593; Release to refresh the feed",
   "ui.feed.noFeedObject": "At the moment there aren't any contribution to see",
