@@ -179,7 +179,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     const isSaving = saving.includes(field);
     const camelField = camelCase(field);
     const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
-    const component = {element: TextField};
+    const component: any = {element: TextField};
     let label = intl.formatMessage({
       id: `ui.userInfo.${camelField}`,
       defaultMessage: `ui.userInfo.${field}`
