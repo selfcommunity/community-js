@@ -202,7 +202,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [authUserId, prefetchedCategories]);
+  }, [authUserId, prefetchedCategories.length]);
 
   /**
    * Get categories filtered
