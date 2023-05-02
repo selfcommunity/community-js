@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.174](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.173...@selfcommunity/react-ui@0.7.0-alpha.174) (2023-05-02)
+
+
+### Bug Fixes
+
+* categories ([52b2dec](https://github.com/selfcommunity/community-js/commit/52b2decd60d30c4999865273839f4c93ce7174a3))
+* Fix PublicInfo.tsx type error ([b521e72](https://github.com/selfcommunity/community-js/commit/b521e7217c5d6741fbee4d5fa3b0bae4f0f08271))
+* Fix widgets behaviour and data load ([da1a0fb](https://github.com/selfcommunity/community-js/commit/da1a0fba75aaebf1954d77a58f3174148f9c322f))
+
+
+
+
+
 # [0.7.0-alpha.173](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.172...@selfcommunity/react-ui@0.7.0-alpha.173) (2023-04-28)
 
 
