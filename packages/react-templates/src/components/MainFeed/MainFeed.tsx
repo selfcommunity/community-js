@@ -11,7 +11,7 @@ import {
   FeedProps,
   InlineComposerWidget,
   LoyaltyProgramWidget,
-  PeopleSuggestionWidget,
+  UserSuggestionWidget,
   PlatformWidget,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
@@ -99,7 +99,7 @@ const WIDGETS: SCFeedWidgetType[] = [
   },
   {
     type: 'widget',
-    component: PeopleSuggestionWidget,
+    component: UserSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 3

@@ -4,7 +4,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UserFollowersWidget from './index';
 
 export default {
-  title: 'Design System/React UI/UserFollowersWidget',
+  title: 'Design System/React UI/User Followers Widget',
   component: UserFollowersWidget,
   argTypes: {
     userId: {

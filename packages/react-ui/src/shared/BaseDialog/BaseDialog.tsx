@@ -104,6 +104,7 @@ export default function BaseDialog(props: BaseDialogProps) {
     actions = null,
     children,
     maxWidth = 'sm',
+    scroll = 'body',
     ...rest
   } = props;
 
@@ -118,7 +119,7 @@ export default function BaseDialog(props: BaseDialogProps) {
       open={open}
       onClose={onClose}
       maxWidth={maxWidth}
-      scroll="body"
+      scroll={scroll}
       {...rest}>
       <DialogTitle onClose={onClose}>{title}</DialogTitle>
       {subtitle && subtitle}

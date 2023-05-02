@@ -11,6 +11,7 @@ export const DISCUSSION_ROUTE_NAME = 'discussion';
 export const STATUS_ROUTE_NAME = 'status';
 export const COMMENT_ROUTE_NAME = 'comment';
 export const CATEGORY_ROUTE_NAME = 'category';
+export const CATEGORY_TRENDING_FEED_ROUTE_NAME = 'category_trending_feed';
 export const CATEGORIES_LIST_ROUTE_NAME = 'categories';
 export const USER_PROFILE_ROUTE_NAME = 'user_profile';
 export const USER_PROFILE_SETTINGS_ROUTE_NAME = 'user_profile_settings';
@@ -42,6 +43,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [STATUS_ROUTE_NAME]: '/status/:id/',
   [COMMENT_ROUTE_NAME]: '/:contribution_type/:contribution_id/comment/:id/',
   [CATEGORY_ROUTE_NAME]: '/category/:id/',
+  [CATEGORY_TRENDING_FEED_ROUTE_NAME]: '/category/:id/trending/',
   [CATEGORIES_LIST_ROUTE_NAME]: '/categories/',
   [USER_PROFILE_ROUTE_NAME]: '/user/:id/',
   [USER_PROFILE_SETTINGS_ROUTE_NAME]: '/user/:id/edit/',

@@ -45,26 +45,26 @@
 
   "ui.userInfoDialog.title": "Informazioni",
 
-  "ui.peopleSuggestionWidget.title": "Persone che potresti conoscere",
-  "ui.peopleSuggestionWidget.subtitle.noResults": "Nessun risultato",
-  "ui.peopleSuggestionWidget.button.showMore": "Vedi di più",
+  "ui.userSuggestionWidget.title": "Persone che potresti conoscere",
+  "ui.userSuggestionWidget.subtitle.noResults": "Nessun risultato",
+  "ui.userSuggestionWidget.button.showMore": "Vedi di più",
 
   "ui.pollSuggestionWidget.title": "Sondaggi che ti potrebbero interessare",
   "ui.pollSuggestionWidget.subtitle.noResults": "Nessun risultato",
-  "ui.pollSuggestionWidget.button.showMore": "Vedi di più",
+  "ui.pollSuggestionWidget.button.showAll": "Vedi tutti",
   "ui.pollSuggestionWidget.noMoreResults": "Nient'altro da mostrare",
 
   "ui.pollSuggestionWidget.pollSnippet.button.seeItem": "Vedi",
 
-  "ui.trendingPeopleWidget.title": "Gli utenti più apprezzati",
-  "ui.trendingPeopleWidget.noResults": "Nessun risultato",
-  "ui.trendingPeopleWidget.button.showAll": "Vedi di più",
-  "ui.trendingPeopleWidget.noMoreResults": "Nient'altro da mostrare",
+  "ui.categoryTrendingUsersWidget.title": "Gli utenti più apprezzati",
+  "ui.categoryTrendingUsersWidget.noResults": "Nessun risultato",
+  "ui.categoryTrendingUsersWidget.button.showAll": "Vedi di più",
+  "ui.categoryTrendingUsersWidget.noMoreResults": "Nient'altro da mostrare",
 
-  "ui.trendingFeedWidget.title": "I post più partecipati",
-  "ui.trendingFeedWidget.noResults": "Nessun risultato",
-  "ui.trendingFeedWidget.button.showMore": "Vedi di più",
-  "ui.trendingFeedWidget.noMoreResults": "Nient'altro da mostrare",
+  "ui.categoryTrendingFeedWidget.title": "I post più partecipati",
+  "ui.categoryTrendingFeedWidget.noResults": "Nessun risultato",
+  "ui.categoryTrendingFeedWidget.button.showAll": "Vedi di più",
+  "ui.categoryTrendingFeedWidget.noMoreResults": "Nient'altro da mostrare",
 
   "ui.relatedFeedObjectsWidget.title": "Post correlati",
   "ui.relatedFeedObjectsWidget.noResults": "Nessun risultato",
@@ -76,11 +76,11 @@
   "ui.categories.filterByName": "Trova e aggiungi un interesse",
   "ui.categories.noResults": "Nessuna categoria trovata",
 
-  "ui.categoriesFollowedWidget.title": "{total, plural, =0 {Segue # stili di vita} one {Segue # stile di vita} other {Segue # stili di vita}}",
-  "ui.categoriesFollowedWidget.modal.title": "Stili di vita seguiti",
-  "ui.categoriesFollowedWidget.subtitle.noResults": "Nessun risultato",
-  "ui.categoriesFollowedWidget.button.showAll": "Vedi di più",
-  "ui.categoriesFollowedWidget.noMoreResults": "Nient'altro da mostrare",
+  "ui.userFollowedCategoriesWidget.title": "{total, plural, =0 {Segue # stili di vita} one {Segue # stile di vita} other {Segue # stili di vita}}",
+  "ui.userFollowedCategoriesWidget.modal.title": "Stili di vita seguiti",
+  "ui.userFollowedCategoriesWidget.subtitle.noResults": "Nessun risultato",
+  "ui.userFollowedCategoriesWidget.button.showAll": "Vedi di più",
+  "ui.userFollowedCategoriesWidget.noMoreResults": "Nient'altro da mostrare",
 
   "ui.categoriesPopularWidget.title": "Stili di vita più popolari",
   "ui.categoriesPopularWidget.noResults": "Nessun risultato",
@@ -90,7 +90,8 @@
 
   "ui.categoriesSuggestionWidget.title": "Segui uno stile di vita",
   "ui.categoriesSuggestionWidget.noResults": "Nessun risultato",
-  "ui.categoriesSuggestionWidget.button.showMore": "Vedi di più",
+  "ui.categoriesSuggestionWidget.button.showAll": "Vedi di più",
+  "ui.categoriesSuggestionWidget.noMoreResults": "Nient'altro da mostrare",
 
   "ui.changeCover.button.change": "Cambia Copertina",
   "ui.changeCover.button.delete": "Elimina Copertina",
@@ -340,11 +341,11 @@
   "ui.userProfileEdit.notification": "Impostazioni di notifica",
   "ui.userProfileEdit.account": "Impostazioni account",
 
-  "ui.usersFollowedWidget.title": "{total, plural, =0 {Segue # persone} one {Segue # persona} other {Segue # persone}}",
-  "ui.usersFollowedWidget.modal.title": "Utenti Seguiti",
-  "ui.usersFollowedWidget.subtitle.noResults": "Nessun risultato",
-  "ui.usersFollowedWidget.button.showAll": "Vedi di più",
-  "ui.usersFollowedWidget.noMoreResults": "Nient'altro da mostrare",
+  "ui.userFollowedUsersWidget.title": "{total, plural, =0 {Segue # persone} one {Segue # persona} other {Segue # persone}}",
+  "ui.userFollowedUsersWidget.modal.title": "Utenti Seguiti",
+  "ui.userFollowedUsersWidget.subtitle.noResults": "Nessun risultato",
+  "ui.userFollowedUsersWidget.button.showAll": "Vedi di più",
+  "ui.userFollowedUsersWidget.noMoreResults": "Nient'altro da mostrare",
 
   "ui.userFollowersWidget.title": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
   "ui.userFollowersWidget.modal.title": "Followers",

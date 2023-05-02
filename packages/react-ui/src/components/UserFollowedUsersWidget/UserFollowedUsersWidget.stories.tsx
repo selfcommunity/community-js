@@ -1,11 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import UsersFollowedWidget from './index';
+import UserProfileFollowedUsersWidget from './index';
 
 export default {
-  title: 'Design System/React UI/UsersFollowedWidget',
-  component: UsersFollowedWidget,
+  title: 'Design System/React UI/User Followed Users Widget',
+  component: UserProfileFollowedUsersWidget,
   argTypes: {
     userId: {
       control: {type: 'number'},
@@ -17,12 +17,12 @@ export default {
     userId: 1
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UsersFollowedWidget>;
+} as ComponentMeta<typeof UserProfileFollowedUsersWidget>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UsersFollowedWidget> = (args) => (
+const Template: ComponentStory<typeof UserProfileFollowedUsersWidget> = (args) => (
   <div style={{width: 400}}>
-    <UsersFollowedWidget {...args} />
+    <UserProfileFollowedUsersWidget {...args} />
   </div>
 );
 

@@ -17,11 +17,11 @@ export interface CategoryApiClientInterface {
   getCategoryFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getCategoryFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
   getCategoryTrendingFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getCategoryTrendingFollowers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   checkCategoryIsFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCCategoryFollowedStatusType>;
   getFollowedCategories(params?: CategoryParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
-  getPopularCategories(config?: AxiosRequestConfig, params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
 }
 
 /**
@@ -142,8 +142,12 @@ export class CategoryApiClient {
    * @param id
    * @param config
    */
-  static getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({url: Endpoints.CategoryTrendingPeople.url({id}), method: Endpoints.CategoryTrendingPeople.method, ...config});
+  static getCategoryTrendingFollowers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({url: Endpoints.CategoryTrendingPeople.url({id}), method: Endpoints.CategoryTrendingPeople.method, params, ...config});
   }
 
   /**
@@ -179,7 +183,7 @@ export class CategoryApiClient {
    * @param params
    * @param config
    */
-  static getPopularCategories(config?: AxiosRequestConfig, params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
+  static getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.PopularCategories.url({})}?${p.toString()}`, method: Endpoints.PopularCategories.method});
   }
@@ -276,8 +280,12 @@ export default class CategoryService {
     return CategoryApiClient.getCategoryTrendingFeed(id, params, config);
   }
 
-  static async getCategoryTrendingFollowers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return CategoryApiClient.getCategoryTrendingFollowers(id, config);
+  static async getCategoryTrendingFollowers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return CategoryApiClient.getCategoryTrendingFollowers(id, params, config);
   }
 
   static async followCategory(id: number | string, config?: AxiosRequestConfig): Promise<any> {
@@ -292,7 +300,7 @@ export default class CategoryService {
     return CategoryApiClient.getFollowedCategories(params, config);
   }
 
-  static async getPopularCategories(config?: AxiosRequestConfig, params?: BaseGetParams): Promise<SCPaginatedResponse<SCCategoryType>> {
-    return CategoryApiClient.getPopularCategories(config, params);
+  static async getPopularCategories(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
+    return CategoryApiClient.getPopularCategories(params, config);
   }
 }

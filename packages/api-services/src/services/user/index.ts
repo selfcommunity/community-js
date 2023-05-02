@@ -23,7 +23,7 @@ import {
   SCUserSettingsType,
   SCUserType
 } from '@selfcommunity/types';
-import {SCPaginatedResponse, UserAutocompleteParams, UserSearchParams} from '../../types';
+import {BaseGetParams, SCPaginatedResponse, UserAutocompleteParams, UserGetParams, UserSearchParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 import {DeleteProviderAssociation} from '../../types/user';
@@ -48,9 +48,19 @@ export interface UserApiClientInterface {
   getCurrentUserPermission(config?: AxiosRequestConfig): Promise<SCUserPermissionType>;
   getCurrentUserPlatform(next?: string, config?: AxiosRequestConfig): Promise<SCPlatformType>;
   getUserFollowedCategories(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]>;
-  getUserFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
-  getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-  getUserFollowings(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getUserFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>>;
+  getUserFollowers(
+    id: number | string,
+    mutual?: number,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>>;
+  getUserFollowings(
+    id: number | string,
+    mutual?: number,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>>;
   followUser(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   checkUserFollowed(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowedStatusType>;
   checkUserFollower(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType>;
@@ -307,8 +317,8 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return apiRequest({...config, url: Endpoints.UserFeed.url({id}), method: Endpoints.UserFeed.method});
+  static getUserFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return apiRequest({...config, url: Endpoints.UserFeed.url({id}), method: Endpoints.UserFeed.method, params});
   }
 
   /**
@@ -317,9 +327,8 @@ export class UserApiClient {
    * @param mutual
    * @param config
    */
-  static getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams({...(mutual && {mutual: mutual})});
-    return apiRequest({...config, url: `${Endpoints.UserFollowers.url({id})}?${p.toString()}`, method: Endpoints.UserFollowers.method});
+  static getUserFollowers(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({...config, url: Endpoints.UserFollowers.url({id}), method: Endpoints.UserFollowers.method, params});
   }
 
   /**
@@ -328,9 +337,8 @@ export class UserApiClient {
    * @param mutual
    * @param config
    */
-  static getUserFollowings(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams({...(mutual && {mutual: mutual})});
-    return apiRequest({...config, url: `${Endpoints.UserFollowings.url({id})}?${p.toString()}`, method: Endpoints.UserFollowings.method});
+  static getUserFollowings(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({...config, url: Endpoints.UserFollowings.url({id}), method: Endpoints.UserFollowings.method, params});
   }
 
   /**
@@ -714,14 +722,14 @@ export default class UserService {
   static async getUserFollowedCategories(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCCategoryType[]> {
     return UserApiClient.getUserFollowedCategories(id, mutual, config);
   }
-  static async getUserFeed(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
-    return UserApiClient.getUserFeed(id, config);
+  static async getUserFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
+    return UserApiClient.getUserFeed(id, params, config);
   }
-  static async getUserFollowers(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return UserApiClient.getUserFollowers(id, mutual, config);
+  static async getUserFollowers(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getUserFollowers(id, params, config);
   }
-  static async getUserFollowings(id: number | string, mutual?: number, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return UserApiClient.getUserFollowings(id, mutual, config);
+  static async getUserFollowings(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return UserApiClient.getUserFollowings(id, params, config);
   }
   static async followUser(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.followUser(id, config);

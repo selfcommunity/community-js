@@ -1,5 +1,5 @@
 import React from 'react';
-import {TrendingPeopleWidgetSkeleton} from '../TrendingPeopleWidget';
+import {CategoryTrendingPeopleWidgetSkeleton} from '../CategoryTrendingUsersWidget';
 import {WidgetProps} from '../Widget';
 import {styled} from '@mui/material/styles';
 
@@ -9,7 +9,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(TrendingPeopleWidgetSkeleton, {
+const Root = styled(CategoryTrendingPeopleWidgetSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

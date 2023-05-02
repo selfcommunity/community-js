@@ -17,6 +17,8 @@ const Component = {
           fontWeight: theme.typography.fontWeightBold,
           textTransform: 'uppercase',
           color: theme.palette.secondary.main,
+          display: 'flex',
+          alignItems: 'center',
           '& .MuiChip-root': {
             color: theme.palette.common.white,
             borderRadius: theme.shape.borderRadius,

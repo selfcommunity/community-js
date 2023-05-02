@@ -15,18 +15,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.categories}`]: {
-    ' .SCBaseItem-image': {
-      borderTopLeftRadius: theme.shape.borderRadius,
-      borderBottomLeftRadius: theme.shape.borderRadius,
-      '& > span': {
-        width: '56px !important',
-        height: '56px !important'
-      }
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CategoriesSkeletonProps {
   /**

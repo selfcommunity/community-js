@@ -1,15 +1,15 @@
 import React from 'react';
-import {TrendingPeopleWidgetSkeleton} from '../TrendingPeopleWidget';
+import {CategoryTrendingPeopleWidgetSkeleton} from '../CategoryTrendingUsersWidget';
 import {WidgetProps} from '../Widget';
 import {styled} from '@mui/material/styles';
 
-const PREFIX = 'SCUsersFollowedWidgetSkeleton';
+const PREFIX = 'SCUserFollowedUsersWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(TrendingPeopleWidgetSkeleton, {
+const Root = styled(CategoryTrendingPeopleWidgetSkeleton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -21,21 +21,21 @@ const Root = styled(TrendingPeopleWidgetSkeleton, {
  #### Import
 
  ```jsx
- import {UsersFollowedWidgetSkeleton} from '@selfcommunity/react-ui';
+ import {UserFollowedUsersWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCUsersFollowedWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserFollowedUsersWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUsersFollowedWidgetSkeleton-root|Styles applied to the root element.|
+ |root|.SCUserFollowedUsersWidgetSkeleton-root|Styles applied to the root element.|
  *
  */
 
-export default function UsersFollowedWidgetSkeleton(props: WidgetProps): JSX.Element {
+export default function UserFollowedUsersWidgetSkeleton(props: WidgetProps): JSX.Element {
   return <Root className={classes.root} {...props} />;
 }

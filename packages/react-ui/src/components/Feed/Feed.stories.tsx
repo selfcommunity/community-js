@@ -12,7 +12,7 @@ import {
   CategoriesSuggestionWidget,
   InlineComposerWidget,
   CategoriesPopularWidget,
-  PeopleSuggestionWidget,
+  UserSuggestionWidget,
   TrendingPeopleWidget,
   FeedUpdatesWidget,
 } from '../../index';
@@ -66,7 +66,7 @@ const _WIDGETS = [
   },
   {
     type: 'widget',
-    component: PeopleSuggestionWidget,
+    component: UserSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 6

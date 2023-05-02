@@ -5,7 +5,7 @@ import {styled} from '@mui/material/styles';
 import FeedObjectSkeleton from '../FeedObject/Skeleton';
 import {CardContent} from '@mui/material';
 
-const PREFIX = 'SCTrendingFeedWidgetSkeleton';
+const PREFIX = 'SCCategoryTrendingFeedWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -21,21 +21,21 @@ const Root = styled(Widget)(({theme}) => ({
  #### Import
 
  ```jsx
- import {TrendingFeedWidgetSkeleton} from '@selfcommunity/react-ui';
+ import {CategoryTrendingFeedWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCTrendingFeedWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoryTrendingFeedWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCTrendingFeedWidgetSkeleton-root|Styles applied to the root element.|
+ |root|.SCCategoryTrendingFeedWidgetSkeleton-root|Styles applied to the root element.|
  *
  */
-export default function TrendingFeedWidgetSkeleton(props): JSX.Element {
+export default function CategoryTrendingFeedWidgetSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>

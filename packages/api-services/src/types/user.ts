@@ -48,6 +48,10 @@ export interface UserScoreParams {
   user: number;
 }
 
+export interface UserGetParams extends BaseGetParams {
+  mutual?: number;
+}
+
 /**
  * UserSearchParams interface.
  */

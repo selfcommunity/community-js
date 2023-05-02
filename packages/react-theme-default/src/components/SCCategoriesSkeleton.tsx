@@ -6,8 +6,14 @@ const Component = {
         '& .SCCategorySkeleton-root': {
           padding: theme.spacing(2),
           width: 'auto',
-          '& .SCCategorySkeleton-image': {
-            borderRadius: 0
+          '& .SCBaseItem-image': {
+            borderTopLeftRadius: theme.shape.borderRadius,
+            borderBottomLeftRadius: theme.shape.borderRadius,
+            '& .SCCategorySkeleton-image': {
+              borderRadius: 0,
+              width: '56px !important',
+              height: '56px !important'
+            }
           }
         }
       }

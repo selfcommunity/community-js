@@ -4,7 +4,7 @@ import UserFollowersSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Skeleton/UserFollowers',
+  title: 'Design System/React UI/Skeleton/User Followers Widget',
   component: UserFollowersSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserFollowersSkeleton>;

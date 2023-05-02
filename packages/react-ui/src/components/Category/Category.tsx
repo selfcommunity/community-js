@@ -31,15 +31,7 @@ const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  '& .SCBaseItemButton-primary, & .SCBaseItemButton-secondary': {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    display: 'block',
-    width: '44%'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CategoryProps extends WidgetProps {
   /**

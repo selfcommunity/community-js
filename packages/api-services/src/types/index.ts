@@ -7,7 +7,7 @@ import {IncubatorCreateParams, IncubatorSearchParams} from './incubator';
 import {LoyaltyPrizeParams} from './prize';
 import {ModerationParams, ModerateContributionParams, FlaggedContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
-import {UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
+import {UserGetParams, UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
 import {TagParams, TagGetParams} from './tag';
 import {MediaCreateParams, MediaTypes, ChunkUploadParams, ChunkUploadCompleteParams} from './media';
 import {
@@ -51,6 +51,7 @@ export {
   ModerateContributionParams,
   FlaggedContributionParams,
   CustomNotificationParams,
+  UserGetParams,
   UserAutocompleteParams,
   UserScoreParams,
   UserSearchParams,
