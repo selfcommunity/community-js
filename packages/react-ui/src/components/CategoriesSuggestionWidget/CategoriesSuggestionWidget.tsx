@@ -1,19 +1,23 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, ListItem, Typography} from '@mui/material';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCCache, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Endpoints, http, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
+import {SCCache, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
-import Category, {CategoryProps} from '../Category';
+import Category, {CategoryProps, CategorySkeleton} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import Widget from '../Widget';
+import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {CacheStrategies} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosResponse} from 'axios';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 
 const PREFIX = 'SCCategoriesSuggestionWidget';
 
@@ -21,7 +25,9 @@ const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   noResults: `${PREFIX}-no-results`,
-  showMore: `${PREFIX}-show-more`
+  showMore: `${PREFIX}-show-more`,
+  dialogRoot: `${PREFIX}-dialog-root`,
+  endMessage: `${PREFIX}-end-message`
 };
 
 const Root = styled(Widget, {
@@ -30,22 +36,23 @@ const Root = styled(Widget, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface CategoriesListProps extends VirtualScrollerItemProps {
-  /**
-   * The user id
-   * @default null
-   */
-  userId: number;
+const DialogRoot = styled(BaseDialog, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.dialogRoot
+})(({theme}) => ({}));
+
+export interface CategoriesSuggestionWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
    * Hides this component
    * @default false
    */
   autoHide?: boolean;
   /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
+   * Limit the number of categories to show
+   * @default false
    */
-  className?: string;
+  limit?: number;
   /**
    * Props to spread to single category object
    * @default empty object
@@ -57,6 +64,12 @@ export interface CategoriesListProps extends VirtualScrollerItemProps {
    * @default CacheStrategies.CACHE_FIRST
    */
   cacheStrategy?: CacheStrategies;
+
+  /**
+   * Props to spread to categories suggestion dialog
+   * @default {}
+   */
+  DialogProps?: BaseDialogProps;
 
   /**
    * Other props
@@ -82,107 +95,108 @@ export interface CategoriesListProps extends VirtualScrollerItemProps {
  |title|.SCCategoriesSuggestionWidget-title|Styles applied to the title element.|
  |noResults|.SCCategoriesSuggestionWidget-no-results|Styles applied to no results section.|
  |showMore|.SCCategoriesSuggestionWidget-show-more|Styles applied to show more button element.|
-
+ |dialogRoot|.SCCategoriesSuggestionWidget-dialog-root|Styles applied to the root dialog element.|
+ |endMessage|.SCCategoriesSuggestionWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */
-export default function CategoriesSuggestionWidget(inProps: CategoriesListProps): JSX.Element {
-  // CONST
-  const limit = 3;
-
+export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestionWidgetProps): JSX.Element {
   // PROPS
-  const props: CategoriesListProps = useThemeProps({
+  const props: CategoriesSuggestionWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
 
-  const {autoHide, className, CategoryProps = {}, onHeightChange, onStateChange, cacheStrategy = CacheStrategies.NETWORK_ONLY, ...rest} = props;
+  const {
+    autoHide = true,
+    limit = 3,
+    className,
+    CategoryProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onHeightChange,
+    onStateChange,
+    DialogProps = {},
+    ...rest
+  } = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // STATE
   const [state, dispatch] = useReducer(
     dataToolsReducer,
     {
       isLoadingNext: true,
-      next: `${Endpoints.CategoriesSuggestion.url()}?limit=10`,
+      next: null,
       cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
     stateToolsInitializer
   );
-  const [openCategoriesSuggestionDialog, setOpenCategoriesSuggestionDialog] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
-  // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-
-  // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // REFS
-  const isMountedRef = useIsComponentMountedRef();
+  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
 
   /**
    * Handles list change on category follow
    */
-  function handleOnFollowCategory(category, follow) {
+  function handleFollow(category, follow) {
     dispatch({
       type: actionToolsTypes.SET_RESULTS,
       payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
     });
   }
 
-  /**
-   * Fetches categories suggestion list
-   */
-  const fetchCategoriesSuggestion = useMemo(
-    () => () => {
-      return http.request({
-        url: state.next,
-        method: Endpoints.CategoriesSuggestion.method
-      });
-    },
-    [dispatch, state.next, state.isLoadingNext]
-  );
-
-  /**
-   * Loads more categories on "see more" button click
-   */
-  function loadCategories(n) {
-    dispatch({type: actionToolsTypes.SET_VISIBLE_ITEMS, payload: {visibleItems: state.visibleItems + n}});
-  }
+  // EFFECTS
   useEffect(() => {
     if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
+
   /**
    * On mount, fetches categories suggestion list
    */
   useEffect(() => {
-    let ignore = false;
-    if (state.next && scUserContext.user) {
-      fetchCategoriesSuggestion()
-        .then((res: HttpResponse<any>) => {
-          if (res.status < 300 && isMountedRef.current && !ignore) {
-            const data = res.data;
-            dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-              payload: {
-                results: data.results,
-                count: data.count,
-                next: data.next
-              }
-            });
-          }
+    if (!scUserContext.user) {
+      return;
+    }
+    SuggestionService.getCategorySuggestion({limit})
+      .then((payload: SCPaginatedResponse<SCCategoryType>) => {
+        dispatch({
+          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          payload: payload
+        });
+      })
+      .catch((error) => {
+        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        Logger.error(SCOPE_SC_UI, error);
+      })
+      .then(() => setLoaded(true));
+  }, [scUserContext.user]);
+
+  useEffect(() => {
+    if (openDialog && state.next && state.results.length === limit) {
+      SuggestionService.getCategorySuggestion({offset: limit, limit: 10})
+        .then((payload: SCPaginatedResponse<SCCategoryType>) => {
+          dispatch({
+            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            payload: payload
+          });
         })
         .catch((error) => {
           dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          console.log(error);
+          Logger.error(SCOPE_SC_UI, error);
         });
-      return () => {
-        ignore = true;
-      };
     }
-  }, [state.next, authUserId]);
+  }, [openDialog, state.next, state.results]);
 
   /**
    * Virtual feed update
@@ -191,59 +205,99 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesListProps)
     onHeightChange && onHeightChange();
   }, [state.results]);
 
-  /**
-   * Renders categories suggestion list
-   */
-  const c = (
-    <React.Fragment>
-      {state.isLoadingNext ? (
-        <Skeleton elevation={0} />
-      ) : (
-        <CardContent>
-          <Typography className={classes.title} variant="h5">
-            <FormattedMessage id="ui.categoriesSuggestionWidget.title" defaultMessage="ui.categoriesSuggestionWidget.title" />
-          </Typography>
-          {!state.count ? (
-            <Typography className={classes.noResults} variant="body2">
-              <FormattedMessage id="ui.categoriesSuggestionWidget.noResults" defaultMessage="ui.categoriesSuggestionWidget.noResults" />
-            </Typography>
-          ) : (
-            <React.Fragment>
-              <List>
-                {state.results.slice(0, state.visibleItems).map((category: SCCategoryType) => (
-                  <ListItem key={category.id}>
-                    <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
-                  </ListItem>
-                ))}
-              </List>
-              {state.visibleItems < state.results.length && (
-                <Button className={classes.showMore} onClick={() => loadCategories(2)}>
-                  <FormattedMessage
-                    id="ui.categoriesSuggestionWidget.button.showMore"
-                    defaultMessage="ui.categoriesSuggestionWidget.button.showMore"
-                  />
-                </Button>
-              )}
-            </React.Fragment>
-          )}
-          {openCategoriesSuggestionDialog && <></>}
-        </CardContent>
-      )}
-    </React.Fragment>
+  // HANDLERS
+  const handleNext = useMemo(
+    () => () => {
+      dispatch({
+        type: actionToolsTypes.LOADING_NEXT
+      });
+      return http
+        .request({
+          url: state.next,
+          method: Endpoints.PopularCategories.method
+        })
+        .then((res: AxiosResponse<SCPaginatedResponse<SCCategoryType>>) => {
+          dispatch({
+            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            payload: res.data
+          });
+        });
+    },
+    [dispatch, state.next, state.isLoadingNext]
   );
 
+  const handleToggleDialogOpen = () => {
+    setOpenDialog((prev) => !prev);
+  };
+
+  // RENDER
+  if (!loaded) {
+    return <Skeleton />;
+  }
   /**
    * Renders root object (if results and if user is logged, otherwise component is hidden)
    */
-  if (autoHide && !state.count) {
+  if ((autoHide && !state.count) || !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
-  if (scUserContext.user) {
-    return (
-      <Root className={classNames(classes.root, className)} {...rest}>
-        {c}
-      </Root>
-    );
-  }
-  return <HiddenPlaceholder />;
+  const content = (
+    <CardContent>
+      <Typography className={classes.title} variant="h5">
+        <FormattedMessage id="ui.categoriesSuggestionWidget.title" defaultMessage="ui.categoriesSuggestionWidget.title" />
+      </Typography>
+      {!state.count ? (
+        <Typography className={classes.noResults} variant="body2">
+          <FormattedMessage id="ui.categoriesSuggestionWidget.noResults" defaultMessage="ui.categoriesSuggestionWidget.noResults" />
+        </Typography>
+      ) : (
+        <React.Fragment>
+          <List>
+            {state.results.slice(0, state.visibleItems).map((category: SCCategoryType) => (
+              <ListItem key={category.id}>
+                <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleFollow}} {...CategoryProps} />
+              </ListItem>
+            ))}
+          </List>
+          {state.count > state.visibleItems && (
+            <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
+              <FormattedMessage id="ui.categoriesSuggestionWidget.button.showAll" defaultMessage="ui.categoriesSuggestionWidget.button.showAll" />
+            </Button>
+          )}
+        </React.Fragment>
+      )}
+      {openDialog && (
+        <DialogRoot
+          className={classes.dialogRoot}
+          title={<FormattedMessage defaultMessage="ui.categoriesSuggestionWidget.title" id="ui.categoriesSuggestionWidget.title" />}
+          onClose={handleToggleDialogOpen}
+          open={openDialog}
+          {...DialogProps}>
+          <InfiniteScroll
+            dataLength={state.results.length}
+            next={handleNext}
+            hasMoreNext={Boolean(state.next)}
+            loaderNext={<CategorySkeleton elevation={0} {...CategoryProps} />}
+            height={isMobile ? '100%' : 400}
+            endMessage={
+              <Typography className={classes.endMessage}>
+                <FormattedMessage id="ui.categoriesSuggestionWidget.noMoreResults" defaultMessage="ui.categoriesSuggestionWidget.noMoreResults" />
+              </Typography>
+            }>
+            <List>
+              {state.results.map((c) => (
+                <ListItem key={c.id}>
+                  <Category elevation={0} category={c} {...CategoryProps} followCategoryButtonProps={{onFollow: handleFollow}} />
+                </ListItem>
+              ))}
+            </List>
+          </InfiniteScroll>
+        </DialogRoot>
+      )}
+    </CardContent>
+  );
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {content}
+    </Root>
+  );
 }

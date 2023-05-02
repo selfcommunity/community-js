@@ -1,21 +1,23 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import UsersFollowedWidgetSkeleton from './Skeleton';
+import CategoryTrendingFeedWidgetSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Skeleton/UsersFollowedWidget',
-  component: UsersFollowedWidgetSkeleton
+  title: 'Design System/React UI/Skeleton/CategoryTrendingFeedWidget',
+  component: CategoryTrendingFeedWidgetSkeleton
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UsersFollowedWidgetSkeleton>;
+} as ComponentMeta<typeof CategoryTrendingFeedWidgetSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UsersFollowedWidgetSkeleton> = (args) => (
+const Template: ComponentStory<typeof CategoryTrendingFeedWidgetSkeleton> = (args) => (
   <div style={{width: 400}}>
-    <UsersFollowedWidgetSkeleton {...args} />
+    <CategoryTrendingFeedWidgetSkeleton {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  contained: true
+};

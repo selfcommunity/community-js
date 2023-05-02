@@ -34,23 +34,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.filters}`]: {
-    marginTop: theme.spacing(),
-    marginBottom: theme.spacing(2)
-  },
-  [`& .${classes.category}`]: {
-    '& > div': {
-      cursor: 'default'
-    },
-    ' .SCCategory-category-image': {
-      minWidth: 56,
-      height: '100%',
-      borderTopLeftRadius: theme.shape.borderRadius,
-      borderBottomLeftRadius: theme.shape.borderRadius
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CategoriesProps {
   /**
@@ -202,7 +186,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [authUserId, prefetchedCategories]);
+  }, [authUserId, prefetchedCategories.length]);
 
   /**
    * Get categories filtered

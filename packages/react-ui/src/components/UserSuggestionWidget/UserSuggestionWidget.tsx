@@ -1,11 +1,8 @@
 import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
-import Widget, {WidgetProps} from '../Widget';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse, UserService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {http, Endpoints, HttpResponse, SuggestionService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
   SCCache,
   SCPreferences,
@@ -15,23 +12,25 @@ import {
   SCUserContext,
   SCUserContextType,
   useIsComponentMountedRef,
+  useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import Skeleton from './Skeleton';
 import User, {UserProps, UserSkeleton} from '../User';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import CentralProgress from '../../shared/CentralProgress';
-import InfiniteScroll from '../../shared/InfiniteScroll';
+import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 
-const PREFIX = 'SCUserFollowersWidget';
+const PREFIX = 'SCUserSuggestionWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -54,12 +53,7 @@ const DialogRoot = styled(BaseDialog, {
   overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
 
-export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
-  /**
-   * The user id
-   * @default null
-   */
-  userId: number;
+export interface UserSuggestionWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
    * Hides this component
    * @default false
@@ -82,7 +76,7 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to followers users dialog
+   * Props to spread to users suggestion dialog
    * @default {}
    */
   DialogProps?: BaseDialogProps;
@@ -94,41 +88,42 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
 }
 
 /**
- > API documentation for the Community-JS User Followers Widget component. Learn about the available props and the CSS API.
- > This component renders the list of the followes of the given user
+ *
+ > API documentation for the Community-JS User Suggestion Widget component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {UserFollowersWidget} from '@selfcommunity/react-ui';
+ import {UserSuggestionWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCUserFollowersWidget` can be used when providing style overrides in the theme.
+ The name `SCUserSuggestionWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserFollowersWidget-root|Styles applied to the root element.|
- |title|.SCUserFollowersWidget-title|Styles applied to the title element.|
- |noResults|.SCUserFollowersWidget-no-results|Styles applied to no results section.|
- |followersItem|.SCUserFollowersWidget-followers-item|Styles applied to follower item element.|
- |showMore|.SCUserFollowersWidget-show-more|Styles applied to show more button element.|
+ |root|.SCUserSuggestionWidget-root|Styles applied to the root element.|
+ |title|.SCUserSuggestionWidget-title|Styles applied to the title element.|
+ |noResults|.SCUserSuggestionWidget-no-results|Styles applied to no results section.|
+ |showMore|.SCUserSuggestionWidget-show-more|Styles applied to show more button element.|
+ |dialogRoot|.SCUserSuggestionWidget-dialog-root|Styles applied to the root dialog element.|
+ |endMessage|.SCUserSuggestionWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */
-export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): JSX.Element {
+export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps): JSX.Element {
   // PROPS
-  const props: UserFollowersWidgetProps = useThemeProps({
+  const props: UserSuggestionWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
+
   const {
-    userId,
-    autoHide = false,
+    autoHide = true,
     limit = 3,
     className,
     UserProps = {},
@@ -143,9 +138,9 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   const [state, dispatch] = useReducer(
     dataToolsReducer,
     {
-      isLoadingNext: false,
+      isLoadingNext: true,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.USER_FOLLOWERS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
@@ -156,43 +151,41 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const contentAvailability =
-    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
-
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // MEMO
+  // REFS
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
+
+  /**
+   * Handles list change on user follow
+   */
+  function handleFollow(user, follow) {
+    dispatch({
+      type: actionToolsTypes.SET_RESULTS,
+      payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
+    });
+  }
 
   // EFFECTS
   useEffect(() => {
-    if (!userId) {
-      return;
-    } else if (!contentAvailability && !authUserId) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
   }, [authUserId]);
-
   /**
-   * On mount, fetches the list of users followers
+   * On mount, fetches people suggestion list
    */
   useEffect(() => {
-    if (!followEnabled || (!contentAvailability && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
+    if (!scUserContext.user) {
       return;
     }
-    dispatch({
-      type: actionToolsTypes.LOADING_NEXT
-    });
-    UserService.getUserFollowers(userId, {limit})
+    SuggestionService.getUserSuggestion({limit})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -204,14 +197,11 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
         Logger.error(SCOPE_SC_UI, error);
       })
       .then(() => setLoaded(true));
-  }, [followEnabled, contentAvailability, authUserId]);
+  }, [scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && !state.isLoadingNext) {
-      dispatch({
-        type: actionToolsTypes.LOADING_NEXT
-      });
-      UserService.getUserFollowers(userId, {offset: limit, limit: 10})
+    if (openDialog && state.next && state.results.length === limit) {
+      SuggestionService.getUserSuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({
             type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -241,7 +231,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       return http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowers.method
+          method: Endpoints.PopularCategories.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
           dispatch({
@@ -261,30 +251,34 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   if (!loaded) {
     return <Skeleton />;
   }
-  if (!followEnabled || (autoHide && !state.count) || (!contentAvailability && !scUserContext.user) || !userId) {
-    return <HiddenPlaceholder />;
-  }
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userFollowersWidget.title" defaultMessage="ui.userFollowersWidget.title" values={{total: state.count}} />
+        <FormattedMessage id="ui.userSuggestionWidget.title" defaultMessage="ui.userSuggestionWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.userFollowersWidget.subtitle.noResults" defaultMessage="" />
+          <FormattedMessage id="ui.userSuggestionWidget.noResults" defaultMessage="ui.userSuggestionWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
             {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
               <ListItem key={user.id}>
-                <User elevation={0} user={user} {...UserProps} />
+                <User
+                  elevation={0}
+                  user={user}
+                  {...(followEnabled
+                    ? {followConnectUserButtonProps: {onFollow: handleFollow}}
+                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollow}})}
+                  {...UserProps}
+                />
               </ListItem>
             ))}
           </List>
           {state.count > state.visibleItems && (
             <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.userFollowersWidget.button.showAll" defaultMessage="ui.userFollowersWidget.button.showAll" />
+              <FormattedMessage id="ui.userSuggestionWidget.button.showAll" defaultMessage="ui.userSuggestionWidget.button.showAll" />
             </Button>
           )}
         </React.Fragment>
@@ -292,7 +286,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
-          title={<FormattedMessage defaultMessage="ui.userFollowersWidget.title" id="ui.userFollowersWidget.title" values={{total: state.count}} />}
+          title={<FormattedMessage defaultMessage="ui.userSuggestionWidget.title" id="ui.userSuggestionWidget.title" />}
           onClose={handleToggleDialogOpen}
           open={openDialog}
           {...DialogProps}>
@@ -304,13 +298,20 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
             height={isMobile ? '100%' : 400}
             endMessage={
               <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.userFollowersWidget.noMoreResults" defaultMessage="ui.userFollowersWidget.noMoreResults" />
+                <FormattedMessage id="ui.userSuggestionWidget.noMoreResults" defaultMessage="ui.userSuggestionWidget.noMoreResults" />
               </Typography>
             }>
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User elevation={0} user={user} {...UserProps} />
+                  <User
+                    elevation={0}
+                    user={user}
+                    {...(followEnabled
+                      ? {followConnectUserButtonProps: {onFollow: handleFollow}}
+                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollow}})}
+                    {...UserProps}
+                  />
                 </ListItem>
               ))}
             </List>
@@ -319,6 +320,13 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       )}
     </CardContent>
   );
+
+  /**
+   * Renders root object (if results and if user is logged, otherwise component is hidden)
+   */
+  if (autoHide && (!state.count || !scUserContext.user)) {
+    return <HiddenPlaceholder />;
+  }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {content}

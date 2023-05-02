@@ -5,7 +5,7 @@ import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
 import {CardContent, ListItem} from '@mui/material';
 
-const PREFIX = 'SCTrendingPeopleWidgetSkeleton';
+const PREFIX = 'SCCategoryTrendingPeopleWidgetSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -21,22 +21,22 @@ const Root = styled(Widget)(({theme}) => ({
  #### Import
 
  ```jsx
- import {TrendingPeopleWidgetSkeleton} from '@selfcommunity/react-ui';
+ import {CategoryTrendingPeopleWidgetSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCTrendingPeopleWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoryTrendingPeopleWidgetSkeleton` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCTrendingPeopleWidgetSkeleton-root|Styles applied to the root element.|
- |list|.SCTrendingPeopleWidgetSkeleton-list|Styles applied to the list element.|
+ |root|.SCCategoryTrendingPeopleWidgetSkeleton-root|Styles applied to the root element.|
+ |list|.SCCategoryTrendingPeopleWidgetSkeleton-list|Styles applied to the list element.|
  *
  */
-export default function TrendingPeopleWidgetSkeleton(props: WidgetProps): JSX.Element {
+export default function CategoryTrendingPeopleWidgetSkeleton(props: WidgetProps): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <CardContent>

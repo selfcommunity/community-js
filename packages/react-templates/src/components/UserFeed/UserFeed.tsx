@@ -4,19 +4,19 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {
-  CategoriesFollowedWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  SCFeedObjectTemplateType,
+  FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FeedProps,
   InlineComposerWidget,
+  SCFeedObjectTemplateType,
   SCFeedWidgetType,
-  UserFollowersWidget,
-  UsersFollowedWidget
+  UserFollowedCategoriesWidget,
+  UserFollowedUsersWidget,
+  UserFollowersWidget
 } from '@selfcommunity/react-ui';
 import {UserFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
@@ -61,7 +61,7 @@ export interface UserFeedProps {
 
   /**
    * Widgets to be rendered into the feed
-   * @default [CategoriesFollowedWidget, UsersFollowedWidget]
+   * @default [UserFollowedCategoriesWidget, UserFollowedUsersWidget]
    */
   widgets?: SCFeedWidgetType[] | null;
 
@@ -91,14 +91,14 @@ export interface UserFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: CategoriesFollowedWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UsersFollowedWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 1

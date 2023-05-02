@@ -1,12 +1,12 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import TrendingFeedWidget from './index';
+import CategoryTrendingFeedWidget from './index';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Trending Feed Widget',
-  component: TrendingFeedWidget,
+  title: 'Design System/React UI/Category Trending Feed Widget',
+  component: CategoryTrendingFeedWidget,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -26,12 +26,12 @@ export default {
     variant: 'elevation',
     template: SCFeedObjectTemplateType.SNIPPET
   }
-} as ComponentMeta<typeof TrendingFeedWidget>;
+} as ComponentMeta<typeof CategoryTrendingFeedWidget>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TrendingFeedWidget> = (args) => (
+const Template: ComponentStory<typeof CategoryTrendingFeedWidget> = (args) => (
   <div style={{width: 500}}>
-    <TrendingFeedWidget {...args} />
+    <CategoryTrendingFeedWidget {...args} />
   </div>
 );
 

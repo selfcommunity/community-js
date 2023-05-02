@@ -1,41 +1,40 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
-import CategoryTrendingFeedWidgetSkeleton from '../CategoryTrendingFeedWidget/Skeleton';
+import Widget, {WidgetProps} from '../Widget';
+import {SCFeedObjectType} from '@selfcommunity/types';
+import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import CustomAdv from '../CustomAdv';
 import classNames from 'classnames';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import Widget, {WidgetProps} from '../Widget';
+import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
-import {http, Endpoints, HttpResponse, FeedObjectService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCContributionType, SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType} from '@selfcommunity/types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {
+  Link,
   SCCache,
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
   SCThemeType,
   SCUserContextType,
-  useIsComponentMountedRef,
-  useSCFetchFeedObject,
+  useSCFetchCategory,
   useSCPreferences,
+  useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import {AxiosResponse} from 'axios';
-import Skeleton from './Skeleton';
 
-const PREFIX = 'SCRelatedFeedObjectsWidget';
+const PREFIX = 'SCCategoryTrendingFeedWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -58,27 +57,12 @@ const DialogRoot = styled(BaseDialog, {
   overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
 
-export interface RelatedFeedObjectWidgetProps extends VirtualScrollerItemProps, WidgetProps {
+export interface CategoryTrendingFeedWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
-   * Type of  feed object
-   * @default 'discussion'
-   */
-  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
-  /**
-   * Feed Object
+   * Id of category
    * @default null
    */
-  feedObject?: SCFeedObjectType;
-  /**
-   * Feed Object template type
-   * @default 'snippet'
-   */
-  template?: SCFeedObjectTemplateType;
-  /**
-   * Props to spread to single feed object
-   * @default empty object
-   */
-  FeedObjectProps?: FeedObjectProps;
+  categoryId?: number;
   /**
    * Hides this component
    * @default false
@@ -89,6 +73,11 @@ export interface RelatedFeedObjectWidgetProps extends VirtualScrollerItemProps, 
    * @default false
    */
   limit?: number;
+  /**
+   * Props to spread to single feed object
+   * @default empty object
+   */
+  FeedObjectProps?: FeedObjectProps;
   /**
    * Caching strategies
    * @default CacheStrategies.CACHE_FIRST
@@ -107,23 +96,19 @@ export interface RelatedFeedObjectWidgetProps extends VirtualScrollerItemProps, 
   [p: string]: any;
 }
 
-const PREFERENCES = [
-  SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED,
-  SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED,
-  SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY
-];
 /**
- *> API documentation for the Community-JS Related FeedObjects component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Trending Feed Widget component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {RelatedFeedObjectsWidget} from '@selfcommunity/react-ui';
+ import {CategoryTrendingFeedWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCRelatedFeedObjectsWidget` can be used when providing style overrides in the theme.
+ The name `SCCategoryTrendingFeedWidget` can be used when providing style overrides in the theme.
+
 
  #### CSS
 
@@ -135,23 +120,19 @@ const PREFERENCES = [
  |followersItem|.SCCategoryTrendingFeedWidget-followers-item|Styles applied to follower item element.|
  |showMore|.SCCategoryTrendingFeedWidget-show-more|Styles applied to show more button element.|
 
- *
  * @param inProps
  */
-export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidgetProps): JSX.Element {
+export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeedWidgetProps): JSX.Element {
   // PROPS
-  const props: RelatedFeedObjectWidgetProps = useThemeProps({
+  const props: CategoryTrendingFeedWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
   const {
-    feedObject,
-    feedObjectId,
-    feedObjectType,
-    template = SCFeedObjectTemplateType.SNIPPET,
     className = null,
+    categoryId = null,
     autoHide = null,
-    limit = 4,
+    limit = 3,
     FeedObjectProps = {
       template: SCFeedObjectTemplateType.SNIPPET
     },
@@ -168,7 +149,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.RELATED_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, feedObjectId),
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -179,41 +160,43 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const contentAvailability = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
+    [scPreferencesContext]
+  );
 
   // HOOKS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {scCategory} = useSCFetchCategory({id: categoryId});
 
   // MEMO
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
 
   // EFFECTS
   useEffect(() => {
-    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !authUserId) {
+    if (!contentAvailability && !authUserId) {
       return;
-    } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [obj?.id, authUserId]);
+  }, [authUserId]);
 
   /**
-   * On mount, fetches related discussions list
+   * On mount, fetches trending posts list
    */
   useEffect(() => {
-    if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
+    if ((!contentAvailability && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
       return;
     }
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {limit})
+    CategoryService.getCategoryTrendingFeed(categoryId, {limit})
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -225,14 +208,14 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
         Logger.error(SCOPE_SC_UI, error);
       })
       .then(() => setLoaded(true));
-  }, [preferences, authUserId]);
+  }, [contentAvailability, authUserId]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit) {
+    if (openDialog && state.next && state.results.length === limit && !state.isLoadingNext) {
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
-      FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {offset: limit, limit: 10})
+      CategoryService.getCategoryTrendingFeed(categoryId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
           dispatch({
             type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -283,56 +266,35 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     return <Skeleton />;
   }
   /**
-   * Renders related discussions list
+   * If content availability community option is false and user is anonymous, component is hidden.
    */
-  if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) || (autoHide && !state.count)) {
+  if ((!contentAvailability && !scUserContext.user) || (autoHide && !state.count)) {
     return <HiddenPlaceholder />;
   }
-  /**
-   * Render advertising
-   */
-  function renderAdvertising() {
-    if (
-      preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
-      ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
-        !preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED])
-    ) {
-      return (
-        <ListItem>
-          <CustomAdv
-            position={SCCustomAdvPosition.POSITION_RELATED_POSTS_COLUMN}
-            {...(obj.categories.length && {categoriesId: obj.categories.map((c) => c.id)})}
-          />
-        </ListItem>
-      );
-    }
-    return null;
-  }
-  const advPosition = Math.floor(Math.random() * (Math.min(state.count, 5) - 1 + 1) + 1);
-
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.relatedFeedObjectsWidget.title" defaultMessage="ui.relatedFeedObjectsWidget.title" />
+        <FormattedMessage id="ui.categoryTrendingFeedWidget.title" defaultMessage="ui.categoryTrendingFeedWidget.title" />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.relatedFeedObjectsWidget.noResults" defaultMessage="ui.relatedFeedObjectsWidget.noResults" />
+          <FormattedMessage id="ui.categoryTrendingFeedWidget.noResults" defaultMessage="ui.categoryTrendingFeedWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {state.results.slice(0, state.visibleItems).map((obj: SCFeedObjectType, index) => (
-              <React.Fragment key={index}>
-                <ListItem key={obj.id}>
-                  <FeedObject elevation={0} feedObject={obj} template={template} {...FeedObjectProps} />
-                </ListItem>
-                {advPosition === index && renderAdvertising()}
-              </React.Fragment>
+            {state.results.slice(0, state.visibleItems).map((obj: SCFeedObjectType) => (
+              <ListItem key={obj.id}>
+                <FeedObject elevation={0} feedObject={obj[obj.type]} {...FeedObjectProps} />
+              </ListItem>
             ))}
           </List>
           {state.count > state.visibleItems && (
-            <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
+            <Button
+              className={classes.showMore}
+              {...(isMobile
+                ? {onClick: handleToggleDialogOpen}
+                : {component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_TRENDING_FEED_ROUTE_NAME, scCategory)})}>
               <FormattedMessage id="ui.categoryTrendingFeedWidget.button.showAll" defaultMessage="ui.categoryTrendingFeedWidget.button.showAll" />
             </Button>
           )}
@@ -365,7 +327,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
             <List>
               {state.results.map((obj: SCFeedObjectType) => (
                 <ListItem key={obj.id}>
-                  <FeedObject elevation={0} feedObject={obj} {...FeedObjectProps} />
+                  <FeedObject elevation={0} feedObject={obj[obj.type]} {...FeedObjectProps} />
                 </ListItem>
               ))}
             </List>

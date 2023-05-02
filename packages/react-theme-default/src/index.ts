@@ -104,6 +104,8 @@ import SCChangePictureDialog from './components/SCChangePictureDialog';
 import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
 import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
+import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
+import SCCategorySkeleton from './components/SCCategorySkeleton';
 
 /**
  * Style fragments - Imports - End
@@ -178,6 +180,7 @@ const theme = {
     SCCategoryFeedTemplate,
     SCCategoryFollowersButton,
     SCCategoryHeader,
+    SCCategorySkeleton,
     SCCategoryTemplate,
     SCCategoryTemplateSkeleton,
     SCChoices,
@@ -208,6 +211,7 @@ const theme = {
     SCFeedObjectSkeleton,
     SCFeedRelevantActivities,
     SCFeedSkeleton,
+    SCFeedUpdatesWidget,
     SCFollowAction,
     SCFooter,
     SCInlineComposerWidget,

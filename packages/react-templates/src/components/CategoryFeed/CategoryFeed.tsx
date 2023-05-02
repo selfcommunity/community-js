@@ -1,6 +1,8 @@
 import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
+  CategoryTrendingFeedWidget,
+  CategoryTrendingUsersWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -10,9 +12,7 @@ import {
   FeedSidebarProps,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType,
-  TrendingFeedWidget,
-  TrendingPeopleWidget
+  SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
@@ -90,14 +90,14 @@ export interface CategoryFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: TrendingPeopleWidget,
+    component: CategoryTrendingUsersWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: TrendingFeedWidget,
+    component: CategoryTrendingFeedWidget,
     componentProps: {},
     column: 'right',
     position: 1

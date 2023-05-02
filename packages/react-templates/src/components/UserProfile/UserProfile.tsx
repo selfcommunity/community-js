@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {
-  CategoriesFollowedWidget,
+  UserFollowedCategoriesWidget,
   ConnectionUserButton,
   FeedObjectProps,
   FeedSidebarProps,
@@ -12,7 +12,7 @@ import {
   UserFollowersWidget,
   UserProfileHeader,
   UserProfileHeaderProps,
-  UsersFollowedWidget,
+  UserFollowedUsersWidget,
   UserCounters
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
@@ -79,7 +79,7 @@ export interface UserProfileProps {
 
   /**
    * Widgets to be rendered into the feed
-   * @default [CategoriesFollowedWidget, UsersFollowedWidget]
+   * @default [UserFollowedCategoriesWidget, UserFollowedUsersWidget]
    */
   widgets?: SCFeedWidgetType[] | null;
 
@@ -122,14 +122,14 @@ export interface UserProfileProps {
 const WIDGETS = [
   {
     type: 'widget',
-    component: CategoriesFollowedWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UsersFollowedWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 1
@@ -139,14 +139,14 @@ const WIDGETS = [
 const MY_PROFILE_WIDGETS = [
   {
     type: 'widget',
-    component: CategoriesFollowedWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UsersFollowedWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 1

@@ -51,31 +51,7 @@ const Root = styled(Grid, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(-2),
-  [`& .${classes.left}`]: {
-    padding: '0 2px 0 2px',
-    '& > div:first-of-type': {
-      marginTop: 0
-    },
-    '& > div:last-child': {
-      marginTop: 0
-    },
-    [theme.breakpoints.down('md')]: {
-      '& > .SCWidget-root, & > .SCCustomAdv-root': {
-        maxWidth: 850,
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }
-    }
-  },
-  [`& .${classes.end}, & .${classes.refresh}`]: {
-    textAlign: 'center'
-  },
-  [`& .${classes.paginationLink}`]: {
-    display: 'none'
-  }
-}));
+})(({theme}) => ({}));
 
 /**
  * FeedSidebarProps has the same props as StickyBoxProps type

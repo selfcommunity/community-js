@@ -1,11 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import CategoriesFollowedWidgetSkeleton from './Skeleton';
+import UserFollowedCategoriesWidget from './UserFollowedCategoriesWidget';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Skeleton/CategoriesFollowedWidget',
-  component: CategoriesFollowedWidgetSkeleton,
+  title: 'Design System/React UI/User Followed Categories Widget',
+  component: UserFollowedCategoriesWidget,
   argTypes: {
     variant: {
       options: ['elevation', 'outlined'],
@@ -23,15 +23,17 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof CategoriesFollowedWidgetSkeleton>;
+} as ComponentMeta<typeof UserFollowedCategoriesWidget>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoriesFollowedWidgetSkeleton> = (args) => (
+const Template: ComponentStory<typeof UserFollowedCategoriesWidget> = (args) => (
   <div style={{width: 400}}>
-    <CategoriesFollowedWidgetSkeleton {...args} />
+    <UserFollowedCategoriesWidget {...args} />
   </div>
 );
 
 export const Base = Template.bind({});
 
-Base.args = {};
+Base.args = {
+  userId: 1
+};

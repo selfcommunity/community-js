@@ -32,6 +32,11 @@ const Component = {
           }
         }
       },
+      '& [class*="-end-message"]': {
+        padding: theme.spacing(3, 2),
+        fontWeight: theme.typography.fontWeightBold,
+        textAlign: 'center'
+      },
       '& .MuiDialogActions-spacing': {
         padding: theme.spacing(2, 3)
       }

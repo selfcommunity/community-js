@@ -7,8 +7,16 @@ const Component = {
         [theme.breakpoints.up('sm')]: {
           padding: theme.spacing(1.25)
         },
-        '&:last-child': {
+        '& > div:first-of-type': {
+          marginTop: 0
+        },
+        '&:last-of-type': {
           paddingBottom: theme.spacing(4)
+        },
+        '& > .SCWidget-root, & > .SCCustomAdv-root': {
+          maxWidth: 850,
+          marginLeft: 'auto',
+          marginRight: 'auto'
         },
         '& > * > * > .SCWidget-root': {
           marginBottom: theme.spacing(2)
@@ -23,9 +31,16 @@ const Component = {
       '& .SCFeed-end': {
         padding: 0,
         marginBottom: theme.spacing(3),
+        textAlign: 'center',
         '& > div': {
           padding: theme.spacing(2)
         }
+      },
+      '& .SCFeed-refresh': {
+        textAlign: 'center'
+      },
+      '& .SCFeed-paginationLink': {
+        display: 'none'
       }
     })
   }

@@ -43,26 +43,26 @@
 
   "ui.userInfoDialog.title": "Informations",
 
-  "ui.peopleSuggestionWidget.title": "People Suggestion",
-  "ui.peopleSuggestionWidget.subtitle.noResults": "Nothing to show",
-  "ui.peopleSuggestionWidget.button.showMore": "Show More",
+  "ui.userSuggestionWidget.title": "People Suggestion",
+  "ui.userSuggestionWidget.subtitle.noResults": "Nothing to show",
+  "ui.userSuggestionWidget.button.showMore": "Show More",
 
   "ui.pollSuggestionWidget.title": "Suggested polls",
   "ui.pollSuggestionWidget.subtitle.noResults": "Nothing to show",
-  "ui.pollSuggestionWidget.button.showMore": "Show More",
+  "ui.pollSuggestionWidget.button.showAll": "Show All",
   "ui.pollSuggestionWidget.noMoreResults": "No more results",
 
   "ui.pollSuggestionWidget.pollSnippet.button.seeItem": "See",
 
-  "ui.trendingPeopleWidget.title": "Trending People",
-  "ui.trendingPeopleWidget.noResults": "Nothing to show",
-  "ui.trendingPeopleWidget.button.showAll": "Show All",
-  "ui.trendingPeopleWidget.noMoreResults": "No more results",
+  "ui.categoryTrendingUsersWidget.title": "Trending People",
+  "ui.categoryTrendingUsersWidget.noResults": "Nothing to show",
+  "ui.categoryTrendingUsersWidget.button.showAll": "Show All",
+  "ui.categoryTrendingUsersWidget.noMoreResults": "No more results",
 
-  "ui.trendingFeedWidget.title": "Trending Feed",
-  "ui.trendingFeedWidget.noResults": "Nothing to show",
-  "ui.trendingFeedWidget.button.showMore": "Show More",
-  "ui.trendingFeedWidget.noMoreResults": "No more results",
+  "ui.categoryTrendingFeedWidget.title": "Trending Feed",
+  "ui.categoryTrendingFeedWidget.noResults": "Nothing to show",
+  "ui.categoryTrendingFeedWidget.button.showAll": "Show More",
+  "ui.categoryTrendingFeedWidget.noMoreResults": "No more results",
 
   "ui.relatedFeedObjectsWidget.title": "Related Posts",
   "ui.relatedFeedObjectsWidget.noResults": "Nothing to show",
@@ -74,11 +74,11 @@
   "ui.categories.filterByName": "Find and add an interest",
   "ui.categories.noResults": "No categories found",
 
-  "ui.categoriesFollowedWidget.title": "{total, plural, =0 {# Lifestyles followed} one {# Lifestyle followed} other {# Lifestyles followed}}",
-  "ui.categoriesFollowedWidget.modal.title": "Followed Lifestyles",
-  "ui.categoriesFollowedWidget.subtitle.noResults": "Nothing to show",
-  "ui.categoriesFollowedWidget.button.showAll": "Show All",
-  "ui.categoriesFollowedWidget.noMoreResults": "No more results",
+  "ui.userFollowedCategoriesWidget.title": "{total, plural, =0 {# Lifestyles followed} one {# Lifestyle followed} other {# Lifestyles followed}}",
+  "ui.userFollowedCategoriesWidget.modal.title": "Followed Lifestyles",
+  "ui.userFollowedCategoriesWidget.subtitle.noResults": "Nothing to show",
+  "ui.userFollowedCategoriesWidget.button.showAll": "Show All",
+  "ui.userFollowedCategoriesWidget.noMoreResults": "No more results",
 
   "ui.categoriesPopularWidget.title": "Popular Lifestyles",
   "ui.categoriesPopularWidget.noResults": "Nothing to show",
@@ -87,7 +87,8 @@
 
   "ui.categoriesSuggestionWidget.title": "Explore Lifestyles",
   "ui.categoriesSuggestionWidget.noResults": "Nothing to show",
-  "ui.categoriesSuggestionWidget.button.showMore": "Show More",
+  "ui.categoriesSuggestionWidget.button.showAll": "Show More",
+  "ui.categoriesSuggestionWidget.noMoreResults": "No more results",
 
   "ui.changeCover.button.change": "Change Cover",
   "ui.changeCover.button.delete": "Delete Cover",
@@ -332,11 +333,11 @@
   "ui.userProfileEdit.notification": "Notification settings",
   "ui.userProfileEdit.account": "Account settings",
 
-  "ui.usersFollowedWidget.title": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
-  "ui.usersFollowedWidget.modal.title": "Users Followed",
-  "ui.usersFollowedWidget.subtitle.noResults": "Nothing to show",
-  "ui.usersFollowedWidget.button.showAll": "Show All",
-  "ui.usersFollowedWidget.noMoreResults": "No more results",
+  "ui.userFollowedUsersWidget.title": "{total, plural, =0 {# users followed} one {# user followed} other {# users followed}}",
+  "ui.userFollowedUsersWidget.modal.title": "Users Followed",
+  "ui.userFollowedUsersWidget.subtitle.noResults": "Nothing to show",
+  "ui.userFollowedUsersWidget.button.showAll": "Show All",
+  "ui.userFollowedUsersWidget.noMoreResults": "No more results",
 
   "ui.userFollowersWidget.title": "{total, plural, =0 {# followers} one {# follower} other {# followers}}",
   "ui.userFollowersWidget.modal.title": "Followers",

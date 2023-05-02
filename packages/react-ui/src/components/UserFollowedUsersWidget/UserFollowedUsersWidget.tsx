@@ -17,7 +17,6 @@ import {
   useIsComponentMountedRef,
   useSCUser
 } from '@selfcommunity/react-core';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import Skeleton from './Skeleton';
 import User, {UserProps, UserSkeleton} from '../User';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -29,9 +28,10 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCUserFollowersWidget';
+const PREFIX = 'SCUserFollowedUsersWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -54,7 +54,7 @@ const DialogRoot = styled(BaseDialog, {
   overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
 
-export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
+export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
    * The user id
    * @default null
@@ -82,7 +82,7 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to followers users dialog
+   * Props to spread to followed users dialog
    * @default {}
    */
   DialogProps?: BaseDialogProps;
@@ -94,35 +94,36 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
 }
 
 /**
- > API documentation for the Community-JS User Followers Widget component. Learn about the available props and the CSS API.
- > This component renders the list of the followes of the given user
-
+ *
+ > API documentation for the Community-JS User Followed Users Widget component. Learn about the available props and the CSS API.
+ > This component renders the list of the users that the given user follows.
+ *
  #### Import
 
  ```jsx
- import {UserFollowersWidget} from '@selfcommunity/react-ui';
+ import {UserFollowedUsersWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCUserFollowersWidget` can be used when providing style overrides in the theme.
+ The name `SCUserFollowedUsersWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserFollowersWidget-root|Styles applied to the root element.|
- |title|.SCUserFollowersWidget-title|Styles applied to the title element.|
- |noResults|.SCUserFollowersWidget-no-results|Styles applied to no results section.|
- |followersItem|.SCUserFollowersWidget-followers-item|Styles applied to follower item element.|
- |showMore|.SCUserFollowersWidget-show-more|Styles applied to show more button element.|
+ |root|.SCUserFollowedUsersWidget-root|Styles applied to the root element.|
+ |title|.SCUserFollowedUsersWidget-title|Styles applied to the title element.|
+ |noResults|.SCUserFollowedUsersWidget-no-results|Styles applied to no results section.|
+ |followedItem|.SCUserFollowedUsersWidget-followed-item|Styles applied to the followed item element.|
+ |showMore|.SCUserFollowedUsersWidget-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
-export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): JSX.Element {
+export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidgetProps): JSX.Element {
   // PROPS
-  const props: UserFollowersWidgetProps = useThemeProps({
+  const props: UserFollowedUsersWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -145,7 +146,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.USER_FOLLOWERS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getToolsStateCacheKey(SCCache.USERS_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -183,7 +184,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   }, [authUserId]);
 
   /**
-   * On mount, fetches the list of users followers
+   * On mount, fetches the list of users followed
    */
   useEffect(() => {
     if (!followEnabled || (!contentAvailability && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
@@ -192,7 +193,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    UserService.getUserFollowers(userId, {limit})
+    UserService.getUserFollowings(userId, {limit})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -211,7 +212,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
-      UserService.getUserFollowers(userId, {offset: limit, limit: 10})
+      UserService.getUserFollowings(userId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({
             type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -241,7 +242,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       return http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowers.method
+          method: Endpoints.UserFollowings.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
           dispatch({
@@ -267,11 +268,11 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userFollowersWidget.title" defaultMessage="ui.userFollowersWidget.title" values={{total: state.count}} />
+        <FormattedMessage id="ui.userFollowedUsersWidget.title" defaultMessage="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.userFollowersWidget.subtitle.noResults" defaultMessage="" />
+          <FormattedMessage id="ui.userFollowedUsersWidget.subtitle.noResults" defaultMessage="" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -284,7 +285,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
           </List>
           {state.count > state.visibleItems && (
             <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.userFollowersWidget.button.showAll" defaultMessage="ui.userFollowersWidget.button.showAll" />
+              <FormattedMessage id="ui.userFollowedUsersWidget.button.showAll" defaultMessage="ui.userFollowedUsersWidget.button.showAll" />
             </Button>
           )}
         </React.Fragment>
@@ -292,7 +293,9 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
-          title={<FormattedMessage defaultMessage="ui.userFollowersWidget.title" id="ui.userFollowersWidget.title" values={{total: state.count}} />}
+          title={
+            <FormattedMessage defaultMessage="ui.userFollowedUsersWidget.title" id="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+          }
           onClose={handleToggleDialogOpen}
           open={openDialog}
           {...DialogProps}>
@@ -304,7 +307,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
             height={isMobile ? '100%' : 400}
             endMessage={
               <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.userFollowersWidget.noMoreResults" defaultMessage="ui.userFollowersWidget.noMoreResults" />
+                <FormattedMessage id="ui.userFollowedUsersWidget.noMoreResults" defaultMessage="ui.userFollowedUsersWidget.noMoreResults" />
               </Typography>
             }>
             <List>

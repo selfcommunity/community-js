@@ -16,20 +16,7 @@ const classes = {
   action: `${PREFIX}-action`
 };
 
-const Root = styled(BaseItem)(({theme}) => ({
-  [`& .${classes.primary}`]: {
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.secondary}`]: {
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.button}`]: {
-    margin: theme.spacing()
-  },
-  [`& .${classes.action}`]: {
-    margin: theme.spacing()
-  }
-}));
+const Root = styled(BaseItem)(({theme}) => ({}));
 
 /**
  * > API documentation for the Community-JS Category Skeleton component. Learn about the available props and the CSS API.

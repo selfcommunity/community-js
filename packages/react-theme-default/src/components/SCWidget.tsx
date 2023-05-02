@@ -23,6 +23,9 @@ const Component = {
       [theme.breakpoints.up('sm')]: {
         borderRadius: theme.shape.borderRadius
       },
+      '&.MuiPaper-elevation0': {
+        borderRadius: 0
+      },
       '& .MuiCardContent-root': {
         padding: theme.spacing(3),
         '& h5': {
@@ -39,7 +42,7 @@ const Component = {
             paddingBottom: theme.spacing(1),
             paddingLeft: 0,
             paddingRight: 0,
-            '& .SCBaseItemButton-text': {
+            '& .SCBaseItemButton-text, & .SCBaseItem-text': {
               marginTop: 0,
               marginBottom: 0
             },

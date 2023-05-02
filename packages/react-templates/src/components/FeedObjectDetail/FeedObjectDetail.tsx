@@ -9,7 +9,7 @@ import {
   FeedObjectProps,
   FeedSidebarProps,
   RelatedFeedObjectsWidget,
-  RelatedFeedObjectsWidgetProps,
+  RelatedFeedObjectWidgetProps,
   SCFeedObjectTemplateType,
   StickyBox
 } from '@selfcommunity/react-ui';
@@ -93,7 +93,7 @@ export interface FeedObjectDetailProps {
    * Props to spread to RelatedFeedObject
    * @default empty object
    */
-  RelatedFeedObjectProps?: RelatedFeedObjectsWidgetProps;
+  RelatedFeedObjectProps?: RelatedFeedObjectWidgetProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];

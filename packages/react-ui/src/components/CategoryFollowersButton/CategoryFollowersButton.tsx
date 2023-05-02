@@ -20,7 +20,8 @@ const PREFIX = 'SCCategoryFollowersButton';
 
 const classes = {
   root: `${PREFIX}-root`,
-  dialogRoot: `${PREFIX}-dialog-root`
+  dialogRoot: `${PREFIX}-dialog-root`,
+  endMessage: `${PREFIX}-end-message`
 };
 
 const Root = styled(Button, {
@@ -32,7 +33,7 @@ const Root = styled(Button, {
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.popperRoot
+  overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
 
 export interface CategoryFollowersButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled'>> {
@@ -76,6 +77,7 @@ export interface CategoryFollowersButtonProps extends Pick<ButtonProps, Exclude<
  |---|---|---|
  |root|.SCCategoryFollowersButton-root|Styles applied to the root element.|
  |dialogRoot|.SCCategoryFollowersButton-dialog-root|Styles applied to the root element.|
+ |endMessage|.SCCategoriesFollowedWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */
@@ -197,14 +199,14 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
             loaderNext={<UserSkeleton elevation={0} />}
             height={isMobile ? '100%' : 400}
             endMessage={
-              <Typography variant="body2" align="center" fontWeight="bold">
+              <Typography className={classes.endMessage}>
                 <FormattedMessage id="ui.categoryFollowersButton.noOtherFollowers" defaultMessage="ui.categoryFollowersButton.noOtherFollowers" />
               </Typography>
             }>
             <List>
               {followers.map((follower, index) => (
                 <ListItem key={follower.id}>
-                  <User elevation={0} user={follower} key={index} />
+                  <User elevation={0} user={follower} />
                 </ListItem>
               ))}
             </List>
