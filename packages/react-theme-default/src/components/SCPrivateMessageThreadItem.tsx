@@ -21,7 +21,8 @@ const Component = {
         display: 'flex',
         alignItems: 'center',
         '& .MuiTypography-root': {
-          fontSize: '1.143rem'
+          fontSize: '1.143rem',
+          whiteSpace: 'pre-line'
         }
       },
       '& .SCPrivateMessageThreadItem-img': {
