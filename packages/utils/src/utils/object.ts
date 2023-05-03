@@ -29,3 +29,18 @@ export function mergeDeep(target: object, source: object): object {
   }
   return output;
 }
+
+/**
+ * Get an object without keys
+ * @param obj
+ * @param keys
+ */
+export function objectWithoutProperties<T>(obj: T | null, keys: string[]): T {
+  let target: T = obj ? Object.assign({}, obj) : null;
+  keys.forEach(function (i: string) {
+    if (target && i in target) {
+      delete target[i];
+    }
+  });
+  return target;
+}

@@ -295,7 +295,7 @@ export default function useSCFetchFeed(props: {
                 previous: res.previous,
               },
             });
-            onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res);
+            onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res.results);
             if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
               revalidate(state.next, true);
             }

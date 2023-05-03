@@ -97,7 +97,7 @@
     "throttle-debounce": "^2.1.0",
     "use-deep-compare-effect": "^1.8.1",
     "use-resize-observer": "^9.1.0",
-    "virtual-scroller": "^1.9.1"
+    "virtual-scroller": "^1.12.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

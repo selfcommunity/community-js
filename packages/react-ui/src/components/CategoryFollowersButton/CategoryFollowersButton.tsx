@@ -15,6 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import {ButtonProps} from '@mui/material/Button/Button';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const PREFIX = 'SCCategoryFollowersButton';
 
@@ -101,11 +102,13 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
 
   // FETCH FIRST FOLLOWERS
-  useEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
+    console.log(scCategory);
     if (!scCategory) {
       return;
     }
     if (followers.length === 0) {
+      console.log('getCategoryFollowers');
       CategoryService.getCategoryFollowers(scCategory.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
         setFollowers([...res.results]);
         setOffset(3);

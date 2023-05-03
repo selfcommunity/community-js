@@ -1,13 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
-  SCUserContext,
+  SCFollowedCategoriesManagerType,
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
-  SCFollowedCategoriesManagerType,
   useSCUser
 } from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -91,23 +90,30 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
 
   const {className, categoryId, category, onFollow, ...rest} = props;
 
-  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
-  const [followed, setFollowed] = useState<boolean>(null);
-
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const scCategoriesManager: SCFollowedCategoriesManagerType = scUserContext.managers.categories;
+
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
+  const {scCategory, setSCCategory} = useSCFetchCategory({
+    id: categoryId,
+    category,
+    cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
+  });
+  const [followed, setFollowed] = useState<boolean>(null);
 
   useEffect(() => {
     /**
      * Call scCategoriesManager.isFollowed inside an effect
      * to avoid warning rendering child during update parent state
      */
-    if (scUserContext.user) {
+    if (authUserId) {
       setFollowed(scCategoriesManager.isFollowed(scCategory));
     }
-  });
+  }, [authUserId, scCategoriesManager.isFollowed]);
 
   const followCategory = () => {
     scCategoriesManager
