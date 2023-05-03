@@ -7,15 +7,14 @@ const Component = {
       position: 'relative',
       [theme.breakpoints.up('sm')]: {
         height: '100vh',
-        maxHeight: theme.breakpoints.values['md']
+        maxHeight: 'calc(100vh - 6.2rem)'
       },
       '& .MuiCardContent-root': {
         overflow: 'auto',
         padding: theme.spacing(0),
         height: 'calc(100vh - 6.2rem)',
         [theme.breakpoints.up('sm')]: {
-          height: `calc(100% - ${theme.spacing(6.25)})`,
-          maxHeight: theme.breakpoints.values['md']
+          height: `calc(100% - ${theme.spacing(6.25)})`
         },
         '& .MuiAlert-root': {
           position: 'absolute',

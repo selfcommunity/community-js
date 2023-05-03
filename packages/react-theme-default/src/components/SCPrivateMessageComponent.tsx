@@ -3,7 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       [theme.breakpoints.up('sm')]: {
         maxWidth: theme.breakpoints.values['lg'],
-        maxHeight: theme.breakpoints.values['md']
+        maxHeight: theme.breakpoints.values['lg']
       },
       ' .MuiPaper-root': {
         boxShadow: 'none',
