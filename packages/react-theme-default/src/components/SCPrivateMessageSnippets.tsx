@@ -5,7 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       [theme.breakpoints.up('sm')]: {
         height: '100vh',
-        maxHeight: theme.breakpoints.values['md'],
+        maxHeight: 'calc(100vh - 6.2rem)',
         overflow: 'auto'
       },
       '& .MuiCardContent-root': {
