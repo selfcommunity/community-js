@@ -21,6 +21,7 @@ import {Logger} from '@selfcommunity/utils';
  */
 export default function useSCFollowedCategoriesManager(user?: SCUserType, updateUser?: (info) => void) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const authUserId = user ? user.id : null;
 
   /**
    * Memoized refresh all categories
@@ -109,7 +110,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
   };
 
   /**
-   * Bypass remote check if the user is followed
+   * Bypass remote check if the category is followed
    */
   const getFollowStatus = useMemo(
     () => (category: SCCategoryType) => {
@@ -129,18 +130,21 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
   const isFollowed = useMemo(
     () =>
       (category: SCCategoryType): boolean => {
+        // Cache is valid also for anonymous user
         if (cache.includes(category.id)) {
           return Boolean(data.includes(category.id));
         }
-        if ('followed' in category) {
-          return getFollowStatus(category);
-        }
-        if (!loading.includes(category.id)) {
-          checkIsCategoryFollowed(category);
+        if (authUserId) {
+          if ('followed' in category) {
+            return getFollowStatus(category);
+          }
+          if (!loading.includes(category.id)) {
+            checkIsCategoryFollowed(category);
+          }
         }
         return false;
       },
-    [data, loading, cache]
+    [data, loading, cache, authUserId]
   );
 
   if (!user) {
