@@ -13,7 +13,6 @@ import {
   InlineComposerWidget,
   CategoriesPopularWidget,
   UserSuggestionWidget,
-  TrendingPeopleWidget,
   FeedUpdatesWidget,
 } from '../../index';
 import {exampleExploreData} from './prefetchedData';
@@ -43,13 +42,6 @@ const Template: ComponentStory<typeof Feed> = (args) => {
 };
 
 const _WIDGETS = [
-  {
-    type: 'widget',
-    component: TrendingPeopleWidget,
-    componentProps: {categoryId: 1},
-    column: 'right',
-    position: 1
-  },
   {
     type: 'widget',
     component: CategoriesPopularWidget,
