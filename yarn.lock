@@ -16581,7 +16581,7 @@ vinyl@^2.2.1:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
-virtual-scroller@^1.9.1:
+virtual-scroller@^1.12.3:
   version "1.12.3"
   resolved "https://registry.yarnpkg.com/virtual-scroller/-/virtual-scroller-1.12.3.tgz#20f4990fe552587e75f894feabf6b770d64095ca"
   integrity sha512-59C3P3O3wIPoGzhXOprLk5aUZgpILKcfefhD/LKG+garpoSIUMR/SNO/anFBtyW6WQnnac4PA722/ZjG+6auCw==

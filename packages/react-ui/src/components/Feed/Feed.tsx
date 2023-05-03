@@ -592,7 +592,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const getPreviousPage = useMemo(
     () => () => {
-      if (isMountRef.current && feedDataObject.componentLoaded && feedDataObject.isLoadingPrevious) {
+      if (isMountRef.current && feedDataObject.componentLoaded && !feedDataObject.isLoadingPrevious) {
         feedDataObject.getPreviousPage();
       }
     },
