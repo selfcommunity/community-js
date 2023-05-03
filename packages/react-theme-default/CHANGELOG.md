@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.119...@selfcommunity/react-theme-default@0.1.0-alpha.120) (2023-05-02)
+
+
+### Bug Fixes
+
+* Fix widgets behaviour and data load ([da1a0fb](https://github.com/selfcommunity/community-js/commit/da1a0fba75aaebf1954d77a58f3174148f9c322f))
+
+
+
+
+
 # [0.1.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.118...@selfcommunity/react-theme-default@0.1.0-alpha.119) (2023-04-28)
 
 

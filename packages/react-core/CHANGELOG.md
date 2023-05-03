@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.24...@selfcommunity/react-core@0.4.0-alpha.25) (2023-05-02)
+
+
+### Bug Fixes
+
+* Fix widgets behaviour and data load ([da1a0fb](https://github.com/selfcommunity/community-js/commit/da1a0fba75aaebf1954d77a58f3174148f9c322f))
+
+
+
+
+
 # [0.4.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.23...@selfcommunity/react-core@0.4.0-alpha.24) (2023-04-28)
 
 

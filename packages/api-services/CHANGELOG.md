@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.1...@selfcommunity/api-services@0.4.0-alpha.2) (2023-05-02)
+
+
+### Bug Fixes
+
+* Fix widgets behaviour and data load ([da1a0fb](https://github.com/selfcommunity/community-js/commit/da1a0fba75aaebf1954d77a58f3174148f9c322f))
+
+
+
+
+
 # [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.0...@selfcommunity/api-services@0.4.0-alpha.1) (2023-04-28)
 
 
