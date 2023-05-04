@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?taykjf');
-  src:  url('./community/icons.eot?taykjf#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?taykjf') format('woff2'),
-  url('./community/icons.ttf?taykjf') format('truetype'),
-  url('./community/icons.woff?taykjf') format('woff'),
-  url('./community/icons.svg?taykjf#fashionista') format('svg');
+  src:  url('./community/icons.eot?xgaocv');
+  src:  url('./community/icons.eot?xgaocv#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?xgaocv') format('woff2'),
+  url('./community/icons.ttf?xgaocv') format('truetype'),
+  url('./community/icons.woff?xgaocv') format('woff'),
+  url('./community/icons.svg?xgaocv#community') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,8 +36,44 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-close:before {
+.icon-CalendarIcon:before {
+  content: "\e904";
+}
+.icon-format_align_justify:before {
   content: "\e90f";
+}
+.icon-format_heading_1:before {
+  content: "\e917";
+}
+.icon-format_heading_2:before {
+  content: "\e918";
+}
+.icon-format_heading_3:before {
+  content: "\e958";
+}
+.icon-format_horizontal_rule:before {
+  content: "\e959";
+}
+.icon-format_paragraph:before {
+  content: "\e95a";
+}
+.icon-format_subscript:before {
+  content: "\e95b";
+}
+.icon-format_superscript:before {
+  content: "\e95c";
+}
+.icon-close:before {
+  content: "\e95d";
+}
+.icon-expand_less:before {
+  content: "\e95e";
+}
+.icon-expand_more:before {
+  content: "\e95f";
+}
+.icon-arrow_back:before {
+  content: "\e960";
 }
 .icon-access_time:before {
   content: "\e900";
@@ -50,9 +86,6 @@
 }
 .icon-add:before {
   content: "\e903";
-}
-.icon-arrow_back:before {
-  content: "\e904";
 }
 .icon-attach_file:before {
   content: "\e905";
@@ -104,12 +137,6 @@
 }
 .icon-error:before {
   content: "\e916";
-}
-.icon-expand_less:before {
-  content: "\e917";
-}
-.icon-expand_more:before {
-  content: "\e918";
 }
 .icon-explore:before {
   content: "\e919";

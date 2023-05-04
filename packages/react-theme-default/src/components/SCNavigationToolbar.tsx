@@ -30,7 +30,10 @@ const Component = {
         textAlign: 'right',
         marginRight: theme.spacing(1.5),
         '& .MuiFormControl-root': {
-          width: 330
+          width: 285,
+          [theme.breakpoints.up('lg')]: {
+            width: 330
+          }
         }
       },
       '& .SCNavigationToolbar-profile, & .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {

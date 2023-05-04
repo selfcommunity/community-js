@@ -17,7 +17,7 @@ import {useThemeProps} from '@mui/system';
 import PollSnippet, {PollSnippetProps, PollSnippetSkeleton} from './PollSnippet';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCPollSuggestionWidget';
@@ -124,15 +124,15 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
 
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -157,35 +157,37 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
       return;
     }
     dispatch({
-      type: actionToolsTypes.LOADING_NEXT
+      type: actionWidgetTypes.LOADING_NEXT
     });
-    SuggestionService.getPollSuggestion({limit})
+    const controller = new AbortController();
+    SuggestionService.getPollSuggestion({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
-          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [scUserContext.user]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       SuggestionService.getPollSuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: payload
           });
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -205,7 +207,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
         return;
       }
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       return http
         .request({
@@ -214,7 +216,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCFeedObjectType>>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
           });
         });

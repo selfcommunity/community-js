@@ -20,7 +20,7 @@ import Widget from '../Widget';
 import CreateIncubatorDialog from './CreateIncubatorDialog';
 import IncubatorDetail from '../IncubatorDetail';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {SCCache, useIsComponentMountedRef} from '@selfcommunity/react-core';
 
 const PREFIX = 'IncubatorsListWidget';
@@ -134,14 +134,14 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
   const isMountedRef = useIsComponentMountedRef();
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
       isLoadingNext: true,
       next: `${Endpoints.GetAllIncubators.url()}?limit=10`,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openIncubatorsDialog, setOpenIncubatorsDialog] = useState<boolean>(false);
   const [openCreateIncubatorDialog, setOpenCreateIncubatorDialog] = useState<boolean>(false);
@@ -202,7 +202,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
           if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
             dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
               payload: {
                 results: data.results,
                 count: data.count,
@@ -212,7 +212,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
           }
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
       return () => {
@@ -237,7 +237,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
         newIncubators[index].subscribed = !incubator.subscribed;
       }
       dispatch({
-        type: actionToolsTypes.SET_RESULTS,
+        type: actionWidgetTypes.SET_RESULTS,
         payload: {results: newIncubators}
       });
     }

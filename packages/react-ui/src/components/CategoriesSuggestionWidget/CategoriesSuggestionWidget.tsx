@@ -13,7 +13,7 @@ import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
@@ -124,15 +124,15 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
 
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
-      isLoadingNext: true,
+      isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -145,7 +145,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
    */
   function handleFollow(category, follow) {
     dispatch({
-      type: actionToolsTypes.SET_RESULTS,
+      type: actionWidgetTypes.SET_RESULTS,
       payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
     });
   }
@@ -164,17 +164,22 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     if (!scUserContext.user || state.initialized || state.isLoadingNext) {
       return;
     }
-    SuggestionService.getCategorySuggestion({limit})
+    dispatch({
+      type: actionWidgetTypes.LOADING_NEXT
+    });
+    const controller = new AbortController();
+    SuggestionService.getCategorySuggestion({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCCategoryType>) => {
         dispatch({
-          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [scUserContext.user, state.initialized]);
 
   useEffect(() => {
@@ -182,12 +187,12 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
       SuggestionService.getCategorySuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCCategoryType>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: payload
           });
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -207,7 +212,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
         return;
       }
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       return http
         .request({
@@ -216,7 +221,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCCategoryType>>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
           });
         });

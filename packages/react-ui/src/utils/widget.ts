@@ -1,4 +1,3 @@
-import {SCCache} from '@selfcommunity/react-core';
 import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
 
 /**
@@ -8,7 +7,7 @@ import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
  * Define all possible auth action types label
  * Use this to export actions and dispatch an action
  */
-export const actionToolsTypes = {
+export const actionWidgetTypes = {
   LOADING_NEXT: '_loading_next',
   LOADING_PREVIOUS: '_loading_previous',
   LOAD_NEXT_SUCCESS: '_load_next_success',
@@ -24,16 +23,16 @@ export const actionToolsTypes = {
  * @param state
  * @param action
  */
-export function dataToolsReducer(state, action) {
+export function dataWidgetReducer(state, action) {
   let _state = {...state};
   switch (action.type) {
-    case actionToolsTypes.LOADING_NEXT:
+    case actionWidgetTypes.LOADING_NEXT:
       _state = {...state, isLoadingNext: true, errorLoadNext: null};
       break;
-    case actionToolsTypes.LOADING_PREVIOUS:
+    case actionWidgetTypes.LOADING_PREVIOUS:
       _state = {...state, isLoadingPrevious: true, errorLoadPrevious: null};
       break;
-    case actionToolsTypes.LOAD_NEXT_SUCCESS:
+    case actionWidgetTypes.LOAD_NEXT_SUCCESS:
       _state = {
         ...state,
         isLoadingNext: false,
@@ -44,7 +43,7 @@ export function dataToolsReducer(state, action) {
         initialized: action.payload?.initialized || true
       };
       break;
-    case actionToolsTypes.LOAD_PREVIOUS_SUCCESS:
+    case actionWidgetTypes.LOAD_PREVIOUS_SUCCESS:
       _state = {
         ...state,
         isLoadingPrevious: false,
@@ -54,20 +53,20 @@ export function dataToolsReducer(state, action) {
         errorPreviousNext: null
       };
       break;
-    case actionToolsTypes.SET_RESULTS:
+    case actionWidgetTypes.SET_RESULTS:
       _state = {
         ...state,
         results: [...action.payload.results],
         ...(action.payload.count ? {count: action.payload.count} : {})
       };
       break;
-    case actionToolsTypes.SET_VISIBLE_ITEMS:
+    case actionWidgetTypes.SET_VISIBLE_ITEMS:
       _state = {...state, visibleItems: action.payload.visibleItems};
       break;
-    case actionToolsTypes.LOAD_NEXT_FAILURE:
+    case actionWidgetTypes.LOAD_NEXT_FAILURE:
       _state = {...state, isLoadingNext: false, errorLoadNext: action.payload.error};
       break;
-    case actionToolsTypes.LOAD_PREVIOUS_FAILURE:
+    case actionWidgetTypes.LOAD_PREVIOUS_FAILURE:
       _state = {...state, isLoadingNext: false, errorLoadPrevious: action.payload.error};
       break;
   }
@@ -79,7 +78,7 @@ export function dataToolsReducer(state, action) {
  * Define initial tools state
  * @param data
  */
-export function stateToolsInitializer(data) {
+export function stateWidgetInitializer(data) {
   let _initState = {
     cacheKey: data.cacheKey ? data.cacheKey : null,
     count: data.count ? data.count : 0,

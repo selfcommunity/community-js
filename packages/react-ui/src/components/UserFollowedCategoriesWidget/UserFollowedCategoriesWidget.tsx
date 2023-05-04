@@ -5,7 +5,7 @@ import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import {UserService} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Category, {CategoryProps, CategorySkeleton} from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -125,14 +125,14 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
 
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
-      isLoadingNext: true,
+      isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -152,10 +152,14 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    UserService.getUserFollowedCategories(userId)
+    dispatch({
+      type: actionWidgetTypes.LOADING_NEXT
+    });
+    const controller = new AbortController();
+    UserService.getUserFollowedCategories(userId, null, {signal: controller.signal})
       .then((categories: SCCategoryType[]) => {
         dispatch({
-          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: {
             count: categories.length,
             results: categories,
@@ -164,9 +168,10 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
         });
       })
       .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, []);
 
   /**
@@ -180,7 +185,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   function handleOnFollowCategory(category) {
     if (scUserContext.user.id === userId) {
       dispatch({
-        type: actionToolsTypes.SET_RESULTS,
+        type: actionWidgetTypes.SET_RESULTS,
         payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
       });
     } else {
@@ -195,7 +200,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
           newCategories[index].followed = !category.followed;
         }
         dispatch({
-          type: actionToolsTypes.SET_RESULTS,
+          type: actionWidgetTypes.SET_RESULTS,
           payload: {results: newCategories}
         });
       }
