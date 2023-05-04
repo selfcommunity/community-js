@@ -40,7 +40,8 @@ export function dataToolsReducer(state, action) {
         count: action.payload.count,
         next: action.payload.next ? action.payload.next : null,
         results: [...state.results, ...action.payload.results],
-        errorLoadNext: null
+        errorLoadNext: null,
+        initialized: action.payload?.initialized || true
       };
       break;
     case actionToolsTypes.LOAD_PREVIOUS_SUCCESS:
@@ -87,7 +88,8 @@ export function stateToolsInitializer(data) {
     previous: data.previous ? data.previous : null,
     isLoadingNext: data.isLoadingNext ? data.isLoadingNext : false,
     isLoadingPrevious: data.isLoadingPrevious ? data.isLoadingPrevious : false,
-    visibleItems: data.visibleItems ? data.visibleItems : null
+    visibleItems: data.visibleItems ? data.visibleItems : null,
+    initialized: false
   };
   if (_initState.cacheKey && LRUCache.hasKey(_initState.cacheKey) && data.cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
     const _cachedStateData = LRUCache.get(_initState.cacheKey);

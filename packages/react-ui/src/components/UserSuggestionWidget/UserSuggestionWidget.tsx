@@ -138,7 +138,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   const [state, dispatch] = useReducer(
     dataToolsReducer,
     {
-      isLoadingNext: true,
+      isLoadingNext: false,
       next: null,
       cacheKey: SCCache.getToolsStateCacheKey(SCCache.PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
@@ -147,7 +147,6 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -155,52 +154,39 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  // REFS
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
-  /**
-   * Handles list change on user follow
-   */
-  function handleFollow(user, follow) {
-    dispatch({
-      type: actionToolsTypes.SET_RESULTS,
-      payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
-    });
-  }
 
   // EFFECTS
   useEffect(() => {
     if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [scUserContext.user]);
   /**
    * On mount, fetches people suggestion list
    */
   useEffect(() => {
-    if (!scUserContext.user) {
+    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
       return;
     }
     SuggestionService.getUserSuggestion({limit})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
+      });
   }, [scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       SuggestionService.getUserSuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({
@@ -223,8 +209,18 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   }, [state.results]);
 
   // HANDLERS
+  const handleConnect = (user, follow) => {
+    dispatch({
+      type: actionToolsTypes.SET_RESULTS,
+      payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
+    });
+  };
+
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -240,7 +236,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
   const handleToggleDialogOpen = () => {
@@ -248,7 +244,10 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   };
 
   // RENDER
-  if (!loaded) {
+  if ((autoHide && !state.count && state.initialized) || !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
+  if (!state.initialized) {
     return <Skeleton />;
   }
   const content = (
@@ -269,8 +268,8 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
                   elevation={0}
                   user={user}
                   {...(followEnabled
-                    ? {followConnectUserButtonProps: {onFollow: handleFollow}}
-                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollow}})}
+                    ? {followConnectUserButtonProps: {onFollow: handleConnect}}
+                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleConnect}})}
                   {...UserProps}
                 />
               </ListItem>
@@ -308,8 +307,8 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
                     elevation={0}
                     user={user}
                     {...(followEnabled
-                      ? {followConnectUserButtonProps: {onFollow: handleFollow}}
-                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleFollow}})}
+                      ? {followConnectUserButtonProps: {onFollow: handleConnect}}
+                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleConnect}})}
                     {...UserProps}
                   />
                 </ListItem>
@@ -320,13 +319,6 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
       )}
     </CardContent>
   );
-
-  /**
-   * Renders root object (if results and if user is logged, otherwise component is hidden)
-   */
-  if (autoHide && (!state.count || !scUserContext.user)) {
-    return <HiddenPlaceholder />;
-  }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {content}

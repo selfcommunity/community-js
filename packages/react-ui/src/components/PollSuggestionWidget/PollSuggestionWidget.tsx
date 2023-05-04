@@ -135,7 +135,6 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -144,20 +143,17 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // REFS
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
   // EFFECTS
   useEffect(() => {
     if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [scUserContext.user]);
   /**
    * On mount, fetches polls list
    */
   useEffect(() => {
-    if (!authUserId || state.results.length > 0 || state.isLoadingNext) {
+    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
       return;
     }
     dispatch({
@@ -167,18 +163,17 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
-  }, [authUserId]);
+      });
+  }, [scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && !state.isLoadingNext) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -206,6 +201,9 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
   // HANDLERS
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -221,7 +219,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
   const handleToggleDialogOpen = () => {
@@ -229,15 +227,13 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
   };
 
   // RENDER
-  if (!loaded) {
-    return <Skeleton />;
-  }
-  /**
-   * Renders root object (if results and if user is logged, otherwise component is hidden)
-   */
-  if ((autoHide && !state.count) || !scUserContext.user) {
+  if ((autoHide && !state.count && state.initialized) || !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
+  if (!state.initialized) {
+    return <Skeleton />;
+  }
+
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">

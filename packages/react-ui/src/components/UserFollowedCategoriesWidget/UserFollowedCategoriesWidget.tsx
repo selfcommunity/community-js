@@ -139,9 +139,6 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
-  // MEMO
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
   // EFFECTS
   useEffect(() => {
     if (!userId) {
@@ -149,7 +146,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [userId]);
 
   /**
    * On mount, fetches the list of categories followed
@@ -161,7 +158,8 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
           payload: {
             count: categories.length,
-            results: categories
+            results: categories,
+            initialized: true
           }
         });
       })
@@ -180,7 +178,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
 
   // HANDLERS
   function handleOnFollowCategory(category) {
-    if (scUserContext.user['id'] === userId) {
+    if (scUserContext.user.id === userId) {
       dispatch({
         type: actionToolsTypes.SET_RESULTS,
         payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
@@ -209,13 +207,13 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   };
 
   // RENDER
-  if (state.isLoadingNext) {
-    return <Skeleton />;
-  }
-  if ((autoHide && !state.count) || !userId) {
+  if ((autoHide && !state.count && state.initialized) || !userId) {
     return <HiddenPlaceholder />;
   }
-  const c = (
+  if (!state.initialized) {
+    return <Skeleton />;
+  }
+  const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
         <FormattedMessage
@@ -282,7 +280,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   );
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {c}
+      {content}
     </Root>
   );
 }

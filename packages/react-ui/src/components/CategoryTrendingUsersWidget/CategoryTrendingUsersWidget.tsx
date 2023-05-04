@@ -134,7 +134,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
     autoHide = null,
     limit = 3,
     UserProps = {},
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     onHeightChange,
     onStateChange,
     DialogProps = {},
@@ -154,7 +154,6 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -170,23 +169,20 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // MEMO
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !authUserId) {
+    if (!contentAvailability && !scUserContext.user) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [scUserContext.user]);
 
   /**
    * On mount, fetches trending user list
    */
   useEffect(() => {
-    if ((!contentAvailability && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
+    if ((!contentAvailability && !scUserContext.user) || state.initialized || state.isLoadingNext) {
       return;
     }
     dispatch({
@@ -196,18 +192,17 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
-  }, [contentAvailability, authUserId]);
+      });
+  }, [contentAvailability, scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && !state.isLoadingNext) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -235,6 +230,9 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   // HANDLERS
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -250,7 +248,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
   const handleToggleDialogOpen = () => {
@@ -258,12 +256,13 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   };
 
   // RENDER
-  if (!loaded) {
-    return <Skeleton />;
-  }
-  if ((!contentAvailability && !scUserContext.user) || (autoHide && !state.count)) {
+  if ((!contentAvailability && !scUserContext.user) || (autoHide && !state.count && state.initialized)) {
     return <HiddenPlaceholder />;
   }
+  if (!state.initialized) {
+    return <Skeleton />;
+  }
+
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">

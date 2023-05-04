@@ -13,7 +13,6 @@ import {
   InlineComposerWidget,
   CategoriesPopularWidget,
   UserSuggestionWidget,
-  TrendingPeopleWidget,
   FeedUpdatesWidget,
 } from '../../index';
 import {exampleExploreData} from './prefetchedData';
@@ -43,13 +42,6 @@ const Template: ComponentStory<typeof Feed> = (args) => {
 };
 
 const _WIDGETS = [
-  {
-    type: 'widget',
-    component: TrendingPeopleWidget,
-    componentProps: {categoryId: 1},
-    column: 'right',
-    position: 1
-  },
   {
     type: 'widget',
     component: CategoriesPopularWidget,
@@ -138,6 +130,7 @@ Explore.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.NETWORK_ONLY,
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -160,6 +153,7 @@ ExploreCache.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   cacheStrategy: CacheStrategies.CACHE_FIRST,
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -182,6 +176,7 @@ ExploreOffset2.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 2},
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -206,6 +201,7 @@ ExploreOffset2Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 2},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -228,6 +224,7 @@ ExploreOffset5.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 5},
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -251,6 +248,7 @@ ExploreOffset5Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 5},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -274,6 +272,7 @@ ExploreOffset20.args = {
     template: SCFeedObjectTemplateType.PREVIEW
   },
   endpointQueryParams: {limit: 5, offset: 20},
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -297,6 +296,7 @@ ExploreOffset20Cached.args = {
   },
   endpointQueryParams: {limit: 5, offset: 20},
   cacheStrategy: CacheStrategies.CACHE_FIRST,
+  requireAuthentication: true,
   HeaderComponent: <InlineComposerWidget />
 };
 
@@ -320,6 +320,7 @@ ExplorePrefetchedData.args = {
   },
   endpointQueryParams: {limit: 5},
   HeaderComponent: <InlineComposerWidget />,
+  requireAuthentication: true,
   prefetchedData: exampleExploreData,
 };
 
@@ -343,6 +344,7 @@ ExplorePrefetchedDataCached.args = {
   },
   endpointQueryParams: {limit: 5},
   HeaderComponent: <InlineComposerWidget />,
+  requireAuthentication: true,
   cacheStrategy: CacheStrategies.CACHE_FIRST
 };
 
@@ -366,6 +368,7 @@ ExploreWithoutVirtualization.args = {
   },
   cacheStrategy: CacheStrategies.NETWORK_ONLY,
   HeaderComponent: <InlineComposerWidget />,
+  requireAuthentication: true,
   VirtualizedScrollerProps: {bypass: true}
 };
 

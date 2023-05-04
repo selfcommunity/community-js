@@ -136,7 +136,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     FeedObjectProps = {
       template: SCFeedObjectTemplateType.SNIPPET
     },
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     onHeightChange,
     onStateChange,
     DialogProps = {},
@@ -156,7 +156,6 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -174,23 +173,20 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {scCategory} = useSCFetchCategory({id: categoryId});
 
-  // MEMO
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !authUserId) {
+    if (!contentAvailability && !scUserContext.user) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [scUserContext.user]);
 
   /**
    * On mount, fetches trending posts list
    */
   useEffect(() => {
-    if ((!contentAvailability && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
+    if ((!contentAvailability && !scUserContext.user) || state.initialized || state.isLoadingNext) {
       return;
     }
     dispatch({
@@ -206,12 +202,11 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
-  }, [contentAvailability, authUserId]);
+      });
+  }, [contentAvailability, scUserContext.user, state.initialized]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && !state.isLoadingNext) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -219,7 +214,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
         .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
           dispatch({
             type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
+            payload: {...payload, initialized: true}
           });
         })
         .catch((error) => {
@@ -227,7 +222,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, state.next, state.results, state.initialized]);
 
   /**
    * Virtual feed update
@@ -239,6 +234,9 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   // HANDLERS
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -262,15 +260,13 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   };
 
   // RENDER
-  if (!loaded) {
-    return <Skeleton />;
-  }
-  /**
-   * If content availability community option is false and user is anonymous, component is hidden.
-   */
-  if ((!contentAvailability && !scUserContext.user) || (autoHide && !state.count)) {
+  if ((!contentAvailability && !scUserContext.user) || (autoHide && !state.count && state.initialized)) {
     return <HiddenPlaceholder />;
   }
+  if (!state.initialized) {
+    return <Skeleton />;
+  }
+
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">

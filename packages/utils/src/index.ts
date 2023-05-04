@@ -10,7 +10,7 @@ import {
   updateQueryStringParameter
 } from './utils/url';
 import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
-import {mergeDeep, isObject} from './utils/object';
+import {mergeDeep, isObject, objectWithoutProperties} from './utils/object';
 import {arraysEqual} from './utils/array';
 import {loadVersionBrowser} from './utils/browser';
 import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
@@ -44,6 +44,7 @@ export {
   Logger,
   mergeDeep,
   isObject,
+  objectWithoutProperties,
   arraysEqual,
   WSClient,
   WSClientType,
