@@ -35,7 +35,6 @@ const Component = {
             '& .SCFeedObject-tag': {
               '& .MuiIcon-root': {
                 fontSize: '1rem',
-                lineHeight: '1.143rem',
                 color: 'inherit'
               }
             }
