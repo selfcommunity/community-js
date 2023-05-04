@@ -127,9 +127,9 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   const [state, dispatch] = useReducer(
     dataToolsReducer,
     {
-      isLoadingNext: true,
+      isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy
     },
     stateToolsInitializer
@@ -152,7 +152,11 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
    * On mount, fetches the list of categories followed
    */
   useEffect(() => {
-    UserService.getUserFollowedCategories(userId)
+    dispatch({
+      type: actionToolsTypes.LOADING_NEXT
+    });
+    const controller = new AbortController();
+    UserService.getUserFollowedCategories(userId, null, {signal: controller.signal})
       .then((categories: SCCategoryType[]) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -167,6 +171,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, []);
 
   /**

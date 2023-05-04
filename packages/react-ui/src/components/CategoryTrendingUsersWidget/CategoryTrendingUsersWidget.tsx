@@ -147,7 +147,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -188,7 +188,8 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    CategoryService.getCategoryTrendingFollowers(categoryId, {limit})
+    const controller = new AbortController();
+    CategoryService.getCategoryTrendingFollowers(categoryId, {limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -199,6 +200,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [contentAvailability, scUserContext.user]);
 
   useEffect(() => {

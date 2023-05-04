@@ -168,7 +168,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.RELATED_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, feedObjectId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.RELATED_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, feedObjectId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -211,7 +211,8 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {limit})
+    const controller = new AbortController();
+    FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -222,6 +223,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [preferences, scUserContext.user]);
 
   useEffect(() => {

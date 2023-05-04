@@ -126,9 +126,9 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   const [state, dispatch] = useReducer(
     dataToolsReducer,
     {
-      isLoadingNext: true,
+      isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
@@ -164,7 +164,11 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     if (!scUserContext.user || state.initialized || state.isLoadingNext) {
       return;
     }
-    SuggestionService.getCategorySuggestion({limit})
+    dispatch({
+      type: actionToolsTypes.LOADING_NEXT
+    });
+    const controller = new AbortController();
+    SuggestionService.getCategorySuggestion({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCCategoryType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -175,6 +179,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [scUserContext.user, state.initialized]);
 
   useEffect(() => {

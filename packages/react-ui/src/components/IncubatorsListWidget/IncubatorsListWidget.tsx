@@ -138,7 +138,7 @@ export default function IncubatorsListWidget(inProps: IncubatorsListWidgetProps)
     {
       isLoadingNext: true,
       next: `${Endpoints.GetAllIncubators.url()}?limit=10`,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy
     },
     stateToolsInitializer

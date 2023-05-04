@@ -149,7 +149,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -192,7 +192,8 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    CategoryService.getCategoryTrendingFeed(categoryId, {limit})
+    const controller = new AbortController();
+    CategoryService.getCategoryTrendingFeed(categoryId, {limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -203,6 +204,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [contentAvailability, scUserContext.user, state.initialized]);
 
   useEffect(() => {

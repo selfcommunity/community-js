@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { StrictMode, useEffect, useState } from 'react';
 import { SCContextProvider } from '../packages/react-core/src';
 import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
 import { Box, Button } from '@mui/material';
@@ -130,29 +130,31 @@ const withProvider = (Story, context) => {
   };
 
   return (
-    <EmotionThemeProvider theme={defaultTheme}>
-      <Box style={{ textAlign: 'right' }}>
-        {!authToken && (
-          <Button
-            variant="contained"
-            onClick={() => changeCommunityConf(true)}
-          >
-            Login
-          </Button>
-        )}
-        {authToken && (
-          <Button
-            variant="contained"
-            onClick={() => changeCommunityConf(false)}
-          >
-            Logout
-          </Button>
-        )}
-      </Box>
-      <SCContextProvider conf={_conf}>
-        <Story {...context} />
-      </SCContextProvider>
-    </EmotionThemeProvider>
+    <StrictMode>
+      <EmotionThemeProvider theme={defaultTheme}>
+        <Box style={{ textAlign: 'right' }}>
+          {!authToken && (
+            <Button
+              variant="contained"
+              onClick={() => changeCommunityConf(true)}
+            >
+              Login
+            </Button>
+          )}
+          {authToken && (
+            <Button
+              variant="contained"
+              onClick={() => changeCommunityConf(false)}
+            >
+              Logout
+            </Button>
+          )}
+        </Box>
+        <SCContextProvider conf={_conf}>
+          <Story {...context} />
+        </SCContextProvider>
+      </EmotionThemeProvider>
+    </StrictMode>
   );
 };
 

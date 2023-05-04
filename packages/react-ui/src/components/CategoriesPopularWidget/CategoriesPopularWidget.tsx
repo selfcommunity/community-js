@@ -139,9 +139,9 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
   const [state, dispatch] = useReducer(
     dataToolsReducer,
     {
-      isLoadingNext: true,
+      isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.CATEGORIES_POPULAR_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.CATEGORIES_POPULAR_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
@@ -170,7 +170,11 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
     if (state.initialized || state.isLoadingNext || (!contentAvailability && !scUserContext.user)) {
       return;
     }
-    CategoryService.getPopularCategories({limit})
+    dispatch({
+      type: actionToolsTypes.LOADING_NEXT
+    });
+    const controller = new AbortController();
+    CategoryService.getPopularCategories({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCCategoryType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -181,6 +185,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
@@ -249,10 +254,10 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
   };
 
   // RENDER
+  console.log({...state});
   if ((!contentAvailability && !scUserContext.user) || (state.initialized && autoHide && !state.count)) {
     return <HiddenPlaceholder />;
   }
-
   if (!state.initialized) {
     return <Skeleton />;
   }

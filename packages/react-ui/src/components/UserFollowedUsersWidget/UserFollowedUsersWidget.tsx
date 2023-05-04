@@ -147,7 +147,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.USERS_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USERS_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -198,7 +198,8 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    UserService.getUserFollowings(userId, {limit})
+    const controller = new AbortController();
+    UserService.getUserFollowings(userId, {limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -209,6 +210,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [followEnabled, contentAvailability, scUserContext.user, userId]);
 
   useEffect(() => {

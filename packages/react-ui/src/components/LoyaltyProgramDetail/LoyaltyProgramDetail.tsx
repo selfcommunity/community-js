@@ -120,7 +120,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     {
       isLoadingNext: true,
       next: `${Endpoints.GetPrizes.url()}?limit=10`,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.LOYALTY_PROGRAM_DETAIL_PRIZES_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.LOYALTY_PROGRAM_DETAIL_PRIZES_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy
     },
     stateToolsInitializer

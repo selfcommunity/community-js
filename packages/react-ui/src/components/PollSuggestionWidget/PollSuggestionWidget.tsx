@@ -128,7 +128,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
@@ -159,7 +159,8 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
     dispatch({
       type: actionToolsTypes.LOADING_NEXT
     });
-    SuggestionService.getPollSuggestion({limit})
+    const controller = new AbortController();
+    SuggestionService.getPollSuggestion({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
@@ -170,6 +171,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
+    return () => controller.abort();
   }, [scUserContext.user]);
 
   useEffect(() => {

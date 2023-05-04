@@ -133,7 +133,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
     {
       isLoadingNext: true,
       next: `${Endpoints.GetIncubatorSuggestion.url()}?limit=10`,
-      cacheKey: SCCache.getToolsStateCacheKey(SCCache.INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy
     },
     stateToolsInitializer
