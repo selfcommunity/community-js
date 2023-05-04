@@ -18,7 +18,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Skeleton from './Skeleton';
 import User, {UserProps, UserSkeleton} from '../User';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -142,7 +142,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
 
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
       isLoadingNext: false,
       next: null,
@@ -150,7 +150,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       cacheStrategy,
       visibleItems: limit
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -195,18 +195,18 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       return;
     }
     dispatch({
-      type: actionToolsTypes.LOADING_NEXT
+      type: actionWidgetTypes.LOADING_NEXT
     });
     const controller = new AbortController();
     UserService.getUserFollowers(userId, {limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
-          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
     return () => controller.abort();
@@ -215,17 +215,17 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       UserService.getUserFollowers(userId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: payload
           });
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -245,7 +245,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
         return;
       }
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       return http
         .request({
@@ -254,7 +254,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
           });
         });

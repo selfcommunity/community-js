@@ -35,6 +35,7 @@
   "ui.userActionIconButton.information": "More Informations",
   "ui.userActionIconButton.hide": "Block user",
   "ui.userActionIconButton.show": "Unblock user",
+  "ui.userActionIconButton.moderate": "Moderate user",
 
   "ui.userCounters.followings": "<b>{count}</b> Followings",
   "ui.userCounters.followers": "<b>{count}</b> Followers",
@@ -617,7 +618,6 @@
 
   "templates.userProfile.dateJoined": "Joined {date}",
   "templates.userProfile.edit": "Edit",
-  "templates.userProfile.moderate": "Moderate user",
   "templates.userProfile.send.pm": "Send private message",
   "templates.privateMessages.delete" : "Select thread to delete",
   "templates.feedObjectDetail.contributionNotFound": "Contribution not found or you do not have permission to view it.",

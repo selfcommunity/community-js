@@ -203,7 +203,6 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   } = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {features}: SCPreferencesContextType = useSCPreferences();
@@ -245,8 +244,6 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
 
   // RENDER
   const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
-  const roles = scUserContext.user && scUserContext.user.role;
-  const canModerate = roles && (roles.includes('admin') || roles.includes('moderator')) && !isMe;
 
   if (!isMe) {
     UserFeedProps.FeedProps = {HeaderComponent: null, ...UserFeedProps.FeedProps};
@@ -275,16 +272,6 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
             <ConnectionUserButton user={scUser} />
             <UserActionIconButton user={scUser} items={actionItems} />
           </>
-        )}
-        {canModerate && (
-          <Button
-            variant="contained"
-            color="secondary"
-            component="a"
-            href={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
-            target="_blank">
-            <FormattedMessage defaultMessage="templates.userProfile.moderate" id="templates.userProfile.moderate" />
-          </Button>
         )}
       </Stack>
       <UserCounters className={classes.counters} userId={userId as number} user={scUser} />

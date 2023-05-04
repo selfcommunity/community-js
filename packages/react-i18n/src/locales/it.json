@@ -37,6 +37,7 @@
   "ui.userActionIconButton.information": "Maggiori Informazioni",
   "ui.userActionIconButton.hide": "Blocca utente",
   "ui.userActionIconButton.show": "Sblocca utente ",
+  "ui.userActionIconButton.moderate": "Modera utente",
 
   "ui.userCounters.followings": "<b>{count}</b> Utenti seguiti",
   "ui.userCounters.followers": "<b>{count}</b> Seguito da",
@@ -624,7 +625,6 @@
 
   "templates.userProfile.dateJoined": "Iscritto da {date}",
   "templates.userProfile.edit": "Modifica",
-  "templates.userProfile.moderate": "Modera utente",
   "templates.userProfile.send.pm": "Invia messaggio privato",
   "templates.privateMessages.delete" : "Seleziona la conversazione da eliminare",
   "templates.feedObjectDetail.contributionNotFound": "Il contributo non è stato trovato oppure non hai i permessi per vederlo.",

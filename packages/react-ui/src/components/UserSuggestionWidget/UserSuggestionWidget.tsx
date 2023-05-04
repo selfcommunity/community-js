@@ -24,7 +24,7 @@ import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
@@ -136,7 +136,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
 
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
       isLoadingNext: false,
       next: null,
@@ -144,7 +144,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
       cacheStrategy,
       visibleItems: limit
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -173,18 +173,18 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
       return;
     }
     dispatch({
-      type: actionToolsTypes.LOADING_NEXT
+      type: actionWidgetTypes.LOADING_NEXT
     });
     const controller = new AbortController();
     SuggestionService.getUserSuggestion({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
-          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
     return () => controller.abort();
@@ -195,12 +195,12 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
       SuggestionService.getUserSuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: payload
           });
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -216,7 +216,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   // HANDLERS
   const handleConnect = (user, follow) => {
     dispatch({
-      type: actionToolsTypes.SET_RESULTS,
+      type: actionWidgetTypes.SET_RESULTS,
       payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
     });
   };
@@ -227,7 +227,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
         return;
       }
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       return http
         .request({
@@ -236,7 +236,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
           });
         });

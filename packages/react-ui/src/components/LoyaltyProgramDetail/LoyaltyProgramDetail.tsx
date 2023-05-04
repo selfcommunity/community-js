@@ -13,7 +13,7 @@ import PointsList from './PointsList';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Widget from '../Widget';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {useSnackbar} from 'notistack';
@@ -116,14 +116,14 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   const isMountedRef = useIsComponentMountedRef();
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
       isLoadingNext: true,
       next: `${Endpoints.GetPrizes.url()}?limit=10`,
       cacheKey: SCCache.getWidgetStateCacheKey(SCCache.LOYALTY_PROGRAM_DETAIL_PRIZES_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [points, setPoints] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -225,7 +225,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           if (res.status < 300 && isMountedRef.current && !ignore) {
             const data = res.data;
             dispatch({
-              type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+              type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
               payload: {
                 results: data.results,
                 count: data.count,
@@ -235,7 +235,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           }
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
       return () => {

@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
+  Button,
   Divider,
   Icon,
   IconButton,
@@ -16,7 +17,7 @@ import {
   useTheme
 } from '@mui/material';
 import {SCUserHiddenStatusType, SCUserType} from '@selfcommunity/types';
-import {Link, SCThemeType, SCUserContextType, useEffectOnce, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import {Link, SCContextType, SCThemeType, SCUserContextType, useEffectOnce, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
@@ -103,6 +104,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scContext: SCContextType = useSCContext();
 
   // HOOKS
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
@@ -142,8 +144,12 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
     }
   }, [anchorEl]);
 
-  // RENDER
+  // MEMO
   const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
+  const roles = useMemo(() => scUserContext.user && scUserContext?.user.role, [scUserContext.user]);
+  const canModerate = useMemo(() => roles && (roles.includes('admin') || roles.includes('moderator')) && !isMe, [roles, isMe]);
+
+  // RENDER
   if (isMe) {
     return null;
   }
@@ -178,7 +184,21 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
               }
             />
           </ListItemButton>
-        </ListItem>
+        </ListItem>,
+        ...(canModerate
+          ? [
+              <Divider key="divider_moderate" />,
+              <ListItem key="moderate">
+                <ListItemButton
+                  component={Link}
+                  to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}>
+                  <ListItemText
+                    primary={<FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ]
+          : [])
       ];
     } else {
       return [
@@ -197,7 +217,19 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
           ) : (
             <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
           )}
-        </MenuItem>
+        </MenuItem>,
+        ...(canModerate
+          ? [
+              <Divider key="divider_moderate" />,
+              <MenuItem
+                key="moderate"
+                component={Link}
+                to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
+                onClick={handleClose}>
+                <FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />
+              </MenuItem>
+            ]
+          : [])
       ];
     }
   };

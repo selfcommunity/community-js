@@ -38,10 +38,7 @@ const Component = {
       '& .SCUserProfileHeader-change-cover': {
         position: 'absolute',
         right: 10,
-        bottom: 10,
-        [theme.breakpoints.down('md')]: {
-          bottom: 310
-        }
+        bottom: 10
       }
     })
   }

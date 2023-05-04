@@ -31,7 +31,7 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {AxiosResponse} from 'axios';
 import Skeleton from './Skeleton';
 
@@ -164,7 +164,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
 
   // STATE
   const [state, dispatch] = useReducer(
-    dataToolsReducer,
+    dataWidgetReducer,
     {
       isLoadingNext: false,
       next: null,
@@ -172,7 +172,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
       cacheStrategy,
       visibleItems: limit
     },
-    stateToolsInitializer
+    stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -209,18 +209,18 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
       return;
     }
     dispatch({
-      type: actionToolsTypes.LOADING_NEXT
+      type: actionWidgetTypes.LOADING_NEXT
     });
     const controller = new AbortController();
     FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
-          type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
-        dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
     return () => controller.abort();
@@ -229,17 +229,17 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: payload
           });
         })
         .catch((error) => {
-          dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -259,7 +259,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
         return;
       }
       dispatch({
-        type: actionToolsTypes.LOADING_NEXT
+        type: actionWidgetTypes.LOADING_NEXT
       });
       return http
         .request({
@@ -268,7 +268,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCFeedObjectType>>) => {
           dispatch({
-            type: actionToolsTypes.LOAD_NEXT_SUCCESS,
+            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
           });
         });
