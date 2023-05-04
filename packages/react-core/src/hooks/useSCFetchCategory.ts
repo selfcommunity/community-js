@@ -5,7 +5,8 @@ import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
 import {getCategoryObjectCacheKey} from '../constants/Cache';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {useSCUser} from '../components/provider/SCUserProvider';
+import {SCUserContextType} from '../types/context';
 
 /**
  :::info
