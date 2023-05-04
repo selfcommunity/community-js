@@ -155,7 +155,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     FeedObjectProps = {
       template: SCFeedObjectTemplateType.SNIPPET
     },
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     onHeightChange,
     onStateChange,
     DialogProps = {},
@@ -175,7 +175,6 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -187,7 +186,6 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // MEMO
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
   const preferences = useMemo(() => {
     const _preferences = {};
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
@@ -196,18 +194,18 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
 
   // EFFECTS
   useEffect(() => {
-    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !authUserId) {
+    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) {
       return;
     } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [obj?.id, authUserId]);
+  }, [obj?.id, scUserContext.user]);
 
   /**
    * On mount, fetches related discussions list
    */
   useEffect(() => {
-    if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
+    if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) || state.initialized || state.isLoadingNext) {
       return;
     }
     dispatch({
@@ -217,18 +215,17 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
       .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
-  }, [preferences, authUserId]);
+      });
+  }, [preferences, scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -256,6 +253,9 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   // HANDLERS
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -271,7 +271,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
   const handleToggleDialogOpen = () => {
@@ -279,18 +279,12 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   };
 
   // RENDER
-  if (!loaded) {
-    return <Skeleton />;
-  }
-  /**
-   * Renders related discussions list
-   */
-  if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) || (autoHide && !state.count)) {
+  if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) || (autoHide && !state.count && state.initialized)) {
     return <HiddenPlaceholder />;
   }
-  /**
-   * Render advertising
-   */
+  if (!state.initialized) {
+    return <Skeleton />;
+  }
   function renderAdvertising() {
     if (
       preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&

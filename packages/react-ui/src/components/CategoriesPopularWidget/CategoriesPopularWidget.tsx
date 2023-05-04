@@ -121,7 +121,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
     limit = 3,
     className,
     CategoryProps = {},
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     onHeightChange,
     onStateChange,
     DialogProps = {},
@@ -148,45 +148,43 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // CONST
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !authUserId) {
+    if (!contentAvailability && !scUserContext.user) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
       // dispatch({type: actionToolsTypes.LOADING_NEXT});
     }
-  }, [authUserId]);
+  }, [contentAvailability, scUserContext.user]);
 
   /**
    * On mount, fetches popular categories list
    */
   useEffect(() => {
+    if (state.initialized || state.isLoadingNext || (!contentAvailability && !scUserContext.user)) {
+      return;
+    }
     CategoryService.getPopularCategories({limit})
       .then((payload: SCPaginatedResponse<SCCategoryType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
+      });
   }, []);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit) {
+    if (openDialog && state.next && state.initialized && state.results.length === limit) {
       CategoryService.getPopularCategories({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCCategoryType>) => {
           dispatch({
@@ -199,7 +197,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, state.next, state.initialized, state.results]);
 
   // HANDLERS
   /**
@@ -207,6 +205,9 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
    */
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -222,7 +223,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next]
   );
 
   function handleFollowersUpdate(category) {
@@ -248,10 +249,15 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
   };
 
   // RENDER
-  if (!loaded) {
+  if ((!contentAvailability && !scUserContext.user) || (state.initialized && autoHide && !state.count)) {
+    return <HiddenPlaceholder />;
+  }
+
+  if (!state.initialized) {
     return <Skeleton />;
   }
-  const c = (
+
+  const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.categoriesPopularWidget.title" defaultMessage="ui.categoriesPopularWidget.title" />
@@ -306,22 +312,9 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
       )}
     </CardContent>
   );
-
-  /**
-   * If content availability community option is false and user is anonymous, component is hidden.
-   */
-  if (!contentAvailability && !scUserContext.user) {
-    return <HiddenPlaceholder />;
-  }
-  /**
-   * Renders root object (if results and autoHide prop is set to false, otherwise component is hidden)
-   */
-  if (autoHide && !state.count) {
-    return <HiddenPlaceholder />;
-  }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {c}
+      {content}
     </Root>
   );
 }

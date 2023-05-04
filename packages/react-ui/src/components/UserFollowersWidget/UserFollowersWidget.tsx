@@ -15,6 +15,7 @@ import {
   SCUserContext,
   SCUserContextType,
   useIsComponentMountedRef,
+  useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
 import {actionToolsTypes, dataToolsReducer, stateToolsInitializer} from '../../utils/tools';
@@ -152,41 +153,45 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const contentAvailability =
-    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
-  const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+
+  // MEMO
+  const contentAvailability = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
+    [scPreferencesContext.preferences]
+  );
+  const followEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // MEMO
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
-
   // EFFECTS
   useEffect(() => {
     if (!userId) {
       return;
-    } else if (!contentAvailability && !authUserId) {
+    } else if (!contentAvailability && !scUserContext.user) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [scUserContext.user]);
 
   /**
    * On mount, fetches the list of users followers
    */
   useEffect(() => {
-    if (!followEnabled || (!contentAvailability && !authUserId) || state.results.length > 0 || state.isLoadingNext) {
+    if (!followEnabled || (!contentAvailability && !scUserContext.user) || !userId || state.initialized || state.isLoadingNext) {
       return;
     }
     dispatch({
@@ -196,18 +201,17 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       .then((payload: SCPaginatedResponse<SCUserType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
-  }, [followEnabled, contentAvailability, authUserId]);
+      });
+  }, [followEnabled, contentAvailability, scUserContext.user, userId]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && !state.isLoadingNext) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -235,6 +239,9 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   // HANDLERS
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
@@ -250,7 +257,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
   const handleToggleDialogOpen = () => {
@@ -258,11 +265,11 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   };
 
   // RENDER
-  if (!loaded) {
-    return <Skeleton />;
-  }
-  if (!followEnabled || (autoHide && !state.count) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
     return <HiddenPlaceholder />;
+  }
+  if (!state.initialized) {
+    return <Skeleton />;
   }
   const content = (
     <CardContent>

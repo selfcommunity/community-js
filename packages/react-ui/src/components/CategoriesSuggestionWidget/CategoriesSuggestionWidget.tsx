@@ -135,14 +135,10 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     stateToolsInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  // REFS
-  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
 
   /**
    * Handles list change on category follow
@@ -159,31 +155,30 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [authUserId]);
+  }, [scUserContext.user]);
 
   /**
    * On mount, fetches categories suggestion list
    */
   useEffect(() => {
-    if (!scUserContext.user) {
+    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
       return;
     }
     SuggestionService.getCategorySuggestion({limit})
       .then((payload: SCPaginatedResponse<SCCategoryType>) => {
         dispatch({
           type: actionToolsTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
+          payload: {...payload, initialized: true}
         });
       })
       .catch((error) => {
         dispatch({type: actionToolsTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoaded(true));
-  }, [scUserContext.user]);
+      });
+  }, [scUserContext.user, state.initialized]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit) {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
       SuggestionService.getCategorySuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCCategoryType>) => {
           dispatch({
@@ -196,7 +191,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, state.next, state.results, state.initialized]);
 
   /**
    * Virtual feed update
@@ -208,13 +203,16 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   // HANDLERS
   const handleNext = useMemo(
     () => () => {
+      if (!state.initialized || state.isLoadingNext) {
+        return;
+      }
       dispatch({
         type: actionToolsTypes.LOADING_NEXT
       });
       return http
         .request({
           url: state.next,
-          method: Endpoints.PopularCategories.method
+          method: Endpoints.CategoriesSuggestion.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCCategoryType>>) => {
           dispatch({
@@ -223,7 +221,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext]
+    [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
   const handleToggleDialogOpen = () => {
@@ -231,15 +229,13 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   };
 
   // RENDER
-  if (!loaded) {
-    return <Skeleton />;
-  }
-  /**
-   * Renders root object (if results and if user is logged, otherwise component is hidden)
-   */
-  if ((autoHide && !state.count) || !scUserContext.user) {
+  if ((autoHide && !state.count && state.initialized) || !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
+  if (!state.initialized) {
+    return <Skeleton />;
+  }
+
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
