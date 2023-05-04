@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.175...@selfcommunity/react-ui@0.7.0-alpha.176) (2023-05-04)
+
+
+### Bug Fixes
+
+* consentSolution ([54b95c6](https://github.com/selfcommunity/community-js/commit/54b95c69793d08848e8c73aca7add831cde5478d))
+* Fix Widgets and react strict mode ([7acc95c](https://github.com/selfcommunity/community-js/commit/7acc95c1b548047490d4a45c426ddbe08785d9ca))
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
 # [0.7.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.174...@selfcommunity/react-ui@0.7.0-alpha.175) (2023-05-04)
 
 
