@@ -607,6 +607,7 @@
   "ui.consentSolution.removeAccountConfirm": "Sei sicuro di voler cancellare il tuo account?",
   "ui.consentSolution.removeAccountConfirmButton": "Si, confermo",
   "ui.consentSolution.removeAccountCancelButton": "No",
+  "ui.consentSolution.emptyDocument": "Documento non presente",
 
   "ui.consentSolutionButton.viewStateButton": "Vedi il tuo stato di accettazione",
 

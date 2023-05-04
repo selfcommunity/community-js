@@ -79,9 +79,9 @@ export interface SCLegalPageAckType {
    */
   not_accepted_at: Date | string;
   /**
-   * The id of the policy document
+   * The id of the policy page
    */
-  policy_document: number;
+  custom_page: number;
   /**
    * 	The id of the user
    */

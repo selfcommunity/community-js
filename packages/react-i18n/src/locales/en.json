@@ -600,6 +600,7 @@
   "ui.consentSolution.removeAccountConfirm": "Are you sure you want to delete your account?",
   "ui.consentSolution.removeAccountConfirmButton": "Yes",
   "ui.consentSolution.removeAccountCancelButton": "No",
+  "ui.consentSolution.emptyDocument": "Empty document",
 
   "ui.consentSolutionButton.viewStateButton": "See your acceptance status",
 
