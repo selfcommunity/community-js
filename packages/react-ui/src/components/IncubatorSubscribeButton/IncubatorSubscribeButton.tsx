@@ -1,25 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {SCIncubatorType} from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCSubscribedIncubatorsManagerType,
-  SCUserContext,
   SCUserContextType,
-  UserUtils,
   useSCContext,
-  useSCFetchIncubator
+  useSCFetchIncubator,
+  useSCUser
 } from '@selfcommunity/react-core';
-import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 
-const PREFIX = 'SCSubscribeButton';
+const PREFIX = 'SCIncubatorSubscribeButton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -29,11 +26,9 @@ const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: 8
-}));
+})(({theme}) => ({}));
 
-export interface SubscribeButtonProps {
+export interface IncubatorSubscribeButtonProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -65,30 +60,30 @@ export interface SubscribeButtonProps {
 }
 
 /**
- * > API documentation for the Community-JS Subscribe Button component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Incubator Subscribe Button component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {SubscribeButton} from '@selfcommunity/react-ui';
+ import {IncubatorSubscribeButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCSubscribeButton` can be used when providing style overrides in the theme.
+ The name `SCIncubatorSubscribeButton` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCSubscribeButton-root|Styles applied to the root element.|
+ |root|.SCIncubatorSubscribeButton-root|Styles applied to the root element.|
 
  * @param inProps
  */
-export default function SubscribeButton(inProps: SubscribeButtonProps): JSX.Element {
+export default function IncubatorSubscribeButton(inProps: IncubatorSubscribeButtonProps): JSX.Element {
   // PROPS
-  const props: SubscribeButtonProps = useThemeProps({
+  const props: IncubatorSubscribeButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -96,39 +91,36 @@ export default function SubscribeButton(inProps: SubscribeButtonProps): JSX.Elem
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scUserContext: SCUserContextType = useSCUser();
   const scSubscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = scUserContext.managers.incubators;
-
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
   // STATE
-  const {scIncubator, setSCIncubator} = useSCFetchIncubator({id: incubatorId, incubator});
+  const {scIncubator, setSCIncubator} = useSCFetchIncubator({
+    id: incubatorId,
+    incubator,
+    cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
+  });
   const [subscribed, setSubscribed] = useState<boolean>(null);
-  const {enqueueSnackbar} = useSnackbar();
 
   useEffect(() => {
     /**
      * Call scFollowedIncubatorsManager.isFollowed inside an effect
      * to avoid warning rendering child during update parent state
      */
-    if (scUserContext.user) {
+    if (authUserId) {
       setSubscribed(scSubscribedIncubatorsManager.isSubscribed(scIncubator));
     }
-  });
+  }, [authUserId, scSubscribedIncubatorsManager.isSubscribed]);
 
   const subscribe = () => {
-    if (!subscribed && UserUtils.isBlocked(scUserContext.user)) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning'
+    scSubscribedIncubatorsManager
+      .subscribe(scIncubator)
+      .then(() => {
+        onSubscribe && onSubscribe(scIncubator, !subscribed);
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
       });
-    } else {
-      scSubscribedIncubatorsManager
-        .subscribe(scIncubator)
-        .then(() => {
-          onSubscribe && onSubscribe(scIncubator, !subscribed);
-        })
-        .catch((e) => {
-          Logger.error(SCOPE_SC_UI, e);
-        });
-    }
   };
 
   const handleSubscribeAction = () => {
@@ -147,11 +139,8 @@ export default function SubscribeButton(inProps: SubscribeButtonProps): JSX.Elem
       loading={scUserContext.user ? subscribed === null || scSubscribedIncubatorsManager.isLoading(scIncubator) : null}
       className={classNames(classes.root, className)}
       {...rest}>
-      {subscribed ? (
-        <>
-          <Icon>check</Icon>
-          <FormattedMessage defaultMessage="ui.incubator.subscribeButton.button.subscribed" id="ui.incubator.subscribeButton.button.subscribed" />
-        </>
+      {subscribed && scUserContext.user ? (
+        <FormattedMessage defaultMessage="ui.incubator.subscribeButton.button.subscribed" id="ui.incubator.subscribeButton.button.subscribed" />
       ) : (
         <FormattedMessage defaultMessage="ui.incubator.subscribeButton.button.subscribe" id="ui.incubator.subscribeButton.button.subscribe" />
       )}

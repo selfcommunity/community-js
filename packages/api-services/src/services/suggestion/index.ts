@@ -7,8 +7,8 @@ import {urlParams} from '../../utils/url';
 
 export interface SuggestionApiClientInterface {
   getCategorySuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
-  getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCIncubatorType[]>;
-  getPollSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCFeedObjectType[]>;
+  getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>>;
+  getPollSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   getUserSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getSearchSuggestion(search: string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCSuggestionType>>;
 }
@@ -19,6 +19,7 @@ export interface SuggestionApiClientInterface {
 export class SuggestionApiClient {
   /**
    * This endpoint retrieves a list of categories suggested to the current user.
+   * @param params
    * @param config
    */
   static getCategorySuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
@@ -27,14 +28,16 @@ export class SuggestionApiClient {
 
   /**
    * This endpoint retrieves a list of suggested incubators.
+   * @param params
    * @param config
    */
-  static getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCIncubatorType[]> {
+  static getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>> {
     return apiRequest({...config, url: Endpoints.GetIncubatorSuggestion.url({}), method: Endpoints.GetIncubatorSuggestion.method, params});
   }
 
   /**
    * This endpoint retrieves a list of contributes(discussions, posts, statuses) with a related poll.
+   * @param params
    * @param config
    */
   static getPollSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>> {
@@ -43,6 +46,7 @@ export class SuggestionApiClient {
 
   /**
    * This endpoint retrieves a list of users suggested to the current user.
+   * @param params
    * @param config
    */
   static getUserSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
@@ -51,6 +55,7 @@ export class SuggestionApiClient {
   /**
    * This endpoint retrieves a list of users suggested to the current user.
    * @param search
+   * @param params
    * @param config
    */
   static getSearchSuggestion(search: string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCSuggestionType>> {
@@ -92,7 +97,7 @@ export default class SuggestionService {
     return SuggestionApiClient.getCategorySuggestion(params, config);
   }
 
-  static async getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCIncubatorType[]> {
+  static async getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>> {
     return SuggestionApiClient.getIncubatorSuggestion(params, config);
   }
 

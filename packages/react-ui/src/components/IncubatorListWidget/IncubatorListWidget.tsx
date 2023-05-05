@@ -1,10 +1,9 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, List, Typography, ListItem, useMediaQuery, useTheme} from '@mui/material';
+import {Button, List, Typography, Box, IconButton, ListItem, useTheme, useMediaQuery} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import {http, Endpoints, SuggestionService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, SCPaginatedResponse, IncubatorService} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCache, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCIncubatorType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -13,21 +12,36 @@ import classNames from 'classnames';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import Incubator, {IncubatorProps, IncubatorSkeleton} from '../Incubator';
+import Popover from '@mui/material/Popover';
+import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
+import CreateIncubatorDialog from './CreateIncubatorDialog';
 import IncubatorDetail from '../IncubatorDetail';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContext,
+  SCUserContextType
+} from '@selfcommunity/react-core';
 import {AxiosResponse} from 'axios';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
-const PREFIX = 'SCIncubatorSuggestionWidget';
+const PREFIX = 'SCIncubatorListWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
+  header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
   noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`,
+  actions: `${PREFIX}-actions`,
+  helpPopover: `${PREFIX}-help-popover`,
   dialogRoot: `${PREFIX}-dialog-root`,
   endMessage: `${PREFIX}-end-message`
 };
@@ -43,7 +57,7 @@ const DialogRoot = styled(BaseDialog, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
-export interface IncubatorSuggestionWidgetProps extends VirtualScrollerItemProps {
+export interface IncubatorListWidgetProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
    * @default false
@@ -80,32 +94,35 @@ export interface IncubatorSuggestionWidgetProps extends VirtualScrollerItemProps
   [p: string]: any;
 }
 /**
- > API documentation for the Community-JS Incubator Suggestion component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Incubator List Widget component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import {IncubatorSuggestionWidget} from '@selfcommunity/react-ui';
+ import {IncubatorListWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
- The name `SCIncubatorSuggestionWidget` can be used when providing style overrides in the theme.
+ The name `IncubatorListWidget` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCIncubatorSuggestionWidget-root|Styles applied to the root element.|
- |title|.SCIncubatorSuggestionWidget-title|Styles applied to the title element.|
- |noResults|.SCIncubatorSuggestionWidget-no-results|Styles applied to the no results section.|
- |showMore|.SCIncubatorSuggestionWidget-show-more|Styles applied to the show more button element.|
- |dialogRoot|.SCIncubatorSuggestionWidget-dialog-root|Styles applied to the root dialog element.|
- |endMessage|.SCIncubatorSuggestionWidget-end-message|Styles applied to the end message element.|
+ |root|.SCIncubatorListWidget-root|Styles applied to the root element.|
+ |header|.SCIncubatorListWidget-header|Styles applied to the header element.|
+ |title|.SCIncubatorListWidget-title|Styles applied to the title element.|
+ |noResults|.SCIncubatorListWidget-no-results|Styles applied to the no results section.|
+ |showMore|.SCIncubatorListWidget-show-more|Styles applied to the show more button element.|
+ |actions|.SCIncubatorListWidget-actions|Styles applied to the actions section.|
+ |helpPopover|.SCIncubatorListWidget-help-popover|Styles applied to the help popover element.|
+ |dialogRoot|.SCIncubatorListWidget-dialog-root|Styles applied to the root dialog element.|
+ |endMessage|.SCIncubatorListWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */
-export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWidgetProps): JSX.Element {
+export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): JSX.Element {
   // PROPS
-  const props: IncubatorSuggestionWidgetProps = useThemeProps({
+  const props: IncubatorListWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -114,30 +131,35 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
     limit = 3,
     className,
     IncubatorProps = {},
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     onHeightChange,
     onStateChange,
     DialogProps = {},
     ...rest
   } = props;
-
   // CONTEXT
-  const scUserContext: SCUserContextType = useSCUser();
-
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   // STATE
   const [state, dispatch] = useReducer(
     dataWidgetReducer,
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.INCUBATOR_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
       cacheStrategy,
       visibleItems: limit
     },
     stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openCreateIncubatorDialog, setOpenCreateIncubatorDialog] = useState<boolean>(false);
   const [openIncubatorDetailDialog, setOpenIncubatorDetailDialog] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const isOpen = Boolean(anchorEl);
   const [detailObj, setDetailObj] = useState(null);
 
   // HOOKS
@@ -145,6 +167,17 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // HANDLERS
+
+  const handleClickHelpButton = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCreateIncubatorDialogClose = () => {
+    setOpenCreateIncubatorDialog(false);
+  };
 
   function handleIncubatorDetailDialogOpening(incubator) {
     setOpenIncubatorDetailDialog(true);
@@ -159,7 +192,6 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   const handleToggleDialogOpen = () => {
     setOpenDialog((prev) => !prev);
   };
-
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
    * @param incubator
@@ -175,6 +207,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
         newIncubators[index].subscribers_count = incubator.subscribers_count + 1;
         newIncubators[index].subscribed = !incubator.subscribed;
       }
+      console.log(newIncubators);
       dispatch({
         type: actionWidgetTypes.SET_RESULTS,
         payload: {results: newIncubators}
@@ -182,24 +215,28 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
     }
   }
 
-  // EFFECTS
+  //EFFECTS
   useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+      // dispatch({type: actionWidgetTypes.LOADING_NEXT});
     }
-  }, [scUserContext.user, cacheStrategy]);
+  }, [contentAvailability, scUserContext.user]);
+
   /**
-   * On mount, if user is authenticated, fetches suggested incubators list
+   * On mount, fetches  incubators list
    */
   useEffect(() => {
-    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
+    if (state.initialized || state.isLoadingNext || (!contentAvailability && !scUserContext.user)) {
       return;
     }
     dispatch({
       type: actionWidgetTypes.LOADING_NEXT
     });
     const controller = new AbortController();
-    SuggestionService.getIncubatorSuggestion({limit}, {signal: controller.signal})
+    IncubatorService.getAllIncubators({limit}, {signal: controller.signal})
       .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
         dispatch({
           type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
@@ -211,11 +248,11 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
         Logger.error(SCOPE_SC_UI, error);
       });
     return () => controller.abort();
-  }, [scUserContext.user, state.initialized]);
+  }, []);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      SuggestionService.getIncubatorSuggestion({offset: limit, limit: 10})
+    if (openDialog && state.next && state.initialized && state.results.length === limit) {
+      IncubatorService.getAllIncubators({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
           dispatch({
             type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
@@ -227,14 +264,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, state.initialized]);
-
-  /**
-   * Virtual feed update
-   */
-  useEffect(() => {
-    onHeightChange && onHeightChange();
-  }, [state.results]);
+  }, [openDialog, state.next, state.initialized, state.results]);
 
   const handleNext = useMemo(
     () => () => {
@@ -247,7 +277,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
       return http
         .request({
           url: state.next,
-          method: Endpoints.GetIncubatorSuggestion.method
+          method: Endpoints.GetAllIncubators.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCIncubatorType>>) => {
           dispatch({
@@ -260,7 +290,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   );
 
   // RENDER
-  if ((autoHide && !state.count && state.initialized) || !scUserContext.user) {
+  if ((!contentAvailability && !scUserContext.user) || (state.initialized && autoHide && !state.count)) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -268,12 +298,33 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   }
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant={'h5'}>
-        <FormattedMessage id="ui.incubatorSuggestionWidget.title" defaultMessage="ui.incubatorSuggestionWidget.title" />
-      </Typography>
+      <Box className={classes.header}>
+        <Typography className={classes.title} variant={'h5'}>
+          <FormattedMessage id="ui.incubatorListWidget.title" defaultMessage="ui.incubatorListWidget.title" />
+        </Typography>
+        <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
+          <Icon fontSize="small">help_outline</Icon>
+        </IconButton>
+        {isOpen && (
+          <Popover
+            open={isOpen}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}>
+            <Box sx={{p: '10px'}}>
+              <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
+                <FormattedMessage id="ui.incubatorListWidget.popover" defaultMessage="ui.incubatorListWidget.popover" />
+              </Typography>
+            </Box>
+          </Popover>
+        )}
+      </Box>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.incubatorSuggestionWidget.noResults" defaultMessage="ui.incubatorSuggestionWidget.noResults" />
+          <FormattedMessage id="ui.incubatorListWidget.noResults" defaultMessage="ui.incubatorListWidget.noResults" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -290,17 +341,22 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
               </ListItem>
             ))}
           </List>
-          {state.count > state.visibleItems && (
-            <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.incubatorSuggestionWidget.ShowAll" defaultMessage="ui.incubatorSuggestionWidget.ShowAll" />
+          <Box className={classes.actions}>
+            {state.count > state.visibleItems && (
+              <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
+                <FormattedMessage id="ui.incubatorListWidget.ShowAll" defaultMessage="ui.incubatorListWidget.ShowAll" />
+              </Button>
+            )}
+            <Button size="small" onClick={() => setOpenCreateIncubatorDialog(true)}>
+              <FormattedMessage id="ui.incubatorListWidget.SuggestNewTopic" defaultMessage="ui.incubatorListWidget.SuggestNewTopic" />
             </Button>
-          )}
+          </Box>
         </React.Fragment>
       )}
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
-          title={<FormattedMessage id="ui.incubatorSuggestionWidget.title" defaultMessage="ui.incubatorSuggestionWidget.title" />}
+          title={<FormattedMessage id="ui.incubatorListWidget.title" defaultMessage="ui.incubatorListWidget.title" />}
           onClose={handleToggleDialogOpen}
           open={openDialog}
           {...DialogProps}>
@@ -312,7 +368,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
             height={isMobile ? '100vh' : 400}
             endMessage={
               <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.incubatorSuggestionWidget.noMoreIncubators" defaultMessage="ui.incubatorSuggestionWidget.noMoreIncubators" />
+                <FormattedMessage id="ui.incubatorListWidget.noMoreIncubators" defaultMessage="ui.incubatorListWidget.noMoreIncubators" />
               </Typography>
             }>
             <List>
@@ -331,6 +387,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
           </InfiniteScroll>
         </DialogRoot>
       )}
+      {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
       {openIncubatorDetailDialog && (
         <IncubatorDetail
           open={openIncubatorDetailDialog}

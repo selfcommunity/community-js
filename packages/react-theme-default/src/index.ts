@@ -106,6 +106,10 @@ import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
 import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
 import SCCategorySkeleton from './components/SCCategorySkeleton';
+import SCIncubator from './components/SCIncubator';
+import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
+import SCIncubatorListWidget from './components/SCIncubatorListWidget';
+import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 
 /**
  * Style fragments - Imports - End
@@ -257,7 +261,11 @@ const theme = {
     SCPrivateMessageThreadItemDialog,
     SCPlatformWidget,
     SCChangePictureButton,
-    SCChangePictureDialog
+    SCChangePictureDialog,
+    SCIncubator,
+    SCIncubatorListWidget,
+    SCIncubatorSkeleton,
+    SCIncubatorSuggestionWidget
   },
   selfcommunity: {
     user: {
