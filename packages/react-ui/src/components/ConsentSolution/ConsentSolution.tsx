@@ -610,7 +610,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             loading={(dataPortability && dataPortability.computing) || loadingDataPortability}
             disabled={dataPortability && (dataPortability.computing || moment().diff(moment(dataPortability.requested_at), 'hours') < 24)}
             loadingPosition="start"
-            startIcon={<Icon>copy_all_outlined</Icon>}
+            startIcon={<Icon>folder_open</Icon>}
             variant="outlined"
             className={classes.createDataPortabilityButton}
             onClick={handleCreateDataPortabilityFile}>
@@ -681,7 +681,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             size="small"
             variant={'outlined'}
             className={classes.logoutAccountButton}
-            startIcon={<Icon>door_back_outlined</Icon>}
+            startIcon={<Icon>upload</Icon>}
             onClick={handleLogout}>
             <FormattedMessage id="ui.consentSolution.logoutImmediatelyButton" defaultMessage="ui.consentSolution.logoutImmediatelyButton" />
           </Button>
