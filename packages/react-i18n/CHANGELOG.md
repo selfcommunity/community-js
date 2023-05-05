@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.17...@selfcommunity/react-i18n@0.5.0-alpha.18) (2023-05-05)
+
+
+### Bug Fixes
+
+* moved loyalty program detail to templates and fix prizes rendering ([d915409](https://github.com/selfcommunity/community-js/commit/d9154096ccf5e465c50c087e88dcc2efd451c5c6))
+
+
+
+
+
 # [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.16...@selfcommunity/react-i18n@0.5.0-alpha.17) (2023-05-05)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.128](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.127...@selfcommunity/react-theme-default@0.1.0-alpha.128) (2023-05-05)
+
+
+### Bug Fixes
+
+* moved loyalty program detail to templates and fix prizes rendering ([d915409](https://github.com/selfcommunity/community-js/commit/d9154096ccf5e465c50c087e88dcc2efd451c5c6))
+
+
+
+
+
 # [0.1.0-alpha.127](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.126...@selfcommunity/react-theme-default@0.1.0-alpha.127) (2023-05-05)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

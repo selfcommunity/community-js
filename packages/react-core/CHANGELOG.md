@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.30...@selfcommunity/react-core@0.4.0-alpha.31) (2023-05-05)
+
+
+### Bug Fixes
+
+* moved loyalty program detail to templates and fix prizes rendering ([d915409](https://github.com/selfcommunity/community-js/commit/d9154096ccf5e465c50c087e88dcc2efd451c5c6))
+
+
+
+
+
 # [0.4.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.29...@selfcommunity/react-core@0.4.0-alpha.30) (2023-05-05)
 
 **Note:** Version bump only for package @selfcommunity/react-core
