@@ -29,7 +29,12 @@ export function PointElement({message, points}: {message: React.ReactNode; point
       <Typography component={'div'} className={classes.element}>
         <Typography>{message}</Typography>
         <Typography>
-          +<FormattedMessage id="ui.loyaltyProgramDetail.points" defaultMessage="ui.loyaltyProgramDetail.points" values={{total: points}} />
+          +
+          <FormattedMessage
+            id="templates.loyaltyProgramDetail.points"
+            defaultMessage="templates.loyaltyProgramDetail.points"
+            values={{total: points}}
+          />
         </Typography>
       </Typography>
       <Divider />
@@ -75,35 +80,46 @@ export default function PointsList(inProps: PointsListProps): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} container spacing={2} {...rest}>
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.post" defaultMessage="ui.loyaltyProgramDetail.points.post" />}
+        message={<FormattedMessage id="templates.loyaltyProgramDetail.points.post" defaultMessage="templates.loyaltyProgramDetail.points.post" />}
         points={preferences[SCPreferences.POINTS_MAKE_POST]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.discussion" defaultMessage="ui.loyaltyProgramDetail.points.discussion" />}
+        message={
+          <FormattedMessage id="templates.loyaltyProgramDetail.points.discussion" defaultMessage="templates.loyaltyProgramDetail.points.discussion" />
+        }
         points={preferences[SCPreferences.POINTS_MAKE_DISCUSSION]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.comment" defaultMessage="ui.loyaltyProgramDetail.points.comment" />}
+        message={
+          <FormattedMessage id="templates.loyaltyProgramDetail.points.comment" defaultMessage="templates.loyaltyProgramDetail.points.comment" />
+        }
         points={preferences[SCPreferences.POINTS_MAKE_COMMENT]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.appreciation" defaultMessage="ui.loyaltyProgramDetail.points.appreciation" />}
+        message={
+          <FormattedMessage
+            id="templates.loyaltyProgramDetail.points.appreciation"
+            defaultMessage="templates.loyaltyProgramDetail.points.appreciation"
+          />
+        }
         points={preferences[SCPreferences.POINTS_RECEIVE_VOTE]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.follower" defaultMessage="ui.loyaltyProgramDetail.points.follower" />}
+        message={
+          <FormattedMessage id="templates.loyaltyProgramDetail.points.follower" defaultMessage="templates.loyaltyProgramDetail.points.follower" />
+        }
         points={preferences[SCPreferences.POINTS_CONNECTION_OR_FOLLOWER]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.share" defaultMessage="ui.loyaltyProgramDetail.points.share" />}
+        message={<FormattedMessage id="templates.loyaltyProgramDetail.points.share" defaultMessage="templates.loyaltyProgramDetail.points.share" />}
         points={preferences[SCPreferences.POINTS_SOCIAL_SHARE]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.app" defaultMessage="ui.loyaltyProgramDetail.points.app" />}
+        message={<FormattedMessage id="templates.loyaltyProgramDetail.points.app" defaultMessage="templates.loyaltyProgramDetail.points.app" />}
         points={preferences[SCPreferences.POINTS_APP_USED]}
       />
       <PointElement
-        message={<FormattedMessage id="ui.loyaltyProgramDetail.points.visit" defaultMessage="ui.loyaltyProgramDetail.points.visit" />}
+        message={<FormattedMessage id="templates.loyaltyProgramDetail.points.visit" defaultMessage="templates.loyaltyProgramDetail.points.visit" />}
         points={preferences[SCPreferences.POINTS_DAILY_VISIT]}
       />
     </Root>

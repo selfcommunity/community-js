@@ -86,5 +86,4 @@ export const PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
 export const INCUBATOR_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_iListWidget_';
 export const INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_iSugWidget_';
 export const POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
-export const LOYALTY_PROGRAM_DETAIL_PRIZES_TOOLS_STATE_CACHE_PREFIX_KEY = '_lProgDetPrizesWidget_';
 export const getWidgetStateCacheKey = (p, id = undefined) => `${p}${id !== undefined ? id : ''}`;

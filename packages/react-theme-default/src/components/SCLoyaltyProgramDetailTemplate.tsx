@@ -5,7 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       boxShadow: 'none',
       borderRadius: 0,
-      '& .SCLoyaltyProgramDetail-title': {
+      '& .SCLoyaltyProgramDetailTemplate-title': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.286rem',
         marginBottom: theme.spacing(5),
@@ -13,18 +13,18 @@ const Component = {
           textAlign: 'center'
         }
       },
-      '& .SCLoyaltyProgramDetail-section-title': {
+      '& .SCLoyaltyProgramDetailTemplate-section-title': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.143rem',
         marginBottom: theme.spacing(1)
       },
-      '& .SCLoyaltyProgramDetail-section-info': {
+      '& .SCLoyaltyProgramDetailTemplate-section-info': {
         marginBottom: theme.spacing(5),
         [theme.breakpoints.down('md')]: {
           marginBottom: theme.spacing(3)
         }
       },
-      '& .SCLoyaltyProgramDetail-user-points': {
+      '& .SCLoyaltyProgramDetailTemplate-user-points': {
         marginLeft: theme.spacing(2),
         backgroundColor: theme.palette.secondary.main,
         '& .MuiChip-label': {
@@ -34,25 +34,28 @@ const Component = {
           padding: theme.spacing(1, 2, 1, 2)
         }
       },
-      '& .SCLoyaltyProgramDetail-prize-section': {
+      '& .SCLoyaltyProgramDetailTemplate-prize-section': {
         '& .MuiGrid-item': {
+          [theme.breakpoints.up('sm')]: {
+            paddingLeft: theme.spacing(4),
+            paddingRight: theme.spacing(4)
+          },
           [theme.breakpoints.down('md')]: {
             marginBottom: theme.spacing(4)
           }
         }
       },
-      '& .SCLoyaltyProgramDetail-card': {
+      '& .SCLoyaltyProgramDetailTemplate-card': {
         boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.3)',
         [theme.breakpoints.down('md')]: {
-          borderRadius: 0,
-          height: '100%'
+          borderRadius: 0
         },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: theme.spacing(53),
-        '& .SCLoyaltyProgramDetail-card-title': {
+        height: '100%',
+        '& .SCLoyaltyProgramDetailTemplate-card-title': {
           fontWeight: theme.typography.fontWeightBold,
           fontSize: '1.143rem'
         },
@@ -62,7 +65,7 @@ const Component = {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          '& .SCLoyaltyProgramDetail-card-content': {
+          '& .SCLoyaltyProgramDetailTemplate-card-content': {
             paddingTop: theme.spacing(1),
             maxHeight: theme.spacing(12.5),
             overflow: 'hidden',
@@ -83,7 +86,7 @@ const Component = {
         '& .MuiCardMedia-root': {
           height: theme.spacing(17)
         },
-        '& .SCLoyaltyProgramDetail-prize-points': {
+        '& .SCLoyaltyProgramDetailTemplate-prize-points': {
           marginTop: theme.spacing(2),
           '& .MuiChip-root': {
             backgroundColor: theme.palette.secondary.main,
@@ -93,15 +96,9 @@ const Component = {
               color: theme.palette.common.white
             }
           },
-          '& .SCLoyaltyProgramDetail-not-requestable': {
+          '& .SCLoyaltyProgramDetailTemplate-not-requestable': {
             backgroundColor: theme.palette.error.main
           }
-        }
-      },
-      '& .SCLoyaltyProgramDetail-end-section': {
-        boxShadow: 'none',
-        '& .MuiButtonBase-root': {
-          padding: 0
         }
       },
       '& .SCLoyaltyProgramDetailPointsList-root': {
@@ -114,6 +111,14 @@ const Component = {
             justifyContent: 'space-between',
             marginBottom: theme.spacing(1)
           }
+        }
+      },
+      '& .SCLoyaltyProgramDetailTemplate-end-message': {
+        padding: theme.spacing(3, 2),
+        fontWeight: theme.typography.fontWeightBold,
+        textAlign: 'center',
+        '& .MuiButtonBase-root': {
+          padding: 0
         }
       }
     })
