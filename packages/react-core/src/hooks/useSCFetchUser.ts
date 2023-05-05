@@ -1,9 +1,10 @@
 import {useEffect, useMemo, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import { SCCategoryType, SCUserType } from "@selfcommunity/types";
+import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import { Logger, objectWithoutProperties } from "@selfcommunity/utils";
-import { SCUserContextType, useSCUser } from "@selfcommunity/react-core";
+import {Logger, objectWithoutProperties} from '@selfcommunity/utils';
+import {useSCUser} from '../components/provider/SCUserProvider';
+import {SCUserContextType} from '../types/context';
 
 /**
  :::info
@@ -14,7 +15,6 @@ import { SCUserContextType, useSCUser } from "@selfcommunity/react-core";
  * @param object.user
  */
 export default function useSCFetchUser({id = null, user = null}: {id?: number | string; user?: SCUserType}) {
-
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
