@@ -14,7 +14,7 @@ export interface SCLegalPageType {
   /**
    * The name and version code for this page
    */
-  name_and_version: string;
+  slug: string;
   /**
    * 	A css class representing the icon associated to this page
    */
