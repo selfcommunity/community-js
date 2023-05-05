@@ -142,6 +142,11 @@ export interface ImagePreviewComponentProps {
    */
   medias: Array<any>;
   /**
+   * Maximum number of visible media
+   * @default 5
+   */
+  maxVisible?: number;
+  /**
    * Gallery view
    * @default true
    */
@@ -162,11 +167,10 @@ export interface ImagePreviewComponentProps {
 }
 export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {className = '', medias = [], gallery = true, adornment = null, onClick = null, onMediaClick = null} = props;
+  const {className = '', medias = [], maxVisible = 5, gallery = true, adornment = null, onClick = null, onMediaClick = null} = props;
 
   // STATE
   const [preview, setPreview] = useState(-1);
-  const [from, setFrom] = useState(0);
 
   // HANDLERS
   const handleClose = () => {
@@ -226,7 +230,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const renderOne = () => {
-    const overlay = medias.length > from && from == 1 ? renderCountOverlay(true) : renderOverlay(0);
+    const overlay = medias.length > maxVisible && maxVisible == 1 ? renderCountOverlay(true) : renderOverlay(0);
 
     return (
       <Grid container>
@@ -249,8 +253,8 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const renderTwo = () => {
-    const overlay = medias.length > from && [2, 3].includes(+from) ? renderCountOverlay(true) : renderOverlay(1);
-    const conditionalRender = [3, 4].includes(medias.length) || (medias.length > +from && [3, 4].includes(+from));
+    const overlay = medias.length > maxVisible && [2, 3].includes(+maxVisible) ? renderCountOverlay(true) : renderOverlay(1);
+    const conditionalRender = [3, 4].includes(medias.length) || (medias.length > +maxVisible && [3, 4].includes(+maxVisible));
     return (
       <Grid container>
         <Grid
@@ -276,9 +280,10 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const renderThree = () => {
-    const conditionalRender = medias.length == 4 || (medias.length > +from && +from == 4);
+    const conditionalRender = medias.length == 4 || (medias.length > +maxVisible && +maxVisible == 4);
+    console.log();
     const overlay =
-      !from || from > 5 || (medias.length > from && [4, 5].includes(+from)) ? renderCountOverlay(true) : renderOverlay(conditionalRender ? 3 : 4);
+      !maxVisible || maxVisible > 5 || (medias.length > maxVisible && [4, 5].includes(+maxVisible)) ? renderCountOverlay(true) : renderOverlay(conditionalRender ? 3 : 4);
     return (
       <Grid container>
         <Grid
@@ -328,7 +333,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const renderCountOverlay = (more) => {
-    const extra = medias.length - (from && from > 5 ? 5 : from);
+    const extra = medias.length - (maxVisible && maxVisible > 5 ? 5 : maxVisible);
 
     return [
       more && <div key="count" className={classes.cover}></div>,
@@ -341,8 +346,8 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const imagesToShow = [...medias];
-  if (from && medias.length > from) {
-    imagesToShow.length = from;
+  if (maxVisible && medias.length > maxVisible) {
+    imagesToShow.length = maxVisible;
   }
 
   return (

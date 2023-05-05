@@ -381,7 +381,6 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
   }
 
   componentWillUnmount() {
-    this['didUnmount'] = true;
     Object.keys(this['listeners']).forEach((type) => {
       this['windowContext'].removeEventListener(type, this['listeners'][type]);
     });
@@ -1211,7 +1210,7 @@ class ReactImageLightbox extends React.Component<ReactImageLightboxProps, ReactI
 
       // Don't rerender if the src is not the same as when the load started
       // or if the component has unmounted
-      if (this.props[srcType] !== imageSrc || this['didUnmount']) {
+      if (this.props[srcType] !== imageSrc) {
         return;
       }
 
