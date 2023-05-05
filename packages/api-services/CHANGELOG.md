@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.4...@selfcommunity/api-services@0.4.0-alpha.5) (2023-05-05)
+
+
+### Bug Fixes
+
+* fixed incubators. Asana issue: https://app.asana.com/0/1202523699272956/1204529315335506/f ([86f345d](https://github.com/selfcommunity/community-js/commit/86f345dc3faf98508a2435a72af5c90b14154998))
+
+
+
+
+
 # [0.4.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.3...@selfcommunity/api-services@0.4.0-alpha.4) (2023-05-04)
 
 **Note:** Version bump only for package @selfcommunity/api-services
