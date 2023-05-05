@@ -1,13 +1,13 @@
 import React, {forwardRef, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
-import {Alert, Checkbox, Button, DialogProps, FormControlLabel, Typography, CardProps} from '@mui/material';
+import {Alert, Checkbox, Button, DialogProps, FormControlLabel, Typography} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import {LoadingButton} from '@mui/lab';
 import moment from 'moment';
 import {DataPortabilityService, LegalPageService, UserService} from '@selfcommunity/api-services';
-import {SCDataPortabilityType, SCLegalPageType} from '@selfcommunity/types';
+import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType} from '@selfcommunity/types';
 import {arraysEqual, capitalize, Logger} from '@selfcommunity/utils';
 import {SCPreferencesContextType, useSCPreferences, SCUserContextType, SCUserContext, SCPreferences} from '@selfcommunity/react-core';
 import ConsentSolutionSwitch from '../../shared/ConsentSolutionSwitch';
@@ -424,7 +424,8 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
     setLoading(true);
     return LegalPageService.getAllLastRevisionsOfLegalPages()
       .then((documents: SCLegalPageType[]) => {
-        let docs = documents.filter((lp) => legalPolicies.filter((p) => lp.name_and_version.startsWith(p)).length > 0);
+        // filter documents (show only privacy and tec)
+        let docs = documents.filter((lp: SCLegalPageType) => legalPolicies.filter((p: SCLegalPagePoliciesType) => lp.slug.startsWith(p)).length > 0);
         // if initial legalPolicies !== LEGAL_POLICIES
         if (arraysEqual(legalPolicies, LEGAL_POLICIES)) {
           docs = docs.filter((d) => !isEmptyDocumentBody(d) && !isDocumentApproved(d));
@@ -609,7 +610,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             loading={(dataPortability && dataPortability.computing) || loadingDataPortability}
             disabled={dataPortability && (dataPortability.computing || moment().diff(moment(dataPortability.requested_at), 'hours') < 24)}
             loadingPosition="start"
-            startIcon={<Icon>copy_all_outlined</Icon>}
+            startIcon={<Icon>folder_open</Icon>}
             variant="outlined"
             className={classes.createDataPortabilityButton}
             onClick={handleCreateDataPortabilityFile}>
@@ -680,7 +681,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             size="small"
             variant={'outlined'}
             className={classes.logoutAccountButton}
-            startIcon={<Icon>door_back_outlined</Icon>}
+            startIcon={<Icon>upload</Icon>}
             onClick={handleLogout}>
             <FormattedMessage id="ui.consentSolution.logoutImmediatelyButton" defaultMessage="ui.consentSolution.logoutImmediatelyButton" />
           </Button>
