@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.178...@selfcommunity/react-ui@0.7.0-alpha.179) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.178](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.177...@selfcommunity/react-ui@0.7.0-alpha.178) (2023-05-05)
+
+
+### Bug Fixes
+
+* fixed incubators. Asana issue: https://app.asana.com/0/1202523699272956/1204529315335506/f ([86f345d](https://github.com/selfcommunity/community-js/commit/86f345dc3faf98508a2435a72af5c90b14154998))
+* Lightbox and MediaPreview ([62335ba](https://github.com/selfcommunity/community-js/commit/62335ba643d4fd305a44d853e04d62b56fd8a680))
+
+
+
+
+
 # [0.7.0-alpha.177](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.176...@selfcommunity/react-ui@0.7.0-alpha.177) (2023-05-05)
 
 

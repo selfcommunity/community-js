@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.126](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.125...@selfcommunity/react-theme-default@0.1.0-alpha.126) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.124...@selfcommunity/react-theme-default@0.1.0-alpha.125) (2023-05-05)
+
+
+### Bug Fixes
+
+* fixed incubators. Asana issue: https://app.asana.com/0/1202523699272956/1204529315335506/f ([86f345d](https://github.com/selfcommunity/community-js/commit/86f345dc3faf98508a2435a72af5c90b14154998))
+
+
+
+
+
 # [0.1.0-alpha.124](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.123...@selfcommunity/react-theme-default@0.1.0-alpha.124) (2023-05-05)
 
 
