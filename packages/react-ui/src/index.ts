@@ -16,7 +16,10 @@ import UserFollowedCategoriesWidget, {
   UserFollowedCategoriesWidgetProps
 } from './components/UserFollowedCategoriesWidget';
 import CategoriesPopularWidget, {CategoriesPopularWidgetSkeleton} from './components/CategoriesPopularWidget';
-import CategoriesSuggestionWidget, {CategoriesSuggestionWidgetProps, CategoriesSuggestionWidgetSkeleton} from './components/CategoriesSuggestionWidget';
+import CategoriesSuggestionWidget, {
+  CategoriesSuggestionWidgetProps,
+  CategoriesSuggestionWidgetSkeleton
+} from './components/CategoriesSuggestionWidget';
 import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
 import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
 import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
@@ -112,7 +115,8 @@ import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/Poll
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
 import Incubator, {IncubatorProps} from './components/Incubator';
-import IncubatorsListWidget, {IncubatorsListWidgetProps} from './components/IncubatorsListWidget';
+import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './components/IncubatorSubscribeButton';
+import IncubatorListWidget, {IncubatorListWidgetProps} from './components/IncubatorListWidget';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import Footer, {FooterProps} from './components/Footer';
@@ -384,9 +388,11 @@ export {
   PollSuggestionWidget,
   PollSuggestionWidgetProps,
   Incubator,
+  IncubatorSubscribeButton,
+  IncubatorSubscribeButtonProps,
   IncubatorProps,
-  IncubatorsListWidget,
-  IncubatorsListWidgetProps,
+  IncubatorListWidget,
+  IncubatorListWidgetProps,
   IncubatorDetail,
   IncubatorDetailProps,
   IncubatorSuggestionWidget,

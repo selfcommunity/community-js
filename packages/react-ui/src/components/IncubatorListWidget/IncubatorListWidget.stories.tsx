@@ -1,11 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import IncubatorsListWidgetSkeleton from './index';
+import IncubatorListWidgetSkeleton from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/IncubatorsListWidget',
-  component: IncubatorsListWidgetSkeleton,
+  title: 'Design System/React UI/IncubatorListWidget',
+  component: IncubatorListWidgetSkeleton,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -23,12 +23,12 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof IncubatorsListWidgetSkeleton>;
+} as ComponentMeta<typeof IncubatorListWidgetSkeleton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof IncubatorsListWidgetSkeleton> = (args) => (
+const Template: ComponentStory<typeof IncubatorListWidgetSkeleton> = (args) => (
   <div style={{width: 500}}>
-    <IncubatorsListWidgetSkeleton {...args} />
+    <IncubatorListWidgetSkeleton {...args} />
   </div>
 );
 

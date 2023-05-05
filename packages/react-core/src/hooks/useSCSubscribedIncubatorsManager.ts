@@ -21,6 +21,7 @@ import useSCCachingManager from './useSCCachingManager';
  */
 export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const authUserId = user ? user.id : null;
 
   /**
    * Memoized refresh all subscribed
@@ -42,12 +43,9 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
-            updateCache(Object.keys(res.data.results).map((id) => parseInt(id)));
-            setData(
-              Object.entries(res.data.results)
-                .filter(([k, v]) => v === true)
-                .map(([k, v]) => parseInt(k))
-            );
+            const incubatorIds = res.data.results.map((i: SCIncubatorType) => i.id);
+            updateCache(incubatorIds);
+            setData(incubatorIds);
             return Promise.resolve(res.data);
           })
           .catch((e) => {
@@ -110,18 +108,18 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
       });
   };
 
-  // /**
-  //  * Bypass remote check if the incubator is subscribed
-  //  */
-  // const getSubscriptionStatus = useMemo(
-  //   () => (incubator: SCIncubatorType) => {
-  //     const isSubscribed = incubator.subscribed === true;
-  //     updateCache([incubator.id]);
-  //     setData((prev) => (isSubscribed ? [...prev, ...[incubator.id]] : prev));
-  //     return isSubscribed;
-  //   },
-  //   [data, cache]
-  // );
+  /**
+   * Bypass remote check if the incubator is subscribed
+   */
+  const getSubscriptionStatus = useMemo(
+    () => (incubator: SCIncubatorType) => {
+      const isSubscribed = incubator.subscribed || false;
+      updateCache([incubator.id]);
+      setData((prev) => (isSubscribed ? [...prev, ...[incubator.id]] : prev));
+      return isSubscribed;
+    },
+    [data, cache]
+  );
 
   /**
    * Memoized isSubscribed
@@ -134,16 +132,21 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
         if (cache.includes(incubator.id)) {
           return Boolean(data.includes(incubator.id));
         }
-        // if ('subscribed' in incubator) {
-        //   return getSubscriptionStatus(incubator);
-        // }
-        if (!loading.includes(incubator.id)) {
-          checkIsIncubatorFollowed(incubator);
+        if (authUserId) {
+          if ('subscribed' in incubator) {
+            return getSubscriptionStatus(incubator);
+          }
+          if (!loading.includes(incubator['id'])) {
+            checkIsIncubatorFollowed(incubator);
+          }
         }
         return false;
       },
-    [data, loading, cache]
+    [data, loading, cache, authUserId]
   );
 
+  if (!user) {
+    return {incubators: data, loading, isLoading};
+  }
   return {incubators: data, loading, isLoading, subscribe, isSubscribed, refresh, emptyCache};
 }

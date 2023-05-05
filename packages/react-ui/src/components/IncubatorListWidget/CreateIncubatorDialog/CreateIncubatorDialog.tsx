@@ -13,12 +13,12 @@ import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   name: {
-    id: 'ui.incubatorsList.createIncubatorDialog.formPlaceholder.name',
-    defaultMessage: 'ui.incubatorsList.createIncubatorDialog.formPlaceholder.name'
+    id: 'ui.incubatorListWidget.createIncubatorDialog.formPlaceholder.name',
+    defaultMessage: 'ui.incubatorListWidget.createIncubatorDialog.formPlaceholder.name'
   },
   slogan: {
-    id: 'ui.incubatorsList.createIncubatorDialog.formPlaceholder.slogan',
-    defaultMessage: 'ui.incubatorsList.createIncubatorDialog.formPlaceholder.slogan'
+    id: 'ui.incubatorListWidget.createIncubatorDialog.formPlaceholder.slogan',
+    defaultMessage: 'ui.incubatorListWidget.createIncubatorDialog.formPlaceholder.slogan'
   }
 });
 
@@ -133,8 +133,8 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
     dialogContent = (
       <Typography variant={'subtitle2'} className={classes.submittedMessage}>
         <FormattedMessage
-          id="ui.incubatorsListWidget.createIncubatorDialog.propose.success"
-          defaultMessage="ui.incubatorsListWidget.createIncubatorDialog.propose.success"
+          id="ui.incubatorListWidget.createIncubatorDialog.propose.success"
+          defaultMessage="ui.incubatorListWidget.createIncubatorDialog.propose.success"
         />
       </Typography>
     );
@@ -169,8 +169,8 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
         </FormGroup>
         <LoadingButton loading={isSubmitting} disabled={!name || Boolean(error)} variant="contained" onClick={handleSubmit}>
           <FormattedMessage
-            id="ui.incubatorsListWidget.createIncubatorDialog.button"
-            defaultMessage="ui.incubatorsListWidget.createIncubatorDialog.button"
+            id="ui.incubatorListWidget.createIncubatorDialog.button"
+            defaultMessage="ui.incubatorListWidget.createIncubatorDialog.button"
           />
         </LoadingButton>
       </>
@@ -182,8 +182,8 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
     <Root
       title={
         <FormattedMessage
-          id="ui.incubatorsListWidget.createIncubatorDialog.title"
-          defaultMessage="ui.incubatorsListWidget.createIncubatorDialog.title"
+          id="ui.incubatorListWidget.createIncubatorDialog.title"
+          defaultMessage="ui.incubatorListWidget.createIncubatorDialog.title"
         />
       }
       open={open}

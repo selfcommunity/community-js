@@ -101,6 +101,9 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
   const [followed, setFollowed] = useState<boolean>(null);
 
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
   useEffect(() => {
     /**
      * Call scFollowedManager.isFollowed inside an effect
@@ -109,7 +112,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
     if (scUserContext.user && scUserContext.user.id !== scUser.id) {
       setFollowed(scFollowedManager.isFollowed(scUser));
     }
-  });
+  }, [authUserId, scFollowedManager.isFollowed]);
 
   const followUser = () => {
     if (!followed && UserUtils.isBlocked(scUserContext.user)) {

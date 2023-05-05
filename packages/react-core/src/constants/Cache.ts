@@ -23,6 +23,10 @@ export const getCategoriesObjectCacheKey = () => `${CATEGORIES_OBJECT_CACHE_PREF
 export const CATEGORY_OBJECT_CACHE_PREFIX_KEY = '_ca_';
 export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** INCUBATOR OBJECT **/
+export const INCUBATOR_OBJECT_CACHE_PREFIX_KEY = '_inc_';
+export const getIncubatorObjectCacheKey = (id) => `${INCUBATOR_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
 /** CONTRIBUTORS **/
 export const CONTRIBUTORS_CACHE_PREFIX_KEY = '_contr_';
 export const getContributorsCacheKey = (id, type, next) => `${CONTRIBUTORS_CACHE_PREFIX_KEY}${type}_${id}_${next}`;
@@ -79,7 +83,7 @@ export const TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY = '_fTrendWidget_';
 export const RELATED_FEED_TOOLS_STATE_CACHE_PREFIX_KEY = '_rFeedWidget_';
 export const TRENDING_PEOPLE_TOOLS_STATE_CACHE_PREFIX_KEY = '_pTrendWidget_';
 export const PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
-export const INCUBATORS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_iListWidget_';
+export const INCUBATOR_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_iListWidget_';
 export const INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_iSugWidget_';
 export const POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
 export const LOYALTY_PROGRAM_DETAIL_PRIZES_TOOLS_STATE_CACHE_PREFIX_KEY = '_lProgDetPrizesWidget_';
