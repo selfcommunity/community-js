@@ -32,6 +32,7 @@ const STATUS_FOLLOWED = 'followed';
 export default function useSCFollowedManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const authUserId = user ? user.id : null;
   const followEnabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
 
@@ -148,15 +149,17 @@ export default function useSCFollowedManager(user?: SCUserType) {
         if (cache.includes(user.id)) {
           return Boolean(data.includes(user.id));
         }
-        if ('connection_status' in user) {
-          return getConnectionStatus(user);
-        }
-        if (!loading.includes(user.id)) {
-          checkIsUserFollowed(user);
+        if (authUserId) {
+          if ('connection_status' in user) {
+            return getConnectionStatus(user);
+          }
+          if (!loading.includes(user.id)) {
+            checkIsUserFollowed(user);
+          }
         }
         return false;
       },
-    [data, loading, cache]
+    [data, loading, cache, authUserId]
   );
 
   if (!followEnabled || !user) {
