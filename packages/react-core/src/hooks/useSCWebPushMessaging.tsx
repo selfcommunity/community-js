@@ -189,8 +189,6 @@ export default function useSCWebPushMessaging() {
    */
   const subscribe = () => {
     navigator.serviceWorker.getRegistration().then(function (serviceWorkerRegistration) {
-      console.log(serviceWorkerRegistration);
-      console.log(serviceWorkerRegistration.pushManager);
       serviceWorkerRegistration.pushManager
         .subscribe({userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(applicationServerKey)})
         .then(function (subscription) {
@@ -201,7 +199,6 @@ export default function useSCWebPushMessaging() {
           }
         })
         .catch(function (e) {
-          console.log('Error on subscribe web push notification!');
           console.log(e);
           if (Notification.permission === 'denied') {
             // The user denied the notification permission which
