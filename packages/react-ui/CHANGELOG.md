@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.180](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.179...@selfcommunity/react-ui@0.7.0-alpha.180) (2023-05-05)
+
+
+### Bug Fixes
+
+* consentSolution ([19ffbc0](https://github.com/selfcommunity/community-js/commit/19ffbc06c712d20fba68642698c6ff4c55fd7faf))
+* consentSolution ([b3c4c47](https://github.com/selfcommunity/community-js/commit/b3c4c472c8b5455b6fedd8a470f406731b78b874))
+
+
+
+
+
 # [0.7.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.178...@selfcommunity/react-ui@0.7.0-alpha.179) (2023-05-05)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

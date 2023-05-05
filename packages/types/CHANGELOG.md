@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.1...@selfcommunity/types@0.5.0-alpha.2) (2023-05-05)
+
+
+### Bug Fixes
+
+* consentSolution ([61f30ad](https://github.com/selfcommunity/community-js/commit/61f30ada454c0d5cc6ae4651b0ad340f210632ab))
+
+
+
+
+
 # [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.0...@selfcommunity/types@0.5.0-alpha.1) (2023-05-04)
 
 
