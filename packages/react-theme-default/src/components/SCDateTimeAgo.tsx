@@ -2,9 +2,9 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       color: 'inherit',
+      verticalAlign: 'middle',
       '& .MuiIcon-root': {
         fontSize: '1rem',
-        lineHeight: '1.143rem',
         marginRight: 2
       },
       '& .MuiTypography-root': {
