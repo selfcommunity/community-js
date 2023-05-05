@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.26...@selfcommunity/react-core@0.4.0-alpha.27) (2023-05-04)
+
+
+### Bug Fixes
+
+* Fix Widgets and react strict mode ([7acc95c](https://github.com/selfcommunity/community-js/commit/7acc95c1b548047490d4a45c426ddbe08785d9ca))
+
+
+
+
+
+# [0.4.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.25...@selfcommunity/react-core@0.4.0-alpha.26) (2023-05-04)
+
+
+### Bug Fixes
+
+* build ([548d137](https://github.com/selfcommunity/community-js/commit/548d1373bc9cde0f560ed8148c98bbbfc12bc066))
+* categories ([69ea711](https://github.com/selfcommunity/community-js/commit/69ea711f8039fb97a8f8182993a8208443d79855))
+* feed fetching ([39c3107](https://github.com/selfcommunity/community-js/commit/39c310780f4a5b1b70fa958d760f314ec9b4d6bf))
+
+
+
+
+
 # [0.4.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.24...@selfcommunity/react-core@0.4.0-alpha.25) (2023-05-02)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.44-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.44-alpha.1...@selfcommunity/utils@0.1.44-alpha.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* categories ([69ea711](https://github.com/selfcommunity/community-js/commit/69ea711f8039fb97a8f8182993a8208443d79855))
+
+
+
+
+
 ## [0.1.44-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.44-alpha.0...@selfcommunity/utils@0.1.44-alpha.1) (2023-01-16)
 
 

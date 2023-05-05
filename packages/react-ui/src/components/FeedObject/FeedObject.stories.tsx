@@ -92,7 +92,7 @@ BaseWithImage3.args = {
 export const BaseWithImage3More = Template.bind({});
 
 BaseWithImage3More.args = {
-  feedObjectId: 412,
+  feedObjectId: 1377,
   feedObjectType: SCContributionType.POST
 };
 
