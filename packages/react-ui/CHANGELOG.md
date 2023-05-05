@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.177](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.176...@selfcommunity/react-ui@0.7.0-alpha.177) (2023-05-05)
+
+
+### Bug Fixes
+
+* Lightbox and MediaPreview ([6f22139](https://github.com/selfcommunity/community-js/commit/6f22139291809fa360ec1d8abdb7de983ac58105))
+
+
+
+
+
 # [0.7.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.175...@selfcommunity/react-ui@0.7.0-alpha.176) (2023-05-04)
 
 
