@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.175...@selfcommunity/react-ui@0.7.0-alpha.176) (2023-05-04)
+
+
+### Bug Fixes
+
+* consentSolution ([54b95c6](https://github.com/selfcommunity/community-js/commit/54b95c69793d08848e8c73aca7add831cde5478d))
+* Fix Widgets and react strict mode ([7acc95c](https://github.com/selfcommunity/community-js/commit/7acc95c1b548047490d4a45c426ddbe08785d9ca))
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
+# [0.7.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.174...@selfcommunity/react-ui@0.7.0-alpha.175) (2023-05-04)
+
+
+### Bug Fixes
+
+* categories ([69ea711](https://github.com/selfcommunity/community-js/commit/69ea711f8039fb97a8f8182993a8208443d79855))
+* feed fetching ([39c3107](https://github.com/selfcommunity/community-js/commit/39c310780f4a5b1b70fa958d760f314ec9b4d6bf))
+* feed story ([09bdb9a](https://github.com/selfcommunity/community-js/commit/09bdb9aa8a7912dfcc7f77a611b20bfa810a6c53))
+* Fix widgets ([2255a71](https://github.com/selfcommunity/community-js/commit/2255a71b5c039d3ed7b1f5e2ac2294003ed7ebdd))
+
+
+
+
+
 # [0.7.0-alpha.174](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.173...@selfcommunity/react-ui@0.7.0-alpha.174) (2023-05-02)
 
 

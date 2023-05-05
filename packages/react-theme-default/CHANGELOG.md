@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.123](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.122...@selfcommunity/react-theme-default@0.1.0-alpha.123) (2023-05-04)
+
+
+### Bug Fixes
+
+* Fix icon font ([bf303f7](https://github.com/selfcommunity/community-js/commit/bf303f766ed0d9406fffb45b40cb4b23c1cc2384))
+* Fix Widgets and react strict mode ([7acc95c](https://github.com/selfcommunity/community-js/commit/7acc95c1b548047490d4a45c426ddbe08785d9ca))
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
+# [0.1.0-alpha.122](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.121...@selfcommunity/react-theme-default@0.1.0-alpha.122) (2023-05-04)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.121](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.120...@selfcommunity/react-theme-default@0.1.0-alpha.121) (2023-05-03)
+
+
+### Bug Fixes
+
+* fixed pm components scrollbar ([180ead1](https://github.com/selfcommunity/community-js/commit/180ead148a4fc1657db5b61229d553b250860ba6))
+* fixed pm formatting ([d801ba5](https://github.com/selfcommunity/community-js/commit/d801ba5c7f957f61f21fd484dd35da51a8623dfe))
+
+
+
+
+
 # [0.1.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.119...@selfcommunity/react-theme-default@0.1.0-alpha.120) (2023-05-02)
 
 

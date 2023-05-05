@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.164](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.163...@selfcommunity/react-templates@0.3.0-alpha.164) (2023-05-04)
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
+# [0.3.0-alpha.163](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.162...@selfcommunity/react-templates@0.3.0-alpha.163) (2023-05-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 # [0.3.0-alpha.162](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.161...@selfcommunity/react-templates@0.3.0-alpha.162) (2023-05-02)
 
 

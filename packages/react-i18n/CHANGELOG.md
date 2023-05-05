@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.15...@selfcommunity/react-i18n@0.5.0-alpha.16) (2023-05-04)
+
+
+### Bug Fixes
+
+* consentSolution ([54b95c6](https://github.com/selfcommunity/community-js/commit/54b95c69793d08848e8c73aca7add831cde5478d))
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
 # [0.5.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.14...@selfcommunity/react-i18n@0.5.0-alpha.15) (2023-05-02)
 
 
