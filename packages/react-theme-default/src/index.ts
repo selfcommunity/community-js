@@ -36,8 +36,8 @@ import SCPollObject from './components/SCPollObject';
 import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
 import SCFeedSkeleton from './components/SCFeedSkeleton';
 import MuiContainer from './components/MuiContainer';
-import SCLoyaltyProgramDetail from './components/SCLoyaltyProgramDetail';
-import SCLoyaltyProgramDetailSkeleton from './components/SCLoyaltyProgramDetailSkeleton';
+import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
+import SCLoyaltyProgramDetailTemplateSkeleton from './components/SCLoyaltyProgramDetailTemplateSkeleton';
 import SCPrivateMessageComponent from './components/SCPrivateMessageComponent';
 import MuiDialog from './components/MuiDialog';
 import SCCategories from './components/SCCategories';
@@ -110,6 +110,7 @@ import SCIncubator from './components/SCIncubator';
 import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
+import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
 
 /**
  * Style fragments - Imports - End
@@ -221,9 +222,9 @@ const theme = {
     SCInlineComposerWidget,
     SCLightbox,
     SCLoyaltyProgramWidget,
-    SCLoyaltyProgramDetail,
+    SCLoyaltyProgramDetailTemplate,
     SCLoyaltyProgramWidgetSkeleton,
-    SCLoyaltyProgramDetailSkeleton,
+    SCLoyaltyProgramDetailTemplateSkeleton,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarMobile,
@@ -265,7 +266,8 @@ const theme = {
     SCIncubator,
     SCIncubatorListWidget,
     SCIncubatorSkeleton,
-    SCIncubatorSuggestionWidget
+    SCIncubatorSuggestionWidget,
+    SCPrizeItemSkeleton
   },
   selfcommunity: {
     user: {

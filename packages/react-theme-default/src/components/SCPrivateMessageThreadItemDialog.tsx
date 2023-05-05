@@ -13,8 +13,8 @@ const Component = {
         '& .MuiButtonBase-root': {
           background: theme.palette.common.white,
           position: 'absolute',
-          right: theme.spacing(3),
-          bottom: theme.spacing(3),
+          right: theme.spacing(6),
+          bottom: theme.spacing(6),
           '& .MuiIcon-root': {
             color: theme.palette.secondary.main,
             fontSize: '2rem'

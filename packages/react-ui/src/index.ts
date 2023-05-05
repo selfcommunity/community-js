@@ -40,7 +40,6 @@ import PlatformWidget, {PlatformWidgetProps, PlatformWidgetSkeleton} from './com
 import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
 import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
-import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 import CategoryTrendingFeedWidget, {
   CategoryTrendingFeedWidgetProps,
   CategoryTrendingFeedWidgetSkeleton
@@ -253,9 +252,6 @@ export {
   LoyaltyProgramWidget,
   LoyaltyProgramWidgetProps,
   LoyaltyProgramWidgetSkeleton,
-  LoyaltyProgramDetail,
-  LoyaltyProgramDetailSkeleton,
-  LoyaltyProgramDetailProps,
   CategoryTrendingFeedWidget,
   CategoryTrendingFeedWidgetProps,
   CategoryTrendingFeedWidgetSkeleton,
