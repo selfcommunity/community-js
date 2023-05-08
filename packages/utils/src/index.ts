@@ -16,6 +16,7 @@ import {loadVersionBrowser} from './utils/browser';
 import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
 import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
+import {resizeImage} from './utils/image';
 
 /**
  * Export all utilities
@@ -53,5 +54,6 @@ export {
   LRUCache,
   LruCache,
   LruCacheType,
-  CacheStrategies
+  CacheStrategies,
+  resizeImage
 };
