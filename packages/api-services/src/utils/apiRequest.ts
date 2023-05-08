@@ -5,6 +5,10 @@ export function apiRequest(config: AxiosRequestConfig) {
   return client
     .request(config)
     .then((res: any) => {
+      if (!res) {
+        console.log(`Request ${config.method} ${config.url} aborted.`);
+        return Promise.reject(res);
+      }
       if (res.status >= 300) {
         console.log(`Unable to ${config.method} ${config.url} (Response code: ${res.status}).`);
         return Promise.reject(res);
