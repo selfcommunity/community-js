@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.31...@selfcommunity/react-core@0.4.0-alpha.32) (2023-05-08)
+
+
+### Bug Fixes
+
+* useSCWebPushMessaging ([ef413ca](https://github.com/selfcommunity/community-js/commit/ef413cac297af6e4d6e91902f11d9c2c996e1938))
+* useSCWebPushMessaging ([a8c9370](https://github.com/selfcommunity/community-js/commit/a8c9370c14c9ead7a3cb1d141b8473e30593c74e))
+
+
+
+
+
 # [0.4.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.30...@selfcommunity/react-core@0.4.0-alpha.31) (2023-05-05)
 
 
