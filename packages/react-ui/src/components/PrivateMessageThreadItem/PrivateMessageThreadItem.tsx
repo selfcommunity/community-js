@@ -13,7 +13,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import {bytesToSize} from '../../utils/sizeCoverter';
 import BaseDialog from '../../shared/BaseDialog';
+import LightBox from '../../shared/Lightbox';
 import AutoPlayer from '../../shared/AutoPlayer';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCPrivateMessageThreadItem';
 const DIALOG_PREFIX = `${PREFIX}Dialog`;
@@ -25,7 +27,8 @@ const classes = {
   document: `${PREFIX}-document`,
   video: `${PREFIX}-video`,
   messageTime: `${PREFIX}-message-time`,
-  menuItem: `${PREFIX}-menu-item`
+  menuItem: `${PREFIX}-menu-item`,
+  downloadButton: `${PREFIX}-download-button`
 };
 
 const MediaPreviewDialog = styled(BaseDialog, {
@@ -139,6 +142,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const hasFile = message ? message.file : null;
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const {enqueueSnackbar} = useSnackbar();
 
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
     onMouseEnter: mouseEnter,
@@ -151,14 +155,24 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
     onMenuIconClick();
   };
 
-  const handleDownload = (fileUrl, fileName) => {
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.setAttribute('download', fileName);
-    link.setAttribute('target', '_blank');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownload = async (file) => {
+    try {
+      const response = await fetch(file.url);
+      const data = await response.blob();
+      const blob = URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = blob;
+      link.download = file.filename;
+      link.click();
+      URL.revokeObjectURL(blob);
+      link.remove();
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error, {
+        variant: 'error',
+        autoHideDuration: 3000
+      });
+    }
   };
 
   // RENDERING
@@ -192,7 +206,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           section = (
             <Box className={classes.document}>
               <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
-              <Button onClick={() => handleDownload(m.file.url, m.file.fileName)}>
+              <Button onClick={() => handleDownload(m.file)}>
                 <Icon>download</Icon>
                 <Typography>{m.file.filename}</Typography>
                 <Typography>{bytesToSize(m.file.filesize)}</Typography>
@@ -241,18 +255,23 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         })}`}</Typography>
       </>
       {openDialog && (
-        <MediaPreviewDialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <>
           {message?.file.mimetype.startsWith(SCMessageFileType.VIDEO) ? (
-            <AutoPlayer url={message?.file.url} width={'100%'} enableAutoplay={false} />
+            <MediaPreviewDialog open={openDialog} onClose={() => setOpenDialog(false)}>
+              <AutoPlayer url={message?.file.url} width={'100%'} enableAutoplay={false} />
+            </MediaPreviewDialog>
           ) : (
-            <>
-              <img src={message?.file.thumbnail} loading="lazy" alt={'img'} />
-              <IconButton onClick={() => handleDownload(message?.file.url, message?.file.filename)}>
-                <Icon>download</Icon>
-              </IconButton>
-            </>
+            <LightBox
+              mainSrc={message?.file.url}
+              onCloseRequest={() => setOpenDialog(false)}
+              toolbarButtons={[
+                <IconButton onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
+                  <Icon>download</Icon>
+                </IconButton>
+              ]}
+            />
           )}
-        </MediaPreviewDialog>
+        </>
       )}
     </Root>
   );
