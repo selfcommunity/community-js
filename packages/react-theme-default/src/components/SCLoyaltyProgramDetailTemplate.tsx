@@ -38,7 +38,7 @@ const Component = {
         '& .MuiGrid-item': {
           [theme.breakpoints.up('sm')]: {
             paddingLeft: theme.spacing(4),
-            paddingRight: theme.spacing(4)
+            paddingRight: theme.spacing(2)
           },
           [theme.breakpoints.down('md')]: {
             marginBottom: theme.spacing(4)
@@ -118,7 +118,8 @@ const Component = {
         fontWeight: theme.typography.fontWeightBold,
         textAlign: 'center',
         '& .MuiButtonBase-root': {
-          padding: 0
+          padding: 0,
+          marginLeft: theme.spacing(1)
         }
       }
     })

@@ -111,9 +111,8 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // STATE
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
-  const [offset, setOffset] = useState<number | null>(null);
   const [prizes, setPrizes] = useState<SCPrizeType[]>([]);
   const [points, setPoints] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -175,10 +174,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     setOpen(true);
   };
 
-  /**
-   * Fetches the list of available prizes
-   */
-  const fetchPrizes = useMemo(
+  const handleNext = useMemo(
     () => () => {
       if (!next) {
         return;
@@ -198,39 +194,33 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     [next]
   );
 
-  /**
-   * On mount, fetches user loyalty points
-   */
-  useEffect(() => {
-    if (authUserId) {
-      UserService.getUserLoyaltyPoints(authUserId)
-        .then((data) => {
-          setPoints(data.points);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [authUserId]);
-
-  /**
-   * On mount, fetches prizes
-   */
-  useEffect(() => {
-    if (authUserId) {
-      setLoading(true);
-      LoyaltyService.getPrizes({params: {limit: 8}}).then((res: SCPaginatedResponse<SCPrizeType>) => {
-        setPrizes(res.results);
-        setNext(res.next);
-        setOffset(8);
-        setLoading(false);
+  const fetchUserPoints = () => {
+    UserService.getUserLoyaltyPoints(authUserId)
+      .then((data) => {
+        setPoints(data.points);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    }
-  }, [authUserId]);
+  };
+
+  const fetchPrizes = () => {
+    LoyaltyService.getPrizes({params: {limit: 8}}).then((res: SCPaginatedResponse<SCPrizeType>) => {
+      setPrizes(res.results);
+      setNext(res.next);
+      setLoading(false);
+    });
+  };
 
   /**
-   * Renders loyalty program detail skeleton
+   * On mount, fetches loyalty prizes and user points
    */
+  useEffect(() => {
+    if (authUserId) {
+      fetchUserPoints();
+      fetchPrizes();
+    }
+  }, [authUserId]);
 
   if (loading) {
     return <Skeleton />;
@@ -244,7 +234,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {points && (
+      {points !== 0 && (
         <Typography className={classes.title} variant="h5">
           {!isMobile && <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />}
           <Chip
@@ -275,7 +265,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       </Typography>
       <InfiniteScroll
         dataLength={prizes.length}
-        next={fetchPrizes}
+        next={handleNext}
         hasMoreNext={next !== null}
         loaderNext={<PrizeItemSkeleton />}
         endMessage={
@@ -284,14 +274,12 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
               id="templates.loyaltyProgramDetail.content.end.message"
               defaultMessage="templates.loyaltyProgramDetail.content.end.message"
             />
-            {/*{isMobile && (*/}
             <Button color={'secondary'} onClick={handleScrollUp}>
               <FormattedMessage
                 id="templates.loyaltyProgramDetail.content.end.button"
                 defaultMessage="templates.loyaltyProgramDetail.content.end.button"
               />
             </Button>
-            {/*)}*/}
           </Typography>
         }>
         <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
