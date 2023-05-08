@@ -211,6 +211,14 @@ const Component = {
             fontSize: 32
           }
         },
+        '& .SCPrivateMessageThreadItem-download-button': {
+          background: 'rgba(0, 0, 0, 0.2)',
+          marginRight: theme.spacing(3),
+          '& span': {
+            color: '#FFF',
+            fontSize: 32
+          }
+        },
         '& .SCLightbox-ril-outer-animating': {
           animationName: `${closeWindow}`
         },
