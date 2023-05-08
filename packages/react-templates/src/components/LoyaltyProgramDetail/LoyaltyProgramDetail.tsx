@@ -11,13 +11,9 @@ import {useThemeProps} from '@mui/system';
 import Skeleton from './Skeleton';
 import PrizeItemSkeleton from './PrizeItemSkeleton';
 import PointsList from './PointsList';
-import {SCOPE_SC_UI} from '../../../../react-ui/src/constants/Errors';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import HiddenPlaceholder from '../../../../react-ui/src/shared/HiddenPlaceholder';
-import Widget from '../../../../react-ui/src/components/Widget';
-import ConfirmDialog from '../../../../react-ui/src/shared/ConfirmDialog/ConfirmDialog';
+import {CacheStrategies} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
-import {InfiniteScroll} from '@selfcommunity/react-ui';
+import {InfiniteScroll, ConfirmDialog, Widget} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCLoyaltyProgramDetailTemplate';
 
@@ -170,7 +166,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
             }
           }
         );
-        Logger.error(SCOPE_SC_UI, error);
         console.log(error);
       });
   };
@@ -197,7 +192,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           setPrizes([...prizes, ...res.data.results]);
           setNext(res.data.next);
         })
-        .catch((error) => Logger.error(SCOPE_SC_UI, error))
+        .catch((error) => console.log(error))
         .then(() => setLoading(false));
     },
     [next]
@@ -213,7 +208,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           setPoints(data.points);
         })
         .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
           console.log(error);
         });
     }
@@ -245,125 +239,122 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!autoHide && authUserId) {
-    return (
-      <Root className={classNames(classes.root, className)} {...rest}>
-        {points && (
-          <Typography className={classes.title} variant="h5">
-            {!isMobile && <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />}
-            <Chip
-              className={classes.userPoints}
-              component="span"
-              label={
-                <FormattedMessage
-                  id="templates.loyaltyProgramDetail.userPoints"
-                  defaultMessage="templates.loyaltyProgramDetail.userPoints"
-                  values={{total: points}}
-                />
-              }
-            />
-          </Typography>
-        )}
-        <Typography className={classes.sectionTitle}>
-          <FormattedMessage id="templates.loyaltyProgramDetail.community" defaultMessage="templates.loyaltyProgramDetail.community" />
-        </Typography>
-        <Typography className={classes.sectionInfo}>
-          <FormattedMessage id="templates.loyaltyProgramDetail.description" defaultMessage="templates.loyaltyProgramDetail.description" />
-        </Typography>
-        <Typography className={classes.sectionTitle}>
-          <FormattedMessage id="templates.loyaltyProgramDetail.listTitle" defaultMessage="templates.loyaltyProgramDetail.listTitle" />
-        </Typography>
-        <PointsList className={classes.pointsSection} />
-        <Typography className={classes.sectionTitle}>
-          <FormattedMessage id="templates.loyaltyProgramDetail.prizes" defaultMessage="templates.loyaltyProgramDetail.prizes" />
-        </Typography>
-        <InfiniteScroll
-          dataLength={prizes.length}
-          next={fetchPrizes}
-          hasMoreNext={next !== null}
-          loaderNext={<PrizeItemSkeleton />}
-          endMessage={
-            <Typography className={classes.endMessage}>
-              <FormattedMessage
-                id="templates.loyaltyProgramDetail.content.end.message"
-                defaultMessage="templates.loyaltyProgramDetail.content.end.message"
-              />
-              {/*{isMobile && (*/}
-              <Button color={'secondary'} onClick={handleScrollUp}>
-                <FormattedMessage
-                  id="templates.loyaltyProgramDetail.content.end.button"
-                  defaultMessage="templates.loyaltyProgramDetail.content.end.button"
-                />
-              </Button>
-              {/*)}*/}
-            </Typography>
-          }>
-          <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
-            {prizes.map((prize: SCPrizeType) => (
-              <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={prize.id}>
-                <Widget className={classes.card}>
-                  <CardMedia component="img" image={prize.image} />
-                  <Box className={classes.prizePoints}>
-                    <Chip
-                      className={points <= prize.points ? classes.notRequestable : null}
-                      label={
-                        <FormattedMessage
-                          id="templates.loyaltyProgramDetail.prize.points"
-                          defaultMessage="templates.loyaltyProgramDetail.prize.points"
-                          values={{total: prize.points}}
-                        />
-                      }
-                    />
-                  </Box>
-                  <CardContent>
-                    <Typography variant="body1" className={classes.cardTitle}>
-                      {prize.title}
-                    </Typography>
-                    <Typography variant="body2" className={classes.cardContent}>
-                      {prize.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    {prize.link && (
-                      <Button size="medium" color="secondary" href={prize.link} target="_blank" className={classes.actionButton}>
-                        <FormattedMessage
-                          id="templates.loyaltyProgramDetail.button.more"
-                          defaultMessage="templates.loyaltyProgramDetail.button.more"
-                        />
-                      </Button>
-                    )}
-                    {((!prize.link && prize.active && points >= prize.points) || (prize.active && points >= prize.points)) && (
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        className={classes.actionButton}
-                        disabled={points < prize.points}
-                        onClick={() => handleOpenAlert(prize.id)}>
-                        <FormattedMessage
-                          id="templates.loyaltyProgramDetail.button.request"
-                          defaultMessage="templates.loyaltyProgramDetail.button.request"
-                        />
-                      </Button>
-                    )}
-                  </CardActions>
-                </Widget>
-              </Grid>
-            ))}
-          </Grid>
-        </InfiniteScroll>
-        {open && (
-          <ConfirmDialog
-            open={open}
-            title={<FormattedMessage id="templates.loyaltyProgramDetail.dialog.msg" defaultMessage="templates.loyaltyProgramDetail.dialog.msg" />}
-            btnConfirm={
-              <FormattedMessage id="templates.loyaltyProgramDetail.dialog.confirm" defaultMessage="templates.loyaltyProgramDetail.dialog.confirm" />
-            }
-            onConfirm={() => requestPrize(prizeRequested)}
-            onClose={() => setOpen(false)}
-          />
-        )}
-      </Root>
-    );
+  if (autoHide && !authUserId) {
+    return null;
   }
-  return <HiddenPlaceholder />;
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {points && (
+        <Typography className={classes.title} variant="h5">
+          {!isMobile && <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />}
+          <Chip
+            className={classes.userPoints}
+            component="span"
+            label={
+              <FormattedMessage
+                id="templates.loyaltyProgramDetail.userPoints"
+                defaultMessage="templates.loyaltyProgramDetail.userPoints"
+                values={{total: points}}
+              />
+            }
+          />
+        </Typography>
+      )}
+      <Typography className={classes.sectionTitle}>
+        <FormattedMessage id="templates.loyaltyProgramDetail.community" defaultMessage="templates.loyaltyProgramDetail.community" />
+      </Typography>
+      <Typography className={classes.sectionInfo}>
+        <FormattedMessage id="templates.loyaltyProgramDetail.description" defaultMessage="templates.loyaltyProgramDetail.description" />
+      </Typography>
+      <Typography className={classes.sectionTitle}>
+        <FormattedMessage id="templates.loyaltyProgramDetail.listTitle" defaultMessage="templates.loyaltyProgramDetail.listTitle" />
+      </Typography>
+      <PointsList className={classes.pointsSection} />
+      <Typography className={classes.sectionTitle}>
+        <FormattedMessage id="templates.loyaltyProgramDetail.prizes" defaultMessage="templates.loyaltyProgramDetail.prizes" />
+      </Typography>
+      <InfiniteScroll
+        dataLength={prizes.length}
+        next={fetchPrizes}
+        hasMoreNext={next !== null}
+        loaderNext={<PrizeItemSkeleton />}
+        endMessage={
+          <Typography className={classes.endMessage}>
+            <FormattedMessage
+              id="templates.loyaltyProgramDetail.content.end.message"
+              defaultMessage="templates.loyaltyProgramDetail.content.end.message"
+            />
+            {/*{isMobile && (*/}
+            <Button color={'secondary'} onClick={handleScrollUp}>
+              <FormattedMessage
+                id="templates.loyaltyProgramDetail.content.end.button"
+                defaultMessage="templates.loyaltyProgramDetail.content.end.button"
+              />
+            </Button>
+            {/*)}*/}
+          </Typography>
+        }>
+        <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
+          {prizes.map((prize: SCPrizeType) => (
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={prize.id}>
+              <Widget className={classes.card}>
+                <CardMedia component="img" image={prize.image} />
+                <Box className={classes.prizePoints}>
+                  <Chip
+                    className={points <= prize.points ? classes.notRequestable : null}
+                    label={
+                      <FormattedMessage
+                        id="templates.loyaltyProgramDetail.prize.points"
+                        defaultMessage="templates.loyaltyProgramDetail.prize.points"
+                        values={{total: prize.points}}
+                      />
+                    }
+                  />
+                </Box>
+                <CardContent>
+                  <Typography variant="body1" className={classes.cardTitle}>
+                    {prize.title}
+                  </Typography>
+                  <Typography variant="body2" className={classes.cardContent}>
+                    {prize.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  {prize.link && (
+                    <Button size="medium" color="secondary" href={prize.link} target="_blank" className={classes.actionButton}>
+                      <FormattedMessage id="templates.loyaltyProgramDetail.button.more" defaultMessage="templates.loyaltyProgramDetail.button.more" />
+                    </Button>
+                  )}
+                  {((!prize.link && prize.active && points >= prize.points) || (prize.active && points >= prize.points)) && (
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      className={classes.actionButton}
+                      disabled={points < prize.points}
+                      onClick={() => handleOpenAlert(prize.id)}>
+                      <FormattedMessage
+                        id="templates.loyaltyProgramDetail.button.request"
+                        defaultMessage="templates.loyaltyProgramDetail.button.request"
+                      />
+                    </Button>
+                  )}
+                </CardActions>
+              </Widget>
+            </Grid>
+          ))}
+        </Grid>
+      </InfiniteScroll>
+      {open && (
+        <ConfirmDialog
+          open={open}
+          title={<FormattedMessage id="templates.loyaltyProgramDetail.dialog.msg" defaultMessage="templates.loyaltyProgramDetail.dialog.msg" />}
+          btnConfirm={
+            <FormattedMessage id="templates.loyaltyProgramDetail.dialog.confirm" defaultMessage="templates.loyaltyProgramDetail.dialog.confirm" />
+          }
+          onConfirm={() => requestPrize(prizeRequested)}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </Root>
+  );
 }
