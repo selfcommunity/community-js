@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.169...@selfcommunity/react-templates@0.3.0-alpha.170) (2023-05-08)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail imports ([ea80fb4](https://github.com/selfcommunity/community-js/commit/ea80fb426ef9401113f87ee87897a6b27354ebff))
+
+
+
+
+
 # [0.3.0-alpha.169](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.168...@selfcommunity/react-templates@0.3.0-alpha.169) (2023-05-05)
 
 
