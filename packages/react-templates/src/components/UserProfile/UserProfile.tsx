@@ -2,28 +2,27 @@ import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {
-  UserFollowedCategoriesWidget,
   ConnectionUserButton,
   FeedObjectProps,
   FeedSidebarProps,
   SCFeedWidgetType,
   TagChip,
   UserActionIconButton,
+  UserCounters,
+  UserFollowedCategoriesWidget,
+  UserFollowedUsersWidget,
   UserFollowersWidget,
   UserProfileHeader,
-  UserProfileHeaderProps,
-  UserFollowedUsersWidget,
-  UserCounters
+  UserProfileHeaderProps
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
-  SCContextType,
   SCFeatures,
+  SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
-  useSCContext,
   useSCFetchUser,
   useSCPreferences,
   useSCRouting,
@@ -198,16 +197,31 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {features}: SCPreferencesContextType = useSCPreferences();
-
-  // MEMO
-  const taggingEnabled = useMemo(() => features.includes(SCFeatures.TAGGING), [features]);
-  const privateMessageEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGES), [features]);
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
   const intl = useIntl();
+
+  // MEMO
+  const taggingEnabled = useMemo(() => features.includes(SCFeatures.TAGGING), [features]);
+  const isMe = useMemo(() => scUserContext.user && scUser.id === scUserContext.user.id, [scUserContext.user, scUser]);
+  const followEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
+  const privateMessageEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGES), [features]);
+  const isConnection = useMemo(() => {
+    if (isMe) {
+      return false;
+    }
+    return followEnabled ? scUserContext.managers.followers.isFollower(user) : scUserContext.managers.connections.status(user) === 'connected';
+  }, [followEnabled, isMe, scUserContext.managers]);
+  const isStaff = useMemo(() => user && user.community_badge, [user]);
 
   if (scUser === null) {
     return <UserProfileSkeleton />;
@@ -238,14 +252,12 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   };
 
   // RENDER
-  const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
-
   if (!isMe) {
     UserFeedProps.FeedProps = {HeaderComponent: null, ...UserFeedProps.FeedProps};
   }
 
   let actionItems = [];
-  if (privateMessageEnabled) {
+  if (privateMessageEnabled && (isConnection || (scUserContext.user && scUserContext.user.role !== null) || isStaff)) {
     actionItems = [
       {
         label: <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />,
