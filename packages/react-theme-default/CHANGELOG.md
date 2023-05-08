@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.132](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.131...@selfcommunity/react-theme-default@0.1.0-alpha.132) (2023-05-08)
+
+
+### Bug Fixes
+
+* Added lightbox for pm image preview  Asana issue: https://app.asana.com/0/1202638443591994/1204521980449388/f ([e6fde9b](https://github.com/selfcommunity/community-js/commit/e6fde9bcfad0c76172baca3b28276d08c3dda7d3))
+* fixed loyalty program detail loading ([c922f2d](https://github.com/selfcommunity/community-js/commit/c922f2d9680aa1e91bc666091a5633c53cb62d91))
+
+
+
+
+
 # [0.1.0-alpha.131](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.130...@selfcommunity/react-theme-default@0.1.0-alpha.131) (2023-05-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

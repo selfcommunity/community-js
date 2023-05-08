@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.185](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.184...@selfcommunity/react-ui@0.7.0-alpha.185) (2023-05-08)
+
+
+### Bug Fixes
+
+* Added lightbox for pm image preview  Asana issue: https://app.asana.com/0/1202638443591994/1204521980449388/f ([e6fde9b](https://github.com/selfcommunity/community-js/commit/e6fde9bcfad0c76172baca3b28276d08c3dda7d3))
+
+
+
+
+
 # [0.7.0-alpha.184](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.183...@selfcommunity/react-ui@0.7.0-alpha.184) (2023-05-08)
 
 

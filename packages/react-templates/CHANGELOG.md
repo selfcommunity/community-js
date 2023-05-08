@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.174...@selfcommunity/react-templates@0.3.0-alpha.175) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix UserProfile.tsx private messages button ([229f622](https://github.com/selfcommunity/community-js/commit/229f6220a85b2e513b4b5f65f46ef7bcd693ecd8))
+* fixed loyalty program detail loading ([c922f2d](https://github.com/selfcommunity/community-js/commit/c922f2d9680aa1e91bc666091a5633c53cb62d91))
+
+
+
+
+
 # [0.3.0-alpha.174](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.173...@selfcommunity/react-templates@0.3.0-alpha.174) (2023-05-08)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
