@@ -501,7 +501,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           <FormattedMessage
             id="ui.consentSolution.acceptDocumentTitle"
             defaultMessage="ui.consentSolution.acceptDocumentTitle"
-            values={{label: doc.label}}
+            values={{label: doc.title}}
           />
         </DialogTitle>
         <DialogContent className={classes.content} dividers ref={contentDialog}>
@@ -677,12 +677,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             onClick={() => setView(CONFIRM_DELETE_ACCOUNT)}>
             <FormattedMessage id="ui.consentSolution.confirmDeleteAccountButton" defaultMessage="ui.consentSolution.confirmDeleteAccountButton" />
           </Button>
-          <Button
-            size="small"
-            variant={'outlined'}
-            className={classes.logoutAccountButton}
-            startIcon={<Icon>upload</Icon>}
-            onClick={handleLogout}>
+          <Button size="small" variant={'outlined'} className={classes.logoutAccountButton} startIcon={<Icon>upload</Icon>} onClick={handleLogout}>
             <FormattedMessage id="ui.consentSolution.logoutImmediatelyButton" defaultMessage="ui.consentSolution.logoutImmediatelyButton" />
           </Button>
         </DialogContent>
