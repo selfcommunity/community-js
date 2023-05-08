@@ -145,42 +145,44 @@ export default function useSCWebPushMessaging() {
    */
   const unsubscribe = (callback = null) => {
     navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
-      // To unsubscribe from push messaging, you need get the
-      // subcription object, which you can call unsubscribe() on.
-      serviceWorkerRegistration.pushManager
-        .getSubscription()
-        .then((pushSubscription) => {
-          // Check we have a subscription to unsubscribe
-          if (!pushSubscription) {
-            // No subscription object, so set the state
-            // to allow the user to subscribe to push
-            return;
-          }
+      if (serviceWorkerRegistration) {
+        // To unsubscribe from push messaging, you need get the
+        // subscription object, which you can call unsubscribe() on.
+        serviceWorkerRegistration.pushManager
+          .getSubscription()
+          .then((pushSubscription) => {
+            // Check we have a subscription to unsubscribe
+            if (!pushSubscription) {
+              // No subscription object, so set the state
+              // to allow the user to subscribe to push
+              return;
+            }
 
-          // We have a subscription, so call unsubscribe on it
-          pushSubscription
-            .unsubscribe()
-            .then(() => {
-              Logger.info(SCOPE_SC_CORE, 'Unsubscription successfully');
-              // Request to server to remove
-              // the users data from your data store so you
-              // don't attempt to send them push messages anymore
-              updateSubscriptionOnServer(pushSubscription, true).then(() => {
-                callback && callback();
+            // We have a subscription, so call unsubscribe on it
+            pushSubscription
+              .unsubscribe()
+              .then(() => {
+                Logger.info(SCOPE_SC_CORE, 'Unsubscription successfully');
+                // Request to server to remove
+                // the users data from your data store so you
+                // don't attempt to send them push messages anymore
+                updateSubscriptionOnServer(pushSubscription, true).then(() => {
+                  callback && callback();
+                });
+              })
+              .catch(function (e) {
+                // We failed to unsubscribe, this can lead to
+                // an unusual state, so may be best to remove
+                // the subscription id from your data store and
+                // inform the user that you disabled push
+                Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
+                console.log(e);
               });
-            })
-            .catch(function (e) {
-              // We failed to unsubscribe, this can lead to
-              // an unusual state, so may be best to remove
-              // the subscription id from your data store and
-              // inform the user that you disabled push
-              Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
-              console.log(e);
-            });
-        })
-        .catch(function (e) {
-          Logger.info(SCOPE_SC_CORE, `Error thrown while unsubscribing from push messaging. ${e}`);
-        });
+          })
+          .catch(function (e) {
+            Logger.info(SCOPE_SC_CORE, `Error thrown while unsubscribing from push messaging. ${e}`);
+          });
+      }
     });
   };
 
