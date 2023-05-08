@@ -1,4 +1,5 @@
 import {
+  BatchItem,
   StartEventResponse,
   useChunkFinishListener,
   useChunkStartListener,
@@ -9,12 +10,15 @@ import {
 import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
+import {useBatchAddListener, useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {md5} from '../../utils/hash';
 import React, {useEffect, useRef, useState} from 'react';
 import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
+import {PreSendResponse} from '@rpldy/shared-ui';
+import {Logger, resizeImage} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 export interface MediaChunkUploaderProps {
   /**
@@ -38,6 +42,7 @@ export interface MediaChunkUploaderProps {
    */
   onError: (chunk: SCMediaChunkType, error: string) => void;
 }
+
 export default (props: MediaChunkUploaderProps): JSX.Element => {
   // PROPS
   const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
@@ -152,11 +157,30 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     if (items.length == 0) {
       return Promise.resolve({options});
     }
+
     //returned object can be wrapped with a promise
-    return Promise.resolve({
-      options: {
-        inputFieldName: options.inputFieldName
-      }
+    return new Promise((resolve, reject) => {
+      Promise.all(
+        items.map(async (item) => {
+          return {...item, file: item.file.type === 'image/gif' ? item.file : await resizeImage(item.file)};
+        })
+      )
+        .then((items) => {
+          resolve({
+            items: items as BatchItem[],
+            options: {
+              inputFieldName: options.inputFieldName
+            }
+          });
+        })
+        .catch((error) => {
+          Logger.error(error, SCOPE_SC_UI);
+          resolve({
+            options: {
+              inputFieldName: options.inputFieldName
+            }
+          });
+        });
     });
   });
 
