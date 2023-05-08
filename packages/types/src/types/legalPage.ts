@@ -16,17 +16,9 @@ export interface SCLegalPageType {
    */
   slug: string;
   /**
-   * 	A css class representing the icon associated to this page
+   * Page title
    */
-  icon_class: string;
-  /**
-   * A label for the page in the menu
-   */
-  label: string;
-  /**
-   * An external url for this page (in alternative to the full body)
-   */
-  external_url: string;
+  title: string;
   /**
    * 	A short html summary
    */
@@ -35,10 +27,6 @@ export interface SCLegalPageType {
    * 	The full html body for this page
    */
   html_body: string;
-  /**
-   * The extraction order of the page
-   */
-  order: number;
   /**
    * This page is valid from this date
    */
@@ -55,6 +43,10 @@ export interface SCLegalPageType {
    * The id of the creator of this page
    */
   created_by: number;
+  /**
+   * Is this page active
+   */
+  active?: boolean;
   /**
    * User ack
    */
