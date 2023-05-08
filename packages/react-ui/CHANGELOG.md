@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.184](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.183...@selfcommunity/react-ui@0.7.0-alpha.184) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix legal page type ([113abc3](https://github.com/selfcommunity/community-js/commit/113abc3b82d5ea708acb4cc72cfae5e425799665))
+
+
+
+
+
 # [0.7.0-alpha.183](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.182...@selfcommunity/react-ui@0.7.0-alpha.183) (2023-05-08)
 
 

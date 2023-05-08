@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.2...@selfcommunity/types@0.5.0-alpha.3) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix legal page type ([697581e](https://github.com/selfcommunity/community-js/commit/697581eeb10de5bd9ac7c142b3a1274b62364667))
+
+
+
+
+
 # [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.1...@selfcommunity/types@0.5.0-alpha.2) (2023-05-05)
 
 
