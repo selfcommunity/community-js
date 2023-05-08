@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/utils",
-  "version": "0.1.44-alpha.2",
+  "version": "0.2.0-alpha.0",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",

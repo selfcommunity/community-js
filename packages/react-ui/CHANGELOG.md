@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.184](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.183...@selfcommunity/react-ui@0.7.0-alpha.184) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix legal page type ([113abc3](https://github.com/selfcommunity/community-js/commit/113abc3b82d5ea708acb4cc72cfae5e425799665))
+
+
+
+
+
+# [0.7.0-alpha.183](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.182...@selfcommunity/react-ui@0.7.0-alpha.183) (2023-05-08)
+
+
+### Features
+
+* Added image resize before chunk upload ([c241aee](https://github.com/selfcommunity/community-js/commit/c241aee8e1dd3fed12f38885de9bb141f4ffed1a))
+
+
+### Performance Improvements
+
+* Private Message is now a feature ([96e6b77](https://github.com/selfcommunity/community-js/commit/96e6b77f00ed2b43fc68f872054e2511ba15fd11))
+
+
+
+
+
 # [0.7.0-alpha.182](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.181...@selfcommunity/react-ui@0.7.0-alpha.182) (2023-05-08)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

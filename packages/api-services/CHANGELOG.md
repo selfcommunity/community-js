@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.7...@selfcommunity/api-services@0.4.0-alpha.8) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix error on request abort ([31564a4](https://github.com/selfcommunity/community-js/commit/31564a47becfddba80fd516a47fbe8b3e1ae60ac))
+* Fix error on request abort ([6dda7d5](https://github.com/selfcommunity/community-js/commit/6dda7d5ff1b6b62737453a35a363c5c0694e0911))
+
+
+
+
+
+# [0.4.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.6...@selfcommunity/api-services@0.4.0-alpha.7) (2023-05-08)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 # [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.5...@selfcommunity/api-services@0.4.0-alpha.6) (2023-05-05)
 
 **Note:** Version bump only for package @selfcommunity/api-services

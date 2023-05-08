@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.33...@selfcommunity/react-core@0.4.0-alpha.34) (2023-05-08)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.4.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.32...@selfcommunity/react-core@0.4.0-alpha.33) (2023-05-08)
+
+
+### Performance Improvements
+
+* Private Message is now a feature ([96e6b77](https://github.com/selfcommunity/community-js/commit/96e6b77f00ed2b43fc68f872054e2511ba15fd11))
+
+
+
+
+
 # [0.4.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.31...@selfcommunity/react-core@0.4.0-alpha.32) (2023-05-08)
 
 
