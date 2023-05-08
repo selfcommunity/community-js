@@ -2,6 +2,7 @@ import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, T
 import React, {useMemo} from 'react';
 import {
   Link,
+  SCFeatures,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
@@ -143,6 +144,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+  const privateMessageEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGES), [scPreferences.features]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);
@@ -236,17 +238,19 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             />
           </>
-          <IconButton
-            className={classNames(classes.messages, {
-              [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {}))
-            })}
-            aria-label="Messages"
-            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
-            component={Link}>
-            <Badge badgeContent={0} color="secondary">
-              <Icon>email</Icon>
-            </Badge>
-          </IconButton>
+          {privateMessageEnabled && (
+            <IconButton
+              className={classNames(classes.messages, {
+                [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {}))
+              })}
+              aria-label="Messages"
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
+              component={Link}>
+              <Badge badgeContent={0} color="secondary">
+                <Icon>email</Icon>
+              </Badge>
+            </IconButton>
+          )}
           {action}
         </>
       ) : (
