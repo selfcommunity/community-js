@@ -1,5 +1,4 @@
 const dataURItoBlob = (dataURI) => {
-  console.log(dataURI);
   // convert base64/URLEncoded data component to raw binary data held in a string
   let byteString;
   if (dataURI.split(',')[0].indexOf('base64') >= 0) byteString = atob(dataURI.split(',')[1]);
