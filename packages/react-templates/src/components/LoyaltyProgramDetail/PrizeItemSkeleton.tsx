@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Typography, CardContent, Skeleton, CardActions, CardMedia, Button} from '@mui/material';
-import Widget from '../../../../react-ui/src/components/Widget';
+import {Widget} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCPrizeItemSkeleton';
 
