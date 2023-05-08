@@ -145,42 +145,44 @@ export default function useSCWebPushMessaging() {
    */
   const unsubscribe = (callback = null) => {
     navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
-      // To unsubscribe from push messaging, you need get the
-      // subcription object, which you can call unsubscribe() on.
-      serviceWorkerRegistration.pushManager
-        .getSubscription()
-        .then((pushSubscription) => {
-          // Check we have a subscription to unsubscribe
-          if (!pushSubscription) {
-            // No subscription object, so set the state
-            // to allow the user to subscribe to push
-            return;
-          }
+      if (serviceWorkerRegistration) {
+        // To unsubscribe from push messaging, you need get the
+        // subscription object, which you can call unsubscribe() on.
+        serviceWorkerRegistration.pushManager
+          .getSubscription()
+          .then((pushSubscription) => {
+            // Check we have a subscription to unsubscribe
+            if (!pushSubscription) {
+              // No subscription object, so set the state
+              // to allow the user to subscribe to push
+              return;
+            }
 
-          // We have a subscription, so call unsubscribe on it
-          pushSubscription
-            .unsubscribe()
-            .then(() => {
-              Logger.info(SCOPE_SC_CORE, 'Unsubscription successfully');
-              // Request to server to remove
-              // the users data from your data store so you
-              // don't attempt to send them push messages anymore
-              updateSubscriptionOnServer(pushSubscription, true).then(() => {
-                callback && callback();
+            // We have a subscription, so call unsubscribe on it
+            pushSubscription
+              .unsubscribe()
+              .then(() => {
+                Logger.info(SCOPE_SC_CORE, 'Unsubscription successfully');
+                // Request to server to remove
+                // the users data from your data store so you
+                // don't attempt to send them push messages anymore
+                updateSubscriptionOnServer(pushSubscription, true).then(() => {
+                  callback && callback();
+                });
+              })
+              .catch(function (e) {
+                // We failed to unsubscribe, this can lead to
+                // an unusual state, so may be best to remove
+                // the subscription id from your data store and
+                // inform the user that you disabled push
+                Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
+                console.log(e);
               });
-            })
-            .catch(function (e) {
-              // We failed to unsubscribe, this can lead to
-              // an unusual state, so may be best to remove
-              // the subscription id from your data store and
-              // inform the user that you disabled push
-              Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
-              console.log(e);
-            });
-        })
-        .catch(function (e) {
-          Logger.info(SCOPE_SC_CORE, `Error thrown while unsubscribing from push messaging. ${e}`);
-        });
+          })
+          .catch(function (e) {
+            Logger.info(SCOPE_SC_CORE, `Error thrown while unsubscribing from push messaging. ${e}`);
+          });
+      }
     });
   };
 
@@ -189,34 +191,39 @@ export default function useSCWebPushMessaging() {
    */
   const subscribe = () => {
     navigator.serviceWorker.getRegistration().then(function (serviceWorkerRegistration) {
-      serviceWorkerRegistration.pushManager
-        .subscribe({userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(applicationServerKey)})
-        .then(function (subscription) {
-          if (!subscription) {
-            Logger.info(SCOPE_SC_CORE, 'We aren’t subscribed to push.');
-          } else {
-            updateSubscriptionOnServer(subscription, false);
-          }
-        })
-        .catch(function (e) {
-          console.log(e);
-          if (Notification.permission === 'denied') {
-            // The user denied the notification permission which
-            // means we failed to subscribe and the user will need
-            // to manually change the notification permission to
-            // subscribe to push messages
-            Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
-          } else {
-            // A problem occurred with the subscription
-            subAttempts.current += 1;
-            Logger.info(SCOPE_SC_CORE, `Unable to subscribe(${subAttempts.current}) to push. ${e}`);
-            if (subAttempts.current < 3) {
-              unsubscribe(() => subscribe());
+      if (serviceWorkerRegistration) {
+        // service worker is registered
+        serviceWorkerRegistration.pushManager
+          .subscribe({userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(applicationServerKey)})
+          .then(function (subscription) {
+            if (!subscription) {
+              Logger.info(SCOPE_SC_CORE, 'We aren’t subscribed to push.');
             } else {
-              Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+              updateSubscriptionOnServer(subscription, false);
             }
-          }
-        });
+          })
+          .catch(function (e) {
+            console.log(e);
+            if (Notification.permission === 'denied') {
+              // The user denied the notification permission which
+              // means we failed to subscribe and the user will need
+              // to manually change the notification permission to
+              // subscribe to push messages
+              Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
+            } else {
+              // A problem occurred with the subscription
+              subAttempts.current += 1;
+              Logger.info(SCOPE_SC_CORE, `Unable to subscribe(${subAttempts.current}) to push. ${e}`);
+              if (subAttempts.current < 3) {
+                unsubscribe(() => subscribe());
+              } else {
+                Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+              }
+            }
+          });
+      } else {
+        Logger.info(SCOPE_SC_CORE, `To receive web push notifications the service worker must be registered.`);
+      }
     });
   };
 

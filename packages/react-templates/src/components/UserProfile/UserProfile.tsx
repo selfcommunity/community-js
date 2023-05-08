@@ -112,11 +112,6 @@ export interface UserProfileProps {
    * @default {}
    */
   UserFeedProps?: UserFeedProps;
-  /**
-   * Props to show send pm
-   * @default false
-   */
-  showSendPmButton?: boolean;
 }
 
 const WIDGETS = [
@@ -198,8 +193,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     FeedSidebarProps,
     UserProfileHeaderProps = {},
     onEditClick = null,
-    UserFeedProps = {},
-    showSendPmButton
+    UserFeedProps = {}
   } = props;
 
   // CONTEXT
@@ -209,6 +203,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
 
   // MEMO
   const taggingEnabled = useMemo(() => features.includes(SCFeatures.TAGGING), [features]);
+  const privateMessageEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGES), [features]);
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -250,7 +245,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   }
 
   let actionItems = [];
-  if (showSendPmButton) {
+  if (privateMessageEnabled) {
     actionItems = [
       {
         label: <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />,
