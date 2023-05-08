@@ -189,34 +189,39 @@ export default function useSCWebPushMessaging() {
    */
   const subscribe = () => {
     navigator.serviceWorker.getRegistration().then(function (serviceWorkerRegistration) {
-      serviceWorkerRegistration.pushManager
-        .subscribe({userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(applicationServerKey)})
-        .then(function (subscription) {
-          if (!subscription) {
-            Logger.info(SCOPE_SC_CORE, 'We aren’t subscribed to push.');
-          } else {
-            updateSubscriptionOnServer(subscription, false);
-          }
-        })
-        .catch(function (e) {
-          console.log(e);
-          if (Notification.permission === 'denied') {
-            // The user denied the notification permission which
-            // means we failed to subscribe and the user will need
-            // to manually change the notification permission to
-            // subscribe to push messages
-            Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
-          } else {
-            // A problem occurred with the subscription
-            subAttempts.current += 1;
-            Logger.info(SCOPE_SC_CORE, `Unable to subscribe(${subAttempts.current}) to push. ${e}`);
-            if (subAttempts.current < 3) {
-              unsubscribe(() => subscribe());
+      if (serviceWorkerRegistration) {
+        // service worker is registered
+        serviceWorkerRegistration.pushManager
+          .subscribe({userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(applicationServerKey)})
+          .then(function (subscription) {
+            if (!subscription) {
+              Logger.info(SCOPE_SC_CORE, 'We aren’t subscribed to push.');
             } else {
-              Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+              updateSubscriptionOnServer(subscription, false);
             }
-          }
-        });
+          })
+          .catch(function (e) {
+            console.log(e);
+            if (Notification.permission === 'denied') {
+              // The user denied the notification permission which
+              // means we failed to subscribe and the user will need
+              // to manually change the notification permission to
+              // subscribe to push messages
+              Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
+            } else {
+              // A problem occurred with the subscription
+              subAttempts.current += 1;
+              Logger.info(SCOPE_SC_CORE, `Unable to subscribe(${subAttempts.current}) to push. ${e}`);
+              if (subAttempts.current < 3) {
+                unsubscribe(() => subscribe());
+              } else {
+                Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+              }
+            }
+          });
+      } else {
+        Logger.info(SCOPE_SC_CORE, `To receive web push notifications the service worker must be registered.`);
+      }
     });
   };
 
