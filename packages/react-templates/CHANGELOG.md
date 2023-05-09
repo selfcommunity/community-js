@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.175...@selfcommunity/react-templates@0.3.0-alpha.176) (2023-05-09)
+
+
+### Bug Fixes
+
+* Fix abort request ([9cd66ee](https://github.com/selfcommunity/community-js/commit/9cd66eebb9d5ebe70fe92312bb9688682f092a3d))
+
+
+
+
+
 # [0.3.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.174...@selfcommunity/react-templates@0.3.0-alpha.175) (2023-05-08)
 
 
