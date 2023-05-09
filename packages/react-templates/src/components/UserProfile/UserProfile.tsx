@@ -216,11 +216,11 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   );
   const privateMessageEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGES), [features]);
   const isConnection = useMemo(() => {
-    if (isMe) {
+    if (isMe || !scUserContext.user || !user) {
       return false;
     }
     return followEnabled ? scUserContext.managers.followers.isFollower(user) : scUserContext.managers.connections.status(user) === 'connected';
-  }, [followEnabled, isMe, scUserContext.managers]);
+  }, [followEnabled, isMe, user, scUserContext.user, scUserContext.managers]);
   const isStaff = useMemo(() => user && user.community_badge, [user]);
 
   if (scUser === null) {

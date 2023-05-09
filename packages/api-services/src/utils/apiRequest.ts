@@ -9,7 +9,7 @@ export function apiRequest(config: AxiosRequestConfig) {
     .then((res: any) => {
       if (!res) {
         Logger.info(SCOPE_API_SERVICES, `Request ${config.method} ${config.url} aborted.`);
-        return Promise.reject(res);
+        return Promise.reject(`Request ${config.method} ${config.url} aborted.`);
       }
       if (res.status >= 300) {
         Logger.info(SCOPE_API_SERVICES, `Unable to ${config.method} ${config.url} (Response code: ${res.status}).`);
