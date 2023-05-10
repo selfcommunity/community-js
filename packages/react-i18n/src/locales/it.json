@@ -169,8 +169,6 @@
   "ui.inlineComposerWidget.success": "Creation succeed!",
 
   "ui.editor.placeholder": "Write your text...",
-  "ui.editor.imagePluginResizer.width": "Larghezza",
-  "ui.editor.imagePluginResizer.height": "Altezza",
   "ui.editor.toolbarPlugin.blockType": "Stile",
   "ui.editor.toolbarPlugin.link": "Inserisci link",
   "ui.editor.toolbarPlugin.clear": "Cancella formattazione",

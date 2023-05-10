@@ -165,8 +165,6 @@
   "ui.inlineComposerWidget.success": "Creation succeed!",
 
   "ui.editor.placeholder": "Write your text...",
-  "ui.editor.imagePluginResizer.width": "Width",
-  "ui.editor.imagePluginResizer.height": "Height",
   "ui.editor.toolbarPlugin.blockType": "Style",
   "ui.editor.toolbarPlugin.link": "Insert Link",
   "ui.editor.toolbarPlugin.clear": "Clear",
