@@ -9,12 +9,7 @@ import {useThemeProps} from '@mui/system';
 import {SCPrivateMessageFileType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
-// import deps only if csr
-let Picker;
-typeof window !== 'undefined' &&
-  import('emoji-picker-react').then((_module) => {
-    Picker = _module.default;
-  });
+import EmojiPicker from '../../shared/EmojiPicker';
 
 const messages = defineMessages({
   placeholder: {
@@ -210,7 +205,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
                       onOpen={handleOpenEmoji}
                       anchor="bottom"
                       disableSwipeToOpen>
-                      {Picker && <Picker onEmojiClick={handleEmojiClick} width="100%" />}
+                      <EmojiPicker onEmojiClick={handleEmojiClick} width="100%" />
                     </SwipeableDrawer>
                   ) : (
                     <Popover
@@ -229,7 +224,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
                       sx={(theme) => {
                         return {zIndex: theme.zIndex.tooltip};
                       }}>
-                      {Picker && <Picker onEmojiClick={handleEmojiClick} />}
+                      <EmojiPicker onEmojiClick={handleEmojiClick} />
                     </Popover>
                   )}
                 </Stack>
