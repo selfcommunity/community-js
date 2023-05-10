@@ -1,12 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Alert, Box, Fade, IconButton, Popover, Stack, TextField, useMediaQuery, useTheme} from '@mui/material';
+import {Alert, Box, Fade, IconButton, Popover, Stack, SwipeableDrawer, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
-import BaseDrawer from '../../shared/BaseDrawer';
 import {SCPrivateMessageFileType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
@@ -137,8 +136,11 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     setMessage(event.target.value);
   };
 
-  const handleToggleEmoji = (event: React.MouseEvent<HTMLElement>) => {
-    setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
+  const handleOpenEmoji = (event: React.MouseEvent<HTMLElement>) => {
+    setEmojiAnchorEl(event.currentTarget);
+  };
+  const handleCloseEmoji = (event: React.MouseEvent<HTMLElement>) => {
+    setEmojiAnchorEl(null);
   };
 
   const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
@@ -198,18 +200,23 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
             startAdornment: (
               <>
                 <Stack>
-                  <IconButton onClick={handleToggleEmoji}>
+                  <IconButton onClick={handleOpenEmoji}>
                     <Icon>sentiment_satisfied_alt</Icon>
                   </IconButton>
                   {isMobile ? (
-                    <BaseDrawer open={Boolean(emojiAnchorEl)} onClose={handleToggleEmoji} width={'100%'}>
-                      {Picker && <Picker onEmojiClick={handleEmojiClick} />}
-                    </BaseDrawer>
+                    <SwipeableDrawer
+                      open={Boolean(emojiAnchorEl)}
+                      onClose={handleCloseEmoji}
+                      onOpen={handleOpenEmoji}
+                      anchor="bottom"
+                      disableSwipeToOpen>
+                      {Picker && <Picker onEmojiClick={handleEmojiClick} width="100%" />}
+                    </SwipeableDrawer>
                   ) : (
                     <Popover
                       open={Boolean(emojiAnchorEl)}
                       anchorEl={emojiAnchorEl}
-                      onClose={handleToggleEmoji}
+                      onClose={handleCloseEmoji}
                       TransitionComponent={Fade}
                       anchorOrigin={{
                         vertical: 'top',

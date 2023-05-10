@@ -1,21 +1,15 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-
-import ChangeCover from './index';
+import Bullet from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Change Cover',
-  component: ChangeCover
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof ChangeCover>;
+  title: 'Design System/React UI Shared/Bullet',
+  component: Bullet
+} as ComponentMeta<typeof Bullet>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ChangeCover> = (args) => (
-  <div style={{width: 400}}>
-    <ChangeCover {...args} />
-  </div>
-);
+const Template: ComponentStory<typeof Bullet> = (args) => <Bullet {...args} />;
 
 export const Base = Template.bind({});
 

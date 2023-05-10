@@ -24,6 +24,7 @@ import {
   MenuItem,
   MenuList,
   Paper,
+  SwipeableDrawer,
   Typography,
   useMediaQuery,
   useTheme
@@ -67,7 +68,6 @@ import {
   RESTORE_CONTRIBUTION,
   SUSPEND_NOTIFICATION_CONTRIBUTION
 } from '../../constants/ContributionsActionsMenu';
-import BaseDrawer from '../BaseDrawer';
 
 const PREFIX = 'SCContributionActionsMenu';
 
@@ -1164,9 +1164,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         )}
       </IconButton>
       {isMobile ? (
-        <BaseDrawer open={open} onClose={handleClose} width={'100%'}>
+        <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
           {renderContent()}
-        </BaseDrawer>
+        </SwipeableDrawer>
       ) : (
         <PopperRoot
           open={open}

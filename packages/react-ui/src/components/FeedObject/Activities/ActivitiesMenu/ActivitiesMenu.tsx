@@ -1,18 +1,17 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
-import {Button, ListItemButton, ListItemText, useTheme, useMediaQuery} from '@mui/material';
+import {Button, ListItemButton, ListItemText, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {useContext} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import BaseDrawer from '../../../../shared/BaseDrawer';
 
 const messages = defineMessages({
   relevantActivities: {
@@ -99,7 +98,7 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
   const intl = useIntl();
 
   // HANDLERS
-  const handleClick = (event) => {
+  const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -191,7 +190,7 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
       <Box className={classes.selector}>
         <Tooltip
           title={<FormattedMessage id="ui.feedObject.activitiesMenu.tooltipTitle" defaultMessage="ui.feedObject.activitiesMenu.tooltipTitle" />}>
-          <Button variant="text" size="small" onClick={handleClick}>
+          <Button variant="text" size="small" onClick={handleOpen}>
             {selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS && followEnabled
               ? intl.formatMessage(messages.followedComments)
               : intl.formatMessage(messages[`${camelCase(selectedActivities)}`])}
@@ -200,9 +199,9 @@ export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
         </Tooltip>
       </Box>
       {isMobile ? (
-        <BaseDrawer open={open} onClose={handleClose} width={'100%'}>
+        <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
           {renderMenuContent()}
-        </BaseDrawer>
+        </SwipeableDrawer>
       ) : (
         <Menu
           anchorEl={anchorEl}

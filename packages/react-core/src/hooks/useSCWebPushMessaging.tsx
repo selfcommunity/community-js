@@ -275,7 +275,7 @@ export default function useSCWebPushMessaging() {
     /**
      * Check if Notifications supported in the service worker
      */
-    if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+    if (!(typeof ServiceWorkerRegistration !== 'undefined' && 'showNotification' in ServiceWorkerRegistration.prototype)) {
       Logger.info(SCOPE_SC_CORE, "Notifications aren't supported.");
       return;
     }

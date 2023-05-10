@@ -4,7 +4,7 @@ import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, ListItemText, Menu, Tooltip, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Composer from '../../../Composer';
@@ -13,8 +13,8 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import {SCFeedObjectType, SCContributionType, SCMediaType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
@@ -32,8 +32,7 @@ import {
 } from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
-import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../../../constants/SocialShare';
-import BaseDrawer from '../../../../shared/BaseDrawer';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from '../../../../constants/SocialShare';
 
 const messages = defineMessages({
   shares: {
@@ -383,9 +382,9 @@ export default function Share(inProps: ShareProps): JSX.Element {
                   {renderShareMenuItems()}
                 </Menu>
               ) : (
-                <BaseDrawer open={Boolean(anchorEl)} onClose={handleClose} width={'100%'}>
+                <SwipeableDrawer open={Boolean(anchorEl)} onClose={handleClose} onOpen={handleOpenShareMenu} anchor="bottom" disableSwipeToOpen>
                   {renderShareMenuItems()}
-                </BaseDrawer>
+                </SwipeableDrawer>
               )}
             </>
             {isComposerOpen && (
