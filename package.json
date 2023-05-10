@@ -82,11 +82,11 @@
     "validate-color": "^2.2.4"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/lab": "~5.0.0-alpha.128",
-    "@mui/material": "^5.12.2",
-    "@mui/x-date-pickers": "^6.2.1",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/lab": "~5.0.0-alpha.129",
+    "@mui/material": "^5.13.0",
+    "@mui/x-date-pickers": "^6.3.1",
     "@rpldy/chunked-sender": "^1.4.1",
     "@rpldy/chunked-uploady": "^1.4.1",
     "@rpldy/upload-button": "^1.4.1",
@@ -94,7 +94,7 @@
     "@rpldy/upload-preview": "^1.4.1",
     "@rpldy/uploady": "^1.4.1",
     "notistack": "^3.0.1",
-    "pdfjs-dist": "^3.5.141",
+    "pdfjs-dist": "^3.6.172",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18",
     "react-intl": "^5.25.0"

@@ -14,11 +14,7 @@ const Component = {
           margin: 0
         },
         '& img': {
-          margin: 0,
-          '&.focused': {
-            outline: '2px solid rgb(60, 132, 244)',
-            userSelect: 'none'
-          }
+          margin: 0
         },
         ['& mention']: {
           backgroundColor: theme.palette.primary.light
@@ -43,52 +39,56 @@ const Component = {
           fontSize: '1.143rem'
         }
       },
-      '& .image-resizer': {
-        display: 'block',
-        width: 7,
-        height: 7,
-        position: 'absolute',
-        backgroundColor: theme.palette.secondary.main,
-        border: '1px solid #fff',
-        '&.image-resizer-n': {
-          top: -6,
-          left: '48%',
-          cursor: 'n-resize'
-        },
-        '&.image-resizer-ne': {
-          top: -6,
-          right: -6,
-          cursor: 'ne-resize'
-        },
-        '&.image-resizer-e': {
-          top: '48%',
-          right: -6,
-          cursor: 'e-resize'
-        },
-        '&.image-resizerSe': {
-          bottom: -2,
-          right: -6,
-          cursor: 'se-resize'
-        },
-        '&.image-resizerS': {
-          bottom: -2,
-          left: '48%',
-          cursor: 's-resize'
-        },
-        '&.image-resizerSw': {
-          bottom: -2,
-          left: -6,
-          cursor: 'sw-resize'
-        },
-        '&.image-resizerW': {
-          bottom: '48%',
-          left: -6,
-          cursor: 'w-resize'
-        },
-        '&.image-resizer-nw': {
-          top: -6,
-          left: -6,
-          cursor: 'nw-resize'
+      '& .SCEditor-image': {
+        position: 'relative',
+        display: 'inline-block',
+        '& .image-resizer': {
+          display: 'block',
+          width: 7,
+          height: 7,
+          position: 'absolute',
+          backgroundColor: theme.palette.secondary.main,
+          border: '1px solid #fff',
+          '&.image-resizer-n': {
+            top: -6,
+            left: '48%',
+            cursor: 'n-resize'
+          },
+          '&.image-resizer-ne': {
+            top: -6,
+            right: -6,
+            cursor: 'ne-resize'
+          },
+          '&.image-resizer-e': {
+            top: '48%',
+            right: -6,
+            cursor: 'e-resize'
+          },
+          '&.image-resizer-se': {
+            bottom: -2,
+            right: -6,
+            cursor: 'se-resize'
+          },
+          '&.image-resizer-s': {
+            bottom: -2,
+            left: '48%',
+            cursor: 's-resize'
+          },
+          '&.image-resizer-sw': {
+            bottom: -2,
+            left: -6,
+            cursor: 'sw-resize'
+          },
+          '&.image-resizer-w': {
+            bottom: '48%',
+            left: -6,
+            cursor: 'w-resize'
+          },
+          '&.image-resizer-nw': {
+            top: -6,
+            left: -6,
+            cursor: 'nw-resize'
+          }
         }
       },
       '& hr': {

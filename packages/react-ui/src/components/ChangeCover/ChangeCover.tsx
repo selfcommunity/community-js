@@ -1,7 +1,20 @@
 import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box, useTheme, useMediaQuery} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Popover,
+  SwipeableDrawer,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
@@ -10,7 +23,6 @@ import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
-import BaseDrawer from '../../shared/BaseDrawer';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -105,7 +117,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
 
   // HANDLERS
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -220,14 +232,14 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
    */
   const cc = (
     <React.Fragment>
-      <Button size="small" variant="contained" disabled={loading} onClick={handleClick} {...rest}>
+      <Button size="small" variant="contained" disabled={loading} onClick={handleOpen} {...rest}>
         {isMobile ? <Icon>photo_camera</Icon> : <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />}
       </Button>
       <>
         {isMobile ? (
-          <BaseDrawer open={open} onClose={handleClose} width={'100%'}>
+          <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
             {renderMenuItems()}
-          </BaseDrawer>
+          </SwipeableDrawer>
         ) : (
           <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
             {renderMenuItems()}

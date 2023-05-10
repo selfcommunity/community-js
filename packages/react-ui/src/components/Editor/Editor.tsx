@@ -63,6 +63,7 @@ const editorTheme: EditorThemeClasses = {
   },
   ltr: `${PREFIX}-ltr`,
   paragraph: `${PREFIX}-paragraph`,
+  image: `${PREFIX}-image`,
   quote: `${PREFIX}-quote`,
   rtl: `${PREFIX}-rtl`,
   text: {
@@ -217,7 +218,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <OnChangePlugin onChange={handleChange} />
         <AutoLinkPlugin />
         <MentionsPlugin />
-        <HashtagPlugin />
+        {/*<HashtagPlugin />*/}
         <LinkPlugin />
         {!isMobile && <FloatingLinkPlugin />}
         <ApiPlugin ref={apiRef} />

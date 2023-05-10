@@ -207,7 +207,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
 
   // MEMO
   const taggingEnabled = useMemo(() => features.includes(SCFeatures.TAGGING), [features]);
-  const isMe = useMemo(() => scUserContext.user && scUser.id === scUserContext.user.id, [scUserContext.user, scUser]);
+  const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
   const followEnabled = useMemo(
     () =>
       SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&

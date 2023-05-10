@@ -14,7 +14,7 @@ const nodes = [
   ListItemNode,
   QuoteNode,
   TextNode,
-  HashtagNode,
+  // HashtagNode,
   AutoLinkNode,
   LinkNode,
   ImageNode,

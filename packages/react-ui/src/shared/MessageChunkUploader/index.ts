@@ -1,4 +1,5 @@
 import {
+  BatchItem,
   StartEventResponse,
   useChunkFinishListener,
   useChunkStartListener,
@@ -14,7 +15,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SCMessageChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
-import {createThumbnail, createVideoThumbnail, dataURLtoFile, pdfToJpeg} from '../../utils/thumbnailCoverter';
+import {createThumbnail, createVideoThumbnail, pdfToJpeg} from '../../utils/thumbnailCoverter';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 export interface MessageChunkUploaderProps {
   /**
@@ -58,6 +61,9 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
     setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
   };
+  const isImageType = (type) => {
+    return type.startsWith(SCMessageFileType.IMAGE);
+  };
   // HOOKS
   const intl = useIntl();
 
@@ -95,10 +101,10 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   useItemProgressListener((item) => {
     chunkStateRef.current.setChunk({id: item.id, completed: item.completed});
   });
-  const uploadThumbnail = (item, file, parentUuid) => {
+  const uploadThumbnail = (item, file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('parentuuid', parentUuid);
+    formData.append('parentuuid', item.uploadResponse.results[0].data.file_uuid);
     http
       .request({
         url: Endpoints.PrivateMessageUploadThumbnail.url(),
@@ -121,11 +127,10 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       });
   };
 
-  const generateImageThumbnail = (callBack, item, fileUrl, uuid) => {
-    callBack(fileUrl)
-      .then((data) => {
-        const file = dataURLtoFile(data, item.file.name);
-        uploadThumbnail(item, file, uuid);
+  const generateImageThumbnail = (callBack, item, fileUrl) => {
+    callBack(fileUrl, item.file.name)
+      .then((file) => {
+        uploadThumbnail(item, file);
       })
       .catch((error) => {
         console.error(error);
@@ -137,15 +142,9 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   };
 
   useItemFinishListener((item) => {
-    const callBack = item.file.type.startsWith(SCMessageFileType.DOCUMENT)
-      ? pdfToJpeg
-      : item.file.type.startsWith(SCMessageFileType.VIDEO)
-      ? createVideoThumbnail
-      : createThumbnail;
+    const callBack = item.file.type.startsWith(SCMessageFileType.DOCUMENT) ? pdfToJpeg : createVideoThumbnail;
     const _chunks = {...chunkStateRef.current.chunks};
-    if (item.file.size < 1048576) {
-      generateImageThumbnail(callBack, item, _chunks[item.id].file_url, item.uploadResponse.results[0].data.file_uuid);
-    } else {
+    if (item.uploadResponse.results.length > 1) {
       const formData = new FormData();
       formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
       formData.append('filename', chunkStateRef.current.chunks[item.id].filename);
@@ -158,7 +157,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
           headers: {'Content-Type': 'multipart/form-data'}
         })
         .then((res: HttpResponse<any>) => {
-          generateImageThumbnail(callBack, item, res.data.file_url, res.data.file_uuid);
+          isImageType(item.file.type) ? uploadThumbnail(item, item.file) : generateImageThumbnail(callBack, item, res.data.file_url);
         })
         .catch((error) => {
           error = formatHttpError(error);
@@ -167,6 +166,8 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
           delete _chunks[item.id];
           chunkStateRef.current.setChunks(_chunks);
         });
+    } else {
+      isImageType(item.file.type) ? uploadThumbnail(item, item.file) : generateImageThumbnail(callBack, item, _chunks[item.id].file_url);
     }
   });
 
@@ -186,7 +187,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
         method: Endpoints.PrivateMessageUploadMediaInChunks.method
       }
     };
-    if (data.totalCount > 0) {
+    if (data.totalCount > 1) {
       let _params = {
         partindex: data.chunk.index,
         totalparts: data.totalCount
@@ -212,13 +213,38 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   useRequestPreSend(({items, options}) => {
     if (items.length == 0) {
       return Promise.resolve({options});
+    } else if (isImageType(items[0].file.type)) {
+      return new Promise((resolve, reject) => {
+        Promise.all(
+          items.map(async (item) => {
+            return {...item, file: item.file.type === 'image/gif' ? item.file : await createThumbnail(item.file)};
+          })
+        )
+          .then((items) => {
+            resolve({
+              items: items as BatchItem[],
+              options: {
+                inputFieldName: options.inputFieldName
+              }
+            });
+          })
+          .catch((error) => {
+            Logger.error(error, SCOPE_SC_UI);
+            resolve({
+              options: {
+                inputFieldName: options.inputFieldName
+              }
+            });
+          });
+      });
+    } else {
+      //returned object can be wrapped with a promise
+      return Promise.resolve({
+        options: {
+          inputFieldName: options.inputFieldName
+        }
+      });
     }
-    //returned object can be wrapped with a promise
-    return Promise.resolve({
-      options: {
-        inputFieldName: options.inputFieldName
-      }
-    });
   });
 
   return null;

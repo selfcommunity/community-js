@@ -111,6 +111,8 @@ import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
+import MuiDrawer from './components/MuiDrawer';
+import SCEmojiPicker from './components/SCEmojiPicker';
 
 /**
  * Style fragments - Imports - End
@@ -167,6 +169,7 @@ const theme = {
     MuiButton,
     MuiContainer,
     MuiDialog,
+    MuiDrawer,
     MuiIcon,
     MuiIconButton,
     MuiOutlinedInput,
@@ -209,6 +212,7 @@ const theme = {
     SCEditorHashtagPlugin,
     SCEditorMentionPlugin,
     SCEditorToolbarPlugin,
+    SCEmojiPicker,
     SCFeed,
     SCFeedObject,
     SCFeedObjectDetailTemplate,

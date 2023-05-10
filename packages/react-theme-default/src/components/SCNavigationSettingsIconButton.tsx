@@ -1,11 +1,5 @@
 const Component = {
   styleOverrides: {
-    drawerRoot: ({theme}: any) => ({
-      '& .SCNavigationSettingsIconButton-paper': {
-        borderTopLeftRadius: theme.shape.borderRadius,
-        borderTopRightRadius: theme.shape.borderRadius
-      }
-    }),
     menuRoot: ({theme}: any) => ({
       '& .SCNavigationSettingsIconButton-paper': {
         maxWidth: 400,
