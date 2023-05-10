@@ -74,7 +74,11 @@ export class WebhookApiClient {
    * @param params
    * @param config
    */
-  static updateASingleWebhookEndpointField(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static updateASingleWebhookEndpointField(
+    id: number | string,
+    params: WebhookParamType,
+    config?: AxiosRequestConfig
+  ): Promise<SCWebhookEndpointType> {
     return apiRequest({...config, url: Endpoints.WebhookPatch.url({id}), method: Endpoints.WebhookPatch.method, data: params});
   }
 
@@ -193,16 +197,27 @@ export default class WebhookService {
   static async getASpecificWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.getASpecificWebhookEndpoint(id, config);
   }
-  static async updateASpecificWebhookEndpoint(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static async updateASpecificWebhookEndpoint(
+    id: number | string,
+    params: WebhookParamType,
+    config?: AxiosRequestConfig
+  ): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.updateASpecificWebhookEndpoint(id, params, config);
   }
-  static async updateASingleWebhookEndpointField(id: number | string, params: WebhookParamType, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
+  static async updateASingleWebhookEndpointField(
+    id: number | string,
+    params: WebhookParamType,
+    config?: AxiosRequestConfig
+  ): Promise<SCWebhookEndpointType> {
     return WebhookApiClient.updateASingleWebhookEndpointField(id, params, config);
   }
   static async deleteWebhookEndpoint(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return WebhookApiClient.deleteWebhookEndpoint(id, config);
   }
-  static async getAllWebhookEndpointAttempts(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
+  static async getAllWebhookEndpointAttempts(
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCWebhookEndpointAttemptType>> {
     return WebhookApiClient.getAllWebhookEndpointAttempts(id, config);
   }
   static async expireWebhookSigningSecret(id: number | string, config?: AxiosRequestConfig): Promise<SCWebhookEndpointType> {
