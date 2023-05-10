@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.187](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.186...@selfcommunity/react-ui@0.7.0-alpha.187) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix image plugin resize ([1b260b3](https://github.com/selfcommunity/community-js/commit/1b260b3e8e92262ad770098586442efa3cb85ab2))
+* Fix UserProfile.tsx ([10fc9d6](https://github.com/selfcommunity/community-js/commit/10fc9d6e3fabea3cf19e7cf99e9fb3327f977c04))
+* message chunk uploader fix. Asana issue: https://app.asana.com/0/1202638443591994/1204521980449396/f ([0140002](https://github.com/selfcommunity/community-js/commit/014000214add22caace5c48485ac176103ac0ced))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([beeda17](https://github.com/selfcommunity/community-js/commit/beeda17bfc106d120b557808d84c6e9ac162e20d))
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
 # [0.7.0-alpha.186](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.185...@selfcommunity/react-ui@0.7.0-alpha.186) (2023-05-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

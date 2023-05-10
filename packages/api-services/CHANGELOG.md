@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.9...@selfcommunity/api-services@0.4.0-alpha.10) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix build ([cdf16bf](https://github.com/selfcommunity/community-js/commit/cdf16bfff419d7d479b9f8ab656c18c18ef0575d))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
 # [0.4.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.8...@selfcommunity/api-services@0.4.0-alpha.9) (2023-05-09)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.35...@selfcommunity/react-core@0.4.0-alpha.36) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix UserProfile.tsx ([10fc9d6](https://github.com/selfcommunity/community-js/commit/10fc9d6e3fabea3cf19e7cf99e9fb3327f977c04))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
 # [0.4.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.34...@selfcommunity/react-core@0.4.0-alpha.35) (2023-05-09)
 
 **Note:** Version bump only for package @selfcommunity/react-core
