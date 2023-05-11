@@ -30,15 +30,15 @@ const Component = {
         height: theme.spacing(15),
         backgroundColor: theme.palette.secondary.light,
         '& .MuiCardContent-root': {
-          borderTop: `1px dashed${theme.palette.secondary.main}`,
-          '&:hover': {
-            backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
-          },
+          // borderTop: `1px dashed${theme.palette.secondary.main}`,
+          // '&:hover': {
+          //   backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
+          // },
           overflow: 'visible',
           padding: theme.spacing(1),
-          display: 'flex',
-          flexDirection: 'column',
-          height: theme.mixins.toolbar.minHeight,
+          //display: 'flex',
+          //flexDirection: 'column',
+          //height: theme.mixins.toolbar.minHeight,
           '& .SCMessageMediaUploader-close': {
             '& .MuiIcon-root': {
               fontSize: '0.857rem'
@@ -59,11 +59,10 @@ const Component = {
             position: 'relative',
             display: 'flex',
             margin: '0 auto',
-            height: theme.spacing(6.25),
             '& .MuiListItem-root': {
+              height: theme.spacing(6.25),
               marginRight: theme.spacing(3),
               img: {
-                // resizeMode: 'contain',
                 width: theme.spacing(6.25),
                 height: theme.spacing(6.25)
               },
