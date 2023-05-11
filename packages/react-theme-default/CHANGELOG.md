@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.135](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.134...@selfcommunity/react-theme-default@0.1.0-alpha.135) (2023-05-11)
+
+
+### Performance Improvements
+
+* Fix private message styles ([928698a](https://github.com/selfcommunity/community-js/commit/928698a937f1e5a4c82850841d5729ca479ed92b))
+
+
+
+
+
 # [0.1.0-alpha.134](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.133...@selfcommunity/react-theme-default@0.1.0-alpha.134) (2023-05-10)
 
 

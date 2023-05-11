@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.10...@selfcommunity/api-services@0.4.0-alpha.11) (2023-05-11)
+
+
+### Bug Fixes
+
+* Fix axios configurations ([9ec7a7d](https://github.com/selfcommunity/community-js/commit/9ec7a7df5feee128f9dc22e7f81982703abedd1d))
+
+
+
+
+
 # [0.4.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.9...@selfcommunity/api-services@0.4.0-alpha.10) (2023-05-10)
 
 

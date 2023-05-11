@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.188](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.187...@selfcommunity/react-ui@0.7.0-alpha.188) (2023-05-11)
+
+
+### Bug Fixes
+
+* Fix drawer ([df79ea6](https://github.com/selfcommunity/community-js/commit/df79ea6ea7c287f7f31f5370b3f8c0e1ce0ce1c0))
+
+
+### Performance Improvements
+
+* Fix private message styles ([928698a](https://github.com/selfcommunity/community-js/commit/928698a937f1e5a4c82850841d5729ca479ed92b))
+
+
+
+
+
 # [0.7.0-alpha.187](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.186...@selfcommunity/react-ui@0.7.0-alpha.187) (2023-05-10)
 
 
