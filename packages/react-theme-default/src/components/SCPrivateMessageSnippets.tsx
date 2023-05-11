@@ -3,20 +3,44 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      [theme.breakpoints.up('sm')]: {
-        height: '100vh',
-        maxHeight: `calc(100vh - ${theme.spacing(11)})`,
-        overflow: 'auto'
-      },
+      height: '100%',
+      width: '100%',
       '& .MuiCardContent-root': {
         display: 'flex',
         flexDirection: 'column',
+        height: `calc(100% - ${theme.spacing(4)})`,
+        padding: theme.spacing(2),
+        '& .SCPrivateMessageSnippets-search-bar': {
+          padding: theme.spacing(1),
+          '& .SCPrivateMessageSnippets-input': {
+            borderRadius: theme.shape.borderRadius,
+            backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
+            '&:hover': {
+              backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
+            },
+            '& .MuiInputBase-input, MuiFilledInput-input': {
+              padding: 0
+            },
+            '& .SCPrivateMessageSnippets-icon': {
+              marginRight: theme.spacing(1)
+            }
+          }
+        },
+        '& .SCPrivateMessageSnippets-new-message-button': {
+          color: `${theme.palette.primary.main} !important`,
+          alignSelf: 'center',
+          backgroundColor: 'transparent',
+          '&:hover': {
+            borderWidth: '2px !important',
+            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity)
+          }
+        },
         '& .MuiList-root': {
+          flexGrow: 1,
+          overflowY: 'auto',
+          padding: theme.spacing(1),
           '& .Mui-selected': {
             backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
-          },
-          '&:last-child': {
-            marginBottom: theme.spacing(2)
           },
           '& .MuiButtonBase-root, MuiListItemButton-root': {
             '&:hover': {borderRadius: 'inherit', backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.hoverOpacity)}
@@ -25,29 +49,6 @@ const Component = {
       },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCPrivateMessageSnippets-root, MuiCardContent-root': {
         padding: theme.spacing(2)
-      },
-      '& .SCPrivateMessageSnippets-input': {
-        '& .MuiInputBase-input, MuiFilledInput-input': {
-          padding: theme.spacing(0)
-        },
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
-        '&:hover': {
-          backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
-        },
-        height: theme.spacing(3.75),
-        '& .SCPrivateMessageSnippets-icon': {
-          marginRight: theme.spacing(1)
-        }
-      },
-      '& .SCPrivateMessageSnippets-new-message-button': {
-        color: `${theme.palette.primary.main} !important`,
-        alignSelf: 'center',
-        backgroundColor: 'transparent',
-        '&:hover': {
-          borderWidth: '2px !important',
-          backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity)
-        }
       }
     })
   }

@@ -2,13 +2,12 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       height: '100%',
-      [theme.breakpoints.down('md')]: {
-        height: '100vh'
-      },
+      width: '100%',
+      borderRadius: 0,
       '& .MuiCardContent-root': {
         padding: 0,
         '& .MuiList-root .MuiListItem-root': {
-          padding: theme.spacing(0, 1, 0, 1),
+          // padding: theme.spacing(0, 1, 0, 1),
           height: theme.spacing(10),
           [theme.breakpoints.up('sm')]: {
             width: '80%'

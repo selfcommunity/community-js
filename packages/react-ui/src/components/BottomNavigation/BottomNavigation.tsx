@@ -9,6 +9,7 @@ import {
 import React, {useMemo} from 'react';
 import {
   Link,
+  SCFeatures,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
@@ -88,6 +89,9 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
     return _preferences;
   }, [scPreferences.preferences]);
 
+  // MEMO
+  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGING), [scPreferences.features]);
+
   // RENDER
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
@@ -131,7 +135,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 }
               />
             ) : null,
-            scUserContext.user ? (
+            privateMessagingEnabled && scUserContext.user ? (
               <BottomNavigationAction
                 key="messages"
                 className={classes.action}
@@ -139,9 +143,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
                 value={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}
                 icon={
-                  <Badge
-                    badgeContent={scUserContext.user.unseen_notification_banners_counter + scUserContext.user.unseen_interactions_counter}
-                    color="secondary">
+                  <Badge badgeContent={0} color="secondary">
                     <Icon>email</Icon>
                   </Badge>
                 }

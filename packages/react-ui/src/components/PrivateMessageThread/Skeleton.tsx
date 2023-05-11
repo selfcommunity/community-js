@@ -1,7 +1,6 @@
 import React from 'react';
-import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
-import {CardContent, ListSubheader, Skeleton} from '@mui/material';
+import {Card, CardContent, ListSubheader, Skeleton} from '@mui/material';
 import List from '@mui/material/List';
 import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
 
@@ -12,7 +11,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

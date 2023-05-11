@@ -2,10 +2,9 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       borderRadius: theme.shape.borderRadius,
-      paddingTop: `${theme.spacing(2)} !important`,
-      paddingBottom: `${theme.spacing(4)} !important`,
-      paddingRight: `${theme.spacing(2)} !important`,
-      paddingLeft: `${theme.spacing(2)} !important`,
+      padding: theme.spacing(2, 2, 4, 2),
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+      marginBottom: theme.spacing(1),
       '& .MuiListItemSecondaryAction-root': {
         right: theme.spacing(0),
         top: theme.spacing(3)
