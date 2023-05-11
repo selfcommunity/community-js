@@ -46,4 +46,4 @@ export const HEADLESS = 'headless';
 export const CUSTOMIZE_HEADLESS = 'customize_headless';
 export const SYSTEM_PAGES = 'system_pages';
 export const REACTION = 'reaction';
-export const PRIVATE_MESSAGES = 'private_messages';
+export const PRIVATE_MESSAGING = 'private_messaging';

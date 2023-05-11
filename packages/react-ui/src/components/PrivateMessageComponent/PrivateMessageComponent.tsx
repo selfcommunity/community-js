@@ -1,13 +1,12 @@
-import React, {useContext, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Grid, useTheme, useMediaQuery} from '@mui/material';
-import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {Grid, useMediaQuery, useTheme} from '@mui/material';
+import {SCFeatures, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCPrivateMessageComponent';
 
@@ -46,16 +45,6 @@ export interface PrivateMessageComponentProps {
    */
   onThreadBack?: () => void;
   /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -92,11 +81,12 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     props: inProps,
     name: PREFIX
   });
-  const {id = null, autoHide = false, className = null, onItemClick = null, onThreadBack = null, onSingleMessageOpen = null, ...rest} = props;
+  const {id = null, className = null, onItemClick = null, onThreadBack = null, onSingleMessageOpen = null, ...rest} = props;
 
   // CONTEXT
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const scUserContext: SCUserContextType = useSCUser();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+
   // STATE
   const theme = useTheme<SCThemeType>();
   const [clear, setClear] = useState<boolean>(false);
@@ -114,6 +104,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
   };
 
+  // MEMO
+  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGING), [scPreferences.features]);
+  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -217,16 +210,13 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (!authUserId) {
-    return <HiddenPlaceholder />;
+  if (!authUserId || !privateMessagingEnabled) {
+    return null;
   }
-  if (!autoHide) {
-    return (
-      <Root container {...rest} className={classNames(classes.root, className)}>
-        {renderSnippets()}
-        {renderThread()}
-      </Root>
-    );
-  }
-  return <HiddenPlaceholder />;
+  return (
+    <Root container {...rest} className={classNames(classes.root, className)}>
+      {renderSnippets()}
+      {renderThread()}
+    </Root>
+  );
 }

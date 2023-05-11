@@ -144,7 +144,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
-  const privateMessageEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGES), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGING), [scPreferences.features]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);
@@ -238,7 +238,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             />
           </>
-          {privateMessageEnabled && (
+          {privateMessagingEnabled && (
             <IconButton
               className={classNames(classes.messages, {
                 [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {}))

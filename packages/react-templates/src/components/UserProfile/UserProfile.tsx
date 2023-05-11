@@ -214,7 +214,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
     [scPreferencesContext.preferences]
   );
-  const privateMessageEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGES), [features]);
+  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGING), [features]);
   const isConnection = useMemo(() => {
     if (isMe || !scUserContext.user || !user) {
       return false;
@@ -257,7 +257,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   }
 
   let actionItems = [];
-  if (privateMessageEnabled && (isConnection || (scUserContext.user && scUserContext.user.role !== null) || isStaff)) {
+  if (privateMessagingEnabled && (isConnection || (scUserContext.user && scUserContext.user.role !== null) || isStaff)) {
     actionItems = [
       {
         label: <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />,
