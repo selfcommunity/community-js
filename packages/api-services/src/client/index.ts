@@ -71,7 +71,7 @@ export class ApiClient implements ApiClientInterface {
 
   constructor(config?: any) {
     this.client = this.createClient(config);
-    this.setDefaultHeader({name: 'Content-Type', value: 'application/x-www-form-urlencoded', methods: ['post']});
+    this.setDefaultHeader({name: 'Content-Type', value: 'application/json', methods: ['post']});
   }
 
   /**
