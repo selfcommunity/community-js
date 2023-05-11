@@ -3,6 +3,8 @@ const Component = {
     root: ({theme}: any) => ({
       borderRadius: theme.spacing(1.5),
       padding: `${theme.spacing(0)}!important`,
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+      marginBottom: theme.spacing(1),
       '& .SCPrivateMessageSnippetItem-time': {
         float: 'right',
         fontSize: theme.typography.fontWeightRegular

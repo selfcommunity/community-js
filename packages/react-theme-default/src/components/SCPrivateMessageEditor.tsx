@@ -3,14 +3,6 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      width: '100%',
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      zIndex: 1,
-      [theme.breakpoints.down('md')]: {
-        position: 'fixed'
-      },
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
       '& .MuiIcon-root': {
         fontSize: '1.571rem'
@@ -32,6 +24,7 @@ const Component = {
         }
       },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
+        borderRadius: 0,
         height: theme.spacing(15),
         backgroundColor: theme.palette.secondary.light,
         '& .MuiCardContent-root': {
@@ -43,7 +36,7 @@ const Component = {
           padding: theme.spacing(1),
           display: 'flex',
           flexDirection: 'column',
-          minHeight: theme.spacing(15),
+          height: theme.mixins.toolbar.minHeight,
           '& .SCMessageMediaUploader-close': {
             '& .MuiIcon-root': {
               fontSize: '0.857rem'

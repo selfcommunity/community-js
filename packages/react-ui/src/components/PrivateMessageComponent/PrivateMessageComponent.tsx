@@ -191,6 +191,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           }}
           userObj={obj}
           clearSearch={clear}
+          elevation={0}
         />
       </Grid>
     );
@@ -207,6 +208,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           onNewMessageClose={handleMessageBack}
           onNewMessageSent={handleOnNewMessageSent}
           onSingleMessageOpen={handleSingleMessage}
+          elevation={0}
         />
       </Grid>
     );

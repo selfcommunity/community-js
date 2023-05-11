@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import Widget from '../Widget';
 import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
 import {SCFollowersManagerType, SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {
@@ -14,7 +13,7 @@ import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, CardContent, IconButton, List, ListSubheader, TextField, Typography} from '@mui/material';
+import {Box, Card, CardContent, CardProps, IconButton, List, ListSubheader, TextField, Typography} from '@mui/material';
 import PrivateMessageEditor from '../PrivateMessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
@@ -47,16 +46,17 @@ const classes = {
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
   autocomplete: `${PREFIX}-autocomplete`,
-  autocompleteDialog: `${PREFIX}-autocomplete-dialog`
+  autocompleteDialog: `${PREFIX}-autocomplete-dialog`,
+  editor: `${PREFIX}-editor`
 };
 
-const Root = styled(Widget, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface PrivateMessageThreadProps {
+export interface PrivateMessageThreadProps extends CardProps {
   /**
    * Thread object or thread id
    * default null
@@ -467,7 +467,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     }
     return (
       <CardContent>
-        <List subheader={<li />}>
+        <List>
           {Object.keys(formattedMessages).map((key) => (
             <li key={key} className={classes.section}>
               <ul>
@@ -495,6 +495,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           ))}
         </List>
         <PrivateMessageEditor
+          className={classes.editor}
           send={handleSend}
           autoHide={!isFollower && !role}
           onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
@@ -570,10 +571,17 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>
-            <PrivateMessageEditor send={handleSend} autoHide={!followers} error={error} onErrorRemove={() => setError(false)} />
+            <List></List>
+            <PrivateMessageEditor
+              className={classes.editor}
+              send={handleSend}
+              autoHide={!followers}
+              error={error}
+              onErrorRemove={() => setError(false)}
+            />
           </>
         ) : (
-          <Typography component="span" className={classes.emptyMessage}>
+          <Typography className={classes.emptyMessage}>
             <FormattedMessage id="ui.privateMessage.thread.emptyBox.message" defaultMessage="ui.privateMessage.thread.emptyBox.message" />
           </Typography>
         )}
