@@ -240,7 +240,13 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
         <Icon>more_vert</Icon>
       </Root>
       {isMobile ? (
-        <SwipeableDrawerRoot className={classes.drawerRoot} anchor="bottom" open={Boolean(anchorEl)} onClose={handleClose} onOpen={handleOpen}>
+        <SwipeableDrawerRoot
+          className={classes.drawerRoot}
+          anchor="bottom"
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          disableSwipeToOpen>
           <List>{renderList()}</List>
         </SwipeableDrawerRoot>
       ) : (

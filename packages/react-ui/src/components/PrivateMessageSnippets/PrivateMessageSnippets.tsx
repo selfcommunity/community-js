@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, CardContent, Icon, IconButton, List, TextField} from '@mui/material';
-import Widget from '../Widget';
+import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageSnippetsSkeleton from './Skeleton';
@@ -31,13 +30,13 @@ const classes = {
   newMessageButton: `${PREFIX}-new-message-button`
 };
 
-const Root = styled(Widget, {
+const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface PrivateMessageSnippetsProps {
+export interface PrivateMessageSnippetsProps extends CardProps {
   /**
    * Snippets list
    * @default[]
@@ -114,14 +113,15 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   const {autoHide = false, className = null, userObj = null, snippetActions, clearSearch, ...rest} = props;
 
   // STATE
-
   const {data, updateSnippets} = useSCFetchPrivateMessageSnippets({cacheStrategy: CacheStrategies.CACHE_FIRST});
   const [search, setSearch] = useState<string>('');
   const isObj = typeof userObj === 'object';
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
   // INTL
   const intl = useIntl();
+
   // REFS
   const refreshSubscription = useRef(null);
 

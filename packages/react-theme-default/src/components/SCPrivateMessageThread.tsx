@@ -3,19 +3,16 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      height: '100%',
+      width: '100%',
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
-      position: 'relative',
-      [theme.breakpoints.up('sm')]: {
-        height: '100vh',
-        maxHeight: 'calc(100vh - 6.2rem)'
-      },
+      borderRadius: 0,
       '& .MuiCardContent-root': {
-        overflow: 'auto',
-        padding: theme.spacing(0),
-        height: 'calc(100vh - 6.2rem)',
-        [theme.breakpoints.up('sm')]: {
-          height: `calc(100% - ${theme.spacing(6.25)})`
-        },
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        padding: 0,
+        position: 'relative',
         '& .MuiAlert-root': {
           position: 'absolute',
           bottom: 0,
@@ -24,8 +21,11 @@ const Component = {
           display: 'flex',
           justifyContent: 'center'
         },
-        '& .MuiList-root': {
-          margin: theme.spacing(0, 2, 0, 2),
+        '& > .MuiList-root': {
+          flexGrow: 1,
+          overflowY: 'auto',
+          margin: 0,
+          padding: theme.spacing(2, 2, 0, 2),
           '& .MuiListItem-root': {
             '&.SCPrivateMessageThread-receiver': {
               backgroundColor: theme.palette.common.white,
@@ -48,19 +48,16 @@ const Component = {
         }
       },
       '& .SCPrivateMessageThread-empty-message': {
-        position: 'relative',
-        top: '50%',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
         fontSize: '1.5rem'
       },
       '& .SCPrivateMessageThread-new-message-header': {
-        position: 'absolute',
-        top: 0,
-        right: 0,
         display: 'flex',
         width: '100%',
-        height: theme.spacing(6.25),
+        height: theme.mixins.toolbar.minHeight,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),

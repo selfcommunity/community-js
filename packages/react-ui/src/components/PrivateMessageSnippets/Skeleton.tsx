@@ -1,9 +1,8 @@
 import React from 'react';
-import Widget from '../Widget';
 import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import PrivateMessageSnippetItemSkeleton from '../PrivateMessageSnippetItem/Skeleton';
-import {Button, CardContent, Skeleton, Stack} from '@mui/material';
+import {Button, Card, CardContent, Skeleton, Stack} from '@mui/material';
 
 const PREFIX = 'SCPrivateMessageSnippetsSkeleton';
 
@@ -14,7 +13,7 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({}));
+const Root = styled(Card)(({theme}) => ({}));
 
 /**
  * > API documentation for the Community-JS PrivateMessageSnippets Skeleton component. Learn about the available props and the CSS API.
