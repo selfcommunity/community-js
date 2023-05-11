@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
-import {SCFeedObjectType} from '@selfcommunity/types';
+import {SCFeedUnitType} from '@selfcommunity/types';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -194,7 +194,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     });
     const controller = new AbortController();
     CategoryService.getCategoryTrendingFeed(categoryId, {limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
+      .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
         dispatch({
           type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
           payload: payload
@@ -213,7 +213,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
         type: actionWidgetTypes.LOADING_NEXT
       });
       CategoryService.getCategoryTrendingFeed(categoryId, {offset: limit, limit: 10})
-        .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
+        .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
           dispatch({
             type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: {...payload, initialized: true}
@@ -247,7 +247,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           url: state.next,
           method: Endpoints.UserFollowers.method
         })
-        .then((res: AxiosResponse<SCPaginatedResponse<SCFeedObjectType>>) => {
+        .then((res: AxiosResponse<SCPaginatedResponse<SCFeedUnitType>>) => {
           dispatch({
             type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
@@ -281,8 +281,8 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
       ) : (
         <React.Fragment>
           <List>
-            {state.results.slice(0, state.visibleItems).map((obj: SCFeedObjectType) => (
-              <ListItem key={obj.id}>
+            {state.results.slice(0, state.visibleItems).map((obj: SCFeedUnitType) => (
+              <ListItem key={obj[obj.type].id}>
                 <FeedObject elevation={0} feedObject={obj[obj.type]} {...FeedObjectProps} />
               </ListItem>
             ))}
@@ -323,8 +323,8 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
               </Typography>
             }>
             <List>
-              {state.results.map((obj: SCFeedObjectType) => (
-                <ListItem key={obj.id}>
+              {state.results.map((obj: SCFeedUnitType) => (
+                <ListItem key={obj[obj.type].id}>
                   <FeedObject elevation={0} feedObject={obj[obj.type]} {...FeedObjectProps} />
                 </ListItem>
               ))}
