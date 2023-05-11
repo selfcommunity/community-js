@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.178...@selfcommunity/react-templates@0.3.0-alpha.179) (2023-05-11)
+
+
+### Performance Improvements
+
+* Added feature for PrivateMessages ([e907361](https://github.com/selfcommunity/community-js/commit/e907361e37f2f061389eeb185a7a3aaa56add60a))
+
+
+
+
+
+# [0.3.0-alpha.178](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.177...@selfcommunity/react-templates@0.3.0-alpha.178) (2023-05-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.177](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.176...@selfcommunity/react-templates@0.3.0-alpha.177) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix UserProfile.tsx ([10fc9d6](https://github.com/selfcommunity/community-js/commit/10fc9d6e3fabea3cf19e7cf99e9fb3327f977c04))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
+# [0.3.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.175...@selfcommunity/react-templates@0.3.0-alpha.176) (2023-05-09)
+
+
+### Bug Fixes
+
+* Fix abort request ([9cd66ee](https://github.com/selfcommunity/community-js/commit/9cd66eebb9d5ebe70fe92312bb9688682f092a3d))
+
+
+
+
+
+# [0.3.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.174...@selfcommunity/react-templates@0.3.0-alpha.175) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix UserProfile.tsx private messages button ([229f622](https://github.com/selfcommunity/community-js/commit/229f6220a85b2e513b4b5f65f46ef7bcd693ecd8))
+* fixed loyalty program detail loading ([c922f2d](https://github.com/selfcommunity/community-js/commit/c922f2d9680aa1e91bc666091a5633c53cb62d91))
+
+
+
+
+
 # [0.3.0-alpha.174](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.173...@selfcommunity/react-templates@0.3.0-alpha.174) (2023-05-08)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

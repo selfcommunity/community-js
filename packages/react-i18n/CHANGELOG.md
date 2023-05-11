@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.18...@selfcommunity/react-i18n@0.5.0-alpha.19) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix image plugin resize ([1b260b3](https://github.com/selfcommunity/community-js/commit/1b260b3e8e92262ad770098586442efa3cb85ab2))
+
+
+
+
+
 # [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.17...@selfcommunity/react-i18n@0.5.0-alpha.18) (2023-05-05)
 
 

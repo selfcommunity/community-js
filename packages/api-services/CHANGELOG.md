@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.10...@selfcommunity/api-services@0.4.0-alpha.11) (2023-05-11)
+
+
+### Bug Fixes
+
+* Fix axios configurations ([9ec7a7d](https://github.com/selfcommunity/community-js/commit/9ec7a7df5feee128f9dc22e7f81982703abedd1d))
+
+
+
+
+
+# [0.4.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.9...@selfcommunity/api-services@0.4.0-alpha.10) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix build ([cdf16bf](https://github.com/selfcommunity/community-js/commit/cdf16bfff419d7d479b9f8ab656c18c18ef0575d))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
+# [0.4.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.8...@selfcommunity/api-services@0.4.0-alpha.9) (2023-05-09)
+
+
+### Bug Fixes
+
+* Fix abort request ([9cd66ee](https://github.com/selfcommunity/community-js/commit/9cd66eebb9d5ebe70fe92312bb9688682f092a3d))
+
+
+
+
+
 # [0.4.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.7...@selfcommunity/api-services@0.4.0-alpha.8) (2023-05-08)
 
 
