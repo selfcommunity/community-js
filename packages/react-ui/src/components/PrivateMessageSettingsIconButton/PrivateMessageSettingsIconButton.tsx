@@ -169,7 +169,8 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
           open={Boolean(anchorEl)}
           onClose={handleClose}
           onOpen={handleOpen}
-          PaperProps={{className: classes.paper}}>
+          PaperProps={{className: classes.paper}}
+          disableSwipeToOpen>
           <List>{renderList()}</List>
         </SwipeableDrawerRoot>
       ) : (
