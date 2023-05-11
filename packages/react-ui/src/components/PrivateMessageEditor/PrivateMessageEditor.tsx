@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
-import {SCPrivateMessageFileType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../shared/EmojiPicker';
@@ -46,7 +45,7 @@ export interface PrivateMessageEditorProps {
   /**
    * Callback to send the message
    */
-  send?: (message?: string, file?: SCPrivateMessageFileType) => void;
+  send?: (message?: string, file?: string) => void;
   /**
    * If there's an error
    * @default false
@@ -100,10 +99,11 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [message, setMessage] = useState<string>('');
-  const [messageFile, setMessageFile] = useState(null);
+  const [messageFiles, setMessageFiles] = useState([]);
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
   const [openMediaSection, setOpenMediaSection] = useState(false);
   const [threadId, setThreadId] = useState<number>(null);
+  const [uploading, setUploading] = useState(false);
 
   // INTL
   const intl = useIntl();
@@ -116,14 +116,20 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     setOpenMediaSection(false);
   };
 
-  const handleMessageFile = (f) => {
-    setMessageFile(f);
+  const handleMessageFiles = (f) => {
+    setMessageFiles(f);
   };
 
   const handleMessageSend = () => {
-    send(message, messageFile);
+    if (messageFiles.length) {
+      messageFiles.map((file) => {
+        send(message, file.file_uuid);
+      });
+    } else {
+      send(message, '');
+    }
     setMessage('');
-    setMessageFile(null);
+    setMessageFiles([]);
     setOpenMediaSection(false);
   };
 
@@ -148,7 +154,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     setThreadId(onThreadChangeId);
     if (threadId !== onThreadChangeId) {
       setMessage('');
-      setMessageFile(null);
+      setMessageFiles([]);
       setOpenMediaSection(false);
     }
   }, [onThreadChangeId]);
@@ -177,12 +183,17 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     return (
       <>
         {openMediaSection && (
-          <MessageMediaUploader open={openMediaSection} onClose={handleMediaSectionClose} forwardMessageFile={handleMessageFile} />
+          <MessageMediaUploader
+            open={openMediaSection}
+            onClose={handleMediaSectionClose}
+            forwardMessageFile={handleMessageFiles}
+            isUploading={setUploading}
+          />
         )}
         <TextField
           size="small"
           variant="filled"
-          disabled={Boolean(messageFile)}
+          disabled={Boolean(messageFiles.length) || openMediaSection}
           ref={ref}
           className={classes.messageInput}
           multiline
@@ -234,7 +245,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
               </>
             ),
             endAdornment: (
-              <IconButton disabled={!message && !messageFile} onClick={handleMessageSend}>
+              <IconButton disabled={(!message && !messageFiles.length) || uploading} onClick={handleMessageSend}>
                 <Icon>send</Icon>
               </IconButton>
             )

@@ -7,12 +7,12 @@ const Component = {
       position: 'relative',
       [theme.breakpoints.up('sm')]: {
         height: '100vh',
-        maxHeight: 'calc(100vh - 6.2rem)'
+        maxHeight: `calc(100vh - ${theme.spacing(11)})`
       },
       '& .MuiCardContent-root': {
         overflow: 'auto',
         padding: theme.spacing(0),
-        height: 'calc(100vh - 6.2rem)',
+        height: `calc(100vh - ${theme.spacing(11.75)})`,
         [theme.breakpoints.up('sm')]: {
           height: `calc(100% - ${theme.spacing(6.25)})`
         },

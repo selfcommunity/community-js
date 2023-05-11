@@ -29,7 +29,7 @@ export interface MessageChunkUploaderProps {
    * Handles on progress
    * @default null
    */
-  onStart: (item: any) => void;
+  onStart?: (item: any) => void;
   /**
    * Handles on success
    * @default null
@@ -48,7 +48,7 @@ export interface MessageChunkUploaderProps {
 }
 export default (props: MessageChunkUploaderProps): JSX.Element => {
   // PROPS
-  const {type = null, onSuccess = null, onProgress = null, onError = null, onStart = null} = props;
+  const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
 
   // REFS
   const firstRender = useRef<boolean>(true);
@@ -85,17 +85,20 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   // LISTENERS
   useItemStartListener((item) => {
-    onStart(item);
-    if (item.file.type.startsWith(SCMessageFileType.IMAGE)) {
+    if (!item.file.type.startsWith(SCMessageFileType.DOCUMENT)) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        chunkStateRef.current.setChunk({id: item.id, file_url: e.target.result});
+        if (isImageType(item.file.type)) {
+          chunkStateRef.current.setChunk({id: item.id, file_url: e.target.result});
+        } else {
+          chunkStateRef.current.setChunk({id: item.id, video_url: e.target.result});
+        }
       };
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
-    chunkStateRef.current.setChunk({id: item.id, file_uuid: null, completed: 0, filename: item.file.name, totalparts: null});
+    chunkStateRef.current.setChunk({id: item.id, file_uuid: null, completed: 0, file: item.file, totalparts: null});
   });
 
   useItemProgressListener((item) => {
@@ -116,7 +119,9 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
         const _chunks = {...chunkStateRef.current.chunks};
         delete _chunks[item.id];
         chunkStateRef.current.setChunks(_chunks);
-        onSuccess(res.data);
+        let data = res.data;
+        data.file = item.file;
+        onSuccess(data);
       })
       .catch((error) => {
         error = formatHttpError(error);
@@ -147,7 +152,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
     if (item.uploadResponse.results.length > 1) {
       const formData = new FormData();
       formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
-      formData.append('filename', chunkStateRef.current.chunks[item.id].filename);
+      formData.append('filename', chunkStateRef.current.chunks[item.id].file.name);
       formData.append('totalparts', chunkStateRef.current.chunks[item.id].totalparts);
       http
         .request({
