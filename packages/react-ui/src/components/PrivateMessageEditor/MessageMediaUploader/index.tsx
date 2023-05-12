@@ -1,6 +1,6 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, useContext, useState} from 'react';
-import {Alert, AlertTitle, CardContent, Fade, IconButton, ImageListItemBar, List, ListItem, Typography, Box} from '@mui/material';
+import {Alert, AlertTitle, CardContent, Fade, IconButton, ImageListItemBar, List, ListItem, Typography, Box, CardHeader} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -27,57 +27,18 @@ const UploadButton = asUploadButton(
   ))
 );
 
-const CustomPreview = ({file, mouseEvents, isHovering, onClear, loading}) => {
-  const getMouseEvents = (mouseEnter, mouseLeave) => ({
-    onMouseEnter: mouseEnter,
-    onMouseLeave: mouseLeave,
-    onTouchStart: mouseEnter,
-    onTouchMove: mouseLeave
-  });
-  const isPdf = file.file.type.startsWith(SCMessageFileType.DOCUMENT);
-  return (
-    <ListItem id={file.id ?? file.file_uuid} {...getMouseEvents(mouseEvents.onMouseEnter, mouseEvents.onMouseLeave)}>
-      {'video_url' in file ? <video src={file.video_url} /> : <img src={isPdf && !file.file_url ? pdfImagePlaceholder : file.file_url} />}
-      <ImageListItemBar
-        className={classNames(classes.previewActions, {[classes.progress]: file.completed})}
-        actionIcon={
-          <>
-            {typeof file.completed !== 'undefined' && file.completed !== 0 && (
-              <Typography textAlign="center">{`${Math.round(file.completed)}%`}</Typography>
-            )}
-            {isHovering && !loading && (
-              <IconButton onClick={onClear} size="small">
-                <Icon>delete</Icon>
-              </IconButton>
-            )}
-          </>
-        }
-      />
-      {isHovering && (
-        <Box component={'span'} className={classes.previewInfo}>
-          <Typography noWrap textAlign={'center'}>
-            {file.file.name}
-          </Typography>
-          <Typography textAlign={'center'} fontWeight={'light'}>
-            {bytesToSize(file.file.size)}
-          </Typography>
-        </Box>
-      )}
-    </ListItem>
-  );
-};
-
 const PREFIX = 'SCMessageMediaUploader';
 
 const classes = {
   root: `${PREFIX}-root`,
   uploadSection: `${PREFIX}-upload-section`,
   uploadButton: `${PREFIX}-upload-button`,
+  closeButton: `${PREFIX}-close-button`,
   previewContent: `${PREFIX}-preview-content`,
+  previewItem: `${PREFIX}-preview-item`,
   previewActions: `${PREFIX}-preview-actions`,
   progress: `${PREFIX}-progress`,
-  previewInfo: `${PREFIX}-preview-info`,
-  close: `${PREFIX}-close`
+  previewInfo: `${PREFIX}-preview-info`
 };
 
 const Root = styled(Widget, {
@@ -87,6 +48,11 @@ const Root = styled(Widget, {
 })(({theme}) => ({}));
 
 export interface MessageMediaUploaderProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
   /**
    * Callback to pass message file item
    * @param file
@@ -111,13 +77,12 @@ export interface MessageMediaUploaderProps {
 
 export default function MessageMediaUploader(props: MessageMediaUploaderProps): JSX.Element {
   //PROPS
-  const {forwardMessageFile, onClose, isUploading} = props;
+  const {className, forwardMessageFile, onClose, isUploading} = props;
 
   // STATE
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState({});
   const [previews, setPreviews] = useState([]);
-  const [loaded, setLoaded] = useState<boolean>(false);
   const [errors, setErrors] = useState({});
   const [isHovered, setIsHovered] = useState({});
 
@@ -142,9 +107,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
   };
 
   const handleSuccess = (media: SCPrivateMessageUploadThumbnailType) => {
-    setLoaded(true);
     setFiles([...files, media]);
-    setPreviews([]);
     forwardMessageFile([...files, media]);
   };
 
@@ -179,6 +142,13 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     });
   };
 
+  const getMouseEvents = (mouseEnter, mouseLeave) => ({
+    onMouseEnter: mouseEnter,
+    onMouseLeave: mouseLeave,
+    onTouchStart: mouseEnter,
+    onTouchMove: mouseLeave
+  });
+
   /**
    * Renders root object
    */
@@ -189,13 +159,15 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     );
   };
   return (
-    <Root className={classes.root}>
-      <CardContent>
-        <Typography component={'span'} className={classes.close} textAlign={loaded ? 'right' : 'left'}>
-          <Icon fontSize={'small'} onClick={onClose}>
+    <Root className={classNames(classes.root, className)}>
+      <CardHeader
+        action={
+          <Icon fontSize={'small'} onClick={onClose} className={classes.closeButton}>
             close
           </Icon>
-        </Typography>
+        }
+      />
+      <CardContent>
         {Object.keys(errors).map((id: string) => (
           <Fade in key={id}>
             <Alert severity="error" onClose={handleRemoveErrors(id)}>
@@ -213,6 +185,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           chunkSize={204800}
           multiple
           chunked
+          maxConcurrent={2}
           fileFilter={filterBySizeAndType}>
           <MessageChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
           {!files.length && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
@@ -225,18 +198,46 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           )}
           <List className={classes.previewContent}>
             {previews.length !== 0 &&
-              previews.map((item, index) => (
-                <CustomPreview
-                  key={index}
-                  file={item}
-                  mouseEvents={{
-                    onMouseEnter: () => handleMouseEnter(item.file_uuid),
-                    onMouseLeave: () => handleMouseLeave(item.file_uuid)
-                  }}
-                  isHovering={isHovered[item.file_uuid]}
-                  onClear={() => handleClear(item.file_uuid)}
-                  loading={Object.keys(uploading).length !== 0}
-                />
+              previews.map((item) => (
+                <ListItem
+                  className={classes.previewItem}
+                  key={item.id ?? item.file_uuid}
+                  {...getMouseEvents(
+                    () => handleMouseEnter(item.file_uuid),
+                    () => handleMouseLeave(item.file_uuid)
+                  )}>
+                  {'video_url' in item ? (
+                    <video src={item.video_url} />
+                  ) : (
+                    <img src={item.file.type.startsWith(SCMessageFileType.DOCUMENT) && !item.file_url ? pdfImagePlaceholder : item.file_url} />
+                  )}
+                  <ImageListItemBar
+                    className={classNames(classes.previewActions, {[classes.progress]: item.completed})}
+                    title={
+                      typeof item.completed !== 'undefined' &&
+                      item.completed !== 0 && <Typography textAlign="center">{`${Math.round(item.completed)}%`}</Typography>
+                    }
+                    actionIcon={
+                      <>
+                        {isHovered[item.file_uuid] && Object.keys(uploading).length === 0 && (
+                          <IconButton onClick={() => handleClear(item.file_uuid)} size="small">
+                            <Icon>delete</Icon>
+                          </IconButton>
+                        )}
+                      </>
+                    }
+                  />
+                  {isHovered[item.file_uuid] && (
+                    <Box component={'span'} className={classes.previewInfo}>
+                      <Typography noWrap textAlign={'center'}>
+                        {item.file.name}
+                      </Typography>
+                      <Typography textAlign={'center'} fontWeight={'light'}>
+                        {bytesToSize(item.file.size)}
+                      </Typography>
+                    </Box>
+                  )}
+                </ListItem>
               ))}
           </List>
         </ChunkedUploady>

@@ -25,25 +25,28 @@ const Component = {
           '&.Mui-disabled': {border: 'none'}
         }
       },
+      '& .SCPrivateMessageEditor-emoji-section, SCEmojiPicker-root': {
+        '& .EmojiPickerReact.epr-main': {
+          borderRadius: 0,
+          '& .epr-preview': {
+            display: 'none'
+          }
+        }
+      },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
         borderRadius: 0,
         height: theme.spacing(15),
         backgroundColor: theme.palette.secondary.light,
+        '& .MuiCardHeader-root': {
+          paddingBottom: theme.spacing(0),
+          '& .SCMessageMediaUploader-close-button': {
+            fontSize: '0.857rem'
+          }
+        },
         '& .MuiCardContent-root': {
-          // borderTop: `1px dashed${theme.palette.secondary.main}`,
-          // '&:hover': {
-          //   backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
-          // },
-          overflow: 'visible',
+          overflow: 'auto',
           padding: theme.spacing(1),
-          //display: 'flex',
-          //flexDirection: 'column',
           //height: theme.mixins.toolbar.minHeight,
-          '& .SCMessageMediaUploader-close': {
-            '& .MuiIcon-root': {
-              fontSize: '0.857rem'
-            }
-          },
           '& .SCMessageMediaUploader-upload-section': {
             '& .SCMessageMediaUploader-upload-button': {
               display: 'flex',
@@ -67,6 +70,7 @@ const Component = {
                 height: theme.spacing(6.25)
               },
               video: {
+                objectFit: 'fill',
                 width: theme.spacing(6.25),
                 height: theme.spacing(6.25)
               }
