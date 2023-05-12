@@ -49,13 +49,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CategoryTrendingFeedWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -172,6 +172,28 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {scCategory} = useSCFetchCategory({id: categoryId});
+  const catId = scCategory ? scCategory.id : null;
+
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        CategoryService.getCategoryTrendingFeed(catId, {limit})
+          .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [catId, state.isLoadingNext, state.initialized, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
@@ -182,37 +204,21 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     }
   }, [scUserContext.user]);
 
-  /**
-   * On mount, fetches trending posts list
-   */
   useEffect(() => {
-    if ((!contentAvailability && !scUserContext.user) || state.initialized || state.isLoadingNext) {
-      return;
+    let _t;
+    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user.id))) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    CategoryService.getCategoryTrendingFeed(categoryId, {limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [contentAvailability, scUserContext.user, state.initialized]);
+  }, [catId, scUserContext.user, contentAvailability]);
 
+  // Add 10 - limit items to initial dialog page
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      CategoryService.getCategoryTrendingFeed(categoryId, {offset: limit, limit: 10})
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      CategoryService.getCategoryTrendingFeed(catId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
           dispatch({
             type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
@@ -224,7 +230,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, state.initialized]);
+  }, [openDialog, state.next, state.results, state.initialized, catId]);
 
   /**
    * Virtual feed update
@@ -235,17 +241,12 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
 
   // HANDLERS
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowers.method
+          method: Endpoints.CategoryTrendingFeed.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCFeedUnitType>>) => {
           dispatch({
@@ -254,10 +255,10 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext, state.initialized]
+    [dispatch, state.next]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 
@@ -316,7 +317,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
             next={handleNext}
             hasMoreNext={Boolean(state.next)}
             loaderNext={<FeedObjectSkeleton elevation={0} {...FeedObjectProps} />}
-            height={isMobile ? '100%' : 400}
+            height={isMobile ? 800 : 400}
             endMessage={
               <Typography className={classes.endMessage}>
                 <FormattedMessage id="ui.categoryTrendingFeedWidget.noMoreResults" defaultMessage="ui.categoryTrendingFeedWidget.noMoreResults" />

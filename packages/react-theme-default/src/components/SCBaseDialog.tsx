@@ -57,7 +57,7 @@ const Component = {
         fontSize: '1rem',
         marginRight: theme.spacing(1),
         [theme.breakpoints.up('md')]: {
-          marginRight: 0
+          marginRight: -6
         }
       }
     })

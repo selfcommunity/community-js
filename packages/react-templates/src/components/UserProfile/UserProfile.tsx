@@ -230,7 +230,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   // Utils
   const getWidgets = () => {
     let _widgets = [];
-    if (scUserContext.user === null) {
+    if (!scUserContext.user) {
       _widgets = [];
     } else if (scUserContext.user.id === scUser.id) {
       _widgets = [...MY_PROFILE_WIDGETS];

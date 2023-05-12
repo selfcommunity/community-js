@@ -35,7 +35,7 @@ export const userActionTypes = {
 function userReducer(state, action) {
   switch (action.type) {
     case userActionTypes.LOGIN_LOADING:
-      return {user: null, session: Object.assign({}, state.session), error: null, loading: true};
+      return {session: Object.assign({}, state.session), error: null, loading: true};
 
     case userActionTypes.LOGIN_SUCCESS:
       return {user: action.payload.user, error: null, session: Object.assign({}, state.session), loading: false};
@@ -94,7 +94,7 @@ function stateInitializer(session: SCSessionType): any {
     }
   }
   http.setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
-  return {user: null, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};
+  return {user: undefined, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};
 }
 
 /**
