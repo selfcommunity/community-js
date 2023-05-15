@@ -111,6 +111,7 @@ import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
+import SCIncubatorDetail from './components/SCIncubatorDetail';
 import MuiDrawer from './components/MuiDrawer';
 import SCEmojiPicker from './components/SCEmojiPicker';
 
@@ -271,6 +272,7 @@ const theme = {
     SCIncubatorListWidget,
     SCIncubatorSkeleton,
     SCIncubatorSuggestionWidget,
+    SCIncubatorDetail,
     SCPrizeItemSkeleton
   },
   selfcommunity: {
