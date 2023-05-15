@@ -1,35 +1,32 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
-import CategoryTrendingFeedWidgetSkeleton from '../CategoryTrendingFeedWidget/Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCFetchFeedObject,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import CustomAdv from '../CustomAdv';
 import classNames from 'classnames';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
-import {http, Endpoints, HttpResponse, FeedObjectService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, FeedObjectService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCContributionType, SCCustomAdvPosition, SCFeedDiscussionType, SCFeedObjectType} from '@selfcommunity/types';
+import {SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {
-  SCCache,
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCThemeType,
-  SCUserContextType,
-  useIsComponentMountedRef,
-  useSCFetchFeedObject,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {AxiosResponse} from 'axios';
@@ -151,7 +148,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     template = SCFeedObjectTemplateType.SNIPPET,
     className = null,
     autoHide = null,
-    limit = 4,
+    limit = 5,
     FeedObjectProps = {
       template: SCFeedObjectTemplateType.SNIPPET
     },
@@ -181,9 +178,10 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // HOOKS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const objId = obj ? obj.id : null;
 
   // MEMO
   const preferences = useMemo(() => {
@@ -192,58 +190,58 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     return _preferences;
   }, [scPreferences.preferences]);
 
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        FeedObjectService.relatedFeedObjects(obj.type, obj.id, {limit})
+          .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [objId, state.initialized, state.isLoadingNext, limit, dispatch]
+  );
+
   // EFFECTS
   useEffect(() => {
-    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) {
-      return;
-    } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t: string | number | NodeJS.Timeout;
+    if (
+      scUserContext.user !== undefined &&
+      objId &&
+      preferences &&
+      (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] ||
+        (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && scUserContext.user?.id))
+    ) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [obj?.id, scUserContext.user]);
+  }, [objId, scUserContext.user, preferences]);
 
-  /**
-   * On mount, fetches related discussions list
-   */
-  useEffect(() => {
-    if ((!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [preferences, scUserContext.user]);
-
+  // Add 10 - limit items to initial dialog page
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      FeedObjectService.relatedFeedObjects(feedObjectType, feedObjectId, {offset: limit, limit: 10})
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      FeedObjectService.relatedFeedObjects(obj.type, obj.id, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, limit, state.next, state.initialized, state.results.length, obj]);
 
   /**
    * Virtual feed update
@@ -252,19 +250,22 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     onHeightChange && onHeightChange();
   }, [state.results]);
 
+  useEffect(() => {
+    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) {
+      return;
+    } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [obj?.id, preferences, cacheStrategy, scUserContext.user]);
+
   // HANDLERS
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowers.method
+          method: Endpoints.RelatedFeedObjects.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCFeedObjectType>>) => {
           dispatch({
@@ -273,10 +274,10 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext, state.initialized]
+    [dispatch, state.next]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 
@@ -287,7 +288,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   if (!state.initialized) {
     return <Skeleton />;
   }
-  function renderAdvertising() {
+  const renderAdvertising = (): JSX.Element | null => {
     if (
       preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED] &&
       ((preferences[SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED] && scUserContext.user === null) ||
@@ -303,7 +304,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
       );
     }
     return null;
-  }
+  };
   const advPosition = Math.floor(Math.random() * (Math.min(state.count, 5) - 1 + 1) + 1);
 
   const content = (

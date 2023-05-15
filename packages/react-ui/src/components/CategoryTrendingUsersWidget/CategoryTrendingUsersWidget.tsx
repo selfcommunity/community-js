@@ -1,18 +1,16 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
-import {http, Endpoints, HttpResponse, CategoryService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, CategoryService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
   SCCache,
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
   SCThemeType,
-  SCUserContext,
   SCUserContextType,
-  useIsComponentMountedRef,
+  useSCFetchCategory,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -20,13 +18,12 @@ import {FormattedMessage} from 'react-intl';
 import User, {UserProps, UserSkeleton} from '../User';
 import classNames from 'classnames';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCUserType} from '@selfcommunity/types/src/types';
@@ -147,7 +144,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.TRENDING_FEED_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.TRENDING_PEOPLE_TOOLS_STATE_CACHE_PREFIX_KEY, categoryId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -168,59 +165,54 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {scCategory} = useSCFetchCategory({id: categoryId});
+  const catId = scCategory ? scCategory.id : null;
+
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        CategoryService.getCategoryTrendingFollowers(catId, {limit})
+          .then((payload: SCPaginatedResponse<SCUserType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [catId, state.isLoadingNext, state.initialized, limit, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t;
+    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [scUserContext.user]);
-
-  /**
-   * On mount, fetches trending user list
-   */
-  useEffect(() => {
-    if ((!contentAvailability && !scUserContext.user) || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    CategoryService.getCategoryTrendingFollowers(categoryId, {limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCUserType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [contentAvailability, scUserContext.user]);
+  }, [catId, scUserContext.user, contentAvailability]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      CategoryService.getCategoryTrendingFollowers(categoryId, {offset: limit, limit: 10})
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      CategoryService.getCategoryTrendingFollowers(catId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, limit, state.next, state.initialized, state.results.length, catId]);
 
   /**
    * Virtual feed update
@@ -229,19 +221,22 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
     onHeightChange && onHeightChange();
   }, [state.results]);
 
+  useEffect(() => {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (isInteger(catId) && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [contentAvailability, cacheStrategy, catId, scUserContext.user]);
+
   // HANDLERS
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowers.method
+          method: Endpoints.CategoryTrendingPeople.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
           dispatch({
@@ -250,10 +245,10 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext, state.initialized]
+    [dispatch, state.next]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 

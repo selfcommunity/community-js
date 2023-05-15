@@ -1,21 +1,21 @@
 import {asUploadButton} from '@rpldy/upload-button';
-import React, {forwardRef, useCallback, useContext, useRef, useState} from 'react';
-import {Alert, AlertTitle, Box, CardContent, Fade, IconButton, Typography} from '@mui/material';
+import React, {forwardRef, useContext, useState} from 'react';
+import {Alert, AlertTitle, CardContent, Fade, IconButton, ImageListItemBar, List, ListItem, Typography, Box, CardHeader} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {SCMessageFileType, SCPrivateMessageFileType} from '@selfcommunity/types';
+import {SCMessageFileType, SCPrivateMessageUploadThumbnailType} from '@selfcommunity/types';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCContext, SCContextType} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {SCMessageChunkType} from '../../../types/media';
 import Widget from '../../Widget';
 import MessageChunkUploader from '../../../shared/MessageChunkUploader';
-import UploadPreview from '@rpldy/upload-preview';
 import UploadDropZone from '@rpldy/upload-drop-zone';
 import {FormattedMessage} from 'react-intl';
+import {pdfImagePlaceholder} from '../../../utils/thumbnailCoverter';
+import classNames from 'classnames';
 import {bytesToSize} from '../../../utils/sizeCoverter';
-import {fallbackImage} from '../../../utils/thumbnailCoverter';
 
 const MAX_FILE_SIZE = 10485760;
 
@@ -33,11 +33,12 @@ const classes = {
   root: `${PREFIX}-root`,
   uploadSection: `${PREFIX}-upload-section`,
   uploadButton: `${PREFIX}-upload-button`,
+  closeButton: `${PREFIX}-close-button`,
   previewContent: `${PREFIX}-preview-content`,
+  previewItem: `${PREFIX}-preview-item`,
   previewActions: `${PREFIX}-preview-actions`,
   progress: `${PREFIX}-progress`,
-  previewInfo: `${PREFIX}-preview-info`,
-  close: `${PREFIX}-close`
+  previewInfo: `${PREFIX}-preview-info`
 };
 
 const Root = styled(Widget, {
@@ -47,6 +48,11 @@ const Root = styled(Widget, {
 })(({theme}) => ({}));
 
 export interface MessageMediaUploaderProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
   /**
    * Callback to pass message file item
    * @param file
@@ -62,70 +68,78 @@ export interface MessageMediaUploaderProps {
    * @default false
    */
   open?: boolean;
+  /**
+   * On messsage media upload  isUploading callback function
+   * @default false
+   */
+  isUploading?: (boolean) => void;
 }
 
 export default function MessageMediaUploader(props: MessageMediaUploaderProps): JSX.Element {
   //PROPS
-  const {forwardMessageFile, onClose} = props;
+  const {className, forwardMessageFile, onClose, isUploading} = props;
 
   // STATE
-  const [file, setFile] = useState(null);
-  const [batchFile, setBatchFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState({});
-  const previewMethodsRef = useRef();
   const [previews, setPreviews] = useState([]);
-  const [loaded, setLoaded] = useState<boolean>(false);
   const [errors, setErrors] = useState({});
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState({});
+
   // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
+  // HANDLERS
+  const update = (list, itemId) => {
+    return list.filter((i) => i.file_uuid != itemId);
+  };
 
-  // Chunk Upload handlers
-
-  const onPreviewsChanged = useCallback((previews) => {
-    setPreviews(previews);
-  }, []);
-
-  const onClear = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    if (previewMethodsRef.current?.clear) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      previewMethodsRef.current.clear();
+  const handleClear = (itemId?: string) => {
+    if (itemId) {
+      setPreviews((prev) => update(prev, itemId));
+      setFiles((prev) => update(prev, itemId));
+      forwardMessageFile(update(files, itemId));
+    } else {
+      setFiles([]);
+      setPreviews([]);
+      forwardMessageFile([]);
     }
-    setPreviews([]);
-    setFile(null);
-    setBatchFile(null);
-    forwardMessageFile(null);
-    setLoaded(false);
-  }, [previewMethodsRef]);
+    setUploading({});
+  };
 
-  const handleSuccess = (media: SCPrivateMessageFileType) => {
-    setLoaded(true);
-    setFile(media);
-    forwardMessageFile(media.file_uuid);
+  const handleSuccess = (media: SCPrivateMessageUploadThumbnailType) => {
+    setFiles([...files, media]);
+    forwardMessageFile([...files, media]);
   };
 
   const handleProgress = (chunks: any) => {
     setUploading({...chunks});
-  };
-
-  const handleStart = (item: any) => {
-    setBatchFile(item.file);
+    setPreviews([...files, ...Object.values(chunks)]);
+    isUploading(Object.keys(chunks).length !== 0);
   };
 
   const handleError = (chunk: SCMessageChunkType, error: string) => {
     setErrors({...errors, [chunk.id]: {...chunk, error}});
-    onClear();
+    handleClear();
   };
 
   const handleRemoveErrors = (id: string) => {
     return () => {
       delete errors[id];
       setErrors({...errors});
-      setFile(null);
+      setFiles([]);
+      setPreviews([]);
     };
+  };
+  const handleMouseEnter = (index) => {
+    setIsHovered((prevState) => {
+      return {...prevState, [index]: true};
+    });
+  };
+
+  const handleMouseLeave = (index) => {
+    setIsHovered((prevState) => {
+      return {...prevState, [index]: false};
+    });
   };
 
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
@@ -144,15 +158,16 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
       (file.type.startsWith(SCMessageFileType.IMAGE) || file.type.startsWith(SCMessageFileType.VIDEO) || file.type.startsWith(SCMessageFileType.PDF))
     );
   };
-
   return (
-    <Root className={classes.root}>
-      <CardContent>
-        <Typography component={'span'} className={classes.close} textAlign={loaded ? 'right' : 'left'}>
-          <Icon fontSize={'small'} onClick={onClose}>
+    <Root className={classNames(classes.root, className)}>
+      <CardHeader
+        action={
+          <Icon fontSize={'small'} onClick={onClose} className={classes.closeButton}>
             close
           </Icon>
-        </Typography>
+        }
+      />
+      <CardContent>
         {Object.keys(errors).map((id: string) => (
           <Fade in key={id}>
             <Alert severity="error" onClose={handleRemoveErrors(id)}>
@@ -170,9 +185,10 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           chunkSize={204800}
           multiple
           chunked
+          maxConcurrent={2}
           fileFilter={filterBySizeAndType}>
-          <MessageChunkUploader onStart={handleStart} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
-          {!file && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
+          <MessageChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
+          {!files.length && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
             <UploadDropZone className={classes.uploadSection}>
               <UploadButton inputFieldName="file" className={classes.uploadButton} />
               <Typography textAlign={'center'} fontWeight={'medium'}>
@@ -180,41 +196,50 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
               </Typography>
             </UploadDropZone>
           )}
-          <Box
-            className={classes.previewContent}
-            {...getMouseEvents(
-              () => setIsHovered(true),
-              () => setIsHovered(false)
-            )}>
-            <UploadPreview
-              rememberPreviousBatches
-              previewMethodsRef={previewMethodsRef}
-              onPreviewsChanged={onPreviewsChanged}
-              fallbackUrl={fallbackImage}
-            />
-            {batchFile && (
-              <Box className={classes.previewActions}>
-                {Object.values(uploading).map((chunk: SCMessageChunkType) => (
-                  <Box key={chunk.id} className={classes.progress}>
-                    <Typography textAlign="center">{`${Math.round(chunk.completed)}%`}</Typography>
-                  </Box>
-                ))}
-                {loaded && isHovered && (
-                  <IconButton onClick={onClear} size="small">
-                    <Icon>delete</Icon>
-                  </IconButton>
-                )}
-              </Box>
-            )}
-          </Box>
-          {loaded && isHovered && (
-            <Box className={classes.previewInfo}>
-              <Typography textAlign={'center'}>{batchFile?.name}</Typography>
-              <Typography textAlign={'center'} fontWeight={'light'}>
-                {batchFile && bytesToSize(batchFile.size)}
-              </Typography>
-            </Box>
-          )}
+          <List className={classes.previewContent}>
+            {previews.length !== 0 &&
+              previews.map((item) => (
+                <ListItem
+                  className={classes.previewItem}
+                  key={item.id ?? item.file_uuid}
+                  {...getMouseEvents(
+                    () => handleMouseEnter(item.file_uuid),
+                    () => handleMouseLeave(item.file_uuid)
+                  )}>
+                  {'video_url' in item ? (
+                    <video src={item.video_url} />
+                  ) : (
+                    <img src={item.file.type.startsWith(SCMessageFileType.DOCUMENT) && !item.file_url ? pdfImagePlaceholder : item.file_url} />
+                  )}
+                  <ImageListItemBar
+                    className={classNames(classes.previewActions, {[classes.progress]: item.completed})}
+                    title={
+                      typeof item.completed !== 'undefined' &&
+                      item.completed !== 0 && <Typography textAlign="center">{`${Math.round(item.completed)}%`}</Typography>
+                    }
+                    actionIcon={
+                      <>
+                        {isHovered[item.file_uuid] && Object.keys(uploading).length === 0 && (
+                          <IconButton onClick={() => handleClear(item.file_uuid)} size="small">
+                            <Icon>delete</Icon>
+                          </IconButton>
+                        )}
+                      </>
+                    }
+                  />
+                  {isHovered[item.file_uuid] && (
+                    <Box component={'span'} className={classes.previewInfo}>
+                      <Typography noWrap textAlign={'center'}>
+                        {item.file.name}
+                      </Typography>
+                      <Typography textAlign={'center'} fontWeight={'light'}>
+                        {bytesToSize(item.file.size)}
+                      </Typography>
+                    </Box>
+                  )}
+                </ListItem>
+              ))}
+          </List>
         </ChunkedUploady>
       </CardContent>
     </Root>

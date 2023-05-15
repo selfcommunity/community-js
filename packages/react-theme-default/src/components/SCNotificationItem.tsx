@@ -9,12 +9,19 @@ const Component = {
           fontWeight: theme.typography.fontWeightMedium,
           '& .SCContributionNotification-username': {
             fontWeight: theme.typography.fontWeightBold
+          },
+          '& a': {
+            color: theme.palette.text.primary,
+            textDecoration: 'none'
           }
         },
         '& .SCNotificationItem-secondary': {
           '& .SCDateTimeAgo-root, & .MuiStack-root': {
             color: theme.palette.primary.main,
             minHeight: theme.spacing(3)
+          },
+          '& a': {
+            textDecoration: 'none'
           }
         }
       },

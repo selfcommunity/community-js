@@ -2,13 +2,7 @@ import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
 import {SCFollowersManagerType, SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
-import {
-  SCNotificationTopicType,
-  SCNotificationTypologyType,
-  SCPrivateMessageFileType,
-  SCPrivateMessageStatusType,
-  SCPrivateMessageThreadType
-} from '@selfcommunity/types';
+import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
 import _ from 'lodash';
@@ -381,7 +375,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * @param message
    * @param file
    */
-  function handleSend(message: string, file: SCPrivateMessageFileType) {
+  function handleSend(message: string, file: string) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',

@@ -16,6 +16,7 @@ const Component = {
         '& .infinite-scroll-component__outerdiv': {
           height: '100%',
           '& .infinite-scroll-component': {
+            paddingRight: 10,
             ' > .': {
               marginBottom: theme.spacing(2.5)
             },
@@ -24,6 +25,7 @@ const Component = {
               paddingBottom: 0,
               '& .MuiListItem-root': {
                 paddingLeft: 0,
+                paddingRight: 0,
                 '& .SCBaseItemButton-root': {
                   borderRadius: 0
                 }
@@ -57,7 +59,7 @@ const Component = {
         fontSize: '1rem',
         marginRight: theme.spacing(1),
         [theme.breakpoints.up('md')]: {
-          marginRight: 0
+          marginRight: -6
         }
       }
     })

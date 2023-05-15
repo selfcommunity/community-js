@@ -1,30 +1,26 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse, UserService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {http, Endpoints, UserService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {
   SCCache,
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
   SCThemeType,
-  SCUserContext,
   SCUserContextType,
-  useIsComponentMountedRef,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import User, {UserProps, UserSkeleton} from '../User';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
@@ -47,13 +43,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -177,60 +173,55 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        UserService.getUserFollowings(userId, {limit})
+          .then((payload: SCPaginatedResponse<SCUserType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, userId, limit, dispatch]
+  );
+
   // EFFECTS
   useEffect(() => {
-    if (!userId) {
-      return;
-    } else if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t;
+    if (
+      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
+      followEnabled &&
+      isInteger(userId) &&
+      scUserContext.user !== undefined
+    ) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [scUserContext.user]);
-
-  /**
-   * On mount, fetches the list of users followed
-   */
-  useEffect(() => {
-    if (!followEnabled || (!contentAvailability && !scUserContext.user) || !userId || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    UserService.getUserFollowings(userId, {limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCUserType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [followEnabled, contentAvailability, scUserContext.user, userId]);
+  }, [scUserContext.user, contentAvailability, userId]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
       UserService.getUserFollowings(userId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, state.next, state.results.length, state.initialized, limit]);
 
   /**
    * Virtual feed update
@@ -239,16 +230,19 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     onHeightChange && onHeightChange();
   }, [state.results]);
 
+  useEffect(() => {
+    if (!isInteger(userId) || !followEnabled || (!contentAvailability && !scUserContext.user)) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user, userId, contentAvailability]);
+
   // HANDLERS
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
           method: Endpoints.UserFollowings.method
@@ -263,7 +257,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 

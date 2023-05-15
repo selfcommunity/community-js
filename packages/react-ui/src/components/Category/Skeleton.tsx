@@ -16,7 +16,11 @@ const classes = {
   action: `${PREFIX}-action`
 };
 
-const Root = styled(BaseItem)(({theme}) => ({}));
+const Root = styled(BaseItem, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({}));
 
 /**
  * > API documentation for the Community-JS Category Skeleton component. Learn about the available props and the CSS API.

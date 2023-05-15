@@ -12,9 +12,6 @@ export default {
       description: 'User Id',
       table: {defaultValue: {summary: 1}}
     }
-  },
-  args: {
-    userId: 1
   }
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof UserProfileFollowedUsersWidget>;
@@ -29,5 +26,5 @@ const Template: ComponentStory<typeof UserProfileFollowedUsersWidget> = (args) =
 export const Base = Template.bind({});
 
 Base.args = {
-  /* the args you need here will depend on your component */
+  userId: 1
 };

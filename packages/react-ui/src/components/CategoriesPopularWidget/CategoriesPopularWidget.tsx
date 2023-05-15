@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import { CacheStrategies, isInteger, Logger } from "@selfcommunity/utils";
 import Skeleton from './Skeleton';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -131,9 +131,12 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const contentAvailability =
-    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+  const contentAvailability = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
+    [scPreferencesContext]
+  );
 
   // STATE
   const [state, dispatch] = useReducer(
@@ -153,85 +156,90 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        CategoryService.getPopularCategories({limit})
+          .then((payload: SCPaginatedResponse<SCCategoryType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, limit, dispatch]
+  );
+
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-      // dispatch({type: actionWidgetTypes.LOADING_NEXT});
+    let _t;
+    if (scUserContext.user !== undefined && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [contentAvailability, scUserContext.user]);
-
-  /**
-   * On mount, fetches popular categories list
-   */
-  useEffect(() => {
-    if (state.initialized || state.isLoadingNext || (!contentAvailability && !scUserContext.user)) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    CategoryService.getPopularCategories({limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCCategoryType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, []);
+  }, [scUserContext.user, contentAvailability]);
 
   useEffect(() => {
     if (openDialog && state.next && state.initialized && state.results.length === limit) {
       CategoryService.getPopularCategories({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCCategoryType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.initialized, state.results]);
+  }, [openDialog, limit, state.next, state.initialized, state.results.length]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [state.results]);
+
+  useEffect(() => {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [contentAvailability, cacheStrategy, scUserContext.user]);
 
   // HANDLERS
   /**
    * Fetches popular categories list
    */
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
           method: Endpoints.PopularCategories.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCCategoryType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
-  function handleFollowersUpdate(category) {
+  /**
+   * Update counters above the category name and the user follow state
+   * @param category
+   */
+  const handleFollowersUpdate = (category): void => {
     const newCategories = [...state.results];
     const index = newCategories.findIndex((u) => u.id === category.id);
     if (index !== -1) {
@@ -242,14 +250,11 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
         newCategories[index].followers_counter = category.followers_counter + 1;
         newCategories[index].followed = !category.followed;
       }
-      dispatch({
-        type: actionWidgetTypes.SET_RESULTS,
-        payload: {results: newCategories}
-      });
+      dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newCategories}});
     }
-  }
+  };
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 

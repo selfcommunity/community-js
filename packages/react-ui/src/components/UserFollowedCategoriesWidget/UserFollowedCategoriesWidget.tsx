@@ -1,10 +1,10 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import {UserService} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
+import {SCCache, SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Category, {CategoryProps, CategorySkeleton} from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -33,13 +33,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface UserFollowedCategoriesWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -123,6 +123,16 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
     ...rest
   } = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
+    [scPreferencesContext]
+  );
+
   // STATE
   const [state, dispatch] = useReducer(
     dataWidgetReducer,
@@ -136,43 +146,43 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  // CONTEXT
-  const scUserContext: SCUserContextType = useSCUser();
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        UserService.getUserFollowedCategories(userId, null)
+          .then((categories: SCCategoryType[]) => {
+            dispatch({
+              type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
+              payload: {
+                count: categories.length,
+                results: categories,
+                initialized: true
+              }
+            });
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, userId, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
-    if (!userId) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t;
+    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && isInteger(userId) && scUserContext.user !== undefined) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [userId]);
-
-  /**
-   * On mount, fetches the list of categories followed
-   */
-  useEffect(() => {
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    UserService.getUserFollowedCategories(userId, null, {signal: controller.signal})
-      .then((categories: SCCategoryType[]) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {
-            count: categories.length,
-            results: categories,
-            initialized: true
-          }
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, []);
+  }, [scUserContext.user, contentAvailability, userId]);
 
   /**
    * Virtual feed update
@@ -181,33 +191,38 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
     onHeightChange && onHeightChange();
   }, [state.results.length]);
 
+  useEffect(() => {
+    if ((!contentAvailability && !scUserContext.user) || !isInteger(userId)) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [contentAvailability, cacheStrategy, scUserContext.user, userId]);
+
   // HANDLERS
-  function handleOnFollowCategory(category) {
-    if (scUserContext.user.id === userId) {
+  const handleOnFollowCategory = (category): void => {
+    /* if (scUserContext.user?.id === userId) {
       dispatch({
         type: actionWidgetTypes.SET_RESULTS,
         payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
       });
-    } else {
-      const newCategories = [...state.results];
-      const index = newCategories.findIndex((u) => u.id === category.id);
-      if (index !== -1) {
-        if (category.followed) {
-          newCategories[index].followers_counter = category.followers_counter - 1;
-          newCategories[index].followed = !category.followed;
-        } else {
-          newCategories[index].followers_counter = category.followers_counter + 1;
-          newCategories[index].followed = !category.followed;
-        }
-        dispatch({
-          type: actionWidgetTypes.SET_RESULTS,
-          payload: {results: newCategories}
-        });
+    } else { */
+    const newCategories = [...state.results];
+    const index = newCategories.findIndex((u) => u.id === category.id);
+    if (index !== -1) {
+      if (category.followed) {
+        newCategories[index].followers_counter = category.followers_counter - 1;
+        newCategories[index].followed = !category.followed;
+      } else {
+        newCategories[index].followers_counter = category.followers_counter + 1;
+        newCategories[index].followed = !category.followed;
       }
+      dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newCategories}});
     }
-  }
+    // }
+  };
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 

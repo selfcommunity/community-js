@@ -3,9 +3,9 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
-import {SCFeedObjectType} from '@selfcommunity/types';
+import {SCFeedUnitType} from '@selfcommunity/types';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import { CacheStrategies, isInteger, Logger } from "@selfcommunity/utils";
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
@@ -49,13 +49,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CategoryTrendingFeedWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -172,48 +172,46 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {scCategory} = useSCFetchCategory({id: categoryId});
+  const catId = scCategory ? scCategory.id : null;
+
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        CategoryService.getCategoryTrendingFeed(catId, {limit})
+          .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [catId, state.isLoadingNext, state.initialized, limit, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t;
+    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [scUserContext.user]);
+  }, [catId, scUserContext.user, contentAvailability]);
 
-  /**
-   * On mount, fetches trending posts list
-   */
-  useEffect(() => {
-    if ((!contentAvailability && !scUserContext.user) || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    CategoryService.getCategoryTrendingFeed(categoryId, {limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: payload
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [contentAvailability, scUserContext.user, state.initialized]);
-
+  // Add 10 - limit items to initial dialog page
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      CategoryService.getCategoryTrendingFeed(categoryId, {offset: limit, limit: 10})
-        .then((payload: SCPaginatedResponse<SCFeedObjectType>) => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      CategoryService.getCategoryTrendingFeed(catId, {offset: limit, limit: 10})
+        .then((payload: SCPaginatedResponse<SCFeedUnitType>) => {
           dispatch({
             type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: {...payload, initialized: true}
@@ -224,7 +222,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, state.initialized]);
+  }, [openDialog, limit, state.next, state.results.length, state.initialized, catId]);
 
   /**
    * Virtual feed update
@@ -233,31 +231,34 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
     onHeightChange && onHeightChange();
   }, [state.results]);
 
+  useEffect(() => {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (isInteger(catId) && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [contentAvailability, cacheStrategy, catId, scUserContext.user]);
+
   // HANDLERS
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowers.method
+          method: Endpoints.CategoryTrendingFeed.method
         })
-        .then((res: AxiosResponse<SCPaginatedResponse<SCFeedObjectType>>) => {
+        .then((res: AxiosResponse<SCPaginatedResponse<SCFeedUnitType>>) => {
           dispatch({
             type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
             payload: res.data
           });
         });
     },
-    [dispatch, state.next, state.isLoadingNext, state.initialized]
+    [dispatch, state.next]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 
@@ -281,8 +282,8 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
       ) : (
         <React.Fragment>
           <List>
-            {state.results.slice(0, state.visibleItems).map((obj: SCFeedObjectType) => (
-              <ListItem key={obj.id}>
+            {state.results.slice(0, state.visibleItems).map((obj: SCFeedUnitType) => (
+              <ListItem key={obj[obj.type].id}>
                 <FeedObject elevation={0} feedObject={obj[obj.type]} {...FeedObjectProps} />
               </ListItem>
             ))}
@@ -323,8 +324,8 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
               </Typography>
             }>
             <List>
-              {state.results.map((obj: SCFeedObjectType) => (
-                <ListItem key={obj.id}>
+              {state.results.map((obj: SCFeedUnitType) => (
+                <ListItem key={obj[obj.type].id}>
                   <FeedObject elevation={0} feedObject={obj[obj.type]} {...FeedObjectProps} />
                 </ListItem>
               ))}
