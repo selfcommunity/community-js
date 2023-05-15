@@ -245,7 +245,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
           method: Endpoints.UserSuggestion.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-          // dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
