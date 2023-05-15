@@ -174,7 +174,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
           });
       }
     },
-    [state.isLoadingNext, state.initialized, dispatch]
+    [state.isLoadingNext, state.initialized, limit, dispatch]
   );
 
   // EFFECTS

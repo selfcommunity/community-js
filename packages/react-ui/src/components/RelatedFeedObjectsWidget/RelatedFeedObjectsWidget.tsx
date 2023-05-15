@@ -208,7 +208,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
           });
       }
     },
-    [objId, state.initialized, state.isLoadingNext, dispatch]
+    [objId, state.initialized, state.isLoadingNext, limit, dispatch]
   );
 
   // EFFECTS

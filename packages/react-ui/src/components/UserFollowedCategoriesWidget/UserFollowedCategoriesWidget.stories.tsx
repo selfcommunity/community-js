@@ -37,10 +37,3 @@ export const Base = Template.bind({});
 Base.args = {
   userId: 1
 };
-
-export const CategoriesLoggedUser = Template.bind({});
-
-CategoriesLoggedUser.args = {
-  userId: 7
-};
-

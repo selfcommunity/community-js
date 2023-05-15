@@ -201,12 +201,12 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
 
   // HANDLERS
   const handleOnFollowCategory = (category): void => {
-    if (scUserContext.user?.id === userId) {
+    /* if (scUserContext.user?.id === userId) {
       dispatch({
         type: actionWidgetTypes.SET_RESULTS,
         payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
       });
-    } else {
+    } else { */
       const newCategories = [...state.results];
       const index = newCategories.findIndex((u) => u.id === category.id);
       if (index !== -1) {
@@ -219,7 +219,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
         }
         dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newCategories}});
       }
-    }
+    // }
   };
 
   const handleToggleDialogOpen = (): void => {

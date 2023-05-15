@@ -28,9 +28,3 @@ export const Base = Template.bind({});
 Base.args = {
   userId: 1
 };
-
-export const FollowedLoggedUser = Template.bind({});
-
-FollowedLoggedUser.args = {
-  userId: 7
-};

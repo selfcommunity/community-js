@@ -186,7 +186,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
           });
       }
     },
-    [catId, state.isLoadingNext, state.initialized, dispatch]
+    [catId, state.isLoadingNext, state.initialized, limit, dispatch]
   );
 
   // EFFECTS

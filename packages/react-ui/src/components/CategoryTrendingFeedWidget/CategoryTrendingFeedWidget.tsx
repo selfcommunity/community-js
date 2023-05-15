@@ -192,7 +192,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           });
       }
     },
-    [catId, state.isLoadingNext, state.initialized, dispatch]
+    [catId, state.isLoadingNext, state.initialized, limit, dispatch]
   );
 
   // EFFECTS
