@@ -21,28 +21,34 @@ const Component = {
           display: 'flex',
           justifyContent: 'center'
         },
-        '& > .MuiList-root': {
+        '& .infinite-scroll-component__outerdiv': {
           flexGrow: 1,
           overflowY: 'auto',
-          margin: 0,
-          padding: theme.spacing(2, 2, 0, 2),
-          '& .MuiListItem-root': {
-            '&.SCPrivateMessageThread-receiver': {
-              backgroundColor: theme.palette.common.white,
-              marginLeft: theme.spacing(-2),
-              filter: 'drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))',
-              '&:after': {
-                marginRight: theme.spacing(3),
-                content: `""`,
-                position: 'absolute',
-                border: `${theme.spacing(3)} solid transparent`,
-                borderTop: `${theme.spacing(3)} solid ${theme.palette.common.white}`,
-                top: 0,
-                left: theme.spacing(-3)
+          '& .infinite-scroll-component': {
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            '& .MuiList-root': {
+              margin: 0,
+              padding: theme.spacing(2, 2, 0, 2),
+              '& .MuiListItem-root': {
+                '&.SCPrivateMessageThread-receiver': {
+                  backgroundColor: theme.palette.common.white,
+                  marginLeft: theme.spacing(-2),
+                  filter: 'drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))',
+                  '&:after': {
+                    marginRight: theme.spacing(3),
+                    content: `""`,
+                    position: 'absolute',
+                    border: `${theme.spacing(3)} solid transparent`,
+                    borderTop: `${theme.spacing(3)} solid ${theme.palette.common.white}`,
+                    top: 0,
+                    left: theme.spacing(-3)
+                  }
+                },
+                '&.SCPrivateMessageThread-sender': {
+                  backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
+                }
               }
-            },
-            '&.SCPrivateMessageThread-sender': {
-              backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
             }
           }
         }
@@ -107,7 +113,8 @@ const Component = {
           borderRadius: theme.shape.borderRadius,
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)'
         }
-      }
+      },
+      '& .MuiList-root, .SCPrivateMessageThread-new-message-content': {flexGrow: 1}
     })
   }
 };
