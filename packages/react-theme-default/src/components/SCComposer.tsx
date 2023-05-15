@@ -109,6 +109,27 @@ const Component = {
         '& .SCComposer-mediaContent, & .SCComposer-audienceContent, & .SCComposer-locationContent': {
           minHeight: 300
         },
+        '& .SCComposer-audienceContent': {
+          maxWidth: 400,
+          margin: theme.spacing(0, 'auto'),
+          '& .MuiTabs-root': {
+            margin: theme.spacing(4, 0),
+            '& .MuiTabs-flexContainer': {
+              justifyContent: 'center',
+              '& .MuiTab-root': {
+                minHeight: theme.spacing(6),
+                flexDirection: 'row',
+                '& .MuiTab-iconWrapper': {
+                  marginRight: theme.spacing(1),
+                  fontSize: '1.429rem'
+                }
+              }
+            }
+          },
+          '& .SCComposer-block': {
+            marginBottom: theme.spacing(4)
+          }
+        },
         '& .SCComposer-block': {
           padding: theme.spacing(1)
         },
