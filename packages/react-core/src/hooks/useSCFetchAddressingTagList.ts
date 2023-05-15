@@ -1,9 +1,8 @@
 import {useEffect, useMemo, useState} from 'react';
-import {SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCFeatureName, SCTagType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
-import * as SCFeatures from '../constants/Features';
 
 /**
  :::info
@@ -42,7 +41,7 @@ export default function useSCFetchAddressingTagList({fetch = false}: {fetch?: bo
 
   // load addressing tags
   useEffect(() => {
-    if (!loaded && fetch && scUserContext.user && scPreferences.features.includes(SCFeatures.TAGGING)) {
+    if (!loaded && fetch && scUserContext.user && scPreferences.features.includes(SCFeatureName.TAGGING)) {
       fetchAddressingTags().then((obj: SCTagType[]) => {
         setLoaded(true);
         setSCAddressingTags(obj);

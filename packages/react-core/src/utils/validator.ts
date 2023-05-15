@@ -1,6 +1,5 @@
-import React from 'react';
 import * as Locale from '../constants/Locale';
-import {isValidUrl, isObject, isString} from '@selfcommunity/utils';
+import {isObject, isString, isValidUrl, Logger} from '@selfcommunity/utils';
 import * as Session from '../constants/Session';
 import {
   SCNotificationsType,
@@ -13,8 +12,7 @@ import {
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
 import {SCLocaleType} from '../types';
-import {DEFAULT_CONTEXT_PROVIDERS, CONTEXT_PROVIDERS_OPTION} from '../constants/ContextProviders';
-import {Logger} from '@selfcommunity/utils';
+import {CONTEXT_PROVIDERS_OPTION, DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
 import * as Notifications from '../constants/Notifications';
 import * as Theme from '../constants/Theme';
 import {PORTAL_OPTION, ROUTER_OPTION} from '../constants/Routes';

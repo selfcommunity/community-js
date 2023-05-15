@@ -144,27 +144,92 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // HANDLERS
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized, and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        SuggestionService.getIncubatorSuggestion({limit})
+          .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, limit, dispatch]
+  );
 
-  function handleIncubatorDetailDialogOpening(incubator) {
-    setOpenIncubatorDetailDialog(true);
-    setOpenDialog(false);
-    setDetailObj(incubator);
-  }
+  // EFFECTS
+  useEffect(() => {
+    let _t;
+    if (scUserContext.user) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
+    }
+  }, [scUserContext.user]);
+
+  useEffect(() => {
+    if (openDialog && state.next && state.results.length === limit && state.initialized) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      SuggestionService.getIncubatorSuggestion({offset: limit, limit: 10})
+        .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
+        })
+        .catch((error) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [openDialog, state.next, state.results.length, state.initialized, limit]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [state.results]);
+
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user, cacheStrategy]);
+
+  // HANDLERS
+  const handleIncubatorDetailDialogOpening = useMemo(
+    () =>
+      (incubator): void => {
+        setOpenIncubatorDetailDialog(true);
+        setOpenDialog(false);
+        setDetailObj(incubator);
+      },
+    [setOpenIncubatorDetailDialog, setOpenDialog, setDetailObj]
+  );
 
   const handleIncubatorDetailDialogClose = () => {
     setOpenIncubatorDetailDialog(false);
   };
 
-  const handleToggleDialogOpen = () => {
-    setOpenDialog((prev) => !prev);
-  };
+  const handleToggleDialogOpen = useMemo(
+    () => (): void => {
+      setOpenDialog((prev) => !prev);
+    },
+    []
+  );
 
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
    * @param incubator
    */
-  function handleSubscriptionsUpdate(incubator) {
+  const handleSubscriptionsUpdate = (incubator): void => {
     const newIncubators = [...state.results];
     const index = newIncubators.findIndex((i) => i.id === incubator.id);
     if (index !== -1) {
@@ -175,85 +240,20 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
         newIncubators[index].subscribers_count = incubator.subscribers_count + 1;
         newIncubators[index].subscribed = !incubator.subscribed;
       }
-      dispatch({
-        type: actionWidgetTypes.SET_RESULTS,
-        payload: {results: newIncubators}
-      });
+      dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newIncubators}});
     }
-  }
-
-  // EFFECTS
-  useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, [scUserContext.user, cacheStrategy]);
-  /**
-   * On mount, if user is authenticated, fetches suggested incubators list
-   */
-  useEffect(() => {
-    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    SuggestionService.getIncubatorSuggestion({limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [scUserContext.user, state.initialized]);
-
-  useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && state.initialized) {
-      SuggestionService.getIncubatorSuggestion({offset: limit, limit: 10})
-        .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
-        })
-        .catch((error) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }, [openDialog, state.next, state.results, state.initialized]);
-
-  /**
-   * Virtual feed update
-   */
-  useEffect(() => {
-    onHeightChange && onHeightChange();
-  }, [state.results]);
+  };
 
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
           method: Endpoints.GetIncubatorSuggestion.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCIncubatorType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]

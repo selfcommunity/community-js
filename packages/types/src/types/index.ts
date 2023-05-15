@@ -91,7 +91,7 @@ import {SCFlagModerationStatusType, SCFlagType, SCFlagTypeEnum} from './flag';
 import {SCCustomPageTypeEnum, SCCustomPageType} from './customPage';
 import {SCDataPortabilityType} from './dataPortability';
 import {SCPreferenceSection, SCPreferenceName, SCPreferenceType} from './preference';
-import {SCFeatureType} from './feature';
+import {SCFeatureName, SCFeatureType} from './feature';
 import {SSOSignInType, SSOSignUpType} from './sso';
 import {SCLegalPagePoliciesType, SCLegalPageAckType, SCLegalPageType} from './legalPage';
 import {
@@ -225,6 +225,7 @@ export {
   SCPreferenceSection,
   SCPreferenceName,
   SCPreferenceType,
+  SCFeatureName,
   SCFeatureType,
   SSOSignInType,
   SSOSignUpType,

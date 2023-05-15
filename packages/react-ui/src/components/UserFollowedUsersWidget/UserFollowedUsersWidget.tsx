@@ -180,6 +180,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   const _initComponent = useMemo(
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
         UserService.getUserFollowings(userId, {limit})
           .then((payload: SCPaginatedResponse<SCUserType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});

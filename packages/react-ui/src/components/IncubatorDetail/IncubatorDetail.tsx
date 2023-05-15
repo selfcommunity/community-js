@@ -95,15 +95,15 @@ const Root = styled(BaseDialog, {
   },
   [`& .${classes.shareSection}`]: {
     display: 'flex',
-    gap: theme.spacing(1),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    gap: theme.spacing(),
+    marginTop: theme.spacing(),
+    marginBottom: theme.spacing(3)
   },
   [`& .${classes.socialShareButton}`]: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing()
   },
   [`& .${classes.subscribers}`]: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(),
     '& .MuiAvatar-root': {
       color: theme.palette.common.white,
       border: '2px solid #FFF'

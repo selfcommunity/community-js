@@ -166,37 +166,115 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // HANDLERS
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        IncubatorService.getAllIncubators({limit})
+          .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, limit, dispatch]
+  );
 
-  const handleClickHelpButton = (event: React.MouseEvent<HTMLElement>) => {
+  //EFFECTS
+  useEffect(() => {
+    let _t;
+    if (scUserContext.user !== undefined) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
+    }
+  }, [scUserContext.user]);
+
+  useEffect(() => {
+    if (openDialog && state.next && state.initialized && state.results.length === limit) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      IncubatorService.getAllIncubators({offset: limit, limit: 10})
+        .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
+        })
+        .catch((error) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [openDialog, state.next, state.initialized, state.results.length, limit]);
+
+  /**
+   * Virtual feed update
+   */
+  useEffect(() => {
+    onHeightChange && onHeightChange();
+  }, [state.results]);
+
+  useEffect(() => {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [contentAvailability, scUserContext.user]);
+
+  // HANDLERS
+  const handleClickHelpButton = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
 
-  const handleCreateIncubatorDialogClose = () => {
-    setOpenCreateIncubatorDialog(false);
-  };
+  const handlePopoverClose = useMemo(
+    () => (): void => {
+      setAnchorEl(null);
+    },
+    [setAnchorEl]
+  );
 
-  function handleIncubatorDetailDialogOpening(incubator) {
-    setOpenIncubatorDetailDialog(true);
-    setOpenDialog(false);
-    setDetailObj(incubator);
-  }
+  const handleCreateIncubatorDialogClose = useMemo(
+    () => (): void => {
+      setOpenCreateIncubatorDialog(false);
+    },
+    [setOpenCreateIncubatorDialog]
+  );
 
-  const handleIncubatorDetailDialogClose = () => {
-    setOpenIncubatorDetailDialog(false);
-  };
+  const handleIncubatorDetailDialogOpening = useMemo(
+    () =>
+      (incubator): void => {
+        setOpenIncubatorDetailDialog(true);
+        setOpenDialog(false);
+        setDetailObj(incubator);
+      },
+    [setOpenIncubatorDetailDialog, setOpenDialog, setDetailObj]
+  );
 
-  const handleToggleDialogOpen = () => {
-    setOpenDialog((prev) => !prev);
-  };
+  const handleIncubatorDetailDialogClose = useMemo(
+    () => (): void => {
+      setOpenIncubatorDetailDialog(false);
+    },
+    [setOpenIncubatorDetailDialog]
+  );
+
+  const handleToggleDialogOpen = useMemo(
+    () => (): void => {
+      setOpenDialog((prev) => !prev);
+    },
+    [setOpenDialog]
+  );
+
   /**
    * Handles subscriptions counter update on subscribe/unsubscribe action.
    * @param incubator
    */
-  function handleSubscriptionsUpdate(incubator) {
+  const handleSubscriptionsUpdate = (incubator): void => {
     const newIncubators = [...state.results];
     const index = newIncubators.findIndex((i) => i.id === incubator.id);
     if (index !== -1) {
@@ -208,82 +286,23 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
         newIncubators[index].subscribed = !incubator.subscribed;
       }
       console.log(newIncubators);
-      dispatch({
-        type: actionWidgetTypes.SET_RESULTS,
-        payload: {results: newIncubators}
-      });
+      dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newIncubators}});
     }
-  }
-
-  //EFFECTS
-  useEffect(() => {
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-      // dispatch({type: actionWidgetTypes.LOADING_NEXT});
-    }
-  }, [contentAvailability, scUserContext.user]);
+  };
 
   /**
-   * On mount, fetches  incubators list
+   * Handle pagination
    */
-  useEffect(() => {
-    if (state.initialized || state.isLoadingNext || (!contentAvailability && !scUserContext.user)) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    IncubatorService.getAllIncubators({limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    if (openDialog && state.next && state.initialized && state.results.length === limit) {
-      IncubatorService.getAllIncubators({offset: limit, limit: 10})
-        .then((payload: SCPaginatedResponse<SCIncubatorType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
-        })
-        .catch((error) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }, [openDialog, state.next, state.initialized, state.results]);
-
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
           method: Endpoints.GetAllIncubators.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCIncubatorType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
@@ -335,7 +354,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
                   elevation={0}
                   incubator={incubator}
                   subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
-                  ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
+                  ButtonProps={{onClick: (): void => handleIncubatorDetailDialogOpening(incubator)}}
                   {...IncubatorProps}
                 />
               </ListItem>
@@ -347,7 +366,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
                 <FormattedMessage id="ui.incubatorListWidget.ShowAll" defaultMessage="ui.incubatorListWidget.ShowAll" />
               </Button>
             )}
-            <Button size="small" onClick={() => setOpenCreateIncubatorDialog(true)}>
+            <Button size="small" onClick={(): void => setOpenCreateIncubatorDialog(true)}>
               <FormattedMessage id="ui.incubatorListWidget.SuggestNewTopic" defaultMessage="ui.incubatorListWidget.SuggestNewTopic" />
             </Button>
           </Box>
@@ -378,7 +397,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
                     elevation={0}
                     incubator={incubator}
                     subscribeButtonProps={{onSubscribe: handleSubscriptionsUpdate}}
-                    ButtonProps={{onClick: () => handleIncubatorDetailDialogOpening(incubator)}}
+                    ButtonProps={{onClick: (): void => handleIncubatorDetailDialogOpening(incubator)}}
                     {...IncubatorProps}
                   />
                 </ListItem>

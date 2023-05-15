@@ -2,6 +2,7 @@ import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, use
 import {
   SCCategoryType,
   SCContributionType,
+  SCFeatureName,
   SCFeedDiscussionType,
   SCFeedPostType,
   SCFeedStatusType,
@@ -11,7 +12,6 @@ import {
 } from '@selfcommunity/types';
 import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
 import {
-  SCFeatures,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
@@ -37,7 +37,6 @@ import {
   DialogTitle,
   Fade,
   FormControl,
-  hexToRgb,
   IconButton,
   InputBase,
   MenuItem,
@@ -48,8 +47,6 @@ import {
   Tabs,
   TextField,
   Theme,
-  ToggleButton,
-  ToggleButtonGroup,
   Tooltip,
   Typography,
   useMediaQuery
@@ -579,7 +576,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         lng: location.lng
       };
     }
-    if (scPrefernces.features.includes(SCFeatures.TAGGING) && audience === AUDIENCE_TAG) {
+    if (scPrefernces.features.includes(SCFeatureName.TAGGING) && audience === AUDIENCE_TAG) {
       data.addressing = addressing.map((t) => t.id);
     }
     setIsSubmitting(true);
@@ -928,7 +925,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 <Icon>add_location_alt</Icon>
               </IconButton>
             )}
-            {scPrefernces.features.includes(SCFeatures.TAGGING) && scAddressingTags.length > 0 && (
+            {scPrefernces.features.includes(SCFeatureName.TAGGING) && scAddressingTags.length > 0 && (
               <IconButton disabled={isSubmitting} onClick={handleChangeView(AUDIENCE_VIEW)}>
                 {audience === AUDIENCE_TAG ? <Icon>label</Icon> : <Icon>public</Icon>}
               </IconButton>
