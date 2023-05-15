@@ -222,7 +222,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, limit, state.next, state.results, state.initialized, catId]);
+  }, [openDialog, limit, state.next, state.results.length, state.initialized, catId]);
 
   /**
    * Virtual feed update

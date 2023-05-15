@@ -221,7 +221,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results]);
+  }, [openDialog, state.next, state.results.length, state.initialized, limit]);
 
   /**
    * Virtual feed update
