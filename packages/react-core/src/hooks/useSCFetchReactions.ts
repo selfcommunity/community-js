@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCReactionType} from '@selfcommunity/types';
+import {SCFeatureName, SCReactionType} from '@selfcommunity/types';
 import {Endpoints, http} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {getReactionsObjectCacheKey, getReactionObjectCacheKey} from '../constants/Cache';
+import {getReactionObjectCacheKey, getReactionsObjectCacheKey} from '../constants/Cache';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
-import * as SCFeatures from '../constants/Features';
 
 const init = {default: null, reactions: [], isLoading: true};
 
@@ -78,7 +77,7 @@ const useSCFetchReactions = (props?: {cacheStrategy?: CacheStrategies}) => {
     if (cacheStrategy === CacheStrategies.CACHE_FIRST && reactions) {
       return;
     }
-    if (!scPreferences.features.includes(SCFeatures.REACTION)) {
+    if (!scPreferences.features.includes(SCFeatureName.REACTION)) {
       return;
     }
     fetchReactions()

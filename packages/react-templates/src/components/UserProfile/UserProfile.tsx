@@ -17,7 +17,6 @@ import {
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
-  SCFeatures,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
@@ -28,7 +27,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCUserType} from '@selfcommunity/types';
+import {SCFeatureName, SCUserType} from '@selfcommunity/types';
 import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -206,7 +205,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   const intl = useIntl();
 
   // MEMO
-  const taggingEnabled = useMemo(() => features.includes(SCFeatures.TAGGING), [features]);
+  const taggingEnabled = useMemo(() => features.includes(SCFeatureName.TAGGING), [features]);
   const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
   const followEnabled = useMemo(
     () =>
@@ -214,7 +213,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
     [scPreferencesContext.preferences]
   );
-  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatures.PRIVATE_MESSAGING), [features]);
+  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
   const isConnection = useMemo(() => {
     if (isMe || !scUserContext.user || !user) {
       return false;

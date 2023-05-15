@@ -21,6 +21,7 @@ import {
 } from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {SCFeatureName} from '@selfcommunity/types/src/types';
 
 const PREFIX = 'SCBottomNavigation';
 
@@ -90,7 +91,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
   }, [scPreferences.preferences]);
 
   // MEMO
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
 
   // RENDER
   return (

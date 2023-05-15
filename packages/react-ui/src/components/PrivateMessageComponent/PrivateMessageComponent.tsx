@@ -1,10 +1,10 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Grid, useMediaQuery, useTheme} from '@mui/material';
-import {SCFeatures, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCPrivateMessageStatusType} from '@selfcommunity/types';
+import {SCFeatureName, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
 
@@ -105,7 +105,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   };
 
   // MEMO
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
   //  HANDLERS
   /**

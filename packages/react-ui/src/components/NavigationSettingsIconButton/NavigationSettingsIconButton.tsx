@@ -14,7 +14,7 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {SCUserType} from '@selfcommunity/types';
+import {SCFeatureName, SCUserType} from '@selfcommunity/types';
 import {
   Link,
   SCFeatures,
@@ -187,7 +187,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        scPreferences.features.includes(SCFeatures.LOYALTY) && (
+        scPreferences.features.includes(SCFeatureName.LOYALTY) && (
           <ListItem className={classes.item} key="loyaltyProgram">
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
               <FormattedMessage id="ui.navigationSettingsIconButton.loyalty" defaultMessage="ui.navigationSettingsIconButton.loyalty" />
@@ -284,7 +284,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.connections" defaultMessage="ui.navigationSettingsIconButton.connections" />
           </MenuItem>
         ),
-        scPreferences.features.includes(SCFeatures.LOYALTY) && (
+        scPreferences.features.includes(SCFeatureName.LOYALTY) && (
           <MenuItem className={classes.item} key="loyaltyProgram" component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
             <FormattedMessage id="ui.navigationSettingsIconButton.loyalty" defaultMessage="ui.navigationSettingsIconButton.loyalty" />
           </MenuItem>

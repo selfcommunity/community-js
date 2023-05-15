@@ -2,7 +2,6 @@ import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, T
 import React, {useMemo} from 'react';
 import {
   Link,
-  SCFeatures,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
@@ -22,6 +21,7 @@ import NotificationMenu from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
 import ComposerIconButton from '../ComposerIconButton';
+import {SCFeatureName} from '@selfcommunity/types/src/types';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -144,7 +144,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatures.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);
