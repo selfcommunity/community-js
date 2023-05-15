@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.190](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.189...@selfcommunity/react-ui@0.7.0-alpha.190) (2023-05-15)
+
+
+### Bug Fixes
+
+* Fix composer audience ux ([ada4dcc](https://github.com/selfcommunity/community-js/commit/ada4dccf2263bec9198f9930e7c0fa71320dab25))
+* fixed private message uploader emoji section ([2ce3ab8](https://github.com/selfcommunity/community-js/commit/2ce3ab88d95f69263eaf15ec51337325cf75439d))
+* types ([d5ab3d8](https://github.com/selfcommunity/community-js/commit/d5ab3d8482471d576f20dc0e77eeddb2b308a4b4))
+* widgets strict mode ([0892016](https://github.com/selfcommunity/community-js/commit/0892016eb560f1548e93784136988fdc1251a135))
+* widgets strict mode ([4d15a0e](https://github.com/selfcommunity/community-js/commit/4d15a0e08ce42ccb13a47aed0601e09957c53a9a))
+* widgets strict mode ([edf696f](https://github.com/selfcommunity/community-js/commit/edf696ffa568e9da1125bb47abc0573a613708a4))
+* widgets strict mode ([953c929](https://github.com/selfcommunity/community-js/commit/953c929d6730abfbb551edb0e4128377fee402b1))
+* widgets strict mode ([a414c1b](https://github.com/selfcommunity/community-js/commit/a414c1b0b47b41cea8a9b72a9e57806130c81cf0))
+* widgets strict mode ([74e486a](https://github.com/selfcommunity/community-js/commit/74e486ad71b86873fbc68ca02c5ee2b46702e7ac))
+
+
+### Performance Improvements
+
+* Added borderRadious to category icon ([ba92c24](https://github.com/selfcommunity/community-js/commit/ba92c2401e9c44ceb422f87fa998ae4447ae4c05))
+* added multiple file upload ([3a11c56](https://github.com/selfcommunity/community-js/commit/3a11c56d3e04aec276a3f692855435680540d6df))
+* Removed arrows on Lightbox when it has only one image ([e37f3ce](https://github.com/selfcommunity/community-js/commit/e37f3ce435ad196014eb095ba4e92cf786c97ce4))
+
+
+
+
+
 # [0.7.0-alpha.189](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.188...@selfcommunity/react-ui@0.7.0-alpha.189) (2023-05-11)
 
 

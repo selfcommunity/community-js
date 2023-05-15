@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.137](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.136...@selfcommunity/react-theme-default@0.1.0-alpha.137) (2023-05-15)
+
+
+### Bug Fixes
+
+* Fix composer audience ux ([ada4dcc](https://github.com/selfcommunity/community-js/commit/ada4dccf2263bec9198f9930e7c0fa71320dab25))
+* Fix SnippetNotification style ([51a452d](https://github.com/selfcommunity/community-js/commit/51a452dd4c00303ff7c12226a34fc0bf034da9a0))
+* fixed message uploader content style ([104fc7f](https://github.com/selfcommunity/community-js/commit/104fc7f30f558bfe380f57898d9b721ef88e7bff))
+* fixed private message uploader emoji section ([2ce3ab8](https://github.com/selfcommunity/community-js/commit/2ce3ab88d95f69263eaf15ec51337325cf75439d))
+* widgets strict mode ([0892016](https://github.com/selfcommunity/community-js/commit/0892016eb560f1548e93784136988fdc1251a135))
+* widgets strict mode ([74e486a](https://github.com/selfcommunity/community-js/commit/74e486ad71b86873fbc68ca02c5ee2b46702e7ac))
+
+
+### Performance Improvements
+
+* Added borderRadious to category icon ([ba92c24](https://github.com/selfcommunity/community-js/commit/ba92c2401e9c44ceb422f87fa998ae4447ae4c05))
+* added multiple file upload ([3a11c56](https://github.com/selfcommunity/community-js/commit/3a11c56d3e04aec276a3f692855435680540d6df))
+
+
+
+
+
 # [0.1.0-alpha.136](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.135...@selfcommunity/react-theme-default@0.1.0-alpha.136) (2023-05-11)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
