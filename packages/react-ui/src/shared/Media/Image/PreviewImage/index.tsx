@@ -72,8 +72,8 @@ export default function PreviewImage(props: PreviewImageProps) {
     <Root
       {...rest}
       mainSrc={getImageUrl(images[currentImageIndex])}
-      nextSrc={getImageUrl(images[(currentImageIndex + 1) % currentImages.length])}
-      prevSrc={getImageUrl(images[(currentImageIndex + currentImages.length - 1) % currentImages.length])}
+      nextSrc={currentImages.length === 1 ? null : getImageUrl(images[(currentImageIndex + 1) % currentImages.length])}
+      prevSrc={currentImages.length === 1 ? null : getImageUrl(images[(currentImageIndex + currentImages.length - 1) % currentImages.length])}
       onCloseRequest={onClose}
       onMovePrevRequest={onMovePrevRequest}
       onMoveNextRequest={onMoveNextRequest}
