@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
-import {SCPrivateMessageThreadType, SCMessageFileType} from '@selfcommunity/types';
+import {SCPrivateMessageThreadType, SCMessageFileType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -242,7 +242,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         message.status !== 'hidden' && <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} />
       }>
       <>
-        {hasFile ? (
+        {hasFile && message.status !== SCPrivateMessageStatusType.DELETED ? (
           renderMessageFile(message)
         ) : (
           <Box className={classes.text}>

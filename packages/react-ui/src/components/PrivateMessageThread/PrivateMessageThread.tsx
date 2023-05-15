@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Endpoints, http, HttpResponse, PrivateMessageService} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCFollowersManagerType, SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
@@ -19,11 +19,17 @@ import {Logger} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {useSnackbar} from 'notistack';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import InfiniteScroll from '../../shared/InfiniteScroll';
+import {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 
 const translMessages = defineMessages({
   placeholder: {
     id: 'ui.privateMessage.thread.newMessage.autocomplete.placeholder',
     defaultMessage: 'ui.privateMessage.thread.newMessage.autocomplete.placeholder'
+  },
+  messageDeleted: {
+    id: 'ui.privateMessage.thread.message.deleted',
+    defaultMessage: 'ui.privateMessage.thread.message.deleted'
   }
 });
 
@@ -37,6 +43,7 @@ const classes = {
   newMessageHeader: `${PREFIX}-new-message-header`,
   newMessageHeaderContent: `${PREFIX}-new-message-header-content`,
   newMessageHeaderIcon: `${PREFIX}-new-message-header-icon`,
+  newMessageContent: `${PREFIX}-new-message-content`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
   autocomplete: `${PREFIX}-autocomplete`,
@@ -82,11 +89,6 @@ export interface PrivateMessageThreadProps extends CardProps {
    */
   onSingleMessageOpen?: (open: boolean) => void;
   /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -130,16 +132,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {
-    userObj,
-    openNewMessage = false,
-    onNewMessageClose = null,
-    onNewMessageSent = null,
-    onSingleMessageOpen = null,
-    autoHide,
-    className,
-    ...rest
-  } = props;
+  const {userObj, openNewMessage = false, onNewMessageClose = null, onNewMessageSent = null, onSingleMessageOpen = null, className, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -148,7 +141,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // STATE
   const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
   const [value, setValue] = useState<string>('');
-  const [messageObjs, setMessageObjs] = useState<any[]>([]);
+  const [previous, setPrevious] = useState<string>(null);
+  const [messageObjs, setMessageObjs] = useState([]);
   const [loadingMessageObjs, setLoadingMessageObjs] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState({});
@@ -246,11 +240,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         console.log(error);
       });
   }
-  useEffect(() => {
-    if (value) {
-      fetchResults();
-    }
-  }, [value]);
 
   const handleInputChange = (event, value, reason) => {
     switch (reason) {
@@ -291,29 +280,46 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     // @ts-ignore
     onNewMessageClose && onNewMessageClose();
   };
+
+  const handlePrevious = useMemo(
+    () => () => {
+      if (!previous) {
+        return;
+      }
+      const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
+      return http
+        .request({
+          url: previous,
+          method: Endpoints.GetAThread.method,
+          params: {user: _userObjId}
+        })
+        .then((res: HttpResponse<any>) => {
+          const _prev = [...messageObjs];
+          _prev.unshift(...res.data.results);
+          setMessageObjs(_prev);
+          setPrevious(res.data.next);
+        })
+        .catch((error) => console.log(error));
+    },
+    [previous]
+  );
+
   /**
    * Fetches thread
    */
   function fetchThread() {
-    const _isFollower = (scUser && scFollowersManager.isFollower(scUser)) || (scUser && scUser.community_badge);
     if (userObj && typeof userObj !== 'string') {
+      const _isFollower = (scUser && scFollowersManager.isFollower(scUser)) || (scUser && scUser.community_badge);
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
-      http
-        .request({
-          url: Endpoints.GetAThread.url(),
-          method: Endpoints.GetAThread.method,
-          params: {
-            user: _userObjId
-          }
-        })
-        .then((res: HttpResponse<any>) => {
-          const data = res.data;
-          setMessageObjs(data.results);
-          if (data.results.length) {
-            if (data.results[0].receiver.id !== authUserId) {
-              setReceiver(data.results[0].receiver);
+      PrivateMessageService.getAThread({user: _userObjId, limit: 10})
+        .then((res: SCPaginatedResponse<SCPrivateMessageThreadType>) => {
+          setMessageObjs(res.results);
+          setPrevious(res.next);
+          if (res.results.length) {
+            if (res.results[0].receiver.id !== authUserId) {
+              setReceiver(res.results[0].receiver);
             } else {
-              setReceiver(data.results[0].sender);
+              setReceiver(res.results[0].sender);
             }
             setSingleMessageThread(false);
           } else {
@@ -335,15 +341,34 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         });
     }
   }
+
+  const isNewerThan60Seconds = (creationTime) => {
+    const date = new Date(creationTime);
+    const now = new Date();
+    return now.getTime() - date.getTime() < 60000;
+  };
+
+  function updateMessageAfterDeletion(id: number) {
+    const newMessageObjects = [...messageObjs];
+    const index = newMessageObjects.findIndex((s) => s.id === id);
+    if (index !== -1) {
+      newMessageObjects[index].message = `${intl.formatMessage(translMessages.messageDeleted)}`;
+      newMessageObjects[index].file = null;
+      newMessageObjects[index].status = SCPrivateMessageStatusType.DELETED;
+      setMessageObjs(newMessageObjects);
+    }
+  }
+
   /**
    * Handles the deletion of a single message
    */
   function handleDeleteMessage() {
+    const toHide = isNewerThan60Seconds(deletingMsg.created_at);
     PrivateMessageService.deleteAMessage(deletingMsg.id)
       .then(() => {
         const result = messageObjs.filter((m) => m.id !== deletingMsg.id);
-        setMessageObjs(result);
-        handleSnippetsUpdate(result.length >= 1 ? result.slice(-1) : deletingMsg);
+        toHide ? setMessageObjs(result) : updateMessageAfterDeletion(deletingMsg.id);
+        handleSnippetsUpdate(result.length >= 1 && toHide ? result.slice(-1) : [deletingMsg]);
         handleCloseDeleteMessageDialog();
       })
       .catch((error) => {
@@ -410,6 +435,17 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     }
   }
 
+  // EFFECTS
+
+  /**
+   * If a value is entered in new message field, it fetches user followers
+   */
+  useEffect(() => {
+    if (value) {
+      fetchResults();
+    }
+  }, [value]);
+
   /**
    * Checks is thread receiver is a user follower
    */
@@ -423,6 +459,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * On mount, if obj, fetches thread
    */
   useEffect(() => {
+    if (!authUserId) {
+      return;
+    }
     userObj && fetchThread();
   }, [userObj, authUserId, scUser]);
 
@@ -461,33 +500,40 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     }
     return (
       <CardContent>
-        <List>
-          {Object.keys(formattedMessages).map((key) => (
-            <li key={key} className={classes.section}>
-              <ul>
-                <ListSubheader>
-                  <Typography align="center" className={classes.subHeader}>
-                    {key}
-                  </Typography>
-                </ListSubheader>
-                {formattedMessages[key].map((msg: SCPrivateMessageThreadType) => (
-                  <PrivateMessageThreadItem
-                    className={authUserId === msg.sender.id ? classes.sender : classes.receiver}
-                    message={msg}
-                    key={msg.id}
-                    mouseEvents={{
-                      onMouseEnter: () => handleMouseEnter(msg.id),
-                      onMouseLeave: () => handleMouseLeave(msg.id)
-                    }}
-                    isHovering={isHovered[msg.id]}
-                    showMenuIcon={authUserId === msg.sender.id}
-                    onMenuIconClick={() => handleOpenDeleteMessageDialog(msg)}
-                  />
-                ))}
-              </ul>
-            </li>
-          ))}
-        </List>
+        <InfiniteScroll
+          height={'100%'}
+          dataLength={messageObjs.length}
+          previous={handlePrevious}
+          hasMorePrevious={previous !== null}
+          loaderPrevious={<PrivateMessageThreadItemSkeleton />}>
+          <List>
+            {Object.keys(formattedMessages).map((key) => (
+              <li key={key} className={classes.section}>
+                <ul>
+                  <ListSubheader>
+                    <Typography align="center" className={classes.subHeader}>
+                      {key}
+                    </Typography>
+                  </ListSubheader>
+                  {formattedMessages[key].map((msg: SCPrivateMessageThreadType) => (
+                    <PrivateMessageThreadItem
+                      className={authUserId === msg.sender.id ? classes.sender : classes.receiver}
+                      message={msg}
+                      key={msg.id}
+                      mouseEvents={{
+                        onMouseEnter: () => handleMouseEnter(msg.id),
+                        onMouseLeave: () => handleMouseLeave(msg.id)
+                      }}
+                      isHovering={isHovered[msg.id]}
+                      showMenuIcon={authUserId === msg.sender.id}
+                      onMenuIconClick={() => handleOpenDeleteMessageDialog(msg)}
+                    />
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </List>
+        </InfiniteScroll>
         <PrivateMessageEditor
           className={classes.editor}
           send={handleSend}
@@ -565,7 +611,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                 <Icon fontSize="small">close</Icon>
               </IconButton>
             </Box>
-            <List></List>
+            <List className={classes.newMessageContent}></List>
             <PrivateMessageEditor
               className={classes.editor}
               send={handleSend}
@@ -585,17 +631,14 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
 
   // Anonymous
   if (!authUserId) {
-    return <HiddenPlaceholder />;
+    return null;
   }
   /**
-   * Renders the component (if not hidden by autoHide prop)
+   * Renders the component
    */
-  if (!autoHide) {
-    return (
-      <Root {...rest} className={classNames(classes.root, className)}>
-        {userObj !== null && !isNew && !singleMessageThread ? renderThread() : renderNewOrNoMessageBox()}
-      </Root>
-    );
-  }
-  return <HiddenPlaceholder />;
+  return (
+    <Root {...rest} className={classNames(classes.root, className)}>
+      {userObj !== null && !isNew && !singleMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+    </Root>
+  );
 }

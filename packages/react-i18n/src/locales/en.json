@@ -430,6 +430,7 @@
   "ui.privateMessage.thread.newMessage.autocomplete.placeholder" : "Username",
   "ui.privateMessage.thread.emptyBox.message" : "Select or compose a message",
   "ui.privateMessage.thread.error.delete.msg" : "An error occurred while deleting the message",
+  "ui.privateMessage.thread.message.deleted" : "Message deleted",
   "ui.privateMessage.snippets.button.newMessage" : "Create New Message",
   "ui.privateMessage.snippets.searchBar.placeholder" : "Search on Private Messages",
 
