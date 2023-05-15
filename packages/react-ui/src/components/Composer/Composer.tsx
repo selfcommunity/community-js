@@ -44,6 +44,8 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  Tab,
+  Tabs,
   TextField,
   Theme,
   ToggleButton,
@@ -665,18 +667,19 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </Box>
         </DialogTitle>
         <DialogContent className={classes.audienceContent}>
-          <Box sx={{textAlign: 'center'}} className={classes.block}>
-            <ToggleButtonGroup value={audience} exclusive onChange={handleChange('audience')}>
-              <ToggleButton value={AUDIENCE_ALL} size="small">
-                <Icon>public</Icon>
-                <FormattedMessage id="ui.composer.audience.all" defaultMessage="ui.composer.audience.all" />
-              </ToggleButton>
-              <ToggleButton value={AUDIENCE_TAG} size="small">
-                <Icon>label</Icon> <FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-          <Typography align="center" className={classes.block} gutterBottom>
+          <Tabs value={audience} onChange={handleChange('audience')} aria-label="audience type">
+            <Tab
+              value={AUDIENCE_ALL}
+              icon={<Icon>public</Icon>}
+              label={<FormattedMessage id="ui.composer.audience.all" defaultMessage="ui.composer.audience.all" />}
+            />
+            <Tab
+              value={AUDIENCE_TAG}
+              icon={<Icon>label</Icon>}
+              label={<FormattedMessage id="ui.composer.audience.tag" defaultMessage="ui.composer.audience.tag" />}
+            />
+          </Tabs>
+          <Typography align="center" className={classes.block}>
             {audience === AUDIENCE_ALL && (
               <FormattedMessage id="ui.composer.audience.all.message" defaultMessage="ui.composer.audience.all.message" />
             )}
@@ -684,13 +687,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               <FormattedMessage id="ui.composer.audience.tag.message" defaultMessage="ui.composer.audience.tag.message" />
             )}
           </Typography>
-          {audience === AUDIENCE_TAG && (
-            <Box className={classes.divider}>
-              <Box className={classes.block} sx={{textAlign: 'center'}}>
-                <Audience onChange={handleChange('addressing')} defaultValue={addressing} tags={scAddressingTags} />
-              </Box>
-            </Box>
-          )}
+          {audience === AUDIENCE_TAG && <Audience onChange={handleChange('addressing')} defaultValue={addressing} tags={scAddressingTags} />}
         </DialogContent>
       </React.Fragment>
     );
