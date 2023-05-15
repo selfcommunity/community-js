@@ -5,7 +5,7 @@ import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from
 import Widget, {WidgetProps} from '../Widget';
 import {SCFeedUnitType} from '@selfcommunity/types';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import { CacheStrategies, isInteger, Logger } from "@selfcommunity/utils";
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
@@ -198,7 +198,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user.id))) {
+    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -234,10 +234,10 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   useEffect(() => {
     if (!contentAvailability && !scUserContext.user) {
       return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    } else if (isInteger(catId) && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, contentAvailability, cacheStrategy]);
+  }, [contentAvailability, cacheStrategy, catId, scUserContext.user]);
 
   // HANDLERS
   const handleNext = useMemo(

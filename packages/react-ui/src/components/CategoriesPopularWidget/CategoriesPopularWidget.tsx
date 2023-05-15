@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import { CacheStrategies, isInteger, Logger } from "@selfcommunity/utils";
 import Skeleton from './Skeleton';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -180,7 +180,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user !== undefined && (contentAvailability || (!contentAvailability && scUserContext.user.id))) {
+    if (scUserContext.user !== undefined && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -214,7 +214,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, contentAvailability, cacheStrategy]);
+  }, [contentAvailability, cacheStrategy, scUserContext.user]);
 
   // HANDLERS
   /**

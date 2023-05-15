@@ -177,16 +177,6 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // EFFECTS
-  useEffect(() => {
-    if (!userId) {
-      return;
-    } else if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, [scUserContext.user]);
-
   /**
    * On mount, fetches the list of users followers
    */
@@ -237,6 +227,16 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   useEffect(() => {
     onHeightChange && onHeightChange();
   }, [state.results]);
+
+  useEffect(() => {
+    if (!userId) {
+      return;
+    } else if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user]);
 
   // HANDLERS
   const handleNext = useMemo(

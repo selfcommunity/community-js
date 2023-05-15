@@ -219,7 +219,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
       objId &&
       preferences &&
       (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] ||
-        (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && scUserContext.user.id))
+        (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && scUserContext.user?.id))
     ) {
       _t = setTimeout(_initComponent);
       return (): void => {
@@ -256,15 +256,12 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
     } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [obj?.id, scUserContext.user, preferences, cacheStrategy]);
-
+  }, [obj?.id, preferences, cacheStrategy, scUserContext.user]);
 
   // HANDLERS
   const handleNext = useMemo(
     () => (): void => {
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
       http
         .request({
           url: state.next,

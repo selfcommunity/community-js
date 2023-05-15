@@ -23,13 +23,11 @@ import Skeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCUserType} from '@selfcommunity/types/src/types';
 import {AxiosResponse} from 'axios';
-import { TRENDING_PEOPLE_TOOLS_STATE_CACHE_PREFIX_KEY } from "@selfcommunity/react-core/src/constants/Cache";
-import { prefetchedCategories } from "../Categories/prefetchedCategories";
 
 const PREFIX = 'SCCategoryTrendingUsersWidget';
 
@@ -194,7 +192,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user.id))) {
+    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -226,10 +224,10 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   useEffect(() => {
     if (!contentAvailability && !scUserContext.user) {
       return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+    } else if (isInteger(catId) && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, contentAvailability, cacheStrategy]);
+  }, [contentAvailability, cacheStrategy, catId, scUserContext.user]);
 
   // HANDLERS
   const handleNext = useMemo(
