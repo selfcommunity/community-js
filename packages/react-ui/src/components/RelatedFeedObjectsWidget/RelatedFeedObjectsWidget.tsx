@@ -268,10 +268,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
           method: Endpoints.RelatedFeedObjects.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCFeedObjectType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next]
