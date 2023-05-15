@@ -29,6 +29,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCUserType} from '@selfcommunity/types/src/types';
 import {AxiosResponse} from 'axios';
 import { TRENDING_PEOPLE_TOOLS_STATE_CACHE_PREFIX_KEY } from "@selfcommunity/react-core/src/constants/Cache";
+import { prefetchedCategories } from "../Categories/prefetchedCategories";
 
 const PREFIX = 'SCCategoryTrendingUsersWidget';
 
@@ -192,14 +193,6 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
 
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, [scUserContext.user]);
-
-  useEffect(() => {
     let _t;
     if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user.id))) {
       _t = setTimeout(_initComponent);
@@ -221,7 +214,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, catId]);
+  }, [openDialog, limit, state.next, state.initialized, state.results, catId]);
 
   /**
    * Virtual feed update
@@ -229,6 +222,14 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   useEffect(() => {
     onHeightChange && onHeightChange();
   }, [state.results]);
+
+  useEffect(() => {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user, contentAvailability, cacheStrategy]);
 
   // HANDLERS
   const handleNext = useMemo(

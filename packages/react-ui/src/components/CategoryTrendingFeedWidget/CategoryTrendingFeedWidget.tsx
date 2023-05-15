@@ -197,14 +197,6 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
 
   // EFFECTS
   useEffect(() => {
-    if (!contentAvailability && !scUserContext.user) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, [scUserContext.user]);
-
-  useEffect(() => {
     let _t;
     if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user.id))) {
       _t = setTimeout(_initComponent);
@@ -230,7 +222,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, state.initialized, catId]);
+  }, [openDialog, limit, state.next, state.results, state.initialized, catId]);
 
   /**
    * Virtual feed update
@@ -238,6 +230,14 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
   useEffect(() => {
     onHeightChange && onHeightChange();
   }, [state.results]);
+
+  useEffect(() => {
+    if (!contentAvailability && !scUserContext.user) {
+      return;
+    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user, contentAvailability, cacheStrategy]);
 
   // HANDLERS
   const handleNext = useMemo(
@@ -317,7 +317,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
             next={handleNext}
             hasMoreNext={Boolean(state.next)}
             loaderNext={<FeedObjectSkeleton elevation={0} {...FeedObjectProps} />}
-            height={isMobile ? 800 : 400}
+            height={isMobile ? '100%' : 400}
             endMessage={
               <Typography className={classes.endMessage}>
                 <FormattedMessage id="ui.categoryTrendingFeedWidget.noMoreResults" defaultMessage="ui.categoryTrendingFeedWidget.noMoreResults" />

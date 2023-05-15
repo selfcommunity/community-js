@@ -213,14 +213,6 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
 
   // EFFECTS
   useEffect(() => {
-    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) {
-      return;
-    } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, [obj?.id, scUserContext.user]);
-
-  useEffect(() => {
     let _t: string | number | NodeJS.Timeout;
     if (
       scUserContext.user !== undefined &&
@@ -249,7 +241,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, obj]);
+  }, [openDialog, limit, state.next, state.initialized, state.results, obj]);
 
   /**
    * Virtual feed update
@@ -257,6 +249,15 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
   useEffect(() => {
     onHeightChange && onHeightChange();
   }, [state.results]);
+
+  useEffect(() => {
+    if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !scUserContext.user) {
+      return;
+    } else if (obj?.id !== null && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [obj?.id, scUserContext.user, preferences, cacheStrategy]);
+
 
   // HANDLERS
   const handleNext = useMemo(
