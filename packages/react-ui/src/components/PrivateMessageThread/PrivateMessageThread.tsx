@@ -353,6 +353,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     const index = newMessageObjects.findIndex((s) => s.id === id);
     if (index !== -1) {
       newMessageObjects[index].message = `${intl.formatMessage(translMessages.messageDeleted)}`;
+      newMessageObjects[index].file = null;
+      newMessageObjects[index].status = SCPrivateMessageStatusType.DELETED;
       setMessageObjs(newMessageObjects);
     }
   }
