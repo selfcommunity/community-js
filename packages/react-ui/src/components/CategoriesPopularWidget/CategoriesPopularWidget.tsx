@@ -199,7 +199,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, limit, state.next, state.initialized, state.results]);
+  }, [openDialog, limit, state.next, state.initialized, state.results.length]);
 
   /**
    * Virtual feed update

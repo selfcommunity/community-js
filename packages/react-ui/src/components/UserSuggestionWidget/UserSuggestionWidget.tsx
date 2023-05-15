@@ -1,17 +1,14 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse, SuggestionService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, SuggestionService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
   SCCache,
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
   SCThemeType,
-  SCUserContext,
   SCUserContextType,
-  useIsComponentMountedRef,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -45,13 +42,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface UserSuggestionWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -151,53 +148,55 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const followEnabled =
-    SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const followEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized, and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        SuggestionService.getUserSuggestion({limit})
+          .then((payload: SCPaginatedResponse<SCUserType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, limit, dispatch]
+  );
+
   // EFFECTS
   useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t;
+    if (scUserContext.user) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [scUserContext.user]);
-  /**
-   * On mount, fetches people suggestion list
-   */
-  useEffect(() => {
-    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    SuggestionService.getUserSuggestion({limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCUserType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
   }, [scUserContext.user]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
       SuggestionService.getUserSuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
@@ -213,38 +212,46 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
     onHeightChange && onHeightChange();
   }, [state.results]);
 
-  // HANDLERS
-  const handleConnect = (user, follow) => {
-    dispatch({
-      type: actionWidgetTypes.SET_RESULTS,
-      payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
-    });
-  };
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user]);
 
+  // HANDLERS
+  /**
+   * Handles list change on user connect
+   */
+  const handleConnect = useMemo(
+    () =>
+      (user): void => {
+        dispatch({
+          type: actionWidgetTypes.SET_RESULTS,
+          payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
+        });
+      },
+    [dispatch, state.count, state.results.length]
+  );
+
+  /**
+   * Handles pagination
+   */
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
-          method: Endpoints.PopularCategories.method
+          method: Endpoints.UserSuggestion.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          // dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 

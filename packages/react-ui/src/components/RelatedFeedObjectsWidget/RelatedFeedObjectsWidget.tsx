@@ -241,7 +241,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, limit, state.next, state.initialized, state.results, obj]);
+  }, [openDialog, limit, state.next, state.initialized, state.results.length, obj]);
 
   /**
    * Virtual feed update

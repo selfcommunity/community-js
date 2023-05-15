@@ -212,7 +212,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, limit, state.next, state.initialized, state.results, catId]);
+  }, [openDialog, limit, state.next, state.initialized, state.results.length, catId]);
 
   /**
    * Virtual feed update

@@ -141,62 +141,50 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   /**
-   * Handles list change on category follow
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
    */
-  function handleFollow(category, follow) {
-    dispatch({
-      type: actionWidgetTypes.SET_RESULTS,
-      payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
-    });
-  }
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!state.initialized && !state.isLoadingNext) {
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
+        SuggestionService.getCategorySuggestion({limit})
+          .then((payload: SCPaginatedResponse<SCCategoryType>) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          })
+          .catch((error) => {
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [state.isLoadingNext, state.initialized, limit, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
-    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    let _t;
+    if (scUserContext.user) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
   }, [scUserContext.user]);
 
-  /**
-   * On mount, fetches categories suggestion list
-   */
-  useEffect(() => {
-    if (!scUserContext.user || state.initialized || state.isLoadingNext) {
-      return;
-    }
-    dispatch({
-      type: actionWidgetTypes.LOADING_NEXT
-    });
-    const controller = new AbortController();
-    SuggestionService.getCategorySuggestion({limit}, {signal: controller.signal})
-      .then((payload: SCPaginatedResponse<SCCategoryType>) => {
-        dispatch({
-          type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-          payload: {...payload, initialized: true}
-        });
-      })
-      .catch((error) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-        Logger.error(SCOPE_SC_UI, error);
-      });
-    return () => controller.abort();
-  }, [scUserContext.user, state.initialized]);
-
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
       SuggestionService.getCategorySuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCCategoryType>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: payload
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [openDialog, state.next, state.results, state.initialized]);
+  }, [openDialog, state.next, state.results.length, state.initialized, limit]);
 
   /**
    * Virtual feed update
@@ -205,31 +193,46 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     onHeightChange && onHeightChange();
   }, [state.results]);
 
+  useEffect(() => {
+    if (scUserContext.user && cacheStrategy === CacheStrategies.NETWORK_ONLY) {
+      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
+    }
+  }, [scUserContext.user]);
+
   // HANDLERS
+  /**
+   * Handles list change on category follow
+   */
+  const handleFollow = useMemo(
+    () =>
+      (category): void => {
+        dispatch({
+          type: actionWidgetTypes.SET_RESULTS,
+          payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
+        });
+      },
+    [dispatch, state.count, state.results.length]
+  );
+
+  /**
+   * Handles pagination
+   */
   const handleNext = useMemo(
-    () => () => {
-      if (!state.initialized || state.isLoadingNext) {
-        return;
-      }
-      dispatch({
-        type: actionWidgetTypes.LOADING_NEXT
-      });
-      return http
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
         .request({
           url: state.next,
           method: Endpoints.CategoriesSuggestion.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCCategoryType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
-  const handleToggleDialogOpen = () => {
+  const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 

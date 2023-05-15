@@ -132,7 +132,7 @@ const withProvider = (Story, context) => {
   return (
     <StrictMode>
       <EmotionThemeProvider theme={defaultTheme}>
-        <Box style={{ position: 'absolute', right: 0, zIndex: 1000 }}>
+        <Box style={{ position: 'absolute', right: 5, top: 5, zIndex: 1000 }}>
           {!authToken && (
             <Button
               variant="contained"
