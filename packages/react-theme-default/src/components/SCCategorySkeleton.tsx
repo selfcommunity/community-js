@@ -1,6 +1,9 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCCategorySkeleton-image': {
+        borderRadius: theme.spacing(1)
+      },
       '& .SCCategorySkeleton-primary': {
         marginBottom: theme.spacing(1)
       },

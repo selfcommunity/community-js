@@ -12,7 +12,11 @@ const classes = {
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
   marginBottom: theme.spacing(2)
 }));
 /**

@@ -7,7 +7,7 @@ const Component = {
       },
       '& .SCCategory-category-image': {
         '& img': {
-          borderRadius: 0
+          borderRadius: theme.spacing(1)
         }
       },
       '& .SCBaseItemButton-primary, & .SCBaseItemButton-secondary': {
