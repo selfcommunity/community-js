@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.180](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.179...@selfcommunity/react-templates@0.3.0-alpha.180) (2023-05-15)
+
+
+### Bug Fixes
+
+* widgets strict mode ([74e486a](https://github.com/selfcommunity/community-js/commit/74e486ad71b86873fbc68ca02c5ee2b46702e7ac))
+
+
+
+
+
 # [0.3.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.178...@selfcommunity/react-templates@0.3.0-alpha.179) (2023-05-11)
 
 
