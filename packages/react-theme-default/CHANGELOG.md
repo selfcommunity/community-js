@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.138](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.137...@selfcommunity/react-theme-default@0.1.0-alpha.138) (2023-05-15)
+
+
+### Performance Improvements
+
+* added infinte scroll to thread pagination, fixed single message delete ([f1031cd](https://github.com/selfcommunity/community-js/commit/f1031cdbc9ba4cf1265f63d656147858b0e45c49))
+
+
+
+
+
 # [0.1.0-alpha.137](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.136...@selfcommunity/react-theme-default@0.1.0-alpha.137) (2023-05-15)
 
 
