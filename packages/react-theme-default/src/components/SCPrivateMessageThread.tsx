@@ -86,11 +86,10 @@ const Component = {
             marginLeft: theme.spacing(1)
           },
           '& .SCPrivateMessageThread-autocomplete': {
-            minWidth: theme.spacing(27),
+            width: '100%',
             marginLeft: theme.spacing(1),
             maxHeight: theme.mixins.toolbar.minHeight,
             overflow: 'auto',
-            scrollbarWidth: 'none',
             '& .MuiAutocomplete-tag': {
               height: theme.spacing(3),
               '& .MuiChip-deleteIcon': {
