@@ -382,7 +382,13 @@ export default function Share(inProps: ShareProps): JSX.Element {
                   {renderShareMenuItems()}
                 </Menu>
               ) : (
-                <SwipeableDrawer open={Boolean(anchorEl)} onClose={handleClose} onOpen={handleOpenShareMenu} anchor="bottom" disableSwipeToOpen>
+                <SwipeableDrawer
+                  open={Boolean(anchorEl)}
+                  onClick={handleClose}
+                  onClose={handleClose}
+                  onOpen={handleOpenShareMenu}
+                  anchor="bottom"
+                  disableSwipeToOpen>
                   {renderShareMenuItems()}
                 </SwipeableDrawer>
               )}
