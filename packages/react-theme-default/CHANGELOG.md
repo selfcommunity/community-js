@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.140](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.139...@selfcommunity/react-theme-default@0.1.0-alpha.140) (2023-05-16)
+
+
+### Bug Fixes
+
+* widgets strict mode ([5c556d5](https://github.com/selfcommunity/community-js/commit/5c556d5bc4f6edc7ac01769767a96fc2a1ade788))
+
+
+
+
+
 # [0.1.0-alpha.139](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.138...@selfcommunity/react-theme-default@0.1.0-alpha.139) (2023-05-15)
 
 
