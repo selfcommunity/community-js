@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.192...@selfcommunity/react-ui@0.7.0-alpha.193) (2023-05-16)
+
+
+### Bug Fixes
+
+* fixed imports ([e491bc5](https://github.com/selfcommunity/community-js/commit/e491bc56446f1339249ebdf73b85bc276b33df22))
+* widgets strict mode ([5c556d5](https://github.com/selfcommunity/community-js/commit/5c556d5bc4f6edc7ac01769767a96fc2a1ade788))
+
+
+
+
+
 # [0.7.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.191...@selfcommunity/react-ui@0.7.0-alpha.192) (2023-05-15)
 
 
