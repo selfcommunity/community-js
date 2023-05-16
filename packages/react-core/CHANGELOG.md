@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.41...@selfcommunity/react-core@0.4.0-alpha.42) (2023-05-16)
+
+
+### Bug Fixes
+
+* CategoriesPopularWidget ([06c8e15](https://github.com/selfcommunity/community-js/commit/06c8e15f25b829f36adc6cb2e4c1ec50e9d9b594))
+
+
+
+
+
 # [0.4.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.40...@selfcommunity/react-core@0.4.0-alpha.41) (2023-05-15)
 
 

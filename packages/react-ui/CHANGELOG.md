@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.194](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.193...@selfcommunity/react-ui@0.7.0-alpha.194) (2023-05-16)
+
+
+### Bug Fixes
+
+* CategoriesPopularWidget ([06c8e15](https://github.com/selfcommunity/community-js/commit/06c8e15f25b829f36adc6cb2e4c1ec50e9d9b594))
+
+
+### Performance Improvements
+
+* removed unused autohide prop from pm components, fixed message hidden status ([103b781](https://github.com/selfcommunity/community-js/commit/103b7816473f26042dec345eabf2197da0684adb))
+
+
+
+
+
 # [0.7.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.192...@selfcommunity/react-ui@0.7.0-alpha.193) (2023-05-16)
 
 
