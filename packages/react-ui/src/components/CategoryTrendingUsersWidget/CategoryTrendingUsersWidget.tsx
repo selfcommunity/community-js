@@ -26,7 +26,7 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {SCUserType} from '@selfcommunity/types/src/types';
+import {SCUserType} from '@selfcommunity/types';
 import {AxiosResponse} from 'axios';
 
 const PREFIX = 'SCCategoryTrendingUsersWidget';

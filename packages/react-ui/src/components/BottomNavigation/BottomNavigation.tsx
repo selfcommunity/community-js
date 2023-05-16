@@ -9,7 +9,6 @@ import {
 import React, {useMemo} from 'react';
 import {
   Link,
-  SCFeatures,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
@@ -21,7 +20,7 @@ import {
 } from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {SCFeatureName} from '@selfcommunity/types/src/types';
+import {SCFeatureName} from '@selfcommunity/types';
 
 const PREFIX = 'SCBottomNavigation';
 
