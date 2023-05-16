@@ -877,17 +877,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleChangeView(AUDIENCE_VIEW)} />
               ))}
           </Stack>
-          {type === COMPOSER_TYPE_DISCUSSION && (
-            <div className={classes.block}>
-              <CategoryAutocomplete
-                multiple
-                key={`${key}-categories`}
-                onChange={handleChange('categories')}
-                defaultValue={categories}
-                disabled={isSubmitting}
-              />
-            </div>
-          )}
+          <div className={classes.block}>
+            <CategoryAutocomplete
+              multiple
+              key={`${key}-categories`}
+              onChange={handleChange('categories')}
+              defaultValue={categories}
+              disabled={isSubmitting}
+            />
+          </div>
           {error && (
             <Typography className={classes.block} color="error">
               {error}
