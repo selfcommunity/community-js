@@ -21,7 +21,7 @@ import NotificationMenu from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
 import ComposerIconButton from '../ComposerIconButton';
-import {SCFeatureName} from '@selfcommunity/types/src/types';
+import {SCFeatureName} from '@selfcommunity/types';
 
 const PREFIX = 'SCNavigationToolbar';
 

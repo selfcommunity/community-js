@@ -30,6 +30,9 @@ const Component = {
                   borderRadius: 0
                 }
               }
+            },
+            '& .SCFeedObjectSkeleton-snippet': {
+              marginLeft: theme.spacing(-2)
             }
           }
         }
