@@ -585,6 +585,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   multiple={!singleMessageThread}
                   limitTags={3}
                   freeSolo
+                  disableClearable
                   options={followers}
                   onChange={handleChange}
                   onInputChange={handleInputChange}

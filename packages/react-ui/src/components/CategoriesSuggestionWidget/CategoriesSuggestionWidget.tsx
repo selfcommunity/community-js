@@ -40,7 +40,7 @@ const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CategoriesSuggestionWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -116,6 +116,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     onHeightChange,
     onStateChange,
     DialogProps = {},
+    categoryId, // Removed from root DOM
     ...rest
   } = props;
 

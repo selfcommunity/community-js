@@ -51,7 +51,7 @@ const Root = styled(Grid, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 /**
  * FeedSidebarProps has the same props as StickyBoxProps type

@@ -42,13 +42,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CategoriesPopularWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -125,6 +125,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
     onHeightChange,
     onStateChange,
     DialogProps = {},
+    categoryId, // Removed from root DOM
     ...rest
   } = props;
 
