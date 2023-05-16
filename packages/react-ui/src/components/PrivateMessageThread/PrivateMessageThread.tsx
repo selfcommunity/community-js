@@ -16,7 +16,6 @@ import Icon from '@mui/material/Icon';
 import PrivateMessageThreadSkeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {useSnackbar} from 'notistack';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
@@ -354,7 +353,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     if (index !== -1) {
       newMessageObjects[index].message = `${intl.formatMessage(translMessages.messageDeleted)}`;
       newMessageObjects[index].file = null;
-      newMessageObjects[index].status = SCPrivateMessageStatusType.DELETED;
+      newMessageObjects[index].status = SCPrivateMessageStatusType.HIDDEN;
       setMessageObjs(newMessageObjects);
     }
   }

@@ -7,7 +7,6 @@ import {SCPrivateMessageThreadType, SCMessageFileType, SCPrivateMessageStatusTyp
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
@@ -54,11 +53,6 @@ export interface PrivateMessageThreadItemProps {
    * @default null
    */
   message?: SCPrivateMessageThreadType;
-  /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
   /**
    * Mouse Events to spread to the element
    */
@@ -123,16 +117,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
     props: inProps,
     name: PREFIX
   });
-  const {
-    autoHide = false,
-    message = null,
-    className = null,
-    mouseEvents = {},
-    isHovering = null,
-    showMenuIcon = false,
-    onMenuIconClick = null,
-    ...rest
-  } = props;
+  const {message = null, className = null, mouseEvents = {}, isHovering = null, showMenuIcon = false, onMenuIconClick = null, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -226,11 +211,8 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
     return <PrivateMessageThreadItemSkeleton elevation={0} />;
   }
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object
    */
-  if (autoHide) {
-    return <HiddenPlaceholder />;
-  }
   return (
     <Root
       className={classNames(classes.root, className)}
@@ -239,10 +221,10 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
       secondaryAction={
         (isHovering || isMobile) &&
         showMenuIcon &&
-        message.status !== 'hidden' && <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} />
+        message.status !== SCPrivateMessageStatusType.HIDDEN && <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} />
       }>
       <>
-        {hasFile && message.status !== SCPrivateMessageStatusType.DELETED ? (
+        {hasFile && message.status !== SCPrivateMessageStatusType.HIDDEN ? (
           renderMessageFile(message)
         ) : (
           <Box className={classes.text}>

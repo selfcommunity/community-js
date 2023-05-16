@@ -8,7 +8,6 @@ import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextTyp
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const PREFIX = 'SCPrivateMessageSnippetItem';
@@ -39,11 +38,6 @@ export interface PrivateMessageSnippetItemProps {
    * @default null
    */
   message?: SCPrivateMessageSnippetType;
-  /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
 
   /**
    * Callback fired on item click
@@ -93,7 +87,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = false, message = null, className = null, onItemClick = null, secondaryAction = null, ...rest} = props;
+  const {message = null, className = null, onItemClick = null, secondaryAction = null, ...rest} = props;
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   // PREFERENCES
@@ -118,11 +112,8 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
   }
 
   /**
-   * Renders root object (if not hidden by autoHide prop)
+   * Renders root object
    */
-  if (autoHide) {
-    return <HiddenPlaceholder />;
-  }
   return (
     <Root className={classNames(classes.root, className)} {...rest} secondaryAction={!isMobile && secondaryAction} disablePadding>
       <ListItemButton onClick={onItemClick}>
