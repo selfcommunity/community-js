@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.196](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.195...@selfcommunity/react-ui@0.7.0-alpha.196) (2023-05-16)
+
+
+### Bug Fixes
+
+* Added CategoryAutocomplete into Composer for posts ([3d2db68](https://github.com/selfcommunity/community-js/commit/3d2db68093b60e67b6979ae7fc3879e7ab92fcb3))
+* Fix close Share Drawer ([9fd8a04](https://github.com/selfcommunity/community-js/commit/9fd8a043bb171b9326edb85e3566f625d82de9a4))
+* input autofill bug chrome ([a66fd6b](https://github.com/selfcommunity/community-js/commit/a66fd6bd14173c52d9ed3f972d581abec159d3fa))
+
+
+### Performance Improvements
+
+* edited infinite scroll component for private messages inverse scroll ([8667f22](https://github.com/selfcommunity/community-js/commit/8667f22a1e28e3f2b8ab64af604f5250c7fe17e8))
+
+
+
+
+
 # [0.7.0-alpha.195](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.194...@selfcommunity/react-ui@0.7.0-alpha.195) (2023-05-16)
 
 
