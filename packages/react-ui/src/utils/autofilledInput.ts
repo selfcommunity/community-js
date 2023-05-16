@@ -41,6 +41,7 @@ const useInitialAutofilledInput = (id, value) => {
     // The time when it's ready is not very stable, so check few times
     setTimeout(checkAutofilled, 500);
     setTimeout(checkAutofilled, 1000);
+    setTimeout(checkAutofilled, 2000);
   }, []);
 
   return {autofilled: wasInitiallyAutofilled && !initialized && !value, setAutofilledInitialized};
