@@ -48,7 +48,6 @@ const UsernameTextField = (props: TextFieldProps): JSX.Element => {
       {...(id && {id})}
       {...(!InputLabelProps && {InputLabelProps: {shrink: autofilled}})}
       value={value}
-      // InputProps={{autocomplete: 'email'}}
       onChange={handleChange}
       error={Boolean(errorMsg) || error}
       helperText={errorMsg || helperText}

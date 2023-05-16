@@ -16,12 +16,16 @@ Base.args = {};
 export const BaseLabel = Template.bind({});
 
 BaseLabel.args = {
-  label: 'Label'
+  label: 'Label',
+  name: 'username',
+  id: 'username'
 };
 
 export const BaseLabelValue = Template.bind({});
 
 BaseLabelValue.args = {
   label: 'Label',
+  name: 'username',
+  id: 'username',
   value: 'value'
 };
