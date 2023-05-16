@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.191...@selfcommunity/react-ui@0.7.0-alpha.192) (2023-05-15)
+
+
+### Bug Fixes
+
+* widgets strict mode ([5aed870](https://github.com/selfcommunity/community-js/commit/5aed870372b1ad66dc67df08625ac8fbea0b5daa))
+* widgets strict mode ([a630976](https://github.com/selfcommunity/community-js/commit/a63097652368bd5bf01ae1a2f6b0c1a8bceeef43))
+
+
+### Performance Improvements
+
+* Moved Features into @selfcommunity/types package ([4d75469](https://github.com/selfcommunity/community-js/commit/4d75469e588761e45ea6028cb6adc60dd25d3d96))
+
+
+
+
+
+# [0.7.0-alpha.191](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.190...@selfcommunity/react-ui@0.7.0-alpha.191) (2023-05-15)
+
+
+### Bug Fixes
+
+* fixed single message(file) deletion update ([eee035b](https://github.com/selfcommunity/community-js/commit/eee035bc3ddc474a4731560d09269f98f27496f9))
+
+
+### Performance Improvements
+
+* added infinte scroll to thread pagination, fixed single message delete ([f1031cd](https://github.com/selfcommunity/community-js/commit/f1031cdbc9ba4cf1265f63d656147858b0e45c49))
+
+
+
+
+
 # [0.7.0-alpha.190](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.189...@selfcommunity/react-ui@0.7.0-alpha.190) (2023-05-15)
 
 

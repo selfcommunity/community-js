@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.40...@selfcommunity/react-core@0.4.0-alpha.41) (2023-05-15)
+
+
+### Performance Improvements
+
+* Moved Features into @selfcommunity/types package ([4d75469](https://github.com/selfcommunity/community-js/commit/4d75469e588761e45ea6028cb6adc60dd25d3d96))
+
+
+
+
+
+# [0.4.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.39...@selfcommunity/react-core@0.4.0-alpha.40) (2023-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 # [0.4.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.38...@selfcommunity/react-core@0.4.0-alpha.39) (2023-05-15)
 
 

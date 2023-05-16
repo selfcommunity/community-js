@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.3...@selfcommunity/types@0.5.0-alpha.4) (2023-05-15)
+
+
+### Performance Improvements
+
+* Moved Features into @selfcommunity/types package ([4d75469](https://github.com/selfcommunity/community-js/commit/4d75469e588761e45ea6028cb6adc60dd25d3d96))
+
+
+
+
+
 # [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.2...@selfcommunity/types@0.5.0-alpha.3) (2023-05-08)
 
 
