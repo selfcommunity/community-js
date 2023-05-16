@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {TextField, TextFieldProps} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
+import useInitialAutofilledInput from '../../utils/autofilledInput';
 
 const messages = defineMessages({
   urlError: {
@@ -22,13 +23,14 @@ const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()
 
 const UrlTextField = (props: TextFieldProps): JSX.Element => {
   // PROPS
-  const {onChange, error = false, helperText = null, ...rest} = props;
+  const {id, value = '', InputLabelProps = {}, onChange, error = false, helperText = null, ...rest} = props;
 
   // STATE
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // HOOKS
   const intl = useIntl();
+  const {autofilled, setAutofilledInitialized} = useInitialAutofilledInput(id, value);
 
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,11 +39,22 @@ const UrlTextField = (props: TextFieldProps): JSX.Element => {
     } else if (error !== null) {
       setErrorMsg(null);
     }
+    setAutofilledInitialized(true);
     onChange && onChange(event);
   };
 
   // RENDER
-  return <Root {...rest} onChange={handleChange} error={Boolean(errorMsg) || error} helperText={errorMsg || helperText} />;
+  return (
+    <Root
+      {...(id && {id})}
+      {...(!InputLabelProps && {InputLabelProps: {shrink: autofilled}})}
+      value={value}
+      onChange={handleChange}
+      error={Boolean(errorMsg) || error}
+      helperText={errorMsg || helperText}
+      {...rest}
+    />
+  );
 };
 
 export default UrlTextField;

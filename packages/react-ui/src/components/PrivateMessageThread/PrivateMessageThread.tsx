@@ -503,7 +503,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           height={'100%'}
           dataLength={messageObjs.length}
           previous={handlePrevious}
-          hasMorePrevious={previous !== null}
+          inverse={true}
+          hasMorePrevious={Boolean(previous)}
           loaderPrevious={<PrivateMessageThreadItemSkeleton />}>
           <List>
             {Object.keys(formattedMessages).map((key) => (
