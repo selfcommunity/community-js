@@ -88,9 +88,15 @@ const Component = {
           '& .SCPrivateMessageThread-autocomplete': {
             minWidth: theme.spacing(27),
             marginLeft: theme.spacing(1),
-            maxHeight: theme.spacing(5),
+            maxHeight: theme.mixins.toolbar.minHeight,
             overflow: 'auto',
             scrollbarWidth: 'none',
+            '& .MuiAutocomplete-tag': {
+              height: theme.spacing(3),
+              '& .MuiChip-deleteIcon': {
+                fontSize: '18px'
+              }
+            },
             '& .MuiAutocomplete-endAdornment': {
               position: 'relative',
               '& .MuiAutocomplete-clearIndicator': {
