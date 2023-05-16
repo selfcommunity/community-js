@@ -11,6 +11,7 @@ export interface Props {
   children: ReactNode;
   loaderNext?: ReactNode;
   loaderPrevious?: ReactNode;
+  inverse?: boolean;
   scrollThreshold?: number | string;
   endMessage?: ReactNode;
   header?: ReactNode;
@@ -252,6 +253,8 @@ export default class InfiniteScroll extends Component<Props, State> {
         Math.abs(this.lastScrollTop - target.scrollTop) >= threshold.value / 3 &&
         target.scrollTop < this.lastScrollTop
       );
+    } else if (this.props.inverse) {
+      return target.scrollTop <= threshold.value / 100 + clientHeight - target.scrollHeight + 1;
     }
     return target.scrollTop <= threshold.value / 100 + clientHeight && target.scrollTop < this.lastScrollTop;
   }
@@ -338,8 +341,9 @@ export default class InfiniteScroll extends Component<Props, State> {
               </div>
             </div>
           )}
-          {this.state.showLoaderPrevious && this.props.hasMorePrevious && this.props.loaderPrevious}
+          {!this.props.inverse && this.state.showLoaderPrevious && this.props.hasMorePrevious && this.props.loaderPrevious}
           {this.props.children}
+          {this.props.inverse && this.state.showLoaderPrevious && this.props.hasMorePrevious && this.props.loaderPrevious}
           {!this.state.showLoaderNext && !hasChildren && this.props.hasMoreNext && this.props.loaderNext}
           {this.state.showLoaderNext && this.props.hasMoreNext && this.props.loaderNext}
           {!this.props.hasMoreNext && this.props.endMessage}
