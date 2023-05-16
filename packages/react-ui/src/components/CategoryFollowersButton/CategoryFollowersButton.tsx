@@ -99,16 +99,14 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
+  const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
-    console.log(scCategory);
     if (!scCategory) {
       return;
     }
     if (followers.length === 0) {
-      console.log('getCategoryFollowers');
       CategoryService.getCategoryFollowers(scCategory.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
         setFollowers([...res.results]);
         setOffset(3);
@@ -135,7 +133,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
    * Memoized fetchFollowers
    */
   const fetchFollowers = useMemo(
-    () => () => {
+    () => (): void => {
       if (!next) {
         return;
       }
@@ -157,9 +155,12 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
   /**
    * Opens dialog votes
    */
-  function handleToggleDialogOpen() {
-    setOpen((prev) => !prev);
-  }
+  const handleToggleDialogOpen = useMemo(
+    () => (): void => {
+      setOpen((prev) => !prev);
+    },
+    [setOpen]
+  );
 
   // RENDER
   const theme = useTheme<SCThemeType>();
@@ -207,7 +208,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
               </Typography>
             }>
             <List>
-              {followers.map((follower, index) => (
+              {followers.map((follower: SCUserType) => (
                 <ListItem key={follower.id}>
                   <User elevation={0} user={follower} />
                 </ListItem>
