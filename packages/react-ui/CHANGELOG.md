@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.195](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.194...@selfcommunity/react-ui@0.7.0-alpha.195) (2023-05-16)
+
+
+### Bug Fixes
+
+* CategoriesPopularWidget ([660720b](https://github.com/selfcommunity/community-js/commit/660720bdb899d65458a86b8db166b119232d46fc))
+* CategoryFollowersButton ([fa82185](https://github.com/selfcommunity/community-js/commit/fa82185b0fe38a312e956f04d1d4f3ab0e1d8142))
+* fixed new message autocomplete ([7f500c4](https://github.com/selfcommunity/community-js/commit/7f500c403389800f4b27197af7f79c794f373495))
+
+
+
+
+
 # [0.7.0-alpha.194](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.193...@selfcommunity/react-ui@0.7.0-alpha.194) (2023-05-16)
 
 
