@@ -141,7 +141,6 @@ import MetadataField from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
 import {bytesToSize} from './utils/sizeCoverter';
-import useInitialAutofilledInput from './utils/autofilledInput';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 
 /**
@@ -395,7 +394,6 @@ export {
   IncubatorSuggestionWidgetProps,
   ContributionUtils,
   bytesToSize,
-  useInitialAutofilledInput,
   MessageUploaderUtils,
   Footer,
   FooterProps,

@@ -40,7 +40,7 @@ const UsernameTextField = (props: TextFieldProps): JSX.Element => {
   };
 
   // RENDER
-  return <Root onChange={handleChange} error={Boolean(errorMsg) || error} helperText={errorMsg || helperText} {...rest} />;
+  return <Root {...rest} onChange={handleChange} error={Boolean(errorMsg) || error} helperText={errorMsg || helperText} />;
 };
 
 export default UsernameTextField;
