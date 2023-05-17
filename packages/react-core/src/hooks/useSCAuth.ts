@@ -80,7 +80,7 @@ function userReducer(state, action) {
  */
 function stateInitializer(session: SCSessionType): any {
   let _session: SCSessionType = Object.assign({}, session);
-  let _isLoading = false;
+  let _isLoading = true;
   /**
    * Set http authorization if session type is OAuth or JWT
    * Configure http object (Authorization, etc...)
@@ -88,13 +88,26 @@ function stateInitializer(session: SCSessionType): any {
   if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type)) {
     if (_session.authToken && _session.authToken.accessToken) {
       http.setAuthorizeToken(_session.authToken.accessToken);
-      _isLoading = true;
     } else {
       http.setAuthorizeToken();
+      _isLoading = false;
     }
+  } else if (_session.type === Session.COOKIE_SESSION) {
+    /**
+     * if the session is of type Cookie -> reset header token
+     * and keep the session on loading to recover the logged user
+     */
+    http.setAuthorizeToken();
   }
   http.setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
-  return {user: undefined, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};
+  return {
+    user: _isLoading ? undefined : null,
+    session: _session,
+    error: null,
+    loading: _isLoading,
+    isSessionRefreshing: false,
+    refreshSession: false,
+  };
 }
 
 /**
