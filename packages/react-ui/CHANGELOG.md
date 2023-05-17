@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.198](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.197...@selfcommunity/react-ui@0.7.0-alpha.198) (2023-05-17)
+
+
+### Bug Fixes
+
+* input autofill bug chrome ([0093b21](https://github.com/selfcommunity/community-js/commit/0093b21342c0e3c5146210d25ee77f158bb97319))
+* input autofill bug chrome ([144bc0e](https://github.com/selfcommunity/community-js/commit/144bc0e2a0ea21d14d64919a1cff008962814223))
+
+
+
+
+
 # [0.7.0-alpha.197](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.196...@selfcommunity/react-ui@0.7.0-alpha.197) (2023-05-16)
 
 
