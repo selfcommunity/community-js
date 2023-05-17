@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Grid, Typography} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCLocaleContextType, SCUserContext, SCUserContextType, useSCLocale} from '@selfcommunity/react-core';
+import {SCLocaleContextType, SCUserContext, SCUserContextType, UserUtils, useSCLocale} from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -80,9 +80,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
 
   // CONST
   const language = scLocaleContext.locale;
-  const roles = scUserContext.user && scUserContext.user.role;
-  const isAdmin = roles && roles.includes('admin');
-  const isModerator = roles && roles.includes('moderator');
+  const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
+  const isModerator = useMemo(() => UserUtils.isModerator(scUserContext.user), [scUserContext.user]);
 
   /**
    * Fetches platform url
@@ -143,7 +142,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide && roles !== null) {
+  if (!autoHide && scUserContext?.user?.role) {
     return (
       <Root className={classNames(classes.root, className)} {...rest}>
         {c}
