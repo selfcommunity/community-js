@@ -9,6 +9,10 @@ const Component = {
           borderRadius: theme.shape.borderRadius
         }
       },
+      '& .SCFeedObjectSkeleton-media': {
+        height: 250,
+        marginBottom: 20
+      },
       '& .SCFeedObjectSkeleton-snippet > *': {
         paddingLeft: 0,
         paddingRight: 0
