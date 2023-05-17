@@ -64,6 +64,7 @@ const classes = {
   username: `${PREFIX}-username`,
   activityAt: `${PREFIX}-activity-at`,
   tag: `${PREFIX}-tag`,
+  location: `${PREFIX}-location`,
   content: `${PREFIX}-content`,
   titleSection: `${PREFIX}-title-section`,
   title: `${PREFIX}-title`,
@@ -85,128 +86,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({
-  [`&.${classes.root}`]: {
-    width: '100%',
-    paddingBottom: 5
-  },
-  [`& .${classes.titleSection}`]: {
-    '& a': {
-      textDecoration: 'none'
-    },
-    '& a:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.title}`]: {
-    fontWeight: 600,
-    color: '#3e3e3e',
-    padding: `0px ${theme.spacing(2)}`
-  },
-  [`& .${classes.username}`]: {
-    color: '#000',
-    fontWeight: 600,
-    textDecoration: 'none'
-  },
-  [`& .${classes.avatar}`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  },
-  [`& .${classes.header}`]: {
-    paddingBottom: 0,
-    '& .MuiCardHeader-subheader': {
-      display: 'flex',
-      alignItems: 'center'
-    }
-  },
-  [`& .${classes.category}`]: {
-    textAlign: 'center',
-    color: '#939598',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    '& a': {
-      textDecoration: 'none',
-      color: '#3e3e3e'
-    },
-    '& a::after': {
-      content: '"\\2022"',
-      padding: theme.spacing()
-    },
-    '& a:last-child::after': {
-      display: 'none'
-    },
-    '& span': {
-      textTransform: 'initial'
-    }
-  },
-  [`& .${classes.content}`]: {
-    padding: `${theme.spacing()} 0px`
-  },
-  [`& .${classes.textSection}`]: {
-    '& >:first-of-type': {
-      padding: `${theme.spacing(2)}`,
-      display: 'block'
-    },
-    '& a': {
-      color: theme.palette.text.primary,
-      textDecoration: 'none'
-    },
-    '& img': {
-      maxWidth: '100%'
-    }
-  },
-  [`& .${classes.text}`]: {
-    marginBottom: 0,
-    '& a': {
-      color: theme.palette.text.primary
-    }
-  },
-  [`& .${classes.snippet}`]: {
-    '& > div': {
-      alignItems: 'flex-start'
-    },
-    '& .SCBaseItem-text': {
-      marginTop: 0
-    }
-  },
-  [`& .${classes.snippetContent} a`]: {
-    textDecoration: 'none',
-    color: '#3e3e3e'
-  },
-  [`& .${classes.tag}`]: {
-    display: 'inline-flex'
-  },
-  [`& .${classes.actionsSection}`]: {
-    padding: 0,
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  [`& .${classes.replyContent}`]: {
-    width: '100%',
-    boxSizing: 'border-box',
-    margin: 0,
-    padding: theme.spacing(2)
-  },
-  [`& .${classes.activitiesContent}`]: {
-    paddingTop: 3,
-    '&:last-child': {
-      paddingBottom: 5
-    }
-  },
-  [`& .${classes.infoSection}`]: {
-    padding: `0px ${theme.spacing(2)}`
-  },
-  [`& .${classes.activityAt}`]: {
-    textDecoration: 'none',
-    color: 'inherit',
-    marginTop: 3
-  },
-  [`& .${classes.deleted}`]: {
-    opacity: 0.3,
-    '&:hover': {
-      opacity: 1
-    }
-  }
-}));
+})(({theme}: any) => ({}));
 
 export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   /**
@@ -753,7 +633,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </div>
             )}
             <CardHeader
-              classes={{root: classes.header}}
+              className={classes.header}
               avatar={
                 <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
                   <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
@@ -771,6 +651,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                     <DateTimeAgo component={'span'} date={obj.added_at} />
                   </Link>
+                  {obj.location && (
+                    <>
+                      <Bullet />
+                      <Box className={classes.location}>
+                        <Icon>add_location_alt</Icon>
+                        {obj.location?.location}
+                      </Box>
+                    </>
+                  )}
                   <Bullet />
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
