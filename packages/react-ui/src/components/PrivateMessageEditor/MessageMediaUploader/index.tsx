@@ -107,14 +107,18 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
   };
 
   const handleSuccess = (media: SCPrivateMessageUploadThumbnailType) => {
-    setFiles([...files, media]);
-    forwardMessageFile([...files, media]);
+    setFiles((prev) => [...prev, media]);
+  };
+
+  const forwardFiles = () => {
+    forwardMessageFile(files);
   };
 
   const handleProgress = (chunks: any) => {
     setUploading({...chunks});
     setPreviews([...files, ...Object.values(chunks)]);
     isUploading(Object.keys(chunks).length !== 0);
+    Object.keys(chunks).length === 0 && Object.keys(uploading).length !== 0 && forwardFiles();
   };
 
   const handleError = (chunk: SCMessageChunkType, error: string) => {

@@ -35,7 +35,6 @@ const Component = {
       },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
         borderRadius: 0,
-        height: theme.spacing(15),
         backgroundColor: theme.palette.secondary.light,
         '& .MuiCardHeader-root': {
           paddingBottom: theme.spacing(0),
@@ -46,7 +45,7 @@ const Component = {
         '& .MuiCardContent-root': {
           overflow: 'auto',
           padding: theme.spacing(1),
-          //height: theme.mixins.toolbar.minHeight,
+          minHeight: theme.spacing(12.5),
           '& .SCMessageMediaUploader-upload-section': {
             '& .SCMessageMediaUploader-upload-button': {
               display: 'flex',
