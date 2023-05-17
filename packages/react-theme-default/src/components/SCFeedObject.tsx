@@ -62,7 +62,8 @@ const Component = {
         }
       },
       '& .SCFeedObject-snippet-content a': {
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: theme.palette.text.secondary
       },
       '& .SCFeedObject-tag': {
         display: 'inline-flex'
@@ -144,7 +145,8 @@ const Component = {
           },
           '& .SCFeedObject-text-section': {
             '& > :first-of-type': {
-              padding: theme.spacing(0, 2, 2)
+              padding: theme.spacing(0, 2, 2),
+              display: 'block'
             },
             '& hr': {
               margin: '1em 0'
