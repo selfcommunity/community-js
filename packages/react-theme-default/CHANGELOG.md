@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.147](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.146...@selfcommunity/react-theme-default@0.1.0-alpha.147) (2023-05-17)
+
+
+### Performance Improvements
+
+* Added location to FeedObject ([3021d88](https://github.com/selfcommunity/community-js/commit/3021d88ace2ef1e94dffd1fa748792a2c3956b2c))
+
+
+
+
+
+# [0.1.0-alpha.146](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.145...@selfcommunity/react-theme-default@0.1.0-alpha.146) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.145](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.144...@selfcommunity/react-theme-default@0.1.0-alpha.145) (2023-05-17)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
