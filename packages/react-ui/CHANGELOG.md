@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.198...@selfcommunity/react-ui@0.7.0-alpha.199) (2023-05-17)
+
+
+### Bug Fixes
+
+* fixed pm thread pagination on scroll(duplicate results on fetchPrev) ([f80cea6](https://github.com/selfcommunity/community-js/commit/f80cea63b90744738614a98e6b144b60c5a49d05))
+* revert input autofill bug chrome ([046d6cd](https://github.com/selfcommunity/community-js/commit/046d6cd6bab5249593cf0c2a0d62e2233e8dd23b))
+
+
+
+
+
 # [0.7.0-alpha.198](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.197...@selfcommunity/react-ui@0.7.0-alpha.198) (2023-05-17)
 
 
