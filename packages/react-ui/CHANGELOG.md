@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.202](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.201...@selfcommunity/react-ui@0.7.0-alpha.202) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix FeedObject.tsx for deleted object ([1204927](https://github.com/selfcommunity/community-js/commit/1204927db513bc08c099bfc6e39834261a231a95))
+
+
+
+
+
 # [0.7.0-alpha.201](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.200...@selfcommunity/react-ui@0.7.0-alpha.201) (2023-05-17)
 
 

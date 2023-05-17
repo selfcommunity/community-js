@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.149](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.148...@selfcommunity/react-theme-default@0.1.0-alpha.149) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix FeedObject.tsx for deleted object ([1204927](https://github.com/selfcommunity/community-js/commit/1204927db513bc08c099bfc6e39834261a231a95))
+
+
+
+
+
 # [0.1.0-alpha.148](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.147...@selfcommunity/react-theme-default@0.1.0-alpha.148) (2023-05-17)
 
 
