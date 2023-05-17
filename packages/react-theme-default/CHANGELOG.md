@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.149...@selfcommunity/react-theme-default@0.1.0-alpha.150) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix css ([f01d095](https://github.com/selfcommunity/community-js/commit/f01d095b2e16ec693cf77f3bdd7cea4b717f66eb))
+* Fix FeedObject style ([4216a12](https://github.com/selfcommunity/community-js/commit/4216a121929db5a0d4eb06f89e416476dd6bbc3b))
+
+
+
+
+
 # [0.1.0-alpha.149](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.148...@selfcommunity/react-theme-default@0.1.0-alpha.149) (2023-05-17)
 
 
