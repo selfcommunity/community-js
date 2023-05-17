@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.200](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.199...@selfcommunity/react-ui@0.7.0-alpha.200) (2023-05-17)
+
+
+### Performance Improvements
+
+* Added location to FeedObject ([3021d88](https://github.com/selfcommunity/community-js/commit/3021d88ace2ef1e94dffd1fa748792a2c3956b2c))
+
+
+
+
+
 # [0.7.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.198...@selfcommunity/react-ui@0.7.0-alpha.199) (2023-05-17)
 
 
