@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.148](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.147...@selfcommunity/react-theme-default@0.1.0-alpha.148) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix css for feed and toolbar ([675961f](https://github.com/selfcommunity/community-js/commit/675961f2ff33fc706b058a32a1fba1c089628a2e))
+* Fix pagination link ([0fccc07](https://github.com/selfcommunity/community-js/commit/0fccc07942642333adaa1ef74dde7e892a418c3f))
+* fixed pm multiple file uploading ([19903a8](https://github.com/selfcommunity/community-js/commit/19903a8bc98474d286470403a5be7f56fde6c3ce))
+
+
+
+
+
 # [0.1.0-alpha.147](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.146...@selfcommunity/react-theme-default@0.1.0-alpha.147) (2023-05-17)
 
 

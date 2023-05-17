@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.201](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.200...@selfcommunity/react-ui@0.7.0-alpha.201) (2023-05-17)
+
+
+### Bug Fixes
+
+* FeedObject now renders null if user cannot see the object ([3423262](https://github.com/selfcommunity/community-js/commit/3423262946493a8f6a43ddafd5c6b38d13f9bffa))
+* Fix css for feed and toolbar ([675961f](https://github.com/selfcommunity/community-js/commit/675961f2ff33fc706b058a32a1fba1c089628a2e))
+* fixed pm multiple file uploading ([19903a8](https://github.com/selfcommunity/community-js/commit/19903a8bc98474d286470403a5be7f56fde6c3ce))
+
+
+
+
+
 # [0.7.0-alpha.200](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.199...@selfcommunity/react-ui@0.7.0-alpha.200) (2023-05-17)
 
 
