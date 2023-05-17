@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCFollowersManagerType, SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
-import PrivateMessageThreadItem from '../PrivateMessageThreadItem';
+import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
 import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -19,7 +19,6 @@ import {Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 
 const translMessages = defineMessages({
   placeholder: {
@@ -178,13 +177,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       month: 'long'
     });
 
-  const formatMessages = (messages) => {
-    return _.groupBy(messages, format);
-  };
-
   // CONST
   const formattedMessages = useMemo(() => {
-    return formatMessages(messageObjs);
+    const _messages = [...messageObjs];
+    return _.groupBy(_messages, format);
   }, [messageObjs]);
 
   // HANDLERS
@@ -280,27 +276,32 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     onNewMessageClose && onNewMessageClose();
   };
 
+  function updateAndDeleteURLParameters(url, paramToUpdate, newValue, paramToDelete) {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set(paramToUpdate, newValue);
+    urlObj.searchParams.delete(paramToDelete);
+    return urlObj.toString();
+  }
+
   const handlePrevious = useMemo(
     () => () => {
       if (!previous) {
         return;
       }
-      const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       return http
         .request({
           url: previous,
-          method: Endpoints.GetAThread.method,
-          params: {user: _userObjId}
+          method: Endpoints.GetAThread.method
         })
         .then((res: HttpResponse<any>) => {
           const _prev = [...messageObjs];
           _prev.unshift(...res.data.results);
           setMessageObjs(_prev);
-          setPrevious(res.data.next);
+          setPrevious(res.data.next && updateAndDeleteURLParameters(res.data.next, 'before_message', res.data.results[0].id, 'offset'));
         })
         .catch((error) => console.log(error));
     },
-    [previous]
+    [previous, messageObjs]
   );
 
   /**
@@ -313,7 +314,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       PrivateMessageService.getAThread({user: _userObjId, limit: 10})
         .then((res: SCPaginatedResponse<SCPrivateMessageThreadType>) => {
           setMessageObjs(res.results);
-          setPrevious(res.next);
+          setPrevious(res.next && updateAndDeleteURLParameters(res.next, 'before_message', res.results[0].id, 'offset'));
           if (res.results.length) {
             if (res.results[0].receiver.id !== authUserId) {
               setReceiver(res.results[0].receiver);
