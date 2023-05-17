@@ -3,7 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       padding: theme.spacing(0, 1, 0, 2),
       '& .SCNavigationToolbarMobile-logo': {
-        marginRight: theme.spacing(2),
+        margin: theme.spacing(0.5, 2, 0.5, 0),
         flexGrow: 1,
         '& img': {
           verticalAlign: 'middle',

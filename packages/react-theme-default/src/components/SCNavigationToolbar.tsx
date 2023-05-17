@@ -1,7 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      padding: theme.spacing(0, 3),
+      padding: theme.spacing(0, 1),
       '& .SCNavigationToolbar-logo': {
         marginRight: theme.spacing(2),
         '& img': {
@@ -14,8 +14,8 @@ const Component = {
         textAlign: 'center',
         alignSelf: 'end',
         '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
-          padding: theme.spacing(2, 2, 1, 2),
-          margin: theme.spacing(0, 2),
+          padding: theme.spacing(2, 1, 1, 1),
+          margin: theme.spacing(0, 1),
           color: theme.palette.primary.main,
           borderRadius: 0,
           borderBottom: `1px solid transparent`,
@@ -55,7 +55,19 @@ const Component = {
         }
       },
       '& .SCNavigationToolbar-settings': {
-        marginLeft: theme.spacing(4.5)
+        marginLeft: theme.spacing(2)
+      },
+      [theme.breakpoints.up(950)]: {
+        padding: theme.spacing(0, 3),
+        '& .SCNavigationToolbar-navigation': {
+          '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
+            padding: theme.spacing(2, 2, 1, 2),
+            margin: theme.spacing(0, 2)
+          }
+        },
+        '& .SCNavigationToolbar-settings': {
+          marginLeft: theme.spacing(4.5)
+        }
       }
     })
   }

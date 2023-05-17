@@ -24,6 +24,7 @@ import {
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
 } from '../../../types';
+import * as Session from '../../../constants/Session';
 
 /**
  * SCUserContext (Authentication Context)
@@ -92,7 +93,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * If there is an error, it means there is no session.
    */
   useDeepCompareEffectNoCheck(() => {
-    if (state.session.authToken && state.session.authToken.accessToken) {
+    if ((state.session.authToken && state.session.authToken.accessToken) || state.session.type === Session.COOKIE_SESSION) {
       dispatch({type: userActionTypes.LOGIN_LOADING});
       UserService.getCurrentUser()
         .then((user: SCUserType) => {

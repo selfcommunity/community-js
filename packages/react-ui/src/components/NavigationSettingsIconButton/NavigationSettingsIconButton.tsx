@@ -24,6 +24,7 @@ import {
   SCRoutingContextType,
   SCThemeType,
   SCUserContextType,
+  UserUtils,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -118,9 +119,10 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const roles = scUserContext.user && scUserContext.user.role;
-  const isAdmin = roles && roles.includes('admin');
-  const isModerator = roles && roles.includes('moderator');
+
+  // MEMO
+  const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
+  const isModerator = useMemo(() => UserUtils.isModerator(scUserContext.user), [scUserContext.user]);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();

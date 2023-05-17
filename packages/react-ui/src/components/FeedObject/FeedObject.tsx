@@ -358,6 +358,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
   const [expanded, setExpanded] = useState(false);
+
   // INTL
   const intl = useIntl();
 
@@ -608,7 +609,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if (!obj && error) {
+  if ((!obj && error) || (obj.deleted && (UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))) {
     objElement = (
       <CardContent>
         <FormattedMessage id="ui.feedObject.error" defaultMessage="ui.feedObject.error" />
