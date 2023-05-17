@@ -10,9 +10,6 @@ const Component = {
         '& > div:first-of-type': {
           marginTop: 0
         },
-        '&:last-of-type': {
-          paddingBottom: theme.spacing(4)
-        },
         '& > .SCWidget-root, & > .SCCustomAdv-root': {
           maxWidth: 850,
           marginLeft: 'auto',

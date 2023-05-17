@@ -315,7 +315,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const getExtraSections = useMemo(
     () => () => {
       let _extra = [];
-      if (scUserContext.user && Boolean(contributionObj) && scUserId !== contributionObj.author.id) {
+      if (
+        scUserContext.user &&
+        Boolean(contributionObj) &&
+        scUserId !== contributionObj.author.id &&
+        !contributionObj.deleted &&
+        !contributionObj.collapsed
+      ) {
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
       // Enable when backend is ready
