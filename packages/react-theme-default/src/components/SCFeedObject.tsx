@@ -144,7 +144,8 @@ const Component = {
           },
           '& .SCFeedObject-text-section': {
             '& > :first-of-type': {
-              padding: theme.spacing(0, 2, 2)
+              padding: theme.spacing(0, 2, 2),
+              display: 'block'
             },
             '& hr': {
               margin: '1em 0'
