@@ -4,7 +4,6 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       width: '100%',
-      paddingBottom: 5,
       '& .SCFeedObject-title-section': {
         '& a': {
           textDecoration: 'none'
@@ -48,7 +47,11 @@ const Component = {
         }
       },
       '& .SCFeedObject-content': {
-        padding: theme.spacing(1, 0)
+        padding: theme.spacing(1, 0),
+        '&.SCFeedObject-error': {
+          padding: theme.spacing(2),
+          textAlign: 'center'
+        }
       },
       '& .SCFeedObject-snippet': {
         '& > div': {

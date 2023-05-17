@@ -18,13 +18,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  [`& .${classes.media}`]: {
-    height: 250,
-    marginBottom: 20
-  }
-}));
+})(() => ({}));
 
 export interface FeedObjectSkeletonProps extends CardProps {
   /**

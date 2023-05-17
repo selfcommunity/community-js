@@ -66,6 +66,7 @@ const classes = {
   tag: `${PREFIX}-tag`,
   location: `${PREFIX}-location`,
   content: `${PREFIX}-content`,
+  error: `${PREFIX}-error`,
   titleSection: `${PREFIX}-title-section`,
   title: `${PREFIX}-title`,
   textSection: `${PREFIX}-text-section`,
@@ -86,7 +87,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({}));
+})(() => ({}));
 
 export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   /**
@@ -609,9 +610,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if ((!obj && error) || (obj.deleted && (UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))) {
+  if ((!obj && error) || (obj?.deleted && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))) {
     objElement = (
-      <CardContent>
+      <CardContent className={classNames(classes.error, classes.content)}>
         <FormattedMessage id="ui.feedObject.error" defaultMessage="ui.feedObject.error" />
       </CardContent>
     );
