@@ -3,6 +3,95 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      width: '100%',
+      paddingBottom: 5,
+      '& .SCFeedObject-title-section': {
+        '& a': {
+          textDecoration: 'none'
+        },
+        '& a:hover': {
+          textDecoration: 'underline'
+        }
+      },
+      '& .SCFeedObject-username': {
+        textDecoration: 'none',
+        color: theme.palette.text.primary
+      },
+      '& .SCFeedObject-avatar': {
+        width: theme.selfcommunity.user.avatar.sizeMedium,
+        height: theme.selfcommunity.user.avatar.sizeMedium
+      },
+      '& .SCFeedObject-header': {
+        paddingBottom: 0,
+        '& .MuiCardHeader-subheader': {
+          display: 'flex',
+          alignItems: 'center'
+        }
+      },
+      '& .SCFeedObject-category': {
+        color: theme.palette.primary.main,
+        textAlign: 'center',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        '& a': {
+          color: 'inherit',
+          textDecoration: 'none'
+        },
+        '& a::after': {
+          content: '"\\2022"',
+          padding: theme.spacing()
+        },
+        '& a:last-child::after': {
+          display: 'none'
+        },
+        '& span': {
+          textTransform: 'initial'
+        }
+      },
+      '& .SCFeedObject-content': {
+        padding: theme.spacing(1, 0)
+      },
+      '& .SCFeedObject-snippet': {
+        '& > div': {
+          alignItems: 'flex-start'
+        },
+        '& .SCBaseItem-text': {
+          marginTop: 0
+        }
+      },
+      '& .SCFeedObject-snippet-content a': {
+        textDecoration: 'none'
+      },
+      '& .SCFeedObject-tag': {
+        display: 'inline-flex'
+      },
+      '& .SCFeedObject-location': {
+        display: 'inline-flex'
+      },
+      '& .SCFeedObject-actions-section': {
+        padding: 0,
+        display: 'flex',
+        flexDirection: 'column'
+      },
+      '& .SCFeedObject-reply-content': {
+        width: '100%',
+        boxSizing: 'border-box',
+        margin: 0,
+        padding: theme.spacing(2)
+      },
+      '& .SCFeedObject-info-section': {
+        padding: theme.spacing(0, 2)
+      },
+      '& .SCFeedObject-activity-at': {
+        textDecoration: 'none',
+        color: 'inherit',
+        marginTop: 0
+      },
+      '& .SCFeedObject-deleted': {
+        opacity: 0.3,
+        '&:hover': {
+          opacity: 1
+        }
+      },
       '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search': {
         border: `0 none`,
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
@@ -19,20 +108,19 @@ const Component = {
             marginRight: theme.spacing(1)
           },
           '& .SCFeedObject-username': {
-            fontWeight: theme.typography.fontWeightMedium
+            fontWeight: theme.typography.fontWeightBold
           },
           '& .MuiCardHeader-subheader': {
             fontSize: '0.857rem',
             color: theme.palette.primary.main,
             '& .SCFeedObject-activity-at': {
-              marginTop: 0,
               display: 'inline-flex',
               '&:hover': {
                 color: 'inherit',
                 textDecoration: 'underline'
               }
             },
-            '& .SCFeedObject-tag': {
+            '& .SCFeedObject-tag, & .SCFeedObject-location': {
               '& .MuiIcon-root': {
                 fontSize: '1rem',
                 color: 'inherit'
@@ -44,7 +132,8 @@ const Component = {
           '& .SCFeedObject-title-section': {
             '& .SCFeedObject-title': {
               fontWeight: theme.typography.fontWeightBold,
-              marginBottom: theme.spacing(1)
+              marginBottom: theme.spacing(1),
+              padding: theme.spacing(0, 2)
             },
             '& a': {
               color: 'inherit'
@@ -64,6 +153,9 @@ const Component = {
                 textDecoration: 'underline',
                 cursor: 'pointer'
               }
+            },
+            '& img': {
+              maxWidth: '100%'
             },
             '& blockquote': {
               margin: 0,
@@ -268,7 +360,6 @@ const Component = {
           marginBottom: theme.spacing(1)
         },
         '& .SCFeedObject-activity-at': {
-          marginTop: 0,
           display: 'inline-flex',
           '&:hover': {
             color: 'inherit',
