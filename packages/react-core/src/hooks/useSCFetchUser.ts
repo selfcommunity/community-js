@@ -19,7 +19,7 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
   const scUserContext: SCUserContextType = useSCUser();
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const __user = authUserId ? user : objectWithoutProperties<SCUserType>(user, ['connection_status']);
+  const __user = useMemo(() => (authUserId ? user : objectWithoutProperties<SCUserType>(user, ['connection_status'])), [user]);
 
   const [scUser, setSCUser] = useState<SCUserType>(__user);
   const [error, setError] = useState<string>(null);
