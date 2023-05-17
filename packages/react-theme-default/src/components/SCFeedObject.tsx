@@ -62,7 +62,8 @@ const Component = {
         }
       },
       '& .SCFeedObject-snippet-content a': {
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: theme.palette.text.secondary
       },
       '& .SCFeedObject-tag': {
         display: 'inline-flex'
