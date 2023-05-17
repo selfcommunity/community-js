@@ -39,7 +39,7 @@ const Component = {
       '& .SCFeed-refresh': {
         textAlign: 'center'
       },
-      '& .SCFeed-paginationLink': {
+      '& .SCFeed-pagination-link': {
         display: 'none'
       }
     })
