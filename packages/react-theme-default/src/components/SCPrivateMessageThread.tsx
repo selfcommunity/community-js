@@ -86,6 +86,9 @@ const Component = {
             marginLeft: theme.spacing(1)
           },
           '& .SCPrivateMessageThread-autocomplete': {
+            [theme.breakpoints.down('md')]: {
+              maxHeight: theme.spacing(3.75)
+            },
             width: '100%',
             marginLeft: theme.spacing(1),
             maxHeight: theme.mixins.toolbar.minHeight,
