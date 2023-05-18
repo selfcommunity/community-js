@@ -17,6 +17,8 @@
   "ui.common.nextPage": "Next page",
   "ui.common.previousPage": "Previous page",
 
+  "ui.shared.messageChunkUploader.error": "{filename} file cannot be uploaded.",
+
   "ui.confirmDialog.title": "Are you sure you want to proceed?",
   "ui.confirmDialog.btnConfirm": "Yes",
   "ui.confirmDialog.btnCancel": "No",
