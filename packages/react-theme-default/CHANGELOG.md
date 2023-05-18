@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.149...@selfcommunity/react-theme-default@0.1.0-alpha.150) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix css ([f01d095](https://github.com/selfcommunity/community-js/commit/f01d095b2e16ec693cf77f3bdd7cea4b717f66eb))
+* Fix FeedObject style ([4216a12](https://github.com/selfcommunity/community-js/commit/4216a121929db5a0d4eb06f89e416476dd6bbc3b))
+
+
+
+
+
+# [0.1.0-alpha.149](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.148...@selfcommunity/react-theme-default@0.1.0-alpha.149) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix FeedObject.tsx for deleted object ([1204927](https://github.com/selfcommunity/community-js/commit/1204927db513bc08c099bfc6e39834261a231a95))
+
+
+
+
+
+# [0.1.0-alpha.148](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.147...@selfcommunity/react-theme-default@0.1.0-alpha.148) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix css for feed and toolbar ([675961f](https://github.com/selfcommunity/community-js/commit/675961f2ff33fc706b058a32a1fba1c089628a2e))
+* Fix pagination link ([0fccc07](https://github.com/selfcommunity/community-js/commit/0fccc07942642333adaa1ef74dde7e892a418c3f))
+* fixed pm multiple file uploading ([19903a8](https://github.com/selfcommunity/community-js/commit/19903a8bc98474d286470403a5be7f56fde6c3ce))
+
+
+
+
+
 # [0.1.0-alpha.147](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.146...@selfcommunity/react-theme-default@0.1.0-alpha.147) (2023-05-17)
 
 

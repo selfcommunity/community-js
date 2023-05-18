@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.43...@selfcommunity/react-core@0.4.0-alpha.44) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix Maximum update depth exceeded. This can happen when a component calls setState inside useEffect ([7deadbd](https://github.com/selfcommunity/community-js/commit/7deadbd9350b3dc97df68cf02109658069cebf8d))
+
+
+
+
+
+# [0.4.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.42...@selfcommunity/react-core@0.4.0-alpha.43) (2023-05-17)
+
+
+### Bug Fixes
+
+* session ([19a1290](https://github.com/selfcommunity/community-js/commit/19a1290bac26bafd8f7c9a0839abad2064c9c53d))
+
+
+
+
+
 # [0.4.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.41...@selfcommunity/react-core@0.4.0-alpha.42) (2023-05-16)
 
 
