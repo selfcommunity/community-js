@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.204](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.203...@selfcommunity/react-ui@0.7.0-alpha.204) (2023-05-18)
+
+
+### Bug Fixes
+
+* fixed pm  uploading section style, deleted message update ([87e1803](https://github.com/selfcommunity/community-js/commit/87e1803532d310e30c268c5356f658d3c7f39fc4))
+
+
+### Performance Improvements
+
+* moved snippet updated/added to the top of the list ([d0a096c](https://github.com/selfcommunity/community-js/commit/d0a096cd61941150ef515f07c3056d6b46b40954))
+
+
+
+
+
 # [0.7.0-alpha.203](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.202...@selfcommunity/react-ui@0.7.0-alpha.203) (2023-05-17)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
