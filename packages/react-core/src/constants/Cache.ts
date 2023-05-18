@@ -32,6 +32,10 @@ export const CONTRIBUTORS_CACHE_PREFIX_KEY = '_contr_';
 export const getContributorsCacheKey = (id, type, next) => `${CONTRIBUTORS_CACHE_PREFIX_KEY}${type}_${id}_${next}`;
 export const getContributorsCachePrefixKeys = (id, type) => `${CONTRIBUTORS_CACHE_PREFIX_KEY}${type}_${id}`;
 
+/** BROADCAST MESSAGES OBJECT **/
+export const BROADCAST_MESSAGES_OBJECT_CACHE_PREFIX_KEY = '_bcms_';
+export const getBroadcastMessagesObjectCacheKey = () => `${BROADCAST_MESSAGES_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** FEED **/
 
 // Cache single response body

@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {
   Avatar,
   Box,
@@ -175,6 +175,10 @@ export default function Message(props: MessageProps): JSX.Element {
         Logger.error(SCOPE_SC_UI, error);
       });
   };
+
+  useEffect(() => {
+    setOpen(message.disposed_at === null);
+  }, [message]);
 
   // RENDER
   const renderContent = (banner) => {

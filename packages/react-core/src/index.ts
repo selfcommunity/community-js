@@ -91,6 +91,7 @@ import useSCFetchContributors from './hooks/useSCFetchContributors';
 import useSCFetchFeed from './hooks/useSCFetchFeed';
 import useSCFetchReactions from './hooks/useSCFetchReactions';
 import useSCFetchPrivateMessageSnippets from './hooks/useSCFetchPrivateMessageSnippets';
+import useSCFetchBroadcastMessages from './hooks/useSCFetchBroadcastMessages';
 
 /**
  * Routing component
@@ -194,4 +195,5 @@ export {
   useNoInitialEffect,
   useSCFetchReactions,
   useSCFetchPrivateMessageSnippets,
+  useSCFetchBroadcastMessages,
 };
