@@ -17,6 +17,8 @@
   "ui.common.nextPage": "Pagina successiva",
   "ui.common.previousPage": "Pagina precedente",
 
+  "ui.shared.messageChunkUploader.error": "Il file {filename} non può essere caricato.",
+
   "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
   "ui.confirmDialog.btnConfirm": "Si",
   "ui.confirmDialog.btnCancel": "No",

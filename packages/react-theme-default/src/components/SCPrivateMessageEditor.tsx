@@ -42,6 +42,9 @@ const Component = {
             fontSize: '0.857rem'
           }
         },
+        '& .MuiAlert-root': {
+          position: 'relative'
+        },
         '& .MuiCardContent-root': {
           overflow: 'auto',
           padding: theme.spacing(1),

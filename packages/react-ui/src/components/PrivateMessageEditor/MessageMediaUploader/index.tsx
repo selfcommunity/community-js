@@ -1,6 +1,6 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, useContext, useState} from 'react';
-import {Alert, AlertTitle, CardContent, Fade, IconButton, ImageListItemBar, List, ListItem, Typography, Box, CardHeader} from '@mui/material';
+import {Alert, AlertTitle, Box, CardContent, CardHeader, Fade, IconButton, ImageListItemBar, List, ListItem, Typography} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -123,15 +123,12 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
 
   const handleError = (chunk: SCMessageChunkType, error: string) => {
     setErrors({...errors, [chunk.id]: {...chunk, error}});
-    handleClear();
   };
 
   const handleRemoveErrors = (id: string) => {
     return () => {
       delete errors[id];
       setErrors({...errors});
-      setFiles([]);
-      setPreviews([]);
     };
   };
   const handleMouseEnter = (index) => {
@@ -153,15 +150,22 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     onTouchMove: mouseLeave
   });
 
-  /**
-   * Renders root object
-   */
-  const filterBySizeAndType = (file) => {
+  const filterBySizeAndType = (file: File | any, index: number, files: File[]) => {
+    if (files.length > 1) {
+      return files.every(
+        (obj) =>
+          obj.type.startsWith(SCMessageFileType.IMAGE) || obj.type.startsWith(SCMessageFileType.VIDEO) || obj.type.startsWith(SCMessageFileType.PDF)
+      );
+    }
     return (
       file.size < MAX_FILE_SIZE &&
       (file.type.startsWith(SCMessageFileType.IMAGE) || file.type.startsWith(SCMessageFileType.VIDEO) || file.type.startsWith(SCMessageFileType.PDF))
     );
   };
+
+  /**
+   * Renders root object
+   */
   return (
     <Root className={classNames(classes.root, className)}>
       <CardHeader
@@ -171,15 +175,15 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           </Icon>
         }
       />
+      {Object.keys(errors).map((id: string) => (
+        <Fade in key={id}>
+          <Alert severity="error" onClose={handleRemoveErrors(id)}>
+            <AlertTitle>{errors[id].name}</AlertTitle>
+            {errors[id].error}
+          </Alert>
+        </Fade>
+      ))}
       <CardContent>
-        {Object.keys(errors).map((id: string) => (
-          <Fade in key={id}>
-            <Alert severity="error" onClose={handleRemoveErrors(id)}>
-              <AlertTitle>{errors[id].name}</AlertTitle>
-              {errors[id].error}
-            </Alert>
-          </Fade>
-        ))}
         <ChunkedUploady
           destination={{
             url: `${scContext.settings.portal}${Endpoints.PrivateMessageUploadMediaInChunks.url()}`,
@@ -203,45 +207,49 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           <List className={classes.previewContent}>
             {previews.length !== 0 &&
               previews.map((item) => (
-                <ListItem
-                  className={classes.previewItem}
-                  key={item.id ?? item.file_uuid}
-                  {...getMouseEvents(
-                    () => handleMouseEnter(item.file_uuid),
-                    () => handleMouseLeave(item.file_uuid)
-                  )}>
-                  {'video_url' in item ? (
-                    <video src={item.video_url} />
-                  ) : (
-                    <img src={item.file.type.startsWith(SCMessageFileType.DOCUMENT) && !item.file_url ? pdfImagePlaceholder : item.file_url} />
+                <>
+                  {'file' in item && (
+                    <ListItem
+                      className={classes.previewItem}
+                      key={item.id ?? item.file_uuid}
+                      {...getMouseEvents(
+                        () => handleMouseEnter(item.file_uuid),
+                        () => handleMouseLeave(item.file_uuid)
+                      )}>
+                      {'video_url' in item ? (
+                        <video src={item.video_url} />
+                      ) : (
+                        <img src={item.file.type.startsWith(SCMessageFileType.PDF) && !item.file_url ? pdfImagePlaceholder : item.file_url} />
+                      )}
+                      <ImageListItemBar
+                        className={classNames(classes.previewActions, {[classes.progress]: item.completed})}
+                        title={
+                          typeof item.completed !== 'undefined' &&
+                          item.completed !== 0 && <Typography textAlign="center">{`${Math.round(item.completed)}%`}</Typography>
+                        }
+                        actionIcon={
+                          <>
+                            {isHovered[item.file_uuid] && Object.keys(uploading).length === 0 && (
+                              <IconButton onClick={() => handleClear(item.file_uuid)} size="small">
+                                <Icon>delete</Icon>
+                              </IconButton>
+                            )}
+                          </>
+                        }
+                      />
+                      {isHovered[item.file_uuid] && (
+                        <Box component={'span'} className={classes.previewInfo}>
+                          <Typography noWrap textAlign={'center'}>
+                            {item.file.name}
+                          </Typography>
+                          <Typography textAlign={'center'} fontWeight={'light'}>
+                            {bytesToSize(item.file.size)}
+                          </Typography>
+                        </Box>
+                      )}
+                    </ListItem>
                   )}
-                  <ImageListItemBar
-                    className={classNames(classes.previewActions, {[classes.progress]: item.completed})}
-                    title={
-                      typeof item.completed !== 'undefined' &&
-                      item.completed !== 0 && <Typography textAlign="center">{`${Math.round(item.completed)}%`}</Typography>
-                    }
-                    actionIcon={
-                      <>
-                        {isHovered[item.file_uuid] && Object.keys(uploading).length === 0 && (
-                          <IconButton onClick={() => handleClear(item.file_uuid)} size="small">
-                            <Icon>delete</Icon>
-                          </IconButton>
-                        )}
-                      </>
-                    }
-                  />
-                  {isHovered[item.file_uuid] && (
-                    <Box component={'span'} className={classes.previewInfo}>
-                      <Typography noWrap textAlign={'center'}>
-                        {item.file.name}
-                      </Typography>
-                      <Typography textAlign={'center'} fontWeight={'light'}>
-                        {bytesToSize(item.file.size)}
-                      </Typography>
-                    </Box>
-                  )}
-                </ListItem>
+                </>
               ))}
           </List>
         </ChunkedUploady>

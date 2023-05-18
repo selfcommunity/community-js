@@ -57,22 +57,23 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   // STATE
   const [chunks, setChunks] = useState({});
   const setChunk: Function = (chunk: SCMessageChunkType) => {
-    const _chunks = {...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}};
+    const _chunks = {...chunkStateRef.current.chunks, [chunk.id]: {...chunkStateRef.current.chunks[chunk.id], ...chunk}};
     setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
   };
-  const isImageType = (type) => {
-    return type.startsWith(SCMessageFileType.IMAGE);
-  };
-  // HOOKS
-  const intl = useIntl();
 
   // Using refs to have the correct chunks values in the callbacks
   // https://stackoverflow.com/questions/57847594/react-hooks-accessing-up-to-date-state-from-within-a-callback
   chunkStateRef.current = {chunks, setChunk, setChunks};
-
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+
+  // INTL
+  const intl = useIntl();
+
+  const isImageType = (type) => {
+    return type.startsWith(SCMessageFileType.IMAGE);
+  };
 
   // component update
   useEffect(() => {
@@ -139,7 +140,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
       })
       .catch((error) => {
         console.error(error);
-        onError({...chunkStateRef.current.chunks[item.id]}, error.toString());
+        onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.messageFileUploadError, {filename: item.file.name}));
         const _chunks = {...chunkStateRef.current.chunks};
         delete _chunks[item.id];
         chunkStateRef.current.setChunks(_chunks);
