@@ -189,8 +189,10 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
         if (idx !== -1) {
           temp[idx].headline = m.message;
           temp[idx].thread_status = m.status;
+          const element = temp.splice(idx, 1)[0];
+          temp.unshift(element);
         } else {
-          temp = [...temp, m];
+          temp.unshift(m);
         }
         updateSnippets(temp);
       });

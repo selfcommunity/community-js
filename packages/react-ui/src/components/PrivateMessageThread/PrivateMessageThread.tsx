@@ -368,7 +368,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       .then(() => {
         const result = messageObjs.filter((m) => m.id !== deletingMsg.id);
         toHide ? setMessageObjs(result) : updateMessageAfterDeletion(deletingMsg.id);
-        handleSnippetsUpdate(result.length >= 1 && toHide ? result.slice(-1) : [deletingMsg]);
+        handleSnippetsUpdate(
+          (result.length >= 1 && toHide) || (!toHide && deletingMsg.id !== messageObjs.slice(-1)[0].id) ? result.slice(-1) : [deletingMsg]
+        );
         handleCloseDeleteMessageDialog();
       })
       .catch((error) => {

@@ -45,7 +45,7 @@ const Component = {
         '& .MuiCardContent-root': {
           overflow: 'auto',
           padding: theme.spacing(1),
-          minHeight: theme.spacing(12.5),
+          minHeight: theme.spacing(15),
           '& .SCMessageMediaUploader-upload-section': {
             '& .SCMessageMediaUploader-upload-button': {
               display: 'flex',
@@ -61,6 +61,8 @@ const Component = {
             position: 'relative',
             display: 'flex',
             margin: '0 auto',
+            justifyContent: 'center',
+            alignItems: 'center',
             '& .MuiListItem-root': {
               height: theme.spacing(6.25),
               marginRight: theme.spacing(3),
