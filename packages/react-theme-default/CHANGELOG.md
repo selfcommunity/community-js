@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.151](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.150...@selfcommunity/react-theme-default@0.1.0-alpha.151) (2023-05-18)
+
+
+### Bug Fixes
+
+* fixed pm  uploading section style, deleted message update ([87e1803](https://github.com/selfcommunity/community-js/commit/87e1803532d310e30c268c5356f658d3c7f39fc4))
+
+
+
+
+
 # [0.1.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.149...@selfcommunity/react-theme-default@0.1.0-alpha.150) (2023-05-17)
 
 
