@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.152](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.151...@selfcommunity/react-theme-default@0.1.0-alpha.152) (2023-05-18)
+
+
+### Bug Fixes
+
+* fixed pm file uploading error handling ([e948023](https://github.com/selfcommunity/community-js/commit/e948023bf7887b23cac4aff7794c3e5619695521))
+
+
+### Performance Improvements
+
+* pm thread autocomplete height on mobile view ([a61803f](https://github.com/selfcommunity/community-js/commit/a61803f7cab3778fb7e991dd84053ddb65d7d196))
+
+
+
+
+
 # [0.1.0-alpha.151](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.150...@selfcommunity/react-theme-default@0.1.0-alpha.151) (2023-05-18)
 
 

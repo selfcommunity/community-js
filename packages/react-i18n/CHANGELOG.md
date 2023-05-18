@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.20...@selfcommunity/react-i18n@0.5.0-alpha.21) (2023-05-18)
+
+
+### Bug Fixes
+
+* fixed pm file uploading error handling ([e948023](https://github.com/selfcommunity/community-js/commit/e948023bf7887b23cac4aff7794c3e5619695521))
+
+
+
+
+
 # [0.5.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.19...@selfcommunity/react-i18n@0.5.0-alpha.20) (2023-05-15)
 
 
