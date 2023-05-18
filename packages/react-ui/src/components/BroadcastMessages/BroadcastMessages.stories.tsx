@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import BroadcastMessages from './index';
+import {CacheStrategies} from '@selfcommunity/utils';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -35,6 +36,12 @@ const Template: ComponentStory<typeof BroadcastMessages> = (args) => (
 
 export const Base = Template.bind({});
 
-Base.args = {
-  /* the args you need here will depend on your component */
+Base.args = {};
+
+export const BaseCached = Template.bind({});
+
+BaseCached.args = {
+  viewAllMessages: true,
+  disableLoader: true,
+  cacheStrategy: CacheStrategies.CACHE_FIRST
 };
