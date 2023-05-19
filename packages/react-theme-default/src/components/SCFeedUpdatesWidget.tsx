@@ -8,12 +8,12 @@ const Component = {
       },
       '& .MuiCardContent-root': {
         ' > .MuiButton-sizeMedium': {
-          marginLeft: 10
+          marginLeft: -10,
+          marginTop: -1
         }
       },
       '& .SCFeedUpdatesWidget-button-load-more': {
-        textTransform: 'capitalize',
-        marginLeft: 10
+        textTransform: 'capitalize'
       }
     })
   }
