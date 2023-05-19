@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.46...@selfcommunity/react-core@0.4.0-alpha.47) (2023-05-19)
+
+
+### Bug Fixes
+
+* broadcastMessages, feed notifcations, feedUpdates ([bc18dc2](https://github.com/selfcommunity/community-js/commit/bc18dc2b13e988b9578540501cd966953f1be60a))
+
+
+
+
+
 # [0.4.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.45...@selfcommunity/react-core@0.4.0-alpha.46) (2023-05-18)
 
 
