@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.13...@selfcommunity/api-services@0.4.0-alpha.14) (2023-05-19)
+
+
+### Performance Improvements
+
+* loyalty program/loyalty program detail ([6beaec2](https://github.com/selfcommunity/community-js/commit/6beaec2764e159bf12829682f6075b408b1b9634))
+
+
+
+
+
 # [0.4.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.12...@selfcommunity/api-services@0.4.0-alpha.13) (2023-05-15)
 
 **Note:** Version bump only for package @selfcommunity/api-services

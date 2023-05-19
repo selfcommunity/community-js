@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.209](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.208...@selfcommunity/react-ui@0.7.0-alpha.209) (2023-05-19)
+
+
+### Performance Improvements
+
+* loyalty program/loyalty program detail ([6beaec2](https://github.com/selfcommunity/community-js/commit/6beaec2764e159bf12829682f6075b408b1b9634))
+* thread skeleton/autocomplete placeholder on newmessagethread user load ([aa15940](https://github.com/selfcommunity/community-js/commit/aa1594055c5bc0947efda893b4c1af7977e3b832))
+
+
+
+
+
 # [0.7.0-alpha.208](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.207...@selfcommunity/react-ui@0.7.0-alpha.208) (2023-05-19)
 
 
