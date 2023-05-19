@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.208](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.207...@selfcommunity/react-ui@0.7.0-alpha.208) (2023-05-19)
+
+
+### Bug Fixes
+
+* broadcastMessages, feed notifcations, feedUpdates ([bc18dc2](https://github.com/selfcommunity/community-js/commit/bc18dc2b13e988b9578540501cd966953f1be60a))
+
+
+
+
+
 # [0.7.0-alpha.207](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.206...@selfcommunity/react-ui@0.7.0-alpha.207) (2023-05-19)
 
 
