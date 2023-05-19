@@ -74,7 +74,7 @@ export default function LoyaltyProgramDetailSkeleton(): JSX.Element {
       </Typography>
       <Grid container spacing={isMobile ? 3 : 6}>
         {[...Array(6)].map((prize, index) => (
-          <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={index}>
+          <Grid item xs={12} sm={12} md={6} lg={4} key={index}>
             <PrizeItemSkeleton />
           </Grid>
         ))}

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {http, Endpoints, HttpResponse, UserService, LoyaltyService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
-import {Box, Button, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import Chip from '@mui/material/Chip';
 import classNames from 'classnames';
@@ -11,9 +11,8 @@ import {useThemeProps} from '@mui/system';
 import Skeleton from './Skeleton';
 import PrizeItemSkeleton from './PrizeItemSkeleton';
 import PointsList from './PointsList';
-import {CacheStrategies} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
-import {InfiniteScroll, ConfirmDialog, Widget} from '@selfcommunity/react-ui';
+import {InfiniteScroll, ConfirmDialog} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCLoyaltyProgramDetailTemplate';
 
@@ -42,20 +41,10 @@ const Root = styled(Box, {
 
 export interface LoyaltyProgramDetailProps {
   /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
-  /**
-   * Caching strategies
-   * @default CacheStrategies.CACHE_FIRST
-   */
-  cacheStrategy?: CacheStrategies;
   /**
    * Other props
    */
@@ -104,7 +93,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, autoHide, ...rest} = props;
+  const {className, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -205,7 +194,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
   };
 
   const fetchPrizes = () => {
-    LoyaltyService.getPrizes({params: {limit: 8}}).then((res: SCPaginatedResponse<SCPrizeType>) => {
+    LoyaltyService.getPrizes({limit: 8}).then((res: SCPaginatedResponse<SCPrizeType>) => {
       setPrizes(res.results);
       setNext(res.next);
       setLoading(false);
@@ -222,15 +211,14 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
     }
   }, [authUserId]);
 
-  if (loading) {
-    return <Skeleton />;
-  }
-
   /**
    * Renders the component (if not hidden by autoHide prop)
    */
-  if (autoHide && !authUserId) {
+  if (!authUserId) {
     return null;
+  }
+  if (loading) {
+    return <Skeleton />;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
@@ -266,7 +254,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
       <InfiniteScroll
         dataLength={prizes.length}
         next={handleNext}
-        hasMoreNext={next !== null}
+        hasMoreNext={Boolean(next)}
         loaderNext={<PrizeItemSkeleton />}
         endMessage={
           <Typography className={classes.endMessage}>
@@ -285,7 +273,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
           {prizes.map((prize: SCPrizeType) => (
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={prize.id}>
-              <Widget className={classes.card}>
+              <Card className={classes.card}>
                 <CardMedia component="img" image={prize.image} />
                 <Box className={classes.prizePoints}>
                   <Chip
@@ -327,7 +315,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                     </Button>
                   )}
                 </CardActions>
-              </Widget>
+              </Card>
             </Grid>
           ))}
         </Grid>

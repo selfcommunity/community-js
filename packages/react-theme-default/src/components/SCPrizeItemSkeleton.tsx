@@ -3,7 +3,8 @@ const Component = {
     root: ({theme}: any) => ({
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(45),
-        height: theme.spacing(45)
+        height: theme.spacing(45),
+        marginTop: theme.spacing(3)
       },
       '& .MuiCard-root': {
         [theme.breakpoints.down('md')]: {

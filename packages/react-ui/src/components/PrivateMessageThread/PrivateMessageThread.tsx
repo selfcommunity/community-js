@@ -594,12 +594,12 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   onChange={handleChange}
                   onInputChange={handleInputChange}
                   inputValue={value}
-                  value={singleMessageUser ?? recipients}
+                  value={singleMessageThread ? singleMessageUser : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      placeholder={`${intl.formatMessage(translMessages.placeholder)}`}
+                      placeholder={singleMessageThread ? '...' : `${intl.formatMessage(translMessages.placeholder)}`}
                       variant="standard"
                       InputProps={{
                         ...params.InputProps,

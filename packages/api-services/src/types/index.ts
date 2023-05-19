@@ -4,7 +4,7 @@ import {WebhookParamType, WebhookEventsType} from './webhook';
 import {SSOSignUpParams} from './sso';
 import {CommentListParams, CommentCreateParams} from './comment';
 import {IncubatorCreateParams, IncubatorSearchParams} from './incubator';
-import {LoyaltyPrizeParams} from './prize';
+import {LoyaltyPrizeParams, LoyaltyGetPrizeParams} from './prize';
 import {ModerationParams, ModerateContributionParams, FlaggedContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
 import {UserGetParams, UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
@@ -47,6 +47,7 @@ export {
   IncubatorCreateParams,
   IncubatorSearchParams,
   LoyaltyPrizeParams,
+  LoyaltyGetPrizeParams,
   ModerationParams,
   ModerateContributionParams,
   FlaggedContributionParams,
