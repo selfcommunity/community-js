@@ -1,9 +1,24 @@
 import {SCUserType} from '@selfcommunity/types';
+import {BaseSearchParams} from './baseParams';
+
+/**
+ * LoyaltyGetPrizeParams interface
+ */
+
+export interface LoyaltyGetPrizeParams extends BaseSearchParams {
+  /**
+   * Filter by active only for editor or admin users
+   */
+  active?: string;
+  /**
+   * Which field to use when ordering the results
+   */
+  ordering?: string;
+}
 
 /**
  * LoyaltyPrizeParams interface
  */
-
 export interface LoyaltyPrizeParams {
   /**
    * Unique integer value

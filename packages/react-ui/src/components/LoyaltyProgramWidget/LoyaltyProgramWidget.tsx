@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import {Button, CardActions, Chip, Typography} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
 import classNames from 'classnames';
@@ -11,6 +11,8 @@ import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Skeleton from './Skeleton';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const PREFIX = 'SCLoyaltyProgramWidget';
 
@@ -76,11 +78,20 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
   const [points, setPoints] = useState<number>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  //MEMO
+  const loyaltyEnabled = useMemo(
+    () =>
+      SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION].value,
+    [scPreferencesContext.preferences]
+  );
 
   /**
    * Fetches user loyalty points
@@ -98,6 +109,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
       })
       .catch((error) => {
         setLoading(false);
+        Logger.error(SCOPE_SC_UI, error);
         console.log(error);
       });
   }
@@ -106,41 +118,41 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
    * On mount, fetches user loyalty points
    */
   useEffect(() => {
-    if (scUserContext.user) {
+    if (loyaltyEnabled && scUserContext.user) {
       fetchLP();
     }
   }, [scUserContext.user]);
 
-  if (loading) {
-    return <Skeleton />;
-  }
   /**
    * Rendering
    */
-  if (!autoHide && scUserContext.user) {
-    return (
-      <Root {...props} className={classNames(classes.root, className)}>
-        <CardContent>
-          <Typography className={classes.title}>
-            <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.actions}>
-          <Typography className={classes.points}>
-            <Chip size={'medium'} component="span" label={points} />
-            <FormattedMessage id="ui.loyaltyProgramWidget.points" defaultMessage="ui.loyaltyProgramWidget.points" />
-          </Typography>
-          <Button
-            size="small"
-            variant="outlined"
-            className={classes.discoverMore}
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
-            <FormattedMessage id="ui.loyaltyProgramWidget.discover" defaultMessage="ui.loyaltyProgramWidget.discover" />
-          </Button>
-        </CardActions>
-      </Root>
-    );
+  if (autoHide || (!loyaltyEnabled && !scUserContext.user)) {
+    return <HiddenPlaceholder />;
   }
-  return <HiddenPlaceholder />;
+  if (loading) {
+    return <Skeleton />;
+  }
+  return (
+    <Root {...props} className={classNames(classes.root, className)}>
+      <CardContent>
+        <Typography className={classes.title}>
+          <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />
+        </Typography>
+      </CardContent>
+      <CardActions className={classes.actions}>
+        <Typography className={classes.points}>
+          <Chip size={'medium'} component="span" label={points} />
+          <FormattedMessage id="ui.loyaltyProgramWidget.points" defaultMessage="ui.loyaltyProgramWidget.points" />
+        </Typography>
+        <Button
+          size="small"
+          variant="outlined"
+          className={classes.discoverMore}
+          component={Link}
+          to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
+          <FormattedMessage id="ui.loyaltyProgramWidget.discover" defaultMessage="ui.loyaltyProgramWidget.discover" />
+        </Button>
+      </CardActions>
+    </Root>
+  );
 }

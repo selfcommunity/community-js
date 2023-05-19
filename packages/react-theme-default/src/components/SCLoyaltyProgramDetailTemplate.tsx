@@ -71,8 +71,8 @@ const Component = {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            '-webkitBoxOrient': 'vertical',
-            '-webkitLineClamp': '4'
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 4
           }
         },
         '& .MuiCardActions-root': {
