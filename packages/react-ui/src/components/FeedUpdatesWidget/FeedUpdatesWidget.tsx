@@ -13,14 +13,14 @@ const PREFIX = 'SCFeedUpdatesWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
-  image: `${PREFIX}-image`
+  buttonLoadMore: `${PREFIX}-button-load-more`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface FeedUpdatesWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -84,7 +84,7 @@ export interface FeedUpdatesWidgetProps extends VirtualScrollerItemProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCFeedUpdatesWidget-root|Styles applied to the root element.|
- |image|.SCFeedUpdatesWidget-image|Styles applied to the image element.|
+ |buttonLoadMore|.SCFeedUpdatesWidget-button-load-more|Styles applied to the to load more button.|
  *
  * @param inProps
  */
@@ -152,7 +152,7 @@ export default function FeedUpdatesWidget(inProps: FeedUpdatesWidgetProps): JSX.
       <CardContent>
         {message}
         {publicationChannel && (
-          <Button onClick={handleClick}>
+          <Button variant="text" color="inherit" onClick={handleClick} classes={{root: classes.buttonLoadMore}}>
             <FormattedMessage id="ui.feedUpdatesWidget.reload" defaultMessage="ui.feedUpdatesWidget.reload" />
           </Button>
         )}

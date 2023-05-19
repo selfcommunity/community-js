@@ -14,7 +14,8 @@ import {
   NotificationSkeleton,
   UserSuggestionWidget,
   PlatformWidget,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  getUnseenNotificationCounter
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -159,6 +160,18 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
     return null;
   }
 
+  /**
+   * Update user unseen notification counter
+   * @param page
+   * @param offset
+   * @param total
+   * @param data
+   */
+  const handleFetchData = (page: number, offset: number, total: number, data: any[]) => {
+    let _unviewed = getUnseenNotificationCounter(data);
+    _unviewed > 0 && scUserContext.setUnseenInteractionsCounter(scUserContext.user.unseen_interactions_counter - _unviewed);
+  };
+
   return (
     <Root
       id={id}
@@ -178,6 +191,8 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
       FeedSidebarProps={FeedSidebarProps}
       requireAuthentication={true}
       disablePaginationLinks={true}
+      onNextData={handleFetchData}
+      onPreviousData={handleFetchData}
       {...FeedProps}
     />
   );

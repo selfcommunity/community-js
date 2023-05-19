@@ -161,12 +161,12 @@ export interface FeedProps {
   /**
    * Callback invoked whenever data is loaded during paging next
    */
-  onNextData?: (data) => any;
+  onNextData?: (page: number, offset: number, total: number, data: any[]) => any;
 
   /**
    * Callback invoked whenever data is loaded during paging previous
    */
-  onPreviousData?: (data) => any;
+  onPreviousData?: (page: number, offset: number, total: number, data: any[]) => any;
 
   /**
    * Authenticated or not
@@ -531,17 +531,20 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   /**
    * Callback on refresh
    */
-  const refresh = () => {
-    /**
-     * Only if the feedDataObject is loaded reload data
-     */
-    if (feedDataObject.componentLoaded) {
-      setHeadData([]);
-      setFeedDataLeft([]);
-      setFeedDataRight(_getFeedDataRight());
-      feedDataObject.reload();
-    }
-  };
+  const refresh = useMemo(
+    () => (): void => {
+      /**
+       * Only if the feedDataObject is loaded reload data
+       */
+      if (feedDataObject.componentLoaded) {
+        setHeadData([]);
+        setFeedDataLeft([]);
+        setFeedDataRight(_getFeedDataRight());
+        feedDataObject.reload();
+      }
+    },
+    [feedDataObject.componentLoaded, setHeadData, setFeedDataLeft, setFeedDataRight]
+  );
 
   /**
    * Callback subscribe events
@@ -651,7 +654,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, []);
+  }, [subscriber]);
 
   /**
    * Remove duplicated data when load previous page and

@@ -1,6 +1,9 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, CardContent} from '@mui/material';
+import PubSub from 'pubsub-js';
+import {useThemeProps} from '@mui/system';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {SCBroadcastMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {
@@ -16,9 +19,6 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {MessageSkeleton} from './Skeleton';
 import Widget from '../Widget';
-import PubSub from 'pubsub-js';
-import {useThemeProps} from '@mui/system';
-import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const PREFIX = 'SCBroadcastMessages';
 
@@ -166,7 +166,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const unViewedMessages = data.results.filter((m: SCBroadcastMessageType) => !m.viewed_at);
-  const viewedMessageCounter = data.results.length - unViewedMessages.length;
+  const viewedMessageCounter = data.count - unViewedMessages.length + 1;
 
   /**
    * Dispose a broadcast message
@@ -177,6 +177,21 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     if (_data.results.length <= 1) {
       fetchMessages(true);
     }
+  };
+
+  /**
+   * Handle mark read message
+   * @param message
+   */
+  const handleMarkRead = (message) => {
+    const _data = [...data.results];
+    data.results.map((m, i) => {
+      if (m.id === message.id) {
+        _data[i] = {...m, viewed_at: new Date()};
+      }
+    });
+    scUserContext.setUnseenNotificationBannersCounter(scUserContext.user.unseen_notification_banners_counter - 1);
+    setMessages(_data);
   };
 
   /**
@@ -212,6 +227,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
    */
   const subscriber = (msg, data) => {
     fetchMessages(true);
+    setViewAll(false);
   };
 
   /**
@@ -237,7 +253,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {messagesToShow.map((message, index) => (
         <Box key={index}>
-          <Message message={message} {...MessageProps} onClose={handleDisposeMessage} />
+          <Message message={message} {...MessageProps} onClose={handleDisposeMessage} onRead={handleMarkRead} />
         </Box>
       ))}
       {loading && !disableLoader && <MessageSkeleton />}
