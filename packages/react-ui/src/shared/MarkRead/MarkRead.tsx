@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {http, EndpointType} from '@selfcommunity/api-services';
+import {http, EndpointType, HttpResponse} from '@selfcommunity/api-services';
 import LazyLoad from 'react-lazyload';
 import {MIN_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
 
@@ -18,20 +18,43 @@ export interface MarkReadProps {
    * @default null
    */
   data?: any;
+  /**
+   * Callback
+   * @default null
+   */
+  callback?: any;
 }
 
 const MarkRead = (props: MarkReadProps): JSX.Element => {
   // PROPS
-  const {endpoint, params = {}, data = null} = props;
-  useEffect(() => {
+  const {endpoint, params = {}, callback, data = null} = props;
+
+  /**
+   * Perform request
+   */
+  const performRequest = () => {
     http
       .request({
         url: endpoint.url(params),
         method: endpoint.method,
         data
       })
+      .then((res: HttpResponse<any>) => {
+        callback && callback(res);
+      })
       .catch(() => null);
+  };
+
+  useEffect(() => {
+    let _t;
+    if (endpoint) {
+      _t = setTimeout(performRequest);
+      return () => {
+        _t && clearTimeout(_t);
+      };
+    }
   }, []);
+
   return null;
 };
 

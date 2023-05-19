@@ -101,6 +101,12 @@ export interface MessageProps extends CardProps {
   message: SCBroadcastMessageType;
 
   /**
+   * Bypass mark read message
+   * @default false
+   */
+  disableMarkRead?: boolean;
+
+  /**
    * Handler triggered when message is closed
    * @default null
    */
@@ -132,6 +138,7 @@ export default function Message(props: MessageProps): JSX.Element {
     id = `message_${props.message.id}`,
     className,
     message,
+    disableMarkRead = false,
     onClose = null,
     onRead = null,
     template = SCBroadcastMessageTemplateType.DETAIL,
@@ -156,6 +163,10 @@ export default function Message(props: MessageProps): JSX.Element {
   }, [scPrefernces.preferences]);
 
   // HANDLERS
+  /**
+   * Handle dispose message
+   * @param res
+   */
   const handleClose = () => {
     setClosing(true);
     http
@@ -174,6 +185,16 @@ export default function Message(props: MessageProps): JSX.Element {
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
+  };
+
+  /**
+   * Handle on read message
+   * @param res
+   */
+  const handleOnRead = (res) => {
+    if (res.status < 300) {
+      onRead && onRead(message);
+    }
   };
 
   useEffect(() => {
@@ -214,7 +235,9 @@ export default function Message(props: MessageProps): JSX.Element {
       <Root id={id} className={className} {...rest}>
         <Fade in={open} unmountOnExit>
           <Box>
-            {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
+            {message.viewed_at === null && !disableMarkRead && (
+              <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} callback={handleOnRead} />
+            )}
             <CardHeader
               className={classes.header}
               avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />}

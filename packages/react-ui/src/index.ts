@@ -141,6 +141,7 @@ import MetadataField from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
 import {bytesToSize} from './utils/sizeCoverter';
+import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 
 /**
@@ -394,6 +395,8 @@ export {
   IncubatorSuggestionWidgetProps,
   ContributionUtils,
   bytesToSize,
+  getUnseenNotification,
+  getUnseenNotificationCounter,
   MessageUploaderUtils,
   Footer,
   FooterProps,

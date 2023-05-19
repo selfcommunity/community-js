@@ -159,14 +159,14 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Handle change unseen interactions counter
    */
   function setUnseenInteractionsCounter(counter): void {
-    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_interactions_counter: counter}});
+    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_interactions_counter: Math.max(counter, 0)}});
   }
 
   /**
    * Handle change unseen notification banners counter
    */
   function setUnseenNotificationBannersCounter(counter): void {
-    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_notification_banners_counter: counter}});
+    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_notification_banners_counter: Math.max(counter, 0)}});
   }
 
   /**

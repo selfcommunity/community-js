@@ -3,8 +3,6 @@ import {SCBroadcastMessageType} from '@selfcommunity/types';
 import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getBroadcastMessagesObjectCacheKey} from '../constants/Cache';
-import {SCUserContextType} from '../types/context';
-import {useSCUser} from '../components/provider/SCUserProvider';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
 /**
@@ -39,9 +37,6 @@ const useSCFetchBroadcastMessages = (props?: {cacheStrategy?: CacheStrategies}) 
   // PROPS
   const {cacheStrategy = CacheStrategies.CACHE_FIRST} = props || {};
 
-  // CONTEXT
-  const scUserContext: SCUserContextType = useSCUser();
-
   // STATE
   const cachedData = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(broadcastMessagesCacheKey, null) : null;
   const [data, setData] = useState<SCPaginatedResponse<SCBroadcastMessageType>>(cachedData !== null ? cachedData : initialData);
@@ -74,8 +69,6 @@ const useSCFetchBroadcastMessages = (props?: {cacheStrategy?: CacheStrategies}) 
         const _data = refresh ? res : {results: [...data.results, ...res.results], next: res.next, count: res.count, previous: res.previous};
         setData(_data);
         setLoading(false);
-        const _unviewed = res.results.filter((m: SCBroadcastMessageType) => !m.viewed_at).length;
-        _unviewed > 0 && scUserContext.setUnseenNotificationBannersCounter(scUserContext.user.unseen_notification_banners_counter - _unviewed);
         LRUCache.set(broadcastMessagesCacheKey, _data);
         return Promise.resolve(res);
       })
