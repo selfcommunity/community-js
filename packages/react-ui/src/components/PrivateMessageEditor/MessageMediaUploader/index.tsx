@@ -206,8 +206,8 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           )}
           <List className={classes.previewContent}>
             {previews.length !== 0 &&
-              previews.map((item) => (
-                <>
+              previews.map((item, index) => (
+                <React.Fragment key={index}>
                   {'file' in item && (
                     <ListItem
                       className={classes.previewItem}
@@ -249,7 +249,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
                       )}
                     </ListItem>
                   )}
-                </>
+                </React.Fragment>
               ))}
           </List>
         </ChunkedUploady>
