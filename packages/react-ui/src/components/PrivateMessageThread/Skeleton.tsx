@@ -1,14 +1,16 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Card, CardContent, ListSubheader, Skeleton} from '@mui/material';
+import {Box, Card, CardContent, ListSubheader, Skeleton, useMediaQuery, useTheme} from '@mui/material';
 import List from '@mui/material/List';
 import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCPrivateMessageThreadSkeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
-  list: `${PREFIX}-list`
+  list: `${PREFIX}-list`,
+  editor: `${PREFIX}-editor`
 };
 
 const Root = styled(Card, {
@@ -38,6 +40,8 @@ const Root = styled(Card, {
  *
  */
 export default function PrivateMessageThreadSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Root className={classes.root} {...props}>
       <CardContent>
@@ -45,10 +49,13 @@ export default function PrivateMessageThreadSkeleton(props): JSX.Element {
           <ListSubheader sx={{display: 'flex', justifyContent: 'center'}}>
             <Skeleton animation="wave" height={30} width={120} style={{borderRadius: 20}} />
           </ListSubheader>
-          {[...Array(8)].map((item, index) => (
+          {[...Array(isMobile ? 6 : 8)].map((item, index) => (
             <PrivateMessageThreadItemSkeleton index={index} key={index} />
           ))}
         </List>
+        <Box className={classes.editor}>
+          <Skeleton animation="wave" height={40} width={'100%'} variant={'rectangular'} />
+        </Box>
       </CardContent>
     </Root>
   );
