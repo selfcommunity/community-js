@@ -149,32 +149,27 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   useItemFinishListener((item) => {
     const callBack = item.file.type.startsWith(SCMessageFileType.DOCUMENT) ? pdfToJpeg : createVideoThumbnail;
-    const _chunks = {...chunkStateRef.current.chunks};
-    if (item.uploadResponse.results.length > 1) {
-      const formData = new FormData();
-      formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
-      formData.append('filename', chunkStateRef.current.chunks[item.id].file.name);
-      formData.append('totalparts', chunkStateRef.current.chunks[item.id].totalparts);
-      http
-        .request({
-          url: Endpoints.PrivateMessageChunkUploadDone.url(),
-          method: Endpoints.PrivateMessageChunkUploadDone.method,
-          data: formData,
-          headers: {'Content-Type': 'multipart/form-data'}
-        })
-        .then((res: HttpResponse<any>) => {
-          isImageType(item.file.type) ? uploadThumbnail(item, item.file) : generateImageThumbnail(callBack, item, res.data.file_url);
-        })
-        .catch((error) => {
-          error = formatHttpError(error);
-          onError({...chunkStateRef.current.chunks[item.id]}, error.error);
-          const _chunks = {...chunkStateRef.current.chunks};
-          delete _chunks[item.id];
-          chunkStateRef.current.setChunks(_chunks);
-        });
-    } else {
-      isImageType(item.file.type) ? uploadThumbnail(item, item.file) : generateImageThumbnail(callBack, item, _chunks[item.id].file_url);
-    }
+    const formData = new FormData();
+    formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
+    formData.append('filename', chunkStateRef.current.chunks[item.id].file.name);
+    formData.append('totalparts', chunkStateRef.current.chunks[item.id].totalparts);
+    http
+      .request({
+        url: Endpoints.PrivateMessageChunkUploadDone.url(),
+        method: Endpoints.PrivateMessageChunkUploadDone.method,
+        data: formData,
+        headers: {'Content-Type': 'multipart/form-data'}
+      })
+      .then((res: HttpResponse<any>) => {
+        isImageType(item.file.type) ? uploadThumbnail(item, item.file) : generateImageThumbnail(callBack, item, res.data.file_url);
+      })
+      .catch((error) => {
+        error = formatHttpError(error);
+        onError({...chunkStateRef.current.chunks[item.id]}, error.error);
+        const _chunks = {...chunkStateRef.current.chunks};
+        delete _chunks[item.id];
+        chunkStateRef.current.setChunks(_chunks);
+      });
   });
 
   useItemErrorListener((item) => {
