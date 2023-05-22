@@ -2,12 +2,20 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .SCVoteAudienceButton-reaction-list': {
+        maxWidth: theme.spacing(5),
+        overflow: 'hidden',
+        marginTop: theme.spacing(-0.25),
+        fontSize: '1.143rem',
+        display: 'flex',
+        flexDirection: 'row',
         '& .MuiIcon-root': {
-          padding: 1,
-          borderRadius: '50%',
-          backgroundColor: theme.palette.background.paper,
-          border: `1px solid ${theme.palette.background.paper}`
+          paddingRight: theme.spacing(0.5),
+          backgroundColor: 'transparent'
         }
+      },
+      '& > .MuiIcon-root': {
+        fontSize: '1.143rem',
+        marginTop: theme.spacing(-0.25)
       }
     }),
     dialogRoot: ({theme}: any) => ({

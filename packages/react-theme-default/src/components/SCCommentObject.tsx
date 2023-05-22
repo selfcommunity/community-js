@@ -15,7 +15,7 @@ const Component = {
       '& .SCCommentObject-nested-comments': {
         paddingTop: 0,
         paddingBottom: 0,
-        paddingLeft: 25,
+        paddingLeft: theme.spacing(2),
         '& ul.MuiList-root': {
           paddingTop: 0,
           paddingBottom: 0,
@@ -25,7 +25,7 @@ const Component = {
           }
         },
         [theme.breakpoints.up('sm')]: {
-          paddingLeft: 55
+          paddingLeft: theme.spacing(6)
         }
       },
       '& .SCCommentObject-content': {
@@ -80,10 +80,14 @@ const Component = {
       },
       '& .SCCommentObject-comment-sub-section': {
         display: 'flex',
+        flexWrap: 'wrap',
         alignItems: 'center',
         color: theme.palette.primary.main,
         marginTop: 0,
         position: 'relative',
+        '& > *': {
+          marginRight: theme.spacing(1)
+        },
         '& .SCCommentObject-activity-at': {
           color: 'inherit',
           textDecoration: 'none',
@@ -98,10 +102,22 @@ const Component = {
           padding: theme.spacing(1),
           textTransform: 'capitalize'
         },
-        '& .SCCommentObject-vote-audience': {
-          position: 'absolute',
-          right: 0,
-          top: 0
+        '& .SCBullet-root': {
+          display: 'none'
+        },
+
+        [theme.breakpoints.up('sm')]: {
+          '& > *': {
+            marginRight: 0
+          },
+          '& .SCCommentObject-vote-audience': {
+            position: 'absolute',
+            right: 0,
+            top: 0
+          },
+          '& .SCBullet-root': {
+            display: 'inline'
+          }
         }
       }
     })

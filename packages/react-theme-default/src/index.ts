@@ -114,6 +114,7 @@ import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
 import MuiDrawer from './components/MuiDrawer';
 import SCEmojiPicker from './components/SCEmojiPicker';
+import SCBullet from './components/SCBullet';
 
 /**
  * Style fragments - Imports - End
@@ -183,6 +184,7 @@ const theme = {
     SCBaseItemButton,
     SCBottomNavigation,
     SCBroadcastMessages,
+    SCBullet,
     SCCategories,
     SCCategoriesSkeleton,
     SCCategory,
