@@ -29,6 +29,7 @@ const Component = {
         }
       },
       '& .SCCommentObject-content': {
+        overflowWrap: 'anywhere',
         position: 'relative',
         display: 'flex',
         padding: theme.spacing(2),

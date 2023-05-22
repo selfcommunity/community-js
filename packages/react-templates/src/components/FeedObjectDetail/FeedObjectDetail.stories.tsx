@@ -20,8 +20,8 @@ const Template: ComponentStory<typeof FeedObjectDetailTemplate> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {
-  feedObjectId: 724,
-  feedObjectType: SCContributionType.POST
+  feedObjectId: 1400,
+  feedObjectType: SCContributionType.DISCUSSION
 };
 
 

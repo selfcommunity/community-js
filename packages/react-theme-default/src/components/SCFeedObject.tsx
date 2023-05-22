@@ -144,6 +144,7 @@ const Component = {
             }
           },
           '& .SCFeedObject-text-section': {
+            overflowWrap: 'anywhere',
             '& > :first-of-type': {
               padding: theme.spacing(0, 2, 2),
               display: 'block'
