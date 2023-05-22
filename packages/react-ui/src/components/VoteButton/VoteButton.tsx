@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
-import {IconButton, Paper, Popper, Tooltip} from '@mui/material';
-import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
+import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme} from '@mui/material';
+import {SCThemeType, SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCVoteButton';
@@ -126,6 +126,8 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     contribution,
     onVote: handleVoteDone
   });
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // MEMO
   const rootProps = useMemo(() => {
@@ -134,16 +136,16 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     }
     return {
       onMouseEnter: handleMouseEnter,
-      onMouseLeave: handleMouseLeave,
-      onTouchStart: handleMouseEnter,
-      onTouchMove: handleMouseLeave
+      onMouseLeave: handleMouseLeave
     };
   }, [reactions]);
 
   // RENDER
   const button = (
     <Root
-      onClick={() => handleVote(contributionReaction ? contributionReaction : reactions.default ? reactions.default : null)}
+      onClick={
+        isMobile ? handleMouseEnter : () => handleVote(contributionReaction ? contributionReaction : reactions.default ? reactions.default : null)
+      }
       disabled={isLoading || Boolean(error)}
       loading={isVoting}
       className={classNames(classes.root, className, {

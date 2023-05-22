@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      borderRadius: 0,
       '& .MuiButton-root': {
         '&:focus:not(:focus-visible)': {
           backgroundColor: 'transparent',
@@ -25,7 +26,7 @@ const Component = {
       '& .SCPollObject-title': {
         color: theme.palette.grey[600],
         marginBottom: 10,
-        fontWeight: theme.typography.fontWeightBold,
+        fontWeight: theme.typography.fontWeightBold
       },
       '& .SCPollObject-expiration, & .SCPollObject-close, & .SCPollObject-voters': {
         color: theme.palette.grey[600],
@@ -35,7 +36,7 @@ const Component = {
       },
       '& .SCPollObject-voters .MuiTypography-root': {
         fontWeight: theme.typography.fontWeightLight,
-        fontSize: '0.765rem'
+        fontSize: '1rem'
       },
       '& ul': {
         padding: theme.spacing(2.5),
