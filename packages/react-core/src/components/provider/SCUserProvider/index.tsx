@@ -125,6 +125,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   function handleVisibilityChange() {
     if (isClientSideRendering() && !window.document.hidden && state.user) {
       settingsManager.refresh && settingsManager.refresh();
+      refreshNotificationCounters();
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
