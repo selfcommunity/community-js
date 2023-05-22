@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.48...@selfcommunity/react-core@0.4.0-alpha.49) (2023-05-22)
+
+
+### Bug Fixes
+
+* refresh counters notifications on document focus ([c4faaab](https://github.com/selfcommunity/community-js/commit/c4faaab5a314bce7b24c7f92a534f9c8d4788bb5))
+
+
+
+
+
 # [0.4.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.47...@selfcommunity/react-core@0.4.0-alpha.48) (2023-05-19)
 
 **Note:** Version bump only for package @selfcommunity/react-core

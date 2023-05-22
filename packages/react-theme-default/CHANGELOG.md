@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.158](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.157...@selfcommunity/react-theme-default@0.1.0-alpha.158) (2023-05-22)
+
+
+### Bug Fixes
+
+* Fix overflow in comments ([d04253d](https://github.com/selfcommunity/community-js/commit/d04253d690482908b60aa087d7f4985c23da86ba))
+* Fix poll object ([4e42b41](https://github.com/selfcommunity/community-js/commit/4e42b416563992e652440ac3ab1ada9f96480c2a))
+* Fix responsiveness ([dca0ad5](https://github.com/selfcommunity/community-js/commit/dca0ad5c3af04877440fb1a4ca3f29c4ecd4f24b))
+
+
+
+
+
 # [0.1.0-alpha.157](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.156...@selfcommunity/react-theme-default@0.1.0-alpha.157) (2023-05-19)
 
 

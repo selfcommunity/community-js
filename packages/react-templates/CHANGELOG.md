@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.200](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.199...@selfcommunity/react-templates@0.3.0-alpha.200) (2023-05-22)
+
+
+### Bug Fixes
+
+* Fix overflow in comments ([d04253d](https://github.com/selfcommunity/community-js/commit/d04253d690482908b60aa087d7f4985c23da86ba))
+
+
+
+
+
 # [0.3.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.198...@selfcommunity/react-templates@0.3.0-alpha.199) (2023-05-19)
 
 

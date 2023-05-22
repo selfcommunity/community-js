@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.210](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.209...@selfcommunity/react-ui@0.7.0-alpha.210) (2023-05-22)
+
+
+### Bug Fixes
+
+* Fix media upload with preview ([228a2fb](https://github.com/selfcommunity/community-js/commit/228a2fb88849ba1a90d06a8bc0bc24a1f8c9dae9))
+* Fix responsiveness ([dca0ad5](https://github.com/selfcommunity/community-js/commit/dca0ad5c3af04877440fb1a4ca3f29c4ecd4f24b))
+* Fix VoteButton.tsx on touch devices ([b765488](https://github.com/selfcommunity/community-js/commit/b765488037c8f3223174bfd9f31d67ab603023c4))
+
+
+
+
+
 # [0.7.0-alpha.209](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.208...@selfcommunity/react-ui@0.7.0-alpha.209) (2023-05-19)
 
 
