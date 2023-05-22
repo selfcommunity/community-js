@@ -118,7 +118,7 @@ import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './compone
 import IncubatorListWidget, {IncubatorListWidgetProps} from './components/IncubatorListWidget';
 import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
-import Footer, {FooterProps} from './components/Footer';
+import Footer, {FooterProps, FooterSkeleton} from './components/Footer';
 import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAutocomplete';
 import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
 import PrivateMessageSettingsIconButton, {PrivateMessageSettingsIconButtonProps} from './components/PrivateMessageSettingsIconButton';
@@ -400,6 +400,7 @@ export {
   MessageUploaderUtils,
   Footer,
   FooterProps,
+  FooterSkeleton,
   BaseItem,
   BaseItemProps,
   BaseDialog,
