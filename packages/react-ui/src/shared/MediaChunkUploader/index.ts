@@ -7,16 +7,15 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import {useBatchAddListener, useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
+import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
 import {md5} from '../../utils/hash';
 import React, {useEffect, useRef, useState} from 'react';
 import {SCMediaChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
-import {PreSendResponse} from '@rpldy/shared-ui';
 import {Logger, resizeImage} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 
@@ -162,7 +161,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     return new Promise((resolve, reject) => {
       Promise.all(
         items.map(async (item) => {
-          return {...item, file: item.file.type === 'image/gif' ? item.file : await resizeImage(item.file)};
+          return {...item, file: item.file.type.startsWith('image/') && item.file.type !== 'image/gif' ? await resizeImage(item.file) : item.file};
         })
       )
         .then((items) => {
