@@ -346,11 +346,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const objId = obj ? obj.id : null;
 
   /**
-   * Get initial expanded activities
+   * Get initial expanded activities type
    */
-  function geExpandedActivities() {
+  const geExpandedActivities = (): boolean => {
     return obj && activitiesExpanded && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
-  }
+  };
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
@@ -367,12 +367,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Notify changes to Feed if the FeedObject is contained in the feed
    */
   const notifyFeedChanges = useMemo(
-    () => (state?: Record<string, any>) => {
-      if (onStateChange && state) {
-        onStateChange(state);
-      }
-      onHeightChange && onHeightChange();
-    },
+    () =>
+      (state?: Record<string, any>): void => {
+        if (onStateChange && state) {
+          onStateChange(state);
+        }
+        onHeightChange && onHeightChange();
+      },
     [onStateChange, onHeightChange]
   );
 
@@ -380,10 +381,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Update state object
    * @param obj
    */
-  function updateObject(newObj) {
+  const updateObject = (newObj): void => {
     setObj(newObj);
     notifyFeedChanges();
-  }
+  };
 
   /**
    * Get initial selected activities section
@@ -422,7 +423,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * if author = authenticated user -> render edit action
    * else render ContributionActionsMenu
    */
-  function renderHeaderAction() {
+  const renderHeaderAction = (): JSX.Element => {
     return (
       <ContributionActionsMenu
         feedObject={obj}
@@ -435,7 +436,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         {...ContributionActionsMenuProps}
       />
     );
-  }
+  };
 
   /**
    * Handle restore obj
@@ -543,30 +544,31 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Comment of first level
    */
   const performReply = useMemo(
-    () => (comment: SCCommentType) => {
-      return http
-        .request({
-          url: Endpoints.NewComment.url({}),
-          method: Endpoints.NewComment.method,
-          data: {
-            [`${obj.type}`]: obj.id,
-            text: comment
-          }
-        })
-        .then((res: HttpResponse<SCCommentType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
+    () =>
+      (comment: SCCommentType): Promise<SCCommentType> => {
+        return http
+          .request({
+            url: Endpoints.NewComment.url({}),
+            method: Endpoints.NewComment.method,
+            data: {
+              [`${obj.type}`]: obj.id,
+              text: comment
+            }
+          })
+          .then((res: HttpResponse<SCCommentType>) => {
+            if (res.status >= 300) {
+              return Promise.reject(res);
+            }
+            return Promise.resolve(res.data);
+          });
+      },
     [objId]
   );
 
   /**
    * Handle comment
    */
-  function handleReply(comment: SCCommentType) {
+  const handleReply = (comment: SCCommentType): void => {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else if (UserUtils.isBlocked(scUserContext.user)) {
@@ -602,7 +604,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           });
         });
     }
-  }
+  };
 
   /**
    * Render the obj object
@@ -713,7 +715,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                       dangerouslySetInnerHTML={{__html: expanded ? getContributionHtml(obj, scRoutingContext.url) : obj.summary}}
                     />
                     {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
-                      <Button size="small" variant="text" color="inherit" onClick={() => setExpanded(!expanded)}>
+                      <Button size="small" variant="text" color="inherit" onClick={(): void => setExpanded(!expanded)}>
                         <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
                       </Button>
                     )}

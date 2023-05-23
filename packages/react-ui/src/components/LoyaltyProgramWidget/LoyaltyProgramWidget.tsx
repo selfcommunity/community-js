@@ -32,11 +32,6 @@ const Root = styled(Widget, {
 
 export interface LoyaltyProgramWidgetProps {
   /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -74,7 +69,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
     name: PREFIX
   });
   // PROPS
-  const {autoHide, className} = props;
+  const {className} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -126,7 +121,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   /**
    * Rendering
    */
-  if (autoHide || (!loyaltyEnabled && !scUserContext.user)) {
+  if (!loyaltyEnabled || !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
   if (loading) {

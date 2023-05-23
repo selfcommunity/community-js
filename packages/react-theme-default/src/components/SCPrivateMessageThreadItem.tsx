@@ -19,9 +19,14 @@ const Component = {
         minHeight: theme.spacing(6),
         display: 'flex',
         alignItems: 'center',
+        maxWidth: '90%',
         '& .MuiTypography-root': {
           fontSize: '1.143rem',
-          whiteSpace: 'pre-line'
+          whiteSpace: 'pre-line',
+          overflowWrap: 'break-word',
+          wordWrap: 'break-word',
+          wordBreak: 'break-word',
+          hyphens: 'auto'
         }
       },
       '& .SCPrivateMessageThreadItem-img': {

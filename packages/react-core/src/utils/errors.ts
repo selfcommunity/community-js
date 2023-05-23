@@ -31,6 +31,9 @@ export class ValidationError {
   static ERROR_INVALID_PREFERENCES = 5000;
   static ERROR_INVALID_GLOBAL_PREFERENCES = 5001;
   static ERROR_INVALID_PREFERENCES_FEATURES = 5002;
+  static ERROR_INVALID_VOTE = 6000;
+  static ERROR_INVALID_VOTE_REACTIONS = 6001;
+  static ERROR_INVALID_VOTE_REACTIONS_STRUCTURE = 6002;
   static defaultErrorMessageMap = {
     [ValidationError.ERROR_INVALID_CONF]:
       'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
@@ -61,6 +64,10 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_GLOBAL_PREFERENCES]:
       "Invalid preferences option. 'preferences' inside preferences must be a valid array of global preferences.",
     [ValidationError.ERROR_INVALID_PREFERENCES_FEATURES]: "Invalid preferences option. 'features' must be a valid array of features.",
+    [ValidationError.ERROR_INVALID_VOTE]: 'Invalid vote option.',
+    [ValidationError.ERROR_INVALID_VOTE_REACTIONS]: "Invalid vote option. 'reactions' must be a valid array of reaction objects.",
+    [ValidationError.ERROR_INVALID_VOTE_REACTIONS_STRUCTURE]:
+      "Invalid vote option. 'reactions' must be a valid array of reaction with attributes (id, label, sentiment, image, active).",
   };
 
   errorCode = null;

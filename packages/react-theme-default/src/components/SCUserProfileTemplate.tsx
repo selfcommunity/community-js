@@ -13,7 +13,8 @@ const Component = {
         marginTop: theme.spacing(2),
         justifyContent: 'center',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexWrap: 'wrap'
       },
       '& .SCUserProfileTemplate-info': {
         marginTop: theme.spacing(1),
