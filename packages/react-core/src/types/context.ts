@@ -1,5 +1,12 @@
 import React, {ReactNode} from 'react';
-import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType, SCUserSettingsType} from '@selfcommunity/types';
+import {
+  SCAuthTokenType,
+  SCIncubatorType,
+  SCCategoryType,
+  SCUserType,
+  SCUserSettingsType,
+  SCReactionType
+} from "@selfcommunity/types";
 import {SCThemeType} from './theme';
 
 /**
@@ -34,7 +41,12 @@ export interface SCSettingsType {
   /**
    * Object conf of preferences.
    */
-  preferences?: SCPreferencesContextType;
+  preferences?: SCPreferencesType;
+
+  /**
+   * Vote conf
+   */
+  vote?: SCVoteType;
 
   /**
    * Object conf of notification.
@@ -70,6 +82,31 @@ export interface SCLocaleType {
    * Overrides default messages.
    */
   messages?: Record<string, any>;
+}
+
+/**
+ * Interface SCPreferencesType
+ */
+export interface SCPreferencesType {
+  /**
+   * List of all community preferences
+   */
+  preferences: Record<string, any>;
+
+  /**
+   * List of all community enabled features
+   */
+  features: string[];
+}
+
+/**
+ * Interface SCVoteType
+ */
+export interface SCVoteType {
+  /**
+   * List of all reactions
+   */
+  reactions: SCReactionType[];
 }
 
 /**
@@ -408,7 +445,7 @@ export interface SCContextProviderType {
 }
 
 /**
- * Interface SCPreferencesType
+ * Interface SCPreferencesContextType
  */
 export interface SCPreferencesContextType {
   /**
@@ -420,6 +457,21 @@ export interface SCPreferencesContextType {
    * List of all community enabled features
    */
   features: string[];
+}
+
+/**
+ * Interface SCVoteContextType
+ */
+export interface SCVoteContextType {
+  /**
+   * List of all reactions
+   */
+  reactions: SCReactionType[];
+
+  /**
+   * Refresh reactions
+   */
+  refreshReactions: () => Promise<SCReactionType[]>;
 }
 
 /**

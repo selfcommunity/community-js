@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCFeatureName, SCReactionType} from '@selfcommunity/types';
-import {Endpoints, http} from '@selfcommunity/api-services';
+import {ReactionService} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getReactionObjectCacheKey, getReactionsObjectCacheKey} from '../constants/Cache';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
@@ -56,31 +56,16 @@ const useSCFetchReactions = (props?: {cacheStrategy?: CacheStrategies}) => {
   );
 
   /**
-   * Fetch reactions
-   */
-  const fetchReactions = async (next: string = Endpoints.GetReactions.url()): Promise<[]> => {
-    const response = await http.request({
-      url: next,
-      method: Endpoints.GetReactions.method,
-    });
-    const data: any = response.data;
-    if (data.next) {
-      return data.results.concat(await fetchReactions(data.next));
-    }
-    return data.results;
-  };
-
-  /**
    * Get reactions
    */
   useEffect(() => {
     if (cacheStrategy === CacheStrategies.CACHE_FIRST && reactions) {
       return;
     }
-    if (!scPreferences.features.includes(SCFeatureName.REACTION)) {
+    if (!scPreferences.features || !scPreferences.features.includes(SCFeatureName.REACTION)) {
       return;
     }
-    fetchReactions()
+    ReactionService.getAllReactionsList()
       .then((data: SCReactionType[]) => {
         setData({reactions: data, isLoading: false, default: data.find((reaction: SCReactionType) => reaction.id === 1)});
         LRUCache.set(

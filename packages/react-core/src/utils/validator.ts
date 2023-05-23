@@ -5,13 +5,13 @@ import {
   SCNotificationsType,
   SCNotificationsWebPushMessagingType,
   SCNotificationsWebSocketType,
-  SCPreferencesContextType,
+  SCPreferencesType,
   SCSessionType,
   SCSettingsType,
 } from '../types/context';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
-import {SCLocaleType} from '../types';
+import {SCLocaleType, SCVoteType} from '../types';
 import {CONTEXT_PROVIDERS_OPTION, DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
 import * as Notifications from '../constants/Notifications';
 import * as Theme from '../constants/Theme';
@@ -19,6 +19,7 @@ import {PORTAL_OPTION, ROUTER_OPTION} from '../constants/Routes';
 import * as Actions from '../constants/Actions';
 import * as Preferences from '../constants/Preferences';
 import * as Features from '../constants/Features';
+import * as Vote from '../constants/Vote';
 
 /**
  * Validate session option
@@ -506,7 +507,7 @@ export function validatePreferences(v: Record<string, any>) {
       return {errors, warnings, value: v};
     } else {
       const _options = Object.keys(preferencesOptions);
-      const value: SCPreferencesContextType = Object.keys(v)
+      const value: SCPreferencesType = Object.keys(v)
         .filter((key) => _options.includes(key))
         .reduce((obj, key) => {
           const res = preferencesOptions[key].validator(v[key], v);
@@ -514,7 +515,60 @@ export function validatePreferences(v: Record<string, any>) {
           res.warnings.map((warning) => warnings.push(warning));
           obj[key] = res.value;
           return obj;
-        }, {} as SCPreferencesContextType);
+        }, {} as SCPreferencesType);
+      return {errors, warnings, value: {...defaultValue, ...value}};
+    }
+  }
+  return {errors, warnings, value: defaultValue};
+}
+
+/**
+ * Validate reactions
+ * @param value
+ * @param vote
+ */
+export const validateReactions = (value, vote) => {
+  const errors = [];
+  const warnings = [];
+  if (vote[Vote.VOTE_REACTIONS_OPTION]) {
+    if (!Array.isArray(value)) {
+      errors.push(ValidationError.ERROR_INVALID_VOTE_REACTIONS);
+    }
+    if (Array.isArray(value) && value.length > 0) {
+      let _validValuesCounts = value.filter((e) => e.id !== null && e.label !== null && e.sentiment && e.image && e.active !== null).length;
+      if (_validValuesCounts < value.length) {
+        errors.push(ValidationError.ERROR_INVALID_VOTE_REACTIONS_STRUCTURE);
+      }
+    }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate vote option
+ * @param v
+ */
+export function validateVote(v: Record<string, any>) {
+  const errors = [];
+  const warnings = [];
+  const defaultValue = {
+    [Vote.VOTE_REACTIONS_OPTION]: Vote.DEFAULT_VOTE_REACTIONS_OPTION,
+  };
+  if (v) {
+    if (!isObject(v)) {
+      errors.push(ValidationError.ERROR_INVALID_VOTE);
+      return {errors, warnings, value: v};
+    } else {
+      const _options = Object.keys(voteOptions);
+      const value: SCVoteType = Object.keys(v)
+        .filter((key) => _options.includes(key))
+        .reduce((obj, key) => {
+          const res = voteOptions[key].validator(v[key], v);
+          res.errors.map((error) => errors.push(error));
+          res.warnings.map((warning) => warnings.push(warning));
+          obj[key] = res.value;
+          return obj;
+        }, {} as SCVoteType);
       return {errors, warnings, value: {...defaultValue, ...value}};
     }
   }
@@ -559,6 +613,10 @@ const ContextProvidersOption = {
 const PreferencesOption = {
   name: Preferences.PREFERENCES_OPTION,
   validator: validatePreferences,
+};
+const VoteOption = {
+  name: Vote.VOTE_OPTION,
+  validator: validateVote,
 };
 
 /**
@@ -624,6 +682,10 @@ const NotificationsWebPushMessagingApplicationServerKeyOption = {
   name: Notifications.NOTIFICATIONS_APPLICATION_SERVER_KEY_OPTION,
   validator: validateWebPushMessagingApplicationServerKey,
 };
+const ReactionsOption = {
+  name: Vote.VOTE_REACTIONS_OPTION,
+  validator: validateReactions,
+};
 
 /**
  * Valid options
@@ -639,6 +701,7 @@ export const settingsOptions: Record<string, any> = {
   [HandleAnonymousActionOption.name]: HandleAnonymousActionOption,
   [ContextProvidersOption.name]: ContextProvidersOption,
   [PreferencesOption.name]: PreferencesOption,
+  [VoteOption.name]: VoteOption,
 };
 export const sessionOptions: Record<string, any> = {
   [SessionTypeOption.name]: SessionTypeOption,
@@ -667,6 +730,9 @@ export const preferencesOptions: Record<string, any> = {
   [GlobalPreferencesOption.name]: GlobalPreferencesOption,
   [FeaturesOption.name]: FeaturesOption,
 };
+export const voteOptions: Record<string, any> = {
+  [ReactionsOption.name]: ReactionsOption,
+};
 
 export const validOptions = {
   ...settingsOptions,
@@ -692,8 +758,8 @@ export const validateOptions = (values: SCSettingsType, schemaOptions: Record<st
     }, {}),
   };
   const settings: SCSettingsType = Object.keys(_data)
-    .filter((key) => _options.includes(key))
-    .reduce((obj, key) => {
+    .filter((key: string) => _options.includes(key))
+    .reduce((obj: SCSettingsType, key: string) => {
       const res: {errors: ValidationError[]; warnings: ValidationWarnings[]; value: any} = schemaOptions[key].validator(values[key]);
       res.errors.map((error: ValidationError) => validationResult.addError(error, res.value));
       res.warnings.map((warning) => validationResult.addWarnings(warning, res.value));

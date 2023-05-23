@@ -1,4 +1,5 @@
 import SCPreferencesProvider from '../components/provider/SCPreferencesProvider';
+import SCVoteProvider from '../components/provider/SCVoteProvider';
 import SCRoutingProvider from '../components/provider/SCRoutingProvider';
 import SCUserProvider from '../components/provider/SCUserProvider';
 import SCNotificationProvider from '../components/provider/SCNotificationProvider';
@@ -13,6 +14,7 @@ export const CONTEXT_PROVIDERS_OPTION = 'contextProviders';
  */
 export const DEFAULT_CONTEXT_PROVIDERS: ((children) => JSX.Element)[] = [
   SCPreferencesProvider,
+  SCVoteProvider,
   SCRoutingProvider,
   SCUserProvider,
   SCLocaleProvider,

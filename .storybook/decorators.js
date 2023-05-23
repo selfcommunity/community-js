@@ -7,6 +7,7 @@ import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import {Image, Document, Link} from '../packages/react-ui/src';
 import theme from '@selfcommunity/react-theme-default';
 import { mergeDeep } from '@selfcommunity/utils';
+import reactions from './data/reactions'
 
 /**
  * Fix Storybook v6.3.10 with mui v5
@@ -91,6 +92,7 @@ const withProvider = (Story, context) => {
         // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
       },
     },
+    // vote: {reactions: reactions}, // Test caching reactions data
     theme: mergeDeep(theme, {
       components: {
         SCInlineComposerWidget: {
