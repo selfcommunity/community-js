@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.14...@selfcommunity/api-services@0.4.0-alpha.15) (2023-05-23)
+
+
+### Bug Fixes
+
+* reactions caching, SCVoteProvider ([530b953](https://github.com/selfcommunity/community-js/commit/530b95327c8c77038dc21b08caffc3bc34bee465))
+
+
+
+
+
 # [0.4.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.13...@selfcommunity/api-services@0.4.0-alpha.14) (2023-05-19)
 
 

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.49...@selfcommunity/react-core@0.4.0-alpha.50) (2023-05-23)
+
+
+### Bug Fixes
+
+* fixed build, pm snippets hook multiple requests ([3bd7650](https://github.com/selfcommunity/community-js/commit/3bd7650c837e7f7e8318017e70d9061a7c85063f))
+* multiple api calls to commentObject ([f077c4d](https://github.com/selfcommunity/community-js/commit/f077c4df66b7b749d6876b03bb40daa3026452c2))
+* reactions caching, SCVoteProvider ([530b953](https://github.com/selfcommunity/community-js/commit/530b95327c8c77038dc21b08caffc3bc34bee465))
+
+
+
+
+
 # [0.4.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.48...@selfcommunity/react-core@0.4.0-alpha.49) (2023-05-22)
 
 

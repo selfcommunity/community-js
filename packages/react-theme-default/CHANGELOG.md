@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.159](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.158...@selfcommunity/react-theme-default@0.1.0-alpha.159) (2023-05-23)
+
+
+### Bug Fixes
+
+* fixed feedObject actions, user secondary text and user profile counters overlap on mobile viewport ([15a902b](https://github.com/selfcommunity/community-js/commit/15a902bf229d6265fe754db9624e692b32269de4))
+* fixed thread item text overflow ([4106309](https://github.com/selfcommunity/community-js/commit/4106309221aaff6318ae71f0480ae4905f8862b2))
+
+
+
+
+
 # [0.1.0-alpha.158](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.157...@selfcommunity/react-theme-default@0.1.0-alpha.158) (2023-05-22)
 
 

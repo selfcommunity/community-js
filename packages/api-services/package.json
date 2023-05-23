@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/api-services",
-  "version": "0.4.0-alpha.14",
+  "version": "0.4.0-alpha.15",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
