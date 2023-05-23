@@ -30,7 +30,7 @@ export default function useSCFetchCommentObject({
   const __commentObjectCacheKey = getCommentObjectCacheKey(__commentObjectId);
 
   const [obj, setObj] = useState<SCCommentType>(
-    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__commentObjectCacheKey, commentObject) : null
+    cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__commentObjectCacheKey, commentObject) : commentObject
   );
   const [error, setError] = useState<string>(null);
 
