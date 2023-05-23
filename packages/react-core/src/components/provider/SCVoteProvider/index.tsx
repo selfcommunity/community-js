@@ -6,7 +6,7 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import {useSCContext} from '../SCContextProvider';
 import {SCFeatureName, SCReactionType} from '@selfcommunity/types';
 import {getReactionObjectCacheKey, getReactionsObjectCacheKey} from '../../../constants/Cache';
-import {SCPreferencesContext} from '@selfcommunity/react-core';
+import {SCPreferencesContext} from '../SCPreferencesProvider';
 
 /**
  * Creates Vote Context

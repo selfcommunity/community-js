@@ -75,24 +75,23 @@ const useSCFetchPrivateMessageSnippets = (props?: {cacheStrategy?: CacheStrategi
     if (cacheStrategy === CacheStrategies.CACHE_FIRST && snippets) {
       return;
     }
-    scUserContext.user &&
-      fetchSnippets()
-        .then((data) => {
-          setData({snippets: data, isLoading: false});
-          LRUCache.set(
-            __snippetsCacheKey,
-            data.map((snippet: SCPrivateMessageSnippetType) => {
-              const __snippetCacheKey = getPmSnippetObjectCacheKey(snippet.id);
-              LRUCache.set(__snippetCacheKey, snippet);
-              return snippet.id;
-            })
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-          Logger.error(SCOPE_SC_CORE, 'Unable to retrieve snippets');
-        });
-  }, [scUserContext]);
+    fetchSnippets()
+      .then((data) => {
+        setData({snippets: data, isLoading: false});
+        LRUCache.set(
+          __snippetsCacheKey,
+          data.map((snippet: SCPrivateMessageSnippetType) => {
+            const __snippetCacheKey = getPmSnippetObjectCacheKey(snippet.id);
+            LRUCache.set(__snippetCacheKey, snippet);
+            return snippet.id;
+          })
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        Logger.error(SCOPE_SC_CORE, 'Unable to retrieve snippets');
+      });
+  }, []);
 
   /**
    * Updated snippets list
