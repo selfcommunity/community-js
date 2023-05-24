@@ -174,7 +174,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   }, [scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && state.initialized) {
+    if (openDialog && state.next && state.results.length <= limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
       SuggestionService.getCategorySuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCCategoryType>) => {
