@@ -36,7 +36,7 @@ const STATUS_CONNECTION_REQUEST_RECEIVED = 'received_connection_request';
  :::
  */
 export default function useSCConnectionsManager(user?: SCUserType) {
-  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const connectionsDisabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
@@ -137,7 +137,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   const requestConnection = useMemo(
     () =>
       (user: SCUserType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[user.id]]);
+        setLoading(user.id);
         if (getCurrentStatus(user) === STATUS_CONNECTION_REQUEST_RECEIVED) {
           return acceptConnection(user);
         }
@@ -155,7 +155,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
               k: k === user.id ? STATUS_CONNECTION_REQUEST_SENT : v,
             }));
             setData(_data);
-            setLoading((prev) => prev.filter((u) => u !== user.id));
+            setUnLoading(user.id);
             return Promise.resolve(res.data);
           });
       },
@@ -168,7 +168,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   const acceptConnection = useMemo(
     () =>
       (user: SCUserType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[user.id]]);
+        setLoading(user.id);
         if (getCurrentStatus(user) === STATUS_CONNECTION_REQUEST_RECEIVED) {
           return http
             .request({
@@ -184,7 +184,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
                 k: k === user.id ? STATUS_CONNECTED : v,
               }));
               setData(_data);
-              setLoading((prev) => prev.filter((u) => u !== user.id));
+              setUnLoading(user.id);
               return Promise.resolve(res.data);
             });
         }
@@ -212,7 +212,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
    * @param user
    */
   const checkUserConnectionStatus = (user: SCUserType): void => {
-    setLoading((prev) => (prev.includes(user.id) ? prev : [...prev, ...[user.id]]));
+    setLoading(user.id);
     http
       .request({
         url: Endpoints.UserCheckConnection.url({id: user.id}),
@@ -224,7 +224,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
         }
         updateCache([user.id]);
         setData((prev) => (res.data.is_connection ? [...prev, ...[{[user.id]: STATUS_CONNECTED}]] : prev.filter(([id, v]) => id !== user.id)));
-        setLoading((prev) => prev.filter((u) => u !== user.id));
+        setUnLoading(user.id);
         return Promise.resolve(res.data);
       });
   };

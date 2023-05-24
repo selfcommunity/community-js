@@ -20,7 +20,7 @@ import useSCCachingManager from './useSCCachingManager';
  :::
  */
 export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
-  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const authUserId = user ? user.id : null;
 
   /**
@@ -64,7 +64,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
   const subscribe = useMemo(
     () =>
       (incubator: SCIncubatorType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[incubator.id]]);
+        setLoading(incubator.id);
         return http
           .request({
             url: Endpoints.SubscribeToIncubator.url({id: incubator.id}),
@@ -77,7 +77,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
             updateCache([incubator.id]);
             const isSubscribed = data.includes(incubator.id);
             setData((prev) => (isSubscribed ? prev.filter((id) => id !== incubator.id) : [...[incubator.id], ...prev]));
-            setLoading((prev) => prev.filter((i) => i !== incubator.id));
+            setUnLoading(incubator.id);
             return Promise.resolve(res.data);
           });
       },
@@ -91,7 +91,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
    * @param incubator
    */
   const checkIsIncubatorFollowed = (incubator: SCIncubatorType): void => {
-    setLoading((prev) => (prev.includes(incubator.id) ? prev : [...prev, ...[incubator.id]]));
+    setLoading(incubator.id);
     http
       .request({
         url: Endpoints.CheckIncubatorSubscription.url({id: incubator.id}),
@@ -103,7 +103,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
         }
         updateCache([incubator.id]);
         setData((prev) => (res.data.subscribed ? [...prev, ...[incubator.id]] : prev.filter((id) => id !== incubator.id)));
-        setLoading((prev) => prev.filter((i) => i !== incubator.id));
+        setUnLoading(incubator.id);
         return Promise.resolve(res.data);
       });
   };
@@ -136,7 +136,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
           if ('subscribed' in incubator) {
             return getSubscriptionStatus(incubator);
           }
-          if (!loading.includes(incubator['id'])) {
+          if (!isLoading(incubator['id'])) {
             checkIsIncubatorFollowed(incubator);
           }
         }

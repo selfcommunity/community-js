@@ -30,7 +30,7 @@ const STATUS_FOLLOWED = 'followed';
  :::
  */
 export default function useSCFollowedManager(user?: SCUserType) {
-  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const authUserId = user ? user.id : null;
   const followEnabled =
@@ -81,7 +81,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
   const follow = useMemo(
     () =>
       (user: SCUserType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[user.id]]);
+        setLoading(user.id);
         return http
           .request({
             url: Endpoints.FollowUser.url({id: user.id}),
@@ -94,7 +94,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
             updateCache([user.id]);
             const isFollowed = data.includes(user.id);
             setData((prev) => (isFollowed ? prev.filter((id) => id !== user.id) : [...[user.id], ...prev]));
-            setLoading((prev) => prev.filter((u) => u !== user.id));
+            setUnLoading(user.id);
             return Promise.resolve(res.data);
           });
       },
@@ -108,7 +108,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * @param user
    */
   const checkIsUserFollowed = (user: SCUserType): void => {
-    setLoading((prev) => (prev.includes(user.id) ? prev : [...prev, ...[user.id]]));
+    setLoading(user.id);
     http
       .request({
         url: Endpoints.CheckUserFollowed.url({id: user.id}),
@@ -120,7 +120,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
         }
         updateCache([user.id]);
         setData((prev) => (res.data.is_followed ? [...prev, ...[user.id]] : prev.filter((id) => id !== user.id)));
-        setLoading((prev) => prev.filter((u) => u !== user.id));
+        setUnLoading(user.id);
         return Promise.resolve(res.data);
       });
   };
@@ -153,7 +153,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
           if ('connection_status' in user) {
             return getConnectionStatus(user);
           }
-          if (!loading.includes(user.id)) {
+          if (!isLoading(user)) {
             checkIsUserFollowed(user);
           }
         }
