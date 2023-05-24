@@ -192,7 +192,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   }, [scUserContext.user]);
 
   useEffect(() => {
-    if (openDialog && state.next && state.results.length === limit && state.initialized) {
+    if (openDialog && state.next && state.results.length <= limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
       SuggestionService.getUserSuggestion({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {

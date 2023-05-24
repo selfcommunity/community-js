@@ -29,7 +29,14 @@ export const Main = BaseTemplate.bind({});
 Main.args = {
   /* the args you need here will depend on your component */
   SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
-  value: '/'
+  value: '/',
+  NotificationMenuProps: {
+    SnippetNotificationsProps: {
+      onFetchNotifications: (data) => {
+        console.log(data);
+      }
+    }
+  }
 };
 
 export const Custom = BaseTemplate.bind({});

@@ -3,6 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       borderRadius: 0,
       paddingBottom: 0,
+      overflow: 'visible',
       [theme.breakpoints.up('sm')]: {
         borderRadius: theme.shape.borderRadius
       },

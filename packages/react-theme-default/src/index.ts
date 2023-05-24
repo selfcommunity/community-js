@@ -280,7 +280,7 @@ const theme = {
   selfcommunity: {
     user: {
       avatar: {
-        sizeSmall: 24,
+        sizeSmall: 21,
         sizeMedium: 30,
         sizeLarge: 60,
         sizeXLarge: 140
