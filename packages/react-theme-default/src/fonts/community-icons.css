@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?xgaocv');
-  src:  url('./community/icons.eot?xgaocv#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?xgaocv') format('woff2'),
-  url('./community/icons.ttf?xgaocv') format('truetype'),
-  url('./community/icons.woff?xgaocv') format('woff'),
-  url('./community/icons.svg?xgaocv#community') format('svg');
+  src:  url('./community/icons.eot?fgd28d');
+  src:  url('./community/icons.eot?fgd28d#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?fgd28d') format('woff2'),
+  url('./community/icons.ttf?fgd28d') format('truetype'),
+  url('./community/icons.woff?fgd28d') format('woff'),
+  url('./community/icons.svg?fgd28d#community') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-google_circle:before {
+  content: "\e961";
+}
 .icon-CalendarIcon:before {
   content: "\e904";
 }
