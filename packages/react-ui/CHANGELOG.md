@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.214](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.213...@selfcommunity/react-ui@0.7.0-alpha.214) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix NavigationToolbar.tsx props ([906971c](https://github.com/selfcommunity/community-js/commit/906971c537320a5c49867ace8c7aef0d5a5f5675))
+
+
+
+
+
 # [0.7.0-alpha.213](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.212...@selfcommunity/react-ui@0.7.0-alpha.213) (2023-05-24)
 
 
