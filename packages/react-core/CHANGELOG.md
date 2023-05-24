@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.50...@selfcommunity/react-core@0.4.0-alpha.51) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix font icons ([2a7b91b](https://github.com/selfcommunity/community-js/commit/2a7b91b230708ddb38fa6f43148170e2ed957b2d))
+
+
+
+
+
 # [0.4.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.49...@selfcommunity/react-core@0.4.0-alpha.50) (2023-05-23)
 
 
