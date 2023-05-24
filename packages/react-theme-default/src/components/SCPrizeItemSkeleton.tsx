@@ -19,7 +19,8 @@ const Component = {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: theme.spacing(2)
+          marginTop: theme.spacing(2),
+          paddingBottom: theme.spacing(8)
         }
       },
       '& .MuiCardActions-root': {
