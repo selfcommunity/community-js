@@ -17,7 +17,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
-import NotificationMenu from './NotificationMenu';
+import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
 import ComposerIconButton from '../ComposerIconButton';
@@ -75,6 +75,19 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * Prop to customize some routes
    */
   action?: React.ReactNode;
+  /**
+   * Callback on open notification menu
+   */
+  onOpenNotificationMenu: () => void;
+  /**
+   * Callback on close notification menu
+   */
+  onCloseNotificationMenu: () => void;
+  /**
+   * Props to spread to the NotificationsMenu
+   * @default {}
+   */
+  NotificationMenuProps?: NotificationsMenuProps;
 }
 
 const PREFERENCES = [
@@ -130,6 +143,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     SearchAutocompleteProps = {},
     action = <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>,
     children = null,
+    NotificationMenuProps = {},
+    onOpenNotificationMenu,
+    onCloseNotificationMenu,
     ...rest
   } = props;
 
@@ -152,10 +168,12 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   // HANDLERS
   const handleOpenNotificationMenu = (event) => {
     setAnchorNotification(event.currentTarget);
+    onOpenNotificationMenu && onOpenNotificationMenu();
   };
 
   const handleCloseNotificationMenu = () => {
     setAnchorNotification(null);
+    onCloseNotificationMenu && onCloseNotificationMenu();
   };
 
   // RENDER
@@ -236,6 +254,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               onClick={handleCloseNotificationMenu}
               transformOrigin={{horizontal: 'right', vertical: 'top'}}
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+              {...NotificationMenuProps}
             />
           </>
           {privateMessagingEnabled && (

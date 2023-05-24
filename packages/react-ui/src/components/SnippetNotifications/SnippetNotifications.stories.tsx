@@ -25,6 +25,9 @@ Base.args = {
      * e.stopPropagation();
      * console.log(n);
      */
+  },
+  onFetchNotifications: (data) => {
+    console.log(data);
   }
 };
 
