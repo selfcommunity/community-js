@@ -154,7 +154,6 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
             }
           }
         );
-        console.log(error);
       });
   };
 

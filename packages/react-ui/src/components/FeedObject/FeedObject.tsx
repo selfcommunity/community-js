@@ -763,7 +763,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 </Box>
               )}
             </CardActions>
-            {template === SCFeedObjectTemplateType.PREVIEW && (
+            {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
               <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
                   <Activities

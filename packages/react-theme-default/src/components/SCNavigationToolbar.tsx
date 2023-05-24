@@ -14,14 +14,17 @@ const Component = {
         textAlign: 'center',
         alignSelf: 'end',
         '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
-          padding: theme.spacing(2, 1, 1, 1),
+          paddingTop: 12,
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
+          paddingBottom: 11,
           margin: theme.spacing(0, 1),
           color: theme.palette.primary.main,
           borderRadius: 0,
-          borderBottom: `1px solid transparent`,
+          borderBottom: `2px solid transparent`,
           '&.SCNavigationToolbar-active, &:hover': {
             color: theme.palette.secondary.main,
-            borderBottom: `1px solid ${theme.palette.secondary.main}`
+            borderBottom: `2px solid ${theme.palette.secondary.main}`
           }
         }
       },
@@ -44,14 +47,14 @@ const Component = {
         height: theme.selfcommunity.user.avatar.sizeMedium
       },
       '& .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(1),
+        paddingTop: 12,
+        paddingBottom: 11,
         borderRadius: 0,
-        borderBottom: `1px solid transparent`,
+        borderBottom: `2px solid transparent`,
         color: theme.palette.primary.main,
         '&.SCNavigationToolbar-active, &:hover': {
           color: theme.palette.secondary.main,
-          borderBottom: `1px solid ${theme.palette.secondary.main}`
+          borderBottom: `2px solid ${theme.palette.secondary.main}`
         }
       },
       '& .SCNavigationToolbar-settings': {
@@ -61,7 +64,6 @@ const Component = {
         padding: theme.spacing(0, 3),
         '& .SCNavigationToolbar-navigation': {
           '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
-            padding: theme.spacing(2, 2, 1, 2),
             margin: theme.spacing(0, 2)
           }
         },

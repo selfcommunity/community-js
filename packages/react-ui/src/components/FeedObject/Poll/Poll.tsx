@@ -40,10 +40,9 @@ const PREFIX = 'SCPollObject';
 
 const classes = {
   root: `${PREFIX}-root`,
-  poll: `${PREFIX}-poll`,
   voters: `${PREFIX}-voters`,
   votes: `${PREFIX}-votes`,
-  toggleButton: `${PREFIX}-toggleButton`,
+  toggleButton: `${PREFIX}-toggle-button`,
   title: `${PREFIX}-title`,
   expiration: `${PREFIX}-expiration`,
   closed: `${PREFIX}-closed`,
@@ -55,60 +54,7 @@ const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-  borderTop: `1px solid ${theme.palette.grey['A200']}`,
-  borderBottom: `1px solid ${theme.palette.grey['A200']}`,
-  boxShadow: 'none',
-  '& .MuiCardHeader-root': {
-    textAlign: 'center',
-    width: '100%',
-    maxHeight: '10px'
-  },
-  [`& .${classes.poll}`]: {
-    textAlign: 'center'
-  },
-  [`& .${classes.voters}`]: {
-    display: 'flex',
-    margin: theme.spacing(1),
-    alignItems: 'center',
-    justifyContent: 'center',
-    '& .MuiIcon-root': {
-      marginRight: '5px'
-    }
-  },
-  [`& .${classes.votes}`]: {
-    display: 'flex',
-    margin: theme.spacing(1),
-    alignItems: 'center',
-    justifyContent: 'center',
-    '& .MuiIcon-root': {
-      width: '1em',
-      marginRight: '5px'
-    }
-  },
-  [`& .${classes.toggleButton}`]: {
-    textTransform: 'uppercase'
-  },
-  [`& .${classes.expandIcon}`]: {
-    marginBottom: 2,
-    marginLeft: -2,
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  [`& .${classes.collapsedIcon}`]: {
-    transform: 'rotate(180deg)'
-  },
-  '& .MuiTypography-root': {
-    fontSize: '1rem'
-  },
-  [`& .${classes.title}, & .${classes.expiration}, & .${classes.closed}`]: {
-    marginBottom: theme.spacing(),
-    textAlign: 'center'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface PollObjectProps {
   /**

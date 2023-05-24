@@ -9,6 +9,7 @@ const PREFIX = 'SCBaseItemButton';
 
 const classes = {
   root: `${PREFIX}-root`,
+  withActions: `${PREFIX}-with-actions`,
   content: `${PREFIX}-content`,
   image: `${PREFIX}-image`,
   text: `${PREFIX}-text`,
@@ -136,7 +137,7 @@ export default function BaseItemButton(inProps: BaseItemButtonProps): JSX.Elemen
 
   // RENDER
   return (
-    <Root id={id} {...rest} className={classNames(classes.root, className)}>
+    <Root id={id} {...rest} className={classNames(classes.root, className, {[classes.withActions]: Boolean(actions)})}>
       <ButtonBase className={classes.content} {...ButtonBaseProps}>
         {image && <Box className={classes.image}>{image}</Box>}
         <Box className={classes.text}>

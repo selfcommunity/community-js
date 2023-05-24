@@ -42,9 +42,25 @@ const Component = {
         color: theme.palette.text.primary
       },
       '& .SCBaseItem-secondary': {
+        color: theme.palette.text.secondary
+      },
+      '& .SCBaseItem-primary, & .SCBaseItem-secondary': {
+        whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        color: theme.palette.text.secondary
+        display: 'block'
+      },
+      '&.SCBaseItem-with-actions': {
+        '& .SCBaseItem-text < *': {
+          maxWidth: `calc(100% - ${theme.spacing(14)})`
+        },
+        '& .SCBaseItem-actions': {
+          position: 'absolute',
+          right: theme.spacing(2),
+          top: '50%',
+          transform: 'translateY(-50%)',
+          maxWidth: theme.spacing(14)
+        }
       }
     })
   }

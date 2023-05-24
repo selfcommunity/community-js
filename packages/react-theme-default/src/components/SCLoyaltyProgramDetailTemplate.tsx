@@ -118,7 +118,6 @@ const Component = {
         fontWeight: theme.typography.fontWeightBold,
         textAlign: 'center',
         '& .MuiButtonBase-root': {
-          padding: 0,
           marginLeft: theme.spacing(1)
         }
       }

@@ -39,16 +39,25 @@ const Component = {
         color: theme.palette.text.primary
       },
       '& .SCBaseItemButton-secondary': {
+        color: theme.palette.text.secondary
+      },
+      '& .SCBaseItemButton-primary, & .SCBaseItemButton-secondary': {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        color: theme.palette.text.secondary
+        display: 'block'
       },
-      '& .SCBaseItemButton-actions': {
-        position: 'absolute',
-        right: theme.spacing(2),
-        top: '50%',
-        transform: 'translateY(-50%)'
+      '&.SCBaseItemButton-with-actions': {
+        '& .SCBaseItemButton-text > *': {
+          maxWidth: `calc(100% - ${theme.spacing(14)})`
+        },
+        '& .SCBaseItemButton-actions': {
+          position: 'absolute',
+          right: theme.spacing(2),
+          top: '50%',
+          transform: 'translateY(-50%)',
+          maxWidth: theme.spacing(14)
+        }
       }
     })
   }
