@@ -288,7 +288,9 @@ const theme = {
     },
     category: {
       icon: {
-        sizeMedium: 40
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
       }
     }
   }
