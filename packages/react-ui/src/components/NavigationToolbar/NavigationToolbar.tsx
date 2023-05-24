@@ -87,7 +87,7 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * Props to spread to the NotificationsMenu
    * @default {}
    */
-  NotificationMenuProps?: NotificationsMenuProps;
+  NotificationMenuProps?: Omit<NotificationsMenuProps, 'anchorEl' | 'open' | 'onClose' | 'onClick' | 'transformOrigin' | 'anchorOrigin'>;
 }
 
 const PREFERENCES = [
