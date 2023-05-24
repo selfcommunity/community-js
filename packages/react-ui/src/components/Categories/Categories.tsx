@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, TextField, Typography} from '@mui/material';
 import {CategoryService, Endpoints} from '@selfcommunity/api-services';
+import {AxiosRequestConfig} from 'axios';
 import {
   SCPreferences,
   SCPreferencesContext,
@@ -164,7 +165,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
    * Fetches categories list
    */
   const fetchCategories = async (next: string = Endpoints.CategoryList.url({})): Promise<[]> => {
-    const data: any = await CategoryService.getAllCategories({active: true}, {url: next});
+    const data: any = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchCategories(data.next)) : data.results;
   };
 
