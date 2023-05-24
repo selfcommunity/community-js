@@ -78,11 +78,11 @@ export interface NavigationToolbarProps extends ToolbarProps {
   /**
    * Callback on open notification menu
    */
-  onOpenNotificationMenu: () => void;
+  onOpenNotificationMenu?: () => void;
   /**
    * Callback on close notification menu
    */
-  onCloseNotificationMenu: () => void;
+  onCloseNotificationMenu?: () => void;
   /**
    * Props to spread to the NotificationsMenu
    * @default {}
