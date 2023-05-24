@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.159...@selfcommunity/react-theme-default@0.1.0-alpha.160) (2023-05-24)
+
+
+### Bug Fixes
+
+* suggestion widgets ([d173ab2](https://github.com/selfcommunity/community-js/commit/d173ab2b7b1042a066ed4f0fe1295541c6010bd7))
+
+
+
+
+
 # [0.1.0-alpha.159](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.158...@selfcommunity/react-theme-default@0.1.0-alpha.159) (2023-05-23)
 
 
