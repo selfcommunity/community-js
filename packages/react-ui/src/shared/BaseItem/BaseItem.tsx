@@ -9,6 +9,7 @@ const PREFIX = 'SCBaseItem';
 
 const classes = {
   root: `${PREFIX}-root`,
+  withActions: `${PREFIX}-with-actions`,
   content: `${PREFIX}-content`,
   image: `${PREFIX}-image`,
   text: `${PREFIX}-text`,
@@ -123,7 +124,7 @@ export default function BaseItem(inProps: BaseItemProps): JSX.Element {
 
   // RENDER
   return (
-    <Root id={id} {...rest} className={classNames(classes.root, className)}>
+    <Root id={id} {...rest} className={classNames(classes.root, className, {[classes.withActions]: Boolean(actions)})}>
       <Box className={classes.content}>
         {image && <Box className={classes.image}>{image}</Box>}
         <Box className={classes.text}>

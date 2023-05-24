@@ -1,35 +1,59 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+      borderTop: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
+      borderBottom: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
+      boxShadow: 'none',
       borderRadius: 0,
       '& .MuiButton-root': {
         '&:focus:not(:focus-visible)': {
-          backgroundColor: 'transparent',
-          borderWidth: '2px !important',
-          borderColor: theme.palette.primary.light
-        },
-        '&:hover': {
-          borderWidth: '2px !important'
+          borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
         }
       },
       '& .MuiCardHeader-root': {
-        maxHeight: 'none',
+        textAlign: 'center',
         padding: theme.spacing(2),
-        '& .SCPollObject-toggleButton': {
+        '& .SCPollObject-toggle-button': {
           fontSize: '0.875rem',
           textTransform: 'uppercase',
           '& .MuiButton-endIcon': {
             display: 'none'
+          },
+          '& .SCPollObject-expand-icon': {
+            marginBottom: 2,
+            marginLeft: -2,
+            transition: theme.transitions.create('transform', {
+              duration: theme.transitions.duration.shortest
+            })
+          },
+          '& .SCPollObject-collapsed-icon': {
+            transform: 'rotate(180deg)'
           }
         }
       },
       '& .SCPollObject-title': {
-        color: theme.palette.grey[600],
-        marginBottom: 10,
+        textAlign: 'center',
+        color: theme.palette.text.primary,
+        marginBottom: theme.spacing(1),
         fontWeight: theme.typography.fontWeightBold
       },
+      '& .SCPollObject-voters, & .SCPollObject-votes': {
+        display: 'flex',
+        margin: theme.spacing(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+        '& .MuiIcon-root': {
+          width: '1em',
+          marginRight: theme.spacing(1)
+        }
+      },
       '& .SCPollObject-expiration, & .SCPollObject-close, & .SCPollObject-voters': {
-        color: theme.palette.grey[600],
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
         marginBottom: theme.spacing(2.5),
         fontWeight: theme.typography.fontWeightLight,
         fontSize: '0.765rem'
@@ -41,7 +65,7 @@ const Component = {
       '& ul': {
         padding: theme.spacing(2.5),
         marginBottom: theme.spacing(2.5),
-        backgroundColor: theme.palette.grey[300],
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         borderRadius: theme.shape.borderRadius,
         '& li': {
           padding: 0,

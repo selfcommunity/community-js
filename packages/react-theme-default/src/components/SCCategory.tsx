@@ -10,13 +10,6 @@ const Component = {
           borderRadius: theme.spacing(1)
         }
       },
-      '& .SCBaseItemButton-primary, & .SCBaseItemButton-secondary': {
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        display: 'block',
-        width: '44%'
-      },
       '& .SCBaseItemButton-primary': {
         fontWeight: theme.typography.fontWeightBold
       },

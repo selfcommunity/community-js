@@ -246,6 +246,9 @@ const Component = {
         },
         '& .SCFeedObject-actions-section': {
           marginBottom: theme.spacing(1),
+          '&:last-of-type': {
+            marginBottom: 0
+          },
           '& .SCFeedObjectActions-root': {
             margin: 0,
             padding: theme.spacing(2, 2, 0, 2),

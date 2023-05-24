@@ -2,7 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing(2, 2, 4, 2),
+      padding: theme.spacing(2, 4, 4, 2),
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
       marginBottom: theme.spacing(1),
       '& .MuiListItemSecondaryAction-root': {
@@ -19,7 +19,6 @@ const Component = {
         minHeight: theme.spacing(6),
         display: 'flex',
         alignItems: 'center',
-        maxWidth: '90%',
         '& .MuiTypography-root': {
           fontSize: '1.143rem',
           whiteSpace: 'pre-line',

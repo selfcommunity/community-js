@@ -41,12 +41,8 @@ export default function PrizeItemSkeleton(): JSX.Element {
       </CardMedia>
       <CardContent>
         <Typography className={classes.content}>
-          <Skeleton animation="wave" variant="circular" width={60} height={30} />
           <Skeleton animation="wave" height={20} width="80%" variant="text" />
-          <Skeleton animation="wave" height={10} width="70%" variant="text" />
-          <Skeleton animation="wave" height={10} width="70%" variant="text" />
-          <Skeleton animation="wave" height={10} width="70%" variant="text" />
-          <Skeleton animation="wave" height={10} width="70%" variant="text" />
+          <Skeleton animation="wave" height={10} width="70%" variant="text" style={{marginTop: 8}} />
         </Typography>
       </CardContent>
       <CardActions className={classes.actions}>
