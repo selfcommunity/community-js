@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.212](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.211...@selfcommunity/react-ui@0.7.0-alpha.212) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix media link error ([788856c](https://github.com/selfcommunity/community-js/commit/788856c20502aa8c5c7da6dacb7d2b6fc1d25198))
+* NotificationMenu ([bf33e32](https://github.com/selfcommunity/community-js/commit/bf33e32b8713946d53395c0eaeed2a936808159f))
+* suggestion widgets ([d173ab2](https://github.com/selfcommunity/community-js/commit/d173ab2b7b1042a066ed4f0fe1295541c6010bd7))
+
+
+
+
+
 # [0.7.0-alpha.211](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.210...@selfcommunity/react-ui@0.7.0-alpha.211) (2023-05-23)
 
 
