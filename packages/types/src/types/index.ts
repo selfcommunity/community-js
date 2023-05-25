@@ -109,6 +109,7 @@ import {SCPlatformType} from './platform';
 import {SCAvatarType} from './avatar';
 import {SCReactionType} from './reaction';
 import {SCSuggestionType, SuggestionType} from './suggestion';
+import {SCConnectionStatus} from './friendship';
 /**
  * Exports all types
  */
@@ -246,5 +247,6 @@ export {
   SCAvatarType,
   SCReactionType,
   SCSuggestionType,
-  SuggestionType
+  SuggestionType,
+  SCConnectionStatus
 };

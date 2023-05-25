@@ -327,6 +327,16 @@ export interface SCConnectionsManagerType {
   requestConnection?: (user: SCUserType) => Promise<any>;
 
   /**
+   * Handle cancel request connection
+   */
+  cancelRequestConnection?: (user: SCUserType) => Promise<any>;
+
+  /**
+   * Handle remove connection
+   */
+  removeConnection?: (user: SCUserType) => Promise<any>;
+
+  /**
    * Handle accept connection
    */
   acceptConnection?: (user: SCUserType) => Promise<any>;

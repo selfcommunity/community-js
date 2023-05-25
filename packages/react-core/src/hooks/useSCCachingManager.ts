@@ -1,4 +1,4 @@
-import {useMemo, useRef, useState} from 'react';
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  :::info
@@ -39,6 +39,7 @@ export default function useSCCachingManager() {
   const emptyCache = useMemo(
     () => (): void => {
       cache.current = [];
+      loadingCache.current = [];
     },
     [cache]
   );
@@ -52,9 +53,10 @@ export default function useSCCachingManager() {
   const isLoading = useMemo(
     () =>
       (obj: {id: number}): boolean => {
+        console.log('isLoading', loadingCache, loadingCache.current.includes(obj.id));
         return loadingCache.current.includes(obj.id);
       },
-    [loading]
+    [loading, loadingCache]
   );
 
   const setLoading = useMemo(
@@ -62,6 +64,7 @@ export default function useSCCachingManager() {
       (id: number): void => {
         loadingCache.current = loadingCache.current.includes(id) ? loadingCache.current : [...loadingCache.current, ...[id]];
         setDataLoading((prev) => (prev.includes(id) ? prev : [...prev, ...[id]]));
+        console.log('loadingCache: ', loadingCache.current);
       },
     [loadingCache, loading]
   );

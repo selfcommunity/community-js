@@ -134,7 +134,8 @@ import {
   SCAvatarType,
   SCReactionType,
   SCSuggestionType,
-  SuggestionType
+  SuggestionType,
+  SCConnectionStatus
 } from './types';
 
 /**
@@ -273,5 +274,6 @@ export {
   SCAvatarType,
   SCReactionType,
   SCSuggestionType,
-  SuggestionType
+  SuggestionType,
+  SCConnectionStatus
 };

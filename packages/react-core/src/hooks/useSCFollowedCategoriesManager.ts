@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import { useEffect, useMemo } from "react";
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
@@ -146,6 +146,15 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
       },
     [data, loading, cache, authUserId]
   );
+
+  /**
+   * Empty cache on logout
+   */
+  useEffect(() => {
+    if (!authUserId) {
+      emptyCache();
+    }
+  }, [authUserId]);
 
   if (!user) {
     return {categories: data, loading, isLoading};

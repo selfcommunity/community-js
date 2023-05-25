@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCUserType} from '@selfcommunity/types';
@@ -60,8 +60,8 @@ export default function useSCFollowedManager(user?: SCUserType) {
             updateCache(Object.keys(res.data.connection_statuses).map((id) => parseInt(id)));
             setData(
               Object.entries(res.data.connection_statuses)
-                .filter(([k, v]) => v === STATUS_FOLLOWED)
-                .map(([k, v]) => parseInt(k))
+                .filter(([, v]) => v === STATUS_FOLLOWED)
+                .map(([k]) => parseInt(k))
             );
             return Promise.resolve(res.data);
           })
@@ -129,12 +129,13 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * Bypass remote check if the user is followed
    */
   const getConnectionStatus = useMemo(
-    () => (user: SCUserType) => {
-      const isFollowed = user.connection_status === STATUS_FOLLOWED;
-      updateCache([user.id]);
-      setData((prev) => (isFollowed ? [...prev, ...[user.id]] : prev));
-      return isFollowed;
-    },
+    () =>
+      (user: SCUserType): boolean => {
+        const isFollowed = user.connection_status === STATUS_FOLLOWED;
+        updateCache([user.id]);
+        setData((prev) => (isFollowed ? [...prev, ...[user.id]] : prev));
+        return isFollowed;
+      },
     [data, cache]
   );
 
@@ -143,24 +144,31 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * If user is already in cache -> check if the user is in followed,
    * otherwise, check if auth user follow the user
    */
-  const isFollowed = useMemo(
-    () =>
-      (user: SCUserType): boolean => {
-        if (cache.includes(user.id)) {
-          return Boolean(data.includes(user.id));
+  const isFollowed = useMemo(() => {
+    return (user: SCUserType): boolean => {
+      if (cache.includes(user.id)) {
+        return Boolean(data.includes(user.id));
+      }
+      if (authUserId) {
+        if ('connection_status' in user) {
+          return getConnectionStatus(user);
         }
-        if (authUserId) {
-          if ('connection_status' in user) {
-            return getConnectionStatus(user);
-          }
-          if (!isLoading(user)) {
-            checkIsUserFollowed(user);
-          }
+        if (!isLoading(user)) {
+          checkIsUserFollowed(user);
         }
-        return false;
-      },
-    [data, loading, cache, authUserId]
-  );
+      }
+      return false;
+    };
+  }, [data, loading, cache, authUserId]);
+
+  /**
+   * Empty cache on logout
+   */
+  useEffect(() => {
+    if (!authUserId) {
+      emptyCache();
+    }
+  }, [authUserId]);
 
   if (!followEnabled || !user) {
     return {followed: data, loading, isLoading};

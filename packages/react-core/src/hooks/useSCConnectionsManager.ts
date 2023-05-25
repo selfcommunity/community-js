@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useRef} from 'react';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse, EndpointType} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
@@ -9,16 +9,8 @@ import {CONFIGURATIONS_FOLLOW_ENABLED} from '../constants/Preferences';
 import useSCCachingManager from './useSCCachingManager';
 import PubSub from 'pubsub-js';
 import {SCNotificationMapping} from '../constants/Notification';
-
-/**
- * Used on refresh and in status method
- * Check if the user status is 'connected', 'sent_connection_request'
- * 'received_connection_request', to update the cache and data
- */
-const STATUS_CONNECTED = 'connected';
-const STATUS_DISCONNECTED = 'disconnected';
-const STATUS_CONNECTION_REQUEST_SENT = 'sent_connection_request';
-const STATUS_CONNECTION_REQUEST_RECEIVED = 'received_connection_request';
+import {SCConnectionStatus} from '@selfcommunity/types';
+import { useDeepCompareEffectNoCheck } from "use-deep-compare-effect";
 
 /**
  :::info
@@ -38,48 +30,73 @@ const STATUS_CONNECTION_REQUEST_RECEIVED = 'received_connection_request';
 export default function useSCConnectionsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const authUserId = user ? user.id : null;
   const connectionsDisabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
   const notificationConnAcceptSubscription = useRef(null);
   const notificationConnRequestSubscription = useRef(null);
   const notificationConnRemoveSubscription = useRef(null);
+  const notificationConnRequestCancelSubscription = useRef(null);
 
   /**
    * Notification subscriber only for FOLLOW
    * @param msg
    * @param data
    */
-  const notificationSubscriber = (msg, data) => {
-    if (data.connection && data.connection_id !== undefined) {
-      updateCache([data.data.connection.id]);
+  const notificationSubscriber = (msg, dataMsg) => {
+    if (dataMsg.data.connection !== undefined) {
       let _data = [];
-      if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REQUEST) {
-        _data = data.map(([k, v]) => ({
-          k: k === data.data.connection_id ? STATUS_CONNECTION_REQUEST_SENT : v,
-        }));
-      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-        _data = data.map(([k, v]) => ({
-          k: k === data.data.connection_id ? STATUS_CONNECTED : v,
-        }));
-      } else if (SCNotificationMapping[data.data.activity_type] === SCNotificationTypologyType.CONNECTION_REMOVE) {
-        _data = data.map(([k, v]) => ({
-          k: k === data.data.connection_id ? STATUS_DISCONNECTED : v,
-        }));
+      if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_REQUEST) {
+        updateCache([dataMsg.data.request_user.id]);
+        _data = data.map((k) => {
+          if (parseInt(Object.keys(k)[0]) === dataMsg.data.request_user.id) {
+            return {[Object.keys(k)[0]]: SCConnectionStatus.CONNECTION_REQUEST_RECEIVED};
+          }
+          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+        });
+      } else if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_CANCEL_REQUEST) {
+        updateCache([dataMsg.data.cancel_request_user.id]);
+        _data = data.map((k) => {
+          if (parseInt(Object.keys(k)[0]) === dataMsg.data.cancel_request_user.id) {
+            return {[Object.keys(k)[0]]: null};
+          }
+          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+        });
+      } else if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_ACCEPT) {
+        updateCache([dataMsg.data.accept_user.id]);
+        _data = data.map((k) => {
+          if (parseInt(Object.keys(k)[0]) === dataMsg.data.accept_user.id) {
+            return {[Object.keys(k)[0]]: SCConnectionStatus.CONNECTED};
+          }
+          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+        });
+      } else if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_REMOVE) {
+        updateCache([dataMsg.data.remove_user.id]);
+        _data = data.map((k) => {
+          if (parseInt(Object.keys(k)[0]) === dataMsg.data.remove_user.id) {
+            return {[Object.keys(k)[0]]: null};
+          }
+          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+        });
       }
-      setData(_data);
+      setData([..._data]);
     }
   };
 
   /**
    * Subscribe to notification types user_follow, user_unfollow
    */
-  useEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     notificationConnAcceptSubscription.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.CONNECTION_ACCEPT}`,
       notificationSubscriber
     );
     notificationConnRequestSubscription.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.CONNECTION_REQUEST}`,
+      notificationSubscriber
+    );
+    notificationConnRequestCancelSubscription.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.CONNECTION_CANCEL_REQUEST}`,
       notificationSubscriber
     );
     notificationConnRemoveSubscription.current = PubSub.subscribe(
@@ -89,9 +106,10 @@ export default function useSCConnectionsManager(user?: SCUserType) {
     return () => {
       PubSub.unsubscribe(notificationConnAcceptSubscription.current);
       PubSub.unsubscribe(notificationConnRequestSubscription.current);
+      PubSub.unsubscribe(notificationConnRequestCancelSubscription.current);
       PubSub.unsubscribe(notificationConnRemoveSubscription.current);
     };
-  }, []);
+  }, [data]);
 
   /**
    * Memoized refresh all connections
@@ -102,7 +120,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   const refresh = useMemo(
     () => (): void => {
       emptyCache();
-      if (user && cache.length > 0) {
+      if (authUserId && cache.length > 0) {
         // Only if user is authenticated
         http
           .request({
@@ -115,11 +133,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
               return Promise.reject(res);
             }
             updateCache(Object.keys(res.data.connection_statuses).map((id) => parseInt(id)));
-            setData(
-              Object.entries(res.data.connection_statuses)
-                .filter(([k, v]) => v !== null)
-                .map(([k, v]) => ({[parseInt(k)]: v}))
-            );
+            setData(Object.keys(res.data.connection_statuses).map((k) => ({[k]: res.data.connection_statuses[k]})));
             return Promise.resolve(res.data);
           })
           .catch((e) => {
@@ -128,32 +142,31 @@ export default function useSCConnectionsManager(user?: SCUserType) {
           });
       }
     },
-    [data, user, cache]
+    [data, authUserId, cache]
   );
 
   /**
    * Memoized Request connection
    */
-  const requestConnection = useMemo(
+  const handleRequest = useMemo(
     () =>
-      (user: SCUserType): Promise<any> => {
+      (user: SCUserType, endpoint: EndpointType): Promise<any> => {
         setLoading(user.id);
-        if (getCurrentStatus(user) === STATUS_CONNECTION_REQUEST_RECEIVED) {
-          return acceptConnection(user);
-        }
         return http
           .request({
-            url: Endpoints.UserRequestConnection.url({id: user.id}),
-            method: Endpoints.UserRequestConnection.method,
+            url: endpoint.url({id: user.id}),
+            method: endpoint.method,
           })
-          .then((res: HttpResponse<any>) => {
+          .then((res: HttpResponse<{connection_status: string}>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
             updateCache([user.id]);
-            const _data = data.map(([k, v]) => ({
-              k: k === user.id ? STATUS_CONNECTION_REQUEST_SENT : v,
-            }));
+            const _data = data.map((k) => {
+              if (parseInt(Object.keys(k)[0]) === user.id) {
+                return {[Object.keys(k)[0]]: res.data.connection_status};
+              }
+            });
             setData(_data);
             setUnLoading(user.id);
             return Promise.resolve(res.data);
@@ -163,43 +176,57 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   );
 
   /**
+   * Memoized Request connection
+   */
+  const requestConnection = useMemo(
+    () =>
+      (user: SCUserType): Promise<any> => {
+        return handleRequest(user, Endpoints.UserRequestConnection);
+      },
+    [handleRequest]
+  );
+
+  /**
+   * Memoized cancel request connection
+   */
+  const cancelRequestConnection = useMemo(
+    () =>
+      (user: SCUserType): Promise<any> => {
+        return handleRequest(user, Endpoints.UserCancelRequestConnection);
+      },
+    [handleRequest]
+  );
+
+  /**
+   * Memoized Remove connection
+   */
+  const removeConnection = useMemo(
+    () =>
+      (user: SCUserType): Promise<any> => {
+        return handleRequest(user, Endpoints.UserRemoveConnection);
+      },
+    [handleRequest]
+  );
+
+  /**
    * Memoized Accept Request connection
    */
   const acceptConnection = useMemo(
     () =>
       (user: SCUserType): Promise<any> => {
-        setLoading(user.id);
-        if (getCurrentStatus(user) === STATUS_CONNECTION_REQUEST_RECEIVED) {
-          return http
-            .request({
-              url: Endpoints.UserAcceptRequestConnection.url({id: user.id}),
-              method: Endpoints.UserAcceptRequestConnection.method,
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([user.id]);
-              const _data = data.map(([k, v]) => ({
-                k: k === user.id ? STATUS_CONNECTED : v,
-              }));
-              setData(_data);
-              setUnLoading(user.id);
-              return Promise.resolve(res.data);
-            });
-        }
+        return handleRequest(user, Endpoints.UserAcceptRequestConnection);
       },
-    [data, loading, cache]
+    [handleRequest]
   );
 
   /**
-   * Return current user status if exist,
+   * Return current user status if exists,
    * otherwise return null
    */
-  const getCurrentStatus = useMemo(
+  const getCurrentUserCacheStatus = useMemo(
     () =>
       (user: SCUserType): string => {
-        const d = data.filter(([id, v]) => id === user.id);
+        const d = data.filter((k) => parseInt(Object.keys(k)[0]) === user.id);
         return d.length ? d[0][user.id] : null;
       },
     [data]
@@ -215,41 +242,78 @@ export default function useSCConnectionsManager(user?: SCUserType) {
     setLoading(user.id);
     http
       .request({
-        url: Endpoints.UserCheckConnection.url({id: user.id}),
-        method: Endpoints.UserCheckConnection.method,
+        url: Endpoints.UserCheckConnectionStatus.url({id: user.id}),
+        method: Endpoints.UserCheckConnectionStatus.method,
       })
       .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
+        const e = {[user.id]: res.data.connection_status};
+        setData((prev) => [...prev, ...[e]]);
         updateCache([user.id]);
-        setData((prev) => (res.data.is_connection ? [...prev, ...[{[user.id]: STATUS_CONNECTED}]] : prev.filter(([id, v]) => id !== user.id)));
         setUnLoading(user.id);
         return Promise.resolve(res.data);
       });
   };
 
   /**
+   * Bypass remote check if the user is followed
+   */
+  const getConnectionStatus = useMemo(
+    () => (user: SCUserType) => {
+      updateCache([user.id]);
+      setData((prev) => [...prev, ...[{[user.id]: user.connection_status}]]);
+      return user.connection_status;
+    },
+    [data, cache]
+  );
+
+  /**
    * Memoized status
    * If user is already in cache -> check data user statuses,
    * otherwise, check if auth user is connected with user
    */
-  const status = useMemo(
-    () =>
-      (user: SCUserType): string => {
-        if (cache.includes(user.id)) {
-          return data.filter((k, v) => k === user.id)[0][user.id];
-        }
-        if (!loading.includes(user.id)) {
-          checkUserConnectionStatus(user);
-        }
-        return null;
-      },
-    [data, loading, cache]
-  );
+  const status = (user: SCUserType): string => {
+    if (cache.includes(user.id)) {
+      const _d = data.filter((k) => parseInt(Object.keys(k)[0]) === user.id);
+      if (_d.length) {
+        return _d[0][user.id];
+      }
+    }
+    if (authUserId) {
+      if ('connection_status' in user) {
+        return getConnectionStatus(user);
+      }
+      if (!isLoading(user)) {
+        checkUserConnectionStatus(user);
+      }
+    }
+    return null;
+  };
+
+  /**
+   * Empty cache on logout
+   */
+  useEffect(() => {
+    if (!authUserId) {
+      emptyCache();
+    }
+  }, [authUserId]);
 
   if (connectionsDisabled || !user) {
     return {connections: data, loading, isLoading};
   }
-  return {connections: data, loading, isLoading, status, requestConnection, acceptConnection, refresh, emptyCache};
+  return {
+    connections: data,
+    loading,
+    isLoading,
+    status,
+    requestConnection,
+    cancelRequestConnection,
+    acceptConnection,
+    removeConnection,
+    refresh,
+    emptyCache,
+  };
 }

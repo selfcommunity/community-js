@@ -414,6 +414,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/is_connection/'),
     method: 'GET'
   },
+  UserCheckConnectionStatus: {
+    url: urlReplacer('/api/v2/user/$(id)/connection_status/'),
+    method: 'GET'
+  },
   UserConnectionRequests: {
     url: urlReplacer('/api/v2/user/$(id)/connection/requests/'),
     method: 'GET'

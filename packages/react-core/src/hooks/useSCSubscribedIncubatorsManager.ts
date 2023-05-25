@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import { useEffect, useMemo } from "react";
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
@@ -144,6 +144,15 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
       },
     [data, loading, cache, authUserId]
   );
+
+  /**
+   * Empty cache on logout
+   */
+  useEffect(() => {
+    if (!authUserId) {
+      emptyCache();
+    }
+  }, [authUserId]);
 
   if (!user) {
     return {incubators: data, loading, isLoading};

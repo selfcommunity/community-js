@@ -257,6 +257,11 @@
   "ui.followUserButton.follow": "Follow",
   "ui.followUserButton.unfollow": "Unfollow",
 
+  "ui.friendshipUserButton.acceptConnection": "Accept request",
+  "ui.friendshipUserButton.requestConnection": "Connect",
+  "ui.friendshipUserButton.removeConnection": "Remove connection",
+  "ui.friendshipUserButton.cancelConnectionRequest": "Cancel request",
+
   "ui.user.userFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",
 
   "ui.userInfo.username": "Username",

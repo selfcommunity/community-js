@@ -1,11 +1,25 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCContextType, SCUserContext, SCUserContextType, useSCContext, useSCFetchUser} from '@selfcommunity/react-core';
-import {SCUserType} from '@selfcommunity/types';
+import {
+  SCConnectionsManagerType,
+  SCContextType,
+  SCFollowedManagerType,
+  SCUserContext,
+  SCUserContextType,
+  UserUtils,
+  useSCContext,
+  useSCFetchUser
+} from '@selfcommunity/react-core';
+import {SCConnectionStatus, SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import {useSnackbar} from 'notistack';
+import {FormattedMessage} from 'react-intl';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {LoadingButton} from '@mui/lab';
 
 const PREFIX = 'SCFriendshipUserButton';
 
@@ -13,20 +27,11 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Button, {
+const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  border: '0px',
-  color: 'black',
-  borderRadius: 20,
-  backgroundColor: '#e2e2e2',
-  paddingTop: '4px',
-  paddingRight: '16px',
-  paddingBottom: '4px',
-  paddingLeft: '16px'
-}));
+})(({theme}) => ({}));
 
 export interface FriendshipButtonProps {
   /**
@@ -88,75 +93,78 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className, userId, user, connected, ...rest} = props;
-
-  // STATE
-  const [status, setStatus] = useState<any>(connected ? 'Remove' : 'Connect');
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const {className, userId, user, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scConnectionsManager: SCConnectionsManagerType = scUserContext.managers.connections;
+  const {enqueueSnackbar} = useSnackbar();
 
-  function updateStatus(status) {
-    if (status === 'Connect') {
-      setStatus('Remove');
-    } else {
-      setStatus('Connect');
-    }
-  }
+  // STATE
+  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const [status, setStatus] = useState<string>(null);
 
-  function requestConnection() {
-    updateStatus(status);
-    http
-      .request({
-        url: Endpoints.RequestConnection.url({id: user.id}),
-        method: Endpoints.RequestConnection.method
-      })
-      .then((res: HttpResponse<any>) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  function cancelConnectionRequest() {
-    console.log('connection');
-    http
-      .request({
-        url: Endpoints.CancelConnectionRequest.url({id: user.id}),
-        method: Endpoints.CancelConnectionRequest.method
-      })
-      .then((res: HttpResponse<any>) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function removeConnection() {
-    http
-      .request({
-        url: Endpoints.RemoveConnection.url({id: user.id}),
-        method: Endpoints.RemoveConnection.method
-      })
-      .then((res: HttpResponse<any>) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function handleConnectionStatus() {
+  /**
+   * Handle actions
+   */
+  const handleConnectionStatus = (): void => {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
+    } else if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning',
+        autoHideDuration: 3000
+      });
     } else {
-      connected ? removeConnection() : requestConnection();
+      if (status === SCConnectionStatus.CONNECTED) {
+        scConnectionsManager.removeConnection(scUser);
+      } else if (status === SCConnectionStatus.CONNECTION_REQUEST_SENT) {
+        scConnectionsManager.cancelRequestConnection(scUser);
+      } else if (status === SCConnectionStatus.CONNECTION_REQUEST_RECEIVED) {
+        scConnectionsManager.acceptConnection(scUser);
+      } else if (status === null) {
+        scConnectionsManager.requestConnection(scUser);
+      }
     }
-  }
+  };
+
+  /**
+   * Get current translated status
+   */
+  const getStatus = () => {
+    let _status;
+    switch (status) {
+      case SCConnectionStatus.CONNECTED:
+        _status = <FormattedMessage defaultMessage="ui.friendshipUserButton.removeConnection" id="ui.friendshipUserButton.removeConnection" />;
+        break;
+      case SCConnectionStatus.CONNECTION_REQUEST_SENT:
+        _status = (
+          <FormattedMessage defaultMessage="ui.friendshipUserButton.cancelConnectionRequest" id="ui.friendshipUserButton.cancelConnectionRequest" />
+        );
+        break;
+      case SCConnectionStatus.CONNECTION_REQUEST_RECEIVED:
+        _status = <FormattedMessage defaultMessage="ui.friendshipUserButton.acceptConnection" id="ui.friendshipUserButton.acceptConnection" />;
+        break;
+      default:
+        _status = <FormattedMessage defaultMessage="ui.friendshipUserButton.requestConnection" id="ui.friendshipUserButton.requestConnection" />;
+        break;
+    }
+    return _status;
+  };
+
+  useEffect(() => {
+    /**
+     * Call scConnectionsManager.isFollowed inside an effect
+     * to avoid warning rendering child during update parent state
+     */
+    if (authUserId && authUserId !== scUser.id) {
+      setStatus(scConnectionsManager.status(scUser));
+    }
+  }, [authUserId, scConnectionsManager.status]);
 
   // same user
   if (scUserContext.user && scUserContext.user.id === scUser.id) {
@@ -164,8 +172,14 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   }
 
   return (
-    <Root size="small" variant="outlined" onClick={() => handleConnectionStatus()} className={classNames(classes.root, className)}>
-      {status}
+    <Root
+      size="small"
+      variant="outlined"
+      loading={scUserContext.user ? scConnectionsManager.isLoading(scUser) : null}
+      onClick={handleConnectionStatus}
+      className={classNames(classes.root, className)}
+      {...rest}>
+      {getStatus()}
     </Root>
   );
 }
