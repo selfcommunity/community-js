@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.165](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.164...@selfcommunity/react-theme-default@0.1.0-alpha.165) (2023-05-26)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([8d59b09](https://github.com/selfcommunity/community-js/commit/8d59b09d0f8cb67d5a20b70abf9e6700ee24f82b))
+
+
+
+
+
 # [0.1.0-alpha.164](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.163...@selfcommunity/react-theme-default@0.1.0-alpha.164) (2023-05-26)
 
 
