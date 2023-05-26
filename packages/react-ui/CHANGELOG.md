@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.216](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.215...@selfcommunity/react-ui@0.7.0-alpha.216) (2023-05-26)
+
+
+### Bug Fixes
+
+* category autoFollow ([28593fe](https://github.com/selfcommunity/community-js/commit/28593fe435e9f2340fd03c297cacf53b6008a3c4))
+* friendship ([1837ffc](https://github.com/selfcommunity/community-js/commit/1837ffceae25065c4ba9d39e3bf62f3d732a5eba))
+
+
+
+
+
 # [0.7.0-alpha.215](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.214...@selfcommunity/react-ui@0.7.0-alpha.215) (2023-05-24)
 
 

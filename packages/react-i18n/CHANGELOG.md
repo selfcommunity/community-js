@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.22...@selfcommunity/react-i18n@0.5.0-alpha.23) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([1837ffc](https://github.com/selfcommunity/community-js/commit/1837ffceae25065c4ba9d39e3bf62f3d732a5eba))
+
+
+
+
+
 # [0.5.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.21...@selfcommunity/react-i18n@0.5.0-alpha.22) (2023-05-24)
 
 
