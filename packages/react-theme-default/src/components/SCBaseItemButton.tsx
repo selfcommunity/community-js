@@ -56,7 +56,7 @@ const Component = {
           right: theme.spacing(2),
           top: '50%',
           transform: 'translateY(-50%)',
-          maxWidth: theme.spacing(17)
+          maxWidth: theme.spacing(19)
         }
       }
     })
