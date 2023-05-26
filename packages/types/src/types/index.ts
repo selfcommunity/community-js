@@ -26,7 +26,7 @@ import {
   SCUserProviderAssociationType
 } from './user';
 import {SCTagType} from './tag';
-import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType} from './category';
+import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType, SCCategoryAutoFollowType} from './category';
 import {SCEmbedType} from './embed';
 import {SCChunkMediaType, SCMediaType} from './media';
 import {SCMetadataTypeFieldType, SCMetadataType} from './metadata';
@@ -143,6 +143,7 @@ export {
   SCMetadataType,
   SCTagType,
   SCCategoryType,
+  SCCategoryAutoFollowType,
   SCCategoryAudienceType,
   SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
