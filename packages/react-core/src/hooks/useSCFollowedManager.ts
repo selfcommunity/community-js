@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferencesContextType} from '../types';
 import {SCUserType} from '@selfcommunity/types';
@@ -30,7 +30,7 @@ const STATUS_FOLLOWED = 'followed';
  :::
  */
 export default function useSCFollowedManager(user?: SCUserType) {
-  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const authUserId = user ? user.id : null;
   const followEnabled =
@@ -60,8 +60,8 @@ export default function useSCFollowedManager(user?: SCUserType) {
             updateCache(Object.keys(res.data.connection_statuses).map((id) => parseInt(id)));
             setData(
               Object.entries(res.data.connection_statuses)
-                .filter(([k, v]) => v === STATUS_FOLLOWED)
-                .map(([k, v]) => parseInt(k))
+                .filter(([, v]) => v === STATUS_FOLLOWED)
+                .map(([k]) => parseInt(k))
             );
             return Promise.resolve(res.data);
           })
@@ -81,7 +81,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
   const follow = useMemo(
     () =>
       (user: SCUserType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[user.id]]);
+        setLoading(user.id);
         return http
           .request({
             url: Endpoints.FollowUser.url({id: user.id}),
@@ -94,7 +94,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
             updateCache([user.id]);
             const isFollowed = data.includes(user.id);
             setData((prev) => (isFollowed ? prev.filter((id) => id !== user.id) : [...[user.id], ...prev]));
-            setLoading((prev) => prev.filter((u) => u !== user.id));
+            setUnLoading(user.id);
             return Promise.resolve(res.data);
           });
       },
@@ -108,7 +108,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * @param user
    */
   const checkIsUserFollowed = (user: SCUserType): void => {
-    setLoading((prev) => (prev.includes(user.id) ? prev : [...prev, ...[user.id]]));
+    setLoading(user.id);
     http
       .request({
         url: Endpoints.CheckUserFollowed.url({id: user.id}),
@@ -120,7 +120,7 @@ export default function useSCFollowedManager(user?: SCUserType) {
         }
         updateCache([user.id]);
         setData((prev) => (res.data.is_followed ? [...prev, ...[user.id]] : prev.filter((id) => id !== user.id)));
-        setLoading((prev) => prev.filter((u) => u !== user.id));
+        setUnLoading(user.id);
         return Promise.resolve(res.data);
       });
   };
@@ -129,12 +129,13 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * Bypass remote check if the user is followed
    */
   const getConnectionStatus = useMemo(
-    () => (user: SCUserType) => {
-      const isFollowed = user.connection_status === STATUS_FOLLOWED;
-      updateCache([user.id]);
-      setData((prev) => (isFollowed ? [...prev, ...[user.id]] : prev));
-      return isFollowed;
-    },
+    () =>
+      (user: SCUserType): boolean => {
+        const isFollowed = user.connection_status === STATUS_FOLLOWED;
+        updateCache([user.id]);
+        setData((prev) => (isFollowed ? [...prev, ...[user.id]] : prev));
+        return isFollowed;
+      },
     [data, cache]
   );
 
@@ -143,24 +144,31 @@ export default function useSCFollowedManager(user?: SCUserType) {
    * If user is already in cache -> check if the user is in followed,
    * otherwise, check if auth user follow the user
    */
-  const isFollowed = useMemo(
-    () =>
-      (user: SCUserType): boolean => {
-        if (cache.includes(user.id)) {
-          return Boolean(data.includes(user.id));
+  const isFollowed = useMemo(() => {
+    return (user: SCUserType): boolean => {
+      if (cache.includes(user.id)) {
+        return Boolean(data.includes(user.id));
+      }
+      if (authUserId) {
+        if ('connection_status' in user) {
+          return getConnectionStatus(user);
         }
-        if (authUserId) {
-          if ('connection_status' in user) {
-            return getConnectionStatus(user);
-          }
-          if (!loading.includes(user.id)) {
-            checkIsUserFollowed(user);
-          }
+        if (!isLoading(user)) {
+          checkIsUserFollowed(user);
         }
-        return false;
-      },
-    [data, loading, cache, authUserId]
-  );
+      }
+      return false;
+    };
+  }, [data, loading, cache, authUserId]);
+
+  /**
+   * Empty cache on logout
+   */
+  useEffect(() => {
+    if (!authUserId) {
+      emptyCache();
+    }
+  }, [authUserId]);
 
   if (!followEnabled || !user) {
     return {followed: data, loading, isLoading};

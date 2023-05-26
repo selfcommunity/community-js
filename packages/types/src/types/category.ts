@@ -134,3 +134,9 @@ export interface SCCategoryAudienceType {
 export interface SCCategoryFollowedStatusType {
   is_followed: boolean;
 }
+
+export enum SCCategoryAutoFollowType {
+  NONE = 'none',
+  DEFAULT = 'default',
+  FORCED = 'forced'
+}

@@ -14,10 +14,7 @@ const Component = {
           paddingTop: 0,
           paddingBottom: 0,
           paddingLeft: 0,
-          paddingRight: 0,
-          '& .SCBaseItem-actions': {
-            right: 0
-          }
+          paddingRight: 0
         }
       },
       '& .SCBaseItem-content': {
@@ -55,10 +52,8 @@ const Component = {
           maxWidth: `calc(100% - ${theme.spacing(14)})`
         },
         '& .SCBaseItem-actions': {
-          position: 'absolute',
-          right: theme.spacing(2),
+          right: theme.spacing(3),
           top: '50%',
-          transform: 'translateY(-50%)',
           maxWidth: theme.spacing(14)
         }
       }

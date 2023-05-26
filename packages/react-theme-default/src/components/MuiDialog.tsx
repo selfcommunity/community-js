@@ -4,6 +4,9 @@ const Component = {
       '& .MuiDialog-paperFullScreen': {
         display: 'inline-flex',
         flexDirection: 'column'
+      },
+      '& .MuiDialog-paperScrollBody': {
+        overflowY: 'hidden'
       }
     }
   }

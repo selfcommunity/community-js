@@ -37,6 +37,7 @@ import {
   SCCategoryType,
   SCCategoryAudienceType,
   SCCategoryFollowedStatusType,
+  SCCategoryAutoFollowType,
   SCEmbedType,
   SCMediaType,
   SCChunkMediaType,
@@ -134,7 +135,8 @@ import {
   SCAvatarType,
   SCReactionType,
   SCSuggestionType,
-  SuggestionType
+  SuggestionType,
+  SCConnectionStatus
 } from './types';
 
 /**
@@ -176,6 +178,7 @@ export {
   SCCategoryType,
   SCCategoryAudienceType,
   SCCategoryFollowedStatusType,
+  SCCategoryAutoFollowType,
   SCEmbedType,
   SCMediaType,
   SCChunkMediaType,
@@ -273,5 +276,6 @@ export {
   SCAvatarType,
   SCReactionType,
   SCSuggestionType,
-  SuggestionType
+  SuggestionType,
+  SCConnectionStatus
 };

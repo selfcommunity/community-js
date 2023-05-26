@@ -15,6 +15,7 @@ import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import {SCCategoryAutoFollowType} from '@selfcommunity/types';
 
 const PREFIX = 'SCFollowCategoryButton';
 
@@ -134,12 +135,16 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     }
   };
 
+  if (!scCategory || (scCategory && followed && scCategory.auto_follow === SCCategoryAutoFollowType.FORCED)) {
+    return null;
+  }
+
   return (
     <FollowButton
       size="small"
       variant="outlined"
       onClick={handleFollowAction}
-      loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
+      loading={scUserContext.user === undefined || followed === null || scCategoriesManager.isLoading(scCategory)}
       className={classNames(classes.root, className)}
       {...rest}>
       {followed && scUserContext.user ? (

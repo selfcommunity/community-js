@@ -26,7 +26,7 @@ import {
   SCUserProviderAssociationType
 } from './user';
 import {SCTagType} from './tag';
-import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType} from './category';
+import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType, SCCategoryAutoFollowType} from './category';
 import {SCEmbedType} from './embed';
 import {SCChunkMediaType, SCMediaType} from './media';
 import {SCMetadataTypeFieldType, SCMetadataType} from './metadata';
@@ -109,6 +109,7 @@ import {SCPlatformType} from './platform';
 import {SCAvatarType} from './avatar';
 import {SCReactionType} from './reaction';
 import {SCSuggestionType, SuggestionType} from './suggestion';
+import {SCConnectionStatus} from './friendship';
 /**
  * Exports all types
  */
@@ -142,6 +143,7 @@ export {
   SCMetadataType,
   SCTagType,
   SCCategoryType,
+  SCCategoryAutoFollowType,
   SCCategoryAudienceType,
   SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
@@ -246,5 +248,6 @@ export {
   SCAvatarType,
   SCReactionType,
   SCSuggestionType,
-  SuggestionType
+  SuggestionType,
+  SCConnectionStatus
 };

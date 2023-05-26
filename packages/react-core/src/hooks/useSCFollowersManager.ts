@@ -23,7 +23,7 @@ import {SCNotificationMapping} from '../constants/Notification';
  :::
  */
 export default function useSCFollowersManager(user?: SCUserType) {
-  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const followEnabled =
     CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences && scPreferencesContext.preferences[CONFIGURATIONS_FOLLOW_ENABLED].value;
@@ -73,7 +73,7 @@ export default function useSCFollowersManager(user?: SCUserType) {
    * @param user
    */
   const checkIsUserFollowers = (user: SCUserType): void => {
-    setLoading((prev) => (prev.includes(user.id) ? prev : [...prev, ...[user.id]]));
+    setLoading(user.id);
     http
       .request({
         url: Endpoints.CheckUserFollower.url({id: user.id}),
@@ -85,7 +85,7 @@ export default function useSCFollowersManager(user?: SCUserType) {
         }
         updateCache([user.id]);
         setData((prev) => (res.data.is_follower ? [...prev, ...[user.id]] : prev.filter((id) => id !== user.id)));
-        setLoading((prev) => prev.filter((u) => u !== user.id));
+        setUnLoading(user.id);
         return Promise.resolve(res.data);
       });
   };
@@ -101,7 +101,7 @@ export default function useSCFollowersManager(user?: SCUserType) {
         if (cache.includes(user.id)) {
           return Boolean(data.includes(user.id));
         }
-        if (!loading.includes(user.id)) {
+        if (!isLoading(user)) {
           checkIsUserFollowers(user);
         }
         return false;

@@ -266,6 +266,11 @@
   "ui.followUserButton.follow": "Segui",
   "ui.followUserButton.unfollow": "Non seguire",
 
+  "ui.friendshipUserButton.acceptConnection": "Accetta connessione",
+  "ui.friendshipUserButton.requestConnection": "Connettiti",
+  "ui.friendshipUserButton.removeConnection": "Rimuovi connessione",
+  "ui.friendshipUserButton.cancelConnectionRequest": "Cancella richiesta",
+
   "ui.userInfo.username": "Username",
   "ui.userInfo.realName": "Nome reale",
   "ui.userInfo.dateOfBirth": "Data di nascita",
