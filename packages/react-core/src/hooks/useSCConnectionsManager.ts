@@ -10,7 +10,7 @@ import useSCCachingManager from './useSCCachingManager';
 import PubSub from 'pubsub-js';
 import {SCNotificationMapping} from '../constants/Notification';
 import {SCConnectionStatus} from '@selfcommunity/types';
-import { useDeepCompareEffectNoCheck } from "use-deep-compare-effect";
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 /**
  :::info
@@ -39,46 +39,35 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   const notificationConnRequestCancelSubscription = useRef(null);
 
   /**
-   * Notification subscriber only for FOLLOW
+   * Notification subscriber handler
    * @param msg
    * @param data
    */
   const notificationSubscriber = (msg, dataMsg) => {
     if (dataMsg.data.connection !== undefined) {
       let _data = [];
-      if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_REQUEST) {
-        updateCache([dataMsg.data.request_user.id]);
-        _data = data.map((k) => {
-          if (parseInt(Object.keys(k)[0]) === dataMsg.data.request_user.id) {
-            return {[Object.keys(k)[0]]: SCConnectionStatus.CONNECTION_REQUEST_RECEIVED};
-          }
-          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
-        });
-      } else if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_CANCEL_REQUEST) {
-        updateCache([dataMsg.data.cancel_request_user.id]);
-        _data = data.map((k) => {
-          if (parseInt(Object.keys(k)[0]) === dataMsg.data.cancel_request_user.id) {
-            return {[Object.keys(k)[0]]: null};
-          }
-          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
-        });
-      } else if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_ACCEPT) {
-        updateCache([dataMsg.data.accept_user.id]);
-        _data = data.map((k) => {
-          if (parseInt(Object.keys(k)[0]) === dataMsg.data.accept_user.id) {
-            return {[Object.keys(k)[0]]: SCConnectionStatus.CONNECTED};
-          }
-          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
-        });
-      } else if (SCNotificationMapping[dataMsg.data.activity_type] === SCNotificationTypologyType.CONNECTION_REMOVE) {
-        updateCache([dataMsg.data.remove_user.id]);
-        _data = data.map((k) => {
-          if (parseInt(Object.keys(k)[0]) === dataMsg.data.remove_user.id) {
-            return {[Object.keys(k)[0]]: null};
-          }
-          return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
-        });
+      let _upd: {user: string; state: string};
+      switch (SCNotificationMapping[dataMsg.data.activity_type]) {
+        case SCNotificationTypologyType.CONNECTION_REQUEST:
+          _upd = {user: 'request_user', state: SCConnectionStatus.CONNECTION_REQUEST_RECEIVED};
+          break;
+        case SCNotificationTypologyType.CONNECTION_CANCEL_REQUEST:
+          _upd = {user: 'cancel_request_user', state: null};
+          break;
+        case SCNotificationTypologyType.CONNECTION_ACCEPT:
+          _upd = {user: 'accept_user', state: SCConnectionStatus.CONNECTED};
+          break;
+        case SCNotificationTypologyType.CONNECTION_REMOVE:
+          _upd = {user: 'remove_user', state: null};
+          break;
       }
+      updateCache([dataMsg.data[_upd.user].id]);
+      _data = data.map((k) => {
+        if (parseInt(Object.keys(k)[0]) === dataMsg.data[_upd.user].id) {
+          return {[Object.keys(k)[0]]: _upd.state};
+        }
+        return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+      });
       setData([..._data]);
     }
   };
