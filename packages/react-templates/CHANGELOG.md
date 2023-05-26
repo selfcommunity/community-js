@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.208](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.207...@selfcommunity/react-templates@0.3.0-alpha.208) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([33406f3](https://github.com/selfcommunity/community-js/commit/33406f31e721a8fa06ea855d956f75b5cbe4f96d))
+* friendship ([e305f03](https://github.com/selfcommunity/community-js/commit/e305f0313473f0dfddfcd9a4aee5d5fab20f916d))
+
+
+
+
+
 # [0.3.0-alpha.207](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.206...@selfcommunity/react-templates@0.3.0-alpha.207) (2023-05-26)
 
 

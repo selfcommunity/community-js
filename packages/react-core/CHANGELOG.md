@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.54...@selfcommunity/react-core@0.4.0-alpha.55) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([7caae56](https://github.com/selfcommunity/community-js/commit/7caae56625404511ae997ba564c4b83aa0848b3f))
+
+
+
+
+
 # [0.4.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.53...@selfcommunity/react-core@0.4.0-alpha.54) (2023-05-26)
 
 
