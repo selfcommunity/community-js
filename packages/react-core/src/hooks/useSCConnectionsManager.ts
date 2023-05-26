@@ -249,11 +249,11 @@ export default function useSCConnectionsManager(user?: SCUserType) {
     if (_index < 0) {
       _data = [...data, ...[{[userId]: connectionStatus}]];
     } else {
-      _data = data.map((k) => {
+      _data = data.map((k, i) => {
         if (parseInt(Object.keys(k)[0]) === userId) {
           return {[Object.keys(k)[0]]: connectionStatus};
         }
-        return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+        return {[Object.keys(k)[0]]: data[i][Object.keys(k)[0]]};
       });
     }
     return _data;
