@@ -45,7 +45,6 @@ export default function useSCConnectionsManager(user?: SCUserType) {
    */
   const notificationSubscriber = (msg, dataMsg) => {
     if (dataMsg.data.connection !== undefined) {
-      let _data = [];
       let _upd: {user: string; state: string};
       switch (SCNotificationMapping[dataMsg.data.activity_type]) {
         case SCNotificationTypologyType.CONNECTION_REQUEST:
@@ -62,13 +61,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
           break;
       }
       updateCache([dataMsg.data[_upd.user].id]);
-      _data = data.map((k) => {
-        if (parseInt(Object.keys(k)[0]) === dataMsg.data[_upd.user].id) {
-          return {[Object.keys(k)[0]]: _upd.state};
-        }
-        return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
-      });
-      setData([..._data]);
+      setData((prev) => getDataUpdated(prev, dataMsg.data[_upd.user].id, _upd.state));
     }
   };
 
@@ -151,14 +144,13 @@ export default function useSCConnectionsManager(user?: SCUserType) {
               return Promise.reject(res);
             }
             updateCache([user.id]);
-            const _data = data.map((k) => {
-              if (parseInt(Object.keys(k)[0]) === user.id) {
-                return {[Object.keys(k)[0]]: res.data.connection_status};
-              }
-            });
-            setData(_data);
+            setData((prev) => getDataUpdated(prev, user.id, res.data.connection_status));
             setUnLoading(user.id);
             return Promise.resolve(res.data);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_CORE, error);
+            return checkUserConnectionStatus(user);
           });
       },
     [data, loading, cache]
@@ -227,9 +219,9 @@ export default function useSCConnectionsManager(user?: SCUserType) {
    * Update user statuses
    * @param user
    */
-  const checkUserConnectionStatus = (user: SCUserType): void => {
+  const checkUserConnectionStatus = (user: SCUserType): Promise<any> => {
     setLoading(user.id);
-    http
+    return http
       .request({
         url: Endpoints.UserCheckConnectionStatus.url({id: user.id}),
         method: Endpoints.UserCheckConnectionStatus.method,
@@ -238,12 +230,33 @@ export default function useSCConnectionsManager(user?: SCUserType) {
         if (res.status >= 300) {
           return Promise.reject(res);
         }
-        const e = {[user.id]: res.data.connection_status};
-        setData((prev) => [...prev, ...[e]]);
+        setData((prev) => getDataUpdated(prev, user.id, res.data.connection_status));
         updateCache([user.id]);
         setUnLoading(user.id);
         return Promise.resolve(res.data);
       });
+  };
+
+  /**
+   * Get updated data
+   * @param data
+   * @param userId
+   * @param connectionStatus
+   */
+  const getDataUpdated = (data, userId, connectionStatus) => {
+    const _index = data.findIndex((k) => parseInt(Object.keys(k)[0]) === userId);
+    let _data;
+    if (_index < 0) {
+      _data = [...data, ...[{[userId]: connectionStatus}]];
+    } else {
+      _data = data.map((k) => {
+        if (parseInt(Object.keys(k)[0]) === userId) {
+          return {[Object.keys(k)[0]]: connectionStatus};
+        }
+        return {[Object.keys(k)[0]]: data[Object.keys(k)[0]]};
+      });
+    }
+    return _data;
   };
 
   /**
@@ -252,7 +265,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
   const getConnectionStatus = useMemo(
     () => (user: SCUserType) => {
       updateCache([user.id]);
-      setData((prev) => [...prev, ...[{[user.id]: user.connection_status}]]);
+      setData((prev) => getDataUpdated(prev, user.id, user.connection_status));
       return user.connection_status;
     },
     [data, cache]
@@ -265,10 +278,7 @@ export default function useSCConnectionsManager(user?: SCUserType) {
    */
   const status = (user: SCUserType): string => {
     if (cache.includes(user.id)) {
-      const _d = data.filter((k) => parseInt(Object.keys(k)[0]) === user.id);
-      if (_d.length) {
-        return _d[0][user.id];
-      }
+      return getCurrentUserCacheStatus(user);
     }
     if (authUserId) {
       if ('connection_status' in user) {

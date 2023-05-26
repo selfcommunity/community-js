@@ -1,25 +1,20 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCConnectionStatus, SCUserType} from '@selfcommunity/types';
+import classNames from 'classnames';
+import {useThemeProps} from '@mui/system';
+import {useSnackbar} from 'notistack';
+import {FormattedMessage} from 'react-intl';
+import {LoadingButton} from '@mui/lab';
 import {
   SCConnectionsManagerType,
   SCContextType,
-  SCFollowedManagerType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/react-core';
-import {SCConnectionStatus, SCUserType} from '@selfcommunity/types';
-import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-import {useSnackbar} from 'notistack';
-import {FormattedMessage} from 'react-intl';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {LoadingButton} from '@mui/lab';
 
 const PREFIX = 'SCFriendshipUserButton';
 
@@ -31,7 +26,7 @@ const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface FriendshipButtonProps {
   /**
@@ -102,7 +97,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   const {enqueueSnackbar} = useSnackbar();
 
   // STATE
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const {scUser} = useSCFetchUser({id: userId, user});
   const [status, setStatus] = useState<string>(null);
 
   // CONST
@@ -135,7 +130,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   /**
    * Get current translated status
    */
-  const getStatus = () => {
+  const getStatus = (): void => {
     let _status;
     switch (status) {
       case SCConnectionStatus.CONNECTED:
@@ -162,7 +157,8 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
      * to avoid warning rendering child during update parent state
      */
     if (authUserId && authUserId !== scUser.id) {
-      setStatus(scConnectionsManager.status(scUser));
+      const _status = scConnectionsManager.status(scUser);
+      setStatus(_status);
     }
   }, [authUserId, scConnectionsManager.status]);
 
