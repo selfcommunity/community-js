@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.205](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.204...@selfcommunity/react-templates@0.3.0-alpha.205) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.204](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.203...@selfcommunity/react-templates@0.3.0-alpha.204) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.203](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.202...@selfcommunity/react-templates@0.3.0-alpha.203) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix styles ([872f62a](https://github.com/selfcommunity/community-js/commit/872f62a10403caf9c66513dad087398abc76539f))
+* fixed loyalty prize item skeleton ([ae68262](https://github.com/selfcommunity/community-js/commit/ae6826210fefb7a831e03fdaa690f39542d0f166))
+
+
+
+
+
 # [0.3.0-alpha.202](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.201...@selfcommunity/react-templates@0.3.0-alpha.202) (2023-05-24)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

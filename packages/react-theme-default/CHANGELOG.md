@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.163](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.162...@selfcommunity/react-theme-default@0.1.0-alpha.163) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.162](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.161...@selfcommunity/react-theme-default@0.1.0-alpha.162) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.161](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.160...@selfcommunity/react-theme-default@0.1.0-alpha.161) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix font icons ([2a7b91b](https://github.com/selfcommunity/community-js/commit/2a7b91b230708ddb38fa6f43148170e2ed957b2d))
+* Fix font icons ([2d81e30](https://github.com/selfcommunity/community-js/commit/2d81e3084606a8401e4f79470f3a8391b9b2e79a))
+* Fix styles ([872f62a](https://github.com/selfcommunity/community-js/commit/872f62a10403caf9c66513dad087398abc76539f))
+* fixed loyalty prize item skeleton ([ae68262](https://github.com/selfcommunity/community-js/commit/ae6826210fefb7a831e03fdaa690f39542d0f166))
+
+
+
+
+
 # [0.1.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.159...@selfcommunity/react-theme-default@0.1.0-alpha.160) (2023-05-24)
 
 
