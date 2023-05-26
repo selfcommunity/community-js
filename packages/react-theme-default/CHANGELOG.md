@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.164](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.163...@selfcommunity/react-theme-default@0.1.0-alpha.164) (2023-05-26)
+
+
+### Bug Fixes
+
+* Fix icon font ([632dce7](https://github.com/selfcommunity/community-js/commit/632dce7b7e33bc7d7668980999e5f90e2444182d))
+* friendship ([1837ffc](https://github.com/selfcommunity/community-js/commit/1837ffceae25065c4ba9d39e3bf62f3d732a5eba))
+* MuiDialog style ([9b90819](https://github.com/selfcommunity/community-js/commit/9b90819e78885b64cbf99214ccb85fa8308e8abb))
+* SCBaseItem ([7cb874b](https://github.com/selfcommunity/community-js/commit/7cb874ba4d56562019a00325ab07f92d26d8c0de))
+
+
+
+
+
 # [0.1.0-alpha.163](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.162...@selfcommunity/react-theme-default@0.1.0-alpha.163) (2023-05-24)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.52...@selfcommunity/react-core@0.4.0-alpha.53) (2023-05-26)
+
+
+### Bug Fixes
+
+* caching ([4649b64](https://github.com/selfcommunity/community-js/commit/4649b64786fbec2a741ccc93bb50ee7c5081eb74))
+* friendship ([0ed44d9](https://github.com/selfcommunity/community-js/commit/0ed44d99ea460ee21dc37482a1468cb825ef6319))
+* friendship ([1837ffc](https://github.com/selfcommunity/community-js/commit/1837ffceae25065c4ba9d39e3bf62f3d732a5eba))
+* optimize caching ([b9f870b](https://github.com/selfcommunity/community-js/commit/b9f870b852a6024b6489afef93927a8e035ece42))
+
+
+
+
+
 # [0.4.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.51...@selfcommunity/react-core@0.4.0-alpha.52) (2023-05-24)
 
 **Note:** Version bump only for package @selfcommunity/react-core
