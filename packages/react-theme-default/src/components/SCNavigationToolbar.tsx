@@ -48,7 +48,7 @@ const Component = {
       },
       '& .SCNavigationToolbar-notification, & .SCNavigationToolbar-messages': {
         paddingTop: 12,
-        paddingBottom: 11,
+        paddingBottom: 9,
         borderRadius: 0,
         borderBottom: `2px solid transparent`,
         color: theme.palette.primary.main,
