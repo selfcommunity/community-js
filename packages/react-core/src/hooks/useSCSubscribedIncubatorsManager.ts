@@ -136,7 +136,7 @@ export default function useSCSubscribedIncubatorsManager(user?: SCUserType) {
           if ('subscribed' in incubator) {
             return getSubscriptionStatus(incubator);
           }
-          if (!isLoading(incubator['id'])) {
+          if (!isLoading(incubator)) {
             checkIsIncubatorFollowed(incubator);
           }
         }
