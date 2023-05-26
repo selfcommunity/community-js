@@ -52,8 +52,11 @@ export default function useSCCachingManager() {
    */
   const isLoading = useMemo(
     () =>
-      (obj: {id: number}): boolean => {
-        return loadingCache.current.includes(obj.id);
+      (v: {id: number} | number): boolean => {
+        if (typeof v === 'number') {
+          return loadingCache.current.includes(v);
+        }
+        return loadingCache.current.includes(v.id);
       },
     [loading, loadingCache]
   );
