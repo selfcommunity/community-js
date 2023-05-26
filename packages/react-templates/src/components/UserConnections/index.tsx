@@ -1,8 +1,8 @@
 import React from 'react';
-import UserFeedSkeleton from './Skeleton';
+import UserConnectionsSkeleton from './Skeleton';
 
-import UserFeed, {UserFeedProps} from './UserFeed';
+import UserConnections, {UserConnectionsProps} from './UserConnections';
 
-export default UserFeed;
+export default UserConnections;
 
-export {UserFeedProps, UserFeedSkeleton};
+export {UserConnectionsProps, UserConnectionsSkeleton};

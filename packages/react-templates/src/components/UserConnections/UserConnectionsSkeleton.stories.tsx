@@ -4,7 +4,7 @@ import UserConnectionsSkeleton from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React TEMPLATES/Skeleton/User Connections Feed',
+  title: 'Design System/React TEMPLATES/Skeleton/User Connections',
   component: UserConnectionsSkeleton
 } as ComponentMeta<typeof UserConnectionsSkeleton>;
 
