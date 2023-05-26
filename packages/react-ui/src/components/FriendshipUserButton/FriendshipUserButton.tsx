@@ -130,7 +130,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   /**
    * Get current translated status
    */
-  const getStatus = (): void => {
+  const getStatus = (): JSX.Element => {
     let _status;
     switch (status) {
       case SCConnectionStatus.CONNECTED:
