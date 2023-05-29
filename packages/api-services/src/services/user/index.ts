@@ -66,16 +66,8 @@ export interface UserApiClientInterface {
   checkUserFollower(id: number | string, config?: AxiosRequestConfig): Promise<SCUserFollowerStatusType>;
   getUserConnections(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   checkUserConnections(id: number | string, config?: AxiosRequestConfig): Promise<SCUserConnectionStatusType>;
-  getUserConnectionRequests(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
-  getUserRequestConnectionsSent(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
+  getUserConnectionRequests(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
+  getUserRequestConnectionsSent(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>>;
   userAcceptRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   userRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   userRemoveConnection(id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -400,12 +392,8 @@ export class UserApiClient {
    * @param id
    * @param config
    */
-  static getUserConnectionRequests(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
-    return apiRequest({...config, url: Endpoints.UserConnectionRequests.url({id}), method: Endpoints.UserConnectionRequests.method, params});
+  static getUserConnectionRequests(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
+    return apiRequest({...config, url: Endpoints.UserConnectionRequests.url(), method: Endpoints.UserConnectionRequests.method, params});
   }
 
   /**
@@ -414,11 +402,10 @@ export class UserApiClient {
    * @param config
    */
   static getUserRequestConnectionsSent(
-    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
-    return apiRequest({...config, url: Endpoints.UserRequestConnectionsSent.url({id}), method: Endpoints.UserRequestConnectionsSent.method, params});
+    return apiRequest({...config, url: Endpoints.UserRequestConnectionsSent.url(), method: Endpoints.UserRequestConnectionsSent.method, params});
   }
 
   /**
@@ -766,18 +753,16 @@ export default class UserService {
     return UserApiClient.checkUserConnections(id, config);
   }
   static async getUserConnectionRequests(
-    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
-    return UserApiClient.getUserConnectionRequests(id, params, config);
+    return UserApiClient.getUserConnectionRequests(params, config);
   }
   static async getUserRequestConnectionsSent(
-    id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
-    return UserApiClient.getUserRequestConnectionsSent(id, params, config);
+    return UserApiClient.getUserRequestConnectionsSent(params, config);
   }
   static async userAcceptRequestConnection(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.userAcceptRequestConnection(id, config);

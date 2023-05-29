@@ -53,11 +53,6 @@ const DialogRoot = styled(BaseDialog, {
 
 export interface UserConnectionsRequestsWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
-   * The user id
-   * @default null
-   */
-  userId: number;
-  /**
    * Hides this component
    * @default false
    */
@@ -92,7 +87,7 @@ export interface UserConnectionsRequestsWidgetProps extends VirtualScrollerItemP
 
 /**
  > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
- > This component renders the list of connections requests of the given user
+ > This component renders the list of connections requests of the authenticated user
 
  #### Import
 
@@ -124,7 +119,6 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
     name: PREFIX
   });
   const {
-    userId,
     autoHide = false,
     limit = 3,
     className,
@@ -133,8 +127,13 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
     onHeightChange,
     onStateChange,
     DialogProps = {},
+    userId,
     ...rest
   } = props;
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [state, dispatch] = useReducer(
@@ -142,17 +141,13 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY, 3),
       cacheStrategy,
       visibleItems: limit
     },
     stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-
-  // CONTEXT
-  const scUserContext: SCUserContextType = useSCUser();
-  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
 
   // MEMO
   const contentAvailability = useMemo(
@@ -180,7 +175,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserConnectionRequests(userId, {limit})
+        UserService.getUserConnectionRequests({limit})
           .then((payload: SCPaginatedResponse<SCUserConnectionRequestType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
@@ -190,29 +185,24 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
           });
       }
     },
-    [state.isLoadingNext, state.initialized, userId, limit, dispatch]
+    [state.isLoadingNext, state.initialized, limit, dispatch]
   );
 
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (
-      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      !followEnabled &&
-      isInteger(userId) &&
-      scUserContext.user !== undefined
-    ) {
+    if (scUserContext.user && !followEnabled) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, contentAvailability, userId]);
+  }, [scUserContext.user, contentAvailability]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserConnectionRequests(userId, {offset: limit, limit: 10})
+      UserService.getUserConnectionRequests({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserConnectionRequestType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
@@ -231,12 +221,12 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (followEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, userId, contentAvailability]);
+  }, [scUserContext.user, contentAvailability]);
 
   // HANDLERS
   const handleNext = useMemo(
@@ -259,7 +249,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
   };
 
   // RENDER
-  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user)) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

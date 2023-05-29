@@ -419,11 +419,11 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   UserConnectionRequests: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/requests/'),
+    url: urlReplacer('/api/v2/user/connection/requests/'),
     method: 'GET'
   },
   UserRequestConnectionsSent: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/requests_sent/'),
+    url: urlReplacer('/api/v2/user/connection/requests_sent/'),
     method: 'GET'
   },
   UserAcceptRequestConnection: {
