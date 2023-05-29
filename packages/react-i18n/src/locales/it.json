@@ -337,6 +337,24 @@
   "ui.userFollowersWidget.button.showAll": "Vedi di più",
   "ui.userFollowersWidget.noMoreResults": "Nient'altro da mostrare",
 
+  "ui.userConnectionsWidget.title": "{total, plural, =0 {# connessioni} one {# connessione} other {# connesssioni}}",
+  "ui.userConnectionsWidget.modal.title": "Connesioni",
+  "ui.userConnectionsWidget.subtitle.noResults": "Nessun risultato",
+  "ui.userConnectionsWidget.button.showAll": "Vedi di più",
+  "ui.userConnectionsWidget.noMoreResults": "Nient'altro da mostrare",
+
+  "ui.userConnectionsRequestsWidget.title": "{total, plural, =0 {# richieste di connessione} one {# richiesta di connessione} other {# richieste di connesssione}}",
+  "ui.userConnectionsRequestsWidget.modal.title": "Richieste di connesione",
+  "ui.userConnectionsRequestsWidget.subtitle.noResults": "Nessun risultato",
+  "ui.userConnectionsRequestsWidget.button.showAll": "Vedi di più",
+  "ui.userConnectionsRequestsWidget.noMoreResults": "Nient'altro da mostrare",
+
+  "ui.userConnectionsRequestsSentWidget.title": "{total, plural, =0 {# richieste di connessione inviate} one {# richiesta di connessione inviata} other {# richieste di connesssione inviate}}",
+  "ui.userConnectionsRequestsSentWidget.modal.title": "Richieste di connesione inviate",
+  "ui.userConnectionsRequestsSentWidget.subtitle.noResults": "Nessun risultato",
+  "ui.userConnectionsRequestsSentWidget.button.showAll": "Vedi di più",
+  "ui.userConnectionsRequestsSentWidget.noMoreResults": "Nient'altro da mostrare",
+
   "ui.categoryFollowersButton.dialogTitle": "Followers ({total})",
   "ui.categoryFollowersButton.noOtherFollowers": "Non ci sono altri followers.",
 

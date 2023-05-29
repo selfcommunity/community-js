@@ -15,6 +15,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Skeleton from './Skeleton';
 import User, {UserProps, UserSkeleton} from '../User';
 import {FormattedMessage} from 'react-intl';
@@ -25,10 +26,9 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCUserFollowedUsersWidget';
+const PREFIX = 'SCUserConnectionsWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -43,15 +43,15 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({}));
+})(({theme}) => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(() => ({}));
+})(({theme}) => ({}));
 
-export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
+export interface UserConnectionsWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
    * The user id
    * @default null
@@ -79,7 +79,7 @@ export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, 
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to followed users dialog
+   * Props to spread to followers users dialog
    * @default {}
    */
   DialogProps?: BaseDialogProps;
@@ -91,36 +91,35 @@ export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, 
 }
 
 /**
- *
- > API documentation for the Community-JS User Followed Users Widget component. Learn about the available props and the CSS API.
- > This component renders the list of the users that the given user follows.
- *
+ > API documentation for the Community-JS User Connections Widget component. Learn about the available props and the CSS API.
+ > This component renders the list of connections of the given user
+
  #### Import
 
  ```jsx
- import {UserFollowedUsersWidget} from '@selfcommunity/react-ui';
+ import {UserConnectionsWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCUserFollowedUsersWidget` can be used when providing style overrides in the theme.
+ The name `SCUserConnectionsWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserFollowedUsersWidget-root|Styles applied to the root element.|
- |title|.SCUserFollowedUsersWidget-title|Styles applied to the title element.|
- |noResults|.SCUserFollowedUsersWidget-no-results|Styles applied to no results section.|
- |followedItem|.SCUserFollowedUsersWidget-followed-item|Styles applied to the followed item element.|
- |showMore|.SCUserFollowedUsersWidget-show-more|Styles applied to show more button element.|
+ |root|.SCUserConnectionsWidget-root|Styles applied to the root element.|
+ |title|.SCUserConnectionsWidget-title|Styles applied to the title element.|
+ |noResults|.SCUserConnectionsWidget-no-results|Styles applied to no results section.|
+ |connectionsItem|.SCUserConnectionsWidget-connections-item|Styles applied to connection item element.|
+ |showMore|.SCUserConnectionsWidget-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
-export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidgetProps): JSX.Element {
+export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProps): JSX.Element {
   // PROPS
-  const props: UserFollowedUsersWidgetProps = useThemeProps({
+  const props: UserConnectionsWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -143,7 +142,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -181,7 +180,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserFollowings(userId, {limit})
+        UserService.getUserConnections(userId, {limit})
           .then((payload: SCPaginatedResponse<SCUserType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
@@ -199,7 +198,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     let _t;
     if (
       (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      followEnabled &&
+      !followEnabled &&
       isInteger(userId) &&
       scUserContext.user !== undefined
     ) {
@@ -208,12 +207,12 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, contentAvailability, userId]);
+  }, [scUserContext.user, scUserContext.loading, contentAvailability, userId]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserFollowings(userId, {offset: limit, limit: 10})
+      UserService.getUserConnections(userId, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
@@ -232,7 +231,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || !followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!isInteger(userId) || followEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
@@ -246,13 +245,10 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
       http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowings.method
+          method: Endpoints.UserConnections.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
@@ -263,7 +259,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   };
 
   // RENDER
-  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -272,11 +268,11 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userFollowedUsersWidget.title" defaultMessage="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+        <FormattedMessage id="ui.userConnectionsWidget.title" defaultMessage="ui.userConnectionsWidget.title" values={{total: state.count}} />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.userFollowedUsersWidget.subtitle.noResults" defaultMessage="" />
+          <FormattedMessage id="ui.userConnectionsWidget.subtitle.noResults" defaultMessage="" />
         </Typography>
       ) : (
         <React.Fragment>
@@ -289,7 +285,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
           </List>
           {state.count > state.visibleItems && (
             <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.userFollowedUsersWidget.button.showAll" defaultMessage="ui.userFollowedUsersWidget.button.showAll" />
+              <FormattedMessage id="ui.userConnectionsWidget.button.showAll" defaultMessage="ui.userConnectionsWidget.button.showAll" />
             </Button>
           )}
         </React.Fragment>
@@ -298,7 +294,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
         <DialogRoot
           className={classes.dialogRoot}
           title={
-            <FormattedMessage defaultMessage="ui.userFollowedUsersWidget.title" id="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+            <FormattedMessage defaultMessage="ui.userConnectionsWidget.title" id="ui.userConnectionsWidget.title" values={{total: state.count}} />
           }
           onClose={handleToggleDialogOpen}
           open={openDialog}
@@ -311,7 +307,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
             height={isMobile ? '100%' : 400}
             endMessage={
               <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.userFollowedUsersWidget.noMoreResults" defaultMessage="ui.userFollowedUsersWidget.noMoreResults" />
+                <FormattedMessage id="ui.userConnectionsWidget.noMoreResults" defaultMessage="ui.userConnectionsWidget.noMoreResults" />
               </Typography>
             }>
             <List>

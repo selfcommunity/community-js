@@ -1,13 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
 import {
   Link,
+  SCConnectionsManagerType,
   SCFollowersManagerType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
+  useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
 import {SCNotificationPrivateMessageType} from '@selfcommunity/types';
@@ -126,7 +130,24 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const followEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
+  const manager: SCFollowersManagerType | SCConnectionsManagerType = followEnabled
+    ? scUserContext.managers.followers
+    : scUserContext.managers.connections;
+  function checkFollowerOrConnection(user) {
+    if ('isFollower' in manager) {
+      return manager.isFollower(user);
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    return manager.status(user);
+  }
   const [follower, setFollower] = useState<boolean>(null);
 
   // CONST
@@ -142,7 +163,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
      * to avoid warning rendering child during update parent state
      */
     if (scUserContext.user && scUserContext.user.id !== notificationObject.message.sender.id) {
-      setFollower(scFollowersManager.isFollower(notificationObject.message.sender));
+      setFollower(checkFollowerOrConnection(notificationObject.message.sender));
     }
   });
 
@@ -241,7 +262,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
             size="small"
             classes={{root: classes.replyButton}}
             component={Link}
-            loading={scUserContext.user ? follower === null || scFollowersManager.isLoading(notificationObject.message.sender) : null}
+            loading={scUserContext.user ? follower === null || manager.isLoading(notificationObject.message.sender) : null}
             to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
             {scUserContext.user && follower ? (
               <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />

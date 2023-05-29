@@ -329,6 +329,24 @@
   "ui.userFollowersWidget.button.showAll": "Show All",
   "ui.userFollowersWidget.noMoreResults": "No more results",
 
+  "ui.userConnectionsWidget.title": "{total, plural, =0 {# connections} one {# connection} other {# connections}}",
+  "ui.userConnectionsWidget.modal.title": "Connections",
+  "ui.userConnectionsWidget.subtitle.noResults": "Nothing to show",
+  "ui.userConnectionsWidget.button.showAll": "Show All",
+  "ui.userConnectionsWidget.noMoreResults": "No more results",
+
+  "ui.userConnectionsRequestsWidget.title": "{total, plural, =0 {# connections requests} one {# connection request} other {# connections requests}}",
+  "ui.userConnectionsRequestsWidget.modal.title": "Connections Requests",
+  "ui.userConnectionsRequestsWidget.subtitle.noResults": "Nothing to show",
+  "ui.userConnectionsRequestsWidget.button.showAll": "Show All",
+  "ui.userConnectionsRequestsWidget.noMoreResults": "No more results",
+
+  "ui.userConnectionsRequestsSentWidget.title": "{total, plural, =0 {# connections requests sent} one {# connection request sent} other {# connections requests sent}}",
+  "ui.userConnectionsRequestsSentWidget.modal.title": "Connections Requests Sent",
+  "ui.userConnectionsRequestsSentWidget.subtitle.noResults": "Nothing to show",
+  "ui.userConnectionsRequestsSentWidget.button.showAll": "Show All",
+  "ui.userConnectionsRequestsSentWidget.noMoreResults": "No more results",
+
   "ui.categoryFollowersButton.dialogTitle": "Followers ({total})",
   "ui.categoryFollowersButton.noOtherFollowers": "No other followers.",
 
