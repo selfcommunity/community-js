@@ -1,7 +1,17 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCFollowersManagerType, SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  UserUtils,
+  useSCFetchUser,
+  useSCPreferences,
+  SCConnectionsManagerType,
+  SCFollowersManagerType
+} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
@@ -135,9 +145,26 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const role = UserUtils.getUserRole(scUserContext['user']);
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const followEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
+  const manager: SCFollowersManagerType | SCConnectionsManagerType = followEnabled
+    ? scUserContext.managers.followers
+    : scUserContext.managers.connections;
+  function checkFollowerOrConnection(user) {
+    if ('isFollower' in manager) {
+      return manager.isFollower(user);
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    return manager.status(user);
+  }
 
   // STATE
-  const scFollowersManager: SCFollowersManagerType = scUserContext.managers.followers;
   const [value, setValue] = useState<string>('');
   const [previous, setPrevious] = useState<string>(null);
   const [messageObjs, setMessageObjs] = useState([]);
@@ -309,7 +336,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    */
   function fetchThread() {
     if (userObj && typeof userObj !== 'string') {
-      const _isFollower = (scUser && scFollowersManager.isFollower(scUser)) || (scUser && scUser.community_badge);
+      const _isFollower = (scUser && checkFollowerOrConnection(scUser)) || (scUser && scUser.community_badge);
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       PrivateMessageService.getAThread({user: _userObjId, limit: 10})
         .then((res: SCPaginatedResponse<SCPrivateMessageThreadType>) => {
@@ -453,7 +480,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    */
   useEffect(() => {
     if (receiver) {
-      !receiver.community_badge ? setIsFollower(scFollowersManager.isFollower(receiver)) : setIsFollower(true);
+      !receiver.community_badge && scUser ? setIsFollower(checkFollowerOrConnection(scUser)) : setIsFollower(true);
     }
   });
 
