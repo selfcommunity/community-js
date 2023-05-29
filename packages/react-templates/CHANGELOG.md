@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.209](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.208...@selfcommunity/react-templates@0.3.0-alpha.209) (2023-05-29)
+
+
+### Bug Fixes
+
+* connections widgets ([c6c51ff](https://github.com/selfcommunity/community-js/commit/c6c51ff1402255197f0073a45a25c1b7d64dac5c))
+
+
+
+
+
 # [0.3.0-alpha.208](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.207...@selfcommunity/react-templates@0.3.0-alpha.208) (2023-05-26)
 
 
