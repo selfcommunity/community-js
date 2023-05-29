@@ -65,6 +65,15 @@ import UserProfileEdit, {
 import UserFollowedUsersWidget, {UserFollowedUsersWidgetProps, UserFollowedUsersWidgetSkeleton} from './components/UserFollowedUsersWidget';
 import UserSocialAssociation, {UserSocialAssociationProps} from './components/UserSocialAssociation';
 import UserFollowersWidget, {UserFollowersWidgetProps, UserFollowersWidgetSkeleton} from './components/UserFollowersWidget';
+import UserConnectionsWidget, {UserConnectionsWidgetProps, UserConnectionsWidgetSkeleton} from './components/UserConnectionsWidget';
+import UserConnectionsRequestsWidget, {
+  UserConnectionsRequestsWidgetProps,
+  UserConnectionsRequestsWidgetSkeleton
+} from './components/UserConnectionsRequestsWidget';
+import UserConnectionsRequestsSentWidget, {
+  UserConnectionsRequestsSentWidgetProps,
+  UserConnectionsRequestsSentWidgetSkeleton
+} from './components/UserConnectionsRequestsSentWidget';
 import RelatedFeedObjectsWidget, {RelatedFeedObjectWidgetProps, RelatedFeedObjectsWidgetSkeleton} from './components/RelatedFeedObjectsWidget';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import CommentObjectReply, {CommentObjectReplyProps} from './components/CommentObjectReply';
@@ -289,6 +298,15 @@ export {
   UserFollowersWidget,
   UserFollowersWidgetProps,
   UserFollowersWidgetSkeleton,
+  UserConnectionsWidget,
+  UserConnectionsWidgetProps,
+  UserConnectionsWidgetSkeleton,
+  UserConnectionsRequestsWidget,
+  UserConnectionsRequestsWidgetProps,
+  UserConnectionsRequestsWidgetSkeleton,
+  UserConnectionsRequestsSentWidget,
+  UserConnectionsRequestsSentWidgetProps,
+  UserConnectionsRequestsSentWidgetSkeleton,
   UserSocialAssociation,
   UserSocialAssociationProps,
   SCUserSocialAssociations,

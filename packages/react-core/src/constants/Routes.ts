@@ -20,6 +20,8 @@ export const USER_PRIVATE_MESSAGES_ROUTE_NAME = 'user_messages';
 export const USER_PROFILE_FOLLOWINGS_ROUTE_NAME = 'user_followings';
 export const USER_PROFILE_FOLLOWERS_ROUTE_NAME = 'user_followers';
 export const USER_PROFILE_CONNECTIONS_ROUTE_NAME = 'user_connections';
+export const USER_PROFILE_CONNECTIONS_REQUESTS_ROUTE_NAME = 'user_connections_requests';
+export const USER_PROFILE_CONNECTIONS_REQUESTS_SENT_ROUTE_NAME = 'user_connections_requests_sent';
 export const USER_PROFILE_CATEGORIES_ROUTE_NAME = 'user_categories';
 export const USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME = 'user_followed_posts';
 export const USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME = 'user_followed_discussions';
@@ -52,6 +54,8 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PROFILE_FOLLOWINGS_ROUTE_NAME]: '/user/:id/followed/',
   [USER_PROFILE_FOLLOWERS_ROUTE_NAME]: '/user/:id/followers/',
   [USER_PROFILE_CONNECTIONS_ROUTE_NAME]: '/user/:id/connections/',
+  [USER_PROFILE_CONNECTIONS_REQUESTS_ROUTE_NAME]: '/user/:id/connections/requests/',
+  [USER_PROFILE_CONNECTIONS_REQUESTS_SENT_ROUTE_NAME]: '/user/:id/connections/requests/sent/',
   [USER_PROFILE_CATEGORIES_ROUTE_NAME]: '/user/:id/categories/',
   [USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME]: '/user/:id/posts/followed/',
   [USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME]: '/user/:id/discussions/followed/',

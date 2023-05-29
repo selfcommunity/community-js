@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
-import {SCUserType} from '@selfcommunity/types';
+import {SCUserConnectionRequestType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, UserService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {
@@ -15,6 +15,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Skeleton from './Skeleton';
 import User, {UserProps, UserSkeleton} from '../User';
 import {FormattedMessage} from 'react-intl';
@@ -25,10 +26,9 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {AxiosResponse} from 'axios';
 
-const PREFIX = 'SCUserFollowedUsersWidget';
+const PREFIX = 'SCUserConnectionsRequestsWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -43,15 +43,15 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({}));
+})(({theme}) => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(() => ({}));
+})(({theme}) => ({}));
 
-export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
+export interface UserConnectionsRequestsWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
    * The user id
    * @default null
@@ -79,7 +79,7 @@ export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, 
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to followed users dialog
+   * Props to spread to followers users dialog
    * @default {}
    */
   DialogProps?: BaseDialogProps;
@@ -91,36 +91,35 @@ export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, 
 }
 
 /**
- *
- > API documentation for the Community-JS User Followed Users Widget component. Learn about the available props and the CSS API.
- > This component renders the list of the users that the given user follows.
- *
+ > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
+ > This component renders the list of connections requests of the given user
+
  #### Import
 
  ```jsx
- import {UserFollowedUsersWidget} from '@selfcommunity/react-ui';
+ import {UserConnectionsRequestsWidget} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCUserFollowedUsersWidget` can be used when providing style overrides in the theme.
+ The name `SCUserConnectionsRequestsWidget` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserFollowedUsersWidget-root|Styles applied to the root element.|
- |title|.SCUserFollowedUsersWidget-title|Styles applied to the title element.|
- |noResults|.SCUserFollowedUsersWidget-no-results|Styles applied to no results section.|
- |followedItem|.SCUserFollowedUsersWidget-followed-item|Styles applied to the followed item element.|
- |showMore|.SCUserFollowedUsersWidget-show-more|Styles applied to show more button element.|
+ |root|.SCUserConnectionsRequestsWidget-root|Styles applied to the root element.|
+ |title|.SCUserConnectionsRequestsWidget-title|Styles applied to the title element.|
+ |noResults|.SCUserConnectionsRequestsWidget-no-results|Styles applied to no results section.|
+ |connectionsItem|.SCUserConnectionsRequestsWidget-connections-item|Styles applied to connection item element.|
+ |showMore|.SCUserConnectionsRequestsWidget-show-more|Styles applied to show more button element.|
 
  * @param inProps
  */
-export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidgetProps): JSX.Element {
+export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRequestsWidgetProps): JSX.Element {
   // PROPS
-  const props: UserFollowedUsersWidgetProps = useThemeProps({
+  const props: UserConnectionsRequestsWidgetProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -143,7 +142,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -181,8 +180,8 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserFollowings(userId, {limit})
-          .then((payload: SCPaginatedResponse<SCUserType>) => {
+        UserService.getUserConnectionRequests(userId, {limit})
+          .then((payload: SCPaginatedResponse<SCUserConnectionRequestType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
           .catch((error) => {
@@ -199,7 +198,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     let _t;
     if (
       (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      followEnabled &&
+      !followEnabled &&
       isInteger(userId) &&
       scUserContext.user !== undefined
     ) {
@@ -213,8 +212,8 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserFollowings(userId, {offset: limit, limit: 10})
-        .then((payload: SCPaginatedResponse<SCUserType>) => {
+      UserService.getUserConnectionRequests(userId, {offset: limit, limit: 10})
+        .then((payload: SCPaginatedResponse<SCUserConnectionRequestType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
         .catch((error) => {
@@ -232,7 +231,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || !followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!isInteger(userId) || followEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
@@ -246,13 +245,10 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
       http
         .request({
           url: state.next,
-          method: Endpoints.UserFollowings.method
+          method: Endpoints.UserConnectionsRequests.method
         })
-        .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-          dispatch({
-            type: actionWidgetTypes.LOAD_NEXT_SUCCESS,
-            payload: res.data
-          });
+        .then((res: AxiosResponse<SCPaginatedResponse<SCUserConnectionRequestType>>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
@@ -263,7 +259,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   };
 
   // RENDER
-  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -272,24 +268,31 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userFollowedUsersWidget.title" defaultMessage="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+        <FormattedMessage
+          id="ui.userConnectionsRequestsWidget.title"
+          defaultMessage="ui.userConnectionsRequestsWidget.title"
+          values={{total: state.count}}
+        />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.userFollowedUsersWidget.subtitle.noResults" defaultMessage="" />
+          <FormattedMessage id="ui.userConnectionsRequestsWidget.subtitle.noResults" defaultMessage="" />
         </Typography>
       ) : (
         <React.Fragment>
           <List>
-            {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
-              <ListItem key={user.id}>
-                <User elevation={0} user={user} {...UserProps} />
+            {state.results.slice(0, state.visibleItems).map((conReq: SCUserConnectionRequestType) => (
+              <ListItem key={conReq.from_user.id}>
+                <User elevation={0} user={conReq.from_user} {...UserProps} />
               </ListItem>
             ))}
           </List>
           {state.count > state.visibleItems && (
             <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.userFollowedUsersWidget.button.showAll" defaultMessage="ui.userFollowedUsersWidget.button.showAll" />
+              <FormattedMessage
+                id="ui.userConnectionsRequestsWidget.button.showAll"
+                defaultMessage="ui.userConnectionsRequestsWidget.button.showAll"
+              />
             </Button>
           )}
         </React.Fragment>
@@ -298,7 +301,11 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
         <DialogRoot
           className={classes.dialogRoot}
           title={
-            <FormattedMessage defaultMessage="ui.userFollowedUsersWidget.title" id="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+            <FormattedMessage
+              defaultMessage="ui.userConnectionsRequestsWidget.title"
+              id="ui.userConnectionsRequestsWidget.title"
+              values={{total: state.count}}
+            />
           }
           onClose={handleToggleDialogOpen}
           open={openDialog}
@@ -311,13 +318,16 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
             height={isMobile ? '100%' : 400}
             endMessage={
               <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.userFollowedUsersWidget.noMoreResults" defaultMessage="ui.userFollowedUsersWidget.noMoreResults" />
+                <FormattedMessage
+                  id="ui.userConnectionsRequestsWidget.noMoreResults"
+                  defaultMessage="ui.userConnectionsRequestsWidget.noMoreResults"
+                />
               </Typography>
             }>
             <List>
-              {state.results.map((user: SCUserType) => (
-                <ListItem key={user.id}>
-                  <User elevation={0} user={user} {...UserProps} />
+              {state.results.map((conReq: SCUserConnectionRequestType) => (
+                <ListItem key={conReq.from_user.id}>
+                  <User elevation={0} user={conReq.from_user} {...UserProps} />
                 </ListItem>
               ))}
             </List>
