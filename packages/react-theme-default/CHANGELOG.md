@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.167](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.166...@selfcommunity/react-theme-default@0.1.0-alpha.167) (2023-05-26)
+
+
+### Bug Fixes
+
+* SCBaseItemButton ([e8cf5ef](https://github.com/selfcommunity/community-js/commit/e8cf5ef6e3e85118c0f6b8554ec4fb992b5a7d85))
+
+
+
+
+
 # [0.1.0-alpha.166](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.165...@selfcommunity/react-theme-default@0.1.0-alpha.166) (2023-05-26)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
