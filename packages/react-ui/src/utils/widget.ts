@@ -1,4 +1,5 @@
 import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
+import {SCCache} from '@selfcommunity/react-core';
 
 /**
  * @hidden
@@ -15,7 +16,8 @@ export const actionWidgetTypes = {
   LOAD_NEXT_FAILURE: '_load_next_failure',
   LOAD_PREVIOUS_FAILURE: '_load_previous_failure',
   SET_RESULTS: '_set_results',
-  SET_VISIBLE_ITEMS: '_set_visible_items'
+  SET_VISIBLE_ITEMS: '_set_visible_items',
+  RESET: '_reset'
 };
 
 /**
@@ -68,6 +70,9 @@ export function dataWidgetReducer(state, action) {
       break;
     case actionWidgetTypes.LOAD_PREVIOUS_FAILURE:
       _state = {...state, isLoadingNext: false, errorLoadPrevious: action.payload.error};
+      break;
+    case actionWidgetTypes.RESET:
+      _state = {isLoadingNext: false, next: null, results: [], count: 0, errorLoadNext: null, initialized: false};
       break;
   }
   LRUCache.set(_state.cacheKey, _state);
