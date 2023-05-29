@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
-import {SCUserConnectionRequestType, SCUserType} from '@selfcommunity/types';
+import {SCUserConnectionRequestType} from '@selfcommunity/types';
 import {http, Endpoints, UserService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {
@@ -92,7 +92,7 @@ export interface UserConnectionsRequestsSentWidgetProps extends VirtualScrollerI
 
 /**
  > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
- > This component renders the list of connections requests of the given user
+ > This component renders the list of connections requests sent of the authenticated user
 
  #### Import
 
@@ -124,7 +124,6 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
     name: PREFIX
   });
   const {
-    userId,
     autoHide = false,
     limit = 3,
     className,
@@ -133,6 +132,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
     onHeightChange,
     onStateChange,
     DialogProps = {},
+    userId,
     ...rest
   } = props;
 
@@ -180,7 +180,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserRequestConnectionsSent(userId, {limit})
+        UserService.getUserRequestConnectionsSent({limit})
           .then((payload: SCPaginatedResponse<SCUserConnectionRequestType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
@@ -196,12 +196,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (
-      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      !followEnabled &&
-      isInteger(userId) &&
-      scUserContext.user !== undefined
-    ) {
+    if (!followEnabled && scUserContext.user) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -212,7 +207,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserRequestConnectionsSent(userId, {offset: limit, limit: 10})
+      UserService.getUserRequestConnectionsSent({offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserConnectionRequestType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
@@ -245,7 +240,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
       http
         .request({
           url: state.next,
-          method: Endpoints.UserConnectionsRequestsSent.method
+          method: Endpoints.UserRequestConnectionsSent.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserConnectionRequestType>>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
