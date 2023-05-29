@@ -8,6 +8,9 @@ import {
   SCFeedWidgetType,
   TagChip,
   UserActionIconButton,
+  UserConnectionsRequestsSentWidget,
+  UserConnectionsRequestsWidget,
+  UserConnectionsWidget,
   UserCounters,
   UserFollowedCategoriesWidget,
   UserFollowedUsersWidget,
@@ -112,24 +115,7 @@ export interface UserProfileProps {
   UserFeedProps?: UserFeedProps;
 }
 
-const WIDGETS = [
-  {
-    type: 'widget',
-    component: UserFollowedCategoriesWidget,
-    componentProps: {},
-    column: 'right',
-    position: 0
-  },
-  {
-    type: 'widget',
-    component: UserFollowedUsersWidget,
-    componentProps: {},
-    column: 'right',
-    position: 1
-  }
-];
-
-const MY_PROFILE_WIDGETS = [
+const WIDGETS_FOLLOWERS = [
   {
     type: 'widget',
     component: UserFollowedCategoriesWidget,
@@ -150,6 +136,40 @@ const MY_PROFILE_WIDGETS = [
     componentProps: {},
     column: 'right',
     position: 2
+  }
+];
+
+const WIDGETS_CONNECTIONS = [
+  {
+    type: 'widget',
+    component: UserFollowedCategoriesWidget,
+    componentProps: {},
+    column: 'right',
+    position: 0
+  },
+  {
+    type: 'widget',
+    component: UserConnectionsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 1
+  }
+];
+
+const WIDGETS_CONNECTIONS_MY_PROFILE = [
+  {
+    type: 'widget',
+    component: UserConnectionsRequestsWidget,
+    componentProps: {autoHide: true},
+    column: 'right',
+    position: 2
+  },
+  {
+    type: 'widget',
+    component: UserConnectionsRequestsSentWidget,
+    componentProps: {autoHide: true},
+    column: 'right',
+    position: 3
   }
 ];
 
@@ -231,10 +251,12 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     let _widgets = [];
     if (!scUserContext.user) {
       _widgets = [];
-    } else if (scUserContext.user.id === scUser.id) {
-      _widgets = [...MY_PROFILE_WIDGETS];
+    } else if (followEnabled) {
+      _widgets = [...WIDGETS_FOLLOWERS];
+    } else if (!followEnabled && scUserContext.user.id === scUser.id) {
+      _widgets = [...WIDGETS_CONNECTIONS, ...WIDGETS_CONNECTIONS_MY_PROFILE];
     } else {
-      _widgets = [...WIDGETS];
+      _widgets = [...WIDGETS_CONNECTIONS];
     }
     return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId: scUser.id}}));
   };
