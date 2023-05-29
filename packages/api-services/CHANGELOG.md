@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.16...@selfcommunity/api-services@0.4.0-alpha.17) (2023-05-29)
+
+
+### Bug Fixes
+
+* connections widgets ([c6c51ff](https://github.com/selfcommunity/community-js/commit/c6c51ff1402255197f0073a45a25c1b7d64dac5c))
+
+
+
+
+
 # [0.4.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.15...@selfcommunity/api-services@0.4.0-alpha.16) (2023-05-26)
 
 

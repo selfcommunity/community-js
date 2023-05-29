@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.219](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.218...@selfcommunity/react-ui@0.7.0-alpha.219) (2023-05-29)
+
+
+### Bug Fixes
+
+* connections widgets ([8f20e5a](https://github.com/selfcommunity/community-js/commit/8f20e5ac9e20798b6aa78da7973874e38dfaa623))
+* connections widgets ([c6c51ff](https://github.com/selfcommunity/community-js/commit/c6c51ff1402255197f0073a45a25c1b7d64dac5c))
+* fixed pm thread/pm notification when connection enabled ([4e34003](https://github.com/selfcommunity/community-js/commit/4e34003b25a6527e1f5faa0bfd11ce770a10536c))
+
+
+
+
+
 # [0.7.0-alpha.218](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.217...@selfcommunity/react-ui@0.7.0-alpha.218) (2023-05-26)
 
 

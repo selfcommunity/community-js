@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.23...@selfcommunity/react-i18n@0.5.0-alpha.24) (2023-05-29)
+
+
+### Bug Fixes
+
+* connections widgets ([c6c51ff](https://github.com/selfcommunity/community-js/commit/c6c51ff1402255197f0073a45a25c1b7d64dac5c))
+
+
+
+
+
 # [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.22...@selfcommunity/react-i18n@0.5.0-alpha.23) (2023-05-26)
 
 
