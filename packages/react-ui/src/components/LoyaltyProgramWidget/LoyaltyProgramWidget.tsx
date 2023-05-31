@@ -91,32 +91,35 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   /**
    * Fetches user loyalty points
    */
-  function fetchLP() {
-    setLoading(true);
-    http
-      .request({
-        url: Endpoints.GetUserLoyaltyPoints.url({id: scUserContext.user['id']}),
-        method: Endpoints.GetUserLoyaltyPoints.method
-      })
-      .then((res: HttpResponse<any>) => {
-        setPoints(res.data.points);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        Logger.error(SCOPE_SC_UI, error);
-        console.log(error);
-      });
-  }
+  const fetchLP = useMemo(
+    () => () => {
+      if (loyaltyEnabled && scUserContext.user) {
+        setLoading(true);
+        http
+          .request({
+            url: Endpoints.GetUserLoyaltyPoints.url({id: scUserContext.user['id']}),
+            method: Endpoints.GetUserLoyaltyPoints.method
+          })
+          .then((res: HttpResponse<any>) => {
+            setPoints(res.data.points);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+            Logger.error(SCOPE_SC_UI, error);
+            console.log(error);
+          });
+      }
+    },
+    [scUserContext.user, loyaltyEnabled]
+  );
 
   /**
    * On mount, fetches user loyalty points
    */
   useEffect(() => {
-    if (loyaltyEnabled && scUserContext.user) {
-      fetchLP();
-    }
-  }, [scUserContext.user]);
+    fetchLP();
+  }, []);
 
   /**
    * Rendering
