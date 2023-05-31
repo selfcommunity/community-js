@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.171](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.170...@selfcommunity/react-theme-default@0.1.0-alpha.171) (2023-05-31)
+
+
+### Performance Improvements
+
+* enlarged private message editor ([b3019da](https://github.com/selfcommunity/community-js/commit/b3019da8a94db53a50a60e7d39cf418936f2690f))
+
+
+
+
+
 # [0.1.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.169...@selfcommunity/react-theme-default@0.1.0-alpha.170) (2023-05-31)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
