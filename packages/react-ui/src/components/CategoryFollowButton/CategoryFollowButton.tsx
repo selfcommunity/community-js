@@ -144,7 +144,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
       size="small"
       variant="outlined"
       onClick={handleFollowAction}
-      loading={scUserContext.user === undefined || followed === null || scCategoriesManager.isLoading(scCategory)}
+      loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
       {...rest}>
       {followed && scUserContext.user ? (
