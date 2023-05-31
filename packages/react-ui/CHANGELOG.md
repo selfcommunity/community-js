@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.222](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.221...@selfcommunity/react-ui@0.7.0-alpha.222) (2023-05-31)
+
+
+### Bug Fixes
+
+* LoyaltyProgramWidget rerender. Asana issue: https://app.asana.com/0/1202638443591994/1204721434773093/f ([cc107eb](https://github.com/selfcommunity/community-js/commit/cc107eb78333d4bf68a39a4e66fc41d81349ca7b))
+
+
+
+
+
 # [0.7.0-alpha.221](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.220...@selfcommunity/react-ui@0.7.0-alpha.221) (2023-05-31)
 
 
