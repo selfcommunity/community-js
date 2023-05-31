@@ -23,6 +23,9 @@ const Component = {
             border: `2px solid${theme.palette.secondary.main}`
           },
           '&.Mui-disabled': {border: 'none'}
+        },
+        '& .MuiButtonBase-root': {
+          padding: theme.spacing(1.625)
         }
       },
       '& .SCPrivateMessageEditor-emoji-section, SCEmojiPicker-root': {
