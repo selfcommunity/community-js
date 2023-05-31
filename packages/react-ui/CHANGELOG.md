@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.221](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.220...@selfcommunity/react-ui@0.7.0-alpha.221) (2023-05-31)
+
+
+### Bug Fixes
+
+* FollowButton ([4e1f393](https://github.com/selfcommunity/community-js/commit/4e1f3934d33bead930ac23e4698b86a40e9c6967))
+
+
+
+
+
 # [0.7.0-alpha.220](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.219...@selfcommunity/react-ui@0.7.0-alpha.220) (2023-05-29)
 
 
