@@ -53,10 +53,6 @@ const messages = defineMessages({
   fieldLink: {
     id: 'ui.userInfo.fieldLink',
     defaultMessage: 'ui.userInfo.fieldLink'
-  },
-  fieldLinkFemale: {
-    id: 'ui.userInfo.fieldLink.female',
-    defaultMessage: 'ui.userInfo.fieldLink.female'
   }
 });
 
