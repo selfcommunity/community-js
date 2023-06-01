@@ -443,7 +443,7 @@
   "ui.searchAutocomplete.noOptions": "No results...",
   "ui.searchAutocomplete.placeholder": "Search on {community}",
   "ui.shared.messageChunkUploader.error": "{filename} file cannot be uploaded.",
-  "ui.snippetNotifications.broadcastMessages": "<b>MESSAGES:</b> you have {count, plural, =0 {# messages unread. <link>See it now →</link>} one {# message unread. <link>See it now →</link>} other {# messages unreads. <link>See it now →</link>}}",
+  "ui.snippetNotifications.broadcastMessages": "<b>MESSAGES:</b> you have {count, plural, =0 {# messages unread. <link>See them now →</link>} one {# message unread. <link>See it now →</link>} other {# messages unread. <link>See them now →</link>}}",
   "ui.snippetNotifications.noNotifications": "At the moment, there aren't notifications",
   "ui.user.ignore": "Ignore",
   "ui.user.userFollowers": "{total, plural, =0 {Followed by # people} one {Followed by # person} other {Followed by # people}}",

@@ -443,7 +443,7 @@
   "ui.searchAutocomplete.noOptions": "Nessun risultato...",
   "ui.searchAutocomplete.placeholder": "Cerca su {community}",
   "ui.shared.messageChunkUploader.error": "Il file {filename} non può essere caricato.",
-  "ui.snippetNotifications.broadcastMessages": "<b>IN EVIDENZA:</b> hai {count, plural, =0 {# messaggi non ancora visti. <link>Guardali ora →</link>} one {# messaggi non ancora visto. <link>Guardalo ora →</link>} other {# messaggi non ancora visti. <link>Guardali ora →</link>}}",
+  "ui.snippetNotifications.broadcastMessages": "<b>IN EVIDENZA:</b> hai {count, plural, =0 {# messaggi non ancora visti. <link>Guardali ora →</link>} one {# messaggio non ancora visto. <link>Guardalo ora →</link>} other {# messaggi non ancora visti. <link>Guardali ora →</link>}}",
   "ui.snippetNotifications.noNotifications": "Al momento non ci sono notifiche",
   "ui.user.ignore": "Ignora",
   "ui.user.userFollowers": "{total, plural, =0 {Seguito da # persone} one {Seguito da # persona} other {Seguito da # persone}}",
