@@ -257,7 +257,6 @@
   "ui.feedObject.share.facebook": "Facebook",
   "ui.feedObject.share.linkedin": "LinkedIn",
   "ui.feedObject.share.share": "Condividi il contributo",
-  "ui.feedObject.share.shareInCategories": "Condividi in {categories}",
   "ui.feedObject.share.shareNow": "Condividi ora",
   "ui.feedObject.share.shares": "{total, plural, =0 {# Condivisioni} one {# Condivisione} other {# Condivisioni}}",
   "ui.feedObject.share.twitter": "Twitter",
