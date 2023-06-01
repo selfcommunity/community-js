@@ -39,6 +39,8 @@ export interface LoyaltyProgramWidgetProps {
 }
 /**
  * > API documentation for the Community-JS Loyalty Program Widget component. Learn about the available props and the CSS API.
+ * <br/>This component renders a widget containing the points earn by the user with the loyalty program.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/LoyaltyProgram)
 
  #### Import
 

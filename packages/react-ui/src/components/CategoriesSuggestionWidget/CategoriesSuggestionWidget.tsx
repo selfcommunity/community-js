@@ -79,7 +79,9 @@ export interface CategoriesSuggestionWidgetProps extends VirtualScrollerItemProp
 
 /**
  * > API documentation for the Community-JS Categories Suggestion component. Learn about the available props and the CSS API.
- *
+ * <br/>This component renders a list of suggested categories.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoriesSuggestion)
+
  #### Import
  ```jsx
  import {CategoriesSuggestionWidget} from '@selfcommunity/react-ui';

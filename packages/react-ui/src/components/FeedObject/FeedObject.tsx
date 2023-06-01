@@ -255,6 +255,8 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
 
 /**
  * > API documentation for the Community-JS Feed Object component. Learn about the available props and the CSS API.
+ *  <br/>This component renders a feed object item (post, discussion or status).
+ *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedObject)
 
  #### Import
 
@@ -272,13 +274,18 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCFeedObject-root|Styles applied to the root element.|
+ |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
+ |category|.SCFeedObject-category|Styles applied to the category element.|
+ |avatar|.SCFeedObject-avatar|Styles applied to the avatar element.|
+ |username|.SCFeedObject-username|Styles applied to the username element.|
+ |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
  |tag|.SCFeedObject-tag|Styles applied to the tag element.|
+ |location|.SCFeedObject-location|Styles applied to the location element.|
+ |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
+ |error|.SCFeedObject-error|Styles applied to the error element.|
  |title-section|.SCFeedObject-title-section|Styles applied to the title section.|
  |title|.SCFeedObject-title|Styles applied to the title element.|
- |username|.SCFeedObject-username|Styles applied to the username element.|
- |category|.SCFeedObject-category|Styles applied to the category element.|
- |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
  |text-section|.SCFeedObject-text-section|Styles applied to the text section.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
  |snippet|.SCFeedObject-snippet|Styles applied to snippet element.|
@@ -286,13 +293,11 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |medias-section|.SCFeedObject-medias-section|Styles applied to the medias section.|
  |polls-section|.SCFeedObject-polls-section|Styles applied to the polls section.|
  |info-section|.SCFeedObject-info-section|Styles applied to the info section.|
- |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
  |actions-section|.SCFeedObject-actions-section|Styles applied to the actions container.|
  |reply-content|.SCFeedObject-reply-content|Styles applied to the reply box.|
  |activitiesSection|.SCFeedObject-activities-section|Styles applied to the activities section element.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
- |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
- |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
+ |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
 
  * @param inProps
  */

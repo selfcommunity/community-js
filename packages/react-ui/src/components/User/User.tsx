@@ -84,6 +84,8 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
 
 /**
  * > API documentation for the Community-JS User component. Learn about the available props and the CSS API.
+ *  <br/>This component renders a user item.
+ *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
 
  #### Import
 
@@ -101,9 +103,11 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUser-root|Styles applied to the root element.|
+ |avatar|.SCUser-avatar|Styles applied to the avatar element.|
+ |staffBadge|.SCUser-staff-badge|Styles applied to the reaction icon element.|
  |staffBadgeLabel|.SCUser-staff-badge-label|Styles applied to the staff badge label element.|
  |staffBadgeIcon|.SCUser-staff-badge-icon|Styles applied to the staff badge icon element.|
- |staffBadge|.SCUser-staff-badge|Styles applied to the reaction icon element.|
+ *
  * @param inProps
  */
 export default function User(inProps: UserProps): JSX.Element {

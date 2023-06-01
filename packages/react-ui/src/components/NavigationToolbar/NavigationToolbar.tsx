@@ -99,6 +99,8 @@ const PREFERENCES = [
 
 /**
  * > API documentation for the Community-JS NavigationToolbar component. Learn about the available props and the CSS API.
+ * <br/>This component renders the application header.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbar)
 
  #### Import
 
@@ -122,6 +124,7 @@ const PREFERENCES = [
  |home|.SCNavigationToolbar-home|Styles applied to the home button|
  |explore|.SCNavigationToolbar-explore|Styles applied to the explore button|
  |search|.SCNavigationToolbar-search|Styles applied to the search component|
+ |composer|.SCNavigationToolbar-composer|Styles applied to the composer component|
  |profile|.SCNavigationToolbar-profile|Styles applied to the profile button|
  |notification|.SCNavigationToolbar-notification|Styles applied to the notification button|
  |messages|.SCNavigationToolbar-messages|Styles applied to the messages button|

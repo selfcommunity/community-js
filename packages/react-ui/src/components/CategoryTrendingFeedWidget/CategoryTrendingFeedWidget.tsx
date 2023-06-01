@@ -5,7 +5,7 @@ import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from
 import Widget, {WidgetProps} from '../Widget';
 import {SCFeedUnitType} from '@selfcommunity/types';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import { CacheStrategies, isInteger, Logger } from "@selfcommunity/utils";
+import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from '../FeedObject';
 import {FormattedMessage} from 'react-intl';
@@ -98,6 +98,8 @@ export interface CategoryTrendingFeedWidgetProps extends VirtualScrollerItemProp
 
 /**
  * > API documentation for the Community-JS Trending Feed Widget component. Learn about the available props and the CSS API.
+ * <br/>This component renders a specific category's trending posts, discussions, statuses list.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryTrendingFeed)
 
  #### Import
 
@@ -117,8 +119,9 @@ export interface CategoryTrendingFeedWidgetProps extends VirtualScrollerItemProp
  |root|.SCCategoryTrendingFeedWidget-root|Styles applied to the root element.|
  |title|.SCCategoryTrendingFeedWidget-title|Styles applied to the title element.|
  |noResults|.SCCategoryTrendingFeedWidget-no-results|Styles applied to no results section.|
- |followersItem|.SCCategoryTrendingFeedWidget-followers-item|Styles applied to follower item element.|
  |showMore|.SCCategoryTrendingFeedWidget-show-more|Styles applied to show more button element.|
+ |dialogRoot|.SCCategoryTrendingFeedWidget-dialog-root|Styles applied to dialog root element.|
+ |endMessage|.SCCategoryTrendingFeedWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */

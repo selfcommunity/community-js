@@ -58,7 +58,9 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
 const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPreferences.LOGO_NAVBAR_LOGO_MOBILE];
 
 /**
- * > API documentation for the Community-JS NavigationToolbarMobile component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Navigation Toolbar Mobile component. Learn about the available props and the CSS API.
+ * <br/>This component renders the mobile application header.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbarMobile)
 
  #### Import
 
@@ -68,19 +70,21 @@ const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPrefer
 
  #### Component Name
 
- The name `SCNavigationToolbar` can be used when providing style overrides in the theme.
+ The name `SCNavigationToolbarMobile` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCNavigationToolbar-root|Styles applied to the root element.|
- |logo|.SCNavigationToolbar-logo|Styles applied to the logo element.|
- |search|.SCNavigationToolbar-search|Styles applied to the search button element|
- |searchDialog|.SCNavigationToolbar-search-dialog|Styles applied to the search dialog element|
- |settings|.SCNavigationToolbar-settings|Styles applied to the settings button element|
- |settingsDialog|.SCNavigationToolbar-settingsDialog|Styles applied to the settings dialog elements|
+ |root|.SCNavigationToolbarMobile-root|Styles applied to the root element.|
+ |logo|.SCNavigationToolbarMobile-logo|Styles applied to the logo element.|
+ |search|.SCNavigationToolbarMobile-search|Styles applied to the search button element|
+ |searchDialog|.SCNavigationToolbarMobile-search-dialog|Styles applied to the search dialog element|
+ |composer|.SCNavigationToolbarMobile-composer|Styles applied to the composer component|
+ |settings|.SCNavigationToolbarMobile-settings|Styles applied to the settings button element|
+ |settingsDialog|.SCNavigationToolbarMobile-settingsDialog|Styles applied to the settings dialog elements|
+ |login|.SCNavigationToolbarMobile-login|Styles applied to the login element.|
  *
  * @param inProps
  */

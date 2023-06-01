@@ -104,6 +104,8 @@ export interface PrivateMessageThreadProps extends CardProps {
 /**
  *
  > API documentation for the Community-JS PrivateMessage Thread component. Learn about the available props and the CSS API.
+ * <br/>This component renders the conversation between two users.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Thread)
 
  #### Import
 
@@ -121,16 +123,18 @@ export interface PrivateMessageThreadProps extends CardProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCPrivateMessageThread-root|Styles applied to the root element.|
+ |subHeader|.SCPrivateMessageThread-subheader|Styles applied to thread list subheader element.|
  |section|.SCPrivateMessageThread-section|Styles applied to the list section|
  |emptyMessage|.SCPrivateMessageThread-empty-message|Styles applied to the empty message element.|
  |newMessageHeader|.SCPrivateMessageThread-new-message-header|Styles applied to the new message header section.|
- |newMessageHeaderIcon|.SCPrivateMessageThread-new-message-header-icon|Styles applied to the new message header icon element.|
  |newMessageHeaderContent|.SCPrivateMessageThread-new-message-header-content|Styles applied to the new message header content.|
- |subHeader|.SCPrivateMessageThread-subheader|Styles applied to thread list subheader element.|
+ |newMessageHeaderIcon|.SCPrivateMessageThread-new-message-header-icon|Styles applied to the new message header icon element.|
+ |newMessageContent|.SCPrivateMessageThread-new-message-content|Styles applied to the new message content.|
  |sender|.SCPrivateMessageThread-sender|Styles applied to the sender element.|
  |receiver|.SCPrivateMessageThread-receiver|Styles applied to the receiver element.|
  |autocomplete|.SCPrivateMessageThread-autocomplete|Styles applied to autocomplete element.|
  |autocompleteDialog|.SCPrivateMessageThread-autocomplete-dialog|Styles applied to autocomplete dialog element.|
+ |editor|.SCPrivateMessageThread-editor|Styles applied to the editor element.|
 
  * @param inProps
  */

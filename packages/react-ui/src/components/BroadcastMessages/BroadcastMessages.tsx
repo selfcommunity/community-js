@@ -105,9 +105,10 @@ export interface BroadcastMessagesProps extends VirtualScrollerItemProps {
 const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
 
 /**
- > API documentation for the Community-JS Broadcast Messages component. Learn about the available props and the CSS API.
- > This component handles message broadcasts. It initially displays unseen messages. If all messages have been viewed it will show at most one message.
- *
+ * > API documentation for the Community-JS Broadcast Messages component. Learn about the available props and the CSS API.
+ * <br/>This component handles message broadcasts. It initially displays unseen messages. If all messages have been viewed it will show at most one message.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/BroadcastMessages)
+
  #### Import
  ```jsx
  import {BroadcastMessages} from '@selfcommunity/react-ui';

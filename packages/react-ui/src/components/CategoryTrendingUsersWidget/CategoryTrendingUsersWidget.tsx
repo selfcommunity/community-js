@@ -94,7 +94,9 @@ export interface CategoryTrendingUsersWidgetProps extends VirtualScrollerItemPro
 }
 
 /**
- * > API documentation for the Community-JS Trending People Widget component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Trending Users Widget component. Learn about the available props and the CSS API.
+ * <br/>This component renders a specific category's trending people list.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryTrendingUsers)
 
  #### Import
 
@@ -111,11 +113,12 @@ export interface CategoryTrendingUsersWidgetProps extends VirtualScrollerItemPro
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryTrendingFeedWidget-root|Styles applied to the root element.|
- |title|.SCCategoryTrendingFeedWidget-title|Styles applied to the title element.|
- |noResults|.SCCategoryTrendingFeedWidget-no-results|Styles applied to no results section.|
- |followersItem|.SCCategoryTrendingFeedWidget-followers-item|Styles applied to follower item element.|
- |showMore|.SCCategoryTrendingFeedWidget-show-more|Styles applied to show more button element.|
+ |root|.SCCategoryTrendingUsersWidget-root|Styles applied to the root element.|
+ |title|.SCCategoryTrendingUsersWidget-title|Styles applied to the title element.|
+ |noResults|.SCCategoryTrendingUsersWidget-no-results|Styles applied to no results section.|
+ |showMore|.SCCategoryTrendingUsersWidget-show-more|Styles applied to show more button element.|
+ |dialogRoot|.SCCategoryTrendingUsersWidget-dialog-root|Styles applied to dialog root element.|
+ |endMessage|.SCCategoryTrendingUsersWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */

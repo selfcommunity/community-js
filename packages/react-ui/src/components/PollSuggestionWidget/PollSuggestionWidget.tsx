@@ -78,7 +78,9 @@ export interface PollSuggestionWidgetProps extends VirtualScrollerItemProps, Wid
 }
 
 /**
- *> API documentation for the Community-JS Poll Suggestion Widget component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Poll Suggestion Widget component. Learn about the available props and the CSS API.
+ * <br/>This component renders a list of suggested polls.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/PollSuggestion)
 
  #### Import
 

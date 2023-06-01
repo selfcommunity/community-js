@@ -81,7 +81,9 @@ export interface IncubatorSuggestionWidgetProps extends VirtualScrollerItemProps
 }
 /**
  > API documentation for the Community-JS Incubator Suggestion component. Learn about the available props and the CSS API.
- *
+ * <br/>This component renders a list of suggested incubators.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/IncubatorSuggestion)
+
  #### Import
  ```jsx
  import {IncubatorSuggestionWidget} from '@selfcommunity/react-ui';

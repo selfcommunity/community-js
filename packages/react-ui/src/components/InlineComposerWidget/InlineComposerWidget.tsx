@@ -94,7 +94,8 @@ const INITIAL_STATE = {
 };
 /**
  > API documentation for the Community-JS Inline Composer component. Learn about the available props and the CSS API.
- *
+ * <br/>This component renders This component renders the section used for feed objects creation
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/InlineComposer)
  #### Import
  ```jsx
  import {InlineComposerWidget} from '@selfcommunity/react-ui';

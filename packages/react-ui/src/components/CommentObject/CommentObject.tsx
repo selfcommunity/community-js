@@ -168,6 +168,8 @@ export interface CommentObjectProps {
 
 /**
  *> API documentation for the Community-JS Comment Object component. Learn about the available props and the CSS API.
+ * <br/>This component renders a comment item.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CommentObject)
 
  #### Import
 

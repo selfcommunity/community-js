@@ -78,11 +78,13 @@ export interface UserProfileHeaderProps {
 
 /**
  * > API documentation for the Community-JS User Profile AppBar component. Learn about the available props and the CSS API.
+ * <br/>This component renders the user profile's top section.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserProfileHeader)
 
  #### Import
 
  ```jsx
- import {UserTagStack} from '@selfcommunity/react-ui';
+ import {UserProfileHeader} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -97,7 +99,6 @@ export interface UserProfileHeaderProps {
  |root|.SCUserProfileHeader-root|Styles applied to the root element.|
  |cover|.SCUserProfileHeader-cover|Styles applied to the cover element.|
  |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
- |info|SCUserProfileHeader-info|Styles applied to the info element.|
  |username|SCUserProfileHeader-username|Styles applied to the username element.|
  |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
  |changeCover|.SCUserProfileHeader-change-cover`|Styles applied to changeCover element.|
