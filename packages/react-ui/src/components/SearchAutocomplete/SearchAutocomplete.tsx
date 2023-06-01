@@ -187,6 +187,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
           })}`}
           InputProps={{
             ...params.InputProps,
+            name: 'search-autocomplete',
             className: classes.input,
             startAdornment: <Icon className={classes.icon}>search</Icon>,
             endAdornment: (
