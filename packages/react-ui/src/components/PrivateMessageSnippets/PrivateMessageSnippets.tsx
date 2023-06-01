@@ -72,6 +72,8 @@ export interface PrivateMessageSnippetsProps extends CardProps {
 /**
  *
  > API documentation for the Community-JS PrivateMessageSnippets component. Learn about the available props and the CSS API.
+ * <br/>This component renders the list of conversations preview between users.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Snippets)
 
  #### Import
 

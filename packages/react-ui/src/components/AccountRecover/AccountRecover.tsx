@@ -67,7 +67,9 @@ export interface AccountRecoverProps {
 }
 
 /**
- * > API documentation for the Community-JS AccountVerify component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Account Verify component. Learn about the available props and the CSS API.
+ * <br/>This component allows users to recover their account with their email.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
 
  #### Import
 
@@ -98,7 +100,14 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
     name: PREFIX
   });
   // PROPS
-  const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, successAction = null, ...rest} = props;
+  const {
+    className,
+    onSuccess = null,
+    TextFieldProps = {variant: 'outlined', fullWidth: true},
+    ButtonProps = {variant: 'contained'},
+    successAction = null,
+    ...rest
+  } = props;
 
   // STATE
   const [email, setEmail] = useState<string>('');

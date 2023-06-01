@@ -442,7 +442,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   const canSubmit = () => {
     return (
-      (type === COMPOSER_TYPE_DISCUSSION && title.length > 0) ||
+      (type === COMPOSER_TYPE_DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
       (type === COMPOSER_TYPE_POST && (stripHtml(text).length > 0 || medias.length > 0 || hasPoll()))
     );
   };

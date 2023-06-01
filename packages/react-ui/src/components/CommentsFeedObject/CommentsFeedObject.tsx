@@ -171,25 +171,27 @@ export interface CommentsFeedObjectProps {
 }
 
 /**
- *> API documentation for the Community-JS Comments Object component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS Comments Feed Object component. Learn about the available props and the CSS API.
+ * <br/>This component renders a list of comment items.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CommentsFeedObject)
 
  #### Import
 
  ```jsx
- import {CommentsObject} from '@selfcommunity/react-ui';
+ import {CommentsFeedObject} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCCommentsObject` can be used when providing style overrides in the theme.
+ The name `SCCommentsFeedObject` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCommentsObject-root|Styles applied to the root element.|
- |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
- |noComments|.SCCommentsObject-no-comments|Styles applied to the 'no comments' section.|
+ |root|.SCCommentsFeedObject-root|Styles applied to the root element.|
+ |noComments|.SCCommentsFeedObject-no-comments|Styles applied to the 'no comments' section.|
+ |commentNotFound|.SCCommentsFeedObject-comment-not-found|Styles applied to the label 'Comment not found'.|
 
  * @param inProps
  */

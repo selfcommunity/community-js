@@ -110,7 +110,9 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY
 ];
 /**
- *> API documentation for the Community-JS Related FeedObjects component. Learn about the available props and the CSS API.
+ > API documentation for the Community-JS Related FeedObjects component. Learn about the available props and the CSS API.
+ *  <br/>This component renders a list of related feed objects (posts, discussions or statuses).
+ *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/RelatedFeedObjects)
 
  #### Import
 
@@ -126,11 +128,12 @@ const PREFERENCES = [
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryTrendingFeedWidget-root|Styles applied to the root element.|
- |title|.SCCategoryTrendingFeedWidget-title|Styles applied to the title element.|
- |noResults|.SCCategoryTrendingFeedWidget-no-results|Styles applied to no results section.|
- |followersItem|.SCCategoryTrendingFeedWidget-followers-item|Styles applied to follower item element.|
- |showMore|.SCCategoryTrendingFeedWidget-show-more|Styles applied to show more button element.|
+ |root|.SCRelatedFeedObjectsWidget-root|Styles applied to the root element.|
+ |title|.SCRelatedFeedObjectsWidget-title|Styles applied to the title element.|
+ |noResults|.SCRelatedFeedObjectsWidget-no-results|Styles applied to no results section.|
+ |showMore|.SCRelatedFeedObjectsWidget-show-more|Styles applied to show more button element.|
+ |dialogRoot|.SCRelatedFeedObjectsWidget-dialog-root|Styles applied to the dialog root element.|
+ |endMessage|.SCRelatedFeedObjectsWidget-end-message|Styles applied to the end message element.|
 
  *
  * @param inProps

@@ -113,7 +113,7 @@ export default function UserConnectionNotification(inProps: NotificationConnecti
           </Link>{' '}
           {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
             ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
-            : intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
+            : intl.formatMessage(messages.acceptConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
         </Typography>
       }
       secondary={

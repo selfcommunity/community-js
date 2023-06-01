@@ -71,7 +71,26 @@ const Root = styled(Autocomplete, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
-
+/**
+ * > API documentation for the Community-JS Category Autocomplete component. Learn about the available props and the CSS API.
+ * <br/>This component renders a bar that allows users to search (with autocomplete) for all the categories available in the application.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryAutocomplete)
+ *
+ * #### Import
+ *  ```jsx
+ *  import {CategoryAutocomplete} from '@selfcommunity/react-ui';
+ *  ```
+ *  #### Component Name
+ *  The name `SCCategoryAutocomplete` can be used when providing style overrides in the theme.
+ *
+ *  #### CSS
+ *
+ *  |Rule Name|Global class|Description|
+ *  |---|---|---|
+ *  |root|.SCCategoryAutocomplete-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element => {
   const props: CategoryAutocompleteProps = useThemeProps({
     props: inProps,

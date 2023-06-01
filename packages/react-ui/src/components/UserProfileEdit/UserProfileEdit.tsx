@@ -73,6 +73,8 @@ export interface UserProfileEditProps {
 /**
  *
  > API documentation for the Community-JS User Profile Edit component. Learn about the available props and the CSS API.
+ * <br/>This component renders a section composed of different tabs where the user can edit the settings about its public information, account and notifications.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserProfileEdit)
 
  #### Import
 
@@ -90,7 +92,8 @@ export interface UserProfileEditProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUserProfileEdit-root|Styles applied to the root element.|
- |field|.SCUserProfileEdit-field|Styles applied to the field element.|
+ |tabs|.SCUserProfileEdit-tabs|Styles applied to the tab elements.|
+ |tabsContent|.SCUserProfileEdit-tabs-content|Styles applied to tab content elements.|
 
  * @param inProps
  */

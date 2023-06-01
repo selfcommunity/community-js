@@ -47,7 +47,9 @@ export type BottomNavigationProps = MuiBottomNavigationProps;
 const PREFERENCES = [SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED, SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY];
 
 /**
- * > API documentation for the Community-JS BottomNavigation component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Bottom Navigation component. Learn about the available props and the CSS API.
+ * <br/>This component renders the bottom navigation bar when browsing from mobile.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/BottomNavigation)
 
  #### Import
 

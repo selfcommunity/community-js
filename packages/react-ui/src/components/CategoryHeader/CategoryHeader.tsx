@@ -65,6 +65,8 @@ export interface CategoryHeaderProps {
 
 /**
  *> API documentation for the Community-JS Category AppBar component. Learn about the available props and the CSS API.
+ * <br/>This component renders the top section for category pages.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryHeader)
  *
  #### Import
  ```jsx

@@ -54,7 +54,7 @@ export default function PrivateMessageThreadSkeleton(props): JSX.Element {
           ))}
         </List>
         <Box className={classes.editor}>
-          <Skeleton animation="wave" height={40} width={'100%'} variant={'rectangular'} />
+          <Skeleton animation="wave" height={55} width={'100%'} variant={'rectangular'} />
         </Box>
       </CardContent>
     </Root>

@@ -83,7 +83,8 @@ export interface UserFollowedCategoriesWidgetProps extends VirtualScrollerItemPr
 
 /**
  > API documentation for the Community-JS User Profile Categories Followed Widget component. Learn about the available props and the CSS API.
- > This component renders the list of the categories that the given user follows.
+ * <br/>This component renders the list of the categories that the given user follows.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowedCategories)
 
  #### Import
  ```jsx

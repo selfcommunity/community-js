@@ -96,7 +96,7 @@ const Component = {
           opacity: 1
         }
       },
-      '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search': {
+      '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search, &.SCFeedObject-share': {
         border: `0 none`,
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         borderRadius: 0,
@@ -379,6 +379,10 @@ const Component = {
       },
       '&.SCFeedObject-detail .SCFeedObject-reply-content': {
         borderBottom: '0 none'
+      },
+      '&.SCFeedObject-share': {
+        boxShadow: 'none',
+        border: '1px solid rgba(0, 0, 0, 0.12)'
       }
     })
   }

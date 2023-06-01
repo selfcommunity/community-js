@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import { CacheStrategies, isInteger, Logger } from "@selfcommunity/utils";
+import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -87,7 +87,9 @@ export interface CategoriesPopularWidgetProps extends VirtualScrollerItemProps, 
 
 /**
  > API documentation for the Community-JS Categories Popular widget component. Learn about the available props and the CSS API.
- *
+ * <br/>This component renders a list of popular categories.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoriesPopular) 
+ 
  #### Import
  ```jsx
  import {CategoriesPopular} from '@selfcommunity/react-ui';
@@ -104,8 +106,8 @@ export interface CategoriesPopularWidgetProps extends VirtualScrollerItemProps, 
  |title|.SCCategoriesPopularWidget-title|Styles applied to the title element.|
  |noResults|.SCCategoriesPopularWidget-no-results|Styles applied to no results section.|
  |showMore|.SCCategoriesPopularWidget-show-more|Styles applied to show more button element.|
- |dialogRoot|.SCCategoriesFollowedWidget-dialog-root|Styles applied to the root dialog element.|
- |endMessage|.SCCategoriesFollowedWidget-end-message|Styles applied to the end message element.|
+ |dialogRoot|.SCCategoriesPopularWidget-dialog-root|Styles applied to the root dialog element.|
+ |endMessage|.SCCategoriesPopularWidget-end-message|Styles applied to the end message element.|
 
  * @param inProps
  */

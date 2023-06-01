@@ -80,6 +80,8 @@ export interface CustomAdvProps extends VirtualScrollerItemProps {
 }
 /**
  > API documentation for the Community-JS CustomAdv component. Learn about the available props and the CSS API.
+ * <br/>This component renders custom adv banners.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CustomAdv)
  *
  #### Import
  ```jsx
@@ -93,7 +95,10 @@ export interface CustomAdvProps extends VirtualScrollerItemProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCustomAdv-root|Styles applied to the root element.|
+ |wrap|.SCCustomAdv-wrap|Styles applied to wrap an element.|
  |image|.SCCustomAdv-image|Styles applied to the image element.|
+ |embedCode|.SCCustomAdv-embed-code|Styles applied to the embed code section.|
+ |prefixedHeight|.SCCustomAdv-prefixed-height|Styles applied to handle a prefixed height.|
 
  * @param inProps
  */

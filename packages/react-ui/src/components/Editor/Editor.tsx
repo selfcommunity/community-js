@@ -123,6 +123,8 @@ export interface EditorProps {
 
 /**
  * > API documentation for the Community-JS Editor component. Learn about the available props and the CSS API.
+ *  <br/>This component renders a text editor.
+ *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Editor)
 
  #### Import
 
@@ -139,7 +141,10 @@ export interface EditorProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCEditor-root|Styles applied to the root element.|
+ |toolbar|.SCEditor-toolbar|Styles applied to the toolbar element.|
  |content|.SCEditor-content|Styles applied to the content element.|
+ |placeholder|.SCEditor-placeholder|Styles applied to the placeholder element.|
+ |actions|.SCEditor-actions|Styles applied to the actions section.|
 
  * @param inProps
  */

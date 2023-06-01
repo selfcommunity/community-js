@@ -58,7 +58,26 @@ export interface LocationAutocompleteProps
    */
   onChange?: (value: any) => void;
 }
-
+/**
+ * > API documentation for the Community-JS Location Autocomplete component. Learn about the available props and the CSS API.
+ * <br/>This component renders a bar that allows users to search (with autocomplete) for cities names.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/LocationAutocomplete)
+ *
+ * #### Import
+ *  ```jsx
+ *  import {LocationAutocomplete} from '@selfcommunity/react-ui';
+ *  ```
+ *  #### Component Name
+ *  The name `SCLocationAutocomplete` can be used when providing style overrides in the theme.
+ *
+ *  #### CSS
+ *
+ *  |Rule Name|Global class|Description|
+ *  |---|---|---|
+ *  |root|.SCLocationAutocomplete-root|Styles applied to the root element.|
+ *
+ * @param inProps
+ */
 export default function LocationAutocomplete(inProps: LocationAutocompleteProps): JSX.Element {
   // Props
   const props: LocationAutocompleteProps = useThemeProps({

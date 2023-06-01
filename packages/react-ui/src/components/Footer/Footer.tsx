@@ -46,6 +46,8 @@ export interface FooterProps {
 
 /**
  *> API documentation for the Community-JS Footer component. Learn about the available props and the CSS API.
+ * <br/>This component renders the application footer, which contains the links to reach specific sections, and the application copyright.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Footer)
  *
  #### Import
  ```jsx
@@ -77,7 +79,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const copyright = useMemo(() => {
     return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in scPreferences.preferences
-      ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value
+      ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value.replace('$year', new Date().getFullYear())
       : null;
   }, [scPreferences.preferences]);
 
@@ -125,9 +127,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
           </Button>
         ))}
       </Box>
-      <Typography textAlign="center" className={classes.copyright} variant="subtitle2">
-        {copyright}
-      </Typography>
+      <Typography textAlign="center" className={classes.copyright} variant="subtitle2" dangerouslySetInnerHTML={{__html: copyright}} />
     </Root>
   );
 }

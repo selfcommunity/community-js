@@ -74,12 +74,14 @@ export interface AccountResetProps {
 }
 
 /**
- * > API documentation for the Community-JS AccountVerify component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Account Reset component. Learn about the available props and the CSS API.
+ * <br/>This component allows users to log in to the application with their usernames and passwords.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountReset)
 
  #### Import
 
  ```jsx
- import {AccountVerify} from '@selfcommunity/react-ui';
+ import {AccountReset} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name

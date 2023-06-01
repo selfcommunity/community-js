@@ -39,6 +39,8 @@ export interface LoyaltyProgramWidgetProps {
 }
 /**
  * > API documentation for the Community-JS Loyalty Program Widget component. Learn about the available props and the CSS API.
+ * <br/>This component renders a widget containing the points earn by the user with the loyalty program.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/LoyaltyProgram)
 
  #### Import
 
@@ -78,7 +80,8 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
 
   // STATE
   const [points, setPoints] = useState<number>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   //MEMO
   const loyaltyEnabled = useMemo(
@@ -91,35 +94,31 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   /**
    * Fetches user loyalty points
    */
-  const fetchLP = useMemo(
-    () => () => {
-      if (loyaltyEnabled && scUserContext.user) {
-        setLoading(true);
-        http
-          .request({
-            url: Endpoints.GetUserLoyaltyPoints.url({id: scUserContext.user['id']}),
-            method: Endpoints.GetUserLoyaltyPoints.method
-          })
-          .then((res: HttpResponse<any>) => {
-            setPoints(res.data.points);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-            Logger.error(SCOPE_SC_UI, error);
-            console.log(error);
-          });
-      }
-    },
-    [scUserContext.user, loyaltyEnabled]
-  );
+  const fetchLP = () => {
+    http
+      .request({
+        url: Endpoints.GetUserLoyaltyPoints.url({id: scUserContext.user['id']}),
+        method: Endpoints.GetUserLoyaltyPoints.method
+      })
+      .then((res: HttpResponse<any>) => {
+        setPoints(res.data.points);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        Logger.error(SCOPE_SC_UI, error);
+        console.log(error);
+      });
+  };
 
   /**
    * On mount, fetches user loyalty points
    */
   useEffect(() => {
-    fetchLP();
-  }, []);
+    if (loyaltyEnabled && authUserId) {
+      fetchLP();
+    }
+  }, [authUserId, loyaltyEnabled]);
 
   /**
    * Rendering
