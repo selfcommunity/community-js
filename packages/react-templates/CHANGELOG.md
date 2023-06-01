@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.214](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.213...@selfcommunity/react-templates@0.3.0-alpha.214) (2023-06-01)
+
+
+### Bug Fixes
+
+* Fix widgets for anonymous users on UserProfile.tsx ([d970eb6](https://github.com/selfcommunity/community-js/commit/d970eb671389918d9fce60f771344b1b62c70d37))
+* notification accept connection request ([decf702](https://github.com/selfcommunity/community-js/commit/decf7023f32b47fef0511e9735dec33f7080f260))
+
+
+
+
+
 # [0.3.0-alpha.213](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.212...@selfcommunity/react-templates@0.3.0-alpha.213) (2023-05-31)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

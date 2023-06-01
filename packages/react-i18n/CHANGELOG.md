@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.24...@selfcommunity/react-i18n@0.5.0-alpha.25) (2023-06-01)
+
+
+### Bug Fixes
+
+* fixed italian translations ([7ed8220](https://github.com/selfcommunity/community-js/commit/7ed8220c13c902481af8e77b17a9683a0a65ee03))
+
+
+### Performance Improvements
+
+* cleaned translation files ([ea2cc2d](https://github.com/selfcommunity/community-js/commit/ea2cc2df3882cbce0ed558581c20f07cd9ae1a75))
+
+
+
+
+
 # [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.23...@selfcommunity/react-i18n@0.5.0-alpha.24) (2023-05-29)
 
 
