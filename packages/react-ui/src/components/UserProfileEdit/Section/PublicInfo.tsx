@@ -17,7 +17,7 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {parseISO} from 'date-fns';
+import {parseISO, isValid, format} from 'date-fns';
 
 const messages = defineMessages({
   genderMale: {
@@ -100,7 +100,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
       } catch (e) {
         Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
-        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
         return {};
       }
     }
@@ -108,7 +107,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   }, [scPreferences.preferences]);
 
   // STATE
-  const [user, setUser] = useState<SCUserType>({...scUserContext.user});
+  const [user, setUser] = useState<SCUserType>();
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([editingField] ?? []);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
@@ -118,7 +117,11 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
 
   // EFFECTS
   useDeepCompareEffectNoCheck(() => {
-    setUser(scUserContext.user);
+    if (scUserContext.user) {
+      setUser({...scUserContext.user});
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      return () => {};
+    }
   }, [scUserContext.user]);
 
   // HANDLERS
@@ -219,10 +222,18 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                 id: `ui.userInfo.${camelCase(field)}`,
                 defaultMessage: `ui.userInfo.${field}`
               })}
-              value={parseISO(user[field])}
+              defaultValue={user[field] ? parseISO(user[field]) : null}
               onChange={(newValue) => {
-                console.log(newValue.toJSON().split('T')[0]);
-                setUser({...user, [field]: newValue.toJSON().split('T')[0]}); // FIX for ensuring API format
+                const u = user;
+                try {
+                  // FIX for ensuring API format
+                  u[field] = isValid(newValue) ? format(newValue, 'yyyy-MM-dd') : null;
+                } catch (e) {
+                  u[field] = null;
+                  Logger.info(SCOPE_SC_UI, 'Invalid date for field date of birth');
+                  console.log(e);
+                }
+                setUser(u);
               }}
               disableFuture
               disabled={!isEditing || isSaving}
