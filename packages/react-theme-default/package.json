@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-theme-default",
-  "version": "0.1.0-alpha.173",
+  "version": "0.1.0-alpha.174",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -50,8 +50,8 @@
     "react-dom": "17 || 18"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.4.0-alpha.59",
-    "@selfcommunity/react-ui": "^0.7.0-alpha.224"
+    "@selfcommunity/react-core": "^0.4.0-alpha.60",
+    "@selfcommunity/react-ui": "^0.7.0-alpha.225"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
