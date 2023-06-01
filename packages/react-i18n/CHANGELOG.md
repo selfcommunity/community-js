@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.25...@selfcommunity/react-i18n@0.5.0-alpha.26) (2023-06-01)
+
+
+### Bug Fixes
+
+* fx transl ([627a6fe](https://github.com/selfcommunity/community-js/commit/627a6fe777d2a98dc8746d8609130f07e6e76f27))
+
+
+
+
+
 # [0.5.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.24...@selfcommunity/react-i18n@0.5.0-alpha.25) (2023-06-01)
 
 
