@@ -45,7 +45,7 @@ const Template: ComponentStory<typeof UserProfileTemplate> = (args) => {
 export const Main = Template.bind({});
 
 Main.args = {
-  userId: 32,
+  userId: 13,
   showSendPmButton: true
 };
 
