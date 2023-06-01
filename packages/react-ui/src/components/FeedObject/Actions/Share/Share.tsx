@@ -42,10 +42,6 @@ const messages = defineMessages({
   share: {
     id: 'ui.feedObject.share.share',
     defaultMessage: 'ui.feedObject.share.share'
-  },
-  shareInCategories: {
-    id: 'ui.feedObject.share.shareInCategories',
-    defaultMessage: 'ui.feedObject.share.shareInCategories'
   }
 });
 
@@ -299,14 +295,6 @@ export default function Share(inProps: ShareProps): JSX.Element {
           </ListItemIcon>
           <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
         </MenuItem>
-        {obj.categories.length > 0 && (
-          <MenuItem onClick={() => share(true)}>
-            <ListItemIcon>
-              <Icon fontSize="small">share</Icon>
-            </ListItemIcon>
-            <ListItemText primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})} />
-          </MenuItem>
-        )}
         {facebookShareEnabled && (
           <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
             <ListItemIcon>
