@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.172](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.171...@selfcommunity/react-theme-default@0.1.0-alpha.172) (2023-06-01)
+
+
+### Bug Fixes
+
+* Fix FeedObject share theme ([808937e](https://github.com/selfcommunity/community-js/commit/808937e67b2eb7128b88823c8f8fbf89b140435a))
+* Fix followers button styles ([3031000](https://github.com/selfcommunity/community-js/commit/30310001f833be4cea1db5e3e31d024004177d68))
+
+
+
+
+
 # [0.1.0-alpha.171](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.170...@selfcommunity/react-theme-default@0.1.0-alpha.171) (2023-05-31)
 
 

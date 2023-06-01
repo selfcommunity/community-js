@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.223](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.222...@selfcommunity/react-ui@0.7.0-alpha.223) (2023-06-01)
+
+
+### Bug Fixes
+
+* Fix Change password submit button behaviour after errors from server ([e5e913a](https://github.com/selfcommunity/community-js/commit/e5e913a12977fdf26914ce3179713069d3c51da7))
+* Fix Composer.tsx title length check for submit button ([1f042a8](https://github.com/selfcommunity/community-js/commit/1f042a8c684cc2d1f1f38eb21f9458d44dbe2b95))
+* Fix Footer.tsx text replacement ([eb198be](https://github.com/selfcommunity/community-js/commit/eb198beb7393d91bab8a8e558a1de0bf94cfc8c0))
+* form edit date ([d125341](https://github.com/selfcommunity/community-js/commit/d125341bee3786729cdbd0ec26c25203cadd2f67))
+* LoyaltyProgramWidget loading snap, lengthened pm editor in thread component skeleton ([edff05b](https://github.com/selfcommunity/community-js/commit/edff05b96c7b006f15cd845c8ccf1243b3dac463))
+* notification accept connection request ([decf702](https://github.com/selfcommunity/community-js/commit/decf7023f32b47fef0511e9735dec33f7080f260))
+* notification links ([1b1f954](https://github.com/selfcommunity/community-js/commit/1b1f954cd59028931fadca8397d94adb30e03adb))
+
+
+### Performance Improvements
+
+* cleaned translation files ([ea2cc2d](https://github.com/selfcommunity/community-js/commit/ea2cc2df3882cbce0ed558581c20f07cd9ae1a75))
+* fixed comments for doc(react-ui) ([46cfd30](https://github.com/selfcommunity/community-js/commit/46cfd30a4a07f3822d920f10d5b66d8c55d37b79))
+
+
+
+
+
 # [0.7.0-alpha.222](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.221...@selfcommunity/react-ui@0.7.0-alpha.222) (2023-05-31)
 
 
