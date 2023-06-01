@@ -133,6 +133,8 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
     setField((prev) => ({...prev, [name]: value}));
     if (!value) {
       setError((prev) => ({...prev, [name]: value}));
+    } else {
+      setError((prev) => ({...prev, [name]: ''}));
     }
   };
   const handleEmailBlur = (e) => {

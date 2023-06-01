@@ -5,7 +5,7 @@ import SearchDialog from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Search Autocomplete',
+  title: 'Design System/React UI/Search Dialog',
   component: SearchDialog
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof SearchDialog>;
@@ -22,4 +22,5 @@ export const Base = Template.bind({});
 
 Base.args = {
   /* the args you need here will depend on your component */
+  open: true
 };

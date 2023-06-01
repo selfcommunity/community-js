@@ -10,7 +10,10 @@ const Component = {
         '&.MuiAvatar-colorDefault': {
           marginLeft: 0,
           backgroundColor: 'transparent',
-          color: theme.palette.primary.main
+          color: theme.palette.primary.main,
+          border: '0 none',
+          borderRadius: 0,
+          padding: 1
         }
       }
     })

@@ -85,7 +85,7 @@ export function getRouteData(obj) {
     if (obj.type === SCContributionType.DISCUSSION || obj.type === SCContributionType.POST || obj.type === SCContributionType.STATUS) {
       data = {
         ...obj,
-        contributionType: obj.type,
+        contribution_type: obj.type,
         contribution_id: obj.id,
         contribution_slug: obj.slug
       };
@@ -94,7 +94,7 @@ export function getRouteData(obj) {
       const isContributionTypeObj = obj[contributionType] && typeof obj[contributionType] === 'object';
       data = {
         ...obj,
-        contributionType,
+        contribution_type: contributionType,
         contribution_id: isContributionTypeObj ? obj[contributionType].id : obj[contributionType],
         contribution_slug: isContributionTypeObj ? obj[contributionType].slug : contributionType
       };

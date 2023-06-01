@@ -249,11 +249,9 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   // Utils
   const getWidgets = () => {
     let _widgets = [];
-    if (!scUserContext.user) {
-      _widgets = [];
-    } else if (followEnabled) {
+    if (followEnabled) {
       _widgets = [...WIDGETS_FOLLOWERS];
-    } else if (!followEnabled && scUserContext.user.id === scUser.id) {
+    } else if (!followEnabled && scUserContext?.user?.id === scUser.id) {
       _widgets = [...WIDGETS_CONNECTIONS, ...WIDGETS_CONNECTIONS_MY_PROFILE];
     } else {
       _widgets = [...WIDGETS_CONNECTIONS];
