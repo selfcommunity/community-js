@@ -1097,7 +1097,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               {currentActionLoading === SUSPEND_NOTIFICATION_CONTRIBUTION ? (
                 <CircularProgress size={20} />
               ) : contributionObj['suspended'] ? (
-                <Icon>notifications</Icon>
+                <Icon>notifications_active</Icon>
               ) : (
                 <Icon>notifications_off</Icon>
               )}
