@@ -222,20 +222,6 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
 
   // HANDLERS
   /**
-   * Handles list change on user connect
-   */
-  const handleConnect = useMemo(
-    () =>
-      (user): void => {
-        dispatch({
-          type: actionWidgetTypes.SET_RESULTS,
-          payload: {results: state.results.filter((u) => u.id !== user.id), count: state.count - 1}
-        });
-      },
-    [dispatch, state.count, state.results.length]
-  );
-
-  /**
    * Handles pagination
    */
   const handleNext = useMemo(
@@ -278,14 +264,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
           <List>
             {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
               <ListItem key={user.id}>
-                <User
-                  elevation={0}
-                  user={user}
-                  {...(followEnabled
-                    ? {followConnectUserButtonProps: {onFollow: handleConnect}}
-                    : {followConnectUserButtonProps: {onChangeConnectionStatus: handleConnect}})}
-                  {...UserProps}
-                />
+                <User elevation={0} user={user} {...UserProps} />
               </ListItem>
             ))}
           </List>
@@ -317,14 +296,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User
-                    elevation={0}
-                    user={user}
-                    {...(followEnabled
-                      ? {followConnectUserButtonProps: {onFollow: handleConnect}}
-                      : {followConnectUserButtonProps: {onChangeConnectionStatus: handleConnect}})}
-                    {...UserProps}
-                  />
+                  <User elevation={0} user={user} {...UserProps} />
                 </ListItem>
               ))}
             </List>
