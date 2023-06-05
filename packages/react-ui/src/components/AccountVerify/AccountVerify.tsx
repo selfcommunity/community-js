@@ -93,7 +93,6 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
   const {className, onSuccess = null, validationCode, successAction = null, ...rest} = props;
 
   // STATE
-  const [isValidating, setIsValidating] = useState<boolean>(true);
   const [succeed, setSucceed] = useState<boolean | string>(false);
   const [error, setError] = useState<boolean>(false);
 
@@ -102,15 +101,16 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
 
   // EFFECTS
   useEffect(() => {
-    setIsValidating(true);
+    if (!validationCode) {
+      return;
+    }
     setError(false);
     AccountService.verify({validation_code: validationCode})
       .then((res: any) => {
         setSucceed(res.token ? true : res.user_awaiting_approval);
         onSuccess && onSuccess(res);
       })
-      .catch(() => setError(true))
-      .then(() => setIsValidating(false));
+      .catch(() => setError(true));
   }, [validationCode]);
 
   if (scUserContext.user !== null) {
