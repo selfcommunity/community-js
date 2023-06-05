@@ -264,6 +264,8 @@
   "ui.feedObject.sharesDialog.title": "Condivisioni",
   "ui.feedObject.unfollow": "Non seguire più",
   "ui.feedObject.visibleToAll": "Visibile a tutti",
+  "ui.feedObject.notificationsEnabled": "Le notifiche di questo contributo sono state abilitate",
+  "ui.feedObject.notificationsDisabled": "Le notifiche di questo contributo sono state disabilitate",
   "ui.feedUpdatesWidget.message": "C'è un aggiornamento per te!",
   "ui.feedUpdatesWidget.reload": "Aggiorna",
   "ui.followCategoryButton.follow": "Segui",
