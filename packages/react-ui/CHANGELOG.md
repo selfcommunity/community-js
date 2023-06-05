@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.226](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.225...@selfcommunity/react-ui@0.7.0-alpha.226) (2023-06-05)
+
+
+### Bug Fixes
+
+* disable feedObject notifications ([c042cf3](https://github.com/selfcommunity/community-js/commit/c042cf3a9223687a588ce64ab936e75ad9cf980c))
+* Fix default avatar url ([5b9dce9](https://github.com/selfcommunity/community-js/commit/5b9dce92ff2a95f6ea80406f081eb7e7cedf98e6))
+* Fix notifications item style ([3fdf51e](https://github.com/selfcommunity/community-js/commit/3fdf51e6a002982f878e7c6807e31bb72455d706))
+* suggestion widgets ([5509f49](https://github.com/selfcommunity/community-js/commit/5509f49f6bb7638ea8ac43de21b465d1743ee080))
+
+
+### Performance Improvements
+
+* Removed link from Categories list ([1026da4](https://github.com/selfcommunity/community-js/commit/1026da405f18cc718cbabaaa84cc595ce5601480))
+
+
+
+
+
 # [0.7.0-alpha.225](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.224...@selfcommunity/react-ui@0.7.0-alpha.225) (2023-06-01)
 
 
