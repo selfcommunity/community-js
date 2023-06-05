@@ -374,7 +374,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
           <Skeleton elevation={0} />
         ) : (
           <ScrollContainer {...ScrollContainerProps}>
-            <MenuList className={classes.list}>
+            <MenuList className={classes.list} disabledItemsFocusable disableListWrap>
               {scUserContext.user.unseen_notification_banners_counter ? (
                 <MenuItem
                   className={classNames(classes.item, classes.broadcastMessagesBanner)}
@@ -410,7 +410,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
               ) : (
                 notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
                   notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                    <MenuItem className={classes.item} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
+                    <MenuItem className={classes.item} key={k} onClick={(e) => handleSingleNotificationClick(e, n)} disableRipple disableTouchRipple>
                       {renderAggregatedItem(n, i)}
                     </MenuItem>
                   ))

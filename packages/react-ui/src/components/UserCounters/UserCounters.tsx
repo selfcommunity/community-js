@@ -97,6 +97,10 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
   // HOOKS
   const {scUser} = useSCFetchUser({id: userId, user});
 
+  if (!scUser) {
+    return null;
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {followEnabled ? (

@@ -21,7 +21,8 @@ const Component = {
             minHeight: theme.spacing(3)
           },
           '& a': {
-            textDecoration: 'none'
+            textDecoration: 'none',
+            color: theme.palette.text.primary
           }
         }
       },

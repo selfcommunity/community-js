@@ -5,7 +5,7 @@ import { DEFAULT_FIELDS } from '../../constants/UserProfile';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/UserCounters ',
+  title: 'Design System/React UI/User Info ',
   component: UserInfo,
   argTypes: {
     userId: {
