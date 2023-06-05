@@ -205,16 +205,26 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   // HANDLERS
   /**
    * Handles list change on category follow
+   * !important: don't remove the category from the list after follow for the
+   * way backend side results are generated
    */
   const handleFollow = useMemo(
     () =>
       (category): void => {
-        dispatch({
-          type: actionWidgetTypes.SET_RESULTS,
-          payload: {results: state.results.filter((c) => c.id !== category.id), count: state.count - 1}
-        });
+        const newCategories = [...state.results];
+        const index = newCategories.findIndex((u) => u.id === category.id);
+        if (index !== -1) {
+          if (category.followed) {
+            newCategories[index].followers_counter = category.followers_counter - 1;
+            newCategories[index].followed = !category.followed;
+          } else {
+            newCategories[index].followers_counter = category.followers_counter + 1;
+            newCategories[index].followed = !category.followed;
+          }
+          dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newCategories}});
+        }
       },
-    [dispatch, state.count, state.results.length]
+    [dispatch, state.count, state.results]
   );
 
   /**

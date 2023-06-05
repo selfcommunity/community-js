@@ -2,13 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-import {
-  SCCommentType,
-  SCContributionType,
-  SCFeedObjectType,
-  SCNotificationCommentType,
-  SCNotificationTypologyType,
-} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCNotificationCommentType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Bullet from '../../../shared/Bullet';
 import DateTimeAgo from '../../../shared/DateTimeAgo';

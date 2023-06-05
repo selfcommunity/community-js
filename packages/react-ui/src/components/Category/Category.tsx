@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
@@ -103,6 +103,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     autoHide = false,
     followCategoryButtonProps = {},
     showFollowers = true,
+    ButtonBaseProps = null,
     ...rest
   } = props;
 
@@ -111,6 +112,12 @@ export default function Category(inProps: CategoryProps): JSX.Element {
 
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
+
+  // MEMO
+  const _ButtonBaseProps = useMemo(
+    () => (ButtonBaseProps ? ButtonBaseProps : {component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}),
+    [ButtonBaseProps, scRoutingContext, scCategory]
+  );
 
   // INTL
   const intl = useIntl();
@@ -125,7 +132,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
       <Root
         elevation={elevation}
         className={classNames(classes.root, className)}
-        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}}
+        ButtonBaseProps={_ButtonBaseProps}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
         primary={scCategory.name}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}

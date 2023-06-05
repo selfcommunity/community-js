@@ -469,6 +469,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleSuspendNotification = useCallback(() => {
     updateObject(Object.assign({}, obj, {suspended: !obj.suspended}));
+    enqueueSnackbar(
+      obj.suspended ? (
+        <FormattedMessage id="ui.feedObject.notificationsEnabled" defaultMessage="ui.feedObject.notificationsEnabled" />
+      ) : (
+        <FormattedMessage id="ui.feedObject.notificationsDisabled" defaultMessage="ui.feedObject.notificationsDisabled" />
+      ),
+      {
+        autoHideDuration: 3000
+      }
+    );
   }, [obj]);
 
   /**

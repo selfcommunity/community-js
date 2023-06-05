@@ -133,7 +133,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
     if (scUser.id === scUserContext.user.id && avatar) {
       setSCUser(Object.assign({}, scUser, {avatar: avatar.avatar}));
     } else {
-      setSCUser(Object.assign({}, scUser, {avatar: `${scContext.settings.portal}/avatar/${scUser.username}`}));
+      setSCUser(Object.assign({}, scUser, {avatar: `${scContext.settings.portal}/api/v2/avatar/${scUser.id}`}));
     }
   }
 

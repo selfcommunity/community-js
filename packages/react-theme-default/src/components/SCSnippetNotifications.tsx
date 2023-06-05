@@ -4,6 +4,10 @@ const Component = {
       '& .SCSnippetNotifications-item': {
         padding: 0,
         marginBottom: theme.spacing(),
+        '&:hover': {
+          backgroundColor: 'transparent',
+          cursor: 'default'
+        },
         '& .SCNotificationItem-root': {
           backgroundColor: 'transparent',
           borderRadius: 0,
