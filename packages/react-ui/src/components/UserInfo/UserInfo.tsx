@@ -107,7 +107,7 @@ export interface UserInfoProps {
  #### Import
 
  ```jsx
- import {UserCounters} from '@selfcommunity/react-ui';
+ import {UserInfo} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
