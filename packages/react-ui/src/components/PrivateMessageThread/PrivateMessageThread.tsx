@@ -203,7 +203,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+    messagesEndRef.current?.scrollIntoView({block: 'end', behavior: 'instant'});
   };
   // UTILS
   const format = (item) =>
@@ -465,6 +465,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             setRecipients([]);
             onNewMessageSent(res.data[0], isOne);
           }
+          scrollToBottom();
         })
         .catch((error) => {
           console.log(error);
@@ -503,10 +504,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     userObj && fetchThread();
   }, [userObj, authUserId, scUser]);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messageObjs]);
-
   /**
    * Notification subscriber
    */
@@ -521,8 +518,10 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     if (index !== -1) {
       setMessageObjs((prev) => [...prev, res.notification_obj.message]);
     }
+    if (isNumber ? userObj === res.thread_id : userObj.id === res.thread_id) {
+      scrollToBottom();
+    }
   };
-
   /**
    * When a ws notification arrives, updates thread and snippets data
    */
@@ -545,7 +544,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       return <PrivateMessageThreadSkeleton />;
     }
     return (
-      <CardContent ref={messagesEndRef}>
+      <CardContent>
         <InfiniteScroll
           height={'100%'}
           dataLength={messageObjs.length}
@@ -553,7 +552,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           inverse={true}
           hasMorePrevious={Boolean(previous)}
           loaderPrevious={<PrivateMessageThreadItemSkeleton />}>
-          <List>
+          <List ref={messagesEndRef}>
             {Object.keys(formattedMessages).map((key) => (
               <li key={key} className={classes.section}>
                 <ul>
