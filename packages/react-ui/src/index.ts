@@ -152,7 +152,7 @@ import CentralProgress from './shared/CentralProgress';
 import {bytesToSize} from './utils/sizeCoverter';
 import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
-
+import {getRelativeTime} from './utils/formatRelativeTime';
 /**
  * List all exports
  */
@@ -416,6 +416,7 @@ export {
   getUnseenNotification,
   getUnseenNotificationCounter,
   MessageUploaderUtils,
+  getRelativeTime,
   Footer,
   FooterProps,
   FooterSkeleton,
