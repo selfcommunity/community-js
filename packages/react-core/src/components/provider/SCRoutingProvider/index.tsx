@@ -88,7 +88,7 @@ export default function SCRoutingProvider({children = null}: {children: React.Re
           scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS].value
         ),
         [USER_NOTIFICATIONS_ROUTE_NAME]: normalizeUrl(
-          scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS].value
+          scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_NOTIFICATIONS].value
         ),
         [USER_PRIVATE_MESSAGES_ROUTE_NAME]: normalizeUrl(
           scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES].value

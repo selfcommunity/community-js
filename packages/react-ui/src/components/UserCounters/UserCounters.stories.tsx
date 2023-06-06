@@ -10,7 +10,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: 1}}
     }
   },
   args: {
@@ -29,5 +29,5 @@ const Template: ComponentStory<typeof UserCounters> = (args) => (
 export const Base = Template.bind({});
 
 Base.args = {
-  /* the args you need here will depend on your component */
+  userId: 1
 };

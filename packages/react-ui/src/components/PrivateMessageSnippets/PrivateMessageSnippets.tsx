@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField} from '@mui/material';
+import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField, useTheme} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageSnippetsSkeleton from './Skeleton';
@@ -8,9 +8,10 @@ import PrivateMessageSnippetItem from '../PrivateMessageSnippetItem';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserContext, SCUserContextType, useSCFetchPrivateMessageSnippets} from '@selfcommunity/react-core';
+import {SCThemeType, SCUserContext, SCUserContextType, useSCFetchPrivateMessageSnippets} from '@selfcommunity/react-core';
 import {CacheStrategies} from '@selfcommunity/utils';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const messages = defineMessages({
   placeholder: {
@@ -109,6 +110,8 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   const {className = null, userObj = null, snippetActions, clearSearch, ...rest} = props;
 
   // STATE
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {data, updateSnippets} = useSCFetchPrivateMessageSnippets({cacheStrategy: CacheStrategies.CACHE_FIRST});
   const [search, setSearch] = useState<string>('');
   const isObj = typeof userObj === 'object';
@@ -190,7 +193,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
         );
         if (idx !== -1) {
           temp[idx].headline = m.message;
-          temp[idx].thread_status = m.status;
+          temp[idx].thread_status = m.status === SCPrivateMessageStatusType.NEW ? m.status : m.thread_status;
           const element = temp.splice(idx, 1)[0];
           temp.unshift(element);
         } else {
@@ -227,7 +230,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   }, [clearSearch]);
 
   /**
-   * Thread/ Private Message Component subscribtions handlers
+   * Thread/ Private Message Component subscriptions handlers
    */
   useEffect(() => {
     const threadSubscriber = PubSub.subscribe('snippetsChannel', (msg, data) => {
@@ -291,10 +294,19 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                   key={message.id}
                   onItemClick={() => handleOpenThread(message)}
                   secondaryAction={
-                    <PrivateMessageSettingsIconButton
-                      threadToDelete={messageReceiver(message, authUserId)}
-                      onItemDeleteConfirm={() => handleDeleteConversation(messageReceiver(message, authUserId))}
-                    />
+                    <>
+                      {message.thread_status === SCPrivateMessageStatusType.NEW && (
+                        <Icon fontSize="small" color="secondary">
+                          fiber_manual_record
+                        </Icon>
+                      )}
+                      {!isMobile && (
+                        <PrivateMessageSettingsIconButton
+                          threadToDelete={messageReceiver(message, authUserId)}
+                          onItemDeleteConfirm={() => handleDeleteConversation(messageReceiver(message, authUserId))}
+                        />
+                      )}
+                    </>
                   }
                   selected={
                     userObj !== SCPrivateMessageStatusType.NEW &&

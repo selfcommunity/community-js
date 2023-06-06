@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useMemo} from 'react';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {useIntl} from 'react-intl';
+import {intlFormatDistance} from 'date-fns';
 import classNames from 'classnames';
-import moment from 'moment';
 
 const PREFIX = 'SCDateTimeAgo';
 
@@ -68,10 +68,8 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
 
-  useEffect(() => {
-    if (moment.locale() !== scContext.settings.locale.default) {
-      moment.locale(scContext.settings.locale.default);
-    }
+  const _locale = useMemo(() => {
+    return scContext.settings.locale.default;
   }, [scContext.settings.locale.default]);
 
   // INTL
@@ -89,7 +87,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
           title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}
           enterTouchDelay={0}>
           <Typography variant={'body2'} component={'span'}>
-            {moment(date).fromNow()}
+            {intlFormatDistance(new Date(date), new Date(), {locale: _locale})}
           </Typography>
         </Tooltip>
       </Root>

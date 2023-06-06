@@ -1,14 +1,12 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, useTheme, ListItem} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
-import {SCPrivateMessageSnippetType} from '@selfcommunity/types';
-import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextType, useSCPreferences, SCThemeType} from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
+import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
+import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 const PREFIX = 'SCPrivateMessageSnippetItem';
 
@@ -17,7 +15,8 @@ const classes = {
   username: `${PREFIX}-username`,
   badgeLabel: `${PREFIX}-badge-label`,
   time: `${PREFIX}-time`,
-  menuItem: `${PREFIX}-menu-item`
+  menuItem: `${PREFIX}-menu-item`,
+  unread: `${PREFIX}-unread`
 };
 
 const Root = styled(ListItem, {
@@ -78,6 +77,7 @@ export interface PrivateMessageSnippetItemProps {
  |badgeLabel|.SCPrivateMessageSnippetItem-badgeLabel|Styles applied to the badgeLabel element.|
  |time|.SCPrivateMessageSnippetItem-time|Styles applied to the time element.|
  |menuItem|.SCPrivateMessageSnippetItem-menu-item|Styles applied to the menu item element.|
+ |unread|.SCPrivateMessageSnippetItem-unread|Styles applied to snippet item if there's an unread message.|
 
  * @param inProps
  */
@@ -102,9 +102,6 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
   const intl = useIntl();
 
   // STATE
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isNew = message ? message.thread_status === 'new' : null;
   const hasBadge = message?.receiver.community_badge;
 
   if (!message) {
@@ -115,8 +112,10 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
    * Renders root object
    */
   return (
-    <Root className={classNames(classes.root, className)} {...rest} secondaryAction={!isMobile && secondaryAction} disablePadding>
-      <ListItemButton onClick={onItemClick}>
+    <Root className={classNames(classes.root, className)} {...rest} secondaryAction={secondaryAction} disablePadding>
+      <ListItemButton
+        onClick={onItemClick}
+        classes={{root: classNames({[classes.unread]: message.thread_status === SCPrivateMessageStatusType.NEW})}}>
         <ListItemAvatar>
           {scUserContext?.user?.username === message.receiver.username ? (
             <Avatar alt={message.sender.username} src={message.sender.avatar} />
@@ -134,19 +133,15 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
                 <Chip component="span" className={classes.badgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
               )}
               <Typography color="secondary" className={classes.time} component="span">{`${intl.formatDate(message.last_message_at, {
-                weekday: 'long',
-                day: 'numeric'
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
               })}`}</Typography>
             </>
           }
           secondary={
             <>
               <Typography component="span" color="text.secondary" dangerouslySetInnerHTML={{__html: message.headline ?? message.message}} />
-              {isNew && (
-                <Icon fontSize="small" color="secondary">
-                  fiber_manual_record
-                </Icon>
-              )}
             </>
           }
         />

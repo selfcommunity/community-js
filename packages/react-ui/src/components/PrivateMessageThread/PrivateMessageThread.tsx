@@ -198,8 +198,13 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // HOOKS
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const {scUser} = useSCFetchUser({id: userObj, userObj});
+  const {scUser} = useSCFetchUser({id: isNumber ? userObj : null, userObj});
 
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({block: 'end', behavior: 'instant'});
+  };
   // UTILS
   const format = (item) =>
     intl.formatDate(item.created_at, {
@@ -460,6 +465,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             setRecipients([]);
             onNewMessageSent(res.data[0], isOne);
           }
+          scrollToBottom();
         })
         .catch((error) => {
           console.log(error);
@@ -504,12 +510,18 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const subscriber = (msg, data) => {
     const res = data.data;
     const newMessages = [...messageObjs];
-    const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
+    const index = newMessages.findIndex((m) => m.thread_id === res.thread_id);
+    const _message = res.notification_obj.message;
+    _message.receiver = res.notification_obj.snippet.receiver;
+    _message.thread_status = res.notification_obj.snippet.thread_status;
+    handleSnippetsUpdate([_message]);
     if (index !== -1) {
       setMessageObjs((prev) => [...prev, res.notification_obj.message]);
     }
+    if (isNumber ? userObj === res.thread_id : userObj.id === res.thread_id) {
+      scrollToBottom();
+    }
   };
-
   /**
    * When a ws notification arrives, updates thread and snippets data
    */
@@ -540,7 +552,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           inverse={true}
           hasMorePrevious={Boolean(previous)}
           loaderPrevious={<PrivateMessageThreadItemSkeleton />}>
-          <List>
+          <List ref={messagesEndRef}>
             {Object.keys(formattedMessages).map((key) => (
               <li key={key} className={classes.section}>
                 <ul>
