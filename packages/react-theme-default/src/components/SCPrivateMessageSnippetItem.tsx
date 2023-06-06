@@ -2,6 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       borderRadius: theme.spacing(1.5),
+      padding: `${theme.spacing(0)}!important`,
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
       marginBottom: theme.spacing(1),
       '& .SCPrivateMessageSnippetItem-time': {
@@ -9,12 +10,9 @@ const Component = {
         fontSize: theme.typography.fontWeightRegular
       },
       '& .MuiListItemButton-root': {
-        [theme.breakpoints.up('sm')]: {
-          '&.SCPrivateMessageSnippetItem-unread': {paddingRight: theme.spacing(7)},
-          paddingRight: theme.spacing(4)
-        },
-        [theme.breakpoints.down('sm')]: {
-          '&.SCPrivateMessageSnippetItem-unread': {paddingRight: theme.spacing(3)},
+        '&.SCPrivateMessageSnippetItem-unread': {paddingRight: theme.spacing(7.5)},
+        [theme.breakpoints.down('md')]: {
+          '&.SCPrivateMessageSnippetItem-unread': {paddingRight: theme.spacing(5)},
           paddingRight: theme.spacing(2)
         }
       },
@@ -42,9 +40,15 @@ const Component = {
         alignItems: 'center',
         position: 'absolute',
         top: theme.spacing(3),
-        right: theme.spacing(0.5),
+        right: theme.spacing(1),
         '& .MuiButtonBase-root': {
           fontSize: '1rem'
+        },
+        [theme.breakpoints.down('md')]: {
+          padding: theme.spacing(1)
+        },
+        ' .MuiPaper-root': {
+          padding: 0
         }
       }
     })

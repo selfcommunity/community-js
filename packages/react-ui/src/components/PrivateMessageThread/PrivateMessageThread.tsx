@@ -198,8 +198,13 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // HOOKS
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const {scUser} = useSCFetchUser({id: userObj, userObj});
+  const {scUser} = useSCFetchUser({id: isNumber ? userObj : null, userObj});
 
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+  };
   // UTILS
   const format = (item) =>
     intl.formatDate(item.created_at, {
@@ -498,13 +503,21 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     userObj && fetchThread();
   }, [userObj, authUserId, scUser]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageObjs]);
+
   /**
    * Notification subscriber
    */
   const subscriber = (msg, data) => {
     const res = data.data;
     const newMessages = [...messageObjs];
-    const index = newMessages.findIndex((m) => m.sender.id === res.notification_obj.message.sender.id);
+    const index = newMessages.findIndex((m) => m.thread_id === res.thread_id);
+    const _message = res.notification_obj.message;
+    _message.receiver = res.notification_obj.snippet.receiver;
+    _message.thread_status = res.notification_obj.snippet.thread_status;
+    handleSnippetsUpdate([_message]);
     if (index !== -1) {
       setMessageObjs((prev) => [...prev, res.notification_obj.message]);
     }
@@ -532,7 +545,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       return <PrivateMessageThreadSkeleton />;
     }
     return (
-      <CardContent>
+      <CardContent ref={messagesEndRef}>
         <InfiniteScroll
           height={'100%'}
           dataLength={messageObjs.length}

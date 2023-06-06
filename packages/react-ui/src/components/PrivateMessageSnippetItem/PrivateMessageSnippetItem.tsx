@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
-import {SCPrivateMessageSnippetType} from '@selfcommunity/types';
+import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -113,7 +113,9 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest} secondaryAction={secondaryAction} disablePadding>
-      <ListItemButton onClick={onItemClick} classes={{root: classNames({[classes.unread]: message.thread_status === 'new'})}}>
+      <ListItemButton
+        onClick={onItemClick}
+        classes={{root: classNames({[classes.unread]: message.thread_status === SCPrivateMessageStatusType.NEW})}}>
         <ListItemAvatar>
           {scUserContext?.user?.username === message.receiver.username ? (
             <Avatar alt={message.sender.username} src={message.sender.avatar} />

@@ -111,6 +111,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
 
   const handleOpenDialog = () => {
     setOpenConfirmDialog(true);
+    setAnchorEl(null);
   };
   const handleCloseDialog = () => {
     setOpenConfirmDialog(false);

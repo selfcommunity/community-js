@@ -193,7 +193,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
         );
         if (idx !== -1) {
           temp[idx].headline = m.message;
-          temp[idx].thread_status = m.status;
+          temp[idx].thread_status = m.status === SCPrivateMessageStatusType.NEW ? m.status : m.thread_status;
           const element = temp.splice(idx, 1)[0];
           temp.unshift(element);
         } else {
@@ -295,7 +295,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                   onItemClick={() => handleOpenThread(message)}
                   secondaryAction={
                     <>
-                      {message.thread_status === 'new' && (
+                      {message.thread_status === SCPrivateMessageStatusType.NEW && (
                         <Icon fontSize="small" color="secondary">
                           fiber_manual_record
                         </Icon>
