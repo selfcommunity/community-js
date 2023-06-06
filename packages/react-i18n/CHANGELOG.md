@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.28...@selfcommunity/react-i18n@0.5.0-alpha.29) (2023-06-06)
+
+
+### Bug Fixes
+
+* fixed new message icon position, translations. Asana issues: ([637cffb](https://github.com/selfcommunity/community-js/commit/637cffb78276203de6a0f3dd7c764812379d8140))
+
+
+
+
+
 # [0.5.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.27...@selfcommunity/react-i18n@0.5.0-alpha.28) (2023-06-05)
 
 

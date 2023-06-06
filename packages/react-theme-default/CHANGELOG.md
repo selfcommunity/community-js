@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.175...@selfcommunity/react-theme-default@0.1.0-alpha.176) (2023-06-06)
+
+
+### Bug Fixes
+
+* fixed new message icon position, translations. Asana issues: ([637cffb](https://github.com/selfcommunity/community-js/commit/637cffb78276203de6a0f3dd7c764812379d8140))
+* fixed private messages. (pubsub update, scroll bottom when e new message is sent, snippet menu button overlap) ([77edd3c](https://github.com/selfcommunity/community-js/commit/77edd3cb7a9cb8554a07eafa30c0cc4d32e764c1))
+
+
+
+
+
 # [0.1.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.174...@selfcommunity/react-theme-default@0.1.0-alpha.175) (2023-06-05)
 
 

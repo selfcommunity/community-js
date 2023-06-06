@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.226...@selfcommunity/react-ui@0.7.0-alpha.227) (2023-06-06)
+
+
+### Bug Fixes
+
+* Fix account verify loader ([3977119](https://github.com/selfcommunity/community-js/commit/3977119b66d6b6cf2a4ec23a179eb8d70a20ae20))
+* fixed new message icon position, translations. Asana issues: ([637cffb](https://github.com/selfcommunity/community-js/commit/637cffb78276203de6a0f3dd7c764812379d8140))
+* fixed private messages. (pubsub update, scroll bottom when e new message is sent, snippet menu button overlap) ([77edd3c](https://github.com/selfcommunity/community-js/commit/77edd3cb7a9cb8554a07eafa30c0cc4d32e764c1))
+* fixed scroll, removed moment for relative datetime ([6a94db8](https://github.com/selfcommunity/community-js/commit/6a94db89cd863554f351f379b362e86ebc2fbe13))
+* UserCounters ([27b7dca](https://github.com/selfcommunity/community-js/commit/27b7dca9a5cd3f96abf343922e952e360bfa8082))
+
+
+
+
+
 # [0.7.0-alpha.226](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.225...@selfcommunity/react-ui@0.7.0-alpha.226) (2023-06-05)
 
 
