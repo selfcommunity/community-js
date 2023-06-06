@@ -318,6 +318,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/hidden_users/'),
     method: 'GET'
   },
+  ListHiddenUsersId: {
+    url: urlReplacer('/api/v2/user/hidden_users_id/'),
+    method: 'GET'
+  },
   UserAutocomplete: {
     url: urlReplacer('/api/v2/user/autocomplete/'),
     method: 'GET'

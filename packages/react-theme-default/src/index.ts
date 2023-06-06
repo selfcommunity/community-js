@@ -92,6 +92,7 @@ import SCUserInfoDialog from './components/SCUserInfoDialog';
 import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
+import SCUserProfileBlocked from './components/SCUserProfileBlocked';
 import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
@@ -250,6 +251,7 @@ const theme = {
     SCUser,
     SCUserActionIconButton,
     SCUserCounters,
+    SCUserProfileBlocked,
     SCUserInfo,
     SCUserInfoDialog,
     SCUserProfileHeader,

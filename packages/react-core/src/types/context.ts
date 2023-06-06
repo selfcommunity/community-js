@@ -174,6 +174,7 @@ export interface SCUserContextType {
     connections?: SCConnectionsManagerType;
     categories: SCFollowedCategoriesManagerType;
     incubators?: SCSubscribedIncubatorsManagerType;
+    blockedUsers?: SCBlockedUsersManagerType;
   };
 }
 
@@ -355,6 +356,38 @@ export interface SCConnectionsManagerType {
    * Empty cache to revalidate all categories
    */
   emptyCache?: () => void;
+}
+
+export interface SCBlockedUsersManagerType {
+  /**
+   * List of all blocked users
+   */
+  blocked: number[];
+
+  /**
+   * Loading state
+   */
+  loading: boolean;
+
+  /**
+   * List of current user in loading state
+   */
+  isLoading: () => boolean;
+
+  /**
+   * Handle user block/unblock
+   */
+  block?: (user: SCUserType) => Promise<any>;
+
+  /**
+   * Handle check if a user is blocked
+   */
+  isBlocked?: (user: SCUserType) => boolean;
+
+  /**
+   * Refresh blocked user list
+   */
+  refresh?: () => Promise<any>;
 }
 
 export interface SCSubscribedIncubatorsManagerType {

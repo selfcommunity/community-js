@@ -15,6 +15,8 @@ import {
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/react-core';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCFriendshipUserButton';
 
@@ -115,15 +117,37 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
         autoHideDuration: 3000
       });
     } else {
+      let _action: (user: SCUserType) => Promise<any>;
       if (status === SCConnectionStatus.CONNECTED) {
-        scConnectionsManager.removeConnection(scUser);
+        _action = scConnectionsManager.removeConnection;
       } else if (status === SCConnectionStatus.CONNECTION_REQUEST_SENT) {
-        scConnectionsManager.cancelRequestConnection(scUser);
+        _action = scConnectionsManager.cancelRequestConnection;
       } else if (status === SCConnectionStatus.CONNECTION_REQUEST_RECEIVED) {
-        scConnectionsManager.acceptConnection(scUser);
+        _action = scConnectionsManager.acceptConnection;
       } else if (status === null) {
-        scConnectionsManager.requestConnection(scUser);
+        _action = scConnectionsManager.requestConnection;
       }
+      _action(scUser).catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+        if (e.response.status === 403) {
+          if (scUserContext.managers.blockedUsers.isBlocked(scUser)) {
+            enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserBlockedByMe" defaultMessage="ui.common.actionToUserBlockedByMe" />, {
+              variant: 'warning',
+              autoHideDuration: 3000
+            });
+          } else {
+            enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserHasBlockedMe" defaultMessage="ui.common.actionToUserHasBlockedMe" />, {
+              variant: 'warning',
+              autoHideDuration: 3000
+            });
+          }
+        } else {
+          enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
+            variant: 'warning',
+            autoHideDuration: 3000
+          });
+        }
+      });
     }
   };
 

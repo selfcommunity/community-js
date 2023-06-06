@@ -234,6 +234,10 @@ export default function useSCConnectionsManager(user?: SCUserType) {
         updateCache([user.id]);
         setUnLoading(user.id);
         return Promise.resolve(res.data);
+      })
+      .catch((e) => {
+        setUnLoading(user.id);
+        return Promise.reject(e);
       });
   };
 

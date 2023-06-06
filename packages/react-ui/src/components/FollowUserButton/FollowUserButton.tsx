@@ -100,6 +100,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
   // STATE
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
   const [followed, setFollowed] = useState<boolean>(null);
+  const [followedDisabled, setFollowedDisabled] = useState<boolean>(false);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -128,6 +129,25 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
         })
         .catch((e) => {
           Logger.error(SCOPE_SC_UI, e);
+          if (e.response.status === 403) {
+            if (scUserContext.managers.blockedUsers.isBlocked(scUser)) {
+              enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserBlockedByMe" defaultMessage="ui.common.actionToUserBlockedByMe" />, {
+                variant: 'warning',
+                autoHideDuration: 3000
+              });
+            } else {
+              enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserHasBlockedMe" defaultMessage="ui.common.actionToUserHasBlockedMe" />, {
+                variant: 'warning',
+                autoHideDuration: 3000
+              });
+            }
+            setFollowedDisabled(true);
+          } else {
+            enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
+              variant: 'warning',
+              autoHideDuration: 3000
+            });
+          }
         });
     }
   };
@@ -151,6 +171,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
       variant="outlined"
       onClick={handleFollowAction}
       loading={scUserContext.user ? followed === null || scFollowedManager.isLoading(scUser) : null}
+      disabled={followedDisabled}
       className={classNames(classes.root, className)}
       {...rest}>
       {scUserContext.user && followed ? (
