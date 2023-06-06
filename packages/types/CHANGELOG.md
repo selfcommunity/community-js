@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.5...@selfcommunity/types@0.5.0-alpha.6) (2023-06-06)
+
+
+### Bug Fixes
+
+* Fix account verify loader ([3977119](https://github.com/selfcommunity/community-js/commit/3977119b66d6b6cf2a4ec23a179eb8d70a20ae20))
+
+
+
+
+
 # [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.4...@selfcommunity/types@0.5.0-alpha.5) (2023-05-26)
 
 
