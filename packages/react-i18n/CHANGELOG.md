@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.27...@selfcommunity/react-i18n@0.5.0-alpha.28) (2023-06-05)
+
+
+### Bug Fixes
+
+* disable feedObject notifications ([c042cf3](https://github.com/selfcommunity/community-js/commit/c042cf3a9223687a588ce64ab936e75ad9cf980c))
+
+
+
+
+
 # [0.5.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.26...@selfcommunity/react-i18n@0.5.0-alpha.27) (2023-06-01)
 
 
