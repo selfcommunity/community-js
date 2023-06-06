@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.228](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.227...@selfcommunity/react-ui@0.7.0-alpha.228) (2023-06-06)
+
+
+### Performance Improvements
+
+* replaced data-fns relative time transl with react-intl FormattedRelativeTime ([79a0bd1](https://github.com/selfcommunity/community-js/commit/79a0bd16391e7f3636fd640b52e2dbf6d9a04da5))
+
+
+
+
+
 # [0.7.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.226...@selfcommunity/react-ui@0.7.0-alpha.227) (2023-06-06)
 
 
