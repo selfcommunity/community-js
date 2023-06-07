@@ -102,6 +102,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   // STATE
   const {scUser} = useSCFetchUser({id: userId, user});
   const [status, setStatus] = useState<string>(null);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -130,7 +131,9 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
       }
       _action(scUser).catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
-        if (!catchUnauthorizedActionByBlockedUser(e, scUserContext.managers.blockedUsers.isBlocked(scUser), enqueueSnackbar)) {
+        if (catchUnauthorizedActionByBlockedUser(e, scUserContext.managers.blockedUsers.isBlocked(scUser), enqueueSnackbar)) {
+          setDisabled(true);
+        } else {
           enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
             variant: 'warning',
             autoHideDuration: 3000
@@ -184,6 +187,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
     <Root
       size="small"
       variant="outlined"
+      disabled={disabled}
       loading={scUserContext.user ? scConnectionsManager.isLoading(scUser) : null}
       onClick={handleConnectionStatus}
       className={classNames(classes.root, className)}
