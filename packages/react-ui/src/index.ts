@@ -1,6 +1,10 @@
 /**
  * Components
  */
+import AccountDataPortability, {AccountDataPortabilityProps} from './components/AccountDataPortability';
+import AccountDataPortabilityButton, {AccountDataPortabilityButtonProps} from './components/AccountDataPortabilityButton';
+import AccountDelete, {AccountDeleteProps} from './components/AccountDelete';
+import AccountDeleteButton, {AccountDeleteButtonProps} from './components/AccountDeleteButton';
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
@@ -157,6 +161,14 @@ import {getRelativeTime} from './utils/formatRelativeTime';
  * List all exports
  */
 export {
+  AccountDataPortability,
+  AccountDataPortabilityProps,
+  AccountDataPortabilityButton,
+  AccountDataPortabilityButtonProps,
+  AccountDelete,
+  AccountDeleteProps,
+  AccountDeleteButton,
+  AccountDeleteButtonProps,
   AccountRecover,
   AccountRecoverProps,
   AccountReset,
