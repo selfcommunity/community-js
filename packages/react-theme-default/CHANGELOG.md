@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.178...@selfcommunity/react-theme-default@0.1.0-alpha.179) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix edit profile buttons order ([5eb2629](https://github.com/selfcommunity/community-js/commit/5eb2629586f2247b77b7087fb9f5884dab32dcd4))
+
+
+
+
+
 # [0.1.0-alpha.178](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.177...@selfcommunity/react-theme-default@0.1.0-alpha.178) (2023-06-07)
 
 
