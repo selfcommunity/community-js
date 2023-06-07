@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.230](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.229...@selfcommunity/react-ui@0.7.0-alpha.230) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix edit profile buttons order ([5eb2629](https://github.com/selfcommunity/community-js/commit/5eb2629586f2247b77b7087fb9f5884dab32dcd4))
+
+
+
+
+
+# [0.7.0-alpha.229](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.228...@selfcommunity/react-ui@0.7.0-alpha.229) (2023-06-07)
+
+
+### Features
+
+* Added AccountDataPortability.tsx, AccountDataPortabilityButton.tsx, AccountDelete.tsx, AccountDeleteButton.tsx ([62a4b86](https://github.com/selfcommunity/community-js/commit/62a4b86862879fc88e93b8b08487e995104de11a))
+
+
+
+
+
+# [0.7.0-alpha.228](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.227...@selfcommunity/react-ui@0.7.0-alpha.228) (2023-06-06)
+
+
+### Performance Improvements
+
+* replaced data-fns relative time transl with react-intl FormattedRelativeTime ([79a0bd1](https://github.com/selfcommunity/community-js/commit/79a0bd16391e7f3636fd640b52e2dbf6d9a04da5))
+
+
+
+
+
 # [0.7.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.226...@selfcommunity/react-ui@0.7.0-alpha.227) (2023-06-06)
 
 

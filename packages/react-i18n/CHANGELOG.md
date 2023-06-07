@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.29...@selfcommunity/react-i18n@0.5.0-alpha.30) (2023-06-07)
+
+
+### Features
+
+* Added AccountDataPortability.tsx, AccountDataPortabilityButton.tsx, AccountDelete.tsx, AccountDeleteButton.tsx ([62a4b86](https://github.com/selfcommunity/community-js/commit/62a4b86862879fc88e93b8b08487e995104de11a))
+
+
+
+
+
 # [0.5.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.28...@selfcommunity/react-i18n@0.5.0-alpha.29) (2023-06-06)
 
 
