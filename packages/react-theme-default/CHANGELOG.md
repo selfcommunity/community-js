@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.178](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.177...@selfcommunity/react-theme-default@0.1.0-alpha.178) (2023-06-07)
+
+
+### Features
+
+* Added AccountDataPortability.tsx, AccountDataPortabilityButton.tsx, AccountDelete.tsx, AccountDeleteButton.tsx ([62a4b86](https://github.com/selfcommunity/community-js/commit/62a4b86862879fc88e93b8b08487e995104de11a))
+
+
+
+
+
 # [0.1.0-alpha.177](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.176...@selfcommunity/react-theme-default@0.1.0-alpha.177) (2023-06-06)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
