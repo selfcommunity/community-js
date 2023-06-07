@@ -570,6 +570,10 @@ export interface SCNotificationsType {
    * Web push messaging notification
    */
   webPushMessaging?: SCNotificationsWebPushMessagingType;
+  /**
+   * Mobile native push messaging
+   */
+  mobileNativePushMessaging?: SCNotificationsMobileNativePushMessagingType;
 }
 
 /**
@@ -608,6 +612,16 @@ export interface SCNotificationsWebPushMessagingType {
 }
 
 /**
+ * Interface SCNotificationsMobileNativePushMessagingType
+ */
+export interface SCNotificationsMobileNativePushMessagingType {
+  /**
+   * Disable
+   */
+  disable?: boolean;
+}
+
+/**
  * Interface SCRoutingContextType
  */
 export interface SCRoutingContextType {
@@ -640,6 +654,11 @@ export interface SCNotificationContextType {
    * wp subscription
    */
   wpSubscription: any;
+
+  /**
+   * mobile native push instance
+   */
+  mnpmInstance?: any;
 }
 
 /**

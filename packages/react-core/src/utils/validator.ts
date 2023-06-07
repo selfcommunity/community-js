@@ -2,6 +2,7 @@ import * as Locale from '../constants/Locale';
 import {isFunc, isObject, isString, isValidUrl, Logger} from '@selfcommunity/utils';
 import * as Session from '../constants/Session';
 import {
+  SCNotificationsMobileNativePushMessagingType,
   SCNotificationsType,
   SCNotificationsWebPushMessagingType,
   SCNotificationsWebSocketType,
@@ -20,6 +21,7 @@ import * as Actions from '../constants/Actions';
 import * as Preferences from '../constants/Preferences';
 import * as Features from '../constants/Features';
 import * as Vote from '../constants/Vote';
+import { NOTIFICATIONS_MOBILE_NATIVE_PUSH_MESSAGING_OPTION } from "../constants/Notifications";
 
 /**
  * Validate session option
@@ -244,11 +246,11 @@ export const validateWebPushMessaging = (v) => {
     errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING);
     return {errors, warnings, v};
   }
-  const _options = Object.keys(notificationsWebSPushMessagingOptions);
+  const _options = Object.keys(notificationsWebPushMessagingOptions);
   const value: SCNotificationsWebPushMessagingType = Object.keys(v)
     .filter((key) => _options.includes(key))
     .reduce((obj, key) => {
-      const res = notificationsWebSPushMessagingOptions[key].validator(v[key], v);
+      const res = notificationsWebPushMessagingOptions[key].validator(v[key], v);
       res.errors.map((error) => errors.push(error));
       res.warnings.map((warning) => warnings.push(warning));
       obj[key] = res.value;
@@ -294,6 +296,56 @@ export const validateWebPushMessagingApplicationServerKey = (value, notification
     if (!isString(value)) {
       errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY);
     }
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate mobile native
+ * @param value
+ * @param {}
+ */
+export const validateMobileNativePushMessaging = (v) => {
+  const errors = [];
+  const warnings = [];
+  if (v && !isObject(v)) {
+    errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_MOBILE_NATIVE_PUSH_MESSAGING);
+    return {errors, warnings, v};
+  }
+  const _options = Object.keys(notificationsMobileNativePushMessagingOptions);
+  const value: SCNotificationsMobileNativePushMessagingType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = notificationsMobileNativePushMessagingOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCNotificationsMobileNativePushMessagingType);
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate default disable (mobileNativePushMessaging)
+ * @param value
+ * @param {}
+ */
+export const validateMobileNativePushMessagingDisable = (value, notifications) => {
+  const errors = [];
+  const warnings = [];
+  if (value !== undefined) {
+    if (!(typeof value === 'boolean')) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_MOBILE_PUSH_MESSAGING_DISABLE);
+    }
+  } else {
+    return {
+      errors,
+      warnings,
+      value:
+        Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_MOBILE_NATIVE_DISABLE_OPTION][
+          Notifications.NOTIFICATIONS_MOBILE_NATIVE_DISABLE_OPTION
+        ],
+    };
   }
   return {errors, warnings, value};
 };
@@ -666,6 +718,10 @@ const NotificationsWebPushMessagingOption = {
   name: Notifications.NOTIFICATIONS_WEB_PUSH_MESSAGING_OPTION,
   validator: validateWebPushMessaging,
 };
+const NotificationsMobileNativePushMessagingOption = {
+  name: Notifications.NOTIFICATIONS_MOBILE_NATIVE_PUSH_MESSAGING_OPTION,
+  validator: validateMobileNativePushMessaging,
+};
 const NotificationsWebSocketDisableToastMessageOption = {
   name: Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION,
   validator: validateWebSocketDisableToastMessage,
@@ -682,6 +738,11 @@ const NotificationsWebPushMessagingApplicationServerKeyOption = {
   name: Notifications.NOTIFICATIONS_APPLICATION_SERVER_KEY_OPTION,
   validator: validateWebPushMessagingApplicationServerKey,
 };
+const NotificationsMobileNativePushMessagingDisableOption = {
+  name: Notifications.NOTIFICATIONS_MOBILE_NATIVE_DISABLE_OPTION,
+  validator: validateMobileNativePushMessagingDisable,
+};
+
 const ReactionsOption = {
   name: Vote.VOTE_REACTIONS_OPTION,
   validator: validateReactions,
@@ -717,14 +778,18 @@ export const localeOptions: Record<string, any> = {
 export const notificationsOptions: Record<string, any> = {
   [NotificationsWebSocketOption.name]: NotificationsWebSocketOption,
   [NotificationsWebPushMessagingOption.name]: NotificationsWebPushMessagingOption,
+  [NotificationsMobileNativePushMessagingOption.name]: NotificationsMobileNativePushMessagingOption,
 };
 export const notificationsWebSocketOptions: Record<string, any> = {
   [NotificationsWebSocketDisableToastMessageOption.name]: NotificationsWebSocketDisableToastMessageOption,
   [NotificationsWebSocketSecureOption.name]: NotificationsWebSocketSecureOption,
 };
-export const notificationsWebSPushMessagingOptions: Record<string, any> = {
+export const notificationsWebPushMessagingOptions: Record<string, any> = {
   [NotificationsWebPushMessagingDisableToastMessageOption.name]: NotificationsWebPushMessagingDisableToastMessageOption,
   [NotificationsWebPushMessagingApplicationServerKeyOption.name]: NotificationsWebPushMessagingApplicationServerKeyOption,
+};
+export const notificationsMobileNativePushMessagingOptions: Record<string, any> = {
+  [NotificationsMobileNativePushMessagingDisableOption.name]: NotificationsMobileNativePushMessagingDisableOption,
 };
 export const preferencesOptions: Record<string, any> = {
   [GlobalPreferencesOption.name]: GlobalPreferencesOption,

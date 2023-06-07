@@ -3,12 +3,12 @@ import {SCContextType, SCPreferencesContextType, SCUserContextType} from '../typ
 import {SCTagType} from '@selfcommunity/types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
-import {Logger} from '@selfcommunity/utils';
+import {LocalStorageDB, Logger} from '@selfcommunity/utils';
 import Button from '@mui/material/Button';
 import {loadVersionBrowser, urlB64ToUint8Array} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
+import {NOTIFICATION_SERVICE_KEY, REGISTRATION_ID_KEY, WEB_PUSH_NOTIFICATION_DEVICE_TYPE} from '../constants/Device';
 import {SCPreferencesContext} from '../components/provider/SCPreferencesProvider';
 import {SnackbarKey, useSnackbar} from 'notistack';
 import * as SCPreferences from '../constants/Preferences';
@@ -42,7 +42,12 @@ export default function useSCWebPushMessaging() {
       : SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY in scPreferencesContext.preferences
       ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY].value
       : null;
+  const isMobileNaitiveNotificationEnabled =
+    window &&
+    (window[REGISTRATION_ID_KEY] ||
+      (LocalStorageDB.get(NOTIFICATION_SERVICE_KEY) && !scContext.settings.notifications.mobileNativePushMessaging.disable));
   const webPushEnabled =
+    !isMobileNaitiveNotificationEnabled &&
     SCPreferences.PROVIDERS_WEB_PUSH_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
       ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
@@ -318,7 +323,7 @@ export default function useSCWebPushMessaging() {
   useEffect(() => {
     if (!wpSubscription && !scContext.settings.notifications.webPushMessaging.disableToastMessage && scUserContext.user) {
       if (!webPushEnabled) {
-        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support notifications. Enable this feature.');
+        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support notifications.');
       } else if (!applicationServerKey) {
         Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
       } else {

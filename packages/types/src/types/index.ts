@@ -110,6 +110,7 @@ import {SCAvatarType} from './avatar';
 import {SCReactionType} from './reaction';
 import {SCSuggestionType, SuggestionType} from './suggestion';
 import {SCConnectionStatus} from './friendship';
+import {SCDeviceType, SCApnsDeviceType, SCGcmDeviceType, SCDeviceApnsTypeEnum, SCDeviceGcmTypeEnum, SCDeviceTypeEnum} from './device';
 /**
  * Exports all types
  */
@@ -249,5 +250,11 @@ export {
   SCReactionType,
   SCSuggestionType,
   SuggestionType,
-  SCConnectionStatus
+  SCConnectionStatus,
+  SCDeviceType,
+  SCApnsDeviceType,
+  SCGcmDeviceType,
+  SCDeviceApnsTypeEnum,
+  SCDeviceGcmTypeEnum,
+  SCDeviceTypeEnum
 };
