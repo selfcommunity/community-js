@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.19...@selfcommunity/api-services@0.4.0-alpha.20) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([baaf57c](https://github.com/selfcommunity/community-js/commit/baaf57c97a9344f9d3c48b39eac731566e9203c6))
+
+
+
+
+
 # [0.4.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.18...@selfcommunity/api-services@0.4.0-alpha.19) (2023-06-06)
 
 **Note:** Version bump only for package @selfcommunity/api-services

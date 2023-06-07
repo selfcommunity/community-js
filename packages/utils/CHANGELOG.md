@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.1...@selfcommunity/utils@0.2.0-alpha.2) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([372542a](https://github.com/selfcommunity/community-js/commit/372542a5a8ed1a33ae0f8c9044565bd154de6f2a))
+
+
+
+
+
 # [0.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.0...@selfcommunity/utils@0.2.0-alpha.1) (2023-05-15)
 
 
