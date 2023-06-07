@@ -1,11 +1,11 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCUserProfileEditAccountCredentials-email, .SCUserProfileEditAccountCredentials-password': {
+      '& .SCUserProfileEditSectionAccountCredentials-email, .SCUserProfileEditSectionAccountCredentials-password': {
         margin: theme.spacing(1, 0, 1, 0),
         fontWeight: 'bold'
       },
-      '& .SCUserProfileEditAccountCredentials-danger-zone': {
+      '& .SCUserProfileEditSectionAccountCredentials-danger-zone': {
         marginTop: theme.spacing(2),
         '&  > *': {
           marginBottom: theme.spacing(2)
@@ -14,13 +14,13 @@ const Component = {
     }),
     dialogRoot: ({theme}: any) => ({
       '& .MuiDialogContent-root': {
-        '& .SCUserProfileEditAccountCredentials-form': {
-          '& .SCUserProfileEditAccountCredentials-form-field': {
+        '& .SCUserProfileEditSectionAccountCredentials-form': {
+          '& .SCUserProfileEditSectionAccountCredentials-form-field': {
             margin: theme.spacing(1, 1, 1, 0)
           }
         }
       },
-      '& .SCUserProfileEditAccountCredentials-confirm-change-button': {
+      '& .SCUserProfileEditSectionAccountCredentials-confirm-change-button': {
         marginTop: theme.spacing(1)
       }
     })
