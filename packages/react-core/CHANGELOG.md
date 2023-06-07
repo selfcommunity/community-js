@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.64...@selfcommunity/react-core@0.4.0-alpha.65) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([768eba0](https://github.com/selfcommunity/community-js/commit/768eba0bb8c2a4b6b47a90d33b8e9c5e2d99d714))
+
+
+
+
+
 # [0.4.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.63...@selfcommunity/react-core@0.4.0-alpha.64) (2023-06-07)
 
 
