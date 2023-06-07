@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.232](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.231...@selfcommunity/react-ui@0.7.0-alpha.232) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([768eba0](https://github.com/selfcommunity/community-js/commit/768eba0bb8c2a4b6b47a90d33b8e9c5e2d99d714))
+
+
+
+
+
 # [0.7.0-alpha.231](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.230...@selfcommunity/react-ui@0.7.0-alpha.231) (2023-06-07)
 
 
