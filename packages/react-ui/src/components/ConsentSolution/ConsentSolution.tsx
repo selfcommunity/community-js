@@ -1,15 +1,13 @@
 import React, {forwardRef, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
-import {Alert, Checkbox, Button, DialogProps, FormControlLabel, Typography} from '@mui/material';
+import {Alert, Button, Checkbox, DialogProps, FormControlLabel, Typography} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
-import {LoadingButton} from '@mui/lab';
-import moment from 'moment';
-import {DataPortabilityService, LegalPageService, UserService} from '@selfcommunity/api-services';
+import {LegalPageService, UserService} from '@selfcommunity/api-services';
 import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType} from '@selfcommunity/types';
 import {arraysEqual, capitalize, Logger} from '@selfcommunity/utils';
-import {SCPreferencesContextType, useSCPreferences, SCUserContextType, SCUserContext, SCPreferences} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import ConsentSolutionSwitch from '../../shared/ConsentSolutionSwitch';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Dialog from '@mui/material/Dialog';
@@ -21,8 +19,9 @@ import {TransitionProps} from '@mui/material/transitions';
 import {LEGAL_POLICIES} from './../../constants/LegalPolicies';
 import ConsentSolutionSkeleton from './Skeleton';
 import {getDocumentBody, isDocumentApproved, isEmptyDocumentBody} from '../../utils/legalPages';
-import {FormattedMessage, FormattedDate, FormattedTime, defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {elementScrollTo} from 'seamless-scroll-polyfill';
+import AccountDataPortability from '../AccountDataPortability';
 
 const PREFIX = 'SCConsentSolution';
 
@@ -40,8 +39,7 @@ const classes = {
   confirmDeleteAccountButton: `${PREFIX}-confirm-delete-account-button`,
   logoutAccountButton: `${PREFIX}-logout-account-button`,
   deleteAccountButton: `${PREFIX}-delete-account-button`,
-  createDataPortabilityButton: `${PREFIX}-create-data-portability-button`,
-  downloadDataPortabilityButton: `${PREFIX}-download-data-portability-button`,
+  dataPortability: `${PREFIX}-data-portability`,
   dataPortabilityCheck: `${PREFIX}-download-data-portability-check`,
   alertAcceptDocument: `${PREFIX}-alert-accept-document`,
   acceptConditions: `${PREFIX}-accept-conditions`
@@ -117,12 +115,8 @@ const Root = styled(Dialog, {
   [`& .${classes.logoutAccountButton}`]: {
     marginBottom: theme.spacing()
   },
-  [`& .${classes.createDataPortabilityButton}`]: {
-    marginRight: theme.spacing(2),
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.downloadDataPortabilityButton}`]: {
-    marginBottom: theme.spacing()
+  [`& .${classes.dataPortability}`]: {
+    marginBottom: theme.spacing(2)
   },
   [`& .${classes.alertAcceptDocument}`]: {
     padding: theme.spacing(),
@@ -146,21 +140,9 @@ const Root = styled(Dialog, {
  * Translations
  */
 const messages = defineMessages({
-  createDpSectionInfo: {
-    id: 'ui.consentSolution.createDpSectionInfo',
-    defaultMessage: 'ui.consentSolution.createDpSectionInfo'
-  },
   deleteAccountDpSectionInfo: {
     id: 'ui.consentSolution.deleteAccountDpSectionInfo',
     defaultMessage: 'ui.consentSolution.deleteAccountDpSectionInfo'
-  },
-  createDpSectionTitle: {
-    id: 'ui.consentSolution.createDpSectionTitle',
-    defaultMessage: 'ui.consentSolution.createDpSectionTitle'
-  },
-  createDpSectionGeneratedAt: {
-    id: 'ui.consentSolution.createDpSectionGeneratedAt',
-    defaultMessage: 'ui.consentSolution.createDpSectionGeneratedAt'
   },
   deleteAccountDpSectionTitle: {
     id: 'ui.consentSolution.deleteAccountDpSectionTitle',
@@ -250,8 +232,7 @@ export const CONFIRM_DELETE_ACCOUNT = 'delete_account';
  |confirmDeleteAccountButton|.SCConsentSolution-confirm-delete-account-button|Styles applied to the confirm delete account button in the rejection section.|
  |logoutAccountButton|.SCConsentSolution-logout-account-button|Styles applied to the exit account button in the rejection section.|
  |deleteAccountButton|.SCConsentSolution-delete-account-button|Styles applied to the delete account button in the rejection section.|
- |createDataPortabilityButton|.SCConsentSolution-create-data-portability-button|Styles applied to the create data portability button in the rejection section.|
- |downloadDataPortabilityButton|.SCConsentSolution-download-data-portability-button|Styles applied to the download data portability button in the rejection section.|
+ |dataPortability|.SCConsentSolution-data-portability|Styles applied to the data portability component in the rejection section.|
  |dataPortabilityCheck|.SCConsentSolution-data-portability-check|Styles applied to the checkbox in the rejection section.|
 
  * @param inProps
@@ -288,8 +269,6 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
 
   const [dataPortability, setDataPortability] = useState<SCDataPortabilityType>(null);
   const [dataPortabilityChecked, setDataPortabilityChecked] = useState<boolean>(false);
-  const [loadingDataPortability, setLoadingDataPortability] = useState<boolean>(false);
-  const [downloadingDataPortability, setDownloadingDataPortability] = useState<boolean>(false);
 
   const [loadingDeleteAccount, setLoadingDeleteAccount] = useState<boolean>(false);
 
@@ -351,48 +330,6 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   };
 
   /**
-   * Handle create data portability
-   */
-  const handleCreateDataPortabilityFile = () => {
-    setLoadingDataPortability(true);
-    DataPortabilityService.generateDataPortability()
-      .then((res) => {
-        if (res) {
-          setDataPortability(dataPortability);
-        }
-      })
-      .catch((_error) => {
-        Logger.error(SCOPE_SC_UI, _error);
-      });
-  };
-
-  /**
-   * Handle download data portability
-   */
-  const handleDownloadDataPortabilityFile = () => {
-    setDownloadingDataPortability(true);
-    DataPortabilityService.downloadDataPortability()
-      .then((res) => {
-        const url = window.URL.createObjectURL(new Blob([res], {type: 'application/zip'}));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute(
-          'download',
-          `${scUserContext.user.username}_${intl.formatDate(moment().format(), {year: 'numeric', month: 'numeric', day: 'numeric'})}.zip`
-        );
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-        setDownloadingDataPortability(false);
-      })
-      .catch((_error) => {
-        setDownloadingDataPortability(false);
-        Logger.error(SCOPE_SC_UI, _error);
-      });
-  };
-
-  /**
    * Handle confirm delete account
    */
   const handleConfirmDeleteAccount = () => {
@@ -444,24 +381,6 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   };
 
   /**
-   * Fetch data portability status
-   */
-  const fetchDataPortabilityStatus = () => {
-    DataPortabilityService.dataPortabilityStatus()
-      .then((res) => {
-        if (res) {
-          if (!res.computing && res.generated_at) {
-            setLoadingDataPortability(false);
-          }
-          setDataPortability(res);
-        }
-      })
-      .catch((_error) => {
-        Logger.error(SCOPE_SC_UI, _error);
-      });
-  };
-
-  /**
    * On mount, fetches legal and custom documents
    */
   useEffect(() => {
@@ -470,22 +389,6 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
     }
     fetchLegalPages();
   }, [authUserId]);
-
-  /**
-   * Sync data portability status
-   */
-  useEffect(() => {
-    let interval;
-    if (authUserId !== null && ready) {
-      fetchDataPortabilityStatus();
-      if (_view === REJECTION_VIEW) {
-        interval = setInterval(() => {
-          fetchDataPortabilityStatus();
-        }, 5000);
-      }
-    }
-    return () => interval && clearInterval(interval);
-  }, [authUserId, ready, _view]);
 
   /**
    * Render main view
@@ -589,61 +492,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           </Button>
         </DialogTitle>
         <DialogContent className={classes.content} dividers>
-          <Typography variant="h6">
-            <FormattedMessage
-              id="ui.consentSolution.createDpSectionTitle"
-              defaultMessage="ui.consentSolution.createDpSectionTitle"
-              values={{username: capitalize(scUserContext.user.username)}}
-            />
-          </Typography>
-          <br />
-          <Typography variant="body2">
-            <FormattedMessage id="ui.consentSolution.deleteAccountTitle" defaultMessage="ui.consentSolution.deleteAccountTitle" />
-          </Typography>
-          <ul>
-            {intl.formatMessage(messages.createDpSectionInfo, {
-              li: (chunks) => <li>{chunks}</li>
-            })}
-          </ul>
-          <LoadingButton
-            size="small"
-            loading={(dataPortability && dataPortability.computing) || loadingDataPortability}
-            disabled={dataPortability && (dataPortability.computing || moment().diff(moment(dataPortability.requested_at), 'hours') < 24)}
-            loadingPosition="start"
-            startIcon={<Icon>folder_open</Icon>}
-            variant="outlined"
-            className={classes.createDataPortabilityButton}
-            onClick={handleCreateDataPortabilityFile}>
-            {(dataPortability && dataPortability.computing) || loadingDataPortability ? (
-              <FormattedMessage id="ui.consentSolution.createFileLoadingButton" defaultMessage="ui.consentSolution.createFileLoadingButton" />
-            ) : (
-              <FormattedMessage id="ui.consentSolution.createFileButton" defaultMessage="ui.consentSolution.createFileButton" />
-            )}
-          </LoadingButton>
-          {dataPortability && !dataPortability.computing && dataPortability.generated_at && (
-            <LoadingButton
-              size="small"
-              loading={downloadingDataPortability}
-              loadingPosition="start"
-              startIcon={<Icon>cloud_download_outlined</Icon>}
-              variant={'outlined'}
-              className={classes.downloadDataPortabilityButton}
-              onClick={handleDownloadDataPortabilityFile}>
-              <FormattedMessage id="ui.consentSolution.downloadFileButton" defaultMessage="ui.consentSolution.downloadFileButton" />
-            </LoadingButton>
-          )}
-          <br />
-          {dataPortability && !dataPortability.computing && dataPortability.generated_at && (
-            <Typography variant="body2">
-              <b>
-                {intl.formatMessage(messages.createDpSectionGeneratedAt, {
-                  date: <FormattedDate value={dataPortability.requested_at} day="numeric" month="long" year="numeric" />,
-                  time: <FormattedTime value={dataPortability.requested_at} />
-                })}
-              </b>
-            </Typography>
-          )}
-          <br />
+          <AccountDataPortability className={classes.dataPortability} />
           <Typography variant="h6">
             <FormattedMessage
               id="ui.consentSolution.deleteAccountDpSectionTitle"

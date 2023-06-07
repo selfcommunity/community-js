@@ -115,6 +115,9 @@ import SCIncubatorDetail from './components/SCIncubatorDetail';
 import MuiDrawer from './components/MuiDrawer';
 import SCEmojiPicker from './components/SCEmojiPicker';
 import SCBullet from './components/SCBullet';
+import SCAccountDataPortability from './components/SCAccountDataPortability';
+import SCAccountDelete from './components/SCAccountDelete';
+import SCUserProfileEditAccountCredentials from './components/SCUserProfileEditAccountCredentials';
 
 /**
  * Style fragments - Imports - End
@@ -178,6 +181,8 @@ const theme = {
     MuiPopover,
     MuiSelect,
     MuiTooltip,
+    SCAccountDataPortability,
+    SCAccountDelete,
     SCActivitiesMenu,
     SCBaseDialog,
     SCBaseItem,
@@ -254,6 +259,7 @@ const theme = {
     SCUserInfoDialog,
     SCUserProfileHeader,
     SCUserProfileEdit,
+    SCUserProfileEditAccountCredentials,
     SCUserProfileTemplate,
     SCVoteAction,
     SCVoteButton,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Popover, Typography} from '@mui/material';
+import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Paper, Popover, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -14,6 +14,8 @@ import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
 import {useSnackbar} from 'notistack';
+import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
+import AccountDeleteButton from '../../AccountDeleteButton';
 
 const messages = defineMessages({
   changePasswordTitle: {
@@ -29,47 +31,32 @@ const messages = defineMessages({
     defaultMessage: 'ui.userProfileEditAccountCredentials.email.empty.error'
   }
 });
-const PREFIX = 'SCAccountCredential';
-const DIALOG_PREFIX = `${PREFIX}-password-dialog`;
+const PREFIX = 'SCUserProfileEditAccountCredentials';
 
 const classes = {
   root: `${PREFIX}-root`,
   email: `${PREFIX}-email`,
   success: `${PREFIX}-success`,
   error: `${PREFIX}-error`,
-  form: `${DIALOG_PREFIX}-password-form`,
-  formField: `${DIALOG_PREFIX}-form-field`,
-  password: `${DIALOG_PREFIX}-password`,
-  confirmChangeButton: `${DIALOG_PREFIX}-confirm-change-button`
+  dangerZone: `${PREFIX}-danger-zone`,
+  passwordDialogRoot: `${PREFIX}-dialog-root`,
+  form: `${PREFIX}-password-form`,
+  formField: `${PREFIX}-form-field`,
+  password: `${PREFIX}-password`,
+  confirmChangeButton: `${PREFIX}-confirm-change-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.email}, .${classes.password}`]: {
-    margin: theme.spacing(1, 0, 1, 0),
-    fontWeight: 'bold'
-  }
-}));
+})(() => ({}));
 
-const PasswordDialog = styled(BaseDialog, {
-  name: DIALOG_PREFIX,
+const PasswordDialogRoot = styled(BaseDialog, {
+  name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  '& .MuiDialogContent-root': {
-    [`& .${classes.form}`]: {
-      [`& .${classes.formField}`]: {
-        margin: theme.spacing(1, 1, 1, 0)
-      }
-    }
-  },
-  [`& .${classes.confirmChangeButton}`]: {
-    marginTop: theme.spacing(1)
-  }
-}));
+  overridesResolver: (props, styles) => styles.passwordDialogRoot
+})(() => ({}));
 
 export interface AccountCredentialProps {
   /**
@@ -272,9 +259,14 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
             defaultMessage="ui.userProfileEditAccountCredentials.changePassword"
           />
         </Button>
+        <Box className={classes.dangerZone}>
+          <AccountDataPortabilityButton fullWidth variant="outlined" color="primary" />
+          <AccountDeleteButton fullWidth variant="contained" color="secondary" />
+        </Box>
       </>
       {openChangePasswordDialog && (
-        <PasswordDialog
+        <PasswordDialogRoot
+          className={classes.passwordDialogRoot}
           title={intl.formatMessage(messages.changePasswordTitle)}
           open={openChangePasswordDialog}
           onClose={handleCloseDialog}
@@ -368,7 +360,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
               defaultMessage="ui.userProfileEditAccountCredentials.changePassword"
             />
           </LoadingButton>
-        </PasswordDialog>
+        </PasswordDialogRoot>
       )}
     </Root>
   );
