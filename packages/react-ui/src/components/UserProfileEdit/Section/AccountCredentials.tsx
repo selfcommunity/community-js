@@ -33,7 +33,7 @@ const classes = {
   success: `${PREFIX}-success`,
   error: `${PREFIX}-error`,
   dangerZone: `${PREFIX}-danger-zone`,
-  passwordDialogRoot: `${PREFIX}-dialog-root`,
+  dialogRoot: `${PREFIX}-dialog-root`,
   form: `${PREFIX}-password-form`,
   formField: `${PREFIX}-form-field`,
   password: `${PREFIX}-password`,
@@ -49,7 +49,7 @@ const Root = styled(Box, {
 const PasswordDialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.passwordDialogRoot
+  overridesResolver: (props, styles) => styles.dialogRoot
 })(() => ({}));
 
 export interface AccountCredentialProps {
@@ -263,7 +263,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
       </>
       {openChangePasswordDialog && (
         <PasswordDialogRoot
-          className={classes.passwordDialogRoot}
+          className={classes.dialogRoot}
           title={intl.formatMessage(messages.changePasswordTitle)}
           open={openChangePasswordDialog}
           onClose={handleCloseDialog}
