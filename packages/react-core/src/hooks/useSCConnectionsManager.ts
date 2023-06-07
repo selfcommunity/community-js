@@ -148,8 +148,12 @@ export default function useSCConnectionsManager(user?: SCUserType) {
             setUnLoading(user.id);
             return Promise.resolve(res.data);
           })
-          .catch((error) => {
-            Logger.error(SCOPE_SC_CORE, error);
+          .catch((e) => {
+            Logger.error(SCOPE_SC_CORE, e);
+            if (e && e.response && e.response && e.response.status && e.response.status === 403) {
+              setUnLoading(user.id);
+              return Promise.reject(e);
+            }
             return checkUserConnectionStatus(user);
           });
       },
@@ -234,6 +238,10 @@ export default function useSCConnectionsManager(user?: SCUserType) {
         updateCache([user.id]);
         setUnLoading(user.id);
         return Promise.resolve(res.data);
+      })
+      .catch((e) => {
+        setUnLoading(user.id);
+        return Promise.reject(e);
       });
   };
 

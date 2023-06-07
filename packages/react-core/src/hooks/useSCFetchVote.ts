@@ -20,7 +20,6 @@ import {useIntl} from 'react-intl';
 import {SCContextType, SCUserContextType} from '../types/context';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
-import {UserUtils} from '../index';
 
 interface FetchVoteProps {
   /**
@@ -38,12 +37,11 @@ interface FetchVoteProps {
    * @default null
    */
   contribution?: SCFeedObjectType | SCCommentType | null;
-
   /**
    * onVote callback
    * @default null
    */
-  onVote?: (contribution: SCFeedObjectType | SCCommentType) => any;
+  onVote?: (contribution: SCFeedObjectType | SCCommentType, error) => any;
   /**
    * Cache strategy
    * @default CACHE_FIRST
@@ -158,71 +156,62 @@ export default function useSCFetchVote({
 
   // HANDLERS
   const handleVote = (reaction?: SCReactionType) => {
-    if (!scUserContext.user) {
-      scContext.settings.handleAnonymousAction();
-      return;
-    }
-    if (UserUtils.isBlocked(scUserContext.user)) {
-      enqueueSnackbar(intl.formatMessage({id: 'ui.common.userBlocked', defaultMessage: 'ui.common.userBlocked'}), {
-        variant: 'warning',
-        autoHideDuration: 3000,
-      });
-    } else {
-      if (obj && !isVoting) {
-        setIsVoting(true);
-        performVote(reaction)
-          .then(() => {
-            let _obj: any = {
-              voted: !obj.voted,
-              vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1,
+    if (scUserContext.user && obj && !isVoting) {
+      setIsVoting(true);
+      performVote(reaction)
+        .then(() => {
+          let _obj: any = {
+            voted: !obj.voted,
+            vote_count: obj.voted ? obj.vote_count - 1 : obj.vote_count + 1,
+          };
+          if (reaction && obj?.reaction?.id !== reaction.id) {
+            // AGGUINTA / MODIFICA
+            const add = !obj?.reaction;
+            const addCount = obj.reactions_count.findIndex((count: any) => count.reaction.id === reaction.id) === -1;
+            _obj = {
+              voted: add ? true : obj.voted,
+              vote_count: add ? obj.vote_count + 1 : obj.vote_count,
+              reaction,
+              reactions_count: [
+                ...obj.reactions_count.map((count: any) => {
+                  if (count.reaction.id === obj?.reaction?.id && count.count - 1 === 0) {
+                    return null;
+                  } else if (count.reaction.id === obj?.reaction?.id && count.count - 1 > 0) {
+                    return {count: count.count - 1, reaction: count.reaction};
+                  } else if (count.reaction.id === reaction.id) {
+                    return {count: count.count + 1, reaction: count.reaction};
+                  }
+                  return count;
+                }),
+                addCount ? {count: 1, reaction} : null,
+              ].filter((count) => Boolean(count)),
             };
-            if (reaction && obj?.reaction?.id !== reaction.id) {
-              // AGGUINTA / MODIFICA
-              const add = !obj?.reaction;
-              const addCount = obj.reactions_count.findIndex((count: any) => count.reaction.id === reaction.id) === -1;
-              _obj = {
-                voted: add ? true : obj.voted,
-                vote_count: add ? obj.vote_count + 1 : obj.vote_count,
-                reaction,
-                reactions_count: [
-                  ...obj.reactions_count.map((count: any) => {
-                    if (count.reaction.id === obj?.reaction?.id && count.count - 1 === 0) {
-                      return null;
-                    } else if (count.reaction.id === obj?.reaction?.id && count.count - 1 > 0) {
-                      return {count: count.count - 1, reaction: count.reaction};
-                    } else if (count.reaction.id === reaction.id) {
-                      return {count: count.count + 1, reaction: count.reaction};
-                    }
-                    return count;
-                  }),
-                  addCount ? {count: 1, reaction} : null,
-                ].filter((count) => Boolean(count)),
-              };
-            } else if (reaction && obj?.reaction && obj?.reaction?.id === reaction.id) {
-              // RIMOZIONE
-              _obj = Object.assign({}, _obj, {
-                reaction: null,
-                reactions_count: obj.reactions_count
-                  .map((count: any) => {
-                    if (count.reaction.id === obj?.reaction?.id && count.count - 1 === 0) {
-                      return null;
-                    } else if (count.reaction.id === obj?.reaction?.id && count.count - 1 > 0) {
-                      return {count: count.count - 1, reaction: count.reaction};
-                    }
-                    return count;
-                  })
-                  .filter((count) => Boolean(count)),
-              });
-            }
-            const newObj = Object.assign({}, obj, _obj);
-            setObj(newObj);
-            onVote && onVote(newObj);
-          })
-          .catch((error) => {
-            Logger.error(SCOPE_SC_CORE, error);
-          })
-          .then(() => setIsVoting(false));
-      }
+          } else if (reaction && obj?.reaction && obj?.reaction?.id === reaction.id) {
+            // RIMOZIONE
+            _obj = Object.assign({}, _obj, {
+              reaction: null,
+              reactions_count: obj.reactions_count
+                .map((count: any) => {
+                  if (count.reaction.id === obj?.reaction?.id && count.count - 1 === 0) {
+                    return null;
+                  } else if (count.reaction.id === obj?.reaction?.id && count.count - 1 > 0) {
+                    return {count: count.count - 1, reaction: count.reaction};
+                  }
+                  return count;
+                })
+                .filter((count) => Boolean(count)),
+            });
+          }
+          const newObj = Object.assign({}, obj, _obj);
+          setObj(newObj);
+          setIsVoting(false);
+          onVote && onVote(newObj, null);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_CORE, error);
+          setIsVoting(false);
+          onVote && onVote(obj, error);
+        });
     }
   };
 

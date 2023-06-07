@@ -6,6 +6,9 @@ import {useThemeProps} from '@mui/system';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
   SCConnectionsManagerType,
   SCContextType,
@@ -99,6 +102,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   // STATE
   const {scUser} = useSCFetchUser({id: userId, user});
   const [status, setStatus] = useState<string>(null);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -115,15 +119,27 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
         autoHideDuration: 3000
       });
     } else {
+      let _action: (user: SCUserType) => Promise<any>;
       if (status === SCConnectionStatus.CONNECTED) {
-        scConnectionsManager.removeConnection(scUser);
+        _action = scConnectionsManager.removeConnection;
       } else if (status === SCConnectionStatus.CONNECTION_REQUEST_SENT) {
-        scConnectionsManager.cancelRequestConnection(scUser);
+        _action = scConnectionsManager.cancelRequestConnection;
       } else if (status === SCConnectionStatus.CONNECTION_REQUEST_RECEIVED) {
-        scConnectionsManager.acceptConnection(scUser);
+        _action = scConnectionsManager.acceptConnection;
       } else if (status === null) {
-        scConnectionsManager.requestConnection(scUser);
+        _action = scConnectionsManager.requestConnection;
       }
+      _action(scUser).catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+        if (catchUnauthorizedActionByBlockedUser(e, scUserContext.managers.blockedUsers.isBlocked(scUser), enqueueSnackbar)) {
+          setDisabled(true);
+        } else {
+          enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
+            variant: 'warning',
+            autoHideDuration: 3000
+          });
+        }
+      });
     }
   };
 
@@ -171,6 +187,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
     <Root
       size="small"
       variant="outlined"
+      disabled={disabled}
       loading={scUserContext.user ? scConnectionsManager.isLoading(scUser) : null}
       onClick={handleConnectionStatus}
       className={classNames(classes.root, className)}

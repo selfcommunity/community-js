@@ -44,3 +44,11 @@ export function objectWithoutProperties<T>(obj: T | null, keys: string[]): T {
   });
   return target;
 }
+
+/**
+ * Check if v is a func
+ * @param v
+ */
+export function isFunc(v) {
+  return typeof v === 'function';
+}

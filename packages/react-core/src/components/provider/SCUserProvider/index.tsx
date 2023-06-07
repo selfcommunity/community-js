@@ -13,6 +13,7 @@ import useSCFollowersManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
 import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
 import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
+import useSCBlockedUsersManager from '../../../hooks/useSCBlockedUsersManager';
 import {
   SCUserContextType,
   SCContextType,
@@ -23,6 +24,7 @@ import {
   SCFollowersManagerType,
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
+  SCBlockedUsersManagerType,
 } from '../../../types';
 import * as Session from '../../../constants/Session';
 
@@ -72,7 +74,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
-   * Managers followed, categories
+   * Managers followed, connections, blocked users, categories, incubators, settings
    */
   const settingsManager: SCSettingsManagerType = useSCSettingsManager(state.user);
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
@@ -80,7 +82,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const subscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = useSCSubscribedIncubatorsManager(state.user);
   const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
   const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user, updateUser);
-
+  const blockedUsersManager: SCBlockedUsersManagerType = useSCBlockedUsersManager(state.user);
   /**
    * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
    */
@@ -130,6 +132,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
       subscribedIncubatorsManager.refresh && subscribedIncubatorsManager.refresh();
+      blockedUsersManager.refresh && blockedUsersManager.refresh();
     }
   }
 
@@ -242,6 +245,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         followers: followersManager,
         connections: connectionsManager,
         incubators: subscribedIncubatorsManager,
+        blockedUsers: blockedUsersManager,
       },
     }),
     [
@@ -256,6 +260,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       followersManager.followers,
       connectionsManager.loading,
       connectionsManager.connections,
+      blockedUsersManager.blocked,
       subscribedIncubatorsManager.loading,
       subscribedIncubatorsManager.incubators,
     ]

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.64...@selfcommunity/react-core@0.4.0-alpha.65) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([768eba0](https://github.com/selfcommunity/community-js/commit/768eba0bb8c2a4b6b47a90d33b8e9c5e2d99d714))
+
+
+
+
+
+# [0.4.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.63...@selfcommunity/react-core@0.4.0-alpha.64) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([372542a](https://github.com/selfcommunity/community-js/commit/372542a5a8ed1a33ae0f8c9044565bd154de6f2a))
+* block user ([75c4df6](https://github.com/selfcommunity/community-js/commit/75c4df603df69f8a472b65e69792411e16b6a39f))
+* block user ([baaf57c](https://github.com/selfcommunity/community-js/commit/baaf57c97a9344f9d3c48b39eac731566e9203c6))
+
+
+
+
+
+# [0.4.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.62...@selfcommunity/react-core@0.4.0-alpha.63) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 # [0.4.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.61...@selfcommunity/react-core@0.4.0-alpha.62) (2023-06-06)
 
 

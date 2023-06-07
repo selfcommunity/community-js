@@ -31,6 +31,7 @@ import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
   Link,
   SCCache,
@@ -613,10 +614,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
+          if (!catchUnauthorizedActionByBlockedUser(error, scUserContext.managers.blockedUsers.isBlocked(obj.author), enqueueSnackbar)) {
+            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+              variant: 'error',
+              autoHideDuration: 3000
+            });
+          }
         });
     }
   };
