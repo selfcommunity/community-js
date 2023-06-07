@@ -117,7 +117,8 @@ import SCEmojiPicker from './components/SCEmojiPicker';
 import SCBullet from './components/SCBullet';
 import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
-import SCUserProfileEditAccountCredentials from './components/SCUserProfileEditAccountCredentials';
+import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfileEditSectionAccountCredentials';
+import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
 
 /**
  * Style fragments - Imports - End
@@ -259,7 +260,8 @@ const theme = {
     SCUserInfoDialog,
     SCUserProfileHeader,
     SCUserProfileEdit,
-    SCUserProfileEditAccountCredentials,
+    SCUserProfileEditSectionAccount,
+    SCUserProfileEditSectionAccountCredentials,
     SCUserProfileTemplate,
     SCVoteAction,
     SCVoteButton,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Paper, Popover, Typography} from '@mui/material';
+import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Popover, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -14,8 +14,6 @@ import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
 import {useSnackbar} from 'notistack';
-import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
-import AccountDeleteButton from '../../AccountDeleteButton';
 
 const messages = defineMessages({
   changePasswordTitle: {
@@ -31,7 +29,7 @@ const messages = defineMessages({
     defaultMessage: 'ui.userProfileEditAccountCredentials.email.empty.error'
   }
 });
-const PREFIX = 'SCUserProfileEditAccountCredentials';
+const PREFIX = 'SCUserProfileEditSectionAccountCredentials';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -259,10 +257,6 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
             defaultMessage="ui.userProfileEditAccountCredentials.changePassword"
           />
         </Button>
-        <Box className={classes.dangerZone}>
-          <AccountDataPortabilityButton fullWidth variant="outlined" color="primary" />
-          <AccountDeleteButton fullWidth variant="contained" color="secondary" />
-        </Box>
       </>
       {openChangePasswordDialog && (
         <PasswordDialogRoot

@@ -11,6 +11,8 @@ import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import AccountCredentials from './AccountCredentials';
+import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
+import AccountDeleteButton from '../../AccountDeleteButton';
 
 const messages = defineMessages({
   socialTitle: {
@@ -29,7 +31,8 @@ const messages = defineMessages({
 const PREFIX = 'SCUserProfileEditSectionAccount';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  dangerZone: `${PREFIX}-danger-zone`
 };
 
 const Root = styled(Box, {
@@ -134,6 +137,10 @@ export default function Account(inProps: AccountProps): JSX.Element {
           onClose={() => setOpenDeleteDialog(false)}
         />
       )}
+      <Box className={classes.dangerZone}>
+        <AccountDataPortabilityButton fullWidth variant="outlined" color="primary" />
+        <AccountDeleteButton fullWidth variant="contained" color="secondary" />
+      </Box>
     </Root>
   );
 }
