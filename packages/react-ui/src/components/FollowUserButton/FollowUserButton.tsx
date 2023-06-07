@@ -101,7 +101,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
   // STATE
   const {scUser} = useSCFetchUser({id: userId, user});
   const [followed, setFollowed] = useState<boolean>(null);
-  const [followedDisabled, setFollowedDisabled] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -131,7 +131,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
         .catch((e) => {
           Logger.error(SCOPE_SC_UI, e);
           if (catchUnauthorizedActionByBlockedUser(e, scUserContext.managers.blockedUsers.isBlocked(scUser), enqueueSnackbar)) {
-            setFollowedDisabled(true);
+            setDisabled(true);
           } else {
             enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
               variant: 'warning',
@@ -161,7 +161,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
       variant="outlined"
       onClick={handleFollowAction}
       loading={scUserContext.user ? followed === null || scFollowedManager.isLoading(scUser) : null}
-      disabled={followedDisabled}
+      disabled={disabled}
       className={classNames(classes.root, className)}
       {...rest}>
       {scUserContext.user && followed ? (
