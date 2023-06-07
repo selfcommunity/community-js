@@ -12,6 +12,7 @@ import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
+import {catchUnauthorizedActionByBlockedUser} from '../../../../utils/errors';
 
 const PREFIX = 'SCFollowAction';
 
@@ -134,10 +135,13 @@ export default function Follow(inProps: FollowProps): JSX.Element {
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
+          if (!catchUnauthorizedActionByBlockedUser(error, scUserContext.managers.blockedUsers.isBlocked(obj.author), enqueueSnackbar)) {
+            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+              variant: 'error',
+              autoHideDuration: 3000
+            });
+          }
+          setIsFollowing(false);
         });
     }
   }

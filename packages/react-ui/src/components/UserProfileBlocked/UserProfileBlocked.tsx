@@ -49,6 +49,12 @@ export interface UserProfileBlockedProps {
   blockedByUser?: boolean | null;
 
   /**
+   * Enable sync status blockedBy
+   * @default false
+   */
+  syncBlockedByUserStatus?: boolean;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -85,14 +91,14 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className = null, userId = null, user = null, blockedByUser = null, ...rest} = props;
+  const {className = null, userId = null, user = null, blockedByUser = null, syncBlockedByUserStatus = false, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
   const {scUser} = useSCFetchUser({id: userId, user});
-  const {blockedBy, loading: loadingBlockedBy} = useSCFetchUserBlockedBy({user: scUser, blockedByUser});
+  const {blockedBy, loading: loadingBlockedBy} = useSCFetchUserBlockedBy({user: scUser, blockedByUser, sync: syncBlockedByUserStatus});
 
   // CONST
   const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);

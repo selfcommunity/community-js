@@ -3,7 +3,8 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCUserHiddenByStatusType, SCUserType} from '@selfcommunity/types';
 import {UserService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType} from '../types/context';
+import {useSCUser} from '../components/provider/SCUserProvider';
 
 /**
  :::info
@@ -64,6 +65,15 @@ export default function useSCFetchUserBlockedBy({
       }
     }
   }, [authUserId, user, fetchUserBlockedBy, blockedBy]);
+
+  /**
+   * Update blockedBy if blockedByUser changes
+   */
+  useEffect(() => {
+    if (authUserId && user) {
+      setBlockedBy(blockedByUser);
+    }
+  }, [authUserId, blockedByUser, setBlockedBy]);
 
   /**
    * If sync enabled pull the remote status every 5sec
