@@ -57,6 +57,7 @@ import UserCounters, {UserCountersProps} from './components/UserCounters';
 import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
 import UserInfoDialog, {UserInfoDialogProps} from './components/UserInfoDialog';
 import UserInfo, {UserInfoProps, UserInfoSkeleton} from './components/UserInfo';
+import UserProfileBlocked, {UserProfileBlockedProps} from './components/UserProfileBlocked';
 import UserProfileEdit, {
   UserProfileEditProps,
   UserProfileEditSectionPublicInfo,
@@ -294,6 +295,8 @@ export {
   UserInfo,
   UserInfoProps,
   UserInfoSkeleton,
+  UserProfileBlocked,
+  UserProfileBlockedProps,
   SCUserProfileFields,
   SCUserProfileSettings,
   UserProfileEdit,

@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import {Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent} from '@mui/material';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 
@@ -81,9 +80,6 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
     disableBackdropClick = false,
     ...rest
   } = props;
-
-  // CONTEXT
-  const scUser: SCUserContextType = useContext(SCUserContext);
 
   /**
    * Handles dialog closing

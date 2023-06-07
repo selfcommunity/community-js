@@ -6,8 +6,10 @@ import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} fro
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme} from '@mui/material';
-import {SCThemeType, SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
+import {SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
+import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 
 const PREFIX = 'SCVoteButton';
 
@@ -29,7 +31,7 @@ const PopperRoot = styled(Popper, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.popperRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
   /**
@@ -98,7 +100,9 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   const timeoutRef = useRef(null);
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
   const handleMouseEnter = (event) => {
@@ -114,9 +118,40 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     timeoutRef.current = null;
   };
 
-  const handleVoteDone = (contribution: SCFeedObjectType | SCCommentType) => {
+  /**
+   * Perform vote action
+   * @param reaction
+   */
+  const handleVoteAction = (reaction: SCReactionType) => {
+    if (!scUserContext.user) {
+      scContext.settings.handleAnonymousAction();
+    } else if (UserUtils.isBlocked(scUserContext.user)) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked'" defaultMessage="ui.common.userBlocked'" />, {
+        variant: 'warning',
+        autoHideDuration: 3000
+      });
+    } else {
+      handleVote(reaction);
+    }
+  };
+
+  /**
+   * Handle callback onVote
+   * @param contribution
+   * @param error
+   */
+  const handleOnVote = (contribution: SCFeedObjectType | SCCommentType, error) => {
     setAnchorEl(null);
-    onVote && onVote(contribution);
+    if (error) {
+      if (!catchUnauthorizedActionByBlockedUser(error, scUserContext.managers.blockedUsers.isBlocked(contribution.author), enqueueSnackbar)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      }
+    } else {
+      onVote && onVote(contribution);
+    }
   };
 
   // HOOKS
@@ -124,7 +159,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     id: contributionId,
     contributionType,
     contribution,
-    onVote: handleVoteDone
+    onVote: handleOnVote
   });
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -144,7 +179,9 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   const button = (
     <Root
       onClick={
-        isMobile ? handleMouseEnter : () => handleVote(contributionReaction ? contributionReaction : reactions.default ? reactions.default : null)
+        isMobile
+          ? handleMouseEnter
+          : () => handleVoteAction(contributionReaction ? contributionReaction : reactions.default ? reactions.default : null)
       }
       disabled={isLoading || Boolean(error)}
       loading={isVoting}
@@ -193,7 +230,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
           keepMounted>
           <Paper className={classes.reactionList} onMouseEnter={handleClearTimeout} onMouseLeave={handleMouseLeave}>
             {reactions.reactions.map((reaction: SCReactionType) => (
-              <IconButton key={reaction.id} className={classes.reaction} onClick={() => handleVote(reaction)}>
+              <IconButton key={reaction.id} className={classes.reaction} onClick={() => handleVoteAction(reaction)}>
                 <Icon>
                   <img alt={reaction.label} src={reaction.image} width="100%" height="100%" />
                 </Icon>

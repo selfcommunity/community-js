@@ -10,7 +10,7 @@ import {
   updateQueryStringParameter
 } from './utils/url';
 import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
-import {mergeDeep, isObject, objectWithoutProperties} from './utils/object';
+import {mergeDeep, isObject, objectWithoutProperties, isFunc} from './utils/object';
 import {isInteger} from './utils/number';
 import {arraysEqual} from './utils/array';
 import {loadVersionBrowser} from './utils/browser';
@@ -47,6 +47,7 @@ export {
   mergeDeep,
   isObject,
   objectWithoutProperties,
+  isFunc,
   isInteger,
   arraysEqual,
   WSClient,

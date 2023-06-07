@@ -31,6 +31,7 @@ import {DeleteProviderAssociation} from '../../types/user';
 export interface UserApiClientInterface {
   getAllUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getHiddenUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getHiddenUsersId(params?: any, config?: AxiosRequestConfig): Promise<number[]>;
   userAutocomplete(params: UserAutocompleteParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserAutocompleteType>>;
   userSearch(params: UserSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getSpecificUser(id: number | string, config?: AxiosRequestConfig): Promise<SCUserType>;
@@ -113,6 +114,16 @@ export class UserApiClient {
   static getHiddenUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.ListHiddenUsers.url({})}?${p.toString()}`, method: Endpoints.ListHiddenUsers.method});
+  }
+
+  /**
+   * This endpoint retrieves the list of all users hidden id by the authenticated user
+   * @param params
+   * @param config
+   */
+  static getHiddenUsersId(params?: any, config?: AxiosRequestConfig): Promise<number[]> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.ListHiddenUsersId.url({})}?${p.toString()}`, method: Endpoints.ListHiddenUsersId.method});
   }
 
   /**
@@ -667,6 +678,9 @@ export default class UserService {
   }
   static async getHiddenUsers(params?: any, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return UserApiClient.getHiddenUsers(params, config);
+  }
+  static async getHiddenUsersId(params?: any, config?: AxiosRequestConfig): Promise<number[]> {
+    return UserApiClient.getHiddenUsersId(params, config);
   }
   static async userAutocomplete(params: UserAutocompleteParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserAutocompleteType>> {
     return UserApiClient.userAutocomplete(params, config);

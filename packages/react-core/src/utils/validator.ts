@@ -1,5 +1,5 @@
 import * as Locale from '../constants/Locale';
-import {isObject, isString, isValidUrl, Logger} from '@selfcommunity/utils';
+import {isFunc, isObject, isString, isValidUrl, Logger} from '@selfcommunity/utils';
 import * as Session from '../constants/Session';
 import {
   SCNotificationsType,
@@ -10,7 +10,7 @@ import {
   SCSettingsType,
 } from '../types/context';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {isFunc, ValidationError, ValidationResult, ValidationWarnings} from './errors';
+import {ValidationError, ValidationResult, ValidationWarnings} from './errors';
 import {SCLocaleType, SCVoteType} from '../types';
 import {CONTEXT_PROVIDERS_OPTION, DEFAULT_CONTEXT_PROVIDERS} from '../constants/ContextProviders';
 import * as Notifications from '../constants/Notifications';
