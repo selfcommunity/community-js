@@ -54,9 +54,10 @@ export default function SCVoteProvider({children = null}: {children: React.React
         getReactionsObjectCacheKey(),
         data.map((r: SCReactionType) => {
           const __reactionCacheKey = getReactionObjectCacheKey(r.id);
-          LRUCache.set(__reactionCacheKey, r);
+          LRUCache.set(__reactionCacheKey, r, {noSsr: false});
           return r.id;
-        })
+        }),
+        {noSsr: false}
       );
     }
     return data;
