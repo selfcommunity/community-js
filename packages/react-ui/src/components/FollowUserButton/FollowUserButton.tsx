@@ -7,6 +7,8 @@ import {useSnackbar} from 'notistack';
 import classNames from 'classnames';
 import {SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
+import {useThemeProps} from '@mui/system';
+import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
   SCContextType,
   SCFollowedManagerType,
@@ -16,7 +18,6 @@ import {
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/react-core';
-import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCFollowUserButton';
 
@@ -28,7 +29,7 @@ const FollowButton = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface FollowUserButtonProps {
   /**
@@ -98,7 +99,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
   const {enqueueSnackbar} = useSnackbar();
 
   // STATE
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const {scUser} = useSCFetchUser({id: userId, user});
   const [followed, setFollowed] = useState<boolean>(null);
   const [followedDisabled, setFollowedDisabled] = useState<boolean>(false);
 
@@ -115,7 +116,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
     }
   }, [authUserId, scFollowedManager.isFollowed]);
 
-  const followUser = () => {
+  const followUser = (): void => {
     if (!followed && UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -129,18 +130,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
         })
         .catch((e) => {
           Logger.error(SCOPE_SC_UI, e);
-          if (e.response.status === 403) {
-            if (scUserContext.managers.blockedUsers.isBlocked(scUser)) {
-              enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserBlockedByMe" defaultMessage="ui.common.actionToUserBlockedByMe" />, {
-                variant: 'warning',
-                autoHideDuration: 3000
-              });
-            } else {
-              enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserHasBlockedMe" defaultMessage="ui.common.actionToUserHasBlockedMe" />, {
-                variant: 'warning',
-                autoHideDuration: 3000
-              });
-            }
+          if (catchUnauthorizedActionByBlockedUser(e, scUserContext.managers.blockedUsers.isBlocked(scUser), enqueueSnackbar)) {
             setFollowedDisabled(true);
           } else {
             enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
@@ -152,7 +142,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
     }
   };
 
-  const handleFollowAction = () => {
+  const handleFollowAction = (): void => {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {

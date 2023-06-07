@@ -53,7 +53,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface UserProfileProps {
   /**
@@ -269,7 +269,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   }
 
   // HANDLERS
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     onEditClick && onEditClick(scUser);
   };
 

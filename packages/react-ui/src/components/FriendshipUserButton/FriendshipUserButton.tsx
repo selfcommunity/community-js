@@ -6,6 +6,9 @@ import {useThemeProps} from '@mui/system';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
   SCConnectionsManagerType,
   SCContextType,
@@ -15,8 +18,6 @@ import {
   useSCContext,
   useSCFetchUser
 } from '@selfcommunity/react-core';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCFriendshipUserButton';
 
@@ -129,19 +130,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
       }
       _action(scUser).catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
-        if (e.response.status === 403) {
-          if (scUserContext.managers.blockedUsers.isBlocked(scUser)) {
-            enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserBlockedByMe" defaultMessage="ui.common.actionToUserBlockedByMe" />, {
-              variant: 'warning',
-              autoHideDuration: 3000
-            });
-          } else {
-            enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserHasBlockedMe" defaultMessage="ui.common.actionToUserHasBlockedMe" />, {
-              variant: 'warning',
-              autoHideDuration: 3000
-            });
-          }
-        } else {
+        if (!catchUnauthorizedActionByBlockedUser(e, scUserContext.managers.blockedUsers.isBlocked(scUser), enqueueSnackbar)) {
           enqueueSnackbar(<FormattedMessage id="ui.common.actionToUserDeleted" defaultMessage="ui.common.actionToUserDeleted" />, {
             variant: 'warning',
             autoHideDuration: 3000

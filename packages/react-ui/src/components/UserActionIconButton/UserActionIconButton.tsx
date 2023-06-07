@@ -277,7 +277,6 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
           open={openHideDialog}
           isUpdating={isHiddenLoading}
           TransitionComponent={Transition}
-          minWidth={'md'}
           keepMounted
           title={
             hidden ? (

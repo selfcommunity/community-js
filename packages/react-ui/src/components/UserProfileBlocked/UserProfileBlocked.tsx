@@ -11,7 +11,8 @@ const PREFIX = 'SCUserProfileBlocked';
 
 const classes = {
   root: `${PREFIX}-root`,
-  info: `${PREFIX}-info`
+  info: `${PREFIX}-info`,
+  button: `${PREFIX}-button`
 };
 
 const Root = styled(Box, {
@@ -73,6 +74,8 @@ export interface UserProfileBlockedProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUserProfileBlocked-root|Styles applied to the root element.|
+ |info|.SCUserProfileBlocked-info|Styles applied to info text element.|
+ |button|.SCUserProfileBlocked-button|Styles applied to the unblock button element.|
 
  * @param inProps
  */
@@ -101,6 +104,11 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Divider />
+      {!isMe && blockedBy && (
+        <Typography variant="body1" className={classes.info}>
+          <FormattedMessage id="ui.userProfileBlocked.blockedUserBy" defaultMessage="ui.userProfileBlocked.blockedUserBy" />
+        </Typography>
+      )}
       {!isMe && scUserContext.managers.blockedUsers.isBlocked(scUser) && (
         <>
           <Typography variant="body1" className={classes.info}>
@@ -108,16 +116,12 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
           </Typography>
           <Button
             variant="contained"
+            className={classes.button}
             onClick={() => scUserContext.managers.blockedUsers.block(scUser)}
             disabled={scUserContext.managers.blockedUsers.isLoading()}>
             <FormattedMessage id="ui.userProfileBlocked.unBlockUser" defaultMessage="ui.userProfileBlocked.unBlockUser" />
           </Button>
         </>
-      )}
-      {!isMe && blockedBy && (
-        <Typography variant="body1" className={classes.info}>
-          <FormattedMessage id="ui.userProfileBlocked.blockedUserBy" defaultMessage="ui.userProfileBlocked.blockedUserBy" />
-        </Typography>
       )}
     </Root>
   );
