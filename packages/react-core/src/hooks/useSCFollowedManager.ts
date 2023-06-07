@@ -95,7 +95,11 @@ export default function useSCFollowedManager(user?: SCUserType) {
             const isFollowed = data.includes(user.id);
             setData((prev) => (isFollowed ? prev.filter((id) => id !== user.id) : [...[user.id], ...prev]));
             setUnLoading(user.id);
-            return Promise.resolve(res.data);
+            return Promise.resolve(res);
+          })
+          .catch((e) => {
+            setUnLoading(user.id);
+            return Promise.reject(e);
           });
       },
     [data, loading, cache]

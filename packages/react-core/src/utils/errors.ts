@@ -185,11 +185,3 @@ export class ValidationResult {
     this.emitWarnings();
   }
 }
-
-/**
- * Check if v is a func
- * @param v
- */
-export function isFunc(v) {
-  return typeof v === 'function';
-}

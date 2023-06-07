@@ -12,17 +12,19 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Slide,
   SwipeableDrawer,
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {SCUserHiddenStatusType, SCUserType} from '@selfcommunity/types';
-import {Link, SCContextType, SCThemeType, SCUserContextType, useEffectOnce, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import {SCUserType} from '@selfcommunity/types';
+import {Link, SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
-import {UserService} from '@selfcommunity/api-services';
 import UserInfoDialog from '../UserInfoDialog';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import {TransitionProps} from '@mui/material/transitions';
 
 const PREFIX = 'SCUserActionIconButton';
 
@@ -66,6 +68,15 @@ export interface UserActionIconButtonProps extends IconButtonProps {
   items?: any;
 }
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 /**
  * > API documentation for the Community-JS User Action Menu component. Learn about the available props and the CSS API.
 
@@ -96,15 +107,16 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
   });
   const {className = null, userId = null, user = null, items = [], ...rest} = props;
 
-  // STATE
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [infoOpen, setInfoOpen] = useState<boolean>(false);
-  const [isHiddenLoading, setHiddenLoading] = useState<boolean>(true);
-  const [hidden, setHidden] = useState<boolean | null>(null);
-
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scContext: SCContextType = useSCContext();
+
+  // STATE
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [infoOpen, setInfoOpen] = useState<boolean>(false);
+  const [isHiddenLoading, setHiddenLoading] = useState<boolean>(false);
+  const [hidden, setHidden] = useState<boolean | null>(null);
+  const [openHideDialog, setOpenHideDialog] = useState<boolean>(false);
 
   // HOOKS
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
@@ -126,28 +138,33 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
     setInfoOpen(false);
   };
   const handleHideToggle = () => {
-    if (hidden === null) {
-      return null;
-    }
     setHiddenLoading(true);
-    UserService.showHideUser(scUser.id)
-      .then(() => setHidden(!hidden))
+    scUserContext.managers.blockedUsers
+      .block(scUser)
+      .then((blocked) => {
+        setHidden(blocked);
+      })
       .then(() => setHiddenLoading(false));
   };
-
-  // EFFECTS
-  useEffect(() => {
-    if (anchorEl && hidden === null) {
-      UserService.checkUserHidden(scUser.id)
-        .then((res: SCUserHiddenStatusType) => setHidden(res.is_hidden))
-        .then(() => setHiddenLoading(false));
-    }
-  }, [anchorEl]);
+  const handleHide = useMemo(
+    () => () => {
+      setOpenHideDialog(true);
+      handleClose();
+    },
+    [setOpenHideDialog, handleClose]
+  );
 
   // MEMO
   const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
   const roles = useMemo(() => scUserContext.user && scUserContext?.user.role, [scUserContext.user]);
   const canModerate = useMemo(() => roles && (roles.includes('admin') || roles.includes('moderator')) && !isMe, [roles, isMe]);
+
+  // EFFECTS
+  useEffect(() => {
+    if (anchorEl && hidden === null && scUser) {
+      setHidden(scUserContext.managers.blockedUsers.isBlocked(scUser));
+    }
+  }, [anchorEl, scUser]);
 
   // RENDER
   if (isMe) {
@@ -211,7 +228,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
           <FormattedMessage defaultMessage="ui.userActionIconButton.information" id="ui.userActionIconButton.information" />
         </MenuItem>,
         <Divider key="divider" />,
-        <MenuItem key="hide" onClick={handleHideToggle} disabled={isHiddenLoading}>
+        <MenuItem key="hide" onClick={handleHide} disabled={isHiddenLoading}>
           {hidden ? (
             <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
           ) : (
@@ -255,6 +272,30 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
         </MenuRoot>
       )}
       <UserInfoDialog userId={userId} user={scUser} open={infoOpen} onClose={handleInfoClose} />
+      {openHideDialog && (
+        <ConfirmDialog
+          open={openHideDialog}
+          isUpdating={isHiddenLoading}
+          TransitionComponent={Transition}
+          keepMounted
+          title={
+            hidden ? (
+              <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
+            ) : (
+              <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
+            )
+          }
+          content={
+            hidden ? (
+              <FormattedMessage defaultMessage="ui.userActionIconButton.dialogShowAction" id="ui.userActionIconButton.dialogShowAction" />
+            ) : (
+              <FormattedMessage defaultMessage="ui.userActionIconButton.dialogHideAction" id="ui.userActionIconButton.dialogHideAction" />
+            )
+          }
+          onConfirm={handleHideToggle}
+          onClose={() => setOpenHideDialog(false)}
+        />
+      )}
     </>
   );
 }
