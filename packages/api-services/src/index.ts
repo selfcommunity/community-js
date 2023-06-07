@@ -11,7 +11,7 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
 /**
  * Utils
  */
-import {formatHttpError, getCancelTokenSourceRequest} from './utils/http';
+import {formatHttpError, formatHttpErrorCode, getCancelTokenSourceRequest} from './utils/http';
 import {generateJWTToken, parseJwt} from './utils/token';
 import {apiRequest} from './utils/apiRequest';
 import {urlParams} from './utils/url';
@@ -118,6 +118,7 @@ export {
   HttpMethod,
   apiRequest,
   formatHttpError,
+  formatHttpErrorCode,
   getCancelTokenSourceRequest,
   generateJWTToken,
   parseJwt,

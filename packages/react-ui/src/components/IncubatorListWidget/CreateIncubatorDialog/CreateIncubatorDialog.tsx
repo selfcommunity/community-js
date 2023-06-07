@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, FormGroup} from '@mui/material';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../../shared/BaseDialog';
@@ -118,7 +118,7 @@ export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProp
         setSubmitted(true);
       })
       .catch((error) => {
-        setError(formatHttpError(error));
+        setError(error);
         setIsSubmitting(false);
         Logger.error(SCOPE_SC_UI, error);
       });

@@ -5,7 +5,7 @@ import {Alert, Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
-import {AccountService, formatHttpError} from '@selfcommunity/api-services';
+import {AccountService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import PasswordTextField from '../../shared/PasswordTextField';
 
 const PREFIX = 'SCAccountReset';
@@ -145,7 +145,7 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
         onSuccess && onSuccess(res);
       })
       .catch((error) => {
-        const _error = formatHttpError(error);
+        const _error = formatHttpErrorCode(error);
         if (_error.passwordError) {
           setPasswordError(_error.passwordError.error);
         }
@@ -185,7 +185,14 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
             value={password}
             onChange={handleChange}
             error={Boolean(passwordError)}
-            helperText={passwordError}
+            helperText={
+              passwordError && (
+                <FormattedMessage
+                  id={`ui.accountReset.password.error.${passwordError}`}
+                  defaultMessage={`ui.accountReset.password.error.${passwordError}`}
+                />
+              )
+            }
           />
           <Button type="submit" {...ButtonProps} disabled={!password || isSubmitting}>
             <FormattedMessage id="ui.accountReset.submit" defaultMessage="ui.accountReset.submit" />
