@@ -59,7 +59,6 @@ export default function useSCFetchUserBlockedBy({
     if (scUserContext.user) {
       if (user && blockedBy === null) {
         if (scUserContext.user.id !== user.id) {
-          console.log('fetchUserBlockedBy');
           fetchUserBlockedBy(user);
         } else {
           setLoading(false);
