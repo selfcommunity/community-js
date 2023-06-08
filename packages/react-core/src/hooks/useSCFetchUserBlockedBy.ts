@@ -59,6 +59,7 @@ export default function useSCFetchUserBlockedBy({
     if (scUserContext.user) {
       if (user && blockedBy === null) {
         if (scUserContext.user.id !== user.id) {
+          console.log('fetchUserBlockedBy');
           fetchUserBlockedBy(user);
         } else {
           setLoading(false);
@@ -68,15 +69,6 @@ export default function useSCFetchUserBlockedBy({
       setLoading(false);
     }
   }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy]);
-
-  /**
-   * Update blockedBy if blockedByUser changes
-   */
-  useEffect(() => {
-    if (scUserContext.user && user) {
-      setBlockedBy(blockedByUser);
-    }
-  }, [scUserContext.user, blockedByUser, setBlockedBy]);
 
   /**
    * If sync enabled pull the remote status every 5sec
