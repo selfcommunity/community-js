@@ -6,7 +6,15 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, formatHttpErrorCode, HttpResponse} from '@selfcommunity/api-services';
 import {camelCase, Logger} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCContext,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
@@ -91,6 +99,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   });
   const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, editingField, ...rest} = props;
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -226,6 +235,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                 id: `ui.userInfo.${camelCase(field)}`,
                 defaultMessage: `ui.userInfo.${field}`
               })}
+              {...(scContext.settings.locale.default === 'it' ? {format: 'dd/MM/yyyy'} : {})}
               defaultValue={user[field] ? parseISO(user[field]) : null}
               onChange={(newValue) => {
                 const u = user;
