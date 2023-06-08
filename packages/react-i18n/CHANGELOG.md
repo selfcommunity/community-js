@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.31...@selfcommunity/react-i18n@0.5.0-alpha.32) (2023-06-08)
+
+
+### Performance Improvements
+
+* format errors by their codes. ([d6ade5a](https://github.com/selfcommunity/community-js/commit/d6ade5a4729c08839c7c54aead22e7e624a141be))
+
+
+
+
+
 # [0.5.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.30...@selfcommunity/react-i18n@0.5.0-alpha.31) (2023-06-07)
 
 

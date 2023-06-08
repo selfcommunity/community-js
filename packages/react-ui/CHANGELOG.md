@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.234](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.233...@selfcommunity/react-ui@0.7.0-alpha.234) (2023-06-08)
+
+
+### Bug Fixes
+
+* fixed account credential theme(wasn't applying style) ([14552fc](https://github.com/selfcommunity/community-js/commit/14552fc3c4eba7c4c8719337a5ede733f2f39827))
+
+
+### Performance Improvements
+
+* format errors by their codes. ([d6ade5a](https://github.com/selfcommunity/community-js/commit/d6ade5a4729c08839c7c54aead22e7e624a141be))
+
+
+
+
+
 # [0.7.0-alpha.233](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.232...@selfcommunity/react-ui@0.7.0-alpha.233) (2023-06-07)
 
 
