@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.183](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.182...@selfcommunity/react-theme-default@0.1.0-alpha.183) (2023-06-08)
+
+
+### Bug Fixes
+
+* fixed account credential theme(wasn't applying style) ([14552fc](https://github.com/selfcommunity/community-js/commit/14552fc3c4eba7c4c8719337a5ede733f2f39827))
+
+
+
+
+
 # [0.1.0-alpha.182](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.181...@selfcommunity/react-theme-default@0.1.0-alpha.182) (2023-06-07)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
