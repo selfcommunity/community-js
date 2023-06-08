@@ -1,5 +1,5 @@
 import {camelCase} from '@selfcommunity/utils';
-import axios, { CancelTokenSource } from "axios";
+import axios, {CancelTokenSource} from 'axios';
 
 export function defaultError(error: {request?: any; message?: any}): void {
   if (error.request) {
@@ -34,6 +34,33 @@ export function formatHttpError(error) {
   let errors: any = {};
   if (error.response && error.response.data && typeof error.response.data === 'object' && error.response.data.errors) {
     errors = {...formatError(error.response.data.errors)};
+  } else {
+    defaultError(error);
+  }
+  return errors;
+}
+
+const formatErrorCode = (error) => {
+  const errors: any = {};
+  if (Array.isArray(error)) {
+    for (let i = 0; i < error.length; i++) {
+      const err = error[i];
+      if (err.field) {
+        errors[`${camelCase(err.field)}Error`] = Array.isArray(err.messages) ? formatErrorCode(err.messages) : err.messages;
+      } else {
+        errors.error = err.code;
+      }
+    }
+  } else {
+    errors.error = error.errors;
+  }
+  return errors;
+};
+
+export function formatHttpErrorCode(error) {
+  let errors: any = {};
+  if (error.response && error.response.data && typeof error.response.data === 'object' && error.response.data.errors) {
+    errors = {...formatErrorCode(error.response.data.errors)};
   } else {
     defaultError(error);
   }

@@ -3,12 +3,11 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpErrorCode, HttpResponse} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
 import {isValidUrl} from '@selfcommunity/utils';
 import {MEDIA_TYPE_URL} from '../../../../constants/Media';
-import {FormattedMessage, useIntl} from 'react-intl';
-import commonMessages from '../../../../messages/common';
+import {FormattedMessage} from 'react-intl';
 import {CircularProgress, Fade} from '@mui/material';
 import {BaseTextFieldProps} from '@mui/material/TextField/TextField';
 import {InputProps as StandardInputProps} from '@mui/material/Input/Input';
@@ -112,9 +111,6 @@ export default (props: UrlTextFieldProps): JSX.Element => {
   // PROPS
   const {helperText, error, onSuccess, ...rest} = props;
 
-  // INTL
-  const intl = useIntl();
-
   // Component update
   useEffect(() => {
     // Clear the interval when the component unmounts
@@ -124,7 +120,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
   // HANDLERS
   const handleChange = (event: SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
-    setState({url: target.value, urlError: isValidUrl(target.value) ? null : intl.formatMessage(commonMessages.urlError)});
+    setState({url: target.value, urlError: isValidUrl(target.value) ? null : 'validationError'});
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
@@ -148,7 +144,8 @@ export default (props: UrlTextFieldProps): JSX.Element => {
         onSuccess && onSuccess(res.data as SCMediaType);
       })
       .catch((error) => {
-        setState({urlError: formatHttpError(error).error, url: urlRef.current});
+        const _error = formatHttpErrorCode(error);
+        setState({urlError: _error.urlError ? `urlError.${_error.urlError.error}` : _error.error, url: urlRef.current});
       })
       .then(() => setIsCreating(false));
   };
@@ -174,7 +171,10 @@ export default (props: UrlTextFieldProps): JSX.Element => {
         onPaste={handlePaste}
         error={error || Boolean(urlError)}
         helperText={
-          helperText || urlError || <FormattedMessage id="ui.composer.media.link.add.help" defaultMessage="ui.composer.media.link.add.help" />
+          helperText ||
+          (urlError && (
+            <FormattedMessage id={`ui.composer.media.link.add.error.${urlError}`} defaultMessage={`ui.composer.media.link.add.error.${urlError}`} />
+          )) || <FormattedMessage id="ui.composer.media.link.add.help" defaultMessage="ui.composer.media.link.add.help" />
         }
         disabled={isCreating}
         {...rest}

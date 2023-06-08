@@ -4,7 +4,7 @@ import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Po
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {formatHttpError, UserService} from '@selfcommunity/api-services';
+import {formatHttpErrorCode, UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import BaseDialog from '../../../shared/BaseDialog';
@@ -23,10 +23,6 @@ const messages = defineMessages({
   confirmPasswordError: {
     id: 'ui.userProfileEditAccountCredentials.confirmPassword.error',
     defaultMessage: 'ui.userProfileEditAccountCredentials.confirmPassword.error'
-  },
-  emptyEmailError: {
-    id: 'ui.userProfileEditAccountCredentials.email.empty.error',
-    defaultMessage: 'ui.userProfileEditAccountCredentials.email.empty.error'
   }
 });
 const PREFIX = 'SCUserProfileEditSectionAccountCredentials';
@@ -37,7 +33,7 @@ const classes = {
   success: `${PREFIX}-success`,
   error: `${PREFIX}-error`,
   dangerZone: `${PREFIX}-danger-zone`,
-  passwordDialogRoot: `${PREFIX}-dialog-root`,
+  dialogRoot: `${PREFIX}-dialog-root`,
   form: `${PREFIX}-password-form`,
   formField: `${PREFIX}-form-field`,
   password: `${PREFIX}-password`,
@@ -53,7 +49,7 @@ const Root = styled(Box, {
 const PasswordDialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.passwordDialogRoot
+  overridesResolver: (props, styles) => styles.dialogRoot
 })(() => ({}));
 
 export interface AccountCredentialProps {
@@ -100,7 +96,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
-  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+  const {enqueueSnackbar} = useSnackbar();
   // INTL
   const intl = useIntl();
 
@@ -151,7 +147,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
       })
       .catch((error) => {
         setIsSubmittingPassword(false);
-        const _error = formatHttpError(error);
+        const _error = formatHttpErrorCode(error);
         Logger.error(SCOPE_SC_UI, error);
         if (_error.passwordError) {
           setError((prev) => ({...prev, ['password']: _error.passwordError.error}));
@@ -172,8 +168,8 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
       })
       .catch((error) => {
         setIsSubmitting(false);
-        const _error = formatHttpError(error);
-        setError((prev) => ({...prev, ['email']: _error.error}));
+        const _error = formatHttpErrorCode(error);
+        setError((prev) => ({...prev, ['email']: _error.newEmailError ? `newEmailError.${_error.newEmailError.error}` : _error.error}));
       });
   };
 
@@ -194,12 +190,12 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
         );
       })
       .catch((error) => {
-        const _error = formatHttpError(error);
+        const _error = formatHttpErrorCode(error);
         setError((prev) => ({...prev, ['email']: _error.error}));
         setIsSubmitting(false);
       });
   };
-
+  console.log(error);
   if (!user) {
     return;
   }
@@ -223,7 +219,14 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
                 onChange={handleChange}
                 onBlur={handleEmailBlur}
                 error={Boolean(error.email)}
-                helperText={error.email}
+                helperText={
+                  error.email && (
+                    <FormattedMessage
+                      id={`ui.userProfileEditAccountCredentials.email.error.${error.email}`}
+                      defaultMessage={`ui.userProfileEditAccountCredentials.email.error.${error.email}`}
+                    />
+                  )
+                }
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -234,7 +237,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
                       ) : error.email ? (
                         <Icon color="error">error</Icon>
                       ) : (
-                        <IconButton onClick={handleSubmitEmail} edge="end" color="primary" disabled={!field.email}>
+                        <IconButton onClick={handleSubmitEmail} edge="end" color="primary" disabled={!field.email || error.email}>
                           <Icon>check</Icon>
                         </IconButton>
                       )}
@@ -260,7 +263,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
       </>
       {openChangePasswordDialog && (
         <PasswordDialogRoot
-          className={classes.passwordDialogRoot}
+          className={classes.dialogRoot}
           title={intl.formatMessage(messages.changePasswordTitle)}
           open={openChangePasswordDialog}
           onClose={handleCloseDialog}
@@ -277,7 +280,14 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
               value={field.password}
               onChange={handleChange}
               error={Boolean(error.password)}
-              helperText={error.password}
+              helperText={
+                error.password && (
+                  <FormattedMessage
+                    id={`ui.userProfileEditAccountCredentials.password.error.${error.password}`}
+                    defaultMessage={`ui.userProfileEditAccountCredentials.password.error.${error.password}`}
+                  />
+                )
+              }
             />
             <PasswordTextField
               name="newPassword"
@@ -293,7 +303,14 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
               value={field.newPassword}
               onChange={handleChange}
               error={Boolean(error.newPassword)}
-              helperText={error.newPassword}
+              helperText={
+                error.newPassword && (
+                  <FormattedMessage
+                    id={`ui.userProfileEditAccountCredentials.newPassword.error.${error.newPassword}`}
+                    defaultMessage={`ui.userProfileEditAccountCredentials.newPassword.error.${error.newPassword}`}
+                  />
+                )
+              }
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -346,7 +363,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
           <LoadingButton
             className={classes.confirmChangeButton}
             loading={isSubmittingPassword}
-            disabled={!field.confirmPassword || Boolean(error.password) || Boolean(error.newPassword)}
+            disabled={!field.confirmPassword || Boolean(error.confirmPassword) || Boolean(error.password) || Boolean(error.newPassword)}
             variant="contained"
             onClick={handleSubmitPassword}>
             <FormattedMessage

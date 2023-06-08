@@ -14,7 +14,7 @@ const Component = {
     }),
     dialogRoot: ({theme}: any) => ({
       '& .MuiDialogContent-root': {
-        '& .SCUserProfileEditSectionAccountCredentials-form': {
+        '& .SCUserProfileEditSectionAccountCredentials-password-form': {
           '& .SCUserProfileEditSectionAccountCredentials-form-field': {
             margin: theme.spacing(1, 1, 1, 0)
           }

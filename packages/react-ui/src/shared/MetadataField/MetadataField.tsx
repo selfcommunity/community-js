@@ -11,24 +11,25 @@ export type MetadataFieldProps = TextFieldProps & {
 
 const MetadataField = (props: MetadataFieldProps): JSX.Element => {
   // PROPS
-  const {metadata, className = '', ...rest} = props;
+  const {metadata, className = '', label, ...rest} = props;
 
   // RENDER
   let component = null;
+  const _label = label ?? metadata.label;
 
   switch (metadata?.type) {
     case SCMetadataTypeFieldType.EMAIL:
-      component = <EmailTextField {...rest} className={className} label={metadata.label} required={metadata?.mandatory} />;
+      component = <EmailTextField {...rest} className={className} label={_label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.URL:
-      component = <UrlTextField {...rest} type="url" className={className} label={metadata.label} required={metadata?.mandatory} />;
+      component = <UrlTextField {...rest} type="url" className={className} label={_label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.PHONE_NUMBER:
-      component = <PhoneTextField {...rest} className={className} label={metadata.label} required={metadata?.mandatory} />;
+      component = <PhoneTextField {...rest} className={className} label={_label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.ENUM:
       component = (
-        <TextField {...rest} className={className} label={metadata.label} required={metadata?.mandatory} select>
+        <TextField {...rest} className={className} label={_label} required={metadata?.mandatory} select>
           {metadata?.type_options.map((option: string) => (
             <MenuItem key={option} value={option}>
               {option}
@@ -40,15 +41,11 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
     case SCMetadataTypeFieldType.CHECKBOX:
       const {value} = rest;
       component = (
-        <FormControlLabel
-          className={className}
-          control={<Checkbox required={metadata?.mandatory} checked={Boolean(value)} />}
-          label={metadata.label}
-        />
+        <FormControlLabel className={className} control={<Checkbox required={metadata?.mandatory} checked={Boolean(value)} />} label={_label} />
       );
       break;
     default:
-      component = <TextField {...rest} className={className} label={metadata.label} required={metadata?.mandatory} />;
+      component = <TextField {...rest} className={className} label={_label} required={metadata?.mandatory} />;
       break;
   }
   return <React.Fragment>{component}</React.Fragment>;

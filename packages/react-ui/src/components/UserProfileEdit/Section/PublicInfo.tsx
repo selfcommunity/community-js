@@ -2,9 +2,9 @@ import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpErrorCode, HttpResponse} from '@selfcommunity/api-services';
 import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
@@ -150,16 +150,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         })
         .then((res: HttpResponse<SCUserType>) => {
           scUserContext.updateUser(res.data);
-        })
-        .catch((error) => {
-          setError({...error, ...formatHttpError(error)});
-        })
-        .then(() => {
           setEditing(editing.filter((f) => f !== field));
           setSaving(saving.filter((f) => f !== field));
           if (onEditSuccess) {
             editingField ? onEditSuccess(editedField) : onEditSuccess();
           }
+        })
+        .catch((error) => {
+          setError({...error, ...formatHttpErrorCode(error)});
+          setEditing([...editing, editingField ?? field]);
+          setSaving(saving.filter((f) => f !== field));
         });
     };
   };
@@ -167,6 +167,10 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEditedField({[event.target.name]: event.target.value});
     setUser({...user, [event.target.name]: event.target.value});
+    if (error[`${camelCase(event.target.name)}Error`]) {
+      delete error[`${camelCase(event.target.name)}Error`];
+      setError(error);
+    }
   };
 
   useEffect(() => {
@@ -185,7 +189,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     const component: any = {element: TextField};
     let label = intl.formatMessage({
       id: `ui.userInfo.${camelField}`,
-      defaultMessage: `ui.userInfo.${field}`
+      defaultMessage: `ui.userInfo.${camelField}`
     });
     let props: any = {
       InputProps: {
@@ -288,7 +292,11 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
               onChange={handleChange}
               disabled={!isEditing || isSaving}
               error={_error}
-              helperText={_error}
+              helperText={
+                _error && (
+                  <FormattedMessage id={`ui.userInfo.${camelField}.error.${_error}`} defaultMessage={`ui.userInfo.${camelField}.error.${_error}`} />
+                )
+              }
               metadata={metadataDefinitions[field]}
             />
           );
@@ -308,7 +316,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         onChange={handleChange}
         disabled={!isEditing || isSaving}
         error={_error}
-        helperText={_error}>
+        helperText={
+          _error && <FormattedMessage id={`ui.userInfo.${camelField}.error.${_error}`} defaultMessage={`ui.userInfo.${camelField}.error.${_error}`} />
+        }>
         {content}
       </component.element>
     );

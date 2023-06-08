@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';
 import {useThemeProps} from '@mui/system';
-import {AccountService, formatHttpError} from '@selfcommunity/api-services';
+import {AccountService, formatHttpErrorCode} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCAccountRecover';
 
@@ -136,7 +136,7 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
         onSuccess && onSuccess();
       })
       .catch((error) => {
-        const _error = formatHttpError(error);
+        const _error = formatHttpErrorCode(error);
         if (_error.emailError) {
           setEmailError(_error.emailError.error);
         }
@@ -174,7 +174,11 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
             value={email}
             onChange={handleChange}
             error={Boolean(emailError)}
-            helperText={emailError}
+            helperText={
+              emailError && (
+                <FormattedMessage id={`ui.accountRecover.email.error.${emailError}`} defaultMessage={`ui.accountRecover.email.error.${emailError}`} />
+              )
+            }
           />
           <Button type="submit" {...ButtonProps} disabled={!email || Boolean(emailError) || isSubmitting}>
             <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />
