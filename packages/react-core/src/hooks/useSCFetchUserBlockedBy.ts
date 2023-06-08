@@ -28,7 +28,6 @@ export default function useSCFetchUserBlockedBy({
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   /**
    * Memoized fetchUserBlockedBy
@@ -57,30 +56,34 @@ export default function useSCFetchUserBlockedBy({
    * If user attempt to get blocked by
    */
   useEffect(() => {
-    if (authUserId && user && loading && blockedBy === null) {
-      if (authUserId !== user.id) {
-        fetchUserBlockedBy(user);
-      } else {
-        setLoading(false);
+    if (scUserContext.user) {
+      if (user && blockedBy === null) {
+        if (scUserContext.user.id !== user.id) {
+          fetchUserBlockedBy(user);
+        } else {
+          setLoading(false);
+        }
       }
+    } else if (scUserContext.user === null) {
+      setLoading(false);
     }
-  }, [authUserId, user, fetchUserBlockedBy, blockedBy]);
+  }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy]);
 
   /**
    * Update blockedBy if blockedByUser changes
    */
   useEffect(() => {
-    if (authUserId && user) {
+    if (scUserContext.user && user) {
       setBlockedBy(blockedByUser);
     }
-  }, [authUserId, blockedByUser, setBlockedBy]);
+  }, [scUserContext.user, blockedByUser, setBlockedBy]);
 
   /**
    * If sync enabled pull the remote status every 5sec
    */
   useEffect(() => {
     let interval;
-    if (authUserId && blockedBy !== null && sync) {
+    if (scUserContext.user && blockedBy !== null && sync) {
       interval = setInterval(() => {
         fetchUserBlockedBy(user, false);
       }, 5000);
@@ -88,7 +91,7 @@ export default function useSCFetchUserBlockedBy({
         interval && clearInterval(interval);
       };
     }
-  }, [authUserId, user, fetchUserBlockedBy, blockedBy]);
+  }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy]);
 
   return {blockedBy, loading, error};
 }
