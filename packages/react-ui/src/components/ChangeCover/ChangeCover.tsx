@@ -1,6 +1,7 @@
 import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
+  Alert,
   Box,
   Button,
   Divider,
@@ -23,6 +24,8 @@ import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const PREFIX = 'SCChangeCoverButton';
 
@@ -117,6 +120,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const [openDeleteCoverDialog, setOpenDeleteCoverDialog] = useState<boolean>(false);
   const [isDeletingCover, setIsDeletingCover] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [alert, setAlert] = useState<boolean>(false);
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -144,14 +148,19 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
    * Handles file upload
    * @param event
    */
-  function handleUpload(event) {
-    fileInput = event.target.files[0];
-    handleSave();
-  }
+  const handleUpload = (event) => {
+    const maxSize = 5 * 1024 * 1024;
+    if (event.target.files[0]?.size <= maxSize) {
+      fileInput = event.target.files[0];
+      handleSave();
+    } else {
+      setAlert(true);
+      setAnchorEl(null);
+    }
+  };
 
   /**
    * Handles deletion of a specific cover
-   * @param id
    */
   function deleteCover() {
     setIsDeletingCover(true);
@@ -192,7 +201,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -208,7 +217,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
           </MenuItem>
         ) : (
           <>
-            <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+            <input type="file" onChange={handleUpload} ref={fileInput} hidden accept=".gif,.png,.jpg,.jpeg" />
             <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
                 <Icon fontSize="small">add_circle_outline</Icon>
@@ -268,17 +277,18 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
                 </Typography>
                 <Divider />
                 <Typography component="span">
-                  <ul className="list">
-                    <li>
-                      <FormattedMessage id="ui.changeCover.listF" defaultMessage="ui.changeCover.listF" />
-                    </li>
-                    <li>
-                      <FormattedMessage id="ui.changeCover.listD" defaultMessage="ui.changeCover.listF" />
-                    </li>
-                    <li>
-                      <FormattedMessage id="ui.changeCover.listW" defaultMessage="ui.changeCover.listF" />
-                    </li>
-                  </ul>
+                  <FormattedMessage
+                    id="ui.changeCover.info"
+                    defaultMessage="ui.changeCover.info"
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      li: (chunks) => <li>{chunks}</li>,
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      ul: (chunks) => <ul>{chunks}</ul>
+                    }}
+                  />
                 </Typography>
               </Box>
             </Popover>
@@ -299,7 +309,13 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       )}
     </React.Fragment>
   );
-
+  if (alert) {
+    return (
+      <Alert color="error" onClose={() => setAlert(false)}>
+        <FormattedMessage id="ui.changeCover.button.change.alert" defaultMessage="ui.changeCover.button.change.alert" />
+      </Alert>
+    );
+  }
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
