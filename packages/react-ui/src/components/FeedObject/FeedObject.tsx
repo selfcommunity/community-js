@@ -632,7 +632,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if ((!obj && error) || (obj?.deleted && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))) {
+  if ((!obj && error) || (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))) {
     objElement = (
       <CardContent className={classNames(classes.error, classes.content)}>
         <FormattedMessage id="ui.feedObject.error" defaultMessage="ui.feedObject.error" />
