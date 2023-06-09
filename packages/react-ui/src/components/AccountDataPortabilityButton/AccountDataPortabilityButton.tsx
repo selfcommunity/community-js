@@ -36,8 +36,9 @@ export interface AccountDataPortabilityButtonProps extends Pick<ButtonProps, Exc
 
 /**
  * > API documentation for the Community-JS Account Data Portability Button component. Learn about the available props and the CSS API.
- <br/>This component display a button that open a Dialog that display the [AccountDataPortability](/docs/sdk/community-js/react-ui/Components/AccountDataPortability) component.
- <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountDataPortabilityButton)
+ *
+ *
+ * This component display a button that open a Dialog that display the [AccountDataPortability](/docs/sdk/community-js/react-ui/Components/AccountDataPortability) component.
 
  #### Import
 

@@ -101,8 +101,7 @@ export interface UserInfoProps {
 }
 
 /**
- *
- > API documentation for the Community-JS User Info component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Info component. Learn about the available props and the CSS API.
 
  #### Import
 

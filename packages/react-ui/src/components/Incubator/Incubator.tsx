@@ -102,10 +102,12 @@ export interface IncubatorProps {
 
 /**
  * > API documentation for the Community-JS Incubator component. Learn about the available props and the CSS API.
- * <br/>This component renders an incubator item.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Incubator)
  *
- * #### Import
+ *
+ * This component renders an incubator item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Incubator)
+
+ #### Import
  ```jsx
  import {Incubator} from '@selfcommunity/react-ui';
  ```

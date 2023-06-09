@@ -65,8 +65,7 @@ export interface UserProfileBlockedProps {
 }
 
 /**
- *
- > API documentation for the Community-JS User Profile Blocked component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Profile Blocked component. Learn about the available props and the CSS API.
 
  #### Import
 

@@ -84,8 +84,10 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
 
 /**
  * > API documentation for the Community-JS User component. Learn about the available props and the CSS API.
- *  <br/>This component renders a user item.
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
+ *
+ *
+ * This component renders a user item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
 
  #### Import
 

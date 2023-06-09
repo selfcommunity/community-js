@@ -59,8 +59,10 @@ const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPrefer
 
 /**
  * > API documentation for the Community-JS Navigation Toolbar Mobile component. Learn about the available props and the CSS API.
- * <br/>This component renders the mobile application header.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbarMobile)
+ *
+ *
+ * This component renders the mobile application header.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbarMobile)
 
  #### Import
 

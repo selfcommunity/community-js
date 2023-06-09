@@ -256,8 +256,10 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
 
 /**
  * > API documentation for the Community-JS Feed Object component. Learn about the available props and the CSS API.
- *  <br/>This component renders a feed object item (post, discussion or status).
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedObject)
+ *
+ *
+ * This component renders a feed object item (post, discussion or status).
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedObject)
 
  #### Import
 

@@ -63,8 +63,7 @@ export interface PrivateMessageEditorProps {
 }
 
 /**
- *
- > API documentation for the Community-JS Private Message Editor component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Private Message Editor component. Learn about the available props and the CSS API.
 
  #### Import
 

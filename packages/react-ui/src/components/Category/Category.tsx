@@ -67,10 +67,12 @@ export interface CategoryProps extends WidgetProps {
 
 /**
  * > API documentation for the Community-JS Category component. Learn about the available props and the CSS API.
- * <br/>This component renders a category item.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Category)
  *
- * #### Import
+ *
+ * This component renders a category item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Category)
+
+ #### Import
  ```jsx
  import {Category} from '@selfcommunity/react-ui';
  ```

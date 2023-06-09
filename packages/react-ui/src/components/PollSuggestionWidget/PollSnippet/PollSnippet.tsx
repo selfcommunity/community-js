@@ -73,7 +73,9 @@ export interface PollSnippetProps {
 /**
  * > API documentation for the Community-JS PollSnippet component. Learn about the available props and the CSS API.
  *
- * #### Import
+ *
+
+ #### Import
  ```jsx
  import {PollSnippet} from '@selfcommunity/react-ui';
  ```

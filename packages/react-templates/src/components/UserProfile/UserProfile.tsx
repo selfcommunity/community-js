@@ -178,8 +178,10 @@ const WIDGETS_CONNECTIONS_MY_PROFILE = [
 
 /**
  * > API documentation for the Community-JS User Profile Template. Learn about the available props and the CSS API.
- * <br/>This component renders a specific user's profile template.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/UserProfile)
+ *
+ *
+ * This component renders a specific user's profile template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/UserProfile)
 
  #### Import
 

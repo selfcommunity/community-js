@@ -76,10 +76,12 @@ export interface ChangeCoverProps {
 }
 
 /**
- *> API documentation for the Community-JS Change Cover component. Learn about the available props and the CSS API.
- * <br/>This component renders a button that allows users to edit their profile cover and a popover that specifies format and sizes allowed.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/ChangeCover)
+ * > API documentation for the Community-JS Change Cover component. Learn about the available props and the CSS API.
  *
+ *
+ * This component renders a button that allows users to edit their profile cover and a popover that specifies format and sizes allowed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/ChangeCover)
+
  #### Import
  ```jsx
  import {ChangeCover} from '@selfcommunity/react-ui';

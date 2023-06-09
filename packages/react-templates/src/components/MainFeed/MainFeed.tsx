@@ -108,8 +108,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Main Feed Template. Learn about the available props and the CSS API.
- * <br/>This component renders the template for the main feed.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/MainFeed)
+ *
+ *
+ * This component renders the template for the main feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/MainFeed)
 
  #### Import
 

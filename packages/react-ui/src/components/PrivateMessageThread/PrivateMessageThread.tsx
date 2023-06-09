@@ -102,10 +102,11 @@ export interface PrivateMessageThreadProps extends CardProps {
   [p: string]: any;
 }
 /**
+ * > API documentation for the Community-JS PrivateMessage Thread component. Learn about the available props and the CSS API.
  *
- > API documentation for the Community-JS PrivateMessage Thread component. Learn about the available props and the CSS API.
- * <br/>This component renders the conversation between two users.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Thread)
+ *
+ * This component renders the conversation between two users.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Thread)
 
  #### Import
 

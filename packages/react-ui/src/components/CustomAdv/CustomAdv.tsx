@@ -79,10 +79,12 @@ export interface CustomAdvProps extends VirtualScrollerItemProps {
   prefixedHeight?: number;
 }
 /**
- > API documentation for the Community-JS CustomAdv component. Learn about the available props and the CSS API.
- * <br/>This component renders custom adv banners.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CustomAdv)
+ * > API documentation for the Community-JS CustomAdv component. Learn about the available props and the CSS API.
  *
+ *
+ * This component renders custom adv banners.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CustomAdv)
+
  #### Import
  ```jsx
  import {CustomAdv} from '@selfcommunity/react-ui';

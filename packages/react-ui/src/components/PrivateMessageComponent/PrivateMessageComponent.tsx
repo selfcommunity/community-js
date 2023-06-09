@@ -51,9 +51,11 @@ export interface PrivateMessageComponentProps {
 }
 /**
  *
- > API documentation for the Community-JS Private Messages component. Learn about the available props and the CSS API.
- * <br/>This component renders the private messages section.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/PrivateMessages)
+ * > API documentation for the Community-JS Private Messages component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the private messages section.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/PrivateMessages)
 
  #### Import
 

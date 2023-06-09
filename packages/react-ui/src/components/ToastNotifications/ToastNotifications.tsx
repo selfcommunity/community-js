@@ -46,8 +46,7 @@ export interface ToastNotificationsProps extends BoxProps {
   [p: string]: any;
 }
 /**
- *
- > API documentation for the Community-JS Toast Notifications component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Toast Notifications component. Learn about the available props and the CSS API.
 
  #### Import
 

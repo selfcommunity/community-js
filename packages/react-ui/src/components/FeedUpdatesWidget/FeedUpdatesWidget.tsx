@@ -66,8 +66,10 @@ export interface FeedUpdatesWidgetProps extends VirtualScrollerItemProps {
 
 /**
  * > API documentation for the Community-JS Feed Updates Widget component. Learn about the available props and the CSS API.
- * <br/>This component allows the subscription to updates from PubSub channel (e.g. websocket) and tell the feed to updates if necessary.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedUpdates)
+ *
+ *
+ * This component allows the subscription to updates from PubSub channel (e.g. websocket) and tell the feed to updates if necessary.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedUpdates)
 
  #### Import
 

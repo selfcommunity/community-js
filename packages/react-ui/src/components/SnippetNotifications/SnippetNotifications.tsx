@@ -129,10 +129,11 @@ export interface SnippetNotificationsProps extends CardProps {
 const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
 
 /**
+ * > API documentation for the Community-JS SnippetNotifications component. Learn about the available props and the CSS API.
  *
- > API documentation for the Community-JS SnippetNotifications component. Learn about the available props and the CSS API.
- * <br/>This component renders the notification list.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/SnippetNotifications)
+ *
+ * This component renders the notification list.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/SnippetNotifications)
 
  #### Import
 
