@@ -437,7 +437,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // CHECKS
   const hasPoll = () => {
-    return poll && poll.title.length > 0 && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
+    return poll && poll.title.length > 0 && poll.title.length < COMPOSER_TITLE_MAX_LENGTH && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
   };
 
   const canSubmit = () => {
@@ -465,7 +465,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   const handleChangePoll = (poll: SCPollType): void => {
-    dispatch({type: 'poll', value: poll});
+    dispatch({
+      type: 'multiple',
+      value: {
+        poll: poll,
+        pollError:
+          poll.title.length > COMPOSER_TITLE_MAX_LENGTH
+            ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
+            : null
+      }
+    });
   };
 
   const handleChange =
