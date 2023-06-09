@@ -94,7 +94,7 @@ export interface UserConnectionsWidgetProps extends VirtualScrollerItemProps, Wi
  * > API documentation for the Community-JS User Connections Widget component. Learn about the available props and the CSS API.
  *
  *
- * This component renders the list of connections of the given user
+ * This component renders the list of connections of the given user.
 
  #### Import
 
