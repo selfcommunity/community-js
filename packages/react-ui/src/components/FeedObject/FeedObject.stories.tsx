@@ -56,7 +56,7 @@ const Template: ComponentStory<typeof FeedObject> = (args) => {
 export const Base = Template.bind({});
 
 Base.args = {
-  feedObjectId: 57,
+  feedObjectId: 136,
   feedObjectType: SCContributionType.DISCUSSION
 };
 
