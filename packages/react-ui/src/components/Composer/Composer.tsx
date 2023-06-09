@@ -243,9 +243,11 @@ const reducer = (state, action) => {
   }
 };
 /**
- > API documentation for the Community-JS Composer component. Learn about the available props and the CSS API.
- > The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
+ * > API documentation for the Community-JS Composer component. Learn about the available props and the CSS API.
  *
+ *
+ * The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
+
  #### Import
  ```jsx
  import {Composer} from '@selfcommunity/react-ui';
@@ -437,7 +439,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // CHECKS
   const hasPoll = () => {
-    return poll && poll.title.length > 0 && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
+    return poll && poll.title.length > 0 && poll.title.length < COMPOSER_TITLE_MAX_LENGTH && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
   };
 
   const canSubmit = () => {
@@ -465,7 +467,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   const handleChangePoll = (poll: SCPollType): void => {
-    dispatch({type: 'poll', value: poll});
+    dispatch({
+      type: 'multiple',
+      value: {
+        poll: poll,
+        pollError:
+          poll.title.length > COMPOSER_TITLE_MAX_LENGTH
+            ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
+            : null
+      }
+    });
   };
 
   const handleChange =

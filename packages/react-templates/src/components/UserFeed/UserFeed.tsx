@@ -114,6 +114,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS User Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific user's feed template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/UserFeed)
 
  #### Import
 

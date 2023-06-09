@@ -49,8 +49,10 @@ export interface ChangePictureProps {
 
 /**
  * > API documentation for the Community-JS Change Picture component. Learn about the available props and the CSS API.
- * <br/>This component renders a button that allows users to manage their profile pictures.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/ChangePicture)
+ *
+ *
+ * This component renders a button that allows users to manage their profile pictures.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/ChangePicture)
 
  #### Import
 

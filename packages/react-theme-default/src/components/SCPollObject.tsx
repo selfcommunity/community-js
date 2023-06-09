@@ -39,7 +39,8 @@ const Component = {
         textAlign: 'center',
         color: theme.palette.text.primary,
         marginBottom: theme.spacing(1),
-        fontWeight: theme.typography.fontWeightBold
+        fontWeight: theme.typography.fontWeightBold,
+        wordWrap: 'break-word'
       },
       '& .SCPollObject-voters, & .SCPollObject-votes': {
         display: 'flex',

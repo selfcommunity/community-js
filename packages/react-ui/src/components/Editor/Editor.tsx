@@ -123,8 +123,10 @@ export interface EditorProps {
 
 /**
  * > API documentation for the Community-JS Editor component. Learn about the available props and the CSS API.
- *  <br/>This component renders a text editor.
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Editor)
+ *
+ *
+ * This component renders a text editor.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Editor)
 
  #### Import
 

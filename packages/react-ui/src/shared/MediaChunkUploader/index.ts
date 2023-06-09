@@ -7,7 +7,7 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
@@ -115,8 +115,8 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           onSuccess(res.data);
         })
         .catch((error) => {
-          error = formatHttpError(error);
-          onError({...chunkStateRef.current.chunks[item.id]}, error.error);
+          console.log(error);
+          onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.fileUploadErrorGeneric));
           const _chunks = {...chunkStateRef.current.chunks};
           delete _chunks[item.id];
           chunkStateRef.current.setChunks(_chunks);
@@ -125,7 +125,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useItemErrorListener((item) => {
-    onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.error));
+    onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.fileUploadErrorGeneric));
     const _chunks = {...chunkStateRef.current.chunks};
     delete _chunks[item.id];
     chunkStateRef.current.setChunks(_chunks);

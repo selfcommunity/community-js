@@ -91,9 +91,11 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
 }
 
 /**
- > API documentation for the Community-JS User Followers Widget component. Learn about the available props and the CSS API.
- * <br/>This component renders the list of the follows of the given user.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowers)
+ * > API documentation for the Community-JS User Followers Widget component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the list of the follows of the given user.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowers)
 
  #### Import
 

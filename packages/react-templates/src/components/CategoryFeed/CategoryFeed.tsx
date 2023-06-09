@@ -106,6 +106,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Category Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific category's feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/CategoryFeed)
 
  #### Import
 

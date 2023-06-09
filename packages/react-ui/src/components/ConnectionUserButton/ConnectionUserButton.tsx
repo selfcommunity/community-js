@@ -38,8 +38,10 @@ export interface ConnectionUserButtonProps {
 }
 
 /**
- > API documentation for the Community-JS Connection User Button component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Connection User Button component. Learn about the available props and the CSS API.
  *
+ *
+
  #### Import
  ```jsx
  import {ConnectionUserButton} from '@selfcommunity/react-ui';

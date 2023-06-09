@@ -77,6 +77,10 @@ export interface CategoryProps {
 }
 /**
  * > API documentation for the Community-JS Category Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific category's template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/Category)
 
  #### Import
 
@@ -93,6 +97,7 @@ export interface CategoryProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCategoryTemplate-root|Styles applied to the root element.|
+ |feed|.SCCategoryTemplate-feed|Styles applied to the feed element.|
  *
  * @param inProps
  */

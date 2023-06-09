@@ -99,8 +99,10 @@ const PREFERENCES = [
 
 /**
  * > API documentation for the Community-JS NavigationToolbar component. Learn about the available props and the CSS API.
- * <br/>This component renders the application header.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbar)
+ *
+ *
+ * This component renders the application header.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbar)
 
  #### Import
 

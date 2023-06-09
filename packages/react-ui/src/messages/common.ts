@@ -12,6 +12,10 @@ const messages = defineMessages({
   messageFileUploadError: {
     id: 'ui.shared.messageChunkUploader.error',
     defaultMessage: 'ui.shared.messageChunkUploader.error'
+  },
+  fileUploadErrorGeneric: {
+    id: 'ui.common.fileUpload.error',
+    defaultMessage: 'ui.common.fileUpload.error'
   }
 });
 

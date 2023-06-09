@@ -45,10 +45,12 @@ export interface FooterProps {
 }
 
 /**
- *> API documentation for the Community-JS Footer component. Learn about the available props and the CSS API.
- * <br/>This component renders the application footer, which contains the links to reach specific sections, and the application copyright.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Footer)
+ * > API documentation for the Community-JS Footer component. Learn about the available props and the CSS API.
  *
+ *
+ * This component renders the application footer, which contains the links to reach specific sections, and the application copyright.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Footer)
+
  #### Import
  ```jsx
  import {Footer} from '@selfcommunity/react-ui';

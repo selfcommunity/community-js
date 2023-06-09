@@ -136,7 +136,7 @@ export default (inProps: PollProps): JSX.Element => {
 
   // Component update
   useEffect(() => {
-    if (onChange && (title || expiration !== null || choices.filter((c) => c.choice.length > 0).length > 0)) {
+    if (onChange && (title || titleError || expiration !== null || choices.filter((c) => c.choice.length > 0).length > 0)) {
       onChange({title, expiration_at: expiration, multiple_choices: multiple, choices: choices.filter((c) => c.choice.length > 0)});
     }
   }, [title, multiple, expiration, choices]);
@@ -188,7 +188,7 @@ export default (inProps: PollProps): JSX.Element => {
           onChange={handleChangeTitle}
           fullWidth
           error={Boolean(titleError)}
-          helperText={titleError ? titleError.error : null}
+          helperText={titleError && titleError}
           InputProps={{
             endAdornment: <Typography variant="body2">{COMPOSER_POLL_TITLE_MAX_LENGTH - title.length}</Typography>
           }}

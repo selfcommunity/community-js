@@ -195,7 +195,6 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
         setIsSubmitting(false);
       });
   };
-  console.log(error);
   if (!user) {
     return;
   }

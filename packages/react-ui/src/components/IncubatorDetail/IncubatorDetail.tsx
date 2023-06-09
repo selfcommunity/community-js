@@ -150,8 +150,8 @@ export interface IncubatorDetailProps {
 }
 /**
  * > API documentation for the Community-JS Incubator Detail component. Learn about the available props and the CSS API.
- *
- * #### Import
+
+ #### Import
  ```jsx
  import {IncubatorDetail} from '@selfcommunity/react-ui';
  ```

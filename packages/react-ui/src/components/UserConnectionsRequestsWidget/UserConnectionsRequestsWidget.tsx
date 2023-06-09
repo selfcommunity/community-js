@@ -86,8 +86,10 @@ export interface UserConnectionsRequestsWidgetProps extends VirtualScrollerItemP
 }
 
 /**
- > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
- > This component renders the list of connections requests of the authenticated user
+ * > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the list of connections requests of the authenticated user.
 
  #### Import
 

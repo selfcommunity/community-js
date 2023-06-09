@@ -103,8 +103,10 @@ export interface CategoriesProps {
 
 /**
  * > API documentation for the Community-JS Categories component. Learn about the available props and the CSS API.
- * <br/>The Categories component renders the list of all available categories.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
+ *
+ *
+ * The Categories component renders the list of all available categories.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
 
  #### Import
  ```jsx

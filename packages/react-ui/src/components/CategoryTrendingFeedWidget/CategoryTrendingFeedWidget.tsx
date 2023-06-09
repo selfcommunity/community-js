@@ -98,8 +98,10 @@ export interface CategoryTrendingFeedWidgetProps extends VirtualScrollerItemProp
 
 /**
  * > API documentation for the Community-JS Trending Feed Widget component. Learn about the available props and the CSS API.
- * <br/>This component renders a specific category's trending posts, discussions, statuses list.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryTrendingFeed)
+ *
+ *
+ * This component renders a specific category's trending posts, discussions, statuses list.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryTrendingFeed)
 
  #### Import
 

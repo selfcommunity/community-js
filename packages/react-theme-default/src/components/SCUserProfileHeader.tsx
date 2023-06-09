@@ -20,7 +20,8 @@ const Component = {
         position: 'relative',
         margin: '0px auto',
         borderRadius: '50%',
-        border: `#FFF solid ${theme.spacing(0.5)}`
+        border: `#FFF solid ${theme.spacing(0.5)}`,
+        objectFit: 'cover'
       },
       '& .SCUserProfileHeader-change-picture': {
         top: theme.selfcommunity.user.avatar.sizeXLarge,

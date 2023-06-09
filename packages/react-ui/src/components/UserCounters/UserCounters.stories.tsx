@@ -31,3 +31,9 @@ export const Base = Template.bind({});
 Base.args = {
   userId: 1
 };
+
+export const AuthenticatedUser = Template.bind({});
+
+AuthenticatedUser.args = {
+  userId: 153
+};

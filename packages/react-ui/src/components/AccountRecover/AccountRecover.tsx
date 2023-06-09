@@ -67,9 +67,11 @@ export interface AccountRecoverProps {
 }
 
 /**
- * > API documentation for the Community-JS Account Verify component. Learn about the available props and the CSS API.
- * <br/>This component allows users to recover their account with their email.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
+ * > API documentation for the Community-JS Categories component. Learn about the available props and the CSS API.
+ *
+ *
+ * The Categories component renders the list of all available categories.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
 
  #### Import
 
