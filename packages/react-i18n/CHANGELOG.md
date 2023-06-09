@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.32...@selfcommunity/react-i18n@0.5.0-alpha.33) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed errors for media/message chunk uploader, fixed asana issues about change picture/change cover. ([c810377](https://github.com/selfcommunity/community-js/commit/c81037793387d2b0f21fc687a508734324f7dfe4))
+
+
+
+
+
 # [0.5.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.31...@selfcommunity/react-i18n@0.5.0-alpha.32) (2023-06-08)
 
 

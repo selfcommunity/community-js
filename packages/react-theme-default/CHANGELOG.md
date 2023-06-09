@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.186](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.185...@selfcommunity/react-theme-default@0.1.0-alpha.186) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed errors for media/message chunk uploader, fixed asana issues about change picture/change cover. ([c810377](https://github.com/selfcommunity/community-js/commit/c81037793387d2b0f21fc687a508734324f7dfe4))
+* poll title/error on field title. Asana issue: https://app.asana.com/0/1202638443591994/1204784688546920/f ([d044cf1](https://github.com/selfcommunity/community-js/commit/d044cf1a37461356c7061d7064f587b80a319d69))
+
+
+
+
+
 # [0.1.0-alpha.185](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.184...@selfcommunity/react-theme-default@0.1.0-alpha.185) (2023-06-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

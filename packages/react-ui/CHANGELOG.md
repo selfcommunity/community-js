@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.237](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.236...@selfcommunity/react-ui@0.7.0-alpha.237) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed comments for doc ([ef9283c](https://github.com/selfcommunity/community-js/commit/ef9283ca85db8beaf6dee47890197d883fbaff7b))
+* fixed comments for doc ([ba897ba](https://github.com/selfcommunity/community-js/commit/ba897ba182dd196159fda9e241224186bb90049e))
+* fixed errors for media/message chunk uploader, fixed asana issues about change picture/change cover. ([c810377](https://github.com/selfcommunity/community-js/commit/c81037793387d2b0f21fc687a508734324f7dfe4))
+* poll title/error on field title. Asana issue: https://app.asana.com/0/1202638443591994/1204784688546920/f ([d044cf1](https://github.com/selfcommunity/community-js/commit/d044cf1a37461356c7061d7064f587b80a319d69))
+* removed unnecessary variables from user profile edit publicInfo. ([91d1add](https://github.com/selfcommunity/community-js/commit/91d1addb72c4b44fe95b3a7fd173656b66e8a279))
+* user profile ([16bbc5a](https://github.com/selfcommunity/community-js/commit/16bbc5a4c72d2d366fdf5a1d2145fe4a00ad1544))
+* user profile ([04c79eb](https://github.com/selfcommunity/community-js/commit/04c79ebe61cf931311170a5a248a735c08f4ef88))
+* UserCounters ([6779577](https://github.com/selfcommunity/community-js/commit/67795774633fd447947cece675fe68e252a3261d))
+
+
+
+
+
 # [0.7.0-alpha.236](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.235...@selfcommunity/react-ui@0.7.0-alpha.236) (2023-06-08)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
