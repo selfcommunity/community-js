@@ -41,7 +41,12 @@ function userReducer(state, action) {
       return {user: action.payload.user, error: null, session: Object.assign({}, state.session), loading: false};
 
     case userActionTypes.LOGIN_FAILURE:
-      return {user: null, session: Object.assign({}, state.session), error: action.payload.error ? action.payload.error : null, loading: false};
+      return {
+        user: null,
+        session: Object.assign({}, state.session),
+        error: action.payload && action.payload.error ? action.payload.error : null,
+        loading: false,
+      };
 
     case userActionTypes.REFRESH_TOKEN_SUCCESS:
       const newAuthToken = Object.assign({}, state.session.authToken, {
@@ -61,7 +66,7 @@ function userReducer(state, action) {
       return {user: null, session: Object.assign({}, state.session), loading: null, error: action.payload.error};
 
     case userActionTypes.LOGOUT:
-      return {user: null, session: {}, error: null, loading: null};
+      return {user: undefined, session: {}, error: null, loading: null};
 
     case userActionTypes.UPDATE_USER:
       return {...state, user: {...state.user, ...action.payload}};
@@ -90,7 +95,6 @@ function stateInitializer(session: SCSessionType): any {
       http.setAuthorizeToken(_session.authToken.accessToken);
     } else {
       http.setAuthorizeToken();
-      _isLoading = false;
     }
   } else if (_session.type === Session.COOKIE_SESSION) {
     /**
@@ -147,6 +151,13 @@ export default function useAuth(initialSession: SCSessionType) {
   // CONST
   const userId = state.user ? state.user.id : null;
   const accessToken = state.session.authToken && state.session.authToken.accessToken ? state.session.authToken.accessToken : null;
+
+  /**
+   * Reset session if initial conf changed
+   */
+  useDeepCompareEffect(() => {
+    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
+  }, [initialSession]);
 
   /**
    * Refresh session
@@ -285,13 +296,6 @@ export default function useAuth(initialSession: SCSessionType) {
       }
     };
   }, [userId, accessToken]);
-
-  /**
-   * Reset session if initial conf changed
-   */
-  useDeepCompareEffect(() => {
-    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
-  }, [initialSession]);
 
   return {state, dispatch, helpers: {refreshSession, logoutSession}};
 }

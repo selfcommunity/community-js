@@ -43,22 +43,26 @@ export default function useSCBlockedUsersManager(user?: SCUserType) {
    * It might be useful for multi-tab sync
    */
   const refresh = useMemo(
-    () => (): Promise<number[]> => {
-      if (user) {
-        // Only if user is authenticated
-        return UserService.getHiddenUsersId()
-          .then((res) => {
-            setData(res);
-            return Promise.resolve(res);
-          })
-          .catch((e) => {
-            Logger.error(SCOPE_SC_CORE, 'Unable to load blocked users.');
-            Logger.error(SCOPE_SC_CORE, e);
-            return Promise.reject(e);
-          });
-      }
-      return Promise.reject();
-    },
+    () =>
+      (setLoadingStatus = false): Promise<number[]> => {
+        if (user) {
+          setLoadingStatus && setLoading(true);
+          // Only if user is authenticated
+          return UserService.getHiddenUsersId()
+            .then((res) => {
+              setData(res);
+              setLoadingStatus && setLoading(false);
+              return Promise.resolve(res);
+            })
+            .catch((e) => {
+              Logger.error(SCOPE_SC_CORE, 'Unable to load blocked users.');
+              Logger.error(SCOPE_SC_CORE, e);
+              setLoadingStatus && setLoading(false);
+              return Promise.reject(e);
+            });
+        }
+        return Promise.reject();
+      },
     [data, user]
   );
 
@@ -86,7 +90,7 @@ export default function useSCBlockedUsersManager(user?: SCUserType) {
             return Promise.resolve(!isBlocked);
           });
       },
-    [loading, setData, setLoading]
+    [loading, data.length, setLoading]
   );
 
   /**
@@ -111,7 +115,7 @@ export default function useSCBlockedUsersManager(user?: SCUserType) {
    */
   useEffect(() => {
     if (authUserId) {
-      refresh();
+      refresh(true);
     } else {
       setData([]);
     }
