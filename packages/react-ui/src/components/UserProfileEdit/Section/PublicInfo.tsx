@@ -263,6 +263,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
               disabled={!isEditing || isSaving}
               slots={{
                 inputAdornment: (params) => {
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
                   const {children, ...rest} = params.children.props;
                   return (
                     <InputAdornment position={'end'}>
