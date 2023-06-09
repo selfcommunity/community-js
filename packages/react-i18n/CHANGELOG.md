@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.33...@selfcommunity/react-i18n@0.5.0-alpha.34) (2023-06-09)
+
+
+### Bug Fixes
+
+* user profile date of birth ([4333afa](https://github.com/selfcommunity/community-js/commit/4333afa629c37368c4311204bcac4beba0145a29))
+
+
+
+
+
 # [0.5.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.32...@selfcommunity/react-i18n@0.5.0-alpha.33) (2023-06-09)
 
 
