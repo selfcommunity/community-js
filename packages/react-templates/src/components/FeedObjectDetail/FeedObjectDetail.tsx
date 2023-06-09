@@ -100,6 +100,8 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
 
 /**
  * > API documentation for the Community-JS Feed Object Detail Template. Learn about the available props and the CSS API.
+ * <br/>This component renders a specific feed object detail template.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/FeedObjectDetail)
 
  #### Import
 

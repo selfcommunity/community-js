@@ -177,6 +177,8 @@ const WIDGETS_CONNECTIONS_MY_PROFILE = [
 
 /**
  * > API documentation for the Community-JS User Profile Template. Learn about the available props and the CSS API.
+ * <br/>This component renders a specific user's profile template.
+ * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/UserProfile)
 
  #### Import
 
@@ -193,6 +195,10 @@ const WIDGETS_CONNECTIONS_MY_PROFILE = [
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUserProfileTemplate-root|Styles applied to the root element.|
+ |counters|.SCUserProfileTemplate-counters|Styles applied to the counters section.|
+ |tags|.SCUserProfileTemplate-tags|Styles applied to the tags section.|
+ |info|.SCUserProfileTemplate-info|Styles applied to the info section.|
+ |feed|.SCUserProfileTemplate-feed|Styles applied to the feed section.|
  |actions|.SCUserProfileTemplate-actions|Styles applied to the actions section.|
  *
  * @param inProps
