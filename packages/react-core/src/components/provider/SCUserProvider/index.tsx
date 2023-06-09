@@ -14,6 +14,7 @@ import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
 import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
 import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
 import useSCBlockedUsersManager from '../../../hooks/useSCBlockedUsersManager';
+import * as Session from '../../../constants/Session';
 import {
   SCUserContextType,
   SCContextType,
@@ -26,7 +27,6 @@ import {
   SCSubscribedIncubatorsManagerType,
   SCBlockedUsersManagerType,
 } from '../../../types';
-import * as Session from '../../../constants/Session';
 
 /**
  * SCUserContext (Authentication Context)
@@ -105,6 +105,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
           Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
           dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
         });
+    } else {
+      dispatch({type: userActionTypes.LOGIN_FAILURE});
     }
   }, [state.session]);
 

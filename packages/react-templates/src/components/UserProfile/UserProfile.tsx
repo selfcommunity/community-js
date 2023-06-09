@@ -37,6 +37,7 @@ import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
+import {LoadingButton} from '@mui/lab';
 
 const PREFIX = 'SCUserProfileTemplate';
 
@@ -251,7 +252,11 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   }, [followEnabled, isMe, user, scUserContext.user, scUserContext.managers]);
   const isStaff = useMemo(() => user && user.community_badge, [user]);
 
-  if (scUser === null || loadingBlockedBy || scUserContext.managers.blockedUsers.isLoading()) {
+  if (
+    !scUser ||
+    scUserContext.user === undefined ||
+    (scUserContext.user !== undefined && ((loadingBlockedBy && blockedBy === null) || scUserContext.managers.blockedUsers.isLoading()))
+  ) {
     return <UserProfileSkeleton />;
   }
 
@@ -297,60 +302,64 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <UserProfileHeader user={scUser} {...UserProfileHeaderProps} />
-      {!isMe && scUser && ((scUserContext.user && scUserContext.managers.blockedUsers.isBlocked(scUser)) || blockedBy) ? (
-        <UserProfileBlocked user={scUser} blockedByUser={blockedBy} />
-      ) : (
+      {loadingBlockedBy || (scUserContext.user && scUserContext.managers.blockedUsers.loading) ? null : (
         <>
-          <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
-            {isMe ? (
-              <Button variant="contained" color="secondary" onClick={handleEdit}>
-                <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
-              </Button>
-            ) : (
-              <>
-                <ConnectionUserButton user={scUser} />
-                <UserActionIconButton user={scUser} items={actionItems} />
-              </>
-            )}
-          </Stack>
-          <UserCounters className={classes.counters} userId={userId as number} user={scUser} />
-          {scUser.date_joined && (
-            <Typography className={classes.info}>
-              <FormattedMessage
-                id="templates.userProfile.dateJoined"
-                defaultMessage="templates.userProfile.dateJoined"
-                values={{
-                  date: intl.formatDate(scUser.date_joined, {
-                    year: 'numeric',
-                    month: 'long'
-                  })
-                }}
+          {!isMe && scUser && Boolean((scUserContext.user && scUserContext.managers.blockedUsers.isBlocked(scUser)) || blockedBy) ? (
+            <UserProfileBlocked user={scUser} blockedByUser={blockedBy} />
+          ) : (
+            <>
+              <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
+                {isMe ? (
+                  <Button variant="contained" color="secondary" onClick={handleEdit}>
+                    <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
+                  </Button>
+                ) : (
+                  <>
+                    <ConnectionUserButton user={scUser} />
+                    <UserActionIconButton user={scUser} items={actionItems} />
+                  </>
+                )}
+              </Stack>
+              <UserCounters className={classes.counters} userId={userId as number} user={scUser} />
+              {scUser.date_joined && (
+                <Typography className={classes.info}>
+                  <FormattedMessage
+                    id="templates.userProfile.dateJoined"
+                    defaultMessage="templates.userProfile.dateJoined"
+                    values={{
+                      date: intl.formatDate(scUser.date_joined, {
+                        year: 'numeric',
+                        month: 'long'
+                      })
+                    }}
+                  />
+                </Typography>
+              )}
+              {scUser.location && (
+                <Typography className={classes.info}>
+                  <Icon>add_location_alt</Icon> {scUser.location}
+                </Typography>
+              )}
+              {taggingEnabled && (
+                <Stack key={`tags_${scUser.id}`} direction="row" spacing={2} className={classes.tags}>
+                  {scUser.tags
+                    .filter((t) => t.visible)
+                    .map((tag) => (
+                      <TagChip key={tag.id} tag={tag} clickable={false} disposable={false} />
+                    ))}
+                </Stack>
+              )}
+              <UserFeed
+                key={`feed_${scUser.id}`}
+                className={classes.feed}
+                user={scUser}
+                widgets={_widgets}
+                FeedObjectProps={FeedObjectProps}
+                FeedSidebarProps={FeedSidebarProps}
+                {...UserFeedProps}
               />
-            </Typography>
+            </>
           )}
-          {scUser.location && (
-            <Typography className={classes.info}>
-              <Icon>add_location_alt</Icon> {scUser.location}
-            </Typography>
-          )}
-          {taggingEnabled && (
-            <Stack key={`tags_${scUser.id}`} direction="row" spacing={2} className={classes.tags}>
-              {scUser.tags
-                .filter((t) => t.visible)
-                .map((tag) => (
-                  <TagChip key={tag.id} tag={tag} clickable={false} disposable={false} />
-                ))}
-            </Stack>
-          )}
-          <UserFeed
-            key={`feed_${scUser.id}`}
-            className={classes.feed}
-            user={scUser}
-            widgets={_widgets}
-            FeedObjectProps={FeedObjectProps}
-            FeedSidebarProps={FeedSidebarProps}
-            {...UserFeedProps}
-          />
         </>
       )}
     </Root>

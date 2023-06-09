@@ -167,7 +167,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
   }, [anchorEl, scUser]);
 
   // RENDER
-  if (isMe) {
+  if (isMe || !scUserContext.user) {
     return null;
   }
 

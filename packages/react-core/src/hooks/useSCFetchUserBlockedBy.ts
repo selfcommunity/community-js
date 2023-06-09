@@ -22,8 +22,8 @@ export default function useSCFetchUserBlockedBy({
   blockedByUser?: boolean | null;
   sync?: boolean;
 }) {
-  const [blockedBy, setBlockedBy] = useState<boolean>(blockedByUser);
-  const [loading, setLoading] = useState(blockedByUser === null);
+  const [blockedBy, setBlockedBy] = useState<boolean>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>(null);
 
   // CONTEXT
@@ -56,18 +56,29 @@ export default function useSCFetchUserBlockedBy({
    * If user attempt to get blocked by
    */
   useEffect(() => {
-    if (scUserContext.user) {
-      if (user && blockedBy === null) {
+    if (user && blockedBy === null) {
+      // if user && blockedBy === null initialize the component
+      if (scUserContext.user) {
+        // authenticated user
         if (scUserContext.user.id !== user.id) {
           fetchUserBlockedBy(user);
         } else {
+          setBlockedBy(false);
           setLoading(false);
         }
+      } else if (scUserContext.user === null) {
+        // anonymous user
+        setBlockedBy(blockedByUser);
+        setLoading(false);
       }
-    } else if (scUserContext.user === null) {
-      setLoading(false);
     }
-  }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy]);
+  }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy, loading]);
+
+  useEffect(() => {
+    if (!scUserContext.user && blockedBy !== null) {
+      setBlockedBy(blockedByUser);
+    }
+  }, [scUserContext.user, blockedBy, blockedByUser]);
 
   /**
    * If sync enabled pull the remote status every 5sec
