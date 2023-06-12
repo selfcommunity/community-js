@@ -445,10 +445,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       return;
     }
     if (type === COMPOSER_TYPE_DISCUSSION) {
-      console.log('focus t');
       titleRef.current && titleRef.current.focus();
     } else {
-      console.log('focus text');
       editorRef.current && editorRef.current.focus();
     }
   }, [rest.open, type, editorRef]);

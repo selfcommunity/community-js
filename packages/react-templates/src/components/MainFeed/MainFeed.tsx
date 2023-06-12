@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext, useRef } from "react";
 import {styled} from '@mui/material/styles';
 import {
   CategoriesSuggestionWidget,
@@ -13,8 +13,8 @@ import {
   LoyaltyProgramWidget,
   UserSuggestionWidget,
   PlatformWidget,
-  SCFeedWidgetType
-} from '@selfcommunity/react-ui';
+  SCFeedWidgetType, FeedRef
+} from "@selfcommunity/react-ui";
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
@@ -142,15 +142,31 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
+  // REF
+  const feedRef = useRef<FeedRef>();
+
   // Ckeck user is authenticated
   if (!scUserContext.user) {
     return null;
   }
 
+  // HANDLERS
+  const handleComposerSuccess = (feedObject) => {
+    // Hydrate feedUnit
+    const feedUnit = {
+      type: feedObject.type,
+      [feedObject.type]: feedObject,
+      seen_by_id: [],
+      has_boost: false
+    };
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+  };
+
   return (
     <Root
       id={id}
       className={classNames(classes.root, className)}
+      ref={feedRef}
       endpoint={Endpoints.MainFeed}
       widgets={widgets}
       ItemComponent={FeedObject}
@@ -167,7 +183,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposerWidget />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
       requireAuthentication={true}
       disablePaginationLinks={true}
       enabledCustomAdvPositions={[
