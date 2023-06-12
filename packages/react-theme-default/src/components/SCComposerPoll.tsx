@@ -5,7 +5,10 @@ const Component = {
         marginBottom: theme.spacing(4)
       },
       '& .SCComposerPoll-choices': {
-        marginBottom: 0
+        marginBottom: 0,
+        '& .MuiTextField-root .MuiInputAdornment-positionStart': {
+          cursor: 'grab'
+        }
       },
       '& .SCComposerPoll-choice-new': {
         color: theme.palette.secondary.main,
