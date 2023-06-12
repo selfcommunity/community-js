@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.188](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.187...@selfcommunity/react-theme-default@0.1.0-alpha.188) (2023-06-12)
+
+
+### Bug Fixes
+
+* Fix focus on composer open ([087fffd](https://github.com/selfcommunity/community-js/commit/087fffd7fe6da252d120b508748f4a70477100cb))
+* Fix icons ([fff9b7e](https://github.com/selfcommunity/community-js/commit/fff9b7e82f3d0ae937688c75a236ba8544b47141))
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+* styles feed ([1f622c9](https://github.com/selfcommunity/community-js/commit/1f622c971a0ce9a8673f8094b88867287f69afe9))
+
+
+
+
+
 # [0.1.0-alpha.187](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.186...@selfcommunity/react-theme-default@0.1.0-alpha.187) (2023-06-09)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.230](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.229...@selfcommunity/react-templates@0.3.0-alpha.230) (2023-06-12)
+
+
+### Bug Fixes
+
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+
+
+
+
+
 # [0.3.0-alpha.229](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.228...@selfcommunity/react-templates@0.3.0-alpha.229) (2023-06-09)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
