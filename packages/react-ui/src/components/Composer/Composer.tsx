@@ -10,7 +10,7 @@ import {
   SCPollType,
   SCTagType
 } from '@selfcommunity/types';
-import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
   SCPreferencesContext,
@@ -629,7 +629,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         dispatch({type: 'reset'});
       })
       .catch((error) => {
-        dispatch({type: 'multiple', value: formatHttpError(error)});
+        dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
       })
       .then(() => setIsSubmitting(false));
   };
@@ -915,7 +915,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </div>
           {error && (
             <Typography className={classes.block} color="error">
-              {error}
+              <FormattedMessage id="ui.composer.error.generic" defaultMessage="ui.composer.error.generic" />
             </Typography>
           )}
         </DialogContent>

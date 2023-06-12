@@ -150,6 +150,7 @@
   "ui.composer.delete": "Delete",
   "ui.composer.done": "done",
   "ui.composer.edit": "edit",
+  "ui.composer.error.generic": "An error has occurred",
   "ui.composer.edit.error.content": "This contribution is unavailable for editing",
   "ui.composer.edit.error.title": "Error loading content",
   "ui.composer.media.document.add": "Add Documents",
