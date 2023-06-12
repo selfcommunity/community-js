@@ -203,6 +203,7 @@
   "ui.contributionActionMenu.actionSuccess": "Operazione completata!",
   "ui.contributionActionMenu.aggressive": "Aggressivo",
   "ui.contributionActionMenu.deleteContribution": "Elimina",
+  "ui.contributionActionMenu.deleteContributionInfo": "Il contenuto sarà rimosso. Rimarrà visibile unicamente a te qualora volessi ripristinarlo oppure lo abbia cancellato per errore.",
   "ui.contributionActionMenu.deleteContributionWithMotivation": "Cancella con motivazione",
   "ui.contributionActionMenu.editContribution": "Modifica",
   "ui.contributionActionMenu.enableNotificationContribution": "Riattiva le notifiche",
