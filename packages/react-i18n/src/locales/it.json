@@ -59,6 +59,8 @@
   "ui.accountVerify.verifying": "Validazione in corso",
   "ui.appBar.navigation.login": "Accedi",
   "ui.appBar.navigation.register": "Registrati",
+  "ui.composerIconButton.composer.success": "Creazione andata a buon fine!",
+  "ui.composerIconButton.composer.viewContribute": "Vedi contributo",
   "ui.baseDialog.button.close": "Chiudi",
   "ui.broadcastMessages.loadMore": "Vedi altre info",
   "ui.broadcastMessages.message.chip": "INFO",
