@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.34...@selfcommunity/react-i18n@0.5.0-alpha.35) (2023-06-12)
+
+
+### Bug Fixes
+
+* ComposerIconButton ([c48158e](https://github.com/selfcommunity/community-js/commit/c48158ed46636a2ee122adeb75f84162fdb1f716))
+* fixed metadata error in user field edit component. Asana issue: https://app.asana.com/0/1202638443591994/1204785197222173/f ([65562e7](https://github.com/selfcommunity/community-js/commit/65562e77a319cabe42b2e71962e82e5cee301dfe))
+* translations ([186b54f](https://github.com/selfcommunity/community-js/commit/186b54f4600138626ef9872c4e08c226b730c1db))
+
+
+### Performance Improvements
+
+* added generic error to composer ([0be2ae7](https://github.com/selfcommunity/community-js/commit/0be2ae741cf9f03e1530a9b5e4bb537087bf9cc8))
+
+
+
+
+
 # [0.5.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.33...@selfcommunity/react-i18n@0.5.0-alpha.34) (2023-06-09)
 
 

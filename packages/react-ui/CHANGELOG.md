@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.238...@selfcommunity/react-ui@0.7.0-alpha.239) (2023-06-12)
+
+
+### Bug Fixes
+
+* ComposerIconButton ([c48158e](https://github.com/selfcommunity/community-js/commit/c48158ed46636a2ee122adeb75f84162fdb1f716))
+* Feed component ([4957727](https://github.com/selfcommunity/community-js/commit/49577274d122b3814566829223e68460485864f6))
+* Fix focus on composer open ([087fffd](https://github.com/selfcommunity/community-js/commit/087fffd7fe6da252d120b508748f4a70477100cb))
+* fixed metadata error in user field edit component. Asana issue: https://app.asana.com/0/1202638443591994/1204785197222173/f ([65562e7](https://github.com/selfcommunity/community-js/commit/65562e77a319cabe42b2e71962e82e5cee301dfe))
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+
+
+### Performance Improvements
+
+* added generic error to composer ([0be2ae7](https://github.com/selfcommunity/community-js/commit/0be2ae741cf9f03e1530a9b5e4bb537087bf9cc8))
+
+
+
+
+
 # [0.7.0-alpha.238](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.237...@selfcommunity/react-ui@0.7.0-alpha.238) (2023-06-09)
 
 
