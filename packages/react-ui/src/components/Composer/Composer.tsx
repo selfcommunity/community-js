@@ -1,4 +1,4 @@
-import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {forwardRef, ReactNode, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {
   SCCategoryType,
   SCContributionType,
@@ -10,7 +10,7 @@ import {
   SCPollType,
   SCTagType
 } from '@selfcommunity/types';
-import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
   SCPreferencesContext,
@@ -61,7 +61,7 @@ import {random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
-import Editor, {EditorProps} from '../Editor';
+import Editor, {EditorProps, EditorRef} from '../Editor';
 import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link, Share} from '../../shared/Media';
 import MediasPreview from '../../shared/MediasPreview';
@@ -361,10 +361,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [loadError, setLoadError] = useState<boolean>(false);
 
   // REFS
-  const unloadRef = React.useRef<boolean>(false);
+  const unloadRef = useRef<boolean>(false);
+  let titleRef = useRef<any>();
+  let editorRef: RefObject<EditorRef> = useRef<EditorRef>();
 
   // Create a ref for medias becaouse of state update error on chunk upload
-  const mediasRef = React.useRef({medias, mediaChunks, addMedia, setMediaChunks});
+  const mediasRef = useRef({medias, mediaChunks, addMedia, setMediaChunks});
   mediasRef.current = {medias, mediaChunks, addMedia, setMediaChunks};
 
   /*
@@ -436,6 +438,18 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       window.onbeforeunload = null;
     }
   }, [state]);
+
+  // Autofocus
+  useEffect(() => {
+    if (!rest.open) {
+      return;
+    }
+    if (type === COMPOSER_TYPE_DISCUSSION) {
+      titleRef.current && titleRef.current.focus();
+    } else {
+      editorRef.current && editorRef.current.focus();
+    }
+  }, [rest.open, type, editorRef]);
 
   // CHECKS
   const hasPoll = () => {
@@ -615,7 +629,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         dispatch({type: 'reset'});
       })
       .catch((error) => {
-        dispatch({type: 'multiple', value: formatHttpError(error)});
+        dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
       })
       .then(() => setIsSubmitting(false));
   };
@@ -838,6 +852,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           {type === COMPOSER_TYPE_DISCUSSION && (
             <div className={classes.block}>
               <TextField
+                inputRef={titleRef}
                 label={<FormattedMessage id="ui.composer.title.label" defaultMessage="ui.composer.title.label" />}
                 fullWidth
                 variant="outlined"
@@ -854,6 +869,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </div>
           )}
           <Editor
+            ref={editorRef}
             {..._EditorProps}
             key={`${key}-editor`}
             className={classNames(classes.block, classes.editor)}
@@ -899,7 +915,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </div>
           {error && (
             <Typography className={classes.block} color="error">
-              {error}
+              <FormattedMessage id="ui.composer.error.generic" defaultMessage="ui.composer.error.generic" />
             </Typography>
           )}
         </DialogContent>

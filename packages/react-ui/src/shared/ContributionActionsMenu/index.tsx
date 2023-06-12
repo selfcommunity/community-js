@@ -133,15 +133,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({
-  [`& .${classes.visibilityBadge}`]: {
-    color: 'red',
-    '& > span': {
-      padding: 12,
-      fontSize: 15
-    }
-  }
-}));
+})(() => ({}));
 
 const messages = defineMessages({
   title: {
@@ -1194,6 +1186,16 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}
+          {...(currentAction === DELETE_CONTRIBUTION
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.deleteContributionInfo"
+                    defaultMessage="ui.contributionActionMenu.deleteContributionInfo"
+                  />
+                )
+              }
+            : {})}
           onConfirm={handleConfirmedAction}
           isUpdating={Boolean(currentActionLoading)}
           onClose={() => setOpenConfirmDialog(false)}

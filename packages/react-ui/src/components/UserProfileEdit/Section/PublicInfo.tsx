@@ -322,11 +322,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
               value={user[field] || ''}
               onChange={handleChange}
               disabled={!isEditing || isSaving}
-              error={_error}
+              error={Boolean(_error)}
               helperText={
-                _error && (
-                  <FormattedMessage id={`ui.userInfo.${camelField}.error.${_error}`} defaultMessage={`ui.userInfo.${camelField}.error.${_error}`} />
-                )
+                _error && <FormattedMessage id={`ui.userInfo.metadata.error.${_error}`} defaultMessage={`ui.userInfo.metadata.error.${_error}`} />
               }
               metadata={metadataDefinitions[field]}
             />
@@ -346,7 +344,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         value={user[field] || ''}
         onChange={handleChange}
         disabled={!isEditing || isSaving}
-        error={_error}
+        error={Boolean(_error)}
         helperText={
           _error && <FormattedMessage id={`ui.userInfo.${camelField}.error.${_error}`} defaultMessage={`ui.userInfo.${camelField}.error.${_error}`} />
         }>

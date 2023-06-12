@@ -1,5 +1,15 @@
 import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip} from '@mui/material';
 import React, {useMemo} from 'react';
+import Icon from '@mui/material/Icon';
+import {useThemeProps} from '@mui/system';
+import classNames from 'classnames';
+import NavigationToolbarSkeleton from './Skeleton';
+import {FormattedMessage} from 'react-intl';
+import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
+import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
+import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
+import ComposerIconButton, {ComposerIconButtonProps} from '../ComposerIconButton';
+import {SCFeatureName} from '@selfcommunity/types';
 import {
   Link,
   SCPreferences,
@@ -12,16 +22,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
-import {useThemeProps} from '@mui/system';
-import classNames from 'classnames';
-import NavigationToolbarSkeleton from './Skeleton';
-import {FormattedMessage} from 'react-intl';
-import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
-import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
-import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
-import ComposerIconButton from '../ComposerIconButton';
-import {SCFeatureName} from '@selfcommunity/types';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -88,6 +88,11 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * @default {}
    */
   NotificationMenuProps?: Omit<NotificationsMenuProps, 'anchorEl' | 'open' | 'onClose' | 'onClick' | 'transformOrigin' | 'anchorOrigin'>;
+  /**
+   * Props to spread to the ComposerIconButton
+   * @default {}
+   */
+  ComposerIconButtonProps?: ComposerIconButtonProps;
 }
 
 const PREFERENCES = [
@@ -142,6 +147,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     props: inProps,
     name: PREFIX
   });
+
   const {
     value = '',
     className = '',
@@ -149,6 +155,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     action = <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>,
     children = null,
     NotificationMenuProps = {},
+    ComposerIconButtonProps = {},
     onOpenNotificationMenu,
     onCloseNotificationMenu,
     ...rest
@@ -228,7 +235,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {scUserContext.user ? (
         <>
-          <ComposerIconButton className={classes.composer}></ComposerIconButton>
+          <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>
           <Tooltip title={scUserContext.user.username}>
             <IconButton
               component={Link}

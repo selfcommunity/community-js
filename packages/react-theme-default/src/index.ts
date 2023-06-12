@@ -19,6 +19,7 @@ import SCFeed from './components/SCFeed';
 import MuiButton from './components/MuiButton';
 import MuiAvatar from './components/MuiAvatar';
 import SCContributorsFeedObject from './components/SCContributorsFeedObject';
+import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCBaseItem from './components/SCBaseItem';
 import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryFeedTemplate from './components/SCCategoryFeedTemplate';
@@ -215,6 +216,7 @@ const theme = {
     SCComposerPoll,
     SCContributionNotification,
     SCContributorsFeedObject,
+    SCContributionActionsMenu,
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCEditor,
