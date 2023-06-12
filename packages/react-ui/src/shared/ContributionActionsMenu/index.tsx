@@ -1194,6 +1194,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}
+          {...(currentAction === DELETE_CONTRIBUTION
+            ? {content: <FormattedMessage id="ui.contributionActionMenu.deleteContributionInfo" defaultMessage="ui.contributionActionMenu.deleteContributionInfo" />}
+            : {})}
           onConfirm={handleConfirmedAction}
           isUpdating={Boolean(currentActionLoading)}
           onClose={() => setOpenConfirmDialog(false)}
