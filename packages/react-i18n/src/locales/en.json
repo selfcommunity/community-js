@@ -59,6 +59,8 @@
   "ui.accountVerify.verifying": "Validating",
   "ui.appBar.navigation.login": "Login",
   "ui.appBar.navigation.register": "Register",
+  "ui.composerIconButton.composer.success": "Creation succeed!",
+  "ui.composerIconButton.composer.viewContribute": "View contribute",
   "ui.baseDialog.button.close": "Close",
   "ui.broadcastMessages.loadMore": "See more info",
   "ui.broadcastMessages.message.chip": "INFO",

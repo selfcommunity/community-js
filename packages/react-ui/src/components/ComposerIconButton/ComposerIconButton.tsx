@@ -1,13 +1,23 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Icon, IconButton, IconButtonProps} from '@mui/material';
-import {SCUserType} from '@selfcommunity/types';
-import {SCContextType, SCUserContextType, UserUtils, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  UserUtils,
+  useSCContext,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Composer, {ComposerProps} from '../Composer';
-import {useSnackbar} from 'notistack';
+import {SnackbarKey, useSnackbar} from 'notistack';
+import {getRouteData} from '../../utils/contribution';
 
 const PREFIX = 'SCComposerIconButton';
 
@@ -29,13 +39,20 @@ export interface ComposerIconButtonProps extends IconButtonProps {
   ComposerProps?: ComposerProps;
 
   /**
-   * User Object
-   * @default null
+   * Other props
    */
-  user?: SCUserType;
-
   items?: any;
 }
+
+/**
+ * Translations
+ */
+const messages = defineMessages({
+  success: {
+    id: 'ui.composerIconButton.composer.success',
+    defaultMessage: 'ui.composerIconButton.composer.success'
+  }
+});
 
 /**
  * > API documentation for the Community-JS Composer Icon Button component. Learn about the available props and the CSS API.
@@ -73,7 +90,9 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scContext: SCContextType = useSCContext();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
+  const intl = useIntl();
 
   // HANDLERS
   const handleOpen = useCallback(
@@ -93,14 +112,33 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
     },
     [enqueueSnackbar, scContext.settings, scUserContext.user]
   );
-  const handleClose = useCallback(() => setOpen(false), []);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const handleSuccess = useMemo(
+    () => (feedObject) => {
+      setOpen(false);
+      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+        action: (snackbarId: SnackbarKey) => (
+          <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], getRouteData(feedObject))}>
+            <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
+          </Link>
+        ),
+        variant: 'success',
+        autoHideDuration: 7000
+      });
+    },
+    []
+  );
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
+      <Root className={classNames(classes.root, className)} onClick={handleOpen} {...rest}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      <Composer {...ComposerProps} open={open} fullWidth scroll="body" onClose={handleClose} onSuccess={handleClose} />
+      <Composer open={open} fullWidth scroll="body" onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />
     </>
   );
 }
