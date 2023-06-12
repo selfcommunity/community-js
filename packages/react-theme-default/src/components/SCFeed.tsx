@@ -25,9 +25,19 @@ const Component = {
           marginBottom: theme.spacing(3)
         }
       },
+      '& .SCFeed-start': {
+        '& > .SCWidget-root': {
+          padding: 0,
+          marginBottom: theme.spacing(2),
+        }
+      },
       '& .SCFeed-end': {
-        padding: 0,
-        marginBottom: theme.spacing(3),
+        '& > .SCWidget-root': {
+          padding: 0,
+          marginBottom: theme.spacing(2),
+        }
+      },
+      '& .SCFeed-end-message': {
         textAlign: 'center',
         '& > div': {
           padding: theme.spacing(2)
