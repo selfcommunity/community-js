@@ -6,6 +6,7 @@ import {
   SCFeedDiscussionType,
   SCFeedPostType,
   SCFeedStatusType,
+  SCLocalityType,
   SCMediaType,
   SCPollType,
   SCTagType
@@ -57,7 +58,7 @@ import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import {random, stripHtml} from '@selfcommunity/utils';
+import {isObject, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
@@ -513,8 +514,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           break;
         case 'categories':
         case 'addressing':
-        case 'location':
           dispatch({type: prop, value: event});
+          break;
+        case 'location':
+          const value =
+            event && isObject(event)
+              ? event['location']
+                ? {location: event['location'], lat: event['lat'], lng: event['lng']}
+                : {location: event['full_address'], lat: event['lat'], lng: event['lng']}
+              : null;
+          dispatch({type: prop, value});
           break;
         case 'audience':
           data !== null && dispatch({type: 'multiple', value: {audience: data, addressing: audience === AUDIENCE_ALL ? [] : audience}});
@@ -596,7 +605,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
     if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && location) {
       data.location = {
-        location: location.full_address,
+        location: location.location,
         lat: location.lat,
         lng: location.lng
       };
@@ -818,7 +827,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </Box>
         </DialogTitle>
         <DialogContent className={classes.locationContent}>
-          <LocationAutocomplete onChange={handleChange('location')} defaultValue={location} />
+          <LocationAutocomplete
+            onChange={handleChange('location')}
+            defaultValue={location ? ({full_address: location.location} as SCLocalityType) : ''}
+          />
         </DialogContent>
       </React.Fragment>
     );
@@ -893,7 +905,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             {location && (
               <Chip
                 icon={<Icon>add_location_alt</Icon>}
-                label={location.full_address}
+                label={location.location}
                 onDelete={handleDeleteLocation}
                 onClick={handleChangeView(LOCATION_VIEW)}
               />
