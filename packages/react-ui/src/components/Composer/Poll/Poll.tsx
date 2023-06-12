@@ -206,7 +206,7 @@ export default (inProps: PollProps): JSX.Element => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon>check</Icon>
+                    <Icon>drag</Icon>
                   </InputAdornment>
                 ),
                 endAdornment: (
