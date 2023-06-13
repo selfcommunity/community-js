@@ -1,13 +1,11 @@
 const Component = {
   styleOverrides: {
     root: () => ({
-      '& .SCContributionActionsMenu-visibility-badge': {
+      '& .SCContributionActionsMenu-visibility-icons': {
         color: 'red',
-        marginTop: -2,
-        marginBottom: 5,
-        '& > span': {
-          padding: 12,
-          fontSize: 12
+        '& > span: nth-of-type(2)': {
+          position: 'relative',
+          top: 1
         }
       }
     })
