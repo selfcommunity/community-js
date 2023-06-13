@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, {useContext, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesSuggestionWidget,
@@ -13,13 +13,16 @@ import {
   LoyaltyProgramWidget,
   UserSuggestionWidget,
   PlatformWidget,
-  SCFeedWidgetType, FeedRef
-} from "@selfcommunity/react-ui";
+  SCFeedWidgetType,
+  FeedRef
+} from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
+import {useSnackbar} from 'notistack';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCMainFeedTemplate';
 
@@ -141,6 +144,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const {enqueueSnackbar} = useSnackbar();
 
   // REF
   const feedRef = useRef<FeedRef>();
@@ -152,6 +156,10 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
     // Hydrate feedUnit
     const feedUnit = {
       type: feedObject.type,
