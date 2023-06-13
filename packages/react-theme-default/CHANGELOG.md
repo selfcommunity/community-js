@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.190](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.189...@selfcommunity/react-theme-default@0.1.0-alpha.190) (2023-06-13)
+
+
+### Bug Fixes
+
+* visibility icons feedObject ([71bfb0f](https://github.com/selfcommunity/community-js/commit/71bfb0f471815dbb520a577f4976db130d11be1d))
+
+
+
+
+
 # [0.1.0-alpha.189](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.188...@selfcommunity/react-theme-default@0.1.0-alpha.189) (2023-06-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
