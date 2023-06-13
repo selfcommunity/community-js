@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.239...@selfcommunity/react-ui@0.7.0-alpha.240) (2023-06-12)
+
+
+### Bug Fixes
+
+* location composer ([bcc953a](https://github.com/selfcommunity/community-js/commit/bcc953ae61f1069f080f22ae453c8c0a6aa98796))
+
+
+
+
+
 # [0.7.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.238...@selfcommunity/react-ui@0.7.0-alpha.239) (2023-06-12)
 
 
