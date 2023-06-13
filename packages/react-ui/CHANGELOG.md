@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.241](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.240...@selfcommunity/react-ui@0.7.0-alpha.241) (2023-06-13)
+
+
+### Bug Fixes
+
+* add post to feed after creation ([cb787fb](https://github.com/selfcommunity/community-js/commit/cb787fb69b5efead7531829a9207b6dd03ed4ef4))
+* visibility icons feedObject ([71bfb0f](https://github.com/selfcommunity/community-js/commit/71bfb0f471815dbb520a577f4976db130d11be1d))
+
+
+
+
+
 # [0.7.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.239...@selfcommunity/react-ui@0.7.0-alpha.240) (2023-06-12)
 
 
