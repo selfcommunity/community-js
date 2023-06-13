@@ -20,6 +20,8 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCExploreFeedTemplate';
 
@@ -139,11 +141,18 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   });
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
+  // CONTEXT
+  const {enqueueSnackbar} = useSnackbar();
+
   // REF
   const feedRef = useRef<FeedRef>();
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
     // Hydrate feedUnit
     const feedUnit = {
       type: feedObject.type,

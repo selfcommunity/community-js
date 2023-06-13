@@ -172,11 +172,12 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
   const handleSuccess = (feedObject) => {
     if (onSuccess) {
       onSuccess(feedObject);
+    } else {
+      enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+        variant: 'success',
+        autoHideDuration: 3000
+      });
     }
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
-      variant: 'success',
-      autoHideDuration: 3000
-    });
     setState({...INITIAL_STATE});
   };
 

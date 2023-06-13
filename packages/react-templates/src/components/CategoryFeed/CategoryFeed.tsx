@@ -15,11 +15,14 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {useSCFetchCategory} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {FormattedMessage} from 'react-intl';
+import {SnackbarKey, useSnackbar} from 'notistack';
+import {ContributionUtils} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCCategoryFeedTemplate';
 
@@ -146,6 +149,10 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     FeedProps = {}
   } = props;
 
+  // CONTEXT
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {enqueueSnackbar} = useSnackbar();
+
   // REF
   const feedRef = useRef<FeedRef>();
 
@@ -156,6 +163,15 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   const handleComposerSuccess = (feedObject) => {
     // Not insert if the category does not match
     if (feedObject.categories.findIndex((c) => c.id === scCategory.id) === -1) {
+      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+        action: (snackbarId: SnackbarKey) => (
+          <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
+            <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
+          </Link>
+        ),
+        variant: 'success',
+        autoHideDuration: 7000
+      });
       return;
     }
 

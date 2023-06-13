@@ -14,7 +14,7 @@ import {
 } from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import Composer, {ComposerProps} from '../Composer';
 import {SnackbarKey, useSnackbar} from 'notistack';
 import {getRouteData} from '../../utils/contribution';
@@ -43,16 +43,6 @@ export interface ComposerIconButtonProps extends IconButtonProps {
    */
   items?: any;
 }
-
-/**
- * Translations
- */
-const messages = defineMessages({
-  success: {
-    id: 'ui.composerIconButton.composer.success',
-    defaultMessage: 'ui.composerIconButton.composer.success'
-  }
-});
 
 /**
  * > API documentation for the Community-JS Composer Icon Button component. Learn about the available props and the CSS API.
@@ -92,7 +82,6 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
   const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
-  const intl = useIntl();
 
   // HANDLERS
   const handleOpen = useCallback(
