@@ -121,6 +121,7 @@ import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
 import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfileEditSectionAccountCredentials';
 import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
+import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 
 /**
  * Style fragments - Imports - End
@@ -287,7 +288,8 @@ const theme = {
     SCIncubatorSkeleton,
     SCIncubatorSuggestionWidget,
     SCIncubatorDetail,
-    SCPrizeItemSkeleton
+    SCPrizeItemSkeleton,
+    SCNavigationMenuIconButton
   },
   selfcommunity: {
     user: {

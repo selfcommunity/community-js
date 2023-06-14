@@ -22,6 +22,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
+import NavigationMenuIconButton from '../NavigationMenuIconButton';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -219,6 +220,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
+      <NavigationMenuIconButton />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>

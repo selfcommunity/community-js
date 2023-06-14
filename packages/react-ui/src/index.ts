@@ -8,6 +8,7 @@ import AccountDeleteButton, {AccountDeleteButtonProps} from './components/Accoun
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
+import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from './components/NavigationMenuIconButton';
 import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
@@ -184,6 +185,8 @@ export {
   NavigationToolbar,
   NavigationToolbarProps,
   NavigationToolbarSkeleton,
+  NavigationMenuIconButton,
+  NavigationMenuIconButtonProps,
   BottomNavigation,
   BottomNavigationProps,
   BroadcastMessages,

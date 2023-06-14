@@ -20,6 +20,7 @@ import {SearchAutocompleteProps} from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
 import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
 import ComposerIconButton from '../ComposerIconButton';
+import NavigationMenuIconButton from '../NavigationMenuIconButton';
 
 const PREFIX = 'SCNavigationToolbarMobile';
 
@@ -139,9 +140,12 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   }
 
   const _children = children || (
-    <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
-      <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
-    </Link>
+    <>
+      <NavigationMenuIconButton />
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
+      </Link>
+    </>
   );
 
   return (
