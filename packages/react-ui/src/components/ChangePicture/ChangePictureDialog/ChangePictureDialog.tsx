@@ -244,7 +244,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
             </Button>
           </>
         )}
-        <Typography fontSize="small" color="text.secondary" gutterBottom>
+        <Typography component="span" fontSize="small" color="text.secondary" gutterBottom>
           <FormattedMessage
             id="ui.changePicture.info"
             defaultMessage="ui.changePicture.info"
