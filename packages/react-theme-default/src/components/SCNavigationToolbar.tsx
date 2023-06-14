@@ -61,7 +61,7 @@ const Component = {
         marginLeft: theme.spacing(2)
       },
       [theme.breakpoints.up(950)]: {
-        padding: theme.spacing(0, 3),
+        padding: theme.spacing(0, 2),
         '& .SCNavigationToolbar-navigation': {
           '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
             margin: theme.spacing(0, 2)
