@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?mudpoe');
-  src:  url('./community/icons.eot?mudpoe#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?mudpoe') format('woff2'),
-  url('./community/icons.ttf?mudpoe') format('truetype'),
-  url('./community/icons.woff?mudpoe') format('woff'),
-  url('./community/icons.svg?mudpoe#community') format('svg');
+  src:  url('./community/icons.eot?75rbbg');
+  src:  url('./community/icons.eot?75rbbg#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?75rbbg') format('woff2'),
+  url('./community/icons.ttf?75rbbg') format('truetype'),
+  url('./community/icons.woff?75rbbg') format('woff'),
+  url('./community/icons.svg?75rbbg#community') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-menu:before {
+  content: "\e963";
+}
 .icon-drag:before {
   content: "\e962";
 }
