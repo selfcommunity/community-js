@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.242](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.241...@selfcommunity/react-ui@0.7.0-alpha.242) (2023-06-14)
+
+
+### Features
+
+* added menu component for navigation bar ([1a38a44](https://github.com/selfcommunity/community-js/commit/1a38a44c54accfdafac2eba2626abef8717d6f87))
+
+
+
+
+
 # [0.7.0-alpha.241](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.240...@selfcommunity/react-ui@0.7.0-alpha.241) (2023-06-13)
 
 
