@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.244](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.243...@selfcommunity/react-ui@0.7.0-alpha.244) (2023-06-15)
+
+
+### Bug Fixes
+
+* counters ([9701069](https://github.com/selfcommunity/community-js/commit/9701069c3be197a9bd9bbf21bf8c838410f4b27e))
+* fixed navbar menu logo padding/drawer closing on navigation ([9104488](https://github.com/selfcommunity/community-js/commit/9104488cbfae08c402576ed2e026deb6404f8508))
+
+
+
+
+
 # [0.7.0-alpha.243](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.242...@selfcommunity/react-ui@0.7.0-alpha.243) (2023-06-14)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.72...@selfcommunity/react-core@0.4.0-alpha.73) (2023-06-15)
+
+
+### Bug Fixes
+
+* counters ([9701069](https://github.com/selfcommunity/community-js/commit/9701069c3be197a9bd9bbf21bf8c838410f4b27e))
+
+
+
+
+
 # [0.4.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.71...@selfcommunity/react-core@0.4.0-alpha.72) (2023-06-12)
 
 **Note:** Version bump only for package @selfcommunity/react-core
