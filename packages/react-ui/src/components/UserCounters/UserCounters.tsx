@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
@@ -18,6 +18,7 @@ import {
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Bullet from '../../shared/Bullet';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const PREFIX = 'SCUserCounters';
 
@@ -97,10 +98,26 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
-  const {scUser} = useSCFetchUser({id: userId, user});
+  const {scUser, refresh: refreshUser} = useSCFetchUser({id: userId, user});
   const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
 
-  if (!scUser) {
+  /**
+   * Refresh counters: categories, followed, connections, etc.
+   */
+  useDeepCompareEffectNoCheck(() => {
+    if (scUser) {
+      refreshUser();
+    }
+  }, [
+    isMe,
+    scUser,
+    scUserContext.managers.categories.categories,
+    scUserContext.managers.connections.connections,
+    scUserContext.managers.followed,
+    scUserContext.managers.followers
+  ]);
+
+  if (scUserContext.user === undefined || !scUser) {
     return null;
   }
 
@@ -117,7 +134,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
               id="ui.userCounters.followings"
               defaultMessage="ui.userCounters.followings"
               values={{
-                count: isMe ? scUserContext.managers.followed.followed.length : scUser?.followings_counter,
+                count: scUser?.followings_counter,
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 b: (chunks) => <strong>{chunks}</strong>
@@ -134,7 +151,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
               id="ui.userCounters.followers"
               defaultMessage="ui.userCounters.followers"
               values={{
-                count: isMe ? scUserContext.managers.followers.followers.length : scUser?.followers_counter,
+                count: scUser?.followers_counter,
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 b: (chunks) => <strong>{chunks}</strong>
@@ -152,7 +169,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
             id="ui.userCounters.connections"
             defaultMessage="ui.userCounters.connections"
             values={{
-              count: isMe ? scUserContext.managers.connections.connections.length : scUser?.connections_counter,
+              count: scUser?.connections_counter,
               // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
               // @ts-ignore
               b: (chunks) => <strong>{chunks}</strong>
@@ -170,7 +187,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
           id="ui.userCounters.categories"
           defaultMessage="ui.userCounters.categories"
           values={{
-            count: isMe ? scUserContext.managers.categories.categories.length : scUser?.categories_counter,
+            count: scUser?.categories_counter,
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             b: (chunks) => <strong>{chunks}</strong>

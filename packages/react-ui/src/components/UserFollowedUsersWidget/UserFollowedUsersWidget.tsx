@@ -12,6 +12,7 @@ import {
   SCPreferencesContextType,
   SCThemeType,
   SCUserContextType,
+  useSCFetchUser,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -57,6 +58,11 @@ export interface UserFollowedUsersWidgetProps extends VirtualScrollerItemProps, 
    * @default null
    */
   userId: number;
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
   /**
    * Hides this component
    * @default false
@@ -129,6 +135,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   });
   const {
     userId,
+    user,
     autoHide = false,
     limit = 3,
     className,
@@ -146,7 +153,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY, isInteger(userId) ? userId : user.id),
       cacheStrategy,
       visibleItems: limit
     },
@@ -157,6 +164,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const {scUser, refresh: refreshUser} = useSCFetchUser({id: userId, user});
 
   // MEMO
   const contentAvailability = useMemo(
@@ -184,7 +192,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserFollowings(userId, {limit})
+        UserService.getUserFollowings(scUser.id, {limit})
           .then((payload: SCPaginatedResponse<SCUserType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
@@ -194,29 +202,24 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
           });
       }
     },
-    [state.isLoadingNext, state.initialized, userId, limit, dispatch]
+    [state.isLoadingNext, state.initialized, scUser, limit, dispatch]
   );
 
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (
-      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      followEnabled &&
-      isInteger(userId) &&
-      scUserContext.user !== undefined
-    ) {
+    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && followEnabled && scUser && scUserContext.user !== undefined) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, contentAvailability, userId]);
+  }, [scUserContext.user, contentAvailability, scUser]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserFollowings(userId, {offset: limit, limit: 10})
+      UserService.getUserFollowings(scUser.id, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
@@ -235,12 +238,12 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || !followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!scUser || !followEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, userId, contentAvailability]);
+  }, [scUserContext.user, scUser, contentAvailability]);
 
   // HANDLERS
   const handleNext = useMemo(
@@ -261,12 +264,22 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
+  /**
+   * Handle refresh counters (scUser)
+   */
+  const handleFollow = useMemo(
+    () => (): void => {
+      refreshUser();
+    },
+    [refreshUser]
+  );
+
   const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 
   // RENDER
-  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scUser) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -275,7 +288,11 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userFollowedUsersWidget.title" defaultMessage="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+        <FormattedMessage
+          id="ui.userFollowedUsersWidget.title"
+          defaultMessage="ui.userFollowedUsersWidget.title"
+          values={{total: scUser.followings_counter}}
+        />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
@@ -286,7 +303,12 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
           <List>
             {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
               <ListItem key={user.id}>
-                <User elevation={0} user={user} {...UserProps} />
+                <User
+                  elevation={0}
+                  user={user}
+                  followConnectUserButtonProps={{followConnectUserButtonProps: {onFollow: handleFollow}}}
+                  {...UserProps}
+                />
               </ListItem>
             ))}
           </List>
@@ -301,7 +323,11 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
         <DialogRoot
           className={classes.dialogRoot}
           title={
-            <FormattedMessage defaultMessage="ui.userFollowedUsersWidget.title" id="ui.userFollowedUsersWidget.title" values={{total: state.count}} />
+            <FormattedMessage
+              defaultMessage="ui.userFollowedUsersWidget.title"
+              id="ui.userFollowedUsersWidget.title"
+              values={{total: scUser.followings_counter}}
+            />
           }
           onClose={handleToggleDialogOpen}
           open={openDialog}
@@ -320,7 +346,12 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User elevation={0} user={user} {...UserProps} />
+                  <User
+                    elevation={0}
+                    user={user}
+                    followConnectUserButtonProps={{followConnectUserButtonProps: {onFollow: handleFollow}}}
+                    {...UserProps}
+                  />
                 </ListItem>
               ))}
             </List>

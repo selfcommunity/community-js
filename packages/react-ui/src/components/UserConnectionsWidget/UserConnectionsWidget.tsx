@@ -12,6 +12,7 @@ import {
   SCPreferencesContextType,
   SCThemeType,
   SCUserContextType,
+  useSCFetchUser,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -57,6 +58,11 @@ export interface UserConnectionsWidgetProps extends VirtualScrollerItemProps, Wi
    * @default null
    */
   userId: number;
+  /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
   /**
    * Hides this component
    * @default false
@@ -127,6 +133,7 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   });
   const {
     userId,
+    user,
     autoHide = false,
     limit = 3,
     className,
@@ -144,7 +151,7 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_TOOLS_STATE_CACHE_PREFIX_KEY, isInteger(userId) ? userId : user.id),
       cacheStrategy,
       visibleItems: limit
     },
@@ -155,6 +162,7 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const {scUser, refresh} = useSCFetchUser({id: userId, user});
 
   // MEMO
   const contentAvailability = useMemo(
@@ -182,7 +190,7 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserConnections(userId, {limit})
+        UserService.getUserConnections(scUser.id, {limit})
           .then((payload: SCPaginatedResponse<SCUserType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
@@ -192,29 +200,24 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
           });
       }
     },
-    [state.isLoadingNext, state.initialized, userId, limit, dispatch]
+    [state.isLoadingNext, state.initialized, scUser, limit, dispatch]
   );
 
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (
-      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      !followEnabled &&
-      isInteger(userId) &&
-      scUserContext.user !== undefined
-    ) {
+    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && !followEnabled && scUser && scUserContext.user !== undefined) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, scUserContext.loading, contentAvailability, userId]);
+  }, [scUserContext.user, scUserContext.loading, contentAvailability, scUser]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserConnections(userId, {offset: limit, limit: 10})
+      UserService.getUserConnections(scUser.id, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
@@ -233,12 +236,12 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!scUser || followEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, userId, contentAvailability]);
+  }, [scUserContext.user, scUser, contentAvailability]);
 
   // HANDLERS
   const handleNext = useMemo(
@@ -256,12 +259,22 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
+  /**
+   * Handle refresh counters (scUser)
+   */
+  const handleChangeConnectionStatus = useMemo(
+    () => (): void => {
+      refresh();
+    },
+    [refresh]
+  );
+
   const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
 
   // RENDER
-  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scUser) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -270,7 +283,11 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userConnectionsWidget.title" defaultMessage="ui.userConnectionsWidget.title" values={{total: state.count}} />
+        <FormattedMessage
+          id="ui.userConnectionsWidget.title"
+          defaultMessage="ui.userConnectionsWidget.title"
+          values={{total: scUser.connections_counter}}
+        />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
@@ -281,7 +298,12 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
           <List>
             {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
               <ListItem key={user.id}>
-                <User elevation={0} user={user} {...UserProps} />
+                <User
+                  elevation={0}
+                  user={user}
+                  followConnectUserButtonProps={{followConnectUserButtonProps: {onChangeConnectionStatus: handleChangeConnectionStatus}}}
+                  {...UserProps}
+                />
               </ListItem>
             ))}
           </List>
@@ -296,7 +318,11 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
         <DialogRoot
           className={classes.dialogRoot}
           title={
-            <FormattedMessage defaultMessage="ui.userConnectionsWidget.title" id="ui.userConnectionsWidget.title" values={{total: state.count}} />
+            <FormattedMessage
+              defaultMessage="ui.userConnectionsWidget.title"
+              id="ui.userConnectionsWidget.title"
+              values={{total: scUser.connections_counter}}
+            />
           }
           onClose={handleToggleDialogOpen}
           open={openDialog}
@@ -315,7 +341,12 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User elevation={0} user={user} {...UserProps} />
+                  <User
+                    elevation={0}
+                    user={user}
+                    followConnectUserButtonProps={{followConnectUserButtonProps: {onChangeConnectionStatus: handleChangeConnectionStatus}}}
+                    {...UserProps}
+                  />
                 </ListItem>
               ))}
             </List>

@@ -11,7 +11,7 @@ import useSCFollowedManager from '../../../hooks/useSCFollowedManager';
 import useSCSettingsManager from '../../../hooks/useSCSettingsManager';
 import useSCFollowersManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
-import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
+import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus, SCUserCounterType} from '@selfcommunity/types';
 import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
 import useSCBlockedUsersManager from '../../../hooks/useSCBlockedUsersManager';
 import * as Session from '../../../constants/Session';
@@ -129,7 +129,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   function handleVisibilityChange() {
     if (isClientSideRendering() && !window.document.hidden && state.user) {
       settingsManager.refresh && settingsManager.refresh();
-      refreshNotificationCounters();
+      refreshCounters();
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
@@ -183,11 +183,11 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
-   * Helper to refresh the notification counter
-   * Use getCurrentUser service since the notification counters
+   * Helper to refresh counters
+   * Use getCurrentUser service since the counters
    * have been inserted into the serialized user object
    */
-  const refreshNotificationCounters = useMemo(
+  const refreshCounters = useMemo(
     () => () => {
       if (state.user) {
         return UserService.getCurrentUser()
@@ -197,11 +197,23 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
               payload: {
                 unseen_interactions_counter: user.unseen_interactions_counter,
                 unseen_notification_banners_counter: user.unseen_notification_banners_counter,
+                ...(user.followers_counter ? {followers_counter: user.followers_counter} : {}),
+                ...(user.followings_counter ? {followings_counter: user.followings_counter} : {}),
+                ...(user.categories_counter ? {categories_counter: user.categories_counter} : {}),
+                ...(user.discussions_counter ? {discussions_counter: user.discussions_counter} : {}),
+                ...(user.posts_counter ? {posts_counter: user.posts_counter} : {}),
+                ...(user.statuses_counter ? {status_counter: user.statuses_counter} : {}),
+                ...(user.polls_counter ? {polls_counter: user.polls_counter} : {}),
+                ...(user.connections_counter ? {connections_counter: user.connections_counter} : {}),
+                ...(user.connection_requests_sent_counter ? {connection_requests_sent_counter: user.connection_requests_sent_counter} : {}),
+                ...(user.connection_requests_received_counter
+                  ? {connection_requests_received_counter: user.connection_requests_received_counter}
+                  : {}),
               },
             });
           })
           .catch((error) => {
-            Logger.error(SCOPE_SC_CORE, `Unable to refresh notification counters. Error: ${error.response.toString()}`);
+            Logger.error(SCOPE_SC_CORE, `Unable to refresh counters. Error: ${error.response.toString()}`);
           });
       }
       return Promise.reject();
@@ -237,7 +249,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       updateUser,
       setUnseenInteractionsCounter,
       setUnseenNotificationBannersCounter,
-      refreshNotificationCounters,
+      refreshCounters,
       logout,
       refreshSession,
       managers: {
