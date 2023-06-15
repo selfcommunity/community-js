@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.191...@selfcommunity/react-theme-default@0.1.0-alpha.192) (2023-06-14)
+
+
+### Bug Fixes
+
+* fixed navigation toolbar padding(sx/dx) ([168d997](https://github.com/selfcommunity/community-js/commit/168d997d0e9380a199bd9cdcb830645f7d9bd60b))
+
+
+
+
+
 # [0.1.0-alpha.191](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.190...@selfcommunity/react-theme-default@0.1.0-alpha.191) (2023-06-14)
 
 
