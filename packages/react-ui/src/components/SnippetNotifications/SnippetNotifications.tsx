@@ -234,7 +234,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
           .then((data) => {
             setNotifications(data.results);
             setLoading(false);
-            scUserContext.refreshNotificationCounters();
+            scUserContext.refreshCounters();
             onFetchNotifications && onFetchNotifications(data.results);
           })
           .catch((error) => {

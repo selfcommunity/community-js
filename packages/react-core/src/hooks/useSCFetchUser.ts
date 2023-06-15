@@ -45,6 +45,24 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
   );
 
   /**
+   * Memoized refresh
+   */
+  const refresh = useMemo(
+    () => () => {
+      return fetchUser()
+        .then((obj: SCUserType) => {
+          setSCUser(authUserId ? obj : objectWithoutProperties<SCUserType>(obj, ['connection_status']));
+        })
+        .catch((err) => {
+          setError(`Unable to refresh user with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, `Unable to refresh user with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, err.message);
+        });
+    },
+    [fetchUser]
+  );
+
+  /**
    * If id resolve the obj
    */
   useEffect(() => {
@@ -63,5 +81,5 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
     }
   }, [id, __user]);
 
-  return {scUser, setSCUser, error};
+  return {scUser, setSCUser, refresh, error};
 }

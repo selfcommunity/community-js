@@ -10,9 +10,9 @@ const Component = {
       },
       '& .SCNavigationMenuIconButton-drawer-header': {
         minHeight: theme.mixins.toolbar.minHeight,
-        padding: theme.spacing(0.5),
         '& img': {
-          maxHeight: theme.mixins.toolbar.minHeight
+          maxHeight: theme.mixins.toolbar.minHeight,
+          paddingLeft: theme.spacing(1.5)
         },
         '& .SCNavigationMenuIconButton-drawer-header-action': {
           float: 'right'
