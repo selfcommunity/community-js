@@ -122,7 +122,9 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
         </Box>
         <Divider />
         <ScrollContainer {...ScrollContainerProps}>
-          <List className={classes.drawerContent}>{drawerContent}</List>
+          <List className={classes.drawerContent} onClick={handleClose}>
+            {drawerContent}
+          </List>
         </ScrollContainer>
       </DrawerRoot>
     </>
