@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
@@ -9,6 +9,7 @@ import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import BaseItem from '../../../shared/BaseItem';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 
 const PREFIX = 'SCPollSnippet';
 
@@ -105,47 +106,58 @@ export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // RENDER
   if (!autoHide) {
     return (
-      <Root
-        elevation={0}
-        className={classNames(classes.root, className)}
-        image={
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)}>
-            <Avatar alt={feedObj.author.username} variant="circular" src={feedObj.author.avatar} className={classes.avatar} />
-          </Link>
-        }
-        primary={
-          <Box>
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)} className={classes.username}>
-              {feedObj.author.username}
+      <>
+        <Root
+          elevation={0}
+          className={classNames(classes.root, className)}
+          image={
+            <Link
+              {...(!feedObj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)})}
+              onClick={feedObj.author.deleted ? () => setOpenAlert(true) : null}>
+              <Avatar alt={feedObj.author.username} variant="circular" src={feedObj.author.avatar} className={classes.avatar} />
             </Link>
-            <Typography variant="body2" className={classes.title}>
-              {feedObj.poll.title}
-            </Typography>
-          </Box>
-        }
-        disableTypography
-        secondary={
-          <Stack direction="row" justifyContent="space-between" spacing={2} alignItems="center">
-            <Link to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))} className={classes.activityAt}>
-              <DateTimeAgo component="span" date={feedObj.added_at} />
-            </Link>
-            <Button
-              component={Link}
-              to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))}
-              variant="text"
-              color="secondary"
-              size="small">
-              <FormattedMessage
-                id="ui.pollSuggestionWidget.pollSnippet.button.seeItem"
-                defaultMessage="ui.pollSuggestionWidget.pollSnippet.button.seeItem"
-              />
-            </Button>
-          </Stack>
-        }
-      />
+          }
+          primary={
+            <Box>
+              <Link
+                {...(!feedObj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)})}
+                className={classes.username}
+                onClick={feedObj.author.deleted ? () => setOpenAlert(true) : null}>
+                {feedObj.author.username}
+              </Link>
+              <Typography variant="body2" className={classes.title}>
+                {feedObj.poll.title}
+              </Typography>
+            </Box>
+          }
+          disableTypography
+          secondary={
+            <Stack direction="row" justifyContent="space-between" spacing={2} alignItems="center">
+              <Link to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))} className={classes.activityAt}>
+                <DateTimeAgo component="span" date={feedObj.added_at} />
+              </Link>
+              <Button
+                component={Link}
+                to={scRoutingContext.url(getContributionRouteName(feedObj), getRouteData(feedObj))}
+                variant="text"
+                color="secondary"
+                size="small">
+                <FormattedMessage
+                  id="ui.pollSuggestionWidget.pollSnippet.button.seeItem"
+                  defaultMessage="ui.pollSuggestionWidget.pollSnippet.button.seeItem"
+                />
+              </Button>
+            </Stack>
+          }
+        />
+        <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      </>
     );
   }
   return null;

@@ -585,6 +585,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           className={classes.editor}
           send={handleSend}
           autoHide={!isFollower && !role}
+          autoHideDeletion={receiver?.deleted || scUser?.deleted}
           onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
           error={error}
           onErrorRemove={() => setError(false)}

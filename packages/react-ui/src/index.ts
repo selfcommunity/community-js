@@ -124,6 +124,7 @@ import PasswordTextField from './shared/PasswordTextField';
 import PhoneTextField from './shared/PhoneTextField';
 import StickyBox, {useStickyBox, StickyBoxProps, StickyBoxComponent, UseStickyBoxProps} from './shared/StickyBox';
 import TagChip, {TagChipProps} from './shared/TagChip';
+import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/PollSuggestionWidget';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
@@ -388,6 +389,8 @@ export {
   UseStickyBoxProps,
   TagChip,
   TagChipProps,
+  UserDeletedSnackBar,
+  UserDeletedSnackBarProps,
   CentralProgress,
   ConfirmDialog,
   MediaChunkUploader,

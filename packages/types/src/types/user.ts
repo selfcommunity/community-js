@@ -213,6 +213,16 @@ export interface SCUserType {
    * notification banner counter
    */
   unseen_notification_banners_counter?: number;
+
+  /**
+   * If the user account has been deleted
+   */
+  deleted?: boolean;
+
+  /**
+   * Datetime of the account deletion
+   */
+  deleted_at?: Date;
 }
 
 /**

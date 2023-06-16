@@ -36,6 +36,7 @@ import {
 } from '@selfcommunity/react-core';
 import VoteButton from '../VoteButton';
 import VoteAudienceButton from '../VoteAudienceButton';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const PREFIX = 'SCCommentObject';
 
@@ -251,6 +252,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     parent: commentObject ? commentObject.id : commentObjectId,
     cacheStrategy
   });
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   // HANDLERS
   const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
@@ -511,7 +513,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             elevation={0}
             className={classes.comment}
             image={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
+              <Link
+                {...(!comment.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)})}
+                onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                 <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
               </Link>
             }
@@ -520,7 +524,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               <>
                 <Widget className={classes.content} elevation={elevation} {...rest}>
                   <CardContent className={classNames({[classes.deleted]: obj && obj.deleted})}>
-                    <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
+                    <Link
+                      className={classes.author}
+                      {...(!comment.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)})}
+                      onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
                     <Typography
@@ -627,8 +634,11 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Render object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)}>
-      {comment}
-    </Root>
+    <>
+      <Root id={id} className={classNames(classes.root, className)}>
+        {comment}
+      </Root>
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }

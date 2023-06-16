@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -12,6 +12,7 @@ import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import VoteButton from '../../VoteButton';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   comment: {
@@ -83,6 +84,9 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
     ...rest
   } = props;
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
@@ -98,73 +102,85 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
    * Renders root object
    */
   return (
-    <Root
-      id={id}
-      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
-      template={template}
-      isNew={notificationObject.is_new}
-      disableTypography
-      image={
-        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject['follower'])}>
-          <Avatar
-            alt={notificationObject.comment.author.username}
-            variant="circular"
-            src={notificationObject.comment.author.avatar}
-            classes={{root: classes.avatar}}
-          />
-        </Link>
-      }
-      primary={
-        <>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)} className={classes.username}>
-            {notificationObject.comment.author.username}
-          </Link>{' '}
-          {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
-            ? intl.formatMessage(messages.comment, {
-                b: (...chunks) => <strong>{chunks}</strong>
-              })
-            : intl.formatMessage(messages.nestedComment, {
-                b: (...chunks) => <strong>{chunks}</strong>
-              })}
-        </>
-      }
-      secondary={
-        <React.Fragment>
-          <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
-            <Typography variant="body2" className={classes.contributionText}>
-              {getContributionSnippet(notificationObject.comment)}
-            </Typography>
+    <>
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+        template={template}
+        isNew={notificationObject.is_new}
+        disableTypography
+        image={
+          <Link
+            {...(!notificationObject.comment.author.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)
+            })}
+            onClick={notificationObject.comment.author.deleted ? () => setOpenAlert(true) : null}>
+            <Avatar
+              alt={notificationObject.comment.author.username}
+              variant="circular"
+              src={notificationObject.comment.author.avatar}
+              classes={{root: classes.avatar}}
+            />
           </Link>
-          {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
-            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-              <Bullet className={classes.bullet} />
-              <VoteButton
-                className={classes.voteButton}
-                variant="text"
-                size="small"
-                contributionId={notificationObject.comment.id}
-                contributionType={SCContributionType.COMMENT}
-                contribution={notificationObject.comment}
-                onVote={handleVote}
-              />
+        }
+        primary={
+          <>
+            <Link
+              {...(!notificationObject.comment.author.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)
+              })}
+              onClick={notificationObject.comment.author.deleted ? () => setOpenAlert(true) : null}
+              className={classes.username}>
+              {notificationObject.comment.author.username}
+            </Link>{' '}
+            {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
+              ? intl.formatMessage(messages.comment, {
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })
+              : intl.formatMessage(messages.nestedComment, {
+                  b: (...chunks) => <strong>{chunks}</strong>
+                })}
+          </>
+        }
+        secondary={
+          <React.Fragment>
+            <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
+              <Typography variant="body2" className={classes.contributionText}>
+                {getContributionSnippet(notificationObject.comment)}
+              </Typography>
+            </Link>
+            {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+                <Bullet className={classes.bullet} />
+                <VoteButton
+                  className={classes.voteButton}
+                  variant="text"
+                  size="small"
+                  contributionId={notificationObject.comment.id}
+                  contributionType={SCContributionType.COMMENT}
+                  contribution={notificationObject.comment}
+                  onVote={handleVote}
+                />
+              </Stack>
+            )}
+          </React.Fragment>
+        }
+        footer={
+          template === SCNotificationObjectTemplateType.TOAST && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary" component={'div'}>
+                <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                </Link>
+              </Typography>
             </Stack>
-          )}
-        </React.Fragment>
-      }
-      footer={
-        template === SCNotificationObjectTemplateType.TOAST && (
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <DateTimeAgo date={notificationObject.active_at} />
-            <Typography color="primary" component={'div'}>
-              <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
-                <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
-              </Link>
-            </Typography>
-          </Stack>
-        )
-      }
-      {...rest}
-    />
+          )
+        }
+        {...rest}
+      />
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }
