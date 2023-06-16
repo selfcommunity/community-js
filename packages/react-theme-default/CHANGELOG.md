@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.194](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.193...@selfcommunity/react-theme-default@0.1.0-alpha.194) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
 # [0.1.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.192...@selfcommunity/react-theme-default@0.1.0-alpha.193) (2023-06-15)
 
 

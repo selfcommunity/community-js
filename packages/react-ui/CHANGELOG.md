@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.245](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.244...@selfcommunity/react-ui@0.7.0-alpha.245) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
 # [0.7.0-alpha.244](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.243...@selfcommunity/react-ui@0.7.0-alpha.244) (2023-06-15)
 
 
