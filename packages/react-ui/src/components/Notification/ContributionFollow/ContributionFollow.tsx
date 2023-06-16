@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {SCNotificationVoteUpType} from '@selfcommunity/types';
@@ -10,6 +10,7 @@ import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -97,6 +98,9 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
   // CONST
   const contributionType = getContributionType(notificationObject);
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // INTL
   const intl = useIntl();
 
@@ -104,67 +108,75 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
    * Renders root object
    */
   return (
-    <Root
-      id={id}
-      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
-      template={template}
-      isNew={notificationObject.is_new}
-      disableTypography
-      image={
-        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-          <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
-        </Link>
-      }
-      primary={
-        <Typography component="span" color="inherit" className={classes.followText}>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
-            {notificationObject.user.username}
-          </Link>{' '}
-          {intl.formatMessage(messages.contributionFollow, {
-            b: (...chunks) => <strong>{chunks}</strong>
-          })}
-        </Typography>
-      }
-      secondary={
-        <React.Fragment>
-          {template === SCNotificationObjectTemplateType.SNIPPET && (
-            <>
-              :{' '}
-              <Link
-                to={scRoutingContext.url(
-                  SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                  getRouteData(notificationObject[contributionType])
-                )}>
-                <Typography variant="body2" className={classes.contributionText}>
-                  {getContributionSnippet(notificationObject[contributionType])}
-                </Typography>
-              </Link>
-            </>
-          )}
-          {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
-            <div>
-              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            </div>
-          )}
-        </React.Fragment>
-      }
-      footer={
-        template === SCNotificationObjectTemplateType.TOAST && (
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <DateTimeAgo date={notificationObject.active_at} />
-            <Typography color="primary" component={'div'}>
-              <Link
-                to={scRoutingContext.url(
-                  SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                  getRouteData(notificationObject[contributionType])
-                )}>
-                <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
-              </Link>
-            </Typography>
-          </Stack>
-        )
-      }
-      {...rest}
-    />
+    <>
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+        template={template}
+        isNew={notificationObject.is_new}
+        disableTypography
+        image={
+          <Link
+            {...(!notificationObject.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)})}
+            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
+          </Link>
+        }
+        primary={
+          <Typography component="span" color="inherit" className={classes.followText}>
+            <Link
+              {...(!notificationObject.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)})}
+              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
+              className={classes.username}>
+              {notificationObject.user.username}
+            </Link>{' '}
+            {intl.formatMessage(messages.contributionFollow, {
+              b: (...chunks) => <strong>{chunks}</strong>
+            })}
+          </Typography>
+        }
+        secondary={
+          <React.Fragment>
+            {template === SCNotificationObjectTemplateType.SNIPPET && (
+              <>
+                :{' '}
+                <Link
+                  to={scRoutingContext.url(
+                    SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                    getRouteData(notificationObject[contributionType])
+                  )}>
+                  <Typography variant="body2" className={classes.contributionText}>
+                    {getContributionSnippet(notificationObject[contributionType])}
+                  </Typography>
+                </Link>
+              </>
+            )}
+            {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+              <div>
+                <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+              </div>
+            )}
+          </React.Fragment>
+        }
+        footer={
+          template === SCNotificationObjectTemplateType.TOAST && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary" component={'div'}>
+                <Link
+                  to={scRoutingContext.url(
+                    SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                    getRouteData(notificationObject[contributionType])
+                  )}>
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                </Link>
+              </Typography>
+            </Stack>
+          )
+        }
+        {...rest}
+      />
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }

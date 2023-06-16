@@ -443,6 +443,7 @@
   "ui.privateMessage.component.delete.message.dialog.msg": "Are you sure you want to delete this message?",
   "ui.privateMessage.editor.button.send" : "send",
   "ui.privateMessage.editor.disabled.msg" : "You cannot send messages to people who don't follow you!",
+  "ui.privateMessage.editor.disabled.deleted.msg" : "You cannot send messages to deleted users!",
   "ui.privateMessage.editor.error.send.msg" : "The message could not be sent",
   "ui.privateMessage.editor.media.uploader.msg" : "Upload the attachment (max 10MB) or drag it here",
   "ui.privateMessage.editor.placeholder" : "Write your message",

@@ -22,6 +22,7 @@ import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {LoadingButton} from '@mui/lab';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -149,6 +150,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
     return manager.status(user);
   }
   const [follower, setFollower] = useState<boolean>(null);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
@@ -162,7 +164,7 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
      * Call scFollowedManager.isFollower inside an effect
      * to avoid warning rendering child during update parent state
      */
-    if (scUserContext.user && scUserContext.user.id !== notificationObject.message.sender.id) {
+    if (scUserContext.user && scUserContext.user.id !== notificationObject.message.sender.id && !notificationObject.message.sender.deleted) {
       setFollower(checkFollowerOrConnection(notificationObject.message.sender));
     }
   });
@@ -177,7 +179,11 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
         isNew={notificationObject.is_new}
         disableTypography
         image={
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}>
+          <Link
+            {...(!notificationObject.message.sender.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)
+            })}
+            onClick={notificationObject.message.sender.deleted ? () => setOpenAlert(true) : null}>
             <Avatar
               alt={notificationObject.message.sender.username}
               variant="circular"
@@ -190,7 +196,11 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
           <>
             {isToastTemplate && (
               <Box>
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)}>
+                <Link
+                  {...(!notificationObject.message.sender.deleted && {
+                    to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)
+                  })}
+                  onClick={notificationObject.message.sender.deleted ? () => setOpenAlert(true) : null}>
                   {notificationObject.message.sender.username}
                 </Link>{' '}
                 <FormattedMessage
@@ -210,7 +220,12 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
             {isSnippetTemplate && (
               <Box>
                 <Typography component="div" color="inherit">
-                  <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)} className={classes.username}>
+                  <Link
+                    {...(!notificationObject.message.sender.deleted && {
+                      to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)
+                    })}
+                    onClick={notificationObject.message.sender.deleted ? () => setOpenAlert(true) : null}
+                    className={classes.username}>
                     {notificationObject.message.sender.username}
                   </Link>{' '}
                   <Link
@@ -247,39 +262,48 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
     );
   }
   return (
-    <Root
-      id={id}
-      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
-      template={template}
-      isNew={notificationObject.is_new}
-      disableTypography
-      actions={
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-          <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-          <LoadingButton
-            color={'primary'}
-            variant="outlined"
-            size="small"
-            classes={{root: classes.replyButton}}
-            component={Link}
-            loading={scUserContext.user ? follower === null || manager.isLoading(notificationObject.message.sender) : null}
-            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
-            {scUserContext.user && follower ? (
-              <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
-            ) : (
-              <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
-            )}
-          </LoadingButton>
-        </Stack>
-      }
-      primary={
-        <Box className={classes.messageWrap}>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)} className={classes.message}>
-            <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
-          </Link>
-        </Box>
-      }
-      {...rest}
-    />
+    <>
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+        template={template}
+        isNew={notificationObject.is_new}
+        disableTypography
+        actions={
+          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+            <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+            <LoadingButton
+              color={'primary'}
+              variant="outlined"
+              size="small"
+              classes={{root: classes.replyButton}}
+              component={Link}
+              loading={
+                notificationObject.message.sender.deleted
+                  ? null
+                  : scUserContext.user
+                  ? follower === null || manager.isLoading(notificationObject.message.sender)
+                  : null
+              }
+              to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)}>
+              {scUserContext.user && follower ? (
+                <FormattedMessage id="ui.notification.privateMessage.btnReplyLabel" defaultMessage="ui.notification.privateMessage.btnReplyLabel" />
+              ) : (
+                <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
+              )}
+            </LoadingButton>
+          </Stack>
+        }
+        primary={
+          <Box className={classes.messageWrap}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)} className={classes.message}>
+              <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.message.message}} />
+            </Link>
+          </Box>
+        }
+        {...rest}
+      />
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }

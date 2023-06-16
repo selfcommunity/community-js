@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Typography, Grid, Box, Button, ButtonProps, CardActions} from '@mui/material';
 import {SCIncubatorType} from '@selfcommunity/types';
@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from '../IncubatorSubscribeButton';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const PREFIX = 'SCIncubator';
 
@@ -146,6 +147,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
   const {scIncubator, setSCIncubator} = useSCFetchIncubator({id: incubatorId, incubator});
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   /**
    * Renders total votes
@@ -171,35 +173,44 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
     return <HiddenPlaceholder />;
   }
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      <CardContent>
-        <Button variant="text" className={classes.name} {...ButtonProps}>
-          {scIncubator.name}
-        </Button>
-        {/*<Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>*/}
-        {/*  {incubator.name}*/}
-        {/*</Link>*/}
-        <Typography component={'span'}>
-          <FormattedMessage
-            defaultMessage="ui.incubator.proposedBy"
-            id="ui.incubator.proposedBy"
-            values={{
-              username: <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)}>{scIncubator.user.username}</Link>
-            }}
+    <>
+      <Root className={classNames(classes.root, className)} {...rest}>
+        <CardContent>
+          <Button variant="text" className={classes.name} {...ButtonProps}>
+            {scIncubator.name}
+          </Button>
+          {/*<Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>*/}
+          {/*  {incubator.name}*/}
+          {/*</Link>*/}
+          <Typography component={'span'}>
+            <FormattedMessage
+              defaultMessage="ui.incubator.proposedBy"
+              id="ui.incubator.proposedBy"
+              values={{
+                username: (
+                  <Link
+                    {...(!scIncubator.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)})}
+                    onClick={scIncubator.user.deleted ? () => setOpenAlert(true) : null}>
+                    {scIncubator.user.username}
+                  </Link>
+                )
+              }}
+            />
+          </Typography>
+          <Typography component={'p'} className={!detailView ? classes.slogan : null}>
+            {scIncubator.slogan}
+          </Typography>
+          <LinearProgressWithLabel
+            className={classes.progressBar}
+            value={renderVotes(scIncubator.subscribers_count, scIncubator.subscribers_threshold)}
+            subscribers={scIncubator.subscribers_count}
           />
-        </Typography>
-        <Typography component={'p'} className={!detailView ? classes.slogan : null}>
-          {scIncubator.slogan}
-        </Typography>
-        <LinearProgressWithLabel
-          className={classes.progressBar}
-          value={renderVotes(scIncubator.subscribers_count, scIncubator.subscribers_threshold)}
-          subscribers={scIncubator.subscribers_count}
-        />
-      </CardContent>
-      <CardActions>
-        <IncubatorSubscribeButton incubator={scIncubator} {...subscribeButtonProps} />
-      </CardActions>
-    </Root>
+        </CardContent>
+        <CardActions>
+          <IncubatorSubscribeButton incubator={scIncubator} {...subscribeButtonProps} />
+        </CardActions>
+      </Root>
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }

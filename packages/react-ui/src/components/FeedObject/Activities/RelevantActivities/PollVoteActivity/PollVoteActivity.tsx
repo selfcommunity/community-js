@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
@@ -8,6 +8,7 @@ import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../../../../shared/BaseItem';
+import UserDeletedSnackBar from '../../../../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   pollVote: {
@@ -49,31 +50,42 @@ export default function PollVoteRelevantActivity(inProps: ActionsRelevantActivit
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // INTL
   const intl = useIntl();
 
   // RENDER
   return (
-    <Root
-      {...rest}
-      className={classNames(classes.root, className)}
-      image={
-        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
-          <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
-        </Link>
-      }
-      primary={
-        <>
-          {intl.formatMessage(messages.pollVote, {
-            username: (
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
-                {activityObject.author.username}
-              </Link>
-            )
-          })}
-        </>
-      }
-      secondary={<DateTimeAgo date={activityObject.active_at} />}
-    />
+    <>
+      <Root
+        {...rest}
+        className={classNames(classes.root, className)}
+        image={
+          <Link
+            {...(!activityObject.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)})}
+            onClick={activityObject.author.deleted ? () => setOpenAlert(true) : null}>
+            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
+          </Link>
+        }
+        primary={
+          <>
+            {intl.formatMessage(messages.pollVote, {
+              username: (
+                <Link
+                  {...(!activityObject.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)})}
+                  onClick={activityObject.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
+                  {activityObject.author.username}
+                </Link>
+              )
+            })}
+          </>
+        }
+        secondary={<DateTimeAgo date={activityObject.active_at} />}
+      />
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }

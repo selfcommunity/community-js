@@ -18,7 +18,7 @@ import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip} from '@mui/material';
+import {Avatar, Button, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, Typography} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -37,6 +37,7 @@ import {
   SCNotificationType,
   SCNotificationTypologyType
 } from '@selfcommunity/types';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -174,6 +175,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
   const [obj, setObj] = useState<SCNotificationAggregatedType>(notificationObject);
   const [loadingSuspendNotification, setLoadingSuspendNotification] = useState<boolean>(false);
   const [openOtherAggregated, setOpenOtherAggregated] = useState<boolean>(!collapsedOtherAggregated);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   //INTL
   const intl = useIntl();
@@ -268,7 +270,11 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
         <CardHeader
           className={classes.header}
           avatar={
-            <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)}>
+            <Link
+              {...(!messageNotification.message.sender.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)
+              })}
+              onClick={messageNotification.message.sender.deleted ? () => setOpenAlert(true) : null}>
               <Avatar
                 className={classes.avatar}
                 alt={messageNotification.message.sender.username}
@@ -280,7 +286,12 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
           title={
             <>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)} className={classes.username}>
+              <Link
+                {...(!messageNotification.message.sender.deleted && {
+                  to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)
+                })}
+                onClick={messageNotification.message.sender.deleted ? () => setOpenAlert(true) : null}
+                className={classes.username}>
                 {messageNotification.message.sender.username}
               </Link>{' '}
               {intl.formatMessage(messages.receivePrivateMessage, {
@@ -414,24 +425,27 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {renderNotificationHeader()}
-      <CardContent className={classes.content}>
-        <div className={classes.unCollapsed}>
-          {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
-        </div>
-        {notificationObject.aggregated.length > showMaxAggregated && (
-          <>
-            <ListItemButton onClick={setStateAggregated} classes={{root: classes.showOtherAggregated}}>
-              <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
-              {openOtherAggregated ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
-            </ListItemButton>
-            <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.collapsed}}>
-              {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
-            </Collapse>
-          </>
-        )}
-      </CardContent>
-    </Root>
+    <>
+      <Root id={id} className={classNames(classes.root, className)} {...rest}>
+        {renderNotificationHeader()}
+        <CardContent className={classes.content}>
+          <div className={classes.unCollapsed}>
+            {notificationObject.aggregated.slice(0, showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
+          </div>
+          {notificationObject.aggregated.length > showMaxAggregated && (
+            <>
+              <ListItemButton onClick={setStateAggregated} classes={{root: classes.showOtherAggregated}}>
+                <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
+                {openOtherAggregated ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
+              </ListItemButton>
+              <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.collapsed}}>
+                {notificationObject.aggregated.slice(showMaxAggregated).map((n: SCNotificationType, i) => renderAggregatedItem(n, i))}
+              </Collapse>
+            </>
+          )}
+        </CardContent>
+      </Root>
+      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+    </>
   );
 }
