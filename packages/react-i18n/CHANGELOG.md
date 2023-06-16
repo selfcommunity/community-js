@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.35...@selfcommunity/react-i18n@0.5.0-alpha.36) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
 # [0.5.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.34...@selfcommunity/react-i18n@0.5.0-alpha.35) (2023-06-12)
 
 
