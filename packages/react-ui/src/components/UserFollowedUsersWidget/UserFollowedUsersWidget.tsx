@@ -164,7 +164,8 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const {scUser, refresh: refreshUser} = useSCFetchUser({id: userId, user});
+  const {scUser, refresh: refreshScUser} = useSCFetchUser({id: userId, user});
+  const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
 
   // MEMO
   const contentAvailability = useMemo(
@@ -245,6 +246,15 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
     }
   }, [scUserContext.user, scUser, contentAvailability]);
 
+  useEffect(() => {
+    if (!scUser || !followEnabled || !scUserContext.user || !state.initialized || !isMe) {
+      return;
+    }
+    // Refresh only if the profile is mine - followed users can only change if I'm watching my own user
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    refreshScUser().catch(() => {});
+  }, [isMe, scUserContext.managers.followed.followed.length]);
+
   // HANDLERS
   const handleNext = useMemo(
     () => (): void => {
@@ -262,16 +272,6 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
         });
     },
     [dispatch, state.next, state.isLoadingNext, state.initialized]
-  );
-
-  /**
-   * Handle refresh counters (scUser)
-   */
-  const handleFollow = useMemo(
-    () => (): void => {
-      refreshUser();
-    },
-    [refreshUser]
   );
 
   const handleToggleDialogOpen = (): void => {
@@ -303,12 +303,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
           <List>
             {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
               <ListItem key={user.id}>
-                <User
-                  elevation={0}
-                  user={user}
-                  followConnectUserButtonProps={{followConnectUserButtonProps: {onFollow: handleFollow}}}
-                  {...UserProps}
-                />
+                <User elevation={0} user={user} {...UserProps} />
               </ListItem>
             ))}
           </List>
@@ -346,12 +341,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User
-                    elevation={0}
-                    user={user}
-                    followConnectUserButtonProps={{followConnectUserButtonProps: {onFollow: handleFollow}}}
-                    {...UserProps}
-                  />
+                  <User elevation={0} user={user} {...UserProps} />
                 </ListItem>
               ))}
             </List>

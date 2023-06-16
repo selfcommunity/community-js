@@ -1,8 +1,9 @@
-import React, {useContext, useEffect, useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {
   Link,
   SCPreferences,
@@ -18,7 +19,6 @@ import {
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Bullet from '../../shared/Bullet';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 
 const PREFIX = 'SCUserCounters';
 
@@ -98,24 +98,38 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
-  const {scUser, refresh: refreshUser} = useSCFetchUser({id: userId, user});
+  const {scUser, refresh: refreshScUser, refreshing: refreshingScUser} = useSCFetchUser({id: userId, user});
   const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
+
+  // CONST
+  const scUserId = scUser ? scUser.id : null;
 
   /**
    * Refresh counters: categories, followed, connections, etc.
    */
   useDeepCompareEffectNoCheck(() => {
-    if (scUser) {
-      refreshUser();
+    if (
+      scUserId &&
+      scUserContext.user &&
+      !scUserContext.managers.followed.isLoading(scUser) &&
+      !scUserContext.managers.connections.isLoading(scUser) &&
+      !refreshingScUser
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      refreshScUser().catch(() => {});
     }
-  }, [
-    isMe,
-    scUser,
-    scUserContext.managers.categories.categories,
-    scUserContext.managers.connections.connections,
-    scUserContext.managers.followed,
-    scUserContext.managers.followers
-  ]);
+  }, [scUserId, scUserContext.user, scUserContext.managers.connections.connections, scUserContext.managers.followed.followed.length]);
+
+  /**
+   * Refresh counters: categories
+   */
+  useDeepCompareEffectNoCheck(() => {
+    // Refresh only if follow/unfollow a category and I'm watching my own user
+    if (isMe) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      refreshScUser().catch(() => {});
+    }
+  }, [isMe, scUserContext.managers.categories.categories.length]);
 
   if (scUserContext.user === undefined || !scUser) {
     return null;

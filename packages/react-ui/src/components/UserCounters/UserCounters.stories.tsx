@@ -1,6 +1,8 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import UserCounters from './index';
+// import UserFollowersWidget from "../UserFollowersWidget";
+// import UserFollowedUsersWidget from "../UserFollowedUsersWidget";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -23,17 +25,21 @@ export default {
 const Template: ComponentStory<typeof UserCounters> = (args) => (
   <div style={{width: '100%'}}>
     <UserCounters {...args} />
+    {/*
+    <UserFollowersWidget user={user} />
+    <UserFollowedUsersWidget user={user} />
+    */}
   </div>
 );
 
 export const Base = Template.bind({});
 
 Base.args = {
-  userId: 1
+  userId: 167
 };
 
 export const AuthenticatedUser = Template.bind({});
 
 AuthenticatedUser.args = {
-  userId: 153
+  userId: 167
 };

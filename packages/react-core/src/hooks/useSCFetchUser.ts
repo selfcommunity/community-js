@@ -23,6 +23,7 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
 
   const [scUser, setSCUser] = useState<SCUserType>(__user);
   const [error, setError] = useState<string>(null);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   /**
    * Memoized fetchUser
@@ -31,7 +32,7 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
     () => () => {
       return http
         .request({
-          url: Endpoints.User.url({id: id}),
+          url: Endpoints.User.url({id: user ? user.id : id}),
           method: Endpoints.User.method,
         })
         .then((res: HttpResponse<SCUserType>) => {
@@ -41,7 +42,7 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
           return Promise.resolve(res.data);
         });
     },
-    [id]
+    [id, user]
   );
 
   /**
@@ -49,17 +50,23 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
    */
   const refresh = useMemo(
     () => () => {
-      return fetchUser()
-        .then((obj: SCUserType) => {
-          setSCUser(authUserId ? obj : objectWithoutProperties<SCUserType>(obj, ['connection_status']));
-        })
-        .catch((err) => {
-          setError(`Unable to refresh user with id ${id}`);
-          Logger.error(SCOPE_SC_CORE, `Unable to refresh user with id ${id}`);
-          Logger.error(SCOPE_SC_CORE, err.message);
-        });
+      if (!refreshing) {
+        setRefreshing(true);
+        return fetchUser()
+          .then((obj: SCUserType) => {
+            setRefreshing(false);
+            setSCUser(authUserId ? obj : objectWithoutProperties<SCUserType>(obj, ['connection_status']));
+          })
+          .catch((err) => {
+            setRefreshing(false);
+            setError(`Unable to refresh user with id ${id}`);
+            Logger.error(SCOPE_SC_CORE, `Unable to refresh user with id ${id}`);
+            Logger.error(SCOPE_SC_CORE, err.message);
+          });
+      }
+      return Promise.reject();
     },
-    [fetchUser]
+    [fetchUser, refreshing]
   );
 
   /**
@@ -81,5 +88,5 @@ export default function useSCFetchUser({id = null, user = null}: {id?: number | 
     }
   }, [id, __user]);
 
-  return {scUser, setSCUser, refresh, error};
+  return {scUser, setSCUser, refresh, refreshing, error};
 }
