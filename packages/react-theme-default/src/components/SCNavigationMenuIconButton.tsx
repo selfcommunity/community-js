@@ -10,6 +10,7 @@ const Component = {
       },
       '& .SCNavigationMenuIconButton-drawer-header': {
         minHeight: theme.mixins.toolbar.minHeight,
+        padding: '1px',
         '& img': {
           maxHeight: theme.mixins.toolbar.minHeight,
           paddingLeft: theme.spacing(1.5)
