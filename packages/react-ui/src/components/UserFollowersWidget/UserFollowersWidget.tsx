@@ -164,7 +164,8 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const {scUser, refresh: refreshUser} = useSCFetchUser({id: userId, user});
+  const {scUser, refresh: refreshScUser} = useSCFetchUser({id: userId, user});
+  const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
 
   // MEMO
   const contentAvailability = useMemo(
@@ -246,11 +247,14 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   }, [scUserContext.user, scUser, contentAvailability]);
 
   useEffect(() => {
-    if (!scUser || !followEnabled || !scUserContext.user || !state.initialized) {
+    if (!scUser || !followEnabled || !scUserContext.user || !state.initialized || isMe) {
       return;
     }
-    refreshUser();
-  }, [scUserContext.managers.followed]);
+    // Refresh only if the profile is not mine - followers users can only change if I'm watching
+    // a user (not me) and follow/unfollow that user
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    refreshScUser().catch(() => {});
+  }, [isMe, scUserContext.managers.followed.followed.length]);
 
   // HANDLERS
   const handleNext = useMemo(
@@ -268,16 +272,6 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
-  /**
-   * Handle refresh counters (scUser)
-   */
-  const handleFollow = useMemo(
-    () => (): void => {
-      refreshUser();
-    },
-    [refreshUser]
-  );
-
   const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
@@ -289,6 +283,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   if (!state.initialized) {
     return <Skeleton />;
   }
+
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
@@ -307,12 +302,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
           <List>
             {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
               <ListItem key={user.id}>
-                <User
-                  elevation={0}
-                  user={user}
-                  followConnectUserButtonProps={{followConnectUserButtonProps: {onFollow: handleFollow}}}
-                  {...UserProps}
-                />
+                <User elevation={0} user={user} {...UserProps} />
               </ListItem>
             ))}
           </List>
@@ -350,12 +340,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User
-                    elevation={0}
-                    user={user}
-                    followConnectUserButtonProps={{followConnectUserButtonProps: {onFollow: handleFollow}}}
-                    {...UserProps}
-                  />
+                  <User elevation={0} user={user} {...UserProps} />
                 </ListItem>
               ))}
             </List>
