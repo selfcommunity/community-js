@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.192...@selfcommunity/react-theme-default@0.1.0-alpha.193) (2023-06-15)
+
+
+### Bug Fixes
+
+* fixed navbar menu logo padding/drawer closing on navigation ([9104488](https://github.com/selfcommunity/community-js/commit/9104488cbfae08c402576ed2e026deb6404f8508))
+
+
+
+
+
 # [0.1.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.191...@selfcommunity/react-theme-default@0.1.0-alpha.192) (2023-06-14)
 
 
