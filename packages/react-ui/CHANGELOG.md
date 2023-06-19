@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.247](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.246...@selfcommunity/react-ui@0.7.0-alpha.247) (2023-06-19)
+
+
+### Bug Fixes
+
+* fixed deleted user snackbar alert ([308b9e2](https://github.com/selfcommunity/community-js/commit/308b9e23681d1491db0e68858c4305c8ff734f3e))
+
+
+
+
+
 # [0.7.0-alpha.246](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.245...@selfcommunity/react-ui@0.7.0-alpha.246) (2023-06-16)
 
 
