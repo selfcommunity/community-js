@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.248](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.247...@selfcommunity/react-ui@0.7.0-alpha.248) (2023-06-19)
+
+
+### Bug Fixes
+
+* fixed selectable users for new message ([2f0e02b](https://github.com/selfcommunity/community-js/commit/2f0e02bf006d505705a535ff06d251755ad912c4))
+* storybook v7 upgrade ([553c1bf](https://github.com/selfcommunity/community-js/commit/553c1bff2b3f8a5c4965a9190b7d887766473964))
+* storybook v7 upgrade ([bd599bc](https://github.com/selfcommunity/community-js/commit/bd599bc84bf1980687112e30a2df4e77d7e87479))
+* storybook v7 upgrade ([3d1bb57](https://github.com/selfcommunity/community-js/commit/3d1bb57a2e9f154955ddad015ca2265987106b40))
+* storybook v7 upgrade ([8d86f19](https://github.com/selfcommunity/community-js/commit/8d86f19810793e04da433ad81ce100390bb2b5f2))
+* storybook v7 upgrade ([e59718d](https://github.com/selfcommunity/community-js/commit/e59718d8161846ea114d3858f6d28f61928fda51))
+* storybook v7 upgrade ([391cb8a](https://github.com/selfcommunity/community-js/commit/391cb8a18c1e265399b883c6c335db2a840acf32))
+
+
+
+
+
 # [0.7.0-alpha.247](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.246...@selfcommunity/react-ui@0.7.0-alpha.247) (2023-06-19)
 
 
