@@ -11,34 +11,6 @@ import '../media/header.css';
 // import Logo from '../media/selfcommunity.png';
 
 /**
- * SelfCommunity Theme
- */
-const theme: SCThemeType = mergeDeep(defaultSCTheme, {
-  palette: {
-    primary: {
-      main: '#7baa5d',
-    },
-    secondary: {
-      main: '#4a8f62',
-    },
-  },
-  components: {
-    /* MuiIcon: {
-      defaultProps: {
-        // Replace the `material-icons` default value.
-        baseClassName: 'material-icons-outlined',
-      },
-    }, */
-    SCInlineComposer: {
-      defaultProps: {
-        mediaObjectTypes: [Image, Link]
-      }
-    }
-  },
-}) as SCThemeType;
-
-
-/**
  * Fix Storybook v6.3.10 with mui v5
  * Wrap stories with EmotionThemeProvider, to fix problem of storybook 6.4.19 with mui_v5
  * Check this issue to resolve mui problems in DOCs tab of storybook
@@ -93,11 +65,17 @@ const withProvider = (Story, context) => {
       authToken: authToken,
       handleRefreshToken:
         context.globals.session !== 'Cookie' ? refreshToken(context) : null,
+      handleLogout: () => {
+        changeCommunityConf(false);
+      }
     };
   } else {
     session = {
       type: context.globals.session,
       clientId: context.globals.clientId,
+      handleLogout: () => {
+        changeCommunityConf(false);
+      }
     };
   }
 
@@ -124,7 +102,21 @@ const withProvider = (Story, context) => {
         }
       }, features: ['addons', 'advertising']
     }, */
-    theme,
+    theme: mergeDeep(defaultSCTheme, {
+      components: {
+        /* MuiIcon: {
+          defaultProps: {
+            // Replace the `material-icons` default value.
+            baseClassName: 'material-icons-outlined',
+          },
+        }, */
+        SCInlineComposer: {
+          defaultProps: {
+            mediaObjectTypes: [Image, Link]
+          }
+        }
+      },
+    }) as SCThemeType,
     handleAnonymousAction: () => {
       alert('Anonymous action');
     },
