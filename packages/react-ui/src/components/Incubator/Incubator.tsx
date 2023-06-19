@@ -210,7 +210,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
           <IncubatorSubscribeButton incubator={scIncubator} {...subscribeButtonProps} />
         </CardActions>
       </Root>
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

@@ -85,7 +85,7 @@ export default function PollVoteRelevantActivity(inProps: ActionsRelevantActivit
         }
         secondary={<DateTimeAgo date={activityObject.active_at} />}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }
