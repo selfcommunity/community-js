@@ -37,7 +37,6 @@ import UserProfileSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
-import {LoadingButton} from '@mui/lab';
 
 const PREFIX = 'SCUserProfileTemplate';
 

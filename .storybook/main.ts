@@ -2,33 +2,50 @@ const path = require("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-module.exports = {
-  "staticDirs": ['../public', '../packages/react-theme-default/src'],
-  "framework": '@storybook/react',
-  "core": {
-    "builder": 'webpack5',
-    "options": {
-      "lazyCompilation": true,
-      "fsCache": true
-    },
-  },
-  "stories": [
-    "../packages/react-core/src/**/*.stories.@(js|jsx|ts|tsx)",
+/** @type { import('@storybook/react-webpack5').StorybookConfig } */
+const config = {
+  staticDirs: [
+    '../public',
+    '../packages/react-theme-default/src'
+  ],
+  stories: [
+    '../stories/**/*.@(mdx|js|jsx|ts|tsx)',
     "../packages/react-ui/src/components/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/react-ui/src/shared/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/react-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
-    "../stories/**/*.stories.mdx",
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "addons": [
-    "@storybook/addon-docs",
-    "@storybook/addon-essentials",
-    "@storybook/addon-links",
-    "@storybook/addon-toolbars",
+  addons: [
+    /* {
+      name: '@storybook/addon-docs',
+      options: {
+        jsxOptions: {},
+        csfPluginOptions: null,
+        mdxPluginOptions: {},
+        transcludeMarkdown: true,
+      },
+    },*/
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    // "@storybook/addon-toolbars",
+    '@storybook/addon-interactions',
   ],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  },
   "features": {
     "postcss": false
   },
+  /* typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      compilerOptions: {
+        allowSyntheticDefaultImports: true,
+        esModuleInterop: true,
+      },
+      propFilter: () => true,
+    },
+  },*/
   "webpackFinal": async (config) => {
     return {
       ...config,
@@ -38,12 +55,13 @@ module.exports = {
           ...(config.resolve.plugins || []),
           new TsconfigPathsPlugin({
             extensions: config.resolve.extensions,
+            configFile: path.resolve(__dirname, "../tsconfig.json"),
           }),
         ],
         "alias": {
           ...config.resolve.alias,
           "@emotion/core": toPath("node_modules/@emotion/react"),
-          "@emotion/styled": require.resolve('@emotion/styled'),
+          "@emotion/styled": toPath("node_modules/@emotion/styled"),
           "emotion-theming": toPath("node_modules/@emotion/react"),
           "@selfcommunity/types": toPath("packages/types/src"), // development
           "@selfcommunity/utils": toPath("packages/utils/src"), // development
@@ -51,10 +69,13 @@ module.exports = {
           "@selfcommunity/react-i18n": toPath("packages/react-i18n/src"), // development
           "@selfcommunity/react-core": toPath("packages/react-core/src"), // development
           "@selfcommunity/react-ui": toPath("packages/react-ui/src"), // development
-          "@selfcommunity/react-templates": toPath("packages/react-templates/src"), // development
-          "@selfcommunity/react-theme-default": toPath("packages/react-theme-default/src") // development
+          "@selfcommunity/react-templates": toPath("packages/react-templates/src") // development
         },
       },
     };
-  }
-}
+  },
+  docs: {
+    autodocs: 'tag',
+  },
+};
+export default config;

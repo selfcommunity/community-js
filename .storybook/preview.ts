@@ -1,41 +1,6 @@
-import defaultDecorators from './decorators';
-/**
- * Add decorators:
- * 1. wrap the story with SCContextProvider
- * 2. register a service worker
- */
-export const decorators = [defaultDecorators.withProvider, defaultDecorators.withServiceWorker];
-
-/**
- * Parameters
- */
-export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-  },
-  options: {
-    storySort: {
-      order: ['General', 'Design System'],
-    },
-  },
-  backgrounds: {
-    default: 'light_grey',
-    values: [
-      {
-        name: 'light_grey',
-        value: '#F7F7F7',
-      },
-      {
-        name: 'dark_grey',
-        value: '#565656',
-      },
-    ],
-  }
-}
+import React from "react";
+import withServiceWorker from "./decorators/withServiceWorker";
+import withProvider from "./decorators/withProvider";
 
 /**
  * Set Globals vars for storybook
@@ -85,6 +50,36 @@ export const globalTypes = {
   }
 };
 
+/** @type { import('@storybook/react').Preview } */
+const preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    options: {
+      storySort: {
+        order: ['General', 'Design System'],
+      },
+    },
+    backgrounds: {
+      default: 'light_grey',
+      values: [
+        {
+          name: 'light_grey',
+          value: '#F7F7F7',
+        },
+        {
+          name: 'dark_grey',
+          value: '#565656',
+        },
+      ],
+    },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+  },
+  decorators: [withProvider, withServiceWorker],
+};
 
-
-
+export default preview;

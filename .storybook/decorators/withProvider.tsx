@@ -1,13 +1,41 @@
-import React, { StrictMode, useEffect, useState } from 'react';
-import { SCContextProvider } from '../packages/react-core/src';
-import { getJWTSession, getOAuthSession, refreshToken } from './sessionHelpers';
+import { useEffect, useState } from 'react';
+import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
+import { getJWTSession, getOAuthSession, refreshToken } from '../sessionHelpers';
 import { Box, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import {Image, Document, Link} from '../packages/react-ui/src';
-import theme from '@selfcommunity/react-theme-default';
-import { mergeDeep } from '@selfcommunity/utils';
-import reactions from './data/reactions'
+import {SCContextProvider, SCThemeType} from '../../packages/react-core/src';
+import defaultSCTheme from '../../packages/react-theme-default/src';
+import {mergeDeep} from '../../packages/utils/src';
+import {Image, Link} from '../../packages/react-ui/src';
+
+
+/**
+ * SelfCommunity Theme
+ */
+const theme: SCThemeType = mergeDeep(defaultSCTheme, {
+  palette: {
+    primary: {
+      main: '#7baa5d',
+    },
+    secondary: {
+      main: '#4a8f62',
+    },
+  },
+  components: {
+    /* MuiIcon: {
+      defaultProps: {
+        // Replace the `material-icons` default value.
+        baseClassName: 'material-icons-outlined',
+      },
+    }, */
+    SCInlineComposer: {
+      defaultProps: {
+        mediaObjectTypes: [Image, Link]
+      }
+    }
+  },
+}) as SCThemeType;
+
 
 /**
  * Fix Storybook v6.3.10 with mui v5
@@ -57,24 +85,18 @@ const withProvider = (Story, context) => {
    * Auth session
    */
   let session;
-  if (['OAuth', 'JWT'].includes(context.globals.session)) {
+  if (authToken) {
     session = {
       type: context.globals.session,
       clientId: context.globals.clientId,
       authToken: authToken,
       handleRefreshToken:
         context.globals.session !== 'Cookie' ? refreshToken(context) : null,
-      handleLogout: () => {
-        changeCommunityConf(false);
-      }
     };
   } else {
     session = {
       type: context.globals.session,
       clientId: context.globals.clientId,
-      handleLogout: () => {
-        changeCommunityConf(false);
-      }
     };
   }
 
@@ -85,23 +107,23 @@ const withProvider = (Story, context) => {
     notifications: {
       webSocket: {
         disableToastMessage: false,
-        secure: true
       },
       webPushMessaging: {
-        disableToastMessage: false,
+        disableToastMessage: true,
         // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
       },
     },
-    // vote: {reactions: reactions}, // Test caching reactions data
-    theme: mergeDeep(theme, {
-      components: {
-        SCInlineComposerWidget: {
-          defaultProps: {
-            mediaObjectTypes: [Image, Document, Link]
-          }
+    /* preferences: {
+      preferences: {
+        'addons.affinity_enabled': {
+          id: 81,
+          section: 'addons',
+          name: 'affinity_enabled',
+          value: true
         }
-      },
-    }),
+      }, features: ['addons', 'advertising']
+    }, */
+    theme,
     handleAnonymousAction: () => {
       alert('Anonymous action');
     },
@@ -132,47 +154,30 @@ const withProvider = (Story, context) => {
   };
 
   return (
-      <EmotionThemeProvider theme={defaultTheme}>
-        <Box style={{ position: 'absolute', right: 5, top: 5, zIndex: 1000 }}>
-          {!authToken && (
-            <Button
-              variant="contained"
-              onClick={() => changeCommunityConf(true)}
-            >
-              Login
-            </Button>
-          )}
-          {authToken && (
-            <Button
-              variant="contained"
-              onClick={() => changeCommunityConf(false)}
-            >
-              Logout
-            </Button>
-          )}
-        </Box>
-        <SCContextProvider conf={_conf}>
-          <Story {...context} />
-        </SCContextProvider>
-      </EmotionThemeProvider>
+    <EmotionThemeProvider theme={defaultTheme}>
+      <Box style={{ textAlign: 'right' }}>
+        {!authToken && (
+          <Button
+            variant="contained"
+            onClick={() => changeCommunityConf(true)}
+          >
+            Login
+          </Button>
+        )}
+        {authToken && (
+          <Button
+            variant="contained"
+            onClick={() => changeCommunityConf(false)}
+          >
+            Logout
+          </Button>
+        )}
+      </Box>
+      <SCContextProvider conf={_conf}>
+        <Story {...context} />
+      </SCContextProvider>
+    </EmotionThemeProvider>
   );
 };
 
-const withServiceWorker = (Story, context) => {
-  /**
-   * Register a service worker
-   */
-  if (navigator && navigator.serviceWorker) {
-    navigator.serviceWorker
-      .register('service-worker.js')
-      .then((r) => console.log('Service worker registered!'))
-      .catch((e) => console.log(e));
-  }
-
-  return <Story {...context} />;
-};
-
-export default {
-  withProvider,
-  withServiceWorker,
-};
+export default withProvider;

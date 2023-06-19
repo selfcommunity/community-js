@@ -1,56 +1,57 @@
-import React, {useState} from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import {useState} from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileTemplate from './index';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {UserProfileEdit} from '@selfcommunity/react-ui';
 import DialogContent from '@mui/material/DialogContent';
 import {Dialog, DialogTitle} from '@mui/material';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-export default {
+import UserProfile from './Skeleton';
+
+const meta: Meta<typeof UserProfile> = {
   title: 'Design System/React TEMPLATES/User Profile',
-  component: UserProfileTemplate
-} as ComponentMeta<typeof UserProfileTemplate>;
+  component: UserProfile,
+  // tags: ['autodocs'],
+};
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserProfileTemplate> = (args) => {
-  const {userId, ...rest} = args;
-  const scUserContext: SCUserContextType = useSCUser();
+export default meta;
+type Story = StoryObj<typeof UserProfile>;
 
-  // STATE
-  const [edit, setEdit] = useState<boolean>(false);
+/*
+ *👇 Render functions are a framework specific feature to allow you control on how the component renders.
+ * See https://storybook.js.org/docs/react/api/csf
+ * to learn how to use render functions.
+ */
+export const Base: Story = {
+  args: {
+    userId: 159,
+  },
+  render: (args) => {
+    const {userId, ...rest} = args;
+    const scUserContext: SCUserContextType = useSCUser();
 
-  let _userId = userId;
-  let isMe = false;
-  if (userId === -1) {
-    _userId = scUserContext.user ? scUserContext.user.id : 1;
-    isMe = true;
+    // STATE
+    const [edit, setEdit] = useState<boolean>(false);
+
+    let _userId = userId;
+    let isMe = false;
+    if (userId === -1) {
+      _userId = scUserContext.user ? scUserContext.user.id : 1;
+      isMe = true;
+    }
+
+    return (
+      <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
+        <UserProfileTemplate userId={_userId} {...rest} onEditClick={isMe ? () => setEdit(true) : null} />
+        {isMe && (
+          <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body">
+            <DialogTitle>Edit Profile</DialogTitle>
+            <DialogContent>
+              <UserProfileEdit AccordionProps={{elevation: 0}} />
+            </DialogContent>
+          </Dialog>
+        )}
+      </div>
+    );
   }
-
-  return (
-    <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-      <UserProfileTemplate userId={_userId} {...rest} onEditClick={isMe ? () => setEdit(true) : null} />
-      {isMe && (
-        <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body">
-          <DialogTitle>Edit Profile</DialogTitle>
-          <DialogContent>
-            <UserProfileEdit />
-          </DialogContent>
-        </Dialog>
-      )}
-    </div>
-  );
-};
-
-export const Main = Template.bind({});
-
-Main.args = {
-  userId: 13, // 455,
-  showSendPmButton: true
-};
-
-export const Me = Template.bind({});
-
-Me.args = {
-  userId: -1
 };

@@ -9,7 +9,7 @@ const style = {
   padding: 8
 };
 
-export default class App extends React.Component {
+export default class InfiniteScrollWithHeight extends React.Component {
   state = {
     items: Array.from({length: 20}),
     hasMore: true
@@ -55,5 +55,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-render(<App />, document.getElementById('root'));
