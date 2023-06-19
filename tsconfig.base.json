@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "lib": ["es6"]
   },
 
   "exclude": [
