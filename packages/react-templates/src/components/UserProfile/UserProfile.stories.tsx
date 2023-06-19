@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileTemplate from './index';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';

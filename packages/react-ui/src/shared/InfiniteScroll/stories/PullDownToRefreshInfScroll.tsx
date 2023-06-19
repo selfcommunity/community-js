@@ -1,5 +1,4 @@
-import {useState} from 'react';
-import {render} from 'react-dom';
+import React, {useState} from 'react';
 import InfiniteScroll from '../index';
 
 const style = {
@@ -41,5 +40,4 @@ export default function PullDownToRefreshInfScroll() {
       </InfiniteScroll>
     </div>
   );
-
 }

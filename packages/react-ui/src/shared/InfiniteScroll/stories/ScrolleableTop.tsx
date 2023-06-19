@@ -1,5 +1,5 @@
+import React, {useState} from 'react';
 import InfiniteScroll from '../index';
-import {useState} from 'react';
 
 const style = {
   height: 30,
@@ -45,5 +45,4 @@ export default function ScrolleableTop() {
       </div>
     </div>
   );
-
 }

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import InfiniteScroll from '../index';
 
 const style = {
@@ -19,25 +19,24 @@ export default function ScrollableTargetInfScroll() {
     }, 1500);
   };
 
-    return (
-      <div>
-        <h1>demo: Infinite Scroll with scrollable target</h1>
-        <hr />
-        <div id="scrollableDiv" style={{height: 300, overflow: 'auto'}}>
-          <InfiniteScroll
-            dataLength={items.length}
-            hasMoreNext={true}
-            next={fetchMoreData}
-            loaderNext={<h4>Loading...</h4>}
-            scrollableTarget="scrollableDiv">
-            {items.map((_, index) => (
-              <div style={style} key={index}>
-                div - #{index}
-              </div>
-            ))}
-          </InfiniteScroll>
-        </div>
+  return (
+    <div>
+      <h1>demo: Infinite Scroll with scrollable target</h1>
+      <hr />
+      <div id="scrollableDiv" style={{height: 300, overflow: 'auto'}}>
+        <InfiniteScroll
+          dataLength={items.length}
+          hasMoreNext={true}
+          next={fetchMoreData}
+          loaderNext={<h4>Loading...</h4>}
+          scrollableTarget="scrollableDiv">
+          {items.map((_, index) => (
+            <div style={style} key={index}>
+              div - #{index}
+            </div>
+          ))}
+        </InfiniteScroll>
       </div>
-    );
-
+    </div>
+  );
 }
