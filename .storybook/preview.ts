@@ -58,6 +58,7 @@ const preview = {
         order: ['General', 'Design System'],
       },
     },
+    viewMode: 'canvas',
     backgrounds: {
       default: 'light_grey',
       values: [

@@ -15,37 +15,20 @@ const config = {
     "../packages/react-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
-    /* {
-      name: '@storybook/addon-docs',
-      options: {
-        jsxOptions: {},
-        csfPluginOptions: null,
-        mdxPluginOptions: {},
-        transcludeMarkdown: true,
-      },
-    },*/
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    // "@storybook/addon-toolbars",
     '@storybook/addon-interactions',
   ],
   framework: {
     name: '@storybook/react-webpack5',
-    options: {},
+    options: {
+      "lazyCompilation": true,
+      "fsCache": true
+    },
   },
-  "features": {
+  features: {
     "postcss": false
   },
-  /* typescript: {
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      compilerOptions: {
-        allowSyntheticDefaultImports: true,
-        esModuleInterop: true,
-      },
-      propFilter: () => true,
-    },
-  },*/
   "webpackFinal": async (config) => {
     return {
       ...config,
@@ -75,7 +58,7 @@ const config = {
     };
   },
   docs: {
-    autodocs: 'tag',
+    autodocs: 'tags',
   },
 };
 export default config;
