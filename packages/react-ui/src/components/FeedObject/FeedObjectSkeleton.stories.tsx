@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import FeedObjectSkeleton from './Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
@@ -40,14 +39,19 @@ export default {
     variant: 'elevation',
     template: SCFeedObjectTemplateType.DETAIL
   }
-} as ComponentMeta<typeof FeedObjectSkeleton>;
+} as Meta<typeof FeedObjectSkeleton>;
 
-const Template: ComponentStory<typeof FeedObjectSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <FeedObjectSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<FeedObjectSkeleton> = {
+  args: {
+    elevation: 1,
+    variant: 'elevation',
+    template: SCFeedObjectTemplateType.DETAIL
+  },
+  render: template
+};

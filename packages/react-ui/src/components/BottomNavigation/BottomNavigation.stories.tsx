@@ -1,10 +1,7 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import BottomNavigation from './index';
-import { Mobile } from '../AppBar/AppBar.stories';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Bottom Navigation ',
   component: BottomNavigation,
@@ -15,22 +12,20 @@ export default {
       viewports: INITIAL_VIEWPORTS,
     },
   },
-} as ComponentMeta<typeof BottomNavigation>;
+} as Meta<typeof BottomNavigation>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof BottomNavigation> = (args) => (
-    <BottomNavigation {...args} />
+const template = (args) => (
+  <BottomNavigation {...args} />
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-  value: '/'
+export const Base: StoryObj<BottomNavigation> = {
+  args: {
+    value: '/'
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphone6',
+    }
+  },
+  render: template
 };
-
-Base.parameters = {
-  viewport: {
-    defaultViewport: 'iphone6',
-  }
-}

@@ -1,9 +1,8 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {prefetchedCategories} from './prefetchedCategories';
 import Categories from './index';
+import CategoriesSkeleton from './Skeleton';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Categories',
   component: Categories,
@@ -17,19 +16,21 @@ export default {
   args: {
     showFilters: 1,
   }
-} as ComponentMeta<typeof Categories>;
+} as Meta<typeof Categories>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Categories> = (args) => (
+const template = (args) => (
   <div style={{maxWidth: 1280}}>
     <Categories {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
+export const Base: StoryObj<CategoriesSkeleton> = {
+  render: template
+};
 
-export const BasePrefetchedCategories = Template.bind({});
-
-BasePrefetchedCategories.args = {
-  prefetchedCategories
+export const BasePrefetchedCategories: StoryObj<Categories> = {
+  args: {
+    prefetchedCategories
+  },
+  render: template
 };

@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import CommentsObjectSkeleton from './Skeleton';
 
 export default {
@@ -21,14 +20,15 @@ export default {
       }
     }
   }
-} as ComponentMeta<typeof CommentsObjectSkeleton>;
+} as Meta<typeof CommentsObjectSkeleton>;
 
-const Template: ComponentStory<typeof CommentsObjectSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <CommentsObjectSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
+export const Base: StoryObj<CommentsObjectSkeleton> = {
+  render: template
+};
 
-Base.args = {};

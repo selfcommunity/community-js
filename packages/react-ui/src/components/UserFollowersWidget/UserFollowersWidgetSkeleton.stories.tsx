@@ -1,21 +1,18 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserFollowersSkeleton from './Skeleton';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Skeleton/User Followers Widget',
   component: UserFollowersSkeleton
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserFollowersSkeleton>;
+} as Meta<typeof UserFollowersSkeleton>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserFollowersSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <UserFollowersSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
+export const Base: StoryObj<UserFollowersSkeleton> = {
+  render: template
+};
 
-Base.args = {};

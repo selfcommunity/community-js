@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import TagChip from './index';
 import {SCTagType} from '@selfcommunity/types';
 
@@ -50,9 +49,9 @@ export default {
     visible: true,
     active: true
   }
-} as ComponentMeta<typeof TagChip>;
+} as Meta<typeof TagChip>;
 
-const Template: ComponentStory<typeof TagChip> = (args: {name?: string; color?: string; visible?: boolean; active?: boolean; [p: string]: any}) => {
+const template = (args: {name?: string; color?: string; visible?: boolean; active?: boolean; [p: string]: any}) => {
   /**
    * Example of a tag
    */
@@ -75,8 +74,6 @@ const Template: ComponentStory<typeof TagChip> = (args: {name?: string; color?: 
   );
 };
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<typeof TagChip> = {
+  render: template
 };

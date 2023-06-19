@@ -1,20 +1,17 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import AccountDataPortability from './AccountDataPortability';
 
 export default {
   title: 'Design System/React UI/Account Data Portability',
   component: AccountDataPortability,
-  argTypes: {},
-  args: {}
-} as ComponentMeta<typeof AccountDataPortability>;
+} as Meta<typeof AccountDataPortability>;
 
-const Template: ComponentStory<typeof AccountDataPortability> = (args) => (
+const template = (args) => (
   <div style={{width: 600}}>
     <AccountDataPortability {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<AccountDataPortability> = {
+  render: template
+};

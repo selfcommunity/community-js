@@ -1,38 +1,37 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import SnippetNotifications from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/SnippetNotifications',
   component: SnippetNotifications
-} as ComponentMeta<typeof SnippetNotifications>;
+} as Meta<typeof SnippetNotifications>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof SnippetNotifications> = (args) => (
+const template = (args) => (
   <div style={{width: 280}}>
     <SnippetNotifications {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  onNotificationClick: (e, n) => {
-    /**
-     * Example of onNotificationClick callback
-     * e.preventDefault();
-     * e.stopPropagation();
-     * console.log(n);
-     */
+export const Base: StoryObj<SnippetNotifications> = {
+  args: {
+    onNotificationClick: (e, n) => {
+      /**
+       * Example of onNotificationClick callback
+       * e.preventDefault();
+       * e.stopPropagation();
+       * console.log(n);
+       */
+    },
+    onFetchNotifications: (data) => {
+      console.log(data);
+    }
   },
-  onFetchNotifications: (data) => {
-    console.log(data);
-  }
+  render: template
 };
 
-export const FewNotifications = Template.bind({});
-
-FewNotifications.args = {
-  showMax: 3
+export const FewNotifications: StoryObj<SnippetNotifications> = {
+  args: {
+    showMax: 3
+  },
+  render: template
 };

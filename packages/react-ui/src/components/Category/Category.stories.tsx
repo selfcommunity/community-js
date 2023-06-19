@@ -1,9 +1,6 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import Category from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Category',
   component: Category,
@@ -24,22 +21,20 @@ export default {
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
       table: {defaultValue: {summary: 'elevation'}}
     }
-  },
-  args: {
-    categoryId: 1,
-    elevation: 1,
-    variant: 'elevation'
   }
-} as ComponentMeta<typeof Category>;
+} as Meta<typeof Category>;
 
-const Template: ComponentStory<typeof Category> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <Category {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<Category> = {
+  args: {
+    categoryId: 1,
+    elevation: 1,
+    variant: 'elevation'
+  },
+  render: template
 };

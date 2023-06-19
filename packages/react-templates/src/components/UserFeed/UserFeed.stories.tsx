@@ -1,22 +1,18 @@
-import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserFeedTemplate from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React TEMPLATES/User Feed',
   component: UserFeedTemplate
-} as ComponentMeta<typeof UserFeedTemplate>;
+} as Meta<typeof UserFeedTemplate>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserFeedTemplate> = (args) => (
-  <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-    <UserFeedTemplate {...args} />
-  </div>
-);
-
-export const Main = Template.bind({});
-
-Main.args = {
-  userId: 1
-};
+export const Base: StoryObj<typeof UserFeedTemplate> = {
+  args: {
+    userId: 1
+  },
+  render: (args) => (
+    <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
+      <UserFeedTemplate {...args} />
+    </div>
+  )
+}

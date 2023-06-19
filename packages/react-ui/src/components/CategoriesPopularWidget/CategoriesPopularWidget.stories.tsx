@@ -1,9 +1,6 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import CategoriesPopularWidget from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Categories Popular Widget',
   component: CategoriesPopularWidget,
@@ -24,17 +21,15 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof CategoriesPopularWidget>;
+} as Meta<typeof CategoriesPopularWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoriesPopularWidget> = (args) => (
+
+const template = (args) => (
   <div style={{width: 400}}>
     <CategoriesPopularWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<CategoriesPopularWidget> = {
+  render: template
 };

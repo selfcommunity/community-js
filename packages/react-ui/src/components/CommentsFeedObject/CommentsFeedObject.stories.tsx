@@ -1,11 +1,8 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import CommentsFeedObject from './index';
 import { SCCommentsOrderBy } from '../../types/comments';
 import { SCContributionType } from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/CommentsFeedObject',
   component: CommentsFeedObject,
@@ -42,34 +39,36 @@ export default {
     // onChangePage: (p) => console.log(p),
     // page: 2
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentsFeedObject>;
+  
+} as Meta<typeof CommentsFeedObject>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentsFeedObject> = (args) => (
+const template = (args) => (
   <div style={{width: '100%', maxWidth: 800}}>
     <CommentsFeedObject {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
-  CommentComponentProps: {
-    CommentObjectReplyProps: {elevation: 0, WidgetProps: {elevation: 0, variant: 'outlined'}},
-    variant: 'outlined'
-  }
+export const Base: StoryObj<CommentsFeedObject> = {
+  args: {
+    CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
+    CommentComponentProps: {
+      CommentObjectReplyProps: {elevation: 0, WidgetProps: {elevation: 0, variant: 'outlined'}},
+      variant: 'outlined'
+    }
+  },
+  render: template
 };
 
-export const CommentFirstLevel = Template.bind({});
-
-CommentFirstLevel.args = {
-  commentObjectId: 1146
+export const CommentFirstLevel: StoryObj<CommentsFeedObject> = {
+  args: {
+    commentObjectId: 1146
+  },
+  render: template
 };
 
-export const CommentSecondLevel = Template.bind({});
-
-CommentSecondLevel.args = {
-  commentObjectId: 1119
+export const CommentSecondLevel: StoryObj<CommentsFeedObject> = {
+  args: {
+    commentObjectId: 1119
+  },
+  render: template
 };

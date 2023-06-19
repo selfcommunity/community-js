@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import ConsentSolutionSkeleton from './Skeleton';
 
 export default {
@@ -7,14 +6,17 @@ export default {
   component: ConsentSolutionSkeleton,
   argTypes: {},
   args: {}
-} as ComponentMeta<typeof ConsentSolutionSkeleton>;
+} as Meta<typeof ConsentSolutionSkeleton>;
 
-const Template: ComponentStory<typeof ConsentSolutionSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 600}}>
     <ConsentSolutionSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<ConsentSolutionSkeleton> = {
+  args: {
+    contained: true
+  },
+  render: template
+};
