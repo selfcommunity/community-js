@@ -1,0 +1,27 @@
+.storybook-header {
+  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0px 10px 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.storybook-header img {
+  position: relative;
+  top: 6px;
+}
+
+.storybook-header h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  margin: 6px 0 6px 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.storybook-header button + button {
+  margin-left: 10px;
+}

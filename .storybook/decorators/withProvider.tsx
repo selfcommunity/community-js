@@ -7,7 +7,8 @@ import {SCContextProvider, SCThemeType} from '../../packages/react-core/src';
 import defaultSCTheme from '../../packages/react-theme-default/src';
 import {mergeDeep} from '../../packages/utils/src';
 import {Image, Link} from '../../packages/react-ui/src';
-
+import '../media/header.css';
+// import Logo from '../media/selfcommunity.png';
 
 /**
  * SelfCommunity Theme
@@ -155,24 +156,34 @@ const withProvider = (Story, context) => {
 
   return (
     <EmotionThemeProvider theme={defaultTheme}>
-      <Box style={{ textAlign: 'right' }}>
-        {!authToken && (
-          <Button
-            variant="contained"
-            onClick={() => changeCommunityConf(true)}
-          >
-            Login
-          </Button>
-        )}
-        {authToken && (
-          <Button
-            variant="contained"
-            onClick={() => changeCommunityConf(false)}
-          >
-            Logout
-          </Button>
-        )}
-      </Box>
+      <header>
+        <Box className="storybook-header">
+          <div>
+            {/*
+            <img src={Logo} alt="Logo" width="32" />
+            <h1>Story: {title[title.length-1]}</h1>
+            */}
+          </div>
+          <div>
+            {!authToken && (
+              <Button
+                variant="contained"
+                onClick={() => changeCommunityConf(true)}
+              >
+                Login
+              </Button>
+            )}
+            {authToken && (
+              <Button
+                variant="contained"
+                onClick={() => changeCommunityConf(false)}
+              >
+                Logout
+              </Button>
+            )}
+          </div>
+        </Box>
+      </header>
       <SCContextProvider conf={_conf}>
         <Story {...context} />
       </SCContextProvider>

@@ -1,4 +1,3 @@
-import React from "react";
 import withServiceWorker from "./decorators/withServiceWorker";
 import withProvider from "./decorators/withProvider";
 

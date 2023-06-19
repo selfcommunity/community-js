@@ -1,5 +1,3 @@
-import React from "react";
-
 const withServiceWorker = (Story, context) => {
   /**
    * Register a service worker

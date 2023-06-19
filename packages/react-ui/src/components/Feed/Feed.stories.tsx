@@ -36,7 +36,7 @@ const Template: ComponentStory<typeof Feed> = (args) => {
   };
 
   return (<div style={{width: '100%', marginTop: 30}}>
-    <Button color="info" variant="contained" size="small" style={{position: 'absolute', top: 10, left: 25}} onClick={handleRefresh}>Refresh</Button>
+    <Button color="info" variant="contained" size="small" style={{position: 'absolute', top: 19, left: 25}} onClick={handleRefresh}>Refresh</Button>
     <Feed {...args} ref={feedRef} />
   </div>);
 };
