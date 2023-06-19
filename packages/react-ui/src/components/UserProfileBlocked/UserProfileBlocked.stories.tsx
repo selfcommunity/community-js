@@ -4,6 +4,16 @@ import UserProfileBlocked from './index';
 export default {
   title: 'Design System/React UI/User Profile Blocked ',
   component: UserProfileBlocked,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    }
+  },
+  args: {
+    userId: 11
+  }
 } as Meta<typeof UserProfileBlocked>;
 
 

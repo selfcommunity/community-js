@@ -4,9 +4,18 @@ import { DEFAULT_FIELDS } from '../../constants/UserProfile';
 
 export default {
   title: 'Design System/React UI/User Info ',
-  component: UserInfo
+  component: UserInfo,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 7}}
+    }
+  },
+  args: {
+    userId: 11
+  }
 } as Meta<typeof UserInfo>;
-
 
 const template = (args) => (
   <div style={{width: '100%'}}>

@@ -5,6 +5,16 @@ import { DEFAULT_FIELDS, DEFAULT_SETTINGS } from '../../constants/UserProfile';
 export default {
   title: 'Design System/React UI/User Profile Edit',
   component: UserProfileEdit,
+  argTypes: {
+    id: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    }
+  },
+  args: {
+    id: 796
+  }
 } as Meta<typeof UserProfileEdit>;
 
 const template = (args) => (

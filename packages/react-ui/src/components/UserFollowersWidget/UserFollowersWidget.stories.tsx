@@ -3,7 +3,14 @@ import UserFollowersWidget from './index';
 
 export default {
   title: 'Design System/React UI/User Followers Widget',
-  component: UserFollowersWidget
+  component: UserFollowersWidget,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    }
+  }
 } as Meta<typeof UserFollowersWidget>;
 
 

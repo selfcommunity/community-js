@@ -5,6 +5,16 @@ import UserProfileHeader from './index';
 export default {
   title: 'Design System/React UI/User Profile AppBar ',
   component: UserProfileHeader,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 167}}
+    }
+  },
+  args: {
+    userId: 167
+  }
 } as Meta<typeof UserProfileHeader>;
 
 const template = (args) => (

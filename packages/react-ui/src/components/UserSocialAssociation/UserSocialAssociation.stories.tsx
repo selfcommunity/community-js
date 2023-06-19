@@ -4,6 +4,16 @@ import UserSocialAssociation from './index';
 export default {
   title: 'Design System/React UI/User Social Association ',
   component: UserSocialAssociation,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 7}}
+    }
+  },
+  args: {
+    userId: 7
+  }
 } as Meta<typeof UserSocialAssociation>;
 
 const template = (args) => (

@@ -3,7 +3,14 @@ import UserConnectionsRequestsSentWidget from './index';
 
 export default {
   title: 'Design System/React UI/User Connections Requests Sent Widget',
-  component: UserConnectionsRequestsSentWidget
+  component: UserConnectionsRequestsSentWidget,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    }
+  }
 } as Meta<typeof UserConnectionsRequestsSentWidget>;
 
 

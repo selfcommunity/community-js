@@ -3,10 +3,18 @@ import UserCounters from './index';
 
 export default {
   title: 'Design System/React UI/User Counters ',
-  component: UserCounters
-  
+  component: UserCounters,
+  argTypes: {
+    userId: {
+      control: {type: 'number'},
+      description: 'User Id',
+      table: {defaultValue: {summary: 1}}
+    }
+  },
+  args: {
+    userId: 11
+  }
 } as Meta<typeof UserCounters>;
-
 
 const template = (args) => (
   <div style={{width: '100%'}}>
@@ -17,7 +25,6 @@ const template = (args) => (
     */}
   </div>
 );
-
 
 export const Base: StoryObj<UserCounters> = {
   args: {
