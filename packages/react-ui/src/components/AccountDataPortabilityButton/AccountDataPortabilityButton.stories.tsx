@@ -14,8 +14,6 @@ const template = (args) => (
 
 export const Base: StoryObj<AccountDataPortabilityButton> = {
   args: {
-    contributionId: 1171,
-    contributionType: 'post',
     size: 'medium'
   },
   render: template

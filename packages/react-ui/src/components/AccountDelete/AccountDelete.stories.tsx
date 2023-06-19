@@ -3,9 +3,7 @@ import AccountDelete from './AccountDelete';
 
 export default {
   title: 'Design System/React UI/Account Delete',
-  component: AccountDelete,
-  argTypes: {},
-  args: {}
+  component: AccountDelete
 } as Meta<typeof AccountDelete>;
 
 const template = (args) => (
