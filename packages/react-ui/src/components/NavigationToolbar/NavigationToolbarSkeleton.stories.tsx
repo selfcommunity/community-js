@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import NavigationToolbarSkeleton from './index';
 import { AppBar } from '@mui/material';
 
@@ -8,9 +7,9 @@ export default {
   component: NavigationToolbarSkeleton,
   argTypes: {},
   args: {}
-} as ComponentMeta<typeof NavigationToolbarSkeleton>;
+} as Meta<typeof NavigationToolbarSkeleton>;
 
-const MainTemplate: ComponentStory<typeof NavigationToolbarSkeleton> = (args) => (
+const MainTemplate: StoryObj<typeof NavigationToolbarSkeleton> = (args) => (
   <AppBar position="relative">
     <NavigationToolbarSkeleton {...args} />
   </AppBar>

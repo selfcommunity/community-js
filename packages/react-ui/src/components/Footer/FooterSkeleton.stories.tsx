@@ -1,23 +1,20 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import FooterSkeleton from './Skeleton';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Skeleton/Footer',
   component: FooterSkeleton
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof FooterSkeleton>;
+} as Meta<typeof FooterSkeleton>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof FooterSkeleton> = (args) => (
+const template: StoryObj<typeof FooterSkeleton> = (args) => (
   <div style={{width: 1200}}>
     <FooterSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  contained: true
+export const Base: StoryObj<FooterSkeleton> = {
+  args: {
+    contained: true
+  },
+  render: template
 };

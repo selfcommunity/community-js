@@ -1,10 +1,6 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserCounters from './index';
-// import UserFollowersWidget from "../UserFollowersWidget";
-// import UserFollowedUsersWidget from "../UserFollowedUsersWidget";
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/User Counters ',
   component: UserCounters,
@@ -18,11 +14,9 @@ export default {
   args: {
     userId: 11
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserCounters>;
+} as Meta<typeof UserCounters>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserCounters> = (args) => (
+const template = (args) => (
   <div style={{width: '100%'}}>
     <UserCounters {...args} />
     {/*
@@ -32,14 +26,16 @@ const Template: ComponentStory<typeof UserCounters> = (args) => (
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  userId: 167
+export const Base: StoryObj<UserCounters> = {
+  args: {
+    userId: 1
+  },
+  render: template
 };
 
-export const AuthenticatedUser = Template.bind({});
-
-AuthenticatedUser.args = {
-  userId: 167
+export const AuthenticatedUser: StoryObj<UserCounters> = {
+  args: {
+    userId: 167
+  },
+  render: template
 };

@@ -1,31 +1,32 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UsernameTextField from './index';
 
 export default {
   title: 'Design System/React UI Shared/Username Textfield',
   component: UsernameTextField,
-} as ComponentMeta<typeof UsernameTextField>;
+} as Meta<typeof UsernameTextField>;
 
-const Template: ComponentStory<typeof UsernameTextField> = (args) => <UsernameTextField {...args} />;
+const template = (args) => <UsernameTextField {...args} />;
 
-export const Base = Template.bind({});
-
-Base.args = {};
-
-export const BaseLabel = Template.bind({});
-
-BaseLabel.args = {
-  label: 'Label',
-  name: 'username',
-  id: 'username'
+export const Base: StoryObj<typeof UsernameTextField> = {
+  render: template
 };
 
-export const BaseLabelValue = Template.bind({});
+export const BaseLabel: StoryObj<typeof UsernameTextField> = {
+  args: {
+    label: 'Label',
+    name: 'username',
+    id: 'username'
+  },
+  render: template
+};
 
-BaseLabelValue.args = {
-  label: 'Label',
-  name: 'username',
-  id: 'username',
-  value: 'value'
+export const BaseLabelValue: StoryObj<typeof UsernameTextField> = {
+  args: {
+    label: 'Label',
+    name: 'username',
+    id: 'username',
+    value: 'value'
+  },
+  render: template
 };

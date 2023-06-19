@@ -1,9 +1,6 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import Incubator from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Incubator',
   component: Incubator,
@@ -24,22 +21,20 @@ export default {
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
       table: {defaultValue: {summary: 'elevation'}}
     }
-  },
-  args: {
-    elevation: 1,
-    variant: 'elevation',
-    incubatorId: 1
   }
-} as ComponentMeta<typeof Incubator>;
+} as Meta<typeof Incubator>;
 
-const Template: ComponentStory<typeof Incubator> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <Incubator {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<Incubator> = {
+  args: {
+    elevation: 1,
+    variant: 'elevation',
+    incubatorId: 1
+  },
+  render: template
 };

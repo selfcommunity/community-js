@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import NotificationSkeleton from './Skeleton';
 
 export default {
@@ -22,14 +21,18 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof NotificationSkeleton>;
+} as Meta<typeof NotificationSkeleton>;
 
-const Template: ComponentStory<typeof NotificationSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <NotificationSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<NotificationSkeleton> = {
+  args: {
+    elevation: 1,
+    variant: 'elevation'
+  },
+  render: template
+};

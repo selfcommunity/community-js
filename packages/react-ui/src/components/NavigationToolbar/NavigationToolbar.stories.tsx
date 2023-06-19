@@ -1,10 +1,8 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
 import { AppBar, Typography } from '@mui/material';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Navigation Toolbar ',
   component: NavigationToolbar,
@@ -15,35 +13,36 @@ export default {
       viewports: INITIAL_VIEWPORTS,
     },
   },
-} as ComponentMeta<typeof NavigationToolbar>;
+} as Meta<typeof NavigationToolbar>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const BaseTemplate: ComponentStory<typeof NavigationToolbar> = (args) => (
+const template = (args) => (
   <AppBar position="relative" elevation={0}>
     <NavigationToolbar {...args} />
   </AppBar>
 );
 
-export const Main = BaseTemplate.bind({});
-
-Main.args = {
-  /* the args you need here will depend on your component */
-  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
-  value: '/',
-  NotificationMenuProps: {
-    SnippetNotificationsProps: {
-      onFetchNotifications: (data) => {
-        console.log(data);
+export const Base: StoryObj<NavigationToolbar> = {
+  args: {
+    /* the args you need here will depend on your component */
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    value: '/',
+    NotificationMenuProps: {
+      SnippetNotificationsProps: {
+        onFetchNotifications: (data) => {
+          console.log(data);
+        }
       }
     }
-  }
+  },
+  render: template
 };
 
-export const Custom = BaseTemplate.bind({});
-
-Custom.args = {
-  /* the args you need here will depend on your component */
-  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
-  value: '/',
-  children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
+export const Custom: StoryObj<NavigationToolbar> = {
+  args: {
+    /* the args you need here will depend on your component */
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    value: '/',
+    children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
+  },
+  render: template
 };

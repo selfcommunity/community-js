@@ -1,10 +1,9 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import RelatedFeedObjectsWidget from './index';
 import {SCContributionType} from '@selfcommunity/types';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
+import SearchAutocomplete from '../SearchAutocomplete';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Related Feed Objects Widget',
   component: RelatedFeedObjectsWidget,
@@ -25,23 +24,22 @@ export default {
       description: 'The variant to use. Types: "elevation", "outlined", etc.',
       table: {defaultValue: {summary: 'elevation'}}
     }
-  },
+  }
+} as Meta<typeof RelatedFeedObjectsWidget>;
+
+const template = (args) => (
+  <div style={{maxWidth: 500}}>
+    <RelatedFeedObjectsWidget {...args} />
+  </div>
+);
+
+export const Base: StoryObj<SearchAutocomplete> = {
   args: {
     feedObjectId: 23,
     feedObjectType: SCContributionType.DISCUSSION,
     template: SCFeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'
-  }
-} as ComponentMeta<typeof RelatedFeedObjectsWidget>;
-
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof RelatedFeedObjectsWidget> = (args) => (
-  <div style={{maxWidth: 500}}>
-    <RelatedFeedObjectsWidget {...args} />
-  </div>
-);
-
-export const Base = Template.bind({});
-
-Base.args = {};
+  },
+  render: template
+};

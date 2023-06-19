@@ -1,10 +1,9 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import Activities from './index';
 import {SCContributionType} from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+
 export default {
   title: 'Design System/React UI/FeedObject/Activities',
   component: Activities,
@@ -20,16 +19,16 @@ export default {
       description: 'Object type. Used only with args id.'
     }
   }
-} as ComponentMeta<typeof Activities>;
+} as Meta<typeof Activities>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Activities> = (args) => {
+
+const template: StoryObj<typeof Activities> = (args) => {
   return (<div style={{width: '100%', maxWidth: 800}}>
     <Activities {...args} />
   </div>);
 };
 
-export const Base = Template.bind({});
+
 
 Base.args = {
   feedObjectId: 327,

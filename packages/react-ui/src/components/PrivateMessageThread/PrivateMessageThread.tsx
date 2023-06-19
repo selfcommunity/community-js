@@ -265,7 +265,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     PrivateMessageService.searchUser(value)
       .then((data) => {
         setLoading(false);
-        setFollowers(data.results);
+        setFollowers(data.results.filter((user) => user.id !== authUserId));
       })
       .catch((error) => {
         setLoading(false);

@@ -1,6 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import UserFollowersWidget from './index';
 
 export default {
@@ -13,19 +11,19 @@ export default {
       table: {defaultValue: {summary: 1}}
     }
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserFollowersWidget>;
+} as Meta<typeof UserFollowersWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserFollowersWidget> = (args) => (
+
+const template = (args) => (
   <div style={{width: 400}}>
     <UserFollowersWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  userId: 1
+export const Base: StoryObj<UserFollowersWidget> = {
+  args: {
+    userId: 1
+  },
+  render: template
 };
 

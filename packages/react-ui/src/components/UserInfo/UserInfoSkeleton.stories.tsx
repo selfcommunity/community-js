@@ -1,20 +1,17 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileInfoSkeleton from './Skeleton';
 
 export default {
   title: 'Design System/React UI/Skeleton/User Profile Info',
-  component: UserProfileInfoSkeleton,
-  argTypes: {},
-  args: {}
-} as ComponentMeta<typeof UserProfileInfoSkeleton>;
+  component: UserProfileInfoSkeleton
+} as Meta<typeof UserProfileInfoSkeleton>;
 
-const Template: ComponentStory<typeof UserProfileInfoSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: '100%'}}>
     <UserProfileInfoSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<UserProfileInfoSkeleton> = {
+  render: template
+};

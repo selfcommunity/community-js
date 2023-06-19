@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Tags, {TagsComponentType} from './index';
 import {SCTagType} from '@selfcommunity/types';
 
@@ -30,7 +29,7 @@ export default {
     direction: 'column',
     title: ''
   }
-} as ComponentMeta<typeof Tags>;
+} as Meta<typeof Tags>;
 
 /**
  * Example of a tag
@@ -71,10 +70,11 @@ const tags: SCTagType[] = [
   }
 ];
 
-const Template: ComponentStory<typeof Tags> = (args) => <Tags tags={tags} {...args} />;
+const template = (args) => <Tags tags={tags} {...args} />;
 
-export const Base = Template.bind({});
-
-Base.args = {
-  type: TagsComponentType.POPPER
+export const Base: StoryObj<typeof Tags> = {
+  args: {
+    type: TagsComponentType.POPPER
+  },
+  render: template
 };

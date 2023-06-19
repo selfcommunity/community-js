@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import FeedSkeleton from './Skeleton';
 
 export default {
@@ -7,14 +6,14 @@ export default {
   component: FeedSkeleton,
   argTypes: {},
   args: {}
-} as ComponentMeta<typeof FeedSkeleton>;
+} as Meta<typeof FeedSkeleton>;
 
-const Template: ComponentStory<typeof FeedSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 1280}}>
     <FeedSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<FeedSkeleton> = {
+  render: template
+};

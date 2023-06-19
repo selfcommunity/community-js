@@ -1,9 +1,6 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import CategoryHeader from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Category Header ',
   component: CategoryHeader,
@@ -17,17 +14,14 @@ export default {
   args: {
     categoryId: 1
   }
-} as ComponentMeta<typeof CategoryHeader>;
+} as Meta<typeof CategoryHeader>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoryHeader> = (args) => (
+const template = (args) => (
   <div style={{width: '100%'}}>
     <CategoryHeader {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-};
+export const Base: StoryObj<CategoryHeader> = {
+  render: template
+}
