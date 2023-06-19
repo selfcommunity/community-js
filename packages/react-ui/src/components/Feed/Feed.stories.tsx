@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import {useRef} from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Feed, {FeedRef} from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
@@ -17,16 +17,13 @@ import {
 } from '../../index';
 import {exampleExploreData} from './prefetchedData';
 import {Button} from '@mui/material';
-import Icon from '@mui/material/Icon';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Feed',
   component: Feed
-} as ComponentMeta<typeof Feed>;
+} as Meta<typeof Feed>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Feed> = (args) => {
+const template = (args) => {
   // REF
   const feedRef = useRef<FeedRef>();
 
@@ -65,372 +62,384 @@ const _WIDGETS = [
   }
 ];
 
-export const Main = Template.bind({});
-
-Main.args = {
-  id: 'main',
-  endpoint: Endpoints.MainFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const MainCache = Template.bind({});
-
-MainCache.args = {
-  id: 'main',
-  endpoint: Endpoints.MainFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  requireAuthentication: true,
-  cacheStrategy: CacheStrategies.CACHE_FIRST,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-
-export const Explore = Template.bind({});
-
-Explore.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  cacheStrategy: CacheStrategies.NETWORK_ONLY,
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const ExploreCache = Template.bind({});
-
-ExploreCache.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  cacheStrategy: CacheStrategies.CACHE_FIRST,
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const ExploreOffset2 = Template.bind({});
-
-ExploreOffset2.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5, offset: 2},
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-
-export const ExploreOffset2Cached = Template.bind({});
-
-ExploreOffset2Cached.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5, offset: 2},
-  cacheStrategy: CacheStrategies.CACHE_FIRST,
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const ExploreOffset5 = Template.bind({});
-
-ExploreOffset5.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5, offset: 5},
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const ExploreOffset5Cached = Template.bind({});
-
-ExploreOffset5Cached.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5, offset: 5},
-  cacheStrategy: CacheStrategies.CACHE_FIRST,
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-
-export const ExploreOffset20 = Template.bind({});
-
-ExploreOffset20.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5, offset: 20},
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const ExploreOffset20Cached = Template.bind({});
-
-ExploreOffset20Cached.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5, offset: 20},
-  cacheStrategy: CacheStrategies.CACHE_FIRST,
-  requireAuthentication: true,
-  HeaderComponent: <InlineComposerWidget />
-};
-
-export const ExplorePrefetchedData = Template.bind({});
-
-ExplorePrefetchedData.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5},
-  HeaderComponent: <InlineComposerWidget />,
-  requireAuthentication: true,
-  prefetchedData: exampleExploreData,
-};
-
-export const ExplorePrefetchedDataCached = Template.bind({});
-
-ExplorePrefetchedDataCached.args = {
-  id: 'explore',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  endpointQueryParams: {limit: 5},
-  HeaderComponent: <InlineComposerWidget />,
-  requireAuthentication: true,
-  cacheStrategy: CacheStrategies.CACHE_FIRST
-};
-
-export const ExploreWithoutVirtualization = Template.bind({});
-
-ExploreWithoutVirtualization.args = {
-  id: 'explore_no_virtualization',
-  endpoint: Endpoints.ExploreFeed,
-  widgets: _WIDGETS,
-  ItemComponent: FeedObject,
-  itemPropsGenerator: (scUser, item) => ({
-    feedObject: item[item.type],
-    feedObjectType: item.type,
-    feedObjectActivities: item.activities ? item.activities : null,
-    markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
-  }),
-  itemIdGenerator: (item) => item[item.type].id,
-  ItemSkeleton: FeedObjectSkeleton,
-  ItemSkeletonProps: {
-    template: SCFeedObjectTemplateType.PREVIEW
-  },
-  cacheStrategy: CacheStrategies.NETWORK_ONLY,
-  HeaderComponent: <InlineComposerWidget />,
-  requireAuthentication: true,
-  VirtualizedScrollerProps: {bypass: true}
-};
-
-export const Notification = Template.bind({});
-
-Notification.args = {
-  id: 'notifications_feed',
-  endpoint: Endpoints.UserNotificationList,
-  widgets: [
-    {
-      type: 'widget',
-      component: FeedUpdatesWidget,
-      componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
-      column: 'left',
-      position: 0
+export const Main: StoryObj<Feed> = {
+  args: {
+    id: 'main',
+    endpoint: Endpoints.MainFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
     },
-    {
-      type: 'widget',
-      component: BroadcastMessages,
-      componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
-      column: 'left',
-      position: 0
-    }
-  ],
-  ItemComponent: SCNotification,
-  itemPropsGenerator: (scUser, item) => ({
-    notificationObject: item
-  }),
-  itemIdGenerator: (item) => item.sid,
-  ItemSkeleton: NotificationSkeleton,
-  requireAuthentication: true,
-  disablePaginationLinks: true
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
 };
 
-export const NotificationCached = Template.bind({});
-
-NotificationCached.args = {
-  id: 'notifications_feed',
-  endpoint: Endpoints.UserNotificationList,
-  widgets: [
-    {
-      type: 'widget',
-      component: FeedUpdatesWidget,
-      componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
-      column: 'left',
-      position: 0
+export const MainCache: StoryObj<Feed> = {
+  args: {
+    id: 'main',
+    endpoint: Endpoints.MainFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
     },
-    {
-      type: 'widget',
-      component: BroadcastMessages,
-      componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
-      column: 'left',
-      position: 0
-    }
-  ],
-  ItemComponent: SCNotification,
-  itemPropsGenerator: (scUser, item) => ({
-    notificationObject: item
-  }),
-  itemIdGenerator: (item) => item.sid,
-  ItemSkeleton: NotificationSkeleton,
-  requireAuthentication: true,
-  disablePaginationLinks: true,
-  cacheStrategy: CacheStrategies.CACHE_FIRST
+    requireAuthentication: true,
+    cacheStrategy: CacheStrategies.CACHE_FIRST,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const Explore: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    cacheStrategy: CacheStrategies.NETWORK_ONLY,
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreCache: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    cacheStrategy: CacheStrategies.CACHE_FIRST,
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreOffset2: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5, offset: 2},
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreOffset2Cached: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5, offset: 2},
+    cacheStrategy: CacheStrategies.CACHE_FIRST,
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreOffset5: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5, offset: 5},
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreOffset5Cached: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5, offset: 5},
+    cacheStrategy: CacheStrategies.CACHE_FIRST,
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreOffset20: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5, offset: 20},
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExploreOffset20Cached: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5, offset: 20},
+    cacheStrategy: CacheStrategies.CACHE_FIRST,
+    requireAuthentication: true,
+    HeaderComponent: <InlineComposerWidget />
+  },
+  render: template
+};
+
+export const ExplorePrefetchedData: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5},
+    HeaderComponent: <InlineComposerWidget />,
+    requireAuthentication: true,
+    prefetchedData: exampleExploreData,
+  },
+  render: template
+};
+
+export const ExplorePrefetchedDataCached: StoryObj<Feed> = {
+  args: {
+    id: 'explore',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    endpointQueryParams: {limit: 5},
+    HeaderComponent: <InlineComposerWidget />,
+    requireAuthentication: true,
+    cacheStrategy: CacheStrategies.CACHE_FIRST
+  },
+  render: template
+};
+
+export const ExploreWithoutVirtualization: StoryObj<Feed> = {
+  args: {
+    id: 'explore_no_virtualization',
+    endpoint: Endpoints.ExploreFeed,
+    widgets: _WIDGETS,
+    ItemComponent: FeedObject,
+    itemPropsGenerator: (scUser, item) => ({
+      feedObject: item[item.type],
+      feedObjectType: item.type,
+      feedObjectActivities: item.activities ? item.activities : null,
+      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+    }),
+    itemIdGenerator: (item) => item[item.type].id,
+    ItemSkeleton: FeedObjectSkeleton,
+    ItemSkeletonProps: {
+      template: SCFeedObjectTemplateType.PREVIEW
+    },
+    cacheStrategy: CacheStrategies.NETWORK_ONLY,
+    HeaderComponent: <InlineComposerWidget />,
+    requireAuthentication: true,
+    VirtualizedScrollerProps: {bypass: true}
+  },
+  render: template
+};
+
+export const Notification: StoryObj<Feed> = {
+  args: {
+    id: 'notifications_feed',
+    endpoint: Endpoints.UserNotificationList,
+    widgets: [
+      {
+        type: 'widget',
+        component: FeedUpdatesWidget,
+        componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
+        column: 'left',
+        position: 0
+      },
+      {
+        type: 'widget',
+        component: BroadcastMessages,
+        componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
+        column: 'left',
+        position: 0
+      }
+    ],
+    ItemComponent: SCNotification,
+    itemPropsGenerator: (scUser, item) => ({
+      notificationObject: item
+    }),
+    itemIdGenerator: (item) => item.sid,
+    ItemSkeleton: NotificationSkeleton,
+    requireAuthentication: true,
+    disablePaginationLinks: true
+  },
+  render: template
+};
+
+export const NotificationCached: StoryObj<Feed> = {
+  args: {
+    id: 'notifications_feed',
+    endpoint: Endpoints.UserNotificationList,
+    widgets: [
+      {
+        type: 'widget',
+        component: FeedUpdatesWidget,
+        componentProps: {variant: 'outlined', subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
+        column: 'left',
+        position: 0
+      },
+      {
+        type: 'widget',
+        component: BroadcastMessages,
+        componentProps: {variant: 'outlined', subscriptionChannel: `notifications_feed`},
+        column: 'left',
+        position: 0
+      }
+    ],
+    ItemComponent: SCNotification,
+    itemPropsGenerator: (scUser, item) => ({
+      notificationObject: item
+    }),
+    itemIdGenerator: (item) => item.sid,
+    ItemSkeleton: NotificationSkeleton,
+    requireAuthentication: true,
+    disablePaginationLinks: true,
+    cacheStrategy: CacheStrategies.CACHE_FIRST
+  },
+  render: template
 };

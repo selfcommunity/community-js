@@ -1,18 +1,17 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import NotificationPopupSkeleton from './Skeleton';
 
 export default {
   title: 'Design System/React UI/Skeleton/NotificationPopup',
   component: NotificationPopupSkeleton,
-} as ComponentMeta<typeof NotificationPopupSkeleton>;
+} as Meta<typeof NotificationPopupSkeleton>;
 
-const Template: ComponentStory<typeof NotificationPopupSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 280}}>
     <NotificationPopupSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<NotificationPopupSkeleton> = {
+  render: template
+};

@@ -1,10 +1,8 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import NavigationToolbarMobile from './index';
 import { AppBar, Icon, IconButton, Typography } from '@mui/material';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Navigation Toolbar Mobile',
   component: NavigationToolbarMobile,
@@ -15,40 +13,40 @@ export default {
       viewports: INITIAL_VIEWPORTS,
     },
   },
-} as ComponentMeta<typeof NavigationToolbarMobile>;
+} as Meta<typeof NavigationToolbarMobile>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof NavigationToolbarMobile> = (args) => (
+
+const template = (args) => (
   <AppBar position="relative" elevation={0}>
     <NavigationToolbarMobile {...args}></NavigationToolbarMobile>
   </AppBar>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
-  value: '/'
+export const Base: StoryObj<NavigationToolbarMobile> = {
+  args: {
+    /* the args you need here will depend on your component */
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    value: '/'
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphone6',
+    }
+  },
+  render: template
 };
 
-Base.parameters = {
-  viewport: {
-    defaultViewport: 'iphone6',
-  }
-}
 
-export const Custom = Template.bind({});
-
-Custom.args = {
-  /* the args you need here will depend on your component */
-  SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
-  value: '/',
-  children: <><IconButton><Icon>arrow_back</Icon></IconButton><Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography></>
+export const Custom: StoryObj<NavigationToolbarMobile> = {
+  args: {
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    value: '/',
+    children: <><IconButton><Icon>arrow_back</Icon></IconButton><Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography></>
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphone6',
+    }
+  },
+  render: template
 };
-
-Custom.parameters = {
-  viewport: {
-    defaultViewport: 'iphone6',
-  }
-}

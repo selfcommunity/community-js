@@ -1,10 +1,6 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import CommentObjectReply from './index';
-import { SCContributionType } from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Comment Object Reply',
   component: CommentObjectReply,
@@ -24,19 +20,19 @@ export default {
   args: {
     variant: 'outlined'
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentObjectReply>;
+} as Meta<typeof CommentObjectReply>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentObjectReply> = (args) => (
+
+const template = (args) => (
   <div style={{width: 500}}>
     <CommentObjectReply {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  onSave: null,
-  onReply: (comment) => console.log(comment)
+export const Base: StoryObj<CommentObjectReply> = {
+  args: {
+    onSave: null,
+    onReply: (comment) => console.log(comment)
+  },
+  render: template
 };

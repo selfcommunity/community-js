@@ -1,10 +1,7 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import CommentObject from './index';
 import { SCContributionType } from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/CommentObject',
   component: CommentObject,
@@ -32,16 +29,15 @@ export default {
     feedObjectId: 392,
     variant: 'outlined'
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentObject>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentObject> = (args) => (
+} as Meta<typeof CommentObject>;
+
+const template = (args) => (
   <div style={{width: 500}}>
     <CommentObject {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<CommentObject> = {
+  render: template
+};

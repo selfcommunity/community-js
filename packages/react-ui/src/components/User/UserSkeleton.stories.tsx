@@ -1,23 +1,20 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserSkeleton from './Skeleton';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Skeleton/User',
   component: UserSkeleton
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserSkeleton>;
+} as Meta<typeof UserSkeleton>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <UserSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  contained: true
+export const Base: StoryObj<UserSkeleton> = {
+  args: {
+    contained: true
+  },
+  render: template
 };

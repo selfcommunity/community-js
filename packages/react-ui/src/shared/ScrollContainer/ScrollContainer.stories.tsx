@@ -1,15 +1,13 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import ScrollContainer from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI Shared/ScrollContainer',
   component: ScrollContainer
-} as ComponentMeta<typeof ScrollContainer>;
+} as Meta<typeof ScrollContainer>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ScrollContainer> = (args) => (
+const template = (args) => (
   <div style={{height: 500, width: 300}}>
     <ScrollContainer {...args}>
       <p>
@@ -55,8 +53,6 @@ const Template: ComponentStory<typeof ScrollContainer> = (args) => (
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<ScrollContainer> = {
+  render: template
 };

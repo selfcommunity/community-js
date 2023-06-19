@@ -1,11 +1,9 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import CategoriesSuggestionWidgetSkeleton from './index';
+import type { Meta, StoryObj } from '@storybook/react';
+import CategoriesSuggestionWidget from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Categories Suggestion Widget',
-  component: CategoriesSuggestionWidgetSkeleton,
+  component: CategoriesSuggestionWidget,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -23,17 +21,15 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof CategoriesSuggestionWidgetSkeleton>;
+} as Meta<typeof CategoriesSuggestionWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoriesSuggestionWidgetSkeleton> = (args) => (
+
+const template = (args) => (
   <div style={{width: 400}}>
-    <CategoriesSuggestionWidgetSkeleton {...args} />
+    <CategoriesSuggestionWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<CategoriesSuggestionWidget> = {
+  render: template
 };

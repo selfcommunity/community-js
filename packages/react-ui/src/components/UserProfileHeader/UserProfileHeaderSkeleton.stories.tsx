@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileHeaderSkeleton from './Skeleton';
 
 export default {
@@ -7,14 +6,14 @@ export default {
   component: UserProfileHeaderSkeleton,
   argTypes: {},
   args: {}
-} as ComponentMeta<typeof UserProfileHeaderSkeleton>;
+} as Meta<typeof UserProfileHeaderSkeleton>;
 
-const Template: ComponentStory<typeof UserProfileHeaderSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: '100%'}}>
     <UserProfileHeaderSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<typeof UserProfileHeaderSkeleton> = {
+  render: template
+};

@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import ConsentSolution from './ConsentSolution';
 import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 
@@ -8,26 +7,31 @@ export default {
   component: ConsentSolution,
   argTypes: {},
   args: {}
-} as ComponentMeta<typeof ConsentSolution>;
+} as Meta<typeof ConsentSolution>;
 
-const Template: ComponentStory<typeof ConsentSolution> = (args) => (
+const template = (args) => (
   <div style={{width: 600}}>
     <ConsentSolution {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
-
-export const Tec = Template.bind({});
-
-Tec.args = {
-  legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
+export const Base: StoryObj<ConsentSolution> = {
+  args: {
+    contained: true
+  },
+  render: template
 };
 
-export const Privacy = Template.bind({});
+export const Tec: StoryObj<ConsentSolution> = {
+  args: {
+    legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
+  },
+  render: template
+};
 
-Privacy.args = {
-  legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
+export const Privacy: StoryObj<ConsentSolution> = {
+  args: {
+    legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
+  },
+  render: template
 };

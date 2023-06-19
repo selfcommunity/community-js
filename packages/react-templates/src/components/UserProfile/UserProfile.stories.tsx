@@ -8,21 +8,17 @@ import {Dialog, DialogTitle} from '@mui/material';
 
 import UserProfile from './Skeleton';
 
-const meta: Meta<typeof UserProfile> = {
+export default {
   title: 'Design System/React TEMPLATES/User Profile',
-  component: UserProfile,
-  // tags: ['autodocs'],
-};
-
-export default meta;
-type Story = StoryObj<typeof UserProfile>;
+  component: UserProfile
+} as Meta<typeof UserProfile>;
 
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
  * See https://storybook.js.org/docs/react/api/csf
  * to learn how to use render functions.
  */
-export const Base: Story = {
+export const Base: StoryObj<typeof UserProfile> = {
   args: {
     userId: 159,
   },
