@@ -29,6 +29,9 @@ const config = {
   features: {
     "postcss": false
   },
+  core: {
+    disableTelemetry: true, // Disables telemetry
+  },
   "webpackFinal": async (config) => {
     return {
       ...config,
