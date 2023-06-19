@@ -958,7 +958,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
         {objElement}
       </Root>
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

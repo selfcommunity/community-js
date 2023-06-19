@@ -223,7 +223,7 @@ export default function User(inProps: UserProps): JSX.Element {
         secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
         actions={renderAuthenticatedActions()}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

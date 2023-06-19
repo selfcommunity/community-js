@@ -145,7 +145,7 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
         }
         {...rest}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

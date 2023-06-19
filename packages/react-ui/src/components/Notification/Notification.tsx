@@ -445,7 +445,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           )}
         </CardContent>
       </Root>
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

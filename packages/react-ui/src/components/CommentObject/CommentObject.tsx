@@ -638,7 +638,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       <Root id={id} className={classNames(classes.root, className)}>
         {comment}
       </Root>
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

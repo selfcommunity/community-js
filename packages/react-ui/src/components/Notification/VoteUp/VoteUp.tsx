@@ -161,7 +161,7 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
         }
         {...rest}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }
