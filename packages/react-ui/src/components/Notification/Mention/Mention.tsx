@@ -169,7 +169,7 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
         }
         {...rest}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

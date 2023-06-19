@@ -454,7 +454,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
           </Widget>
         </Box>
       </Root>
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

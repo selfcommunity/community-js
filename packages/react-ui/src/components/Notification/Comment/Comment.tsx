@@ -180,7 +180,7 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
         }
         {...rest}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

@@ -176,7 +176,7 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
         }
         {...rest}
       />
-      <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>
   );
 }

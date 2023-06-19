@@ -156,7 +156,7 @@ export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
             </Stack>
           }
         />
-        <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />
+        {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
       </>
     );
   }
