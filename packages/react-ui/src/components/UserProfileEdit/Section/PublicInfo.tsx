@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
+import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
@@ -10,6 +10,7 @@ import {
   SCContextType,
   SCPreferences,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContextType,
   useSCContext,
   useSCPreferences,
@@ -84,7 +85,7 @@ export interface PublicInfoProps {
   /**
    * Callback on edit data with success
    */
-  onEditSuccess?: (editedField?: {}) => void;
+  onEditSuccess?: (editedField?: Record<string, any>) => void;
   /**
    * Any other properties
    */
@@ -119,6 +120,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   }, [scPreferences.preferences]);
 
   // STATE
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [user, setUser] = useState<SCUserType>();
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
@@ -147,7 +150,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   };
 
   const handleSave = (field: SCUserProfileFields) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
+    return (event: React.MouseEvent<HTMLButtonElement> | any) => {
       if (user[field] === scUserContext.user[field]) {
         setEditing(editing.filter((f) => f !== field));
         return;
@@ -284,8 +287,30 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                   );
                 }
               }}
+              onAccept={isMobile ? handleSave(SCUserProfileFields.DATE_OF_BIRTH) : null}
               slotProps={{
-                textField: {className: classes.field, fullWidth: true, variant: 'outlined', helperText: _error || null}
+                textField: {
+                  className: classes.field,
+                  fullWidth: true,
+                  variant: 'outlined',
+                  helperText: _error || null,
+                  InputProps: {
+                    endAdornment: isMobile && (
+                      <>
+                        <IconButton disabled={!isEditing}>
+                          <Icon>CalendarIcon</Icon>
+                        </IconButton>
+                        {!isEditing ? (
+                          <IconButton onClick={handleEdit(SCUserProfileFields.DATE_OF_BIRTH)} edge="end" disabled={editing.length !== 0}>
+                            <Icon>edit</Icon>
+                          </IconButton>
+                        ) : isSaving ? (
+                          <CircularProgress size={10} />
+                        ) : null}
+                      </>
+                    )
+                  }
+                }
               }}
             />
           </LocalizationProvider>
