@@ -2,7 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "resolveJsonModule": true,
-    "lib": ["es6", "dom"],
+    "lib": ["es7", "dom"],
     "jsx": "react-jsx"
   },
 

@@ -33,8 +33,9 @@ const config = {
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
     "react-hooks/exhaustive-deps": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
   },
   "settings": {
     "import/resolver": {
