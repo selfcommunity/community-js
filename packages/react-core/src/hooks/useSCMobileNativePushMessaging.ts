@@ -13,7 +13,7 @@ import {
   IOS_PUSH_NOTIFICATION_IOS_DEVICE_TYPE,
   PLATFORM_KEY,
   REGISTRATION_ID_KEY,
-  NOTIFICATION_SERVICE_KEY,
+  NOTIFICATIONS_SERVICE_KEY,
   DEVICE_ID_KEY,
 } from '../constants/Device';
 import {isMobileNativeNotificationEnabled} from '../utils/notification';
@@ -44,9 +44,12 @@ export default function useSCMobileNativePushMessaging() {
   const isValid = (data) => {
     return (
       data &&
-      ((data.platform === PLATFORM.ANDROID && data.notification_service === ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE) ||
-        data.notification_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE ||
-        (data.platform === PLATFORM.IOS && data.notification_service === IOS_PUSH_NOTIFICATION_IOS_DEVICE_TYPE))
+      ((data.platform === PLATFORM.ANDROID &&
+        (data.notifications_service === ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE ||
+          data.notifications_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE)) ||
+        (data.platform === PLATFORM.IOS &&
+          (data.notifications_service === IOS_PUSH_NOTIFICATION_IOS_DEVICE_TYPE ||
+            data.notifications_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE)))
     );
   };
 
@@ -57,8 +60,8 @@ export default function useSCMobileNativePushMessaging() {
    */
   const performUpdateDevice = (data, remove = false) => {
     const url = remove
-      ? Endpoints.DeleteDevice.url({type: data.notification_service, id: data.id})
-      : Endpoints.NewDevice.url({type: data.notification_service});
+      ? Endpoints.DeleteDevice.url({type: data.notifications_service, id: data.id})
+      : Endpoints.NewDevice.url({type: data.notifications_service});
     const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
     setLoading(true);
     return http
@@ -91,23 +94,23 @@ export default function useSCMobileNativePushMessaging() {
    * Collect data
    */
   const getDataInstance = () => {
-    if (window && window[PLATFORM_KEY] && window[REGISTRATION_ID_KEY] && window[NOTIFICATION_SERVICE_KEY]) {
+    if (window && window[PLATFORM_KEY] && window[REGISTRATION_ID_KEY] && window[NOTIFICATIONS_SERVICE_KEY]) {
       return {
         platform: window[PLATFORM_KEY],
         registration_id: window[REGISTRATION_ID_KEY],
-        notification_service: window[NOTIFICATION_SERVICE_KEY],
+        notifications_service: window[NOTIFICATIONS_SERVICE_KEY],
         ...(window[DEVICE_ID_KEY] ? {device_id: window[DEVICE_ID_KEY]} : {}),
       };
     } else if (
       LocalStorageDB.checkifSupport() &&
       LocalStorageDB.get(PLATFORM_KEY) &&
-      LocalStorageDB.get(PLATFORM_KEY) &&
-      LocalStorageDB.get(NOTIFICATION_SERVICE_KEY)
+      LocalStorageDB.get(REGISTRATION_ID_KEY) &&
+      LocalStorageDB.get(NOTIFICATIONS_SERVICE_KEY)
     ) {
       return {
         platform: LocalStorageDB.get(PLATFORM_KEY),
-        registration_id: LocalStorageDB.get(PLATFORM_KEY),
-        notification_service: LocalStorageDB.get(NOTIFICATION_SERVICE_KEY),
+        registration_id: LocalStorageDB.get(REGISTRATION_ID_KEY),
+        notifications_service: LocalStorageDB.get(NOTIFICATIONS_SERVICE_KEY),
         ...(window[DEVICE_ID_KEY] ? {device_id: window[DEVICE_ID_KEY]} : {}),
       };
     } else {
