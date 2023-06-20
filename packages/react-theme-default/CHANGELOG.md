@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.198...@selfcommunity/react-theme-default@0.1.0-alpha.199) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
 # [0.1.0-alpha.198](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.197...@selfcommunity/react-theme-default@0.1.0-alpha.198) (2023-06-19)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

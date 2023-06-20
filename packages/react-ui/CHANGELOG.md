@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.249](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.248...@selfcommunity/react-ui@0.7.0-alpha.249) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
 # [0.7.0-alpha.248](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.247...@selfcommunity/react-ui@0.7.0-alpha.248) (2023-06-19)
 
 

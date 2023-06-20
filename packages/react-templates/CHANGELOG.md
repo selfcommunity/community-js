@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.239...@selfcommunity/react-templates@0.3.0-alpha.240) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
 # [0.3.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.238...@selfcommunity/react-templates@0.3.0-alpha.239) (2023-06-19)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.75...@selfcommunity/react-core@0.4.0-alpha.76) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([deda8fe](https://github.com/selfcommunity/community-js/commit/deda8fe848ccfbc70d214eb71c22efa1068dc66a))
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
 # [0.4.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.74...@selfcommunity/react-core@0.4.0-alpha.75) (2023-06-16)
 
 
