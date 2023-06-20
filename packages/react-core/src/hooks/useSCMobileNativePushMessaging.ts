@@ -122,7 +122,7 @@ export default function useSCMobileNativePushMessaging() {
   useEffect(() => {
     if (scUserContext.user && isMobileNativeNotificationEnabled(scContext)) {
       const _data = getDataInstance();
-      if (isValid(_data) && (!mnpmInstance || (mnpmInstance && mnpmInstance.registration_id !== _data.registration_id)) {
+      if (isValid(_data) && (!mnpmInstance || (mnpmInstance && mnpmInstance.registration_id !== _data.registration_id))) {
         // Register the device only if _platform and _registration_id and _notification_service
         // exists in window/localStorage
         if (!isLoading) {
@@ -133,7 +133,7 @@ export default function useSCMobileNativePushMessaging() {
       } else {
         Logger.warn(SCOPE_SC_CORE, 'Invalid data. Unable to register the device for native push notification.');
       }
-  } else {
+    } else {
       const _data = getDataInstance();
       if (isValid(_data)) {
         // Update remote device only if conf is changed
