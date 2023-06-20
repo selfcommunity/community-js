@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.3...@selfcommunity/utils@0.2.0-alpha.4) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([54613e0](https://github.com/selfcommunity/community-js/commit/54613e04b72781bd14f861ef7dad5317edce7846))
+
+
+
+
+
 # [0.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.2...@selfcommunity/utils@0.2.0-alpha.3) (2023-06-07)
 
 
