@@ -63,8 +63,7 @@ export interface PrivateMessageEditorProps {
 }
 
 /**
- *
- > API documentation for the Community-JS Private Message Editor component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Private Message Editor component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -94,7 +93,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     props: inProps,
     name: PREFIX
   });
-  const {autoHide = null, className = null, send = null, onThreadChangeId, error = false, onErrorRemove = null, ...rest} = props;
+  const {autoHide = null, className = null, send = null, onThreadChangeId, error = false, onErrorRemove = null, autoHideDeletion, ...rest} = props;
 
   // STATE
   const [message, setMessage] = useState<string>('');
@@ -152,10 +151,17 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     }
   }, [onThreadChangeId]);
 
-  if (autoHide) {
+  /**
+   * Rendering
+   */
+  if (autoHide || autoHideDeletion) {
     return (
-      <Alert severity="info">
-        <FormattedMessage id="ui.privateMessage.editor.disabled.msg" defaultMessage="ui.privateMessage.editor.disabled.msg" />
+      <Alert severity={autoHideDeletion ? 'warning' : 'info'}>
+        {autoHideDeletion ? (
+          <FormattedMessage id="ui.privateMessage.editor.disabled.deleted.msg" defaultMessage="ui.privateMessage.editor.disabled.deleted.msg" />
+        ) : (
+          <FormattedMessage id="ui.privateMessage.editor.disabled.msg" defaultMessage="ui.privateMessage.editor.disabled.msg" />
+        )}
       </Alert>
     );
   } else if (error) {

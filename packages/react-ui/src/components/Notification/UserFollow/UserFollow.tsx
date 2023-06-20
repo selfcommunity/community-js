@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   followUser: {
@@ -81,6 +82,9 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // INTL
   const intl = useIntl();
 
@@ -88,48 +92,60 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
    * Renders root object
    */
   return (
-    <Root
-      id={id}
-      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
-      template={template}
-      isNew={notificationObject.is_new}
-      disableTypography
-      image={
-        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
-          <Avatar
-            alt={notificationObject.follower.username}
-            variant="circular"
-            src={notificationObject.follower.avatar}
-            classes={{root: classes.avatar}}
-          />
-        </Link>
-      }
-      primary={
-        <Typography component="div" color="inherit" className={classes.followText}>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)} className={classes.username}>
-            {notificationObject.follower.username}
-          </Link>{' '}
-          {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
-        </Typography>
-      }
-      secondary={
-        (template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
-          <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-        )
-      }
-      footer={
-        template === SCNotificationObjectTemplateType.TOAST && (
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <DateTimeAgo date={notificationObject.active_at} />
-            <Typography color="primary" component={'div'}>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)}>
-                <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
-              </Link>
-            </Typography>
-          </Stack>
-        )
-      }
-      {...rest}
-    />
+    <>
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+        template={template}
+        isNew={notificationObject.is_new}
+        disableTypography
+        image={
+          <Link
+            {...(!notificationObject.follower.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)})}
+            onClick={notificationObject.follower.deleted ? () => setOpenAlert(true) : null}>
+            <Avatar
+              alt={notificationObject.follower.username}
+              variant="circular"
+              src={notificationObject.follower.avatar}
+              classes={{root: classes.avatar}}
+            />
+          </Link>
+        }
+        primary={
+          <Typography component="div" color="inherit" className={classes.followText}>
+            <Link
+              {...(!notificationObject.follower.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)})}
+              onClick={notificationObject.follower.deleted ? () => setOpenAlert(true) : null}
+              className={classes.username}>
+              {notificationObject.follower.username}
+            </Link>{' '}
+            {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
+          </Typography>
+        }
+        secondary={
+          (template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+            <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+          )
+        }
+        footer={
+          template === SCNotificationObjectTemplateType.TOAST && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary" component={'div'}>
+                <Link
+                  {...(!notificationObject.follower.deleted && {
+                    to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)
+                  })}
+                  onClick={notificationObject.follower.deleted ? () => setOpenAlert(true) : null}>
+                  <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
+                </Link>
+              </Typography>
+            </Stack>
+          )
+        }
+        {...rest}
+      />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

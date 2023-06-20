@@ -1,6 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import UserConnectionsRequestsSentWidget from './index';
 
 export default {
@@ -13,19 +11,18 @@ export default {
       table: {defaultValue: {summary: 1}}
     }
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserConnectionsRequestsSentWidget>;
+} as Meta<typeof UserConnectionsRequestsSentWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserConnectionsRequestsSentWidget> = (args) => (
+
+const template = (args) => (
   <div style={{width: 400}}>
     <UserConnectionsRequestsSentWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  userId: 153
+export const Base: StoryObj<UserConnectionsRequestsSentWidget> = {
+  args: {
+    userId: 153
+  },
+  render: template
 };
-

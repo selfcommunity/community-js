@@ -19,6 +19,7 @@ import SCFeed from './components/SCFeed';
 import MuiButton from './components/MuiButton';
 import MuiAvatar from './components/MuiAvatar';
 import SCContributorsFeedObject from './components/SCContributorsFeedObject';
+import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCBaseItem from './components/SCBaseItem';
 import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryFeedTemplate from './components/SCCategoryFeedTemplate';
@@ -120,6 +121,7 @@ import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
 import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfileEditSectionAccountCredentials';
 import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
+import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 
 /**
  * Style fragments - Imports - End
@@ -215,6 +217,7 @@ const theme = {
     SCComposerPoll,
     SCContributionNotification,
     SCContributorsFeedObject,
+    SCContributionActionsMenu,
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCEditor,
@@ -285,7 +288,8 @@ const theme = {
     SCIncubatorSkeleton,
     SCIncubatorSuggestionWidget,
     SCIncubatorDetail,
-    SCPrizeItemSkeleton
+    SCPrizeItemSkeleton,
+    SCNavigationMenuIconButton
   },
   selfcommunity: {
     user: {

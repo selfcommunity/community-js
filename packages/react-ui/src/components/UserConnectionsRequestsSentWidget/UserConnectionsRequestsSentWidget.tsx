@@ -91,8 +91,10 @@ export interface UserConnectionsRequestsSentWidgetProps extends VirtualScrollerI
 }
 
 /**
- > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
- > This component renders the list of connections requests sent of the authenticated user
+ * > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the list of connections requests sent of the authenticated user.
 
  #### Import
 
@@ -249,6 +251,16 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
+  /**
+   * Handle refresh counters (authenticated user)
+   */
+  const handleChangeConnectionStatus = useMemo(
+    () => (): void => {
+      scUserContext.refreshCounters();
+    },
+    [scUserContext.refreshCounters]
+  );
+
   const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
@@ -266,7 +278,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
         <FormattedMessage
           id="ui.userConnectionsRequestsSentWidget.title"
           defaultMessage="ui.userConnectionsRequestsSentWidget.title"
-          values={{total: state.count}}
+          values={{total: scUserContext.user.connection_requests_sent_counter}}
         />
       </Typography>
       {!state.count ? (
@@ -278,7 +290,12 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
           <List>
             {state.results.slice(0, state.visibleItems).map((conReq: SCUserConnectionRequestType) => (
               <ListItem key={conReq.to_user.id}>
-                <User elevation={0} user={conReq.to_user} {...UserProps} />
+                <User
+                  elevation={0}
+                  user={conReq.to_user}
+                  followConnectUserButtonProps={{followConnectUserButtonProps: {onChangeConnectionStatus: handleChangeConnectionStatus}}}
+                  {...UserProps}
+                />
               </ListItem>
             ))}
           </List>
@@ -299,7 +316,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
             <FormattedMessage
               defaultMessage="ui.userConnectionsRequestsSentWidget.title"
               id="ui.userConnectionsRequestsSentWidget.title"
-              values={{total: state.count}}
+              values={{total: scUserContext.user.connection_requests_sent_counter}}
             />
           }
           onClose={handleToggleDialogOpen}
@@ -322,7 +339,12 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
             <List>
               {state.results.map((conReq: SCUserConnectionRequestType) => (
                 <ListItem key={conReq.to_user.id}>
-                  <User elevation={0} user={conReq.to_user} {...UserProps} />
+                  <User
+                    elevation={0}
+                    user={conReq.to_user}
+                    followConnectUserButtonProps={{followConnectUserButtonProps: {onChangeConnectionStatus: handleChangeConnectionStatus}}}
+                    {...UserProps}
+                  />
                 </ListItem>
               ))}
             </List>

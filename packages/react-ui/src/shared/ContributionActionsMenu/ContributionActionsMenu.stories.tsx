@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import ContributionActionsMenu from './index';
 import {SCContributionType} from '@selfcommunity/types';
 
@@ -22,10 +21,10 @@ export default {
     feedObjectId: 379, // 9,
     feedObjectType: SCContributionType.POST
   }
-} as ComponentMeta<typeof ContributionActionsMenu>;
+} as Meta<typeof ContributionActionsMenu>;
 
-const Template: ComponentStory<typeof ContributionActionsMenu> = (args) => <ContributionActionsMenu {...args} />;
+const template = (args) => <ContributionActionsMenu {...args} />;
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<ContributionActionsMenu> = {
+  render: template
+};

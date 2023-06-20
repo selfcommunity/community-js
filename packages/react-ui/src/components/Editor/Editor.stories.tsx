@@ -1,28 +1,23 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import Editor from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Editor',
   component: Editor
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Editor>;
+} as Meta<typeof Editor>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Editor> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <Editor {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-  defaultValue: '<p><s>ciao</s> <mention id="1" ext-id="5">@username</mention></p>',
-  onChange: (value) => console.log(value),
-  toolbar: false,
-  uploadImage: false
+export const Base: StoryObj<Editor> = {
+  args: {
+    defaultValue: '<p><s>ciao</s> <mention id="1" ext-id="5">@username</mention></p>',
+    onChange: (value) => console.log(value),
+    toolbar: false,
+    uploadImage: false
+  },
+  render: template
 };

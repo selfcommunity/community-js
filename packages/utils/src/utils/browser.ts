@@ -28,7 +28,7 @@ export const loadVersionBrowser = () => {
           browsername = brand.substr(brand.indexOf(' ') + 1);
           return {
             name: browsername,
-            version: browserversion,
+            version: browserversion
           };
         }
       }
@@ -37,7 +37,7 @@ export const loadVersionBrowser = () => {
     if (chromeVersion !== null) {
       return {
         name: 'chrome',
-        version: chromeVersion,
+        version: chromeVersion
       };
     }
   }
@@ -64,6 +64,6 @@ export const loadVersionBrowser = () => {
   }
   return {
     name: M[0],
-    version: M[1],
+    version: M[1]
   };
 };

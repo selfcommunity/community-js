@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.35...@selfcommunity/react-i18n@0.5.0-alpha.36) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
+# [0.5.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.34...@selfcommunity/react-i18n@0.5.0-alpha.35) (2023-06-12)
+
+
+### Bug Fixes
+
+* ComposerIconButton ([c48158e](https://github.com/selfcommunity/community-js/commit/c48158ed46636a2ee122adeb75f84162fdb1f716))
+* fixed metadata error in user field edit component. Asana issue: https://app.asana.com/0/1202638443591994/1204785197222173/f ([65562e7](https://github.com/selfcommunity/community-js/commit/65562e77a319cabe42b2e71962e82e5cee301dfe))
+* translations ([186b54f](https://github.com/selfcommunity/community-js/commit/186b54f4600138626ef9872c4e08c226b730c1db))
+
+
+### Performance Improvements
+
+* added generic error to composer ([0be2ae7](https://github.com/selfcommunity/community-js/commit/0be2ae741cf9f03e1530a9b5e4bb537087bf9cc8))
+
+
+
+
+
+# [0.5.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.33...@selfcommunity/react-i18n@0.5.0-alpha.34) (2023-06-09)
+
+
+### Bug Fixes
+
+* user profile date of birth ([4333afa](https://github.com/selfcommunity/community-js/commit/4333afa629c37368c4311204bcac4beba0145a29))
+
+
+
+
+
+# [0.5.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.32...@selfcommunity/react-i18n@0.5.0-alpha.33) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed errors for media/message chunk uploader, fixed asana issues about change picture/change cover. ([c810377](https://github.com/selfcommunity/community-js/commit/c81037793387d2b0f21fc687a508734324f7dfe4))
+
+
+
+
+
+# [0.5.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.31...@selfcommunity/react-i18n@0.5.0-alpha.32) (2023-06-08)
+
+
+### Performance Improvements
+
+* format errors by their codes. ([d6ade5a](https://github.com/selfcommunity/community-js/commit/d6ade5a4729c08839c7c54aead22e7e624a141be))
+
+
+
+
+
 # [0.5.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.30...@selfcommunity/react-i18n@0.5.0-alpha.31) (2023-06-07)
 
 

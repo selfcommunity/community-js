@@ -52,6 +52,10 @@ export interface LoyaltyProgramDetailProps {
 }
 /**
  * > API documentation for the Community-JS Loyalty Program Detail Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the loyalty program detail template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/LoyaltyProgramDetail)
 
  #### Import
 

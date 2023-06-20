@@ -125,6 +125,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Notification Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the template for the notification feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/NotificationFeed)
 
  #### Import
 

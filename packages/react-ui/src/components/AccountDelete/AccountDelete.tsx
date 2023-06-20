@@ -43,9 +43,11 @@ export interface AccountDeleteProps extends BoxProps {
 }
 
 /**
- *> API documentation for the Community-JS AccountDelete component. Learn about the available props and the CSS API.
- * <br/>This component allows users to display the logic behind user deletion.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountDelete)
+ * > API documentation for the Community-JS AccountDelete component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component allows users to display the logic behind user deletion.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountDelete)
 
  #### Import
  ```jsx

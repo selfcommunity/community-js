@@ -85,10 +85,11 @@ export interface UserSuggestionWidgetProps extends VirtualScrollerItemProps, Wid
 }
 
 /**
+ * > API documentation for the Community-JS User Suggestion Widget component. Learn about the available props and the CSS API.
  *
- > API documentation for the Community-JS User Suggestion Widget component. Learn about the available props and the CSS API.
- * <br/>This component renders a list of suggested users.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserSuggestion)
+ *
+ * This component renders a list of suggested users.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserSuggestion)
 
  #### Import
 

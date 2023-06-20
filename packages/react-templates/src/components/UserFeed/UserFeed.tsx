@@ -21,6 +21,8 @@ import {
 import {UserFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCUserFeedTemplate';
 
@@ -114,6 +116,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS User Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific user's feed template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/UserFeed)
 
  #### Import
 
@@ -143,6 +149,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
 
   // Context
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -152,6 +159,10 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
     // Hydrate feedUnit
     const feedUnit = {
       type: feedObject.type,

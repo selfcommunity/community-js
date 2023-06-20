@@ -204,7 +204,7 @@ export const REJECTION_VIEW = 'rejection';
 export const CONFIRM_DELETE_ACCOUNT = 'delete_account';
 
 /**
- *> API documentation for the Community-JS ConsentSolution component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS ConsentSolution component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx

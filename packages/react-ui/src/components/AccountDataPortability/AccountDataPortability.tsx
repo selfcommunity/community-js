@@ -36,10 +36,12 @@ export interface AccountDataPortabilityProps extends BoxProps {
 }
 
 /**
- *> API documentation for the Community-JS AccountDataPortability component. Learn about the available props and the CSS API.
- * <br/>This component allows users to display the logic behind data portability of user data.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountDataPortability)
+ * > API documentation for the Community-JS AccountDataPortability component. Learn about the available props and the CSS API.
  *
+ *
+ * This component allows users to display the logic behind data portability of user data.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountDataPortability)
+
  #### Import
  ```jsx
  import {AccountDataPortability} from '@selfcommunity/react-ui';

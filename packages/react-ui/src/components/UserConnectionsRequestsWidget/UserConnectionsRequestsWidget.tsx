@@ -3,9 +3,9 @@ import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
-import {SCUserConnectionRequestType, SCUserType} from '@selfcommunity/types';
+import {SCUserConnectionRequestType} from '@selfcommunity/types';
 import {http, Endpoints, UserService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCCache,
   SCPreferences,
@@ -86,8 +86,10 @@ export interface UserConnectionsRequestsWidgetProps extends VirtualScrollerItemP
 }
 
 /**
- > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
- > This component renders the list of connections requests of the authenticated user
+ * > API documentation for the Community-JS User Connections Requests Widget component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the list of connections requests of the authenticated user.
 
  #### Import
 
@@ -141,7 +143,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY, 3),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
       cacheStrategy,
       visibleItems: limit
     },
@@ -244,6 +246,16 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
     [dispatch, state.next, state.isLoadingNext, state.initialized]
   );
 
+  /**
+   * Handle refresh counters (authenticated)
+   */
+  const handleChangeConnectionStatus = useMemo(
+    () => (): void => {
+      scUserContext.refreshCounters();
+    },
+    [scUserContext.refreshCounters]
+  );
+
   const handleToggleDialogOpen = (): void => {
     setOpenDialog((prev) => !prev);
   };
@@ -261,7 +273,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
         <FormattedMessage
           id="ui.userConnectionsRequestsWidget.title"
           defaultMessage="ui.userConnectionsRequestsWidget.title"
-          values={{total: state.count}}
+          values={{total: scUserContext.user.connection_requests_received_counter}}
         />
       </Typography>
       {!state.count ? (
@@ -273,7 +285,12 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
           <List>
             {state.results.slice(0, state.visibleItems).map((conReq: SCUserConnectionRequestType) => (
               <ListItem key={conReq.from_user.id}>
-                <User elevation={0} user={conReq.from_user} {...UserProps} />
+                <User
+                  elevation={0}
+                  user={conReq.from_user}
+                  followConnectUserButtonProps={{followConnectUserButtonProps: {onChangeConnectionStatus: handleChangeConnectionStatus}}}
+                  {...UserProps}
+                />
               </ListItem>
             ))}
           </List>
@@ -294,7 +311,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
             <FormattedMessage
               defaultMessage="ui.userConnectionsRequestsWidget.title"
               id="ui.userConnectionsRequestsWidget.title"
-              values={{total: state.count}}
+              values={{total: scUserContext.user.connection_requests_received_counter}}
             />
           }
           onClose={handleToggleDialogOpen}
@@ -317,7 +334,12 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
             <List>
               {state.results.map((conReq: SCUserConnectionRequestType) => (
                 <ListItem key={conReq.from_user.id}>
-                  <User elevation={0} user={conReq.from_user} {...UserProps} />
+                  <User
+                    elevation={0}
+                    user={conReq.from_user}
+                    followConnectUserButtonProps={{followConnectUserButtonProps: {onChangeConnectionStatus: handleChangeConnectionStatus}}}
+                    {...UserProps}
+                  />
                 </ListItem>
               ))}
             </List>

@@ -102,10 +102,11 @@ export interface PrivateMessageThreadProps extends CardProps {
   [p: string]: any;
 }
 /**
+ * > API documentation for the Community-JS PrivateMessage Thread component. Learn about the available props and the CSS API.
  *
- > API documentation for the Community-JS PrivateMessage Thread component. Learn about the available props and the CSS API.
- * <br/>This component renders the conversation between two users.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Thread)
+ *
+ * This component renders the conversation between two users.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Thread)
 
  #### Import
 
@@ -264,7 +265,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     PrivateMessageService.searchUser(value)
       .then((data) => {
         setLoading(false);
-        setFollowers(data.results);
+        setFollowers(data.results.filter((user) => user.id !== authUserId));
       })
       .catch((error) => {
         setLoading(false);
@@ -584,6 +585,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           className={classes.editor}
           send={handleSend}
           autoHide={!isFollower && !role}
+          autoHideDeletion={receiver?.deleted || scUser?.deleted}
           onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
           error={error}
           onErrorRemove={() => setError(false)}

@@ -44,8 +44,10 @@ export interface PlatformWidgetProps extends VirtualScrollerItemProps {
 
 /**
  * > API documentation for the Community-JS PlatformWidget component. Learn about the available props and the CSS API.
- * <br/>This component renders a widget containing the links that allow users and moderators to handle their application content.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Platform)
+ *
+ *
+ * This component renders a widget containing the links that allow users and moderators to handle their application content.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Platform)
 
  #### Import
 

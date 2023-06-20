@@ -1,22 +1,22 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import EmailTextField from './index';
 
 export default {
   title: 'Design System/React UI Shared/Email Textfield',
   component: EmailTextField,
-} as ComponentMeta<typeof EmailTextField>;
+} as Meta<typeof EmailTextField>;
 
-const Template: ComponentStory<typeof EmailTextField> = (args) => <EmailTextField {...args} />;
+const template = (args) => <EmailTextField {...args} />;
 
-export const Base = Template.bind({});
+export const Base: StoryObj<EmailTextField> = {
+  render: template
+};
 
-Base.args = {};
-
-export const BaseLabel = Template.bind({});
-
-BaseLabel.args = {
-  label: 'Label',
-  name: 'email',
-  id: 'email'
+export const BaseLabel: StoryObj<EmailTextField> = {
+  args: {
+    label: 'Label',
+    name: 'email',
+    id: 'email'
+  },
+  render: template
 };

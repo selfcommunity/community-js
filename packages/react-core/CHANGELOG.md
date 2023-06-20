@@ -3,6 +3,119 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.75...@selfcommunity/react-core@0.4.0-alpha.76) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([deda8fe](https://github.com/selfcommunity/community-js/commit/deda8fe848ccfbc70d214eb71c22efa1068dc66a))
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
+# [0.4.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.74...@selfcommunity/react-core@0.4.0-alpha.75) (2023-06-16)
+
+
+### Bug Fixes
+
+* counters ([441d2ac](https://github.com/selfcommunity/community-js/commit/441d2ac08dd8aa97f447d0730e473cc1193400e7))
+
+
+
+
+
+# [0.4.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.73...@selfcommunity/react-core@0.4.0-alpha.74) (2023-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.4.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.72...@selfcommunity/react-core@0.4.0-alpha.73) (2023-06-15)
+
+
+### Bug Fixes
+
+* counters ([9701069](https://github.com/selfcommunity/community-js/commit/9701069c3be197a9bd9bbf21bf8c838410f4b27e))
+
+
+
+
+
+# [0.4.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.71...@selfcommunity/react-core@0.4.0-alpha.72) (2023-06-12)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.4.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.70...@selfcommunity/react-core@0.4.0-alpha.71) (2023-06-09)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.4.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.69...@selfcommunity/react-core@0.4.0-alpha.70) (2023-06-09)
+
+
+### Bug Fixes
+
+* user profile ([16bbc5a](https://github.com/selfcommunity/community-js/commit/16bbc5a4c72d2d366fdf5a1d2145fe4a00ad1544))
+
+
+
+
+
+# [0.4.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.68...@selfcommunity/react-core@0.4.0-alpha.69) (2023-06-08)
+
+
+### Bug Fixes
+
+* remove log ([29c9698](https://github.com/selfcommunity/community-js/commit/29c96986697eaafa135b0f6ce2d97b6f012a3448))
+
+
+
+
+
+# [0.4.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.67...@selfcommunity/react-core@0.4.0-alpha.68) (2023-06-08)
+
+
+### Bug Fixes
+
+* user profile ([61d7ccb](https://github.com/selfcommunity/community-js/commit/61d7ccb2bafd7482c40257b50fa9b3efc0844681))
+
+
+
+
+
+# [0.4.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.66...@selfcommunity/react-core@0.4.0-alpha.67) (2023-06-08)
+
+
+### Bug Fixes
+
+* user profile ([ae255c1](https://github.com/selfcommunity/community-js/commit/ae255c15b745a7fa2297e67a0da317e0b4fde78f))
+
+
+
+
+
+# [0.4.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.65...@selfcommunity/react-core@0.4.0-alpha.66) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix ssr cache ([d89110b](https://github.com/selfcommunity/community-js/commit/d89110b5420de9e5ffd89016d7227eb4df28ca35))
+
+
+
+
+
 # [0.4.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.64...@selfcommunity/react-core@0.4.0-alpha.65) (2023-06-07)
 
 

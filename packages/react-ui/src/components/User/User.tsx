@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
 import {Avatar, Badge, Button, Chip} from '@mui/material';
@@ -21,6 +21,7 @@ import ConnectionUserButton from '../ConnectionUserButton';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   userFollowers: {
@@ -84,8 +85,10 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
 
 /**
  * > API documentation for the Community-JS User component. Learn about the available props and the CSS API.
- *  <br/>This component renders a user item.
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
+ *
+ *
+ * This component renders a user item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
 
  #### Import
 
@@ -142,6 +145,7 @@ export default function User(inProps: UserProps): JSX.Element {
     return _preferences;
   }, [scPreferences.preferences]);
   const hasBadge = scUser && scUser.community_badge;
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -174,47 +178,52 @@ export default function User(inProps: UserProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root
-      elevation={elevation}
-      {...rest}
-      className={classNames(classes.root, className)}
-      ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}}
-      image={
-        badgeContent ? (
-          <Badge overlap="circular" anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} badgeContent={badgeContent}>
-            <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
-          </Badge>
-        ) : (
-          <Badge
-            invisible={!hasBadge}
-            classes={{badge: classes.staffBadgeIcon}}
-            overlap="circular"
-            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-            badgeContent={
-              preferences ? (
-                <Avatar
-                  className={classes.staffBadge}
-                  alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
-                  src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
-                />
-              ) : null
-            }>
-            <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
-          </Badge>
-        )
-      }
-      primary={
-        hasBadge && preferences ? (
-          <>
-            {scUser.username}
-            <Chip component="span" className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
-          </>
-        ) : (
-          scUser.username
-        )
-      }
-      secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
-      actions={renderAuthenticatedActions()}
-    />
+    <>
+      <Root
+        elevation={elevation}
+        {...rest}
+        className={classNames(classes.root, className)}
+        ButtonBaseProps={
+          scUser.deleted ? {onClick: () => setOpenAlert(true)} : {component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}
+        }
+        image={
+          badgeContent ? (
+            <Badge overlap="circular" anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} badgeContent={badgeContent}>
+              <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
+            </Badge>
+          ) : (
+            <Badge
+              invisible={!hasBadge}
+              classes={{badge: classes.staffBadgeIcon}}
+              overlap="circular"
+              anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+              badgeContent={
+                preferences ? (
+                  <Avatar
+                    className={classes.staffBadge}
+                    alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
+                    src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
+                  />
+                ) : null
+              }>
+              <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
+            </Badge>
+          )
+        }
+        primary={
+          hasBadge && preferences ? (
+            <>
+              {scUser.username}
+              <Chip component="span" className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
+            </>
+          ) : (
+            scUser.username
+          )
+        }
+        secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
+        actions={renderAuthenticatedActions()}
+      />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

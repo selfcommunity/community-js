@@ -84,7 +84,7 @@ const classes = {
   selectedIcon: `${PREFIX}-selected-icon`,
   sectionBadge: `${PREFIX}-section-badge`,
   sectionWithSelectionIcon: `${PREFIX}-section-with-selection-icon`,
-  visibilityBadge: `${PREFIX}-visibility-badge`
+  visibilityIcons: `${PREFIX}-visibility-icons`
 };
 
 const PopperRoot = styled(Popper, {
@@ -133,15 +133,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({
-  [`& .${classes.visibilityBadge}`]: {
-    color: 'red',
-    '& > span': {
-      padding: 12,
-      fontSize: 15
-    }
-  }
-}));
+})(() => ({}));
 
 const messages = defineMessages({
   title: {
@@ -1160,11 +1152,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         className={classes.button}
         size="small">
         {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
-          <Badge
-            badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
-            classes={{badge: classes.visibilityBadge}}>
-            <Icon>more_vert</Icon>
-          </Badge>
+          <span className={classes.visibilityIcons}>
+            {contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
+            <Icon>expand_more</Icon>
+          </span>
         ) : (
           <Icon>more_vert</Icon>
         )}
@@ -1194,6 +1185,16 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}
+          {...(currentAction === DELETE_CONTRIBUTION
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.deleteContributionInfo"
+                    defaultMessage="ui.contributionActionMenu.deleteContributionInfo"
+                  />
+                )
+              }
+            : {})}
           onConfirm={handleConfirmedAction}
           isUpdating={Boolean(currentActionLoading)}
           onClose={() => setOpenConfirmDialog(false)}

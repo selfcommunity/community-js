@@ -3,6 +3,169 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.239...@selfcommunity/react-templates@0.3.0-alpha.240) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
+# [0.3.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.238...@selfcommunity/react-templates@0.3.0-alpha.239) (2023-06-19)
+
+
+### Bug Fixes
+
+* storybook v7 upgrade ([553c1bf](https://github.com/selfcommunity/community-js/commit/553c1bff2b3f8a5c4965a9190b7d887766473964))
+* storybook v7 upgrade ([8d86f19](https://github.com/selfcommunity/community-js/commit/8d86f19810793e04da433ad81ce100390bb2b5f2))
+* storybook v7 upgrade ([00f395b](https://github.com/selfcommunity/community-js/commit/00f395b17ab15d8aab551e995fe9defc2fde294e))
+* storybook v7 upgrade ([391cb8a](https://github.com/selfcommunity/community-js/commit/391cb8a18c1e265399b883c6c335db2a840acf32))
+
+
+
+
+
+# [0.3.0-alpha.238](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.237...@selfcommunity/react-templates@0.3.0-alpha.238) (2023-06-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.237](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.236...@selfcommunity/react-templates@0.3.0-alpha.237) (2023-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.236](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.235...@selfcommunity/react-templates@0.3.0-alpha.236) (2023-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.235](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.234...@selfcommunity/react-templates@0.3.0-alpha.235) (2023-06-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.234](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.233...@selfcommunity/react-templates@0.3.0-alpha.234) (2023-06-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.233](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.232...@selfcommunity/react-templates@0.3.0-alpha.233) (2023-06-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.232](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.231...@selfcommunity/react-templates@0.3.0-alpha.232) (2023-06-13)
+
+
+### Bug Fixes
+
+* add post to feed after creation ([cb787fb](https://github.com/selfcommunity/community-js/commit/cb787fb69b5efead7531829a9207b6dd03ed4ef4))
+
+
+
+
+
+# [0.3.0-alpha.231](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.230...@selfcommunity/react-templates@0.3.0-alpha.231) (2023-06-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.230](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.229...@selfcommunity/react-templates@0.3.0-alpha.230) (2023-06-12)
+
+
+### Bug Fixes
+
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+
+
+
+
+
+# [0.3.0-alpha.229](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.228...@selfcommunity/react-templates@0.3.0-alpha.229) (2023-06-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.228](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.227...@selfcommunity/react-templates@0.3.0-alpha.228) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed comments for doc ([ba897ba](https://github.com/selfcommunity/community-js/commit/ba897ba182dd196159fda9e241224186bb90049e))
+* user profile ([16bbc5a](https://github.com/selfcommunity/community-js/commit/16bbc5a4c72d2d366fdf5a1d2145fe4a00ad1544))
+
+
+### Performance Improvements
+
+* added links to sc-templates components comments for doc. ([a2c18ca](https://github.com/selfcommunity/community-js/commit/a2c18ca0d71609ca2e57826bf19b3789a2bdb0f0))
+
+
+
+
+
+# [0.3.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.226...@selfcommunity/react-templates@0.3.0-alpha.227) (2023-06-08)
+
+
+### Bug Fixes
+
+* remove log ([29c9698](https://github.com/selfcommunity/community-js/commit/29c96986697eaafa135b0f6ce2d97b6f012a3448))
+
+
+
+
+
+# [0.3.0-alpha.226](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.225...@selfcommunity/react-templates@0.3.0-alpha.226) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.225](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.224...@selfcommunity/react-templates@0.3.0-alpha.225) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.224](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.223...@selfcommunity/react-templates@0.3.0-alpha.224) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 # [0.3.0-alpha.223](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.222...@selfcommunity/react-templates@0.3.0-alpha.223) (2023-06-07)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

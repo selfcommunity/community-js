@@ -171,9 +171,11 @@ export interface CommentsFeedObjectProps {
 }
 
 /**
- *> API documentation for the Community-JS Comments Feed Object component. Learn about the available props and the CSS API.
- * <br/>This component renders a list of comment items.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CommentsFeedObject)
+ * > API documentation for the Community-JS Comments Feed Object component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a list of comment items.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CommentsFeedObject)
 
  #### Import
 

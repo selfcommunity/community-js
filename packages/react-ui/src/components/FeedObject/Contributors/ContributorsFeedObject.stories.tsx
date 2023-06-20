@@ -1,10 +1,8 @@
-import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import ContributorsFeedObject from './index';
 import {SCContributionType} from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+
 export default {
   title: 'Design System/React UI/ContributorsFeedObject',
   component: ContributorsFeedObject,
@@ -24,11 +22,11 @@ export default {
     feedObjectId: 17,
     feedObjectType: SCContributionType.DISCUSSION
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof ContributorsFeedObject>;
+  
+} as Meta<typeof ContributorsFeedObject>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ContributorsFeedObject> = (args) => (
+
+const template: StoryObj<typeof ContributorsFeedObject> = (args) => (
   <div style={{width: 800}}>
     <ContributorsFeedObject {...args} />
   </div>

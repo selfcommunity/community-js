@@ -45,6 +45,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const MAX_SUMMARY_LENGTH = 150;
 const messages = defineMessages({
@@ -256,8 +257,10 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
 
 /**
  * > API documentation for the Community-JS Feed Object component. Learn about the available props and the CSS API.
- *  <br/>This component renders a feed object item (post, discussion or status).
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedObject)
+ *
+ *
+ * This component renders a feed object item (post, discussion or status).
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedObject)
 
  #### Import
 
@@ -350,6 +353,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   // OBJECTS
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   /**
    * Get initial expanded activities type
@@ -630,7 +634,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if ((!obj && error) || (obj?.deleted && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))) {
+  if (
+    (!obj && error) ||
+    (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))
+  ) {
     objElement = (
       <CardContent className={classNames(classes.error, classes.content)}>
         <FormattedMessage id="ui.feedObject.error" defaultMessage="ui.feedObject.error" />
@@ -657,14 +664,19 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardHeader
               className={classes.header}
               avatar={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
                   <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
               }
               title={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
                   {obj.author.username}
                 </Link>
               }
@@ -835,14 +847,20 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardHeader
               classes={{root: classes.header}}
               avatar={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
                   <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
                     {obj.author.username}
                   </Avatar>
                 </Link>
               }
               title={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
                   {obj.author.username}
                 </Link>
               }
@@ -888,13 +906,18 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             elevation={0}
             className={classes.snippet}
             image={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
+              <Link
+                {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
                 <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
               </Link>
             }
             primary={
               <Box>
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
                   {obj.author.username}
                 </Link>
                 <Typography variant="body2" className={classes.snippetContent}>
@@ -930,9 +953,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
-      {objElement}
-    </Root>
+    <>
+      <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
+        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
+        {objElement}
+      </Root>
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

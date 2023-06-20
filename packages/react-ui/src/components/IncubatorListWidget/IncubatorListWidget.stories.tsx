@@ -1,11 +1,9 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import IncubatorListWidgetSkeleton from './index';
+import type { Meta, StoryObj } from '@storybook/react';
+import IncubatorListWidget from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/IncubatorListWidget',
-  component: IncubatorListWidgetSkeleton,
+  component: IncubatorListWidget,
   argTypes: {
     elevation: {
       control: {type: 'number'},
@@ -23,17 +21,15 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof IncubatorListWidgetSkeleton>;
+} as Meta<typeof IncubatorListWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof IncubatorListWidgetSkeleton> = (args) => (
+
+const template = (args) => (
   <div style={{width: 500}}>
-    <IncubatorListWidgetSkeleton {...args} />
+    <IncubatorListWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
+export const Base: StoryObj<IncubatorListWidget> = {
+  render: template
 };

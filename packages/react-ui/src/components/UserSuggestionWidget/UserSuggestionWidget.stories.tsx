@@ -1,9 +1,6 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import UserSuggestionWidget from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/User Suggestion Widget',
   component: UserSuggestionWidget,
@@ -24,31 +21,14 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof UserSuggestionWidget>;
+} as Meta<typeof UserSuggestionWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserSuggestionWidget> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <UserSuggestionWidget {...args} />
   </div>
 );
 
-/**
- *
- <ThemeProvider
- theme={createTheme({
-        palette: {
-          secondary: {
-            main: '#dc1616'
-          }
-        }
-      })}>
-  <UserSuggestion {...args} />
- </ThemeProvider>
- */
-
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-};
+export const Base: StoryObj<UserSuggestionWidget> = {
+  render: template
+}

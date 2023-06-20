@@ -1,4 +1,4 @@
-import React, {forwardRef, ReactNode, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {forwardRef, ReactNode, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {
   SCCategoryType,
   SCContributionType,
@@ -6,11 +6,12 @@ import {
   SCFeedDiscussionType,
   SCFeedPostType,
   SCFeedStatusType,
+  SCLocalityType,
   SCMediaType,
   SCPollType,
   SCTagType
 } from '@selfcommunity/types';
-import {Endpoints, formatHttpError, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
   SCPreferencesContext,
@@ -57,11 +58,11 @@ import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import {random, stripHtml} from '@selfcommunity/utils';
+import {isObject, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
-import Editor, {EditorProps} from '../Editor';
+import Editor, {EditorProps, EditorRef} from '../Editor';
 import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link, Share} from '../../shared/Media';
 import MediasPreview from '../../shared/MediasPreview';
@@ -243,9 +244,11 @@ const reducer = (state, action) => {
   }
 };
 /**
- > API documentation for the Community-JS Composer component. Learn about the available props and the CSS API.
- > The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
+ * > API documentation for the Community-JS Composer component. Learn about the available props and the CSS API.
  *
+ *
+ * The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
+
  #### Import
  ```jsx
  import {Composer} from '@selfcommunity/react-ui';
@@ -359,10 +362,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [loadError, setLoadError] = useState<boolean>(false);
 
   // REFS
-  const unloadRef = React.useRef<boolean>(false);
+  const unloadRef = useRef<boolean>(false);
+  let titleRef = useRef<any>();
+  let editorRef: RefObject<EditorRef> = useRef<EditorRef>();
 
   // Create a ref for medias becaouse of state update error on chunk upload
-  const mediasRef = React.useRef({medias, mediaChunks, addMedia, setMediaChunks});
+  const mediasRef = useRef({medias, mediaChunks, addMedia, setMediaChunks});
   mediasRef.current = {medias, mediaChunks, addMedia, setMediaChunks};
 
   /*
@@ -435,9 +440,21 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
   }, [state]);
 
+  // Autofocus
+  useEffect(() => {
+    if (!rest.open) {
+      return;
+    }
+    if (type === COMPOSER_TYPE_DISCUSSION) {
+      titleRef.current && titleRef.current.focus();
+    } else {
+      editorRef.current && editorRef.current.focus();
+    }
+  }, [rest.open, type, editorRef]);
+
   // CHECKS
   const hasPoll = () => {
-    return poll && poll.title.length > 0 && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
+    return poll && poll.title.length > 0 && poll.title.length < COMPOSER_TITLE_MAX_LENGTH && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
   };
 
   const canSubmit = () => {
@@ -465,7 +482,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   const handleChangePoll = (poll: SCPollType): void => {
-    dispatch({type: 'poll', value: poll});
+    dispatch({
+      type: 'multiple',
+      value: {
+        poll: poll,
+        pollError:
+          poll.title.length > COMPOSER_TITLE_MAX_LENGTH
+            ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
+            : null
+      }
+    });
   };
 
   const handleChange =
@@ -488,8 +514,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           break;
         case 'categories':
         case 'addressing':
-        case 'location':
           dispatch({type: prop, value: event});
+          break;
+        case 'location':
+          const value =
+            event && isObject(event)
+              ? event['location']
+                ? {location: event['location'], lat: event['lat'], lng: event['lng']}
+                : {location: event['full_address'], lat: event['lat'], lng: event['lng']}
+              : null;
+          dispatch({type: prop, value});
           break;
         case 'audience':
           data !== null && dispatch({type: 'multiple', value: {audience: data, addressing: audience === AUDIENCE_ALL ? [] : audience}});
@@ -571,7 +605,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
     if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && location) {
       data.location = {
-        location: location.full_address,
+        location: location.location,
         lat: location.lat,
         lng: location.lng
       };
@@ -604,7 +638,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         dispatch({type: 'reset'});
       })
       .catch((error) => {
-        dispatch({type: 'multiple', value: formatHttpError(error)});
+        dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
       })
       .then(() => setIsSubmitting(false));
   };
@@ -793,7 +827,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </Box>
         </DialogTitle>
         <DialogContent className={classes.locationContent}>
-          <LocationAutocomplete onChange={handleChange('location')} defaultValue={location} />
+          <LocationAutocomplete
+            onChange={handleChange('location')}
+            defaultValue={location ? ({full_address: location.location} as SCLocalityType) : ''}
+          />
         </DialogContent>
       </React.Fragment>
     );
@@ -827,6 +864,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           {type === COMPOSER_TYPE_DISCUSSION && (
             <div className={classes.block}>
               <TextField
+                inputRef={titleRef}
                 label={<FormattedMessage id="ui.composer.title.label" defaultMessage="ui.composer.title.label" />}
                 fullWidth
                 variant="outlined"
@@ -843,6 +881,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </div>
           )}
           <Editor
+            ref={editorRef}
             {..._EditorProps}
             key={`${key}-editor`}
             className={classNames(classes.block, classes.editor)}
@@ -866,7 +905,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             {location && (
               <Chip
                 icon={<Icon>add_location_alt</Icon>}
-                label={location.full_address}
+                label={location.location}
                 onDelete={handleDeleteLocation}
                 onClick={handleChangeView(LOCATION_VIEW)}
               />
@@ -888,7 +927,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </div>
           {error && (
             <Typography className={classes.block} color="error">
-              {error}
+              <FormattedMessage id="ui.composer.error.generic" defaultMessage="ui.composer.error.generic" />
             </Typography>
           )}
         </DialogContent>

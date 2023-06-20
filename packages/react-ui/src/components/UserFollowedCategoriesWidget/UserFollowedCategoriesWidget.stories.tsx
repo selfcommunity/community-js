@@ -1,8 +1,6 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserFollowedCategoriesWidget from './UserFollowedCategoriesWidget';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/User Followed Categories Widget',
   component: UserFollowedCategoriesWidget,
@@ -23,17 +21,17 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as ComponentMeta<typeof UserFollowedCategoriesWidget>;
+} as Meta<typeof UserFollowedCategoriesWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserFollowedCategoriesWidget> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <UserFollowedCategoriesWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  userId: 1
+export const Base: StoryObj<UserFollowedCategoriesWidget> = {
+  args: {
+    userId: 1
+  },
+  render: template
 };

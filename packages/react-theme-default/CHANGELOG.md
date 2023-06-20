@@ -3,6 +3,184 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.198...@selfcommunity/react-theme-default@0.1.0-alpha.199) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
+# [0.1.0-alpha.198](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.197...@selfcommunity/react-theme-default@0.1.0-alpha.198) (2023-06-19)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.197](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.196...@selfcommunity/react-theme-default@0.1.0-alpha.197) (2023-06-19)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.196](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.195...@selfcommunity/react-theme-default@0.1.0-alpha.196) (2023-06-16)
+
+
+### Bug Fixes
+
+* fixed left drawer divider padding ([ebfff9b](https://github.com/selfcommunity/community-js/commit/ebfff9b2a1376ab897dac36c688056155377a140))
+
+
+
+
+
+# [0.1.0-alpha.195](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.194...@selfcommunity/react-theme-default@0.1.0-alpha.195) (2023-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.194](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.193...@selfcommunity/react-theme-default@0.1.0-alpha.194) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
+# [0.1.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.192...@selfcommunity/react-theme-default@0.1.0-alpha.193) (2023-06-15)
+
+
+### Bug Fixes
+
+* fixed navbar menu logo padding/drawer closing on navigation ([9104488](https://github.com/selfcommunity/community-js/commit/9104488cbfae08c402576ed2e026deb6404f8508))
+
+
+
+
+
+# [0.1.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.191...@selfcommunity/react-theme-default@0.1.0-alpha.192) (2023-06-14)
+
+
+### Bug Fixes
+
+* fixed navigation toolbar padding(sx/dx) ([168d997](https://github.com/selfcommunity/community-js/commit/168d997d0e9380a199bd9cdcb830645f7d9bd60b))
+
+
+
+
+
+# [0.1.0-alpha.191](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.190...@selfcommunity/react-theme-default@0.1.0-alpha.191) (2023-06-14)
+
+
+### Features
+
+* added menu component for navigation bar ([1a38a44](https://github.com/selfcommunity/community-js/commit/1a38a44c54accfdafac2eba2626abef8717d6f87))
+
+
+
+
+
+# [0.1.0-alpha.190](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.189...@selfcommunity/react-theme-default@0.1.0-alpha.190) (2023-06-13)
+
+
+### Bug Fixes
+
+* visibility icons feedObject ([71bfb0f](https://github.com/selfcommunity/community-js/commit/71bfb0f471815dbb520a577f4976db130d11be1d))
+
+
+
+
+
+# [0.1.0-alpha.189](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.188...@selfcommunity/react-theme-default@0.1.0-alpha.189) (2023-06-12)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.188](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.187...@selfcommunity/react-theme-default@0.1.0-alpha.188) (2023-06-12)
+
+
+### Bug Fixes
+
+* Fix focus on composer open ([087fffd](https://github.com/selfcommunity/community-js/commit/087fffd7fe6da252d120b508748f4a70477100cb))
+* Fix icons ([fff9b7e](https://github.com/selfcommunity/community-js/commit/fff9b7e82f3d0ae937688c75a236ba8544b47141))
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+* styles feed ([1f622c9](https://github.com/selfcommunity/community-js/commit/1f622c971a0ce9a8673f8094b88867287f69afe9))
+
+
+
+
+
+# [0.1.0-alpha.187](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.186...@selfcommunity/react-theme-default@0.1.0-alpha.187) (2023-06-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.186](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.185...@selfcommunity/react-theme-default@0.1.0-alpha.186) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed errors for media/message chunk uploader, fixed asana issues about change picture/change cover. ([c810377](https://github.com/selfcommunity/community-js/commit/c81037793387d2b0f21fc687a508734324f7dfe4))
+* poll title/error on field title. Asana issue: https://app.asana.com/0/1202638443591994/1204784688546920/f ([d044cf1](https://github.com/selfcommunity/community-js/commit/d044cf1a37461356c7061d7064f587b80a319d69))
+
+
+
+
+
+# [0.1.0-alpha.185](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.184...@selfcommunity/react-theme-default@0.1.0-alpha.185) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.184](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.183...@selfcommunity/react-theme-default@0.1.0-alpha.184) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.183](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.182...@selfcommunity/react-theme-default@0.1.0-alpha.183) (2023-06-08)
+
+
+### Bug Fixes
+
+* fixed account credential theme(wasn't applying style) ([14552fc](https://github.com/selfcommunity/community-js/commit/14552fc3c4eba7c4c8719337a5ede733f2f39827))
+
+
+
+
+
+# [0.1.0-alpha.182](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.181...@selfcommunity/react-theme-default@0.1.0-alpha.182) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.181](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.180...@selfcommunity/react-theme-default@0.1.0-alpha.181) (2023-06-07)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

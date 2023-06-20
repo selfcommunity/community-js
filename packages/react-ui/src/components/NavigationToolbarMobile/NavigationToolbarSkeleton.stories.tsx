@@ -1,14 +1,11 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import NavigationToolbarMobileSkeleton from './index';
 import { AppBar } from '@mui/material';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
 
 export default {
   title: 'Design System/React UI/Skeleton/Navigation Toolbar Mobile',
   component: NavigationToolbarMobileSkeleton,
-  argTypes: {},
-  args: {},
   parameters: {
     // The viewports object from the Essentials addon
     viewport: {
@@ -16,21 +13,20 @@ export default {
       viewports: INITIAL_VIEWPORTS,
     },
   },
-} as ComponentMeta<typeof NavigationToolbarMobileSkeleton>;
+} as Meta<typeof NavigationToolbarMobileSkeleton>;
 
-const Template: ComponentStory<typeof NavigationToolbarMobileSkeleton> = (args) => (
+const template = (args) => (
   <AppBar position="relative">
     <NavigationToolbarMobileSkeleton {...args} />
   </AppBar>
 );
 
-export const Base = Template.bind({});
+export const Base: StoryObj<NavigationToolbarMobileSkeleton> = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphone6',
+    }
+  },
+  render: template
+};
 
-Base.args = {};
-
-
-Base.parameters = {
-  viewport: {
-    defaultViewport: 'iphone6',
-  }
-}

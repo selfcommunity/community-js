@@ -160,9 +160,9 @@ export interface SCUserContextType {
 
   /**
    * Handle refresh user notification counters
-   * Interactions, BroadcastMessages
+   * Interactions, BroadcastMessages, Followers, Followings, Categories, etc.
    */
-  refreshNotificationCounters: () => Promise<any>;
+  refreshCounters: () => Promise<any>;
 
   /**
    * Managers: followed, connections, categories, incubators, etc...

@@ -93,9 +93,12 @@ const INITIAL_STATE = {
   view: null
 };
 /**
- > API documentation for the Community-JS Inline Composer component. Learn about the available props and the CSS API.
- * <br/>This component renders This component renders the section used for feed objects creation
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/InlineComposer)
+ * > API documentation for the Community-JS Inline Composer component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders This component renders the section used for feed objects creation
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/InlineComposer)
+
  #### Import
  ```jsx
  import {InlineComposerWidget} from '@selfcommunity/react-ui';
@@ -169,11 +172,12 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
   const handleSuccess = (feedObject) => {
     if (onSuccess) {
       onSuccess(feedObject);
+    } else {
+      enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+        variant: 'success',
+        autoHideDuration: 3000
+      });
     }
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
-      variant: 'success',
-      autoHideDuration: 3000
-    });
     setState({...INITIAL_STATE});
   };
 

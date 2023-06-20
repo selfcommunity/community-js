@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {AutocompleteProps, Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types/notification';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   appreciated: {
@@ -95,6 +96,9 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
   const contribution = getContribution(notificationObject);
   const contributionType = getContributionType(notificationObject);
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // INTL
   const intl = useIntl();
 
@@ -102,54 +106,62 @@ export default function VoteUpNotification(inProps: NotificationVoteUpProps): JS
    * Renders root object
    */
   return (
-    <Root
-      id={id}
-      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
-      template={template}
-      isNew={notificationObject.is_new}
-      disableTypography
-      image={
-        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)}>
-          <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
-        </Link>
-      }
-      primary={
-        <>
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)} className={classes.username}>
-            {notificationObject.user.username}
-          </Link>{' '}
-          {intl.formatMessage(messages.appreciated, {
-            username: notificationObject.user.username,
-            b: (...chunks) => <strong>{chunks}</strong>
-          })}
-        </>
-      }
-      secondary={
-        <>
+    <>
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+        template={template}
+        isNew={notificationObject.is_new}
+        disableTypography
+        image={
           <Link
-            to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-            <Typography variant="body2" className={classes.contributionText} component={'div'}>
-              {getContributionSnippet(notificationObject[contributionType])}
-            </Typography>
+            {...(!notificationObject.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)})}
+            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
+            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
           </Link>
-          {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
-            <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-          )}
-        </>
-      }
-      footer={
-        template === SCNotificationObjectTemplateType.TOAST && (
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <DateTimeAgo date={notificationObject.active_at} />
-            <Typography color="primary" component={'div'}>
-              <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
-                <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
-              </Link>
-            </Typography>
-          </Stack>
-        )
-      }
-      {...rest}
-    />
+        }
+        primary={
+          <>
+            <Link
+              {...(!notificationObject.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)})}
+              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
+              className={classes.username}>
+              {notificationObject.user.username}
+            </Link>{' '}
+            {intl.formatMessage(messages.appreciated, {
+              username: notificationObject.user.username,
+              b: (...chunks) => <strong>{chunks}</strong>
+            })}
+          </>
+        }
+        secondary={
+          <>
+            <Link
+              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
+              <Typography variant="body2" className={classes.contributionText} component={'div'}>
+                {getContributionSnippet(notificationObject[contributionType])}
+              </Typography>
+            </Link>
+            {(template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+            )}
+          </>
+        }
+        footer={
+          template === SCNotificationObjectTemplateType.TOAST && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary" component={'div'}>
+                <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                </Link>
+              </Typography>
+            </Stack>
+          )
+        }
+        {...rest}
+      />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

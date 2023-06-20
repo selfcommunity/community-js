@@ -36,8 +36,10 @@ export interface AccountDeleteButtonProps extends Pick<ButtonProps, Exclude<keyo
 
 /**
  * > API documentation for the Community-JS Account Delete Button component. Learn about the available props and the CSS API.
- <br/>This component display a button that open a Dialog that display the [AccountDelete](/docs/sdk/community-js/react-ui/Components/AccountDelete) component.
- <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountDeleteButton)
+ *
+ *
+ * This component display a button that open a Dialog that display the [AccountDelete](/docs/sdk/community-js/react-ui/Components/AccountDelete) component.
+
  #### Import
 
  ```jsx

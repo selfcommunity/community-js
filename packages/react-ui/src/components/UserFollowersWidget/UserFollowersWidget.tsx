@@ -12,6 +12,7 @@ import {
   SCPreferencesContextType,
   SCThemeType,
   SCUserContextType,
+  useSCFetchUser,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -58,6 +59,11 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
    */
   userId: number;
   /**
+   * User Object
+   * @default null
+   */
+  user?: SCUserType;
+  /**
    * Hides this component
    * @default false
    */
@@ -91,9 +97,11 @@ export interface UserFollowersWidgetProps extends VirtualScrollerItemProps, Widg
 }
 
 /**
- > API documentation for the Community-JS User Followers Widget component. Learn about the available props and the CSS API.
- * <br/>This component renders the list of the follows of the given user.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowers)
+ * > API documentation for the Community-JS User Followers Widget component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the list of the follows of the given user.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowers)
 
  #### Import
 
@@ -127,6 +135,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   });
   const {
     userId,
+    user,
     autoHide = false,
     limit = 3,
     className,
@@ -144,7 +153,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_FOLLOWERS_TOOLS_STATE_CACHE_PREFIX_KEY, userId),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_FOLLOWERS_TOOLS_STATE_CACHE_PREFIX_KEY, isInteger(userId) ? userId : user.id),
       cacheStrategy,
       visibleItems: limit
     },
@@ -155,6 +164,8 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const {scUser, refresh: refreshScUser} = useSCFetchUser({id: userId, user});
+  const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
 
   // MEMO
   const contentAvailability = useMemo(
@@ -182,7 +193,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
     () => (): void => {
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        UserService.getUserFollowers(userId, {limit})
+        UserService.getUserFollowers(scUser.id, {limit})
           .then((payload: SCPaginatedResponse<SCUserType>) => {
             dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           })
@@ -192,29 +203,24 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
           });
       }
     },
-    [state.isLoadingNext, state.initialized, userId, limit, dispatch]
+    [state.isLoadingNext, state.initialized, scUser, limit, dispatch]
   );
 
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (
-      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
-      followEnabled &&
-      isInteger(userId) &&
-      scUserContext.user !== undefined
-    ) {
+    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && followEnabled && scUser && scUserContext.user !== undefined) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, contentAvailability, userId]);
+  }, [scUserContext.user, contentAvailability, scUser]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      UserService.getUserFollowers(userId, {offset: limit, limit: 10})
+      UserService.getUserFollowers(scUser.id, {offset: limit, limit: 10})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload});
         })
@@ -233,12 +239,22 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || !followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!scUser || !followEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
     }
-  }, [scUserContext.user, userId, contentAvailability]);
+  }, [scUserContext.user, scUser, contentAvailability]);
+
+  useEffect(() => {
+    if (!scUser || !followEnabled || !scUserContext.user || !state.initialized || isMe) {
+      return;
+    }
+    // Refresh only if the profile is not mine - followers users can only change if I'm watching
+    // a user (not me) and follow/unfollow that user
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    refreshScUser().catch(() => {});
+  }, [isMe, scUserContext.managers.followed.followed.length]);
 
   // HANDLERS
   const handleNext = useMemo(
@@ -261,16 +277,21 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
   };
 
   // RENDER
-  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (!followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scUser) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
     return <Skeleton />;
   }
+
   const content = (
     <CardContent>
       <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.userFollowersWidget.title" defaultMessage="ui.userFollowersWidget.title" values={{total: state.count}} />
+        <FormattedMessage
+          id="ui.userFollowersWidget.title"
+          defaultMessage="ui.userFollowersWidget.title"
+          values={{total: scUser.followers_counter}}
+        />
       </Typography>
       {!state.count ? (
         <Typography className={classes.noResults} variant="body2">
@@ -295,7 +316,13 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
-          title={<FormattedMessage defaultMessage="ui.userFollowersWidget.title" id="ui.userFollowersWidget.title" values={{total: state.count}} />}
+          title={
+            <FormattedMessage
+              defaultMessage="ui.userFollowersWidget.title"
+              id="ui.userFollowersWidget.title"
+              values={{total: scUser.followers_counter}}
+            />
+          }
           onClose={handleToggleDialogOpen}
           open={openDialog}
           {...DialogProps}>

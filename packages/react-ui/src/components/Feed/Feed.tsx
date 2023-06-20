@@ -14,7 +14,7 @@ import {
   SCThemeType
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import { Box, CardContent, Grid, Hidden, Theme, useMediaQuery } from "@mui/material";
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -41,8 +41,10 @@ const PREFIX = 'SCFeed';
 const classes = {
   root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
-  right: `${PREFIX}-right`,
+  start: `${PREFIX}-start`,
   end: `${PREFIX}-end`,
+  endMessage: `${PREFIX}-end-message`,
+  right: `${PREFIX}-right`,
   refresh: `${PREFIX}-refresh`,
   paginationLink: `${PREFIX}-pagination-link`
 };
@@ -244,8 +246,10 @@ const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences
 
 /**
  * > API documentation for the Community-JS Feed component. Learn about the available props and the CSS API.
- *  <br/>This component renders a feed.
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Feed)
+ *
+ *
+ * This component renders a feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Feed)
 
  #### Import
 
@@ -564,7 +568,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const renderHeaderComponent = () => {
     return (
-      <>
+      <Box className={classes.start}>
         {!feedDataObject.previous && (
           <>
             {virtualScrollerMountState.current && HeaderComponent}
@@ -576,7 +580,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             })}
           </>
         )}
-      </>
+      </Box>
     );
   };
 
@@ -796,15 +800,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
             scrollThreshold={1}
             endMessage={
-              <>
-                <Widget className={classes.end}>
+              <Box className={classes.end}>
+                <Widget className={classes.endMessage}>
                   <CardContent>{endMessage}</CardContent>
                 </Widget>
                 {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
                   <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
                 ) : null}
                 {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
-              </>
+              </Box>
             }
             refreshFunction={refresh}
             pullDownToRefresh

@@ -22,13 +22,12 @@ export default function useSCFetchUserBlockedBy({
   blockedByUser?: boolean | null;
   sync?: boolean;
 }) {
-  const [blockedBy, setBlockedBy] = useState<boolean>(blockedByUser);
-  const [loading, setLoading] = useState(blockedByUser === null);
+  const [blockedBy, setBlockedBy] = useState<boolean>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>(null);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
   /**
    * Memoized fetchUserBlockedBy
@@ -57,30 +56,36 @@ export default function useSCFetchUserBlockedBy({
    * If user attempt to get blocked by
    */
   useEffect(() => {
-    if (authUserId && user && loading && blockedBy === null) {
-      if (authUserId !== user.id) {
-        fetchUserBlockedBy(user);
-      } else {
+    if (user && blockedBy === null) {
+      // if user && blockedBy === null initialize the component
+      if (scUserContext.user) {
+        // authenticated user
+        if (scUserContext.user.id !== user.id) {
+          fetchUserBlockedBy(user);
+        } else {
+          setBlockedBy(false);
+          setLoading(false);
+        }
+      } else if (scUserContext.user === null) {
+        // anonymous user
+        setBlockedBy(blockedByUser);
         setLoading(false);
       }
     }
-  }, [authUserId, user, fetchUserBlockedBy, blockedBy]);
+  }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy, loading]);
 
-  /**
-   * Update blockedBy if blockedByUser changes
-   */
   useEffect(() => {
-    if (authUserId && user) {
+    if (!scUserContext.user && blockedBy !== null) {
       setBlockedBy(blockedByUser);
     }
-  }, [authUserId, blockedByUser, setBlockedBy]);
+  }, [scUserContext.user, blockedBy, blockedByUser]);
 
   /**
    * If sync enabled pull the remote status every 5sec
    */
   useEffect(() => {
     let interval;
-    if (authUserId && blockedBy !== null && sync) {
+    if (scUserContext.user && blockedBy !== null && sync) {
       interval = setInterval(() => {
         fetchUserBlockedBy(user, false);
       }, 5000);
@@ -88,7 +93,7 @@ export default function useSCFetchUserBlockedBy({
         interval && clearInterval(interval);
       };
     }
-  }, [authUserId, user, fetchUserBlockedBy, blockedBy]);
+  }, [scUserContext.user, user, fetchUserBlockedBy, blockedBy]);
 
   return {blockedBy, loading, error};
 }

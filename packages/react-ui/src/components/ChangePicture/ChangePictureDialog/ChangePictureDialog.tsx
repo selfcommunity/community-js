@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, ImageList, ImageListItem, ImageListItemBar} from '@mui/material';
+import {Alert, Box, IconButton, ImageList, ImageListItem, ImageListItemBar} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {Endpoints, UserService} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -13,6 +13,8 @@ import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
 import {scroll} from 'seamless-scroll-polyfill';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const PREFIX = 'SCChangePictureDialog';
 
@@ -59,6 +61,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
   //STATE
   const [file, setFile] = useState(scUserContext.user['avatar']);
   const [error, setError] = useState<boolean>(false);
+  const [alert, setAlert] = useState<boolean>(false);
   const [primary, setPrimary] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [deleteAvatarId, setDeleteAvatarId] = useState<number>(null);
@@ -80,9 +83,14 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    * @param event
    */
   function handleUpload(event) {
-    fileInput = event.target.files[0];
-    setFile(URL.createObjectURL(fileInput as any));
-    handleSave();
+    const maxSize = 3 * 1024 * 1024;
+    if (event && event.target.files[0]?.size <= maxSize) {
+      fileInput = event.target.files[0];
+      setFile(URL.createObjectURL(fileInput as any));
+      handleSave();
+    } else {
+      setAlert(true);
+    }
   }
 
   /**
@@ -103,7 +111,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
       .catch((error) => {
         setError(true);
         setLoading(false);
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -149,7 +157,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
           onChange && onChange(avatar);
         })
         .catch((error) => {
-          console.log(error);
+          Logger.error(SCOPE_SC_UI, error);
         });
     }
   }
@@ -176,7 +184,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
       })
       .catch((error) => {
         setOpenDeleteAvatarDialog(false);
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }
 
@@ -194,10 +202,13 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
         }
       })
       .catch((error) => {
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
       });
   }, []);
 
+  /**
+   * Renders root object
+   */
   return (
     <Root
       className={classNames(classes.root, className)}
@@ -206,28 +217,46 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
       open={open}
       {...rest}>
       <Box className={classes.upload}>
-        <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
-        <Button
-          disabled={loading || isDeletingAvatar}
-          variant="outlined"
-          onClick={() => fileInput.current.click()}
-          color={error ? 'error' : 'primary'}
-          startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
-          {loading ? (
-            <CircularProgress size={15} />
-          ) : (
-            <>
-              {error ? (
-                <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
+        {alert ? (
+          <Alert color="error" onClose={() => setAlert(false)}>
+            <FormattedMessage id="ui.changePicture.button.upload.alert" defaultMessage="ui.changePicture.button.upload.alert" />
+          </Alert>
+        ) : (
+          <>
+            <input type="file" onChange={handleUpload} ref={fileInput} hidden accept=".gif,.png,.jpg,.jpeg" />
+            <Button
+              disabled={loading || isDeletingAvatar}
+              variant="outlined"
+              onClick={() => fileInput.current.click()}
+              color={error ? 'error' : 'primary'}
+              startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
+              {loading ? (
+                <CircularProgress size={15} />
               ) : (
-                <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+                <>
+                  {error ? (
+                    <FormattedMessage id="ui.changePicture.button.upload.error" defaultMessage="ui.changePicture.button.upload.error" />
+                  ) : (
+                    <FormattedMessage id="ui.changePicture.button.upload" defaultMessage="ui.changePicture.button.upload" />
+                  )}
+                </>
               )}
-            </>
-          )}
-        </Button>
-        <Typography fontSize="small" color="text.secondary" gutterBottom>
-          <FormattedMessage id="ui.changePicture.listF" defaultMessage="ui.changePicture.listF" /> <br />
-          <FormattedMessage id="ui.changePicture.listS" defaultMessage="ui.changePicture.listS" />
+            </Button>
+          </>
+        )}
+        <Typography component="span" fontSize="small" color="text.secondary" gutterBottom>
+          <FormattedMessage
+            id="ui.changePicture.info"
+            defaultMessage="ui.changePicture.info"
+            values={{
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              li: (chunks) => <li>{chunks}</li>,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              ul: (chunks) => <ul>{chunks}</ul>
+            }}
+          />
         </Typography>
       </Box>
       <ImageList cols={3} rowHeight={'auto'} id="avatarsList" classes={{root: classes.imagesList}}>

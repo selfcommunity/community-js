@@ -31,6 +31,7 @@ import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Icon from '@mui/material/Icon';
 import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../constants/SocialShare';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
   intro: {
@@ -150,8 +151,8 @@ export interface IncubatorDetailProps {
 }
 /**
  * > API documentation for the Community-JS Incubator Detail component. Learn about the available props and the CSS API.
- *
- * #### Import
+
+ #### Import
  ```jsx
  import {IncubatorDetail} from '@selfcommunity/react-ui';
  ```
@@ -193,6 +194,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
   const [total, setTotal] = useState<number>(0);
   const [subscribers, setSubscribers] = useState<SCUserType[]>([]);
   const [openSubscribersDialog, setOpenSubscribersDialog] = useState<boolean>(false);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -306,140 +308,153 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
    * Renders root element
    */
   return (
-    <Root
-      title={
-        <>
-          <Avatar className={classes.avatar} alt={scIncubator.user.avatar} src={scIncubator.user.avatar} />
-          <Box>
-            <Typography className={classes.title}>{`${intl.formatMessage(messages.intro, {name: scIncubator.name})}`} </Typography>
-            <Typography component={'span'}>
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)}>@{scIncubator.user.username}</Link>
-            </Typography>
-          </Box>
-        </>
-      }
-      open={open}
-      onClose={onClose}
-      className={classNames(classes.root, className)}
-      {...rest}>
-      <Box>
-        <Incubator elevation={0} incubator={scIncubator} detailView={true} subscribeButtonProps={{onSubscribe: handleUpdates}} {...IncubatorProps} />
-        <Box className={classes.subscribers}>
-          {loading && !scIncubator ? (
-            <AvatarGroupSkeleton {...rest} />
-          ) : (
-            <>
-              {total > 0 ? (
-                <Button onClick={handleToggleSubscribersDialog} disabled={loading || !scIncubator}>
-                  <AvatarGroup {...rest}>
-                    {subscribers.map((u: SCUserType) => (
-                      <Avatar key={u.id} alt={u.username} src={u.avatar} />
-                    ))}
-                    {[...Array(Math.max(0, total - subscribers.length))].map(
-                      (
-                        x,
-                        i // Add max to 0 to prevent creation of array with negative index during state update
-                      ) => (
-                        <Avatar key={i} />
-                      )
-                    )}
-                  </AvatarGroup>
-                </Button>
-              ) : null}
-            </>
-          )}
-        </Box>
-        {openSubscribersDialog && (
-          <BaseDialog
-            title={
-              <>
-                <FormattedMessage defaultMessage="ui.incubatorDetail.subscribersSection.title" id="ui.incubatorDetail.subscribersSection.title" /> (
-                {total})
-              </>
-            }
-            onClose={handleToggleSubscribersDialog}
-            open={openSubscribersDialog}>
-            {loading ? (
-              <CentralProgress size={50} />
-            ) : (
-              <InfiniteScroll
-                dataLength={total}
-                next={fetchSubscribers}
-                hasMoreNext={next !== null}
-                loaderNext={<CentralProgress size={30} />}
-                height={400}
-                endMessage={
-                  <Typography variant="body2" align="center" fontWeight="bold">
-                    <FormattedMessage
-                      id="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
-                      defaultMessage="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
-                    />
-                  </Typography>
-                }>
-                <List>
-                  {subscribers.map((s, index) => (
-                    <ListItem key={(s.id, index)}>
-                      <User elevation={0} user={s} key={index} />
-                    </ListItem>
-                  ))}
-                </List>
-              </InfiniteScroll>
-            )}
-          </BaseDialog>
-        )}
-        <Widget elevation={1} className={classes.shareCard}>
-          <CardContent>
-            <Typography variant={'h6'}>
-              <FormattedMessage id="ui.incubatorDetail.shareSection.title" defaultMessage="ui.incubatorDetail.shareSection.title" />
-            </Typography>
-            <Typography variant={'subtitle1'}>
-              <FormattedMessage id="ui.incubatorDetail.shareSection.share" defaultMessage="ui.incubatorDetail.shareSection.share" />
-            </Typography>
-            <FormGroup className={classes.copyUrlForm}>
-              <TextField className={classes.copyText} variant="outlined" value={portal} />
-              <Button className={classes.copyButton} variant="contained" onClick={copy}>
-                <FormattedMessage id="ui.incubatorDetail.shareSection.button.copy" defaultMessage="ui.incubatorDetail.shareSection.button.copy" />
-              </Button>
-            </FormGroup>
-            {alert && (
-              <Alert onClose={() => setAlert(false)}>
-                <FormattedMessage id="ui.incubatorDetail.shareSection.copied" defaultMessage="ui.incubatorDetail.shareSection.copied" />
-              </Alert>
-            )}
-            {isSocialShareEnabled && (
-              <Typography variant={'subtitle2'}>
-                <FormattedMessage id="ui.incubatorDetail.shareSection.invite" defaultMessage="ui.incubatorDetail.shareSection.invite" />
+    <>
+      <Root
+        title={
+          <>
+            <Avatar className={classes.avatar} alt={scIncubator.user.avatar} src={scIncubator.user.avatar} />
+            <Box>
+              <Typography className={classes.title}>{`${intl.formatMessage(messages.intro, {name: scIncubator.name})}`} </Typography>
+              <Typography component={'span'}>
+                <Link
+                  {...(!scIncubator.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)})}
+                  onClick={scIncubator.user.deleted ? () => setOpenAlert(true) : null}>
+                  @{scIncubator.user.username}
+                </Link>
               </Typography>
-            )}
-            <Box className={classes.shareSection}>
-              {facebookShareEnabled && (
-                <Icon
-                  classes={{root: classes.shareMenuIcon}}
-                  fontSize="small"
-                  onClick={() => window.open(FACEBOOK_SHARE + portal, 'facebook-share-dialog', 'width=626,height=436')}>
-                  facebook
-                </Icon>
-              )}
-              {twitterShareEnabled && (
-                <Icon
-                  classes={{root: classes.shareMenuIcon}}
-                  fontSize="small"
-                  onClick={() => window.open(TWITTER_SHARE + portal, 'twitter-share-dialog', 'width=626,height=436')}>
-                  twitter
-                </Icon>
-              )}
-              {linkedinShareEnabled && (
-                <Icon
-                  classes={{root: classes.shareMenuIcon}}
-                  fontSize="small"
-                  onClick={() => window.open(LINKEDIN_SHARE + portal, 'linkedin-share-dialog', 'width=626,height=436')}>
-                  linkedin
-                </Icon>
-              )}
             </Box>
-          </CardContent>
-        </Widget>
-      </Box>
-    </Root>
+          </>
+        }
+        open={open}
+        onClose={onClose}
+        className={classNames(classes.root, className)}
+        {...rest}>
+        <Box>
+          <Incubator
+            elevation={0}
+            incubator={scIncubator}
+            detailView={true}
+            subscribeButtonProps={{onSubscribe: handleUpdates}}
+            {...IncubatorProps}
+          />
+          <Box className={classes.subscribers}>
+            {loading && !scIncubator ? (
+              <AvatarGroupSkeleton {...rest} />
+            ) : (
+              <>
+                {total > 0 ? (
+                  <Button onClick={handleToggleSubscribersDialog} disabled={loading || !scIncubator}>
+                    <AvatarGroup {...rest}>
+                      {subscribers.map((u: SCUserType) => (
+                        <Avatar key={u.id} alt={u.username} src={u.avatar} />
+                      ))}
+                      {[...Array(Math.max(0, total - subscribers.length))].map(
+                        (
+                          x,
+                          i // Add max to 0 to prevent creation of array with negative index during state update
+                        ) => (
+                          <Avatar key={i} />
+                        )
+                      )}
+                    </AvatarGroup>
+                  </Button>
+                ) : null}
+              </>
+            )}
+          </Box>
+          {openSubscribersDialog && (
+            <BaseDialog
+              title={
+                <>
+                  <FormattedMessage defaultMessage="ui.incubatorDetail.subscribersSection.title" id="ui.incubatorDetail.subscribersSection.title" /> (
+                  {total})
+                </>
+              }
+              onClose={handleToggleSubscribersDialog}
+              open={openSubscribersDialog}>
+              {loading ? (
+                <CentralProgress size={50} />
+              ) : (
+                <InfiniteScroll
+                  dataLength={total}
+                  next={fetchSubscribers}
+                  hasMoreNext={next !== null}
+                  loaderNext={<CentralProgress size={30} />}
+                  height={400}
+                  endMessage={
+                    <Typography variant="body2" align="center" fontWeight="bold">
+                      <FormattedMessage
+                        id="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
+                        defaultMessage="ui.incubatorDetail.subscribersSection.noMoreSubscribers"
+                      />
+                    </Typography>
+                  }>
+                  <List>
+                    {subscribers.map((s, index) => (
+                      <ListItem key={(s.id, index)}>
+                        <User elevation={0} user={s} key={index} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </InfiniteScroll>
+              )}
+            </BaseDialog>
+          )}
+          <Widget elevation={1} className={classes.shareCard}>
+            <CardContent>
+              <Typography variant={'h6'}>
+                <FormattedMessage id="ui.incubatorDetail.shareSection.title" defaultMessage="ui.incubatorDetail.shareSection.title" />
+              </Typography>
+              <Typography variant={'subtitle1'}>
+                <FormattedMessage id="ui.incubatorDetail.shareSection.share" defaultMessage="ui.incubatorDetail.shareSection.share" />
+              </Typography>
+              <FormGroup className={classes.copyUrlForm}>
+                <TextField className={classes.copyText} variant="outlined" value={portal} />
+                <Button className={classes.copyButton} variant="contained" onClick={copy}>
+                  <FormattedMessage id="ui.incubatorDetail.shareSection.button.copy" defaultMessage="ui.incubatorDetail.shareSection.button.copy" />
+                </Button>
+              </FormGroup>
+              {alert && (
+                <Alert onClose={() => setAlert(false)}>
+                  <FormattedMessage id="ui.incubatorDetail.shareSection.copied" defaultMessage="ui.incubatorDetail.shareSection.copied" />
+                </Alert>
+              )}
+              {isSocialShareEnabled && (
+                <Typography variant={'subtitle2'}>
+                  <FormattedMessage id="ui.incubatorDetail.shareSection.invite" defaultMessage="ui.incubatorDetail.shareSection.invite" />
+                </Typography>
+              )}
+              <Box className={classes.shareSection}>
+                {facebookShareEnabled && (
+                  <Icon
+                    classes={{root: classes.shareMenuIcon}}
+                    fontSize="small"
+                    onClick={() => window.open(FACEBOOK_SHARE + portal, 'facebook-share-dialog', 'width=626,height=436')}>
+                    facebook
+                  </Icon>
+                )}
+                {twitterShareEnabled && (
+                  <Icon
+                    classes={{root: classes.shareMenuIcon}}
+                    fontSize="small"
+                    onClick={() => window.open(TWITTER_SHARE + portal, 'twitter-share-dialog', 'width=626,height=436')}>
+                    twitter
+                  </Icon>
+                )}
+                {linkedinShareEnabled && (
+                  <Icon
+                    classes={{root: classes.shareMenuIcon}}
+                    fontSize="small"
+                    onClick={() => window.open(LINKEDIN_SHARE + portal, 'linkedin-share-dialog', 'width=626,height=436')}>
+                    linkedin
+                  </Icon>
+                )}
+              </Box>
+            </CardContent>
+          </Widget>
+        </Box>
+      </Root>
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

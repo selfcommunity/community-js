@@ -95,8 +95,10 @@ export interface CategoryTrendingUsersWidgetProps extends VirtualScrollerItemPro
 
 /**
  * > API documentation for the Community-JS Trending Users Widget component. Learn about the available props and the CSS API.
- * <br/>This component renders a specific category's trending people list.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryTrendingUsers)
+ *
+ *
+ * This component renders a specific category's trending people list.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoryTrendingUsers)
 
  #### Import
 

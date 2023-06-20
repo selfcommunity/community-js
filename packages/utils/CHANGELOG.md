@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.2...@selfcommunity/utils@0.2.0-alpha.3) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix ssr cache ([d89110b](https://github.com/selfcommunity/community-js/commit/d89110b5420de9e5ffd89016d7227eb4df28ca35))
+
+
+
+
+
 # [0.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.1...@selfcommunity/utils@0.2.0-alpha.2) (2023-06-07)
 
 

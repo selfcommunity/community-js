@@ -2,12 +2,13 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "lib",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     // Import non-ES modules as default imports.
     "esModuleInterop": true,
     // Ensure that .d.ts files are created by tsc, but not .js files
-    "declaration": true
+    "declaration": true,
+    "lib": ["es7", "dom"]
   },
   "include": ["src", "./globals.d.ts"]
 }

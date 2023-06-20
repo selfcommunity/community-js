@@ -15,6 +15,8 @@
       "@selfcommunity/*": ["packages/*/src"]
     },
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
   }
 }

@@ -85,8 +85,7 @@ export interface UserSocialAssociationProps extends StackProps {
 }
 
 /**
- *
- > API documentation for the Community-JS User Social Association component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Social Association component. Learn about the available props and the CSS API.
 
  #### Import
 

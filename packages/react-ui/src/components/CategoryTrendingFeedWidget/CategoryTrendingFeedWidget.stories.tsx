@@ -1,9 +1,7 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import CategoryTrendingFeedWidget from './index';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Category Trending Feed Widget',
   component: CategoryTrendingFeedWidget,
@@ -26,15 +24,16 @@ export default {
     variant: 'elevation',
     template: SCFeedObjectTemplateType.SNIPPET
   }
-} as ComponentMeta<typeof CategoryTrendingFeedWidget>;
+} as Meta<typeof CategoryTrendingFeedWidget>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CategoryTrendingFeedWidget> = (args) => (
+
+const template = (args) => (
   <div style={{width: 500}}>
     <CategoryTrendingFeedWidget {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
+export const Base: StoryObj<CategoryTrendingFeedWidget> = {
+  render: template
+};
 
-Base.args = {};

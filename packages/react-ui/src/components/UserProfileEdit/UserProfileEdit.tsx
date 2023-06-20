@@ -71,10 +71,11 @@ export interface UserProfileEditProps {
 }
 
 /**
+ * > API documentation for the Community-JS User Profile Edit component. Learn about the available props and the CSS API.
  *
- > API documentation for the Community-JS User Profile Edit component. Learn about the available props and the CSS API.
- * <br/>This component renders a section composed of different tabs where the user can edit the settings about its public information, account and notifications.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserProfileEdit)
+ *
+ * This component renders a section composed of different tabs where the user can edit the settings about its public information, account and notifications.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserProfileEdit)
 
  #### Import
 

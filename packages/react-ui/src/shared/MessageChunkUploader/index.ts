@@ -7,7 +7,7 @@ import {
   useItemFinishListener,
   useRequestPreSend
 } from '@rpldy/chunked-uploady';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {http, Endpoints, formatHttpErrorCode, HttpResponse} from '@selfcommunity/api-services';
 import {SCMessageFileType, SCPrivateMessageFileType} from '@selfcommunity/types';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
@@ -125,8 +125,13 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
         onSuccess(data);
       })
       .catch((error) => {
-        error = formatHttpError(error);
-        onError({...chunkStateRef.current.chunks[item.id]}, error.error);
+        error = formatHttpErrorCode(error);
+        onError(
+          {...chunkStateRef.current.chunks[item.id]},
+          error.fileError
+            ? intl.formatMessage(messages.fileUploadErrorGeneric)
+            : intl.formatMessage(messages.messageFileUploadError, {filename: item.file.name})
+        );
         const _chunks = {...chunkStateRef.current.chunks};
         delete _chunks[item.id];
         chunkStateRef.current.setChunks(_chunks);
@@ -139,7 +144,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
         uploadThumbnail(item, file);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.messageFileUploadError, {filename: item.file.name}));
         const _chunks = {...chunkStateRef.current.chunks};
         delete _chunks[item.id];
@@ -164,8 +169,13 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
         isImageType(item.file.type) ? uploadThumbnail(item, item.file) : generateImageThumbnail(callBack, item, res.data.file_url);
       })
       .catch((error) => {
-        error = formatHttpError(error);
-        onError({...chunkStateRef.current.chunks[item.id]}, error.error);
+        error = formatHttpErrorCode(error);
+        onError(
+          {...chunkStateRef.current.chunks[item.id]},
+          error.fileError
+            ? intl.formatMessage(messages.fileUploadErrorGeneric)
+            : intl.formatMessage(messages.messageFileUploadError, {filename: item.file.name})
+        );
         const _chunks = {...chunkStateRef.current.chunks};
         delete _chunks[item.id];
         chunkStateRef.current.setChunks(_chunks);

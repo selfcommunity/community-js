@@ -1,5 +1,15 @@
 import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip} from '@mui/material';
 import React, {useMemo} from 'react';
+import Icon from '@mui/material/Icon';
+import {useThemeProps} from '@mui/system';
+import classNames from 'classnames';
+import NavigationToolbarSkeleton from './Skeleton';
+import {FormattedMessage} from 'react-intl';
+import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
+import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
+import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
+import ComposerIconButton, {ComposerIconButtonProps} from '../ComposerIconButton';
+import {SCFeatureName} from '@selfcommunity/types';
 import {
   Link,
   SCPreferences,
@@ -12,16 +22,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
-import {useThemeProps} from '@mui/system';
-import classNames from 'classnames';
-import NavigationToolbarSkeleton from './Skeleton';
-import {FormattedMessage} from 'react-intl';
-import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
-import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
-import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
-import ComposerIconButton from '../ComposerIconButton';
-import {SCFeatureName} from '@selfcommunity/types';
+import NavigationMenuIconButton from '../NavigationMenuIconButton';
 
 const PREFIX = 'SCNavigationToolbar';
 
@@ -88,6 +89,11 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * @default {}
    */
   NotificationMenuProps?: Omit<NotificationsMenuProps, 'anchorEl' | 'open' | 'onClose' | 'onClick' | 'transformOrigin' | 'anchorOrigin'>;
+  /**
+   * Props to spread to the ComposerIconButton
+   * @default {}
+   */
+  ComposerIconButtonProps?: ComposerIconButtonProps;
 }
 
 const PREFERENCES = [
@@ -99,8 +105,10 @@ const PREFERENCES = [
 
 /**
  * > API documentation for the Community-JS NavigationToolbar component. Learn about the available props and the CSS API.
- * <br/>This component renders the application header.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbar)
+ *
+ *
+ * This component renders the application header.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/NavigationToolbar)
 
  #### Import
 
@@ -140,6 +148,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     props: inProps,
     name: PREFIX
   });
+
   const {
     value = '',
     className = '',
@@ -147,6 +156,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     action = <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>,
     children = null,
     NotificationMenuProps = {},
+    ComposerIconButtonProps = {},
     onOpenNotificationMenu,
     onCloseNotificationMenu,
     ...rest
@@ -210,6 +220,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
+      <NavigationMenuIconButton />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
@@ -226,7 +237,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {scUserContext.user ? (
         <>
-          <ComposerIconButton className={classes.composer}></ComposerIconButton>
+          <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>
           <Tooltip title={scUserContext.user.username}>
             <IconButton
               component={Link}

@@ -1,11 +1,15 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, Grid, Typography} from '@mui/material';
+import {Box, Divider, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {SCUserContextType, useSCFetchUser, useSCFetchUserBlockedBy, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import {LoadingButton} from '@mui/lab';
+import {useSnackbar} from 'notistack';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const PREFIX = 'SCUserProfileBlocked';
 
@@ -61,8 +65,7 @@ export interface UserProfileBlockedProps {
 }
 
 /**
- *
- > API documentation for the Community-JS User Profile Blocked component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Profile Blocked component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -95,6 +98,7 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // HOOKS
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -103,7 +107,23 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
   // CONST
   const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
 
-  if (!scUser || loadingBlockedBy) {
+  /**
+   * Handle block action
+   */
+  const handleBlock = useMemo(
+    () => (): void => {
+      scUserContext.managers.blockedUsers.block(scUser).catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
+    },
+    [scUserContext.managers.blockedUsers, scUser]
+  );
+
+  if (!scUser || !scUserContext.user || loadingBlockedBy) {
     return null;
   }
 
@@ -120,13 +140,14 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
           <Typography variant="body1" className={classes.info}>
             <FormattedMessage id="ui.userProfileBlocked.blockedUser" defaultMessage="ui.userProfileBlocked.blockedUser" />
           </Typography>
-          <Button
+          <LoadingButton
             variant="contained"
             className={classes.button}
-            onClick={() => scUserContext.managers.blockedUsers.block(scUser)}
-            disabled={scUserContext.managers.blockedUsers.isLoading()}>
+            loading={scUserContext.managers.blockedUsers.loading}
+            disabled={scUserContext.managers.blockedUsers.loading}
+            onClick={handleBlock}>
             <FormattedMessage id="ui.userProfileBlocked.unBlockUser" defaultMessage="ui.userProfileBlocked.unBlockUser" />
-          </Button>
+          </LoadingButton>
         </>
       )}
     </Root>

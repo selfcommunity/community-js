@@ -82,9 +82,11 @@ export interface UserFollowedCategoriesWidgetProps extends VirtualScrollerItemPr
 }
 
 /**
- > API documentation for the Community-JS User Profile Categories Followed Widget component. Learn about the available props and the CSS API.
- * <br/>This component renders the list of the categories that the given user follows.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowedCategories)
+ * > API documentation for the Community-JS User Profile Categories Followed Widget component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the list of the categories that the given user follows.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserFollowedCategories)
 
  #### Import
  ```jsx
@@ -126,6 +128,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const isMe = useMemo(() => scUserContext.user && userId === scUserContext.user.id, [scUserContext.user, userId]);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const contentAvailability = useMemo(
     () =>
@@ -202,17 +205,19 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
 
   // HANDLERS
   const handleOnFollowCategory = (category): void => {
-    const newCategories = [...state.results];
-    const index = newCategories.findIndex((u) => u.id === category.id);
-    if (index !== -1) {
-      if (category.followed) {
-        newCategories[index].followers_counter = category.followers_counter - 1;
-        newCategories[index].followed = !category.followed;
-      } else {
-        newCategories[index].followers_counter = category.followers_counter + 1;
-        newCategories[index].followed = !category.followed;
+    if (isMe) {
+      const newCategories = [...state.results];
+      const index = newCategories.findIndex((u) => u.id === category.id);
+      if (index !== -1) {
+        if (category.followed) {
+          newCategories[index].followers_counter = category.followers_counter - 1;
+          newCategories[index].followed = !category.followed;
+        } else {
+          newCategories[index].followers_counter = category.followers_counter + 1;
+          newCategories[index].followed = !category.followed;
+        }
+        dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newCategories}});
       }
-      dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newCategories}});
     }
   };
 
@@ -233,7 +238,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
         <FormattedMessage
           id="ui.userFollowedCategoriesWidget.title"
           defaultMessage="ui.userFollowedCategoriesWidget.title"
-          values={{total: state.count}}
+          values={{total: isMe ? state.results.filter((c) => c.followed).length : state.count}}
         />
       </Typography>
       {!state.count ? (

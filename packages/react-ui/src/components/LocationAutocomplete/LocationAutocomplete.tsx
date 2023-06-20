@@ -60,8 +60,10 @@ export interface LocationAutocompleteProps
 }
 /**
  * > API documentation for the Community-JS Location Autocomplete component. Learn about the available props and the CSS API.
- * <br/>This component renders a bar that allows users to search (with autocomplete) for cities names.
- * <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/LocationAutocomplete)
+ *
+ *
+ * This component renders a bar that allows users to search (with autocomplete) for cities names.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/LocationAutocomplete)
  *
  * #### Import
  *  ```jsx

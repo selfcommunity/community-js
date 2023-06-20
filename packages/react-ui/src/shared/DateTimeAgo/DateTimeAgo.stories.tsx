@@ -1,5 +1,4 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import DateTimeAgo from './index';
 
 export default {
@@ -17,13 +16,14 @@ export default {
       table: {defaultValue: {summary: true}}
     }
   }
-} as ComponentMeta<typeof DateTimeAgo>;
+} as Meta<typeof DateTimeAgo>;
 
-const Template: ComponentStory<typeof DateTimeAgo> = (args) => <DateTimeAgo {...args} />;
+const template = (args) => <DateTimeAgo {...args} />;
 
-export const Base = Template.bind({});
-
-Base.args = {
-  date: new Date(),
-  live: true
+export const Base: StoryObj<DateTimeAgo> = {
+  args: {
+    date: new Date(),
+    live: true
+  },
+  render: template
 };

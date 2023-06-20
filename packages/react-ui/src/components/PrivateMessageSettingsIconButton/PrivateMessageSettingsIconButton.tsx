@@ -63,8 +63,7 @@ export interface PrivateMessageSettingsIconButtonProps extends IconButtonProps {
 }
 
 /**
- *
- > API documentation for the Community-JS PrivateMessageSettingsIconButton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS PrivateMessageSettingsIconButton component. Learn about the available props and the CSS API.
 
  #### Import
 

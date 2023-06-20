@@ -2,8 +2,8 @@
  * LruCache interface
  */
 export interface LruCacheType<T> {
-  get: (key: string, value?: T) => T;
-  set: (key: string, value: T) => void;
+  get: (key: string, value?: T, options?: {noSsr: boolean}) => T;
+  set: (key: string, value: T, options?: {noSsr: boolean}) => void;
   hasKey: (key: string) => boolean;
   delete: (key: string) => void;
   deleteKeys: (keys: string[]) => void;
@@ -18,6 +18,7 @@ export interface LruCacheType<T> {
 export class LruCache<T> {
   private values: Map<string, T> = new Map<string, T>();
   private maxEntries;
+  private ssr: boolean;
 
   /**
    * Initialize Cache
@@ -25,7 +26,8 @@ export class LruCache<T> {
    */
   constructor(maxEntries = 10000) {
     this.maxEntries = maxEntries;
-    if (typeof window !== 'undefined') {
+    this.ssr = typeof window === 'undefined';
+    if (!this.ssr) {
       window['__viewSCCache'] = this.values;
     }
   }
@@ -34,8 +36,9 @@ export class LruCache<T> {
    * Get a key from the map store
    * @param key
    * @param value
+   * @param options
    */
-  public get(key: string, value?: T): T {
+  public get(key: string, value?: T, options: {noSsr: boolean} = {noSsr: true}): T {
     const hasKey = this.values.has(key);
     let entry: T;
     if (hasKey) {
@@ -46,7 +49,7 @@ export class LruCache<T> {
     } else if (value) {
       // insert value if passed
       entry = value;
-      this.values.set(key, entry);
+      !(this.ssr && options.noSsr) && this.values.set(key, entry);
     }
     return entry;
   }
@@ -55,8 +58,12 @@ export class LruCache<T> {
    * Set a key in the store
    * @param key
    * @param value
+   * @param options
    */
-  public set(key: string, value: T): void {
+  public set(key: string, value: T, options: {noSsr: boolean} = {noSsr: true}): void {
+    if (this.ssr && options.noSsr) {
+      return;
+    }
     if (this.values.size >= this.maxEntries) {
       // least-recently used cache eviction strategy
       const keyToDelete = this.values.keys().next().value;

@@ -1,20 +1,17 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import InlineComposerWidgetSkeleton from './Skeleton';
 
 export default {
   title: 'Design System/React UI/Skeleton/Inline Composer Widget',
   component: InlineComposerWidgetSkeleton,
-  argTypes: {},
-  args: {}
-} as ComponentMeta<typeof InlineComposerWidgetSkeleton>;
+} as Meta<typeof InlineComposerWidgetSkeleton>;
 
-const Template: ComponentStory<typeof InlineComposerWidgetSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <InlineComposerWidgetSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<InlineComposerWidgetSkeleton> = {
+  render: template
+};

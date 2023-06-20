@@ -1,8 +1,6 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileBlocked from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/User Profile Blocked ',
   component: UserProfileBlocked,
@@ -16,18 +14,19 @@ export default {
   args: {
     userId: 11
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof UserProfileBlocked>;
+} as Meta<typeof UserProfileBlocked>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof UserProfileBlocked> = (args) => (
+
+const template = (args) => (
   <div style={{width: '100%'}}>
     <UserProfileBlocked {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  userId: 455
+export const Base: StoryObj<UserProfileBlocked> = {
+  args: {
+    userId: 455
+  },
+  render: template
 };
+

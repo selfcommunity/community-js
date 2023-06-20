@@ -8,6 +8,7 @@ import AccountDeleteButton, {AccountDeleteButtonProps} from './components/Accoun
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
+import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from './components/NavigationMenuIconButton';
 import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
@@ -123,6 +124,7 @@ import PasswordTextField from './shared/PasswordTextField';
 import PhoneTextField from './shared/PhoneTextField';
 import StickyBox, {useStickyBox, StickyBoxProps, StickyBoxComponent, UseStickyBoxProps} from './shared/StickyBox';
 import TagChip, {TagChipProps} from './shared/TagChip';
+import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/PollSuggestionWidget';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
@@ -184,6 +186,8 @@ export {
   NavigationToolbar,
   NavigationToolbarProps,
   NavigationToolbarSkeleton,
+  NavigationMenuIconButton,
+  NavigationMenuIconButtonProps,
   BottomNavigation,
   BottomNavigationProps,
   BroadcastMessages,
@@ -385,6 +389,8 @@ export {
   UseStickyBoxProps,
   TagChip,
   TagChipProps,
+  UserDeletedSnackBar,
+  UserDeletedSnackBarProps,
   CentralProgress,
   ConfirmDialog,
   MediaChunkUploader,

@@ -110,9 +110,11 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY
 ];
 /**
- > API documentation for the Community-JS Related FeedObjects component. Learn about the available props and the CSS API.
- *  <br/>This component renders a list of related feed objects (posts, discussions or statuses).
- *  <br/>Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/RelatedFeedObjects)
+ * > API documentation for the Community-JS Related FeedObjects component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a list of related feed objects (posts, discussions or statuses).
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/RelatedFeedObjects)
 
  #### Import
 
