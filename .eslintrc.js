@@ -34,6 +34,8 @@ const config = {
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/prefer-regexp-exec": "off",
     "react-hooks/exhaustive-deps": "off",
     "import/prefer-default-export": "off",
   },

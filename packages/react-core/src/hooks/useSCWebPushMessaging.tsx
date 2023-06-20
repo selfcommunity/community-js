@@ -72,6 +72,8 @@ export default function useSCWebPushMessaging() {
           preventDuplicate: true,
         }
       );
+    } else {
+      Logger.info(SCOPE_SC_CORE, 'Skip show the dialog to request Web Push Notifications grant permission');
     }
   };
 
@@ -131,6 +133,7 @@ export default function useSCWebPushMessaging() {
         if (remove) {
           setWpSubscription(null);
         } else {
+          Logger.info(SCOPE_SC_CORE, 'Web Push Notifications subscription created successfully');
           setWpSubscription(res);
         }
       })
@@ -166,7 +169,7 @@ export default function useSCWebPushMessaging() {
                 // Request to server to remove
                 // the users data from your data store so you
                 // don't attempt to send them push messages anymore
-                updateSubscriptionOnServer(pushSubscription, true).then(() => {
+                void updateSubscriptionOnServer(pushSubscription, true).then(() => {
                   callback && callback();
                 });
               })
@@ -175,7 +178,7 @@ export default function useSCWebPushMessaging() {
                 // an unusual state, so may be best to remove
                 // the subscription id from your data store and
                 // inform the user that you disabled push
-                Logger.info(SCOPE_SC_CORE, `Unsubscription error.`);
+                Logger.info(SCOPE_SC_CORE, `Error on removing web push notification subscription.`);
                 console.log(e);
               });
           })
@@ -209,7 +212,7 @@ export default function useSCWebPushMessaging() {
               // means we failed to subscribe and the user will need
               // to manually change the notification permission to
               // subscribe to push messages
-              Logger.info(SCOPE_SC_CORE, 'Permission for Notifications was denied');
+              Logger.info(SCOPE_SC_CORE, 'Permission for Web Push Notifications was denied');
             } else {
               // A problem occurred with the subscription
               subAttempts.current += 1;
@@ -217,12 +220,12 @@ export default function useSCWebPushMessaging() {
               if (subAttempts.current < 3) {
                 unsubscribe(() => subscribe());
               } else {
-                Logger.info(SCOPE_SC_CORE, `Unable to subscribe to push. ${e}`);
+                Logger.info(SCOPE_SC_CORE, `Unable to subscribe to Web Push Notification. ${e}`);
               }
             }
           });
       } else {
-        Logger.info(SCOPE_SC_CORE, `To receive web push notifications the service worker must be registered.`);
+        Logger.info(SCOPE_SC_CORE, `To receive Web Push Notifications the service worker must be registered.`);
       }
     });
   };
@@ -247,7 +250,6 @@ export default function useSCWebPushMessaging() {
                     subscribe();
                     return;
                   }
-
                   // Keep your server in sync with the latest subscription
                   updateSubscriptionOnServer(subscription, false);
                 })
@@ -275,7 +277,7 @@ export default function useSCWebPushMessaging() {
     /**
      * Check if Notifications supported in the service worker
      */
-    if (!(typeof ServiceWorkerRegistration !== 'undefined' && 'showNotification' in ServiceWorkerRegistration.prototype)) {
+    if (typeof ServiceWorkerRegistration === 'undefined') {
       Logger.info(SCOPE_SC_CORE, "Notifications aren't supported.");
       return;
     }
@@ -295,7 +297,7 @@ export default function useSCWebPushMessaging() {
      * If its denied, it's a permanent block until the user changes the permission
      */
     if (Notification.permission === 'denied') {
-      Logger.info(SCOPE_SC_CORE, 'The user has blocked notifications.');
+      Logger.info(SCOPE_SC_CORE, 'The user has blocked Web Push Notifications.');
       return;
     } else {
       if (Notification.permission === 'default') {
@@ -322,6 +324,7 @@ export default function useSCWebPushMessaging() {
       } else if (!applicationServerKey) {
         Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
       } else {
+        Logger.info(SCOPE_SC_CORE, 'Initialize web push notification.');
         initialiseState();
       }
     }
