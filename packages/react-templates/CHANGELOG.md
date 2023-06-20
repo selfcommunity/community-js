@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.239...@selfcommunity/react-templates@0.3.0-alpha.240) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
+# [0.3.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.238...@selfcommunity/react-templates@0.3.0-alpha.239) (2023-06-19)
+
+
+### Bug Fixes
+
+* storybook v7 upgrade ([553c1bf](https://github.com/selfcommunity/community-js/commit/553c1bff2b3f8a5c4965a9190b7d887766473964))
+* storybook v7 upgrade ([8d86f19](https://github.com/selfcommunity/community-js/commit/8d86f19810793e04da433ad81ce100390bb2b5f2))
+* storybook v7 upgrade ([00f395b](https://github.com/selfcommunity/community-js/commit/00f395b17ab15d8aab551e995fe9defc2fde294e))
+* storybook v7 upgrade ([391cb8a](https://github.com/selfcommunity/community-js/commit/391cb8a18c1e265399b883c6c335db2a840acf32))
+
+
+
+
+
 # [0.3.0-alpha.238](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.237...@selfcommunity/react-templates@0.3.0-alpha.238) (2023-06-19)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
