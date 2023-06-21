@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.252](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.251...@selfcommunity/react-ui@0.7.0-alpha.252) (2023-06-21)
+
+
+### Performance Improvements
+
+* added collapsed content for feed object share template ([748856f](https://github.com/selfcommunity/community-js/commit/748856f5c1cfd5cad3643a8fe0c17e9573c654e2))
+
+
+
+
+
 # [0.7.0-alpha.251](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.250...@selfcommunity/react-ui@0.7.0-alpha.251) (2023-06-20)
 
 

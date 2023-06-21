@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.77...@selfcommunity/react-core@0.4.0-alpha.78) (2023-06-21)
+
+
+### Bug Fixes
+
+* safari web push notification ([90d789c](https://github.com/selfcommunity/community-js/commit/90d789c0dbd2fc102c27bee4ce26e8bb187aed31))
+* safari web push notification ([62e8980](https://github.com/selfcommunity/community-js/commit/62e89804d1a97e10d3537f3739469f5bfba2550e))
+
+
+
+
+
 # [0.4.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.76...@selfcommunity/react-core@0.4.0-alpha.77) (2023-06-20)
 
 
