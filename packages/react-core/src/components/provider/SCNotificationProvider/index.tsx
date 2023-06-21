@@ -2,6 +2,7 @@ import React, {createContext, useContext} from 'react';
 import {SCNotificationContextType} from '../../../types';
 import useSCWebSocket from '../../../hooks/useSCWebSocket';
 import useSCWebPushMessaging from '../../../hooks/useSCWebPushMessaging';
+import useSCMobileNativePushMessaging from '../../../hooks/useSCMobileNativePushMessaging';
 
 /**
  * Creates Global Context
@@ -33,8 +34,9 @@ export const SCNotificationContext = createContext<SCNotificationContextType>({}
 export default function SCNotificationProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const {wsInstance} = useSCWebSocket();
   const {wpSubscription} = useSCWebPushMessaging();
+  const {mnpmInstance} = useSCMobileNativePushMessaging();
 
-  return <SCNotificationContext.Provider value={{wsInstance, wpSubscription}}>{children}</SCNotificationContext.Provider>;
+  return <SCNotificationContext.Provider value={{wsInstance, wpSubscription, mnpmInstance}}>{children}</SCNotificationContext.Provider>;
 }
 
 /**

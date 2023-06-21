@@ -28,6 +28,8 @@ export class ValidationError {
   static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING = 4921;
   static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_DISABLE_TOAST_MESSAGE = 4922;
   static ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY = 4923;
+  static ERROR_INVALID_NOTIFICATIONS_MOBILE_PUSH_MESSAGING_DISABLE = 4924;
+  static ERROR_INVALID_NOTIFICATIONS_MOBILE_NATIVE_PUSH_MESSAGING = 4931;
   static ERROR_INVALID_PREFERENCES = 5000;
   static ERROR_INVALID_GLOBAL_PREFERENCES = 5001;
   static ERROR_INVALID_PREFERENCES_FEATURES = 5002;
@@ -60,6 +62,9 @@ export class ValidationError {
       "Invalid notifications web push messaging option. 'disableToastMessage' must be a boolean value.",
     [ValidationError.ERROR_INVALID_NOTIFICATIONS_WEB_PUSH_MESSAGING_APPLICATION_SERVER_KEY]:
       "Invalid notifications web push messaging option. 'applicationServerKey' must be a string value.",
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_MOBILE_NATIVE_PUSH_MESSAGING]: 'Invalid notifications (mobile native push messaging) option.',
+    [ValidationError.ERROR_INVALID_NOTIFICATIONS_MOBILE_PUSH_MESSAGING_DISABLE]:
+      "Invalid notifications mobile native push messaging option. 'disable' must be a boolean value.",
     [ValidationError.ERROR_INVALID_PREFERENCES]: 'Invalid preferences option.',
     [ValidationError.ERROR_INVALID_GLOBAL_PREFERENCES]:
       "Invalid preferences option. 'preferences' inside preferences must be a valid array of global preferences.",

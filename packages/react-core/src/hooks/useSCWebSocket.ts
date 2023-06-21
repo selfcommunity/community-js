@@ -18,7 +18,7 @@ import PubSub from 'pubsub-js';
 
 /**
  :::info
- This custom hook is used to to init web socket.
+ This custom hook is used to init web socket.
  :::
  */
 export default function useSCWebSocket() {
