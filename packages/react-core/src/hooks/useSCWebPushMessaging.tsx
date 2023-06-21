@@ -20,10 +20,10 @@ import {isWebPushMessagingEnabled} from '../utils/notification';
 /**
  * Browser supported on backend
  */
-export const CHROME_BROWSER_TYPE = 'Chrome';
-export const FIREFOX_BROWSER_TYPE = 'Firefox';
-export const OPERA_BROWSER_TYPE = 'Opera';
-export const EDGE_BROWSER_TYPE = 'Edge';
+export const CHROME_BROWSER_TYPE = 'chrome';
+export const FIREFOX_BROWSER_TYPE = 'firefox';
+export const OPERA_BROWSER_TYPE = 'opera';
+export const EDGE_BROWSER_TYPE = 'edge';
 export const DEFAULT_BROWSER_TYPE = CHROME_BROWSER_TYPE;
 export const SUPPORTED_BROWSER_TYPES = [CHROME_BROWSER_TYPE, FIREFOX_BROWSER_TYPE, OPERA_BROWSER_TYPE, EDGE_BROWSER_TYPE];
 

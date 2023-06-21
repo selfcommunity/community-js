@@ -154,7 +154,7 @@ export default function useSCMobileNativePushMessaging() {
       performUpdateDevice(mnpmInstance, true)
         .then((res) => {
           setMnpmInstance(null);
-          Logger.info(SCOPE_SC_CORE, 'Device unregistration successful. Your device will not be able to receive push notifications.');
+          Logger.info(SCOPE_SC_CORE, 'Device unregistration successful. Your device will not be able to receive mobile push notifications.');
         })
         .catch(() => {
           setMnpmInstance(null);
@@ -177,7 +177,7 @@ export default function useSCMobileNativePushMessaging() {
           Logger.info(SCOPE_SC_CORE, 'Data is valid to register the device for receive mobile push notification.');
           performUpdateDevice(_data).then((res) => {
             setMnpmInstance({..._data, id: res.id});
-            Logger.info(SCOPE_SC_CORE, 'Device registration successful. Your device will now be able to receive push notifications.');
+            Logger.info(SCOPE_SC_CORE, 'Device registration successful. Your device will now be able to receive mobile push notifications.');
           });
         }
       } else {
