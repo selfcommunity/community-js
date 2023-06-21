@@ -139,8 +139,7 @@ import {
   SCConnectionStatus,
   SCDeviceType,
   SCApnsDeviceType,
-  SCGcmDeviceType,
-  SCDeviceCloudMessageTypeEnum
+  SCGcmDeviceType
 } from './types';
 
 /**
@@ -284,6 +283,5 @@ export {
   SCConnectionStatus,
   SCDeviceType,
   SCApnsDeviceType,
-  SCGcmDeviceType,
-  SCDeviceCloudMessageTypeEnum
+  SCGcmDeviceType
 };
