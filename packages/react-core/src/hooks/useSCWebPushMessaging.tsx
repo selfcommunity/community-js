@@ -95,7 +95,10 @@ export default function useSCWebPushMessaging() {
   const closeRequestNotificationSnackbar = (snackbarId: SnackbarKey | null) => {
     if (snackbarId) {
       closeSnackbar(snackbarId);
-      Cookies.set(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE, '1');
+      // To set expiration in minutes:
+      // let inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+      // {expires: inFifteenMinutes}
+      Cookies.set(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE, '1', {expires: 1});
     }
   };
 
