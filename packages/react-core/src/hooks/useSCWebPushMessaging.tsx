@@ -15,6 +15,7 @@ import * as SCPreferences from '../constants/Preferences';
 import {NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE} from '../constants/Notifications';
 import Cookies from 'js-cookie';
 import {useIntl} from 'react-intl';
+import {isWebPushMessagingEnabled} from '../utils/notification';
 
 /**
  * Browser supported on backend
@@ -52,7 +53,7 @@ export default function useSCWebPushMessaging() {
       : SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY in scPreferencesContext.preferences
       ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_PUBLIC_KEY].value
       : null;
-  const webPushEnabled =
+  const webPushPreferenceEnabled =
     SCPreferences.PROVIDERS_WEB_PUSH_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
       ? scPreferencesContext.preferences[SCPreferences.PROVIDERS_WEB_PUSH_ENABLED].value
@@ -357,9 +358,11 @@ export default function useSCWebPushMessaging() {
    * If web push enabled, applicationServerKey and user is logged, check subscription
    */
   useEffect(() => {
-    if (!wpSubscription && !scContext.settings.notifications.webPushMessaging.disableToastMessage && scUserContext.user) {
-      if (!webPushEnabled) {
-        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support notifications. Enable this feature.');
+    if (!wpSubscription && scUserContext.user) {
+      if (!isWebPushMessagingEnabled()) {
+        Logger.warn(SCOPE_SC_CORE, 'Mobile native notifications replace web push messages with this settings.');
+      } else if (!webPushPreferenceEnabled || scContext.settings.notifications.webPushMessaging.disableToastMessage) {
+        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support web push notifications or they have been disabled.');
       } else if (!applicationServerKey) {
         Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
       } else {
@@ -367,7 +370,7 @@ export default function useSCWebPushMessaging() {
         initialiseState();
       }
     }
-    if (!scUserContext.user && wpSubscription) {
+    if ((!scUserContext.user || !isWebPushMessagingEnabled()) && wpSubscription) {
       // Unsubscribe if user not in session
       unsubscribe();
     }

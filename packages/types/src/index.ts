@@ -136,7 +136,11 @@ import {
   SCReactionType,
   SCSuggestionType,
   SuggestionType,
-  SCConnectionStatus
+  SCConnectionStatus,
+  SCDeviceType,
+  SCApnsDeviceType,
+  SCGcmDeviceType,
+  SCDeviceCloudMessageTypeEnum
 } from './types';
 
 /**
@@ -277,5 +281,9 @@ export {
   SCReactionType,
   SCSuggestionType,
   SuggestionType,
-  SCConnectionStatus
+  SCConnectionStatus,
+  SCDeviceType,
+  SCApnsDeviceType,
+  SCGcmDeviceType,
+  SCDeviceCloudMessageTypeEnum
 };

@@ -14,6 +14,7 @@ import {mergeDeep, isObject, objectWithoutProperties, isFunc} from './utils/obje
 import {isInteger} from './utils/number';
 import {arraysEqual} from './utils/array';
 import {loadVersionBrowser} from './utils/browser';
+import {LocalStorageDB} from './utils/localStorage';
 import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
 import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
@@ -54,6 +55,7 @@ export {
   WSClientType,
   WSClientPropTypes,
   loadVersionBrowser,
+  LocalStorageDB,
   LRUCache,
   LruCache,
   LruCacheType,
