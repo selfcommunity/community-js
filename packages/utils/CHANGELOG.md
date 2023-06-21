@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.4...@selfcommunity/utils@0.2.0-alpha.5) (2023-06-21)
+
+
+### Bug Fixes
+
+* mobile push ([1348b2e](https://github.com/selfcommunity/community-js/commit/1348b2ed9b8a24f42cbf6e398f2cc3868c161da7))
+
+
+
+
+
 # [0.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.3...@selfcommunity/utils@0.2.0-alpha.4) (2023-06-20)
 
 
