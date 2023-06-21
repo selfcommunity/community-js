@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.78...@selfcommunity/react-core@0.4.0-alpha.79) (2023-06-21)
+
+
+### Bug Fixes
+
+* mobile native push ([5548865](https://github.com/selfcommunity/community-js/commit/5548865908b00de66cc369d5d29b1f2a63b51896))
+* mobile native push ([47f3aa7](https://github.com/selfcommunity/community-js/commit/47f3aa7893385469a5e73868df46915987c9bf2d))
+* mobile native push ([7381b95](https://github.com/selfcommunity/community-js/commit/7381b958181c8d1e018ad4b1b535b036e7db9057))
+* mobile native push ([a3b4ba8](https://github.com/selfcommunity/community-js/commit/a3b4ba83b843d4c591a4f4a20f3a653e673a1fc2))
+* mobile native push ([ac29600](https://github.com/selfcommunity/community-js/commit/ac296003b70332c1993d178f0f86dedf1cd84b23))
+* mobile native push ([7714999](https://github.com/selfcommunity/community-js/commit/7714999b0da1809e775a6ade3ff0b6a8002bcb17))
+* mobile push ([1348b2e](https://github.com/selfcommunity/community-js/commit/1348b2ed9b8a24f42cbf6e398f2cc3868c161da7))
+
+
+
+
+
 # [0.4.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.77...@selfcommunity/react-core@0.4.0-alpha.78) (2023-06-21)
 
 
