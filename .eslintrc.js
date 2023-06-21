@@ -36,6 +36,7 @@ const config = {
     "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/restrict-plus-operands": "off",
     "@typescript-eslint/prefer-regexp-exec": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "react-hooks/exhaustive-deps": "off",
     "import/prefer-default-export": "off",
   },

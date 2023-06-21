@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.251](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.250...@selfcommunity/react-ui@0.7.0-alpha.251) (2023-06-20)
+
+
+### Bug Fixes
+
+* fixed user settings calendar on mobile. Asana issue: https://app.asana.com/0/1202638443591994/1204856037629472/f ([9d059d6](https://github.com/selfcommunity/community-js/commit/9d059d6a740886345b4842a88fadd949022d42c4))
+
+
+
+
+
 # [0.7.0-alpha.250](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.249...@selfcommunity/react-ui@0.7.0-alpha.250) (2023-06-20)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

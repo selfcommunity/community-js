@@ -882,8 +882,19 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.textSection}>
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
-                  <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
+                  <Typography
+                    component="div"
+                    className={classes.text}
+                    variant="body2"
+                    gutterBottom
+                    dangerouslySetInnerHTML={{__html: expanded ? getContributionHtml(obj, scRoutingContext.url) : obj.summary}}
+                  />
                 </Link>
+                {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
+                  <Button size="small" variant="text" color="inherit" onClick={(): void => setExpanded(!expanded)}>
+                    <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+                  </Button>
+                )}
               </Box>
               <Box className={classes.mediasSection}>
                 <MediasPreview medias={obj.medias} {...MediasPreviewProps} />

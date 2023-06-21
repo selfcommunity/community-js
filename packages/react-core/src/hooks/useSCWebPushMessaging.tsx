@@ -18,8 +18,18 @@ import {useIntl} from 'react-intl';
 import {isWebPushMessagingEnabled} from '../utils/notification';
 
 /**
+ * Browser supported on backend
+ */
+export const CHROME_BROWSER_TYPE = 'Chrome';
+export const FIREFOX_BROWSER_TYPE = 'Firefox';
+export const OPERA_BROWSER_TYPE = 'Opera';
+export const EDGE_BROWSER_TYPE = 'Edge';
+export const DEFAULT_BROWSER_TYPE = CHROME_BROWSER_TYPE;
+export const SUPPORTED_BROWSER_TYPES = [CHROME_BROWSER_TYPE, FIREFOX_BROWSER_TYPE, OPERA_BROWSER_TYPE, EDGE_BROWSER_TYPE];
+
+/**
  :::info
- This custom hook is used to to init web push messaging.
+ This custom hook is used to init web push messaging.
  :::
  */
 export default function useSCWebPushMessaging() {
@@ -81,12 +91,15 @@ export default function useSCWebPushMessaging() {
   /**
    * Close the SnackBar dialog if the request notification permission
    * came from the custom dialog
-   * @param snackbarid
+   * @param snackbarId
    */
   const closeRequestNotificationSnackbar = (snackbarId: SnackbarKey | null) => {
     if (snackbarId) {
       closeSnackbar(snackbarId);
-      Cookies.set(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE, '1');
+      // To set expiration in minutes:
+      // let inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+      // {expires: inFifteenMinutes}
+      Cookies.set(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE, '1', {expires: 1});
     }
   };
 
@@ -115,19 +128,45 @@ export default function useSCWebPushMessaging() {
   };
 
   /**
+   * Return browser type
+   * Fallback to DEFAULT_BROWSER_TYPE if the browser detected not in SUPPORTED_BROWSER_TYPES
+   */
+  const getBrowserType = (browser: {name: string; version: string}) => {
+    if (SUPPORTED_BROWSER_TYPES.indexOf(browser.name) < 0) {
+      return DEFAULT_BROWSER_TYPE;
+    }
+    return browser.name;
+  };
+
+  /**
+   * Return registrationId based on browser type and subscription
+   * Fallback to subscription.endpoint if the browser detected not in SUPPORTED_BROWSER_TYPES
+   */
+  const getRegistrationId = (browser: {name: string; version: string}, sub) => {
+    if (SUPPORTED_BROWSER_TYPES.indexOf(browser.name) < 0) {
+      return sub.endpoint;
+    }
+    try {
+      const endpointParts = sub.endpoint.split('/');
+      return endpointParts[endpointParts.length - 1];
+    } catch (e) {
+      return sub.endpoint;
+    }
+  };
+
+  /**
    * updateSubscriptionOnServer to sync current subscription
    * @param sub
+   * @param remove
    */
   const updateSubscriptionOnServer = (sub, remove) => {
     const browser = loadVersionBrowser();
-    const endpointParts = sub.endpoint.split('/');
-    const registration_id = endpointParts[endpointParts.length - 1];
     const data = {
-      browser: browser.name.toUpperCase(),
+      browser: getBrowserType(browser).toUpperCase(),
       p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))),
       auth: btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))),
       user: scUserContext.user ? scUserContext.user.username : '',
-      registration_id: registration_id,
+      registration_id: getRegistrationId(browser, sub),
     };
     return performUpdateSubscription(data, remove)
       .then((res: any) => {
@@ -203,7 +242,7 @@ export default function useSCWebPushMessaging() {
             if (!subscription) {
               Logger.info(SCOPE_SC_CORE, 'We aren’t subscribed to push.');
             } else {
-              updateSubscriptionOnServer(subscription, false);
+              void updateSubscriptionOnServer(subscription, false);
             }
           })
           .catch(function (e) {
@@ -252,7 +291,7 @@ export default function useSCWebPushMessaging() {
                     return;
                   }
                   // Keep your server in sync with the latest subscription
-                  updateSubscriptionOnServer(subscription, false);
+                  void updateSubscriptionOnServer(subscription, false);
                 })
                 .catch((err) => {
                   Logger.info(SCOPE_SC_CORE, 'Error during getSubscription()');
@@ -295,7 +334,7 @@ export default function useSCWebPushMessaging() {
 
     /**
      * Check the current Notification permission.
-     * If its denied, it's a permanent block until the user changes the permission
+     * If it's denied, it's a permanent block until the user changes the permission
      */
     if (Notification.permission === 'denied') {
       Logger.info(SCOPE_SC_CORE, 'The user has blocked Web Push Notifications.');
