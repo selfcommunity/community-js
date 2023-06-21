@@ -57,27 +57,14 @@ export default function useSCMobileNativePushMessaging() {
   };
 
   /**
-   * Get url type based on the notification_service
-   * If notification_service is fcm -> fallback to ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE
-   * Backend support gcm or apns as url type (use cloud_message_type=fcm in the body request to select fcm service)
-   * @param data
-   */
-  const getUrlType = (data) => {
-    if (data.notification_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE) {
-      return ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE;
-    }
-    return data.notification_service;
-  };
-
-  /**
    * Perform device registration
    * @param data
    * @param remove
    */
   const performUpdateDevice = (data, remove = false) => {
     const url = remove
-      ? Endpoints.DeleteDevice.url({type: getUrlType(data), id: data.registration_id})
-      : Endpoints.NewDevice.url({type: getUrlType(data)});
+      ? Endpoints.DeleteDevice.url({type: data.notification_service, id: data.registration_id})
+      : Endpoints.NewDevice.url({type: data.notification_service});
     const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
     setLoading(true);
     return http
