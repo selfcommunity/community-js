@@ -359,10 +359,10 @@ export default function useSCWebPushMessaging() {
    */
   useEffect(() => {
     if (!wpSubscription && scUserContext.user) {
-      if (!webPushPreferenceEnabled) {
-        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support notifications.');
-      } else if (!isWebPushMessagingEnabled(scContext)) {
+      if (!isWebPushMessagingEnabled()) {
         Logger.warn(SCOPE_SC_CORE, 'Mobile native notifications replace web push messages with this settings.');
+      } else if (!webPushPreferenceEnabled || scContext.settings.notifications.webPushMessaging.disableToastMessage) {
+        Logger.warn(SCOPE_SC_CORE, 'This instance is not configured to support web push notifications or they have been disabled.');
       } else if (!applicationServerKey) {
         Logger.warn(SCOPE_SC_CORE, 'Invalid or missing applicationServerKey. Check the configuration that is passed to the SCContextProvider.');
       } else {
@@ -370,7 +370,7 @@ export default function useSCWebPushMessaging() {
         initialiseState();
       }
     }
-    if (!scUserContext.user && wpSubscription) {
+    if ((!scUserContext.user || !isWebPushMessagingEnabled()) && wpSubscription) {
       // Unsubscribe if user not in session
       unsubscribe();
     }

@@ -14,6 +14,7 @@ export const PLATFORM = {
   ANDROID: 'Android',
   IOS: 'iOS',
 };
+export const PLATFORMS = Object.keys(PLATFORM).map((k: string) => PLATFORM[k]);
 
 /**
  * Notifications service
@@ -28,6 +29,6 @@ export const NOTIFICATIONS_SERVICES = [
  * Const to enable native push notification
  */
 export const PLATFORM_KEY = 'app-platform';
-export const REGISTRATION_ID_KEY = 'app-registration-id';
-export const NOTIFICATIONS_SERVICE_KEY = 'app-notifications-service';
-export const DEVICE_ID_KEY = 'app-device-id';
+export const REGISTRATION_ID_KEY = 'app-registrationId';
+export const NOTIFICATION_SERVICE_KEY = 'app-notificationService';
+export const DEVICE_ID_KEY = 'app-deviceId';

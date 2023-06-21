@@ -13,8 +13,10 @@ import {
   IOS_PUSH_NOTIFICATION_IOS_DEVICE_TYPE,
   PLATFORM_KEY,
   REGISTRATION_ID_KEY,
-  NOTIFICATIONS_SERVICE_KEY,
+  NOTIFICATION_SERVICE_KEY,
   DEVICE_ID_KEY,
+  NOTIFICATIONS_SERVICES,
+  PLATFORMS,
 } from '../constants/Device';
 import {isMobileNativeNotificationEnabled} from '../utils/notification';
 
@@ -34,7 +36,7 @@ import {isMobileNativeNotificationEnabled} from '../utils/notification';
 export default function useSCMobileNativePushMessaging() {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const [mnpmInstance, setMnpmInstance] = useState<SCDeviceType>(null);
+  const [mnpmInstance, setMnpmInstance] = useState<SCDeviceType | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
 
   /**
@@ -44,13 +46,27 @@ export default function useSCMobileNativePushMessaging() {
   const isValid = (data) => {
     return (
       data &&
+      data.registration_id &&
       ((data.platform === PLATFORM.ANDROID &&
-        (data.notifications_service === ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE ||
-          data.notifications_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE)) ||
+        (data.notification_service === ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE ||
+          data.notification_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE)) ||
         (data.platform === PLATFORM.IOS &&
-          (data.notifications_service === IOS_PUSH_NOTIFICATION_IOS_DEVICE_TYPE ||
-            data.notifications_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE)))
+          (data.notification_service === IOS_PUSH_NOTIFICATION_IOS_DEVICE_TYPE ||
+            data.notification_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE)))
     );
+  };
+
+  /**
+   * Get url type based on the notification_service
+   * If notification_service is fcm -> fallback to ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE
+   * Backend support gcm or apns as url type (use cloud_message_type=fcm in the body request to select fcm service)
+   * @param data
+   */
+  const getUrlType = (data) => {
+    if (data.notification_service === ANDROID_PUSH_NOTIFICATION_FCM_DEVICE_TYPE) {
+      return ANDROID_PUSH_NOTIFICATION_GCM_DEVICE_TYPE;
+    }
+    return data.notification_service;
   };
 
   /**
@@ -60,8 +76,8 @@ export default function useSCMobileNativePushMessaging() {
    */
   const performUpdateDevice = (data, remove = false) => {
     const url = remove
-      ? Endpoints.DeleteDevice.url({type: data.notifications_service, id: data.id})
-      : Endpoints.NewDevice.url({type: data.notifications_service});
+      ? Endpoints.DeleteDevice.url({type: getUrlType(data), id: data.registration_id})
+      : Endpoints.NewDevice.url({type: getUrlType(data)});
     const method = remove ? Endpoints.DeleteDevice.method : Endpoints.NewDevice.method;
     setLoading(true);
     return http
@@ -73,6 +89,8 @@ export default function useSCMobileNativePushMessaging() {
           : {
               data: {
                 registration_id: data.registration_id,
+                cloud_message_type: data.notification_service.toUpperCase(),
+                name: `${data.platform} device`,
                 ...(data.device_id ? {device_id: data.device_id} : {}),
               },
             }),
@@ -94,23 +112,32 @@ export default function useSCMobileNativePushMessaging() {
    * Collect data
    */
   const getDataInstance = () => {
-    if (window && window[PLATFORM_KEY] && window[REGISTRATION_ID_KEY] && window[NOTIFICATIONS_SERVICE_KEY]) {
+    if (
+      window &&
+      window[PLATFORM_KEY] &&
+      PLATFORMS.includes(window[PLATFORM_KEY]) &&
+      window[REGISTRATION_ID_KEY] &&
+      window[NOTIFICATION_SERVICE_KEY] &&
+      NOTIFICATIONS_SERVICES.includes(window[NOTIFICATION_SERVICE_KEY])
+    ) {
       return {
         platform: window[PLATFORM_KEY],
         registration_id: window[REGISTRATION_ID_KEY],
-        notifications_service: window[NOTIFICATIONS_SERVICE_KEY],
+        notification_service: window[NOTIFICATION_SERVICE_KEY],
         ...(window[DEVICE_ID_KEY] ? {device_id: window[DEVICE_ID_KEY]} : {}),
       };
     } else if (
       LocalStorageDB.checkifSupport() &&
       LocalStorageDB.get(PLATFORM_KEY) &&
+      PLATFORMS.includes(LocalStorageDB.get(PLATFORM_KEY)) &&
       LocalStorageDB.get(REGISTRATION_ID_KEY) &&
-      LocalStorageDB.get(NOTIFICATIONS_SERVICE_KEY)
+      LocalStorageDB.get(NOTIFICATION_SERVICE_KEY) &&
+      NOTIFICATIONS_SERVICES.includes(LocalStorageDB.get(NOTIFICATION_SERVICE_KEY))
     ) {
       return {
         platform: LocalStorageDB.get(PLATFORM_KEY),
         registration_id: LocalStorageDB.get(REGISTRATION_ID_KEY),
-        notifications_service: LocalStorageDB.get(NOTIFICATIONS_SERVICE_KEY),
+        notification_service: LocalStorageDB.get(NOTIFICATION_SERVICE_KEY),
         ...(window[DEVICE_ID_KEY] ? {device_id: window[DEVICE_ID_KEY]} : {}),
       };
     } else {
@@ -119,33 +146,46 @@ export default function useSCMobileNativePushMessaging() {
   };
 
   /**
+   * Unsubscribe device
+   */
+  const unsubscribeDevice = () => {
+    if (mnpmInstance && !isLoading) {
+      Logger.info(SCOPE_SC_CORE, 'Mobile native notification is disabled. Unregister the device.');
+      performUpdateDevice(mnpmInstance, true)
+        .then((res) => {
+          setMnpmInstance(null);
+          Logger.info(SCOPE_SC_CORE, 'Device unregistration successful. Your device will not be able to receive push notifications.');
+        })
+        .catch(() => {
+          setMnpmInstance(null);
+        });
+    }
+  };
+
+  /**
    * Check if there is a currently active session and a
    * instance when the provider is mounted for the first time.
    */
   useEffect(() => {
-    if (scUserContext.user && isMobileNativeNotificationEnabled(scContext)) {
+    if (scUserContext.user && isMobileNativeNotificationEnabled() && !scContext.settings.notifications.mobileNativePushMessaging.disable) {
       const _data = getDataInstance();
-      if (isValid(_data) && (!mnpmInstance || (mnpmInstance && mnpmInstance.registration_id !== _data.registration_id))) {
-        // Register the device only if _platform and _registration_id and _notification_service
-        // exists in window/localStorage
-        if (!isLoading) {
+      if (isValid(_data)) {
+        if ((!mnpmInstance || (mnpmInstance && mnpmInstance.registration_id !== _data.registration_id)) && !isLoading) {
+          Logger.info(SCOPE_SC_CORE, 'Mobile native notification is enabled. Checking and validate data...');
+          // Register the device only if app-platform and app-registrationId and app-notificationService
+          // exists in window/localStorage
+          Logger.info(SCOPE_SC_CORE, 'Data is valid to register the device for receive mobile push notification.');
           performUpdateDevice(_data).then((res) => {
             setMnpmInstance({..._data, id: res.id});
+            Logger.info(SCOPE_SC_CORE, 'Device registration successful. Your device will now be able to receive push notifications.');
           });
         }
       } else {
         Logger.warn(SCOPE_SC_CORE, 'Invalid data. Unable to register the device for native push notification.');
+        unsubscribeDevice();
       }
     } else {
-      const _data = getDataInstance();
-      if (isValid(_data)) {
-        // Update remote device only if conf is changed
-        if (_data) {
-          performUpdateDevice(_data).then((res) => {
-            setMnpmInstance({..._data, id: res.id});
-          });
-        }
-      }
+      unsubscribeDevice();
     }
   });
 
