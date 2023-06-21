@@ -372,7 +372,11 @@ export default function useSCWebPushMessaging() {
     }
     if ((!scUserContext.user || !isWebPushMessagingEnabled()) && wpSubscription) {
       // Unsubscribe if user not in session
-      unsubscribe();
+      unsubscribe(() => {
+        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+          Cookies.remove(NOTIFICATIONS_WEB_PUSH_MESSAGING_DIALOG_COOKIE);
+        }
+      });
     }
   }, [scUserContext.user, scContext.settings.notifications.webPushMessaging, wpSubscription]);
 
