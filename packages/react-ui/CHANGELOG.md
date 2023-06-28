@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.256](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.255...@selfcommunity/react-ui@0.7.0-alpha.256) (2023-06-28)
+
+
+### Bug Fixes
+
+* categories component ([cda16d4](https://github.com/selfcommunity/community-js/commit/cda16d46ab58d725963dd66deb10a4e47fd44d8a))
+
+
+
+
+
 # [0.7.0-alpha.255](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.254...@selfcommunity/react-ui@0.7.0-alpha.255) (2023-06-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
