@@ -11,6 +11,11 @@ import '../media/header.css';
 // import Logo from '../media/selfcommunity.png';
 
 /**
+ * Debug anonymous initial session
+ */
+const ANONYMOUS = false;
+
+/**
  * Fix Storybook v6.3.10 with mui v5
  * Wrap stories with EmotionThemeProvider, to fix problem of storybook 6.4.19 with mui_v5
  * Check this issue to resolve mui problems in DOCs tab of storybook
@@ -51,7 +56,9 @@ const withProvider = (Story, context) => {
    * OAuth2 and JWT create initial session
    */
   useEffect(() => {
-    getToken();
+    if (!ANONYMOUS) {
+      getToken();
+    }
   }, []);
 
   /**
@@ -88,7 +95,7 @@ const withProvider = (Story, context) => {
         disableToastMessage: false,
       },
       webPushMessaging: {
-        disableToastMessage: true,
+        disableToastMessage: false,
         // applicationServerKey: 'BD9Ic3IqC5Uom1NiC46fjOFYCvQcDPA2emgmyBx25oTXySeA25C0cJsWfK1Dxr4zDYeQ-MUwV9vOqz8aIGMeLAI',
       },
       mobileNativePushMessaging: {
