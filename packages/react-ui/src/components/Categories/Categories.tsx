@@ -148,8 +148,8 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
   } = props;
 
   // STATE
-  const [categories, setCategories] = useState<SCCategoryType[]>(prefetchedCategories);
-  const [loading, setLoading] = useState<boolean>(!prefetchedCategories.length);
+  const [categories, setCategories] = useState<SCCategoryType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [filterName, setFilterName] = useState<string>('');
 
   // CONTEXT
@@ -179,7 +179,10 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
   useEffect(() => {
     if (!contentAvailability && !authUserId) {
       return;
-    } else if (scUserContext.user && !prefetchedCategories.length) {
+    } else if (prefetchedCategories.length) {
+      setCategories(prefetchedCategories);
+      setLoading(false);
+    } else {
       fetchCategories()
         .then((data: any) => {
           if (isMountedRef.current) {
@@ -191,7 +194,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [authUserId, prefetchedCategories.length]);
+  }, [contentAvailability, authUserId, prefetchedCategories.length]);
 
   /**
    * Get categories filtered
