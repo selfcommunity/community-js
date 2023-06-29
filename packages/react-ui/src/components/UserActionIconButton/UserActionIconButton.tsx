@@ -190,7 +190,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
         </ListItem>,
         <Divider key="divider" />,
         <ListItem key="hide">
-          <ListItemButton onClick={handleHideToggle} disabled={isHiddenLoading}>
+          <ListItemButton onClick={handleHideToggle} disabled={isHiddenLoading || scUser.community_badge}>
             <ListItemText
               primary={
                 hidden ? (
@@ -228,7 +228,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
           <FormattedMessage defaultMessage="ui.userActionIconButton.information" id="ui.userActionIconButton.information" />
         </MenuItem>,
         <Divider key="divider" />,
-        <MenuItem key="hide" onClick={handleHide} disabled={isHiddenLoading}>
+        <MenuItem key="hide" onClick={handleHide} disabled={isHiddenLoading || scUser.community_badge}>
           {hidden ? (
             <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
           ) : (

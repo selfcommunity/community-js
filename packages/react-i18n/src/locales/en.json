@@ -206,7 +206,7 @@
   "ui.contributionActionMenu.actionSuccess": "Operation successfully complete!",
   "ui.contributionActionMenu.aggressive": "Aggressive",
   "ui.contributionActionMenu.deleteContribution": "Delete",
-  "ui.contributionActionMenu.deleteContributionInfo": "The content will be removed. Will remain visible only to you if you want to restore it or if you deleted it by mistake.",
+  "ui.contributionActionMenu.deleteContributionInfo": "The content has been successfully removed. It remains visible only to you, as long as you remain on this page, in case you want to restore it or have deleted it by mistake.",
   "ui.contributionActionMenu.deleteContributionWithMotivation": "Delete with motivation",
   "ui.contributionActionMenu.editContribution": "Edit",
   "ui.contributionActionMenu.enableNotificationContribution": "Enable notifications",
