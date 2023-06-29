@@ -213,7 +213,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                 disabled={Boolean(_error) || !user[field]}
                 onClick={handleSave(field)}
                 edge="end"
-                color={'success'}
+                color={'secondary'}
                 // color={user[field] === scUserContext.user[field] ? 'default' : 'primary'}
               >
                 <Icon>check</Icon>
