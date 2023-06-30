@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.257](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.256...@selfcommunity/react-ui@0.7.0-alpha.257) (2023-06-30)
+
+
+### Bug Fixes
+
+* changed user profile edit save icon color ([d74d4dc](https://github.com/selfcommunity/community-js/commit/d74d4dcbb5df94b867e53f8072441b5bdc0a297d))
+* fixed translations, user block button status. Asana issues: ([0cff53d](https://github.com/selfcommunity/community-js/commit/0cff53dc2737acdd10abdabec53fa2e26ee226a2))
+* issue https://app.asana.com/0/1202638443591994/1204923697931064/f ([8af1812](https://github.com/selfcommunity/community-js/commit/8af181285b118fbc0f035527065b292d11863172))
+
+
+
+
+
 # [0.7.0-alpha.256](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.255...@selfcommunity/react-ui@0.7.0-alpha.256) (2023-06-28)
 
 
