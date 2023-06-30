@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.207](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.206...@selfcommunity/react-theme-default@0.1.0-alpha.207) (2023-06-30)
+
+
+### Bug Fixes
+
+* fixed translations, user block button status. Asana issues: ([0cff53d](https://github.com/selfcommunity/community-js/commit/0cff53dc2737acdd10abdabec53fa2e26ee226a2))
+
+
+
+
+
 # [0.1.0-alpha.206](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.205...@selfcommunity/react-theme-default@0.1.0-alpha.206) (2023-06-28)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
