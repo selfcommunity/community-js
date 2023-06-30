@@ -1,5 +1,6 @@
 import {
   BatchItem,
+  PreSendResponse,
   StartEventResponse,
   useChunkFinishListener,
   useChunkStartListener,
@@ -152,7 +153,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: data.uploadData.response.data.upload_id});
   });
 
-  useRequestPreSend(({items, options}) => {
+  useRequestPreSend(({items, options}): Promise<PreSendResponse> => {
     if (items.length == 0) {
       return Promise.resolve({options});
     }
