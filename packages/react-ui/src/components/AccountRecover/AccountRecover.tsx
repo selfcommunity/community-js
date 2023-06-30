@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {Box, Button, ButtonProps, TextFieldProps, Alert} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';
@@ -157,15 +157,13 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isSucceed ? (
-        <>
-          <Typography className={classes.success}>
-            {intl.formatMessage(
-              {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
-              {email, bold: (chunks) => <b>{chunks}</b>}
-            )}
-          </Typography>
+        <Alert severity="success" className={classes.success}>
+          {intl.formatMessage(
+            {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
+            {email, bold: (chunks) => <b>{chunks}</b>}
+          )}
           {successAction}
-        </>
+        </Alert>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
           <EmailTextField
