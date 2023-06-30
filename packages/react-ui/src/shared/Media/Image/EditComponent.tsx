@@ -75,7 +75,7 @@ export default (props: EditMediaProps): JSX.Element => {
   const handleSuccess = (media: SCMediaType) => {
     onSuccess(media);
   };
-
+  console.log(uploading);
   const handleProgress = (chunks: {string: SCMediaChunkType}) => {
     setUploading({...chunks});
     onProgress && onProgress(Object.values(chunks));

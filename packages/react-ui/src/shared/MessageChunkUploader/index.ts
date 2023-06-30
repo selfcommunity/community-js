@@ -1,5 +1,6 @@
 import {
   BatchItem,
+  PreSendResponse,
   StartEventResponse,
   useChunkFinishListener,
   useChunkStartListener,
@@ -221,7 +222,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
     });
   });
 
-  useRequestPreSend(({items, options}) => {
+  useRequestPreSend(({items, options}): Promise<PreSendResponse> => {
     if (items.length == 0) {
       return Promise.resolve({options});
     } else if (isImageType(items[0].file.type)) {
