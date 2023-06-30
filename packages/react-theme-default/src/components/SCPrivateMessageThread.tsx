@@ -5,7 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       height: '100%',
       width: '100%',
-      backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
+      backgroundColor: alpha(theme.palette.common.white, theme.palette.action.selectedOpacity),
       borderRadius: 0,
       '& .MuiCardContent-root': {
         display: 'flex',
