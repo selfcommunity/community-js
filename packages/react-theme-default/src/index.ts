@@ -122,6 +122,7 @@ import SCAccountDelete from './components/SCAccountDelete';
 import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfileEditSectionAccountCredentials';
 import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
+import SCPreviewMediaLink from './components/SCPreviewMediaLink';
 
 /**
  * Style fragments - Imports - End
@@ -250,6 +251,7 @@ const theme = {
     SCNotificationsMenu,
     SCPollObject,
     SCPreviewMediaDocument,
+    SCPreviewMediaLink,
     SCPrivateMessageComponent,
     SCReactionAction,
     SCScrollContainer,
