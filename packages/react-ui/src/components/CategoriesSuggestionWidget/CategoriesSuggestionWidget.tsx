@@ -273,7 +273,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
           <List>
             {state.results.slice(0, state.visibleItems).map((category: SCCategoryType) => (
               <ListItem key={category.id}>
-                <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleFollow}} {...CategoryProps} />
+                <Category elevation={0} category={category} categoryFollowButtonProps={{onFollow: handleFollow}} {...CategoryProps} />
               </ListItem>
             ))}
           </List>
@@ -305,7 +305,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
             <List>
               {state.results.map((c) => (
                 <ListItem key={c.id}>
-                  <Category elevation={0} category={c} {...CategoryProps} followCategoryButtonProps={{onFollow: handleFollow}} />
+                  <Category elevation={0} category={c} {...CategoryProps} categoryFollowButtonProps={{onFollow: handleFollow}} />
                 </ListItem>
               ))}
             </List>

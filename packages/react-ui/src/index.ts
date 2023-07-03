@@ -36,7 +36,7 @@ import User, {UserProps, UserSkeleton} from './components/User';
 import Feed, {FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton} from './components/Feed';
 import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/FeedObject';
 import FeedUpdatesWidget, {FeedUpdatesWidgetProps, FeedUpdatesWidgetSkeleton} from './components/FeedUpdatesWidget';
-import FollowCategoryButton, {CategoryFollowButtonProps} from './components/CategoryFollowButton';
+import CategoryFollowButton, {CategoryFollowButtonProps} from './components/CategoryFollowButton';
 import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
 import ConnectionUserButton from './components/ConnectionUserButton';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
@@ -236,7 +236,7 @@ export {
   FeedProps,
   FeedSidebarProps,
   FeedSkeleton,
-  FollowCategoryButton,
+  CategoryFollowButton,
   CategoryFollowButtonProps,
   FollowUserButton,
   FollowUserButtonProps,
