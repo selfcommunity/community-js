@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Paper, Typography} from '@mui/material';
-import FollowCategoryButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
+import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {FormattedMessage} from 'react-intl';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -146,7 +146,7 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
           <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
         </Box>
         <Box className={classes.action}>
-          <FollowCategoryButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />
+          <CategoryFollowButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />
         </Box>
       </Box>
     </Root>

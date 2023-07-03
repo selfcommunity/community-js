@@ -4,7 +4,7 @@ import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
-import FollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
+import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -53,7 +53,7 @@ export interface CategoryProps extends WidgetProps {
    * Props to spread to follow button
    * @default {}
    */
-  followCategoryButtonProps?: CategoryFollowButtonProps;
+  categoryFollowButtonProps?: CategoryFollowButtonProps;
   /**
    * Prop to show category followers as secondary text
    * @default true
@@ -103,7 +103,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     className = null,
     elevation,
     autoHide = false,
-    followCategoryButtonProps = {},
+    categoryFollowButtonProps = {},
     showFollowers = true,
     ButtonBaseProps = null,
     ...rest
@@ -138,7 +138,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
         primary={scCategory.name}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
-        actions={<FollowButton category={scCategory} {...followCategoryButtonProps} />}
+        actions={<CategoryFollowButton category={scCategory} {...categoryFollowButtonProps} />}
         {...rest}
       />
     );

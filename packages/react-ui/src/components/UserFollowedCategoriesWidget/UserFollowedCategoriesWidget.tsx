@@ -253,7 +253,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
           <List>
             {state.results.slice(0, limit).map((category: SCCategoryType) => (
               <ListItem key={category.id}>
-                <Category elevation={0} category={category} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
+                <Category elevation={0} category={category} categoryFollowButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
               </ListItem>
             ))}
           </List>
@@ -279,7 +279,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
               <List>
                 {state.results.map((c) => (
                   <ListItem key={c.id}>
-                    <Category elevation={0} category={c} followCategoryButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
+                    <Category elevation={0} category={c} categoryFollowButtonProps={{onFollow: handleOnFollowCategory}} {...CategoryProps} />
                   </ListItem>
                 ))}
                 {state.isLoadingNext && (

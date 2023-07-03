@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCCategoryAutoFollowType} from '@selfcommunity/types';
 
-const PREFIX = 'SCFollowCategoryButton';
+const PREFIX = 'SCCategoryFollowButton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -71,14 +71,14 @@ export interface CategoryFollowButtonProps {
 
  #### Component Name
 
- The name `SCFollowCategoryButton` can be used when providing style overrides in the theme.
+ The name `SCCategoryFollowButton` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFollowCategoryButton-root|Styles applied to the root element.|
+ |root|.SCCategoryFollowButton-root|Styles applied to the root element.|
 
  * @param inProps
  */
@@ -148,9 +148,9 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
       className={classNames(classes.root, className)}
       {...rest}>
       {followed && scUserContext.user ? (
-        <FormattedMessage defaultMessage="ui.followCategoryButton.unfollow" id="ui.followCategoryButton.unfollow" />
+        <FormattedMessage defaultMessage="ui.categoryFollowButton.unfollow" id="ui.categoryFollowButton.unfollow" />
       ) : (
-        <FormattedMessage defaultMessage="ui.followCategoryButton.follow" id="ui.followCategoryButton.follow" />
+        <FormattedMessage defaultMessage="ui.categoryFollowButton.follow" id="ui.categoryFollowButton.follow" />
       )}
     </FollowButton>
   );
