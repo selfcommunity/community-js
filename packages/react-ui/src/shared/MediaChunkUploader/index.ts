@@ -110,10 +110,12 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           headers: {'Content-Type': 'multipart/form-data'}
         })
         .then((res: HttpResponse<any>) => {
-          const _chunks = {...chunkStateRef.current.chunks};
-          delete _chunks[item.id];
-          chunkStateRef.current.setChunks(_chunks);
-          onSuccess(res.data);
+          setTimeout(() => {
+            const _chunks = {...chunkStateRef.current.chunks};
+            delete _chunks[item.id];
+            chunkStateRef.current.setChunks(_chunks);
+            onSuccess(res.data);
+          }, 0);
         })
         .catch((error) => {
           console.log(error);
