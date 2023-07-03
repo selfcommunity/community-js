@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-templates",
-  "version": "0.3.0-alpha.252",
+  "version": "0.3.0-alpha.253",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
