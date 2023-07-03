@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.38...@selfcommunity/react-i18n@0.5.0-alpha.39) (2023-07-03)
+
+
+### Bug Fixes
+
+* fixed component/props import name ([bcb9cfc](https://github.com/selfcommunity/community-js/commit/bcb9cfc1f7a809fbf40b0ead4cac3cc03779a210))
+
+
+
+
+
 # [0.5.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.37...@selfcommunity/react-i18n@0.5.0-alpha.38) (2023-07-03)
 
 
