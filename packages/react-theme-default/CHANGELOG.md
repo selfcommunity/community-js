@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.213](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.212...@selfcommunity/react-theme-default@0.1.0-alpha.213) (2023-07-03)
+
+
+### Bug Fixes
+
+* Fix media link PreviewComponent.tsx ([a688390](https://github.com/selfcommunity/community-js/commit/a68839051f31d2b445aa1f9cf4a007e5dc4f4123))
+
+
+
+
+
 # [0.1.0-alpha.212](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.211...@selfcommunity/react-theme-default@0.1.0-alpha.212) (2023-07-03)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
