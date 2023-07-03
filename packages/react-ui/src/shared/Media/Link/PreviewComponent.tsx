@@ -17,54 +17,16 @@ const classes = {
   thumbnailFullWidth: `${PREFIX}-thumbnail`,
   image: `${PREFIX}-image`,
   snippet: `${PREFIX}-snippet`,
-  snippetTitle: `${PREFIX}-snippetTitle`,
-  snippetDescription: `${PREFIX}-snippetDescription`
+  snippetTitle: `${PREFIX}-snippet-title`,
+  snippetDescription: `${PREFIX}-snippet-description`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.previewLink}`]: {
-    position: 'relative',
-    backgroundColor: '#F5F5F5',
-    margin: '10px 0px',
-    padding: theme.spacing()
-  },
-  [`& .${classes.previewVideo}`]: {
-    margin: '10px 0px',
-    height: 360
-  },
-  [`& .${classes.thumbnail}`]: {
-    border: '1px solid #dddddd',
-    borderRadius: 3,
-    paddingTop: theme.spacing(),
-    margin: theme.spacing(),
-    [theme.breakpoints.up('sm')]: {
-      maxWidth: 200,
-      width: '100%',
-      float: 'left'
-    }
-  },
-  [`& .${classes.image}`]: {
-    backgroundSize: 'cover !important',
-    backgroundPosition: 'center !important',
-    backgroundRepeat: 'no-repeat !important'
-  },
+})(({theme}) => ({}));
 
-  [`& .${classes.snippet}`]: {
-    padding: 10,
-    [`& .${classes.snippetTitle}`]: {},
-    [`& .${classes.snippetDescription}`]: {
-      fontSize: 12
-    },
-    '& a': {
-      fontSize: 13,
-      fontStyle: 'italic'
-    }
-  }
-}));
 export interface LinkPreviewProps {
   /**
    * Medias
@@ -90,7 +52,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
   const {medias, fullWidth = false, adornment = null, onMediaClick = null} = props;
 
   const handleLinkClick = (link) => {
-    onMediaClick(link);
+    onMediaClick && onMediaClick(link);
   };
 
   /**
@@ -109,10 +71,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
                 style={{background: `url(${link.image})`, paddingBottom: `${100 / link.image_width / link.image_height}%`}}
               />
             ) : (
-              <Box
-                className={classNames(classes.thumbnail, classes.image)}
-                style={{background: `url(${link.image})`, paddingBottom: 170}}
-              />
+              <Box className={classNames(classes.thumbnail, classes.image)} style={{background: `url(${link.image})`}} />
             )}
           </>
         )}

@@ -3,7 +3,7 @@ import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import {Box, CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
+import {CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 
