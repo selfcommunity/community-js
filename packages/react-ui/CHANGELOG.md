@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.259](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.258...@selfcommunity/react-ui@0.7.0-alpha.259) (2023-07-03)
+
+
+### Bug Fixes
+
+* UsernameTextfield ([5ca35e8](https://github.com/selfcommunity/community-js/commit/5ca35e81ee844e626dc2603aa3231372b613f12d))
+* UsernameTextfield ([e50f162](https://github.com/selfcommunity/community-js/commit/e50f162297e2e808c00b7a228413264316a97ff9))
+
+
+
+
+
 # [0.7.0-alpha.258](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.257...@selfcommunity/react-ui@0.7.0-alpha.258) (2023-06-30)
 
 

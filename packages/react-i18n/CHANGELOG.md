@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.37...@selfcommunity/react-i18n@0.5.0-alpha.38) (2023-07-03)
+
+
+### Bug Fixes
+
+* DataPortability i18n ([6c28257](https://github.com/selfcommunity/community-js/commit/6c28257ed4bce0422b6e910d776bd5cce15d86e3))
+* UsernameTextfield ([e50f162](https://github.com/selfcommunity/community-js/commit/e50f162297e2e808c00b7a228413264316a97ff9))
+
+
+
+
+
 # [0.5.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.36...@selfcommunity/react-i18n@0.5.0-alpha.37) (2023-06-30)
 
 
