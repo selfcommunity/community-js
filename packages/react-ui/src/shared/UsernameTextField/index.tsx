@@ -23,12 +23,12 @@ const Root = styled(TextField, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface UsernameTextFieldProps extends TextFieldProps {
+export type UsernameTextFieldProps = {
   /**
    * Allows the field to accept an email format as well
    */
   allowEmail?: boolean;
-}
+} & TextFieldProps;
 
 const UsernameTextField = (props: UsernameTextFieldProps): JSX.Element => {
   // PROPS
