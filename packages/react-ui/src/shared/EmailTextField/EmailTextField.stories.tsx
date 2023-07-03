@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import EmailTextField from './index';
 
 export default {
-  title: 'Design System/React UI Shared/Email Textfield',
+  title: 'Design System/React UI Shared/EmailTextfield',
   component: EmailTextField,
 } as Meta<typeof EmailTextField>;
 
