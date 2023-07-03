@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.261](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.260...@selfcommunity/react-ui@0.7.0-alpha.261) (2023-07-03)
+
+
+### Bug Fixes
+
+* image preview post/status/discussion ([466f55f](https://github.com/selfcommunity/community-js/commit/466f55f03c33023081ca369e9fc7b5d401e43db3))
+* video preview autoplay ([57ce4f8](https://github.com/selfcommunity/community-js/commit/57ce4f82a98abf119a03945d1e93368398df7297))
+
+
+
+
+
 # [0.7.0-alpha.260](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.259...@selfcommunity/react-ui@0.7.0-alpha.260) (2023-07-03)
 
 
