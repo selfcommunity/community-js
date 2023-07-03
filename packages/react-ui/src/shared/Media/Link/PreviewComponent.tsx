@@ -52,7 +52,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
   const {medias, fullWidth = false, adornment = null, onMediaClick = null} = props;
 
   const handleLinkClick = (link) => {
-    onMediaClick(link);
+    onMediaClick && onMediaClick(link);
   };
 
   /**
