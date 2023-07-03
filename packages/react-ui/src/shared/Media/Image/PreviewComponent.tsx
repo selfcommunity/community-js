@@ -95,7 +95,6 @@ const Root = styled(Box, {
   [`& .${classes.slide}`]: {
     height: 0,
     bottom: '100%',
-    transition: '.5s ease',
     overflow: 'hidden',
     fontSize: '3%',
     color: '#FFF'
@@ -104,13 +103,12 @@ const Root = styled(Box, {
   [`& .${classes.border}`]: {
     position: 'relative',
     border: '2px solid white',
-    borderRadius: 6,
     '&:hover > div': {
       bottom: 0,
       height: 'auto'
     },
     '&:hover > div.animate-text': {
-      top: '62%'
+      top: '66%'
     }
   },
 
