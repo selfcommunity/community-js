@@ -52,11 +52,15 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   const chunkStateRef = React.useRef({chunks: {}, setChunk: null, setChunks: null});
 
   // STATE
-  const [chunks, setChunks] = useState({});
-  const setChunk: Function = (chunk: SCMediaChunkType) => {
+  const [chunks, _setChunks] = useState({});
+  const setChunk: any = (chunk: SCMediaChunkType) => {
     const _chunks = {...chunkStateRef.current.chunks, [chunk.id]: {...chunkStateRef.current.chunks[chunk.id], ...chunk}};
-    setChunks(_chunks);
+    _setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
+  };
+  const setChunks = (chunks: SCMediaChunkType) => {
+    _setChunks(chunks);
+    chunkStateRef.current.chunks = chunks;
   };
 
   // Using refs to have the correct chunks values in the callbacks
@@ -85,7 +89,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       reader.onload = (e) => {
         chunkStateRef.current.setChunk({id: item.id, image: e.target.result});
       };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
@@ -161,7 +165,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     }
 
     //returned object can be wrapped with a promise
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       Promise.all(
         items.map(async (item) => {
           return {...item, file: item.file.type.startsWith('image/') && item.file.type !== 'image/gif' ? await resizeImage(item.file) : item.file};
