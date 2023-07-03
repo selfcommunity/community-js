@@ -174,6 +174,10 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
   const handleFetchData = (page: number, offset: number, total: number, data: any[]) => {
     let _unviewed = getUnseenNotificationCounter(data);
     _unviewed > 0 && scUserContext.setUnseenInteractionsCounter(scUserContext.user.unseen_interactions_counter - _unviewed);
+    if (!_unviewed) {
+      // Sync counters
+      void scUserContext.refreshCounters();
+    }
   };
 
   return (
