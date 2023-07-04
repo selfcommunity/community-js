@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Alert, Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {Alert, Box, Button, ButtonProps, CircularProgress, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
@@ -15,7 +15,8 @@ const classes = {
   form: `${PREFIX}-form`,
   password: `${PREFIX}-password`,
   success: `${PREFIX}-success`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  validating: `${PREFIX}-validating`
 };
 
 const Root = styled(Box, {
@@ -28,6 +29,15 @@ const Root = styled(Box, {
   },
   [`& .${classes.form} .MuiTypography-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
+  },
+  [`& .${classes.validating}`]: {
+    [`& span`]: {
+      marginRight: 12,
+      float: 'left'
+    },
+    [`& p`]: {
+      paddingTop: 12
+    }
   }
 }));
 
@@ -121,6 +131,7 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   } = props;
 
   // STATE
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const [validationCodeError, setValidationCodeError] = useState<string>('');
@@ -131,6 +142,33 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
   const intl = useIntl();
 
+  /**
+   * Verify the validation code before enable the form
+   */
+  useEffect(() => {
+    if (!scUserContext.user) {
+      if (validationCode) {
+        AccountService.verifyValidationCode({validation_code: validationCode})
+          .then((res: any) => {
+            if (res.status >= 300 || (res && !res.is_valid)) {
+              setValidationCodeError(intl.formatMessage({id: 'ui.accountReset.code.error', defaultMessage: 'ui.accountReset.code.error'}));
+            }
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            const _error = formatHttpErrorCode(error);
+            if (_error.validationCodeError) {
+              setValidationCodeError(_error.validationCodeError.error);
+            }
+            setIsLoading(false);
+          });
+      } else {
+        setValidationCodeError(intl.formatMessage({id: 'ui.accountReset.code.error', defaultMessage: 'ui.accountReset.code.error'}));
+        setIsLoading(false);
+      }
+    }
+  }, [validationCode]);
+
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -140,7 +178,6 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
     event.preventDefault();
     event.stopPropagation();
     setIsSubmitting(true);
-
     AccountService.reset({validation_code: validationCode, password})
       .then((res: any) => {
         setIsSucceed(true);
@@ -177,6 +214,11 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
         <Alert severity="error" className={classes.error}>
           <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
         </Alert>
+      ) : isLoading ? (
+        <Box className={classes.validating}>
+          <CircularProgress />
+          <p><FormattedMessage id="ui.accountReset.code.validatingToken" defaultMessage="ui.accountReset.code.validatingToken" /></p>
+        </Box>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
           <PasswordTextField

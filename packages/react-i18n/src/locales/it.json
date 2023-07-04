@@ -49,6 +49,7 @@
   "ui.accountRecover.submit": "Recupera Account",
   "ui.accountRecover.success": "Abbiamo inviato una mail di conferma a <bold>{email}</bold>, controlla la tua casella di posta",
   "ui.accountReset.code.error": "Token non valido o scaduto",
+  "ui.accountReset.code.validatingToken": "Verifica del token",
   "ui.accountReset.password.error.invalid": "La password deve contenere almeno 3 dei seguenti 4 tipi di caratteri: lettere minuscole, lettere maiuscole, numeri e caratteri speciali (eg !@#$%^&)",
   "ui.accountReset.password.error.min_length": "Assicurati che questo campo abbia almeno 8 caratteri.",
   "ui.accountReset.password.label": "Password",
