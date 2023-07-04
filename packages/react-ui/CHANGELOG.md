@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.266](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.265...@selfcommunity/react-ui@0.7.0-alpha.266) (2023-07-04)
+
+
+### Bug Fixes
+
+* UserInfo ([631cd59](https://github.com/selfcommunity/community-js/commit/631cd5910cf33347b590ea94f198e90017ee3b3c))
+
+
+
+
+
 # [0.7.0-alpha.265](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.264...@selfcommunity/react-ui@0.7.0-alpha.265) (2023-07-04)
 
 
