@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.257](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.256...@selfcommunity/react-templates@0.3.0-alpha.257) (2023-07-04)
+
+
+### Bug Fixes
+
+* editProfileDialog mobile responsive tabs ([72689f1](https://github.com/selfcommunity/community-js/commit/72689f19988ba3875cfb55fe3eeb71d11b1eef21))
+
+
+
+
+
 # [0.3.0-alpha.256](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.255...@selfcommunity/react-templates@0.3.0-alpha.256) (2023-07-04)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
