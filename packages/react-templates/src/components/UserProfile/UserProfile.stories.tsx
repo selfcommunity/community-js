@@ -20,7 +20,7 @@ export default {
  */
 export const Base: StoryObj<typeof UserProfile> = {
   args: {
-    userId: 159,
+    userId: -1,
   },
   render: (args) => {
     const {userId, ...rest} = args;
@@ -40,7 +40,7 @@ export const Base: StoryObj<typeof UserProfile> = {
       <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
         <UserProfileTemplate userId={_userId} {...rest} onEditClick={isMe ? () => setEdit(true) : null} />
         {isMe && (
-          <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body">
+          <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body" PaperProps={{sx: {mt: '90px', verticalAlign: 'top'}}}>
             <DialogTitle>Edit Profile</DialogTitle>
             <DialogContent>
               <UserProfileEdit AccordionProps={{elevation: 0}} />
