@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.265](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.264...@selfcommunity/react-ui@0.7.0-alpha.265) (2023-07-04)
+
+
+### Bug Fixes
+
+* editProfileDialog mobile responsive tabs ([72689f1](https://github.com/selfcommunity/community-js/commit/72689f19988ba3875cfb55fe3eeb71d11b1eef21))
+* skeleton ([3fefe6f](https://github.com/selfcommunity/community-js/commit/3fefe6fb1542a9f5f8244282368fe5ab23cb90f8))
+
+
+
+
+
 # [0.7.0-alpha.264](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.263...@selfcommunity/react-ui@0.7.0-alpha.264) (2023-07-04)
 
 
