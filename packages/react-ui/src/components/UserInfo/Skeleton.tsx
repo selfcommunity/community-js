@@ -40,8 +40,8 @@ const Root = styled(Box, {
 function UserProfileInfoSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      {Array.from({length: 3}).map(() => (
-        <Box className={classes.field}>
+      {Array.from({length: 3}).map((v, i) => (
+        <Box className={classes.field} key={i}>
           <Typography variant="h6">
             <Skeleton animation="wave" sx={{height: 20, width: '50%'}} />
           </Typography>

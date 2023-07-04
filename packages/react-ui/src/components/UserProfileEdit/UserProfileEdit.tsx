@@ -128,7 +128,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
   // RENDER
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      <Tabs className={classes.tabs} value={tab} onChange={handleChange} variant="scrollable" scrollButtons="auto">
+      <Tabs className={classes.tabs} value={tab} onChange={handleChange} variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile>
         <Tab label={<FormattedMessage id="ui.userProfileEdit.info" defaultMessage="ui.userProfileEdit.info" />} />
         <Tab label={<FormattedMessage id="ui.userProfileEdit.account" defaultMessage="ui.userProfileEdit.account" />} />
         <Tab label={<FormattedMessage id="ui.userProfileEdit.notification" defaultMessage="ui.userProfileEdit.notification" />} />
