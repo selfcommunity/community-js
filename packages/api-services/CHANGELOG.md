@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.25...@selfcommunity/api-services@0.4.0-alpha.26) (2023-07-04)
+
+
+### Bug Fixes
+
+* account verify validation code ([9e9400b](https://github.com/selfcommunity/community-js/commit/9e9400b38ee7d393b1846c77745cbedf6c635986))
+
+
+
+
+
 # [0.4.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.24...@selfcommunity/api-services@0.4.0-alpha.25) (2023-06-21)
 
 **Note:** Version bump only for package @selfcommunity/api-services
