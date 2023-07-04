@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.39...@selfcommunity/react-i18n@0.5.0-alpha.40) (2023-07-04)
+
+
+### Bug Fixes
+
+* account verify validation code ([9e9400b](https://github.com/selfcommunity/community-js/commit/9e9400b38ee7d393b1846c77745cbedf6c635986))
+
+
+
+
+
 # [0.5.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.38...@selfcommunity/react-i18n@0.5.0-alpha.39) (2023-07-03)
 
 
