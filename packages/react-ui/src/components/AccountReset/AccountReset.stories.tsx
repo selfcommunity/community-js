@@ -18,3 +18,10 @@ export const Base: StoryObj<AccountReset> = {
   },
   render: template
 };
+
+export const ValidCode: StoryObj<AccountReset> = {
+  args: {
+    validationCode: 'd3d13bdc525411f3455849e9615cd7b1cbf'
+  },
+  render: template
+};

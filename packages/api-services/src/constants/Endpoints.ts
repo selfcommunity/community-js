@@ -18,6 +18,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/account/verify/'),
     method: 'POST'
   },
+  AccountVerifyValidationCode: {
+    url: urlReplacer('/api/v2/account/verify/validation_code/'),
+    method: 'POST'
+  },
   AccountRecover: {
     url: urlReplacer('/api/v2/account/recover/'),
     method: 'POST'

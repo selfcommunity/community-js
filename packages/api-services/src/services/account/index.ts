@@ -36,6 +36,14 @@ export class AccountApiClient {
     return apiRequest({...config, data, url: Endpoints.AccountVerify.url({}), method: Endpoints.AccountVerify.method});
   }
   /**
+   * This endpoint verify if a validation code is valid.
+   * @param data
+   * @param config
+   */
+  static verifyValidationCode(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, data, url: Endpoints.AccountVerifyValidationCode.url({}), method: Endpoints.AccountVerifyValidationCode.method});
+  }
+  /**
    * This endpoint recover an account.
    * @param data
    * @param config
@@ -104,6 +112,9 @@ export default class AccountService {
   }
   static async verify(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any> {
     return AccountApiClient.verify(data, config);
+  }
+  static async verifyValidationCode(params?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<SCUserType> {
+    return AccountApiClient.verifyValidationCode(params, config);
   }
   static async recover(data?: AccountRecoverParams, config?: AxiosRequestConfig): Promise<any> {
     return AccountApiClient.recover(data, config);

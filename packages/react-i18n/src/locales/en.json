@@ -49,6 +49,7 @@
   "ui.accountRecover.submit": "Recover Account",
   "ui.accountRecover.success": "We sent an email to <b>{email}</b>, check your inbox",
   "ui.accountReset.code.error": "Invalid token",
+  "ui.accountReset.code.validatingToken": "Verifying the token",
   "ui.accountReset.password.error.invalid": "The password must contain at least 3 of the following 4 types of characters: lowercase letters, uppercase letters, numbers and special characters (eg !@#$%^&)",
   "ui.accountReset.password.error.min_length": "Your password must be at least 8 characters",
   "ui.accountReset.password.label": "Password",
