@@ -11,9 +11,6 @@ export default {
       description: 'User Id',
       table: {defaultValue: {summary: 7}}
     }
-  },
-  args: {
-    userId: 11
   }
 } as Meta<typeof UserInfo>;
 
@@ -25,7 +22,7 @@ const template = (args) => (
 
 export const Base: StoryObj<UserInfo> = {
   args: {
-    userId: 11,
+    userId: 167,
     fields: [...DEFAULT_FIELDS]
   },
   render: template

@@ -170,6 +170,12 @@ export default function UserInfo(inProps: UserInfoProps): JSX.Element {
             TagChipProps={{clickable: false, disposable: false}}
           />
         );
+      case SCUserProfileFields.WEBSITE:
+        return (
+          <a href={user[field]} target={'_blank'}>
+            {user[field]}
+          </a>
+        );
       default:
         return user[field];
     }
