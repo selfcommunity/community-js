@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.255](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.254...@selfcommunity/react-templates@0.3.0-alpha.255) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.254](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.253...@selfcommunity/react-templates@0.3.0-alpha.254) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.253](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.252...@selfcommunity/react-templates@0.3.0-alpha.253) (2023-07-03)
+
+
+### Bug Fixes
+
+* sync notification counters ([4d65faf](https://github.com/selfcommunity/community-js/commit/4d65fafc8cc6d3ac40bd1b3c4189028869a39c42))
+
+
+
+
+
 # [0.3.0-alpha.252](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.251...@selfcommunity/react-templates@0.3.0-alpha.252) (2023-07-03)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
