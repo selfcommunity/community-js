@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.218](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.217...@selfcommunity/react-theme-default@0.1.0-alpha.218) (2023-07-05)
+
+
+### Bug Fixes
+
+* user profile ([4ee1e45](https://github.com/selfcommunity/community-js/commit/4ee1e456b105eb43f3364836198372637e7e3523))
+
+
+
+
+
 # [0.1.0-alpha.217](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.216...@selfcommunity/react-theme-default@0.1.0-alpha.217) (2023-07-05)
 
 

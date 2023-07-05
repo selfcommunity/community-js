@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.268](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.267...@selfcommunity/react-ui@0.7.0-alpha.268) (2023-07-05)
+
+
+### Bug Fixes
+
+* account verify validation code ([ae59246](https://github.com/selfcommunity/community-js/commit/ae59246f6fcb2488aa59c4cdbe73313b52f69e8e))
+* user profile ([4ee1e45](https://github.com/selfcommunity/community-js/commit/4ee1e456b105eb43f3364836198372637e7e3523))
+
+
+
+
+
 # [0.7.0-alpha.267](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.266...@selfcommunity/react-ui@0.7.0-alpha.267) (2023-07-05)
 
 
