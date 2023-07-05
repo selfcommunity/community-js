@@ -166,6 +166,12 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   hideParticipantsPreview?: boolean;
 
   /**
+   * Show poll as default if exist
+   * @default false
+   */
+  pollVisible: boolean;
+
+  /**
    * Props to spread to ContributionActionsMenu component
    * @default {elevation: 0}
    */
@@ -326,6 +332,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     activitiesExpanded = true,
     activitiesExpandedType,
     hideParticipantsPreview = false,
+    pollVisible = false,
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
@@ -426,6 +433,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       updateObject(Object.assign({}, obj, {poll: pollObject}));
     },
     [obj]
+  );
+
+  /**
+   * Handle change poll visibility
+   */
+  const handleTogglePollVisibility = useCallback(
+    (visible: boolean) => {
+      notifyFeedChanges({pollVisible: visible});
+    },
+    [pollVisible, notifyFeedChanges]
   );
 
   /**
@@ -756,7 +773,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
-                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+                {obj['poll'] && (
+                  <PollObject
+                    visible={pollVisible}
+                    feedObject={obj}
+                    pollObject={obj['poll']}
+                    onChange={handleChangePoll}
+                    onToggleVisibility={handleTogglePollVisibility}
+                    {...PollObjectProps}
+                  />
+                )}
               </Box>
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>

@@ -29,6 +29,7 @@ import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {format, isBefore, isValid, parseISO, startOfHour} from 'date-fns';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
+import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   genderMale: {
@@ -49,7 +50,8 @@ const PREFIX = 'SCUserProfileEditSectionPublicInfo';
 
 const classes = {
   root: `${PREFIX}-root`,
-  field: `${PREFIX}-field`
+  field: `${PREFIX}-field`,
+  btnSave: `${PREFIX}-btn-save`
 };
 
 const Root = styled(Box, {
@@ -62,6 +64,9 @@ const Root = styled(Box, {
   },
   [`& .${classes.field} .MuiSelect-icon`]: {
     right: theme.spacing(5)
+  },
+  [`& .${classes.btnSave}`]: {
+    marginTop: theme.spacing(2)
   }
 }));
 
@@ -139,51 +144,45 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   }, [scUserContext.user]);
 
   // HANDLERS
-  const handleEdit = (field: SCUserProfileFields) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSave = () => {
+    setSaving([...editing]);
+    setError({});
+    const data = {};
+    editing.map((f) => {
+      data[f] = f === SCUserProfileFields.DATE_OF_BIRTH && user[f] ? format(user[f], 'yyyy-MM-dd') : user[f];
+    });
+    http
+      .request({
+        url: Endpoints.UserPatch.url({id: user.id}),
+        method: Endpoints.UserPatch.method,
+        data
+      })
+      .then((res: HttpResponse<SCUserType>) => {
+        scUserContext.updateUser(res.data);
+        setEditing([]);
+        setSaving([]);
+        if (onEditSuccess) {
+          onEditSuccess();
+        }
+      })
+      .catch((error) => {
+        setError({...error, ...formatHttpErrorCode(error)});
+        setEditing([]);
+        setSaving([]);
+      });
+  };
+
+  const handleChange = (field: SCUserProfileFields) => {
+    return (event: ChangeEvent<HTMLInputElement>) => {
+      setUser({...user, [event.target.name]: event.target.value});
       setEditing([...editing, field]);
-      if (error[`${camelCase(field)}Error`]) {
-        delete error[`${camelCase(field)}Error`];
+      if (!event.target.value && event.target.name in metadataDefinitions && metadataDefinitions[event.target.name].mandatory) {
+        setError({...error, ...{[`${camelCase(event.target.name)}Error`]: {error: 'invalid'}}});
+      } else if (error[`${camelCase(event.target.name)}Error`]) {
+        delete error[`${camelCase(event.target.name)}Error`];
         setError(error);
       }
     };
-  };
-
-  const handleSave = (field: SCUserProfileFields) => {
-    return (event: React.MouseEvent<HTMLButtonElement> | any) => {
-      if (user[field] === scUserContext.user[field]) {
-        setEditing(editing.filter((f) => f !== field));
-        return;
-      }
-      setSaving([...saving, field]);
-      http
-        .request({
-          url: Endpoints.UserPatch.url({id: user.id}),
-          method: Endpoints.UserPatch.method,
-          data: {[field]: field === SCUserProfileFields.DATE_OF_BIRTH && user[field] ? format(user[field], 'yyyy-MM-dd') : user[field]}
-        })
-        .then((res: HttpResponse<SCUserType>) => {
-          scUserContext.updateUser(res.data);
-          setEditing(editing.filter((f) => f !== field));
-          setSaving(saving.filter((f) => f !== field));
-          if (onEditSuccess) {
-            onEditSuccess();
-          }
-        })
-        .catch((error) => {
-          setError({...error, ...formatHttpErrorCode(error)});
-          setEditing([...editing, field]);
-          setSaving(saving.filter((f) => f !== field));
-        });
-    };
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUser({...user, [event.target.name]: event.target.value});
-    if (error[`${camelCase(event.target.name)}Error`]) {
-      delete error[`${camelCase(event.target.name)}Error`];
-      setError(error);
-    }
   };
 
   // RENDER
@@ -200,27 +199,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
 
     let props: any = {
       InputProps: {
-        endAdornment: (
-          <InputAdornment position="end">
-            {!isEditing ? (
-              <IconButton onClick={handleEdit(field)} edge="end" disabled={editing.length !== 0}>
-                <Icon>edit</Icon>
-              </IconButton>
-            ) : isSaving ? (
-              <CircularProgress size={10} />
-            ) : (
-              <IconButton
-                disabled={Boolean(_error) || !user[field]}
-                onClick={handleSave(field)}
-                edge="end"
-                color={'secondary'}
-                // color={user[field] === scUserContext.user[field] ? 'default' : 'primary'}
-              >
-                <Icon>check</Icon>
-              </IconButton>
-            )}
-          </InputAdornment>
-        )
+        endAdornment: <InputAdornment position="end">{isSaving && <CircularProgress size={10} />}</InputAdornment>
       }
     };
     let content = null;
@@ -264,33 +243,24 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                   });
                 }
                 setUser(u);
+                setEditing([...editing, field]);
               }}
               disableFuture
-              disabled={!isEditing || isSaving}
+              disabled={isSaving}
               slots={{
                 inputAdornment: (params) => {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
                   // @ts-ignore
                   const {children, ...rest} = params.children.props;
                   return (
                     <InputAdornment position={'end'}>
                       <IconButton {...rest}>{children}</IconButton>
-                      {!isEditing ? (
-                        <IconButton onClick={handleEdit(SCUserProfileFields.DATE_OF_BIRTH)} edge="end" disabled={editing.length !== 0}>
-                          <Icon>edit</Icon>
-                        </IconButton>
-                      ) : isSaving ? (
-                        <CircularProgress size={10} />
-                      ) : (
-                        <IconButton disabled={Boolean(_error)} onClick={handleSave(SCUserProfileFields.DATE_OF_BIRTH)} edge="end">
-                          <Icon>check</Icon>
-                        </IconButton>
-                      )}
+                      {isSaving && <CircularProgress size={10} />}
                     </InputAdornment>
                   );
                 }
               }}
-              onAccept={isMobile ? handleSave(SCUserProfileFields.DATE_OF_BIRTH) : null}
+              // onAccept={isMobile ? handleSave(SCUserProfileFields.DATE_OF_BIRTH) : null}
               slotProps={{
                 textField: {
                   className: classes.field,
@@ -303,13 +273,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
                         <IconButton disabled={!isEditing}>
                           <Icon>CalendarIcon</Icon>
                         </IconButton>
-                        {!isEditing ? (
-                          <IconButton onClick={handleEdit(SCUserProfileFields.DATE_OF_BIRTH)} edge="end" disabled={editing.length !== 0}>
-                            <Icon>edit</Icon>
-                          </IconButton>
-                        ) : isSaving ? (
-                          <CircularProgress size={10} />
-                        ) : null}
+                        {isSaving ? <CircularProgress size={10} /> : null}
                       </>
                     )
                   }
@@ -342,19 +306,19 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
             <MetadataField
               id={field}
               key={field}
-              {...props}
               className={classes.field}
               name={field}
               fullWidth
               label={label}
               value={user[field] || ''}
-              onChange={handleChange}
-              disabled={!isEditing || isSaving}
+              onChange={handleChange(field)}
+              disabled={isSaving}
               error={Boolean(_error)}
               helperText={
                 _error && <FormattedMessage id={`ui.userInfo.metadata.error.${_error}`} defaultMessage={`ui.userInfo.metadata.error.${_error}`} />
               }
               metadata={metadataDefinitions[field]}
+              {...props}
             />
           );
         }
@@ -370,8 +334,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         fullWidth
         label={label}
         value={user[field] || ''}
-        onChange={handleChange}
-        disabled={!isEditing || isSaving}
+        onChange={handleChange(field)}
+        disabled={isSaving}
         error={Boolean(_error)}
         helperText={
           _error && <FormattedMessage id={`ui.userInfo.${camelField}.error.${_error}`} defaultMessage={`ui.userInfo.${camelField}.error.${_error}`} />
@@ -393,6 +357,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
       {_fields.map((field) => {
         return renderField(field);
       })}
+      <LoadingButton
+        className={classes.btnSave}
+        fullWidth
+        variant="contained"
+        color="secondary"
+        onClick={handleSave}
+        loading={saving.length > 0}
+        disabled={saving.length > 0 || Object.keys(error).length > 0}>
+        <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
+      </LoadingButton>
     </Root>
   );
 }

@@ -72,10 +72,20 @@ export interface PollObjectProps {
    */
   disabled?: boolean;
   /**
+   * If `false`, the poll is collapsed
+   * @default false
+   */
+  visible?: boolean;
+  /**
    * Callback to sync poll obj of the feedObject
    * @param value
    */
   onChange?: (value: any) => void;
+  /**
+   * Callback onToggle poll visibility
+   * @param value
+   */
+  onToggleVisibility?: (visible: any) => void;
   /**
    * Feed object
    */
@@ -92,7 +102,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, feedObject, pollObject, disabled, onChange, ...rest} = props;
+  const {className, feedObject, pollObject, disabled, visible = true, onChange, onToggleVisibility, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -103,7 +113,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
   const [choices, setChoices] = useState(pollObject.choices);
   const [isVoting, setIsVoting] = useState<number>(null);
   const [collapsed, setCollapsed] = useState<boolean>(
-    Boolean(feedObject && (feedObject.type === SCContributionType.DISCUSSION || feedObject.html || feedObject.medias.length))
+    Boolean(feedObject && (feedObject.type === SCContributionType.DISCUSSION || feedObject.html || feedObject.medias.length)) && !visible
   );
 
   // CONST
@@ -198,9 +208,10 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
    */
   const handleToggleCollapsedClick = useMemo(
     () => () => {
+      onToggleVisibility && onToggleVisibility(collapsed);
       setCollapsed((prev) => !prev);
     },
-    [collapsed]
+    [setCollapsed, onToggleVisibility]
   );
 
   /**
