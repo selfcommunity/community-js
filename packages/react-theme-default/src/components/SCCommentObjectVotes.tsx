@@ -7,7 +7,7 @@ const Component = {
       '& .SCCommentObjectVotes-btnViewVotes': {
         minWidth: 0,
         '& .MuiIcon-root': {
-          fontSize: '1.571rem'
+          fontSize: '1.57rem'
         }
       }
     })

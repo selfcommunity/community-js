@@ -5,7 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
       '& .MuiIcon-root': {
-        fontSize: '1.571rem'
+        fontSize: '1.57rem'
       },
       '& .SCPrivateMessageEditor-message-input': {
         width: '100%',
@@ -56,7 +56,7 @@ const Component = {
             '& .SCMessageMediaUploader-upload-button': {
               display: 'flex',
               margin: '0 auto',
-              fontSize: '1.571rem'
+              fontSize: '1.57rem'
             }
           },
           '& .MuiList-root': {

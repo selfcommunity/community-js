@@ -3,7 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       '& h2 .MuiIconButton-root': {
         top: theme.spacing(1),
-        fontSize: '1.571rem'
+        fontSize: '1.57rem'
       }
     })
   }

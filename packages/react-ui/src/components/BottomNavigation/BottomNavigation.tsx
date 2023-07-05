@@ -38,7 +38,7 @@ const Root = styled(MuiBottomNavigation, {
   // @ts-ignore
   backgroundColor: theme.palette?.navbar?.main,
   [`& .${classes.action}`]: {
-    fontSize: '1.571rem'
+    fontSize: '1.57rem'
   }
 }));
 
