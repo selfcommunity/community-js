@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.40...@selfcommunity/react-i18n@0.5.0-alpha.41) (2023-07-05)
+
+
+### Bug Fixes
+
+* UserInfo & feedObject poll collapsed in feed ([62e86d1](https://github.com/selfcommunity/community-js/commit/62e86d1b13416c64ee21b0ada4496c23c6fdf0a0))
+
+
+
+
+
 # [0.5.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.39...@selfcommunity/react-i18n@0.5.0-alpha.40) (2023-07-04)
 
 

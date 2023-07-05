@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.267](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.266...@selfcommunity/react-ui@0.7.0-alpha.267) (2023-07-05)
+
+
+### Bug Fixes
+
+* poll collapsed ts ([0c8d09b](https://github.com/selfcommunity/community-js/commit/0c8d09b35ab49e105ed06e2d1e3060619567ef7c))
+* styles ([e25c7b2](https://github.com/selfcommunity/community-js/commit/e25c7b264607572f9fd1ddfbaef2d52832e8d2f9))
+* UserInfo & feedObject poll collapsed in feed ([62e86d1](https://github.com/selfcommunity/community-js/commit/62e86d1b13416c64ee21b0ada4496c23c6fdf0a0))
+
+
+
+
+
 # [0.7.0-alpha.266](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.265...@selfcommunity/react-ui@0.7.0-alpha.266) (2023-07-04)
 
 
