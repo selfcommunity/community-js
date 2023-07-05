@@ -169,7 +169,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    * Show poll as default if exist
    * @default false
    */
-  pollVisible: boolean;
+  pollVisible?: boolean;
 
   /**
    * Props to spread to ContributionActionsMenu component
