@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
@@ -25,6 +25,7 @@ const classes = {
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
+  realname: `${PREFIX}-realname`,
   changePicture: `${PREFIX}-change-picture`,
   changeCover: `${PREFIX}-change-cover`
 };
@@ -102,6 +103,7 @@ export interface UserProfileHeaderProps {
  |cover|.SCUserProfileHeader-cover|Styles applied to the cover element.|
  |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
  |username|SCUserProfileHeader-username|Styles applied to the username element.|
+ |realname|SCUserProfileHeader-realname|Styles applied to the realname element.|
  |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
  |changeCover|.SCUserProfileHeader-change-cover`|Styles applied to changeCover element.|
 
@@ -124,6 +126,9 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
 
   // HOOKS
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+
+  // CONST
+  const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
 
   /**
    * Handles Change Avatar
@@ -154,13 +159,12 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
   if (!scUser) {
     return <UserProfileHeaderSkeleton />;
   }
-  const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
   const _backgroundCover = {
     ...(scUser.cover
       ? {background: `url('${scUser.cover}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
-
+  const realName = (isMe && scUserContext.user.real_name) || scUser.real_name;
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
@@ -175,8 +179,13 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
         )}
       </Paper>
       <Typography variant="h5" className={classes.username}>
-        {scUser.real_name ? scUser.real_name : scUser.username}
+        @{isMe ? scUserContext.user.username : scUser.username}
       </Typography>
+      {realName && (
+        <Typography variant="h5" className={classes.realname}>
+          {realName}
+        </Typography>
+      )}
     </Root>
   );
 }

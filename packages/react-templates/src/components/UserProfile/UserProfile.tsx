@@ -256,7 +256,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   if (
     !scUser ||
     scUserContext.user === undefined ||
-    (scUserContext.user !== undefined && ((loadingBlockedBy && blockedBy === null) || scUserContext.managers.blockedUsers.isLoading()))
+    (scUserContext.user && ((loadingBlockedBy && blockedBy === null) || scUserContext.managers.blockedUsers.isLoading()))
   ) {
     return <UserProfileSkeleton />;
   }

@@ -36,6 +36,10 @@ const Component = {
         fontSize: '1.429rem',
         textAlign: 'center'
       },
+      '& .SCUserProfileHeader-realname': {
+        fontSize: '1rem',
+        textAlign: 'center'
+      },
       '& .SCUserProfileHeader-change-cover': {
         position: 'absolute',
         right: 10,
