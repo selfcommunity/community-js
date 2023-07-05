@@ -26,7 +26,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}: any) => ({
-  minHeight: 40,
+  minHeight: 28,
   marginTop: 0,
   marginBottom: 0,
   [`& .${classes.btnParticipants}`]: {

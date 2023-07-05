@@ -47,7 +47,7 @@ const Component = {
         }
       },
       '& .SCFeedObject-content': {
-        padding: theme.spacing(1, 0),
+        padding: theme.spacing(1, 0, 0, 0),
         '&.SCFeedObject-error': {
           padding: theme.spacing(2),
           textAlign: 'center'
@@ -146,7 +146,7 @@ const Component = {
           '& .SCFeedObject-text-section': {
             overflowWrap: 'anywhere',
             '& > :first-of-type': {
-              padding: theme.spacing(0, 2, 2),
+              padding: theme.spacing(0, 2, 1),
               display: 'block'
             },
             '& hr': {
@@ -251,7 +251,7 @@ const Component = {
           },
           '& .SCFeedObjectActions-root': {
             margin: 0,
-            padding: theme.spacing(2, 2, 0, 2),
+            padding: theme.spacing(0, 2, 0, 2),
             '& .SCFeedObjectActions-action': {
               marginTop: 'auto',
               '& .SCVoteAction-view-audience-button, & .SCCommentAction-view-audience-button, & .SCShareAction-view-audience-button, & .SCReactionAction-view-audience-button':
@@ -276,11 +276,11 @@ const Component = {
                 padding: theme.spacing(1.5),
                 minWidth: 0,
                 '& .MuiIcon-root': {
-                  fontSize: '1.571rem'
+                  fontSize: '1.57rem'
                 },
                 '& > img': {
-                  width: '1.571rem',
-                  height: '1.571rem'
+                  width: '1.57rem',
+                  height: '1.57rem'
                 }
               }
             }
@@ -313,6 +313,7 @@ const Component = {
         '& .SCFeedObject-activities-section': {
           '& .SCFeedObject-activities-content': {
             paddingTop: 0,
+            paddingBottom: 0,
             '& .SCActivitiesMenu-selector': {
               '& .MuiButton-root': {
                 fontSize: '0.857rem',

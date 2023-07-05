@@ -5,7 +5,7 @@ const Component = {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      fontSize: '1.571rem',
+      fontSize: '1.57rem',
       '&.SCReactionAction-inline': {
         flexDirection: 'row-reverse'
       },

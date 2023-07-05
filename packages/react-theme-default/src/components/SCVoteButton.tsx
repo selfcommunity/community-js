@@ -8,7 +8,7 @@ const Component = {
       padding: theme.spacing(1.5),
       minWidth: 0,
       '& .MuiIcon-root': {
-        fontSize: '1.571rem'
+        fontSize: '1.57rem'
       },
       '&.MuiButton-sizeSmall': {
         padding: theme.spacing(0.5),
