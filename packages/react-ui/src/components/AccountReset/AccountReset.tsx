@@ -78,6 +78,11 @@ export interface AccountResetProps {
   successAction?: React.ReactNode;
 
   /**
+   * Action component to display after error message
+   * */
+  errorAction?: React.ReactNode;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -127,6 +132,7 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
     ButtonProps = {variant: 'contained'},
     validationCode,
     successAction = null,
+    errorAction = null,
     ...rest
   } = props;
 
@@ -162,9 +168,6 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
             }
             setIsLoading(false);
           });
-      } else {
-        setValidationCodeError(intl.formatMessage({id: 'ui.accountReset.code.error', defaultMessage: 'ui.accountReset.code.error'}));
-        setIsLoading(false);
       }
     }
   }, [validationCode]);
@@ -211,13 +214,18 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
           {successAction}
         </Alert>
       ) : validationCodeError ? (
-        <Alert severity="error" className={classes.error}>
-          <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
-        </Alert>
+        <>
+          <Alert severity="error" className={classes.error}>
+            <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
+          </Alert>
+          {errorAction}
+        </>
       ) : isLoading ? (
         <Box className={classes.validating}>
           <CircularProgress />
-          <p><FormattedMessage id="ui.accountReset.code.validatingToken" defaultMessage="ui.accountReset.code.validatingToken" /></p>
+          <p>
+            <FormattedMessage id="ui.accountReset.code.validatingToken" defaultMessage="ui.accountReset.code.validatingToken" />
+          </p>
         </Box>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
