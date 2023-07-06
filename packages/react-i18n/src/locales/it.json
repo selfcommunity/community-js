@@ -131,7 +131,7 @@
   "ui.common.error.phone": "Il numero di telefono non è valido",
   "ui.common.error.url": "L'url non è valido",
   "ui.common.error.username": "Il campo username può essere composto da caratteri alfanumerici _ e -",
-  "ui.common.error.usernameOrEmail": "Inserisci uno username valido (sono permessi caratteri alfanumerici _ e -) oppure un email valida",
+  "ui.common.error.usernameOrEmail": "Inserisci uno username valido (sono permessi caratteri alfanumerici _ e -) oppure una email valida",
   "ui.common.fileUpload.error": "Si è verificato un errore durante il caricamento del file.",
   "ui.common.nextPage": "Pagina successiva",
   "ui.common.no": "No",
