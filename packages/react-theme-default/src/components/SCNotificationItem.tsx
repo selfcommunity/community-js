@@ -5,6 +5,7 @@ const Component = {
       '& .SCNotificationItem-header': {
         display: 'flex',
         flexDirection: 'row',
+        paddingBottom: theme.spacing(),
         '& .SCNotificationItem-primary': {
           fontWeight: theme.typography.fontWeightMedium,
           '& .SCContributionNotification-username': {
