@@ -116,7 +116,7 @@ const Component = {
         marginBottom: theme.spacing(1),
         '& .SCPrivateMessageThread-subheader': {
           width: 'fit-content',
-          padding: theme.spacing(0.5),
+          padding: theme.spacing(0.5, 1, 0.5, 1),
           backgroundColor: 'white',
           fontWeight: theme.typography.fontWeightRegular,
           borderRadius: theme.shape.borderRadius,

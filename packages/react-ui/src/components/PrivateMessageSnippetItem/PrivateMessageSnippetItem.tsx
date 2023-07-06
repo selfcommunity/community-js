@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem, Badge} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
@@ -13,6 +13,8 @@ const PREFIX = 'SCPrivateMessageSnippetItem';
 const classes = {
   root: `${PREFIX}-root`,
   username: `${PREFIX}-username`,
+  badge: `${PREFIX}-badge`,
+  badgeIcon: `${PREFIX}-badge-icon`,
   badgeLabel: `${PREFIX}-badge-label`,
   time: `${PREFIX}-time`,
   menuItem: `${PREFIX}-menu-item`,
@@ -73,6 +75,8 @@ export interface PrivateMessageSnippetItemProps {
  |---|---|---|
  |root|.SCPrivateMessageSnippetItem-root|Styles applied to the root element.|
  |username|.SCPrivateMessageSnippetItem-username|Styles applied to the username element.|
+ |badge|.SCPrivateMessageSnippetItem-badge|Styles applied to the badge element.|
+ |badgeIcon|.SCPrivateMessageSnippetItem-badgeIcon|Styles applied to the badgeIcon element.|
  |badgeLabel|.SCPrivateMessageSnippetItem-badgeLabel|Styles applied to the badgeLabel element.|
  |time|.SCPrivateMessageSnippetItem-time|Styles applied to the time element.|
  |menuItem|.SCPrivateMessageSnippetItem-menu-item|Styles applied to the menu item element.|
@@ -116,11 +120,25 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
         onClick={onItemClick}
         classes={{root: classNames({[classes.unread]: message.thread_status === SCPrivateMessageStatusType.NEW})}}>
         <ListItemAvatar>
-          {scUserContext?.user?.username === message.receiver.username ? (
-            <Avatar alt={message.sender.username} src={message.sender.avatar} />
-          ) : (
-            <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
-          )}
+          <Badge
+            invisible={!hasBadge}
+            classes={{badge: classes.badge}}
+            overlap="circular"
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+            badgeContent={
+              preferences ? (
+                <Avatar
+                  className={classes.badgeIcon}
+                  alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
+                  src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
+                />
+              ) : null
+            }>
+            <Avatar
+              alt={scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
+              src={scUserContext?.user?.username === message.receiver.username ? message.sender.avatar : message.receiver.avatar}
+            />
+          </Badge>
         </ListItemAvatar>
         <ListItemText
           primary={

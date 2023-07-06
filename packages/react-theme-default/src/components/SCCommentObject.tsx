@@ -10,6 +10,16 @@ const Component = {
         overflow: 'visible',
         '& > div': {
           alignItems: 'flex-start'
+        },
+        '& .SCCommentObject-badge': {
+          top: '50%',
+          right: '5%',
+          '& .SCCommentObject-badge-icon': {
+            width: theme.selfcommunity.user.avatar.sizeSmall,
+            height: theme.selfcommunity.user.avatar.sizeSmall,
+            backgroundColor: theme.palette.background.paper,
+            border: `1px solid ${theme.palette.background.paper}`
+          }
         }
       },
       '& .SCCommentObject-nested-comments': {

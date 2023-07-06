@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Badge, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
@@ -36,18 +36,24 @@ import {
   Link,
   SCCache,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchFeedObject,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const MAX_SUMMARY_LENGTH = 150;
+
+const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_STAFF_BADGE_ICON];
+
 const messages = defineMessages({
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
@@ -63,6 +69,8 @@ const classes = {
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
   avatar: `${PREFIX}-avatar`,
+  badge: `${PREFIX}-badge`,
+  badgeIcon: `${PREFIX}-badge-icon`,
   username: `${PREFIX}-username`,
   activityAt: `${PREFIX}-activity-at`,
   tag: `${PREFIX}-tag`,
@@ -288,6 +296,8 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
  |avatar|.SCFeedObject-avatar|Styles applied to the avatar element.|
+ |badge|.SCFeedObject-badge|Styles applied to the badge element.|
+ |badgeIcon|.SCFeedObject-badgeIcon|Styles applied to the badgeIcon element.|
  |username|.SCFeedObject-username|Styles applied to the username element.|
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
  |tag|.SCFeedObject-tag|Styles applied to the tag element.|
@@ -377,6 +387,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
   const [expanded, setExpanded] = useState(false);
 
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
   // INTL
   const intl = useIntl();
 
@@ -684,9 +701,24 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Link
                   {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                   onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
-                    {obj.author.username}
-                  </Avatar>
+                  <Badge
+                    invisible={!obj.author.community_badge}
+                    classes={{badge: classes.badge}}
+                    overlap="circular"
+                    anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                    badgeContent={
+                      preferences ? (
+                        <Avatar
+                          className={classes.badgeIcon}
+                          alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
+                          src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
+                        />
+                      ) : null
+                    }>
+                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                      {obj.author.username}
+                    </Avatar>
+                  </Badge>
                 </Link>
               }
               title={
@@ -877,9 +909,24 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                   onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
                   className={classes.username}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
-                    {obj.author.username}
-                  </Avatar>
+                  <Badge
+                    invisible={!obj.author.community_badge}
+                    classes={{badge: classes.badge}}
+                    overlap="circular"
+                    anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                    badgeContent={
+                      preferences ? (
+                        <Avatar
+                          className={classes.badgeIcon}
+                          alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
+                          src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
+                        />
+                      ) : null
+                    }>
+                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                      {obj.author.username}
+                    </Avatar>
+                  </Badge>
                 </Link>
               }
               title={
@@ -946,7 +993,22 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Link
                 {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                 onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
-                <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
+                <Badge
+                  invisible={!obj.author.community_badge}
+                  classes={{badge: classes.badge}}
+                  overlap="circular"
+                  anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                  badgeContent={
+                    preferences ? (
+                      <Avatar
+                        className={classes.badgeIcon}
+                        alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
+                        src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
+                      />
+                    ) : null
+                  }>
+                  <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
+                </Badge>
               </Link>
             }
             primary={
