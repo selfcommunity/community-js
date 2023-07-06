@@ -66,7 +66,8 @@ const Root = styled(Box, {
     right: theme.spacing(5)
   },
   [`& .${classes.btnSave}`]: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing()
   }
 }));
 
@@ -165,9 +166,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
           onEditSuccess();
         }
       })
-      .catch((error) => {
-        setError({...error, ...formatHttpErrorCode(error)});
-        setEditing([]);
+      .catch((e) => {
+        setError({...error, ...formatHttpErrorCode(e)});
         setSaving([]);
       });
   };

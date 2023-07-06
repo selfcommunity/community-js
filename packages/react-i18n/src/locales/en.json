@@ -528,7 +528,7 @@
   "ui.userInfo.website": "Website",
   "ui.userInfo.website.error.invalid": "Please enter a valid URL.",
   "ui.userInfoDialog.title": "Informations",
-  "ui.userInfoDialog.button.save": "Save",
+  "ui.userInfo.button.save": "Save",
   "ui.publicInfo.dateOfBirth.error": "Invalid date of birth.",
   "ui.userPopupNotification.viewOther": "View others",
   "ui.userProfileBlocked.blockedUser": "The contents are hidden because you have blocked the user.",

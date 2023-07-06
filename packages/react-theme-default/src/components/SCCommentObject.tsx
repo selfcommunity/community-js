@@ -32,12 +32,15 @@ const Component = {
         overflowWrap: 'anywhere',
         position: 'relative',
         display: 'flex',
-        padding: theme.spacing(2),
+        padding: `12px ${theme.spacing(2)}`,
         borderRadius: theme.shape.borderRadius * 0.5,
         borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         '& .MuiCardContent-root': {
           flexGrow: 1,
-          padding: 0
+          padding: 0,
+          '& > p:first-of-type': {
+            paddingTop: 4
+          }
         },
         '& .SCCommentObject-text-content': {
           margin: 0,
