@@ -112,9 +112,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
   const [votes, setVotes] = useState(getVotes());
   const [choices, setChoices] = useState(pollObject.choices);
   const [isVoting, setIsVoting] = useState<number>(null);
-  const [collapsed, setCollapsed] = useState<boolean>(
-    Boolean(feedObject && (feedObject.type === SCContributionType.DISCUSSION || feedObject.html || feedObject.medias.length)) && !visible
-  );
+  const [collapsed, setCollapsed] = useState<boolean>(!visible);
 
   // CONST
   const multipleChoices = pollObject['multiple_choices'];

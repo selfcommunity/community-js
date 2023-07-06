@@ -807,7 +807,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (
                   <PollObject
-                    visible={pollVisible}
+                    visible={
+                      pollVisible ||
+                      template === SCFeedObjectTemplateType.DETAIL ||
+                      Boolean(obj.type !== SCContributionType.DISCUSSION && !obj.html && !obj.medias.length)
+                    }
                     feedObject={obj}
                     pollObject={obj['poll']}
                     onChange={handleChangePoll}
@@ -973,7 +977,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
-                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+                {obj['poll'] && (
+                  <PollObject
+                    feedObject={obj}
+                    pollObject={obj['poll']}
+                    onChange={handleChangePoll}
+                    visible={Boolean(obj.type !== SCContributionType.DISCUSSION && !obj.html && !obj.medias.length)}
+                    {...PollObjectProps}
+                  />
+                )}
               </Box>
             </CardContent>
           </React.Fragment>
