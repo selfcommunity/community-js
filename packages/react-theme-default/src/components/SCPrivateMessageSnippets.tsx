@@ -1,5 +1,3 @@
-import {alpha} from '@mui/system';
-
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -14,12 +12,8 @@ const Component = {
           padding: theme.spacing(1),
           '& .SCPrivateMessageSnippets-input': {
             borderRadius: theme.shape.borderRadius,
-            backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity),
-            '&:hover': {
-              backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
-            },
             '& .MuiInputBase-input, MuiFilledInput-input': {
-              padding: 0
+              padding: theme.spacing(0.5, 1)
             },
             '& .SCPrivateMessageSnippets-icon': {
               marginRight: theme.spacing(1)
@@ -32,7 +26,7 @@ const Component = {
           backgroundColor: 'transparent',
           '&:hover': {
             borderWidth: '2px !important',
-            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity)
+            backgroundColor: theme.palette.grey['A200']
           }
         },
         '& .MuiList-root': {
@@ -40,10 +34,10 @@ const Component = {
           overflowY: 'auto',
           padding: theme.spacing(1),
           '& .Mui-selected': {
-            backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.selectedOpacity)
+            backgroundColor: theme.palette.grey['A200']
           },
           '& .MuiButtonBase-root, MuiListItemButton-root': {
-            '&:hover': {borderRadius: 'inherit', backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.hoverOpacity)}
+            '&:hover': {borderRadius: 'inherit', backgroundColor: theme.palette.grey['A200']}
           }
         }
       },

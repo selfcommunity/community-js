@@ -32,6 +32,13 @@ const Component = {
               margin: 0,
               padding: theme.spacing(2, 2, 0, 2),
               '& .MuiListItem-root': {
+                padding: theme.spacing(2, 1, 4, 2),
+                minWidth: '35%',
+                maxWidth: '80%',
+                textAlign: 'left',
+                width: 'fit-content',
+                position: 'relative',
+                marginBottom: theme.spacing(1),
                 '&.SCPrivateMessageThread-receiver': {
                   backgroundColor: theme.palette.common.white,
                   marginLeft: theme.spacing(-2),
@@ -42,12 +49,14 @@ const Component = {
                     position: 'absolute',
                     border: `${theme.spacing(3)} solid transparent`,
                     borderTop: `${theme.spacing(3)} solid ${theme.palette.common.white}`,
-                    top: 0,
-                    left: theme.spacing(-3)
+                    top: theme.spacing(1),
+                    left: theme.spacing(-2)
                   }
                 },
                 '&.SCPrivateMessageThread-sender': {
-                  backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
+                  backgroundColor: theme.palette.grey[300],
+                  position: 'relative',
+                  marginLeft: 'auto'
                 }
               }
             }
@@ -116,7 +125,7 @@ const Component = {
         marginBottom: theme.spacing(1),
         '& .SCPrivateMessageThread-subheader': {
           width: 'fit-content',
-          padding: theme.spacing(0.5, 1, 0.5, 1),
+          padding: theme.spacing(1),
           backgroundColor: 'white',
           fontWeight: theme.typography.fontWeightRegular,
           borderRadius: theme.shape.borderRadius,

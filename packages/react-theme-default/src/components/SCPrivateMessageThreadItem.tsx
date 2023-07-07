@@ -16,7 +16,6 @@ const Component = {
         padding: theme.spacing(0.5)
       },
       '& .SCPrivateMessageThreadItem-text': {
-        minHeight: theme.spacing(6),
         display: 'flex',
         alignItems: 'center',
         '& .MuiTypography-root': {

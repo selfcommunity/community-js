@@ -269,7 +269,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
           <>
             <TextField
               className={classes.searchBar}
-              variant="filled"
+              variant="outlined"
               margin="normal"
               fullWidth
               id={`${PREFIX}-search`}
@@ -278,7 +278,6 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
               onChange={handleChange}
               value={search}
               InputProps={{
-                disableUnderline: true,
                 className: classes.input,
                 startAdornment: <Icon className={classes.icon}>search</Icon>,
                 endAdornment: (
