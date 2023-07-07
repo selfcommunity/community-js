@@ -38,7 +38,8 @@ const Component = {
       },
       '& .SCUserProfileHeader-realname': {
         fontSize: '1rem',
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingBottom: theme.spacing()
       },
       '& .SCUserProfileHeader-change-cover': {
         position: 'absolute',

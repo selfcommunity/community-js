@@ -3,6 +3,9 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1)
+      },
       boxShadow: 'none',
       borderRadius: 0,
       '& .SCLoyaltyProgramDetailTemplate-title': {

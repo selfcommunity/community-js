@@ -1,12 +1,13 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem, Badge} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import UserAvatar from '../../shared/UserAvatar';
 
 const PREFIX = 'SCPrivateMessageSnippetItem';
 
@@ -101,7 +102,12 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
   const intl = useIntl();
 
   // STATE
-  const hasBadge = message?.receiver.community_badge;
+  const hasBadge = () => {
+    if (message?.receiver.id !== scUserContext?.user?.id) {
+      return message?.receiver.community_badge;
+    }
+    return message?.sender.community_badge;
+  };
 
   if (!message) {
     return <PrivateMessageSnippetItemSkeleton elevation={0} />;
@@ -116,11 +122,12 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
         onClick={onItemClick}
         classes={{root: classNames({[classes.unread]: message.thread_status === SCPrivateMessageStatusType.NEW})}}>
         <ListItemAvatar>
-          {scUserContext?.user?.username === message.receiver.username ? (
-            <Avatar alt={message.sender.username} src={message.sender.avatar} />
-          ) : (
-            <Avatar alt={message.receiver.username} src={message.receiver.avatar} />
-          )}
+          <UserAvatar hide={!hasBadge()}>
+            <Avatar
+              alt={scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
+              src={scUserContext?.user?.username === message.receiver.username ? message.sender.avatar : message.receiver.avatar}
+            />
+          </UserAvatar>
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -128,7 +135,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
               <Typography component="span" className={classes.username}>
                 {scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
               </Typography>
-              {hasBadge && preferences && (
+              {hasBadge() && preferences && (
                 <Chip component="span" className={classes.badgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
               )}
               <Typography color="secondary" className={classes.time} component="span">{`${intl.formatDate(message.last_message_at, {

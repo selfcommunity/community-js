@@ -11,6 +11,9 @@ const Component = {
           '& .SCBaseItem-secondary': {
             overflow: 'visible'
           }
+        },
+        '& .SCBaseItem-image .MuiBadge-badge': {
+          top: theme.spacing(1.25)
         }
       },
       '& .SCCommentObjectReply-comment': {

@@ -109,7 +109,10 @@ const Component = {
         },
         '& .SCFeedObject-header': {
           '& .MuiCardHeader-avatar': {
-            marginRight: theme.spacing(1)
+            marginRight: theme.spacing(1.5),
+            '.MuiBadge-badge': {
+              right: theme.spacing(0.25)
+            }
           },
           '& .SCFeedObject-username': {
             fontWeight: theme.typography.fontWeightBold

@@ -641,6 +641,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                   inputValue={value}
                   value={singleMessageThread ? singleMessageUser : recipients}
                   getOptionLabel={(option) => (option ? option.username : '...')}
+                  isOptionEqualToValue={(option, value) => (option ? value.id === option.id : false)}
                   renderInput={(params) => (
                     <TextField
                       {...params}

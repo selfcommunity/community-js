@@ -36,18 +36,23 @@ import {
   Link,
   SCCache,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchFeedObject,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
 
 const MAX_SUMMARY_LENGTH = 150;
+
 const messages = defineMessages({
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
@@ -684,9 +689,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Link
                   {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                   onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
-                    {obj.author.username}
-                  </Avatar>
+                  <UserAvatar hide={!obj.author.community_badge}>
+                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                      {obj.author.username}
+                    </Avatar>
+                  </UserAvatar>
                 </Link>
               }
               title={
@@ -775,7 +782,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (
                   <PollObject
-                    visible={pollVisible}
+                    visible={
+                      pollVisible ||
+                      template === SCFeedObjectTemplateType.DETAIL ||
+                      Boolean(obj.type !== SCContributionType.DISCUSSION && !obj.html && !obj.medias.length)
+                    }
                     feedObject={obj}
                     pollObject={obj['poll']}
                     onChange={handleChangePoll}
@@ -877,9 +888,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                   onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
                   className={classes.username}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
-                    {obj.author.username}
-                  </Avatar>
+                  <UserAvatar hide={!obj.author.community_badge}>
+                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                      {obj.author.username}
+                    </Avatar>
+                  </UserAvatar>
                 </Link>
               }
               title={
@@ -926,7 +939,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
-                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+                {obj['poll'] && (
+                  <PollObject
+                    feedObject={obj}
+                    pollObject={obj['poll']}
+                    onChange={handleChangePoll}
+                    visible={Boolean(obj.type !== SCContributionType.DISCUSSION && !obj.html && !obj.medias.length)}
+                    {...PollObjectProps}
+                  />
+                )}
               </Box>
             </CardContent>
           </React.Fragment>
@@ -946,7 +967,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <Link
                 {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                 onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
-                <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
+                <UserAvatar hide={!obj.author.community_badge}>
+                  <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
+                </UserAvatar>
               </Link>
             }
             primary={

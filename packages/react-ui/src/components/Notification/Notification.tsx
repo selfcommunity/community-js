@@ -18,7 +18,7 @@ import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, Button, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, Typography} from '@mui/material';
+import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -38,6 +38,7 @@ import {
   SCNotificationTypologyType
 } from '@selfcommunity/types';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -275,12 +276,14 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                 to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, messageNotification.message.sender)
               })}
               onClick={messageNotification.message.sender.deleted ? () => setOpenAlert(true) : null}>
-              <Avatar
-                className={classes.avatar}
-                alt={messageNotification.message.sender.username}
-                variant="circular"
-                src={messageNotification.message.sender.avatar}
-              />
+              <UserAvatar hide={!messageNotification.message.sender.community_badge} smaller={true}>
+                <Avatar
+                  className={classes.avatar}
+                  alt={messageNotification.message.sender.username}
+                  variant="circular"
+                  src={messageNotification.message.sender.avatar}
+                />
+              </UserAvatar>
             </Link>
           }
           titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}

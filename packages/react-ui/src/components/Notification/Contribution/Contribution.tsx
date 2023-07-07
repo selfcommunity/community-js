@@ -13,6 +13,7 @@ import NotificationItem, {NotificationItemProps} from '../../../shared/Notificat
 import Bullet from '../../../shared/Bullet';
 import VoteButton from '../../VoteButton';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   postOrStatus: {
@@ -126,12 +127,14 @@ export default function ContributionNotification(inProps: ContributionNotificati
               to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)
             })}
             onClick={notificationObject[contributionType].author.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar
-              alt={notificationObject[contributionType].author.username}
-              variant="circular"
-              src={notificationObject[contributionType].author.avatar}
-              classes={{root: classes.avatar}}
-            />
+            <UserAvatar hide={!notificationObject[contributionType].author.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject[contributionType].author.username}
+                variant="circular"
+                src={notificationObject[contributionType].author.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={

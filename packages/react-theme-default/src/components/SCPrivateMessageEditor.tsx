@@ -1,17 +1,14 @@
-import {alpha} from '@mui/system';
-
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
       '& .MuiIcon-root': {
         fontSize: '1.57rem'
       },
       '& .SCPrivateMessageEditor-message-input': {
-        width: '100%',
-        backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
+        width: '100%'
       },
       '& .MuiInputBase-root, MuiFilledInput-root': {
+        '&.Mui-disabled': {backgroundColor: theme.palette.grey['A200']},
         borderRadius: 0,
         padding: theme.spacing(0.5, 0, 0.5, 0),
         '& textarea': {
@@ -20,7 +17,7 @@ const Component = {
           padding: theme.spacing(1),
           border: `2px solid transparent`,
           '&:hover': {
-            border: `2px solid${theme.palette.secondary.main}`
+            border: `2px solid${theme.palette.primary.main}`
           },
           '&.Mui-disabled': {border: 'none'}
         },
@@ -38,7 +35,7 @@ const Component = {
       },
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
         borderRadius: 0,
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.grey['A200'],
         '& .MuiCardHeader-root': {
           paddingBottom: theme.spacing(0),
           '& .SCMessageMediaUploader-close-button': {

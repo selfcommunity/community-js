@@ -11,6 +11,7 @@ import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -118,12 +119,14 @@ export default function MentionNotification(inProps: MentionNotificationProps): 
               to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[objectType].author)
             })}
             onClick={notificationObject[objectType].author.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar
-              alt={notificationObject[objectType].author.username}
-              variant="circular"
-              src={notificationObject[objectType].author.avatar}
-              classes={{root: classes.avatar}}
-            />
+            <UserAvatar hide={!notificationObject[objectType].author.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject[objectType].author.username}
+                variant="circular"
+                src={notificationObject[objectType].author.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={

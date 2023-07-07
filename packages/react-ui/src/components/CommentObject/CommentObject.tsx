@@ -37,6 +37,7 @@ import {
 import VoteButton from '../VoteButton';
 import VoteAudienceButton from '../VoteAudienceButton';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
 
 const PREFIX = 'SCCommentObject';
 
@@ -516,7 +517,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               <Link
                 {...(!comment.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)})}
                 onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
-                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
+                <UserAvatar hide={!obj.author.community_badge}>
+                  <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
+                </UserAvatar>
               </Link>
             }
             disableTypography

@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
+import UserAvatar from '../../shared/UserAvatar';
 
 const PREFIX = 'SCCommentObjectReply';
 
@@ -201,7 +202,9 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
         !scUserContext.user ? (
           <Avatar variant="circular" className={classes.avatar} />
         ) : (
-          <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
+          <UserAvatar hide={!scUserContext.user.community_badge}>
+            <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
+          </UserAvatar>
         )
       }
       secondary={

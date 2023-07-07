@@ -6,17 +6,16 @@ const Component = {
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
       marginBottom: theme.spacing(1),
       '& .MuiListItemSecondaryAction-root': {
-        right: theme.spacing(0),
+        right: theme.spacing(2),
         top: theme.spacing(3)
       },
       '& .SCPrivateMessageThreadItem-message-time': {
         position: 'absolute',
         bottom: theme.spacing(0),
-        right: theme.spacing(1),
-        padding: theme.spacing(0.5)
+        right: theme.spacing(3),
+        padding: theme.spacing(0.5, 0, 0.5, 0)
       },
       '& .SCPrivateMessageThreadItem-text': {
-        minHeight: theme.spacing(6),
         display: 'flex',
         alignItems: 'center',
         '& .MuiTypography-root': {

@@ -10,6 +10,7 @@ import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   followUser: {
@@ -103,12 +104,14 @@ export default function UserFollowNotification(inProps: NotificationFollowProps)
           <Link
             {...(!notificationObject.follower.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)})}
             onClick={notificationObject.follower.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar
-              alt={notificationObject.follower.username}
-              variant="circular"
-              src={notificationObject.follower.avatar}
-              classes={{root: classes.avatar}}
-            />
+            <UserAvatar hide={!notificationObject.follower.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject.follower.username}
+                variant="circular"
+                src={notificationObject.follower.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={

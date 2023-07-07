@@ -11,6 +11,7 @@ import {getContributionSnippet, getContributionType, getRouteData} from '../../.
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -119,7 +120,14 @@ export default function ContributionFollowNotification(inProps: ContributionFoll
           <Link
             {...(!notificationObject.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)})}
             onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} classes={{root: classes.avatar}} />
+            <UserAvatar hide={!notificationObject.user.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject.user.username}
+                variant="circular"
+                src={notificationObject.user.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={

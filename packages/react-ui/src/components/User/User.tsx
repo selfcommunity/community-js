@@ -22,6 +22,7 @@ import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
 
 const messages = defineMessages({
   userFollowers: {
@@ -35,9 +36,7 @@ const PREFIX = 'SCUser';
 const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
-  staffBadge: `${PREFIX}-staff-badge`,
-  staffBadgeLabel: `${PREFIX}-staff-badge-label`,
-  staffBadgeIcon: `${PREFIX}-staff-badge-icon`
+  staffBadgeLabel: `${PREFIX}-staff-badge-label`
 };
 
 const Root = styled(BaseItemButton, {
@@ -107,9 +106,8 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
  |---|---|---|
  |root|.SCUser-root|Styles applied to the root element.|
  |avatar|.SCUser-avatar|Styles applied to the avatar element.|
- |staffBadge|.SCUser-staff-badge|Styles applied to the reaction icon element.|
  |staffBadgeLabel|.SCUser-staff-badge-label|Styles applied to the staff badge label element.|
- |staffBadgeIcon|.SCUser-staff-badge-icon|Styles applied to the staff badge icon element.|
+
  *
  * @param inProps
  */
@@ -192,22 +190,9 @@ export default function User(inProps: UserProps): JSX.Element {
               <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
             </Badge>
           ) : (
-            <Badge
-              invisible={!hasBadge}
-              classes={{badge: classes.staffBadgeIcon}}
-              overlap="circular"
-              anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-              badgeContent={
-                preferences ? (
-                  <Avatar
-                    className={classes.staffBadge}
-                    alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
-                    src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
-                  />
-                ) : null
-              }>
+            <UserAvatar hide={!hasBadge}>
               <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
-            </Badge>
+            </UserAvatar>
           )
         }
         primary={

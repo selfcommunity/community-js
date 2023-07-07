@@ -36,11 +36,11 @@ export default {
     }
   },
   args: {
-    template: SCFeedObjectTemplateType.PREVIEW,
+    template: SCFeedObjectTemplateType.DETAIL,
     elevation: 0,
     variant: 'outlined'
   }
-  
+
 } as Meta<typeof FeedObject>;
 
 const template = (args) => {
@@ -52,8 +52,8 @@ const template = (args) => {
 
 export const Base: StoryObj<FeedObject> = {
   args: {
-    feedObjectId: 144,
-    feedObjectType: SCContributionType.DISCUSSION
+    feedObjectId: 1453,
+    feedObjectType: SCContributionType.POST
   },
   render: template
 };
