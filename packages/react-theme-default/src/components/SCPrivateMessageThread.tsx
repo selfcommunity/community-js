@@ -41,7 +41,7 @@ const Component = {
                 marginBottom: theme.spacing(1),
                 '&.SCPrivateMessageThread-receiver': {
                   backgroundColor: theme.palette.common.white,
-                  marginLeft: theme.spacing(-2),
+                  marginLeft: theme.spacing(-4),
                   filter: 'drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))',
                   '&:after': {
                     marginRight: theme.spacing(3),
@@ -56,7 +56,16 @@ const Component = {
                 '&.SCPrivateMessageThread-sender': {
                   backgroundColor: theme.palette.grey[300],
                   position: 'relative',
-                  marginLeft: 'auto'
+                  marginLeft: 'auto',
+                  marginRight: theme.spacing(1),
+                  '&:after': {
+                    content: `""`,
+                    position: 'absolute',
+                    border: `${theme.spacing(3)} solid transparent`,
+                    borderTop: `${theme.spacing(3)} solid ${theme.palette.grey[300]}`,
+                    top: theme.spacing(1),
+                    right: theme.spacing(-2)
+                  }
                 }
               }
             }
