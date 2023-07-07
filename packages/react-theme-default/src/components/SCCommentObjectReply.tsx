@@ -3,18 +3,6 @@ const Component = {
     root: ({theme}: any) => ({
       border: '0 none',
       marginBottom: theme.spacing(1),
-      '& .SCBaseItem-image': {
-        '& .SCCommentObjectReply-badge': {
-          top: '25%',
-          right: '5%',
-          '& .SCCommentObjectReply-badge-icon': {
-            width: theme.selfcommunity.user.avatar.sizeSmall,
-            height: theme.selfcommunity.user.avatar.sizeSmall,
-            backgroundColor: theme.palette.background.paper,
-            border: `1px solid ${theme.palette.background.paper}`
-          }
-        }
-      },
       '& .SCBaseItem-content': {
         alignItems: 'flex-start',
         '& .SCBaseItem-text': {
@@ -23,6 +11,9 @@ const Component = {
           '& .SCBaseItem-secondary': {
             overflow: 'visible'
           }
+        },
+        '& .SCBaseItem-image .MuiBadge-badge': {
+          top: theme.spacing(1.25)
         }
       },
       '& .SCCommentObjectReply-comment': {

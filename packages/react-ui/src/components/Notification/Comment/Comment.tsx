@@ -13,6 +13,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import VoteButton from '../../VoteButton';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   comment: {
@@ -115,12 +116,14 @@ export default function CommentNotification(inProps: CommentNotificationProps): 
               to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.comment.author)
             })}
             onClick={notificationObject.comment.author.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar
-              alt={notificationObject.comment.author.username}
-              variant="circular"
-              src={notificationObject.comment.author.avatar}
-              classes={{root: classes.avatar}}
-            />
+            <UserAvatar hide={!notificationObject.comment.author.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject.comment.author.username}
+                variant="circular"
+                src={notificationObject.comment.author.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={

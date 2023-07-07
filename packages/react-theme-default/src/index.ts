@@ -123,6 +123,7 @@ import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfi
 import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCPreviewMediaLink from './components/SCPreviewMediaLink';
+import SCUserAvatar from './components/SCUserAvatar';
 
 /**
  * Style fragments - Imports - End
@@ -291,7 +292,8 @@ const theme = {
     SCIncubatorSuggestionWidget,
     SCIncubatorDetail,
     SCPrizeItemSkeleton,
-    SCNavigationMenuIconButton
+    SCNavigationMenuIconButton,
+    SCUserAvatar
   },
   selfcommunity: {
     user: {

@@ -59,17 +59,6 @@ const Component = {
         },
         '& .SCBaseItem-text': {
           marginTop: 0
-        },
-        '& .SCBaseItem-image': {
-          '& .SCFeedObject-badge': {
-            top: '25%',
-            '& .SCFeedObject-badge-icon': {
-              width: theme.selfcommunity.user.avatar.sizeSmall,
-              height: theme.selfcommunity.user.avatar.sizeSmall,
-              backgroundColor: theme.palette.background.paper,
-              border: `1px solid ${theme.palette.background.paper}`
-            }
-          }
         }
       },
       '& .SCFeedObject-snippet-content a': {
@@ -121,14 +110,8 @@ const Component = {
         '& .SCFeedObject-header': {
           '& .MuiCardHeader-avatar': {
             marginRight: theme.spacing(1.5),
-            '& .SCFeedObject-badge': {
-              top: '25%',
-              '& .SCFeedObject-badge-icon': {
-                width: theme.selfcommunity.user.avatar.sizeSmall,
-                height: theme.selfcommunity.user.avatar.sizeSmall,
-                backgroundColor: theme.palette.background.paper,
-                border: `1px solid ${theme.palette.background.paper}`
-              }
+            '.MuiBadge-badge': {
+              right: theme.spacing(0.25)
             }
           },
           '& .SCFeedObject-username': {

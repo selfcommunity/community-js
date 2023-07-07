@@ -10,6 +10,7 @@ import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   requestConnection: {
@@ -110,7 +111,9 @@ export default function UserConnectionNotification(inProps: NotificationConnecti
           <Link
             {...(!userConnection.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)})}
             onClick={userConnection.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} classes={{root: classes.avatar}} />
+            <UserAvatar hide={!userConnection.community_badge} smaller={true}>
+              <Avatar alt={userConnection.username} variant="circular" src={userConnection.avatar} classes={{root: classes.avatar}} />
+            </UserAvatar>
           </Link>
         }
         primary={

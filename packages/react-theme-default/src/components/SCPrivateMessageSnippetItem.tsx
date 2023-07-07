@@ -16,18 +16,6 @@ const Component = {
           paddingRight: theme.spacing(2)
         }
       },
-      '& .MuiListItemAvatar-root': {
-        '& .SCPrivateMessageSnippetItem-badge': {
-          top: '25%',
-          right: '5%',
-          '& .SCPrivateMessageSnippetItem-badge-icon': {
-            width: theme.selfcommunity.user.avatar.sizeSmall,
-            height: theme.selfcommunity.user.avatar.sizeSmall,
-            backgroundColor: theme.palette.background.paper,
-            border: `1px solid ${theme.palette.background.paper}`
-          }
-        }
-      },
       '& .MuiListItemText-primary': {
         '& .SCPrivateMessageSnippetItem-username': {
           fontWeight: theme.typography.fontWeightBold

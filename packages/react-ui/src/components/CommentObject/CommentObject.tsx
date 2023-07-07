@@ -1,8 +1,8 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Badge, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -23,8 +23,6 @@ import {
   Link,
   SCCache,
   SCContextType,
-  SCPreferences,
-  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCThemeType,
@@ -34,14 +32,12 @@ import {
   useSCContext,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
-  useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
 import VoteButton from '../VoteButton';
 import VoteAudienceButton from '../VoteAudienceButton';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
-
-const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_STAFF_BADGE_ICON];
+import UserAvatar from '../../shared/UserAvatar';
 
 const PREFIX = 'SCCommentObject';
 
@@ -50,8 +46,6 @@ const classes = {
   comment: `${PREFIX}-comment`,
   nestedComments: `${PREFIX}-nested-comments`,
   avatar: `${PREFIX}-avatar`,
-  badge: `${PREFIX}-badge`,
-  badgeIcon: `${PREFIX}-badge-icon`,
   content: `${PREFIX}-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
@@ -200,8 +194,6 @@ export interface CommentObjectProps {
  |comment|.SCCommentObject-comment|Styles applied to comment element.|
  |nestedComments|.SCCommentObject-nestedComments|Styles applied to nested comments element wrapper.|
  |avatar|.SCCommentObject-avatar|Styles applied to the avatar element.|
- |badge|.SCCommentObject-badge|Styles applied to the badge element.|
- |badgeIcon|.SCCommentObject-badgeIcon|Styles applied to the badgeIcon element.|
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
@@ -262,14 +254,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     cacheStrategy
   });
   const [openAlert, setOpenAlert] = useState<boolean>(false);
-
-  // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
 
   // HANDLERS
   const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
@@ -533,22 +517,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               <Link
                 {...(!comment.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)})}
                 onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
-                <Badge
-                  invisible={!obj.author.community_badge}
-                  classes={{badge: classes.badge}}
-                  overlap="circular"
-                  anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                  badgeContent={
-                    preferences ? (
-                      <Avatar
-                        className={classes.badgeIcon}
-                        alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
-                        src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
-                      />
-                    ) : null
-                  }>
+                <UserAvatar hide={!obj.author.community_badge}>
                   <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
-                </Badge>
+                </UserAvatar>
               </Link>
             }
             disableTypography

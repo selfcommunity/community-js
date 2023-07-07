@@ -2,15 +2,14 @@ import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Badge, Stack} from '@mui/material';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {Avatar, Stack} from '@mui/material';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
-
-const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_STAFF_BADGE_ICON];
+import UserAvatar from '../../shared/UserAvatar';
 
 const PREFIX = 'SCCommentObjectReply';
 
@@ -18,8 +17,6 @@ const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
   avatar: `${PREFIX}-avatar`,
-  badge: `${PREFIX}-badge`,
-  badgeIcon: `${PREFIX}-badge-icon`,
   actions: `${PREFIX}-actions`,
   buttonReply: `${PREFIX}-button-reply`,
   buttonSave: `${PREFIX}-button-save`,
@@ -102,8 +99,6 @@ export interface CommentObjectReplyProps extends WidgetProps {
  |root|.CommentObjectReply-root|Styles applied to the root element.|
  |comment|.SCCommentObjectReply-comment|Styles applied to comment element.|
  |avatar|.SCCommentObjectReply-avatar|Styles applied to the avatar element.|
- |badge|.SCCommentObjectReply-badge|Styles applied to the badge element.|
- |badgeIcon|.SCCommentObjectReply-badgeIcon|Styles applied to the badgeIcon element.|
  |actions|.SCCommentObjectReply-actions|Styles applied to the actions section.|
  |buttonReply|.SCCommentObjectReply-button-reply|Styles applied to reply button element.|
  |buttonSave|.SCCommentObjectReply-button-save|Styles applied to save button element.|
@@ -132,14 +127,6 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-
-  // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
 
   // RETRIEVE OBJECTS
   const [html, setHtml] = useState(text);
@@ -215,22 +202,9 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
         !scUserContext.user ? (
           <Avatar variant="circular" className={classes.avatar} />
         ) : (
-          <Badge
-            invisible={!scUserContext.user.community_badge}
-            classes={{badge: classes.badge}}
-            overlap="circular"
-            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-            badgeContent={
-              preferences ? (
-                <Avatar
-                  className={classes.badgeIcon}
-                  alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
-                  src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
-                />
-              ) : null
-            }>
+          <UserAvatar hide={!scUserContext.user.community_badge}>
             <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
-          </Badge>
+          </UserAvatar>
         )
       }
       secondary={

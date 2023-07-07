@@ -17,20 +17,10 @@ const Component = {
           borderRadius: 0
         }
       },
-      '& .SCUser-staff-badge': {
-        width: theme.selfcommunity.user.avatar.sizeSmall,
-        height: theme.selfcommunity.user.avatar.sizeSmall,
-        backgroundColor: theme.palette.background.paper,
-        border: `1px solid ${theme.palette.background.paper}`
-      },
       '& .SCUser-staff-badge-label': {
         marginLeft: theme.spacing(1),
         borderRadius: 0,
         fontSize: '0.5rem'
-      },
-      '& .SCUser-staff-badge-icon': {
-        top: '25%',
-        right: '5%'
       },
       '& .SCBaseItemButton-primary': {
         fontWeight: theme.typography.fontWeightBold

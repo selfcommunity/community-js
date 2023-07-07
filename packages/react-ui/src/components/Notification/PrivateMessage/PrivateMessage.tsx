@@ -23,6 +23,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -184,12 +185,14 @@ export default function PrivateMessageNotification(inProps: NotificationPrivateM
               to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.message.sender)
             })}
             onClick={notificationObject.message.sender.deleted ? () => setOpenAlert(true) : null}>
-            <Avatar
-              alt={notificationObject.message.sender.username}
-              variant="circular"
-              src={notificationObject.message.sender.avatar}
-              classes={{root: classes.avatar}}
-            />
+            <UserAvatar hide={!notificationObject.message.sender.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject.message.sender.username}
+                variant="circular"
+                src={notificationObject.message.sender.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={

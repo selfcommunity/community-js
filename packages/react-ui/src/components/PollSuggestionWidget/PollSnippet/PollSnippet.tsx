@@ -10,6 +10,7 @@ import {getContributionRouteName, getRouteData} from '../../../utils/contributio
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import BaseItem from '../../../shared/BaseItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
 
 const PREFIX = 'SCPollSnippet';
 
@@ -27,7 +28,8 @@ const Root = styled(BaseItem, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}: {theme: SCThemeType}) => ({
   [`&.${classes.root} > div`]: {
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    paddingTop: theme.spacing(1)
   },
   '& .SCBaseItem-text': {
     marginTop: 0
@@ -120,7 +122,9 @@ export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
             <Link
               {...(!feedObj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, feedObj.author)})}
               onClick={feedObj.author.deleted ? () => setOpenAlert(true) : null}>
-              <Avatar alt={feedObj.author.username} variant="circular" src={feedObj.author.avatar} className={classes.avatar} />
+              <UserAvatar hide={!feedObj.author.community_badge}>
+                <Avatar alt={feedObj.author.username} variant="circular" src={feedObj.author.avatar} className={classes.avatar} />
+              </UserAvatar>
             </Link>
           }
           primary={

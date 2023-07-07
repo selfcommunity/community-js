@@ -7,14 +7,13 @@ import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcomm
 import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import UserAvatar from '../../shared/UserAvatar';
 
 const PREFIX = 'SCPrivateMessageSnippetItem';
 
 const classes = {
   root: `${PREFIX}-root`,
   username: `${PREFIX}-username`,
-  badge: `${PREFIX}-badge`,
-  badgeIcon: `${PREFIX}-badge-icon`,
   badgeLabel: `${PREFIX}-badge-label`,
   time: `${PREFIX}-time`,
   menuItem: `${PREFIX}-menu-item`,
@@ -75,8 +74,6 @@ export interface PrivateMessageSnippetItemProps {
  |---|---|---|
  |root|.SCPrivateMessageSnippetItem-root|Styles applied to the root element.|
  |username|.SCPrivateMessageSnippetItem-username|Styles applied to the username element.|
- |badge|.SCPrivateMessageSnippetItem-badge|Styles applied to the badge element.|
- |badgeIcon|.SCPrivateMessageSnippetItem-badgeIcon|Styles applied to the badgeIcon element.|
  |badgeLabel|.SCPrivateMessageSnippetItem-badgeLabel|Styles applied to the badgeLabel element.|
  |time|.SCPrivateMessageSnippetItem-time|Styles applied to the time element.|
  |menuItem|.SCPrivateMessageSnippetItem-menu-item|Styles applied to the menu item element.|
@@ -105,7 +102,12 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
   const intl = useIntl();
 
   // STATE
-  const hasBadge = message?.receiver.community_badge;
+  const hasBadge = () => {
+    if (message?.receiver.id !== scUserContext?.user?.id) {
+      return message?.receiver.community_badge;
+    }
+    return message?.sender.community_badge;
+  };
 
   if (!message) {
     return <PrivateMessageSnippetItemSkeleton elevation={0} />;
@@ -120,25 +122,12 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
         onClick={onItemClick}
         classes={{root: classNames({[classes.unread]: message.thread_status === SCPrivateMessageStatusType.NEW})}}>
         <ListItemAvatar>
-          <Badge
-            invisible={!hasBadge}
-            classes={{badge: classes.badge}}
-            overlap="circular"
-            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-            badgeContent={
-              preferences ? (
-                <Avatar
-                  className={classes.badgeIcon}
-                  alt={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]}
-                  src={preferences[SCPreferences.STAFF_STAFF_BADGE_ICON]}
-                />
-              ) : null
-            }>
+          <UserAvatar hide={!hasBadge()}>
             <Avatar
               alt={scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
               src={scUserContext?.user?.username === message.receiver.username ? message.sender.avatar : message.receiver.avatar}
             />
-          </Badge>
+          </UserAvatar>
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -146,7 +135,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
               <Typography component="span" className={classes.username}>
                 {scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
               </Typography>
-              {hasBadge && preferences && (
+              {hasBadge() && preferences && (
                 <Chip component="span" className={classes.badgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
               )}
               <Typography color="secondary" className={classes.time} component="span">{`${intl.formatDate(message.last_message_at, {
