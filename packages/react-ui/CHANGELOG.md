@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.269](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.268...@selfcommunity/react-ui@0.7.0-alpha.269) (2023-07-07)
+
+
+### Bug Fixes
+
+* ChangeCover error ([7e00ac3](https://github.com/selfcommunity/community-js/commit/7e00ac3514721bf78de7ac02b0685b1a03393cb7))
+* fixed pm autocomplete. Asana issue: https://app.asana.com/0/1202638443591994/1204963785403758/f ([d703c36](https://github.com/selfcommunity/community-js/commit/d703c3693cfe662493a15946eefe25a6b3facbbe))
+* fixed: ([48c68d4](https://github.com/selfcommunity/community-js/commit/48c68d4de69e9b31ca0cf90f8cc4d425a26d472c))
+* pollObject collapsed ([db375b0](https://github.com/selfcommunity/community-js/commit/db375b05064ecefdcae396f299e3307259b74bef))
+* PublicInfo, PreviewImage ([9dbcd98](https://github.com/selfcommunity/community-js/commit/9dbcd9898054f1a1f3c2c3b9b9483869027f364e))
+
+
+### Performance Improvements
+
+* added user avatar component for user badge ([6cc208f](https://github.com/selfcommunity/community-js/commit/6cc208fbb620d948c395ae4debc4e02e98945286))
+* pm palette, updated font ([547349c](https://github.com/selfcommunity/community-js/commit/547349c8019f6287d64ac0ac489d6dbe4f486ff0))
+
+
+
+
+
 # [0.7.0-alpha.268](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.267...@selfcommunity/react-ui@0.7.0-alpha.268) (2023-07-05)
 
 

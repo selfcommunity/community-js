@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.219](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.218...@selfcommunity/react-theme-default@0.1.0-alpha.219) (2023-07-07)
+
+
+### Bug Fixes
+
+* fixed pm thread item content padding ([eec9a67](https://github.com/selfcommunity/community-js/commit/eec9a67c5c874384439434a4f114d6573b942e2a))
+* fixed: ([48c68d4](https://github.com/selfcommunity/community-js/commit/48c68d4de69e9b31ca0cf90f8cc4d425a26d472c))
+* NavigationMenu ([03f6d58](https://github.com/selfcommunity/community-js/commit/03f6d58e7939f4e2203cff1c6b830b557bc02897))
+* PublicInfo, PreviewImage ([9dbcd98](https://github.com/selfcommunity/community-js/commit/9dbcd9898054f1a1f3c2c3b9b9483869027f364e))
+* styles ([e030b22](https://github.com/selfcommunity/community-js/commit/e030b2284848cdf1205adbf1f536af5eabbeb71a))
+
+
+### Performance Improvements
+
+* added user avatar component for user badge ([6cc208f](https://github.com/selfcommunity/community-js/commit/6cc208fbb620d948c395ae4debc4e02e98945286))
+* pm palette, updated font ([547349c](https://github.com/selfcommunity/community-js/commit/547349c8019f6287d64ac0ac489d6dbe4f486ff0))
+
+
+
+
+
 # [0.1.0-alpha.218](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.217...@selfcommunity/react-theme-default@0.1.0-alpha.218) (2023-07-05)
 
 

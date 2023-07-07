@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.41...@selfcommunity/react-i18n@0.5.0-alpha.42) (2023-07-07)
+
+
+### Bug Fixes
+
+* ChangeCover error ([7e00ac3](https://github.com/selfcommunity/community-js/commit/7e00ac3514721bf78de7ac02b0685b1a03393cb7))
+* i18n ([50ab825](https://github.com/selfcommunity/community-js/commit/50ab82531a4098c902cae7850967e1d5ce37e7df))
+* PublicInfo, PreviewImage ([9dbcd98](https://github.com/selfcommunity/community-js/commit/9dbcd9898054f1a1f3c2c3b9b9483869027f364e))
+
+
+
+
+
 # [0.5.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.40...@selfcommunity/react-i18n@0.5.0-alpha.41) (2023-07-05)
 
 

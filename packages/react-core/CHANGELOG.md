@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.87](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.86...@selfcommunity/react-core@0.4.0-alpha.87) (2023-07-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 # [0.4.0-alpha.86](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.85...@selfcommunity/react-core@0.4.0-alpha.86) (2023-07-05)
 
 **Note:** Version bump only for package @selfcommunity/react-core

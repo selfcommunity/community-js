@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-templates",
-  "version": "0.3.0-alpha.260",
+  "version": "0.3.0-alpha.261",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -55,9 +55,9 @@
     "react-intl": "^5.25.0"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.4.0-alpha.86",
-    "@selfcommunity/react-i18n": "^0.5.0-alpha.41",
-    "@selfcommunity/react-ui": "^0.7.0-alpha.268",
+    "@selfcommunity/react-core": "^0.4.0-alpha.87",
+    "@selfcommunity/react-i18n": "^0.5.0-alpha.42",
+    "@selfcommunity/react-ui": "^0.7.0-alpha.269",
     "@selfcommunity/types": "^0.5.0-alpha.8",
     "@types/classnames": "^2.3.1",
     "classnames": "^2.3.2",
