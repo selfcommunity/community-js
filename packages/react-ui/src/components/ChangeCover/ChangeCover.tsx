@@ -19,7 +19,7 @@ import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -52,6 +52,17 @@ const Root = styled(Box, {
     }
   }
 }));
+
+const messages = defineMessages({
+  imageMaxSize: {
+    id: 'ui.changeCover.button.change.alertMaxSize',
+    defaultMessage: 'ui.changeCover.button.change.alertMaxSize'
+  },
+  errorLoadImage: {
+    id: 'ui.changeCover.button.change.alertErrorImage',
+    defaultMessage: 'ui.changeCover.button.change.alertErrorImage'
+  }
+});
 
 export interface ChangeCoverProps {
   /**
@@ -122,7 +133,10 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const [openDeleteCoverDialog, setOpenDeleteCoverDialog] = useState<boolean>(false);
   const [isDeletingCover, setIsDeletingCover] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [alert, setAlert] = useState<boolean>(false);
+  const [alert, setAlert] = useState<string | null>(null);
+
+  // INTL
+  const intl = useIntl();
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -156,7 +170,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       fileInput = event.target.files[0];
       handleSave();
     } else {
-      setAlert(true);
+      setAlert(intl.formatMessage(messages.imageMaxSize));
       setAnchorEl(null);
     }
   };
@@ -202,8 +216,9 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
         }
       })
       .catch((error) => {
-        setLoading(false);
         Logger.error(SCOPE_SC_UI, error);
+        setLoading(false);
+        setAlert(intl.formatMessage(messages.errorLoadImage));
       });
   }
 
@@ -311,13 +326,18 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       )}
     </React.Fragment>
   );
+
+  /**
+   * If there is an error
+   */
   if (alert) {
     return (
-      <Alert color="error" onClose={() => setAlert(false)}>
-        <FormattedMessage id="ui.changeCover.button.change.alert" defaultMessage="ui.changeCover.button.change.alert" />
+      <Alert color="error" onClose={() => setAlert(null)}>
+        {alert}
       </Alert>
     );
   }
+
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
