@@ -1,11 +1,8 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCFeedObject-detail, & .SCCommentsFeedObject-root': {
-        maxWidth: theme.breakpoints.values['sm']
-      },
       '& .SCCommentsFeedObject-root': {
-        padding: theme.spacing(),
+        padding: theme.spacing(2, 1),
         '& .SCCommentsObject-root h6': {
           paddingLeft: theme.spacing(2)
         }

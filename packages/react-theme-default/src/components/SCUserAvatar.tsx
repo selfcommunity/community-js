@@ -2,8 +2,8 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .SCUserAvatar-badge-content': {
-        width: theme.selfcommunity.user.avatar.sizeSmall,
-        height: theme.selfcommunity.user.avatar.sizeSmall,
+        width: 16,
+        height: 16,
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.background.paper}`
       },
