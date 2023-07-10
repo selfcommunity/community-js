@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof PrivateMessageThreadSkeleton>;
 
 const template = (args) => (
-  <div style={{width: 400}}>
+  <div style={{maxWidth: 600}}>
     <PrivateMessageThreadSkeleton {...args} />
   </div>
 );

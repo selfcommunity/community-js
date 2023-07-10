@@ -7,14 +7,14 @@ export default {
 } as Meta<typeof PrivateMessageThread>;
 
 const template = (args) => (
-  <div>
+  <div style={{maxWidth: 600}}>
     <PrivateMessageThread {...args} />
   </div>
 );
 
 export const Base: StoryObj<PrivateMessageThread> = {
   args: {
-    userObj: 91
+    userObj: 7
   },
   render: template
 };

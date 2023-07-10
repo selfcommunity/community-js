@@ -32,7 +32,7 @@ const Component = {
               margin: 0,
               padding: theme.spacing(2, 2, 0, 2),
               '& .MuiListItem-root': {
-                padding: theme.spacing(2, 1, 4, 2),
+                padding: theme.spacing(1, 1, 4, 2),
                 minWidth: '35%',
                 maxWidth: '80%',
                 textAlign: 'left',
@@ -134,7 +134,8 @@ const Component = {
         marginBottom: theme.spacing(1),
         '& .SCPrivateMessageThread-subheader': {
           width: 'fit-content',
-          padding: theme.spacing(1),
+          minWidth: 100,
+          padding: theme.spacing(0.25, 1),
           backgroundColor: 'white',
           fontWeight: theme.typography.fontWeightRegular,
           borderRadius: theme.shape.borderRadius,
