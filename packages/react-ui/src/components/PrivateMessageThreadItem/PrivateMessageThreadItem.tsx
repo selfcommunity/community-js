@@ -106,8 +106,8 @@ export interface PrivateMessageThreadItemProps {
  |video|.SCPrivateMessageThreadItem-video|Styles applied to the message video element.|
  |messageTime|.SCPrivateMessageThreadItem-message-time|Styles applied to the thread message time element.|
  |menuItem|.SCPrivateMessageThreadItem-menu-item|Styles applied to the thread message menu item element.|
- 
- 
+
+
  * @param inProps
  */
 export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadItemProps): JSX.Element {
@@ -243,8 +243,8 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
             </MediaPreviewDialog>
           ) : (
             <LightBox
-              mainSrc={message?.file.url}
-              onCloseRequest={() => setOpenDialog(false)}
+              images={[{src: message?.file.url, key: 0}]}
+              onClose={() => setOpenDialog(false)}
               toolbarButtons={[
                 <IconButton onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
                   <Icon>download</Icon>

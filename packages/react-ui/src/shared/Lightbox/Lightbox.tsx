@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {PhotoSlider} from 'react-photo-view';
+import {PhotoProviderBase} from 'react-photo-view/dist/types';
 
 const PREFIX = 'SCLightbox';
 
@@ -15,7 +16,7 @@ const Root = styled(PhotoSlider, {
 })(() => ({}));
 
 const ReactImageLightbox = (props: ReactImageLightboxProps) => {
-  const {images = [], index, onClose, visible, afterClose, onIndexChange, ...rest} = props;
+  const {images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarButtons = [], ...rest} = props;
 
   // STATE
   const [currentImages] = useState<any[]>(images || []);
@@ -34,6 +35,14 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
       onIndexChange={setCurrentImageIndex}
       onClose={onClose}
       afterClose={afterClose}
+      toolbarRender={({onClose}) => {
+        return (
+          <>
+            {toolbarButtons}
+            <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onClose()} />
+          </>
+        );
+      }}
     />
   );
 };
@@ -47,12 +56,19 @@ export interface DataType {
   height?: number;
   originRef?: React.MutableRefObject<HTMLElement | null>;
 }
-export interface ReactImageLightboxProps {
+export interface ReactImageLightboxProps extends PhotoProviderBase {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
   images: DataType[];
   index?: number;
   onIndexChange?: (index: number) => void;
-  visible: boolean;
-  onClose: (evt?: React.MouseEvent | React.TouchEvent) => void;
+  visible?: boolean;
+  onClose?: (evt?: React.MouseEvent | React.TouchEvent) => void;
   afterClose?: () => void;
+  // Array of custom toolbar buttons
+  toolbarButtons?: React.ReactNode[];
 }
 export default ReactImageLightbox;
