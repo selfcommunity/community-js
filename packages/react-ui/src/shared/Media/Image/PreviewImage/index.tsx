@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
-import Lightbox from '../../../Lightbox';
+import React from 'react';
 import {styled} from '@mui/material/styles';
+import Lightbox from '../../../Lightbox';
 
 const PREFIX = 'SCPreviewImage';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Lightbox, {
   name: PREFIX,
@@ -27,6 +31,11 @@ export interface PreviewImageProps {
    */
   onClose: () => void;
   /**
+   * Handles on index change
+   * @default null
+   */
+  onIndexChange?: (index: number) => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -34,25 +43,7 @@ export interface PreviewImageProps {
 
 export default function PreviewImage(props: PreviewImageProps) {
   // PROPS
-  const {images = [], index = null, onClose = null, ...rest} = props;
-
-  // STATE
-  const [currentImages, setCurrentImages] = useState<any[]>(images || []);
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(index);
-
-  /**
-   * Handles Prev image
-   */
-  function onMovePrevRequest() {
-    setCurrentImageIndex((currentImageIndex + currentImages.length - 1) % currentImages.length);
-  }
-
-  /**
-   * Handles next image
-   */
-  function onMoveNextRequest() {
-    setCurrentImageIndex((currentImageIndex + 1) % currentImages.length);
-  }
+  const {images = [], index = 0, onClose, onIndexChange, ...rest} = props;
 
   /**
    * Gets image url
@@ -66,17 +57,25 @@ export default function PreviewImage(props: PreviewImageProps) {
   }
 
   /**
+   * Gets image key identifier
+   * @param image
+   */
+  function getImageId(image) {
+    return image.id;
+  }
+
+  /**
    * Renders root object
    */
   return (
     <Root
       {...rest}
-      mainSrc={getImageUrl(images[currentImageIndex])}
-      nextSrc={currentImages.length === 1 ? null : getImageUrl(images[(currentImageIndex + 1) % currentImages.length])}
-      prevSrc={currentImages.length === 1 ? null : getImageUrl(images[(currentImageIndex + currentImages.length - 1) % currentImages.length])}
-      onCloseRequest={onClose}
-      onMovePrevRequest={onMovePrevRequest}
-      onMoveNextRequest={onMoveNextRequest}
+      className={classes.root}
+      images={images.map((item, index) => ({src: getImageUrl(item), key: index}))}
+      visible={index !== -1}
+      onClose={onClose}
+      index={index}
+      onIndexChange={onIndexChange}
     />
   );
 }

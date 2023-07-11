@@ -280,7 +280,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     const conditionalRender = medias.length == 4 || (medias.length > +maxVisible && +maxVisible == 4);
     console.log();
     const overlay =
-      !maxVisible || maxVisible > 5 || (medias.length > maxVisible && [4, 5].includes(+maxVisible)) ? renderCountOverlay(true) : renderOverlay(conditionalRender ? 3 : 4);
+      !maxVisible || maxVisible > 5 || (medias.length > maxVisible && [4, 5].includes(+maxVisible))
+        ? renderCountOverlay(true)
+        : renderOverlay(conditionalRender ? 3 : 4);
     return (
       <Grid container>
         <Grid
