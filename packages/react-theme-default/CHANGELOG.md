@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.221](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.220...@selfcommunity/react-theme-default@0.1.0-alpha.221) (2023-07-11)
+
+
+### Bug Fixes
+
+* Lightbox ([d17a11e](https://github.com/selfcommunity/community-js/commit/d17a11e797df6e3699363eee11e2b17251e833af))
+
+
+
+
+
 # [0.1.0-alpha.220](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.219...@selfcommunity/react-theme-default@0.1.0-alpha.220) (2023-07-10)
 
 

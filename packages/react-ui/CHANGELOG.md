@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.271](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.270...@selfcommunity/react-ui@0.7.0-alpha.271) (2023-07-11)
+
+
+### Bug Fixes
+
+* Lightbox ([3d3a24f](https://github.com/selfcommunity/community-js/commit/3d3a24fe5f429bbeccfa89f9cedb772cfaec6b51))
+* Lightbox ([d17a11e](https://github.com/selfcommunity/community-js/commit/d17a11e797df6e3699363eee11e2b17251e833af))
+
+
+
+
+
 # [0.7.0-alpha.270](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.269...@selfcommunity/react-ui@0.7.0-alpha.270) (2023-07-10)
 
 
