@@ -70,10 +70,10 @@ export default function useSCWebPushMessaging() {
         {
           action: (snackbarId: SnackbarKey) => (
             <>
-              <Button size="small" onClick={() => requestNotificationPermission(snackbarId)}>
+              <Button size="small" sx={{color: '#FFF'}} onClick={() => requestNotificationPermission(snackbarId)}>
                 {intl.formatMessage({id: 'ui.webPushNotification.allow', defaultMessage: 'ui.webPushNotification.allow'})}
               </Button>
-              <Button size="small" onClick={() => closeRequestNotificationSnackbar(snackbarId)}>
+              <Button size="small" sx={{color: '#FFF'}} onClick={() => closeRequestNotificationSnackbar(snackbarId)}>
                 {intl.formatMessage({id: 'ui.webPushNotification.block', defaultMessage: 'ui.webPushNotification.block'})}
               </Button>
             </>
