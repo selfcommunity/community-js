@@ -121,6 +121,12 @@ const Component = {
           zIndex: 20,
           ['&:hover']: {
             opacity: 1
+          },
+          ['& Button']: {
+            color: '#c1c1c1'
+          },
+          ['& Button:hover']: {
+            color: theme.palette.common.white
           }
         },
         ['& .PhotoView-Slider__Counter']: {
