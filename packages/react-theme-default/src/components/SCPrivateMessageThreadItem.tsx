@@ -17,7 +17,7 @@ const Component = {
         position: 'absolute',
         bottom: theme.spacing(0),
         right: theme.spacing(3),
-        padding: theme.spacing(0.5, 0, 0.5, 0),
+        padding: theme.spacing(0.5, 0, 0.5, 0)
       },
       '& .SCPrivateMessageThreadItem-text': {
         display: 'flex',

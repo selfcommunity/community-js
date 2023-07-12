@@ -224,6 +224,11 @@ export interface ContributionActionsMenuProps {
   onRestoreContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
 
   /**
+   * Handle flag notification obj
+   */
+  onFlagContribution?: (obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => void;
+
+  /**
    * Handle suspend notification obj
    */
   onSuspendNotificationContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
@@ -249,6 +254,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     feedObjectType = SCContributionType.POST,
     commentObjectId,
     commentObject,
+    onFlagContribution,
     onEditContribution,
     onHideContribution,
     onDeleteContribution,
@@ -582,9 +588,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         .then((data) => {
           setFlagType(flagType === type ? null : type);
           setIsFlagging(false);
+          onFlagContribution && onFlagContribution(contributionObj, type, flagType !== type);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
         });
     }
   }

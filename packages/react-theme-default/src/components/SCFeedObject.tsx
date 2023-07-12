@@ -80,7 +80,7 @@ const Component = {
         width: '100%',
         boxSizing: 'border-box',
         margin: 0,
-        padding: theme.spacing(2)
+        padding: theme.spacing(1, 2)
       },
       '& .SCFeedObject-info-section': {
         padding: theme.spacing(0, 2)

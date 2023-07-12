@@ -6,7 +6,7 @@ const Component = {
       '& .SCPreviewMediaLink-preview-link': {
         position: 'relative',
         backgroundColor: '#F5F5F5',
-        margin: theme.spacing(2, 0),
+        margin: theme.spacing(1, 0),
         padding: theme.spacing(1)
       },
       '& .SCPreviewMediaLink-preview-video': {

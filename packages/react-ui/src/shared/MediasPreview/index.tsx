@@ -17,7 +17,6 @@ const Root = styled(Box, {
 })(({theme}) => ({
   position: 'relative',
   marginTop: 0,
-  marginBottom: theme.spacing(),
   marginLeft: -2,
   marginRight: -2
 }));

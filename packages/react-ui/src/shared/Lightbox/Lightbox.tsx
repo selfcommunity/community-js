@@ -35,13 +35,8 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
       onIndexChange={setCurrentImageIndex}
       onClose={onClose}
       afterClose={afterClose}
-      toolbarRender={({onClose}) => {
-        return (
-          <>
-            {toolbarButtons}
-            <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onClose()} />
-          </>
-        );
+      toolbarRender={() => {
+        return <>{toolbarButtons}</>;
       }}
     />
   );
