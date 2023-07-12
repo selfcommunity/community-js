@@ -465,10 +465,27 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         onDeleteContribution={handleDelete}
         onRestoreContribution={handleRestore}
         onSuspendNotificationContribution={handleSuspendNotification}
+        onFlagContribution={handleFlag}
         {...ContributionActionsMenuProps}
       />
     );
   };
+
+  /**
+   * Handle flag obj
+   */
+  const handleFlag = useCallback((obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => {
+    enqueueSnackbar(
+      flagged ? (
+        <FormattedMessage id="ui.feedObject.flagSent" defaultMessage="ui.feedObject.flagSent" />
+      ) : (
+        <FormattedMessage id="ui.feedObject.flagRemoved" defaultMessage="ui.feedObject.flagRemoved" />
+      ),
+      {
+        autoHideDuration: 3000
+      }
+    );
+  }, []);
 
   /**
    * Handle restore obj

@@ -15,7 +15,7 @@ import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
 import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCPreferences,
@@ -33,6 +33,7 @@ import {
 import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from '../../../../constants/SocialShare';
+import {GET_CONTRIBUTION_PERMALINK} from '../../../../constants/ContributionsActionsMenu';
 
 const messages = defineMessages({
   shares: {
@@ -252,6 +253,18 @@ export default function Share(inProps: ShareProps): JSX.Element {
   }
 
   /**
+   * Get permalink
+   */
+  function getPermalink() {
+    copyTextToClipboard(url).then(() => {
+      enqueueSnackbar(<FormattedMessage id="ui.common.permanentLinkCopied" defaultMessage="ui.common.permanentLinkCopied" />, {
+        variant: 'success',
+        autoHideDuration: 3000
+      });
+    });
+  }
+
+  /**
    * Renders audience with detail dialog
    * @return {JSX.Element}
    */
@@ -319,6 +332,15 @@ export default function Share(inProps: ShareProps): JSX.Element {
             <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
           </MenuItem>
         )}
+        <MenuItem>
+          <ListItemIcon>
+            <Icon fontSize="small">link</Icon>
+          </ListItemIcon>
+          <ListItemText
+            primary={<FormattedMessage id="ui.feedObject.share.permanentLink" defaultMessage="ui.feedObject.share.permanentLink" />}
+            onClick={() => getPermalink()}
+          />
+        </MenuItem>
       </Box>
     );
   }
