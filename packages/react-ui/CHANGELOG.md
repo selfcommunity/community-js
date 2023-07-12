@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.273](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.272...@selfcommunity/react-ui@0.7.0-alpha.273) (2023-07-12)
+
+
+### Bug Fixes
+
+* CustomAdv padding ([bf74bc7](https://github.com/selfcommunity/community-js/commit/bf74bc78b22621b2e3bd1be3ba80af9e3f05afb0))
+
+
+
+
+
 # [0.7.0-alpha.272](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.271...@selfcommunity/react-ui@0.7.0-alpha.272) (2023-07-12)
 
 
