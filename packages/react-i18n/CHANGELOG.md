@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.42...@selfcommunity/react-i18n@0.5.0-alpha.43) (2023-07-11)
+
+
+### Bug Fixes
+
+* Lightbox ([d17a11e](https://github.com/selfcommunity/community-js/commit/d17a11e797df6e3699363eee11e2b17251e833af))
+
+
+
+
+
 # [0.5.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.41...@selfcommunity/react-i18n@0.5.0-alpha.42) (2023-07-07)
 
 
