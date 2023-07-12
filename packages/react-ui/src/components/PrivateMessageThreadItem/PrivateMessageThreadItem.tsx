@@ -246,7 +246,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
               images={[{src: message?.file.url, key: message.file.uuid}]}
               onClose={() => setOpenDialog(false)}
               toolbarButtons={[
-                <IconButton onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
+                <IconButton key={'download'} onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
                   <Icon>download</Icon>
                 </IconButton>
               ]}
