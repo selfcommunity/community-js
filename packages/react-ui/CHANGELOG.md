@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.272](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.271...@selfcommunity/react-ui@0.7.0-alpha.272) (2023-07-12)
+
+
+### Bug Fixes
+
+* ContributionActionsMenu ([d74082c](https://github.com/selfcommunity/community-js/commit/d74082c3be629d79095007ea98c28fe0a586597d))
+* Lightbox ([9c45163](https://github.com/selfcommunity/community-js/commit/9c4516377de8aa121f469a767beaaf64f4aae1bc))
+* Lightbox toolbar ([b0a80fa](https://github.com/selfcommunity/community-js/commit/b0a80fa1c91b322e394cf14e9879661b91732cac))
+* styles ([af14783](https://github.com/selfcommunity/community-js/commit/af14783bd3b22e22f682de060b123f29ef5aa012))
+
+
+
+
+
 # [0.7.0-alpha.271](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.270...@selfcommunity/react-ui@0.7.0-alpha.271) (2023-07-11)
 
 

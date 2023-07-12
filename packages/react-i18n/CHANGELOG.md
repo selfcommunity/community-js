@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.43...@selfcommunity/react-i18n@0.5.0-alpha.44) (2023-07-12)
+
+
+### Bug Fixes
+
+* ContributionActionsMenu ([d74082c](https://github.com/selfcommunity/community-js/commit/d74082c3be629d79095007ea98c28fe0a586597d))
+
+
+
+
+
 # [0.5.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.42...@selfcommunity/react-i18n@0.5.0-alpha.43) (2023-07-11)
 
 
