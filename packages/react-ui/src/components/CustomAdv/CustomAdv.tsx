@@ -25,7 +25,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-  marginBottom: theme.spacing(2),
+  margin: theme.spacing(2, 0),
   [`& .${classes.wrap}`]: {
     width: '100%',
     position: 'relative'
