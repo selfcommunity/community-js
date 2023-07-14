@@ -101,7 +101,6 @@ const Root = styled(Box, {
 
   [`& .${classes.border}`]: {
     position: 'relative',
-    border: '2px solid white',
     '&:hover > div': {
       bottom: 0,
       height: 'auto'
