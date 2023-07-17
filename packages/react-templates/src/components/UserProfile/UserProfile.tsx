@@ -317,11 +317,9 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                         <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
                       </Button>
                     ) : (
-                      <>
-                        <ConnectionUserButton user={scUser} />
-                        <UserActionIconButton user={scUser} items={actionItems} />
-                      </>
+                      <ConnectionUserButton user={scUser} />
                     )}
+                    <UserActionIconButton user={scUser} items={actionItems} />
                   </Stack>
                   <UserCounters className={classes.counters} userId={userId as number} user={scUser} />
                   {scUser.date_joined && (

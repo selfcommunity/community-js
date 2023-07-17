@@ -167,7 +167,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
   }, [anchorEl, scUser]);
 
   // RENDER
-  if (isMe || !scUserContext.user) {
+  if (!scUserContext.user) {
     return null;
   }
 
@@ -188,34 +188,38 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
             />
           </ListItemButton>
         </ListItem>,
-        <Divider key="divider" />,
-        <ListItem key="hide">
-          <ListItemButton onClick={handleHideToggle} disabled={isHiddenLoading || scUser.community_badge}>
-            <ListItemText
-              primary={
-                hidden ? (
-                  <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
-                ) : (
-                  <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
-                )
-              }
-            />
-          </ListItemButton>
-        </ListItem>,
-        ...(canModerate
-          ? [
-              <Divider key="divider_moderate" />,
-              <ListItem key="moderate">
-                <ListItemButton
-                  component={Link}
-                  to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}>
+        ...(isMe
+          ? []
+          : [
+              <Divider key="divider" />,
+              <ListItem key="hide">
+                <ListItemButton onClick={handleHideToggle} disabled={isHiddenLoading || scUser.community_badge}>
                   <ListItemText
-                    primary={<FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />}
+                    primary={
+                      hidden ? (
+                        <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
+                      ) : (
+                        <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
+                      )
+                    }
                   />
                 </ListItemButton>
-              </ListItem>
-            ]
-          : [])
+              </ListItem>,
+              ...(canModerate
+                ? [
+                    <Divider key="divider_moderate" />,
+                    <ListItem key="moderate">
+                      <ListItemButton
+                        component={Link}
+                        to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}>
+                        <ListItemText
+                          primary={<FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  ]
+                : [])
+            ])
       ];
     } else {
       return [
@@ -227,26 +231,30 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
         <MenuItem key="info" onClick={handleInfoOpen}>
           <FormattedMessage defaultMessage="ui.userActionIconButton.information" id="ui.userActionIconButton.information" />
         </MenuItem>,
-        <Divider key="divider" />,
-        <MenuItem key="hide" onClick={handleHide} disabled={isHiddenLoading || scUser.community_badge}>
-          {hidden ? (
-            <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
-          ) : (
-            <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
-          )}
-        </MenuItem>,
-        ...(canModerate
-          ? [
-              <Divider key="divider_moderate" />,
-              <MenuItem
-                key="moderate"
-                component={Link}
-                to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
-                onClick={handleClose}>
-                <FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />
-              </MenuItem>
-            ]
-          : [])
+        ...(isMe
+          ? []
+          : [
+              <Divider key="divider" />,
+              <MenuItem key="hide" onClick={handleHide} disabled={isHiddenLoading || scUser.community_badge}>
+                {hidden ? (
+                  <FormattedMessage defaultMessage="ui.userActionIconButton.show" id="ui.userActionIconButton.show" />
+                ) : (
+                  <FormattedMessage defaultMessage="ui.userActionIconButton.hide" id="ui.userActionIconButton.hide" />
+                )}
+              </MenuItem>,
+              ...(canModerate
+                ? [
+                    <Divider key="divider_moderate" />,
+                    <MenuItem
+                      key="moderate"
+                      component={Link}
+                      to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
+                      onClick={handleClose}>
+                      <FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />
+                    </MenuItem>
+                  ]
+                : [])
+            ])
       ];
     }
   };
