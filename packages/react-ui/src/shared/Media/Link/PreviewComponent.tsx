@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
 import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
@@ -51,9 +51,12 @@ export default (props: LinkPreviewProps): JSX.Element => {
   // PROPS
   const {medias, fullWidth = false, adornment = null, onMediaClick = null} = props;
 
+  // HANDLERS
   const handleLinkClick = (link) => {
     onMediaClick && onMediaClick(link);
   };
+
+  // RENDER
 
   /**
    * Renders link preview
@@ -61,6 +64,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
    * @param(key)
    */
   const renderPreview = (link, key) => {
+    const domain = new URL(link.embed.metadata.url).hostname.replace('www.', '');
     return (
       <Box className={classes.previewLink} key={key}>
         {link.embed.metadata.images.length > 0 && (
@@ -80,7 +84,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
           <br />
           <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
           <a href={link.embed.metadata.url} target={'_blank'} onClick={() => handleLinkClick(link)}>
-            {link.embed.metadata.url}
+            {domain}
           </a>
         </Box>
         <div style={{clear: 'both'}}></div>
