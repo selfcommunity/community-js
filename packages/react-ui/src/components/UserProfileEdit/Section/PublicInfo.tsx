@@ -30,6 +30,7 @@ import {format, isBefore, isValid, parseISO, startOfHour} from 'date-fns';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
 import {LoadingButton} from '@mui/lab';
+import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   genderMale: {
@@ -92,6 +93,12 @@ export interface PublicInfoProps {
    * Callback on edit data with success
    */
   onEditSuccess?: (editedField?: Record<string, any>) => void;
+
+  /**
+   * Callback on edit data with error
+   */
+  onEditFailure?: (editedField?: Record<string, any>) => void;
+
   /**
    * Any other properties
    */
@@ -107,10 +114,13 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, ...rest} = props;
+  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, onEditFailure = null, ...rest} = props;
+
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
+
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const metadataDefinitions = useMemo(() => {
@@ -132,6 +142,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
+
   // INTL
   const intl = useIntl();
 
@@ -162,13 +173,20 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         scUserContext.updateUser(res.data);
         setEditing([]);
         setSaving([]);
-        if (onEditSuccess) {
-          onEditSuccess();
-        }
+        enqueueSnackbar(<FormattedMessage id="ui.userInfo.save.success" defaultMessage="ui.userInfo.save.success" />, {
+          variant: 'success',
+          autoHideDuration: 3000
+        });
+        onEditSuccess && onEditSuccess();
       })
       .catch((e) => {
         setError({...error, ...formatHttpErrorCode(e)});
         setSaving([]);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+        onEditFailure && onEditFailure();
       });
   };
 
@@ -364,7 +382,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         color="secondary"
         onClick={handleSave}
         loading={saving.length > 0}
-        disabled={saving.length > 0 || Object.keys(error).length > 0}>
+        disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
         <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
       </LoadingButton>
     </Root>

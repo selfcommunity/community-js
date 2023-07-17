@@ -526,6 +526,7 @@
   "ui.userInfo.website.error.invalid": "Inserisci un URL valido.",
   "ui.userInfoDialog.title": "Informazioni",
   "ui.userInfo.button.save": "Salva",
+  "ui.userInfo.save.success": "I tuoi dati sono stati salvati",
   "ui.publicInfo.dateOfBirth.error": "Data di nascita non valida.",
   "ui.userPopupNotification.viewOther": "Vedi altre",
   "ui.userProfileBlocked.blockedUser": "I contenuti sono nascosti perchè hai bloccato l'utente.",
