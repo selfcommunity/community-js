@@ -1,3 +1,5 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -17,10 +19,10 @@ const Component = {
           margin: 0
         },
         '& mention': {
-          backgroundColor: theme.palette.primary.light
+          backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
         },
         '& hashtag': {
-          backgroundColor: theme.palette.secondary.light
+          backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
         }
       },
       '& .SCEditor-placeholder': {
