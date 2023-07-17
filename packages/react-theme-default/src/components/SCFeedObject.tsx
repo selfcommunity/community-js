@@ -308,6 +308,9 @@ const Component = {
                   '& .SCEditor-actions': {
                     bottom: 0
                   }
+                },
+                '&.SCCommentObjectReply-has-value .SCEditor-root .SCEditor-actions': {
+                  bottom: theme.spacing(-4)
                 }
               }
             }
