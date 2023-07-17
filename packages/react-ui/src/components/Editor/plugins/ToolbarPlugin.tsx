@@ -359,7 +359,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
             }}>
             <Tooltip title={<FormattedMessage id={`ui.editor.toolbarPlugin.${format}`} defaultMessage={`ui.editor.toolbarPlugin.${format}`} />}>
-              <Icon>format_{format}</Icon>
+              <Icon>{`format_${format}`}</Icon>
             </Tooltip>
           </ToggleButton>
         ))}
