@@ -10,7 +10,7 @@ import {UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import AccountCredentials from './AccountCredentials';
+import AccountCredentials, {AccountCredentialProps} from './AccountCredentials';
 import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
 import AccountDeleteButton from '../../AccountDeleteButton';
 
@@ -62,6 +62,13 @@ export interface AccountProps {
    *@default true
    */
   showSocialAccountSection?: boolean;
+
+  /**
+   * Props to apply to Account credential section
+   * @default {}
+   */
+  AccountCredentialProps?: AccountCredentialProps;
+
   /**
    * Any other properties
    */
@@ -75,7 +82,14 @@ export default function Account(inProps: AccountProps): JSX.Element {
   });
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const {className = null, handleAssociationCreate, showSocialAccountSection = true, showCredentialsSection = false, ...rest} = props;
+  const {
+    className = null,
+    handleAssociationCreate,
+    showSocialAccountSection = true,
+    showCredentialsSection = false,
+    AccountCredentialProps = {},
+    ...rest
+  } = props;
   // STATE
   const [provider, setProvider] = useState(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -107,7 +121,7 @@ export default function Account(inProps: AccountProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {showCredentialsSection && <AccountCredentials user={scUserContext?.user} />}
+      {showCredentialsSection && <AccountCredentials user={scUserContext?.user} {...AccountCredentialProps} />}
       {showSocialAccountSection && (
         <UserSocialAssociation
           children={

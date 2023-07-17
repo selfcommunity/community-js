@@ -57,11 +57,19 @@ export interface AccountCredentialProps {
    * The user obj
    */
   user?: SCUserType;
+
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
+
+  /**
+   * Skip email validation when change email
+   * @default false
+   */
+  skipEmailValidation?: boolean;
+
   /**
    * Any other properties
    */
@@ -74,7 +82,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
     name: PREFIX
   });
   // CONTEXT
-  const {className = null, user, ...rest} = props;
+  const {className = null, user, skipEmailValidation = false, ...rest} = props;
   // STATE
   const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState<boolean>(false);
   const initialFieldState = {
@@ -162,9 +170,10 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
     e.preventDefault();
     e.stopPropagation();
     setIsSubmitting(true);
-    UserService.changeUserMail(user?.id, field.email, true)
+    UserService.changeUserMail(user?.id, field.email, skipEmailValidation ? false : true)
       .then((res: SCUserChangeEmailType) => {
-        handleVerifyEmail(res.validation_code);
+        setIsEditing(false);
+        setIsSubmitting(false);
       })
       .catch((error) => {
         setIsSubmitting(false);
@@ -173,28 +182,6 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
       });
   };
 
-  const handleVerifyEmail = (code) => {
-    UserService.confirmChangeUserMail(user?.id, field.email, code)
-      .then(() => {
-        setIsEditing(false);
-        setIsSubmitting(false);
-        enqueueSnackbar(
-          <FormattedMessage
-            id="ui.userProfileEditAccountCredentials.email.success"
-            defaultMessage="ui.userProfileEditAccountCredentials.email.success"
-          />,
-          {
-            variant: 'success',
-            autoHideDuration: 1500
-          }
-        );
-      })
-      .catch((error) => {
-        const _error = formatHttpErrorCode(error);
-        setError((prev) => ({...prev, ['email']: _error.error}));
-        setIsSubmitting(false);
-      });
-  };
   if (!user) {
     return;
   }
