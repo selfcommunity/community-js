@@ -156,10 +156,10 @@ const Component = {
               margin: '1em 0'
             },
             '& a': {
-              color: theme.palette.text.primary,
-              textDecoration: 'none',
+              color: theme.palette.text.secondary,
+              textDecoration: 'underline',
               '&:hover': {
-                textDecoration: 'underline',
+                textDecoration: 'none',
                 cursor: 'pointer'
               }
             },

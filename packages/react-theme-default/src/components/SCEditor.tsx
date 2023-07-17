@@ -16,10 +16,10 @@ const Component = {
         '& img': {
           margin: 0
         },
-        ['& mention']: {
+        '& mention': {
           backgroundColor: theme.palette.primary.light
         },
-        ['& hashtag']: {
+        '& hashtag': {
           backgroundColor: theme.palette.secondary.light
         }
       },
@@ -161,11 +161,11 @@ const Component = {
         verticalAlign: 'super'
       },
       '& .SCEditor-link': {
-        color: theme.palette.text.primary,
-        textDecoration: 'none'
+        color: theme.palette.text.secondary,
+        textDecoration: 'underline'
       },
       '& .SCEditor-link:hover': {
-        textDecoration: 'underline',
+        textDecoration: 'none',
         cursor: 'pointer'
       },
       '& .SCEditor-ol1': {
