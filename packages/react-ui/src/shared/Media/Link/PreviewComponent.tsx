@@ -67,7 +67,7 @@ export default (props: LinkPreviewProps): JSX.Element => {
     const domain = new URL(link.embed.metadata.url).hostname.replace('www.', '');
     return (
       <Box className={classes.previewLink} key={key}>
-        {link.embed.metadata.images.length > 0 && (
+        {link.embed.metadata.images && link.embed.metadata.images.length > 0 && (
           <>
             {fullWidth ? (
               <Box
