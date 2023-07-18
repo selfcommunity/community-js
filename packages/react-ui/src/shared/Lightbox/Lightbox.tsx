@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {PhotoSlider} from 'react-photo-view';
+import {DataType} from '../../types/lightbox';
+import {CircularProgress} from '@mui/material';
 import {PhotoProviderBase} from 'react-photo-view/dist/types';
 
 const PREFIX = 'SCLightbox';
@@ -8,6 +10,21 @@ const PREFIX = 'SCLightbox';
 const classes = {
   root: `${PREFIX}-root`
 };
+
+/**
+ * Overrides/extends the styles applied to the component.
+ * @default null
+ */
+export interface ReactImageLightboxProps extends PhotoProviderBase {
+  className?: string;
+  images: DataType[];
+  index?: number;
+  onIndexChange?: (index: number) => void;
+  visible?: boolean;
+  onClose?: (evt?: React.MouseEvent | React.TouchEvent) => void;
+  afterClose?: () => void;
+  toolbarButtons?: React.ReactNode[];
+}
 
 const Root = styled(PhotoSlider, {
   name: PREFIX,
@@ -35,6 +52,7 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
       onIndexChange={setCurrentImageIndex}
       onClose={onClose}
       afterClose={afterClose}
+      loadingElement={<CircularProgress color={'primary'} />}
       toolbarRender={() => {
         return <>{toolbarButtons}</>;
       }}
@@ -42,28 +60,4 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
   );
 };
 
-export interface DataType {
-  key: number | string;
-  src?: string;
-  render?: (props) => React.ReactNode;
-  overlay?: React.ReactNode;
-  width?: number;
-  height?: number;
-  originRef?: React.MutableRefObject<HTMLElement | null>;
-}
-export interface ReactImageLightboxProps extends PhotoProviderBase {
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-  images: DataType[];
-  index?: number;
-  onIndexChange?: (index: number) => void;
-  visible?: boolean;
-  onClose?: (evt?: React.MouseEvent | React.TouchEvent) => void;
-  afterClose?: () => void;
-  // Array of custom toolbar buttons
-  toolbarButtons?: React.ReactNode[];
-}
 export default ReactImageLightbox;
