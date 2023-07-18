@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.224](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.223...@selfcommunity/react-theme-default@0.1.0-alpha.224) (2023-07-18)
+
+
+### Bug Fixes
+
+* Fix CommentObjectReply.tsx icons ([14950f6](https://github.com/selfcommunity/community-js/commit/14950f6e3e71ea36ed70bc9151a6c2865def1e94))
+* Fix Editor format ([e614688](https://github.com/selfcommunity/community-js/commit/e61468851e7fe51a182c65738c31081dae63e008))
+* Fix link behaviour in FeedObject ([09c096b](https://github.com/selfcommunity/community-js/commit/09c096b2592e96de99e4fe37949ae18611da2641))
+* Fix mentions color ([0e311d8](https://github.com/selfcommunity/community-js/commit/0e311d874ea03fec42ae3705ceaf60a6ab958be7))
+* PrivateMessage ([9e69e28](https://github.com/selfcommunity/community-js/commit/9e69e28ff582327a4cdab2aa7b3430f4291ae873))
+
+
+
+
+
 # [0.1.0-alpha.223](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.222...@selfcommunity/react-theme-default@0.1.0-alpha.223) (2023-07-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

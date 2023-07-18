@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.44...@selfcommunity/react-i18n@0.5.0-alpha.45) (2023-07-18)
+
+
+### Bug Fixes
+
+* Account Verify Email ([98ab5f8](https://github.com/selfcommunity/community-js/commit/98ab5f8077cef5e8f9d3f0a7bfe5686b2361302e))
+* UserProfileEdit ([3b4d855](https://github.com/selfcommunity/community-js/commit/3b4d855896678d48f4a7dca6d7da205a2e2a2d83))
+
+
+
+
+
 # [0.5.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.43...@selfcommunity/react-i18n@0.5.0-alpha.44) (2023-07-12)
 
 
