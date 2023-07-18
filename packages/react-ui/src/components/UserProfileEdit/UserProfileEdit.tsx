@@ -110,11 +110,11 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
     fields = [...DEFAULT_FIELDS],
     settings = [...DEFAULT_SETTINGS],
     UserProfileEditSectionPublicInfoProps = {},
-    UserProfileEditSectionSettingsProps = {},
     UserProfileEditSectionAccountProps = {
       showCredentialsSection: true,
       showSocialAccountSection: true
     },
+    UserProfileEditSectionSettingsProps = {},
     ...rest
   } = props;
 

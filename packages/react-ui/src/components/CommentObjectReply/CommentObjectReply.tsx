@@ -16,6 +16,7 @@ const PREFIX = 'SCCommentObjectReply';
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
+  hasValue: `${PREFIX}-has-value`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   buttonReply: `${PREFIX}-button-reply`,
@@ -27,7 +28,7 @@ const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CommentObjectReplyProps extends WidgetProps {
   /**
@@ -77,7 +78,6 @@ export interface CommentObjectReplyProps extends WidgetProps {
    */
   [p: string]: any;
 }
-
 /**
  *> API documentation for the Community-JS Comment Object Reply component. Learn about the available props and the CSS API.
 
@@ -98,6 +98,7 @@ export interface CommentObjectReplyProps extends WidgetProps {
  |---|---|---|
  |root|.CommentObjectReply-root|Styles applied to the root element.|
  |comment|.SCCommentObjectReply-comment|Styles applied to comment element.|
+ |hasValue|.SCCommentObjectReply-has-value|Styles applied to the comment element when editor is not empty.|
  |avatar|.SCCommentObjectReply-avatar|Styles applied to the avatar element.|
  |actions|.SCCommentObjectReply-actions|Styles applied to the actions section.|
  |buttonReply|.SCCommentObjectReply-button-reply|Styles applied to reply button element.|
@@ -106,6 +107,7 @@ export interface CommentObjectReplyProps extends WidgetProps {
 
  * @param inProps
  */
+
 export default function CommentObjectReply(inProps: CommentObjectReplyProps): JSX.Element {
   // PROPS
   const props: CommentObjectReplyProps = useThemeProps({
@@ -182,13 +184,10 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
   /**
    * Check if editor is empty
    */
-  const isEditorEmpty = useMemo(
-    () => (): boolean => {
-      const _html = html.trim();
-      return _html === '' || _html === '<p class="SCEditor-paragraph"></p>' || _html === '<p class="SCEditor-paragraph"><br></p>';
-    },
-    [html]
-  );
+  const isEditorEmpty = useMemo((): boolean => {
+    const _html = html.trim();
+    return _html === '' || _html === '<p class="SCEditor-paragraph"></p>' || _html === '<p class="SCEditor-paragraph"><br></p>';
+  }, [html]);
 
   // RENDER
   return (
@@ -208,9 +207,9 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
         )
       }
       secondary={
-        <Widget className={classes.comment} {...WidgetProps}>
+        <Widget className={classNames(classes.comment, {[classes.hasValue]: !isEditorEmpty})} {...WidgetProps}>
           <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} uploadImage />
-          {!isEditorEmpty() && (
+          {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (
                 <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>

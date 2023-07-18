@@ -98,6 +98,7 @@ import Notification, {NotificationProps, NotificationSkeleton} from './component
 import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
 import AccountReset, {AccountResetProps} from './components/AccountReset';
 import AccountVerify, {AccountVerifyProps} from './components/AccountVerify';
+import AccountChangeMailValidation, {AccountChangeMailValidationProps} from './components/AccountChangeMailValidation';
 import {
   SCBroadcastMessageTemplateType,
   SCCommentsOrderBy,
@@ -179,6 +180,8 @@ export {
   AccountResetProps,
   AccountVerify,
   AccountVerifyProps,
+  AccountChangeMailValidation,
+  AccountChangeMailValidationProps,
   NavigationSettingsIconButton,
   NavigationSettingsIconButtonProps,
   NavigationToolbarMobile,

@@ -39,7 +39,11 @@ const Component = {
         '& .MuiCardHeader-root': {
           paddingBottom: theme.spacing(0),
           '& .SCMessageMediaUploader-close-button': {
-            fontSize: '0.857rem'
+            fontSize: '0.857rem',
+            cursor: 'pointer',
+            '&:hover': {
+              color: theme.palette.common.black
+            }
           }
         },
         '& .MuiAlert-root': {

@@ -48,7 +48,11 @@ const Component = {
         '& .SCCommentObject-text-content': {
           margin: 0,
           '& a': {
-            color: theme.palette.text.primary
+            color: theme.palette.text.secondary,
+            textDecoration: 'underlined',
+            '&:hover': {
+              textDecoration: 'none'
+            }
           },
           '& p': {
             margin: 0,

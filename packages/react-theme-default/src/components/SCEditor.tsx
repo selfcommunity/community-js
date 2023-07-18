@@ -1,3 +1,5 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -16,11 +18,11 @@ const Component = {
         '& img': {
           margin: 0
         },
-        ['& mention']: {
-          backgroundColor: theme.palette.primary.light
+        '& mention': {
+          backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
         },
-        ['& hashtag']: {
-          backgroundColor: theme.palette.secondary.light
+        '& hashtag': {
+          backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity)
         }
       },
       '& .SCEditor-placeholder': {
@@ -123,19 +125,19 @@ const Component = {
         fontSize: '1.429rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightBold,
-        margin: 0
+        margin: theme.spacing(0, 0, 1, 0)
       },
       '& .SCEditor-h2': {
         fontSize: '1.143rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightBold,
-        margin: 0
+        margin: theme.spacing(0, 0, 0.8, 0)
       },
       '& .SCEditor-h3': {
         fontSize: '1rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightLight,
-        margin: 0
+        margin: theme.spacing(0, 0, 0.5, 0)
       },
       '& .SCEditor-textBold': {
         fontWeight: 'bold'
@@ -161,11 +163,11 @@ const Component = {
         verticalAlign: 'super'
       },
       '& .SCEditor-link': {
-        color: theme.palette.text.primary,
-        textDecoration: 'none'
+        color: theme.palette.text.secondary,
+        textDecoration: 'underline'
       },
       '& .SCEditor-link:hover': {
-        textDecoration: 'underline',
+        textDecoration: 'none',
         cursor: 'pointer'
       },
       '& .SCEditor-ol1': {

@@ -4,10 +4,10 @@ import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {Alert, Box, CircularProgress} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {AccountService} from '@selfcommunity/api-services';
+import {UserService} from '@selfcommunity/api-services';
 import {FormattedMessage} from 'react-intl';
 
-const PREFIX = 'SCAccountVerify';
+const PREFIX = 'SCAccountChangeMailValidation';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -28,7 +28,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface AccountVerifyProps {
+export interface AccountChangeMailValidationProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -42,7 +42,19 @@ export interface AccountVerifyProps {
   validationCode: string;
 
   /**
-   * Callback triggered on success sign in
+   * Id (userId) sent by email to the user
+   * @default null
+   */
+  userId: number;
+
+  /**
+   * New email sent by email to the user
+   * @default null
+   */
+  newEmail: string;
+
+  /**
+   * Callback triggered on success
    * @default null
    */
   onSuccess?: (res: any) => void;
@@ -70,38 +82,38 @@ export interface AccountVerifyProps {
 }
 
 /**
- * > API documentation for the Community-JS AccountVerify component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS AccountChangeMailValidation component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {AccountVerify} from '@selfcommunity/react-ui';
+ import {AccountChangeMailValidation} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCAccountVerify` can be used when providing style overrides in the theme.
+ The name `SCAccountChangeMailValidation` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCAccountVerify-root|Styles applied to the root element.|
- |success|.SCAccountVerify-success|Styles applied to the success Alert.|
- |error|.SCAccountVerify-error|Styles applied to the error Alert.|
+ |root|.SCAccountChangeMailValidation-root|Styles applied to the root element.|
+ |success|.SCAccountChangeMailValidation-success|Styles applied to the success Alert.|
+ |error|.SCAccountChangeMailValidation-error|Styles applied to the error Alert.|
 
  *
  * @param inProps
  */
-export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element {
-  const props: AccountVerifyProps = useThemeProps({
+export default function AccountChangeMailValidation(inProps: AccountChangeMailValidationProps): JSX.Element {
+  const props: AccountChangeMailValidationProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
 
   // PROPS
-  const {className, onSuccess, onError, validationCode, successAction = null, errorAction = null, ...rest} = props;
+  const {className, onSuccess, onError, validationCode, userId, newEmail, successAction = null, errorAction = null, ...rest} = props;
 
   // STATE
   const [succeed, setSucceed] = useState<boolean | string>(false);
@@ -112,23 +124,22 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
 
   // EFFECTS
   useEffect(() => {
-    if (!validationCode) {
+    if (scUserContext.user === undefined || !validationCode || !newEmail || isNaN(userId) || succeed) {
       return;
     }
     setError(false);
-    AccountService.verify({validation_code: validationCode})
-      .then((res: any) => {
-        setSucceed(res.token ? true : res.user_awaiting_approval);
+    UserService.confirmChangeUserMail(userId, newEmail, validationCode)
+      .then((res) => {
+        setSucceed(true);
         onSuccess && onSuccess(res);
       })
       .catch((error) => {
         setError(true);
         onError && onError(error);
       });
-  }, [validationCode]);
+  }, [validationCode, userId, newEmail, scUserContext.user, succeed]);
 
-  if (scUserContext.user !== null) {
-    // User already logged in
+  if (scUserContext.user === undefined) {
     return null;
   }
 
@@ -137,18 +148,22 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
     <Root className={classNames(classes.root, className)} {...rest}>
       {succeed ? (
         <Alert severity="success" className={classes.success}>
-          {typeof succeed === 'string' ? succeed : <FormattedMessage id="ui.accountVerify.success" defaultMessage="ui.accountVerify.success" />}
+          {typeof succeed === 'string' ? (
+            succeed
+          ) : (
+            <FormattedMessage id="ui.accountChangeMailValidation.success" defaultMessage="ui.accountChangeMailValidation.success" />
+          )}
           {successAction}
         </Alert>
       ) : error ? (
         <Alert severity="error" className={classes.error}>
-          <FormattedMessage id="ui.accountVerify.error" defaultMessage="ui.accountVerify.error" />
+          <FormattedMessage id="ui.accountChangeMailValidation.error" defaultMessage="ui.accountChangeMailValidation.error" />
           {errorAction}
         </Alert>
       ) : (
         <>
           <CircularProgress />
-          <FormattedMessage id="ui.accountVerify.verifying" defaultMessage="ui.accountVerify.verifying" />
+          <FormattedMessage id="ui.accountChangeMailValidation.verifying" defaultMessage="ui.accountChangeMailValidation.verifying" />
         </>
       )}
     </Root>

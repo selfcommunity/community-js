@@ -78,6 +78,12 @@ export interface AccountResetProps {
   successAction?: React.ReactNode;
 
   /**
+   * Callback triggered on error sign in
+   * @default null
+   */
+  onError?: (res: any) => void;
+
+  /**
    * Action component to display after error message
    * */
   errorAction?: React.ReactNode;
@@ -127,7 +133,8 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   // PROPS
   const {
     className,
-    onSuccess = null,
+    onSuccess,
+    onError,
     TextFieldProps = {variant: 'outlined', fullWidth: true},
     ButtonProps = {variant: 'contained'},
     validationCode,
@@ -194,6 +201,7 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
         if (_error.validationCodeError) {
           setValidationCodeError(_error.validationCodeError.error);
         }
+        onError && onError(error)
       })
       .then(() => setIsSubmitting(false));
 
@@ -214,12 +222,10 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
           {successAction}
         </Alert>
       ) : validationCodeError ? (
-        <>
-          <Alert severity="error" className={classes.error}>
-            <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
-          </Alert>
+        <Alert severity="error" className={classes.error}>
+          <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
           {errorAction}
-        </>
+        </Alert>
       ) : isLoading ? (
         <Box className={classes.validating}>
           <CircularProgress />
