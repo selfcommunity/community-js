@@ -180,18 +180,21 @@ const Component = {
               fontSize: '1.429rem',
               color: theme.palette.text.primary,
               fontWeight: theme.typography.fontWeightBold,
-              margin: 0
+              margin: theme.spacing(0, 0, 1, 0)
             },
             '& h2': {
               fontSize: '1.143rem',
               color: theme.palette.text.primary,
               fontWeight: theme.typography.fontWeightBold,
-              margin: 0
+              margin: theme.spacing(0, 0, 0.8, 0)
             },
             '& h3': {
               fontSize: '1rem',
               color: theme.palette.text.primary,
               fontWeight: theme.typography.fontWeightLight,
+              margin: theme.spacing(0, 0, 0.5, 0)
+            },
+            '& p': {
               margin: 0
             },
             '& b': {

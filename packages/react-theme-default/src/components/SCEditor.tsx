@@ -125,19 +125,19 @@ const Component = {
         fontSize: '1.429rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightBold,
-        margin: 0
+        margin: theme.spacing(0, 0, 1, 0)
       },
       '& .SCEditor-h2': {
         fontSize: '1.143rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightBold,
-        margin: 0
+        margin: theme.spacing(0, 0, 0.8, 0)
       },
       '& .SCEditor-h3': {
         fontSize: '1rem',
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightLight,
-        margin: 0
+        margin: theme.spacing(0, 0, 0.5, 0)
       },
       '& .SCEditor-textBold': {
         fontWeight: 'bold'
