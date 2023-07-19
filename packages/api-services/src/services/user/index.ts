@@ -39,7 +39,13 @@ export interface UserApiClientInterface {
   userUpdate(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType>;
   userPatch(id: number | string, data?: SCUserType, config?: AxiosRequestConfig): Promise<SCUserType>;
   userDelete(id: number | string, hard?: number, config?: AxiosRequestConfig): Promise<any>;
-  changeUserMail(id: number | string, new_email: string, confirm?: boolean, config?: AxiosRequestConfig): Promise<any | SCUserChangeEmailType>;
+  changeUserMail(
+    id: number | string,
+    new_email: string,
+    confirm?: boolean,
+    send_email?: boolean,
+    config?: AxiosRequestConfig
+  ): Promise<any | SCUserChangeEmailType>;
   confirmChangeUserMail(id: number | string, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any>;
   changeUserPassword(id: number | string, password: string, new_password: string, config?: AxiosRequestConfig): Promise<any>;
   userSettings(id: number | string, config?: AxiosRequestConfig): Promise<SCUserSettingsType>;
@@ -208,6 +214,7 @@ export class UserApiClient {
     id: number | string,
     new_email: string,
     confirm?: boolean,
+    send_email?: boolean,
     config?: AxiosRequestConfig
   ): Promise<any | SCUserChangeEmailType> {
     return apiRequest({
@@ -216,7 +223,8 @@ export class UserApiClient {
       method: Endpoints.ChangeUserMail.method,
       data: {
         new_email: new_email,
-        confirm: confirm
+        confirm: confirm,
+        ...(send_email ? {send_email} : {})
       }
     });
   }
@@ -707,9 +715,10 @@ export default class UserService {
     id: number | string,
     new_email: string,
     confirm?: boolean,
+    send_email?: boolean,
     config?: AxiosRequestConfig
   ): Promise<any | SCUserChangeEmailType> {
-    return UserApiClient.changeUserMail(id, new_email, confirm, config);
+    return UserApiClient.changeUserMail(id, new_email, confirm, send_email, config);
   }
   static async confirmChangeUserMail(id: number | string, new_email: string, validation_code?: string, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.confirmChangeUserMail(id, new_email, validation_code, config);
