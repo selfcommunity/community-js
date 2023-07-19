@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.275](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.274...@selfcommunity/react-ui@0.7.0-alpha.275) (2023-07-19)
+
+
+### Bug Fixes
+
+* AccountCredentials ([f21823d](https://github.com/selfcommunity/community-js/commit/f21823d00667711c60533556db0c006052bbc3a3))
+* loader lightbox ([9b7a3b7](https://github.com/selfcommunity/community-js/commit/9b7a3b726115ac79500c7505fbc8f6661215c10d))
+
+
+
+
+
 # [0.7.0-alpha.274](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.273...@selfcommunity/react-ui@0.7.0-alpha.274) (2023-07-18)
 
 

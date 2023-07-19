@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.26...@selfcommunity/api-services@0.4.0-alpha.27) (2023-07-19)
+
+
+### Bug Fixes
+
+* AccountCredentials ([f21823d](https://github.com/selfcommunity/community-js/commit/f21823d00667711c60533556db0c006052bbc3a3))
+
+
+
+
+
 # [0.4.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.25...@selfcommunity/api-services@0.4.0-alpha.26) (2023-07-04)
 
 
