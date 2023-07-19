@@ -13,6 +13,7 @@ import EmailTextField from '../../../shared/EmailTextField';
 import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
+import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   changePasswordTitle: {
@@ -81,8 +82,11 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
     props: inProps,
     name: PREFIX
   });
+
   // CONTEXT
   const {className = null, user, skipEmailValidation = false, ...rest} = props;
+  const {enqueueSnackbar} = useSnackbar();
+
   // STATE
   const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState<boolean>(false);
   const initialFieldState = {
@@ -174,6 +178,29 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
       .then((res: SCUserChangeEmailType) => {
         setIsEditing(false);
         setIsSubmitting(false);
+        if (skipEmailValidation) {
+          enqueueSnackbar(
+            <FormattedMessage
+              id="ui.userProfileEditAccountCredentials.email.success"
+              defaultMessage="ui.userProfileEditAccountCredentials.email.success"
+            />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
+        } else {
+          enqueueSnackbar(
+            <FormattedMessage
+              id="ui.userProfileEditAccountCredentials.email.successConfirm"
+              defaultMessage="ui.userProfileEditAccountCredentials.email.successConfirm"
+            />,
+            {
+              variant: 'warning',
+              autoHideDuration: 5000
+            }
+          );
+        }
       })
       .catch((error) => {
         setIsSubmitting(false);

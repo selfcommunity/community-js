@@ -547,6 +547,7 @@
   "ui.userProfileEditAccountCredentials.email.error.invalid": "The new email must be different from the current email.",
   "ui.userProfileEditAccountCredentials.email.error.newEmailError.invalid": "Enter a valid email address.",
   "ui.userProfileEditAccountCredentials.email.success": "Your email has been successfully changed",
+  "ui.userProfileEditAccountCredentials.email.successConfirm": "Your email will be changed once you have confirmed the email address! Check your email.",
   "ui.userProfileEditAccountCredentials.newPassword": "new password",
   "ui.userProfileEditAccountCredentials.newPassword.error.invalid": "Password must contain at least 3 of the following types of characters: \n lowercase letters, uppercase letters, numbers \n and special characters (eg !@#$%^&).",
   "ui.userProfileEditAccountCredentials.newPassword.error.min_length": "Password must be at least 8 characters long",
