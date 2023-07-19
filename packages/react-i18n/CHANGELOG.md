@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.46...@selfcommunity/react-i18n@0.5.0-alpha.47) (2023-07-19)
+
+
+### Performance Improvements
+
+* New composer ([46f82b8](https://github.com/selfcommunity/community-js/commit/46f82b8557e045500c435d782cd4dbb7a894759f))
+
+
+
+
+
 # [0.5.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.45...@selfcommunity/react-i18n@0.5.0-alpha.46) (2023-07-19)
 
 
