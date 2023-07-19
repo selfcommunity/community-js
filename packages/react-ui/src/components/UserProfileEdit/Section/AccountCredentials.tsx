@@ -13,7 +13,6 @@ import EmailTextField from '../../../shared/EmailTextField';
 import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
-import {useSnackbar} from 'notistack';
 
 const messages = defineMessages({
   changePasswordTitle: {
@@ -66,6 +65,7 @@ export interface AccountCredentialProps {
 
   /**
    * Skip email validation when change email
+   * If skipEmailValidation=false it is required email validation (an email will be sent to the user)
    * @default false
    */
   skipEmailValidation?: boolean;
@@ -104,7 +104,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
-  const {enqueueSnackbar} = useSnackbar();
+
   // INTL
   const intl = useIntl();
 
@@ -170,7 +170,7 @@ export default function AccountCredentials(inProps: AccountCredentialProps): JSX
     e.preventDefault();
     e.stopPropagation();
     setIsSubmitting(true);
-    UserService.changeUserMail(user?.id, field.email, skipEmailValidation ? false : true)
+    UserService.changeUserMail(user?.id, field.email, !skipEmailValidation, !skipEmailValidation)
       .then((res: SCUserChangeEmailType) => {
         setIsEditing(false);
         setIsSubmitting(false);
