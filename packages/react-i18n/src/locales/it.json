@@ -161,6 +161,7 @@
   "ui.composer.done": "finito",
   "ui.composer.edit": "modifica",
   "ui.composer.error.generic": "Si è verificato un errore",
+  "ui.composer.editorFullScreen.close": "Esci dalla modalità a pieno schermo per l'editor",
   "ui.composer.edit.error.content": "Questo contributo non può essere modificato",
   "ui.composer.edit.error.title": "Errore durante il caricamento del contenuto",
   "ui.composer.media.document.add": "Aggiungi Documenti",

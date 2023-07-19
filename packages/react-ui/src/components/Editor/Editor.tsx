@@ -11,7 +11,7 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin, HashtagPlugin} from './plugins';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
@@ -20,6 +20,8 @@ import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
+import OnBlurPlugin from './plugins/OnBlurPlugin';
+import OnFocusPlugin from './plugins/OnFocusPlugin';
 
 const PREFIX = 'SCEditor';
 
@@ -119,6 +121,18 @@ export interface EditorProps {
    * @default null
    * */
   onChange?: (value: string) => void;
+
+  /**
+   * Handler for blur event of the editor
+   * @default null
+   * */
+  onBlur?: (event: FocusEvent) => void;
+
+  /**
+   * Handler for focus event of the editor
+   * @default null
+   * */
+  onFocus?: (event: FocusEvent) => void;
 }
 
 /**
@@ -156,7 +170,17 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     props: inProps,
     name: PREFIX
   });
-  const {id = 'editor', className = null, defaultValue = '', toolbar = false, uploadImage = false, editable = true, onChange = null} = props;
+  const {
+    id = 'editor',
+    className = null,
+    defaultValue = '',
+    toolbar = false,
+    uploadImage = false,
+    editable = true,
+    onChange = null,
+    onFocus = null,
+    onBlur = null
+  } = props;
   const apiRef = useRef<ApiRef>();
 
   // MEMO
@@ -212,7 +236,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           </Stack>
         )}
         <RichTextPlugin
-          contentEditable={<ContentEditable className={classes.content} />}
+          contentEditable={<ContentEditable className={classes.content} onFocus={() => console.log('focus')} onBlur={() => console.log('blur')} />}
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
               <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
@@ -223,6 +247,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <DefaultHtmlValuePlugin defaultValue={defaultValue} />
         <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />
+        <OnBlurPlugin onBlur={onBlur} />
+        <OnFocusPlugin onFocus={onFocus} />
         <AutoLinkPlugin />
         <MentionsPlugin />
         {/*<HashtagPlugin />*/}
