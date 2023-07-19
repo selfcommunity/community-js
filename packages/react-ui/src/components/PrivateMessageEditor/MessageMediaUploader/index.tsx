@@ -1,5 +1,5 @@
 import {asUploadButton} from '@rpldy/upload-button';
-import React, {forwardRef, useContext, useState} from 'react';
+import React, {forwardRef, ReactNode, useContext, useState} from 'react';
 import {Alert, AlertTitle, Box, CardContent, CardHeader, Fade, IconButton, ImageListItemBar, List, ListItem, Typography} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import Icon from '@mui/material/Icon';
@@ -73,11 +73,15 @@ export interface MessageMediaUploaderProps {
    * @default false
    */
   isUploading?: (boolean) => void;
+  /**
+   * The send button element
+   */
+  action: ReactNode;
 }
 
 export default function MessageMediaUploader(props: MessageMediaUploaderProps): JSX.Element {
   //PROPS
-  const {className, forwardMessageFile, onClose, isUploading} = props;
+  const {className, forwardMessageFile, onClose, isUploading, action} = props;
 
   // STATE
   const [files, setFiles] = useState([]);
@@ -251,6 +255,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
                   )}
                 </React.Fragment>
               ))}
+            {previews.length !== 0 && action}
           </List>
         </ChunkedUploady>
       </CardContent>

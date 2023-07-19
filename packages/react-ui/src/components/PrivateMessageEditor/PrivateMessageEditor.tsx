@@ -112,6 +112,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
 
   const handleMediaSectionClose = () => {
     setOpenMediaSection(false);
+    setMessageFiles([]);
   };
 
   const handleMessageFiles = (f) => {
@@ -181,47 +182,55 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
   function renderContent() {
     return (
       <>
-        {openMediaSection && (
+        {openMediaSection ? (
           <MessageMediaUploader
             className={classes.uploadMediaSection}
             open={openMediaSection}
             onClose={handleMediaSectionClose}
             forwardMessageFile={handleMessageFiles}
             isUploading={setUploading}
-          />
-        )}
-        {openEmojiSection && <EmojiPicker className={classes.emojiSection} onEmojiClick={handleEmojiClick} width="100%" />}
-        <TextField
-          size="small"
-          variant="filled"
-          disabled={Boolean(messageFiles.length) || openMediaSection}
-          ref={ref}
-          className={classes.messageInput}
-          multiline
-          placeholder={`${intl.formatMessage(messages.placeholder)}`}
-          value={message}
-          onChange={handleMessageInput}
-          maxRows={2}
-          onSelect={() => setOpenEmojiSection(false)}
-          InputProps={{
-            disableUnderline: true,
-            startAdornment: (
-              <>
-                <IconButton disabled={openMediaSection} onClick={() => setOpenEmojiSection(!openEmojiSection)}>
-                  <Icon>sentiment_satisfied_alt</Icon>
-                </IconButton>
-                <IconButton disabled={message !== '' || openEmojiSection} onClick={() => setOpenMediaSection(true)}>
-                  <Icon>attach_file</Icon>
-                </IconButton>
-              </>
-            ),
-            endAdornment: (
+            action={
               <IconButton disabled={(!message && !messageFiles.length) || uploading} onClick={handleMessageSend}>
                 <Icon>send</Icon>
               </IconButton>
-            )
-          }}
-        />
+            }
+          />
+        ) : (
+          <>
+            {openEmojiSection && <EmojiPicker className={classes.emojiSection} onEmojiClick={handleEmojiClick} width="100%" />}
+            <TextField
+              size="small"
+              variant="filled"
+              disabled={Boolean(messageFiles.length) || openMediaSection}
+              ref={ref}
+              className={classes.messageInput}
+              multiline
+              placeholder={`${intl.formatMessage(messages.placeholder)}`}
+              value={message}
+              onChange={handleMessageInput}
+              maxRows={2}
+              onSelect={() => setOpenEmojiSection(false)}
+              InputProps={{
+                disableUnderline: true,
+                startAdornment: (
+                  <>
+                    <IconButton disabled={openMediaSection} onClick={() => setOpenEmojiSection(!openEmojiSection)}>
+                      <Icon>sentiment_satisfied_alt</Icon>
+                    </IconButton>
+                    <IconButton disabled={message !== '' || openEmojiSection} onClick={() => setOpenMediaSection(true)}>
+                      <Icon>attach_file</Icon>
+                    </IconButton>
+                  </>
+                ),
+                endAdornment: (
+                  <IconButton disabled={(!message && !messageFiles.length) || uploading} onClick={handleMessageSend}>
+                    <Icon>send</Icon>
+                  </IconButton>
+                )
+              }}
+            />
+          </>
+        )}
       </>
     );
   }
