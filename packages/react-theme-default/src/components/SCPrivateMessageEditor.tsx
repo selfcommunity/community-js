@@ -52,7 +52,7 @@ const Component = {
         '& .MuiCardContent-root': {
           overflow: 'auto',
           padding: theme.spacing(1),
-          minHeight: theme.spacing(15),
+          minHeight: theme.spacing(16),
           '& .SCMessageMediaUploader-upload-section': {
             '& .SCMessageMediaUploader-upload-button': {
               display: 'flex',
@@ -71,16 +71,16 @@ const Component = {
             justifyContent: 'center',
             alignItems: 'center',
             '& .MuiListItem-root': {
-              height: theme.spacing(6.25),
+              height: theme.spacing(10),
               marginRight: theme.spacing(3),
               img: {
-                width: theme.spacing(6.25),
-                height: theme.spacing(6.25)
+                width: theme.spacing(10),
+                height: theme.spacing(10)
               },
               video: {
                 objectFit: 'fill',
-                width: theme.spacing(6.25),
-                height: theme.spacing(6.25)
+                width: theme.spacing(10),
+                height: theme.spacing(10)
               }
             },
             '& .SCMessageMediaUploader-preview-actions': {
@@ -104,7 +104,7 @@ const Component = {
               transform: 'translate(-50%, 100%)',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              width: theme.spacing(6.25),
+              width: theme.spacing(10),
               '& .MuiTypography-root': {
                 fontSize: '0.75rem'
               }
