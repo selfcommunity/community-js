@@ -52,7 +52,7 @@ const Component = {
         '& .MuiCardContent-root': {
           overflow: 'auto',
           padding: theme.spacing(1),
-          minHeight: theme.spacing(16),
+          minHeight: theme.spacing(20),
           '& .SCMessageMediaUploader-upload-section': {
             '& .SCMessageMediaUploader-upload-button': {
               display: 'flex',
