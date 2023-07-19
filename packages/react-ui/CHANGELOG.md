@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.274](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.273...@selfcommunity/react-ui@0.7.0-alpha.274) (2023-07-18)
+
+
+### Bug Fixes
+
+* Account Verify Email ([98ab5f8](https://github.com/selfcommunity/community-js/commit/98ab5f8077cef5e8f9d3f0a7bfe5686b2361302e))
+* Fix CommentObjectReply.tsx icons ([14950f6](https://github.com/selfcommunity/community-js/commit/14950f6e3e71ea36ed70bc9151a6c2865def1e94))
+* Fix Editor ToolbarPlugin.tsx icons on safari ([06422f8](https://github.com/selfcommunity/community-js/commit/06422f87f57e75ba5d26400f08b3b6cc360f0826))
+* Fix media link when preview has no images ([887357c](https://github.com/selfcommunity/community-js/commit/887357cea6422a260ebdae442d1c2a50a3de5b63))
+* padding media preview ([6a01fdb](https://github.com/selfcommunity/community-js/commit/6a01fdb176bb113ee8dc3fce13ff092fb26e2db0))
+* padding preview image ([8aa4fd0](https://github.com/selfcommunity/community-js/commit/8aa4fd03dfccd1623281c4dc4b2699150db8590a))
+* Replace url with domain name in Link media preview ([c37678a](https://github.com/selfcommunity/community-js/commit/c37678aad1a8c44caae634f85a35971939c5e08e))
+* UserActionsMenu for authenticated user ([da70416](https://github.com/selfcommunity/community-js/commit/da70416cfd262cf24d29b52ac2a7cbce2ec8dc84))
+* UserProfile ([99f6ac9](https://github.com/selfcommunity/community-js/commit/99f6ac9e8a375131e9cb3121484c6b7bb99761bc))
+* UserProfileEdit ([3b4d855](https://github.com/selfcommunity/community-js/commit/3b4d855896678d48f4a7dca6d7da205a2e2a2d83))
+
+
+
+
+
 # [0.7.0-alpha.273](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.272...@selfcommunity/react-ui@0.7.0-alpha.273) (2023-07-12)
 
 

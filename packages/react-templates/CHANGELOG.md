@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.266](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.265...@selfcommunity/react-templates@0.3.0-alpha.266) (2023-07-18)
+
+
+### Bug Fixes
+
+* UserActionsMenu for authenticated user ([da70416](https://github.com/selfcommunity/community-js/commit/da70416cfd262cf24d29b52ac2a7cbce2ec8dc84))
+
+
+
+
+
 # [0.3.0-alpha.265](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.264...@selfcommunity/react-templates@0.3.0-alpha.265) (2023-07-12)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
