@@ -548,7 +548,7 @@
   "ui.userProfileEditAccountCredentials.email.error.invalid": "La nuova email deve essere diversa da quella attuale.",
   "ui.userProfileEditAccountCredentials.email.error.newEmailError.invalid": "Inserisci un indirizzo email valido.",
   "ui.userProfileEditAccountCredentials.email.success": "La tua email è stata cambiata correttamente",
-  "ui.userProfileEditAccountCredentials.email.successConfirm": "La tua email verrà modificata dopo aver confermato l'inidirizzo email! Controlla la tua email.",
+  "ui.userProfileEditAccountCredentials.email.successConfirm": "La tua email verrà modificata dopo aver confermato l'indirizzo email! Controlla la tua email.",
   "ui.userProfileEditAccountCredentials.newPassword": "nuova password",
   "ui.userProfileEditAccountCredentials.newPassword.error.invalid": "La password deve contenere almeno 3 dei seguenti 4 tipi di caratteri: lettere minuscole, lettere maiuscole, numeri e caratteri speciali (eg !@#$%^&)",
   "ui.userProfileEditAccountCredentials.newPassword.error.min_length": "Assicurati che questo campo abbia almeno 8 caratteri.",
