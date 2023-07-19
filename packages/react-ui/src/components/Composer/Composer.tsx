@@ -1,4 +1,16 @@
-import React, {forwardRef, ReactNode, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  ReactNode,
+  RefObject,
+  SyntheticEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState
+} from 'react';
 import {
   SCCategoryType,
   SCContributionType,
@@ -30,6 +42,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Chip,
   Dialog,
   DialogActions,
@@ -75,6 +88,7 @@ import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import {extractHashtags} from '../../utils/editor';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -106,7 +120,9 @@ const PREFIX = 'SCComposer';
 
 const classes = {
   root: `${PREFIX}-root`,
+  writing: `${PREFIX}-writing`,
   title: `${PREFIX}-title`,
+  titleDense: `${PREFIX}-title-dense`,
   types: `${PREFIX}-types`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
@@ -126,6 +142,8 @@ const classes = {
   sortableMediaCover: `${PREFIX}-sortableMediaCover`,
   links: `${PREFIX}-links`,
   actions: `${PREFIX}-actions`,
+  mediaActions: `${PREFIX}-media-actions`,
+  filterActions: `${PREFIX}-filter-actions`,
   actionInput: `${PREFIX}-actionInput`,
   badgeError: `${PREFIX}-badgeError`
 };
@@ -134,9 +152,9 @@ const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({}));
+})(() => ({}));
 
-export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
+export interface ComposerTypeMap<P = any, D extends React.ElementType = 'div'> {
   props: P &
     DistributiveOmit<DialogProps, 'defaultValue'> & {
       /**
@@ -197,7 +215,7 @@ export interface ComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
   defaultComponent: D;
 }
 
-export type ComposerProps<D extends React.ElementType = ComposerTypeMap['defaultComponent'], P = {}> = OverrideProps<ComposerTypeMap<P, D>, D>;
+export type ComposerProps<D extends React.ElementType = ComposerTypeMap['defaultComponent'], P = any> = OverrideProps<ComposerTypeMap<P, D>, D>;
 
 export const MAIN_VIEW = 'main';
 export const AUDIENCE_VIEW = 'audience';
@@ -261,7 +279,9 @@ const reducer = (state, action) => {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCComposer-root|Styles applied to the root element.|
+ |writing|.SCComposer-writing|Styles applied to the root element when user is writing in the editor.|
  |title|.SCComposer-title|Styles applied to the title element.|
+ |titleDense|.SCComposer-title-dense|Styles applied to the dense title element.|
  |types|.SCComposer-types|Styles applied to the types element.|
  |avatar|.SCComposer-avatar|Styles applied to the avatar element.|
  |content|.SCComposer-content|Styles applied to the content.|
@@ -279,6 +299,8 @@ const reducer = (state, action) => {
  |sortableMediaCover|.SCComposer-sortableMediaCover|Styles applied to the sortable media cover element.|
  |links|.SCComposer-links|Styles applied to the links element.|
  |actions|.SCComposer-actions|Styles applied to the actions section.|
+ |mediaActions|.SCComposer-media-actions|Styles applied to the media actions section.|
+ |filterActions|.SCComposer-filter-actions|Styles applied to the filter actions section.|
  |actionInput|.SCComposer-actionInput|Styles applied to the action input element.|
  |badgeError|.SCComposer-badgeError|Styles applied to the badge error element.|
 
@@ -317,12 +339,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [_view, setView] = useState<string>(view);
   const [composerTypes, setComposerTypes] = useState([]);
-
   const [mediaChunks, setMediaChunks] = useState<SCMediaChunkType[]>([]);
-
+  const [editorFocused, setEditorFocused] = useState<boolean>(false);
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, view, key: random()});
   const {key, id, type, title, titleError, text, categories, addressing, audience, medias, poll, pollError, location, error} = state;
-  const addMedia: Function = (media: SCMediaType) => {
+  const addMedia = (media: SCMediaType) => {
     dispatch({type: 'medias', value: [...medias, media]});
   };
 
@@ -496,7 +517,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   const handleChange =
     (prop: string) =>
-    (event: SyntheticEvent, data?: object): void => {
+    (event: SyntheticEvent, data?: any): void => {
       let target = null;
       switch (prop) {
         case 'title':
@@ -645,7 +666,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // MEMO
   const _EditorProps = useMemo(
-    () => (EditorProps ? EditorProps : {toolbar: type === COMPOSER_TYPE_DISCUSSION, uploadImage: type === COMPOSER_TYPE_DISCUSSION}),
+    () => (EditorProps ? EditorProps : {toolbar: true, uploadImage: type === COMPOSER_TYPE_DISCUSSION}),
     [EditorProps, type]
   );
 
@@ -677,7 +698,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     );
   };
 
-  const renderAudienceView: Function = () => {
+  const renderAudienceView = () => {
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
@@ -724,7 +745,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     );
   };
 
-  const renderMediaView: Function = (mediaObjectType: SCMediaObjectType) => {
+  const renderMediaView = (mediaObjectType: SCMediaObjectType) => {
     return () => {
       return (
         <React.Fragment>
@@ -768,7 +789,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     };
   };
 
-  const renderPollView: Function = () => {
+  const renderPollView = () => {
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
@@ -806,7 +827,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     );
   };
 
-  const renderLocationView: Function = () => {
+  const renderLocationView = () => {
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
@@ -836,7 +857,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     );
   };
 
-  const renderMainView: Function = () => {
+  const renderMainView = () => {
     return (
       <React.Fragment>
         <DialogTitle className={classes.title}>
@@ -886,6 +907,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             key={`${key}-editor`}
             className={classNames(classes.block, classes.editor)}
             onChange={handleChangeText}
+            onFocus={() => setEditorFocused(true)}
             defaultValue={text}
             editable={!isSubmitting}
           />
@@ -931,8 +953,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </Typography>
           )}
         </DialogContent>
-        <DialogActions className={classes.actions}>
-          <Typography align="left">
+        <DialogActions className={classes.actions} onClick={() => setEditorFocused(false)}>
+          <Typography className={classes.mediaActions}>
             {mediaObjectTypes
               .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
               .map((mediaObjectType: SCMediaObjectType) => (
@@ -956,7 +978,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               </IconButton>
             )}
           </Typography>
-          <Typography align="right">
+          <Typography className={classes.filterActions}>
             {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && (
               <IconButton disabled={isSubmitting} onClick={handleChangeView(LOCATION_VIEW)} color={location !== null ? 'primary' : 'default'}>
                 <Icon>add_location_alt</Icon>
@@ -967,17 +989,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 {audience === AUDIENCE_TAG ? <Icon>label</Icon> : <Icon>public</Icon>}
               </IconButton>
             )}
-            {!fullScreen && (
-              <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>
-                <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
-              </LoadingButton>
-            )}
           </Typography>
-          {fullScreen && (
-            <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting} fullWidth>
-              <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
-            </LoadingButton>
-          )}
+          <LoadingButton onClick={handleSubmit} color="primary" variant="contained" disabled={!canSubmit()} loading={isSubmitting}>
+            <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
+          </LoadingButton>
         </DialogActions>
       </React.Fragment>
     );
@@ -1029,8 +1044,20 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       keepMounted
       onClose={handleClose}
       {...rest}
-      className={classes.root}
+      className={classNames(classes.root, {[classes.writing]: editorFocused})}
       fullScreen={fullScreen}>
+      {editorFocused && fullScreen && (
+        <Box className={classes.titleDense}>
+          <IconButton onClick={() => setEditorFocused(false)}>
+            <Tooltip title={<FormattedMessage id="ui.composer.editorFullScreen.close" defaultMessage="ui.composer.editorFullScreen.close" />}>
+              <Icon>zoom_out_map</Icon>
+            </Tooltip>
+          </IconButton>
+          <IconButton onClick={handleClose}>
+            <Icon>close</Icon>
+          </IconButton>
+        </Box>
+      )}
       {child()}
     </Root>
   );

@@ -54,6 +54,7 @@ const Component = {
           flexDirection: 'column',
           justifyContent: 'space-between',
           '& .SCComposer-editor': {
+            flexGrow: 1,
             padding: 0,
             fontSize: '1rem',
             '& .SCEditor-placeholder': {
@@ -182,23 +183,16 @@ const Component = {
           margin: 0,
           borderTop: '1px solid #D1D1D1',
           padding: theme.spacing(1),
-          display: 'block',
-          '& .MuiTypography-alignLeft': {
-            float: 'left'
+          '& .SCComposer-media-actions': {},
+          '& .SCComposer-filter-actions': {
+            flexGrow: 1,
+            textAlign: 'right'
           },
-          '& .MuiTypography-alignRight': {
-            float: 'right'
-          },
-          [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            '& .MuiTypography-alignLeft, & .MuiTypography-alignRight': {
-              float: 'none'
-            }
-          }
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'nowrap',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         },
         '& .SCComposer-actionInput': {
           display: 'none !important'
@@ -264,8 +258,88 @@ const Component = {
           }
         },
         '& .MuiDialog-paperFullScreen': {
-          '& .SCComposer-actions > *:first-of-type': {
-            marginBottom: theme.spacing(2)
+          // Mobile view
+          position: 'relative',
+          '& .SCComposer-title': {
+            transition: 'opacity 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750)',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            padding: theme.spacing(2, 3),
+            backgroundColor: theme.palette.background.paper,
+            zIndex: 1000
+          },
+          '& .SCComposer-content': {
+            transition: 'padding 100ms cubic-bezier(0.250, 0.250, 0.750, 0.750)',
+            padding: theme.spacing(9, 0)
+          },
+          '& .SCComposer-actions': {
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: theme.spacing(2, 3),
+            zIndex: 1000,
+            backgroundColor: theme.palette.background.paper,
+            '& .SCComposer-media-actions': {
+              borderRight: `1px solid ${theme.palette.grey[400]}`,
+              paddingRight: theme.spacing(1)
+            },
+            '& .SCComposer-filter-actions': {
+              textAlign: 'right'
+            }
+          }
+        },
+        '&.SCComposer-writing': {
+          '& .MuiDialog-paperFullScreen': {
+            // Expanded view for editor
+            '& .SCComposer-title': {
+              opacity: 0
+            },
+            '& .SCComposer-title-dense': {
+              position: 'fixed',
+              top: theme.spacing(2),
+              right: theme.spacing(2),
+              zIndex: 1002,
+              borderRadius: theme.shape.borderRadius * 0.2,
+              borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+              borderWidth: 1,
+              borderStyle: 'solid',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'left',
+              '& .MuiButtonBase-root': {
+                margin: theme.spacing(0.5),
+                padding: theme.spacing(1),
+                fontSize: '1rem',
+                border: 0,
+                borderRadius: theme.shape.borderRadius * 0.2
+              }
+            },
+            '& .SCComposer-content': {
+              paddingTop: 0,
+              '& .SCComposer-block': {
+                height: 0,
+                overflow: 'hidden',
+                margin: 0
+              },
+              '& .SCEditor-root': {
+                marginTop: theme.spacing(6),
+                '& .SCEditorToolbarPlugin-root': {
+                  position: 'fixed',
+                  top: theme.spacing(2),
+                  left: theme.spacing(3),
+                  right: theme.spacing(12),
+                  zIndex: 1001
+                },
+                '& .SCEditor-placeholder': {
+                  top: 0
+                }
+              }
+            },
+            '& .SCComposer-actions': {}
           }
         }
       };
