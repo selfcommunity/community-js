@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.45...@selfcommunity/react-i18n@0.5.0-alpha.46) (2023-07-19)
+
+
+### Bug Fixes
+
+* AccountCredentials ([bff792e](https://github.com/selfcommunity/community-js/commit/bff792e640809b49020f2481826b3dd750491539))
+* AccountCredentials ([86b5f37](https://github.com/selfcommunity/community-js/commit/86b5f37cd2f2003a0f4bd88b2f09e4f39fffacc2))
+
+
+
+
+
 # [0.5.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.44...@selfcommunity/react-i18n@0.5.0-alpha.45) (2023-07-18)
 
 
