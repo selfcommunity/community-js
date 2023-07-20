@@ -48,34 +48,27 @@ const Root = styled(IconButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.drawerRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.menuRoot
-})(({theme}) => ({}));
+})(() => ({}));
+
+export interface NavigationSettingsItem {
+  label: React.ReactNode;
+  href: string;
+}
 
 export interface NavigationSettingsIconButtonProps extends IconButtonProps {
-  /**
-   * Id of user object
-   * @default null
-   */
-  userId?: number;
-
-  /**
-   * User Object
-   * @default null
-   */
-  user?: SCUserType;
-
-  items?: any;
+  items?: NavigationSettingsItem[];
 }
 
 const PREFERENCES = [
@@ -112,7 +105,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
     props: inProps,
     name: PREFIX
   });
-  const {className = null, userId = null, user = null, items = [], ...rest} = props;
+  const {className = null, items = [], ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -218,6 +211,13 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
           </ListItemButton>
         </ListItem>,
+        ...items.map((item: NavigationSettingsItem, index) => (
+          <ListItem className={classes.item} key={`custom_item_${index}`}>
+            <ListItemButton component={Link} to={item.href}>
+              {item.label}
+            </ListItemButton>
+          </ListItem>
+        )),
         ...(isAdmin
           ? [
               <Divider key="admin_divider" />,
@@ -319,6 +319,11 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
           <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
         </MenuItem>,
+        ...items.map((item: NavigationSettingsItem, index) => (
+          <MenuItem className={classes.item} key={`custom_item_${index}`} component={Link} to={item.href}>
+            {item.label}
+          </MenuItem>
+        )),
         ...(isAdmin
           ? [
               <Divider key="platform_divider" />,

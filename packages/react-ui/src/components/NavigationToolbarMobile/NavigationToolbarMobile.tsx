@@ -18,7 +18,7 @@ import NavigationToolbarMobileSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import {SearchAutocompleteProps} from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
-import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
 import ComposerIconButton from '../ComposerIconButton';
 import NavigationMenuIconButton from '../NavigationMenuIconButton';
 
@@ -51,9 +51,17 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
   /**
-   * Prop to customize some routes
+   * Actions to be inserted before composer IconButton
    */
-  action?: React.ReactNode;
+  startActions?: React.ReactNode | null;
+  /**
+   * Actions to be inserted after Private Messages IconButton
+   */
+  endActions?: React.ReactNode | null;
+  /**
+   * Component for Navigation Settings
+   */
+  NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
 }
 
 const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPreferences.LOGO_NAVBAR_LOGO_MOBILE];
@@ -102,12 +110,13 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     disableSearch = false,
     SearchAutocompleteProps = {},
     children = null,
-    action = (
+    startActions = null,
+    endActions = (
       <>
         <ComposerIconButton className={classes.composer}></ComposerIconButton>
-        <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>
       </>
     ),
+    NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
     ...rest
   } = props;
 
@@ -151,6 +160,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
+      {scUserContext.user && startActions}
       {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !disableSearch && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
@@ -163,8 +173,10 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
-      {scUserContext.user && action}
-      {!scUserContext.user && (
+      {scUserContext.user && endActions}
+      {scUserContext.user ? (
+        <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
+      ) : (
         <Button className={classes.login} color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
           <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
         </Button>

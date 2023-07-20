@@ -1,3 +1,3 @@
-import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from './NavigationSettingsIconButton';
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps, NavigationSettingsItem} from './NavigationSettingsIconButton';
 export default NavigationSettingsIconButton;
-export {NavigationSettingsIconButtonProps};
+export {NavigationSettingsIconButtonProps, NavigationSettingsItem};

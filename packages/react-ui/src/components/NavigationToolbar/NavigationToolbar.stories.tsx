@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
-import { AppBar, Typography } from '@mui/material';
+import {AppBar, Badge, IconButton, Typography} from '@mui/material';
+import classNames from 'classnames';
+import {Link, SCRoutes} from '@selfcommunity/react-core/lib';
+import Icon from '@mui/material/Icon';
+import React from 'react';
 
 export default {
   title: 'Design System/React UI/Navigation Toolbar ',
@@ -43,6 +47,25 @@ export const Custom: StoryObj<NavigationToolbar> = {
     SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
     value: '/',
     children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
+  },
+  render: template
+};
+
+export const Actions: StoryObj<NavigationToolbar> = {
+  args: {
+    /* the args you need here will depend on your component */
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    value: '/',
+    startActions: <>
+      <IconButton>
+        <Icon>card_membership</Icon>
+      </IconButton>
+    </>,
+    endActions: <>
+      <IconButton>
+        <Icon>download</Icon>
+      </IconButton>
+    </>
   },
   render: template
 };
