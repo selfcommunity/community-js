@@ -5,7 +5,7 @@ import AccountDataPortability, {AccountDataPortabilityProps} from './components/
 import AccountDataPortabilityButton, {AccountDataPortabilityButtonProps} from './components/AccountDataPortabilityButton';
 import AccountDelete, {AccountDeleteProps} from './components/AccountDelete';
 import AccountDeleteButton, {AccountDeleteButtonProps} from './components/AccountDeleteButton';
-import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from './components/NavigationSettingsIconButton';
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps, NavigationSettingsItem} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from './components/NavigationMenuIconButton';
@@ -184,6 +184,7 @@ export {
   AccountChangeMailValidationProps,
   NavigationSettingsIconButton,
   NavigationSettingsIconButtonProps,
+  NavigationSettingsItem,
   NavigationToolbarMobile,
   NavigationToolbarMobileProps,
   NavigationToolbarMobileSkeleton,

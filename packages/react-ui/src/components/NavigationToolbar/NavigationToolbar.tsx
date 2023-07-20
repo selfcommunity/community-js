@@ -7,7 +7,7 @@ import NavigationToolbarSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
-import NavigationSettingsIconButton from '../NavigationSettingsIconButton';
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
 import ComposerIconButton, {ComposerIconButtonProps} from '../ComposerIconButton';
 import {SCFeatureName} from '@selfcommunity/types';
 import {
@@ -73,9 +73,17 @@ export interface NavigationToolbarProps extends ToolbarProps {
    */
   value: string;
   /**
-   * Prop to customize some routes
+   * Actions to be inserted before composer IconButton
    */
-  action?: React.ReactNode;
+  startActions?: React.ReactNode | null;
+  /**
+   * Actions to be inserted after Private Messages IconButton
+   */
+  endActions?: React.ReactNode | null;
+  /**
+   * Component for Navigation Settings
+   */
+  NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
   /**
    * Callback on open notification menu
    */
@@ -153,7 +161,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     value = '',
     className = '',
     SearchAutocompleteProps = {},
-    action = <NavigationSettingsIconButton className={classes.settings}></NavigationSettingsIconButton>,
+    startActions = null,
+    endActions = null,
+    NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
     children = null,
     NotificationMenuProps = {},
     ComposerIconButtonProps = {},
@@ -237,6 +247,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {scUserContext.user ? (
         <>
+          {startActions}
           <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>
           <Tooltip title={scUserContext.user.username}>
             <IconButton
@@ -284,7 +295,8 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               </Badge>
             </IconButton>
           )}
-          {action}
+          {endActions}
+          <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
         </>
       ) : (
         <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>

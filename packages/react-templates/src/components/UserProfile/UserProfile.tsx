@@ -82,6 +82,16 @@ export interface UserProfileProps {
   userId?: number | string;
 
   /**
+   * Actions to be inserted before user profile actions
+   */
+  startActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted after user profile actions
+   */
+  endActions?: React.ReactNode | null;
+
+  /**
    * Widgets to be rendered into the feed
    * @default [UserFollowedCategoriesWidget, UserFollowedUsersWidget]
    */
@@ -217,6 +227,8 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     className,
     user,
     userId,
+    startActions = null,
+    endActions = null,
     widgets = null,
     FeedObjectProps,
     FeedSidebarProps,
@@ -312,6 +324,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
               ) : (
                 <>
                   <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
+                    {startActions}
                     {isMe ? (
                       <Button variant="contained" color="secondary" onClick={handleEdit}>
                         <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
@@ -319,6 +332,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                     ) : (
                       <ConnectionUserButton user={scUser} />
                     )}
+                    {endActions}
                     <UserActionIconButton user={scUser} items={actionItems} />
                   </Stack>
                   <UserCounters className={classes.counters} userId={userId as number} user={scUser} />

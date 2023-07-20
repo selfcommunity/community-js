@@ -4,9 +4,10 @@ import UserProfileTemplate from './index';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {UserProfileEdit} from '@selfcommunity/react-ui';
 import DialogContent from '@mui/material/DialogContent';
-import {Dialog, DialogTitle} from '@mui/material';
+import {Dialog, DialogTitle, IconButton} from '@mui/material';
 
 import UserProfile from './Skeleton';
+import Icon from '@mui/material/Icon';
 
 export default {
   title: 'Design System/React TEMPLATES/User Profile',
@@ -21,6 +22,16 @@ export default {
 export const Base: StoryObj<typeof UserProfile> = {
   args: {
     userId: -1,
+    startActions: <>
+      <IconButton>
+        <Icon>card_membership</Icon>
+      </IconButton>
+    </>,
+    endActions: <>
+      <IconButton>
+        <Icon>download</Icon>
+      </IconButton>
+    </>
   },
   render: (args) => {
     const {userId, ...rest} = args;
