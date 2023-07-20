@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.279](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.278...@selfcommunity/react-ui@0.7.0-alpha.279) (2023-07-20)
+
+
+### Features
+
+* Added customization parameter for toolbars and user profile page ([2d2de65](https://github.com/selfcommunity/community-js/commit/2d2de65a5b200697fd7c5e6d655ee8525ace976d))
+
+
+
+
+
 # [0.7.0-alpha.278](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.277...@selfcommunity/react-ui@0.7.0-alpha.278) (2023-07-19)
 
 
