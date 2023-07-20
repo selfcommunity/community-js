@@ -47,6 +47,10 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   disableSearch?: boolean;
   /**
+   * Disable composer action if possible
+   */
+  disableComposer?: boolean;
+  /**
    * Props spread to SearchAutocomplete component
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
@@ -108,14 +112,11 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const {
     className = '',
     disableSearch = false,
+    disableComposer = false,
     SearchAutocompleteProps = {},
     children = null,
     startActions = null,
-    endActions = (
-      <>
-        <ComposerIconButton className={classes.composer}></ComposerIconButton>
-      </>
-    ),
+    endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
     ...rest
   } = props;
@@ -161,7 +162,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
       {scUserContext.user && startActions}
-      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] && !disableSearch && (
+      {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
             <Icon>search</Icon>
@@ -173,6 +174,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
+      {scUserContext.user && !disableComposer && <ComposerIconButton className={classes.composer}></ComposerIconButton>}
       {scUserContext.user && endActions}
       {scUserContext.user ? (
         <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>

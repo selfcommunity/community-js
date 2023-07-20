@@ -65,6 +65,14 @@ const Root = styled(Toolbar, {
 
 export interface NavigationToolbarProps extends ToolbarProps {
   /**
+   * Disable search action if possible
+   */
+  disableSearch?: boolean;
+  /**
+   * Disable composer action if possible
+   */
+  disableComposer?: boolean;
+  /**
    * Searchbar props
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
@@ -160,6 +168,8 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   const {
     value = '',
     className = '',
+    disableSearch = false,
+    disableComposer = false,
     SearchAutocompleteProps = {},
     startActions = null,
     endActions = null,
@@ -240,7 +250,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
         </Button>
       )}
       {_children}
-      {preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user ? (
+      {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch ? (
         <SearchAutocomplete className={classes.search} blurOnSelect {...SearchAutocompleteProps} />
       ) : (
         <Box className={classes.search} />
@@ -248,7 +258,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {scUserContext.user ? (
         <>
           {startActions}
-          <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>
+          {!disableComposer && <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>}
           <Tooltip title={scUserContext.user.username}>
             <IconButton
               component={Link}
