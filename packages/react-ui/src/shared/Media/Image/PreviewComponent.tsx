@@ -225,7 +225,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   const renderOne = () => {
     const overlay = medias.length > maxVisible && maxVisible == 1 ? renderCountOverlay(true) : renderOverlay(0);
-    const isGif = medias[0].image_mimetype.includes('image/gif');
+    const isGif = medias[0].image_mimetype ? medias[0].image_mimetype.includes('image/gif') : false;
     const isLandscape = medias[0].image_height < medias[0].image_width;
     return (
       <Grid
