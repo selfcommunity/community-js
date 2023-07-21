@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.230](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.229...@selfcommunity/react-theme-default@0.1.0-alpha.230) (2023-07-20)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.229](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.228...@selfcommunity/react-theme-default@0.1.0-alpha.229) (2023-07-20)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.228](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.227...@selfcommunity/react-theme-default@0.1.0-alpha.228) (2023-07-19)
+
+
+### Bug Fixes
+
+* pm message uploader min height ([a4301ca](https://github.com/selfcommunity/community-js/commit/a4301ca88d71701bd5f639cbd7bb0319a99e1af9))
+
+
+### Performance Improvements
+
+* New composer ([46f82b8](https://github.com/selfcommunity/community-js/commit/46f82b8557e045500c435d782cd4dbb7a894759f))
+
+
+
+
+
 # [0.1.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.226...@selfcommunity/react-theme-default@0.1.0-alpha.227) (2023-07-19)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
