@@ -231,7 +231,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       <Grid
         container
         style={{
-          backgroundColor: medias[0].image_thumbnail.color
+          ...(medias[0].image_thumbnail && medias[0].image_thumbnail.color ? {backgroundColor: medias[0].image_thumbnail.color} : {})
         }}>
         <Grid
           item
