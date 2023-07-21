@@ -173,7 +173,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   // UTILS
   const getImageUrl = (image, original = false) => {
     if (typeof image === 'object') {
-      const _image = image.image_thumbnail ? image.image_thumbnail.url : '/static/frontend_v2/images/image.svg';
+      const _image = image.image_thumbnail ? image.image_thumbnail.url : image.image ? image.image : '/static/frontend_v2/images/image.svg';
       return original && image.image ? image.image : _image;
     }
     return image;
