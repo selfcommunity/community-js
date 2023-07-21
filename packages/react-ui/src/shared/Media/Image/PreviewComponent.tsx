@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import PreviewImage from './PreviewImage';
 import {Grid, Typography, Box} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
+import {useInView} from 'react-intersection-observer';
 
 const PREFIX = 'SCPreviewMediaImage';
 
 const classes = {
   root: `${PREFIX}-root`,
   background: `${PREFIX}-background`,
+  backgroundPortrait: `${PREFIX}-backgroundPortrait`,
   heightOne: `${PREFIX}-heightOne`,
   heightHalfOne: `${PREFIX}-heightHalfOne`,
   heightTwo: `${PREFIX}-heightTwo`,
@@ -32,36 +34,34 @@ const Root = styled(Box, {
   margin: 'auto',
   width: '100%',
   position: 'relative',
-  minHeight: 400,
   [theme.breakpoints.down('md')]: {
     minHeight: 170
   },
-
   [`& .${classes.background}`]: {
     backgroundSize: 'cover !important',
     backgroundPosition: 'center !important',
     backgroundRepeat: 'no-repeat !important'
   },
-
+  [`& .${classes.backgroundPortrait}`]: {
+    backgroundSize: 'contain !important',
+    backgroundPosition: 'center !important',
+    backgroundRepeat: 'no-repeat !important'
+  },
   [`& .${classes.heightOne}`]: {
     width: '100%',
-    paddingTop: '100%'
+    paddingTop: '99%'
   },
-
   [`& .${classes.heightHalfOne}`]: {
     paddingTop: '50%'
   },
-
   [`& .${classes.heightTwo}`]: {
     width: '50%',
     paddingTop: '50%'
   },
-
   [`& .${classes.heightThree}`]: {
     width: '33.3333%',
     paddingTop: '33.3333%'
   },
-
   [`& .${classes.cover}`]: {
     backgroundColor: 'rgba(102,102,102,0.2)',
     opacity: 0.8,
@@ -90,7 +90,6 @@ const Root = styled(Box, {
       transform: 'translate(-50%, -50%)'
     }
   },
-
   [`& .${classes.slide}`]: {
     height: 0,
     bottom: '100%',
@@ -98,7 +97,6 @@ const Root = styled(Box, {
     fontSize: '3%',
     color: '#FFF'
   },
-
   [`& .${classes.border}`]: {
     position: 'relative',
     border: '2px solid #FFF',
@@ -110,17 +108,14 @@ const Root = styled(Box, {
       top: '66%'
     }
   },
-
   [`& .${classes.gallery}`]: {
     cursor: 'pointer'
   },
-
   [`& .${classes.title} .MuiTypography-root`]: {
     color: '#FFF',
     backgroundColor: theme.palette.getContrastText('#FFF'),
     opacity: 0.6
   },
-
   [`& .${classes.iconFile}`]: {
     fontSize: 14,
     position: 'relative',
@@ -168,6 +163,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   // STATE
   const [preview, setPreview] = useState(-1);
+  const {ref, inView} = useInView({triggerOnce: false});
 
   // HANDLERS
   const handleClose = () => {
@@ -175,9 +171,10 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   // UTILS
-  const getImageUrl = (image) => {
+  const getImageUrl = (image, original = false) => {
     if (typeof image === 'object') {
-      return image.image ? image.image : '/static/frontend_v2/images/image.svg';
+      const _image = image.image_thumbnail ? image.image_thumbnail.url : '/static/frontend_v2/images/image.svg';
+      return original && image.image ? image.image : _image;
     }
     return image;
   };
@@ -228,20 +225,30 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   const renderOne = () => {
     const overlay = medias.length > maxVisible && maxVisible == 1 ? renderCountOverlay(true) : renderOverlay(0);
-
+    const isGif = medias[0].image_mimetype.includes('image/gif');
+    const isLandscape = medias[0].image_height < medias[0].image_width;
     return (
-      <Grid container>
+      <Grid
+        container
+        style={{
+          backgroundColor: medias[0].image_thumbnail.color
+        }}>
         <Grid
           item
+          ref={ref}
           xs={12}
           classes={{
-            root: classNames(classes.border, classes.heightOne, classes.background, {
+            root: classNames(classes.border, classes.heightOne, {
+              ...(isGif || isLandscape ? {[classes.background]: true} : {[classes.backgroundPortrait]: true}),
               [classes.gallery]: gallery,
               [classes.heightHalfOne]: medias.length > 1
             })
           }}
           onClick={() => openPreviewImage(0)}
-          style={{background: `url(${getImageUrl(medias[0])})`}}>
+          style={{
+            background: `url(${getImageUrl(medias[0], inView && isGif)})`,
+            ...(isLandscape ? {paddingTop: `${(100 * medias[0].image_height) / medias[0].image_width}%`} : {})
+          }}>
           {overlay}
           {renderTitle(medias[0])}
         </Grid>
