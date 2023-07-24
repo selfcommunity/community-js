@@ -82,14 +82,34 @@ export interface UserProfileProps {
   userId?: number | string;
 
   /**
-   * Actions to be inserted before user profile actions
+   * Actions to be inserted before default user profile actions
    */
   startActions?: React.ReactNode | null;
 
   /**
-   * Actions to be inserted after user profile actions
+   * Actions to be inserted after default user profile actions
    */
   endActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted before default user profile actions if is not my profile (view mode)
+   */
+  viewStartActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted after default user profile actions if is not  my profile (view mode)
+   */
+  viewEndActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted before default user profile actions if it is my profile (edit mode)
+   */
+  editStartActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted after default user profile actions if it is my profile (edit mode)
+   */
+  editEndActions?: React.ReactNode | null;
 
   /**
    * Widgets to be rendered into the feed
@@ -229,6 +249,10 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     userId,
     startActions = null,
     endActions = null,
+    viewStartActions = null,
+    viewEndActions = null,
+    editStartActions = null,
+    editEndActions = null,
     widgets = null,
     FeedObjectProps,
     FeedSidebarProps,
@@ -325,6 +349,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                 <>
                   <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
                     {startActions}
+                    {isMe ? editStartActions : viewStartActions}
                     {isMe ? (
                       <Button variant="contained" color="secondary" onClick={handleEdit}>
                         <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
@@ -332,6 +357,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                     ) : (
                       <ConnectionUserButton user={scUser} />
                     )}
+                    {isMe ? editEndActions : viewEndActions}
                     {endActions}
                     <UserActionIconButton user={scUser} items={actionItems} />
                   </Stack>

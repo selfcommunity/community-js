@@ -14,10 +14,9 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {SCFeatureName, SCUserType} from '@selfcommunity/types';
+import {SCFeatureName} from '@selfcommunity/types';
 import {
   Link,
-  SCFeatures,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,

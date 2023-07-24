@@ -51,7 +51,6 @@ const Component = {
         paddingBottom: 9,
         borderRadius: 0,
         borderBottom: `2px solid transparent`,
-        color: theme.palette.primary.main,
         '&.SCNavigationToolbar-active, &:hover': {
           color: theme.palette.secondary.main,
           borderBottom: `2px solid ${theme.palette.secondary.main}`
@@ -59,6 +58,9 @@ const Component = {
       },
       '& .SCNavigationToolbar-settings': {
         marginLeft: theme.spacing(2)
+      },
+      '& .MuiIconButton-root': {
+        color: theme.palette.primary.main
       },
       [theme.breakpoints.up(950)]: {
         padding: theme.spacing(0, 2),
