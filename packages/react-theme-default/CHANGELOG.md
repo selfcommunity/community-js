@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.235](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.234...@selfcommunity/react-theme-default@0.1.0-alpha.235) (2023-07-24)
+
+
+### Bug Fixes
+
+* Fix topbar styles ([71eae18](https://github.com/selfcommunity/community-js/commit/71eae18979fe82338cf232433604fedf38a8d87f))
+
+
+
+
+
 # [0.1.0-alpha.234](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.233...@selfcommunity/react-theme-default@0.1.0-alpha.234) (2023-07-21)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

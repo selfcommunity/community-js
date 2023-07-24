@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.277](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.276...@selfcommunity/react-templates@0.3.0-alpha.277) (2023-07-24)
+
+
+### Bug Fixes
+
+* Fix topbar styles ([71eae18](https://github.com/selfcommunity/community-js/commit/71eae18979fe82338cf232433604fedf38a8d87f))
+
+
+
+
+
 # [0.3.0-alpha.276](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.275...@selfcommunity/react-templates@0.3.0-alpha.276) (2023-07-21)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

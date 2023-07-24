@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.285](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.284...@selfcommunity/react-ui@0.7.0-alpha.285) (2023-07-24)
+
+
+### Bug Fixes
+
+* Fix topbar styles ([71eae18](https://github.com/selfcommunity/community-js/commit/71eae18979fe82338cf232433604fedf38a8d87f))
+
+
+
+
+
 # [0.7.0-alpha.284](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.283...@selfcommunity/react-ui@0.7.0-alpha.284) (2023-07-21)
 
 
