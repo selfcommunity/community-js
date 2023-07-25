@@ -127,6 +127,7 @@ import StickyBox, {useStickyBox, StickyBoxProps, StickyBoxComponent, UseStickyBo
 import TagChip, {TagChipProps} from './shared/TagChip';
 import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import UserAvatar, {UserAvatarProps} from './shared/UserAvatar';
+import Lightbox from './shared/Lightbox';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/PollSuggestionWidget';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
@@ -398,6 +399,7 @@ export {
   UserDeletedSnackBarProps,
   UserAvatar,
   UserAvatarProps,
+  Lightbox,
   CentralProgress,
   ConfirmDialog,
   MediaChunkUploader,
