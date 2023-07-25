@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.286](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.285...@selfcommunity/react-ui@0.7.0-alpha.286) (2023-07-25)
+
+
+### Performance Improvements
+
+* Added export of Lightbox for external use ([6289c33](https://github.com/selfcommunity/community-js/commit/6289c3352729744746aeb6c68f3150d7d89ce60d))
+
+
+
+
+
 # [0.7.0-alpha.285](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.284...@selfcommunity/react-ui@0.7.0-alpha.285) (2023-07-24)
 
 
