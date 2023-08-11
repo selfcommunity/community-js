@@ -59,16 +59,24 @@ export interface AccountProps {
   showCredentialsSection?: boolean;
   /**
    * If true, shows social account section
-   *@default true
+   * @default true
    */
   showSocialAccountSection?: boolean;
-
+  /**
+   * Actions to be inserted before credentials section
+   * @default null
+   */
+  startActions?: React.ReactNode | null;
+  /**
+   * Actions to be inserted after social associations section
+   * @default null
+   */
+  endActions?: React.ReactNode | null;
   /**
    * Props to apply to Account credential section
    * @default {}
    */
   AccountCredentialProps?: AccountCredentialProps;
-
   /**
    * Any other properties
    */
@@ -88,6 +96,8 @@ export default function Account(inProps: AccountProps): JSX.Element {
     showSocialAccountSection = true,
     showCredentialsSection = false,
     AccountCredentialProps = {},
+    startActions = null,
+    endActions = null,
     ...rest
   } = props;
   // STATE
@@ -121,6 +131,7 @@ export default function Account(inProps: AccountProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
+      {startActions}
       {showCredentialsSection && <AccountCredentials user={scUserContext?.user} {...AccountCredentialProps} />}
       {showSocialAccountSection && (
         <UserSocialAssociation
@@ -151,6 +162,7 @@ export default function Account(inProps: AccountProps): JSX.Element {
           onClose={() => setOpenDeleteDialog(false)}
         />
       )}
+      {endActions}
       <Box className={classes.dangerZone}>
         <AccountDataPortabilityButton fullWidth variant="outlined" color="primary" />
         <AccountDeleteButton fullWidth variant="contained" color="secondary" />

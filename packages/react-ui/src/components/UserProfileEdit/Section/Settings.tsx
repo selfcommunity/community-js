@@ -56,6 +56,18 @@ export interface SettingsProps {
   onEditSuccess?: () => void;
 
   /**
+   * Actions to be inserted at the start
+   * @default null
+   */
+  startActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted at the end
+   * @default null
+   */
+  endActions?: React.ReactNode | null;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -67,7 +79,15 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, settings = [...DEFAULT_SETTINGS], onEditSuccess = null, ...rest} = props;
+  const {
+    id = null,
+    className = null,
+    settings = [...DEFAULT_SETTINGS],
+    onEditSuccess = null,
+    startActions = null,
+    endActions = null,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -282,7 +302,9 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      {startActions}
       {settings.map((setting) => renderSetting(setting))}
+      {endActions}
     </Root>
   );
 }
