@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.94](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.93...@selfcommunity/react-core@0.4.0-alpha.94) (2023-07-27)
+
+
+### Performance Improvements
+
+* Update [@material-ui](https://github.com/material-ui) lib ([da66df0](https://github.com/selfcommunity/community-js/commit/da66df03bc7f3f75c84128a3beda9aeae33a1418))
+
+
+
+
+
 # [0.4.0-alpha.93](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.92...@selfcommunity/react-core@0.4.0-alpha.93) (2023-07-19)
 
 **Note:** Version bump only for package @selfcommunity/react-core

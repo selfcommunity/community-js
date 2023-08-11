@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.287](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.286...@selfcommunity/react-ui@0.7.0-alpha.287) (2023-07-27)
+
+
+### Performance Improvements
+
+* Update [@material-ui](https://github.com/material-ui) lib ([da66df0](https://github.com/selfcommunity/community-js/commit/da66df03bc7f3f75c84128a3beda9aeae33a1418))
+
+
+
+
+
 # [0.7.0-alpha.286](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.285...@selfcommunity/react-ui@0.7.0-alpha.286) (2023-07-25)
 
 

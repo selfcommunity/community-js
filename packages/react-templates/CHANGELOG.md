@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.279](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.278...@selfcommunity/react-templates@0.3.0-alpha.279) (2023-07-27)
+
+
+### Performance Improvements
+
+* Update [@material-ui](https://github.com/material-ui) lib ([da66df0](https://github.com/selfcommunity/community-js/commit/da66df03bc7f3f75c84128a3beda9aeae33a1418))
+
+
+
+
+
 # [0.3.0-alpha.278](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.277...@selfcommunity/react-templates@0.3.0-alpha.278) (2023-07-25)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
