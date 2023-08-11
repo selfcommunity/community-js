@@ -99,6 +99,18 @@ export interface PublicInfoProps {
    */
   onEditFailure?: (editedField?: Record<string, any>) => void;
 
+	/**
+	 * Actions to be inserted at the start
+	 * @default null
+	 */
+	startActions?: React.ReactNode | null;
+
+	/**
+	 * Actions to be inserted at the end
+	 * @default null
+	 */
+	endActions?: React.ReactNode | null;
+
   /**
    * Any other properties
    */
@@ -114,7 +126,8 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, onEditFailure = null, ...rest} = props;
+  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, onEditFailure = null,     startActions = null,
+		endActions = null, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -372,10 +385,11 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
+			{startActions}
       {_fields.map((field) => {
         return renderField(field);
       })}
-      <LoadingButton
+			<LoadingButton
         className={classes.btnSave}
         fullWidth
         variant="contained"
@@ -385,6 +399,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
         <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
       </LoadingButton>
+			{endActions}
     </Root>
   );
 }
