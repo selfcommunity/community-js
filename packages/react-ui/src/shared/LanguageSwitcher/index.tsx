@@ -56,7 +56,7 @@ export interface LanguageSwitcherProps {
   /**
    * Minimized version
    */
-  minimized?: false;
+  minimized?: boolean;
   /**
    * Any other properties
    */
