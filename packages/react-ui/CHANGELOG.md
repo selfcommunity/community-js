@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.289](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.288...@selfcommunity/react-ui@0.7.0-alpha.289) (2023-08-21)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([235b02c](https://github.com/selfcommunity/community-js/commit/235b02c817bb735d9ace8caae54b1981ff449d8e))
+
+
+
+
+
 # [0.7.0-alpha.288](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.287...@selfcommunity/react-ui@0.7.0-alpha.288) (2023-08-11)
 
 
