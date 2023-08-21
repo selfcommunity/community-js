@@ -3,6 +3,7 @@
  * User Schema.
  */
 import {SCTagType} from './tag';
+import {SCLanguageType} from './locale';
 
 /**
  * User status
@@ -84,6 +85,11 @@ export interface SCUserType {
    * Gender of the user. Values: Male, Female, Unspecified. Default: Unspecified.
    */
   gender: string;
+
+  /**
+   * User language
+   */
+  language?: SCLanguageType;
 
   /**
    * User status. Values: a (approved), b (blocked), d (deleted; soft deleted), u (unregistered). Default: a.

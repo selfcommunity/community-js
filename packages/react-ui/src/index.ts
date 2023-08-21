@@ -114,6 +114,7 @@ import {
 } from './types';
 import Widget from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
+import LanguageSwitcher from './shared/LanguageSwitcher';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
@@ -402,6 +403,7 @@ export {
   Lightbox,
   CentralProgress,
   ConfirmDialog,
+  LanguageSwitcher,
   MediaChunkUploader,
   MediaChunkUploaderProps,
   Document,

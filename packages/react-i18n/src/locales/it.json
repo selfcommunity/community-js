@@ -604,5 +604,8 @@
   "ui.voteButton.voteUp": "Mi piace",
   "ui.webPushNotification.allow": "Permetti",
   "ui.webPushNotification.block": "Blocca",
-  "ui.webPushNotification.requestPermission": "Questo sito desidera inviarti notifiche push"
+  "ui.webPushNotification.requestPermission": "Questo sito desidera inviarti notifiche push",
+  "ui.languageSwitcher.selectLanguage": "Seleziona la lingua dell'interfaccia",
+  "ui.languageSwitcher.language.it": "Italiano",
+  "ui.languageSwitcher.language.en": "Inglese"
 }

@@ -39,6 +39,18 @@ export interface FooterProps {
   menu?: SCCustomMenuType;
 
   /**
+   * Actions to be inserted at the start
+   * @default null
+   */
+  startActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted at the end
+   * @default null
+   */
+  endActions?: React.ReactNode | null;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -75,7 +87,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, menu = null, ...rest} = props;
+  const {className, menu = null, startActions = null, endActions = null, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -122,6 +134,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   }
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
+      {startActions}
       <Box className={classes.itemList}>
         {_menu.items.map((item: SCCustomMenuItemType, index) => (
           <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
@@ -129,6 +142,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
           </Button>
         ))}
       </Box>
+			{endActions}
       <Typography textAlign="center" className={classes.copyright} variant="subtitle2" dangerouslySetInnerHTML={{__html: copyright}} />
     </Root>
   );

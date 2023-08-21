@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Footer from './index';
+import LanguageSwitcher from '../../shared/LanguageSwitcher';
+import {Box} from '@mui/material';
 
 export default {
   title: 'Design System/React UI/Footer',
@@ -31,4 +33,11 @@ const template = (args) => (
 
 export const Base: StoryObj<Footer> = {
   render: template
+};
+
+export const BaseWithLanguageSwitcher: StoryObj<Footer> = {
+	args: {
+		endActions: <Box align={'center'}><br /><LanguageSwitcher LabelComponentProps={{hidden: true}} /></Box>,
+	},
+	render: template
 };
