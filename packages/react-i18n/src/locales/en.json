@@ -603,5 +603,8 @@
   "ui.voteButton.voteUp": "Like this contribute",
   "ui.webPushNotification.allow": "Allow",
   "ui.webPushNotification.block": "Block",
-  "ui.webPushNotification.requestPermission": "This website would like to send push notification"
+  "ui.webPushNotification.requestPermission": "This website would like to send push notification",
+  "ui.languageSwitcher.selectLanguage": "Select interface language",
+  "ui.languageSwitcher.language.it": "Italian",
+  "ui.languageSwitcher.language.en": "English"
 }

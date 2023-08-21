@@ -31,3 +31,34 @@ export const Base: StoryObj<UserProfileEdit> = {
   },
   render: template
 };
+
+export const BaseWithLanguage: StoryObj<UserProfileEdit> = {
+	args: {
+		id: 796,
+		fields: [...DEFAULT_FIELDS],
+		settings: [...DEFAULT_SETTINGS],
+		UserProfileEditSectionAccountProps: {showCredentialsSection: true, showLanguageSwitcher: true}
+	},
+	render: template
+};
+
+
+export const BaseWithCustomLanguageSwitcher: StoryObj<UserProfileEdit> = {
+	args: {
+		id: 796,
+		fields: [...DEFAULT_FIELDS],
+		settings: [...DEFAULT_SETTINGS],
+		UserProfileEditSectionAccountProps: {
+			showCredentialsSection: true,
+			showLanguageSwitcher: true,
+			LanguageSwitcherProps: {
+				variant: 'standard',
+				minimized: true,
+				LabelComponentProps: {
+					hidden: true
+				}
+			}
+		}
+	},
+	render: template
+};

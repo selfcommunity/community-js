@@ -13,6 +13,7 @@ import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import AccountCredentials, {AccountCredentialProps} from './AccountCredentials';
 import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
 import AccountDeleteButton from '../../AccountDeleteButton';
+import LanguageSwitcher, {LanguageSwitcherProps} from '../../../shared/LanguageSwitcher';
 
 const messages = defineMessages({
   socialTitle: {
@@ -63,6 +64,16 @@ export interface AccountProps {
    */
   showSocialAccountSection?: boolean;
   /**
+   * If true, shows language switcher
+   * @default false
+   */
+  showLanguageSwitcher?: boolean;
+  /**
+   * Props to apply to LanguageSwitcher component
+   * @default {}
+   */
+  LanguageSwitcherProps?: LanguageSwitcherProps;
+  /**
    * Actions to be inserted before credentials section
    * @default null
    */
@@ -96,6 +107,8 @@ export default function Account(inProps: AccountProps): JSX.Element {
     showSocialAccountSection = true,
     showCredentialsSection = false,
     AccountCredentialProps = {},
+    showLanguageSwitcher = false,
+    LanguageSwitcherProps = {},
     startActions = null,
     endActions = null,
     ...rest
@@ -133,6 +146,7 @@ export default function Account(inProps: AccountProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       {startActions}
       {showCredentialsSection && <AccountCredentials user={scUserContext?.user} {...AccountCredentialProps} />}
+      {showLanguageSwitcher && <LanguageSwitcher {...LanguageSwitcherProps} />}
       {showSocialAccountSection && (
         <UserSocialAssociation
           children={

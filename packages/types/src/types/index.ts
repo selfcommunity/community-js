@@ -2,6 +2,7 @@ import {SCAuthTokenType} from './auth';
 import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from './broadcastMessage';
 import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
 import {SCCustomMenuItemType, SCCustomMenuType} from './customMenu';
+import {SCLanguageType} from './locale';
 import {
   SCUserAutocompleteType,
   SCUserAvatarType,
@@ -119,6 +120,7 @@ export {
   SCBroadcastMessageBannerType,
   SCBroadcastMessageType,
   SCAuthTokenType,
+	SCLanguageType,
   SCUserType,
   SCUserSettingsType,
   SCUserStatus,
