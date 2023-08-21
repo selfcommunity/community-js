@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.8...@selfcommunity/types@0.5.0-alpha.9) (2023-08-21)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([235b02c](https://github.com/selfcommunity/community-js/commit/235b02c817bb735d9ace8caae54b1981ff449d8e))
+
+
+
+
+
 # [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.7...@selfcommunity/types@0.5.0-alpha.8) (2023-06-21)
 
 

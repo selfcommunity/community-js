@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.47...@selfcommunity/react-i18n@0.5.0-alpha.48) (2023-08-21)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([235b02c](https://github.com/selfcommunity/community-js/commit/235b02c817bb735d9ace8caae54b1981ff449d8e))
+
+
+
+
+
 # [0.5.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.46...@selfcommunity/react-i18n@0.5.0-alpha.47) (2023-07-19)
 
 
