@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ContributorsFeedObject from './index';
 import {SCContributionType} from '@selfcommunity/types';
 
-
 export default {
   title: 'Design System/React UI/ContributorsFeedObject',
   component: ContributorsFeedObject,
@@ -22,16 +21,15 @@ export default {
     feedObjectId: 17,
     feedObjectType: SCContributionType.DISCUSSION
   }
-  
+
 } as Meta<typeof ContributorsFeedObject>;
 
+const template = (args) => {
+	return (  <div style={{width: 800}}>
+		<ContributorsFeedObject {...args} />
+	</div>);
+};
 
-const template: StoryObj<typeof ContributorsFeedObject> = (args) => (
-  <div style={{width: 800}}>
-    <ContributorsFeedObject {...args} />
-  </div>
-);
-
-export const Preview = Template.bind({});
-
-Preview.args = {};
+export const Base: StoryObj<ContributorsFeedObject> = {
+	render: template
+};
