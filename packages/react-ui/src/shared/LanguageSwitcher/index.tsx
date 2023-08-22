@@ -83,38 +83,47 @@ export default function LanguageSwitcher(inProps: LanguageSwitcherProps): JSX.El
   } = props;
   const scUserContext: SCUserContextType = useSCUser();
   const scLocaleContext: SCLocaleContextType = useSCLocale();
+	const [updating, setUpdating] = useState(false);
   const intl = useIntl();
-  const [updating, setUpdating] = useState(false);
+
+  // Handle callback switch language
+  const handleSwitchLanguage = (language) => {
+    if (handleLanguageSwitch) {
+      handleLanguageSwitch(language)
+        .then(() => {
+          scLocaleContext.selectLocale(language);
+          setUpdating(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          setUpdating(false);
+        });
+    } else {
+      scLocaleContext.selectLocale(language);
+      setUpdating(false);
+    }
+  };
 
   // Handle change language
   const handleChange = (e: {target: {value: any}}) => {
     const language = e.target.value;
     if (language !== intl.locale) {
       setUpdating(true);
-      UserService.userPatch(scUserContext.user?.id, {
-        language
-      } as SCUserType)
-        .then((user: SCUserType) => {
-          scUserContext.updateUser(user);
-          if (handleLanguageSwitch) {
-            handleLanguageSwitch(language)
-              .then(() => {
-                scLocaleContext.selectLocale(language);
-                setUpdating(false);
-              })
-              .catch((e) => {
-                console.log(e);
-                setUpdating(false);
-              });
-          } else {
-            scLocaleContext.selectLocale(language);
+      if (scUserContext.user) {
+        UserService.userPatch(scUserContext.user?.id, {
+          language
+        } as SCUserType)
+          .then((user: SCUserType) => {
+            scUserContext.updateUser(user);
+            handleSwitchLanguage(language);
+          })
+          .catch((error) => {
+            console.log(error);
             setUpdating(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setUpdating(false);
-        });
+          });
+      } else {
+        handleSwitchLanguage(language);
+      }
     }
   };
 
