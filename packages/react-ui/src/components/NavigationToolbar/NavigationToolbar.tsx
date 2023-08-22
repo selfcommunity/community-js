@@ -255,9 +255,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       ) : (
         <Box className={classes.search} />
       )}
+      {startActions}
       {scUserContext.user ? (
         <>
-          {startActions}
           {!disableComposer && <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>}
           <Tooltip title={scUserContext.user.username}>
             <IconButton
@@ -309,9 +309,12 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
         </>
       ) : (
-        <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
-        </Button>
+        <>
+          {endActions}
+          <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
+            <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
+          </Button>
+        </>
       )}
     </Root>
   );

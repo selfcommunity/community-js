@@ -161,7 +161,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
-      {scUserContext.user && startActions}
+      {startActions}
       {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
@@ -175,7 +175,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         </>
       )}
       {scUserContext.user && !disableComposer && <ComposerIconButton className={classes.composer}></ComposerIconButton>}
-      {scUserContext.user && endActions}
+      {endActions}
       {scUserContext.user ? (
         <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
       ) : (
