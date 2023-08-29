@@ -32,7 +32,8 @@
     "build:commonjs": "tsc -b tsconfig-cjs.build.json",
     "build:esm": "tsc -b tsconfig-esm.build.json",
     "build:umd": "webpack --mode production",
-    "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
+	"build:umd:analyze": "webpack --mode production --profile --json > ./lib/umd/stats.json && webpack-bundle-analyzer ./lib/umd/stats.json",
+	"build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
@@ -113,7 +114,8 @@
     "typescript": "^4.1.3",
     "webpack": "^5.20.1",
     "webpack-atoms": "^17.1.0",
-    "webpack-cli": "^4.5.0"
+    "webpack-cli": "^4.5.0",
+	"webpack-bundle-analyzer": "^4.9.0"
   },
   "prettier": {
     "printWidth": 150,
