@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.9...@selfcommunity/types@0.5.0-alpha.10) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+
+
+
+
+
 # [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.8...@selfcommunity/types@0.5.0-alpha.9) (2023-08-21)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.285](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.284...@selfcommunity/react-templates@0.3.0-alpha.285) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+
+
+
+
+
 # [0.3.0-alpha.284](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.283...@selfcommunity/react-templates@0.3.0-alpha.284) (2023-08-22)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

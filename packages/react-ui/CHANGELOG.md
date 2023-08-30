@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.293](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.292...@selfcommunity/react-ui@0.7.0-alpha.293) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+* fixed translation string formatting ([665c8ad](https://github.com/selfcommunity/community-js/commit/665c8ade8d6ef5bbfad6e6326e1ae3d16633f02c))
+
+
+### Performance Improvements
+
+* Added export of WidgetProps ([ff04006](https://github.com/selfcommunity/community-js/commit/ff0400668a695667d05b33cc6660113d50f80613))
+
+
+
+
+
 # [0.7.0-alpha.292](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.291...@selfcommunity/react-ui@0.7.0-alpha.292) (2023-08-22)
 
 
