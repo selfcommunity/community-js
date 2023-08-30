@@ -126,7 +126,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else if (UserUtils.isBlocked(scUserContext.user)) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked'" defaultMessage="ui.common.userBlocked'" />, {
+      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
         autoHideDuration: 3000
       });

@@ -112,7 +112,7 @@ import {
   SCUserProfileSettings,
   SCUserSocialAssociations
 } from './types';
-import Widget from './components/Widget';
+import Widget, {WidgetProps} from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
 import LanguageSwitcher from './shared/LanguageSwitcher';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
@@ -373,6 +373,7 @@ export {
   SearchDialog,
   SearchDialogProps,
   Widget,
+  WidgetProps,
   SCFeedWidgetType,
   SCFeedObjectTemplateType,
   SCCommentsOrderBy,
