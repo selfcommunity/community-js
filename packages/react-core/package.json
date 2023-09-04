@@ -7,6 +7,7 @@
   "license": "MIT",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "sideEffects": false,
   "keywords": [
     "react",
     "widgets",
