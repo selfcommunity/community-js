@@ -24,10 +24,10 @@ First install peer dependencies needed to make the library work:
 
 ```sh
 // with npm
-`npm install @mui/material @mui/styles @emotion/react @emotion/styled react-intl`
+`npm install react react-dom @mui/material @mui/styles @mui/lab @mui/x-date-pickers @emotion/react @emotion/styled react-intl pdfjs-dist notistack @rpldy/chunked-sender @rpldy/chunked-uploady @rpldy/upload-button @rpldy/upload-drop-zone @rpldy/upload-preview @rpldy/uploady`
 
 // with yarn
-`yarn add @mui/material @mui/styles @emotion/react @emotion/styled react-intl`
+`yarn add react react-dom @mui/material @mui/styles @mui/lab @mui/x-date-pickers @emotion/react @emotion/styled react-intl pdfjs-dist notistack @rpldy/chunked-sender @rpldy/chunked-uploady @rpldy/upload-button @rpldy/upload-drop-zone @rpldy/upload-preview @rpldy/uploady`
 ```
 
 Based on which package you want to install proceed as follows:

@@ -5,6 +5,7 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "sideEffects": false,
   "description": "Client api for SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "keywords": [
@@ -96,6 +97,7 @@
     "sass": "^1.32.6",
     "sinon": "^9.2.4",
     "typescript": "^4.1.3",
+	"tslib": "^2.6.2",
     "webpack": "^5.20.1",
     "webpack-atoms": "^17.1.0",
     "webpack-bundle-analyzer": "^4.9.0",

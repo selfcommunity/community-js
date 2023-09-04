@@ -1,6 +1,15 @@
 const path = require('path');
 const {plugins, rules} = require('webpack-atoms');
 
+/** Callbacks with global UMD-name of material-ui imports */
+function externalForMaterialUi({context, request}, callback) {
+	if (/@mui.+/.test(request)) {
+		const name = request.replace(/^.*[\\\/]/, '')
+		return callback(null, 'root MaterialUI.' + name);
+	}
+	callback();
+}
+
 module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
@@ -21,33 +30,25 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
     },
-    externals: {
-      react: {
-        root: 'React',
-        commonjs: 'react',
-        commonjs2: 'react',
-        amd: 'react'
-      },
-      'react-dom': {
-        root: 'ReactDOM',
-        commonjs: 'react-dom',
-        commonjs2: 'react-dom',
-        amd: 'react-dom'
-      },
-      'react-intl': {
-        root: 'ReactIntl',
-        commonjs: 'react-intl',
-        commonjs2: 'react-intl',
-        amd: 'react-intl'
-      }
-    },
+    externals: [
+			/^react/,
+			/^react-dom/,
+			/^react-intl/,
+			/^notistack\/[\/a-zA-Z]*/,
+			/^@rpldy\/[\/a-zA-Z]*/,
+			/^@emotion\/[\/a-zA-Z]*/,
+			/^@mui\/[\/a-zA-Z]*/,
+			/^pdfjs-dist\/[\/a-zA-Z]*/,
+			/^libphonenumber-js/,
+			/^date-fns/,
+		],
     plugins: [
       plugins.define({
         'process.env.NODE_ENV': JSON.stringify(mode)
       }),
       // plugins.uglify(),
       plugins.banner({
-        banner: '(c) 2022 - present: Quentral Srl | https://github.com/selfcommunity/community-js/blob/master/LICENSE.md',
+        banner: '(c) 2023 - present: Quentral Srl | https://github.com/selfcommunity/community-js/blob/master/LICENSE.md',
         entryOnly: true
       })
     ]

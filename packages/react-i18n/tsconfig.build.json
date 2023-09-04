@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+	"importHelpers": true,
     "resolveJsonModule": true,
     "emitDeclarationOnly": true,
     "incremental": true,            /* Enable incremental compilation */
