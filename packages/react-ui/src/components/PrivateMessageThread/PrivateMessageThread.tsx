@@ -15,7 +15,6 @@ import {
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
-import _ from 'lodash';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Box, Card, CardContent, CardProps, IconButton, List, ListSubheader, TextField, Typography} from '@mui/material';
 import PrivateMessageEditor from '../PrivateMessageEditor';
@@ -25,7 +24,7 @@ import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import PrivateMessageThreadSkeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
+import {groupBy, Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
@@ -217,7 +216,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // CONST
   const formattedMessages = useMemo(() => {
     const _messages = [...messageObjs];
-    return _.groupBy(_messages, format);
+    return groupBy(_messages, format);
   }, [messageObjs]);
 
   // HANDLERS
