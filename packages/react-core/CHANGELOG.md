@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.97](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.96...@selfcommunity/react-core@0.4.0-alpha.97) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([5e4547b](https://github.com/selfcommunity/community-js/commit/5e4547ba1e666b438326dbca1d6544d7c685002a))
+* bundles optimization ([ffe6738](https://github.com/selfcommunity/community-js/commit/ffe67381b72625009c3d86bb7cd7df971ececda4))
+
+
+
+
+
 # [0.4.0-alpha.96](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.95...@selfcommunity/react-core@0.4.0-alpha.96) (2023-08-30)
 
 
