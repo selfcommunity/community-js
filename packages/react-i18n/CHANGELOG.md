@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.48...@selfcommunity/react-i18n@0.5.0-alpha.49) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+
+
+
+
+
 # [0.5.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.47...@selfcommunity/react-i18n@0.5.0-alpha.48) (2023-08-21)
 
 

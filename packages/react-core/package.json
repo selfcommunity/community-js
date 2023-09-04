@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-core",
-  "version": "0.4.0-alpha.95",
+  "version": "0.4.0-alpha.96",
   "description": "React Core Components useful for integrating UI Community components (react-ui).",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -33,8 +33,8 @@
     "build:commonjs": "tsc -b tsconfig-cjs.build.json",
     "build:esm": "tsc -b tsconfig-esm.build.json",
     "build:umd": "webpack --mode production",
-	"build:umd:analyze": "webpack --mode production --profile --json > ./lib/umd/stats.json && webpack-bundle-analyzer ./lib/umd/stats.json",
-	"build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
+    "build:umd:analyze": "webpack --mode production --profile --json > ./lib/umd/stats.json && webpack-bundle-analyzer ./lib/umd/stats.json",
+    "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
@@ -58,10 +58,10 @@
     "react-intl": "^5.25.0"
   },
   "dependencies": {
-    "@selfcommunity/api-services": "^0.4.0-alpha.28",
-    "@selfcommunity/react-i18n": "^0.5.0-alpha.48",
-    "@selfcommunity/types": "^0.5.0-alpha.9",
-    "@selfcommunity/utils": "^0.2.0-alpha.5",
+    "@selfcommunity/api-services": "^0.4.0-alpha.29",
+    "@selfcommunity/react-i18n": "^0.5.0-alpha.49",
+    "@selfcommunity/types": "^0.5.0-alpha.10",
+    "@selfcommunity/utils": "^0.2.0-alpha.6",
     "js-cookie": "^3.0.5",
     "pubsub-js": "^1.9.4",
     "react-singleton-hook": "^4.0.1",
@@ -116,8 +116,8 @@
 	"tslib": "^2.6.2",
     "webpack": "^5.20.1",
     "webpack-atoms": "^17.1.0",
-    "webpack-cli": "^4.5.0",
-	"webpack-bundle-analyzer": "^4.9.0"
+    "webpack-bundle-analyzer": "^4.9.0",
+    "webpack-cli": "^4.5.0"
   },
   "prettier": {
     "printWidth": 150,
