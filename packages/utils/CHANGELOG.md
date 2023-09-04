@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.7...@selfcommunity/utils@0.2.0-alpha.8) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([cbc95aa](https://github.com/selfcommunity/community-js/commit/cbc95aa3c516372b49c48bd1421874f042e669ce))
+
+
+
+
+
 # [0.2.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.6...@selfcommunity/utils@0.2.0-alpha.7) (2023-09-04)
 
 
