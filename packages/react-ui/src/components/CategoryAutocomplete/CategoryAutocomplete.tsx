@@ -115,6 +115,8 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   // State
   const [open, setOpen] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
