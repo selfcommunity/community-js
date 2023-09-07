@@ -124,6 +124,9 @@ import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSecti
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCPreviewMediaLink from './components/SCPreviewMediaLink';
 import SCUserAvatar from './components/SCUserAvatar';
+import SCAccountReset from './components/SCAccountReset';
+import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
+import SCAccountVerify from './components/SCAccountVerify';
 
 /**
  * Style fragments - Imports - End
@@ -187,8 +190,11 @@ const theme = {
     MuiPopover,
     MuiSelect,
     MuiTooltip,
+    SCAccountChangeMailValidation,
     SCAccountDataPortability,
     SCAccountDelete,
+    SCAccountReset,
+    SCAccountVerify,
     SCActivitiesMenu,
     SCBaseDialog,
     SCBaseItem,
