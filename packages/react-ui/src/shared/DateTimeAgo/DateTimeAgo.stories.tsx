@@ -22,8 +22,7 @@ const template = (args) => <DateTimeAgo {...args} />;
 
 export const Base: StoryObj<DateTimeAgo> = {
   args: {
-    date: new Date(),
-    live: true
+    date: new Date()
   },
   render: template
 };
