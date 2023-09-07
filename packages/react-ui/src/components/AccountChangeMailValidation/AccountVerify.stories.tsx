@@ -16,7 +16,7 @@ export const Base: StoryObj<AccountChangeMailValidation> = {
   args: {
     validationCode: '',
     userId: 0,
-    newMail: ''
+		newEmail: ''
   },
   render: template
 };

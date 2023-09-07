@@ -38,12 +38,6 @@ export interface DateTimeAgoProps {
   className?: string;
 
   /**
-   * Handles live option
-   * @default true
-   */
-  live?: boolean;
-
-  /**
    * Date obj
    * @default null
    */
