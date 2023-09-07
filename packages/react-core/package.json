@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-core",
-  "version": "0.4.0-alpha.98",
+  "version": "0.4.0-alpha.99",
   "description": "React Core Components useful for integrating UI Community components (react-ui).",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -55,7 +55,7 @@
     "notistack": "^3.0.1",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18",
-	"react-intl": "^6.4.4"
+    "react-intl": "^6.4.4"
   },
   "dependencies": {
     "@selfcommunity/api-services": "^0.4.0-alpha.31",

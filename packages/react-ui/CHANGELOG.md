@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.296](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.295...@selfcommunity/react-ui@0.7.0-alpha.296) (2023-09-07)
+
+
+### Bug Fixes
+
+* react-intl upgrade ([97987df](https://github.com/selfcommunity/community-js/commit/97987df2c5c8ca33d59a235ccd4e0d4b4c75b381))
+* types ([e39201c](https://github.com/selfcommunity/community-js/commit/e39201c39b77cd6eb895ebde12193baa1d730838))
+
+
+
+
+
 # [0.7.0-alpha.295](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.294...@selfcommunity/react-ui@0.7.0-alpha.295) (2023-09-04)
 
 
