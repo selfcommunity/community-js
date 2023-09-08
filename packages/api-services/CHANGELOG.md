@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.31...@selfcommunity/api-services@0.4.0-alpha.32) (2023-09-08)
+
+
+### Bug Fixes
+
+* Fix endpoint type ([db10956](https://github.com/selfcommunity/community-js/commit/db10956d56343050127eb70dc07f500478400312))
+
+
+
+
+
 # [0.4.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.30...@selfcommunity/api-services@0.4.0-alpha.31) (2023-09-04)
 
 **Note:** Version bump only for package @selfcommunity/api-services
