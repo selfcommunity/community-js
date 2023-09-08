@@ -345,6 +345,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    */
   function fetchThread() {
     if (userObj && typeof userObj !== 'string') {
+      setLoadingMessageObjs(true);
       const _isFollower = (scUser && checkFollowerOrConnection(scUser)) || (scUser && scUser.community_badge);
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       PrivateMessageService.getAThread({user: _userObjId, limit: 10})
@@ -516,12 +517,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       return;
     }
     if (userObj) {
-      setLoadingMessageObjs(true);
       fetchThread();
     } else {
       reset();
     }
-  }, [userObj, authUserId, scUser]);
+  }, [userObj, authUserId]);
 
   /**
    * Notification subscriber
