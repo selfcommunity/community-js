@@ -124,7 +124,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadOpening = (item) => {
     onItemClick && onItemClick(messageReceiver(item, authUserId));
-    setObj(item);
+    setObj(messageReceiver(item, authUserId));
     setOpenNewMessage(false);
   };
   /**
@@ -145,7 +145,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   /**
    * Handles new messages open from user profile page or notifications section
    */
-  const handleSingleMessage = (open) => {
+  const handleSingleMessage = (open: boolean) => {
     open && onSingleMessageOpen(SCPrivateMessageStatusType.NEW);
   };
 
@@ -164,7 +164,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleOnNewMessageSent = (msg, isOne) => {
     onItemClick && onItemClick(isOne ? messageReceiver(msg, authUserId) : '');
-    setObj(isOne ? msg : null);
+    setObj(isOne ? messageReceiver(msg, authUserId) : null);
     setOpenNewMessage(false);
   };
 
