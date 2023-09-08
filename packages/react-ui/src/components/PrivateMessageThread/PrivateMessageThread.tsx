@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
@@ -474,6 +474,20 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     }
   }
 
+  /**
+   * Reset component state
+   */
+  const reset = useCallback(
+    () => () => {
+      setLoadingMessageObjs(true);
+      setMessageObjs([]);
+      setPrevious(null);
+      setReceiver(null);
+      setSingleMessageThread(false);
+    },
+    [setLoadingMessageObjs, setMessageObjs, setPrevious, setReceiver, setSingleMessageThread]
+  );
+
   // EFFECTS
 
   /**
@@ -501,7 +515,12 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     if (!authUserId) {
       return;
     }
-    userObj && fetchThread();
+    if (userObj) {
+      setLoadingMessageObjs(true);
+      fetchThread();
+    } else {
+      reset();
+    }
   }, [userObj, authUserId, scUser]);
 
   /**
