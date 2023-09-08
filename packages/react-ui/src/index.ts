@@ -61,6 +61,7 @@ import UserInfo, {UserInfoProps, UserInfoSkeleton} from './components/UserInfo';
 import UserProfileBlocked, {UserProfileBlockedProps} from './components/UserProfileBlocked';
 import UserProfileEdit, {
   UserProfileEditProps,
+  UserProfileEditSkeleton,
   UserProfileEditSectionPublicInfo,
   UserProfileEditSectionPublicInfoProps,
   UserProfileEditSectionSettings,
@@ -312,6 +313,7 @@ export {
   SCUserProfileSettings,
   UserProfileEdit,
   UserProfileEditProps,
+  UserProfileEditSkeleton,
   UserProfileEditSectionPublicInfo,
   UserProfileEditSectionPublicInfoProps,
   UserProfileEditSectionSettings,

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Grid, useMediaQuery, useTheme} from '@mui/material';
 import {SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
@@ -99,8 +99,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const [obj, setObj] = useState<any>(id ?? null);
   const isNew = obj && obj === SCPrivateMessageStatusType.NEW;
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(isNew ?? false);
-  const mobileSnippetsView = (layout === 'default' && !id) || (layout === 'mobile' && id);
-  const mobileThreadView = (layout === 'mobile' && !id) || (layout === 'default' && id);
+  const mobileSnippetsView = (layout === 'default' && !obj) || (layout === 'mobile' && !obj);
+  const mobileThreadView = (layout === 'default' && obj) || (layout === 'mobile' && obj);
+
   const messageReceiver = (item, loggedUserId) => {
     if (typeof item === 'number') {
       return item;
@@ -111,6 +112,11 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   // MEMO
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
+
+  useEffect(() => {
+    setObj(id ?? null);
+  }, [id]);
+
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -120,8 +126,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     onItemClick && onItemClick(messageReceiver(item, authUserId));
     setObj(item);
     setOpenNewMessage(false);
-    isMobile && setLayout('mobile');
-    id && setLayout('default');
   };
   /**
    * Handles thread closing after delete
@@ -137,8 +141,6 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     setOpenNewMessage(!openNewMessage);
     setObj(SCPrivateMessageStatusType.NEW);
     onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
-    isMobile && setLayout('mobile');
-    id && setLayout('default');
   };
   /**
    * Handles new messages open from user profile page or notifications section

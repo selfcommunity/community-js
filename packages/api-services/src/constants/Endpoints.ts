@@ -2,7 +2,7 @@ import {urlReplacer} from '@selfcommunity/utils';
 import {HttpMethod} from '../client';
 
 export interface EndpointType {
-  url: (params?: object) => string;
+  url: (params?: any) => string;
   method: HttpMethod;
 }
 
