@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.298](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.297...@selfcommunity/react-ui@0.7.0-alpha.298) (2023-09-08)
+
+
+### Bug Fixes
+
+* PrivateMessageComponent ([5c8af19](https://github.com/selfcommunity/community-js/commit/5c8af19adb8bf734b8ab3c6b488255324e70a150))
+
+
+
+
+
 # [0.7.0-alpha.297](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.296...@selfcommunity/react-ui@0.7.0-alpha.297) (2023-09-08)
 
 
