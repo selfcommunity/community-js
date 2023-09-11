@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.32...@selfcommunity/api-services@0.4.0-alpha.33) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix type export ([a03dd5b](https://github.com/selfcommunity/community-js/commit/a03dd5bca71751927b41fdbe56e6b15e5965c0c2))
+
+
+
+
+
 # [0.4.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.31...@selfcommunity/api-services@0.4.0-alpha.32) (2023-09-08)
 
 
