@@ -718,7 +718,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </Tooltip>
           </Box>
         </DialogTitle>
-        <DialogContent className={classes.audienceContent}>
+        <DialogContent className={classNames(classes.content, classes.audienceContent)}>
           <Tabs value={audience} onChange={handleChange('audience')} aria-label="audience type">
             <Tab
               value={AUDIENCE_ALL}
@@ -847,7 +847,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </Tooltip>
           </Box>
         </DialogTitle>
-        <DialogContent className={classes.locationContent}>
+        <DialogContent className={classNames(classes.content, classes.locationContent)}>
           <LocationAutocomplete
             onChange={handleChange('location')}
             defaultValue={location ? ({full_address: location.location} as SCLocalityType) : ''}
