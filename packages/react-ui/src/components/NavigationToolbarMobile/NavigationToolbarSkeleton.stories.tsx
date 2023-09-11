@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import NavigationToolbarMobileSkeleton from './index';
+import NavigationToolbarMobileSkeleton from './Skeleton';
 import { AppBar } from '@mui/material';
 import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
 
