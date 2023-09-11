@@ -10,22 +10,22 @@ export const baseConfig: Options = {
   skipNodeModulesBundle: true,
   watch: false,
   // entry: ['src/index.ts', 'src/components/*.*'],
-	entry: ['src/index.ts'],
+  entry: ['src/index.ts'],
   shims: false
 };
 
 export default defineConfig([
-	{
-		...baseConfig,
-		outDir: 'lib/cjs',
-		format: ['cjs'],
-		tsconfig: './tsconfig-cjs.build.json',
-	},
-	{
-		...baseConfig,
-		outDir: 'lib/esm',
-		format: ['esm'],
-		target: 'es2020',
-		tsconfig: './tsconfig-esm.build.json',
-	},
+  {
+    ...baseConfig,
+    outDir: 'lib/cjs',
+    format: ['cjs'],
+    tsconfig: './tsconfig-cjs.build.json'
+  },
+  {
+    ...baseConfig,
+    outDir: 'lib/esm',
+    format: ['esm'],
+    target: 'es2020',
+    tsconfig: './tsconfig-esm.build.json'
+  }
 ]);
