@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+	"emitDeclarationOnly": true,
 	"importHelpers": true,
     "resolveJsonModule": true,
-    "emitDeclarationOnly": true,
     "incremental": true,            /* Enable incremental compilation */
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
