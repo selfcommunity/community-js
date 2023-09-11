@@ -3,7 +3,9 @@
   "compilerOptions": {
     "outDir": "lib",
     "jsx": "react",
-    "allowSyntheticDefaultImports": true
+	"strict": true,
+	"allowSyntheticDefaultImports": true,
+	"isolatedModules": true
   },
   "include": ["src", "./globals.d.ts"]
 }

@@ -1,262 +1,269 @@
-import {SCAuthTokenType} from './auth';
-import {SCBannerType, SCBroadcastMessageBannerType, SCBroadcastMessageType} from './broadcastMessage';
-import {SCCustomAdvPosition, SCCustomAdvType} from './customAdv';
-import {SCCustomMenuItemType, SCCustomMenuType} from './customMenu';
+import {type SCAuthTokenType} from './auth';
+import {type SCBannerType, SCBroadcastMessageBannerType, type SCBroadcastMessageType} from './broadcastMessage';
+import {SCCustomAdvPosition, type SCCustomAdvType} from './customAdv';
+import {type SCCustomMenuItemType, type SCCustomMenuType} from './customMenu';
 import {SCLanguageType} from './locale';
 import {
-  SCUserAutocompleteType,
-  SCUserAvatarType,
-  SCUserBlockedSettingsType,
-  SCUserChangeEmailType,
-  SCUserConnectionRequestType,
-  SCUserConnectionStatusType,
-  SCUserCounterType,
-  SCUserEmailTokenType,
-  SCUserFollowedStatusType,
-  SCUserFollowerStatusType,
-  SCUserHiddenByStatusType,
-  SCUserHiddenStatusType,
-  SCUserModerationType,
-  SCUserPermissionType,
+  type SCUserAutocompleteType,
+  type SCUserAvatarType,
+  type SCUserBlockedSettingsType,
+  type SCUserChangeEmailType,
+  type SCUserConnectionRequestType,
+  type SCUserConnectionStatusType,
+  type SCUserCounterType,
+  type SCUserEmailTokenType,
+  type SCUserFollowedStatusType,
+  type SCUserFollowerStatusType,
+  type SCUserHiddenByStatusType,
+  type SCUserHiddenStatusType,
+  type SCUserModerationType,
+  type SCUserPermissionType,
   SCUserReputationType,
-  SCUserScoreType,
-  SCUserScoreVariation,
-  SCUserSettingsType,
+  type SCUserScoreType,
+  type SCUserScoreVariation,
+  type SCUserSettingsType,
   SCUserStatus,
-  SCUserType,
-  SCUserProviderAssociationType
+  type SCUserType,
+  type SCUserProviderAssociationType
 } from './user';
-import {SCTagType} from './tag';
-import {SCCategoryAudienceType, SCCategoryFollowedStatusType, SCCategoryType, SCCategoryAutoFollowType} from './category';
-import {SCEmbedType} from './embed';
-import {SCChunkMediaType, SCMediaType} from './media';
-import {SCMetadataTypeFieldType, SCMetadataType} from './metadata';
-import {SCContributionLocation, SCLocalityType} from './location';
-import {SCPollChoiceType, SCPollType, SCPollVoteType} from './poll';
-import {SCCommentsOrderBy, SCCommentType} from './comment';
+import {type SCTagType} from './tag';
+import {type SCCategoryAudienceType, type SCCategoryFollowedStatusType, type SCCategoryType, SCCategoryAutoFollowType} from './category';
+import {type SCEmbedType} from './embed';
+import {type SCChunkMediaType, type SCMediaType} from './media';
+import {SCMetadataTypeFieldType, type SCMetadataType} from './metadata';
+import {type SCContributionLocation, type SCLocalityType} from './location';
+import {type SCPollChoiceType, type SCPollType, type SCPollVoteType} from './poll';
+import {SCCommentsOrderBy, type SCCommentType} from './comment';
 import {
   SCMessageFileType,
-  SCPrivateMessageFileType,
+  type SCPrivateMessageFileType,
   SCPrivateMessageStatusType,
-  SCPrivateMessageThreadType,
-  SCPrivateMessageSnippetType,
-  SCPrivateMessageUploadMediaChunkType,
-  SCPrivateMessageUploadMediaType,
-  SCPrivateMessageUploadThumbnailType
+  type SCPrivateMessageThreadType,
+  type SCPrivateMessageSnippetType,
+  type SCPrivateMessageUploadMediaChunkType,
+  type SCPrivateMessageUploadMediaType,
+  type SCPrivateMessageUploadThumbnailType
 } from './privateMessage';
-import {SCIncubatorStatusType, SCIncubatorSubscriptionType, SCIncubatorType} from './incubator';
-import {SCCustomNotificationType} from './customNotification';
-import {SCPrizeType, SCPrizeUserStatusType, SCPrizeUserType, SCUserLoyaltyPointsType} from './prize';
+import {SCIncubatorStatusType, type SCIncubatorSubscriptionType, type SCIncubatorType} from './incubator';
+import {type SCCustomNotificationType} from './customNotification';
+import {type SCPrizeType, SCPrizeUserStatusType, type SCPrizeUserType, type SCUserLoyaltyPointsType} from './prize';
 import {
-  SCCountByCategoryType,
-  SCFeedDiscussionType,
-  SCFeedObjectFollowingStatusType,
-  SCFeedObjectHideStatusType,
-  SCFeedObjectSuspendedStatusType,
-  SCFeedObjectType,
-  SCFeedPostType,
-  SCFeedStatusType,
+  type SCCountByCategoryType,
+  type SCFeedDiscussionType,
+  type SCFeedObjectFollowingStatusType,
+  type SCFeedObjectHideStatusType,
+  type SCFeedObjectSuspendedStatusType,
+  type SCFeedObjectType,
+  type SCFeedPostType,
+  type SCFeedStatusType,
   SCFeedTypologyType,
-  SCFeedUnitActivityType,
+  type SCFeedUnitActivityType,
   SCFeedUnitActivityTypologyType,
-  SCFeedUnitType,
-  SCFeedUnseenCountType
+  type SCFeedUnitType,
+  type SCFeedUnseenCountType
 } from './feed';
 import {
-  SCNotificationAggregatedType,
-  SCNotificationBlockedUserType,
-  SCNotificationCollapsedForType,
-  SCNotificationCommentType,
-  SCNotificationConnectionAcceptType,
-  SCNotificationConnectionRequestType,
-  SCNotificationContributionType,
-  SCNotificationCustomNotificationType,
-  SCNotificationDeletedForType,
-  SCNotificationFollowType,
-  SCNotificationIncubatorType,
-  SCNotificationKindlyNoticeType,
-  SCNotificationMentionType,
-  SCNotificationPrivateMessageType,
+  type SCNotificationAggregatedType,
+  type SCNotificationBlockedUserType,
+  type SCNotificationCollapsedForType,
+  type SCNotificationCommentType,
+  type SCNotificationConnectionAcceptType,
+  type SCNotificationConnectionRequestType,
+  type SCNotificationContributionType,
+  type SCNotificationCustomNotificationType,
+  type SCNotificationDeletedForType,
+  type SCNotificationFollowType,
+  type SCNotificationIncubatorType,
+  type SCNotificationKindlyNoticeType,
+  type SCNotificationMentionType,
+  type SCNotificationPrivateMessageType,
   SCNotificationTopicType,
-  SCNotificationType,
+  type SCNotificationType,
   SCNotificationTypologyType,
-  SCNotificationUnBlockedUserType,
-  SCNotificationUnDeletedForType,
-  SCNotificationUnseenCountType,
-  SCNotificationUserFollowType,
-  SCNotificationVoteUpType
+  type SCNotificationUnBlockedUserType,
+  type SCNotificationUnDeletedForType,
+  type SCNotificationUnseenCountType,
+  type SCNotificationUserFollowType,
+  type SCNotificationVoteUpType
 } from './notification';
-import {SCWebhookEndpointAttemptType, SCWebhookEndpointSecretType, SCWebhookEndpointType, SCWebhookEventsType} from './webhook';
-import {SCVoteType} from './vote';
-import {SCFlagModerationStatusType, SCFlagType, SCFlagTypeEnum} from './flag';
-import {SCCustomPageTypeEnum, SCCustomPageType} from './customPage';
-import {SCDataPortabilityType} from './dataPortability';
-import {SCPreferenceSection, SCPreferenceName, SCPreferenceType} from './preference';
-import {SCFeatureName, SCFeatureType} from './feature';
-import {SSOSignInType, SSOSignUpType} from './sso';
-import {SCLegalPagePoliciesType, SCLegalPageAckType, SCLegalPageType} from './legalPage';
+import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
+import {type SCVoteType} from './vote';
+import {SCFlagModerationStatusType, type SCFlagType, SCFlagTypeEnum} from './flag';
+import {SCCustomPageTypeEnum, type SCCustomPageType} from './customPage';
+import {type SCDataPortabilityType} from './dataPortability';
+import {SCPreferenceSection, SCPreferenceName, type SCPreferenceType} from './preference';
+import {SCFeatureName, type SCFeatureType} from './feature';
+import {type SSOSignInType, type SSOSignUpType} from './sso';
+import {SCLegalPagePoliciesType, type SCLegalPageAckType, type SCLegalPageType} from './legalPage';
 import {
-  SCContributionInsightCountersType,
-  SCContributionInsightType,
-  SCEmbedInsightCountersType,
-  SCEmbedInsightType,
-  SCUsersInsightCountersType,
-  SCUsersInsightType
+  type SCContributionInsightCountersType,
+  type SCContributionInsightType,
+  type SCEmbedInsightCountersType,
+  type SCEmbedInsightType,
+  type SCUsersInsightCountersType,
+  type SCUsersInsightType
 } from './insight';
-import {SCInviteType} from './invite';
-import {SCPromoType} from './promo';
-import {SCContributeStatusType, SCContributionStatus, SCContributionType, SCFlaggedContributionType} from './contribution';
-import {SCPlatformType} from './platform';
-import {SCAvatarType} from './avatar';
-import {SCReactionType} from './reaction';
-import {SCSuggestionType, SuggestionType} from './suggestion';
+import {type SCInviteType} from './invite';
+import {type SCPromoType} from './promo';
+import {SCContributeStatusType, type SCContributionStatus, SCContributionType, type SCFlaggedContributionType} from './contribution';
+import {type SCPlatformType} from './platform';
+import {type SCAvatarType} from './avatar';
+import {type SCReactionType} from './reaction';
+import {type SCSuggestionType, SuggestionType} from './suggestion';
 import {SCConnectionStatus} from './friendship';
-import {SCDeviceType, SCApnsDeviceType, SCGcmDeviceType, SCDeviceApnsTypeEnum, SCDeviceGcmTypeEnum, SCDeviceTypeEnum} from './device';
+import {
+  type SCDeviceType,
+  type SCApnsDeviceType,
+  type SCGcmDeviceType,
+  SCDeviceApnsTypeEnum,
+  type SCDeviceGcmTypeEnum,
+  SCDeviceTypeEnum
+} from './device';
 /**
  * Exports all types
  */
 export {
-  SCBannerType,
+  type SCBannerType,
   SCBroadcastMessageBannerType,
-  SCBroadcastMessageType,
-  SCAuthTokenType,
-	SCLanguageType,
-  SCUserType,
-  SCUserSettingsType,
+  type SCBroadcastMessageType,
+  type SCAuthTokenType,
+  SCLanguageType,
+  type SCUserType,
+  type SCUserSettingsType,
   SCUserStatus,
-  SCUserBlockedSettingsType,
-  SCUserModerationType,
-  SCUserScoreVariation,
-  SCUserScoreType,
+  type SCUserBlockedSettingsType,
+  type SCUserModerationType,
+  type SCUserScoreVariation,
+  type SCUserScoreType,
   SCUserReputationType,
-  SCUserAutocompleteType,
-  SCUserCounterType,
-  SCUserChangeEmailType,
-  SCUserAvatarType,
-  SCUserPermissionType,
-  SCUserFollowedStatusType,
-  SCUserFollowerStatusType,
-  SCUserConnectionStatusType,
-  SCUserHiddenStatusType,
-  SCUserHiddenByStatusType,
-  SCUserConnectionRequestType,
-  SCUserEmailTokenType,
-  SCUserProviderAssociationType,
+  type SCUserAutocompleteType,
+  type SCUserCounterType,
+  type SCUserChangeEmailType,
+  type SCUserAvatarType,
+  type SCUserPermissionType,
+  type SCUserFollowedStatusType,
+  type SCUserFollowerStatusType,
+  type SCUserConnectionStatusType,
+  type SCUserHiddenStatusType,
+  type SCUserHiddenByStatusType,
+  type SCUserConnectionRequestType,
+  type SCUserEmailTokenType,
+  type SCUserProviderAssociationType,
   SCMetadataTypeFieldType,
-  SCMetadataType,
-  SCTagType,
-  SCCategoryType,
+  type SCMetadataType,
+  type SCTagType,
+  type SCCategoryType,
   SCCategoryAutoFollowType,
-  SCCategoryAudienceType,
-  SCCategoryFollowedStatusType,
+  type SCCategoryAudienceType,
+  type SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
-  SCCustomAdvType,
-  SCCustomMenuItemType,
-  SCCustomMenuType,
-  SCEmbedType,
-  SCMediaType,
-  SCChunkMediaType,
-  SCContributionLocation,
-  SCLocalityType,
-  SCPollChoiceType,
-  SCPollType,
-  SCPollVoteType,
-  SCFeedUnitType,
-  SCFeedUnitActivityType,
-  SCFeedObjectType,
-  SCFeedPostType,
-  SCFeedDiscussionType,
-  SCFeedStatusType,
+  type SCCustomAdvType,
+  type SCCustomMenuItemType,
+  type SCCustomMenuType,
+  type SCEmbedType,
+  type SCMediaType,
+  type SCChunkMediaType,
+  type SCContributionLocation,
+  type SCLocalityType,
+  type SCPollChoiceType,
+  type SCPollType,
+  type SCPollVoteType,
+  type SCFeedUnitType,
+  type SCFeedUnitActivityType,
+  type SCFeedObjectType,
+  type SCFeedPostType,
+  type SCFeedDiscussionType,
+  type SCFeedStatusType,
   SCFeedUnitActivityTypologyType,
   SCFeedTypologyType,
-  SCFeedUnseenCountType,
-  SCFeedObjectSuspendedStatusType,
-  SCFeedObjectHideStatusType,
-  SCFeedObjectFollowingStatusType,
-  SCCountByCategoryType,
+  type SCFeedUnseenCountType,
+  type SCFeedObjectSuspendedStatusType,
+  type SCFeedObjectHideStatusType,
+  type SCFeedObjectFollowingStatusType,
+  type SCCountByCategoryType,
   SCCommentsOrderBy,
-  SCCommentType,
-  SCPrivateMessageThreadType,
-  SCPrivateMessageSnippetType,
+  type SCCommentType,
+  type SCPrivateMessageThreadType,
+  type SCPrivateMessageSnippetType,
   SCPrivateMessageStatusType,
-  SCPrivateMessageFileType,
+  type SCPrivateMessageFileType,
   SCMessageFileType,
-  SCPrivateMessageUploadMediaType,
-  SCPrivateMessageUploadThumbnailType,
-  SCPrivateMessageUploadMediaChunkType,
-  SCPromoType,
+  type SCPrivateMessageUploadMediaType,
+  type SCPrivateMessageUploadThumbnailType,
+  type SCPrivateMessageUploadMediaChunkType,
+  type SCPromoType,
   SCNotificationTypologyType,
-  SCNotificationAggregatedType,
-  SCNotificationCommentType,
-  SCNotificationConnectionAcceptType,
-  SCNotificationConnectionRequestType,
-  SCNotificationPrivateMessageType,
-  SCNotificationMentionType,
-  SCNotificationType,
-  SCNotificationBlockedUserType,
-  SCNotificationCollapsedForType,
-  SCNotificationCustomNotificationType,
-  SCNotificationDeletedForType,
-  SCNotificationFollowType,
-  SCNotificationKindlyNoticeType,
-  SCNotificationUnBlockedUserType,
-  SCNotificationUnDeletedForType,
-  SCNotificationUserFollowType,
-  SCNotificationVoteUpType,
-  SCCustomNotificationType,
+  type SCNotificationAggregatedType,
+  type SCNotificationCommentType,
+  type SCNotificationConnectionAcceptType,
+  type SCNotificationConnectionRequestType,
+  type SCNotificationPrivateMessageType,
+  type SCNotificationMentionType,
+  type SCNotificationType,
+  type SCNotificationBlockedUserType,
+  type SCNotificationCollapsedForType,
+  type SCNotificationCustomNotificationType,
+  type SCNotificationDeletedForType,
+  type SCNotificationFollowType,
+  type SCNotificationKindlyNoticeType,
+  type SCNotificationUnBlockedUserType,
+  type SCNotificationUnDeletedForType,
+  type SCNotificationUserFollowType,
+  type SCNotificationVoteUpType,
+  type SCCustomNotificationType,
   SCNotificationTopicType,
-  SCNotificationUnseenCountType,
-  SCIncubatorType,
-  SCIncubatorSubscriptionType,
+  type SCNotificationUnseenCountType,
+  type SCIncubatorType,
+  type SCIncubatorSubscriptionType,
   SCIncubatorStatusType,
-  SCInviteType,
-  SCNotificationIncubatorType,
-  SCNotificationContributionType,
-  SCPrizeType,
-  SCPrizeUserType,
+  type SCInviteType,
+  type SCNotificationIncubatorType,
+  type SCNotificationContributionType,
+  type SCPrizeType,
+  type SCPrizeUserType,
   SCPrizeUserStatusType,
-  SCUserLoyaltyPointsType,
-  SCWebhookEndpointType,
-  SCWebhookEndpointAttemptType,
-  SCWebhookEndpointSecretType,
-  SCWebhookEventsType,
-  SCVoteType,
-  SCFlagType,
+  type SCUserLoyaltyPointsType,
+  type SCWebhookEndpointType,
+  type SCWebhookEndpointAttemptType,
+  type SCWebhookEndpointSecretType,
+  type SCWebhookEventsType,
+  type SCVoteType,
+  type SCFlagType,
   SCFlagTypeEnum,
   SCFlagModerationStatusType,
   SCCustomPageTypeEnum,
-  SCCustomPageType,
-  SCDataPortabilityType,
+  type SCCustomPageType,
+  type SCDataPortabilityType,
   SCPreferenceSection,
   SCPreferenceName,
-  SCPreferenceType,
+  type SCPreferenceType,
   SCFeatureName,
-  SCFeatureType,
-  SSOSignInType,
-  SSOSignUpType,
-  SCLegalPageType,
+  type SCFeatureType,
+  type SSOSignInType,
+  type SSOSignUpType,
+  type SCLegalPageType,
   SCLegalPagePoliciesType,
-  SCLegalPageAckType,
-  SCContributionInsightCountersType,
-  SCContributionInsightType,
-  SCEmbedInsightType,
-  SCEmbedInsightCountersType,
-  SCUsersInsightType,
-  SCUsersInsightCountersType,
-  SCFlaggedContributionType,
+  type SCLegalPageAckType,
+  type SCContributionInsightCountersType,
+  type SCContributionInsightType,
+  type SCEmbedInsightType,
+  type SCEmbedInsightCountersType,
+  type SCUsersInsightType,
+  type SCUsersInsightCountersType,
+  type SCFlaggedContributionType,
   SCContributionType,
-  SCContributionStatus,
+  type SCContributionStatus,
   SCContributeStatusType,
-  SCPlatformType,
-  SCAvatarType,
-  SCReactionType,
-  SCSuggestionType,
+  type SCPlatformType,
+  type SCAvatarType,
+  type SCReactionType,
+  type SCSuggestionType,
   SuggestionType,
   SCConnectionStatus,
-  SCDeviceType,
-  SCApnsDeviceType,
-  SCGcmDeviceType,
+  type SCDeviceType,
+  type SCApnsDeviceType,
+  type SCGcmDeviceType,
   SCDeviceApnsTypeEnum,
-  SCDeviceGcmTypeEnum,
+  type SCDeviceGcmTypeEnum,
   SCDeviceTypeEnum
 };
