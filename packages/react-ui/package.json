@@ -30,9 +30,10 @@
     "clean:node_modules": "rimraf node_modules",
     "build:commonjs": "tsc -b tsconfig-cjs.build.json",
     "build:esm": "tsc -b tsconfig-esm.build.json",
+	"build:tsup": "tsup && yarn build:commonjs && yarn build:esm",
     "build:umd": "webpack --mode production",
     "build:umd:analyze": "webpack --mode production --profile --json > ./lib/umd/stats.json && webpack-bundle-analyzer ./lib/umd/stats.json",
-    "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
+    "build": "yarn clean:lib && yarn build:tsup && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
   "directories": {
@@ -144,9 +145,11 @@
     "rimraf": "^3.0.2",
     "sass": "^1.32.6",
     "sinon": "^9.2.4",
+    "transpile-webpack-plugin": "^1.1.3",
     "tslib": "^2.6.2",
     "typescript": "^4.1.3",
-    "webpack": "^5.20.1",
+	"tsup": "^6.0.1",
+	"webpack": "^5.20.1",
     "webpack-atoms": "^17.1.0",
     "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^4.5.0"

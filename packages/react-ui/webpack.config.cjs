@@ -1,15 +1,6 @@
 const path = require('path');
 const {plugins, rules} = require('webpack-atoms');
 
-/** Callbacks with global UMD-name of material-ui imports */
-function externalForMaterialUi({context, request}, callback) {
-	if (/@mui.+/.test(request)) {
-		const name = request.replace(/^.*[\\\/]/, '')
-		return callback(null, 'root MaterialUI.' + name);
-	}
-	callback();
-}
-
 module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
