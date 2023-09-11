@@ -13,6 +13,9 @@ const Component = {
         },
         '& .SCBaseItem-image .MuiBadge-badge': {
           top: theme.spacing(1.5)
+        },
+        '& .SCBaseItem-text': {
+          marginBottom: 0
         }
       },
       '& .SCCommentObject-nested-comments': {
@@ -35,7 +38,7 @@ const Component = {
         overflowWrap: 'anywhere',
         position: 'relative',
         display: 'flex',
-        padding: `12px ${theme.spacing(2)}`,
+        padding: `6px`,
         borderRadius: theme.shape.borderRadius * 0.5,
         borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         '& .MuiCardContent-root': {

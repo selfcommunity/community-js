@@ -114,7 +114,7 @@ const Component = {
           maxWidth: 400,
           margin: theme.spacing(0, 'auto'),
           '& .MuiTabs-root': {
-            margin: theme.spacing(4, 0),
+            margin: theme.spacing(0),
             '& .MuiTabs-flexContainer': {
               justifyContent: 'center',
               '& .MuiTab-root': {
@@ -279,7 +279,7 @@ const Component = {
             bottom: 0,
             left: 0,
             right: 0,
-            padding: theme.spacing(2, 3),
+            padding: theme.spacing(2, 2),
             zIndex: 1000,
             backgroundColor: theme.palette.background.paper,
             '& .SCComposer-media-actions': {

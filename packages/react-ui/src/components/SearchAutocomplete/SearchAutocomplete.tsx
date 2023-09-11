@@ -173,7 +173,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
             </>
           ) : (
             <>
-              <Avatar alt={option[SuggestionType.CATEGORY]['name']} src={option[SuggestionType.CATEGORY]['image_small']} variant="square" />
+              <Avatar alt={option[SuggestionType.CATEGORY]['name']} src={option[SuggestionType.CATEGORY]['image_medium']} variant="square" />
               <Typography ml={1}>{option[SuggestionType.CATEGORY]['name']}</Typography>
             </>
           )}
