@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-	"emitDeclarationOnly": true,
+	"emitDeclarationOnly": false,
 	"importHelpers": true,
     "target": "es6",
     "module": "commonjs",
