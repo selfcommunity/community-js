@@ -1,5 +1,4 @@
 import {CacheStrategies, LRUCache} from '@selfcommunity/utils';
-import {SCCache} from '@selfcommunity/react-core';
 
 /**
  * @hidden
