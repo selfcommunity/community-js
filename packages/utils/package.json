@@ -5,6 +5,7 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "type": "module",
   "sideEffects": false,
   "description": "Utilities to integrate a Community.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
