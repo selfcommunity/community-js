@@ -334,6 +334,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: rest.open});
+  const theme: Theme = useTheme<SCThemeType>();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   // State variables
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -463,7 +465,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // Autofocus
   useEffect(() => {
-    if (!rest.open) {
+    if (!rest.open || fullScreen) {
       return;
     }
     if (type === COMPOSER_TYPE_DISCUSSION) {
@@ -471,7 +473,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     } else {
       editorRef.current && editorRef.current.focus();
     }
-  }, [rest.open, type, editorRef]);
+  }, [fullScreen, rest.open, type, editorRef]);
 
   // CHECKS
   const hasPoll = () => {
@@ -671,8 +673,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   // RENDER
-  const theme: Theme = useTheme<SCThemeType>();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
