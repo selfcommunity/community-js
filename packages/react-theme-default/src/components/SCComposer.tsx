@@ -341,6 +341,9 @@ const Component = {
             },
             '& .SCComposer-actions': {}
           }
+        },
+        '&.SCComposer-ios .SCComposer-actions': {
+          marginBottom: '10px'
         }
       };
     }

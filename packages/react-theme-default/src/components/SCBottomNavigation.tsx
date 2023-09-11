@@ -8,6 +8,9 @@ const Component = {
           color: theme.palette.secondary.main,
           borderTop: `1px solid ${theme.palette.secondary.main}`
         }
+      },
+      '&.SCBottomNavigation-ios': {
+        paddingBottom: '10px'
       }
     })
   }

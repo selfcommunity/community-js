@@ -1,16 +1,4 @@
-import React, {
-  forwardRef,
-  ReactNode,
-  RefObject,
-  SyntheticEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState
-} from 'react';
+import React, {forwardRef, ReactNode, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {
   SCCategoryType,
   SCContributionType,
@@ -42,7 +30,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   Chip,
   Dialog,
   DialogActions,
@@ -71,7 +58,7 @@ import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import {isObject, random, stripHtml} from '@selfcommunity/utils';
+import {iOS, isObject, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
@@ -88,7 +75,6 @@ import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import {extractHashtags} from '../../utils/editor';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -120,6 +106,7 @@ const PREFIX = 'SCComposer';
 
 const classes = {
   root: `${PREFIX}-root`,
+  ios: `${PREFIX}-ios`,
   writing: `${PREFIX}-writing`,
   title: `${PREFIX}-title`,
   titleDense: `${PREFIX}-title-dense`,
@@ -334,6 +321,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: rest.open});
+  const theme: Theme = useTheme<SCThemeType>();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   // State variables
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -463,7 +452,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // Autofocus
   useEffect(() => {
-    if (!rest.open) {
+    if (!rest.open || fullScreen) {
       return;
     }
     if (type === COMPOSER_TYPE_DISCUSSION) {
@@ -471,7 +460,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     } else {
       editorRef.current && editorRef.current.focus();
     }
-  }, [rest.open, type, editorRef]);
+  }, [fullScreen, rest.open, type, editorRef]);
 
   // CHECKS
   const hasPoll = () => {
@@ -669,10 +658,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     () => (EditorProps ? EditorProps : {toolbar: true, uploadImage: type === COMPOSER_TYPE_DISCUSSION}),
     [EditorProps, type]
   );
+  const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
-  const theme: Theme = useTheme<SCThemeType>();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
@@ -1044,7 +1032,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       keepMounted
       onClose={handleClose}
       {...rest}
-      className={classNames(classes.root, {[classes.writing]: editorFocused})}
+      className={classNames(classes.root, {[classes.writing]: editorFocused, [classes.ios]: isIOS})}
       fullScreen={fullScreen}>
       {editorFocused && fullScreen && (
         <Box className={classes.titleDense}>
