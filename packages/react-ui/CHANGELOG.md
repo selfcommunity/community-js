@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.303](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.302...@selfcommunity/react-ui@0.7.0-alpha.303) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix toolbar theme height ([be03347](https://github.com/selfcommunity/community-js/commit/be03347ce763f4ebecc04577546dca104861a500))
+
+
+
+
+
 # [0.7.0-alpha.302](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.301...@selfcommunity/react-ui@0.7.0-alpha.302) (2023-09-11)
 
 
