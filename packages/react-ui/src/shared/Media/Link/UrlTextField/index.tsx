@@ -120,7 +120,8 @@ export default (props: UrlTextFieldProps): JSX.Element => {
   // HANDLERS
   const handleChange = (event: SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
-    setState({url: target.value, urlError: isValidUrl(target.value) ? null : 'validationError'});
+    const url = target.value.startsWith('h') ? target.value : `https://${target.value}`;
+    setState({url, urlError: isValidUrl(url) ? null : 'validationError'});
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
