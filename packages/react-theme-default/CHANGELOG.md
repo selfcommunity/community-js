@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.252](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.251...@selfcommunity/react-theme-default@0.1.0-alpha.252) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix iOS bottom border ([113a81c](https://github.com/selfcommunity/community-js/commit/113a81ce533909eb92c7c7efe41809cc495ffe68))
+* Style fixes ([a682023](https://github.com/selfcommunity/community-js/commit/a6820236b0f1d1a1f6bc5eed6ef8eb8b02aa5f12))
+
+
+
+
+
 # [0.1.0-alpha.251](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.250...@selfcommunity/react-theme-default@0.1.0-alpha.251) (2023-09-11)
 
 

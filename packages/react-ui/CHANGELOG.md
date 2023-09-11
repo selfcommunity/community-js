@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.302](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.301...@selfcommunity/react-ui@0.7.0-alpha.302) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix iOS bottom border ([113a81c](https://github.com/selfcommunity/community-js/commit/113a81ce533909eb92c7c7efe41809cc495ffe68))
+* Fix ux of url input ([c7a7829](https://github.com/selfcommunity/community-js/commit/c7a7829dae062dd5c66a1de8a01c593be11174a8))
+* Remove focus on mobile devices ([f1a4827](https://github.com/selfcommunity/community-js/commit/f1a48273e6f4061140eb6d3e4299ae90b7fc442b))
+
+
+
+
+
 # [0.7.0-alpha.301](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.300...@selfcommunity/react-ui@0.7.0-alpha.301) (2023-09-11)
 
 
