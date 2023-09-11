@@ -46,22 +46,7 @@ const Root = styled(Toolbar, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  [`& .${classes.logo} img`]: {
-    maxHeight: theme.mixins.toolbar.minHeight
-  },
-  [`& .${classes.navigation}`]: {
-    flexGrow: 1,
-    textAlign: 'center'
-  },
-  [`& .${classes.search}`]: {
-    flexGrow: 1
-  },
-  [`& .${classes.profile} .MuiAvatar-root`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  }
-}));
+})(() => ({}));
 
 export interface NavigationToolbarProps extends ToolbarProps {
   /**

@@ -14,12 +14,7 @@ const Root = styled(Toolbar, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({
-  [`& .${classes.logo}`]: {
-    width: 100,
-    height: 20
-  }
-}));
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Navigation Toolbar Mobile Skeleton component. Learn about the available props and the CSS API.
 
