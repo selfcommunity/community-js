@@ -9,8 +9,8 @@ export const baseConfig: Options = {
   bundle: true,
   skipNodeModulesBundle: true,
   watch: false,
-  entry: ['src/index.ts', 'src/components/**/index.tsx'],
-  tsconfig: './tsconfig-esm.build.json',
+  // entry: ['src/index.ts', 'src/components/**/index.tsx'],
+  entry: ['src/index.ts'],
   shims: false
 };
 
@@ -18,12 +18,14 @@ export default defineConfig([
   {
     ...baseConfig,
     outDir: 'lib/cjs',
-    format: ['cjs']
+    format: ['cjs'],
+    tsconfig: './tsconfig-cjs.build.json'
   },
   {
     ...baseConfig,
     outDir: 'lib/esm',
     format: ['esm'],
-    target: 'es2020'
+    target: 'es2020',
+    tsconfig: './tsconfig-esm.build.json'
   }
 ]);
