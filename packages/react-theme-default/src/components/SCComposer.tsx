@@ -343,7 +343,7 @@ const Component = {
           }
         },
         '&.SCComposer-ios .SCComposer-actions': {
-          marginBottom: '10px'
+          marginBottom: '15px'
         }
       };
     }

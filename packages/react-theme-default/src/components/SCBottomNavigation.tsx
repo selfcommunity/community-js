@@ -1,7 +1,9 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      backgroundColor: theme.palette?.navbar?.main,
       '& .SCBottomNavigation-action': {
+        fontSize: '1.57rem',
         color: theme.palette.primary.main,
         borderTop: `1px solid transparent`,
         '&.Mui-selected, &:hover': {
@@ -10,7 +12,7 @@ const Component = {
         }
       },
       '&.SCBottomNavigation-ios': {
-        paddingBottom: '10px'
+        paddingBottom: '15px'
       }
     })
   }
