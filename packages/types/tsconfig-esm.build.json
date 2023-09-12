@@ -10,8 +10,8 @@
     "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
     "jsx": "react",
     "declaration": true,            /* Concatenate & emit output to single file.*/
-    "sourceMap": true,
-    "declarationMap": true,
+    "sourceMap": false,
+    "declarationMap": false,
     "outDir": "lib/esm",                /* Redirect output to the directory. */
     "skipLibCheck": true,           /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true, /* Disallow inconsistently */
