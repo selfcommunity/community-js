@@ -6,19 +6,19 @@ import {
   useChunkStartListener,
   useItemErrorListener,
   useItemFinishListener,
-  useRequestPreSend
+  useRequestPreSend,
 } from '@rpldy/chunked-uploady';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCMediaType} from '@selfcommunity/types';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
-import {md5} from '../../utils/hash';
-import React, {useEffect, useRef, useState} from 'react';
-import {SCMediaChunkType} from '../../types/media';
-import {useIntl} from 'react-intl';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
+import { SCMediaType } from '@selfcommunity/types';
+import { SCContextType, SCUserContextType, useSCContext, useSCUser } from '@selfcommunity/react-core';
+import { useItemProgressListener, useItemStartListener, useUploady } from '@rpldy/uploady';
+import { md5 } from '../../utils/hash';
+import React, { useEffect, useRef, useState } from 'react';
+import { SCMediaChunkType } from '../../types/media';
+import { useIntl } from 'react-intl';
 import messages from '../../messages/common';
-import {Logger, resizeImage} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import { Logger, resizeImage } from '@selfcommunity/utils';
+import { SCOPE_SC_UI } from '../../constants/Errors';
 
 export interface MediaChunkUploaderProps {
   /**
@@ -69,6 +69,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const {refreshSession}: SCUserContextType = useSCUser();
 
   // INTL
   const intl = useIntl();
@@ -143,8 +144,13 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
       sendOptions: {
         paramName: 'image',
-        headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-        method: Endpoints.ComposerChunkUploadMedia.method
+        method: Endpoints.ComposerChunkUploadMedia.method,
+        formatServerResponse: async (response: string, status: number, headers: Record<string, string> | undefined) => {
+          if (status === 401) {
+            await refreshSession();
+          }
+          return Promise.resolve(JSON.parse(response));
+        }
       }
     };
     if (chunkStateRef.current.chunks[data.item.id].upload_id) {
@@ -155,13 +161,18 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     return res;
   });
 
-  useChunkFinishListener((data) => {
-    chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: data.uploadData.response.data.upload_id});
+  useChunkFinishListener(async (data) => {
+    const _data = await data.uploadData.response.data;
+    chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: _data.upload_id});
   });
 
-  useRequestPreSend(({items, options}): Promise<PreSendResponse> => {
+  useRequestPreSend(async ({items, options}): Promise<PreSendResponse> => {
+    const destination = ['JWT', 'OAuth'].includes(scContext.settings.session.type) ? {
+      headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}
+    } : {};
+
     if (items.length == 0) {
-      return Promise.resolve({options});
+      return Promise.resolve({options, destination});
     }
 
     //returned object can be wrapped with a promise
@@ -175,7 +186,8 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           resolve({
             items: items as BatchItem[],
             options: {
-              inputFieldName: options.inputFieldName
+              inputFieldName: options.inputFieldName,
+              destination
             }
           });
         })
@@ -183,7 +195,8 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           Logger.error(error, SCOPE_SC_UI);
           resolve({
             options: {
-              inputFieldName: options.inputFieldName
+              inputFieldName: options.inputFieldName,
+              destination
             }
           });
         });
