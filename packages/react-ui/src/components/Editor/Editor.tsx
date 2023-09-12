@@ -236,7 +236,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           </Stack>
         )}
         <RichTextPlugin
-          contentEditable={<ContentEditable className={classes.content} onFocus={() => console.log('focus')} onBlur={() => console.log('blur')} />}
+          contentEditable={<ContentEditable className={classes.content} />}
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
               <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
@@ -253,7 +253,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <MentionsPlugin />
         {/*<HashtagPlugin />*/}
         <LinkPlugin />
-        {!isMobile && <FloatingLinkPlugin />}
+        <FloatingLinkPlugin />
         <ApiPlugin ref={apiRef} />
       </LexicalComposer>
     </Root>
