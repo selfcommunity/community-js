@@ -6,7 +6,6 @@ module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
     mode,
-    devtool: 'eval-source-map',
     entry: {
       'react-core': './src/index.ts',
     },
@@ -23,9 +22,14 @@ module.exports = (env, argv) => {
       extensions: ['.js', '.ts', '.tsx', '.json'],
     },
     externals: [/^react/, /^react-dom/, /^react-intl/, /^@mui\/[\/a-zA-Z]*/, /^notistack/],
-    performance: {
-      hints: 'warning',
-    },
+		optimization: {
+			splitChunks: {
+				chunks: 'all'
+			},
+		},
+		performance: {
+			hints: false
+		},
     plugins: [
       plugins.define({
         'process.env.NODE_ENV': JSON.stringify(mode),

@@ -5,7 +5,6 @@ module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
     mode,
-    devtool: 'source-map',
     entry: {
       'react-templates': './src/index.ts'
     },
@@ -28,6 +27,14 @@ module.exports = (env, argv) => {
       /^@emotion\/[\/a-zA-Z]*/,
       /^@mui\/[\/a-zA-Z]*/
     ],
+		optimization: {
+			splitChunks: {
+				chunks: 'all'
+			},
+		},
+		performance: {
+			hints: false
+		},
     plugins: [
       plugins.define({
         'process.env.NODE_ENV': JSON.stringify(mode)

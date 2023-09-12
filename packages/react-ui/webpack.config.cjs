@@ -5,7 +5,6 @@ module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
     mode,
-    devtool: 'source-map',
     entry: {
       'react-ui': './src/index.ts'
     },
@@ -21,6 +20,14 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
     },
+		optimization: {
+			splitChunks: {
+				chunks: 'all'
+			},
+		},
+		performance: {
+			hints: false
+		},
     externals: [
 			/^react/,
 			/^react-dom/,
@@ -30,8 +37,7 @@ module.exports = (env, argv) => {
 			/^@emotion\/[\/a-zA-Z]*/,
 			/^@mui\/[\/a-zA-Z]*/,
 			/^pdfjs-dist\/[\/a-zA-Z]*/,
-			/^libphonenumber-js/,
-			/^date-fns/,
+			/^notistack/,
 		],
     plugins: [
       plugins.define({
