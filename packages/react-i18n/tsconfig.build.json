@@ -11,7 +11,7 @@
     "sourceMap": false,
     "declarationMap": false,
     "outDir": "lib/types",                /* Redirect output to the directory. */
-    "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
+    "esModuleInterop": true,        /* Enables interop between CommonJS and ES */
     "skipLibCheck": true,           /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently */
   },
