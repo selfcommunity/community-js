@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.305](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.304...@selfcommunity/react-ui@0.7.0-alpha.305) (2023-09-12)
+
+
+### Bug Fixes
+
+* Fix link edit on mobile device ([3cd3c63](https://github.com/selfcommunity/community-js/commit/3cd3c63b76d380df543b0895f47b60198d479c25))
+
+
+
+
+
 # [0.7.0-alpha.304](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.303...@selfcommunity/react-ui@0.7.0-alpha.304) (2023-09-12)
 
 
