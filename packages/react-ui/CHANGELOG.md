@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.306](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.305...@selfcommunity/react-ui@0.7.0-alpha.306) (2023-09-12)
+
+
+### Bug Fixes
+
+* Fix 401 session reload on file upload ([c14e24e](https://github.com/selfcommunity/community-js/commit/c14e24ea21165e8a9f206e8e9ecc1ab26d2823e7))
+
+
+
+
+
 # [0.7.0-alpha.305](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.304...@selfcommunity/react-ui@0.7.0-alpha.305) (2023-09-12)
 
 
