@@ -5,6 +5,7 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "type": "module",
   "sideEffects": false,
   "description": "React Templates Components to integrate a Community created with SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",

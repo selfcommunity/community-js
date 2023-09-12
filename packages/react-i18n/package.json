@@ -5,6 +5,7 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "type": "module",
   "sideEffects": false,
   "types": "./lib/types/index.d.ts",
   "description": "Translations to integrate a Community created with SelfCommunity.",
