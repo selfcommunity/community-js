@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.304](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.303...@selfcommunity/react-ui@0.7.0-alpha.304) (2023-09-12)
+
+
+### Bug Fixes
+
+* fix ios bottom bar ([b725210](https://github.com/selfcommunity/community-js/commit/b725210d5799d0d81f6a56d19d57f9ed2a60e3b9))
+
+
+
+
+
 # [0.7.0-alpha.303](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.302...@selfcommunity/react-ui@0.7.0-alpha.303) (2023-09-11)
 
 

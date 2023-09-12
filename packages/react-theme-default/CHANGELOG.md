@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.254](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.253...@selfcommunity/react-theme-default@0.1.0-alpha.254) (2023-09-12)
+
+
+### Bug Fixes
+
+* fix ios bottom bar ([b725210](https://github.com/selfcommunity/community-js/commit/b725210d5799d0d81f6a56d19d57f9ed2a60e3b9))
+
+
+
+
+
 # [0.1.0-alpha.253](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.252...@selfcommunity/react-theme-default@0.1.0-alpha.253) (2023-09-11)
 
 
