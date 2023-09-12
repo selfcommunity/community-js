@@ -136,7 +136,6 @@ export default (props: EditMediaProps): JSX.Element => {
       <ChunkedUploady
         destination={{
           url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-          headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
           method: Endpoints.ComposerChunkUploadMedia.method
         }}
         chunkSize={204800}

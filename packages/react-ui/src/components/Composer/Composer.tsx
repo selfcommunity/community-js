@@ -20,7 +20,7 @@ import {
   SCUserContext,
   SCUserContextType,
   UserUtils,
-  useSCFetchAddressingTagList
+  useSCFetchAddressingTagList, useSCPreferences, useSCUser,
 } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
@@ -315,8 +315,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   } = props;
 
   // Context
-  const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  const scPrefernces: SCPreferencesContextType = useSCPreferences();
+  const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
   // HOOKS
@@ -344,7 +344,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     } else {
       _feedObject = _feedObject as SCFeedStatusType;
     }
-    if (feedObject.author.id === scAuthContext.user.id) {
+    if (feedObject.author.id === scUserContext.user.id) {
       dispatch({
         type: 'multiple',
         value: {
@@ -594,7 +594,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   const handleSubmit = (event: SyntheticEvent): void => {
-    if (UserUtils.isBlocked(scAuthContext.user)) {
+    if (UserUtils.isBlocked(scUserContext.user)) {
       // deny submit action if authenticated user is blocked
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -861,7 +861,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </FormControl>
           </Box>
           <Box>
-            {!scAuthContext.user ? <Avatar className={classes.avatar} /> : <Avatar className={classes.avatar} src={scAuthContext.user.avatar} />}
+            {!scUserContext.user ? <Avatar className={classes.avatar} /> : <Avatar className={classes.avatar} src={scUserContext.user.avatar} />}
           </Box>
           <Box>
             <IconButton onClick={handleClose}>
@@ -958,7 +958,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             {/*    <Icon>play_circle_outline</Icon>*/}
             {/*  </IconButton>*/}
             {/*)}*/}
-            {(preferences[SCPreferences.ADDONS_POLLS_ENABLED] || UserUtils.isStaff(scAuthContext.user)) && (
+            {(preferences[SCPreferences.ADDONS_POLLS_ENABLED] || UserUtils.isStaff(scUserContext.user)) && (
               <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
                 <Badge className={classes.badgeError} badgeContent={pollError ? ' ' : null} color="error">
                   <Icon>bar_chart</Icon>
@@ -1021,7 +1021,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   }
 
   const _maxWidth = useMemo(() => (maxWidth ? maxWidth : type === COMPOSER_TYPE_DISCUSSION ? 'md' : 'sm'), [maxWidth, type]);
-  if (!scAuthContext.user) {
+
+  if (!scUserContext.user && !(scUserContext.loading && open)) {
     return null;
   }
 
