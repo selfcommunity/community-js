@@ -35,14 +35,7 @@ const Root = styled(MuiBottomNavigation, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  backgroundColor: theme.palette?.navbar?.main,
-  [`& .${classes.action}`]: {
-    fontSize: '1.57rem'
-  }
-}));
+})(() => ({}));
 
 export type BottomNavigationProps = MuiBottomNavigationProps;
 
