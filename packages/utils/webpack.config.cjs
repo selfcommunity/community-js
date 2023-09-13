@@ -5,14 +5,13 @@ module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
     mode,
-    devtool: 'source-map',
     entry: {
-      'api-services': './src/index.ts'
+      utils: './src/index.ts'
     },
     output: {
       path: path.join(__dirname, './lib/umd'),
       filename: '[name].js',
-      library: 'SelfCommunityApiServices',
+      library: 'SelfCommunityUtils',
       libraryTarget: 'umd'
     },
     module: {
@@ -21,6 +20,14 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
     },
+		optimization: {
+			splitChunks: {
+				chunks: 'all'
+			},
+		},
+		performance: {
+			hints: false
+		},
     plugins: [
       plugins.define({
         'process.env.NODE_ENV': JSON.stringify(mode)

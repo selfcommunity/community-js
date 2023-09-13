@@ -1,4 +1,5 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 const {plugins, rules} = require('webpack-atoms');
 
 module.exports = (env, argv) => {
@@ -6,20 +7,21 @@ module.exports = (env, argv) => {
   return {
     mode,
     entry: {
-      'react-ui': './src/index.ts'
+      'react-core': './src/index.ts',
     },
     output: {
       path: path.join(__dirname, './lib/umd'),
       filename: '[name].js',
-      library: 'SelfCommunityReactUI',
-      libraryTarget: 'umd'
+      library: 'SelfCommunityReactCore',
+      libraryTarget: 'umd',
     },
     module: {
-      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}, {...rules.css()}]
+      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}],
     },
     resolve: {
-      extensions: ['.js', '.ts', '.tsx', '.json']
+      extensions: ['.js', '.ts', '.tsx', '.json'],
     },
+    externals: [/^react/, /^react-dom/, /^react-intl/, /^@mui\/[\/a-zA-Z]*/, /^notistack/],
 		optimization: {
 			splitChunks: {
 				chunks: 'all'
@@ -28,26 +30,14 @@ module.exports = (env, argv) => {
 		performance: {
 			hints: false
 		},
-    externals: [
-			/^react/,
-			/^react-dom/,
-			/^react-intl/,
-			/^notistack\/[\/a-zA-Z]*/,
-			/^@rpldy\/[\/a-zA-Z]*/,
-			/^@emotion\/[\/a-zA-Z]*/,
-			/^@mui\/[\/a-zA-Z]*/,
-			/^pdfjs-dist\/[\/a-zA-Z]*/,
-			/^notistack/,
-		],
     plugins: [
       plugins.define({
-        'process.env.NODE_ENV': JSON.stringify(mode)
+        'process.env.NODE_ENV': JSON.stringify(mode),
       }),
-      // plugins.uglify(),
       plugins.banner({
         banner: '(c) 2023 - present: Quentral Srl | https://github.com/selfcommunity/community-js/blob/master/LICENSE.md',
-        entryOnly: true
-      })
-    ]
+        entryOnly: true,
+      }),
+    ],
   };
 };
