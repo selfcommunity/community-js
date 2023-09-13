@@ -5,38 +5,29 @@ module.exports = (env, argv) => {
   const mode = argv.mode || 'development'; // dev mode by default
   return {
     mode,
-    devtool: 'source-map',
     entry: {
-      'react-theme-default': './src/index.ts'
+      'react-i18n': './src/index.ts'
     },
     output: {
       path: path.join(__dirname, './lib/umd'),
       filename: '[name].js',
-      library: 'SelfCommunityReactThemeDefault',
+      library: 'SelfCommunityReactI18n',
       libraryTarget: 'umd'
     },
     module: {
-      rules: [
-        {...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/},
-        {...rules.css(), test: /\.css?$/},
-        {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: 'community/'
-              }
-            }
-          ]
-        }
-      ]
+      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}]
     },
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
     },
-    externals: [/^react/, /^react-dom/, /^react-intl/, /^@emotion\/[\/a-zA-Z]*/, /^@mui\/[\/a-zA-Z]*/],
+		optimization: {
+			splitChunks: {
+				chunks: 'all'
+			},
+		},
+		performance: {
+			hints: false
+		},
     plugins: [
       plugins.define({
         'process.env.NODE_ENV': JSON.stringify(mode)

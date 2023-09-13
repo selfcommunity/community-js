@@ -127,6 +127,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     setObj(messageReceiver(item, authUserId));
     setOpenNewMessage(false);
   };
+
   /**
    * Handles thread closing after delete
    */
@@ -142,6 +143,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     setObj(SCPrivateMessageStatusType.NEW);
     onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
   };
+
   /**
    * Handles new messages open from user profile page or notifications section
    */
