@@ -366,6 +366,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
       </Root>
       {isMobile ? (
         <SwipeableDrawerRoot
+          onClick={() => setAnchorEl(null)}
           className={classes.drawerRoot}
           anchor="bottom"
           open={Boolean(anchorEl)}
@@ -377,6 +378,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
         </SwipeableDrawerRoot>
       ) : (
         <MenuRoot
+          onClick={() => setAnchorEl(null)}
           className={classes.menuRoot}
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}

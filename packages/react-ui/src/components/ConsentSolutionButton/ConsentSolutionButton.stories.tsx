@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ConsentSolutionButton from './index';
+import ConsentSolutionButton, {ConsentSolutionButtonProps} from './index';
 import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 
 export default {
@@ -13,7 +13,7 @@ const template = (args) => (
   </div>
 );
 
-export const Tec: StoryObj<ConsentSolutionButton> = {
+export const Tec: StoryObj<ConsentSolutionButtonProps> = {
   args: {
     ConsentSolutionProps: {
       legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
@@ -22,7 +22,7 @@ export const Tec: StoryObj<ConsentSolutionButton> = {
   render: template
 };
 
-export const Privacy: StoryObj<ConsentSolutionButton> = {
+export const Privacy: StoryObj<ConsentSolutionButtonProps> = {
   args: {
     ConsentSolutionProps: {
       legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
