@@ -54,7 +54,6 @@ import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './
  * Types
  */
 import {
-	AccountSearchParams,
   AccountCreateParams,
   AccountVerifyParams,
   AccountResetParams,
@@ -222,7 +221,6 @@ export {
   AccountVerifyParams,
   AccountResetParams,
   AccountRecoverParams,
-  AccountSearchParams,
   CommentCreateParams,
   IncubatorCreateParams,
   IncubatorSearchParams,
