@@ -167,12 +167,12 @@ const theme = {
   spacing: 8,
   mixins: {
     toolbar: {
-      minHeight: 40,
+      minHeight: 45,
       '@media (min-width:0px)': {
-        minHeight: 40
+        minHeight: 45
       },
       '@media (min-width:600px)': {
-        minHeight: 40
+        minHeight: 45
       }
     }
   },

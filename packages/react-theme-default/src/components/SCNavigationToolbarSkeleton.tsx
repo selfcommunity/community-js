@@ -12,9 +12,6 @@ const Component = {
       '& .SCNavigationToolbarSkeleton-avatar': {
         width: theme.selfcommunity.user.avatar.sizeMedium,
         height: theme.selfcommunity.user.avatar.sizeMedium
-      },
-      [theme.breakpoints.up('xs')]: {
-        minHeight: 45
       }
     })
   }
