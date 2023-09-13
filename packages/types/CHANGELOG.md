@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.11...@selfcommunity/types@0.5.0-alpha.12) (2023-09-13)
+
+
+### Bug Fixes
+
+* build optimization ([1ceac97](https://github.com/selfcommunity/community-js/commit/1ceac97e8f92aa0187a9415f4a4db43dd5b5e302))
+* build optimization ([00f8f69](https://github.com/selfcommunity/community-js/commit/00f8f69859d7abe9581334523d76f498e30412a6))
+* build optimization ([49b80a5](https://github.com/selfcommunity/community-js/commit/49b80a5b6deb384a4af25e619fecfaa7d8c63cb7))
+* build optimization ([ce40be5](https://github.com/selfcommunity/community-js/commit/ce40be51278ad2f1ec1a8f5a14905a869a3ceb44))
+* build optimization ([2f504dd](https://github.com/selfcommunity/community-js/commit/2f504dd914ddfaabf66da66ecb5f6731f9ad76d4))
+* build optimization ([bf7c81d](https://github.com/selfcommunity/community-js/commit/bf7c81d2fbf202f4b6a8b44be5741c7e5844d80e))
+* build optimization ([29644f1](https://github.com/selfcommunity/community-js/commit/29644f1f5fcbb84691379a97a04439de8e7b2dca))
+* build optimization ([4c2c3b9](https://github.com/selfcommunity/community-js/commit/4c2c3b92d4ca535381bfdf12632e590ec52eb4e9))
+* build optimization ([11de68f](https://github.com/selfcommunity/community-js/commit/11de68ff6aea9d9816206220a647132865b72296))
+
+
+
+
+
 # [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.10...@selfcommunity/types@0.5.0-alpha.11) (2023-09-04)
 
 

@@ -1,15 +1,15 @@
 {
   "name": "@selfcommunity/react-i18n",
-  "version": "0.5.0-alpha.50",
+  "version": "0.5.0-alpha.51",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "exports": {
-	".": {
-	  "require": "./lib/cjs/index.js",
-	  "import": "./lib/esm/index.js"
-	}
+    ".": {
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js"
+    }
   },
   "sideEffects": false,
   "types": "./lib/types/index.d.ts",
@@ -34,9 +34,9 @@
     "prettier-list-different": "prettier './**/*.js' './**/*.css' './**/*.md' --list-different",
     "clean:lib": "rimraf lib",
     "clean:node_modules": "rimraf node_modules",
-	"build:commonjs": "tsc -b tsconfig-cjs.build.json",
-	"build:esm": "tsc -b tsconfig-esm.build.json",
-	"build:umd": "webpack --mode production",
+    "build:commonjs": "tsc -b tsconfig-cjs.build.json",
+    "build:esm": "tsc -b tsconfig-esm.build.json",
+    "build:umd": "webpack --mode production",
     "build:umd:analyze": "webpack --mode production --profile --json > ./lib/umd/stats.json && webpack-bundle-analyzer ./lib/umd/stats.json",
     "build:types": "tsc -b tsconfig.build.json",
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd && yarn build:types",
@@ -62,8 +62,8 @@
     "@types/sinon": "^9.0.10",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
-	"babel-jest": "^26.6.3",
-	"chai": "^4.2.0",
+    "babel-jest": "^26.6.3",
+    "chai": "^4.2.0",
     "cherry-pick": "^0.5.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.6",

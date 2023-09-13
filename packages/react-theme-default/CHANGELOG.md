@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.257](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.256...@selfcommunity/react-theme-default@0.1.0-alpha.257) (2023-09-13)
+
+
+### Bug Fixes
+
+* build optimization ([1ceac97](https://github.com/selfcommunity/community-js/commit/1ceac97e8f92aa0187a9415f4a4db43dd5b5e302))
+* build optimization ([00f8f69](https://github.com/selfcommunity/community-js/commit/00f8f69859d7abe9581334523d76f498e30412a6))
+* build optimization ([49b80a5](https://github.com/selfcommunity/community-js/commit/49b80a5b6deb384a4af25e619fecfaa7d8c63cb7))
+* build optimization ([ce40be5](https://github.com/selfcommunity/community-js/commit/ce40be51278ad2f1ec1a8f5a14905a869a3ceb44))
+* build optimization ([8c37a63](https://github.com/selfcommunity/community-js/commit/8c37a6313daeb71056316d288cda856afd5a5238))
+* build optimization ([2f504dd](https://github.com/selfcommunity/community-js/commit/2f504dd914ddfaabf66da66ecb5f6731f9ad76d4))
+* build optimization ([b8d6766](https://github.com/selfcommunity/community-js/commit/b8d6766a764cf125ae0eda3b5eca9391c588a5ff))
+* build optimization ([bf7c81d](https://github.com/selfcommunity/community-js/commit/bf7c81d2fbf202f4b6a8b44be5741c7e5844d80e))
+* build optimization ([ff9021b](https://github.com/selfcommunity/community-js/commit/ff9021b50a6b41b804b1c6d9c025aefdb1f12719))
+* build optimization ([4c2c3b9](https://github.com/selfcommunity/community-js/commit/4c2c3b92d4ca535381bfdf12632e590ec52eb4e9))
+* build optimization ([e593518](https://github.com/selfcommunity/community-js/commit/e5935186b7866e2d35e9e7df69d33a003efdd0e5))
+* build optimization ([2a33924](https://github.com/selfcommunity/community-js/commit/2a33924523296726dd7a1948ca7755a93578e711))
+* Fix CommentObjectReply theme ([e9df623](https://github.com/selfcommunity/community-js/commit/e9df623822827424bb0d39ef0e1c8ac79adae28b))
+* Fix navigation toolbar height ([a17139e](https://github.com/selfcommunity/community-js/commit/a17139e43dc8e124f132805db153c3ccb5b6b738))
+
+
+
+
+
 # [0.1.0-alpha.256](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.255...@selfcommunity/react-theme-default@0.1.0-alpha.256) (2023-09-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
