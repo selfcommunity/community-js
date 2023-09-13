@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.308](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.307...@selfcommunity/react-ui@0.7.0-alpha.308) (2023-09-13)
+
+
+### Bug Fixes
+
+* Fix close NavigationSettingsIconButton.tsx after click ([cbc276d](https://github.com/selfcommunity/community-js/commit/cbc276d6e43373aae2551d5c2235171165ef7be5))
+* Fix emoji type in PrivateMessageEditor.tsx ([26eae0b](https://github.com/selfcommunity/community-js/commit/26eae0bd7c7ed7cca5b8908caac1eac93951e48d))
+
+
+
+
+
 # [0.7.0-alpha.307](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.306...@selfcommunity/react-ui@0.7.0-alpha.307) (2023-09-13)
 
 
