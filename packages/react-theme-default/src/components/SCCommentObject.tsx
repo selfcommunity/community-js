@@ -30,6 +30,9 @@ const Component = {
             paddingTop: 5
           }
         },
+        '& .SCCommentObjectReply-root .SCEditor-root': {
+          padding: '6px'
+        },
         [theme.breakpoints.up('sm')]: {
           paddingLeft: theme.spacing(6)
         }
@@ -67,7 +70,7 @@ const Component = {
           }
         }
       },
-      '& .SCCommentObject-avatar': {
+      '& .SCCommentObject-avatar, & .SCCommentObjectReply-avatar': {
         top: theme.spacing(),
         width: theme.selfcommunity.user.avatar.sizeMedium,
         height: theme.selfcommunity.user.avatar.sizeMedium
@@ -118,7 +121,6 @@ const Component = {
         '& .SCBullet-root': {
           display: 'none'
         },
-
         [theme.breakpoints.up('sm')]: {
           '& > *': {
             marginRight: 0
