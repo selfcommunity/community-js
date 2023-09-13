@@ -204,7 +204,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
           />
         ) : (
           <>
-            {openEmojiSection && <EmojiPicker className={classes.emojiSection} onEmojiClick={handleEmojiClick} width="100%" />}
+            {openEmojiSection && <EmojiPicker className={classes.emojiSection} onEmojiClick={handleEmojiClick} width="100%" searchDisabled />}
             <TextField
               size="small"
               disabled={Boolean(messageFiles.length) || openMediaSection}
