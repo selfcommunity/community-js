@@ -4,8 +4,14 @@
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
+  "module": "./lib/types/index.js",
   "type": "module",
+  "exports": {
+	".": {
+	  "require": "./lib/cjs/index.js",
+	  "import": "./lib/types/index.js"
+	}
+  },
   "sideEffects": false,
   "types": "./lib/types/index.d.ts",
   "description": "Translations to integrate a Community created with SelfCommunity.",

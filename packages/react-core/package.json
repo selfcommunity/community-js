@@ -7,7 +7,12 @@
   "license": "MIT",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "type": "module",
+  "exports": {
+	".": {
+	  "require": "./lib/cjs/index.js",
+	  "import": "./lib/esm/index.js"
+	}
+  },
   "sideEffects": false,
   "keywords": [
     "react",
@@ -59,10 +64,10 @@
     "react-intl": "^6.4.4"
   },
   "dependencies": {
-    "@selfcommunity/api-services": "^0.4.0-alpha.32",
-    "@selfcommunity/react-i18n": "^0.5.0-alpha.50",
-    "@selfcommunity/types": "^0.5.0-alpha.11",
-    "@selfcommunity/utils": "^0.2.0-alpha.8",
+	"@selfcommunity/api-services": "file:../api-services",
+	"@selfcommunity/react-i18n": "file:../react-i18n",
+	"@selfcommunity/types": "file:../types",
+	"@selfcommunity/utils": "file:../utils",
     "js-cookie": "^3.0.5",
     "pubsub-js": "^1.9.4",
     "react-singleton-hook": "^4.0.1",

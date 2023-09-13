@@ -7,7 +7,12 @@
   "license": "MIT",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "type": "module",
+  "exports": {
+	".": {
+	  "require": "./lib/cjs/index.js",
+	  "import": "./lib/esm/index.js"
+	}
+  },
   "sideEffects": false,
   "keywords": [
     "react",
@@ -70,10 +75,10 @@
   "dependencies": {
     "@lexical/html": "^0.10.0",
     "@lexical/react": "^0.10.0",
-    "@selfcommunity/api-services": "^0.4.0-alpha.32",
-    "@selfcommunity/react-core": "^0.4.0-alpha.100",
-    "@selfcommunity/react-i18n": "^0.5.0-alpha.50",
-    "@selfcommunity/types": "^0.5.0-alpha.11",
+	"@selfcommunity/api-services": "file:../api-services",
+	"@selfcommunity/react-core": "file:../react-core",
+	"@selfcommunity/react-i18n": "file:../react-i18n",
+	"@selfcommunity/types": "file:../types",
     "@selfcommunity/utils": "^0.2.0-alpha.8",
     "@types/classnames": "^2.3.1",
     "autosuggest-highlight": "^3.1.1",

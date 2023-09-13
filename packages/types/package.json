@@ -5,7 +5,12 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "type": "module",
+  "exports": {
+	".": {
+	  "require": "./lib/cjs/index.js",
+	  "import": "./lib/esm/index.js"
+	}
+  },
   "sideEffects": false,
   "description": "Types to integrate a community created with SelfCommunity.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",

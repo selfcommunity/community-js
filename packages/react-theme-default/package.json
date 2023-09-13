@@ -5,7 +5,12 @@
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "type": "module",
+  "exports": {
+	".": {
+	  "require": "./lib/cjs/index.js",
+	  "import": "./lib/esm/index.js"
+	}
+  },
   "sideEffects": false,
   "description": "Default theme to use with SelfCommunity TS library",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
@@ -53,8 +58,8 @@
     "react-dom": "17 || 18"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.4.0-alpha.100",
-    "@selfcommunity/react-ui": "^0.7.0-alpha.299"
+	"@selfcommunity/react-core": "file:../react-core",
+	"@selfcommunity/react-ui": "file:../react-ui"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

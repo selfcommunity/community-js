@@ -54,6 +54,7 @@ import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './
  * Types
  */
 import {
+	AccountSearchParams,
   AccountCreateParams,
   AccountVerifyParams,
   AccountResetParams,
@@ -215,6 +216,7 @@ export {
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,
+	AccountSearchParams,
   AccountCreateParams,
   AccountVerifyParams,
   AccountResetParams,
