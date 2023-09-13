@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.259](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.258...@selfcommunity/react-theme-default@0.1.0-alpha.259) (2023-09-13)
+
+
+### Bug Fixes
+
+* Fix toolbar height ([2da4246](https://github.com/selfcommunity/community-js/commit/2da4246df20e88fa299b1b7c047357b49fa548d5))
+
+
+
+
+
 # [0.1.0-alpha.258](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.257...@selfcommunity/react-theme-default@0.1.0-alpha.258) (2023-09-13)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
