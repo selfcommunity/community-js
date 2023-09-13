@@ -136,7 +136,7 @@ const Component = {
       '& .SCEditor-h3': {
         fontSize: '1rem',
         color: theme.palette.text.primary,
-        fontWeight: theme.typography.fontWeightLight,
+        fontWeight: theme.typography.fontWeightBold,
         margin: theme.spacing(0, 0, 0.5, 0)
       },
       '& .SCEditor-textBold': {

@@ -1,13 +1,14 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Alert, Box, IconButton, TextField} from '@mui/material';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { styled } from '@mui/material/styles';
+import { Alert, Box, IconButton, TextField } from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {useThemeProps} from '@mui/system';
-import {EmojiClickData} from 'emoji-picker-react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { useThemeProps } from '@mui/system';
+import { EmojiClickData } from 'emoji-picker-react';
 import EmojiPicker from '../../shared/EmojiPicker';
+import { iOS } from '@selfcommunity/utils';
 
 const messages = defineMessages({
   placeholder: {
@@ -20,6 +21,7 @@ const PREFIX = 'SCPrivateMessageEditor';
 
 const classes = {
   root: `${PREFIX}-root`,
+  ios: `${PREFIX}-ios`,
   messageInput: `${PREFIX}-message-input`,
   uploadMediaSection: `${PREFIX}-upload-media-section`,
   emojiSection: `${PREFIX}-emoji-section`
@@ -105,11 +107,11 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
 
   // INTL
   const intl = useIntl();
+
   // REF
   const ref = useRef(null);
 
   // HANDLERS
-
   const handleMediaSectionClose = () => {
     setOpenMediaSection(false);
     setMessageFiles([]);
@@ -143,6 +145,8 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     setMessage(text);
   };
 
+  // EFFECTS
+
   useEffect(() => {
     setThreadId(onThreadChangeId);
     if (threadId !== onThreadChangeId) {
@@ -151,6 +155,9 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
       setOpenMediaSection(false);
     }
   }, [onThreadChangeId]);
+
+  // MEMO
+  const isIOS = useMemo(() => iOS(), []);
 
   /**
    * Rendering
@@ -200,7 +207,6 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
             {openEmojiSection && <EmojiPicker className={classes.emojiSection} onEmojiClick={handleEmojiClick} width="100%" />}
             <TextField
               size="small"
-              variant="filled"
               disabled={Boolean(messageFiles.length) || openMediaSection}
               ref={ref}
               className={classes.messageInput}
@@ -234,8 +240,9 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
       </>
     );
   }
+
   return (
-    <Root {...rest} className={classNames(classes.root, className)}>
+    <Root {...rest} className={classNames(classes.root, className, {[classes.ios]: isIOS})}>
       {renderContent()}
     </Root>
   );

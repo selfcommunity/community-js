@@ -1,16 +1,4 @@
-import React, {
-  forwardRef,
-  ReactNode,
-  RefObject,
-  SyntheticEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState
-} from 'react';
+import React, {forwardRef, ReactNode, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {
   SCCategoryType,
   SCContributionType,
@@ -32,7 +20,7 @@ import {
   SCUserContext,
   SCUserContextType,
   UserUtils,
-  useSCFetchAddressingTagList
+  useSCFetchAddressingTagList, useSCPreferences, useSCUser,
 } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
@@ -42,7 +30,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   Chip,
   Dialog,
   DialogActions,
@@ -71,7 +58,7 @@ import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import {isObject, random, stripHtml} from '@selfcommunity/utils';
+import {iOS, isObject, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
@@ -88,7 +75,6 @@ import {ComposerSkeleton} from './index';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import {extractHashtags} from '../../utils/editor';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -120,6 +106,7 @@ const PREFIX = 'SCComposer';
 
 const classes = {
   root: `${PREFIX}-root`,
+  ios: `${PREFIX}-ios`,
   writing: `${PREFIX}-writing`,
   title: `${PREFIX}-title`,
   titleDense: `${PREFIX}-title-dense`,
@@ -328,12 +315,14 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   } = props;
 
   // Context
-  const scPrefernces: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scAuthContext: SCUserContextType = useContext(SCUserContext);
+  const scPrefernces: SCPreferencesContextType = useSCPreferences();
+  const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: rest.open});
+  const theme: Theme = useTheme<SCThemeType>();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   // State variables
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -355,7 +344,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     } else {
       _feedObject = _feedObject as SCFeedStatusType;
     }
-    if (feedObject.author.id === scAuthContext.user.id) {
+    if (feedObject.author.id === scUserContext.user.id) {
       dispatch({
         type: 'multiple',
         value: {
@@ -463,7 +452,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // Autofocus
   useEffect(() => {
-    if (!rest.open) {
+    if (!rest.open || fullScreen) {
       return;
     }
     if (type === COMPOSER_TYPE_DISCUSSION) {
@@ -471,7 +460,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     } else {
       editorRef.current && editorRef.current.focus();
     }
-  }, [rest.open, type, editorRef]);
+  }, [fullScreen, rest.open, type, editorRef]);
 
   // CHECKS
   const hasPoll = () => {
@@ -605,7 +594,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   const handleSubmit = (event: SyntheticEvent): void => {
-    if (UserUtils.isBlocked(scAuthContext.user)) {
+    if (UserUtils.isBlocked(scUserContext.user)) {
       // deny submit action if authenticated user is blocked
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -669,10 +658,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     () => (EditorProps ? EditorProps : {toolbar: true, uploadImage: type === COMPOSER_TYPE_DISCUSSION}),
     [EditorProps, type]
   );
+  const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
-  const theme: Theme = useTheme<SCThemeType>();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
 
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
 
@@ -718,7 +706,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </Tooltip>
           </Box>
         </DialogTitle>
-        <DialogContent className={classes.audienceContent}>
+        <DialogContent className={classNames(classes.content, classes.audienceContent)}>
           <Tabs value={audience} onChange={handleChange('audience')} aria-label="audience type">
             <Tab
               value={AUDIENCE_ALL}
@@ -847,7 +835,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </Tooltip>
           </Box>
         </DialogTitle>
-        <DialogContent className={classes.locationContent}>
+        <DialogContent className={classNames(classes.content, classes.locationContent)}>
           <LocationAutocomplete
             onChange={handleChange('location')}
             defaultValue={location ? ({full_address: location.location} as SCLocalityType) : ''}
@@ -873,7 +861,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </FormControl>
           </Box>
           <Box>
-            {!scAuthContext.user ? <Avatar className={classes.avatar} /> : <Avatar className={classes.avatar} src={scAuthContext.user.avatar} />}
+            {!scUserContext.user ? <Avatar className={classes.avatar} /> : <Avatar className={classes.avatar} src={scUserContext.user.avatar} />}
           </Box>
           <Box>
             <IconButton onClick={handleClose}>
@@ -970,7 +958,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             {/*    <Icon>play_circle_outline</Icon>*/}
             {/*  </IconButton>*/}
             {/*)}*/}
-            {(preferences[SCPreferences.ADDONS_POLLS_ENABLED] || UserUtils.isStaff(scAuthContext.user)) && (
+            {(preferences[SCPreferences.ADDONS_POLLS_ENABLED] || UserUtils.isStaff(scUserContext.user)) && (
               <IconButton aria-label="add poll" color={poll ? 'primary' : 'default'} disabled={isSubmitting} onClick={handleChangeView(POLL_VIEW)}>
                 <Badge className={classes.badgeError} badgeContent={pollError ? ' ' : null} color="error">
                   <Icon>bar_chart</Icon>
@@ -1033,7 +1021,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   }
 
   const _maxWidth = useMemo(() => (maxWidth ? maxWidth : type === COMPOSER_TYPE_DISCUSSION ? 'md' : 'sm'), [maxWidth, type]);
-  if (!scAuthContext.user) {
+
+  if (!scUserContext.user && !(scUserContext.loading && open)) {
     return null;
   }
 
@@ -1044,7 +1033,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       keepMounted
       onClose={handleClose}
       {...rest}
-      className={classNames(classes.root, {[classes.writing]: editorFocused})}
+      className={classNames(classes.root, {[classes.writing]: editorFocused, [classes.ios]: isIOS})}
       fullScreen={fullScreen}>
       {editorFocused && fullScreen && (
         <Box className={classes.titleDense}>

@@ -1,13 +1,16 @@
+import { alpha } from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
       '& .MuiIcon-root': {
         fontSize: '1.57rem'
       },
       '& .SCPrivateMessageEditor-message-input': {
         width: '100%'
       },
-      '& .MuiInputBase-root, MuiFilledInput-root': {
+      '& .MuiInputBase-root': {
         '&.Mui-disabled': {backgroundColor: theme.palette.grey['A200']},
         borderRadius: 0,
         padding: theme.spacing(0.5, 0, 0.5, 0),
@@ -23,9 +26,12 @@ const Component = {
         },
         '& .MuiButtonBase-root': {
           padding: theme.spacing(1.625)
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: '0 none'
         }
       },
-      '& .SCPrivateMessageEditor-emoji-section, SCEmojiPicker-root': {
+      '& .SCPrivateMessageEditor-emoji-section': {
         '& .EmojiPickerReact.epr-main': {
           borderRadius: 0,
           '& .epr-preview': {
@@ -33,7 +39,7 @@ const Component = {
           }
         }
       },
-      '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCMessageMediaUploader-root': {
+      '& .MuiPaper-root': {
         borderRadius: 0,
         backgroundColor: theme.palette.grey['A200'],
         '& .MuiCardHeader-root': {
@@ -111,6 +117,9 @@ const Component = {
             }
           }
         }
+      },
+      '&.SCPrivateMessageEditor-ios': {
+        paddingBottom: '15px'
       }
     })
   }

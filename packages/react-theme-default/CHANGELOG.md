@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.253](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.252...@selfcommunity/react-theme-default@0.1.0-alpha.253) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix toolbar theme height ([be03347](https://github.com/selfcommunity/community-js/commit/be03347ce763f4ebecc04577546dca104861a500))
+
+
+
+
+
+# [0.1.0-alpha.252](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.251...@selfcommunity/react-theme-default@0.1.0-alpha.252) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix iOS bottom border ([113a81c](https://github.com/selfcommunity/community-js/commit/113a81ce533909eb92c7c7efe41809cc495ffe68))
+* Style fixes ([a682023](https://github.com/selfcommunity/community-js/commit/a6820236b0f1d1a1f6bc5eed6ef8eb8b02aa5f12))
+
+
+
+
+
+# [0.1.0-alpha.251](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.250...@selfcommunity/react-theme-default@0.1.0-alpha.251) (2023-09-11)
+
+
+### Bug Fixes
+
+* Style fixes ([1acf482](https://github.com/selfcommunity/community-js/commit/1acf48295aac72fd45f06d11003dc142056d1922))
+
+
+
+
+
+# [0.1.0-alpha.250](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.249...@selfcommunity/react-theme-default@0.1.0-alpha.250) (2023-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.1.0-alpha.249](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.248...@selfcommunity/react-theme-default@0.1.0-alpha.249) (2023-09-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

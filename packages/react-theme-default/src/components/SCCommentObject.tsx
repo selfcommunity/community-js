@@ -13,6 +13,9 @@ const Component = {
         },
         '& .SCBaseItem-image .MuiBadge-badge': {
           top: theme.spacing(1.5)
+        },
+        '& .SCBaseItem-text': {
+          marginBottom: 0
         }
       },
       '& .SCCommentObject-nested-comments': {
@@ -27,6 +30,9 @@ const Component = {
             paddingTop: 5
           }
         },
+        '& .SCCommentObjectReply-root .SCEditor-root': {
+          padding: '6px'
+        },
         [theme.breakpoints.up('sm')]: {
           paddingLeft: theme.spacing(6)
         }
@@ -35,7 +41,7 @@ const Component = {
         overflowWrap: 'anywhere',
         position: 'relative',
         display: 'flex',
-        padding: `12px ${theme.spacing(2)}`,
+        padding: `6px`,
         borderRadius: theme.shape.borderRadius * 0.5,
         borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         '& .MuiCardContent-root': {
@@ -64,7 +70,7 @@ const Component = {
           }
         }
       },
-      '& .SCCommentObject-avatar': {
+      '& .SCCommentObject-avatar, & .SCCommentObjectReply-avatar': {
         top: theme.spacing(),
         width: theme.selfcommunity.user.avatar.sizeMedium,
         height: theme.selfcommunity.user.avatar.sizeMedium
@@ -115,7 +121,6 @@ const Component = {
         '& .SCBullet-root': {
           display: 'none'
         },
-
         [theme.breakpoints.up('sm')]: {
           '& > *': {
             marginRight: 0

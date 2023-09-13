@@ -191,7 +191,7 @@ const Component = {
             '& h3': {
               fontSize: '1rem',
               color: theme.palette.text.primary,
-              fontWeight: theme.typography.fontWeightLight,
+              fontWeight: theme.typography.fontWeightBold,
               margin: theme.spacing(0, 0, 0.5, 0)
             },
             '& p': {
@@ -353,7 +353,6 @@ const Component = {
             '& .SCCommentObjectReply-comment': {
               marginBottom: '0 !important',
               border: `1px solid ${theme.palette.grey[300]}`,
-              borderRadius: theme.shape.borderRadius,
               '& .SCEditor-root': {
                 minHeight: theme.spacing(4),
                 marginTop: 0,

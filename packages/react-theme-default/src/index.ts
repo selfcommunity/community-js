@@ -127,6 +127,8 @@ import SCUserAvatar from './components/SCUserAvatar';
 import SCAccountReset from './components/SCAccountReset';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountVerify from './components/SCAccountVerify';
+import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
+import SCNavigationToolbarMobileSkeleton from './components/SCNavigationToolbarMobileSkeleton';
 
 /**
  * Style fragments - Imports - End
@@ -165,12 +167,12 @@ const theme = {
   spacing: 8,
   mixins: {
     toolbar: {
-      minHeight: 40,
+      minHeight: 45,
       '@media (min-width:0px)': {
-        minHeight: 40
+        minHeight: 45
       },
       '@media (min-width:600px)': {
-        minHeight: 40
+        minHeight: 45
       }
     }
   },
@@ -252,7 +254,9 @@ const theme = {
     SCLoyaltyProgramDetailTemplateSkeleton,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
+    SCNavigationToolbarSkeleton,
     SCNavigationToolbarMobile,
+    SCNavigationToolbarMobileSkeleton,
     SCNotification,
     SCNotificationItem,
     SCNotificationsMenu,

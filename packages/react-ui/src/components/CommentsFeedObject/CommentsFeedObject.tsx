@@ -29,16 +29,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.noComments}`]: {
-    padding: theme.spacing(),
-    paddingLeft: 0
-  },
-  [`& .${classes.commentNotFound}`]: {
-    padding: theme.spacing()
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CommentsFeedObjectProps {
   /**

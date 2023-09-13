@@ -39,7 +39,7 @@ const Root = styled(Toolbar, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface NavigationToolbarMobileProps extends ToolbarProps {
   /**

@@ -17,20 +17,7 @@ const Root = styled(Toolbar, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  [`& .${classes.logo}`]: {
-    width: 100,
-    height: 20
-  },
-  [`& .${classes.navigation}`]: {
-    flexGrow: 1,
-    margin: theme.spacing(0, 20)
-  },
-  [`& .${classes.avatar}`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  }
-}));
+})(({theme}: {theme: SCThemeType}) => ({}));
 
 /**
  * > API documentation for the Community-JS Navigation Toolbar Skeleton component. Learn about the available props and the CSS API.

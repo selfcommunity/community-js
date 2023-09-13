@@ -1,6 +1,6 @@
-import {$isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$findMatchingParent, mergeRegister} from '@lexical/utils';
+import { $isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $findMatchingParent, mergeRegister } from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
@@ -12,14 +12,15 @@ import {
   LexicalEditor,
   NodeSelection,
   RangeSelection,
-  SELECTION_CHANGE_COMMAND
+  SELECTION_CHANGE_COMMAND,
+  KEY_ARROW_LEFT_COMMAND
 } from 'lexical';
 import * as React from 'react';
-import {Dispatch, useCallback, useEffect, useRef, useState} from 'react';
-import {getSelectedNode} from '../../../utils/editor';
-import {isValidUrl} from '@selfcommunity/utils';
-import {styled} from '@mui/material/styles';
-import {Popper, TextField, IconButton, InputAdornment, Paper} from '@mui/material';
+import { Dispatch, useCallback, useEffect, useState } from 'react';
+import { getSelectedNode } from '../../../utils/editor';
+import { isValidUrl } from '@selfcommunity/utils';
+import { styled } from '@mui/material/styles';
+import { IconButton, InputAdornment, Paper, Popper, TextField } from '@mui/material';
 import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCEditorFloatingLinkPlugin';
@@ -37,8 +38,7 @@ const Root = styled(Popper, {
 function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor; isLink: boolean; setIsLink: Dispatch<boolean>}): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [linkUrl, setLinkUrl] = useState('');
-  const [editedLinkUrl, setEditedLinkUrl] = useState('');
-  const [isEditMode, setEditMode] = useState(false);
+  const [hideForUrl, setHideForUrl] = useState<string | null>(null);
   const [lastSelection, setLastSelection] = useState<RangeSelection | GridSelection | NodeSelection | null>(null);
 
   const updateLinkEditor = useCallback(() => {
@@ -71,12 +71,17 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
     } else if (!activeElement) {
       setAnchorEl(null);
       setLastSelection(null);
-      setEditMode(false);
       setLinkUrl('');
     }
 
     return true;
   }, [editor]);
+
+  useEffect(() => {
+    if (linkUrl != hideForUrl) {
+      setHideForUrl(null);
+    }
+  }, [linkUrl]);
 
   useEffect(() => {
     return mergeRegister(
@@ -117,58 +122,42 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
   const handleLinkSubmission = () => {
     if (lastSelection !== null) {
       if (linkUrl !== '') {
-        editor.dispatchCommand(TOGGLE_LINK_COMMAND, isValidUrl(editedLinkUrl) ? editedLinkUrl : 'https://');
+        setHideForUrl(linkUrl);
+        editor.dispatchCommand(TOGGLE_LINK_COMMAND, isValidUrl(linkUrl) ? linkUrl : 'https://');
       }
-      setEditMode(false);
     }
   };
+
+  if (!isLink || linkUrl === hideForUrl) {
+    return null;
+  }
 
   return (
     <Root className={classes.root} open={Boolean(anchorEl)} anchorEl={anchorEl} placement="right">
       <Paper>
-        {!isLink ? null : (
           <TextField
-            disabled={!isEditMode}
             size="small"
-            value={isEditMode ? editedLinkUrl : linkUrl}
+            value={linkUrl}
             variant="outlined"
             onChange={(event) => {
-              setEditedLinkUrl(event.target.value);
+              setLinkUrl(event.target.value);
             }}
             InputProps={{
-              endAdornment: isEditMode ? (
-                <InputAdornment position="end">
-                  <IconButton
-                    size="small"
-                    tabIndex={0}
-                    onClick={() => {
-                      setEditMode(false);
-                    }}>
-                    <Icon>close</Icon>
-                  </IconButton>
-                  <IconButton size="small" tabIndex={1} onClick={handleLinkSubmission}>
-                    <Icon>check</Icon>
-                  </IconButton>
-                </InputAdornment>
-              ) : (
-                <InputAdornment position="end">
-                  <IconButton
-                    size="small"
-                    tabIndex={0}
-                    onClick={() => {
-                      setEditedLinkUrl(linkUrl);
-                      setEditMode(true);
-                    }}>
-                    <Icon>edit</Icon>
-                  </IconButton>
-                  <IconButton size="small" tabIndex={1} onClick={() => editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)}>
-                    <Icon>delete</Icon>
-                  </IconButton>
-                </InputAdornment>
-              )
+              endAdornment: <InputAdornment position="end">
+                <IconButton
+                  size="small"
+                  tabIndex={0}
+                  onClick={() => {
+                    setIsLink(false);
+                  }}>
+                  <Icon>close</Icon>
+                </IconButton>
+                <IconButton size="small" tabIndex={1} onClick={handleLinkSubmission}>
+                  <Icon>check</Icon>
+                </IconButton>
+              </InputAdornment>
             }}
           />
-        )}
       </Paper>
     </Root>
   );
@@ -184,7 +173,6 @@ function useFloatingLinkEditorToolbar(editor: LexicalEditor): JSX.Element | null
       const node = getSelectedNode(selection);
       const linkParent = $findMatchingParent(node, $isLinkNode);
       const autoLinkParent = $findMatchingParent(node, $isAutoLinkNode);
-
       // We don't want this menu to open for auto links.
       if (linkParent != null && autoLinkParent == null) {
         setIsLink(true);

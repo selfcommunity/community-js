@@ -21,11 +21,13 @@ import {
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
+import {iOS} from '@selfcommunity/utils';
 
 const PREFIX = 'SCBottomNavigation';
 
 const classes = {
   root: `${PREFIX}-root`,
+  ios: `${PREFIX}-ios`,
   action: `${PREFIX}-action`
 };
 
@@ -33,14 +35,7 @@ const Root = styled(MuiBottomNavigation, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  backgroundColor: theme.palette?.navbar?.main,
-  [`& .${classes.action}`]: {
-    fontSize: '1.57rem'
-  }
-}));
+})(() => ({}));
 
 export type BottomNavigationProps = MuiBottomNavigationProps;
 
@@ -95,10 +90,11 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
 
   // MEMO
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
+  const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
   return (
-    <Root className={classNames(className, classes.root)} {...rest}>
+    <Root className={classNames(className, classes.root, {[classes.ios]: isIOS})} {...rest}>
       {children
         ? children
         : [
