@@ -9055,10 +9055,10 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-picker-react@^4.4.9:
-  version "4.4.9"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.9.tgz#564fc387ae2ce8c8086a12a9231d6fd9567d0ae5"
-  integrity sha512-ef9MfzSJy5xrzihLLv0e1zZmiNtcekubctTBQVfIpvKfsfu4iLBBzcHCmOC2IaUVBCZuUw+GM24BAPj1MdCQXQ==
+emoji-picker-react@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.5.1.tgz#341f27dc86ad09340a316e0632484fcb9aff7195"
+  integrity sha512-zpm0ui0TWkXZDUIevyNM0rC9Jyqc08RvVXH0KgsbSkDr+VgMQmYLu6UeI4SIWMZKsKMjQwujPpncRCFlEeykjw==
   dependencies:
     clsx "^1.2.1"
 

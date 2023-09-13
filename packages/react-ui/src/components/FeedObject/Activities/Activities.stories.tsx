@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Activities from './index';
-import {SCContributionType} from '@selfcommunity/types';
+import Activities, { ActivitiesProps } from './index';
+import { SCContributionType } from '@selfcommunity/types';
 
 
 export default {
@@ -19,19 +19,21 @@ export default {
       description: 'Object type. Used only with args id.'
     }
   }
-} as Meta<typeof Activities>;
+} as Meta<ActivitiesProps>;
 
 
-const template: StoryObj<typeof Activities> = (args) => {
+const template = (args) => {
   return (<div style={{width: '100%', maxWidth: 800}}>
     <Activities {...args} />
   </div>);
 };
 
 
-
-Base.args = {
-  feedObjectId: 327,
-  feedObjectType: SCContributionType.POST
+export const Base: StoryObj<ActivitiesProps> = {
+  args: {
+    feedObjectId: 327,
+    feedObjectType: SCContributionType.POST
+  },
+  render: template
 };
 

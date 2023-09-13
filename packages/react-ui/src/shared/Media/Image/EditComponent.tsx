@@ -1,5 +1,5 @@
 import {asUploadButton} from '@rpldy/upload-button';
-import React, {forwardRef, useContext, useState} from 'react';
+import React, { forwardRef, useCallback, useContext, useState } from 'react';
 import {Alert, AlertTitle, Box, Button as MuiButton, Fade, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
@@ -70,8 +70,12 @@ export default (props: EditMediaProps): JSX.Element => {
   // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
 
-  // HANDLERS
+  // FILTER
+  const filterByMime = useCallback((file) => {
+    return file.type.startsWith('image/');
+  }, []);
 
+  // HANDLERS
   const handleSuccess = (media: SCMediaType) => {
     onSuccess(media);
   };
@@ -138,9 +142,11 @@ export default (props: EditMediaProps): JSX.Element => {
           url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
           method: Endpoints.ComposerChunkUploadMedia.method
         }}
+        fileFilter={filterByMime}
         chunkSize={204800}
         multiple
-        accept="image/*">
+        accept="image/*;capture=camera"
+      >
         <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
         <UploadDropZone onDragOverClassName={classes.dragOver} inputFieldName="image" className={classes.upload}>
           <UploadButton inputFieldName="image" className={classes.uploadBtn} />

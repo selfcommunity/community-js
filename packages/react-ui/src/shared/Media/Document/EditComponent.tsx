@@ -1,5 +1,5 @@
 import {asUploadButton} from '@rpldy/upload-button';
-import React, {forwardRef, SyntheticEvent, useContext, useState} from 'react';
+import React, { forwardRef, SyntheticEvent, useCallback, useContext, useState } from 'react';
 import {Alert, AlertTitle, Box, Button as MuiButton, Fade, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {ReactSortable} from 'react-sortablejs';
@@ -67,6 +67,12 @@ export default (props: EditMediaProps): JSX.Element => {
 
   // CONTEXT
   const scContext: SCContextType = useContext(SCContext);
+
+  // FILTER
+  const filterByMime = useCallback((file) => {
+    //filter out files larger than 5MB
+    return file.type === 'application/pdf';
+  }, []);
 
   // HANDLERS
 
@@ -143,7 +149,9 @@ export default (props: EditMediaProps): JSX.Element => {
         }}
         chunkSize={204800}
         multiple
-        accept="application/pdf">
+        accept="application/pdf"
+        fileFilter={filterByMime}
+      >
         <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
         <UploadDropZone onDragOverClassName={classes.dragOver} inputFieldName="document" className={classes.upload}>
           <UploadButton inputFieldName="document" className={classes.uploadBtn} />

@@ -84,7 +84,7 @@
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
-    "emoji-picker-react": "^4.4.9",
+    "emoji-picker-react": "^4.5.1",
     "lexical": "^0.12.2",
     "libphonenumber-js": "^1.10.30",
     "moment": "^2.29.4",

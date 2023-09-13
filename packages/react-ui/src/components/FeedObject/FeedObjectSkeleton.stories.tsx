@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import FeedObjectSkeleton from './Skeleton';
+import FeedObjectSkeleton, { FeedObjectSkeletonProps } from './Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
 
 export default {
@@ -47,7 +47,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<FeedObjectSkeleton> = {
+export const Base: StoryObj<FeedObjectSkeletonProps> = {
   args: {
     elevation: 1,
     variant: 'elevation',

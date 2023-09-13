@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import NavigationSettingsIconButton from './index';
-import {IconButton} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import NavigationSettingsIconButton, { NavigationSettingsIconButtonProps } from './index';
 import React from 'react';
 
 export default {
@@ -16,10 +14,10 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<NavigationSettingsIconButton> = {
+export const Base: StoryObj<NavigationSettingsIconButtonProps> = {
   args: {
     items: [
-      {label: 'test', href: '/test'},
+      {label: 'test', href: 'javascript:;'},
       {label: 'test1', href: '/test1'}
     ]
   },
