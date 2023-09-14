@@ -5,13 +5,13 @@ import {Box, BoxProps, Typography} from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import {LoadingButton} from '@mui/lab';
-import moment from 'moment';
 import {DataPortabilityService} from '@selfcommunity/api-services';
 import {SCDataPortabilityType} from '@selfcommunity/types';
 import {capitalize, Logger} from '@selfcommunity/utils';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedDate, FormattedMessage, FormattedTime, useIntl} from 'react-intl';
+import {differenceInHours, format, parseISO} from 'date-fns';
 
 const PREFIX = 'SCAccountDataPortability';
 
@@ -112,7 +112,11 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
         link.href = url;
         link.setAttribute(
           'download',
-          `${scUserContext.user.username}_${intl.formatDate(moment().format(), {year: 'numeric', month: 'numeric', day: 'numeric'})}.zip`
+          `${scUserContext.user.username}_${intl.formatDate(format(new Date(), "yyyy-MM-dd'T'HH:mm:ssxxx"), {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          })}.zip`
         );
         document.body.appendChild(link);
         link.click();
@@ -197,7 +201,8 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
         size="small"
         loading={(dataPortability && dataPortability.computing) || loading}
         disabled={
-          !dataPortability || (dataPortability && (dataPortability.computing || moment().diff(moment(dataPortability.requested_at), 'hours') < 24))
+          !dataPortability ||
+          (dataPortability && (dataPortability.computing || differenceInHours(new Date(), parseISO(dataPortability.requested_at)) < 24))
         }
         loadingPosition="start"
         startIcon={<Icon>folder_open</Icon>}
