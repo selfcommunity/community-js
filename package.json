@@ -79,20 +79,11 @@
     "webpack-bundle-analyzer": "^4.9.0"
   },
   "dependencies": {
-    "emotion-theming": "^11.0.0",
-    "pubsub-js": "^1.9.4",
-    "react-custom-scrollbars": "^4.2.1",
-    "react-infinite-scroll-component": "^6.1.0",
-    "react-lazyload": "^3.2.0",
-    "seamless-scroll-polyfill": "^2.1.8",
-    "use-deep-compare-effect": "^1.8.1",
-    "validate-color": "^2.2.4"
-  },
-  "peerDependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "~5.0.0-alpha.137",
     "@mui/material": "^5.14.2",
+    "@mui/system": "^5.8.0",
     "@mui/x-date-pickers": "^6.10.1",
     "@rpldy/chunked-sender": "^1.4.1",
     "@rpldy/chunked-uploady": "^1.4.1",
@@ -100,11 +91,20 @@
     "@rpldy/upload-drop-zone": "^1.4.1",
     "@rpldy/upload-preview": "^1.4.1",
     "@rpldy/uploady": "^1.4.1",
+    "csstype": "^3.0.10",
+    "emotion-theming": "^11.0.0",
     "notistack": "^3.0.1",
-    "pdfjs-dist": "3.6.172",
-    "react": "^17.0.2 || 18",
-    "react-dom": "17 || 18",
-    "react-intl": "^6.4.4"
+    "pubsub-js": "^1.9.4",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-intl": "^6.4.4",
+    "react-lazyload": "^3.2.0",
+    "seamless-scroll-polyfill": "^2.1.8",
+    "use-deep-compare-effect": "^1.8.1",
+    "validate-color": "^2.2.4",
+	"react": "^17.0.2 || 18",
+	"react-dom": "17 || 18",
+	"pdfjs-dist": "3.6.172"
   },
   "prettier": {
     "trailingComma": "all",
@@ -114,5 +114,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/selfcommunity/community-js"
+  },
+  "resolutions": {
+	"canvas": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.0.2.tgz"
   }
 }
