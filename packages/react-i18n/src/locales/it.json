@@ -149,6 +149,7 @@
   "ui.common.actionToUserHasBlockedMe": "L'utente ti ha bloccato. Azione non consentita.",
   "ui.common.actionToUserDeleted": "L'utente risulta cancellato.",
   "ui.common.confirmDialogAction": "Sei sicuro di voler procedere?",
+  "ui.common.action.notPermitted": "Questa azione non può essere eseguita.",
   "ui.composer.audience.addressing.label": "Cerca Tag...",
   "ui.composer.audience.all": "Tutti",
   "ui.composer.audience.all.message": "Il tuo post sarà visibile da tutti.",

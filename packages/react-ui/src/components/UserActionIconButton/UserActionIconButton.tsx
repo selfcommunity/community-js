@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {
-  Button,
   Divider,
   Icon,
   IconButton,
@@ -18,13 +17,14 @@ import {
   useTheme
 } from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {Link, SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import {Link, SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
 import UserInfoDialog from '../UserInfoDialog';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {TransitionProps} from '@mui/material/transitions';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCUserActionIconButton';
 
@@ -119,9 +119,10 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
   const [openHideDialog, setOpenHideDialog] = useState<boolean>(false);
 
   // HOOKS
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const {scUser} = useSCFetchUser({id: userId, user});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -144,11 +145,19 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
       .then((blocked) => {
         setHidden(blocked);
       })
-      .then(() => setHiddenLoading(false));
+      .then(() => setHiddenLoading(false))
+      .catch(() => {
+        enqueueSnackbar(<FormattedMessage id="ui.common.action.notPermitted" defaultMessage="ui.common.action.notPermitted" />, {
+          variant: 'warning',
+          autoHideDuration: 7000
+        });
+        setHiddenLoading(false);
+        handleHide();
+      });
   };
   const handleHide = useMemo(
     () => () => {
-      setOpenHideDialog(true);
+      setOpenHideDialog((prev) => !prev);
       handleClose();
     },
     [setOpenHideDialog, handleClose]
@@ -193,7 +202,9 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
           : [
               <Divider key="divider" />,
               <ListItem key="hide">
-                <ListItemButton onClick={handleHideToggle} disabled={isHiddenLoading || scUser.community_badge}>
+                <ListItemButton
+                  onClick={handleHideToggle}
+                  disabled={isHiddenLoading || scUser.community_badge || (!hidden && UserUtils.isStaff(scUser))}>
                   <ListItemText
                     primary={
                       hidden ? (

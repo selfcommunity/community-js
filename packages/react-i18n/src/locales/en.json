@@ -149,6 +149,7 @@
   "ui.common.actionToUserHasBlockedMe": "The user has blocked you. Action not allowed.",
   "ui.common.actionToUserDeleted": "The user is deleted.",
   "ui.common.confirmDialogAction": "Are you sure you want to continue?",
+  "ui.common.action.notPermitted": "This action cannot be performed.",
   "ui.composer.audience.addressing.label": "Search Tag...",
   "ui.composer.audience.all": "Everybody",
   "ui.composer.audience.all.message": "Your post will be visible to all users.",
