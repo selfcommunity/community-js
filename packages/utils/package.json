@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/utils",
-  "version": "0.2.0-alpha.10",
+  "version": "0.2.0-alpha.11",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -9,6 +9,10 @@
     ".": {
       "require": "./lib/cjs/index.js",
       "import": "./lib/esm/index.js"
+    },
+    "./*": {
+      "require": "./lib/cjs/*",
+      "import": "./lib/esm/*"
     }
   },
   "sideEffects": false,
