@@ -9,7 +9,11 @@
     ".": {
       "require": "./lib/cjs/index.js",
       "import": "./lib/esm/index.js"
-    }
+    },
+	"./*": {
+	  "require": "./lib/cjs/*",
+	  "import": "./lib/esm/*"
+	}
   },
   "sideEffects": false,
   "types": "./lib/types/index.d.ts",
