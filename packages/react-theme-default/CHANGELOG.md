@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.260](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.259...@selfcommunity/react-theme-default@0.1.0-alpha.260) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([a317be4](https://github.com/selfcommunity/community-js/commit/a317be4e517cd73a77bfcd359ab8f5e1c1b73f31))
+
+
+
+
+
 # [0.1.0-alpha.259](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.258...@selfcommunity/react-theme-default@0.1.0-alpha.259) (2023-09-13)
 
 
