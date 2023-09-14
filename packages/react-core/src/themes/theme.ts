@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material/styles';
+import createTheme from '@mui/material/styles/createTheme';
 import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
 import {
