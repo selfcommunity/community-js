@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SearchDialog from './index';
+import SearchDialog, { SearchDialogProps } from './index';
 
 export default {
   title: 'Design System/React UI/Search Dialog',
   component: SearchDialog
-} as Meta<typeof SearchDialog>;
+} as Meta<SearchDialogProps>;
 
 const template = (args) => (
   <div style={{width: 400}}>
@@ -12,7 +12,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<SearchDialog> = {
+export const Base: StoryObj<SearchDialogProps> = {
   args: {
     open: true
   },

@@ -98,16 +98,14 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
       {children
         ? children
         : [
-            scUserContext.user ? (
-              <BottomNavigationAction
-                key="home"
-                className={classes.action}
-                component={Link}
-                to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
-                value={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
-                icon={<Icon>home</Icon>}
-              />
-            ) : null,
+            <BottomNavigationAction
+              key="home"
+              className={classes.action}
+              component={Link}
+              to={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
+              value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
+              icon={<Icon>home</Icon>}
+            />,
             (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) &&
             preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] ? (
               <BottomNavigationAction
