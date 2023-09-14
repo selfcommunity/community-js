@@ -54,6 +54,11 @@ export interface SearchAutocompleteProps
     >
   > {
   /**
+   * The search form shoul focus on mount
+   * @default false
+   */
+  autoFocus?: boolean;
+  /**
    * Handler for search action
    */
   onSearch?: (value: string) => void;
@@ -77,6 +82,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     id = `${PREFIX}-autocomplete`,
     className,
     blurOnSelect,
+    autoFocus = false,
     onSearch = null,
     onClear = null,
     onSuggestionSelect = (suggestion: SCSuggestionType) => null,
@@ -187,6 +193,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
           })}`}
           InputProps={{
             ...params.InputProps,
+            autoFocus,
             name: 'search-autocomplete',
             className: classes.input,
             startAdornment: <Icon className={classes.icon}>search</Icon>,

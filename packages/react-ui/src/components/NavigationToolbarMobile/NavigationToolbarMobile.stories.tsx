@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import NavigationToolbarMobile from './index';
+import NavigationToolbarMobile, { NavigationToolbarMobileProps } from './index';
 import { AppBar, Icon, IconButton, Typography } from '@mui/material';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import React from 'react';
@@ -14,7 +14,7 @@ export default {
       viewports: INITIAL_VIEWPORTS,
     },
   },
-} as Meta<typeof NavigationToolbarMobile>;
+} as Meta<NavigationToolbarMobileProps>;
 
 
 const template = (args) => (
@@ -23,10 +23,10 @@ const template = (args) => (
   </AppBar>
 );
 
-export const Base: StoryObj<NavigationToolbarMobile> = {
+export const Base: StoryObj<NavigationToolbarMobileProps> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q), autoFocus: true},
     value: '/'
   },
   parameters: {
@@ -38,9 +38,9 @@ export const Base: StoryObj<NavigationToolbarMobile> = {
 };
 
 
-export const Custom: StoryObj<NavigationToolbarMobile> = {
+export const Custom: StoryObj<NavigationToolbarMobileProps> = {
   args: {
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q), autoFocus: true},
     value: '/',
     children: <><IconButton><Icon>arrow_back</Icon></IconButton><Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography></>
   },
@@ -52,9 +52,9 @@ export const Custom: StoryObj<NavigationToolbarMobile> = {
   render: template
 };
 
-export const Actions: StoryObj<NavigationToolbarMobile> = {
+export const Actions: StoryObj<NavigationToolbarMobileProps> = {
   args: {
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+    SearchAutocompleteProps: {onSearch: (q) => console.log(q), autoFocus: true},
     value: '/',
     startActions: <>
       <IconButton>
