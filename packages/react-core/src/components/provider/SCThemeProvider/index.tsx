@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {ThemeProvider} from '@mui/material/styles';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import getTheme from '../../../themes/theme';
 import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {useSCContext} from '../SCContextProvider';
