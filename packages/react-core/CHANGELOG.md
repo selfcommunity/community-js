@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.104...@selfcommunity/react-core@0.4.0-alpha.105) (2023-09-14)
+
+
+### Bug Fixes
+
+* imports ([080ec20](https://github.com/selfcommunity/community-js/commit/080ec20f57f23327c3498919b8f49b20d753bb6e))
+
+
+
+
+
 # [0.4.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.103...@selfcommunity/react-core@0.4.0-alpha.104) (2023-09-14)
 
 
