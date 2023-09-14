@@ -46,7 +46,7 @@ export default function Search(inProps: SearchDialogProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, SearchAutocompleteProps = {}, ...rest} = props;
+  const {className, SearchAutocompleteProps = {autoFocus: true}, ...rest} = props;
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
