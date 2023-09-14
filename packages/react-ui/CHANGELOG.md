@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.310](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.309...@selfcommunity/react-ui@0.7.0-alpha.310) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([0b1a57b](https://github.com/selfcommunity/community-js/commit/0b1a57b5c1351f529f4bfa2c20d99809886df10b))
+* build optimization ([cc05c9b](https://github.com/selfcommunity/community-js/commit/cc05c9b144ba867922af8c06185fc1d2dc60de2b))
+
+
+### Performance Improvements
+
+* Added autofocus props on SearchAutocomplete.tsx ([92eaca9](https://github.com/selfcommunity/community-js/commit/92eaca9f42a0cd619a2411c30c3faa1fe0210b17))
+* Added home button in BottomNavigation.tsx for anonymous users ([7013637](https://github.com/selfcommunity/community-js/commit/701363743588034f3aac18c64dcb1f339aa55f41))
+
+
+
+
+
 # [0.7.0-alpha.309](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.308...@selfcommunity/react-ui@0.7.0-alpha.309) (2023-09-14)
 
 
