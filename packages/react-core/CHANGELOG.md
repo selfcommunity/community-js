@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.105...@selfcommunity/react-core@0.4.0-alpha.106) (2023-09-15)
+
+
+### Bug Fixes
+
+* add useSCUserIsBlocked hook ([271bf0e](https://github.com/selfcommunity/community-js/commit/271bf0ee5d26105122440844fb5aa2809a1aa986))
+
+
+
+
+
 # [0.4.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.104...@selfcommunity/react-core@0.4.0-alpha.105) (2023-09-14)
 
 
