@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.52...@selfcommunity/react-i18n@0.5.0-alpha.53) (2023-09-14)
+
+
+### Bug Fixes
+
+* block staff user ([07dc21a](https://github.com/selfcommunity/community-js/commit/07dc21a36649493625df073346b8a384ece21073))
+
+
+### Performance Improvements
+
+* updated translations ([72f893d](https://github.com/selfcommunity/community-js/commit/72f893dbd8220a74c81cae4430906f51a8c502d7))
+
+
+
+
+
 # [0.5.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.51...@selfcommunity/react-i18n@0.5.0-alpha.52) (2023-09-14)
 
 

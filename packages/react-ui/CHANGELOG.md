@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.311](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.310...@selfcommunity/react-ui@0.7.0-alpha.311) (2023-09-14)
+
+
+### Bug Fixes
+
+* block staff user ([07dc21a](https://github.com/selfcommunity/community-js/commit/07dc21a36649493625df073346b8a384ece21073))
+* removed target blank ([d15fe26](https://github.com/selfcommunity/community-js/commit/d15fe26b1569a0e08b5ad4bd433b3e58db228d63))
+* upgrade react-scrollbars ([1f8d9a5](https://github.com/selfcommunity/community-js/commit/1f8d9a56575b9d8938e3d0702b5cb7560d209e83))
+
+
+
+
+
 # [0.7.0-alpha.310](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.309...@selfcommunity/react-ui@0.7.0-alpha.310) (2023-09-14)
 
 
