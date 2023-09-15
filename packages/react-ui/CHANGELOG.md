@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.313](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.312...@selfcommunity/react-ui@0.7.0-alpha.313) (2023-09-15)
+
+
+### Bug Fixes
+
+* scrollbars import ([f1b8517](https://github.com/selfcommunity/community-js/commit/f1b851738d907a06b5596ee249ce58e9cac3c526))
+
+
+
+
+
 # [0.7.0-alpha.312](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.311...@selfcommunity/react-ui@0.7.0-alpha.312) (2023-09-15)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
