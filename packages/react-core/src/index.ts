@@ -93,6 +93,7 @@ import useSCFetchReactions from './hooks/useSCFetchReactions';
 import useSCFetchPrivateMessageSnippets from './hooks/useSCFetchPrivateMessageSnippets';
 import useSCFetchBroadcastMessages from './hooks/useSCFetchBroadcastMessages';
 import useSCFetchUserBlockedBy from './hooks/useSCFetchUserBlockedBy';
+import useSCUserIsBlocked from './hooks/useSCUserIsBlocked';
 
 /**
  * Routing component
@@ -198,4 +199,5 @@ export {
   useSCFetchPrivateMessageSnippets,
   useSCFetchBroadcastMessages,
   useSCFetchUserBlockedBy,
+  useSCUserIsBlocked,
 };
