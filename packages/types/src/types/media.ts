@@ -51,6 +51,16 @@ export interface SCMediaType {
   image_height?: number;
 
   /**
+   * Media image thumbnail
+   */
+  image_thumbnail?: {
+    color?: string | null;
+    width: number;
+    height: number;
+    url: string;
+  }
+
+  /**
    * Order in the list of medias
    */
   order?: number;

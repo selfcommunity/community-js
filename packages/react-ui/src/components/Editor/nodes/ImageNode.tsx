@@ -118,7 +118,6 @@ const ImageEdit = ({
   };
 
   // RENDER
-  console.log(width);
   return (
     <Root
       className={classes.root}
@@ -625,10 +624,12 @@ function ImageComponent({
 }
 
 function convertImageElement(domNode) {
-  const image = domNode;
-  return {
-    node: $createImageNode({src: image.getAttribute('src') as string, altText: image.getAttribute('alt'), maxWidth: '100%'})
-  };
+  if (domNode instanceof HTMLImageElement) {
+    const {alt: altText, src, width, height} = domNode;
+    const node = $createImageNode({altText, height, src, width, maxWidth: '100%'});
+    return {node};
+  }
+  return null;
 }
 export type SerializedImageNode = Spread<
   {
