@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.13...@selfcommunity/types@0.5.0-alpha.14) (2023-09-18)
+
+
+### Bug Fixes
+
+* fix image upload on text editor ([19974dd](https://github.com/selfcommunity/community-js/commit/19974dddf5f49ac4d6fae9a9bc22ab9e8db958ea))
+
+
+
+
+
 # [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.12...@selfcommunity/types@0.5.0-alpha.13) (2023-09-14)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.314](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.313...@selfcommunity/react-ui@0.7.0-alpha.314) (2023-09-18)
+
+
+### Bug Fixes
+
+* fix image upload on text editor ([19974dd](https://github.com/selfcommunity/community-js/commit/19974dddf5f49ac4d6fae9a9bc22ab9e8db958ea))
+
+
+
+
+
 # [0.7.0-alpha.313](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.312...@selfcommunity/react-ui@0.7.0-alpha.313) (2023-09-15)
 
 
