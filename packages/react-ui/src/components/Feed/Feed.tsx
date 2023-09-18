@@ -14,7 +14,7 @@ import {
   SCThemeType
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import { Box, CardContent, Grid, Hidden, Theme, useMediaQuery } from "@mui/material";
+import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -422,7 +422,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   /**
    * Compute Widgets for the left column in a specific position
    */
-  const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1, total) => {
+  const _getLeftColumnWidgets = (position = 1, total): SCFeedWidgetType[] => {
     const tw = {
       type: 'widget',
       component: CustomAdv,
@@ -445,7 +445,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           ? [tw]
           : []),
         ...remainingWidgets
-      ];
+      ] as SCFeedWidgetType[];
     }
     const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total && w.column === 'left') : [];
     return [
@@ -458,13 +458,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         ? [tw]
         : []),
       ...remainingWidgets
-    ];
+    ] as SCFeedWidgetType[];
   };
 
   /**
    * Compute Widgets for the right column
    */
-  const _getRightColumnWidgets: SCFeedWidgetType[] = () => {
+  const _getRightColumnWidgets = (): SCFeedWidgetType[] => {
     if (oneColLayout) {
       return [];
     }
