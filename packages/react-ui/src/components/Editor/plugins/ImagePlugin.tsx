@@ -60,11 +60,16 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
   };
 
   const handleUploadSuccess = (media: SCMediaType) => {
-    const data = {
-      altText: media.title,
-      src: media.image,
+    const image = media.image_thumbnail ? media.image_thumbnail : {
+      url: media.image,
       width: media.image_width,
       height: media.image_height
+    };
+    const data = {
+      altText: media.title,
+      src: image.url,
+      width: image.width,
+      height: image.height
     };
     editor.focus();
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
@@ -142,7 +147,7 @@ export default function ImagePlugin(): JSX.Element {
           if ($isRootNode(selection.anchor.getNode())) {
             selection.insertParagraph();
           }
-          const imageNode = $createImageNode({src: payload.src, altText: payload.altText, maxWidth: '100%'});
+          const imageNode = $createImageNode({src: payload.src, altText: payload.altText, maxWidth: '100%', width: payload.width, height: payload.height});
           selection.insertNodes([imageNode]);
         }
         return true;
