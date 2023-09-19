@@ -14,9 +14,11 @@ const Component = {
           maxWidth: 850,
           marginLeft: 'auto',
           marginRight: 'auto'
-        },
-        '& > * > * > .SCWidget-root': {
-          marginBottom: theme.spacing(2)
+        }
+      },
+      '& .SCFeed-left-items': {
+        '& > div': {
+          paddingBottom: theme.spacing(2)
         }
       },
       '& .SCFeed-right': {
@@ -28,13 +30,13 @@ const Component = {
       '& .SCFeed-start': {
         '& > .SCWidget-root': {
           padding: 0,
-          marginBottom: theme.spacing(2),
+          marginBottom: theme.spacing(2)
         }
       },
       '& .SCFeed-end': {
         '& > .SCWidget-root': {
           padding: 0,
-          marginBottom: theme.spacing(2),
+          marginBottom: theme.spacing(2)
         }
       },
       '& .SCFeed-end-message': {

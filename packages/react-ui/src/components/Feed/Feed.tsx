@@ -14,7 +14,7 @@ import {
   SCThemeType
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import { Box, CardContent, Grid, Hidden, Theme, useMediaQuery } from "@mui/material";
+import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -41,6 +41,7 @@ const PREFIX = 'SCFeed';
 const classes = {
   root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
+  leftItems: `${PREFIX}-left-items`,
   start: `${PREFIX}-start`,
   end: `${PREFIX}-end`,
   endMessage: `${PREFIX}-end-message`,
@@ -422,7 +423,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   /**
    * Compute Widgets for the left column in a specific position
    */
-  const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1, total) => {
+  const _getLeftColumnWidgets = (position = 1, total): SCFeedWidgetType[] => {
     const tw = {
       type: 'widget',
       component: CustomAdv,
@@ -445,7 +446,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           ? [tw]
           : []),
         ...remainingWidgets
-      ];
+      ] as SCFeedWidgetType[];
     }
     const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total && w.column === 'left') : [];
     return [
@@ -458,13 +459,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         ? [tw]
         : []),
       ...remainingWidgets
-    ];
+    ] as SCFeedWidgetType[];
   };
 
   /**
    * Compute Widgets for the right column
    */
-  const _getRightColumnWidgets: SCFeedWidgetType[] = () => {
+  const _getRightColumnWidgets = (): SCFeedWidgetType[] => {
     if (oneColLayout) {
       return [];
     }
@@ -798,7 +799,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             footer={NextPageLink}
             loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
             loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
-            scrollThreshold={1}
+            scrollThreshold={'80%'}
             endMessage={
               <Box className={classes.end}>
                 <Widget className={classes.endMessage}>
@@ -822,6 +823,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             style={{overflow: 'visible'}}>
             {renderHeaderComponent()}
             <VirtualizedScroller
+              className={classes.leftItems}
               items={feedDataLeft}
               itemComponent={InnerItem}
               onMount={onScrollerMount}
