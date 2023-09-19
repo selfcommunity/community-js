@@ -41,6 +41,7 @@ const PREFIX = 'SCFeed';
 const classes = {
   root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
+  leftItems: `${PREFIX}-left-items`,
   start: `${PREFIX}-start`,
   end: `${PREFIX}-end`,
   endMessage: `${PREFIX}-end-message`,
@@ -822,6 +823,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             style={{overflow: 'visible'}}>
             {renderHeaderComponent()}
             <VirtualizedScroller
+              className={classes.leftItems}
               items={feedDataLeft}
               itemComponent={InnerItem}
               onMount={onScrollerMount}
