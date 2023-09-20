@@ -18,7 +18,6 @@ import {EditorThemeClasses, LexicalEditor} from 'lexical';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 import {SCThemeType} from '@selfcommunity/react-core';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
 import OnFocusPlugin from './plugins/OnFocusPlugin';
@@ -185,7 +184,6 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   // MEMO
   const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // HANDLERS
   const handleChange = (value) => {

@@ -1,4 +1,4 @@
-import React, { LegacyRef, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import React, {LegacyRef, Suspense, useCallback, useEffect, useRef} from 'react';
 import {
   $getNodeByKey,
   $getSelection,
@@ -8,9 +8,7 @@ import {
   COMMAND_PRIORITY_LOW,
   DecoratorNode,
   DOMExportOutput,
-  DRAGSTART_COMMAND,
   EditorConfig,
-  GridSelection,
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
   KEY_ENTER_COMMAND,
@@ -18,18 +16,15 @@ import {
   LexicalEditor,
   LexicalNode,
   NodeKey,
-  NodeSelection,
-  RangeSelection,
   SELECTION_CHANGE_COMMAND,
   SerializedLexicalNode,
   Spread,
-  TextNode,
+  TextNode
 } from 'lexical';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 
-import { mergeRegister } from '@lexical/utils';
-
+import {mergeRegister} from '@lexical/utils';
 
 export interface ImagePayload {
   altText: string;
@@ -40,10 +35,20 @@ export interface ImagePayload {
   width: number;
 }
 
-function getAspectRatio(width: number, height: number): number {
-  return width/height;
-}
+/**
+ * Limit the width of an image
+ * Used to compute the padding-bottom of the div that wrap the img
+ */
+const IMAGE_WIDTH_THRESHOLD = 500;
 
+/**
+ * Calc aspect-ratio of image
+ * @param width
+ * @param height
+ */
+function getAspectRatio(width: number, height: number): number {
+  return width / height;
+}
 
 const imageCache = new Set();
 
@@ -62,9 +67,9 @@ function useSuspenseImage(src: string) {
 
 function LazyImage({altText, className, imageRef, src, width, height}: ImagePayload): JSX.Element {
   useSuspenseImage(src);
-  const aspectRatio = getAspectRatio(width, height);
+  const aspectRatio = getAspectRatio(IMAGE_WIDTH_THRESHOLD, height);
   return (
-    <div draggable={false} className={className} style={{position: 'relative', paddingBottom: `${100/aspectRatio}%`}}>
+    <div draggable={false} className={className} style={{position: 'relative', paddingBottom: `${100 / aspectRatio}%`}}>
       <img
         src={src}
         alt={altText}
@@ -76,7 +81,7 @@ function LazyImage({altText, className, imageRef, src, width, height}: ImagePayl
         }}
       />
     </div>
-);
+  );
 }
 
 function ImageComponent({
@@ -190,21 +195,18 @@ function ImageComponent({
   const isFocused = isSelected;
   return (
     <Suspense fallback={null}>
-        <LazyImage
-          className={isFocused ? `focused` : null}
-          src={src}
-          altText={altText}
-          imageRef={imageRef}
-          width={width}
-          height={height}
-        />
+      <LazyImage className={isFocused ? `focused` : null} src={src} altText={altText} imageRef={imageRef} width={width} height={height} />
     </Suspense>
   );
 }
 
 function convertImageElement(domNode) {
   if (domNode instanceof HTMLImageElement) {
-    const {alt: altText, src, dataset: {width, height}} = domNode;
+    const {
+      alt: altText,
+      src,
+      dataset: {width, height}
+    } = domNode;
     const node = $createImageNode({altText, height: Number(height), src, width: Number(width)});
     return {node};
   }
@@ -285,7 +287,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   exportDOM(): DOMExportOutput {
     const aspectRatio = getAspectRatio(this.__width, this.__height);
     const element = document.createElement('div');
-    element.setAttribute('style', `position: relative;padding-bottom:${100/aspectRatio}%`);
+    element.setAttribute('style', `position: relative;padding-bottom:${100 / aspectRatio}%`);
     const image = document.createElement('img');
     image.setAttribute('src', this.__src);
     image.setAttribute('alt', this.__altText);
@@ -297,15 +299,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   decorate(): JSX.Element {
-    return (
-      <ImageComponent
-        src={this.__src}
-        altText={this.__altText}
-        width={this.__width}
-        height={this.__height}
-        nodeKey={this.getKey()}
-      />
-    );
+    return <ImageComponent src={this.__src} altText={this.__altText} width={this.__width} height={this.__height} nodeKey={this.getKey()} />;
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
