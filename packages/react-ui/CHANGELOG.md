@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.315](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.314...@selfcommunity/react-ui@0.7.0-alpha.315) (2023-09-19)
+
+
+### Bug Fixes
+
+* feed ([490a70e](https://github.com/selfcommunity/community-js/commit/490a70ed88498e0ce39b368bbf63374cfc5fd003))
+* feed ([bd5fff2](https://github.com/selfcommunity/community-js/commit/bd5fff2aa531d708cdcd4315ae3abb3d89003a0b))
+* feed threshold scroll ([1c8ddc5](https://github.com/selfcommunity/community-js/commit/1c8ddc5ce69c6d1724c6a4d52d7d544e10ce998b))
+* Fix editor image ([a03170e](https://github.com/selfcommunity/community-js/commit/a03170e15f255d9a27d92c26cea10fc976b65704))
+
+
+
+
+
 # [0.7.0-alpha.314](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.313...@selfcommunity/react-ui@0.7.0-alpha.314) (2023-09-18)
 
 
