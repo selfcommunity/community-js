@@ -47,6 +47,7 @@ const classes = {
   nestedComments: `${PREFIX}-nested-comments`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
+  showMoreContent: `${PREFIX}-show-more-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
@@ -538,7 +539,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     </Link>
                     <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
                     {summaryHtmlTruncated && (
-                      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))}>
+                      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>
                         <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
                       </Link>
                     )}
