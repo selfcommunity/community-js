@@ -147,6 +147,12 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   hideFollowAction?: boolean;
 
   /**
+   * Show all summary initially (otherwise it will be truncated)
+   * @default false
+   */
+  summaryExpanded?: boolean;
+
+  /**
    * Show activities as default
    * @default false
    */
@@ -330,6 +336,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
+    summaryExpanded = false,
     activitiesExpanded = true,
     activitiesExpandedType,
     hideParticipantsPreview = false,
@@ -376,7 +383,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(summaryExpanded);
 
   // INTL
   const intl = useIntl();
@@ -445,6 +452,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     },
     [pollVisible, notifyFeedChanges]
   );
+
+  /**
+   * Handle toggle summary
+   */
+  const handleToggleSummary = useCallback(() => {
+    setExpanded(!expanded);
+    notifyFeedChanges({summaryExpanded: !expanded});
+  }, [expanded, notifyFeedChanges]);
 
   /**
    * Render header action
@@ -689,7 +704,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               />
             </Link>
             {!expanded && summaryHtmlTruncated && (
-              <Button size="small" variant="text" color="inherit" onClick={(): void => setExpanded(!expanded)}>
+              <Button size="small" variant="text" color="inherit" onClick={handleToggleSummary}>
                 <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
               </Button>
             )}
@@ -716,7 +731,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               }}
             />
             {!expanded && summaryHtmlTruncated && (
-              <Button size="small" variant="text" color="inherit" onClick={(): void => setExpanded(!expanded)}>
+              <Button size="small" variant="text" color="inherit" onClick={handleToggleSummary}>
                 <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
               </Button>
             )}
