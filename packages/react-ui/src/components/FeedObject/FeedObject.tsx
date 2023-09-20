@@ -47,7 +47,7 @@ import {
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {MAX_SUMMARY_LENGTH} from '../../constants/Feed';
-const Composer = lazy(() => import('../Composer'));
+import Composer from '../Composer';
 
 const messages = defineMessages({
   visibleToAll: {
