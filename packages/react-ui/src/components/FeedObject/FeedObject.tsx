@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {lazy, useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
@@ -12,7 +12,6 @@ import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
-import Composer from '../Composer';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
@@ -36,22 +35,19 @@ import {
   Link,
   SCCache,
   SCContextType,
-  SCPreferences,
-  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchFeedObject,
-  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
-
-const MAX_SUMMARY_LENGTH = 150;
+import {MAX_SUMMARY_LENGTH} from '../../constants/Feed';
+import Composer from '../Composer';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -149,6 +145,12 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    * @default false
    */
   hideFollowAction?: boolean;
+
+  /**
+   * Show all summary initially (otherwise it will be truncated)
+   * @default false
+   */
+  summaryExpanded?: boolean;
 
   /**
    * Show activities as default
@@ -334,6 +336,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
+    summaryExpanded = false,
     activitiesExpanded = true,
     activitiesExpandedType,
     hideParticipantsPreview = false,
@@ -380,7 +383,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(summaryExpanded);
 
   // INTL
   const intl = useIntl();
@@ -449,6 +452,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     },
     [pollVisible, notifyFeedChanges]
   );
+
+  /**
+   * Handle toggle summary
+   */
+  const handleToggleSummary = useCallback(() => {
+    setExpanded(!expanded);
+    notifyFeedChanges({summaryExpanded: !expanded});
+  }, [expanded, notifyFeedChanges]);
 
   /**
    * Render header action
@@ -668,6 +679,70 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   };
 
   /**
+   * Get contribution summary
+   */
+  const getContributionSummary = useCallback(
+    (obj: SCFeedObjectType, template: SCFeedObjectTemplateType): React.ReactNode => {
+      const contributionHtml = obj.summary_html ? obj.summary_html : obj.summary;
+      const summaryHtmlTruncated = obj.summary_truncated ? obj.summary_truncated : obj.html.length >= MAX_SUMMARY_LENGTH;
+      const summaryHtml =
+        expanded || template === SCFeedObjectTemplateType.DETAIL
+          ? getContributionHtml(obj.html, scRoutingContext.url)
+          : getContributionHtml(contributionHtml, scRoutingContext.url);
+      if (template === SCFeedObjectTemplateType.SHARE) {
+        return (
+          <>
+            <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
+              <Typography
+                component="div"
+                className={classes.text}
+                variant="body2"
+                gutterBottom
+                dangerouslySetInnerHTML={{
+                  __html: summaryHtml
+                }}
+              />
+            </Link>
+            {!expanded && summaryHtmlTruncated && (
+              <Button size="small" variant="text" color="inherit" onClick={handleToggleSummary}>
+                <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+              </Button>
+            )}
+          </>
+        );
+      } else if (template === SCFeedObjectTemplateType.DETAIL) {
+        return (
+          <Typography
+            component="div"
+            gutterBottom
+            className={classes.text}
+            dangerouslySetInnerHTML={{
+              __html: summaryHtml
+            }}
+          />
+        );
+      } else {
+        return (
+          <Typography component="div" gutterBottom className={classes.text}>
+            <Typography
+              component="span"
+              dangerouslySetInnerHTML={{
+                __html: summaryHtml
+              }}
+            />
+            {!expanded && summaryHtmlTruncated && (
+              <Button size="small" variant="text" color="inherit" onClick={handleToggleSummary}>
+                <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+              </Button>
+            )}
+          </Typography>
+        );
+      }
+    },
+    [obj, template, expanded]
+  );
+
+  /**
    * Render the obj object
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
@@ -769,30 +844,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   </>
                 )}
               </Box>
-              <Box className={classes.textSection}>
-                {template === SCFeedObjectTemplateType.DETAIL ? (
-                  <Typography
-                    component="div"
-                    gutterBottom
-                    className={classes.text}
-                    dangerouslySetInnerHTML={{
-                      __html: getContributionHtml(obj, scRoutingContext.url)
-                    }}
-                  />
-                ) : (
-                  <Typography component="div" gutterBottom className={classes.text}>
-                    <Typography
-                      component="span"
-                      dangerouslySetInnerHTML={{__html: expanded ? getContributionHtml(obj, scRoutingContext.url) : obj.summary}}
-                    />
-                    {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
-                      <Button size="small" variant="text" color="inherit" onClick={(): void => setExpanded(!expanded)}>
-                        <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
-                      </Button>
-                    )}
-                  </Typography>
-                )}
-              </Box>
+              <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
                 <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
               </Box>
@@ -936,22 +988,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   </Link>
                 )}
               </Box>
-              <Box className={classes.textSection}>
-                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
-                  <Typography
-                    component="div"
-                    className={classes.text}
-                    variant="body2"
-                    gutterBottom
-                    dangerouslySetInnerHTML={{__html: expanded ? getContributionHtml(obj, scRoutingContext.url) : obj.summary}}
-                  />
-                </Link>
-                {!expanded && obj.html.length >= MAX_SUMMARY_LENGTH && (
-                  <Button size="small" variant="text" color="inherit" onClick={(): void => setExpanded(!expanded)}>
-                    <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
-                  </Button>
-                )}
-              </Box>
+              <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
                 <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
               </Box>

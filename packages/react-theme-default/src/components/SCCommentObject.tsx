@@ -70,6 +70,13 @@ const Component = {
           }
         }
       },
+      '& .SCCommentObject-show-more-content': {
+        color: theme.palette.text.secondary,
+        textDecoration: 'underlined',
+        '&:hover': {
+          textDecoration: 'none'
+        }
+      },
       '& .SCCommentObject-avatar, & .SCCommentObjectReply-avatar': {
         top: theme.spacing(),
         width: theme.selfcommunity.user.avatar.sizeMedium,

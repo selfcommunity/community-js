@@ -47,6 +47,7 @@ const classes = {
   nestedComments: `${PREFIX}-nested-comments`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
+  showMoreContent: `${PREFIX}-show-more-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
@@ -495,6 +496,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       // or the comment author is the logged user
       return null;
     }
+    const commentHtml = comment.summary_html ? comment.summary_html : comment.html;
+    const summaryHtmlTruncated = comment.summary_truncated ? comment.summary_truncated : false;
+    const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
         {editComment && editComment.id === comment.id ? (
@@ -533,11 +537,12 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
-                    <Typography
-                      className={classes.textContent}
-                      variant="body2"
-                      gutterBottom
-                      dangerouslySetInnerHTML={{__html: getContributionHtml(comment, scRoutingContext.url)}}></Typography>
+                    <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
+                    {summaryHtmlTruncated && (
+                      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>
+                        <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
+                      </Link>
+                    )}
                   </CardContent>
                   {scUserContext.user && (
                     <Box className={classes.commentActionsMenu}>

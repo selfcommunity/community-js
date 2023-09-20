@@ -151,6 +151,16 @@ export interface SCFeedObjectType {
   summary: string;
 
   /**
+   * Summary html
+   */
+  summary_html?: string;
+
+  /**
+   * True if summary_html is truncated
+   */
+  summary_truncated?: boolean;
+
+  /**
    * True if the object is deleted
    */
   deleted: boolean;

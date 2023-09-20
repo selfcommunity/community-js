@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.53...@selfcommunity/react-i18n@0.5.0-alpha.54) (2023-09-20)
+
+
+### Bug Fixes
+
+* snippetHtml ([d916437](https://github.com/selfcommunity/community-js/commit/d916437014ea80f6208691daac0ab93988bd47f9))
+
+
+
+
+
 # [0.5.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.52...@selfcommunity/react-i18n@0.5.0-alpha.53) (2023-09-14)
 
 
