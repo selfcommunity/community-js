@@ -117,6 +117,7 @@
   "ui.commentObject.replyComment.reply": "Replica",
   "ui.commentObject.replyComment.save": "Salva",
   "ui.commentObject.viewLatestComment": "{total, plural, =0{Nessun commento precedente} one{Vedi un commento precedente} other{Vedi # commenti precedenti}} ",
+  "ui.commentObject.showMore": "Vedi di più",
   "ui.commentsObject.commentNotFound": "Il commento non è stato trovato!",
   "ui.commentsObject.loadMoreComments": "Vedi altri commenti",
   "ui.commentsObject.loadPreviousComments": "Vedi commenti precedenti",
