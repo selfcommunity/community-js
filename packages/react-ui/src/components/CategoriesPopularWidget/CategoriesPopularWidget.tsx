@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
 import {SCCategoryType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -91,7 +91,7 @@ export interface CategoriesPopularWidgetProps extends VirtualScrollerItemProps, 
  *
  * This component renders a list of popular categories.
  * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CategoriesPopular)
- 
+
  #### Import
  ```jsx
  import {CategoriesPopular} from '@selfcommunity/react-ui';

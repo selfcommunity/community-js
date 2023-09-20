@@ -117,6 +117,7 @@
   "ui.commentObject.replyComment.reply": "Reply",
   "ui.commentObject.replyComment.save": "Save",
   "ui.commentObject.viewLatestComment": "{total, plural, =0{No previous comments} one {View previous comment} other {View previous # comments}} ",
+  "ui.commentObject.showMore": "Show more",
   "ui.commentsObject.commentNotFound": "Comment not found!",
   "ui.commentsObject.loadMoreComments": "See more comments",
   "ui.commentsObject.loadPreviousComments": "See previous comments",

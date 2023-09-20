@@ -47,6 +47,16 @@ export interface SCCommentType {
   summary: string;
 
   /**
+   * Summary html
+   */
+  summary_html?: string;
+
+  /**
+   * True if summary_html is truncated
+   */
+  summary_truncated?: boolean;
+
+  /**
    * If the comments is deleted
    */
   deleted: boolean;
