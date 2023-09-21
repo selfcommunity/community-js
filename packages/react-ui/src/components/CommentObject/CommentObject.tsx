@@ -140,6 +140,12 @@ export interface CommentObjectProps {
   onDelete?: (comment: SCCommentType) => void;
 
   /**
+   * Show all summary initially (otherwise it will be truncated)
+   * @default false
+   */
+  truncateContent?: boolean;
+
+  /**
    * Props to spread to single comment object skeleton
    * @default {elevation: 0}
    */
@@ -227,6 +233,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     onDelete,
     onVote,
     elevation = 0,
+    truncateContent = false,
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     CommentObjectReplyProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
@@ -496,7 +503,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       // or the comment author is the logged user
       return null;
     }
-    const commentHtml = comment.summary_html ? comment.summary_html : comment.html;
+    const commentHtml = comment.summary_html && truncateContent ? comment.summary_html : comment.html;
     const summaryHtmlTruncated = comment.summary_truncated ? comment.summary_truncated : false;
     const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
     return (
@@ -538,7 +545,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
                     <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
-                    {summaryHtmlTruncated && (
+                    {summaryHtmlTruncated && truncateContent && (
                       <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>
                         <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
                       </Link>

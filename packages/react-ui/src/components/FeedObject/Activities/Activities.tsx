@@ -140,7 +140,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     feedObject,
     feedObjectType,
     cacheStrategy,
-    pageSize: 3,
+    pageSize: 2,
     orderBy:
       selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
         ? SCCommentsOrderBy.CONNECTION_DESC
@@ -150,7 +150,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-  const skeletonsCount = Math.min(3, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 3);
+  const skeletonsCount = Math.min(3, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 2);
   const existFeedObjectActivities = feedObjectActivities && feedObjectActivities.length > 0;
 
   /**
@@ -185,6 +185,13 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     return <RelevantActivities activities={feedObjectActivities} />;
   }
 
+	/**
+	 * Load comments
+	 */
+  function handleNext() {
+    commentsObject.getNextPage();
+  }
+
   /**
    * Render comments of feedObject
    */
@@ -198,14 +205,18 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
             startComments={comments}
             next={commentsObject.next}
             isLoadingNext={commentsObject.isLoadingNext}
-            handleNext={commentsObject.getNextPage}
+            handleNext={handleNext}
             totalLoadedComments={commentsObject.comments.length + comments.length}
             totalComments={commentsObject.feedObject.comment_count}
             hideAdvertising
-            cacheStrategy={cacheStrategy}
             {...CommentsObjectProps}
+            cacheStrategy={cacheStrategy}
             CommentsObjectSkeletonProps={{count: skeletonsCount}}
-            CommentComponentProps={{...CommentComponentProps, ...{cacheStrategy}}}
+            CommentComponentProps={{
+              ...CommentComponentProps,
+              ...{cacheStrategy},
+              ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {})
+            }}
           />
         )}
       </>
