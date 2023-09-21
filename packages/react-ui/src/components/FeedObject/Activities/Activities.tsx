@@ -185,9 +185,9 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     return <RelevantActivities activities={feedObjectActivities} />;
   }
 
-	/**
-	 * Load comments
-	 */
+  /**
+   * Load comments
+   */
   function handleNext() {
     commentsObject.getNextPage();
   }
