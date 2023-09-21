@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Alert, Box, IconButton, TextField } from '@mui/material';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {Alert, Box, IconButton, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import { useThemeProps } from '@mui/system';
-import { EmojiClickData } from 'emoji-picker-react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {useThemeProps} from '@mui/system';
+import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../shared/EmojiPicker';
-import { iOS } from '@selfcommunity/utils';
+import {iOS} from '@selfcommunity/utils';
 
 const messages = defineMessages({
   placeholder: {
@@ -140,9 +140,13 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
   };
 
   const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
-    const cursor = ref.current.selectionStart;
-    const text = message.slice(0, cursor) + emojiData.emoji;
-    setMessage(text);
+    const cursorPosition = ref.current.selectionEnd;
+    const start = ref.current.value.substring(0, ref.current.selectionStart);
+    const end = ref.current.value.substring(ref.current.selectionStart);
+    setMessage(start + emojiData.emoji + end);
+    setTimeout(() => {
+      ref.current.selectionStart = ref.current.selectionEnd = cursorPosition + emojiData.emoji.length;
+    }, 50);
   };
 
   // EFFECTS
@@ -207,8 +211,8 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
             {openEmojiSection && <EmojiPicker className={classes.emojiSection} onEmojiClick={handleEmojiClick} width="100%" searchDisabled />}
             <TextField
               size="small"
+              inputRef={ref}
               disabled={Boolean(messageFiles.length) || openMediaSection}
-              ref={ref}
               className={classes.messageInput}
               multiline
               placeholder={`${intl.formatMessage(messages.placeholder)}`}
@@ -217,7 +221,6 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
               maxRows={2}
               onSelect={() => setOpenEmojiSection(false)}
               InputProps={{
-                disableUnderline: true,
                 startAdornment: (
                   <>
                     <IconButton disabled={openMediaSection} onClick={() => setOpenEmojiSection(!openEmojiSection)}>

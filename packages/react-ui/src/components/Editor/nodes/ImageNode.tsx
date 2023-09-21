@@ -36,10 +36,11 @@ export interface ImagePayload {
 }
 
 /**
- * Limit the width of an image
+ * Limit the width of an image (min/max)
  * Used to compute the padding-bottom of the div that wrap the img
  */
-const IMAGE_WIDTH_THRESHOLD = 500;
+const IMAGE_MAX_WIDTH_THRESHOLD = 500;
+const IMAGE_MIN_WIDTH_THRESHOLD = 375;
 
 /**
  * Calc aspect-ratio of image
@@ -67,7 +68,7 @@ function useSuspenseImage(src: string) {
 
 function LazyImage({altText, className, imageRef, src, width, height}: ImagePayload): JSX.Element {
   useSuspenseImage(src);
-  const aspectRatio = getAspectRatio(IMAGE_WIDTH_THRESHOLD, height);
+  const aspectRatio = getAspectRatio(width >= IMAGE_MAX_WIDTH_THRESHOLD ? width : IMAGE_MAX_WIDTH_THRESHOLD, height);
   return (
     <div draggable={false} className={className} style={{position: 'relative', paddingBottom: `${100 / aspectRatio}%`}}>
       <img
@@ -76,8 +77,7 @@ function LazyImage({altText, className, imageRef, src, width, height}: ImagePayl
         ref={imageRef}
         style={{
           position: 'absolute',
-          height: `100%`,
-          width: `100%`
+          ...(width < IMAGE_MIN_WIDTH_THRESHOLD ? {paddingRight: IMAGE_MIN_WIDTH_THRESHOLD - width} : {})
         }}
       />
     </div>
