@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.319](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.318...@selfcommunity/react-ui@0.7.0-alpha.319) (2023-09-21)
+
+
+### Bug Fixes
+
+* fixed private message editor emoji selection ([7e47e24](https://github.com/selfcommunity/community-js/commit/7e47e244308b66e32611f1aadfd6e01eae45482d))
+* snippetHtml ([504831a](https://github.com/selfcommunity/community-js/commit/504831ad18c68be178dec168f836777d3c6915bc))
+
+
+
+
+
 # [0.7.0-alpha.318](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.317...@selfcommunity/react-ui@0.7.0-alpha.318) (2023-09-20)
 
 
