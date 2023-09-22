@@ -60,18 +60,11 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
   };
 
   const handleUploadSuccess = (media: SCMediaType) => {
-    const image = media.image_thumbnail
-      ? media.image_thumbnail
-      : {
-          url: media.image,
-          width: media.image_width,
-          height: media.image_height
-        };
     const data = {
       altText: media.title,
-      src: image.url,
-      width: image.width,
-      height: image.height
+      src: media.image,
+      width: media.image_width,
+      height: media.image_height
     };
     editor.focus();
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
