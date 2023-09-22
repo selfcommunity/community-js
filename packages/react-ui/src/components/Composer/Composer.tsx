@@ -655,7 +655,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // MEMO
   const _EditorProps = useMemo(
-    () => (EditorProps ? EditorProps : {toolbar: true, uploadImage: type === COMPOSER_TYPE_DISCUSSION}),
+    () => (EditorProps ? EditorProps : {toolbar: true, uploadImage: true}),
     [EditorProps, type]
   );
   const isIOS = useMemo(() => iOS(), []);

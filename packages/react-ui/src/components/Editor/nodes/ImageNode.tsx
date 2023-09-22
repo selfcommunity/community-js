@@ -29,10 +29,11 @@ import {mergeRegister} from '@lexical/utils';
 export interface ImagePayload {
   altText: string;
   className?: string;
-  height: number;
+  height: number | string;
   imageRef?: LegacyRef<HTMLImageElement>;
+  maxWidth: number | string;
   src: string;
-  width: number;
+  width: number | string;
 }
 
 /**
@@ -59,13 +60,20 @@ function useSuspenseImage(src: string) {
   }
 }
 
-function LazyImage({altText, className, imageRef, src, width, height}: ImagePayload): JSX.Element {
+function LazyImage({altText, className, imageRef, src, width, height, maxWidth}: ImagePayload): JSX.Element {
   useSuspenseImage(src);
-  const aspectRatio = getAspectRatio(width, height);
   return (
-    <div draggable={false} className={className} style={{position: 'relative', paddingBottom: `${100 / aspectRatio}%`}}>
-      <img src={src} alt={altText} ref={imageRef} style={{position: 'absolute', width: '100%'}} />
-    </div>
+    <img
+      className={className}
+      src={src}
+      alt={altText}
+      ref={imageRef}
+      style={{
+        height: `${height}${height === 'inherit' ? '' : 'px'}`,
+        maxWidth,
+        width: `${width}${width === 'inherit' ? '' : 'px'}`
+      }}
+    />
   );
 }
 
@@ -74,13 +82,15 @@ function ImageComponent({
   altText,
   nodeKey,
   width,
-  height
+  height,
+  maxWidth
 }: {
   altText: string;
-  height: number;
+  height: string | number;
+  maxWidth: string | number;
   nodeKey: NodeKey;
   src: string;
-  width: number;
+  width: string | number;
 }): JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -180,7 +190,15 @@ function ImageComponent({
   const isFocused = isSelected;
   return (
     <Suspense fallback={null}>
-      <LazyImage className={isFocused ? `focused` : null} src={src} altText={altText} imageRef={imageRef} width={width} height={height} />
+      <LazyImage
+        className={isFocused ? `focused` : null}
+        src={src}
+        altText={altText}
+        imageRef={imageRef}
+        width={width}
+        height={height}
+        maxWidth={maxWidth}
+      />
     </Suspense>
   );
 }
@@ -192,7 +210,7 @@ function convertImageElement(domNode) {
       src,
       dataset: {width, height}
     } = domNode;
-    const node = $createImageNode({altText, height: Number(height), src, width: Number(width)});
+    const node = $createImageNode({altText, height: Number(height), src, width: Number(width), maxWidth: '100%'});
     return {node};
   }
   return null;
@@ -201,6 +219,7 @@ export type SerializedImageNode = Spread<
   {
     altText: string;
     height: number;
+    maxWidth: number | string;
     src: string;
     width: number;
     type: 'image';
@@ -212,23 +231,25 @@ export type SerializedImageNode = Spread<
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
-  __width: number;
-  __height: number;
+  __width: number | string;
+  __maxWidth: number | string;
+  __height: number | string;
 
   static getType(): string {
     return 'image';
   }
 
   static clone(node: ImageNode): ImageNode {
-    return new ImageNode(node.__src, node.__altText, node.__width, node.__height, node.__key);
+    return new ImageNode(node.__src, node.__altText, node.__maxWidth, node.__width, node.__height, node.__key);
   }
 
-  constructor(src: string, altText: string, width: number, height: number, key?: NodeKey) {
+  constructor(src: string, altText: string, maxWidth: number | string, width: number | string, height: number | string, key?: NodeKey) {
     super(key);
     this.__src = src;
     this.__altText = altText;
-    this.__width = width;
-    this.__height = height;
+    this.__width = width || 'inherit';
+    this.__maxWidth = maxWidth;
+    this.__height = height || 'inherit';
   }
 
   setWidthAndHeight(width: 'inherit' | number, height: 'inherit' | number): void {
@@ -270,30 +291,36 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   exportDOM(): DOMExportOutput {
-    const aspectRatio = getAspectRatio(this.__width, this.__height);
-    const element = document.createElement('div');
-    element.setAttribute('style', `position: relative;padding-bottom:${100 / aspectRatio}%`);
-    const image = document.createElement('img');
-    image.setAttribute('src', this.__src);
-    image.setAttribute('alt', this.__altText);
-    image.setAttribute('style', `position: absolute;width:100%;height:100%;`);
-    image.setAttribute('data-width', `${this.__width}`);
-    image.setAttribute('data-height', `${this.__height}`);
-    element.appendChild(image);
+    const element = document.createElement('img');
+    element.setAttribute('src', this.__src);
+    element.setAttribute('alt', this.__altText);
+    element.setAttribute('width', `${this.__width}`);
+    element.setAttribute('height', `${this.__height}`);
+    element.setAttribute('style', `max-width: ${this.__maxWidth}px;`);
     return {element};
   }
 
   decorate(): JSX.Element {
-    return <ImageComponent src={this.__src} altText={this.__altText} width={this.__width} height={this.__height} nodeKey={this.getKey()} />;
+    return (
+      <ImageComponent
+        src={this.__src}
+        altText={this.__altText}
+        width={this.__width}
+        height={this.__height}
+        maxWidth={this.__maxWidth}
+        nodeKey={this.getKey()}
+      />
+    );
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const {altText, height, width, src} = serializedNode;
+    const {altText, height, width, maxWidth, src} = serializedNode;
     const node = $createImageNode({
       altText,
       height,
       src,
-      width
+      width,
+      maxWidth
     });
     return node;
   }
@@ -301,17 +328,18 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   exportJSON(): SerializedImageNode {
     return {
       altText: this.getAltText(),
-      height: this.__height,
+      height: this.__height === 'inherit' ? 0 : this.__height,
+      maxWidth: this.__maxWidth,
       src: this.getSrc(),
       type: 'image',
       version: 1,
-      width: this.__width
+      width: this.__width === 'inherit' ? 0 : this.__width
     };
   }
 }
 
-export function $createImageNode({src, altText, width, height}: ImagePayload): ImageNode {
-  return new ImageNode(src, altText, width, height);
+export function $createImageNode({src, altText, maxWidth, width, height}: ImagePayload): ImageNode {
+  return new ImageNode(src, altText, maxWidth, width, height);
 }
 
 export function $isImageNode(node?: LexicalNode): boolean {
