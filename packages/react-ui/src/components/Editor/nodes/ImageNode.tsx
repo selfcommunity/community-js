@@ -29,20 +29,11 @@ import {mergeRegister} from '@lexical/utils';
 export interface ImagePayload {
   altText: string;
   className?: string;
-  height: number | string;
+  height?: 'inherit' | number;
   imageRef?: LegacyRef<HTMLImageElement>;
   maxWidth: number | string;
   src: string;
-  width: number | string;
-}
-
-/**
- * Calc aspect-ratio of image
- * @param width
- * @param height
- */
-function getAspectRatio(width: number, height: number): number {
-  return width / height;
+  width?: 'inherit' | number;
 }
 
 const imageCache = new Set();
@@ -86,11 +77,11 @@ function ImageComponent({
   maxWidth
 }: {
   altText: string;
-  height: string | number;
+  height: 'inherit' | number;
   maxWidth: string | number;
   nodeKey: NodeKey;
   src: string;
-  width: string | number;
+  width: 'inherit' | number;
 }): JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -218,10 +209,10 @@ function convertImageElement(domNode) {
 export type SerializedImageNode = Spread<
   {
     altText: string;
-    height: number;
+    height?: number;
     maxWidth: number | string;
     src: string;
-    width: number;
+    width?: number;
     type: 'image';
     version: 1;
   },
@@ -231,9 +222,9 @@ export type SerializedImageNode = Spread<
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
-  __width: number | string;
+  __width: 'inherit' | number;
+  __height: 'inherit' | number;
   __maxWidth: number | string;
-  __height: number | string;
 
   static getType(): string {
     return 'image';
@@ -243,7 +234,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return new ImageNode(node.__src, node.__altText, node.__maxWidth, node.__width, node.__height, node.__key);
   }
 
-  constructor(src: string, altText: string, maxWidth: number | string, width: number | string, height: number | string, key?: NodeKey) {
+  constructor(src: string, altText: string, maxWidth: number | string, width?: 'inherit' | number, height?: 'inherit' | number, key?: NodeKey) {
     super(key);
     this.__src = src;
     this.__altText = altText;
@@ -338,7 +329,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 }
 
-export function $createImageNode({src, altText, maxWidth, width, height}: ImagePayload): ImageNode {
+export function $createImageNode({src, altText, maxWidth, width = null, height = null}: ImagePayload): ImageNode {
   return new ImageNode(src, altText, maxWidth, width, height);
 }
 
