@@ -201,6 +201,7 @@ export interface CommentsObjectProps {
 
   /**
    * Load more contents in place
+	 * rather than opening a new page
    */
   inPlaceLoadMoreContents?: boolean;
 
