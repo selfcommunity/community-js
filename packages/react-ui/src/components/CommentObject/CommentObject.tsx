@@ -631,6 +631,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         }}
         CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
         cacheStrategy={cacheStrategy}
+        inPlaceLoadMoreContents={true}
       />
     );
   }

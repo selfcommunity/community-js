@@ -200,6 +200,11 @@ export interface CommentsObjectProps {
   hidePaginationLinks?: boolean;
 
   /**
+   * Load more contents in place
+   */
+  inPlaceLoadMoreContents?: boolean;
+
+  /**
    * Page query parameter name
    * @default 'page'
    */
@@ -303,6 +308,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     hideAdvertising = false,
     disablePaginationLinks = false,
     hidePaginationLinks = true,
+    inPlaceLoadMoreContents = true,
     paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
     PaginationLinkProps = {},
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
@@ -392,7 +398,12 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
           <>
             <Button
               variant="text"
-              onClick={handlePrevious}
+              {...(inPlaceLoadMoreContents
+                ? {onClick: handlePrevious}
+                : {
+                    component: Link,
+                    to: `${scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject))}`
+                  })}
               disabled={isLoadingPrevious}
               color="inherit"
               classes={{root: classes.loadPreviousCommentsButton}}>
@@ -426,7 +437,23 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
           <>
             <InView as="div" onChange={handleScrollEnd} threshold={0.5}>
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadNextCommentsButton}}>
+                <Button
+                  variant="text"
+                  {...(inPlaceLoadMoreContents
+                    ? {onClick: handleNext}
+                    : {
+                        component: Link,
+                        to:
+                          nextPage && next
+                            ? `${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
+                                {[paginationLinksPageQueryParam]: nextPage}
+                              ])}`
+                            : `${scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject))}`
+                      })}
+                  onClick={handleNext}
+                  disabled={isLoadingNext}
+                  color="inherit"
+                  classes={{root: classes.loadNextCommentsButton}}>
                   <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
                 </Button>
                 {showCommentsCounter() && (
@@ -467,7 +494,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   /**
    * Render comments and load others with load more button
    */
-  function renderComments(comments) {
+  function renderComments(comments, truncateContent = null) {
     return (
       <>
         {comments.map((comment: SCCommentType, index) => (
@@ -479,6 +506,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               feedObject={obj}
               {...CommentComponentProps}
               CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+              {...(truncateContent !== null ? {truncateContent} : {})}
             />
             {advPosition === index && renderAdvertising()}
           </React.Fragment>
@@ -520,9 +548,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {renderComments(getFilteredComments(startComments))}
+      {renderComments(getFilteredComments(startComments), false)}
       {commentsRendered}
-      {renderComments(getFilteredComments(endComments))}
+      {renderComments(getFilteredComments(endComments), false)}
     </Root>
   );
 }
