@@ -72,16 +72,12 @@ function ImageComponent({
   src,
   altText,
   nodeKey,
-  width,
-  height,
   maxWidth
 }: {
   altText: string;
-  height: 'inherit' | number;
   maxWidth: string | number;
   nodeKey: NodeKey;
   src: string;
-  width: 'inherit' | number;
 }): JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -186,8 +182,6 @@ function ImageComponent({
         src={src}
         altText={altText}
         imageRef={imageRef}
-        width={width}
-        height={height}
         maxWidth={maxWidth}
       />
     </Suspense>
@@ -196,12 +190,8 @@ function ImageComponent({
 
 function convertImageElement(domNode) {
   if (domNode instanceof HTMLImageElement) {
-    const {
-      alt: altText,
-      src,
-      dataset: {width, height}
-    } = domNode;
-    const node = $createImageNode({altText, height: Number(height), src, width: Number(width), maxWidth: '100%'});
+    const {alt: altText, src} = domNode;
+    const node = $createImageNode({altText, src, maxWidth: '100%'});
     return {node};
   }
   return null;
@@ -209,10 +199,8 @@ function convertImageElement(domNode) {
 export type SerializedImageNode = Spread<
   {
     altText: string;
-    height?: number;
     maxWidth: number | string;
     src: string;
-    width?: number;
     type: 'image';
     version: 1;
   },
@@ -222,8 +210,6 @@ export type SerializedImageNode = Spread<
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
-  __width: 'inherit' | number;
-  __height: 'inherit' | number;
   __maxWidth: number | string;
 
   static getType(): string {
@@ -231,16 +217,14 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   static clone(node: ImageNode): ImageNode {
-    return new ImageNode(node.__src, node.__altText, node.__maxWidth, node.__width, node.__height, node.__key);
+    return new ImageNode(node.__src, node.__altText, node.__maxWidth, node.__key);
   }
 
-  constructor(src: string, altText: string, maxWidth: number | string, width?: 'inherit' | number, height?: 'inherit' | number, key?: NodeKey) {
+  constructor(src: string, altText: string, maxWidth: number | string, key?: NodeKey) {
     super(key);
     this.__src = src;
     this.__altText = altText;
-    this.__width = width || 'inherit';
     this.__maxWidth = maxWidth;
-    this.__height = height || 'inherit';
   }
 
   setWidthAndHeight(width: 'inherit' | number, height: 'inherit' | number): void {
@@ -285,32 +269,19 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     const element = document.createElement('img');
     element.setAttribute('src', this.__src);
     element.setAttribute('alt', this.__altText);
-    element.setAttribute('width', `${this.__width}`);
-    element.setAttribute('height', `${this.__height}`);
     element.setAttribute('style', `max-width: ${this.__maxWidth}px;`);
     return {element};
   }
 
   decorate(): JSX.Element {
-    return (
-      <ImageComponent
-        src={this.__src}
-        altText={this.__altText}
-        width={this.__width}
-        height={this.__height}
-        maxWidth={this.__maxWidth}
-        nodeKey={this.getKey()}
-      />
-    );
+    return <ImageComponent src={this.__src} altText={this.__altText} maxWidth={this.__maxWidth} nodeKey={this.getKey()} />;
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const {altText, height, width, maxWidth, src} = serializedNode;
+    const {altText, maxWidth, src} = serializedNode;
     const node = $createImageNode({
       altText,
-      height,
       src,
-      width,
       maxWidth
     });
     return node;
@@ -319,18 +290,16 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   exportJSON(): SerializedImageNode {
     return {
       altText: this.getAltText(),
-      height: this.__height === 'inherit' ? 0 : this.__height,
       maxWidth: this.__maxWidth,
       src: this.getSrc(),
       type: 'image',
-      version: 1,
-      width: this.__width === 'inherit' ? 0 : this.__width
+      version: 1
     };
   }
 }
 
-export function $createImageNode({src, altText, maxWidth, width = null, height = null}: ImagePayload): ImageNode {
-  return new ImageNode(src, altText, maxWidth, width, height);
+export function $createImageNode({src, altText, maxWidth}: ImagePayload): ImageNode {
+  return new ImageNode(src, altText, maxWidth);
 }
 
 export function $isImageNode(node?: LexicalNode): boolean {
