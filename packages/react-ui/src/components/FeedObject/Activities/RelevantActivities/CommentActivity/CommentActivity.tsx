@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import BaseItem from '../../../../../shared/BaseItem';
 import UserDeletedSnackBar from '../../../../../shared/UserDeletedSnackBar';
+import {getContributionHtml, getRouteData} from '../../../../../utils/contribution';
+import {MAX_SUMMARY_LENGTH} from '../../../../../constants/Feed';
 
 const messages = defineMessages({
   comment: {
@@ -22,7 +24,8 @@ const PREFIX = 'SCCommentRelevantActivity';
 const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`
+  username: `${PREFIX}-username`,
+  showMoreContent: `${PREFIX}-show-more-content`
 };
 
 const Root = styled(BaseItem, {
@@ -62,6 +65,12 @@ export default function CommentRelevantActivity(inProps: ActionsRelevantActivity
   const intl = useIntl();
 
   // RENDER
+  const summaryHtmlTruncated =
+    'summary_truncated' in activityObject.comment
+      ? activityObject.comment.summary_truncated
+      : activityObject.comment.html.length >= MAX_SUMMARY_LENGTH;
+  const commentHtml = 'summary_html' in activityObject.comment ? activityObject.comment.summary_html : activityObject.comment.summary;
+  const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
   return (
     <>
       <Root
@@ -85,7 +94,16 @@ export default function CommentRelevantActivity(inProps: ActionsRelevantActivity
                   {activityObject.author.username}
                 </Link>
               ),
-              comment: activityObject.comment.summary
+              comment: (
+                <>
+                  {summaryHtml}
+                  <Link
+                    to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}
+                    className={classes.showMoreContent}>
+                    <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
+                  </Link>
+                </>
+              )
             })}
           </>
         }
