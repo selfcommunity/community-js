@@ -683,8 +683,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const getContributionSummary = useCallback(
     (obj: SCFeedObjectType, template: SCFeedObjectTemplateType): React.ReactNode => {
-      const contributionHtml = obj.summary_html ? obj.summary_html : obj.summary;
-      const summaryHtmlTruncated = obj.summary_truncated ? obj.summary_truncated : obj.html.length >= MAX_SUMMARY_LENGTH;
+      const contributionHtml = 'summary_html' in obj ? obj.summary_html : obj.summary;
+      const summaryHtmlTruncated = 'summary_truncated' in obj ? obj.summary_truncated : obj.html.length >= MAX_SUMMARY_LENGTH;
       const summaryHtml =
         expanded || template === SCFeedObjectTemplateType.DETAIL
           ? getContributionHtml(obj.html, scRoutingContext.url)

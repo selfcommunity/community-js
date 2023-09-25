@@ -503,8 +503,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       // or the comment author is the logged user
       return null;
     }
-    const commentHtml = comment.summary_html && truncateContent ? comment.summary_html : comment.html;
-    const summaryHtmlTruncated = comment.summary_truncated ? comment.summary_truncated : false;
+    const commentHtml = 'summary_html' in comment && truncateContent ? comment.summary_html : comment.html;
+    const summaryHtmlTruncated = 'summary_truncated' in comment ? comment.summary_truncated : false;
     const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
