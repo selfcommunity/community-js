@@ -201,7 +201,7 @@ export interface CommentsObjectProps {
 
   /**
    * Load more contents in place
-	 * rather than opening a new page
+   * rather than opening a new page
    */
   inPlaceLoadMoreContents?: boolean;
 
@@ -494,7 +494,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   /**
    * Render comments and load others with load more button
    */
-  function renderComments(comments, truncateContent = null) {
+  function renderComments(comments) {
     return (
       <>
         {comments.map((comment: SCCommentType, index) => (
@@ -506,7 +506,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
               feedObject={obj}
               {...CommentComponentProps}
               CommentObjectSkeletonProps={CommentObjectSkeletonProps}
-              {...(truncateContent !== null ? {truncateContent} : {})}
             />
             {advPosition === index && renderAdvertising()}
           </React.Fragment>
@@ -548,9 +547,9 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {renderComments(getFilteredComments(startComments), false)}
+      {renderComments(getFilteredComments(startComments))}
       {commentsRendered}
-      {renderComments(getFilteredComments(endComments), false)}
+      {renderComments(getFilteredComments(endComments))}
     </Root>
   );
 }

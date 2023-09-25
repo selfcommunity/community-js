@@ -650,11 +650,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
+          // if add a comment -> the comment must be untruncated
+          const _data: SCCommentType = data;
+          _data.summary_truncated = false;
           if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS) {
             setComments([]);
             setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
           } else {
-            setComments([...[data], ...comments]);
+            setComments([...[_data], ...comments]);
           }
           setIsReplying(false);
           const newObj = Object.assign({}, obj, {comment_count: obj.comment_count + 1});
@@ -683,8 +686,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const getContributionSummary = useCallback(
     (obj: SCFeedObjectType, template: SCFeedObjectTemplateType): React.ReactNode => {
-      const contributionHtml = obj.summary_html ? obj.summary_html : obj.summary;
-      const summaryHtmlTruncated = obj.summary_truncated ? obj.summary_truncated : obj.html.length >= MAX_SUMMARY_LENGTH;
+      const contributionHtml = 'summary_html' in obj ? obj.summary_html : obj.summary;
+      const summaryHtmlTruncated = 'summary_truncated' in obj ? obj.summary_truncated : obj.html.length >= MAX_SUMMARY_LENGTH;
       const summaryHtml =
         expanded || template === SCFeedObjectTemplateType.DETAIL
           ? getContributionHtml(obj.html, scRoutingContext.url)
