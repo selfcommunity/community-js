@@ -8,13 +8,13 @@ import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
 import {SCCommentsOrderBy} from '../../types/comments';
+import CommentsObject, {CommentsObjectProps} from '../CommentsObject';
 import CommentObjectReply from '../CommentObjectReply';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
-import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
@@ -158,6 +158,12 @@ export interface CommentObjectProps {
   CommentObjectReplyProps?: CardProps;
 
   /**
+   * Props to spread to sub comments object
+   * @default {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps}
+   */
+  CommentsObjectProps?: CommentsObjectProps;
+
+  /**
    * If datetime is linkable or not
    * @default true
    */
@@ -238,6 +244,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     CommentObjectReplyProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    CommentsObjectProps = {},
     ...rest
   } = props;
 
@@ -634,8 +641,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           truncateContent
         }}
         CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
-        cacheStrategy={cacheStrategy}
         inPlaceLoadMoreContents={true}
+        {...CommentsObjectProps}
+        cacheStrategy={cacheStrategy}
       />
     );
   }
