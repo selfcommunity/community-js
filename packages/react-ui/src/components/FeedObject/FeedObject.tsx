@@ -913,7 +913,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     onSetSelectedActivities={handleSelectedActivities}
                     comments={comments}
                     CommentsObjectProps={{
-                      CommentComponentProps: {...{onDelete: handleDeleteComment, truncateContent: true}, ...CommentComponentProps},
+                      CommentComponentProps: {
+                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectProps: {inPlaceLoadMoreContents: false}},
+                        ...CommentComponentProps
+                      },
                       CommentObjectSkeletonProps: CommentObjectSkeletonProps
                     }}
                     cacheStrategy={cacheStrategy}

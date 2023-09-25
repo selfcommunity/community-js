@@ -216,7 +216,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
               ...{truncateContent: true},
               ...CommentComponentProps,
               ...{cacheStrategy},
-              ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {})
+              CommentsObjectProps: {...{inPlaceLoadMoreContents: false}, ...CommentsObjectProps}
             }}
             inPlaceLoadMoreContents={false}
           />
