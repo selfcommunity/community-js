@@ -451,7 +451,6 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
                               ])}`
                             : `${scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject))}`
                       })}
-                  onClick={handleNext}
                   disabled={isLoadingNext}
                   color="inherit"
                   classes={{root: classes.loadNextCommentsButton}}>
