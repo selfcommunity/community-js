@@ -650,11 +650,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
+          // if add a comment -> the comment must be untruncated
+          const _data: SCCommentType = data;
+          _data.summary_truncated = false;
           if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS) {
             setComments([]);
             setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
           } else {
-            setComments([...[data], ...comments]);
+            setComments([...[_data], ...comments]);
           }
           setIsReplying(false);
           const newObj = Object.assign({}, obj, {comment_count: obj.comment_count + 1});

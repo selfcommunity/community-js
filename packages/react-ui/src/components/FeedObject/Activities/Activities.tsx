@@ -213,6 +213,7 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
             cacheStrategy={cacheStrategy}
             CommentsObjectSkeletonProps={{count: skeletonsCount}}
             CommentComponentProps={{
+              ...{truncateContent: true},
               ...CommentComponentProps,
               ...{cacheStrategy},
               ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {})

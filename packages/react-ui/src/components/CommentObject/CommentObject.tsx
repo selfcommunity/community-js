@@ -360,7 +360,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          updateObject({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
+          // if add a comment -> the comment must be untruncated
+          const _data: SCCommentType = data;
+          _data.summary_truncated = false;
+          updateObject({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, _data]}});
           setReplyComment(null);
           setIsReplying(false);
         })
@@ -503,8 +506,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       // or the comment author is the logged user
       return null;
     }
-    const commentHtml = 'summary_html' in comment && truncateContent ? comment.summary_html : comment.html;
     const summaryHtmlTruncated = 'summary_truncated' in comment ? comment.summary_truncated : false;
+    const commentHtml = 'summary_html' in comment && truncateContent && summaryHtmlTruncated ? comment.summary_html : comment.html;
     const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
@@ -627,7 +630,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           elevation: elevation,
           linkableCommentDateTime: linkableCommentDateTime,
           ...rest,
-          cacheStrategy
+          cacheStrategy,
+          truncateContent
         }}
         CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
         cacheStrategy={cacheStrategy}
