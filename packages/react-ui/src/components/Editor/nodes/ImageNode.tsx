@@ -174,11 +174,10 @@ function ImageComponent({
     };
   }, [clearSelection, editor, isSelected, nodeKey, onDelete, onEnter, onEscape, setSelected]);
 
-  const isFocused = isSelected;
   return (
     <Suspense fallback={null}>
       <LazyImage
-        className={isFocused ? `focused` : null}
+        className={isSelected ? `selected` : null}
         src={src}
         altText={altText}
         imageRef={imageRef}
@@ -239,13 +238,13 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   // View
 
   createDOM(config: EditorConfig): HTMLElement {
-    const span = document.createElement('span');
+    const div = document.createElement('div');
     const theme = config.theme;
     const className = theme.image;
     if (className !== undefined) {
-      span.className = className;
+      div.className = className;
     }
-    return span;
+    return div;
   }
 
   updateDOM(): false {

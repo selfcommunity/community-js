@@ -914,7 +914,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     comments={comments}
                     CommentsObjectProps={{
                       CommentComponentProps: {
-                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectProps: {inPlaceLoadMoreContents: false}},
+                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
                         ...CommentComponentProps
                       },
                       CommentObjectSkeletonProps: CommentObjectSkeletonProps

@@ -161,7 +161,7 @@ export interface CommentObjectProps {
    * Props to spread to sub comments object
    * @default {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps}
    */
-  CommentsObjectProps?: CommentsObjectProps;
+  CommentsObjectComponentProps?: CommentsObjectProps;
 
   /**
    * If datetime is linkable or not
@@ -244,7 +244,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     CommentObjectReplyProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
-    CommentsObjectProps = {},
+		CommentsObjectComponentProps = {},
     ...rest
   } = props;
 
@@ -642,7 +642,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         }}
         CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
         inPlaceLoadMoreContents={true}
-        {...CommentsObjectProps}
+        {...CommentsObjectComponentProps}
         cacheStrategy={cacheStrategy}
       />
     );
