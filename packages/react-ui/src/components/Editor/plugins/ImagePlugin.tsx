@@ -1,26 +1,24 @@
-import React, {forwardRef, useEffect, useState} from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import {
-  $getSelection,
-  $isRangeSelection,
-  $isRootNode,
   COMMAND_PRIORITY_EDITOR,
   createCommand,
   INSERT_PARAGRAPH_COMMAND,
   LexicalCommand,
-  LexicalEditor
+  LexicalEditor,
 } from 'lexical';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import { $insertNodeToNearestRoot } from '@lexical/utils';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { CircularProgress, Icon, IconButton, IconButtonProps } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import {Endpoints} from '@selfcommunity/api-services';
-import {SCMediaType} from '@selfcommunity/types';
-import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import { Endpoints } from '@selfcommunity/api-services';
+import { SCMediaType } from '@selfcommunity/types';
+import { SCContextType, SCUserContextType, useSCContext, useSCUser } from '@selfcommunity/react-core';
 import MediaChunkUploader from '../../../shared/MediaChunkUploader';
-import {SCMediaChunkType} from '../../../types/media';
-import {asUploadButton} from '@rpldy/upload-button';
-import {useSnackbar} from 'notistack';
-import {$createImageNode, ImageNode} from '../nodes/ImageNode';
+import { SCMediaChunkType } from '../../../types/media';
+import { asUploadButton } from '@rpldy/upload-button';
+import { useSnackbar } from 'notistack';
+import { $createImageNode, ImageNode } from '../nodes/ImageNode';
 
 export interface InsertImagePayload {
   altText: string;
@@ -68,7 +66,6 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
     };
     editor.focus();
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
-    editor.dispatchCommand(INSERT_PARAGRAPH_COMMAND, undefined);
   };
 
   const handleUploadProgress = (chunks: any) => {
@@ -137,20 +134,15 @@ export default function ImagePlugin(): JSX.Element {
     return editor.registerCommand(
       INSERT_IMAGE_COMMAND,
       (payload: InsertImagePayload) => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          if ($isRootNode(selection.anchor.getNode())) {
-            selection.insertParagraph();
-          }
-          const imageNode = $createImageNode({
-            src: payload.src,
-            altText: payload.altText,
-            maxWidth: '100%',
-            width: payload.width,
-            height: payload.height
-          });
-          selection.insertNodes([imageNode]);
-        }
+        const imageNode = $createImageNode({
+          src: payload.src,
+          altText: payload.altText,
+          maxWidth: '100%',
+          width: payload.width,
+          height: payload.height
+        });
+        // The image is not editable so it is better to position it near the root element
+        $insertNodeToNearestRoot(imageNode);
         return true;
       },
       COMMAND_PRIORITY_EDITOR

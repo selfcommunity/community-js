@@ -44,7 +44,7 @@ const Component = {
       '& .SCEditor-image': {
         position: 'relative',
         display: 'block',
-        '& .focused': {
+        '& .selected': {
           border: `2px solid ${theme.palette.secondary.main}`
         }
       },
