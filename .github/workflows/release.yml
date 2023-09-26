@@ -39,49 +39,49 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/types
-    - run: echo "@selfcommunity/types - ${{ steps.types.outputs.current-version }}"
+    - run: echo "@selfcommunity/types - ${{ steps.types.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/utils version
       id: utils
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/utils
-    - run: echo "@selfcommunity/utils - ${{ steps.utils.outputs.current-version }}"
+    - run: echo "@selfcommunity/utils - ${{ steps.utils.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/api-services version
       id: api-services
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/api-services
-    - run: echo "@selfcommunity/api-services - ${{ steps.api-services.outputs.current-version }}"
+    - run: echo "@selfcommunity/api-services - ${{ steps.api-services.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/react-i18n version
       id: react-i18n
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-i18n
-    - run: echo "@selfcommunity/react-i18n - ${{ steps.react-i18n.outputs.current-version }}"
+    - run: echo "@selfcommunity/react-i18n - ${{ steps.react-i18n.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/react-core version
       id: react-core
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-core
-    - run: echo "@selfcommunity/react-core - ${{ steps.react-core.outputs.current-version }}"
+    - run: echo "@selfcommunity/react-core - ${{ steps.react-core.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/react-ui version
       id: react-ui
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-ui
-    - run: echo "@selfcommunity/react-ui - ${{ steps.react-ui.outputs.current-version }}"
+    - run: echo "@selfcommunity/react-ui - ${{ steps.react-ui.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/react-templates version
       id: react-templates
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-templates
-    - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
+    - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}" >> $GITHUB_OUTPUT
     - name: Get @selfcommunity/react-theme-default version
       id: react-theme-default
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-theme-default
-    - run: echo "@selfcommunity/react-theme-default - ${{ steps.react-theme-default.outputs.current-version }}"
+    - run: echo "@selfcommunity/react-theme-default - ${{ steps.react-theme-default.outputs.current-version }}" >> $GITHUB_OUTPUT
     - uses: peter-evans/repository-dispatch@v2
       name: Repository Dispatch
       with:
