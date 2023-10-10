@@ -31,19 +31,24 @@ const Component = {
         color: theme.palette.primary.main,
         textAlign: 'center',
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        maxHeight: 30,
         '& a': {
           color: 'inherit',
-          textDecoration: 'none'
-        },
-        '& a::after': {
-          content: '"\\2022"',
-          padding: theme.spacing()
-        },
-        '& a:last-child::after': {
-          display: 'none'
-        },
-        '& span': {
-          textTransform: 'initial'
+          textDecoration: 'none',
+          '&::after': {
+            content: '"\\2022"',
+            padding: theme.spacing()
+          },
+          '&:last-child::after': {
+            display: 'none'
+          },
+          '&:hover': {
+            color: theme.palette.secondary.main
+          },
+          '& span': {
+            textTransform: 'initial',
+            fontWeight: theme.typography.fontWeightBold
+          }
         }
       },
       '& .SCFeedObject-content': {
@@ -80,7 +85,7 @@ const Component = {
         width: '100%',
         boxSizing: 'border-box',
         margin: 0,
-        padding: theme.spacing(1, 2)
+        padding: theme.spacing(0.5, 2)
       },
       '& .SCFeedObject-info-section': {
         padding: theme.spacing(0, 2)

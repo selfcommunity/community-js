@@ -12,8 +12,14 @@ const Component = {
             overflow: 'visible'
           }
         },
-        '& .SCBaseItem-image .MuiBadge-badge': {
-          top: theme.spacing(1.25)
+        '& .SCBaseItem-image': {
+          '& .MuiBadge-badge': {
+            top: theme.spacing(1.25)
+          },
+          '& .SCCommentObjectReply-avatar': {
+            width: theme.selfcommunity.user.avatar.sizeMedium,
+            height: theme.selfcommunity.user.avatar.sizeMedium
+          },
         }
       },
       '& .SCCommentObjectReply-comment': {
