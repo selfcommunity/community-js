@@ -26,7 +26,7 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
-import InfiniteScroll from '../../shared/InfiniteScroll';
+import InfiniteScroll, {InfiniteScrollProps} from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {DEFAULT_WIDGETS_NUMBER, WIDGET_PREFIX_KEY} from '../../constants/Feed';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
@@ -207,6 +207,12 @@ export interface FeedProps {
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
 
   /**
+   * Props to spread to InfiniteScroll object.
+   * @default {}
+   */
+  InfiniteScrollComponentProps?: Pick<InfiniteScrollProps, 'scrollableTarget'>;
+
+  /**
    * Props to spread to VirtualizedScroller object.
    * @default {}
    */
@@ -306,6 +312,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
+    InfiniteScrollComponentProps = {},
     VirtualizedScrollerProps = {},
     disablePaginationLinks = false,
     hidePaginationLinks = true,
@@ -331,6 +338,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REF
   const isMountRef = useIsComponentMountedRef();
+  const containerRef = useRef(null);
 
   /**
    * Compute preferences
@@ -786,8 +794,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
         </Grid>
       ) : null}
-      <Grid item xs={12} md={7}>
-        <div style={{overflow: 'visible'}}>
+      <Grid item xs={12} md={7} ref={containerRef}>
+        {containerRef.current && (
           <InfiniteScroll
             className={classes.left}
             dataLength={feedDataLeft.length}
@@ -820,7 +828,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 <CardContent>{refreshMessage}</CardContent>
               </Widget>
             }
-            style={{overflow: 'visible'}}>
+            style={{overflow: 'visible'}}
+            {...InfiniteScrollComponentProps}>
             {renderHeaderComponent()}
             <VirtualizedScroller
               className={classes.leftItems}
@@ -834,10 +843,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
               cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
               cacheStrategy={cacheStrategy}
+              scrollableContainer={containerRef.current}
               {...VirtualizedScrollerProps}
             />
           </InfiniteScroll>
-        </div>
+        )}
       </Grid>
       {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>
