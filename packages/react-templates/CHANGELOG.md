@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.319](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.318...@selfcommunity/react-templates@0.3.0-alpha.319) (2023-10-10)
+
+
+### Performance Improvements
+
+* Update dependencies ([21fac75](https://github.com/selfcommunity/community-js/commit/21fac7587c6f91bbdce51f7b4f40ed7ae0eb1b63))
+
+
+
+
+
 # [0.3.0-alpha.318](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.317...@selfcommunity/react-templates@0.3.0-alpha.318) (2023-09-26)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
