@@ -8,6 +8,7 @@ import {VirtualScrollerCommonOptions} from 'virtual-scroller';
  */
 export interface VirtualizedScrollerCommonProps extends VirtualScrollerCommonOptions<HTMLElement, any>, React.HTMLAttributes<HTMLElement> {
   scrollableContainer?: any;
+  getScrollableContainer?: () => Element;
 }
 
 /**

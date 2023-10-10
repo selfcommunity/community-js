@@ -794,60 +794,58 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
         </Grid>
       ) : null}
-      <Grid item xs={12} md={7} ref={containerRef}>
-        {containerRef.current && (
-          <InfiniteScroll
-            className={classes.left}
-            dataLength={feedDataLeft.length}
-            next={getNextPage}
-            previous={getPreviousPage}
-            hasMoreNext={Boolean(feedDataObject.next)}
-            hasMorePrevious={Boolean(feedDataObject.previous)}
-            header={PreviousPageLink}
-            footer={NextPageLink}
-            loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
-            loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
-            scrollThreshold={'90%'}
-            endMessage={
-              <Box className={classes.end}>
-                <Widget className={classes.endMessage}>
-                  <CardContent>{endMessage}</CardContent>
-                </Widget>
-                {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
-                  <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
-                ) : null}
-                {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
-              </Box>
-            }
-            refreshFunction={refresh}
-            pullDownToRefresh
-            pullDownToRefreshThreshold={1000}
-            pullDownToRefreshContent={null}
-            releaseToRefreshContent={
-              <Widget variant="outlined" className={classes.refresh}>
-                <CardContent>{refreshMessage}</CardContent>
+      <Grid item xs={12} md={7}>
+        <InfiniteScroll
+          ref={containerRef}
+          className={classes.left}
+          dataLength={feedDataLeft.length}
+          next={getNextPage}
+          previous={getPreviousPage}
+          hasMoreNext={Boolean(feedDataObject.next)}
+          hasMorePrevious={Boolean(feedDataObject.previous)}
+          header={PreviousPageLink}
+          footer={NextPageLink}
+          loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
+          loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
+          scrollThreshold={'90%'}
+          endMessage={
+            <Box className={classes.end}>
+              <Widget className={classes.endMessage}>
+                <CardContent>{endMessage}</CardContent>
               </Widget>
-            }
-            style={{overflow: 'visible'}}
-            {...InfiniteScrollComponentProps}>
-            {renderHeaderComponent()}
-            <VirtualizedScroller
-              className={classes.leftItems}
-              items={feedDataLeft}
-              itemComponent={InnerItem}
-              onMount={onScrollerMount}
-              onScrollerStateChange={onScrollerStateChange}
-              getItemId={getScrollItemId}
-              preserveScrollPosition
-              preserveScrollPositionOnPrependItems
-              cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
-              cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
-              cacheStrategy={cacheStrategy}
-              scrollableContainer={containerRef.current}
-              {...VirtualizedScrollerProps}
-            />
-          </InfiniteScroll>
-        )}
+              {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
+                <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
+              ) : null}
+              {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
+            </Box>
+          }
+          refreshFunction={refresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={1000}
+          pullDownToRefreshContent={null}
+          releaseToRefreshContent={
+            <Widget variant="outlined" className={classes.refresh}>
+              <CardContent>{refreshMessage}</CardContent>
+            </Widget>
+          }
+          style={{overflow: 'visible'}}
+          {...InfiniteScrollComponentProps}>
+          {renderHeaderComponent()}
+          <VirtualizedScroller
+            className={classes.leftItems}
+            items={feedDataLeft}
+            itemComponent={InnerItem}
+            onMount={onScrollerMount}
+            onScrollerStateChange={onScrollerStateChange}
+            getItemId={getScrollItemId}
+            preserveScrollPosition
+            preserveScrollPositionOnPrependItems
+            cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
+            cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
+            cacheStrategy={cacheStrategy}
+            {...VirtualizedScrollerProps}
+          />
+        </InfiniteScroll>
       </Grid>
       {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>
