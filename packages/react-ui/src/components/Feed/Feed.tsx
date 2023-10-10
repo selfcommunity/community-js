@@ -207,10 +207,12 @@ export interface FeedProps {
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
 
   /**
-   * Props to spread to InfiniteScroll object.
-   * @default {}
+   * If the feed is being rendered in a "scrollable container"
+   * (for example, if one of the parent elements of the list is
+   * styled with max-height and overflow: auto),
+   * then passing the "scrollableTargetId"
    */
-  InfiniteScrollComponentProps?: Pick<InfiniteScrollProps, 'scrollableTarget'>;
+  scrollableTargetId?: string;
 
   /**
    * Props to spread to VirtualizedScroller object.
@@ -312,7 +314,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
-    InfiniteScrollComponentProps = {},
+    scrollableTargetId,
     VirtualizedScrollerProps = {},
     disablePaginationLinks = false,
     hidePaginationLinks = true,
@@ -829,7 +831,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             </Widget>
           }
           style={{overflow: 'visible'}}
-          {...InfiniteScrollComponentProps}>
+          {...(scrollableTargetId && {scrollableTarget: scrollableTargetId})}>
           {renderHeaderComponent()}
           <VirtualizedScroller
             className={classes.leftItems}
@@ -843,6 +845,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
             cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
             cacheStrategy={cacheStrategy}
+            {...(scrollableTargetId && {getScrollableContainer: () => document.getElementById(scrollableTargetId)})}
             {...VirtualizedScrollerProps}
           />
         </InfiniteScroll>

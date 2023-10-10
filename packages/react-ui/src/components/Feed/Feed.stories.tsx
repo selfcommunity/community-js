@@ -56,11 +56,12 @@ const templateContainerFixed = (args) => {
 		feedRef && feedRef.current && feedRef.current.refresh();
 	};
 
+	// The feed is wrapped in a container with position fixed and scrollbar and overflow: auto, so pass to the Feed scrollableTargetId={'scrollableDiv'}
 	return (<div>
 		<Button id={'testButton'} color='info' variant='contained' size='small' style={{position: 'absolute', top: 20, left: 25}}
 						onClick={handleRefresh}>Refresh</Button>
-		<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1000, maxWidth: '100% !important', height: '100vh', overflow: 'auto'}} id="scrollableDiv">
-			<Feed {...args} ref={feedRef} InfiniteScrollComponentProps={{scrollableTarget: 'scrollableDiv'}} VirtualizedScrollerProps={{getScrollableContainer: () => document.getElementById('scrollableDiv')}}/>
+		<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1000, maxWidth: '100% !important', height: '92vh', overflow: 'auto'}} id="scrollableDiv">
+			<Feed {...args} ref={feedRef} scrollableTargetId={'scrollableDiv'} />
 		</div>
 	</div>);
 };
