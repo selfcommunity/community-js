@@ -1,4 +1,4 @@
-import React, {Component, ReactNode, CSSProperties, forwardRef} from 'react';
+import React, {Component, ReactNode, CSSProperties} from 'react';
 import {throttle} from 'throttle-debounce';
 import {ThresholdUnits, parseThreshold} from '../../utils/threshold';
 
@@ -352,4 +352,4 @@ class InfiniteScroll extends Component<InfiniteScrollProps, State> {
     );
   }
 }
-export default React.forwardRef((props: InfiniteScrollProps, ref) => <InfiniteScroll innerRef={ref} {...props} />);
+export default InfiniteScroll;
