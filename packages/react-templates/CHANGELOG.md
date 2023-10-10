@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.320](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.319...@selfcommunity/react-templates@0.3.0-alpha.320) (2023-10-10)
+
+
+### Bug Fixes
+
+* feed infinite scroll ([f3cceb6](https://github.com/selfcommunity/community-js/commit/f3cceb633c6688b848d886fd16134c7db2a08d2b))
+* feed infinite scroll ([03fc937](https://github.com/selfcommunity/community-js/commit/03fc93755c06762447ad8667108ebe0bdac84547))
+* feed infinite scroll ([b0f7b9e](https://github.com/selfcommunity/community-js/commit/b0f7b9e8216e9a263c59d32188cb89e867ec64a4))
+
+
+
+
+
 # [0.3.0-alpha.319](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.318...@selfcommunity/react-templates@0.3.0-alpha.319) (2023-10-10)
 
 
