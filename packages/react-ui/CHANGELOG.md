@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.328](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.327...@selfcommunity/react-ui@0.7.0-alpha.328) (2023-10-10)
+
+
+### Bug Fixes
+
+* feed infinite scroll ([735d503](https://github.com/selfcommunity/community-js/commit/735d5033ee8b48ce363e46f3f2be5ff81ceb8f44))
+* feed infinite scroll ([f3cceb6](https://github.com/selfcommunity/community-js/commit/f3cceb633c6688b848d886fd16134c7db2a08d2b))
+* feed infinite scroll ([03fc937](https://github.com/selfcommunity/community-js/commit/03fc93755c06762447ad8667108ebe0bdac84547))
+* feed infinite scroll ([b0f7b9e](https://github.com/selfcommunity/community-js/commit/b0f7b9e8216e9a263c59d32188cb89e867ec64a4))
+
+
+
+
+
 # [0.7.0-alpha.327](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.326...@selfcommunity/react-ui@0.7.0-alpha.327) (2023-10-10)
 
 
