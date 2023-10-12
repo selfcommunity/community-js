@@ -16312,6 +16312,11 @@ seamless-scroll-polyfill@^2.1.8:
   resolved "https://registry.yarnpkg.com/seamless-scroll-polyfill/-/seamless-scroll-polyfill-2.2.0.tgz#422f4a7d1b3a7d0ea86f8afad3d6abea2c66a000"
   integrity sha512-c4KHfltYY8oFRt987Kl9i4xRLylIpg1YHWsOyH1kj4SP+W+8PtOiKrLyv8L6xbHvwQpofOZ98AWpGPEJK++udQ==
 
+seamless-scroll-polyfill@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/seamless-scroll-polyfill/-/seamless-scroll-polyfill-2.3.4.tgz#d2fd1833993a2ad41a3ac319c65dc839bf0746d5"
+  integrity sha512-Biobd4LDoeFODX1bfiru84GveSajzFELFB3ejMZsRR2TpD73W46uEZYAEqSx5RtKpN2umhGWaoSRivs0ZcHp9g==
+
 "semver@2 || 3 || 4 || 5", semver@^5.4.1, semver@^5.5.0, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
