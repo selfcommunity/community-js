@@ -13,12 +13,25 @@ const template = (args) => (
     <FeedObjectDetailTemplate {...args} />
   </div>);
 
+const templateContainerFixed = (args) => (
+	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
+		<FeedObjectDetailTemplate {...args} />
+	</div>);
+
 export const Base: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
     feedObjectId: 1400,
     feedObjectType: SCContributionType.DISCUSSION
   },
   render: template
+};
+
+export const BaseContainerFixed: StoryObj<typeof FeedObjectDetailTemplate> = {
+	args: {
+		feedObjectId: 1400,
+		feedObjectType: SCContributionType.DISCUSSION
+	},
+	render: templateContainerFixed
 };
 
 export const BaseCacheSWR: StoryObj<typeof FeedObjectDetailTemplate> = {
