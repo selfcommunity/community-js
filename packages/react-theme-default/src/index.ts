@@ -129,6 +129,10 @@ import SCAccountChangeMailValidation from './components/SCAccountChangeMailValid
 import SCAccountVerify from './components/SCAccountVerify';
 import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
 import SCNavigationToolbarMobileSkeleton from './components/SCNavigationToolbarMobileSkeleton';
+import UnstableSCComposer from './components/UnstableSCComposer';
+import UnstableSCComposerTypeSwitchButtonGroup from './components/UnstableSCComposerTypeSwitchButtonGroup';
+import UnstableSCComposerAudienceLayer from './components/UnstableSCComposerAudienceLayer';
+import UnstableSCComposerContentDiscussion from './components/UnstableSCComposerContentDiscussion';
 
 /**
  * Style fragments - Imports - End
@@ -223,6 +227,10 @@ const theme = {
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
+    UnstableSCComposer,
+    UnstableSCComposerAudienceLayer,
+    UnstableSCComposerContentDiscussion,
+    UnstableSCComposerTypeSwitchButtonGroup,
     SCCategoryAutocomplete,
     SCComposerPoll,
     SCContributionNotification,

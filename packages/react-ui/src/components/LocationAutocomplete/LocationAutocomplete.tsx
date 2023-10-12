@@ -4,7 +4,7 @@ import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import {Autocomplete, AutocompleteProps} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCLocalityType} from '@selfcommunity/types/src/index';
+import { SCContributionLocation, SCLocalityType } from '@selfcommunity/types/src/index';
 import {styled} from '@mui/material/styles';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -26,9 +26,9 @@ const Root = styled(Autocomplete, {
 
 export interface LocationAutocompleteProps
   extends Pick<
-    AutocompleteProps<SCLocalityType, false, false, true>,
+    AutocompleteProps<SCContributionLocation, false, false, true>,
     Exclude<
-      keyof AutocompleteProps<SCLocalityType, false, false, true>,
+      keyof AutocompleteProps<SCContributionLocation, false, false, true>,
       | 'options'
       | 'getOptionLabel'
       | 'filterOptions'
@@ -100,7 +100,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
   // State
   const [isLoading, setIsLoading] = useState(false);
   const [locations, setLocations] = useState([]);
-  const [value, setValue] = useState<string | SCLocalityType>(defaultValue);
+  const [value, setValue] = useState<string | SCContributionLocation>(defaultValue);
   const [search, setSearch] = useState<string>('');
 
   const load = (offset = 0, limit = 20) => {
@@ -135,8 +135,8 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
 
   // Handlers
 
-  const handleChange = (event: SyntheticEvent, value) => {
-    setValue(value);
+  const handleChange = (event: SyntheticEvent, value: SCLocalityType) => {
+    setValue({ location: value.full_address, lat: value.lat, lon: value.lng });
     onChange && onChange(value);
   };
 
@@ -145,11 +145,13 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
   };
 
   // Render
+
   return (
     <Root
       className={classes.root}
       options={locations || []}
-      getOptionLabel={(option: SCLocalityType) => option.full_address || ''}
+      // @ts-ignore
+      getOptionLabel={(option: SCLocalityType | SCContributionLocation) => option?.full_address || option?.location || '' }
       filterOptions={(x) => x}
       autoComplete
       includeInputInList
@@ -161,7 +163,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
       noOptionsText={<FormattedMessage id="ui.locationAutocomplete.empty" defaultMessage="ui.locationAutocomplete.empty" />}
       onChange={handleChange}
       onInputChange={handleSearch}
-      isOptionEqualToValue={(option: SCLocalityType, value: SCLocalityType) => value.lat === option.lat && value.lng === option.lng}
+      isOptionEqualToValue={(option: SCLocalityType, value: SCContributionLocation) => value.lat === option.lat && value.lon === option.lng}
       renderInput={(params) => {
         return (
           <TextField

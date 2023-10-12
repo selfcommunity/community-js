@@ -65,7 +65,7 @@ import PollPreview from '../FeedObject/Poll';
 import Editor, {EditorProps, EditorRef} from '../Editor';
 import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
 import {Document, Image, Link, Share} from '../../shared/Media';
-import MediasPreview from '../../shared/MediasPreview';
+import MediasPreview from '../../shared/Deprecated_MediasPreview';
 import Poll from './Poll';
 import LocationAutocomplete from '../LocationAutocomplete';
 import TagChip from '../../shared/TagChip';
@@ -180,7 +180,7 @@ export interface ComposerTypeMap<P = any, D extends React.ElementType = 'div'> {
       view?: string;
       /**
        * Media objects available
-       * @default Image, Document, Link
+       * @default File, Document, Link
        */
       mediaObjectTypes?: SCMediaObjectType[];
       /**
