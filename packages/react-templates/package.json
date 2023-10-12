@@ -72,8 +72,7 @@
     "@selfcommunity/react-ui": "^0.7.0-alpha.328",
     "@selfcommunity/types": "^0.5.0-alpha.15",
     "@types/classnames": "^2.3.1",
-    "classnames": "^2.3.2",
-    "seamless-scroll-polyfill": "^2.3.4"
+    "classnames": "^2.3.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
