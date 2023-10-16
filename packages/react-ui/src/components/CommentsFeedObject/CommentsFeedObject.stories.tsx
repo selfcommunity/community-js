@@ -39,7 +39,7 @@ export default {
     // onChangePage: (p) => console.log(p),
     // page: 2
   }
-  
+
 } as Meta<typeof CommentsFeedObject>;
 
 const template = (args) => (
@@ -47,6 +47,11 @@ const template = (args) => (
     <CommentsFeedObject {...args} />
   </div>
 );
+
+const templateContainerFixed = (args) => (
+	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
+		<CommentsFeedObject {...args} />
+	</div>);
 
 export const Base: StoryObj<CommentsFeedObject> = {
   args: {
@@ -61,7 +66,7 @@ export const Base: StoryObj<CommentsFeedObject> = {
 
 export const CommentFirstLevel: StoryObj<CommentsFeedObject> = {
   args: {
-    commentObjectId: 1146
+    commentObjectId: 1585
   },
   render: template
 };
@@ -71,4 +76,11 @@ export const CommentSecondLevel: StoryObj<CommentsFeedObject> = {
     commentObjectId: 1119
   },
   render: template
+};
+
+export const CommentFirstLevelContainerFixed: StoryObj<CommentsFeedObject> = {
+	args: {
+		commentObjectId: 1585
+	},
+	render: templateContainerFixed
 };

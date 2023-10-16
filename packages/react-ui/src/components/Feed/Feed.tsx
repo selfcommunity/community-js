@@ -26,7 +26,7 @@ import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
-import InfiniteScroll from '../../shared/InfiniteScroll';
+import InfiniteScroll, {InfiniteScrollProps} from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
 import {DEFAULT_WIDGETS_NUMBER, WIDGET_PREFIX_KEY} from '../../constants/Feed';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
@@ -207,6 +207,14 @@ export interface FeedProps {
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
 
   /**
+   * If the feed is being rendered in a "scrollable container"
+   * (for example, if one of the parent elements of the list is
+   * styled with max-height and overflow: auto),
+   * then passing the "scrollableTargetId"
+   */
+  scrollableTargetId?: string;
+
+  /**
    * Props to spread to VirtualizedScroller object.
    * @default {}
    */
@@ -306,6 +314,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
+    scrollableTargetId,
     VirtualizedScrollerProps = {},
     disablePaginationLinks = false,
     hidePaginationLinks = true,
@@ -331,6 +340,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REF
   const isMountRef = useIsComponentMountedRef();
+  const containerRef = useRef(null);
 
   /**
    * Compute preferences
@@ -787,57 +797,58 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         </Grid>
       ) : null}
       <Grid item xs={12} md={7}>
-        <div style={{overflow: 'visible'}}>
-          <InfiniteScroll
-            className={classes.left}
-            dataLength={feedDataLeft.length}
-            next={getNextPage}
-            previous={getPreviousPage}
-            hasMoreNext={Boolean(feedDataObject.next)}
-            hasMorePrevious={Boolean(feedDataObject.previous)}
-            header={PreviousPageLink}
-            footer={NextPageLink}
-            loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
-            loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
-            scrollThreshold={'90%'}
-            endMessage={
-              <Box className={classes.end}>
-                <Widget className={classes.endMessage}>
-                  <CardContent>{endMessage}</CardContent>
-                </Widget>
-                {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
-                  <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
-                ) : null}
-                {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
-              </Box>
-            }
-            refreshFunction={refresh}
-            pullDownToRefresh
-            pullDownToRefreshThreshold={1000}
-            pullDownToRefreshContent={null}
-            releaseToRefreshContent={
-              <Widget variant="outlined" className={classes.refresh}>
-                <CardContent>{refreshMessage}</CardContent>
+        <InfiniteScroll
+          ref={containerRef}
+          className={classes.left}
+          dataLength={feedDataLeft.length}
+          next={getNextPage}
+          previous={getPreviousPage}
+          hasMoreNext={Boolean(feedDataObject.next)}
+          hasMorePrevious={Boolean(feedDataObject.previous)}
+          header={PreviousPageLink}
+          footer={NextPageLink}
+          loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
+          loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
+          scrollThreshold={'90%'}
+          endMessage={
+            <Box className={classes.end}>
+              <Widget className={classes.endMessage}>
+                <CardContent>{endMessage}</CardContent>
               </Widget>
-            }
-            style={{overflow: 'visible'}}>
-            {renderHeaderComponent()}
-            <VirtualizedScroller
-              className={classes.leftItems}
-              items={feedDataLeft}
-              itemComponent={InnerItem}
-              onMount={onScrollerMount}
-              onScrollerStateChange={onScrollerStateChange}
-              getItemId={getScrollItemId}
-              preserveScrollPosition
-              preserveScrollPositionOnPrependItems
-              cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
-              cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
-              cacheStrategy={cacheStrategy}
-              {...VirtualizedScrollerProps}
-            />
-          </InfiniteScroll>
-        </div>
+              {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
+                <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
+              ) : null}
+              {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
+            </Box>
+          }
+          refreshFunction={refresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={1000}
+          pullDownToRefreshContent={null}
+          releaseToRefreshContent={
+            <Widget variant="outlined" className={classes.refresh}>
+              <CardContent>{refreshMessage}</CardContent>
+            </Widget>
+          }
+          style={{overflow: 'visible'}}
+          {...(scrollableTargetId && {scrollableTarget: scrollableTargetId})}>
+          {renderHeaderComponent()}
+          <VirtualizedScroller
+            className={classes.leftItems}
+            items={feedDataLeft}
+            itemComponent={InnerItem}
+            onMount={onScrollerMount}
+            onScrollerStateChange={onScrollerStateChange}
+            getItemId={getScrollItemId}
+            preserveScrollPosition
+            preserveScrollPositionOnPrependItems
+            cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
+            cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
+            cacheStrategy={cacheStrategy}
+            {...(scrollableTargetId && {getScrollableContainer: () => document.getElementById(scrollableTargetId)})}
+            {...VirtualizedScrollerProps}
+          />
+        </InfiniteScroll>
       </Grid>
       {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>

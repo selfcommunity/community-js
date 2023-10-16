@@ -13,7 +13,6 @@ import {InView} from 'react-intersection-observer';
 import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import {SCCommentType, SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
 import {appendURLSearchParams, CacheStrategies} from '@selfcommunity/utils';
-import {scrollIntoView} from 'seamless-scroll-polyfill';
 import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {
   Link,
@@ -365,7 +364,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     setTimeout(() => {
       const element = document.getElementById(`reply-${comment.id}`);
       if (element) {
-        scrollIntoView(element, {behavior: 'smooth', block: 'center', inline: 'center'});
+        element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
     }, 200);
   }

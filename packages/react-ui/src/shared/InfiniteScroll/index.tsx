@@ -3,7 +3,7 @@ import {throttle} from 'throttle-debounce';
 import {ThresholdUnits, parseThreshold} from '../../utils/threshold';
 
 type Fn = () => any;
-export interface Props {
+export interface InfiniteScrollProps {
   next?: Fn;
   hasMoreNext?: boolean;
   previous?: Fn;
@@ -38,8 +38,8 @@ interface State {
   prevDataLength: number | undefined;
 }
 
-export default class InfiniteScroll extends Component<Props, State> {
-  constructor(props: Props) {
+class InfiniteScroll extends Component<InfiniteScrollProps, State> {
+  constructor(props: InfiniteScrollProps) {
     super(props);
 
     this.state = {
@@ -79,7 +79,6 @@ export default class InfiniteScroll extends Component<Props, State> {
 
     this._scrollableNode = this.getScrollableTarget();
     this.el = this.props.height ? this._infScroll : this._scrollableNode || window;
-
     if (this.el) {
       this.el.addEventListener('scroll', this.throttledOnScrollListener as EventListenerOrEventListenerObject);
     }
@@ -133,7 +132,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     }
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: InfiniteScrollProps) {
     // do nothing when dataLength is unchanged
     if (this.props.dataLength === prevProps.dataLength) return;
 
@@ -146,7 +145,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     });
   }
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+  static getDerivedStateFromProps(nextProps: InfiniteScrollProps, prevState: State) {
     const dataLengthChanged = nextProps.dataLength !== prevState.prevDataLength;
 
     // reset when data changes
@@ -353,3 +352,4 @@ export default class InfiniteScroll extends Component<Props, State> {
     );
   }
 }
+export default InfiniteScroll;

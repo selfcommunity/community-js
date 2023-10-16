@@ -13,12 +13,26 @@ const template = (args) => (
     <FeedObjectDetailTemplate {...args} />
   </div>);
 
+const templateContainerFixed = (args) => (
+	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
+		<FeedObjectDetailTemplate {...args} />
+	</div>);
+
 export const Base: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
     feedObjectId: 1400,
     feedObjectType: SCContributionType.DISCUSSION
-  },
+	},
   render: template
+};
+
+export const BaseContainerFixed: StoryObj<typeof FeedObjectDetailTemplate> = {
+	args: {
+		feedObjectId: 1400,
+		feedObjectType: SCContributionType.DISCUSSION,
+		CommentsFeedObjectProps: {commentObjectId: 5232}
+	},
+	render: templateContainerFixed
 };
 
 export const BaseCacheSWR: StoryObj<typeof FeedObjectDetailTemplate> = {
@@ -42,9 +56,9 @@ export const BasePagination: StoryObj<typeof FeedObjectDetailTemplate> = {
 
 export const CommentFirstLevel: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
-    feedObjectId: 360,
+    feedObjectId: 412,
     feedObjectType: SCContributionType.POST,
-    CommentsFeedObjectProps: {commentObjectId: 1145}
+    CommentsFeedObjectProps: {commentObjectId: 1205}
   },
   render: template
 };

@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.283](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.282...@selfcommunity/react-theme-default@0.1.0-alpha.283) (2023-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.282](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.281...@selfcommunity/react-theme-default@0.1.0-alpha.282) (2023-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.281](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.280...@selfcommunity/react-theme-default@0.1.0-alpha.281) (2023-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.280](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.279...@selfcommunity/react-theme-default@0.1.0-alpha.280) (2023-10-10)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.279](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.278...@selfcommunity/react-theme-default@0.1.0-alpha.279) (2023-10-10)
+
+
+### Performance Improvements
+
+* Update dependencies ([21fac75](https://github.com/selfcommunity/community-js/commit/21fac7587c6f91bbdce51f7b4f40ed7ae0eb1b63))
+
+
+
+
+
+# [0.1.0-alpha.278](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.277...@selfcommunity/react-theme-default@0.1.0-alpha.278) (2023-10-10)
+
+
+### Performance Improvements
+
+* Padding and sizes in feedObject ([362486f](https://github.com/selfcommunity/community-js/commit/362486f065b71a22a8ddeeefabc49066d186f918))
+* Update icon font ([fc404a9](https://github.com/selfcommunity/community-js/commit/fc404a950c9dd233adc19b0dd05b8540e0571b52))
+
+
+
+
+
 # [0.1.0-alpha.277](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.276...@selfcommunity/react-theme-default@0.1.0-alpha.277) (2023-09-26)
 
 

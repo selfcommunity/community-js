@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-templates",
-  "version": "0.3.0-alpha.318",
+  "version": "0.3.0-alpha.323",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -67,13 +67,12 @@
     "react-intl": "^6.4.7"
   },
   "dependencies": {
-    "@selfcommunity/react-core": "^0.4.0-alpha.108",
+    "@selfcommunity/react-core": "^0.4.0-alpha.109",
     "@selfcommunity/react-i18n": "^0.5.0-alpha.54",
-    "@selfcommunity/react-ui": "^0.7.0-alpha.326",
+    "@selfcommunity/react-ui": "^0.7.0-alpha.331",
     "@selfcommunity/types": "^0.5.0-alpha.15",
     "@types/classnames": "^2.3.1",
-    "classnames": "^2.3.2",
-    "seamless-scroll-polyfill": "^2.3.4"
+    "classnames": "^2.3.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",

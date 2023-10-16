@@ -115,6 +115,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     name: PREFIX
   });
   const {
+    id = 'CommentObjectReply',
     className,
     elevation = 0,
     autoFocus = false,

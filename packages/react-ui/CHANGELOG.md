@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.331](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.330...@selfcommunity/react-ui@0.7.0-alpha.331) (2023-10-16)
+
+
+### Bug Fixes
+
+* scrollIntoView ([dc6fd5d](https://github.com/selfcommunity/community-js/commit/dc6fd5d277006d5d11cfa4fbbf3f12e7fe74b245))
+* scrollIntoView ([fd72f43](https://github.com/selfcommunity/community-js/commit/fd72f437d9d90c12e5de59087a06c317366dac83))
+
+
+
+
+
+# [0.7.0-alpha.330](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.329...@selfcommunity/react-ui@0.7.0-alpha.330) (2023-10-12)
+
+
+### Bug Fixes
+
+* scrollIntoView ([bba1547](https://github.com/selfcommunity/community-js/commit/bba1547b085d64b0df64e937db7ad2893ea84ea5))
+
+
+
+
+
+# [0.7.0-alpha.329](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.328...@selfcommunity/react-ui@0.7.0-alpha.329) (2023-10-12)
+
+
+### Bug Fixes
+
+* scrollIntoView ([6bf9256](https://github.com/selfcommunity/community-js/commit/6bf9256173111f77d464cb514e51e180f9d8df5c))
+
+
+
+
+
+# [0.7.0-alpha.328](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.327...@selfcommunity/react-ui@0.7.0-alpha.328) (2023-10-10)
+
+
+### Bug Fixes
+
+* feed infinite scroll ([735d503](https://github.com/selfcommunity/community-js/commit/735d5033ee8b48ce363e46f3f2be5ff81ceb8f44))
+* feed infinite scroll ([f3cceb6](https://github.com/selfcommunity/community-js/commit/f3cceb633c6688b848d886fd16134c7db2a08d2b))
+* feed infinite scroll ([03fc937](https://github.com/selfcommunity/community-js/commit/03fc93755c06762447ad8667108ebe0bdac84547))
+* feed infinite scroll ([b0f7b9e](https://github.com/selfcommunity/community-js/commit/b0f7b9e8216e9a263c59d32188cb89e867ec64a4))
+
+
+
+
+
+# [0.7.0-alpha.327](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.326...@selfcommunity/react-ui@0.7.0-alpha.327) (2023-10-10)
+
+
+### Performance Improvements
+
+* Update dependencies ([21fac75](https://github.com/selfcommunity/community-js/commit/21fac7587c6f91bbdce51f7b4f40ed7ae0eb1b63))
+
+
+
+
+
 # [0.7.0-alpha.326](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.325...@selfcommunity/react-ui@0.7.0-alpha.326) (2023-09-26)
 
 

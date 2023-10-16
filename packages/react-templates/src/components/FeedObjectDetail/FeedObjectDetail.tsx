@@ -16,7 +16,6 @@ import {
 import FeedObjectDetailSkeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {scrollIntoView} from 'seamless-scroll-polyfill';
 import {FormattedMessage} from 'react-intl';
 import {SCCommentType, SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
 import {
@@ -187,7 +186,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     setTimeout(() => {
       const element = document.getElementById(`comment_object_${comment.id}`);
       if (element) {
-        scrollIntoView(element, {behavior: 'smooth', block: 'center', inline: 'center'});
+        element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
     }, 300);
   }
