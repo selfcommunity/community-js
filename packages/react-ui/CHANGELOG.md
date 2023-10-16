@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.331](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.330...@selfcommunity/react-ui@0.7.0-alpha.331) (2023-10-16)
+
+
+### Bug Fixes
+
+* scrollIntoView ([dc6fd5d](https://github.com/selfcommunity/community-js/commit/dc6fd5d277006d5d11cfa4fbbf3f12e7fe74b245))
+* scrollIntoView ([fd72f43](https://github.com/selfcommunity/community-js/commit/fd72f437d9d90c12e5de59087a06c317366dac83))
+
+
+
+
+
 # [0.7.0-alpha.330](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.329...@selfcommunity/react-ui@0.7.0-alpha.330) (2023-10-12)
 
 
