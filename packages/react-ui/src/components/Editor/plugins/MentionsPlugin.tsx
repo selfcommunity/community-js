@@ -20,8 +20,9 @@ import {createMentionNode, MentionNode} from '../nodes/MentionNode';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {Avatar} from '@mui/material';
+import {Avatar, Portal} from '@mui/material';
 import {styled} from '@mui/material/styles';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 type MentionMatch = {
   leadOffset: number;
@@ -718,7 +719,13 @@ function useMentions(editor: LexicalEditor, anchorClassName = null): JSX.Element
     return null;
   }
 
-  return createPortal(<Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />, anchorElementRef.current);
+  return (
+    <ClickAwayListener onClickAway={closeTypeahead}>
+      <Portal container={anchorElementRef.current}>
+        <Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />
+      </Portal>
+    </ClickAwayListener>
+  );
 }
 
 export default function MentionsPlugin(): JSX.Element {
