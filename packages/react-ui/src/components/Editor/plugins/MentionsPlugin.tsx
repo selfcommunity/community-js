@@ -302,14 +302,12 @@ function MentionsTypeahead({
   close,
   editor,
   resolution,
-  className = '',
-  containerEl = null
+  className = ''
 }: {
   close: () => void;
   editor: LexicalEditor;
   resolution: Resolution;
   className?: string;
-  containerEl?: any;
 }): JSX.Element {
   const divRef = useRef(null);
   const match = resolution.match;
@@ -368,15 +366,7 @@ function MentionsTypeahead({
           const event: KeyboardEvent = payload;
           if (results !== null && selectedIndex !== null) {
             if (selectedIndex < SUGGESTION_LIST_LENGTH_LIMIT - 1 && selectedIndex !== results.length - 1) {
-              const newSelectedIndex = selectedIndex + 1;
               updateSelectedIndex(selectedIndex + 1);
-              const result = results[newSelectedIndex];
-              if (result.ref != null && result.ref.current) {
-                editor.dispatchCommand(SCROLL_TYPEAHEAD_OPTION_INTO_VIEW_COMMAND, {
-                  index: newSelectedIndex,
-                  result
-                });
-              }
               event.preventDefault();
               event.stopImmediatePropagation();
             }
@@ -391,8 +381,7 @@ function MentionsTypeahead({
           const event: KeyboardEvent = payload;
           if (results !== null && selectedIndex !== null) {
             if (selectedIndex !== 0) {
-              const newSelectedIndex = selectedIndex - 1;
-              updateSelectedIndex(newSelectedIndex);
+              updateSelectedIndex(selectedIndex - 1);
               event.preventDefault();
               event.stopImmediatePropagation();
             }
