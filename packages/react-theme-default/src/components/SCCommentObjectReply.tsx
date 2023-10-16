@@ -3,6 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       border: '0 none',
       marginBottom: theme.spacing(1),
+      overflow: 'visible',
       '& .SCBaseItem-content': {
         alignItems: 'flex-start',
         '& .SCBaseItem-text': {
@@ -19,7 +20,7 @@ const Component = {
           '& .SCCommentObjectReply-avatar': {
             width: theme.selfcommunity.user.avatar.sizeMedium,
             height: theme.selfcommunity.user.avatar.sizeMedium
-          },
+          }
         }
       },
       '& .SCCommentObjectReply-comment': {

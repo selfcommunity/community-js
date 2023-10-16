@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {MutableRefObject, useCallback, useEffect, useRef, useState} from 'react';
 import {useIsomorphicLayoutEffect} from '@selfcommunity/react-core';
 import {
   $getSelection,
@@ -78,6 +78,159 @@ const AtSignMentionsRegexAliasRegex = new RegExp(
 
 // At most, 5 suggestions are shown in the popup.
 const SUGGESTION_LIST_LENGTH_LIMIT = 5;
+
+function isTriggerVisibleInNearestScrollContainer(targetElement: HTMLElement, containerElement: HTMLElement): boolean {
+  const tRect = targetElement.getBoundingClientRect();
+  const cRect = containerElement.getBoundingClientRect();
+  return tRect.top > cRect.top && tRect.top < cRect.bottom;
+}
+
+export function getScrollParent(element: HTMLElement, includeHidden: boolean): HTMLElement | HTMLBodyElement {
+  let style = getComputedStyle(element);
+  const excludeStaticParent = style.position === 'absolute';
+  const overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/;
+  if (style.position === 'fixed') {
+    return document.body;
+  }
+  for (let parent: HTMLElement | null = element; (parent = parent.parentElement); ) {
+    style = getComputedStyle(parent);
+    if (excludeStaticParent && style.position === 'static') {
+      continue;
+    }
+    if (overflowRegex.test(style.overflow + style.overflowY + style.overflowX)) {
+      return parent;
+    }
+  }
+  return document.body;
+}
+
+export function useDynamicPositioning(
+  resolution: Resolution | null,
+  targetElement: HTMLElement | null,
+  onReposition: () => void,
+  onVisibilityChange?: (isInView: boolean) => void
+) {
+  const [editor] = useLexicalComposerContext();
+  useEffect(() => {
+    if (targetElement != null && resolution != null) {
+      const rootElement = editor.getRootElement();
+      const rootScrollParent = rootElement != null ? getScrollParent(rootElement, false) : document.body;
+      let ticking = false;
+      let previousIsInView = isTriggerVisibleInNearestScrollContainer(targetElement, rootScrollParent);
+      const handleScroll = function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            onReposition();
+            ticking = false;
+          });
+          ticking = true;
+        }
+        const isInView = isTriggerVisibleInNearestScrollContainer(targetElement, rootScrollParent);
+        if (isInView !== previousIsInView) {
+          previousIsInView = isInView;
+          if (onVisibilityChange != null) {
+            onVisibilityChange(isInView);
+          }
+        }
+      };
+      const resizeObserver = new ResizeObserver(onReposition);
+      window.addEventListener('resize', onReposition);
+      document.addEventListener('scroll', handleScroll, {
+        capture: true,
+        passive: true
+      });
+      resizeObserver.observe(targetElement);
+      return () => {
+        resizeObserver.unobserve(targetElement);
+        window.removeEventListener('resize', onReposition);
+        document.removeEventListener('scroll', handleScroll, true);
+      };
+    }
+  }, [targetElement, editor, onVisibilityChange, onReposition, resolution]);
+}
+
+export function useMenuAnchorRef(
+  resolution: Resolution | null,
+  setResolution: (r: Resolution | null) => void,
+  className?: string
+): MutableRefObject<HTMLElement> {
+  const [editor] = useLexicalComposerContext();
+  const anchorElementRef = useRef<HTMLElement>(document.createElement('div'));
+  const positionMenu = useCallback(() => {
+    const rootElement = editor.getRootElement();
+    const containerDiv = anchorElementRef.current;
+
+    const menuEle = containerDiv.firstChild as Element;
+    if (rootElement !== null && resolution !== null) {
+      const {left, top, width, height} = resolution.range.getBoundingClientRect();
+      containerDiv.style.top = `${top + window.pageYOffset}px`;
+      containerDiv.style.left = `${left + window.pageXOffset}px`;
+      containerDiv.style.height = `${height}px`;
+      containerDiv.style.width = `${width}px`;
+      if (menuEle !== null) {
+        const menuRect = menuEle.getBoundingClientRect();
+        const menuHeight = menuRect.height;
+        const menuWidth = menuRect.width;
+
+        const rootElementRect = rootElement.getBoundingClientRect();
+
+        if (left + menuWidth > rootElementRect.right) {
+          containerDiv.style.left = `${rootElementRect.right - menuWidth + window.pageXOffset}px`;
+        }
+        const margin = 10;
+        if ((top + menuHeight > window.innerHeight || top + menuHeight > rootElementRect.bottom) && top - rootElementRect.top > menuHeight) {
+          containerDiv.style.top = `${top - menuHeight + window.pageYOffset - (height + margin)}px`;
+        }
+      }
+
+      if (!containerDiv.isConnected) {
+        if (className != null) {
+          containerDiv.className = className;
+        }
+        containerDiv.setAttribute('aria-label', 'Typeahead menu');
+        containerDiv.setAttribute('id', 'typeahead-menu');
+        containerDiv.setAttribute('role', 'listbox');
+        containerDiv.style.display = 'block';
+        containerDiv.style.position = 'absolute';
+        document.body.append(containerDiv);
+      }
+      anchorElementRef.current = containerDiv;
+      rootElement.setAttribute('aria-controls', 'typeahead-menu');
+    }
+  }, [editor, resolution, className]);
+
+  useEffect(() => {
+    const rootElement = editor.getRootElement();
+    if (resolution !== null) {
+      positionMenu();
+      return () => {
+        if (rootElement !== null) {
+          rootElement.removeAttribute('aria-controls');
+        }
+
+        const containerDiv = anchorElementRef.current;
+        if (containerDiv !== null && containerDiv.isConnected) {
+          containerDiv.remove();
+        }
+      };
+    }
+  }, [editor, positionMenu, resolution]);
+
+  const onVisibilityChange = useCallback(
+    (isInView: boolean) => {
+      if (resolution !== null) {
+        if (!isInView) {
+          setResolution(null);
+        }
+      }
+    },
+    [resolution, setResolution]
+  );
+
+  useDynamicPositioning(resolution, anchorElementRef.current, positionMenu, onVisibilityChange);
+
+  return anchorElementRef;
+}
 
 const mentionsCache = new Map();
 
@@ -164,31 +317,6 @@ function MentionsTypeahead({
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  useEffect(() => {
-    const div = divRef.current;
-    const rootElement = editor.getRootElement();
-    const parentContainerElement = containerEl ? containerEl : rootElement.parentElement;
-    if (results !== null && div !== null && rootElement !== null) {
-      const range = resolution.range;
-
-      // Re-calc, relative to the parent container, prevent scroll problems
-      const parentRootPos = parentContainerElement.getBoundingClientRect();
-      const {left, right, top, height} = range.getBoundingClientRect();
-      let relativePosTop = top - parentRootPos.top;
-      let relativePosLeft = right - parentRootPos.left;
-      div.style.position = 'absolute';
-      div.style.top = `${relativePosTop + height + 7}px`;
-      div.style.left = `${relativePosLeft - 14}px`;
-      div.style.display = 'block';
-      rootElement.setAttribute('aria-controls', 'mentions-typeahead');
-
-      return () => {
-        div.style.display = 'none';
-        rootElement.removeAttribute('aria-controls');
-      };
-    }
-  }, [editor, resolution, results]);
-
   const applyCurrentSelected = useCallback(
     (index?: number) => {
       index = index || selectedIndex;
@@ -240,10 +368,18 @@ function MentionsTypeahead({
           const event: KeyboardEvent = payload;
           if (results !== null && selectedIndex !== null) {
             if (selectedIndex < SUGGESTION_LIST_LENGTH_LIMIT - 1 && selectedIndex !== results.length - 1) {
+              const newSelectedIndex = selectedIndex + 1;
               updateSelectedIndex(selectedIndex + 1);
+              const result = results[newSelectedIndex];
+              if (result.ref != null && result.ref.current) {
+                editor.dispatchCommand(SCROLL_TYPEAHEAD_OPTION_INTO_VIEW_COMMAND, {
+                  index: newSelectedIndex,
+                  result
+                });
+              }
+              event.preventDefault();
+              event.stopImmediatePropagation();
             }
-            event.preventDefault();
-            event.stopImmediatePropagation();
           }
           return true;
         },
@@ -255,10 +391,11 @@ function MentionsTypeahead({
           const event: KeyboardEvent = payload;
           if (results !== null && selectedIndex !== null) {
             if (selectedIndex !== 0) {
-              updateSelectedIndex(selectedIndex - 1);
+              const newSelectedIndex = selectedIndex - 1;
+              updateSelectedIndex(newSelectedIndex);
+              event.preventDefault();
+              event.stopImmediatePropagation();
             }
-            event.preventDefault();
-            event.stopImmediatePropagation();
           }
           return true;
         },
@@ -411,6 +548,11 @@ function tryToPositionRange(match: MentionMatch, range: Range): boolean {
   const anchorNode = domSelection.anchorNode;
   const startOffset = match.leadOffset;
   const endOffset = domSelection.anchorOffset;
+
+  if (anchorNode == null || endOffset == null) {
+    return false;
+  }
+
   try {
     range.setStart(anchorNode, startOffset);
     range.setEnd(anchorNode, endOffset);
@@ -528,8 +670,9 @@ const Root = styled(MentionsTypeahead, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Element {
+function useMentions(editor: LexicalEditor, anchorClassName = null): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);
+  const anchorElementRef = useMenuAnchorRef(resolution, setResolution, anchorClassName);
 
   useEffect(() => {
     if (!editor.hasNodes([MentionNode])) {
@@ -580,24 +723,16 @@ function useMentions(editor: LexicalEditor, containerSelector = null): JSX.Eleme
 
   const closeTypeahead = useCallback(() => {
     setResolution(null);
-  }, []);
+  }, [resolution]);
 
   if (resolution === null || editor === null) {
     return null;
   }
 
-  // Set portal container
-  const portalContainer = containerSelector
-    ? editor.getRootElement().parentElement.closest(containerSelector)
-    : editor.getRootElement().parentElement;
-
-  return createPortal(
-    <Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} containerEl={portalContainer} />,
-    portalContainer
-  );
+  return createPortal(<Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />, anchorElementRef.current);
 }
 
-export default function MentionsPlugin({containerSelector = 'body'}): JSX.Element {
+export default function MentionsPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
-  return useMentions(editor, containerSelector);
+  return useMentions(editor);
 }
