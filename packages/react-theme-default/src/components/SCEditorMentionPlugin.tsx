@@ -4,7 +4,9 @@ const Component = {
       position: 'absolute',
       background: theme.palette.background.paper,
       boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
-      borderEadius: 8,
+      borderRadius: 8,
+      marginLeft: 7,
+      marginTop: 18,
       zIndex: 3000,
       '& ul': {
         padding: 0,

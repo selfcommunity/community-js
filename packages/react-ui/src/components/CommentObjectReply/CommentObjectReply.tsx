@@ -193,6 +193,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
   // RENDER
   return (
     <Root
+      id={id}
       {...rest}
       disableTypography
       onClick={handleEditorFocus}
