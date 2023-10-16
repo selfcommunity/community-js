@@ -328,7 +328,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     // (usually >= (topBar + offset) and in center of the screen)
     setTimeout(() => {
       // Get the comment inside commentsContainer
-      const el = commentsContainerRef.current.querySelector(`#comment_object_${comment.id}`);
+      const el = commentsContainerRef.current ? (commentsContainerRef.current as HTMLElement).querySelector(`#comment_object_${comment.id}`) : null;
       if (el) {
         el.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
