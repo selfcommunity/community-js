@@ -115,7 +115,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     name: PREFIX
   });
   const {
-		id = 'CommentObjectReply',
+    id = 'CommentObjectReply',
     className,
     elevation = 0,
     autoFocus = false,
@@ -209,7 +209,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
       }
       secondary={
         <Widget className={classNames(classes.comment, {[classes.hasValue]: !isEditorEmpty})} {...WidgetProps}>
-          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} uploadImage containerSelectorId={id} />
+          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} uploadImage />
           {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && (
