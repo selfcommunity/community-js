@@ -317,31 +317,6 @@ function MentionsTypeahead({
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  /* useEffect(() => {
-    const div = divRef.current;
-    const rootElement = editor.getRootElement();
-    const parentContainerElement = containerEl ? containerEl : rootElement.parentElement;
-    if (results !== null && div !== null && rootElement !== null) {
-      const range = resolution.range;
-
-      // Re-calc, relative to the parent container, prevent scroll problems
-      const parentRootPos = parentContainerElement.getBoundingClientRect();
-      const {left, right, top, height} = range.getBoundingClientRect();
-      let relativePosTop = top - parentRootPos.top;
-      let relativePosLeft = right - parentRootPos.left;
-      div.style.position = 'absolute';
-      div.style.top = `${relativePosTop + 7}px`;
-      div.style.left = `${relativePosLeft - 14}px`;
-      div.style.display = 'block';
-      rootElement.setAttribute('aria-controls', 'mentions-typeahead');
-
-      return () => {
-        div.style.display = 'none';
-        rootElement.removeAttribute('aria-controls');
-      };
-    }
-  }, [editor, resolution, results]); */
-
   const applyCurrentSelected = useCallback(
     (index?: number) => {
       index = index || selectedIndex;
