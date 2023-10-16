@@ -326,8 +326,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     setTimeout(() => {
       const el = document.querySelector(`#comment_object_${comment.id}`);
       if (el) {
-        const y = el.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 2;
-        window.scrollTo({top: y, behavior: 'smooth'});
+        el.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
     }, 300);
   }

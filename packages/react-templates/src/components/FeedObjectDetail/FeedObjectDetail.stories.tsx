@@ -22,14 +22,15 @@ export const Base: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
     feedObjectId: 1400,
     feedObjectType: SCContributionType.DISCUSSION
-  },
+	},
   render: template
 };
 
 export const BaseContainerFixed: StoryObj<typeof FeedObjectDetailTemplate> = {
 	args: {
 		feedObjectId: 1400,
-		feedObjectType: SCContributionType.DISCUSSION
+		feedObjectType: SCContributionType.DISCUSSION,
+		CommentsFeedObjectProps: {commentObjectId: 5232}
 	},
 	render: templateContainerFixed
 };
@@ -55,9 +56,9 @@ export const BasePagination: StoryObj<typeof FeedObjectDetailTemplate> = {
 
 export const CommentFirstLevel: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
-    feedObjectId: 360,
+    feedObjectId: 412,
     feedObjectType: SCContributionType.POST,
-    CommentsFeedObjectProps: {commentObjectId: 1145}
+    CommentsFeedObjectProps: {commentObjectId: 1205}
   },
   render: template
 };
