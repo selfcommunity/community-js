@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Box, BoxProps, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
@@ -27,18 +27,25 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange'> {
+export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange' | 'onClick'> {
   /**
    * Value of the component
    */
-  value?: ComposerContentType | null;
+  value?: Omit<ComposerContentType, 'title' | 'html'> | null;
 
   /**
-   * Callback for change event on poll object
+   * Callback for change event on attributes object
    * @param value
    * @default empty object
    */
-  onChange: (value: ComposerContentType) => void;
+  onChange?: (value: Omit<ComposerContentType, 'title' | 'html'>) => void;
+
+  /**
+   * Callback for click event on single attribute
+   * @param value
+   * @default empty object
+   */
+  onClick?: (attribute: 'categories' | 'addressing') => void;
 }
 
 export default (inProps: AttributesProps): JSX.Element => {
@@ -47,17 +54,31 @@ export default (inProps: AttributesProps): JSX.Element => {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, value = null, onChange} = props;
+  const {className = null, value = null, onChange = null, onClick = null} = props;
+
+  // HANDLERS
+  const handleDeleteCategory = useCallback((id: number) => () => {
+    onChange && onChange({...value, categories: value.categories.filter((cat: SCCategoryType) => cat.id !== id)})
+  }, [value, onChange]);
+  const handleClickCategory = useCallback(() => {
+    onClick && onClick('categories');
+  }, [onClick]);
+  const handleDeleteTag = useCallback((id: number) => () => {
+    onChange && onChange({...value, addressing: value.addressing.filter((tag: SCTagType) => tag.id !== id)})
+  }, [value, onChange]);
+  const handleClickTag = useCallback(() => {
+    onClick && onClick('addressing');
+  }, [onClick]);
 
   return (
     <Root className={classNames(classes.root, className)}>
       {value?.categories?.length > 0 &&
         value?.categories.map((c: SCCategoryType) => (
-          <Chip key={c.id} label={c.name} onDelete={() => null} icon={<Icon>category</Icon>} onClick={() => null} />
+          <Chip key={c.id} label={c.name} onDelete={handleDeleteCategory(c.id)} icon={<Icon>category</Icon>} onClick={handleClickCategory} />
         ))}
       {value?.addressing?.length > 0 &&
         value?.addressing.map((t: SCTagType) => (
-          <TagChip key={t.id} tag={t} onDelete={() => null} icon={<Icon>label</Icon>} onClick={() => null} />
+          <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleClickTag} />
         ))}
       {value?.location && (
         <Chip

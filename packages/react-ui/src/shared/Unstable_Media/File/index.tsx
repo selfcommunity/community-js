@@ -1,17 +1,16 @@
-import React from 'react';
+import DisplayComponent from './DisplayComponent';
+import TriggerButton from './TriggerButton';
+import { UnstableSCMediaObjectType } from '../../../types/media';
 import PreviewComponent from './PreviewComponent';
-import EditButton from './EditButton';
-import EditComponent from './EditComponent';
-import {MEDIA_TYPE_IMAGE} from '../../../constants/Media';
-import {SCMediaType} from '@selfcommunity/types';
-import {SCMediaObjectType} from '../../../types/media';
+import filter from './filter';
 
-const File: SCMediaObjectType = {
+const File: UnstableSCMediaObjectType = {
   name: 'file',
-  previewComponent: (props) => <PreviewComponent {...props} />,
-  editButton: (props) => <EditButton {...props} />,
-  editComponent: (props) => <EditComponent {...props} />,
-  filter: (media: SCMediaType): boolean => media.type === MEDIA_TYPE_IMAGE
+  displayComponent: DisplayComponent,
+  triggerButton: TriggerButton,
+  layerComponent: null,
+  previewComponent: PreviewComponent,
+  filter
 };
 
 export default File;

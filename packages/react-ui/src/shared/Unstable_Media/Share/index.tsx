@@ -1,15 +1,16 @@
-import React from 'react';
-import {SCMediaObjectType} from '../../../types/media';
-import PreviewComponent from './PreviewComponent';
-import {MEDIA_TYPE_SHARE} from '../../../constants/Media';
-import {SCMediaType} from '@selfcommunity/types';
+import { UnstableSCMediaObjectType } from '../../../types/media';
+import DisplayComponent from './DisplayComponent';
+import { MEDIA_TYPE_SHARE } from '../../../constants/Media';
+import { SCMediaType } from '@selfcommunity/types';
+import filter from './filter';
 
-const Share: SCMediaObjectType = {
+const Share: UnstableSCMediaObjectType = {
   name: 'share',
-  previewComponent: (props) => <PreviewComponent {...props} />,
-  editButton: null,
-  editComponent: null,
-  filter: (media: SCMediaType): boolean => media.type === MEDIA_TYPE_SHARE
+  displayComponent: DisplayComponent,
+  triggerButton: null,
+  layerComponent: null,
+  previewComponent: null,
+  filter
 };
 
 export default Share;

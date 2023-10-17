@@ -1,6 +1,5 @@
 import React, {
   forwardRef,
-  RefObject,
   SyntheticEvent,
   useCallback,
   useEffect,
@@ -45,29 +44,21 @@ import {
   Fade,
   IconButton,
   Slide,
-  TextField,
   Theme,
   Tooltip,
   Typography,
   useMediaQuery,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import {
-  COMPOSER_POLL_MIN_CHOICES,
-  COMPOSER_TITLE_MAX_LENGTH,
-  COMPOSER_TYPE_DISCUSSION,
-  COMPOSER_TYPE_POLL,
-  COMPOSER_TYPE_POST,
-} from '../../constants/Composer';
+import { COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL } from '../../constants/Composer';
 import { MEDIA_TYPE_SHARE } from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import AudienceLayer from './Layer/AudienceLayer';
 import { iOS, random, stripHtml } from '@selfcommunity/utils';
 import classNames from 'classnames';
 import { TransitionProps } from '@mui/material/transitions';
-import { EditorProps, EditorRef } from '../Editor';
-import { SCMediaChunkType, SCMediaObjectType } from '../../types/media';
-import { Document, Image, Link, Share } from '../../shared/Media';
+import { EditorProps } from '../Editor';
+import { SCMediaChunkType, SCMediaObjectType, UnstableSCMediaObjectType } from '../../types/media';
 import ContentPoll from './Content/ContentPoll';
 import { ComposerSkeleton } from './index';
 import { useSnackbar } from 'notistack';
@@ -79,6 +70,8 @@ import CategoryLayer from './Layer/CategoryLayer';
 import { ComposerContentType, ComposerLayerType } from '../../types/composer';
 import LocationLayer from './Layer/LocationLayer';
 import ContentDiscussion from './Content/ContentDiscussion';
+import { File, Link, Share } from '../../shared/Unstable_Media';
+import Attributes from './Attributes';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -94,32 +87,12 @@ const PREFIX = 'UnstableSCComposer';
 const classes = {
   root: `${PREFIX}-root`,
   ios: `${PREFIX}-ios`,
-  writing: `${PREFIX}-writing`,
   title: `${PREFIX}-title`,
-  titleDense: `${PREFIX}-title-dense`,
   types: `${PREFIX}-types`,
-  avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
-  mediaContent: `${PREFIX}-mediaContent`,
-  audienceContent: `${PREFIX}-audienceContent`,
-  locationContent: `${PREFIX}-locationContent`,
-  block: `${PREFIX}-block`,
-  editor: `${PREFIX}-editor`,
-  divider: `${PREFIX}-divider`,
+  attributes: `${PREFIX}-attributes`,
   medias: `${PREFIX}-medias`,
-  location: `${PREFIX}-location`,
-  audience: `${PREFIX}-audience`,
-  mediasActions: `${PREFIX}-mediasActions`,
-  mediasActionsTitle: `${PREFIX}-mediasActionsTitle`,
-  mediasActionsActions: `${PREFIX}-mediasActionsActions`,
-  sortableMedia: `${PREFIX}-sortableMedia`,
-  sortableMediaCover: `${PREFIX}-sortableMediaCover`,
-  links: `${PREFIX}-links`,
   actions: `${PREFIX}-actions`,
-  mediaActions: `${PREFIX}-media-actions`,
-  filterActions: `${PREFIX}-filter-actions`,
-  actionInput: `${PREFIX}-actionInput`,
-  badgeError: `${PREFIX}-badgeError`,
   layerTransitionRoot: `${PREFIX}-layer-transition-root`
 };
 
@@ -171,12 +144,12 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
    * Media objects available
    * @default File, Document, Link
    */
-  mediaObjectTypes?: SCMediaObjectType[];
+  mediaObjectTypes?: UnstableSCMediaObjectType[];
   /**
    * Editor props
-   * @default {toolbar: false}
+   * @default {}
    */
-  EditorProps?: EditorProps;
+  EditorProps?: Omit<EditorProps, 'onFocus'>;
   /**
    * Callback triggered on success contribution creation
    * @default null
@@ -191,14 +164,6 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
 
 export const MAIN_VIEW = 'main';
 export const POLL_VIEW = 'poll';
-
-const PREFERENCES = [
-  SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED,
-  SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED,
-  SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED,
-  SCPreferences.ADDONS_POLLS_ENABLED,
-  SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED
-];
 
 const COMPOSER_INITIAL_STATE = {
   id: null,
@@ -284,8 +249,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     feedObjectType = null,
     feedObject = null,
     defaultValue = {},
-    mediaObjectTypes = [Image, Document, Link, Share],
-    EditorProps = null,
+    mediaObjectTypes = [File, Link, Share],
+    EditorProps = {},
     onClose = null,
     onSuccess = null,
     maxWidth,
@@ -293,7 +258,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   } = props;
 
   // Context
-  const scPrefernces: SCPreferencesContextType = useSCPreferences();
+  const { preferences, features }: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -304,8 +269,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   // State variables
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [layer, setLayer] = useState<ComposerLayerType | null>();
-  const [mediaChunks, setMediaChunks] = useState<SCMediaChunkType[]>([]);
-  const [editorFocused, setEditorFocused] = useState<boolean>(false);
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, key: random()});
   const {id, type, title, titleError, html, categories, addressing, audience, medias, poll, pollError, location, error} = state;
   const addMedia = (media: SCMediaType) => {
@@ -313,9 +276,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   const destructureFeedObject = (_feedObject) => {
-    if (_feedObject.type === COMPOSER_TYPE_POST) {
+    if (_feedObject.type === SCContributionType.POST) {
       _feedObject = _feedObject as SCFeedPostType;
-    } else if (_feedObject.type === COMPOSER_TYPE_DISCUSSION) {
+    } else if (_feedObject.type === SCContributionType.DISCUSSION) {
       _feedObject = _feedObject as SCFeedDiscussionType;
     } else {
       _feedObject = _feedObject as SCFeedStatusType;
@@ -342,7 +305,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   };
 
   // Edit state variables
-  const editMode = Boolean((feedObjectId && feedObjectType) || feedObject);
+  const editMode = useMemo(() => Boolean((feedObjectId && feedObjectType) || feedObject), [feedObjectId, feedObjectType, feedObject]);
   const [isLoading, setIsLoading] = useState<boolean>(editMode);
   const [loadError, setLoadError] = useState<boolean>(false);
 
@@ -350,29 +313,21 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const dialogRef = useRef<any>();
   const unloadRef = useRef<boolean>(false);
 
-  // Create a ref for medias becaouse of state update error on chunk upload
-  const mediasRef = useRef({medias, mediaChunks, addMedia, setMediaChunks});
-  mediasRef.current = {medias, mediaChunks, addMedia, setMediaChunks};
+  // Create a ref for medias because of state update error on chunk upload
+  const mediasRef = useRef({medias});
+  mediasRef.current = {medias};
 
   // MEMO
   const hasPoll = useMemo(() => {
     return poll && poll.title.length > 0 && poll.title.length < COMPOSER_TITLE_MAX_LENGTH && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
   }, [poll]);
   const canSubmit = useMemo(() => {
-    return (
-      (type === COMPOSER_TYPE_DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
-      (type === COMPOSER_TYPE_POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll))
+    return !isLoading && (
+      (type === SCContributionType.DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
+      (type === SCContributionType.POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll)) ||
+      (type === COMPOSER_TYPE_POLL && hasPoll)
     );
-  }, [type, title, html, medias, hasPoll]);
-
-  /*
-   * Compute preferences
-   */
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPrefernces.preferences ? scPrefernces.preferences[p].value : null));
-    return _preferences;
-  }, [scPrefernces.preferences]);
+  }, [isLoading, type, title, html, medias, hasPoll]);
 
   // Load feed object
   useEffect(() => {
@@ -499,7 +454,58 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       onSave: handleChangeLocation,
       defaultValue: location
     }
-  }), [handleRemoveLayer, handleChangeLocation, location]);
+  }), [handleAddLayer, handleRemoveLayer, handleChangeLocation, location]);
+
+  const handleChangeMedias = useCallback((value: SCMediaType[] | null) => {
+    const _medias = [...value];
+    dispatch({
+      type: 'medias',
+      value: [...value]
+    });
+    mediasRef.current.medias = _medias;
+    setLayer(null);
+  }, []);
+
+  const handleAddMedia = useCallback((media: SCMediaType) => {
+    const _medias = [...mediasRef.current.medias, media];
+    dispatch({
+      type: 'medias',
+      value: _medias
+    });
+    mediasRef.current.medias = _medias;
+  }, []);
+
+  const handleMediaTriggerClick = useCallback((mediaObjectType: UnstableSCMediaObjectType) =>(event: React.MouseEvent<HTMLButtonElement>) => {
+    if (mediaObjectType.layerComponent) {
+      handleAddLayer({
+        name: mediaObjectType.name,
+        Component: mediaObjectType.layerComponent,
+        ComponentProps: {
+          onClose: handleRemoveLayer,
+          onSave: handleChangeMedias,
+          defaultValue: medias
+        }
+      })
+    }
+  }, [handleAddLayer, handleRemoveLayer, handleChangeMedias, medias]);
+
+  const handleChangeAttributes = useCallback((content: Omit<ComposerContentType, 'title' | 'html'>): void => {
+    dispatch({
+      type: 'multiple',
+      value: {...content}
+    });
+  }, []);
+
+  const handleClickAttributes = useCallback((attr: string): void => {
+    switch (attr) {
+      case 'categories':
+        handleAddCategoryLayer();
+        break;
+      case 'addressing':
+        handleAddAudienceLayer();
+        break;
+    }
+  }, [handleAddCategoryLayer, handleAddAudienceLayer]);
 
   const handleSubmit = useCallback((event: SyntheticEvent): void => {
     event.preventDefault();
@@ -520,19 +526,20 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       medias: medias.map((m) => m.id),
       categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
     };
-    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED] && hasPoll) {
+    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED].value && hasPoll) {
       data.poll = poll;
     }
-    if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && location) {
+    if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && location) {
       data.location = location;
     }
-    if (scPrefernces.features.includes(SCFeatureName.TAGGING) && addressing !== null) {
+    if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
       data.addressing = addressing.map((t) => t.id);
     }
     setIsSubmitting(true);
 
     // Finding right url
-    let url = Endpoints.Composer.url({type});
+    const _type = type === COMPOSER_TYPE_POLL ? SCContributionType.POST : type;
+    let url = Endpoints.Composer.url({type: _type});
     let method = Endpoints.Composer.method;
     if (editMode) {
       url = Endpoints.ComposerEdit.url({type, id});
@@ -559,39 +566,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       .then(() => setIsSubmitting(false));
   }, [scUserContext.user, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]);
 
-  // DEPRECATED
-
-  const handleClose = (event: SyntheticEvent): void => {
+  const handleClose = useCallback((event: SyntheticEvent): void => {
     if (unloadRef.current) {
       window.onbeforeunload = null;
     }
     onClose && onClose(event);
-  };
-
-  const handleDeleteMedia = (id?: number | null, mediaObjectType?: any) => {
-    return (event: SyntheticEvent): void => {
-      if (id) {
-        dispatch({type: 'medias', value: medias.filter((m) => m.id != id)});
-      } else if (mediaObjectType) {
-        dispatch({type: 'medias', value: medias.filter((m) => !mediaObjectType.filter(m))});
-      }
-    };
-  };
-
-  const handleMediaProgress = (chunks: SCMediaChunkType[]) => {
-    mediasRef.current.setMediaChunks(chunks);
-  };
-
-  const handleAddMedia = (media: SCMediaType) => {
-    mediasRef.current.addMedia(media);
-  };
-
-  const handleSortMedia = (newSort: SCMediaType[]) => {
-    dispatch({
-      type: 'medias',
-      value: [...medias.filter((media: any) => newSort.findIndex((m: any) => m.id === media.id) === -1), ...newSort]
-    });
-  };
+  }, [onClose]);
 
   const isIOS = useMemo(() => iOS(), []);
 
@@ -613,8 +593,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
     switch (type) {
       case COMPOSER_TYPE_POLL:
-        return <ContentPoll onChange={handleChangePoll} value={{html, categories, addressing, medias, poll, location}} error={pollError} />;
-      case COMPOSER_TYPE_DISCUSSION:
+        return <ContentPoll onChange={handleChangePoll} value={{html, categories, addressing, medias, poll, location}} error={pollError} disabled={isSubmitting} />;
+      case SCContributionType.DISCUSSION:
         return <ContentDiscussion
           value={{title, html, categories, addressing, medias, poll, location}}
           error={{titleError, error}}
@@ -623,7 +603,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           EditorProps={{
             toolbar: true,
             uploadImage: true,
-            onFocus: () => setEditorFocused(true)
+            ...EditorProps
           }}
         />;
       default:
@@ -635,76 +615,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           EditorProps={{
             toolbar: false,
             uploadImage: false,
-            onFocus: () => setEditorFocused(true)
+            ...EditorProps
           }}
         />;
     }
   }, [type, title, html, categories, addressing, medias, poll, pollError, location, error, handleChangePoll, handleChangePost, isSubmitting]);
-  const renderMediaAdornment = (mediaObjectType: SCMediaObjectType): JSX.Element => {
-    return (
-      <Box className={classes.mediasActions}>
-        <Typography className={classes.mediasActionsTitle}>
-          <FormattedMessage id={`ui.unstable_composer.media.${mediaObjectType.name}.edit`} defaultMessage={`ui.unstable_composer.media.${mediaObjectType.name}.edit`} />
-        </Typography>
-        <Typography className={classes.mediasActionsActions}>
-          <Tooltip title={<FormattedMessage id="ui.unstable_composer.edit" defaultMessage="ui.unstable_composer.edit" />}>
-            <IconButton color="inherit">
-              <Icon>edit</Icon>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={<FormattedMessage id="ui.unstable_composer.delete" defaultMessage="ui.unstable_composer.delete" />}>
-            <IconButton onClick={handleDeleteMedia(null, mediaObjectType)} color="inherit">
-              <Icon>delete</Icon>
-            </IconButton>
-          </Tooltip>
-        </Typography>
-      </Box>
-    );
-  };
-
-  const renderMediaView = (mediaObjectType: SCMediaObjectType) => {
-    return () => {
-      return (
-        <React.Fragment>
-          <DialogTitle className={classes.title}>
-            <Typography component="div">
-              <span>
-                <IconButton disabled={mediasRef.current.mediaChunks.length > 0}>
-                  <Icon>arrow_back</Icon>
-                </IconButton>
-              </span>
-            </Typography>
-            <Box>
-              <FormattedMessage
-                id={`ui.unstable_composer.media.${mediaObjectType.name}.edit`}
-                defaultMessage={`ui.unstable_composer.media.${mediaObjectType.name}.edit`}
-              />
-            </Box>
-            <Box>
-              <Tooltip title={<FormattedMessage id="ui.unstable_composer.done" defaultMessage="ui.unstable_composer.done" />}>
-                <span>
-                  <IconButton color="inherit" disabled={mediasRef.current.mediaChunks.length > 0}>
-                    <Icon>check</Icon>
-                  </IconButton>
-                </span>
-              </Tooltip>
-            </Box>
-          </DialogTitle>
-          <DialogContent className={classNames(classes.content, classes.mediaContent)}>
-            {
-              <mediaObjectType.editComponent
-                medias={medias.filter(mediaObjectType.filter)}
-                onProgress={handleMediaProgress}
-                onSuccess={handleAddMedia}
-                onSort={handleSortMedia}
-                onDelete={handleDeleteMedia}
-              />
-            }
-          </DialogContent>
-        </React.Fragment>
-      );
-    };
-  };
 
   if (!scUserContext.user && !(scUserContext.loading && open)) {
     return null;
@@ -730,25 +645,48 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </LoadingButton>
         </DialogTitle>
         <DialogContent className={classes.content}>
+          <Attributes value={{categories, addressing, location}} className={classes.attributes} onChange={handleChangeAttributes} onClick={handleClickAttributes}/>
+          {medias && medias.length > 0 && <Box className={classes.medias}>
+            {
+              mediaObjectTypes.map((mediaObjectType: UnstableSCMediaObjectType) => {
+                if (mediaObjectType.previewComponent) {
+                  return <mediaObjectType.previewComponent
+                    key={mediaObjectType.name}
+                    value={medias}
+                    onChange={handleChangeMedias}
+                  />;
+                } else if (mediaObjectType.displayComponent) {
+                  return <mediaObjectType.displayComponent
+                    key={mediaObjectType.name}
+                    value={medias}
+                  />;
+                }
+              })
+            }
+          </Box>}
           {content}
         </DialogContent>
-        {!canSubmit && <TypeSwitchButtonGroup className={classes.types} onChange={handleChangeType} size="small" value={type} />}
+        {!canSubmit && !editMode && <TypeSwitchButtonGroup className={classes.types} onChange={handleChangeType} size="small" value={type} />}
         <DialogActions className={classes.actions}>
           {mediaObjectTypes
-            .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
-            .map((mediaObjectType: SCMediaObjectType) => (
-              <mediaObjectType.editButton
-                key={mediaObjectType.name}
-                disabled={isSubmitting || hasMediaShare}
-                color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
-              />
-            ))}
+            .filter((mediaObjectType: UnstableSCMediaObjectType) => mediaObjectType.triggerButton !== null)
+            .map((mediaObjectType: UnstableSCMediaObjectType) => {
+              const props = mediaObjectType.layerComponent ? {onClick: handleMediaTriggerClick(mediaObjectType)} : {onAdd: handleAddMedia}
+              return (
+                <mediaObjectType.triggerButton
+                  key={mediaObjectType.name}
+                  disabled={isSubmitting || hasMediaShare}
+                  color={medias.filter(mediaObjectType.filter).length > 0 ? 'primary' : 'default'}
+                  {...props}
+                />
+              );
+            })}
           <IconButton
             disabled={isSubmitting}
             onClick={handleAddCategoryLayer}>
             <Icon>category</Icon>
           </IconButton>
-          <IconButton disabled={isSubmitting || !scPrefernces.features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
+          <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
             {addressing === null ? <Icon>public</Icon> : <Icon>label</Icon>}
           </IconButton>
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && (

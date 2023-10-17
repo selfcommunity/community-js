@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?hb8782');
-  src:  url('./community/icons.eot?hb8782#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?hb8782') format('woff2'),
-  url('./community/icons.ttf?hb8782') format('truetype'),
-  url('./community/icons.woff?hb8782') format('woff'),
-  url('./community/icons.svg?hb8782#community') format('svg');
+  src:  url('./community/icons.eot?ysvuce');
+  src:  url('./community/icons.eot?ysvuce#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?ysvuce') format('woff2'),
+  url('./community/icons.ttf?ysvuce') format('truetype'),
+  url('./community/icons.woff?ysvuce') format('woff'),
+  url('./community/icons.svg?ysvuce#community') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;

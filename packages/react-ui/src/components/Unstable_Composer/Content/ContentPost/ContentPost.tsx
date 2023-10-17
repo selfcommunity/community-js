@@ -8,7 +8,7 @@ import { SCCategoryType, SCFeedObjectType, SCFeedPostType, SCTagType } from '@se
 import classNames from 'classnames';
 import { useThemeProps } from '@mui/system';
 import TagChip from '../../../../shared/TagChip';
-import MediasPreview from '../../../../shared/Deprecated_MediasPreview';
+import MediasPreview from '../../../../shared/MediasPreview';
 import Editor, { EditorProps, EditorRef } from '../../../Editor';
 import Attributes from '../../Attributes';
 import { ComposerContentType } from '../../../../types/composer';
@@ -111,18 +111,6 @@ export default (inProps: ContentPostProps): JSX.Element => {
   return (
     <Root className={classNames(classes.root, className)}>
       {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
-      <Attributes value={value} className={classes.attributes} onChange={onChange} />
-      <Box className={classes.medias}>
-        {/*<Deprecated_MediasPreview*/}
-        {/*  medias={value.medias}*/}
-        {/*  mediaObjectTypes={mediaObjectTypes.map((mediaObjectType) => {*/}
-        {/*    return {*/}
-        {/*      ...mediaObjectType,*/}
-        {/*      previewProps: {adornment: mediaObjectType.editButton !== null ? renderMediaAdornment(mediaObjectType) : null, gallery: false}*/}
-        {/*    } as SCMediaObjectType;*/}
-        {/*  })}*/}
-        {/*/>*/}
-      </Box>
       <Editor
         ref={editorRef}
         {...EditorProps}

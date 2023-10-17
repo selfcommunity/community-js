@@ -1,4 +1,14 @@
-import React, {forwardRef, ReactNode, RefObject, SyntheticEvent, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  ReactNode,
+  RefObject,
+  SyntheticEvent,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import {
   SCCategoryType,
   SCContributionType,
@@ -9,20 +19,20 @@ import {
   SCLocalityType,
   SCMediaType,
   SCPollType,
-  SCTagType
+  SCTagType,
 } from '@selfcommunity/types';
-import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
+import { Endpoints, formatHttpErrorCode, http, HttpResponse } from '@selfcommunity/api-services';
 import {
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
   SCThemeType,
-  SCUserContext,
   SCUserContextType,
   UserUtils,
-  useSCFetchAddressingTagList, useSCPreferences, useSCUser,
+  useSCFetchAddressingTagList,
+  useSCPreferences,
+  useSCUser,
 } from '@selfcommunity/react-core';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Icon from '@mui/material/Icon';
 import {
   Alert,
@@ -50,31 +60,36 @@ import {
   Theme,
   Tooltip,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from '@mui/material';
-import {styled, useTheme} from '@mui/material/styles';
-import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_DISCUSSION, COMPOSER_TYPE_POST} from '../../constants/Composer';
-import {MEDIA_TYPE_SHARE} from '../../constants/Media';
+import { styled, useTheme } from '@mui/material/styles';
+import {
+  COMPOSER_POLL_MIN_CHOICES,
+  COMPOSER_TITLE_MAX_LENGTH,
+  COMPOSER_TYPE_DISCUSSION,
+  COMPOSER_TYPE_POST,
+} from '../../constants/Composer';
+import { MEDIA_TYPE_SHARE } from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Audience from './Audience';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import {iOS, isObject, random, stripHtml} from '@selfcommunity/utils';
+import { iOS, isObject, random, stripHtml } from '@selfcommunity/utils';
 import classNames from 'classnames';
-import {TransitionProps} from '@mui/material/transitions';
+import { TransitionProps } from '@mui/material/transitions';
 import PollPreview from '../FeedObject/Poll';
-import Editor, {EditorProps, EditorRef} from '../Editor';
-import {SCMediaChunkType, SCMediaObjectType} from '../../types/media';
-import {Document, Image, Link, Share} from '../../shared/Media';
-import MediasPreview from '../../shared/Deprecated_MediasPreview';
+import Editor, { EditorProps, EditorRef } from '../Editor';
+import { SCMediaChunkType, SCMediaObjectType } from '../../types/media';
+import { Document, Image, Link, Share } from '../../shared/Media';
+import MediasPreview from '../../shared/MediasPreview';
 import Poll from './Poll';
 import LocationAutocomplete from '../LocationAutocomplete';
 import TagChip from '../../shared/TagChip';
-import {DistributiveOmit} from '@mui/types';
-import {OverrideProps} from '@mui/material/OverridableComponent';
-import {ComposerSkeleton} from './index';
-import {useSnackbar} from 'notistack';
-import {useThemeProps} from '@mui/system';
-import {extractHashtags} from '../../utils/editor';
+import { DistributiveOmit } from '@mui/types';
+import { OverrideProps } from '@mui/material/OverridableComponent';
+import { ComposerSkeleton } from './index';
+import { useSnackbar } from 'notistack';
+import { useThemeProps } from '@mui/system';
+import { extractHashtags } from '../../utils/editor';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -838,7 +853,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         <DialogContent className={classNames(classes.content, classes.locationContent)}>
           <LocationAutocomplete
             onChange={handleChange('location')}
-            defaultValue={location ? ({full_address: location.location} as SCLocalityType) : ''}
+            defaultValue={location ? location : ''}
           />
         </DialogContent>
       </React.Fragment>

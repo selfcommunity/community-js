@@ -27,7 +27,7 @@ const Component = {
         },
         '& .MuiDialogContent-root': {
           margin: theme.spacing(7, 0),
-          padding: theme.spacing(0, 2),
+          padding: theme.spacing(1, 2),
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
             '& .SCEditor-placeholder': {

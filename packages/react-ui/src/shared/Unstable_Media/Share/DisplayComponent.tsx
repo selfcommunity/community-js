@@ -1,0 +1,55 @@
+import React, { ReactElement, useMemo } from 'react';
+import {styled} from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import FeedObject from '../../../components/FeedObject';
+import {SCFeedObjectTemplateType} from '../../../types/feedObject';
+import {CacheStrategies} from '@selfcommunity/utils';
+import { SCMediaType } from '@selfcommunity/types/src/types';
+import classNames from 'classnames';
+import { BoxProps } from '@mui/material';
+import filter from './filter';
+
+const PREFIX = 'UnstableSCMediaShareDisplay';
+
+const classes = {
+  displayRoot: `${PREFIX}-display-root`,
+  sharePreview: `${PREFIX}-share-preview`,
+  sharePlaceholder: `${PREFIX}-share-placeholder`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'DisplayRoot',
+  overridesResolver: (props, styles) => styles.displayRoot
+})(({theme}) => ({}));
+
+export interface DisplayComponentProps extends BoxProps {
+  /**
+   * Medias
+   */
+  medias: SCMediaType[];
+}
+
+export default ({className, medias = [], ...rest}: DisplayComponentProps): ReactElement => {
+  // MEMO
+  const _medias = useMemo(() => medias.filter(filter), [medias]);
+  if (_medias.length === 0) {
+    return null;
+  }
+
+  return (
+      <Root className={classNames(className, classes.displayRoot)} {...rest}>
+        {_medias.map((media, i) => (
+          <Box className={classes.sharePreview} key={i}>
+            <FeedObject
+              feedObjectId={media.embed.metadata.id}
+              feedObjectType={media.embed.metadata.type}
+              variant={'outlined'}
+              template={SCFeedObjectTemplateType.SHARE}
+              cacheStrategy={CacheStrategies.CACHE_FIRST}
+            />
+          </Box>
+        ))}
+      </Root>
+  )
+};

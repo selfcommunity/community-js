@@ -1,3 +1,3 @@
-import ContentPoll, {ContentPollProps} from './Attributes';
-export default ContentPoll;
-export {ContentPollProps};
+import Attributes, {AttributesProps} from './Attributes';
+export default Attributes;
+export {AttributesProps};

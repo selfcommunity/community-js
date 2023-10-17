@@ -133,6 +133,8 @@ import UnstableSCComposer from './components/UnstableSCComposer';
 import UnstableSCComposerTypeSwitchButtonGroup from './components/UnstableSCComposerTypeSwitchButtonGroup';
 import UnstableSCComposerAudienceLayer from './components/UnstableSCComposerAudienceLayer';
 import UnstableSCComposerContentDiscussion from './components/UnstableSCComposerContentDiscussion';
+import UnstableSCMediaLink from './components/UnstableSCMediaLink';
+import UnstableSCMediaFile from './components/UnstableSCMediaFile';
 
 /**
  * Style fragments - Imports - End
@@ -260,6 +262,8 @@ const theme = {
     SCLoyaltyProgramDetailTemplate,
     SCLoyaltyProgramWidgetSkeleton,
     SCLoyaltyProgramDetailTemplateSkeleton,
+    UnstableSCMediaFile,
+    UnstableSCMediaLink,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarSkeleton,

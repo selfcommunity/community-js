@@ -1,4 +1,4 @@
-import React, { forwardRef, RefObject, SyntheticEvent, useCallback, useMemo } from 'react';
+import React, { forwardRef, SyntheticEvent, useCallback, useMemo } from 'react';
 import {
   Box,
   BoxProps,
@@ -26,7 +26,7 @@ import {
 } from '../../../../constants/Composer';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
-import { SCPollChoiceType, SCPollType } from '@selfcommunity/types/src/index';
+import { SCPollChoiceType } from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
 import { useThemeProps } from '@mui/system';
 import { parseISO } from 'date-fns';
@@ -108,6 +108,12 @@ export interface ContentPollProps extends Omit<BoxProps, 'value' | 'onChange'> {
   error?: any;
 
   /**
+   * All the inputs should be disabled?
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
    * Callback for change event on poll object
    * @param value
    * @default empty object
@@ -121,7 +127,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, value = {poll: {...DEFAULT_POLL}} as ComposerContentType, error = {}, onChange} = props;
+  const {className = null, value = {poll: {...DEFAULT_POLL}} as ComposerContentType, error = {}, disabled, onChange} = props;
   const {titleError = null, error: generalError = null} = {...error};
 
   // MEMO
@@ -181,6 +187,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
       <Box className={classes.title}>
         <TextField
           autoFocus
+          disabled={disabled}
           label={<FormattedMessage id="ui.unstable_composer.content.poll.title" defaultMessage="ui.unstable_composer.content.poll.title" />}
           variant="outlined"
           value={poll.title}
@@ -202,6 +209,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
               value={choice.choice}
               onChange={handleChangeChoice(index)}
               variant="outlined"
+              disabled={disabled}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -245,6 +253,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
         />
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={localeMap[intl.locale]}>
           <DatePicker
+            disabled={disabled}
             label={<FormattedMessage id="ui.unstable_composer.content.poll.expiration" defaultMessage="ui.unstable_composer.content.poll.expiration" />}
             value={typeof poll.expiration_at === 'string' ? parseISO(poll.expiration_at) : poll.expiration_at}
             onChange={handleChangeExpiration}

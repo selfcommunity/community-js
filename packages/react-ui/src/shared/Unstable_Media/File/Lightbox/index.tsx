@@ -1,6 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import Lightbox from '../../../Lightbox';
+import BaseLightbox from '../../../Lightbox';
+import { SCMediaType } from '@selfcommunity/types/src/types';
 
 const PREFIX = 'SCPreviewImage';
 
@@ -8,18 +9,18 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Lightbox, {
+const Root = styled(BaseLightbox, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-export interface PreviewImageProps {
+export interface LightboxProps {
   /**
    * Images objs
    * @default []
    */
-  images: any[];
+  medias: SCMediaType[];
   /**
    * Obj index
    * @default null
@@ -41,9 +42,9 @@ export interface PreviewImageProps {
   [p: string]: any;
 }
 
-export default function PreviewImage(props: PreviewImageProps) {
+export default function Lightbox(props: LightboxProps) {
   // PROPS
-  const {images = [], index = 0, onClose, onIndexChange, ...rest} = props;
+  const {medias = [], index = 0, onClose, onIndexChange, ...rest} = props;
 
   /**
    * Gets image url
@@ -71,7 +72,7 @@ export default function PreviewImage(props: PreviewImageProps) {
     <Root
       {...rest}
       className={classes.root}
-      images={images.map((item, index) => ({src: getImageUrl(item), key: index}))}
+      images={medias.map((item, index) => ({src: getImageUrl(item), key: index}))}
       visible={index !== -1}
       onClose={onClose}
       index={index}

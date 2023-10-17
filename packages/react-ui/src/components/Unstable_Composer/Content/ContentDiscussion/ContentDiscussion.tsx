@@ -127,7 +127,7 @@ export default (inProps: ContentDiscussionProps): JSX.Element => {
         disabled={disabled}
       />
       <Box className={classes.medias}>
-        {/*<Deprecated_MediasPreview*/}
+        {/*<MediasPreview*/}
         {/*  medias={value.medias}*/}
         {/*  mediaObjectTypes={mediaObjectTypes.map((mediaObjectType) => {*/}
         {/*    return {*/}
