@@ -7,8 +7,13 @@ import { BoxProps } from '@mui/material';
 import { SCMediaType } from '@selfcommunity/types/src/types';
 import { useThemeProps } from '@mui/system';
 import { File, Link, Share } from '../../shared/Unstable_Media';
+import classNames from 'classnames';
 
 const PREFIX = 'UnstableSCFeedObjectMediaPreview';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -26,13 +31,36 @@ export interface FeedObjectMediaPreviewProps extends BoxProps {
    */
   mediaObjectTypes?: UnstableSCMediaObjectType[];
 }
+
+/**
+ * > API documentation for the Community-JS FeedObjectMediaPreview component. Learn about the available props and the CSS API.
+ *
+ *
+ * The FeedObjectMediaPreview component render the list of medias in a feed object thanks to given configurations.
+
+ #### Import
+ ```jsx
+ import {FeedObjectMediaPreview} from '@selfcommunity/react-ui';
+ ```
+ #### Component Name
+ The name `SCFeedObjectMediaPreview` can be used when providing style overrides in the theme.
+
+ #### CSS
+
+ |Rule Name|Global class|Description|
+ |---|---|---|
+ |root|.SCFeedObjectMediaPreview-root|Styles applied to the root element.|
+
+
+ * @param inProps
+ */
 export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
   //PROPS
   const props: FeedObjectMediaPreviewProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {medias, mediaObjectTypes = [File, Link, Share], ...rest} = props;
+  const {className, medias, mediaObjectTypes = [File, Link, Share], ...rest} = props;
   const {handleMediaClick} = useSCMediaClick();
 
   if (!medias.length) {
@@ -49,7 +77,7 @@ export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
    * for re-editing the media at the top of the group of elements
    */
   return (
-    <Root {...rest}>
+    <Root className={classNames(className, classes.root)} {...rest}>
       {mediaObjectTypes.map((mediaObject: UnstableSCMediaObjectType) => {
         const {displayProps = {}} = mediaObject;
         return (
