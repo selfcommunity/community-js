@@ -203,30 +203,14 @@ const reducer = (state, action) => {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCComposer-root|Styles applied to the root element.|
- |writing|.SCComposer-writing|Styles applied to the root element when user is writing in the editor.|
+ |ios|.SCComposer-ios|Styles applied to the root element when the device is ios.|
  |title|.SCComposer-title|Styles applied to the title element.|
- |titleDense|.SCComposer-title-dense|Styles applied to the dense title element.|
  |types|.SCComposer-types|Styles applied to the types element.|
- |avatar|.SCComposer-avatar|Styles applied to the avatar element.|
  |content|.SCComposer-content|Styles applied to the content.|
- |mediaContent|.SCComposer-mediaContent|Styles applied to the media content.|
- |audienceContent|.SCComposer-audienceContent|Styles applied to the audience content.|
- |locationContent|.SCComposer-locationContent|Styles applied to the location content.|
- |block|.SCComposer-block|Styles applied to the block element.|
- |editor|.SCComposer-editor|Styles applied to the editor element.|
- |divider|.SCComposer-divider|Styles applied to the divider element.|
+ |attributes|.SCComposer-attributes|Styles applied to the attributes.|
  |medias|.SCComposer-medias|Styles applied to the medias.|
- |location|.SCComposer-location|Styles applied to the location element.|
- |audience|.SCComposer-audience|Styles applied to the audience element.|
- |mediasActions|.SCComposer-mediasActions|Styles applied to the medias actions section.|
- |sortableMedia|.SCComposer-sortableMedia|Styles applied to the sortable media element.|
- |sortableMediaCover|.SCComposer-sortableMediaCover|Styles applied to the sortable media cover element.|
- |links|.SCComposer-links|Styles applied to the links element.|
  |actions|.SCComposer-actions|Styles applied to the actions section.|
- |mediaActions|.SCComposer-media-actions|Styles applied to the media actions section.|
- |filterActions|.SCComposer-filter-actions|Styles applied to the filter actions section.|
- |actionInput|.SCComposer-actionInput|Styles applied to the action input element.|
- |badgeError|.SCComposer-badgeError|Styles applied to the badge error element.|
+ |layerTransitionRoot|.SCComposer-layer-transition-root|Styles applied to the overlay layers (eg. location).|
 
 
  * @param inProps
