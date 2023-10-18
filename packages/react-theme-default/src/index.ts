@@ -128,7 +128,6 @@ import SCAccountReset from './components/SCAccountReset';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountVerify from './components/SCAccountVerify';
 import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
-import SCNavigationToolbarMobileSkeleton from './components/SCNavigationToolbarMobileSkeleton';
 import UnstableSCComposer from './components/UnstableSCComposer';
 import UnstableSCMediaLink from './components/UnstableSCMediaLink';
 import UnstableSCMediaFile from './components/UnstableSCMediaFile';
@@ -264,7 +263,6 @@ const theme = {
     SCNavigationToolbar,
     SCNavigationToolbarSkeleton,
     SCNavigationToolbarMobile,
-    SCNavigationToolbarMobileSkeleton,
     SCNotification,
     SCNotificationItem,
     SCNotificationsMenu,

@@ -22,13 +22,15 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
 import {iOS} from '@selfcommunity/utils';
+import Unstable_ComposerIconButton from '../Unstable_ComposerIconButton';
 
 const PREFIX = 'SCBottomNavigation';
 
 const classes = {
   root: `${PREFIX}-root`,
   ios: `${PREFIX}-ios`,
-  action: `${PREFIX}-action`
+  action: `${PREFIX}-action`,
+  composer: `${PREFIX}-composer`,
 };
 
 const Root = styled(MuiBottomNavigation, {
@@ -39,7 +41,6 @@ const Root = styled(MuiBottomNavigation, {
 
 export type BottomNavigationProps = MuiBottomNavigationProps;
 
-const PREFERENCES = [SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED, SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY];
 
 /**
  * > API documentation for the Community-JS Bottom Navigation component. Learn about the available props and the CSS API.
@@ -81,15 +82,10 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // MEMO
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
   const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
@@ -106,8 +102,8 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               icon={<Icon>home</Icon>}
             />,
-            (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) &&
-            preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] ? (
+            (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value) &&
+            preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value ? (
               <BottomNavigationAction
                 key="explore"
                 className={classes.action}
@@ -117,6 +113,11 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 icon={<Icon>explore</Icon>}
               />
             ) : null,
+            <BottomNavigationAction
+              key="composer"
+              className={classNames(classes.composer, classes.action)}
+              component={Unstable_ComposerIconButton}
+            />,
             scUserContext.user ? (
               <BottomNavigationAction
                 key="notifications"

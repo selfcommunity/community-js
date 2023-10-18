@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import BottomNavigation from './index';
+import BottomNavigation, { BottomNavigationProps } from './index';
 
 export default {
   title: 'Design System/React UI/Bottom Navigation ',
@@ -18,7 +18,7 @@ const template = (args) => (
   <BottomNavigation {...args} />
 );
 
-export const Base: StoryObj<BottomNavigation> = {
+export const Base: StoryObj<BottomNavigationProps> = {
   args: {
     value: '/'
   },

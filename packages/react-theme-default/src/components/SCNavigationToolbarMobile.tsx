@@ -16,6 +16,12 @@ const Component = {
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      '& .SCNavigationToolbarMobile-logo': {
+        width: 100,
+        height: 20
+      }
     })
   }
 };
