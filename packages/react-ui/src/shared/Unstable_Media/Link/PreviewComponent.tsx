@@ -18,8 +18,7 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'PreviewRoot',
-  overridesResolver: (props, styles) => styles.previewRoot
+  slot: 'PreviewRoot'
 })(() => ({}));
 
 export interface PreviewComponentProps extends Omit<BoxProps, 'value' | 'onChange'> {
@@ -27,12 +26,8 @@ export interface PreviewComponentProps extends Omit<BoxProps, 'value' | 'onChang
   value: SCMediaType[];
 }
 
-const PreviewComponent = React.forwardRef((inProps: PreviewComponentProps, ref: React.Ref<unknown>): ReactElement => {
-  // Props
-  const props: PreviewComponentProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
+const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: React.Ref<unknown>): ReactElement => {
+  // PROPS
   const {className, onChange, value= [], ...rest} = props;
 
   // MEMO

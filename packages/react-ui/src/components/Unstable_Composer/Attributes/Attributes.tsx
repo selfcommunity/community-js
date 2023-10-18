@@ -2,30 +2,20 @@ import React, { useCallback } from 'react';
 import { Box, BoxProps, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Icon from '@mui/material/Icon';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
 import { SCCategoryType, SCTagType } from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
-import { useThemeProps } from '@mui/system';
 import TagChip from '../../../shared/TagChip';
 import { ComposerContentType } from '../../../types/composer';
-
-const localeMap = {
-  en: enLocale,
-  it: itLocale
-};
-
-const PREFIX = 'UnstableSCComposerAttributes';
+import { PREFIX } from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-attributes-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'AttributesRoot'
+})(() => ({}));
 
 export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange' | 'onClick'> {
   /**
@@ -48,12 +38,8 @@ export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange' | '
   onClick?: (attribute: 'categories' | 'addressing') => void;
 }
 
-export default (inProps: AttributesProps): JSX.Element => {
+export default (props: AttributesProps): JSX.Element => {
   // PROPS
-  const props: AttributesProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className = null, value = null, onChange = null, onClick = null} = props;
 
   // HANDLERS

@@ -45,8 +45,6 @@ import {
   IconButton,
   Slide,
   Theme,
-  Tooltip,
-  Typography,
   useMediaQuery,
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
@@ -58,9 +56,8 @@ import { iOS, random, stripHtml } from '@selfcommunity/utils';
 import classNames from 'classnames';
 import { TransitionProps } from '@mui/material/transitions';
 import { EditorProps } from '../Editor';
-import { SCMediaChunkType, SCMediaObjectType, UnstableSCMediaObjectType } from '../../types/media';
+import { UnstableSCMediaObjectType } from '../../types/media';
 import ContentPoll from './Content/ContentPoll';
-import { ComposerSkeleton } from './index';
 import { useSnackbar } from 'notistack';
 import { useThemeProps } from '@mui/system';
 import { extractHashtags } from '../../utils/editor';
@@ -72,6 +69,9 @@ import LocationLayer from './Layer/LocationLayer';
 import ContentDiscussion from './Content/ContentDiscussion';
 import { File, Link, Share } from '../../shared/Unstable_Media';
 import Attributes from './Attributes';
+import { PREFIX } from './constants';
+import ComposerSkeleton from './Skeleton';
+import CloseLayer from './Layer/CloseLayer';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -81,8 +81,6 @@ const DialogTransition = forwardRef(function Transition(
 ) {
   return <Fade ref={ref} {...props}></Fade>;
 });
-
-const PREFIX = 'UnstableSCComposer';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -106,9 +104,7 @@ const LayerTransitionRoot = styled(Slide, {
   name: PREFIX,
   slot: 'LayerTransitionRoot',
   overridesResolver: (props, styles) => styles.layerTransitionRoot
-})(({theme}) => ({
-
-}));
+})(({theme}) => ({}));
 
 export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scroll'> {
   /**
@@ -161,9 +157,6 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
    */
   onClose?: (event: SyntheticEvent) => void;
 }
-
-export const MAIN_VIEW = 'main';
-export const POLL_VIEW = 'poll';
 
 const COMPOSER_INITIAL_STATE = {
   id: null,
@@ -270,10 +263,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [layer, setLayer] = useState<ComposerLayerType | null>();
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, key: random()});
-  const {id, type, title, titleError, html, categories, addressing, audience, medias, poll, pollError, location, error} = state;
-  const addMedia = (media: SCMediaType) => {
-    dispatch({type: 'medias', value: [...medias, media]});
-  };
+  const {key, id, type, title, titleError, html, categories, addressing, audience, medias, poll, pollError, location, error} = state;
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === SCContributionType.POST) {
@@ -522,7 +512,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     const _categories: string[] = [...categories.map((c: SCCategoryType) => c.id), ...extractHashtags(html)];
     const data: any = {
       title,
-      html,
+      text: html,
       medias: medias.map((m) => m.id),
       categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
     };
@@ -571,7 +561,24 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       window.onbeforeunload = null;
     }
     onClose && onClose(event);
+    setLayer(null);
+    dispatch({type: 'reset'});
   }, [onClose]);
+
+  const handleClosePrompt = useCallback((event: SyntheticEvent): void => {
+    if (canSubmit) {
+      handleAddLayer({
+        name: 'close',
+        Component: CloseLayer,
+        ComponentProps: {
+          onClose: handleRemoveLayer,
+          onSave: handleClose
+        }
+      })
+    } else {
+      handleClose(event);
+    }
+  }, [canSubmit, handleAddLayer, handleRemoveLayer, handleClose]);
 
   const isIOS = useMemo(() => iOS(), []);
 
@@ -593,9 +600,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
     switch (type) {
       case COMPOSER_TYPE_POLL:
-        return <ContentPoll onChange={handleChangePoll} value={{html, categories, addressing, medias, poll, location}} error={pollError} disabled={isSubmitting} />;
+        return <ContentPoll key={key} onChange={handleChangePoll} value={{html, categories, addressing, medias, poll, location}} error={pollError} disabled={isSubmitting} />;
       case SCContributionType.DISCUSSION:
         return <ContentDiscussion
+          key={key}
           value={{title, html, categories, addressing, medias, poll, location}}
           error={{titleError, error}}
           onChange={handleChangeDiscussion}
@@ -608,6 +616,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         />;
       default:
         return <ContentPost
+          key={key}
           value={{html, categories, addressing, medias, poll, location}}
           error={{error}}
           onChange={handleChangePost}
@@ -619,7 +628,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }}
         />;
     }
-  }, [type, title, html, categories, addressing, medias, poll, pollError, location, error, handleChangePoll, handleChangePost, isSubmitting]);
+  }, [key, type, title, html, categories, addressing, medias, poll, pollError, location, error, handleChangePoll, handleChangePost, isSubmitting]);
 
   if (!scUserContext.user && !(scUserContext.loading && open)) {
     return null;
@@ -633,11 +642,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       onClose={handleClose}
       {...rest}
       className={classNames(classes.root, {[classes.ios]: isIOS})}
-      scroll={fullScreen ? 'paper' : 'body'}
+      scroll="body"
       fullScreen={fullScreen}>
       <form onSubmit={handleSubmit} method="post">
         <DialogTitle className={classes.title}>
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={handleClosePrompt}>
             <Icon>close</Icon>
           </IconButton>
           <LoadingButton size="small" type="submit" color="secondary" variant="contained" disabled={!canSubmit} loading={isSubmitting}>
@@ -646,6 +655,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes value={{categories, addressing, location}} className={classes.attributes} onChange={handleChangeAttributes} onClick={handleClickAttributes}/>
+          {content}
           {medias && medias.length > 0 && <Box className={classes.medias}>
             {
               mediaObjectTypes.map((mediaObjectType: UnstableSCMediaObjectType) => {
@@ -664,7 +674,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               })
             }
           </Box>}
-          {content}
         </DialogContent>
         {!canSubmit && !editMode && <TypeSwitchButtonGroup className={classes.types} onChange={handleChangeType} size="small" value={type} />}
         <DialogActions className={classes.actions}>

@@ -1,37 +1,21 @@
-import React, { forwardRef, RefObject, useCallback, useEffect, useRef } from 'react';
-import { Box, BoxProps, Chip, FormGroup, Typography } from '@mui/material';
+import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
+import { Box, BoxProps, FormGroup, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
-import { SCCategoryType, SCFeedObjectType, SCFeedPostType, SCTagType } from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
-import { useThemeProps } from '@mui/system';
-import TagChip from '../../../../shared/TagChip';
-import MediasPreview from '../../../../shared/MediasPreview';
-import Editor, { EditorProps, EditorRef } from '../../../Editor';
-import Attributes from '../../Attributes';
+import Editor, { EditorProps } from '../../../Editor';
 import { ComposerContentType } from '../../../../types/composer';
-
-const localeMap = {
-  en: enLocale,
-  it: itLocale
-};
-
-const PREFIX = 'SCComposerContentPost';
+import { PREFIX } from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  generalError: `${PREFIX}-generalError`,
-  attributes: `${PREFIX}-attributes`,
-  medias: `${PREFIX}-medias`,
-  editor: `${PREFIX}-editor`
+  root: `${PREFIX}-content-post-root`,
+  generalError: `${PREFIX}-general-error`,
+  medias: `${PREFIX}-content-post-medias`,
+  editor: `${PREFIX}-content-post-editor`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'ContentPostRoot'
 })(({theme}) => ({}));
 
 const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props}, ref) => {
@@ -84,12 +68,8 @@ export interface ContentPostProps extends Omit<BoxProps, 'value' | 'onChange'> {
   EditorProps?: Omit<EditorProps, ''>;
 }
 
-export default (inProps: ContentPostProps): JSX.Element => {
+export default (props: ContentPostProps): JSX.Element => {
   // PROPS
-  const props: ContentPostProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className = null, value = {...DEFAULT_POST}, error = {}, disabled = false, onChange, EditorProps = {}} = props;
   const {error: generalError = null} = {...error};
 

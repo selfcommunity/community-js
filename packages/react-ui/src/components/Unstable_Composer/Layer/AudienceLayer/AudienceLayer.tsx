@@ -3,34 +3,31 @@ import { FormattedMessage } from 'react-intl';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import { Autocomplete, AutocompleteProps, Box, BoxProps, Button, DialogTitle, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import { Autocomplete, Box, BoxProps, Button, DialogTitle, IconButton, Tab, Tabs, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { SCTagType } from '@selfcommunity/types/src/index';
 import TagChip from '../../../../shared/TagChip';
-import { useThemeProps } from '@mui/system';
 import { ComposerLayerProps } from '../../../../types/composer';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import DialogContent from '@mui/material/DialogContent';
 import { useSCFetchAddressingTagList } from '@selfcommunity/react-core';
-
+import { PREFIX } from '../../constants';
 
 const AUDIENCE_ALL = 'all';
 const AUDIENCE_TAG = 'tag';
-const PREFIX = 'UnstableSCComposerAudienceLayer';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  title: `${PREFIX}-title`,
-  content: `${PREFIX}-content`,
-  message: `${PREFIX}-message`,
-  autocomplete: `${PREFIX}-autocomplete`
+  root: `${PREFIX}-layer-audience-root`,
+  title: `${PREFIX}-layer-title`,
+  content: `${PREFIX}-layer-content`,
+  message: `${PREFIX}-layer-audience-message`,
+  autocomplete: `${PREFIX}-layer-audience-autocomplete`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'LayerAudienceRoot'
 })(() => ({}));
 
 export interface AudienceLayerProps  extends Omit<BoxProps, 'defaultValue'>, ComposerLayerProps {
@@ -38,11 +35,8 @@ export interface AudienceLayerProps  extends Omit<BoxProps, 'defaultValue'>, Com
   TextFieldProps?: TextFieldProps;
 }
 
-const AudienceLayer = React.forwardRef((inProps: AudienceLayerProps, ref: React.Ref<unknown>): ReactElement => {  // Props
-  const props: AudienceLayerProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
+const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Ref<unknown>): ReactElement => {
+  // Props
   const {
     className,
     onClose,
@@ -63,7 +57,7 @@ const AudienceLayer = React.forwardRef((inProps: AudienceLayerProps, ref: React.
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: autocompleteOpen});
 
   // HANDLERS
-  const handleSave = useCallback(() => onSave(value?.length && value?.length > 0 ? value : null), [value]);
+  const handleSave = useCallback(() => onSave(value?.length && value?.length > 0 ? value : null), [value, onSave]);
   const handleChange = useCallback((event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
 
   const handleChangeAudience = useCallback((event: SyntheticEvent, data: string) => setAudience(data), []);

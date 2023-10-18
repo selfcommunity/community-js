@@ -2,13 +2,6 @@ import { alpha } from '@mui/system';
 
 const Component = {
   styleOverrides: {
-    layerRoot: ({theme}: any) => ({
-      '& .UnstableSCMediaLink-content': {
-        '& form button[type=submit]': {
-          fontWeight: theme.typography.fontWeightBold
-        }
-      }
-    }),
     displayRoot: ({theme}: any) => ({
       '& .UnstableSCMediaLink-link': {
         position: 'relative',
@@ -51,6 +44,13 @@ const Component = {
         }
       }
     }),
+    layerRoot: ({theme}: any) => ({
+      '& .UnstableSCMediaLink-content': {
+        '& form button[type=submit]': {
+          fontWeight: theme.typography.fontWeightBold
+        }
+      }
+    }),
     previewRoot: ({theme}: any) => ({
       '& .UnstableSCMediaLink-media': {
         position: 'relative',
@@ -62,6 +62,7 @@ const Component = {
         }
       }
     }),
+    triggerRoot: ({theme}: any) => ({}),
   }
 };
 

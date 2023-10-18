@@ -1,4 +1,7 @@
-const exampleExploreData = {
+import { SCPaginatedResponse } from '@selfcommunity/api-services/src/types';
+import { SCFeedUnitType } from '@selfcommunity/types/src/types';
+
+const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
   count: 843,
   next: 'https://italiano.quentrix.com/api/v2/feed/explore/?limit=5&offset=25',
   previous: 'https://italiano.quentrix.com/api/v2/feed/explore/?limit=5&offset=15',

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import PreviewImage from './Lightbox';
+import Lightbox from './Lightbox';
 import { Box, Grid, Typography } from '@mui/material';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
@@ -8,29 +8,27 @@ import { useInView } from 'react-intersection-observer';
 import { PREFIX } from './constants';
 import filter from './filter';
 import { MAX_GRID_IMAGES, MEDIA_TYPE_DOCUMENT } from '../../../constants/Media';
-import Lightbox from './Lightbox';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
-  background: `${PREFIX}-display-background`,
-  backgroundPortrait: `${PREFIX}-display-background-portrait`,
-  heightOne: `${PREFIX}-display-height-one`,
-  heightHalfOne: `${PREFIX}-display-height-half-one`,
-  heightTwo: `${PREFIX}-display-height-two`,
-  heightThree: `${PREFIX}-display-height-three`,
-  cover: `${PREFIX}-display-cover`,
-  coverText: `${PREFIX}-display-cover-text`,
-  slide: `${PREFIX}-display-slide`,
-  border: `${PREFIX}-display-border`,
-  gallery: `${PREFIX}-display-gallery`,
-  title: `${PREFIX}-display-title`,
-  iconFile: `${PREFIX}-display-icon-file`
+  background: `${PREFIX}-background`,
+  backgroundPortrait: `${PREFIX}-background-portrait`,
+  heightOne: `${PREFIX}-height-one`,
+  heightHalfOne: `${PREFIX}-height-half-one`,
+  heightTwo: `${PREFIX}-height-two`,
+  heightThree: `${PREFIX}-height-three`,
+  cover: `${PREFIX}-cover`,
+  coverText: `${PREFIX}-cover-text`,
+  slide: `${PREFIX}-slide`,
+  border: `${PREFIX}-border`,
+  gallery: `${PREFIX}-gallery`,
+  title: `${PREFIX}-title`,
+  iconFile: `${PREFIX}-icon-file`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'DisplayRoot',
-  overridesResolver: (props, styles) => styles.displayRoot
+  slot: 'DisplayRoot'
 })(({theme}) => ({
 
 }));

@@ -1,36 +1,52 @@
-import React, {lazy, useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { styled } from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
-import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
+import {
+  Avatar,
+  Box,
+  Button,
+  CardActions,
+  CardHeader,
+  CardProps,
+  Collapse,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import FeedObjectSkeleton, { FeedObjectSkeletonProps } from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
-import Actions, {ActionsProps} from './Actions';
+import MediasPreview, { MediaPreviewProps } from '../../shared/MediasPreview';
+import Actions, { ActionsProps } from './Actions';
 import Icon from '@mui/material/Icon';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import PollObject, {PollObjectProps} from './Poll';
-import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
-import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import PollObject, { PollObjectProps } from './Poll';
+import ContributorsFeedObject, { ContributorsFeedObjectProps } from './Contributors';
+import { SCFeedObjectActivitiesType, SCFeedObjectTemplateType } from '../../types/feedObject';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
-import ContributionActionsMenu, {ContributionActionsMenuProps} from '../../shared/ContributionActionsMenu';
-import {getContributionHtml, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
-import Follow, {FollowProps} from './Actions/Follow';
-import Widget, {WidgetProps} from '../Widget';
-import {useThemeProps} from '@mui/system';
+import ContributionActionsMenu, { ContributionActionsMenuProps } from '../../shared/ContributionActionsMenu';
+import {
+  getContributionHtml,
+  getContributionRouteName,
+  getContributionSnippet,
+  getRouteData,
+} from '../../utils/contribution';
+import Follow, { FollowProps } from './Actions/Follow';
+import Widget, { WidgetProps } from '../Widget';
+import { useThemeProps } from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
-import Activities, {ActivitiesProps} from './Activities';
-import CommentObjectReply, {CommentObjectReplyProps} from '../CommentObjectReply';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {useSnackbar} from 'notistack';
-import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
+import Activities, { ActivitiesProps } from './Activities';
+import CommentObjectReply, { CommentObjectReplyProps } from '../CommentObjectReply';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { useSnackbar } from 'notistack';
+import { CommentObjectProps } from '../CommentObject';
+import { SCCommentType, SCContributionType, SCFeedObjectType, SCPollType } from '@selfcommunity/types';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
+import { CacheStrategies, Logger, LRUCache } from '@selfcommunity/utils';
+import { VirtualScrollerItemProps } from '../../types/virtualScroller';
+import { catchUnauthorizedActionByBlockedUser } from '../../utils/errors';
 import {
   Link,
   SCCache,
@@ -42,12 +58,12 @@ import {
   useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/react-core';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
-import {MAX_SUMMARY_LENGTH} from '../../constants/Feed';
-import Composer from '../Composer';
+import { MAX_SUMMARY_LENGTH } from '../../constants/Feed';
+import Unstable_Composer from '../Unstable_Composer';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -926,14 +942,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Collapse>
             )}
             {composerOpen && (
-              <Composer
+              <Unstable_Composer
                 open={composerOpen}
                 feedObject={obj}
                 onClose={handleToggleEdit}
                 onSuccess={handleEditSuccess}
                 maxWidth="sm"
                 fullWidth
-                scroll="body"
               />
             )}
           </Box>

@@ -39,20 +39,17 @@ const classes = {
 
 const Root = styled(IconButton, {
   name: PREFIX,
-  slot: 'TriggerRoot',
-  overridesResolver: (props, styles) => styles.triggerRoot
+  slot: 'TriggerRoot'
 })(() => ({}));
 
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
-  slot: 'TriggerRoot',
-  overridesResolver: (props, styles) => styles.triggerDrawerRoot
+  slot: 'TriggerDrawerRoot'
 })(() => ({}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
-  slot: 'TriggerRoot',
-  overridesResolver: (props, styles) => styles.triggerMenuRoot
+  slot: 'TriggerMenuRoot'
 })(() => ({}));
 
 const PhotoUploadListItemButton = asUploadButton(

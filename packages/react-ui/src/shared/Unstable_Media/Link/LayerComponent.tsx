@@ -15,28 +15,23 @@ import filter from './filter';
 
 const classes = {
   layerRoot: `${PREFIX}-layer-root`,
-  title: `${PREFIX}-title`,
-  content: `${PREFIX}-content`,
+  title: `${PREFIX}-layer-title`,
+  content: `${PREFIX}-layer-content`,
   media: `${PREFIX}-media`,
   delete: `${PREFIX}-delete`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'LayerRoot',
-  overridesResolver: (props, styles) => styles.layerRoot
+  slot: 'LayerRoot'
 })(() => ({}));
 
 export interface LayerComponentProps extends Omit<BoxProps, 'defaultValue'>, ComposerLayerProps {
   defaultValue: SCMediaType[];
 }
 
-const LayerComponent = React.forwardRef((inProps: LayerComponentProps, ref: React.Ref<unknown>): ReactElement => {
-  // Props
-  const props: LayerComponentProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
+const LayerComponent = React.forwardRef((props: LayerComponentProps, ref: React.Ref<unknown>): ReactElement => {
+  // PROPS
   const {className, onClose, onSave, defaultValue= [], ...rest} = props;
 
   // STATE

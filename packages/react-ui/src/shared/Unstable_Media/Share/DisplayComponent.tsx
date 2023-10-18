@@ -8,8 +8,7 @@ import { SCMediaType } from '@selfcommunity/types/src/types';
 import classNames from 'classnames';
 import { BoxProps } from '@mui/material';
 import filter from './filter';
-
-const PREFIX = 'UnstableSCMediaShareDisplay';
+import { PREFIX } from './constants';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
@@ -19,8 +18,7 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'DisplayRoot',
-  overridesResolver: (props, styles) => styles.displayRoot
+  slot: 'DisplayRoot'
 })(({theme}) => ({}));
 
 export interface DisplayComponentProps extends BoxProps {

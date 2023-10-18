@@ -2,17 +2,15 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import BaseLightbox from '../../../Lightbox';
 import { SCMediaType } from '@selfcommunity/types/src/types';
-
-const PREFIX = 'SCPreviewImage';
+import { PREFIX } from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-lightbox-root`
 };
 
 const Root = styled(BaseLightbox, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'LightboxRoot'
 })(() => ({}));
 
 export interface LightboxProps {
@@ -55,14 +53,6 @@ export default function Lightbox(props: LightboxProps) {
       return image.image ? image.image : '/static/frontend_v2/images/image.svg';
     }
     return image;
-  }
-
-  /**
-   * Gets image key identifier
-   * @param image
-   */
-  function getImageId(image) {
-    return image.id;
   }
 
   /**

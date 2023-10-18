@@ -1,36 +1,24 @@
-import React, { forwardRef, RefObject, SyntheticEvent, useCallback } from 'react';
-import { Box, BoxProps, FormGroup, TextField, Typography } from '@mui/material';
+import React, { useCallback } from 'react';
+import { Box, BoxProps, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
 import classNames from 'classnames';
-import { useThemeProps } from '@mui/system';
-import Editor, { EditorProps, EditorRef } from '../../../Editor';
-import Attributes from '../../Attributes';
+import Editor, { EditorProps } from '../../../Editor';
 import { ComposerContentType } from '../../../../types/composer';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { COMPOSER_TITLE_MAX_LENGTH } from '../../../../constants/Composer';
-
-const localeMap = {
-  en: enLocale,
-  it: itLocale
-};
-
-const PREFIX = 'UnstableSCComposerContentDiscussion';
+import { PREFIX } from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  generalError: `${PREFIX}-generalError`,
-  attributes: `${PREFIX}-attributes`,
-  title: `${PREFIX}-title`,
-  medias: `${PREFIX}-medias`,
-  editor: `${PREFIX}-editor`
+  root: `${PREFIX}-content-discussion-root`,
+  generalError: `${PREFIX}-general-error`,
+  title: `${PREFIX}-content-discussion-title`,
+  medias: `${PREFIX}-content-discussion-medias`,
+  editor: `${PREFIX}-content-discussion-editor`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'ContentDiscussionRoot'
 })(({theme}) => ({}));
 
 /**
@@ -76,12 +64,8 @@ export interface ContentDiscussionProps extends Omit<BoxProps, 'value' | 'onChan
   EditorProps?: EditorProps;
 }
 
-export default (inProps: ContentDiscussionProps): JSX.Element => {
+export default (props: ContentDiscussionProps): JSX.Element => {
   // PROPS
-  const props: ContentDiscussionProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     className = null,
     value = {...DEFAULT_DISCUSSION},
@@ -109,7 +93,6 @@ export default (inProps: ContentDiscussionProps): JSX.Element => {
   return (
     <Root className={classNames(classes.root, className)}>
       {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
-      <Attributes value={value} className={classes.attributes} onChange={onChange} />
       <TextField
         className={classes.title}
         placeholder={intl.formatMessage({id: "ui.unstable_composer.content.discussion.title.label", defaultMessage: "ui.unstable_composer.content.discussion.title.label"})}
@@ -126,17 +109,6 @@ export default (inProps: ContentDiscussionProps): JSX.Element => {
         helperText={titleError}
         disabled={disabled}
       />
-      <Box className={classes.medias}>
-        {/*<MediasPreview*/}
-        {/*  medias={value.medias}*/}
-        {/*  mediaObjectTypes={mediaObjectTypes.map((mediaObjectType) => {*/}
-        {/*    return {*/}
-        {/*      ...mediaObjectType,*/}
-        {/*      previewProps: {adornment: mediaObjectType.editButton !== null ? renderMediaAdornment(mediaObjectType) : null, gallery: false}*/}
-        {/*    } as SCMediaObjectType;*/}
-        {/*  })}*/}
-        {/*/>*/}
-      </Box>
       <Editor
         {...EditorProps}
         editable={!disabled}

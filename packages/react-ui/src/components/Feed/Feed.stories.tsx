@@ -1,6 +1,6 @@
 import {useRef} from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
-import Feed, {FeedRef} from './Feed';
+import Feed, { FeedProps, FeedRef } from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
@@ -13,10 +13,12 @@ import {
 	InlineComposerWidget,
 	CategoriesPopularWidget,
 	UserSuggestionWidget,
-	FeedUpdatesWidget
+	FeedUpdatesWidget, SCFeedWidgetType,
 } from '../../index';
 import {exampleExploreData} from './prefetchedData';
 import {Button} from '@mui/material';
+import Unstable_Composer from '../Unstable_Composer';
+import Unstable_InlineComposerWidget from '../Unstable_InlineComposerWidget';
 
 export default {
 	title: 'Design System/React UI/Feed',
@@ -66,7 +68,7 @@ const templateContainerFixed = (args) => {
 	</div>);
 };
 
-const _WIDGETS = [
+const _WIDGETS: SCFeedWidgetType[] = [
 	{
 		type: 'widget',
 		component: CategoriesPopularWidget,
@@ -90,7 +92,7 @@ const _WIDGETS = [
 	}
 ];
 
-export const Main: StoryObj<Feed> = {
+export const Main: StoryObj<FeedProps> = {
 	args: {
 		id: 'main',
 		endpoint: Endpoints.MainFeed,
@@ -108,12 +110,12 @@ export const Main: StoryObj<Feed> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const MainCache: StoryObj<Feed> = {
+export const MainCache: StoryObj<FeedProps> = {
 	args: {
 		id: 'main',
 		endpoint: Endpoints.MainFeed,
@@ -132,12 +134,12 @@ export const MainCache: StoryObj<Feed> = {
 		},
 		requireAuthentication: true,
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const Explore: StoryObj<Feed> = {
+export const Explore: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -156,7 +158,7 @@ export const Explore: StoryObj<Feed> = {
 		},
 		cacheStrategy: CacheStrategies.NETWORK_ONLY,
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
@@ -180,12 +182,12 @@ export const ExploreContainerFixed: StoryObj<typeof Feed> = {
 		},
 		cacheStrategy: CacheStrategies.NETWORK_ONLY,
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: templateContainerFixed
 };
 
-export const ExploreCache: StoryObj<Feed> = {
+export const ExploreCache: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -204,12 +206,12 @@ export const ExploreCache: StoryObj<Feed> = {
 		},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExploreOffset2: StoryObj<Feed> = {
+export const ExploreOffset2: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -228,12 +230,12 @@ export const ExploreOffset2: StoryObj<Feed> = {
 		},
 		endpointQueryParams: {limit: 5, offset: 2},
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExploreOffset2Cached: StoryObj<Feed> = {
+export const ExploreOffset2Cached: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -253,12 +255,12 @@ export const ExploreOffset2Cached: StoryObj<Feed> = {
 		endpointQueryParams: {limit: 5, offset: 2},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExploreOffset5: StoryObj<Feed> = {
+export const ExploreOffset5: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -277,12 +279,12 @@ export const ExploreOffset5: StoryObj<Feed> = {
 		},
 		endpointQueryParams: {limit: 5, offset: 5},
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExploreOffset5Cached: StoryObj<Feed> = {
+export const ExploreOffset5Cached: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -302,12 +304,12 @@ export const ExploreOffset5Cached: StoryObj<Feed> = {
 		endpointQueryParams: {limit: 5, offset: 5},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExploreOffset20: StoryObj<Feed> = {
+export const ExploreOffset20: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -326,12 +328,12 @@ export const ExploreOffset20: StoryObj<Feed> = {
 		},
 		endpointQueryParams: {limit: 5, offset: 20},
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExploreOffset20Cached: StoryObj<Feed> = {
+export const ExploreOffset20Cached: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -351,12 +353,12 @@ export const ExploreOffset20Cached: StoryObj<Feed> = {
 		endpointQueryParams: {limit: 5, offset: 20},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <InlineComposerWidget />
+		HeaderComponent: <Unstable_InlineComposerWidget />
 	},
 	render: template
 };
 
-export const ExplorePrefetchedData: StoryObj<Feed> = {
+export const ExplorePrefetchedData: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -374,14 +376,14 @@ export const ExplorePrefetchedData: StoryObj<Feed> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		endpointQueryParams: {limit: 5},
-		HeaderComponent: <InlineComposerWidget />,
+		HeaderComponent: <Unstable_InlineComposerWidget />,
 		requireAuthentication: true,
 		prefetchedData: exampleExploreData
 	},
 	render: template
 };
 
-export const ExplorePrefetchedDataCached: StoryObj<Feed> = {
+export const ExplorePrefetchedDataCached: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore',
 		endpoint: Endpoints.ExploreFeed,
@@ -399,14 +401,14 @@ export const ExplorePrefetchedDataCached: StoryObj<Feed> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		endpointQueryParams: {limit: 5},
-		HeaderComponent: <InlineComposerWidget />,
+		HeaderComponent: <Unstable_InlineComposerWidget />,
 		requireAuthentication: true,
 		cacheStrategy: CacheStrategies.CACHE_FIRST
 	},
 	render: template
 };
 
-export const ExploreWithoutVirtualization: StoryObj<Feed> = {
+export const ExploreWithoutVirtualization: StoryObj<FeedProps> = {
 	args: {
 		id: 'explore_no_virtualization',
 		endpoint: Endpoints.ExploreFeed,
@@ -424,14 +426,14 @@ export const ExploreWithoutVirtualization: StoryObj<Feed> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		cacheStrategy: CacheStrategies.NETWORK_ONLY,
-		HeaderComponent: <InlineComposerWidget />,
+		HeaderComponent: <Unstable_InlineComposerWidget />,
 		requireAuthentication: true,
 		VirtualizedScrollerProps: {bypass: true}
 	},
 	render: template
 };
 
-export const Notification: StoryObj<Feed> = {
+export const Notification: StoryObj<FeedProps> = {
 	args: {
 		id: 'notifications_feed',
 		endpoint: Endpoints.UserNotificationList,
@@ -467,7 +469,7 @@ export const Notification: StoryObj<Feed> = {
 	render: template
 };
 
-export const NotificationCached: StoryObj<Feed> = {
+export const NotificationCached: StoryObj<FeedProps> = {
 	args: {
 		id: 'notifications_feed',
 		endpoint: Endpoints.UserNotificationList,

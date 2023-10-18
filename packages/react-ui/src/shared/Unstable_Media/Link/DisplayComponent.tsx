@@ -26,8 +26,7 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'DisplayRoot',
-  overridesResolver: (props, styles) => styles.displayRoot
+  slot: 'DisplayRoot'
 })(({theme}) => ({}));
 
 export interface DisplayComponentProps extends BoxProps {

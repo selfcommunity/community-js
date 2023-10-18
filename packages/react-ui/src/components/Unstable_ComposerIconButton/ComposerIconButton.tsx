@@ -19,7 +19,7 @@ import Composer, {ComposerProps} from '../Unstable_Composer';
 import {SnackbarKey, useSnackbar} from 'notistack';
 import {getRouteData} from '../../utils/contribution';
 
-const PREFIX = 'SCComposerIconButton';
+const PREFIX = 'UnstableSCComposerIconButton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -27,9 +27,8 @@ const classes = {
 
 const Root = styled(IconButton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ComposerIconButtonProps extends IconButtonProps {
   /**

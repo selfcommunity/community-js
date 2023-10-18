@@ -8,32 +8,32 @@ const Component = {
       [theme.breakpoints.down('md')]: {
         minHeight: 170
       },
-      '& .UnstableSCMediaFile-display-background': {
+      '& .UnstableSCMediaFile-background': {
         backgroundSize: 'cover !important',
         backgroundPosition: 'center !important',
         backgroundRepeat: 'no-repeat !important'
       },
-      '& .UnstableSCMediaFile-display-background-portrait': {
+      '& .UnstableSCMediaFile-background-portrait': {
         backgroundSize: 'contain !important',
         backgroundPosition: 'center !important',
         backgroundRepeat: 'no-repeat !important'
       },
-      '& .UnstableSCMediaFile-display-height-one': {
+      '& .UnstableSCMediaFile-height-one': {
         width: '100%',
         paddingTop: '99%'
       },
-      '& .UnstableSCMediaFile-display-height-half-one': {
+      '& .UnstableSCMediaFile-height-half-one': {
         paddingTop: '50%'
       },
-      '& .UnstableSCMediaFile-display-height-two': {
+      '& .UnstableSCMediaFile-height-two': {
         width: '50%',
         paddingTop: '50%'
       },
-      '& .UnstableSCMediaFile-display-height-three': {
+      '& .UnstableSCMediaFile-height-three': {
         width: '33.3333%',
         paddingTop: '33.3333%'
       },
-      '& .UnstableSCMediaFile-display-cover': {
+      '& .UnstableSCMediaFile-cover': {
         backgroundColor: 'rgba(102,102,102,0.2)',
         opacity: 0.8,
         position: 'absolute',
@@ -42,7 +42,7 @@ const Component = {
         left: 0,
         bottom: 0
       },
-      '& .UnstableSCMediaFile-display-cover-text': {
+      '& .UnstableSCMediaFile-cover-text': {
         right: 0,
         left: 0,
         bottom: 0,
@@ -60,14 +60,14 @@ const Component = {
           transform: 'translate(-50%, -50%)'
         }
       },
-      '& .UnstableSCMediaFile-display-slide': {
+      '& .UnstableSCMediaFile-slide': {
         height: 0,
         bottom: '100%',
         overflow: 'hidden',
         fontSize: '3%',
         color: '#FFF'
       },
-      '& .UnstableSCMediaFile-display-border': {
+      '& .UnstableSCMediaFile-border': {
         position: 'relative',
         border: '2px solid #FFF',
         '&:hover > div': {
@@ -78,20 +78,21 @@ const Component = {
           top: '66%'
         }
       },
-      '& .UnstableSCMediaFile-display-gallery': {
+      '& .UnstableSCMediaFile-gallery': {
         cursor: 'pointer'
       },
-      '& .UnstableSCMediaFile-display-title .MuiTypography-root': {
+      '& .UnstableSCMediaFile-title .MuiTypography-root': {
         color: '#FFF',
         backgroundColor: theme.palette.getContrastText('#FFF'),
         opacity: 0.6
       },
-      '& .UnstableSCMediaFile-display-icon-file': {
+      '& .UnstableSCMediaFile-icon-file': {
         fontSize: 14,
         position: 'relative',
         top: 2
       }
     }),
+    lightboxRoot: ({theme}: any) => ({}),
     previewRoot: ({theme}: any) => ({
       '& > div': {
         display: 'flex',
@@ -147,9 +148,11 @@ const Component = {
         }
       }
     }),
+    triggerRoot: ({theme}: any) => ({}),
     triggerDrawerRoot: ({theme}: any) => ({
       zIndex: 1300
-    })
+    }),
+    triggerMenuRoot: ({theme}: any) => ({})
   }
 };
 

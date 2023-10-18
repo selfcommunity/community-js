@@ -31,43 +31,26 @@ import classNames from 'classnames';
 import { useThemeProps } from '@mui/system';
 import { parseISO } from 'date-fns';
 import { ComposerContentType } from '../../../../types/composer';
+import { PREFIX } from '../../constants';
 
 const localeMap = {
   en: enLocale,
   it: itLocale
 };
 
-const PREFIX = 'SCComposerContentPoll';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  generalError: `${PREFIX}-generalError`,
-  title: `${PREFIX}-title`,
-  choices: `${PREFIX}-choices`,
-  choiceNew: `${PREFIX}-choice-new`,
-  metadata: `${PREFIX}-metadata`
+  root: `${PREFIX}-content-poll-root`,
+  generalError: `${PREFIX}-general-error`,
+  title: `${PREFIX}-content-poll-title`,
+  choices: `${PREFIX}-content-poll-choices`,
+  choiceNew: `${PREFIX}-content-poll-choice-new`,
+  metadata: `${PREFIX}-content-poll-metadata`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  padding: theme.spacing(2),
-  [`& .${classes.generalError}`]: {
-    marginBottom: theme.spacing(2),
-    color: theme.palette.error.main
-  },
-  [`& .${classes.title}, & .${classes.choices}, & .${classes.choiceNew}, & .${classes.metadata}`]: {
-    marginBottom: theme.spacing(3)
-  },
-  [`& .${classes.choices} .MuiTextField-root`]: {
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.metadata}`]: {
-    marginTop: theme.spacing(3)
-  }
-}));
+  slot: 'ContentPollRoot'
+})(({theme}) => ({}));
 
 const messages = defineMessages({
   choicePlaceholder: {

@@ -12,8 +12,7 @@ const classes = {
 
 const Root = styled(IconButton, {
   name: PREFIX,
-  slot: 'TriggerRoot',
-  overridesResolver: (props, styles) => styles.triggerRoot
+  slot: 'TriggerRoot'
 })(() => ({}));
 
 export default ({className, ...rest}: IconButtonProps): ReactElement => {
