@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.334](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.333...@selfcommunity/react-ui@0.7.0-alpha.334) (2023-10-16)
+
+
+### Bug Fixes
+
+* editor mentions plugin ([89a3e34](https://github.com/selfcommunity/community-js/commit/89a3e3486df3c2fcdac15365d2c412c1ee221dc0))
+
+
+
+
+
+# [0.7.0-alpha.333](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.332...@selfcommunity/react-ui@0.7.0-alpha.333) (2023-10-16)
+
+
+### Bug Fixes
+
+* editor mentions plugin ([de82ca8](https://github.com/selfcommunity/community-js/commit/de82ca83589a26defe481d7e887bc08cb75a724d))
+* editor mentions plugin ([3b9ff05](https://github.com/selfcommunity/community-js/commit/3b9ff059660f238177ac353bb2595d2323844891))
+* editor mentions plugin ([99a8aa8](https://github.com/selfcommunity/community-js/commit/99a8aa833863f8deb59cb261a08d2af6f7c22f10))
+
+
+
+
+
+# [0.7.0-alpha.332](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.331...@selfcommunity/react-ui@0.7.0-alpha.332) (2023-10-16)
+
+
+### Bug Fixes
+
+* commentsFeedObject ([a0aa237](https://github.com/selfcommunity/community-js/commit/a0aa237143cbe2bed37ddabf8c61bb6560a62d14))
+* scrollIntoView ([5750ace](https://github.com/selfcommunity/community-js/commit/5750aceef6d0f38dc27c9f169566158a17a017b2))
+
+
+
+
+
 # [0.7.0-alpha.331](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.330...@selfcommunity/react-ui@0.7.0-alpha.331) (2023-10-16)
 
 

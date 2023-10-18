@@ -910,6 +910,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               {(template === SCFeedObjectTemplateType.DETAIL || expandedActivities) && (
                 <Box className={classes.replyContent}>
                   <CommentObjectReplyComponent
+                    id={`reply-feedObject-${obj.id}`}
                     onReply={handleReply}
                     editable={!isReplying || Boolean(obj)}
                     key={Number(isReplying)}

@@ -62,7 +62,7 @@ const templateContainerFixed = (args) => {
 	return (<div>
 		<Button id={'testButton'} color='info' variant='contained' size='small' style={{position: 'absolute', top: 20, left: 25}}
 						onClick={handleRefresh}>Refresh</Button>
-		<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1000, maxWidth: '100% !important', height: '92vh', overflow: 'auto'}} id="scrollableDiv">
+		<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1, maxWidth: '100% !important', height: '92vh', overflow: 'auto'}} id="scrollableDiv">
 			<Feed {...args} ref={feedRef} scrollableTargetId={'scrollableDiv'} />
 		</div>
 	</div>);

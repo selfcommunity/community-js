@@ -49,7 +49,7 @@ const template = (args) => (
 );
 
 const templateContainerFixed = (args) => (
-	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
+	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
 		<CommentsFeedObject {...args} />
 	</div>);
 

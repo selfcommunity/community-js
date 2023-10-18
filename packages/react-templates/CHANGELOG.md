@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.326](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.325...@selfcommunity/react-templates@0.3.0-alpha.326) (2023-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.325](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.324...@selfcommunity/react-templates@0.3.0-alpha.325) (2023-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.324](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.323...@selfcommunity/react-templates@0.3.0-alpha.324) (2023-10-16)
+
+
+### Bug Fixes
+
+* scrollIntoView ([5750ace](https://github.com/selfcommunity/community-js/commit/5750aceef6d0f38dc27c9f169566158a17a017b2))
+
+
+
+
+
 # [0.3.0-alpha.323](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.322...@selfcommunity/react-templates@0.3.0-alpha.323) (2023-10-16)
 
 
