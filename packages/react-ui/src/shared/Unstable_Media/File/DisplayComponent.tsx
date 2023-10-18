@@ -54,22 +54,13 @@ export interface ImagePreviewComponentProps {
    */
   gallery?: boolean;
   /**
-   * Component adornments
-   * @default null
-   */
-  adornment?: React.ReactNode;
-  /**
-   * Handles on click
-   */
-  onClick?: (any) => void;
-  /**
    * Handles on media click
    */
   onMediaClick?: (any) => void;
 }
 export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {className = '', medias = [], maxVisible = 5, gallery = true, adornment = null, onClick = null, onMediaClick = null} = props;
+  const {className = '', medias = [], maxVisible = 5, gallery = true, onMediaClick = null} = props;
 
   // STATE
   const [preview, setPreview] = useState(-1);
@@ -282,7 +273,6 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.displayRoot, className)}>
-      {adornment}
       {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
       {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
       {imagesToShow.length >= 4 && renderThree()}

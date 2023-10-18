@@ -136,7 +136,7 @@ const Component = {
             top: theme.spacing(0.5)
           }
         },
-        '&:has(> :last-child:nth-child(1)) .UnstableSCMediaFile-media': {
+        '&:has(> :last-child:nth-of-type(1)) .UnstableSCMediaFile-media': {
           width: '100%',
           flexBasis: '100%',
           height: 220,

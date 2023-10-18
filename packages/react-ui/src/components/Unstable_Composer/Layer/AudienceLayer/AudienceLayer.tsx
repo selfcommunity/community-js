@@ -50,7 +50,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
 
   // STATE
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
-  const [audience, setAudience] = useState<string>(defaultValue === null ? AUDIENCE_ALL : AUDIENCE_TAG);
+  const [audience, setAudience] = useState<string>(defaultValue === null || defaultValue.length === 0 ? AUDIENCE_ALL : AUDIENCE_TAG);
   const [value, setValue] = useState<SCTagType[]>(defaultValue || undefined);
 
   // HOOKS

@@ -185,7 +185,7 @@ const Component = {
             '& .MuiTypography-root': {
               fontSize: '1.143rem'
             },
-            '&:nth-last-child(1)': {
+            '&:nth-last-of-type(1)': {
               color: theme.palette.error.main
             }
           }
@@ -206,10 +206,10 @@ const Component = {
           color: theme.palette.common.white,
           backgroundColor: theme.palette.common.black
         },
-        '&:nth-child(1)': {
+        '&:nth-of-type(1)': {
           paddingLeft: theme.spacing(4)
         },
-        '&:nth-last-child(1)': {
+        '&:nth-last-of-type(1)': {
           paddingRight: theme.spacing(4)
         }
       }

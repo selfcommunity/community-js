@@ -278,7 +278,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         type: 'multiple',
         value: {
           id: _feedObject.id,
-          type: _feedObject.type,
+          type: _feedObject.poll ? COMPOSER_TYPE_POLL : feedObject.type,
           title: _feedObject.title,
           html: _feedObject.html,
           categories: _feedObject.categories,
@@ -532,7 +532,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     let url = Endpoints.Composer.url({type: _type});
     let method = Endpoints.Composer.method;
     if (editMode) {
-      url = Endpoints.ComposerEdit.url({type, id});
+      url = Endpoints.ComposerEdit.url({type: feedObjectType ? feedObjectType : _type, id});
       method = Endpoints.ComposerEdit.method;
     }
 
@@ -554,7 +554,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
       })
       .then(() => setIsSubmitting(false));
-  }, [scUserContext.user, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]);
+  }, [scUserContext.user, feedObjectType, id, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]);
 
   const handleClose = useCallback((event: SyntheticEvent): void => {
     if (unloadRef.current) {
@@ -696,7 +696,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Icon>category</Icon>
           </IconButton>
           <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
-            {addressing === null ? <Icon>public</Icon> : <Icon>label</Icon>}
+            {addressing === null || addressing.length === 0 ? <Icon>public</Icon> : <Icon>label</Icon>}
           </IconButton>
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>

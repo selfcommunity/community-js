@@ -1,16 +1,12 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {SCMediaObjectType} from '../../types/media';
-import {useSCMediaClick} from '@selfcommunity/react-core';
+import { SCMediaObjectType, UnstableSCMediaObjectType } from '../../types/media';
+import { useSCMediaClick } from '@selfcommunity/react-core';
 import { BoxProps } from '@mui/material';
 import { SCMediaType } from '@selfcommunity/types/src/types';
-import Link from '../../shared/Media/Link';
-import Share from '../../shared/Media/Share';
-import Image from '../../shared/Media/Image';
-import Document from '../../shared/Media/Document';
 import { useThemeProps } from '@mui/system';
-import { ComposerIconButtonProps } from '../Unstable_ComposerIconButton';
+import { File, Link, Share } from '../../shared/Unstable_Media';
 
 const PREFIX = 'UnstableSCFeedObjectMediaPreview';
 
@@ -28,7 +24,7 @@ export interface FeedObjectMediaPreviewProps extends BoxProps {
    * Media types
    * @default 'image', 'document', 'link', 'share'
    */
-  mediaObjectTypes?: SCMediaObjectType[];
+  mediaObjectTypes?: UnstableSCMediaObjectType[];
 }
 export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
   //PROPS
@@ -36,7 +32,7 @@ export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
     props: inProps,
     name: PREFIX
   });
-  const {medias, mediaObjectTypes = [Image, Document, Link, Share], ...rest} = props;
+  const {medias, mediaObjectTypes = [File, Link, Share], ...rest} = props;
   const {handleMediaClick} = useSCMediaClick();
 
   if (!medias.length) {
@@ -54,11 +50,11 @@ export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
    */
   return (
     <Root {...rest}>
-      {mediaObjectTypes.map((mediaObject: SCMediaObjectType) => {
-        const {previewProps = {}} = mediaObject;
+      {mediaObjectTypes.map((mediaObject: UnstableSCMediaObjectType) => {
+        const {displayProps = {}} = mediaObject;
         return (
           <div key={mediaObject.name}>
-            <mediaObject.previewComponent medias={medias.filter(mediaObject.filter)} {...previewProps} onMediaClick={handleMediaClick} />
+            <mediaObject.displayComponent medias={medias} {...displayProps} onMediaClick={handleMediaClick} />
           </div>
         );
       })}

@@ -115,10 +115,7 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
     return file.type.startsWith('image/') || file.type === 'application/pdf';
   }, []);
   const handleSuccess = useCallback((media: SCMediaType) => {
-    console.log('success');
-    console.log(media);
     onAdd && onAdd(media);
-    console.log(media);
   }, [onAdd]);
   const handleProgress = useCallback((chunks: any) => {
     console.log(chunks);
@@ -158,7 +155,7 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
       ];
     } else {
       return [
-        <GalleryUploadMenuItem extraProps={{className: classes.item}} inputFieldName="image">
+        <GalleryUploadMenuItem extraProps={{className: classes.item}} inputFieldName="image" key="gallery">
           <FormattedMessage id="ui.unstable_composer.media.file.gallery" defaultMessage="ui.unstable_composer.media.file.gallery" />
         </GalleryUploadMenuItem>,
         <DocumentUploadMenuItem extraProps={{className: classes.item}} key="document" inputFieldName="document">

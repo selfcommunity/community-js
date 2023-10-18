@@ -17,7 +17,7 @@ import FeedObjectSkeleton, { FeedObjectSkeletonProps } from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import MediasPreview, { MediaPreviewProps } from '../../shared/MediasPreview';
+import MediasPreview from '../../shared/MediasPreview';
 import Actions, { ActionsProps } from './Actions';
 import Icon from '@mui/material/Icon';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
@@ -64,6 +64,7 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import { MAX_SUMMARY_LENGTH } from '../../constants/Feed';
 import Unstable_Composer from '../Unstable_Composer';
+import Unstable_FeedObjectMediaPreview, { FeedObjectMediaPreviewProps } from '../Unstable_FeedObjectMediaPreview';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -228,7 +229,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
    * Props to spread to MediasPreview component
    * @default {}
    */
-  MediasPreviewProps?: MediaPreviewProps;
+  FeedObjectMediaPreviewProps?: FeedObjectMediaPreviewProps;
 
   /**
    * Props to spread to PollObject component
@@ -365,7 +366,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ContributionActionsMenuProps = {},
-    MediasPreviewProps = {},
+    FeedObjectMediaPreviewProps = {},
     ActivitiesProps = {cacheStrategy},
     PollObjectProps = {elevation: 0},
     ContributorsFeedObjectProps = {},
@@ -865,7 +866,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
+                <Unstable_FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (
@@ -1012,7 +1013,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
+                <MediasPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (
