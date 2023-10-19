@@ -14,6 +14,7 @@ const Component = {
           }
         },
         '& .SCBaseItem-image': {
+          marginTop: theme.spacing(0.2),
           '& .MuiBadge-badge': {
             top: theme.spacing(1.25)
           },

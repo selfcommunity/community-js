@@ -2,7 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .MuiCardContent-root': {
-        padding: theme.spacing(2, 3, 2, 3)
+        padding: theme.spacing(2)
       },
       '& .SCLoyaltyProgramWidget-title': {
         fontWeight: theme.typography.fontWeightBold,

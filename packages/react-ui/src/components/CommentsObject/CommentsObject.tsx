@@ -43,28 +43,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  boxShadow: 'none',
-  position: 'relative',
-  display: 'flex',
-  flexWrap: 'wrap',
-  width: '100%',
-  [`& .${classes.loadNextCommentsButton}`]: {
-    textTransform: 'initial'
-  },
-  [`& .${classes.loadPreviousCommentsButton}`]: {
-    textTransform: 'initial'
-  },
-  [`& .${classes.commentsCounter}`]: {
-    paddingRight: theme.spacing()
-  },
-  [`& .${classes.pagination}`]: {
-    width: '100%'
-  },
-  [`& .${classes.paginationLink}`]: {
-    display: 'none'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CommentsObjectProps {
   /**

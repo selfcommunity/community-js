@@ -12,7 +12,8 @@ const Component = {
         height: `${theme.spacing(1.75)} !important`
       },
       '.MuiBadge-badge': {
-        right: theme.spacing(0)
+        right: theme.spacing(0.2),
+        top: theme.spacing(0.9)
       }
     })
   }

@@ -69,6 +69,7 @@ const classes = {
   tag: `${PREFIX}-tag`,
   location: `${PREFIX}-location`,
   content: `${PREFIX}-content`,
+  showMore: `${PREFIX}-show-more`,
   error: `${PREFIX}-error`,
   titleSection: `${PREFIX}-title-section`,
   title: `${PREFIX}-title`,
@@ -707,7 +708,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               />
             </Link>
             {!expanded && summaryHtmlTruncated && (
-              <Button size="small" variant="text" color="inherit" onClick={handleToggleSummary}>
+              <Button size="small" variant="text" color="inherit" className={classes.showMore} onClick={handleToggleSummary}>
                 <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
               </Button>
             )}
@@ -734,7 +735,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               }}
             />
             {!expanded && summaryHtmlTruncated && (
-              <Button size="small" variant="text" color="inherit" onClick={handleToggleSummary}>
+              <Button size="small" variant="text" color="inherit" className={classes.showMore} onClick={handleToggleSummary}>
                 <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
               </Button>
             )}

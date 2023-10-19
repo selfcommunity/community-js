@@ -61,7 +61,16 @@ const Root = styled(Widget, {
     objectFit: 'fill'
   },
   [`& .${classes.title}`]: {
-    padding: '4px 16px'
+    padding: `${theme.spacing(2)}`,
+    paddingBottom: `${theme.spacing()}`,
+    paddingTop: 0
+  },
+  [`& .${classes.media}`]: {
+    paddingBottom: `${theme.spacing(2)}`
+  },
+  [`& .${classes.content}`]: {
+    padding: theme.spacing(2),
+    paddingTop: 0
   },
   [`& .${classes.listItemSnippet}`]: {
     padding: '0px 5px',
@@ -209,16 +218,22 @@ export default function Message(props: MessageProps): JSX.Element {
           <Typography variant="h6">{banner.title}</Typography>
         </CardContent>
         {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
-        <CardContent className={classes.content}>
-          <Typography variant="body2" color="text.secondary">
-            {banner.body_text}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <a href={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
-              {banner.link_text}
-            </a>
-          </Typography>
-        </CardContent>
+        {(banner.body_text || banner.link_text) && (
+          <CardContent className={classes.content}>
+            {banner.body_text && (
+              <Typography variant="body1" color="text.secondary">
+                {banner.body_text}
+              </Typography>
+            )}
+            {banner.link_text && (
+              <Typography variant="body1" color="text.secondary">
+                <a href={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
+                  {banner.link_text}
+                </a>
+              </Typography>
+            )}
+          </CardContent>
+        )}
       </>
     );
   };
