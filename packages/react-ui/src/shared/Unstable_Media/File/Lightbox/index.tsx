@@ -1,8 +1,14 @@
-import React from 'react';
-import {styled} from '@mui/material/styles';
+import React, { useCallback } from 'react';
+import { styled } from '@mui/material/styles';
 import BaseLightbox from '../../../Lightbox';
 import { SCMediaType } from '@selfcommunity/types/src/types';
 import { PREFIX } from '../constants';
+import { MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE } from '../../../../constants/Media';
+import { DataType } from '../../../../types/lightbox';
+import { Button, IconButton } from '@mui/material';
+import { Link } from '@selfcommunity/react-core';
+import { OverlayRenderProps } from 'react-photo-view/dist/types';
+import Icon from '@mui/material/Icon';
 
 const classes = {
   root: `${PREFIX}-lightbox-root`
@@ -44,16 +50,18 @@ export default function Lightbox(props: LightboxProps) {
   // PROPS
   const {medias = [], index = 0, onClose, onIndexChange, ...rest} = props;
 
-  /**
-   * Gets image url
-   * @param image
-   */
-  function getImageUrl(image) {
-    if (typeof image === 'object') {
-      return image.image ? image.image : '/static/frontend_v2/images/image.svg';
+  const mediaToDataTypeMap = useCallback((media: SCMediaType, index): DataType => {
+    return {src: media.image, width: media.image_width, height: media.image_height, key: index};
+  }, []);
+
+  const toolbarRender = useCallback((props: OverlayRenderProps): React.ReactNode => {
+    if (medias[props.index].type === MEDIA_TYPE_DOCUMENT) {
+      return <IconButton component={Link} to={medias[props.index].url} target="_blank" color="inherit">
+        <Icon>download</Icon>
+      </IconButton>
     }
-    return image;
-  }
+    return <></>;
+  }, [medias]);
 
   /**
    * Renders root object
@@ -62,11 +70,12 @@ export default function Lightbox(props: LightboxProps) {
     <Root
       {...rest}
       className={classes.root}
-      images={medias.map((item, index) => ({src: getImageUrl(item), key: index}))}
+      images={medias.map(mediaToDataTypeMap)}
       visible={index !== -1}
       onClose={onClose}
       index={index}
       onIndexChange={onIndexChange}
+      toolbarRender={toolbarRender}
     />
   );
 }

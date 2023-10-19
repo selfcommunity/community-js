@@ -137,7 +137,8 @@ const Component = {
         ['& .PhotoView-Slider__BannerRight']: {
           alignItems: 'center',
           display: 'flex',
-          height: '100%'
+          height: '100%',
+          color: '#FFF'
         },
         ['& .PhotoView-Slider__toolbarIcon']: {
           fill: '#fff',

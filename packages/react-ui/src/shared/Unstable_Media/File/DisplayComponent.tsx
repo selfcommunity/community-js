@@ -84,23 +84,12 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const openPreviewImage = useCallback((index) => {
-    if (_medias[index].type === MEDIA_TYPE_DOCUMENT) {
-        if (index >= MAX_GRID_IMAGES - 1) {
-          // Open the post/discussion
-          // history.push(url(threadType, {id: thread.id, slug: thread.slug})());
-        } else if (_medias[index].url) {
-          // Open file in target blank
-          let win = window.open(_medias[index].url, '_blank');
-          win.focus();
-        }
-    } else {
-      if (gallery === false) {
-        // Prevent gallery
-        return;
-      }
-
-      setPreview(index);
+    if (gallery === false) {
+      // Prevent gallery
+      return;
     }
+
+    setPreview(index);
 
     onMediaClick(_medias[index]);
   }, [_medias]);

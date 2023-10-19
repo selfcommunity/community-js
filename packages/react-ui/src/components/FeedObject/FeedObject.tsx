@@ -17,7 +17,6 @@ import FeedObjectSkeleton, { FeedObjectSkeletonProps } from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import MediasPreview from '../../shared/MediasPreview';
 import Actions, { ActionsProps } from './Actions';
 import Icon from '@mui/material/Icon';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
@@ -1013,7 +1012,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <MediasPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
+                <Unstable_FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (
