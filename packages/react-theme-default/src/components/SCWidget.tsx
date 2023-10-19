@@ -27,7 +27,7 @@ const Component = {
         borderRadius: 0
       },
       '& .MuiCardContent-root': {
-        padding: theme.spacing(3),
+        padding: theme.spacing(2.2),
         '& h5': {
           fontFamily: theme.typography.fontFamily,
           fontWeight: theme.typography.fontWeightBold,
@@ -36,7 +36,10 @@ const Component = {
         },
         '& .MuiList-root': {
           paddingTop: theme.spacing(2),
-          paddingBottom: theme.spacing(2),
+          paddingBottom: 0,
+          '& .MuiListItem-root:first-of-type': {
+            paddingTop: 0
+          },
           '& .MuiListItem-root': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -55,9 +58,8 @@ const Component = {
           paddingTop: theme.spacing(2)
         },
         '& > .MuiButton-sizeMedium': {
-          marginLeft: theme.spacing(-2),
-          paddingLeft: theme.spacing(2),
-          paddingRight: theme.spacing(2),
+					marginTop: theme.spacing(1),
+          padding: theme.spacing(0),
           color: theme.palette.secondary.main
         }
       }
