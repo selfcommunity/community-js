@@ -3,17 +3,17 @@ import { alpha } from '@mui/system';
 const Component = {
   styleOverrides: {
     displayRoot: ({theme}: any) => ({
-      '& .UnstableSCMediaLink-link': {
+      '& .SCMediaLink-link': {
         position: 'relative',
         backgroundColor: '#F5F5F5',
         margin: theme.spacing(1, 0),
         padding: theme.spacing(1)
       },
-      '& .UnstableSCMediaLink-video': {
+      '& .SCMediaLink-video': {
         margin: '10px 0px',
         height: 360
       },
-      '& .UnstableSCMediaLink-thumbnail': {
+      '& .SCMediaLink-thumbnail': {
         border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
         borderRadius: theme.shape.borderRadius * 0.75,
         paddingTop: theme.spacing(1),
@@ -24,7 +24,7 @@ const Component = {
           float: 'left'
         }
       },
-      '& .UnstableSCMediaLink-image': {
+      '& .SCMediaLink-image': {
         backgroundSize: 'contain !important',
         backgroundPosition: 'center !important',
         backgroundRepeat: 'no-repeat !important',
@@ -32,10 +32,10 @@ const Component = {
         paddingBottom: 120
       },
 
-      '& .UnstableSCMediaLink-snippet': {
+      '& .SCMediaLink-snippet': {
         padding: theme.spacing(2),
-        '& .UnstableSCMediaLink-snippet-title': {},
-        '& .UnstableSCMediaLink-snippet-description': {
+        '& .SCMediaLink-snippet-title': {},
+        '& .SCMediaLink-snippet-description': {
           fontSize: '0.857rem'
         },
         '& a': {
@@ -45,17 +45,17 @@ const Component = {
       }
     }),
     layerRoot: ({theme}: any) => ({
-      '& .UnstableSCMediaLink-content': {
+      '& .SCMediaLink-content': {
         '& form button[type=submit]': {
           fontWeight: theme.typography.fontWeightBold
         }
       }
     }),
     previewRoot: ({theme}: any) => ({
-      '& .UnstableSCMediaLink-media': {
+      '& .SCMediaLink-media': {
         position: 'relative',
         margin: theme.spacing(1),
-        '& .UnstableSCMediaLink-delete': {
+        '& .SCMediaLink-delete': {
           position: 'absolute',
           right: theme.spacing(2),
           top: theme.spacing(2)

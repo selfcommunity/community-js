@@ -1,1 +1,1 @@
-export const PREFIX = 'UnstableSCMediaLink';
+export const PREFIX = 'SCMediaLink';

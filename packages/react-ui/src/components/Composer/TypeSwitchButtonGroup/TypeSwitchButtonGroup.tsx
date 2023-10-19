@@ -54,13 +54,13 @@ export default function ComposerTypeButtonGroup(props: ComposerTypeButtonGroupPr
 
   return <Root className={classNames(classes.root, className)} onChange={handleChange} exclusive value={value} {...rest}>
     {hasPostType && <ToggleButton value={COMPOSER_TYPE_POST}>
-      <FormattedMessage id="ui.unstable_composer.typeSwitch.post" defaultMessage="ui.unstable_composer.typeSwitch.post" />
+      <FormattedMessage id="ui.composer.typeSwitch.post" defaultMessage="ui.composer.typeSwitch.post" />
     </ToggleButton>}
     {hasDiscussionType && <ToggleButton value={COMPOSER_TYPE_DISCUSSION}>
-      <FormattedMessage id="ui.unstable_composer.typeSwitch.discussion" defaultMessage="ui.unstable_composer.typeSwitch.discussion" />
+      <FormattedMessage id="ui.composer.typeSwitch.discussion" defaultMessage="ui.composer.typeSwitch.discussion" />
     </ToggleButton>}
     {hasPollType && <ToggleButton value={COMPOSER_TYPE_POLL}>
-      <FormattedMessage id="ui.unstable_composer.typeSwitch.poll" defaultMessage="ui.unstable_composer.typeSwitch.poll" />
+      <FormattedMessage id="ui.composer.typeSwitch.poll" defaultMessage="ui.composer.typeSwitch.poll" />
     </ToggleButton>}
   </Root>
 }

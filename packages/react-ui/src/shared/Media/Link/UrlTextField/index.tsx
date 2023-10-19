@@ -173,8 +173,8 @@ export default (props: UrlTextFieldProps): JSX.Element => {
         helperText={
           helperText ||
           (urlError && (
-            <FormattedMessage id={`ui.unstable_composer.media.link.add.error.${urlError}`} defaultMessage={`ui.unstable_composer.media.link.add.error.${urlError}`} />
-          )) || <FormattedMessage id="ui.unstable_composer.media.link.add.help" defaultMessage="ui.unstable_composer.media.link.add.help" />
+            <FormattedMessage id={`ui.composer.media.link.add.error.${urlError}`} defaultMessage={`ui.composer.media.link.add.error.${urlError}`} />
+          )) || <FormattedMessage id="ui.composer.media.link.add.help" defaultMessage="ui.composer.media.link.add.help" />
         }
         disabled={isCreating}
         {...rest}
@@ -183,7 +183,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
             <InputAdornment position="end">
               <Fade in={urlError === null && url !== ''}>
                 <IconButton size="small" disabled={isCreating} type="submit">
-                  {isCreating ? <CircularProgress color="primary" size={20} /> : <FormattedMessage id="ui.unstable_composer.media.link.add.submit" defaultMessage="ui.unstable_composer.media.link.add.submit" />}
+                  {isCreating ? <CircularProgress color="primary" size={20} /> : <FormattedMessage id="ui.composer.media.link.add.submit" defaultMessage="ui.composer.media.link.add.submit" />}
                 </IconButton>
               </Fade>
             </InputAdornment>

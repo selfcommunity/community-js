@@ -1,1 +1,1 @@
-export const PREFIX = 'UnstableSCComposer';
+export const PREFIX = 'SCComposer';

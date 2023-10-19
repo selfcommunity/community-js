@@ -55,31 +55,31 @@ const MenuRoot = styled(Menu, {
 const PhotoUploadListItemButton = asUploadButton(
   forwardRef((props: ListItemButtonProps, ref: any) => (
     <ListItemButton {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'image/*', capture: 'true'}
+  )), {accept: 'image/*', capture: 'camera'}
 );
 
 const GalleryUploadListItemButton = asUploadButton(
   forwardRef((props: ListItemButtonProps, ref: any) => (
     <ListItemButton {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'image/*', capture: 'false'}
+  )), {accept: 'image/*'}
 );
 
 const DocumentUploadListItemButton = asUploadButton(
   forwardRef((props: ListItemButtonProps, ref: any) => (
     <ListItemButton {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'application/pdf', capture: 'false'}
+  )), {accept: 'application/pdf'}
 );
 
 const GalleryUploadMenuItem = asUploadButton(
   forwardRef((props: MenuItemProps, ref: any) => (
     <MenuItem {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'image/*', capture: 'false'}
+  )), {accept: 'image/*'}
 );
 
 const DocumentUploadMenuItem = asUploadButton(
   forwardRef((props: MenuItemProps, ref: any) => (
     <MenuItem {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'application/pdf', capture: 'false'}
+  )), {accept: 'application/pdf'}
 );
 
 export interface TriggerIconButtonProps extends IconButtonProps {
@@ -139,27 +139,27 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
       return [
         <ListItem className={classes.item} key="photo">
           <PhotoUploadListItemButton inputFieldName="image">
-            <FormattedMessage id="ui.unstable_composer.media.file.photo" defaultMessage="ui.unstable_composer.media.file.photo" />
+            <FormattedMessage id="ui.composer.media.file.photo" defaultMessage="ui.composer.media.file.photo" />
           </PhotoUploadListItemButton>
         </ListItem>,
         <ListItem className={classes.item} key="gallery">
           <GalleryUploadListItemButton inputFieldName="image">
-            <FormattedMessage id="ui.unstable_composer.media.file.gallery" defaultMessage="ui.unstable_composer.media.file.gallery" />
+            <FormattedMessage id="ui.composer.media.file.gallery" defaultMessage="ui.composer.media.file.gallery" />
           </GalleryUploadListItemButton>
         </ListItem>,
         <ListItem className={classes.item} key="document">
             <DocumentUploadListItemButton inputFieldName="document">
-              <FormattedMessage id="ui.unstable_composer.media.file.document" defaultMessage="ui.unstable_composer.media.file.document" />
+              <FormattedMessage id="ui.composer.media.file.document" defaultMessage="ui.composer.media.file.document" />
             </DocumentUploadListItemButton>
         </ListItem>
       ];
     } else {
       return [
         <GalleryUploadMenuItem extraProps={{className: classes.item}} inputFieldName="image" key="gallery">
-          <FormattedMessage id="ui.unstable_composer.media.file.gallery" defaultMessage="ui.unstable_composer.media.file.gallery" />
+          <FormattedMessage id="ui.composer.media.file.gallery" defaultMessage="ui.composer.media.file.gallery" />
         </GalleryUploadMenuItem>,
         <DocumentUploadMenuItem extraProps={{className: classes.item}} key="document" inputFieldName="document">
-          <FormattedMessage id="ui.unstable_composer.media.file.document" defaultMessage="ui.unstable_composer.media.file.document" />
+          <FormattedMessage id="ui.composer.media.file.document" defaultMessage="ui.composer.media.file.document" />
         </DocumentUploadMenuItem>
       ];
     }

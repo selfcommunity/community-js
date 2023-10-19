@@ -126,10 +126,9 @@ import SCAccountReset from './components/SCAccountReset';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountVerify from './components/SCAccountVerify';
 import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
-import UnstableSCComposer from './components/UnstableSCComposer';
-import UnstableSCMediaLink from './components/UnstableSCMediaLink';
-import UnstableSCMediaFile from './components/UnstableSCMediaFile';
-import UnstableSCInlineComposerWidget from './components/UnstableSCInlineComposerWidget';
+import SCComposer from './components/SCComposer';
+import SCMediaLink from './components/SCMediaLink';
+import SCMediaFile from './components/SCMediaFile';
 
 /**
  * Style fragments - Imports - End
@@ -223,7 +222,7 @@ const theme = {
     SCCommentObjectVotes,
     SCCommentsFeedObject,
     SCCommentsObject,
-    UnstableSCComposer,
+    SCComposer,
     SCCategoryAutocomplete,
     SCContributionNotification,
     SCContributorsFeedObject,
@@ -247,14 +246,13 @@ const theme = {
     SCFollowAction,
     SCFooter,
     SCInlineComposerWidget,
-    UnstableSCInlineComposerWidget,
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetailTemplate,
     SCLoyaltyProgramWidgetSkeleton,
     SCLoyaltyProgramDetailTemplateSkeleton,
-    UnstableSCMediaFile,
-    UnstableSCMediaLink,
+    SCMediaFile,
+    SCMediaLink,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarSkeleton,

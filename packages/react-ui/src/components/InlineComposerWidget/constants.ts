@@ -1,1 +1,1 @@
-export const PREFIX = 'UnstableSCInlineComposerWidget';
+export const PREFIX = 'SCInlineComposerWidget';

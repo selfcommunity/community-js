@@ -6,7 +6,7 @@ import type { UploadOptions } from "@rpldy/shared";
 import { UploadButtonProps } from '@rpldy/upload-button';
 
 type FileInputProps = {
-  capture: string,
+  capture?: string,
   accept: string,
 };
 
@@ -22,7 +22,11 @@ const asUploadButton = (Component: ComponentType<any>, InputProps: FileInputProp
     const onButtonClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
       const input = getInternalFileInput();
       input.current.accept = InputProps.accept;
-      input.current.capture = InputProps.capture;
+      if (InputProps.capture) {
+        input.current.capture = InputProps.capture;
+      } else {
+        input.current.removeAttribute('capture');
+      }
       showFileUpload(uploadOptionsRef.current);
       onClick?.(e);
     }, [getInternalFileInput, showFileUpload, uploadOptionsRef, onClick]);

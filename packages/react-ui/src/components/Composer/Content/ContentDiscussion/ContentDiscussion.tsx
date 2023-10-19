@@ -95,7 +95,7 @@ export default (props: ContentDiscussionProps): JSX.Element => {
       {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
       <TextField
         className={classes.title}
-        placeholder={intl.formatMessage({id: "ui.unstable_composer.content.discussion.title.label", defaultMessage: "ui.unstable_composer.content.discussion.title.label"})}
+        placeholder={intl.formatMessage({id: "ui.composer.content.discussion.title.label", defaultMessage: "ui.composer.content.discussion.title.label"})}
         autoFocus
         fullWidth
         variant="outlined"

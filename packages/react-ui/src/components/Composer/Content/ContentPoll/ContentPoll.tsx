@@ -54,8 +54,8 @@ const Root = styled(Box, {
 
 const messages = defineMessages({
   choicePlaceholder: {
-    id: 'ui.unstable_composer.content.poll.choice.placeholder',
-    defaultMessage: 'ui.unstable_composer.content.poll.choice.placeholder'
+    id: 'ui.composer.content.poll.choice.placeholder',
+    defaultMessage: 'ui.composer.content.poll.choice.placeholder'
   }
 });
 
@@ -171,7 +171,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
         <TextField
           autoFocus
           disabled={disabled}
-          label={<FormattedMessage id="ui.unstable_composer.content.poll.title" defaultMessage="ui.unstable_composer.content.poll.title" />}
+          label={<FormattedMessage id="ui.composer.content.poll.title" defaultMessage="ui.composer.content.poll.title" />}
           variant="outlined"
           value={poll.title}
           onChange={handleChangeTitle}
@@ -204,9 +204,9 @@ export default (inProps: ContentPollProps): JSX.Element => {
                     <Tooltip
                       title={
                         poll.choices.length <= COMPOSER_POLL_MIN_CHOICES ? (
-                          <FormattedMessage id="ui.unstable_composer.content.poll.choice.delete.disabled" defaultMessage="ui.unstable_composer.content.poll.choice.delete.disabled" />
+                          <FormattedMessage id="ui.composer.content.poll.choice.delete.disabled" defaultMessage="ui.composer.content.poll.choice.delete.disabled" />
                         ) : (
-                          <FormattedMessage id="ui.unstable_composer.content.poll.choice.delete" defaultMessage="ui.unstable_composer.content.poll.choice.delete" />
+                          <FormattedMessage id="ui.composer.content.poll.choice.delete" defaultMessage="ui.composer.content.poll.choice.delete" />
                         )
                       }>
                       <span>
@@ -225,19 +225,19 @@ export default (inProps: ContentPollProps): JSX.Element => {
       <Box className={classes.choiceNew}>
         <Button color="inherit" variant="text" onClick={handleAddChoice}>
           <Icon>add</Icon>
-          <FormattedMessage id="ui.unstable_composer.content.poll.choice.add" defaultMessage="ui.unstable_composer.choice.add" />
+          <FormattedMessage id="ui.composer.content.poll.choice.add" defaultMessage="ui.composer.choice.add" />
         </Button>
       </Box>
       <Divider />
       <FormGroup className={classes.metadata}>
         <FormControlLabel
           control={<Checkbox checked={poll.multiple_choices} onChange={handleChangeMultiple} />}
-          label={<FormattedMessage id="ui.unstable_composer.content.poll.multiple" defaultMessage="ui.unstable_composer.content.poll.multiple" />}
+          label={<FormattedMessage id="ui.composer.content.poll.multiple" defaultMessage="ui.composer.content.poll.multiple" />}
         />
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={localeMap[intl.locale]}>
           <DatePicker
             disabled={disabled}
-            label={<FormattedMessage id="ui.unstable_composer.content.poll.expiration" defaultMessage="ui.unstable_composer.content.poll.expiration" />}
+            label={<FormattedMessage id="ui.composer.content.poll.expiration" defaultMessage="ui.composer.content.poll.expiration" />}
             value={typeof poll.expiration_at === 'string' ? parseISO(poll.expiration_at) : poll.expiration_at}
             onChange={handleChangeExpiration}
             slotProps={{textField: {variant: 'outlined'}}}

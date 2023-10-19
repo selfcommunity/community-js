@@ -44,7 +44,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
     defaultValue= [],
     TextFieldProps = {
       variant: 'outlined',
-      label: <FormattedMessage id="ui.unstable_composer.layer.audience.tags.label" defaultMessage="ui.unstable_composer.layer.audience.tags.label" />
+      label: <FormattedMessage id="ui.composer.layer.audience.tags.label" defaultMessage="ui.composer.layer.audience.tags.label" />
     },
     ...rest} = props;
 
@@ -70,10 +70,10 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
         <Icon>arrow_back</Icon>
       </IconButton>
       <Typography>
-        <FormattedMessage id="ui.unstable_composer.layer.audience.title" defaultMessage="ui.unstable_composer.layer.audience.title" />
+        <FormattedMessage id="ui.composer.layer.audience.title" defaultMessage="ui.composer.layer.audience.title" />
       </Typography>
       <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
-        <FormattedMessage id="ui.unstable_composer.layer.save" defaultMessage="ui.unstable_composer.layer.save" />
+        <FormattedMessage id="ui.composer.layer.save" defaultMessage="ui.composer.layer.save" />
       </Button>
     </DialogTitle>
     <DialogContent className={classes.content}>
@@ -81,20 +81,20 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
         <Tab
           value={AUDIENCE_ALL}
           icon={<Icon>public</Icon>}
-          label={<FormattedMessage id="ui.unstable_composer.layer.audience.all" defaultMessage="ui.unstable_composer.layer.audience.all" />}
+          label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
         />
         <Tab
           value={AUDIENCE_TAG}
           icon={<Icon>label</Icon>}
-          label={<FormattedMessage id="ui.unstable_composer.layer.audience.tag" defaultMessage="ui.unstable_composer.layer.audience.tag" />}
+          label={<FormattedMessage id="ui.composer.layer.audience.tag" defaultMessage="ui.composer.layer.audience.tag" />}
         />
       </Tabs>
       <Typography className={classes.message}>
         {audience === AUDIENCE_ALL && (
-          <FormattedMessage id="ui.unstable_composer.layer.audience.all.message" defaultMessage="ui.unstable_composer.audience.layer.all.message" />
+          <FormattedMessage id="ui.composer.layer.audience.all.message" defaultMessage="ui.composer.audience.layer.all.message" />
         )}
         {audience === AUDIENCE_TAG && (
-          <FormattedMessage id="ui.unstable_composer.layer.audience.tag.message" defaultMessage="ui.unstable_composer.audience.layer.tag.message" />
+          <FormattedMessage id="ui.composer.layer.audience.tag.message" defaultMessage="ui.composer.audience.layer.tag.message" />
         )}
       </Typography>
       {audience === AUDIENCE_TAG && <Autocomplete
@@ -110,7 +110,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
         clearOnBlur
         handleHomeEndKeys
         clearIcon={null}
-        noOptionsText={<FormattedMessage id="ui.unstable_composer.layer.audience.tags.empty" defaultMessage="ui.unstable_composer.layer.audience.tags.empty" />}
+        noOptionsText={<FormattedMessage id="ui.composer.layer.audience.tags.empty" defaultMessage="ui.composer.layer.audience.tags.empty" />}
         onChange={handleChange}
         isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value.id === option.id}
         renderTags={(value, getTagProps) => {

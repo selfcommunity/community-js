@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import InlineComposerWidget, { InlineComposerWidgetProps } from './index';
 
 export default {
-  title: 'Design System/React UI Unstable/Inline Composer Widget',
+  title: 'Design System/React UI /Inline Composer Widget',
   component: InlineComposerWidget
 } as Meta<typeof InlineComposerWidget>;
 

@@ -1,9 +1,8 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Box, BoxProps, Button, DialogTitle, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { SCMediaType } from '@selfcommunity/types/src/index';
-import { useThemeProps } from '@mui/system';
 import Icon from '@mui/material/Icon';
 import DialogContent from '@mui/material/DialogContent';
 import classNames from 'classnames';
@@ -11,7 +10,6 @@ import { ComposerLayerProps } from '../../../types/composer';
 import { PREFIX } from './constants';
 import PreviewComponent from './PreviewComponent';
 import UrlTextField from './UrlTextField';
-import filter from './filter';
 
 const classes = {
   layerRoot: `${PREFIX}-layer-root`,
@@ -48,10 +46,10 @@ const LayerComponent = React.forwardRef((props: LayerComponentProps, ref: React.
         <Icon>arrow_back</Icon>
       </IconButton>
       <Typography>
-        <FormattedMessage id="ui.unstable_composer.media.link.layer.title" defaultMessage="ui.unstable_composer.media.link.layer.title" />
+        <FormattedMessage id="ui.composer.media.link.layer.title" defaultMessage="ui.composer.media.link.layer.title" />
       </Typography>
-      <Button size="small" color="primary" variant="contained" onClick={handleSave}>
-        <FormattedMessage id="ui.unstable_composer.layer.save" defaultMessage="ui.unstable_composer.layer.save" />
+      <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
+        <FormattedMessage id="ui.composer.layer.save" defaultMessage="ui.composer.layer.save" />
       </Button>
     </DialogTitle>
     <DialogContent className={classes.content}>

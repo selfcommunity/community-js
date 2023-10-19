@@ -9,7 +9,7 @@ import { useThemeProps } from '@mui/system';
 import { File, Link, Share } from '../../shared/Media';
 import classNames from 'classnames';
 
-const PREFIX = 'UnstableSCFeedObjectMediaPreview';
+const PREFIX = 'SCFeedObjectMediaPreview';
 
 const classes = {
   root: `${PREFIX}-root`

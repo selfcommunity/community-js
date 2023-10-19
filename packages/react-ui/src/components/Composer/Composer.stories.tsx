@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Composer, { ComposerProps } from './index';
 
 export default {
-  title: 'Design System/React UI Unstable/Composer',
+  title: 'Design System/React UI /Composer',
   component: Composer
 } as Meta<typeof Composer>;
 

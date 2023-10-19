@@ -42,10 +42,10 @@ const CategoryLayer = React.forwardRef((props: CategoryLayerProps, ref: React.Re
         <Icon>arrow_back</Icon>
       </IconButton>
       <Typography>
-        <FormattedMessage id="ui.unstable_composer.layer.category.title" defaultMessage="ui.unstable_composer.layer.category.title" />
+        <FormattedMessage id="ui.composer.layer.category.title" defaultMessage="ui.composer.layer.category.title" />
       </Typography>
       <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
-        <FormattedMessage id="ui.unstable_composer.layer.save" defaultMessage="ui.unstable_composer.layer.save" />
+        <FormattedMessage id="ui.composer.layer.save" defaultMessage="ui.composer.layer.save" />
       </Button>
     </DialogTitle>
     <DialogContent className={classes.content}>

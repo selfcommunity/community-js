@@ -8,32 +8,32 @@ const Component = {
       [theme.breakpoints.down('md')]: {
         minHeight: 170
       },
-      '& .UnstableSCMediaFile-background': {
+      '& .SCMediaFile-background': {
         backgroundSize: 'cover !important',
         backgroundPosition: 'center !important',
         backgroundRepeat: 'no-repeat !important'
       },
-      '& .UnstableSCMediaFile-background-portrait': {
+      '& .SCMediaFile-background-portrait': {
         backgroundSize: 'contain !important',
         backgroundPosition: 'center !important',
         backgroundRepeat: 'no-repeat !important'
       },
-      '& .UnstableSCMediaFile-height-one': {
+      '& .SCMediaFile-height-one': {
         width: '100%',
         paddingTop: '99%'
       },
-      '& .UnstableSCMediaFile-height-half-one': {
+      '& .SCMediaFile-height-half-one': {
         paddingTop: '50%'
       },
-      '& .UnstableSCMediaFile-height-two': {
+      '& .SCMediaFile-height-two': {
         width: '50%',
         paddingTop: '50%'
       },
-      '& .UnstableSCMediaFile-height-three': {
+      '& .SCMediaFile-height-three': {
         width: '33.3333%',
         paddingTop: '33.3333%'
       },
-      '& .UnstableSCMediaFile-cover': {
+      '& .SCMediaFile-cover': {
         backgroundColor: 'rgba(102,102,102,0.2)',
         opacity: 0.8,
         position: 'absolute',
@@ -42,7 +42,7 @@ const Component = {
         left: 0,
         bottom: 0
       },
-      '& .UnstableSCMediaFile-cover-text': {
+      '& .SCMediaFile-cover-text': {
         right: 0,
         left: 0,
         bottom: 0,
@@ -60,14 +60,14 @@ const Component = {
           transform: 'translate(-50%, -50%)'
         }
       },
-      '& .UnstableSCMediaFile-slide': {
+      '& .SCMediaFile-slide': {
         height: 0,
         bottom: '100%',
         overflow: 'hidden',
         fontSize: '3%',
         color: '#FFF'
       },
-      '& .UnstableSCMediaFile-border': {
+      '& .SCMediaFile-border': {
         position: 'relative',
         border: '2px solid #FFF',
         '&:hover > div': {
@@ -78,15 +78,15 @@ const Component = {
           top: '66%'
         }
       },
-      '& .UnstableSCMediaFile-gallery': {
+      '& .SCMediaFile-gallery': {
         cursor: 'pointer'
       },
-      '& .UnstableSCMediaFile-title .MuiTypography-root': {
+      '& .SCMediaFile-title .MuiTypography-root': {
         color: '#FFF',
         backgroundColor: theme.palette.getContrastText('#FFF'),
         opacity: 0.6
       },
-      '& .UnstableSCMediaFile-icon-file': {
+      '& .SCMediaFile-icon-file': {
         fontSize: 14,
         position: 'relative',
         top: 2
@@ -105,7 +105,7 @@ const Component = {
         '&::-webkit-scrollbar': {
           display: 'none'
         },
-        '& .UnstableSCMediaFile-media': {
+        '& .SCMediaFile-media': {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           position: 'relative',
@@ -116,7 +116,7 @@ const Component = {
           flexBasis: 120,
           flexGrow: 0,
           flexShrink: 0,
-          '& .UnstableSCMediaFile-title': {
+          '& .SCMediaFile-title': {
             position: 'absolute',
             left: theme.spacing(1),
             top: theme.spacing(1),
@@ -130,18 +130,18 @@ const Component = {
             overflow: 'hidden',
             whiteSpace: 'nowrap'
           },
-          '& .UnstableSCMediaFile-delete': {
+          '& .SCMediaFile-delete': {
             position: 'absolute',
             right: theme.spacing(0.5),
             top: theme.spacing(0.5)
           }
         },
-        '&:has(> :last-child:nth-of-type(1)) .UnstableSCMediaFile-media': {
+        '&:has(> :last-child:nth-of-type(1)) .SCMediaFile-media': {
           width: '100%',
           flexBasis: '100%',
           height: 220,
           margin: theme.spacing(0.5, 0),
-          '& .UnstableSCMediaFile-title': {
+          '& .SCMediaFile-title': {
             fontSize: '1rem',
             maxWidth: 200
           }

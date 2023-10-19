@@ -356,7 +356,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ...content,
         pollError:
           content.poll.title.length > COMPOSER_TITLE_MAX_LENGTH
-            ? {titleError: <FormattedMessage id="ui.unstable_composer.title.error.maxlength" defaultMessage="ui.unstable_composer.title.error.maxlength" />}
+            ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
             : null
       }
     });
@@ -369,7 +369,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ...content,
         titleError:
           content.title.length > COMPOSER_TITLE_MAX_LENGTH ? (
-            <FormattedMessage id="ui.unstable_composer.title.error.maxlength" defaultMessage="ui.unstable_composer.title.error.maxlength" />
+            <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
           ) : null
       }
     });
@@ -574,9 +574,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       return (
         <Alert severity="error" onClose={handleClose}>
           <AlertTitle>
-            <FormattedMessage id="ui.unstable_composer.edit.error.title" defaultMessage="ui.unstable_composer.edit.error.title" />
+            <FormattedMessage id="ui.composer.edit.error.title" defaultMessage="ui.composer.edit.error.title" />
           </AlertTitle>
-          <FormattedMessage id="ui.unstable_composer.edit.error.content" defaultMessage="ui.unstable_composer.edit.error.content" />
+          <FormattedMessage id="ui.composer.edit.error.content" defaultMessage="ui.composer.edit.error.content" />
         </Alert>
       );
     }
@@ -633,7 +633,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Icon>close</Icon>
           </IconButton>
           <LoadingButton size="small" type="submit" color="secondary" variant="contained" disabled={!canSubmit} loading={isSubmitting}>
-            <FormattedMessage id="ui.unstable_composer.submit" defaultMessage="ui.unstable_composer.submit" />
+            <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
           </LoadingButton>
         </DialogTitle>
         <DialogContent className={classes.content}>

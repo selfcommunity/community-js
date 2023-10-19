@@ -19,7 +19,7 @@ import Composer, {ComposerProps} from '../Composer';
 import {SnackbarKey, useSnackbar} from 'notistack';
 import {getRouteData} from '../../utils/contribution';
 
-const PREFIX = 'UnstableSCComposerIconButton';
+const PREFIX = 'SCComposerIconButton';
 
 const classes = {
   root: `${PREFIX}-root`

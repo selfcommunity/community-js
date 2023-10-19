@@ -52,7 +52,7 @@ const Component = {
             }
           }
         },
-        '& .UnstableSCComposer-types': {
+        '& .SCComposer-types': {
           position: 'absolute',
           zIndex: 2,
           bottom: theme.spacing(7),
@@ -73,7 +73,7 @@ const Component = {
           backgroundColor: theme.palette.background.paper,
           borderTop: `1px solid ${theme.palette.grey[400]}`
         },
-        '& .UnstableSCComposer-general-error': {
+        '& .SCComposer-general-error': {
           marginBottom: theme.spacing(2),
           color: theme.palette.error.main
         },
@@ -96,7 +96,7 @@ const Component = {
     }),
     attributesRoot: ({theme}: any) => ({}),
     contentDiscussionRoot: ({theme}: any) => ({
-      '& .UnstableSCComposer-content-discussion-title': {
+      '& .SCComposer-content-discussion-title': {
         paddingBottom: theme.spacing(2),
         '& .MuiInputBase-root': {
           paddingLeft: 0,
@@ -121,13 +121,13 @@ const Component = {
     }),
     contentPollRoot: ({theme}: any) => ({
       padding: theme.spacing(2),
-      '& .UnstableSCComposer-content-poll-title, & .UnstableSCComposer-content-poll-choices, & .UnstableSCComposer-content-poll-choice-new, & .UnstableSCComposer-content-poll-metadata': {
+      '& .SCComposer-content-poll-title, & .SCComposer-content-poll-choices, & .SCComposer-content-poll-choice-new, & .SCComposer-content-poll-metadata': {
         marginBottom: theme.spacing(3)
       },
-      '& .UnstableSCComposer-content-poll-choices .MuiTextField-root': {
+      '& .SCComposer-content-poll-choices .MuiTextField-root': {
         marginBottom: theme.spacing()
       },
-      '& .UnstableSCComposer-content-poll-metadata': {
+      '& .SCComposer-content-poll-metadata': {
         marginTop: theme.spacing(3)
       }
     }),
@@ -160,14 +160,14 @@ const Component = {
           }
         }
       },
-      '& .UnstableSCComposer-layer-audience-message': {
+      '& .SCComposer-layer-audience-message': {
         textAlign: 'center',
         marginBottom: theme.spacing(4)
       }
     }),
     layerCategoryRoot: ({theme}: any) => ({}),
     layerCloseRoot: ({theme}: any) => ({
-      '& .UnstableSCComposer-layer-content': {
+      '& .SCComposer-layer-content': {
         '& .MuiTypography-root': {
           textAlign: 'center'
         },
