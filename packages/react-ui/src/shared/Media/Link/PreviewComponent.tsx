@@ -1,122 +1,58 @@
-import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import LazyLoad from 'react-lazyload';
-import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
-import AutoPlayer from '../../AutoPlayer';
-import Box from '@mui/material/Box';
-import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
-import Skeleton from '@mui/material/Skeleton';
+import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import { Box, BoxProps, IconButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { SCMediaType } from '@selfcommunity/types/src/index';
+import { useThemeProps } from '@mui/system';
+import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
-
-const PREFIX = 'SCPreviewMediaLink';
+import { ReactSortable } from 'react-sortablejs';
+import DisplayComponent from './DisplayComponent';
+import { PREFIX } from './constants';
+import filter from './filter';
 
 const classes = {
-  previewLink: `${PREFIX}-preview-link`,
-  previewVideo: `${PREFIX}-preview-video`,
-  thumbnail: `${PREFIX}-thumbnail`,
-  thumbnailFullWidth: `${PREFIX}-thumbnail`,
-  image: `${PREFIX}-image`,
-  snippet: `${PREFIX}-snippet`,
-  snippetTitle: `${PREFIX}-snippet-title`,
-  snippetDescription: `${PREFIX}-snippet-description`
+  previewRoot: `${PREFIX}-preview-root`,
+  media: `${PREFIX}-media`,
+  delete: `${PREFIX}-delete`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'PreviewRoot'
+})(() => ({}));
 
-export interface LinkPreviewProps {
-  /**
-   * Medias
-   */
-  medias: any[];
-  /**
-   * Handle full width option
-   * @default false
-   */
-  fullWidth?: boolean;
-  /**
-   * Component adornments
-   * @default null
-   */
-  adornment?: React.ReactNode;
-  /**
-   * Handles on media click
-   */
-  onMediaClick?: (any) => void;
+export interface PreviewComponentProps extends Omit<BoxProps, 'value' | 'onChange'> {
+  onChange: (value: SCMediaType[]) => void;
+  value: SCMediaType[];
 }
-export default (props: LinkPreviewProps): JSX.Element => {
+
+const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: React.Ref<unknown>): ReactElement => {
   // PROPS
-  const {medias, fullWidth = false, adornment = null, onMediaClick = null} = props;
+  const {className, onChange, value= [], ...rest} = props;
+
+  // MEMO
+  const medias = useMemo(() => value.filter(filter), [value]);
 
   // HANDLERS
-  const handleLinkClick = (link) => {
-    onMediaClick && onMediaClick(link);
-  };
+  const handleSort = useCallback((medias: SCMediaType[]) => {
+    onChange && onChange([...value.filter((media: any) => medias.findIndex((m: any) => m.id === media.id) === -1), ...medias]);
+  }, [onChange]);
+  const handleDelete = useCallback((id: number) => () => onChange && onChange(value.filter((media: SCMediaType) => media.id !== id)), [onChange, value]);
 
-  // RENDER
+  return <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>
+    {medias.length > 0 && (
+      <ReactSortable list={medias} setList={handleSort}>
+        {medias.map((media) => (
+          <Box key={media.id} className={classes.media}>
+            <DisplayComponent medias={[media]} />
+            <IconButton className={classes.delete} onClick={handleDelete(media.id)} size="small">
+              <Icon>delete</Icon>
+            </IconButton>
+          </Box>
+        ))}
+      </ReactSortable>
+    )}
+  </Root>
+});
 
-  /**
-   * Renders link preview
-   * @param (link)
-   * @param(key)
-   */
-  const renderPreview = (link, key) => {
-    const domain = new URL(link.embed.metadata.url).hostname.replace('www.', '');
-    return (
-      <Box className={classes.previewLink} key={key}>
-        {link.embed.metadata.images && link.embed.metadata.images.length > 0 && (
-          <>
-            {fullWidth ? (
-              <Box
-                className={classNames(classes.thumbnailFullWidth, classes.image)}
-                style={{background: `url(${link.image})`, paddingBottom: `${100 / link.image_width / link.image_height}%`}}
-              />
-            ) : (
-              <Box className={classNames(classes.thumbnail, classes.image)} style={{background: `url(${link.image})`}} />
-            )}
-          </>
-        )}
-        <Box className={classes.snippet}>
-          <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
-          <br />
-          <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
-          <a href={link.embed.metadata.url} target={'_blank'} onClick={() => handleLinkClick(link)}>
-            {domain}
-          </a>
-        </Box>
-        <div style={{clear: 'both'}}></div>
-      </Box>
-    );
-  };
-
-  /**
-   * Renders component
-   */
-  return (
-    <>
-      {medias.length > 0 && (
-        <Root>
-          {adornment}
-          {medias.map((l, i) => {
-            if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-              return (
-                <LazyLoad
-                  className={classes.previewVideo}
-                  placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
-                  key={i}
-                  once
-                  offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-                  <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />
-                </LazyLoad>
-              );
-            }
-            return <React.Fragment key={i}>{renderPreview(l, i)}</React.Fragment>;
-          })}
-        </Root>
-      )}
-    </>
-  );
-};
+export default PreviewComponent;

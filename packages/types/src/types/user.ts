@@ -108,7 +108,7 @@ export interface SCUserType {
    *    - follow/unfollow a category
    *    - unfollow user
    */
-  status: string;
+  status?: string;
 
   /**
    * User website.
@@ -208,7 +208,7 @@ export interface SCUserType {
   /**
    *  User role
    */
-  role: string;
+  role?: string;
 
   /**
    * interactions counter
@@ -229,6 +229,11 @@ export interface SCUserType {
    * Datetime of the account deletion
    */
   deleted_at?: Date;
+
+  /**
+   * Custom user metadata fields
+   */
+  [p:string]: any;
 }
 
 /**

@@ -10,7 +10,6 @@ import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCEditor from './components/SCEditor';
 import SCCommentsObject from './components/SCCommentsObject';
 import SCCommentsFeedObject from './components/SCCommentsFeedObject';
-import SCComposer from './components/SCComposer';
 import SCBroadcastMessages from './components/SCBroadcastMessages';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCScrollContainer from './components/SCScrollContainer';
@@ -54,7 +53,6 @@ import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import MuiAutocomplete from './components/MuiAutocomplete';
-import SCComposerPoll from './components/SCComposerPoll';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
 import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
@@ -128,7 +126,9 @@ import SCAccountReset from './components/SCAccountReset';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountVerify from './components/SCAccountVerify';
 import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
-import SCNavigationToolbarMobileSkeleton from './components/SCNavigationToolbarMobileSkeleton';
+import SCComposer from './components/SCComposer';
+import SCMediaLink from './components/SCMediaLink';
+import SCMediaFile from './components/SCMediaFile';
 
 /**
  * Style fragments - Imports - End
@@ -224,7 +224,6 @@ const theme = {
     SCCommentsObject,
     SCComposer,
     SCCategoryAutocomplete,
-    SCComposerPoll,
     SCContributionNotification,
     SCContributorsFeedObject,
     SCContributionActionsMenu,
@@ -252,11 +251,12 @@ const theme = {
     SCLoyaltyProgramDetailTemplate,
     SCLoyaltyProgramWidgetSkeleton,
     SCLoyaltyProgramDetailTemplateSkeleton,
+    SCMediaFile,
+    SCMediaLink,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarSkeleton,
     SCNavigationToolbarMobile,
-    SCNavigationToolbarMobileSkeleton,
     SCNotification,
     SCNotificationItem,
     SCNotificationsMenu,

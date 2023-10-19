@@ -28,13 +28,37 @@ const Component = {
             textTransform: 'none'
           }
         },
-        '& .SCInlineComposerWidget-actions': {
+        '& .SCInlineComposerWidget-avatar': {
           display: 'flex',
-          '& .MuiIconButton-root': {
-            [theme.breakpoints.up('sm')]: {
-              marginLeft: 2,
-              marginRight: 2
-            }
+          alignItems: 'center',
+          [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(2)
+          },
+          '& .MuiAvatar-root': {
+            width: theme.selfcommunity.user.avatar.sizeMedium,
+            height: theme.selfcommunity.user.avatar.sizeMedium
+          }
+        }
+      }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      marginBottom: theme.spacing(2),
+      '& .SCInlineComposerWidget-content, & .SCInlineComposerWidget-content:last-child': {
+        padding: theme.spacing(0.5, 1),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        [theme.breakpoints.up('sm')]: {
+          padding: theme.spacing(0.5, 1, 0.5, 2)
+        },
+        '& .SCInlineComposerWidget-input': {
+          display: 'flex',
+          flexGrow: 2,
+          height: 30,
+          width: '80%',
+          '& .MuiSkeleton-root': {
+            width: '100%',
+            height: '100%'
           }
         },
         '& .SCInlineComposerWidget-avatar': {
@@ -43,7 +67,7 @@ const Component = {
           [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(2)
           },
-          '& .MuiAvatar-root': {
+          '& .MuiSkeleton-root': {
             width: theme.selfcommunity.user.avatar.sizeMedium,
             height: theme.selfcommunity.user.avatar.sizeMedium
           }

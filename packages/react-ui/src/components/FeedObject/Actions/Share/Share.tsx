@@ -1,21 +1,30 @@
-import React, {useContext, useMemo, useState} from 'react';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import React, { useContext, useMemo, useState } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import {
+  Box,
+  Button,
+  Divider,
+  ListItemText,
+  Menu,
+  SwipeableDrawer,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Composer from '../../../Composer';
-import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
-import {SCOPE_SC_UI} from '../../../../constants/Errors';
+import { MEDIA_TYPE_SHARE } from '../../../../constants/Media';
+import { SCOPE_SC_UI } from '../../../../constants/Errors';
 import classNames from 'classnames';
-import {useSnackbar} from 'notistack';
+import { useSnackbar } from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
+import { SCContributionType, SCFeedObjectType, SCMediaType } from '@selfcommunity/types';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
+import { copyTextToClipboard, Logger } from '@selfcommunity/utils';
 import {
   SCContextType,
   SCPreferences,
@@ -28,12 +37,12 @@ import {
   useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/react-core';
-import {useThemeProps} from '@mui/system';
-import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
-import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from '../../../../constants/SocialShare';
-import {GET_CONTRIBUTION_PERMALINK} from '../../../../constants/ContributionsActionsMenu';
+import { useThemeProps } from '@mui/system';
+import { getContributionRouteName, getRouteData } from '../../../../utils/contribution';
+import { FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE } from '../../../../constants/SocialShare';
+import Composer from '../../../Composer';
 
 const messages = defineMessages({
   shares: {
@@ -411,7 +420,6 @@ export default function Share(inProps: ShareProps): JSX.Element {
                 onSuccess={handleComposerOnSuccess}
                 maxWidth="sm"
                 fullWidth
-                scroll="body"
               />
             )}
           </React.Fragment>

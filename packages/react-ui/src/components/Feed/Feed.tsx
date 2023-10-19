@@ -1,40 +1,57 @@
 // @ts-nocheck
-import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  ReactNode,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Link,
   SCCache,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
-  useSCFetchFeed,
-  usePreviousValue,
   useIsComponentMountedRef,
-  SCThemeType
+  usePreviousValue,
+  useSCFetchFeed,
 } from '@selfcommunity/react-core';
-import {styled, useTheme} from '@mui/material/styles';
-import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
-import {GenericSkeleton} from '../Skeleton';
-import {SCFeedWidgetType} from '../../types/feed';
-import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
-import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
+import { styled, useTheme } from '@mui/material/styles';
+import { Box, CardContent, Grid, Hidden, Theme, useMediaQuery } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
+import { GenericSkeleton } from '../Skeleton';
+import { SCFeedWidgetType } from '../../types/feed';
+import CustomAdv, { CustomAdvProps } from '../CustomAdv';
+import { SCCustomAdvPosition, SCFeedUnitType, SCUserType } from '@selfcommunity/types';
+import { EndpointType, SCPaginatedResponse } from '@selfcommunity/api-services';
+import { CacheStrategies, getQueryStringParameter, updateQueryStringParameter } from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {useThemeProps} from '@mui/system';
+import { useThemeProps } from '@mui/system';
 import Widget from '../Widget';
-import InfiniteScroll, {InfiniteScrollProps} from '../../shared/InfiniteScroll';
-import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
-import {DEFAULT_WIDGETS_NUMBER, WIDGET_PREFIX_KEY} from '../../constants/Feed';
-import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
-import {widgetSort} from '../../utils/feed';
+import InfiniteScroll from '../../shared/InfiniteScroll';
+import VirtualizedScroller, {
+  VirtualizedScrollerCommonProps,
+  VirtualScrollChild,
+} from '../../shared/VirtualizedScroller';
+import { DEFAULT_WIDGETS_NUMBER, WIDGET_PREFIX_KEY } from '../../constants/Feed';
+import {
+  DEFAULT_PAGINATION_LIMIT,
+  DEFAULT_PAGINATION_OFFSET,
+  DEFAULT_PAGINATION_QUERY_PARAM_NAME,
+} from '../../constants/Pagination';
+import { widgetSort } from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import StickyBoxComp, { StickyBoxProps } from '../../shared/StickyBox';
 
 const PREFIX = 'SCFeed';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactElement } from 'react';
 
 /**
  * Interface MediaObject
@@ -12,22 +12,27 @@ export interface SCMediaObjectType {
   /**
    * The component used to display media
    */
-  previewComponent: React.ElementType;
+  displayComponent: (props: any) => ReactElement;
 
   /**
    * Hook for insert custom props to preview component
    */
-  previewProps?: any;
+  displayProps?: any;
 
   /**
    * The button used to trigger the action
    */
-  editButton: React.ElementType | null;
+  triggerButton: (props: any) => ReactElement;
+
+  /**
+   * The component used to preview the list of media of this type in the composer
+   */
+  previewComponent: (props: any) => ReactElement;
 
   /**
    * The component used to interact with the list of media of this type
    */
-  editComponent: React.ElementType | null;
+  layerComponent: (props: any) => ReactElement;
 
   /**
    * The function used to filter media objects for rendering purpose

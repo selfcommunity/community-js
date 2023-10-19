@@ -6,6 +6,7 @@ export const loadVersionBrowser = () => {
   if ('userAgentData' in navigator) {
     // navigator.userAgentData is not available in
     // Firefox and Safari
+    // @ts-ignore
     const uaData: Array<any> = navigator['userAgentData'];
     // Outputs of navigator.userAgentData.brands[n].brand are e.g.
     // Chrome: 'Google Chrome'

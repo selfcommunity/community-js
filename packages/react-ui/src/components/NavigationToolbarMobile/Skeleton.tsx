@@ -2,18 +2,16 @@ import React from 'react';
 import {Toolbar} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-
-const PREFIX = 'SCNavigationToolbarMobileSkeleton';
+import { PREFIX } from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   logo: `${PREFIX}-logo`
 };
 
 const Root = styled(Toolbar, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'SkeletonRoot'
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Navigation Toolbar Mobile Skeleton component. Learn about the available props and the CSS API.
