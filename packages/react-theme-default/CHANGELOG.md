@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.287](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.286...@selfcommunity/react-theme-default@0.1.0-alpha.287) (2023-10-19)
+
+
+### Bug Fixes
+
+* broadcast message ([d1e988a](https://github.com/selfcommunity/community-js/commit/d1e988aa887bc02074c6202b788ebd2484623aa8))
+* padding FeedObject ([132c981](https://github.com/selfcommunity/community-js/commit/132c9814d8455277f8282d21c302aac0413e5d13))
+* sidebar widget padding ([fe17493](https://github.com/selfcommunity/community-js/commit/fe174937f7a23b03d7f0d4ac8540bf269e104e0b))
+
+
+
+
+
 # [0.1.0-alpha.286](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.285...@selfcommunity/react-theme-default@0.1.0-alpha.286) (2023-10-16)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.335](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.334...@selfcommunity/react-ui@0.7.0-alpha.335) (2023-10-19)
+
+
+### Bug Fixes
+
+* broadcast message ([d1e988a](https://github.com/selfcommunity/community-js/commit/d1e988aa887bc02074c6202b788ebd2484623aa8))
+* padding FeedObject ([132c981](https://github.com/selfcommunity/community-js/commit/132c9814d8455277f8282d21c302aac0413e5d13))
+
+
+
+
+
 # [0.7.0-alpha.334](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.333...@selfcommunity/react-ui@0.7.0-alpha.334) (2023-10-16)
 
 
