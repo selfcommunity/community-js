@@ -1,5 +1,5 @@
-import {Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
-import React, {useMemo, useState} from 'react';
+import { Button, IconButton, styled, Toolbar, ToolbarProps } from '@mui/material';
+import React, { useCallback, useState } from 'react';
 import {
   Link,
   SCPreferences,
@@ -9,27 +9,25 @@ import {
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
-  useSCUser
+  useSCUser,
 } from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
-import {useThemeProps} from '@mui/system';
+import { useThemeProps } from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarMobileSkeleton from './Skeleton';
-import {FormattedMessage} from 'react-intl';
-import {SearchAutocompleteProps} from '../SearchAutocomplete';
+import { FormattedMessage } from 'react-intl';
+import { SearchAutocompleteProps } from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
-import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
-import ComposerIconButton from '../ComposerIconButton';
+import NavigationSettingsIconButton, { NavigationSettingsIconButtonProps } from '../NavigationSettingsIconButton';
 import NavigationMenuIconButton from '../NavigationMenuIconButton';
+import { PREFIX } from './constants';
 
-const PREFIX = 'SCNavigationToolbarMobile';
 
 const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
   search: `${PREFIX}-search`,
   searchDialog: `${PREFIX}-search-dialog`,
-  composer: `${PREFIX}-composer`,
   settings: `${PREFIX}-settings`,
   settingsDialog: `${PREFIX}-settings-dialog`,
   login: `${PREFIX}-login`
@@ -37,8 +35,7 @@ const classes = {
 
 const Root = styled(Toolbar, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 export interface NavigationToolbarMobileProps extends ToolbarProps {
@@ -46,10 +43,6 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    * Disable search action if possible
    */
   disableSearch?: boolean;
-  /**
-   * Disable composer action if possible
-   */
-  disableComposer?: boolean;
   /**
    * Props spread to SearchAutocomplete component
    */
@@ -68,7 +61,6 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
   NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
 }
 
-const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPreferences.LOGO_NAVBAR_LOGO_MOBILE];
 
 /**
  * > API documentation for the Community-JS Navigation Toolbar Mobile component. Learn about the available props and the CSS API.
@@ -96,7 +88,6 @@ const PREFERENCES = [SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY, SCPrefer
  |logo|.SCNavigationToolbarMobile-logo|Styles applied to the logo element.|
  |search|.SCNavigationToolbarMobile-search|Styles applied to the search button element|
  |searchDialog|.SCNavigationToolbarMobile-search-dialog|Styles applied to the search dialog element|
- |composer|.SCNavigationToolbarMobile-composer|Styles applied to the composer component|
  |settings|.SCNavigationToolbarMobile-settings|Styles applied to the settings button element|
  |settingsDialog|.SCNavigationToolbarMobile-settingsDialog|Styles applied to the settings dialog elements|
  |login|.SCNavigationToolbarMobile-login|Styles applied to the login element.|
@@ -112,7 +103,6 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const {
     className = '',
     disableSearch = false,
-    disableComposer = false,
     SearchAutocompleteProps = {},
     children = null,
     startActions = null,
@@ -126,23 +116,18 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferences.preferences]);
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
   // HANDLERS
-  const handleOpenSearch = () => {
+  const handleOpenSearch = useCallback(() => {
     setSearchOpen(true);
-  };
-  const handleCloseSearch = () => {
+  }, []);
+  const handleCloseSearch = useCallback(() => {
     setSearchOpen(false);
-  };
+  }, []);
 
   // RENDER
   if (scUserContext.loading) {
@@ -153,7 +138,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     <>
       <NavigationMenuIconButton />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
-        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} alt="logo" />
+        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
       </Link>
     </>
   );
@@ -162,7 +147,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
       {startActions}
-      {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch && (
+      {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value || scUserContext.user) && !disableSearch && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
             <Icon>search</Icon>
@@ -174,7 +159,6 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
-      {scUserContext.user && !disableComposer && <ComposerIconButton className={classes.composer}></ComposerIconButton>}
       {endActions}
       {scUserContext.user ? (
         <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>

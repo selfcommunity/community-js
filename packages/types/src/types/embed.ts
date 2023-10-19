@@ -18,7 +18,7 @@ export interface SCEmbedType {
   /**
    * External id for the embed object
    */
-  embed_id: number;
+  embed_id: number | string;
 
   /**
    * Url for the resource, if any

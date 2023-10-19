@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import {styled} from '@mui/material/styles';
 import {Icon, IconButton, IconButtonProps} from '@mui/material';
 import {
@@ -27,9 +27,8 @@ const classes = {
 
 const Root = styled(IconButton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ComposerIconButtonProps extends IconButtonProps {
   /**
@@ -66,13 +65,13 @@ export interface ComposerIconButtonProps extends IconButtonProps {
 
  * @param inProps
  */
-export default function ComposerIconButton(inProps: ComposerIconButtonProps): JSX.Element {
+export default function ComposerIconButton(inProps: ComposerIconButtonProps): ReactElement {
   // PROPS
   const props: ComposerIconButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className = null, ComposerProps = {}, ...rest} = props;
+  const {className = null, ComposerProps = {}, onClick, ...rest} = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -84,7 +83,7 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
-  const handleOpen = useCallback(
+  const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       if (scUserContext.user) {
         if (UserUtils.isBlocked(scUserContext.user)) {
@@ -98,8 +97,9 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
       } else {
         scContext.settings.handleAnonymousAction();
       }
+      onClick && onClick(event);
     },
-    [enqueueSnackbar, scContext.settings, scUserContext.user]
+    [onClick, enqueueSnackbar, scContext.settings, scUserContext.user]
   );
 
   const handleClose = useCallback(() => {
@@ -124,10 +124,10 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): JS
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} onClick={handleOpen} {...rest}>
+      <Root className={classNames(classes.root, className)} {...rest} onClick={handleClick}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      <Composer open={open} fullWidth scroll="body" onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />
+      <Composer open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />
     </>
   );
 }

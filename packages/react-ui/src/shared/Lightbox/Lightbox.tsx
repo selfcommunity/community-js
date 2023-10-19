@@ -33,10 +33,10 @@ const Root = styled(PhotoSlider, {
 })(() => ({}));
 
 const ReactImageLightbox = (props: ReactImageLightboxProps) => {
-  const {images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarButtons = [], ...rest} = props;
+  const {images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarRender, toolbarButtons = [], ...rest} = props;
 
   // STATE
-  const [currentImages] = useState<any[]>(images || []);
+  const [currentImages] = useState<DataType[]>(images || []);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(index || 0);
 
   /**
@@ -53,7 +53,7 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
       onClose={onClose}
       afterClose={afterClose}
       loadingElement={<CircularProgress color={'primary'} />}
-      toolbarRender={() => {
+      toolbarRender={toolbarRender ? toolbarRender : () => {
         return <>{toolbarButtons}</>;
       }}
     />

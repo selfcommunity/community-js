@@ -1,12 +1,11 @@
-import React, {forwardRef, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Divider, Icon, IconButton, IconButtonProps, Drawer, DrawerProps, List, Fade} from '@mui/material';
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import { Box, Divider, Drawer, DrawerProps, Icon, IconButton, IconButtonProps, List } from '@mui/material';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
+import { useThemeProps } from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
-import {TransitionProps} from '@mui/material/transitions';
 
 const PREFIX = 'SCNavigationMenuIconButton';
 

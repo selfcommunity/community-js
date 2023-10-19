@@ -1,37 +1,21 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Box, Stack} from '@mui/material';
+import {Box, CardContent, Stack} from '@mui/material';
 import Widget from '../Widget';
-
-const PREFIX = 'SCInlineComposerWidgetSkeleton';
+import { PREFIX } from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
+  content: `${PREFIX}-content`,
   input: `${PREFIX}-input`,
-  actions: `${PREFIX}-actions`,
-  action: `${PREFIX}-action`,
   avatar: `${PREFIX}-avatar`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  padding: theme.spacing(),
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  marginBottom: theme.spacing(2),
-  [`& .${classes.input}`]: {
-    flexGrow: 2
-  },
-  [`& .${classes.actions}`]: {
-    marginLeft: 15,
-    marginRight: 15
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Inline Composer Skeleton component. Learn about the available props and the CSS API.
@@ -50,28 +34,23 @@ const Root = styled(Widget, {
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCInlineComposerWidgetSkeleton-root|Styles applied to the root element.|
- |input|.SCInlineComposerWidgetSkeleton-input|Styles applied to the input element.|
- |actions|.SCInlineComposerWidgetSkeleton-actions|Styles applied to the actions section.|
- |action|.SCInlineComposerWidgetSkeleton-action|Styles applied to the action section.|
- |avatar|.SCInlineComposerWidgetSkeleton-avatar|Styles applied to the avatar element.|
+ |root|.SCInlineComposerWidget-skeleton-root|Styles applied to the root element.|
+ |content|.SCInlineComposerWidget-content|Styles applied to the content element.|
+ |input|.SCInlineComposerWidget-input|Styles applied to the input element.|
+ |avatar|.SCInlineComposerWidget-avatar|Styles applied to the avatar element.|
  *
  */
 export default function InlineComposerWidgetSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      <Box className={classes.input}>
-        <Skeleton sx={{height: 40}} animation="wave" variant="text" />
-      </Box>
-      <Stack className={classes.actions} direction="row" justifyContent="center" alignItems="center" spacing={2}>
-        <Skeleton className={classes.action} animation="wave" variant="circular" width={27} height={27} />
-        <Skeleton className={classes.action} animation="wave" variant="circular" width={27} height={27} />
-        <Skeleton className={classes.action} animation="wave" variant="circular" width={27} height={27} />
-        <Skeleton className={classes.action} animation="wave" variant="circular" width={27} height={27} />
-      </Stack>
-      <Box className={classes.avatar}>
-        <Skeleton className={classes.avatar} animation="wave" variant="circular" width={40} height={40} />
-      </Box>
+      <CardContent className={classes.content}>
+        <Box className={classes.input}>
+          <Skeleton animation="wave" variant="text" />
+        </Box>
+        <Box className={classes.avatar}>
+          <Skeleton className={classes.avatar} animation="wave" variant="circular" />
+        </Box>
+      </CardContent>
     </Root>
   );
 }

@@ -1,4 +1,12 @@
-import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useImperativeHandle, useMemo, useRef} from 'react';
+import React, {
+  ForwardedRef,
+  forwardRef,
+  ForwardRefRenderFunction, useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import {Box, Stack, useTheme} from '@mui/material';
@@ -26,6 +34,7 @@ const PREFIX = 'SCEditor';
 
 const classes = {
   root: `${PREFIX}-root`,
+  focused: `${PREFIX}-focused`,
   toolbar: `${PREFIX}-toolbar`,
   content: `${PREFIX}-content`,
   placeholder: `${PREFIX}-placeholder`,
@@ -182,8 +191,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   } = props;
   const apiRef = useRef<ApiRef>();
 
-  // MEMO
-  const theme = useTheme<SCThemeType>();
+  // STATE
+  const [focused, setFocused] = useState<boolean>(false);
 
   // HANDLERS
   const handleChange = (value) => {
@@ -197,6 +206,15 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   const handleFocus = () => {
     apiRef.current.focus();
   };
+
+  const handleHasFocus = useCallback((event: FocusEvent) => {
+    setFocused(true);
+    onFocus && onFocus(event);
+  }, [onFocus]);
+  const handleHasBlur = useCallback((event: FocusEvent) => {
+    setFocused(false);
+    onBlur && onBlur(event);
+  }, [onBlur]);
 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({
@@ -219,7 +237,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   );
 
   return (
-    <Root id={id} className={classNames(classes.root, className, {[classes.toolbar]: toolbar})}>
+    <Root id={id} className={classNames(classes.root, className, {[classes.toolbar]: toolbar, [classes.focused]: focused})}>
       <LexicalComposer initialConfig={initialConfig}>
         {toolbar ? (
           <>
@@ -245,8 +263,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         <DefaultHtmlValuePlugin defaultValue={defaultValue} />
         <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />
-        <OnBlurPlugin onBlur={onBlur} />
-        <OnFocusPlugin onFocus={onFocus} />
+        <OnBlurPlugin onBlur={handleHasBlur} />
+        <OnFocusPlugin onFocus={handleHasFocus} />
         <AutoLinkPlugin />
         <MentionsPlugin />
         {/*<HashtagPlugin />*/}

@@ -186,9 +186,17 @@ export interface SCFeedObjectType {
   followed?: boolean;
 
   /**
+   * Number of views
+   */
+  view_count: number;
+  /**
    * Number of votes
    */
   vote_count: number;
+  /**
+   * Number of followers
+   */
+  follower_count: number;
   /**
    * Reaction obj
    */
@@ -196,7 +204,7 @@ export interface SCFeedObjectType {
   /**
    * Reactions number and objs
    */
-  reactions_count: [];
+  reactions_count: any[];
   /**
    * True if the logged user has already voted this object
    */

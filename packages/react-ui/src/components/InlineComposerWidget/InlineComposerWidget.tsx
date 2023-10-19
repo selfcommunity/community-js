@@ -1,97 +1,66 @@
-import React, {useContext, useMemo, useState} from 'react';
-import {SCCategoryType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
+import React, { useCallback, useState } from 'react';
+import { SCCategoryType, SCMediaType, SCPollType, SCTagType } from '@selfcommunity/types';
 import {
-  SCContext,
+  Link,
   SCContextType,
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
-  SCUserContext,
   SCUserContextType,
   UserUtils,
+  useSCContext,
   useSCRouting,
-  Link,
-  SCThemeType
+  useSCUser,
 } from '@selfcommunity/react-core';
-import {Avatar, Box, Button, IconButton, CardProps, CardContent} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import {SCMediaObjectType} from '../../types/media';
-import {Document, Image, Link as MediaLink} from '../../shared/Media';
-import Composer, {MAIN_VIEW, POLL_VIEW} from '../Composer';
-import Icon from '@mui/material/Icon';
-import {FormattedMessage} from 'react-intl';
-import {DistributiveOmit} from '@mui/types';
-import {OverrideProps} from '@mui/material/OverridableComponent';
-import {useSnackbar} from 'notistack';
-import Widget from '../Widget';
-import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCInlineComposerWidget';
+import { Avatar, Box, Button, CardContent } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { SCMediaObjectType } from '../../types/media';
+import { FormattedMessage } from 'react-intl';
+import { useSnackbar } from 'notistack';
+import Widget, { WidgetProps } from '../Widget';
+import { useThemeProps } from '@mui/system';
+import Composer from '../Composer';
+import { File, Link as MediaLink } from '../../shared/Media';
+import { PREFIX } from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
   content: `${PREFIX}-content`,
   input: `${PREFIX}-input`,
-  actions: `${PREFIX}-actions`,
   avatar: `${PREFIX}-avatar`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
-export interface InlineComposerTypeMap<P = {}, D extends React.ElementType = 'div'> {
-  props: P &
-    DistributiveOmit<CardProps, 'defaultValue'> & {
-      /**
-       * Media objects available
-       * @default Image, Document, Link
-       */
-      mediaObjectTypes?: SCMediaObjectType[];
-      /**
-       * Initialization Data for the Composer, this is a hook to generate custom posts
-       * @default null
-       */
-      defaultValue?: {
-        title?: string;
-        text?: string;
-        categories?: SCCategoryType[];
-        audience?: string;
-        addressing?: SCTagType[];
-        medias?: SCMediaType[];
-        poll?: SCPollType;
-        location?: string;
-      };
-      /**
-       * Callback triggered on success contribution creation
-       * @default null
-       */
-      onSuccess?: (res: any) => void;
-    };
-  defaultComponent: D;
+export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultValue'> {
+  /**
+   * Media objects available
+   * @default Image, Document, Link
+   */
+  mediaObjectTypes?: SCMediaObjectType[];
+  /**
+   * Initialization Data for the Composer, this is a hook to generate custom posts
+   * @default null
+   */
+  defaultValue?: {
+    title?: string;
+    text?: string;
+    categories?: SCCategoryType[];
+    audience?: string;
+    addressing?: SCTagType[];
+    medias?: SCMediaType[];
+    poll?: SCPollType;
+    location?: string;
+  };
+  /**
+   * Callback triggered on success contribution creation
+   * @default null
+   */
+  onSuccess?: (res: any) => void;
 }
 
-export type InlineComposerWidgetProps<D extends React.ElementType = InlineComposerTypeMap['defaultComponent'], P = {}> = OverrideProps<
-  InlineComposerTypeMap<P, D>,
-  D
->;
-
-const PREFERENCES = [
-  SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED,
-  SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED,
-  SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED,
-  SCPreferences.ADDONS_POLLS_ENABLED,
-  SCPreferences.ADDONS_VIDEO_UPLOAD_ENABLED
-];
-
-const INITIAL_STATE = {
-  open: false,
-  view: null
-};
 /**
  * > API documentation for the Community-JS Inline Composer component. Learn about the available props and the CSS API.
  *
@@ -113,7 +82,6 @@ const INITIAL_STATE = {
  |root|.SCInlineComposerWidget-root|Styles applied to the root element.|
  |content|.SCInlineComposerWidget-content|Styles applied to the content element.|
  |input|.SCInlineComposerWidget-input|Styles applied to the input element.|
- |actions|.SCInlineComposerWidget-actions|Styles applied to the actions section.|
  |avatar|.SCInlineComposerWidget-avatar|Styles applied to the avatar element.|
 
 
@@ -125,31 +93,19 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     props: inProps,
     name: PREFIX
   });
-  const {mediaObjectTypes = [Image, Document, MediaLink], defaultValue, onSuccess = null, ...rest} = props;
+  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, ...rest} = props;
 
   // Context
-  const scContext: SCContextType = useContext(SCContext);
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
   // State variables
-  const [state, setState] = useState({...INITIAL_STATE});
-  const {open, view} = state;
-
-  /*
-   * Compute preferences
-   */
-  const preferences = useMemo(() => {
-    const _preferences = {};
-    PREFERENCES.map((p) => (_preferences[p] = p in scPreferencesContext.preferences ? scPreferencesContext.preferences[p].value : null));
-    return _preferences;
-  }, [scPreferencesContext.preferences]);
+  const [open, setOpen] = useState<boolean>(false);
 
   // Handlers
-  const handleOpen = (view) => {
-    return () => {
+  const handleOpen = useCallback(() => {
       if (scUserContext.user) {
         if (UserUtils.isBlocked(scUserContext.user)) {
           enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
@@ -157,17 +113,16 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
             autoHideDuration: 3000
           });
         } else {
-          setState({view, open: true});
+          setOpen(true);
         }
       } else {
         scContext.settings.handleAnonymousAction();
       }
-    };
-  };
+    }, [scUserContext.user, scContext.settings]);
 
-  const handleClose = () => {
-    setState({...INITIAL_STATE});
-  };
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
 
   const handleSuccess = (feedObject) => {
     if (onSuccess) {
@@ -178,7 +133,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
         autoHideDuration: 3000
       });
     }
-    setState({...INITIAL_STATE});
+    setOpen(false);
   };
 
   return (
@@ -186,21 +141,9 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
       <Root className={classes.root} {...rest}>
         <CardContent className={classes.content}>
           <Box className={classes.input}>
-            <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen(MAIN_VIEW)} fullWidth color="inherit">
+            <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen} fullWidth color="inherit">
               <FormattedMessage id="ui.inlineComposerWidget.label" defaultMessage="ui.inlineComposerWidget.label" />
             </Button>
-          </Box>
-          <Box className={classes.actions}>
-            {mediaObjectTypes
-              .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.editButton !== null)
-              .map((mediaObjectType: SCMediaObjectType) => (
-                <mediaObjectType.editButton key={mediaObjectType.name} onClick={handleOpen(mediaObjectType.name)} />
-              ))}
-            {preferences[SCPreferences.ADDONS_POLLS_ENABLED] && (
-              <IconButton onClick={handleOpen(POLL_VIEW)}>
-                <Icon>bar_chart</Icon>
-              </IconButton>
-            )}
           </Box>
           <Box className={classes.avatar}>
             {!scUserContext.user ? (
@@ -215,11 +158,9 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
       </Root>
       <Composer
         open={open}
-        view={view}
         mediaObjectTypes={mediaObjectTypes}
         defaultValue={defaultValue}
         fullWidth
-        scroll="body"
         onClose={handleClose}
         onSuccess={handleSuccess}
       />
