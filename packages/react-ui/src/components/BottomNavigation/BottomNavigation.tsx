@@ -22,7 +22,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
 import {iOS} from '@selfcommunity/utils';
-import Unstable_ComposerIconButton from '../Unstable_ComposerIconButton';
+import ComposerIconButton from '../ComposerIconButton';
 
 const PREFIX = 'SCBottomNavigation';
 
@@ -116,7 +116,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
             <BottomNavigationAction
               key="composer"
               className={classNames(classes.composer, classes.action)}
-              component={Unstable_ComposerIconButton}
+              component={ComposerIconButton}
             />,
             scUserContext.user ? (
               <BottomNavigationAction

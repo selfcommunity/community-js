@@ -14,5 +14,5 @@ export interface ComposerLayerProps {
 }
 
 export type ComposerContentType = Omit<SCFeedPostType,
-  'id' | 'last_activity_at' | 'added_at' | 'slug' | 'summary' | 'deleted' | 'collapsed' | 'comment_count' | 'share_count' | 'vote_count' | 'reaction' | 'reactions_count' | 'flag_count' | 'type'
+  'id' | 'last_activity_at' | 'added_at' | 'slug' | 'summary' | 'deleted' | 'collapsed' | 'comment_count' | 'share_count' | 'view_count' | 'vote_count' | 'follower_count' | 'reaction' | 'reactions_count' | 'flag_count' | 'type'
 > & {title?: string;};

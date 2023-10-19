@@ -1,16 +1,18 @@
-import { SCPaginatedResponse } from '@selfcommunity/api-services/src/types';
-import { SCFeedUnitType } from '@selfcommunity/types/src/types';
+import { SCPaginatedResponse } from '@selfcommunity/api-services';
+import { SCContributionType } from '@selfcommunity/types';
 
-const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
+
+// @ts-ignore
+const exampleExploreData: SCPaginatedResponse<any> = {
   count: 843,
   next: 'https://italiano.quentrix.com/api/v2/feed/explore/?limit=5&offset=25',
   previous: 'https://italiano.quentrix.com/api/v2/feed/explore/?limit=5&offset=15',
   results: [
     {
-      type: 'post',
+      type: SCContributionType.POST,
       post: {
         id: 1128,
-        type: 'post',
+        type: SCContributionType.POST,
         last_activity_at: '2022-08-08T03:55:00+02:00',
         author: {
           id: 40,
@@ -39,7 +41,6 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           company_role: null
         },
         added_at: '2022-08-08T07:30:00+02:00',
-        last_edited_at: null,
         html: 'Il TeleUccidiLadro 626 Beghelli',
         summary: 'Il TeleUccidiLadro 626 Beghelli',
         deleted: false,
@@ -76,7 +77,7 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
               embed_type: 'sc_shared_object',
               embed_id: '607',
               url: '/thread/607/provvedimenti-di-limitazione-del-traffico-il-magnifico-rettore-del-comune-di-firenze-c-o-m-a-n-d-a-il-divieto-relativo-di-transito-nel-territorio/',
-              metadata: {id: 607, type: 'discussion'}
+              metadata: {id: 607, type: SCContributionType.DISCUSSION}
             }
           }
         ],
@@ -88,10 +89,10 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
       has_boost: false
     },
     {
-      type: 'discussion',
+      type: SCContributionType.DISCUSSION,
       discussion: {
         id: 1140,
-        type: 'discussion',
+        type: SCContributionType.DISCUSSION,
         last_activity_at: '2022-08-08T18:11:00+02:00',
         author: {
           id: 345,
@@ -101,6 +102,7 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           ext_id: null,
           followings_counter: 10,
           followers_counter: 3,
+          status: 'approved',
           posts_counter: 1,
           discussions_counter: 5,
           categories_counter: 12,
@@ -120,7 +122,6 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           company_role: null
         },
         added_at: '2022-08-08T13:49:00+02:00',
-        last_edited_at: null,
         html: "Rinomati sociologi pensano che la pace ha legalizzato pur essendo condivisibile nelle direttrici generali. Tuttavia il desiderio di ingoio rappresenta un'altra forma di possessione maschile. Ritengo che sicuramente non mi aspetto una pietra o un gas che ragionano..",
         summary:
           'Rinomati sociologi pensano che la pace ha legalizzato pur essendo condivisibile nelle direttrici generali. Tuttavia il desiderio di ingoio rappresenta un&#x27;altra forma di possessione ...',
@@ -201,10 +202,10 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
       has_boost: false
     },
     {
-      type: 'discussion',
+      type: SCContributionType.DISCUSSION,
       discussion: {
         id: 1113,
-        type: 'discussion',
+        type: SCContributionType.DISCUSSION,
         last_activity_at: '2022-08-08T01:06:00+02:00',
         author: {
           id: 370,
@@ -213,6 +214,7 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           avatar: 'https://static.quentrix.com/dhpyt711mb8h2n3m/upfiles/avatars/370/resized/209/209/ab230ec47588c7d2fa8a078d48419813.png',
           ext_id: null,
           followings_counter: 4,
+          status: 'approved',
           followers_counter: 1,
           posts_counter: 0,
           discussions_counter: 2,
@@ -233,7 +235,6 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           company_role: null
         },
         added_at: '2022-08-07T22:35:00+02:00',
-        last_edited_at: null,
         html: "Ciao belli... mo ve ricconto l'urtima... 'na cambogia!\n\nIeri mentre che io corevo a dducento, ma de ppiu'! Su 'a tiburtina co'a machina de mi'fratello... aho'... nun so' annato a sbatte co er Faina???!!\n\nE io allora je dico \"Vie'qqua' che te mischio come 'n mazzo de carte! Te metto 'n dito 'n bocca, uno ar culo e te sciaqquo come 'na damiggiana!\"\n\nAho'... ha sgranato j'occhi e s'e' cacato 'n mano!\n\nHa detto 'na cosa tipo \"Ma va a mori' ammazzato...\" (eh eh, e che nun lo so che era la paura a fallo parla', 'sto cojone...) poi se l'e' squajata... e' ripartito a tutta sgommella, tipo da zero a cento in ddu secondi!\n\nNzomma so' troppo bullo... so' er mejo!\n\nVabbe' ve saluto che me ne devo anna'...\n\nS'arisdraiamo...",
         summary:
           'Ciao belli... mo ve ricconto l&#x27;urtima... &#x27;na cambogia! Ieri mentre che io corevo a dducento, ma de ppiu&#x27;! Su &#x27;a tiburtina co&#x27;a machina de mi&#x27;fratello... aho&#x27;... nun so&#x27; annato a sb ...',
@@ -339,10 +340,10 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
       has_boost: false
     },
     {
-      type: 'discussion',
+      type: SCContributionType.DISCUSSION,
       discussion: {
         id: 1126,
-        type: 'discussion',
+        type: SCContributionType.DISCUSSION,
         last_activity_at: '2022-08-07T23:58:00+02:00',
         author: {
           id: 80,
@@ -351,6 +352,7 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           avatar: 'https://www.gravatar.com/avatar/e1f5f91521749b39af9a021f79efff70/?s=209&d=identicon',
           ext_id: null,
           followings_counter: 19,
+          status: 'approved',
           followers_counter: 13,
           posts_counter: 5,
           discussions_counter: 4,
@@ -371,7 +373,6 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           company_role: null
         },
         added_at: '2022-08-07T02:24:00+02:00',
-        last_edited_at: null,
         html: 'Un pomeriggio il poeta Daiju si rec\u00f2 presso Hogen e gli chiese di mostrargli il percorso pi\u00f9 breve per ottenere il Satori.\nIl maestro indic\u00f2 una preziosa giara e disse: "Se vuoi divenire saggio devi riuscire a comprendere la buddha-natura di ogni cosa: prendi quell\'oggetto con te e medita per due anni, poi torna da me". \nQuando Daiju torn\u00f2, Hogen gli disse: "Non sei ancora pronto: medita per altri tre anni, poi torna da me".\nQuando il giovane allievo fece ritorno, il maestro disse: "Wasabi, Mishima, Boutique!", e a quelle parole Daiju fu illuminato!',
         summary:
           'Un pomeriggio il poeta Daiju si rec\u00f2 presso Hogen e gli chiese di mostrargli il percorso pi\u00f9 breve per ottenere il Satori. Il maestro indic\u00f2 una preziosa giara e disse: &quot;Se vuoi di ...',
@@ -426,10 +427,10 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
       has_boost: false
     },
     {
-      type: 'post',
+      type: SCContributionType.POST,
       post: {
         id: 1116,
-        type: 'post',
+        type: SCContributionType.POST,
         last_activity_at: '2022-08-07T22:25:00+02:00',
         author: {
           id: 248,
@@ -438,6 +439,7 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           avatar: 'https://static.quentrix.com/dhpyt711mb8h2n3m/upfiles/avatars/248/resized/209/209/e3087379702f91d90afb015100062b9d.png',
           ext_id: null,
           followings_counter: 10,
+          status: 'approved',
           followers_counter: 3,
           posts_counter: 1,
           discussions_counter: 0,
@@ -458,7 +460,6 @@ const exampleExploreData: SCPaginatedResponse<SCFeedUnitType> = {
           company_role: null
         },
         added_at: '2022-08-07T04:20:00+02:00',
-        last_edited_at: null,
         html: '...la 18\u00ba Abbuffata agonistica del nero sotto le unghie dei maiali di SAN CARETTO (EN)',
         summary: '...la 18\u00ba Abbuffata agonistica del nero sotto le unghie dei maiali di SAN CARETTO (EN)',
         deleted: false,

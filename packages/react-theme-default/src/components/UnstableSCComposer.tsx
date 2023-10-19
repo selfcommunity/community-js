@@ -10,7 +10,7 @@ const Component = {
           zIndex: 0
         },
         '& .MuiDialogTitle-root': {
-          position: 'fixed',
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
@@ -34,29 +34,34 @@ const Component = {
           height: `calc(100vh - 45px - 45px - ${theme.spacing(2)})`,
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
+            position: 'static',
             '& .SCEditor-placeholder': {
               left: 0,
-              top: theme.spacing(1),
+              top: -60,
+              position: 'relative'
             },
             '& .SCEditorToolbarPlugin-root': {
-              position: 'fixed',
+              zIndex: 1,
+              position: 'absolute',
               display: 'flex',
-              bottom: theme.spacing(6),
+              bottom: 45,
               right: theme.spacing(0.2),
               left: theme.spacing(0.2),
-              marginBottom: 0
+              marginBottom: 0,
+              backgroundColor: theme.palette.background.paper
             }
           }
         },
         '& .UnstableSCComposer-types': {
-          position: 'fixed',
+          position: 'absolute',
+          zIndex: 2,
           bottom: theme.spacing(7),
           left: 0,
           right: 0,
           justifyContent: 'center'
         },
         '& .MuiDialogActions-root': {
-          position: 'fixed',
+          position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
@@ -78,23 +83,10 @@ const Component = {
           '& > form': {
             zIndex: 0
           },
-          '& .MuiDialogTitle-root, & .UnstableSCComposer-types, & .MuiDialogActions-root': {
-            position: 'absolute'
-          },
           '& .MuiDialogContent-root': {
             minHeight: 300,
             height: 'auto',
-            maxHeight: 600,
-            '& .SCEditor-root': {
-              position: 'static',
-              '& .SCEditor-placeholder': {
-                position: 'relative',
-                top: -60
-              },
-              '& .SCEditorToolbarPlugin-root': {
-                position: 'absolute'
-              }
-            }
+            maxHeight: 600
           },
           '& .MuiDialogActions-root': {
             justifyContent: 'center'
@@ -149,7 +141,7 @@ const Component = {
       zIndex: 5,
       background: theme.palette.background.paper,
       '& .MuiDialogContent-root': {
-        height: 'calc(100% - 45px - 16px)',
+        height: 'calc(100% - 45px - 16px) !important',
         marginBottom: '0 !important'
       }
     }),
@@ -202,7 +194,7 @@ const Component = {
         fontSize: '1rem',
         fontWeight: theme.typography.fontWeightBold,
         textTransform: 'capitalize',
-        '&.Mui-selected, &:hover, &:active': {
+        '&.Mui-selected, &:hover, &:active, &.Mui-selected:hover': {
           color: theme.palette.common.white,
           backgroundColor: theme.palette.common.black
         },

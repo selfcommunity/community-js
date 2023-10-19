@@ -10,7 +10,6 @@ import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCEditor from './components/SCEditor';
 import SCCommentsObject from './components/SCCommentsObject';
 import SCCommentsFeedObject from './components/SCCommentsFeedObject';
-import SCComposer from './components/SCComposer';
 import SCBroadcastMessages from './components/SCBroadcastMessages';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCScrollContainer from './components/SCScrollContainer';
@@ -54,7 +53,6 @@ import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import MuiAutocomplete from './components/MuiAutocomplete';
-import SCComposerPoll from './components/SCComposerPoll';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
 import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
@@ -225,10 +223,8 @@ const theme = {
     SCCommentObjectVotes,
     SCCommentsFeedObject,
     SCCommentsObject,
-    SCComposer,
     UnstableSCComposer,
     SCCategoryAutocomplete,
-    SCComposerPoll,
     SCContributionNotification,
     SCContributorsFeedObject,
     SCContributionActionsMenu,

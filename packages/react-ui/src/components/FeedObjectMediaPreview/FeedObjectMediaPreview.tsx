@@ -1,12 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { SCMediaObjectType, UnstableSCMediaObjectType } from '../../types/media';
+import { SCMediaObjectType } from '../../types/media';
 import { useSCMediaClick } from '@selfcommunity/react-core';
 import { BoxProps } from '@mui/material';
-import { SCMediaType } from '@selfcommunity/types/src/types';
+import { SCMediaType } from '@selfcommunity/types';
 import { useThemeProps } from '@mui/system';
-import { File, Link, Share } from '../../shared/Unstable_Media';
+import { File, Link, Share } from '../../shared/Media';
 import classNames from 'classnames';
 
 const PREFIX = 'UnstableSCFeedObjectMediaPreview';
@@ -29,7 +29,7 @@ export interface FeedObjectMediaPreviewProps extends BoxProps {
    * Media types
    * @default 'image', 'document', 'link', 'share'
    */
-  mediaObjectTypes?: UnstableSCMediaObjectType[];
+  mediaObjectTypes?: SCMediaObjectType[];
 }
 
 /**
@@ -78,7 +78,7 @@ export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
    */
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {mediaObjectTypes.map((mediaObject: UnstableSCMediaObjectType) => {
+      {mediaObjectTypes.map((mediaObject: SCMediaObjectType) => {
         const {displayProps = {}} = mediaObject;
         return (
           <div key={mediaObject.name}>

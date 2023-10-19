@@ -44,7 +44,7 @@ const LocationLayer = React.forwardRef((props: LocationLayerProps, ref: React.Re
       <Typography>
         <FormattedMessage id="ui.unstable_composer.layer.location.title" defaultMessage="ui.unstable_composer.layer.location.title" />
       </Typography>
-      <Button size="small" color="primary" variant="contained" onClick={handleSave}>
+      <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
         <FormattedMessage id="ui.unstable_composer.layer.save" defaultMessage="ui.unstable_composer.layer.save" />
       </Button>
     </DialogTitle>

@@ -62,8 +62,8 @@ import {
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import { MAX_SUMMARY_LENGTH } from '../../constants/Feed';
-import Unstable_Composer from '../Unstable_Composer';
-import Unstable_FeedObjectMediaPreview, { FeedObjectMediaPreviewProps } from '../Unstable_FeedObjectMediaPreview';
+import Composer from '../Composer';
+import FeedObjectMediaPreview, { FeedObjectMediaPreviewProps } from '../FeedObjectMediaPreview';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -865,7 +865,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <Unstable_FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
+                <FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (
@@ -943,7 +943,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Collapse>
             )}
             {composerOpen && (
-              <Unstable_Composer
+              <Composer
                 open={composerOpen}
                 feedObject={obj}
                 onClose={handleToggleEdit}
@@ -1012,7 +1012,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <Unstable_FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
+                <FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
                 {obj['poll'] && (

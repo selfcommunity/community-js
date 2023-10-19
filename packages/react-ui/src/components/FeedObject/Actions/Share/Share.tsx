@@ -42,7 +42,7 @@ import {
 import { useThemeProps } from '@mui/system';
 import { getContributionRouteName, getRouteData } from '../../../../utils/contribution';
 import { FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE } from '../../../../constants/SocialShare';
-import Unstable_Composer from '../../../Unstable_Composer';
+import Composer from '../../../Composer';
 
 const messages = defineMessages({
   shares: {
@@ -413,7 +413,7 @@ export default function Share(inProps: ShareProps): JSX.Element {
               )}
             </>
             {isComposerOpen && (
-              <Unstable_Composer
+              <Composer
                 open={isComposerOpen}
                 defaultValue={composerShareProps}
                 onClose={handleComposerOnClose}

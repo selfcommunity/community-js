@@ -44,7 +44,7 @@ const CategoryLayer = React.forwardRef((props: CategoryLayerProps, ref: React.Re
       <Typography>
         <FormattedMessage id="ui.unstable_composer.layer.category.title" defaultMessage="ui.unstable_composer.layer.category.title" />
       </Typography>
-      <Button size="small" color="primary" variant="contained" onClick={handleSave}>
+      <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
         <FormattedMessage id="ui.unstable_composer.layer.save" defaultMessage="ui.unstable_composer.layer.save" />
       </Button>
     </DialogTitle>

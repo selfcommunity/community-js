@@ -1,10 +1,10 @@
 import DisplayComponent from './DisplayComponent';
 import TriggerButton from './TriggerButton';
-import { UnstableSCMediaObjectType } from '../../../types/media';
+import { SCMediaObjectType } from '../../../types/media';
 import PreviewComponent from './PreviewComponent';
 import filter from './filter';
 
-const File: UnstableSCMediaObjectType = {
+const File: SCMediaObjectType = {
   name: 'file',
   displayComponent: DisplayComponent,
   triggerButton: TriggerButton,

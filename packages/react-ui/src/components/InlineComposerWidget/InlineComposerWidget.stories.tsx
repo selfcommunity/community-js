@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import InlineComposerWidget from './index';
+import InlineComposerWidget, { InlineComposerWidgetProps } from './index';
 
 export default {
-  title: 'Design System/React UI/Inline Composer Widget',
+  title: 'Design System/React UI Unstable/Inline Composer Widget',
   component: InlineComposerWidget
 } as Meta<typeof InlineComposerWidget>;
 
@@ -12,6 +12,6 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<InlineComposerWidget> = {
+export const Base: StoryObj<InlineComposerWidgetProps> = {
   render: template
 };

@@ -1,24 +1,23 @@
-import {useRef} from 'react';
-import type {Meta, StoryObj} from '@storybook/react';
+import { useRef } from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Feed, { FeedProps, FeedRef } from './Feed';
-import {Endpoints} from '@selfcommunity/api-services';
-import {SCNotificationTopicType} from '@selfcommunity/types';
-import FeedObject, {FeedObjectSkeleton} from '../FeedObject';
-import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import SCNotification, {NotificationSkeleton} from '../Notification';
+import { Endpoints } from '@selfcommunity/api-services';
+import { SCNotificationTopicType } from '@selfcommunity/types';
+import FeedObject, { FeedObjectSkeleton } from '../FeedObject';
+import { SCFeedObjectTemplateType } from '../../types/feedObject';
+import SCNotification, { NotificationSkeleton } from '../Notification';
 import BroadcastMessages from '../BroadcastMessages';
-import {CacheStrategies} from '@selfcommunity/utils';
+import { CacheStrategies } from '@selfcommunity/utils';
 import {
-	CategoriesSuggestionWidget,
-	InlineComposerWidget,
 	CategoriesPopularWidget,
+	CategoriesSuggestionWidget,
+	FeedUpdatesWidget,
+	SCFeedWidgetType,
 	UserSuggestionWidget,
-	FeedUpdatesWidget, SCFeedWidgetType,
 } from '../../index';
-import {exampleExploreData} from './prefetchedData';
-import {Button} from '@mui/material';
-import Unstable_Composer from '../Unstable_Composer';
-import Unstable_InlineComposerWidget from '../Unstable_InlineComposerWidget';
+import { exampleExploreData } from './prefetchedData';
+import { Button } from '@mui/material';
+import InlineComposerWidget from '../InlineComposerWidget';
 
 export default {
 	title: 'Design System/React UI/Feed',
@@ -110,7 +109,7 @@ export const Main: StoryObj<FeedProps> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -134,7 +133,7 @@ export const MainCache: StoryObj<FeedProps> = {
 		},
 		requireAuthentication: true,
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -158,7 +157,7 @@ export const Explore: StoryObj<FeedProps> = {
 		},
 		cacheStrategy: CacheStrategies.NETWORK_ONLY,
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -182,7 +181,7 @@ export const ExploreContainerFixed: StoryObj<typeof Feed> = {
 		},
 		cacheStrategy: CacheStrategies.NETWORK_ONLY,
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: templateContainerFixed
 };
@@ -206,7 +205,7 @@ export const ExploreCache: StoryObj<FeedProps> = {
 		},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -230,7 +229,7 @@ export const ExploreOffset2: StoryObj<FeedProps> = {
 		},
 		endpointQueryParams: {limit: 5, offset: 2},
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -255,7 +254,7 @@ export const ExploreOffset2Cached: StoryObj<FeedProps> = {
 		endpointQueryParams: {limit: 5, offset: 2},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -279,7 +278,7 @@ export const ExploreOffset5: StoryObj<FeedProps> = {
 		},
 		endpointQueryParams: {limit: 5, offset: 5},
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -304,7 +303,7 @@ export const ExploreOffset5Cached: StoryObj<FeedProps> = {
 		endpointQueryParams: {limit: 5, offset: 5},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -328,7 +327,7 @@ export const ExploreOffset20: StoryObj<FeedProps> = {
 		},
 		endpointQueryParams: {limit: 5, offset: 20},
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -353,7 +352,7 @@ export const ExploreOffset20Cached: StoryObj<FeedProps> = {
 		endpointQueryParams: {limit: 5, offset: 20},
 		cacheStrategy: CacheStrategies.CACHE_FIRST,
 		requireAuthentication: true,
-		HeaderComponent: <Unstable_InlineComposerWidget />
+		HeaderComponent: <InlineComposerWidget />
 	},
 	render: template
 };
@@ -376,7 +375,7 @@ export const ExplorePrefetchedData: StoryObj<FeedProps> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		endpointQueryParams: {limit: 5},
-		HeaderComponent: <Unstable_InlineComposerWidget />,
+		HeaderComponent: <InlineComposerWidget />,
 		requireAuthentication: true,
 		prefetchedData: exampleExploreData
 	},
@@ -401,7 +400,7 @@ export const ExplorePrefetchedDataCached: StoryObj<FeedProps> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		endpointQueryParams: {limit: 5},
-		HeaderComponent: <Unstable_InlineComposerWidget />,
+		HeaderComponent: <InlineComposerWidget />,
 		requireAuthentication: true,
 		cacheStrategy: CacheStrategies.CACHE_FIRST
 	},
@@ -426,7 +425,7 @@ export const ExploreWithoutVirtualization: StoryObj<FeedProps> = {
 			template: SCFeedObjectTemplateType.PREVIEW
 		},
 		cacheStrategy: CacheStrategies.NETWORK_ONLY,
-		HeaderComponent: <Unstable_InlineComposerWidget />,
+		HeaderComponent: <InlineComposerWidget />,
 		requireAuthentication: true,
 		VirtualizedScrollerProps: {bypass: true}
 	},

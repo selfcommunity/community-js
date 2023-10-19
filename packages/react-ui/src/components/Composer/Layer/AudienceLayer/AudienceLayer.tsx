@@ -72,7 +72,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
       <Typography>
         <FormattedMessage id="ui.unstable_composer.layer.audience.title" defaultMessage="ui.unstable_composer.layer.audience.title" />
       </Typography>
-      <Button size="small" color="primary" variant="contained" onClick={handleSave}>
+      <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
         <FormattedMessage id="ui.unstable_composer.layer.save" defaultMessage="ui.unstable_composer.layer.save" />
       </Button>
     </DialogTitle>

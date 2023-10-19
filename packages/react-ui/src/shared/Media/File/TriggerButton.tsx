@@ -22,11 +22,11 @@ import { SCContextType, SCThemeType, useSCContext } from '@selfcommunity/react-c
 import { FormattedMessage } from 'react-intl';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import { SCMediaChunkType } from '@selfcommunity/react-ui';
 import { SCMediaType } from '@selfcommunity/types';
 import { Endpoints } from '@selfcommunity/api-services';
 import asUploadButton from './asUploadButton';
 import { useSnackbar } from 'notistack';
+import {SCMediaChunkType} from '../../../types/media';
 
 const classes = {
   triggerRoot: `${PREFIX}-trigger-root`,

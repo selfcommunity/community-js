@@ -1,18 +1,17 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
-import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import {http, Endpoints, formatHttpErrorCode, HttpResponse} from '@selfcommunity/api-services';
-import {SCMediaType} from '@selfcommunity/types';
-import {isValidUrl} from '@selfcommunity/utils';
-import {MEDIA_TYPE_URL} from '../../../../constants/Media';
-import {FormattedMessage} from 'react-intl';
-import {CircularProgress, Fade} from '@mui/material';
-import {BaseTextFieldProps} from '@mui/material/TextField/TextField';
-import {InputProps as StandardInputProps} from '@mui/material/Input/Input';
-import {FilledInputProps} from '@mui/material/FilledInput';
-import {OutlinedInputProps} from '@mui/material/OutlinedInput';
+import { Endpoints, formatHttpErrorCode, http, HttpResponse } from '@selfcommunity/api-services';
+import { SCMediaType } from '@selfcommunity/types';
+import { isValidUrl } from '@selfcommunity/utils';
+import { MEDIA_TYPE_URL } from '../../../../constants/Media';
+import { FormattedMessage } from 'react-intl';
+import { CircularProgress, Fade } from '@mui/material';
+import { BaseTextFieldProps } from '@mui/material/TextField/TextField';
+import { InputProps as StandardInputProps } from '@mui/material/Input/Input';
+import { FilledInputProps } from '@mui/material/FilledInput';
+import { OutlinedInputProps } from '@mui/material/OutlinedInput';
 
 export interface BaseUrlTextFieldProps extends BaseTextFieldProps {
   /**
@@ -174,8 +173,8 @@ export default (props: UrlTextFieldProps): JSX.Element => {
         helperText={
           helperText ||
           (urlError && (
-            <FormattedMessage id={`ui.composer.media.link.add.error.${urlError}`} defaultMessage={`ui.composer.media.link.add.error.${urlError}`} />
-          )) || <FormattedMessage id="ui.composer.media.link.add.help" defaultMessage="ui.composer.media.link.add.help" />
+            <FormattedMessage id={`ui.unstable_composer.media.link.add.error.${urlError}`} defaultMessage={`ui.unstable_composer.media.link.add.error.${urlError}`} />
+          )) || <FormattedMessage id="ui.unstable_composer.media.link.add.help" defaultMessage="ui.unstable_composer.media.link.add.help" />
         }
         disabled={isCreating}
         {...rest}
@@ -184,7 +183,7 @@ export default (props: UrlTextFieldProps): JSX.Element => {
             <InputAdornment position="end">
               <Fade in={urlError === null && url !== ''}>
                 <IconButton size="small" disabled={isCreating} type="submit">
-                  {isCreating ? <CircularProgress color="primary" size={20} /> : <Icon>play_arrow</Icon>}
+                  {isCreating ? <CircularProgress color="primary" size={20} /> : <FormattedMessage id="ui.unstable_composer.media.link.add.submit" defaultMessage="ui.unstable_composer.media.link.add.submit" />}
                 </IconButton>
               </Fade>
             </InputAdornment>
