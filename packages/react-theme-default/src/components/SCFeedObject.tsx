@@ -21,6 +21,7 @@ const Component = {
         height: theme.selfcommunity.user.avatar.sizeMedium
       },
       '& .SCFeedObject-header': {
+        paddingTop: theme.spacing(1),
         paddingBottom: 0,
         '& .MuiCardHeader-subheader': {
           display: 'flex',
@@ -85,7 +86,7 @@ const Component = {
         width: '100%',
         boxSizing: 'border-box',
         margin: 0,
-        padding: theme.spacing(0.5, 2)
+        padding: theme.spacing(0.2, 2)
       },
       '& .SCFeedObject-info-section': {
         padding: theme.spacing(0, 2)
@@ -154,7 +155,8 @@ const Component = {
           '& .SCFeedObject-text-section': {
             overflowWrap: 'anywhere',
             '& > :first-of-type': {
-              padding: theme.spacing(0, 2, 1),
+              marginBottom: 0,
+              padding: theme.spacing(0, 2, 0.5),
               display: 'block'
             },
             '& hr': {
@@ -253,23 +255,26 @@ const Component = {
             '& li': {
               margin: '0 32px'
             }
+          },
+          '& .SCFeedObject-show-more': {
+            padding: theme.spacing(0.5),
+            marginTop: theme.spacing(-0.5)
           }
         },
         '& .SCFeedObject-actions-section': {
-          marginBottom: theme.spacing(1),
           '&:last-of-type': {
             marginBottom: 0
           },
           '& .SCFeedObjectActions-root': {
             margin: 0,
-            padding: theme.spacing(0, 2, 0, 2),
+            padding: theme.spacing(0.2, 2, 0, 2),
             '& .SCFeedObjectActions-action': {
               marginTop: 'auto',
               '& .SCVoteAction-view-audience-button, & .SCCommentAction-view-audience-button, & .SCShareAction-view-audience-button, & .SCReactionAction-view-audience-button':
                 {
                   fontSize: '0.857rem',
                   fontWeight: theme.typography.fontWeightRegular,
-                  marginTop: theme.spacing(1),
+                  marginTop: theme.spacing(0),
                   marginBottom: 0,
                   color: theme.palette.primary.main,
                   '&:hover': {
@@ -281,10 +286,10 @@ const Component = {
               },
               '& .SCVoteAction-button, & .SCCommentAction-button, & .SCShareAction-button, & .SCReactionAction-button': {
                 color: theme.palette.primary.main,
-                marginTop: theme.spacing(0.5),
+                marginTop: theme.spacing(-0.5),
                 marginBottom: theme.spacing(0.5),
                 borderRadius: '50%',
-                padding: theme.spacing(1.5),
+                padding: theme.spacing(1),
                 minWidth: 0,
                 '& .MuiIcon-root': {
                   fontSize: '1.57rem'
@@ -330,6 +335,7 @@ const Component = {
             paddingBottom: 0,
             '& .SCActivitiesMenu-selector': {
               '& .MuiButton-root': {
+                marginTop: theme.spacing(0.2),
                 fontSize: '0.857rem',
                 fontWeight: theme.typography.fontWeightRegular,
                 padding: theme.spacing(1)

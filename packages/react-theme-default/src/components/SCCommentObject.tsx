@@ -15,7 +15,8 @@ const Component = {
           top: theme.spacing(1.5)
         },
         '& .SCBaseItem-text': {
-          marginBottom: 0
+          marginBottom: 0,
+					marginTop: theme.spacing(0.2)
         }
       },
       '& .SCCommentObject-nested-comments': {
