@@ -34,21 +34,27 @@ const Component = {
           height: `calc(100vh - 45px - 45px - ${theme.spacing(2)})`,
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
-            position: 'static',
             '& .SCEditor-placeholder': {
               left: 0,
-              top: -60,
-              position: 'relative'
+              top: theme.spacing(1),
+              position: 'absolute'
             },
-            '& .SCEditorToolbarPlugin-root': {
-              zIndex: 1,
-              position: 'absolute',
-              display: 'flex',
-              bottom: 45,
-              right: theme.spacing(0.2),
-              left: theme.spacing(0.2),
-              marginBottom: 0,
-              backgroundColor: theme.palette.background.paper
+            '&.SCEditor-toolbar': {
+              position: 'static',
+              '& .SCEditor-placeholder': {
+                marginTop: -40,
+                position: 'static'
+              },
+              '& .SCEditorToolbarPlugin-root': {
+                zIndex: 1,
+                position: 'absolute',
+                display: 'flex',
+                bottom: theme.spacing(7),
+                right: theme.spacing(0.2),
+                left: theme.spacing(0.2),
+                marginBottom: 0,
+                backgroundColor: theme.palette.background.paper
+              },
             }
           }
         },

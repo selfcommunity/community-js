@@ -346,7 +346,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
           );
         }}>
         <Tooltip title={<FormattedMessage id={`ui.editor.toolbarPlugin.${alignment}`} defaultMessage={`ui.editor.toolbarPlugin.${alignment}`} />}>
-          <Icon>format_align_{alignment}</Icon>
+          <Icon>{`format_align_${alignment}`}</Icon>
         </Tooltip>
       </IconButton>
       <ToggleButtonGroup value={formats}>
