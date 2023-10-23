@@ -190,6 +190,14 @@ const reducer = (state, action) => {
  *
  *
  * The Composer component contains the logic around the creation of [Post](https://developers.selfcommunity.com/docs/apireference/v2/post/create_a_post) and [Discussion](https://developers.selfcommunity.com/docs/apireference/v2/discussion/create_a_discussion) objects.
+ *
+ *
+ :::info
+ To prevent the editor toolbar and action botton bar being hidden underneath the Virtual Keyboard you need to set the `interactive-widget=resizes-content` on meta viewport.
+ This works on chrome for android.
+ For iOS devices there is a lack of support of this meta so we force the blur event when the user start dragging.
+ [More information](https://bram.us/2021/09/13/prevent-items-from-being-hidden-underneath-the-virtual-keyboard-by-means-of-the-virtualkeyboard-api/)
+ :::
 
  #### Import
  ```jsx
@@ -302,6 +310,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       (type === COMPOSER_TYPE_POLL && hasPoll)
     );
   }, [isLoading, type, title, html, medias, hasPoll]);
+  const isIOS = useMemo(() => iOS(), []);
 
   // Load feed object
   useEffect(() => {
@@ -340,6 +349,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       window.onbeforeunload = null;
     }
   }, [state, canSubmit]);
+
+  useEffect(() => {
+    if (!dialogRef.current || !isIOS) {
+      return;
+    }
+    const handleBlur = () => {
+      dialogRef.current.focus();
+    };
+    dialogRef.current.addEventListener("touchstart", handleBlur);
+    return () => dialogRef.current?.removeEventListener("touchstart", handleBlur);
+  }, [dialogRef.current, isIOS]);
 
   /* Handlers */
   const handleAddLayer = useCallback((layer: ComposerLayerType) => setLayer(layer), []);
@@ -563,8 +583,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
   }, [canSubmit, handleAddLayer, handleRemoveLayer, handleClose]);
 
-  const isIOS = useMemo(() => iOS(), []);
-
   // RENDER
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
   const content = useMemo(() => {
@@ -626,6 +644,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       className={classNames(classes.root, {[classes.ios]: isIOS})}
       scroll="body"
       fullScreen={fullScreen}
+      tabIndex={-1}
       >
       <form onSubmit={handleSubmit} method="post">
         <DialogTitle className={classes.title}>
