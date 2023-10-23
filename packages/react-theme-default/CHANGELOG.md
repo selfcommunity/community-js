@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.290](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.289...@selfcommunity/react-theme-default@0.1.0-alpha.290) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix layout ([918e97c](https://github.com/selfcommunity/community-js/commit/918e97c3a356353985e3fbe6cdff675a503a4050))
+
+
+
+
+
 # [0.1.0-alpha.289](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.288...@selfcommunity/react-theme-default@0.1.0-alpha.289) (2023-10-23)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
