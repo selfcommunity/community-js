@@ -256,6 +256,11 @@ const Component = {
               margin: '0 32px'
             }
           },
+          '& .SCFeedObject-medias-section': {
+            '& .SCFeedObjectMediaPreview-root': {
+              margin: theme.spacing(0, 1)
+            }
+          },
           '& .SCFeedObject-show-more': {
             padding: theme.spacing(0.5),
             marginTop: theme.spacing(-0.5)
