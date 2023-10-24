@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.293](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.292...@selfcommunity/react-theme-default@0.1.0-alpha.293) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix feedObject share layout ([d93a12e](https://github.com/selfcommunity/community-js/commit/d93a12e02c14ee19d5a489005e5397a5665a881f))
+
+
+
+
+
 # [0.1.0-alpha.292](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.291...@selfcommunity/react-theme-default@0.1.0-alpha.292) (2023-10-24)
 
 
