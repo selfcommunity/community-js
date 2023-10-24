@@ -36,7 +36,7 @@ const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: Re
   // HANDLERS
   const handleSort = useCallback((medias: SCMediaType[]) => {
     onChange && onChange([...value.filter((media: any) => medias.findIndex((m: any) => m.id === media.id) === -1), ...medias]);
-  }, [onChange]);
+  }, [onChange, value]);
   const handleDelete = useCallback((id: number) => () => onChange && onChange(value.filter((media: SCMediaType) => media.id !== id)), [onChange, value]);
 
   return <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>

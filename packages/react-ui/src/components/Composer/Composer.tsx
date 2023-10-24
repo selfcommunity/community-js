@@ -670,7 +670,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 } else if (mediaObjectType.displayComponent) {
                   return <mediaObjectType.displayComponent
                     key={mediaObjectType.name}
-                    value={medias}
+                    medias={medias}
                   />;
                 }
               })
