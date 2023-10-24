@@ -1,12 +1,10 @@
-import React, { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { ReactElement, useCallback, useEffect, useMemo } from 'react';
 import { Box, BoxProps, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { SCMediaType } from '@selfcommunity/types/src/index';
-import { useThemeProps } from '@mui/system';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import { ReactSortable } from 'react-sortablejs';
-import DisplayComponent from './DisplayComponent';
 import { PREFIX } from './constants';
 import filter from './filter';
 import { MEDIA_TYPE_DOCUMENT } from '../../../constants/Media';
@@ -51,7 +49,7 @@ const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: Re
   // HANDLERS
   const handleSort = useCallback((medias: SCMediaType[]) => {
     onChange && onChange([...value.filter((media: any) => medias.findIndex((m: any) => m.id === media.id) === -1), ...medias]);
-  }, [onChange]);
+  }, [onChange, value]);
   const handleDelete = useCallback((id: number) => () => onChange && onChange(value.filter((media: SCMediaType) => media.id !== id)), [onChange, value]);
 
   return <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>
