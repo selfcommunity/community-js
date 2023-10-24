@@ -96,14 +96,12 @@ const classes = {
 
 const Root = styled(Dialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 const LayerTransitionRoot = styled(Slide, {
   name: PREFIX,
-  slot: 'LayerTransitionRoot',
-  overridesResolver: (props, styles) => styles.layerTransitionRoot
+  slot: 'LayerTransitionRoot'
 })(({theme}) => ({}));
 
 export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scroll'> {
@@ -519,7 +517,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       medias: medias.map((m) => m.id),
       categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
     };
-    if (preferences[SCPreferences.ADDONS_POLLS_ENABLED].value && hasPoll) {
+    if ((preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user)) && hasPoll) {
       data.poll = poll;
     }
     if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && location) {

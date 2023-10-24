@@ -190,7 +190,7 @@
   "ui.composer.title.error.maxlength": "Il titolo non può avere più di 160 caratteri",
   "ui.composer.typeSwitch.post": "Post",
   "ui.composer.typeSwitch.discussion": "Articolo",
-  "ui.composer.typeSwitch.poll": "Poll",
+  "ui.composer.typeSwitch.poll": "Sondaggio",
   "ui.confirmDialog.btnCancel": "No",
   "ui.confirmDialog.btnConfirm": "Si",
   "ui.confirmDialog.title": "Sei sicuro di voler procedere?",
