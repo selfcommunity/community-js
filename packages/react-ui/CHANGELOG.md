@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.339](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.338...@selfcommunity/react-ui@0.7.0-alpha.339) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix media share ([36efdb4](https://github.com/selfcommunity/community-js/commit/36efdb420fbc2f6493e3e2c701af8f9dad56bcf4))
+
+
+
+
+
 # [0.7.0-alpha.338](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.337...@selfcommunity/react-ui@0.7.0-alpha.338) (2023-10-23)
 
 
