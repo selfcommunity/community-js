@@ -269,7 +269,7 @@ const Component = {
             margin: 0,
             padding: theme.spacing(0.2, 2, 0, 2),
             '& .SCFeedObjectActions-action': {
-              marginTop: 'auto',
+              marginTop: 0,
               '& .SCVoteAction-view-audience-button, & .SCCommentAction-view-audience-button, & .SCShareAction-view-audience-button, & .SCReactionAction-view-audience-button':
                 {
                   fontSize: '0.857rem',

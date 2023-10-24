@@ -347,7 +347,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCContributionType.DISCUSSION,
+    feedObjectType = null,
     feedObjectActivities = null,
     cacheStrategy = CacheStrategies.CACHE_FIRST,
     markRead = false,

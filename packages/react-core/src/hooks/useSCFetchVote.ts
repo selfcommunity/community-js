@@ -1,7 +1,7 @@
-import {useEffect, useMemo, useState} from 'react';
-import {Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-import {SCOPE_SC_CORE} from '../constants/Errors';
+import { useEffect, useMemo, useState } from 'react';
+import { Endpoints, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
+import { CacheStrategies, Logger, LRUCache } from '@selfcommunity/utils';
+import { SCOPE_SC_CORE } from '../constants/Errors';
 import {
   SCCommentType,
   SCContributionType,
@@ -13,13 +13,11 @@ import {
   SCTagType,
   SCVoteType,
 } from '@selfcommunity/types';
-import {getCommentObjectCacheKey, getFeedObjectCacheKey} from '../constants/Cache';
-import {useSnackbar} from 'notistack';
+import { getCommentObjectCacheKey, getFeedObjectCacheKey } from '../constants/Cache';
 import useSCFetchReactions from './useSCFetchReactions';
-import {useIntl} from 'react-intl';
-import {SCContextType, SCUserContextType} from '../types/context';
-import {useSCContext} from '../components/provider/SCContextProvider';
-import {useSCUser} from '../components/provider/SCUserProvider';
+import { SCContextType, SCUserContextType } from '../types/context';
+import { useSCContext } from '../components/provider/SCContextProvider';
+import { useSCUser } from '../components/provider/SCUserProvider';
 
 interface FetchVoteProps {
   /**
@@ -85,9 +83,7 @@ export default function useSCFetchVote({
   // HOOKS
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const {enqueueSnackbar} = useSnackbar();
   const reactions = useSCFetchReactions();
-  const intl = useIntl();
 
   const fetchObject = useMemo(
     () => () => {

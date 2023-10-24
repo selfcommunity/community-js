@@ -9,7 +9,7 @@ const Component = {
         display: 'flex',
         flexDirection: 'row',
         '& .MuiIcon-root': {
-          paddingRight: theme.spacing(0.5),
+          marginRight: theme.spacing(0.5),
           backgroundColor: 'transparent'
         }
       },
