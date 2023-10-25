@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.344](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.343...@selfcommunity/react-ui@0.7.0-alpha.344) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix footer style ([5e4373f](https://github.com/selfcommunity/community-js/commit/5e4373f84d779b1275f4ddbbcf2538b68bbfac70))
+* Fix MentionsPlugin.tsx document reference ([06ae2aa](https://github.com/selfcommunity/community-js/commit/06ae2aa12e94550c5a6a33b0af99cb878e679840))
+
+
+
+
+
 # [0.7.0-alpha.343](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.342...@selfcommunity/react-ui@0.7.0-alpha.343) (2023-10-25)
 
 
