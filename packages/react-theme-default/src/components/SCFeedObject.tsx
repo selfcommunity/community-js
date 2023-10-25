@@ -33,6 +33,16 @@ const Component = {
         textAlign: 'center',
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
         maxHeight: 30,
+        display: 'flex',
+        flexDirection: 'row',
+        overflowY: 'hidden',
+        overflowX: 'auto',
+        justifyContent: 'center',
+        'MsOverflowStyle': 'none',  /* IE and Edge */
+        scrollbarWidth: 'none',  /* Firefox */
+        '&::-webkit-scrollbar': {
+          display: 'none'
+        },
         '& a': {
           color: 'inherit',
           textDecoration: 'none',

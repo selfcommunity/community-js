@@ -26,9 +26,13 @@ export interface DisplayComponentProps extends BoxProps {
    * Medias
    */
   medias: SCMediaType[];
+  /**
+   * Handles on media click
+   */
+  onMediaClick?: (any) => void;
 }
 
-export default ({className, medias = [], ...rest}: DisplayComponentProps): ReactElement => {
+export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayComponentProps): ReactElement => {
   // MEMO
   const _medias = useMemo(() => medias.filter(filter), [medias]);
   if (_medias.length === 0) {
@@ -38,7 +42,7 @@ export default ({className, medias = [], ...rest}: DisplayComponentProps): React
   return (
       <Root className={classNames(className, classes.displayRoot)} {...rest}>
         {_medias.map((media, i) => (
-          <Box className={classes.sharePreview} key={i}>
+          <Box className={classes.sharePreview} key={i} onClick={onMediaClick}>
             <FeedObject
               feedObjectId={media.embed.metadata.id}
               feedObjectType={media.embed.metadata.type}
