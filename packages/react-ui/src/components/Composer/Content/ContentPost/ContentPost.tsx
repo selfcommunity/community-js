@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Editor, { EditorProps } from '../../../Editor';
 import { ComposerContentType } from '../../../../types/composer';
 import { PREFIX } from '../../constants';
+import { FormattedMessage } from 'react-intl';
 
 const classes = {
   root: `${PREFIX}-content-post-root`,
@@ -17,14 +18,6 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'ContentPostRoot'
 })(({theme}) => ({}));
-
-const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props}, ref) => {
-  return (
-    <FormGroup direction="column" ref={ref} {...props}>
-      {children}
-    </FormGroup>
-  );
-});
 
 /**
  * Default post
@@ -90,7 +83,7 @@ export default (props: ContentPostProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
+      {generalError && <Typography className={classes.generalError}><FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} /></Typography>}
       <Editor
         ref={editorRef}
         {...EditorProps}

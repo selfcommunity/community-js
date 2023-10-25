@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import classNames from 'classnames';
 import Editor, { EditorProps } from '../../../Editor';
 import { ComposerContentType } from '../../../../types/composer';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { COMPOSER_TITLE_MAX_LENGTH } from '../../../../constants/Composer';
 import { PREFIX } from '../../constants';
 
@@ -92,7 +92,7 @@ export default (props: ContentDiscussionProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
+      {generalError && <Typography className={classes.generalError}><FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} /></Typography>}
       <TextField
         className={classes.title}
         placeholder={intl.formatMessage({id: "ui.composer.content.discussion.title.label", defaultMessage: "ui.composer.content.discussion.title.label"})}
