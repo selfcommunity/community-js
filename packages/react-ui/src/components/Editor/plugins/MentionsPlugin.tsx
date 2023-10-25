@@ -164,8 +164,8 @@ export function useMenuAnchorRef(
     const menuEle = containerDiv.firstChild as Element;
     if (rootElement !== null && resolution !== null) {
       const {left, top, width, height} = resolution.range.getBoundingClientRect();
-      containerDiv.style.top = `${top + window.pageYOffset}px`;
-      containerDiv.style.left = `${left + window.pageXOffset}px`;
+      containerDiv.style.top = `${top + window.scrollY}px`;
+      containerDiv.style.left = `${left + window.scrollX}px`;
       containerDiv.style.height = `${height}px`;
       containerDiv.style.width = `${width}px`;
       if (menuEle !== null) {
