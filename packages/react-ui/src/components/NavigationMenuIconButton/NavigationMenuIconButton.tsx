@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Divider, Drawer, DrawerProps, Icon, IconButton, IconButtonProps, List } from '@mui/material';
 import classNames from 'classnames';
@@ -6,6 +6,7 @@ import { useThemeProps } from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
+import { SCPreferences, useSCPreferences, useSCUser } from '@selfcommunity/react-core';
 
 const PREFIX = 'SCNavigationMenuIconButton';
 
@@ -99,13 +100,21 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  // CONTEXT
+  const {preferences} = useSCPreferences();
+  const scUserContext = useSCUser();
+
   // HANDLERS
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
+  }, []);
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
+
+  if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value && !scUserContext.user?.id) {
+    return null;
+  }
 
   return (
     <>
