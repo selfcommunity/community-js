@@ -100,7 +100,7 @@ const Component = {
         flexWrap: 'nowrap',
         maxWidth: '100%',
         overflow: 'auto',
-        '-ms-overflow-style': 'none',  /* IE and Edge */
+        'MsOverflowStyle': 'none',  /* IE and Edge */
         scrollbarWidth: 'none',
         '&::-webkit-scrollbar': {
           display: 'none'
