@@ -156,7 +156,7 @@ export function useMenuAnchorRef(
   className?: string
 ): MutableRefObject<HTMLElement> {
   const [editor] = useLexicalComposerContext();
-  const anchorElementRef = useRef<HTMLElement>(document.createElement('div'));
+  const anchorElementRef = useRef<HTMLElement>(typeof document !== undefined ? document.createElement('div') : null);
   const positionMenu = useCallback(() => {
     const rootElement = editor.getRootElement();
     const containerDiv = anchorElementRef.current;

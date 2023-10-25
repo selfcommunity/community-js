@@ -2,7 +2,8 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .SCFooter-copyright': {
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(3),
+        fontSize: '0.857rem'
       },
       '& .SCFooter-item-list': {
         display: 'flex',

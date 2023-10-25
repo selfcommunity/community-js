@@ -143,7 +143,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
         ))}
       </Box>
 			{endActions}
-      <Typography textAlign="center" className={classes.copyright} variant="subtitle2" dangerouslySetInnerHTML={{__html: copyright}} />
+      <Typography textAlign="center" className={classes.copyright} variant="body2" dangerouslySetInnerHTML={{__html: copyright}} />
     </Root>
   );
 }
