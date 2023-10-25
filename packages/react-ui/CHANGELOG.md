@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.343](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.342...@selfcommunity/react-ui@0.7.0-alpha.343) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix NavigationMenuIconButton.tsx when content_availability is false the left sidebar is hidden for anonymous users ([5a92443](https://github.com/selfcommunity/community-js/commit/5a92443f76dc07691e46c0179fba0e4ab7a33d56))
+
+
+
+
+
 # [0.7.0-alpha.342](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.341...@selfcommunity/react-ui@0.7.0-alpha.342) (2023-10-25)
 
 
