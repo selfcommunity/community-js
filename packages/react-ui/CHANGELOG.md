@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.345](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.344...@selfcommunity/react-ui@0.7.0-alpha.345) (2023-10-26)
+
+
+### Bug Fixes
+
+* Fix fix: Fix MentionsPlugin.tsx document reference ([d3d6599](https://github.com/selfcommunity/community-js/commit/d3d6599b959044c802330ccbe1535c35400e2312))
+* Fix poll error text ([373f521](https://github.com/selfcommunity/community-js/commit/373f521c647fc77f0232289ffd507b7387720b79))
+
+
+### Performance Improvements
+
+* Remove deprecation ([42d5217](https://github.com/selfcommunity/community-js/commit/42d5217e36905d43c85d0070f4c1eb6278ae3794))
+
+
+
+
+
 # [0.7.0-alpha.344](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.343...@selfcommunity/react-ui@0.7.0-alpha.344) (2023-10-25)
 
 
