@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {
@@ -267,7 +267,10 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {features}: SCPreferencesContextType = useSCPreferences();
 
-  // Hooks
+  // STATE
+  const [isConnection, setIsConnection] = useState(undefined);
+
+  // HOOKS
   const {scUser} = useSCFetchUser({id: userId, user});
   const {blockedBy, loading: loadingBlockedBy} = useSCFetchUserBlockedBy({user: scUser});
   const intl = useIntl();
@@ -282,13 +285,22 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     [scPreferencesContext.preferences]
   );
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
-  const isConnection = useMemo(() => {
-    if (isMe || !scUserContext.user || !user) {
-      return false;
-    }
-    return followEnabled ? scUserContext.managers.followers.isFollower(user) : scUserContext.managers.connections.status(user) === 'connected';
-  }, [followEnabled, isMe, user, scUserContext.user, scUserContext.managers]);
   const isStaff = useMemo(() => user && user.community_badge, [user]);
+
+  /**
+   * Check if the authenticated user is connected (follow/friend) to the profile user
+   */
+  useEffect(() => {
+    if (user && Object.is(isConnection ?? null, null)) {
+      if (isMe) {
+        setIsConnection(false);
+      } else if (followEnabled && scUserContext.managers.followers.isFollower) {
+        setIsConnection(scUserContext.managers.followers.isFollower(user));
+      } else if (!followEnabled && scUserContext.managers.connections.status) {
+        setIsConnection(scUserContext.managers.connections.status(user) === 'connected');
+      }
+    }
+  }, [isConnection, scUserContext.managers.followers, scUserContext.managers.connections, followEnabled, isMe, user, scUserContext.user]);
 
   if (!scUser) {
     return <UserProfileSkeleton />;
