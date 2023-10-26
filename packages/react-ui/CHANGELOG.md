@@ -3,6 +3,143 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.346](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.345...@selfcommunity/react-ui@0.7.0-alpha.346) (2023-10-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.345](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.344...@selfcommunity/react-ui@0.7.0-alpha.345) (2023-10-26)
+
+
+### Bug Fixes
+
+* Fix fix: Fix MentionsPlugin.tsx document reference ([d3d6599](https://github.com/selfcommunity/community-js/commit/d3d6599b959044c802330ccbe1535c35400e2312))
+* Fix poll error text ([373f521](https://github.com/selfcommunity/community-js/commit/373f521c647fc77f0232289ffd507b7387720b79))
+
+
+### Performance Improvements
+
+* Remove deprecation ([42d5217](https://github.com/selfcommunity/community-js/commit/42d5217e36905d43c85d0070f4c1eb6278ae3794))
+
+
+
+
+
+# [0.7.0-alpha.344](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.343...@selfcommunity/react-ui@0.7.0-alpha.344) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix footer style ([5e4373f](https://github.com/selfcommunity/community-js/commit/5e4373f84d779b1275f4ddbbcf2538b68bbfac70))
+* Fix MentionsPlugin.tsx document reference ([06ae2aa](https://github.com/selfcommunity/community-js/commit/06ae2aa12e94550c5a6a33b0af99cb878e679840))
+
+
+
+
+
+# [0.7.0-alpha.343](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.342...@selfcommunity/react-ui@0.7.0-alpha.343) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix NavigationMenuIconButton.tsx when content_availability is false the left sidebar is hidden for anonymous users ([5a92443](https://github.com/selfcommunity/community-js/commit/5a92443f76dc07691e46c0179fba0e4ab7a33d56))
+
+
+
+
+
+# [0.7.0-alpha.342](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.341...@selfcommunity/react-ui@0.7.0-alpha.342) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix styles ([ffe2c5b](https://github.com/selfcommunity/community-js/commit/ffe2c5bbd2674ddf165006f8c9c44eb25b98031d))
+
+
+
+
+
+# [0.7.0-alpha.341](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.340...@selfcommunity/react-ui@0.7.0-alpha.341) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([977d37e](https://github.com/selfcommunity/community-js/commit/977d37e8597514a36716eceff6a9f4afb5295064))
+
+
+
+
+
+# [0.7.0-alpha.340](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.339...@selfcommunity/react-ui@0.7.0-alpha.340) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([81c5487](https://github.com/selfcommunity/community-js/commit/81c5487445b02f845fde4290e326fbb1716ac5c3))
+
+
+
+
+
+# [0.7.0-alpha.339](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.338...@selfcommunity/react-ui@0.7.0-alpha.339) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix media share ([36efdb4](https://github.com/selfcommunity/community-js/commit/36efdb420fbc2f6493e3e2c701af8f9dad56bcf4))
+
+
+
+
+
+# [0.7.0-alpha.338](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.337...@selfcommunity/react-ui@0.7.0-alpha.338) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix layout ([918e97c](https://github.com/selfcommunity/community-js/commit/918e97c3a356353985e3fbe6cdff675a503a4050))
+
+
+
+
+
+# [0.7.0-alpha.337](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.336...@selfcommunity/react-ui@0.7.0-alpha.337) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix close virtual keyboard on ios devices ([f8ae0cf](https://github.com/selfcommunity/community-js/commit/f8ae0cfe3d582affe06f44df5c70da62bd1e34b5))
+
+
+
+
+
+# [0.7.0-alpha.336](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.335...@selfcommunity/react-ui@0.7.0-alpha.336) (2023-10-19)
+
+
+### Bug Fixes
+
+* Fix Lightbox.tsx ([06d0bdb](https://github.com/selfcommunity/community-js/commit/06d0bdb473c1b2b9fd6c4c7a712e04bec8542a17))
+
+
+
+
+
+# [0.7.0-alpha.335](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.334...@selfcommunity/react-ui@0.7.0-alpha.335) (2023-10-19)
+
+
+### Bug Fixes
+
+* broadcast message ([d1e988a](https://github.com/selfcommunity/community-js/commit/d1e988aa887bc02074c6202b788ebd2484623aa8))
+* padding FeedObject ([132c981](https://github.com/selfcommunity/community-js/commit/132c9814d8455277f8282d21c302aac0413e5d13))
+
+
+
+
+
 # [0.7.0-alpha.334](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.333...@selfcommunity/react-ui@0.7.0-alpha.334) (2023-10-16)
 
 

@@ -3,6 +3,133 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.299](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.298...@selfcommunity/react-theme-default@0.1.0-alpha.299) (2023-10-26)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.298](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.297...@selfcommunity/react-theme-default@0.1.0-alpha.298) (2023-10-26)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.297](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.296...@selfcommunity/react-theme-default@0.1.0-alpha.297) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix footer style ([5e4373f](https://github.com/selfcommunity/community-js/commit/5e4373f84d779b1275f4ddbbcf2538b68bbfac70))
+
+
+
+
+
+# [0.1.0-alpha.296](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.295...@selfcommunity/react-theme-default@0.1.0-alpha.296) (2023-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.295](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.294...@selfcommunity/react-theme-default@0.1.0-alpha.295) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix styles ([ffe2c5b](https://github.com/selfcommunity/community-js/commit/ffe2c5bbd2674ddf165006f8c9c44eb25b98031d))
+
+
+
+
+
+# [0.1.0-alpha.294](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.293...@selfcommunity/react-theme-default@0.1.0-alpha.294) (2023-10-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.293](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.292...@selfcommunity/react-theme-default@0.1.0-alpha.293) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix feedObject share layout ([d93a12e](https://github.com/selfcommunity/community-js/commit/d93a12e02c14ee19d5a489005e5397a5665a881f))
+
+
+
+
+
+# [0.1.0-alpha.292](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.291...@selfcommunity/react-theme-default@0.1.0-alpha.292) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([81c5487](https://github.com/selfcommunity/community-js/commit/81c5487445b02f845fde4290e326fbb1716ac5c3))
+
+
+
+
+
+# [0.1.0-alpha.291](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.290...@selfcommunity/react-theme-default@0.1.0-alpha.291) (2023-10-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.290](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.289...@selfcommunity/react-theme-default@0.1.0-alpha.290) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix layout ([918e97c](https://github.com/selfcommunity/community-js/commit/918e97c3a356353985e3fbe6cdff675a503a4050))
+
+
+
+
+
+# [0.1.0-alpha.289](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.288...@selfcommunity/react-theme-default@0.1.0-alpha.289) (2023-10-23)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.1.0-alpha.288](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.287...@selfcommunity/react-theme-default@0.1.0-alpha.288) (2023-10-19)
+
+
+### Bug Fixes
+
+* Fix Lightbox.tsx ([06d0bdb](https://github.com/selfcommunity/community-js/commit/06d0bdb473c1b2b9fd6c4c7a712e04bec8542a17))
+
+
+
+
+
+# [0.1.0-alpha.287](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.286...@selfcommunity/react-theme-default@0.1.0-alpha.287) (2023-10-19)
+
+
+### Bug Fixes
+
+* broadcast message ([d1e988a](https://github.com/selfcommunity/community-js/commit/d1e988aa887bc02074c6202b788ebd2484623aa8))
+* padding FeedObject ([132c981](https://github.com/selfcommunity/community-js/commit/132c9814d8455277f8282d21c302aac0413e5d13))
+* sidebar widget padding ([fe17493](https://github.com/selfcommunity/community-js/commit/fe174937f7a23b03d7f0d4ac8540bf269e104e0b))
+
+
+
+
+
 # [0.1.0-alpha.286](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.285...@selfcommunity/react-theme-default@0.1.0-alpha.286) (2023-10-16)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.57...@selfcommunity/react-i18n@0.5.0-alpha.58) (2023-10-26)
+
+
+### Bug Fixes
+
+* Fix poll error text ([373f521](https://github.com/selfcommunity/community-js/commit/373f521c647fc77f0232289ffd507b7387720b79))
+
+
+
+
+
+# [0.5.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.56...@selfcommunity/react-i18n@0.5.0-alpha.57) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([977d37e](https://github.com/selfcommunity/community-js/commit/977d37e8597514a36716eceff6a9f4afb5295064))
+
+
+
+
+
+# [0.5.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.55...@selfcommunity/react-i18n@0.5.0-alpha.56) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([81c5487](https://github.com/selfcommunity/community-js/commit/81c5487445b02f845fde4290e326fbb1716ac5c3))
+* Fix i18n ([1500ae5](https://github.com/selfcommunity/community-js/commit/1500ae5af8ac9e75f366361de8a18a57ad36a9f9))
+
+
+
+
+
+# [0.5.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.54...@selfcommunity/react-i18n@0.5.0-alpha.55) (2023-10-19)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 # [0.5.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.53...@selfcommunity/react-i18n@0.5.0-alpha.54) (2023-09-20)
 
 
