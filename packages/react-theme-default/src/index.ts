@@ -22,7 +22,6 @@ import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCBaseItem from './components/SCBaseItem';
 import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryFeedTemplate from './components/SCCategoryFeedTemplate';
-import SCCategoriesSkeleton from './components/SCCategoriesSkeleton';
 import SCBaseItemButton from './components/SCBaseItemButton';
 import SCUserProfileHeader from './components/SCUserProfileHeader';
 import SCCategoryTemplate from './components/SCCategoryTemplate';
@@ -105,7 +104,6 @@ import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
 import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
 import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
-import SCCategorySkeleton from './components/SCCategorySkeleton';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
@@ -129,6 +127,8 @@ import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleto
 import SCComposer from './components/SCComposer';
 import SCMediaLink from './components/SCMediaLink';
 import SCMediaFile from './components/SCMediaFile';
+import SCCategoriesPopularWidget from './components/SCCategoriesPopularWidget';
+import SCCategoriesSuggestionWidget from './components/SCCategoriesSuggestionWidget';
 
 /**
  * Style fragments - Imports - End
@@ -205,12 +205,10 @@ const theme = {
     SCBroadcastMessages,
     SCBullet,
     SCCategories,
-    SCCategoriesSkeleton,
     SCCategory,
     SCCategoryFeedTemplate,
     SCCategoryFollowersButton,
     SCCategoryHeader,
-    SCCategorySkeleton,
     SCCategoryTemplate,
     SCCategoryTemplateSkeleton,
     SCChoices,
@@ -303,7 +301,9 @@ const theme = {
     SCIncubatorDetail,
     SCPrizeItemSkeleton,
     SCNavigationMenuIconButton,
-    SCUserAvatar
+    SCUserAvatar,
+    SCCategoriesPopularWidget,
+    SCCategoriesSuggestionWidget
   },
   selfcommunity: {
     user: {

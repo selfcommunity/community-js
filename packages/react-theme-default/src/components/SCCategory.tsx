@@ -16,6 +16,20 @@ const Component = {
       '& .SCBaseItemButton-secondary': {
         fontSize: '0.857rem'
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      '& .SCCategory-image': {
+        borderRadius: theme.spacing(1)
+      },
+      '& .SCCategory-primary': {
+        marginBottom: theme.spacing(1)
+      },
+      '& .SCCategory-secondary': {
+        marginBottom: theme.spacing(1)
+      },
+      '& .SCCategory-action': {
+        margin: theme.spacing(0.5)
+      }
     })
   }
 };

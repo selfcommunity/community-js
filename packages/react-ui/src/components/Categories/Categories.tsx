@@ -20,8 +20,7 @@ import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-
-const PREFIX = 'SCCategories';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -33,9 +32,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoriesProps {
   /**

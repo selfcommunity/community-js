@@ -1,20 +1,16 @@
 import React from 'react';
 import CategoriesSuggestionWidgetSkeleton from '../CategoriesSuggestionWidget/Skeleton';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCCategoriesPopularWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(CategoriesSuggestionWidgetSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Categories Popular Skeleton component. Learn about the available props and the CSS API.
 
@@ -26,13 +22,13 @@ const Root = styled(CategoriesSuggestionWidgetSkeleton, {
 
  #### Component Name
 
- The name `SCCategoriesPopularSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoriesPopularWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoriesPopularSkeleton-root|Styles applied to the root element.|
+ |root|.SCCategoriesPopularWidget-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CategoriesPopularSkeleton(props): JSX.Element {
