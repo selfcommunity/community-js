@@ -512,6 +512,11 @@ export interface SCVoteContextType {
   reactions: SCReactionType[];
 
   /**
+   * Is loading the list of reactions?
+   */
+  isLoading: boolean;
+
+  /**
    * Refresh reactions
    */
   refreshReactions: () => Promise<SCReactionType[]>;
