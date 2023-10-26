@@ -4,21 +4,17 @@ import {styled} from '@mui/material/styles';
 import CategorySkeleton from '../Category/Skeleton';
 import Widget from '../Widget';
 import {CardContent, ListItem} from '@mui/material';
-
-const PREFIX = 'SCCategoriesSuggestionWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Categories Suggestion Widget Skeleton component. Learn about the available props and the CSS API.
 
@@ -30,14 +26,14 @@ const Root = styled(Widget, {
 
  #### Component Name
 
- The name `SCCategoriesSuggestionWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoriesSuggestionWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoriesSuggestionWidgetSkeleton-root|Styles applied to the root element.|
- |list|.SCCategoriesSuggestionWidgetSkeleton-list|Styles applied to the list element.|
+ |root|.SCCategoriesSuggestionWidget-skeleton-root|Styles applied to the root element.|
+ |list|.SCCategoriesSuggestionWidget-list|Styles applied to the list element.|
  *
  */
 export default function CategoriesSuggestionWidgetSkeleton(props): JSX.Element {

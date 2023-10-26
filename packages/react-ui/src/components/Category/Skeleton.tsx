@@ -4,11 +4,10 @@ import Skeleton from '@mui/material/Skeleton';
 import {Button, useTheme} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCCategorySkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   image: `${PREFIX}-image`,
   primary: `${PREFIX}-primary`,
   secondary: `${PREFIX}-secondary`,
@@ -18,9 +17,8 @@ const classes = {
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Category Skeleton component. Learn about the available props and the CSS API.
@@ -33,13 +31,13 @@ const Root = styled(BaseItem, {
 
  #### Component Name
 
- The name `SCCategorySkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategory-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategorySkeleton-root|Styles applied to the root element.|
+ |root|.SCCategory-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CategorySkeleton(props): JSX.Element {

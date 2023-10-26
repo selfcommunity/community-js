@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -17,8 +18,6 @@ const messages = defineMessages({
     defaultMessage: 'ui.category.categoryFollowers'
   }
 });
-
-const PREFIX = 'SCCategory';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -29,9 +28,8 @@ const classes = {
 
 const Root = styled(BaseItemButton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryProps extends WidgetProps {
   /**

@@ -22,6 +22,24 @@ const Component = {
           }
         }
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      '& .SCCategories-categories': {
+        marginTop: theme.spacing(3),
+        '& .SCCategory-skeleton-root': {
+          padding: theme.spacing(2),
+          width: 'auto',
+          '& .SCBaseItem-image': {
+            borderTopLeftRadius: theme.shape.borderRadius,
+            borderBottomLeftRadius: theme.shape.borderRadius,
+            '& .SCCategory-image': {
+              borderRadius: 0,
+              width: '56px !important',
+              height: '56px !important'
+            }
+          }
+        }
+      }
     })
   }
 };
