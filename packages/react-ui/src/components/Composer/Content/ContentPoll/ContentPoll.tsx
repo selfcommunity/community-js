@@ -166,7 +166,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && <Typography className={classes.generalError}>{generalError}</Typography>}
+      {generalError && <Typography className={classes.generalError}><FormattedMessage id={`ui.composer.content.poll.error.${generalError}`} defaultMessage={`ui.composer.content.poll.error.${generalError}`} /></Typography>}
       <Box className={classes.title}>
         <TextField
           autoFocus

@@ -154,18 +154,19 @@ export function useMenuAnchorRef(
   resolution: Resolution | null,
   setResolution: (r: Resolution | null) => void,
   className?: string
-): MutableRefObject<HTMLElement> {
+): HTMLElement {
+  const [anchorElementRef, setAnchorElementRef] = useState<HTMLElement | null>(null);
   const [editor] = useLexicalComposerContext();
-  const anchorElementRef = useRef<HTMLElement>(typeof document !== undefined ? document.createElement('div') : null);
+  //const anchorElementRef = useRef<HTMLElement>(null);
   const positionMenu = useCallback(() => {
     const rootElement = editor.getRootElement();
-    const containerDiv = anchorElementRef.current;
+    const containerDiv = anchorElementRef;
 
     const menuEle = containerDiv.firstChild as Element;
     if (rootElement !== null && resolution !== null) {
       const {left, top, width, height} = resolution.range.getBoundingClientRect();
-      containerDiv.style.top = `${top + window.pageYOffset}px`;
-      containerDiv.style.left = `${left + window.pageXOffset}px`;
+      containerDiv.style.top = `${top + window.scrollY}px`;
+      containerDiv.style.left = `${left + window.scrollX}px`;
       containerDiv.style.height = `${height}px`;
       containerDiv.style.width = `${width}px`;
       if (menuEle !== null) {
@@ -176,11 +177,11 @@ export function useMenuAnchorRef(
         const rootElementRect = rootElement.getBoundingClientRect();
 
         if (left + menuWidth > rootElementRect.right) {
-          containerDiv.style.left = `${rootElementRect.right - menuWidth + window.pageXOffset}px`;
+          containerDiv.style.left = `${rootElementRect.right - menuWidth + window.scrollX}px`;
         }
         const margin = 10;
         if ((top + menuHeight > window.innerHeight || top + menuHeight > rootElementRect.bottom) && top - rootElementRect.top > menuHeight) {
-          containerDiv.style.top = `${top - menuHeight + window.pageYOffset - (height + margin)}px`;
+          containerDiv.style.top = `${top - menuHeight + window.scrollY - (height + margin)}px`;
         }
       }
 
@@ -195,27 +196,33 @@ export function useMenuAnchorRef(
         containerDiv.style.position = 'absolute';
         document.body.append(containerDiv);
       }
-      anchorElementRef.current = containerDiv;
+      setAnchorElementRef(containerDiv);
       rootElement.setAttribute('aria-controls', 'typeahead-menu');
     }
-  }, [editor, resolution, className]);
+  }, [anchorElementRef, editor, resolution, className]);
+
+  useEffect(() => {
+    if (resolution && !anchorElementRef) {
+      setAnchorElementRef(document.createElement('div'))
+    }
+  }, [resolution]);
 
   useEffect(() => {
     const rootElement = editor.getRootElement();
-    if (resolution !== null) {
+    if (resolution !== null && anchorElementRef) {
       positionMenu();
       return () => {
         if (rootElement !== null) {
           rootElement.removeAttribute('aria-controls');
         }
 
-        const containerDiv = anchorElementRef.current;
+        const containerDiv = anchorElementRef;
         if (containerDiv !== null && containerDiv.isConnected) {
           containerDiv.remove();
         }
       };
     }
-  }, [editor, positionMenu, resolution]);
+  }, [anchorElementRef, editor, positionMenu, resolution]);
 
   const onVisibilityChange = useCallback(
     (isInView: boolean) => {
@@ -228,7 +235,7 @@ export function useMenuAnchorRef(
     [resolution, setResolution]
   );
 
-  useDynamicPositioning(resolution, anchorElementRef.current, positionMenu, onVisibilityChange);
+  useDynamicPositioning(resolution, anchorElementRef, positionMenu, onVisibilityChange);
 
   return anchorElementRef;
 }
@@ -719,9 +726,13 @@ function useMentions(editor: LexicalEditor, anchorClassName = null): JSX.Element
     return null;
   }
 
+  if (!anchorElementRef) {
+    return null;
+  }
+
   return (
     <ClickAwayListener onClickAway={closeTypeahead}>
-      <Portal container={anchorElementRef.current}>
+      <Portal container={anchorElementRef}>
         <Root close={closeTypeahead} resolution={resolution} editor={editor} className={classes.root} />
       </Portal>
     </ClickAwayListener>
