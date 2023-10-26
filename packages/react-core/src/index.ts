@@ -89,7 +89,6 @@ import useSCFetchIncubator from './hooks/useSCFetchIncubator';
 import useSCMediaClick from './hooks/useSCMediaClick';
 import useSCFetchContributors from './hooks/useSCFetchContributors';
 import useSCFetchFeed from './hooks/useSCFetchFeed';
-import useSCFetchReactions from './hooks/useSCFetchReactions';
 import useSCFetchPrivateMessageSnippets from './hooks/useSCFetchPrivateMessageSnippets';
 import useSCFetchBroadcastMessages from './hooks/useSCFetchBroadcastMessages';
 import useSCFetchUserBlockedBy from './hooks/useSCFetchUserBlockedBy';
@@ -195,7 +194,6 @@ export {
   useIsomorphicLayoutEffect,
   useEffectOnce,
   useNoInitialEffect,
-  useSCFetchReactions,
   useSCFetchPrivateMessageSnippets,
   useSCFetchBroadcastMessages,
   useSCFetchUserBlockedBy,

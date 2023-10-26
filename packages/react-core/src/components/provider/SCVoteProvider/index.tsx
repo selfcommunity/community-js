@@ -1,12 +1,11 @@
-import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
-import {ReactionService} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferencesContextType, SCVoteContextType} from '../../../types/context';
-import {Logger, LRUCache} from '@selfcommunity/utils';
-import {SCOPE_SC_CORE} from '../../../constants/Errors';
-import {useSCContext} from '../SCContextProvider';
-import {SCFeatureName, SCReactionType} from '@selfcommunity/types';
-import {getReactionObjectCacheKey, getReactionsObjectCacheKey} from '../../../constants/Cache';
-import {SCPreferencesContext} from '../SCPreferencesProvider';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { ReactionService } from '@selfcommunity/api-services';
+import { SCContextType, SCPreferencesContextType, SCVoteContextType } from '../../../types/context';
+import { Logger } from '@selfcommunity/utils';
+import { SCOPE_SC_CORE } from '../../../constants/Errors';
+import { useSCContext } from '../SCContextProvider';
+import { SCFeatureName, SCReactionType } from '@selfcommunity/types';
+import { SCPreferencesContext } from '../SCPreferencesProvider';
 
 /**
  * Creates Vote Context
@@ -33,43 +32,24 @@ export const SCVoteContext = createContext<SCVoteContextType>({} as SCVoteContex
  * @param children
  * @return
  *  ```jsx
- *  <SCVoteContext.Provider value={{reactions}}>{!loading && children}</SCVoteContext.Provider>
+ *  <SCVoteContext.Provider value={{reactions}}>{!isLoading && children}</SCVoteContext.Provider>
  *  ```
  */
 export default function SCVoteProvider({children = null}: {children: React.ReactNode}): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const [reactions] = useState<SCReactionType[]>(scContext.settings.vote.reactions);
+  const [reactions, setReactions] = useState<SCReactionType[]>(scContext.settings.vote.reactions);
   const [, setError] = useState<any>();
-  const [initialized, setInitialized] = useState<boolean>(scContext.settings.vote.reactions !== null);
-  const [loading, setLoading] = useState<boolean>(scContext.settings.vote.reactions === null);
-
-  /**
-   * Hydrate reactions cache
-   * @param data
-   */
-  const hydrateCache = (data: SCReactionType[]): SCReactionType[] => {
-    if (data && Array.isArray(data) && data.length) {
-      LRUCache.set(
-        getReactionsObjectCacheKey(),
-        data.map((r: SCReactionType) => {
-          const __reactionCacheKey = getReactionObjectCacheKey(r.id);
-          LRUCache.set(__reactionCacheKey, r, {noSsr: false});
-          return r.id;
-        }),
-        {noSsr: false}
-      );
-    }
-    return data;
-  };
+  const [initialized, setInitialized] = useState<boolean>((scPreferencesContext.features && !scPreferencesContext.features.includes(SCFeatureName.REACTION)) || scContext.settings.vote.reactions !== null);
+  const [isLoading, setIsLoading] = useState<boolean>(scPreferencesContext.features && scPreferencesContext.features.includes(SCFeatureName.REACTION) && scContext.settings.vote.reactions === null);
 
   /**
    * Helper to refresh reactions list
    */
-  const refreshReactions = useMemo(
-    () => () =>
-      ReactionService.getAllReactionsList().then((data: SCReactionType[]) => {
-        return hydrateCache(data);
+  const refreshReactions = useCallback(
+    () => ReactionService.getAllReactionsList().then((data: SCReactionType[]) => {
+        setReactions(data);
+        return data;
       }),
     []
   );
@@ -78,42 +58,40 @@ export default function SCVoteProvider({children = null}: {children: React.React
    * Initialize component
    * Load all reactions if the feature 'reaction' is enabled
    */
-  const _initComponent = useMemo(
-    () => (): void => {
+  const _initComponent = useCallback(
+    (): void => {
       if (!initialized) {
         setInitialized(true);
-        setLoading(true);
+        setIsLoading(true);
         refreshReactions()
           .then(() => {
-            setLoading(false);
+            setIsLoading(false);
           })
           .catch((_error) => {
             Logger.error(SCOPE_SC_CORE, _error);
             setError(_error);
           });
-      } else {
-        hydrateCache(reactions);
       }
     },
-    [loading, reactions, initialized]
+    [isLoading, initialized]
   );
 
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scPreferencesContext.features && scPreferencesContext.features.includes(SCFeatureName.REACTION)) {
+    if (scPreferencesContext.features && scPreferencesContext.features.includes(SCFeatureName.REACTION) && !reactions) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scPreferencesContext.features]);
+  }, [scPreferencesContext.features, reactions]);
 
   /**
    * Nesting all necessary providers
    * All child components will use help contexts to works
    */
-  return <SCVoteContext.Provider value={{reactions, refreshReactions}}>{initialized && children}</SCVoteContext.Provider>;
+  return <SCVoteContext.Provider value={{reactions, isLoading, refreshReactions}}>{initialized && children}</SCVoteContext.Provider>;
 }
 
 /**
