@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.339](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.338...@selfcommunity/react-templates@0.3.0-alpha.339) (2023-10-26)
+
+
+### Bug Fixes
+
+* UserProfile template ([24f991a](https://github.com/selfcommunity/community-js/commit/24f991a2f27cc13b67540f7894b71db5db91ad12))
+
+
+
+
+
 # [0.3.0-alpha.338](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.337...@selfcommunity/react-templates@0.3.0-alpha.338) (2023-10-26)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

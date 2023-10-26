@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.347](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.346...@selfcommunity/react-ui@0.7.0-alpha.347) (2023-10-26)
+
+
+### Performance Improvements
+
+* refactored theme for: Category, Categories, CategoriesPopularWidget, CategoriesSuggestionWidget components ([ffc8bea](https://github.com/selfcommunity/community-js/commit/ffc8bea81a681c3ab691966e3cac5dfcacad985e))
+
+
+
+
+
 # [0.7.0-alpha.346](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.345...@selfcommunity/react-ui@0.7.0-alpha.346) (2023-10-26)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
