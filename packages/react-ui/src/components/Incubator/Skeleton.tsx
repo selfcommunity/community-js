@@ -3,11 +3,10 @@ import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import Widget from '../Widget';
 import {Button, CardActions, CardContent, Grid, Typography} from '@mui/material';
-
-const PREFIX = 'SCIncubatorSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   primary: `${PREFIX}-primary`,
   secondary: `${PREFIX}-secondary`,
   progressBar: `${PREFIX}-progress-bar`,
@@ -16,9 +15,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Incubator Skeleton component. Learn about the available props and the CSS API.
@@ -31,17 +29,17 @@ const Root = styled(Widget, {
 
  #### Component Name
 
- The name `SCIncubatorSkeleton` can be used when providing style overrides in the theme.
+ The name `SCIncubator-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCIncubatorSkeleton-root|Styles applied to the root element.|
- |primary|.SCIncubatorSkeleton-primary|Styles applied to the primary text element.|
- |secondary|.SCIncubatorSkeleton-secondary|Styles applied to the secondary text element.|
- |progressBar|.SCIncubatorSkeleton-progress-bar|Styles applied to the progress bar section.|
- |action|.SCIncubatorSkeleton-action|Styles applied to the action button element.|
+ |root|.SCIncubator-skeleton-root|Styles applied to the root element.|
+ |primary|.SCIncubator-primary|Styles applied to the primary text element.|
+ |secondary|.SCIncubator-secondary|Styles applied to the secondary text element.|
+ |progressBar|.SCIncubator-progress-bar|Styles applied to the progress bar section.|
+ |action|.SCIncubator-action|Styles applied to the action button element.|
  *
  */
 export default function IncubatorSkeleton(props): JSX.Element {

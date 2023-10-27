@@ -99,13 +99,11 @@ import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCFooter from './components/SCFooter';
 import SCPlatformWidget from './components/SCPlatformWidget';
 import SCChangePictureButton from './components/SCChangePictureButton';
-import SCChangePictureDialog from './components/SCChangePictureDialog';
 import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
 import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
 import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
 import SCIncubator from './components/SCIncubator';
-import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
@@ -295,10 +293,8 @@ const theme = {
     SCPrivateMessageThreadItemDialog,
     SCPlatformWidget,
     SCChangePictureButton,
-    SCChangePictureDialog,
     SCIncubator,
     SCIncubatorListWidget,
-    SCIncubatorSkeleton,
     SCIncubatorSuggestionWidget,
     SCIncubatorDetail,
     SCPrizeItemSkeleton,

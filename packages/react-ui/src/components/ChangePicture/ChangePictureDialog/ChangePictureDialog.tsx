@@ -15,11 +15,10 @@ import {useThemeProps} from '@mui/system';
 import {scroll} from 'seamless-scroll-polyfill';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-
-const PREFIX = 'SCChangePictureDialog';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  dialogRoot: `${PREFIX}-dialog-root`,
   upload: `${PREFIX}-upload`,
   imagesList: `${PREFIX}-images-list`,
   imageItem: `${PREFIX}-image-item`,
@@ -28,16 +27,8 @@ const classes = {
 
 const Root = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  '& .MuiDialogContent-root': {
-    paddingLeft: theme.spacing(2)
-  },
-  [`& .${classes.imagesList}`]: {
-    maxHeight: 500
-  }
-}));
+  slot: 'DialogRoot'
+})(() => ({}));
 
 export interface CPDialogProps extends BaseDialogProps {
   /**
@@ -211,7 +202,7 @@ export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element
    */
   return (
     <Root
-      className={classNames(classes.root, className)}
+      className={classNames(classes.dialogRoot, className)}
       title={<FormattedMessage defaultMessage="ui.changePicture.title" id="ui.changePicture.title" />}
       onClose={onClose}
       open={open}

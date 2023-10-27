@@ -13,8 +13,7 @@ import Widget from '../Widget';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from '../IncubatorSubscribeButton';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
-
-const PREFIX = 'SCIncubator';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -25,9 +24,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 function LinearProgressWithLabel({className, ...props}: LinearProgressProps & {value: number; subscribers: number}) {
   return (
