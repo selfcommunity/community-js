@@ -47,7 +47,6 @@ import SCFeedRelevantActivities from './components/SCFeedRelevantActivities';
 import MuiIconButton from './components/MuiIconButton';
 import SCUser from './components/SCUser';
 import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
-import SCLoyaltyProgramWidgetSkeleton from './components/SCLoyaltyProgramWidgetSkeleton';
 import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
@@ -248,7 +247,6 @@ const theme = {
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetailTemplate,
-    SCLoyaltyProgramWidgetSkeleton,
     SCLoyaltyProgramDetailTemplateSkeleton,
     SCMediaFile,
     SCMediaLink,

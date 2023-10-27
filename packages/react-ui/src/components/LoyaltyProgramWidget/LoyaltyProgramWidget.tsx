@@ -13,8 +13,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Skeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-
-const PREFIX = 'SCLoyaltyProgramWidget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -26,9 +25,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface LoyaltyProgramWidgetProps {
   /**
