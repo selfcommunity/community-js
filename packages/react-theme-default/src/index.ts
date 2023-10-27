@@ -130,6 +130,7 @@ import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWid
 import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersWidget';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCCustomAdv from './components/SCCustomAdv';
+import SCPollSuggestionWidget from './components/SCPollSuggestionWidget';
 
 /**
  * Style fragments - Imports - End
@@ -305,7 +306,8 @@ const theme = {
     SCCategoryTrendingFeedWidget,
     SCCategoryTrendingUsersWidget,
     SCConsentSolution,
-    SCCustomAdv
+    SCCustomAdv,
+    SCPollSuggestionWidget
   },
   selfcommunity: {
     user: {

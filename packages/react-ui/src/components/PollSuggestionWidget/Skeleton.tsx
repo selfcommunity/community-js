@@ -4,15 +4,17 @@ import Widget from '../Widget';
 import {CardContent, List, ListItem} from '@mui/material';
 import {PollSnippetSkeleton} from './PollSnippet';
 import Skeleton from '@mui/material/Skeleton';
-
-const PREFIX = 'SCPollSuggestionWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({}));
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Poll Suggestion Widget Skeleton component. Learn about the available props and the CSS API.
@@ -25,14 +27,14 @@ const Root = styled(Widget)(({theme}) => ({}));
 
  #### Component Name
 
- The name `SCPollSuggestionWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPollSuggestionWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPollSuggestionWidgetSkeleton-root|Styles applied to the root element.|
- |list|.SCPollSuggestionWidgetSkeleton-list|Styles applied to the list element.|
+ |root|.SCPollSuggestionWidget-skeleton-root|Styles applied to the root element.|
+ |list|.SCPollSuggestionWidget-list|Styles applied to the list element.|
  *
  */
 export default function PollSuggestionWidgetSkeleton(props): JSX.Element {

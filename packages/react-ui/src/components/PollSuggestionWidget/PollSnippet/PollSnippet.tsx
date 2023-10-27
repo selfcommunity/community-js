@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
 import {SCFeedDiscussionType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -11,11 +11,10 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import BaseItem from '../../../shared/BaseItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
-
-const PREFIX = 'SCPollSnippet';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-poll-snippet-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   title: `${PREFIX}-title`,
@@ -24,32 +23,8 @@ const classes = {
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  [`&.${classes.root} > div`]: {
-    alignItems: 'flex-start',
-    paddingTop: theme.spacing(1)
-  },
-  '& .SCBaseItem-text': {
-    marginTop: 0
-  },
-  [`& .${classes.username}`]: {
-    color: theme.palette.text.primary,
-    fontWeight: theme.typography.fontWeightBold,
-    textDecoration: 'none'
-  },
-  [`& .${classes.title}`]: {},
-  [`& .${classes.avatar}`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  },
-  [`& .${classes.activityAt}`]: {
-    textDecoration: 'none',
-    color: 'inherit',
-    marginTop: 3
-  }
-}));
+  slot: 'PollSnippetRoot'
+})(() => ({}));
 
 export interface PollSnippetProps {
   /**
@@ -83,16 +58,17 @@ export interface PollSnippetProps {
  import {PollSnippet} from '@selfcommunity/react-ui';
  ```
  #### Component Name
- The name `SCPollSnippet` can be used when providing style overrides in the theme.
+ The name `SCPollSuggestionWidget-poll-snippet-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPollSnippet-root|Styles applied to the root element.|
- |title|.SCPollSnippet-title|Styles applied to the title element.|
- |action|.SCPollSnippet-actions|Styles applied to action section.|
- |seeItem|.SCPollSnippet-see-item|Styles applied to the see item button element.|
+ |root|.SCPollSuggestionWidget-poll-snippet-root|Styles applied to the root element.|
+ |avatar|.SCPollSuggestionWidget-avatar|Styles applied to the avatar element.|
+ |username|.SCPollSuggestionWidget-username|Styles applied to the username element.|
+ |title|.SCPollSuggestionWidget-title|Styles applied to the title element.|
+ |activityAt|.SCPollSuggestionWidget-activity-at|Styles applied to activity section.|
 
  * @param inProps
  */
