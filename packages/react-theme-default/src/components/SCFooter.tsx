@@ -14,7 +14,8 @@ const Component = {
           color: theme.palette.text.primary
         }
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 
