@@ -4,15 +4,17 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import {IncubatorSkeleton} from '../Incubator';
 import Widget from '../Widget';
-
-const PREFIX = 'SCIncubatorListWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({}));
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Incubator List Skeleton component. Learn about the available props and the CSS API.
@@ -25,14 +27,14 @@ const Root = styled(Widget)(({theme}) => ({}));
 
  #### Component Name
 
- The name `SCIncubatorListWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCIncubatorListWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCIncubatorListWidgetSkeleton-root|Styles applied to the root element.|
- |list|.SCIncubatorListWidgetSkeleton-list|Styles applied to the list element.|
+ |root|.SCIncubatorListWidget-skeleton-root-root|Styles applied to the root element.|
+ |list|.SCIncubatorListWidget-list|Styles applied to the list element.|
  *
  */
 export default function IncubatorListWidgetSkeleton(props): JSX.Element {

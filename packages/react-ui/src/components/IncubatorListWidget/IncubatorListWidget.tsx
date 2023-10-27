@@ -31,8 +31,7 @@ import {
 } from '@selfcommunity/react-core';
 import {AxiosResponse} from 'axios';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-
-const PREFIX = 'SCIncubatorListWidget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -43,7 +42,8 @@ const classes = {
   actions: `${PREFIX}-actions`,
   helpPopover: `${PREFIX}-help-popover`,
   dialogRoot: `${PREFIX}-dialog-root`,
-  endMessage: `${PREFIX}-end-message`
+  endMessage: `${PREFIX}-end-message`,
+  createDialog: `${PREFIX}-create-dialog`
 };
 
 const Root = styled(Widget, {
@@ -54,8 +54,7 @@ const Root = styled(Widget, {
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
+  slot: 'DialogRoot'
 })(({theme}) => ({}));
 export interface IncubatorListWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -121,6 +120,7 @@ export interface IncubatorListWidgetProps extends VirtualScrollerItemProps {
  |helpPopover|.SCIncubatorListWidget-help-popover|Styles applied to the help popover element.|
  |dialogRoot|.SCIncubatorListWidget-dialog-root|Styles applied to the root dialog element.|
  |endMessage|.SCIncubatorListWidget-end-message|Styles applied to the end message element.|
+ |createDialog|.SCIncubatorListWidget-create-dialog|Styles applied to the create dialog element.|
 
  * @param inProps
  */
@@ -410,7 +410,9 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
           </InfiniteScroll>
         </DialogRoot>
       )}
-      {openCreateIncubatorDialog && <CreateIncubatorDialog open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />}
+      {openCreateIncubatorDialog && (
+        <CreateIncubatorDialog className={classes.createDialog} open={openCreateIncubatorDialog} onClose={handleCreateIncubatorDialogClose} />
+      )}
       {openIncubatorDetailDialog && (
         <IncubatorDetail
           open={openIncubatorDetailDialog}
