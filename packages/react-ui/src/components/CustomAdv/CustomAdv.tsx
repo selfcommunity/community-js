@@ -9,8 +9,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import useResizeObserver from 'use-resize-observer';
-
-const PREFIX = 'SCCustomAdv';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -22,28 +21,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  margin: theme.spacing(2, 0),
-  [`& .${classes.wrap}`]: {
-    width: '100%',
-    position: 'relative'
-  },
-  [`& .${classes.image}`]: {
-    width: '100%'
-  },
-  [`& .${classes.embedCode}`]: {
-    width: '100%'
-  },
-  [`& .${classes.prefixedHeight}`]: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CustomAdvProps extends VirtualScrollerItemProps {
   /**
