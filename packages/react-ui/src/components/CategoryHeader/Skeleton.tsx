@@ -2,35 +2,16 @@ import React from 'react';
 import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-
-const PREFIX = 'SCCategoryHeaderSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(() => ({
-  position: 'relative',
-  [`& .${classes.avatar}`]: {
-    position: 'absolute',
-    top: 190,
-    width: '100%',
-    [`& .MuiSkeleton-root`]: {
-      border: '#FFF solid 5px',
-      margin: '0 auto'
-    }
-  },
-  [`& .${classes.username}`]: {
-    marginTop: 50,
-    textAlign: 'center'
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Category AppBar Skeleton component. Learn about the available props and the CSS API.
 
@@ -42,15 +23,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCCategoryHeaderSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoryHeader-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryHeaderSkeleton-root|Styles applied to the root element.|
- |avatar|.SCCategoryHeaderSkeleton-avatar|Styles applied to the avatar element.|
- |username|.SCCategoryHeaderSkeleton-username|Styles applied to the username element.|
+ |root|.SCCategoryHeader-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CategoryHeaderSkeleton(): JSX.Element {

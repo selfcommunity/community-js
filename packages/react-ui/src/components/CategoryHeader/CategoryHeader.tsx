@@ -8,8 +8,7 @@ import {SCCategoryType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import CategoryFollowersButton, {CategoryFollowersButtonProps} from '../CategoryFollowersButton';
-
-const PREFIX = 'SCCategoryHeader';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -24,9 +23,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryHeaderProps {
   /**

@@ -129,6 +129,8 @@ import SCMediaLink from './components/SCMediaLink';
 import SCMediaFile from './components/SCMediaFile';
 import SCCategoriesPopularWidget from './components/SCCategoriesPopularWidget';
 import SCCategoriesSuggestionWidget from './components/SCCategoriesSuggestionWidget';
+import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
+import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersWidget';
 
 /**
  * Style fragments - Imports - End
@@ -303,7 +305,9 @@ const theme = {
     SCNavigationMenuIconButton,
     SCUserAvatar,
     SCCategoriesPopularWidget,
-    SCCategoriesSuggestionWidget
+    SCCategoriesSuggestionWidget,
+    SCCategoryTrendingFeedWidget,
+    SCCategoryTrendingUsersWidget
   },
   selfcommunity: {
     user: {

@@ -4,17 +4,17 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
 import {CardContent, ListItem} from '@mui/material';
-
-const PREFIX = 'SCCategoryTrendingPeopleWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Trending People Widget Skeleton component. Learn about the available props and the CSS API.
 
@@ -26,14 +26,14 @@ const Root = styled(Widget)(({theme}) => ({
 
  #### Component Name
 
- The name `SCCategoryTrendingPeopleWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoryTrendingPeopleWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryTrendingPeopleWidgetSkeleton-root|Styles applied to the root element.|
- |list|.SCCategoryTrendingPeopleWidgetSkeleton-list|Styles applied to the list element.|
+ |root|.SCCategoryTrendingPeopleWidget-skeleton-root|Styles applied to the root element.|
+ |list|.SCCategoryTrendingPeopleWidget-list|Styles applied to the list element.|
  *
  */
 export default function CategoryTrendingPeopleWidgetSkeleton(props: WidgetProps): JSX.Element {
