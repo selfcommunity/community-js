@@ -4,7 +4,7 @@ import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {
   ConnectionUserButton,
   FeedObjectProps,
-  FeedSidebarProps,
+  FeedSidebarProps, LoyaltyProgramWidget,
   SCFeedWidgetType,
   TagChip,
   UserActionIconButton,
@@ -17,7 +17,7 @@ import {
   UserFollowersWidget,
   UserProfileBlocked,
   UserProfileHeader,
-  UserProfileHeaderProps
+  UserProfileHeaderProps,
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
@@ -172,6 +172,16 @@ const WIDGETS_FOLLOWERS = [
   }
 ];
 
+const WIDGETS_FOLLOWERS_MY_PROFILE = [
+  {
+    type: 'widget',
+    component: LoyaltyProgramWidget,
+    componentProps: {},
+    column: 'right',
+    position: -1
+  },
+];
+
 const WIDGETS_CONNECTIONS = [
   {
     type: 'widget',
@@ -190,6 +200,13 @@ const WIDGETS_CONNECTIONS = [
 ];
 
 const WIDGETS_CONNECTIONS_MY_PROFILE = [
+  {
+    type: 'widget',
+    component: LoyaltyProgramWidget,
+    componentProps: {},
+    column: 'right',
+    position: -1
+  },
   {
     type: 'widget',
     component: UserConnectionsRequestsWidget,
@@ -286,6 +303,25 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   );
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
   const isStaff = useMemo(() => user && user.community_badge, [user]);
+  const _widgets = useMemo(() => {
+    if (widgets !== null) {
+      return widgets;
+    }
+    if (!scUser) {
+      return [];
+    }
+    let _widgets = [];
+    if (followEnabled && scUserContext?.user?.id === scUser.id) {
+      _widgets = [...WIDGETS_FOLLOWERS, ...WIDGETS_FOLLOWERS_MY_PROFILE];
+    } else if (followEnabled) {
+      _widgets = [...WIDGETS_FOLLOWERS];
+    } else if (!followEnabled && scUserContext?.user?.id === scUser.id) {
+      _widgets = [...WIDGETS_CONNECTIONS, ...WIDGETS_CONNECTIONS_MY_PROFILE];
+    } else {
+      _widgets = [...WIDGETS_CONNECTIONS];
+    }
+    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId: scUser.id}}));
+  }, [widgets, followEnabled, scUserContext?.user, scUser]);
 
   /**
    * Check if the authenticated user is connected (follow/friend) to the profile user
@@ -304,25 +340,6 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
 
   if (!scUser) {
     return <UserProfileSkeleton />;
-  }
-
-  // Utils
-  const getWidgets = () => {
-    let _widgets = [];
-    if (followEnabled) {
-      _widgets = [...WIDGETS_FOLLOWERS];
-    } else if (!followEnabled && scUserContext?.user?.id === scUser.id) {
-      _widgets = [...WIDGETS_CONNECTIONS, ...WIDGETS_CONNECTIONS_MY_PROFILE];
-    } else {
-      _widgets = [...WIDGETS_CONNECTIONS];
-    }
-    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId: scUser.id}}));
-  };
-
-  // Choose widgets based on user session
-  let _widgets = widgets;
-  if (_widgets === null) {
-    _widgets = getWidgets();
   }
 
   // HANDLERS
