@@ -33,7 +33,7 @@ export const Base: StoryObj<typeof UserProfile> = {
       </IconButton>
     </>
   },
-  render: (args) => {
+  render: (args: any) => {
     const {userId, ...rest} = args;
     const scUserContext: SCUserContextType = useSCUser();
 
