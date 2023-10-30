@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.348](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.347...@selfcommunity/react-ui@0.7.0-alpha.348) (2023-10-30)
+
+
+### Performance Improvements
+
+* Added LoyaltyProgramWidget.tsx to user profile ([091208d](https://github.com/selfcommunity/community-js/commit/091208d66353e53a7cc7d1e51b35b97186504a6f))
+
+
+
+
+
+# [0.7.0-alpha.347](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.346...@selfcommunity/react-ui@0.7.0-alpha.347) (2023-10-26)
+
+
+### Performance Improvements
+
+* refactored theme for: Category, Categories, CategoriesPopularWidget, CategoriesSuggestionWidget components ([ffc8bea](https://github.com/selfcommunity/community-js/commit/ffc8bea81a681c3ab691966e3cac5dfcacad985e))
+
+
+
+
+
 # [0.7.0-alpha.346](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.345...@selfcommunity/react-ui@0.7.0-alpha.346) (2023-10-26)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
