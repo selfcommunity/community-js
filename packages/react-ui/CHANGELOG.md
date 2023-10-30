@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.349](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.348...@selfcommunity/react-ui@0.7.0-alpha.349) (2023-10-30)
+
+
+### Bug Fixes
+
+* PlatformWidget ([ada83cc](https://github.com/selfcommunity/community-js/commit/ada83ccac393882bc059c567670702a4eb497301))
+
+
+
+
+
 # [0.7.0-alpha.348](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.347...@selfcommunity/react-ui@0.7.0-alpha.348) (2023-10-30)
 
 
