@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.348](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.347...@selfcommunity/react-ui@0.7.0-alpha.348) (2023-10-30)
+
+
+### Performance Improvements
+
+* Added LoyaltyProgramWidget.tsx to user profile ([091208d](https://github.com/selfcommunity/community-js/commit/091208d66353e53a7cc7d1e51b35b97186504a6f))
+
+
+
+
+
 # [0.7.0-alpha.347](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.346...@selfcommunity/react-ui@0.7.0-alpha.347) (2023-10-26)
 
 
