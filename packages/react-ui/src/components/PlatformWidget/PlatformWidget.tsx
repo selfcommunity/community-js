@@ -127,7 +127,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
         </Grid>
       )}
       <Grid item xs="auto">
-        <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+        <Button variant="outlined" size="small" onClick={() => fetchPlatform('/moderation/flags/')}>
           {isAdmin || isModerator ? (
             <FormattedMessage id="ui.platformWidget.mod" defaultMessage="ui.platformWidget.mod" />
           ) : (
