@@ -4,20 +4,18 @@ import {Box, Card, CardContent, ListSubheader, Skeleton, useMediaQuery, useTheme
 import List from '@mui/material/List';
 import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCPrivateMessageThreadSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`,
   editor: `${PREFIX}-editor`
 };
 
 const Root = styled(Card, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS PrivateMessage Thread Skeleton component. Learn about the available props and the CSS API.
 
@@ -29,14 +27,14 @@ const Root = styled(Card, {
 
  #### Component Name
 
- The name `SCPrivateMessageThreadSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPrivateMessageThread-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPrivateMessageThreadSkeleton-root|Styles applied to the root element.|
- |list|.SCPrivateMessageThreadSkeleton-list|Styles applied to the list element.|
+ |root|.SCPrivateMessageThread-skeleton-root|Styles applied to the root element.|
+ |list|.SCPrivateMessageThread-list|Styles applied to the list element.|
  *
  */
 export default function PrivateMessageThreadSkeleton(props): JSX.Element {

@@ -28,6 +28,7 @@ import {groupBy, Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
+import {PREFIX} from './constants';
 
 const translMessages = defineMessages({
   placeholder: {
@@ -39,8 +40,6 @@ const translMessages = defineMessages({
     defaultMessage: 'ui.privateMessage.thread.message.deleted'
   }
 });
-
-const PREFIX = 'SCPrivateMessageThread';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -60,9 +59,8 @@ const classes = {
 
 const Root = styled(Card, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface PrivateMessageThreadProps extends CardProps {
   /**

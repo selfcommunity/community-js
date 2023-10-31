@@ -1,18 +1,16 @@
 import React from 'react';
 import {GenericSkeleton} from '../Skeleton';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCMessageEditorSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(GenericSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Message Editor Skeleton component. Learn about the available props and the CSS API.
 

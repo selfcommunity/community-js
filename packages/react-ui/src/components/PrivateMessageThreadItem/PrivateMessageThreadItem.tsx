@@ -15,9 +15,7 @@ import BaseDialog from '../../shared/BaseDialog';
 import LightBox from '../../shared/Lightbox';
 import AutoPlayer from '../../shared/AutoPlayer';
 import {useSnackbar} from 'notistack';
-
-const PREFIX = 'SCPrivateMessageThreadItem';
-const DIALOG_PREFIX = `${PREFIX}Dialog`;
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,20 +25,19 @@ const classes = {
   video: `${PREFIX}-video`,
   messageTime: `${PREFIX}-message-time`,
   menuItem: `${PREFIX}-menu-item`,
-  downloadButton: `${PREFIX}-download-button`
+  downloadButton: `${PREFIX}-download-button`,
+  dialogRoot: `${PREFIX}-dialog-root`
 };
 
-const MediaPreviewDialog = styled(BaseDialog, {
-  name: DIALOG_PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+const DialogRoot = styled(BaseDialog, {
+  name: PREFIX,
+  slot: 'DialogRoot'
+})(() => ({}));
 
 const Root = styled(ListItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface PrivateMessageThreadItemProps {
   /**
@@ -106,6 +103,7 @@ export interface PrivateMessageThreadItemProps {
  |video|.SCPrivateMessageThreadItem-video|Styles applied to the message video element.|
  |messageTime|.SCPrivateMessageThreadItem-message-time|Styles applied to the thread message time element.|
  |menuItem|.SCPrivateMessageThreadItem-menu-item|Styles applied to the thread message menu item element.|
+ |dialogRoot|.SCPrivateMessageThreadItem-dialog-root|Styles applied to dialog root element.|
 
 
  * @param inProps
@@ -238,9 +236,9 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
       {openDialog && (
         <>
           {message?.file.mimetype.startsWith(SCMessageFileType.VIDEO) ? (
-            <MediaPreviewDialog open={openDialog} onClose={() => setOpenDialog(false)}>
+            <DialogRoot open={openDialog} onClose={() => setOpenDialog(false)} className={classes.dialogRoot}>
               <AutoPlayer url={message?.file.url} width={'100%'} enableAutoplay={false} />
-            </MediaPreviewDialog>
+            </DialogRoot>
           ) : (
             <LightBox
               images={[{src: message?.file.url, key: message.file.uuid}]}

@@ -5,18 +5,16 @@ import PrivateMessageSnippetsSkeleton from '../PrivateMessageSnippets/Skeleton';
 import PrivateMessageThreadSkeleton from '../PrivateMessageThread/Skeleton';
 import classNames from 'classnames';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCPrivateMessageComponentSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   snippetsSection: `${PREFIX}-snippets-section`,
   threadSection: `${PREFIX}-thread-section`
 };
 const Root = styled(Grid, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'SkeletonRoot'
 })(() => ({}));
 
 interface PrivateMessageComponentSkeletonMap {
@@ -44,9 +42,9 @@ export type PrivateMessageComponentProps = React.PropsWithChildren<PrivateMessag
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPrivateMessageComponentSkeleton-root|Styles applied to the root element.|
- |snippetsSection|.SCPrivateMessageComponentSkeleton-snippets-section|Styles applied to the snippets section|
- |threadSection|.SCPrivateMessageComponentSkeleton-thread-section|Styles applied to the thread section|
+ |root|.SCPrivateMessageComponent-skeleton-root|Styles applied to the root element.|
+ |snippetsSection|.SCPrivateMessageComponent-snippets-section|Styles applied to the snippets section|
+ |threadSection|.SCPrivateMessageComponent-thread-section|Styles applied to the thread section|
  *
  */
 export default function PrivateMessageComponentSkeleton(props: PrivateMessageComponentProps): JSX.Element {

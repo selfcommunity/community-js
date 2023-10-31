@@ -16,7 +16,7 @@ import {FormattedMessage} from 'react-intl';
 import {pdfImagePlaceholder} from '../../../utils/thumbnailCoverter';
 import classNames from 'classnames';
 import {bytesToSize} from '../../../utils/sizeCoverter';
-
+import {PREFIX} from '../constants';
 const MAX_FILE_SIZE = 10485760;
 
 const UploadButton = asUploadButton(
@@ -27,10 +27,8 @@ const UploadButton = asUploadButton(
   ))
 );
 
-const PREFIX = 'SCMessageMediaUploader';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-message-media-uploader-root`,
   uploadSection: `${PREFIX}-upload-section`,
   uploadButton: `${PREFIX}-upload-button`,
   closeButton: `${PREFIX}-close-button`,
@@ -43,9 +41,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'MessageMediaUploader'
+})(() => ({}));
 
 export interface MessageMediaUploaderProps {
   /**
