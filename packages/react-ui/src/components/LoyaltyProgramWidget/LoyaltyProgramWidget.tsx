@@ -7,7 +7,7 @@ import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextTyp
 import {FormattedMessage} from 'react-intl';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import Widget from '../Widget';
+import Widget, { WidgetProps } from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Skeleton from './Skeleton';
@@ -28,12 +28,12 @@ const Root = styled(Widget, {
   slot: 'Root'
 })(() => ({}));
 
-export interface LoyaltyProgramWidgetProps {
+export interface LoyaltyProgramWidgetProps extends WidgetProps {
   /**
-   * Overrides or extends the styles applied to the component.
+   * The user id
    * @default null
    */
-  className?: string;
+  userId?: number;
 }
 /**
  * > API documentation for the Community-JS Loyalty Program Widget component. Learn about the available props and the CSS API.
@@ -71,7 +71,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
     name: PREFIX
   });
   // PROPS
-  const {className} = props;
+  const {className, userId = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -123,14 +123,14 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   /**
    * Rendering
    */
-  if (!loyaltyEnabled || !scUserContext.user) {
+  if (!loyaltyEnabled || !scUserContext.user || (userId  && userId !== scUserContext.user.id)) {
     return <HiddenPlaceholder />;
   }
   if (loading) {
     return <Skeleton />;
   }
   return (
-    <Root {...props} className={classNames(classes.root, className)}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <CardContent>
         <Typography className={classes.title}>
           <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />
