@@ -5,16 +5,18 @@ import Skeleton from '@mui/material/Skeleton';
 import NotificationItem from '../../shared/NotificationItem';
 import {SCNotificationObjectTemplateType} from '../../types/notification';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCSnippetNotificationsSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`,
   item: `${PREFIX}-item`
 };
 
-const Root = styled(List, {name: PREFIX, slot: 'Root', overridesResolver: (props, styles) => styles.root})(({theme}) => ({}));
+const Root = styled(List, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Snippet Notification Skeleton component. Learn about the available props and the CSS API.
@@ -27,14 +29,14 @@ const Root = styled(List, {name: PREFIX, slot: 'Root', overridesResolver: (props
 
  #### Component Name
 
- The name `SCSnippetNotificationSkeleton` can be used when providing style overrides in the theme.
+ The name `SCSnippetNotification-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCSnippetNotificationSkeleton-root|Styles applied to the root element.|
- |item|.SCSnippetNotificationSkeleton-item|Styles applied to the item element.|
+ |root|.SCSnippetNotification-skeleton-root|Styles applied to the root element.|
+ |item|.SCSnippetNotification-item|Styles applied to the item element.|
  *
  */
 export default function SnippetNotificationSkeleton(props): JSX.Element {

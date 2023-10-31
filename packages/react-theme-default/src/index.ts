@@ -68,7 +68,6 @@ import SCNotificationsMenu from './components/SCNotificationsMenu';
 import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
 import SCContributionNotification from './components/SCContributionNotification';
-import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
 import SCLightbox from './components/SCLightbox';
 import SCFollowAction from './components/SCFollowAction';
 import SCReactionAction from './components/SCReactionAction';
@@ -128,6 +127,8 @@ import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersW
 import SCConsentSolution from './components/SCConsentSolution';
 import SCCustomAdv from './components/SCCustomAdv';
 import SCPollSuggestionWidget from './components/SCPollSuggestionWidget';
+import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget';
+import SCToastNotifications from './components/SCToastNotifications';
 
 /**
  * Style fragments - Imports - End
@@ -265,7 +266,6 @@ const theme = {
     SCSearchAutocomplete,
     SCShareAction,
     SCSnippetNotifications,
-    SCSnippetNotificationsSkeleton,
     SCUser,
     SCUserActionIconButton,
     SCUserCounters,
@@ -301,7 +301,9 @@ const theme = {
     SCCategoryTrendingUsersWidget,
     SCConsentSolution,
     SCCustomAdv,
-    SCPollSuggestionWidget
+    SCPollSuggestionWidget,
+    SCRelatedFeedObjectsWidget,
+    SCToastNotifications
   },
   selfcommunity: {
     user: {

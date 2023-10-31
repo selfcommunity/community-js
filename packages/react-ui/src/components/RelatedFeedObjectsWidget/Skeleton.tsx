@@ -1,18 +1,16 @@
 import React from 'react';
 import {CategoryTrendingFeedWidgetSkeleton} from '../CategoryTrendingFeedWidget';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCRelatedFeedObjectsWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(CategoryTrendingFeedWidgetSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Related Feed Objects Widget Skeleton component. Learn about the available props and the CSS API.
 
@@ -24,13 +22,13 @@ const Root = styled(CategoryTrendingFeedWidgetSkeleton, {
 
  #### Component Name
 
- The name `SCRelatedFeedObjectsWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCRelatedFeedObjects-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCRelatedFeedObjectsWidgetSkeleton-root|Styles applied to the root element.|
+ |root|.SCRelatedFeedObjectsWidget-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function RelatedFeedObjectsWidgetSkeleton(): JSX.Element {

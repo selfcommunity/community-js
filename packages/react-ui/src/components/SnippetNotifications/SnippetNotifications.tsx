@@ -40,8 +40,7 @@ import {
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
 import NotificationItem from '../../shared/NotificationItem';
-
-const PREFIX = 'SCSnippetNotifications';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -54,15 +53,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(() => ({
-  width: '100%',
-  [`& .${classes.notificationsWrap}`]: {
-    height: 330,
-    overflowY: 'hidden'
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface SnippetNotificationsProps extends CardProps {
   /**
