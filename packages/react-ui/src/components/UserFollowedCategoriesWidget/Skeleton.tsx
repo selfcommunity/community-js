@@ -5,16 +5,13 @@ import {styled} from '@mui/material/styles';
 const PREFIX = 'SCUserFollowedCategoriesWidgetSkeleton';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(CategoriesSuggestionWidgetSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS User Profile Categories Followed Widget Skeleton component. Learn about the available props and the CSS API.
 
@@ -26,13 +23,13 @@ const Root = styled(CategoriesSuggestionWidgetSkeleton, {
 
  #### Component Name
 
- The name `SCUserFollowedCategoriesWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserCategoriesFollowedWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserFollowedCategoriesWidgetSkeleton-root|Styles applied to the root element.|
+ |root|.SCUserCategoriesFollowedWidget-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function UserFollowedCategoriesWidgetSkeleton(props): JSX.Element {

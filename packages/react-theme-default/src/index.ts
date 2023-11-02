@@ -132,6 +132,9 @@ import SCToastNotifications from './components/SCToastNotifications';
 import SCUserConnectionsRequestsSentWidget from './components/SCUserConnectionsRequestsSentWidget';
 import SCUserConnectionsRequestsWidget from './components/SCUserConnectionsRequestsWidget';
 import SCUserConnectionsWidget from './components/SCUserConnectionsWidget';
+import SCUserCategoriesFollowedWidget from './components/SCUserCategoriesFollowedWidget';
+import SCUserFollowedUsersWidget from './components/SCUserFollowedUsersWidget';
+import SCUserFollowersWidget from './components/SCUserFollowersWidget';
 
 /**
  * Style fragments - Imports - End
@@ -309,7 +312,10 @@ const theme = {
     SCToastNotifications,
     SCUserConnectionsRequestsSentWidget,
     SCUserConnectionsRequestsWidget,
-    SCUserConnectionsWidget
+    SCUserConnectionsWidget,
+    SCUserCategoriesFollowedWidget,
+    SCUserFollowedUsersWidget,
+    SCUserFollowersWidget
   },
   selfcommunity: {
     user: {

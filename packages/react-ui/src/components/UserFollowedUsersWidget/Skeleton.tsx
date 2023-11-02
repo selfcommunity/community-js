@@ -2,18 +2,16 @@ import React from 'react';
 import {CategoryTrendingPeopleWidgetSkeleton} from '../CategoryTrendingUsersWidget';
 import {WidgetProps} from '../Widget';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCUserFollowedUsersWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(CategoryTrendingPeopleWidgetSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Users Followed Widget Skeleton component. Learn about the available props and the CSS API.
@@ -26,13 +24,13 @@ const Root = styled(CategoryTrendingPeopleWidgetSkeleton, {
 
  #### Component Name
 
- The name `SCUserFollowedUsersWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserFollowedUsersWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserFollowedUsersWidgetSkeleton-root|Styles applied to the root element.|
+ |root|.SCUserFollowedUsersWidget-skeleton-root|Styles applied to the root element.|
  *
  */
 
