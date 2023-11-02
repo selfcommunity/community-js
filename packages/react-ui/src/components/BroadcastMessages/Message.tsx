@@ -23,7 +23,6 @@ import MarkRead from '../../shared/MarkRead';
 import Widget from '../Widget';
 import {SCBroadcastMessageTemplateType} from '../../types';
 import classNames from 'classnames';
-import {red} from '@mui/material/colors';
 import {SCBroadcastMessageType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -36,10 +35,10 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/react-core';
-
-const PREFIX = 'SCBroadcastMessage';
+import {PREFIX} from './constants';
 
 const classes = {
+  root: `${PREFIX}-message-root`,
   header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
   media: `${PREFIX}-media`,
@@ -52,44 +51,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  marginBottom: theme.spacing(2),
-  [`& .${classes.header} .MuiAvatar-img`]: {
-    objectFit: 'fill'
-  },
-  [`& .${classes.title}`]: {
-    padding: `${theme.spacing(2)}`,
-    paddingBottom: `${theme.spacing()}`,
-    paddingTop: 0
-  },
-  [`& .${classes.media}`]: {
-    paddingBottom: `${theme.spacing(2)}`
-  },
-  [`& .${classes.content}`]: {
-    padding: theme.spacing(2),
-    paddingTop: 0
-  },
-  [`& .${classes.listItemSnippet}`]: {
-    padding: '0px 5px',
-    alignItems: 'center'
-  },
-  [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
-  },
-  [`& .${classes.messageIconWrap}`]: {
-    minWidth: 'auto',
-    paddingRight: 10
-  },
-  [`& .${classes.messageIconSnippet}`]: {
-    backgroundColor: red[500],
-    color: '#FFF',
-    width: 30,
-    height: 30
-  }
-}));
+  slot: 'MessageRoot'
+})(() => ({}));
 
 export interface MessageProps extends CardProps {
   /**
@@ -174,7 +137,6 @@ export default function Message(props: MessageProps): JSX.Element {
   // HANDLERS
   /**
    * Handle dispose message
-   * @param res
    */
   const handleClose = () => {
     setClosing(true);
@@ -247,7 +209,7 @@ export default function Message(props: MessageProps): JSX.Element {
      * Include also MarkRead component to
      */
     return (
-      <Root id={id} className={className} {...rest}>
+      <Root id={id} className={classNames(classes.root, className)} {...rest}>
         <Fade in={open} unmountOnExit>
           <Box>
             {message.viewed_at === null && !disableMarkRead && (
