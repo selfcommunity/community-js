@@ -16,15 +16,13 @@ import {
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
-  SCThemeType,
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import NavigationMenuIconButton from '../NavigationMenuIconButton';
-
-const PREFIX = 'SCNavigationToolbar';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -37,6 +35,7 @@ const classes = {
   composer: `${PREFIX}-composer`,
   profile: `${PREFIX}-profile`,
   notification: `${PREFIX}-notification`,
+  notificationsMenu: `${PREFIX}-notifications-menu`,
   messages: `${PREFIX}-messages`,
   settings: `${PREFIX}-settings`,
   active: `${PREFIX}-active`
@@ -44,8 +43,7 @@ const classes = {
 
 const Root = styled(Toolbar, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 export interface NavigationToolbarProps extends ToolbarProps {
@@ -136,6 +134,7 @@ const PREFERENCES = [
  |composer|.SCNavigationToolbar-composer|Styles applied to the composer component|
  |profile|.SCNavigationToolbar-profile|Styles applied to the profile button|
  |notification|.SCNavigationToolbar-notification|Styles applied to the notification button|
+ |notificationsMenu|.SCNavigationToolbar-notifications-menu|Styles applied to the notifications menu|
  |messages|.SCNavigationToolbar-messages|Styles applied to the messages button|
  |settings|.SCNavigationToolbar-settings|Styles applied to the settings button|
  |active|.SCNavigationToolbar-active|Styles applied to the active button on navigation|
@@ -267,6 +266,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               </Badge>
             </IconButton>
             <NotificationMenu
+              className={classes.notificationsMenu}
               id="notification-menu"
               anchorEl={anchorNotification}
               open={Boolean(anchorNotification)}

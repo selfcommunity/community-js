@@ -62,7 +62,6 @@ import SCPrivateMessageThread from './components/SCPrivateMessageThread';
 import SCPrivateMessageThreadItem from './components/SCPrivateMessageThreadItem';
 import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
 import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
-import SCNotificationsMenu from './components/SCNotificationsMenu';
 import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
 import SCContributionNotification from './components/SCContributionNotification';
@@ -110,7 +109,6 @@ import SCUserAvatar from './components/SCUserAvatar';
 import SCAccountReset from './components/SCAccountReset';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountVerify from './components/SCAccountVerify';
-import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
 import SCComposer from './components/SCComposer';
 import SCMediaLink from './components/SCMediaLink';
 import SCMediaFile from './components/SCMediaFile';
@@ -250,11 +248,9 @@ const theme = {
     SCMediaLink,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
-    SCNavigationToolbarSkeleton,
     SCNavigationToolbarMobile,
     SCNotification,
     SCNotificationItem,
-    SCNotificationsMenu,
     SCPollObject,
     SCPreviewMediaDocument,
     SCPreviewMediaLink,

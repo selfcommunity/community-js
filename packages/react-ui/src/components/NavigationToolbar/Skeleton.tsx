@@ -2,12 +2,10 @@ import React from 'react';
 import {Toolbar} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCNavigationToolbarSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   logo: `${PREFIX}-logo`,
   navigation: `${PREFIX}-navigation`,
   avatar: `${PREFIX}-avatar`
@@ -15,9 +13,8 @@ const classes = {
 
 const Root = styled(Toolbar, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Navigation Toolbar Skeleton component. Learn about the available props and the CSS API.
@@ -30,16 +27,16 @@ const Root = styled(Toolbar, {
 
  #### Component Name
 
- The name `SCNavigationToolbarSkeleton` can be used when providing style overrides in the theme.
+ The name `SCNavigationToolbar-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCNavigationToolbarSkeleton-root|Styles applied to the root element.|
- |logo|.SCNavigationToolbarSkeleton-logo|Styles applied to the logo element.|
- |navigation|.SCNavigationToolbarSkeleton-navigation|Styles applied to the navigation element.|
- |avatar|.SCNavigationToolbarSkeleton-avatar|Styles applied to the avatar element.|
+ |root|.SCNavigationToolbar-skeleton-root|Styles applied to the root element.|
+ |logo|.SCNavigationToolbar-logo|Styles applied to the logo element.|
+ |navigation|.SCNavigationToolbar-navigation|Styles applied to the navigation element.|
+ |avatar|.SCNavigationToolbar-avatar|Styles applied to the avatar element.|
  *
  */
 export default function NavigationToolbarSkeleton(): JSX.Element {
