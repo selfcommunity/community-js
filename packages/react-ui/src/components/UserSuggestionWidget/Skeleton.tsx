@@ -3,15 +3,17 @@ import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
 import Widget from '../Widget';
 import {List, CardContent, ListItem} from '@mui/material';
-
-const PREFIX = 'SCUserSuggestionWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({}));
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS People Suggestion Skeleton component. Learn about the available props and the CSS API.
@@ -24,14 +26,14 @@ const Root = styled(Widget)(({theme}) => ({}));
 
  #### Component Name
 
- The name `SCUserSuggestionWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserSuggestionWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserSuggestionWidgetSkeleton-root|Styles applied to the root element.|
- |list|.SCUserSuggestionWidgetSkeleton-list|Styles applied to the list element.|
+ |root|.SCUserSuggestionWidget-skeleton-root|Styles applied to the root element.|
+ |list|.SCUserSuggestionWidget-list|Styles applied to the list element.|
  *
  */
 function UserSuggestionWidgetSkeleton(props): JSX.Element {

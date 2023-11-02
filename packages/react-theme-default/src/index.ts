@@ -81,7 +81,6 @@ import SCCommentNotification from './components/SCCommentNotification';
 import MuiPopover from './components/MuiPopover';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
-import SCUserInfoDialog from './components/SCUserInfoDialog';
 import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
@@ -135,6 +134,7 @@ import SCUserConnectionsWidget from './components/SCUserConnectionsWidget';
 import SCUserCategoriesFollowedWidget from './components/SCUserCategoriesFollowedWidget';
 import SCUserFollowedUsersWidget from './components/SCUserFollowedUsersWidget';
 import SCUserFollowersWidget from './components/SCUserFollowersWidget';
+import SCUserSuggestionWidget from './components/SCUserSuggestionWidget';
 
 /**
  * Style fragments - Imports - End
@@ -277,7 +277,6 @@ const theme = {
     SCUserCounters,
     SCUserProfileBlocked,
     SCUserInfo,
-    SCUserInfoDialog,
     SCUserProfileHeader,
     SCUserProfileEdit,
     SCUserProfileEditSectionAccount,
@@ -315,7 +314,8 @@ const theme = {
     SCUserConnectionsWidget,
     SCUserCategoriesFollowedWidget,
     SCUserFollowedUsersWidget,
-    SCUserFollowersWidget
+    SCUserFollowersWidget,
+    SCUserSuggestionWidget
   },
   selfcommunity: {
     user: {

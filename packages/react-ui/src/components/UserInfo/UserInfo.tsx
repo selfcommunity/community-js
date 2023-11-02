@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Typography} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {camelCase, Logger} from '@selfcommunity/utils';
-import {SCMetadataType, SCUserType} from '@selfcommunity/types';
+import {SCUserType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../constants/UserProfile';
 import UserInfoSkeleton from './Skeleton';
@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Tags, {TagsComponentType} from '../../shared/Tags';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   realName: {
@@ -56,8 +57,6 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserInfo';
-
 const classes = {
   root: `${PREFIX}-root`,
   field: `${PREFIX}-field`
@@ -65,9 +64,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface UserInfoProps {
   /**

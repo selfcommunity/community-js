@@ -26,8 +26,7 @@ import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-
-const PREFIX = 'SCUserSuggestionWidget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -40,14 +39,12 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
+  slot: 'DialogRoot'
 })(() => ({}));
 
 export interface UserSuggestionWidgetProps extends VirtualScrollerItemProps, WidgetProps {
