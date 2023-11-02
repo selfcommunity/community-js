@@ -28,7 +28,8 @@ const Component = {
       '& .SCBaseItemButton-secondary': {
         fontSize: '0.857rem'
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

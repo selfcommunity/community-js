@@ -129,6 +129,9 @@ import SCCustomAdv from './components/SCCustomAdv';
 import SCPollSuggestionWidget from './components/SCPollSuggestionWidget';
 import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget';
 import SCToastNotifications from './components/SCToastNotifications';
+import SCUserConnectionsRequestsSentWidget from './components/SCUserConnectionsRequestsSentWidget';
+import SCUserConnectionsRequestsWidget from './components/SCUserConnectionsRequestsWidget';
+import SCUserConnectionsWidget from './components/SCUserConnectionsWidget';
 
 /**
  * Style fragments - Imports - End
@@ -303,7 +306,10 @@ const theme = {
     SCCustomAdv,
     SCPollSuggestionWidget,
     SCRelatedFeedObjectsWidget,
-    SCToastNotifications
+    SCToastNotifications,
+    SCUserConnectionsRequestsSentWidget,
+    SCUserConnectionsRequestsWidget,
+    SCUserConnectionsWidget
   },
   selfcommunity: {
     user: {

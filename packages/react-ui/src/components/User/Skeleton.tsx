@@ -5,14 +5,16 @@ import Skeleton from '@mui/material/Skeleton';
 import {WidgetProps} from '../Widget';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCUserSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
-const Root = styled(BaseItem)(({theme}) => ({}));
+const Root = styled(BaseItem, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS User Skeleton component. Learn about the available props and the CSS API.
@@ -25,13 +27,13 @@ const Root = styled(BaseItem)(({theme}) => ({}));
 
  #### Component Name
 
- The name `SCUserSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUser-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserSkeleton-root|Styles applied to the root element.|
+ |root|.SCUser-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function UserSkeleton(props: WidgetProps): JSX.Element {
