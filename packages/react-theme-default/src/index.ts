@@ -107,8 +107,6 @@ import SCEmojiPicker from './components/SCEmojiPicker';
 import SCBullet from './components/SCBullet';
 import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
-import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfileEditSectionAccountCredentials';
-import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCPreviewMediaLink from './components/SCPreviewMediaLink';
 import SCUserAvatar from './components/SCUserAvatar';
@@ -279,8 +277,6 @@ const theme = {
     SCUserInfo,
     SCUserProfileHeader,
     SCUserProfileEdit,
-    SCUserProfileEditSectionAccount,
-    SCUserProfileEditSectionAccountCredentials,
     SCUserProfileTemplate,
     SCVoteAction,
     SCVoteButton,

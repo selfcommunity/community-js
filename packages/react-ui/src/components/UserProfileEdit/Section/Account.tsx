@@ -14,6 +14,7 @@ import AccountCredentials, {AccountCredentialProps} from './AccountCredentials';
 import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
 import AccountDeleteButton from '../../AccountDeleteButton';
 import LanguageSwitcher, {LanguageSwitcherProps} from '../../../shared/LanguageSwitcher';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   socialTitle: {
@@ -29,18 +30,18 @@ const messages = defineMessages({
     defaultMessage: 'ui.userProfileEditAccount.socialAssociations.dialog.msg'
   }
 });
-const PREFIX = 'SCUserProfileEditSectionAccount';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-account-root`,
+  credentials: `${PREFIX}-credentials`,
+  languageSwitcher: `${PREFIX}-language-switcher`,
   dangerZone: `${PREFIX}-danger-zone`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'AccountRoot'
+})(() => ({}));
 
 export interface AccountProps {
   /**
@@ -145,8 +146,8 @@ export default function Account(inProps: AccountProps): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {startActions}
-      {showCredentialsSection && <AccountCredentials user={scUserContext?.user} {...AccountCredentialProps} />}
-      {showLanguageSwitcher && <LanguageSwitcher {...LanguageSwitcherProps} />}
+      {showCredentialsSection && <AccountCredentials className={classes.credentials} user={scUserContext?.user} {...AccountCredentialProps} />}
+      {showLanguageSwitcher && <LanguageSwitcher className={classes.languageSwitcher} {...LanguageSwitcherProps} />}
       {showSocialAccountSection && (
         <UserSocialAssociation
           children={

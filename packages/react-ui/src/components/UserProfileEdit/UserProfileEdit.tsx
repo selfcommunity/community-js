@@ -9,20 +9,21 @@ import Settings from './Section/Settings';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields, SCUserProfileSettings} from '../../types';
-
-const PREFIX = 'SCUserProfileEdit';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
   tabs: `${PREFIX}-tabs`,
-  tabContent: `${PREFIX}-tab-content`
+  tabContent: `${PREFIX}-tab-content`,
+  publicInfo: `${PREFIX}-public-info`,
+  account: `${PREFIX}-account`,
+  settings: `${PREFIX}-settings`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface UserProfileEditProps {
   /**
@@ -134,9 +135,9 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
         <Tab label={<FormattedMessage id="ui.userProfileEdit.notification" defaultMessage="ui.userProfileEdit.notification" />} />
       </Tabs>
       <Box className={classes.tabContent}>
-        {tab === 0 && <PublicInfo fields={fields} {...UserProfileEditSectionPublicInfoProps} />}
-        {tab === 1 && <Account {...UserProfileEditSectionAccountProps} />}
-        {tab === 2 && <Settings settings={settings} {...UserProfileEditSectionSettingsProps} />}
+        {tab === 0 && <PublicInfo className={classes.publicInfo} fields={fields} {...UserProfileEditSectionPublicInfoProps} />}
+        {tab === 1 && <Account className={classes.account} {...UserProfileEditSectionAccountProps} />}
+        {tab === 2 && <Settings settings={settings} className={classes.settings} {...UserProfileEditSectionSettingsProps} />}
       </Box>
     </Root>
   );

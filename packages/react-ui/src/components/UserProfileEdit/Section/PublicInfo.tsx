@@ -31,6 +31,7 @@ import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
 import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   genderMale: {
@@ -47,30 +48,16 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserProfileEditSectionPublicInfo';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-public-info-root`,
   field: `${PREFIX}-field`,
   btnSave: `${PREFIX}-btn-save`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.field}`]: {
-    margin: theme.spacing(1, 0, 1, 0)
-  },
-  [`& .${classes.field} .MuiSelect-icon`]: {
-    right: theme.spacing(5)
-  },
-  [`& .${classes.btnSave}`]: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing()
-  }
-}));
+  slot: 'PublicInfoRoot'
+})(() => ({}));
 
 export interface PublicInfoProps {
   /**
@@ -99,17 +86,17 @@ export interface PublicInfoProps {
    */
   onEditFailure?: (editedField?: Record<string, any>) => void;
 
-	/**
-	 * Actions to be inserted at the start
-	 * @default null
-	 */
-	startActions?: React.ReactNode | null;
+  /**
+   * Actions to be inserted at the start
+   * @default null
+   */
+  startActions?: React.ReactNode | null;
 
-	/**
-	 * Actions to be inserted at the end
-	 * @default null
-	 */
-	endActions?: React.ReactNode | null;
+  /**
+   * Actions to be inserted at the end
+   * @default null
+   */
+  endActions?: React.ReactNode | null;
 
   /**
    * Any other properties
@@ -126,8 +113,16 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, onEditFailure = null,     startActions = null,
-		endActions = null, ...rest} = props;
+  const {
+    id = null,
+    className = null,
+    fields = [...DEFAULT_FIELDS],
+    onEditSuccess = null,
+    onEditFailure = null,
+    startActions = null,
+    endActions = null,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -385,11 +380,11 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-			{startActions}
+      {startActions}
       {_fields.map((field) => {
         return renderField(field);
       })}
-			<LoadingButton
+      <LoadingButton
         className={classes.btnSave}
         fullWidth
         variant="contained"
@@ -399,7 +394,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
         <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
       </LoadingButton>
-			{endActions}
+      {endActions}
     </Root>
   );
 }
