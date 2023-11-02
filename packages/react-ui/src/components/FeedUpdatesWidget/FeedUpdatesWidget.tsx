@@ -8,8 +8,7 @@ import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-
-const PREFIX = 'SCFeedUpdatesWidget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -18,8 +17,7 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 export interface FeedUpdatesWidgetProps extends VirtualScrollerItemProps {

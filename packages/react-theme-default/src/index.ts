@@ -33,7 +33,6 @@ import SCCustomSnackMessage from './components/SCCustomSnackMessage';
 import SCCategoryTemplateSkeleton from './components/SCCategoryTemplateSkeleton';
 import SCPollObject from './components/SCPollObject';
 import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
-import SCFeedSkeleton from './components/SCFeedSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
 import SCLoyaltyProgramDetailTemplateSkeleton from './components/SCLoyaltyProgramDetailTemplateSkeleton';
@@ -52,7 +51,6 @@ import MuiSelect from './components/MuiSelect';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import MuiAutocomplete from './components/MuiAutocomplete';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
-import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
 import SCNavigationToolbar from './components/SCNavigationToolbar';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
@@ -74,7 +72,6 @@ import SCReactionAction from './components/SCReactionAction';
 import SCCommentAction from './components/SCCommentAction';
 import SCShareAction from './components/SCShareAction';
 import SCVoteAction from './components/SCVoteAction';
-import SCCommentObjectVotes from './components/SCCommentObjectVotes';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
 import SCCommentNotification from './components/SCCommentNotification';
@@ -220,8 +217,6 @@ const theme = {
     SCCommentNotification,
     SCCommentObject,
     SCCommentObjectReply,
-    SCCommentObjectSkeleton,
-    SCCommentObjectVotes,
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
@@ -243,7 +238,6 @@ const theme = {
     SCFeedObjectDetailTemplateSkeleton,
     SCFeedObjectSkeleton,
     SCFeedRelevantActivities,
-    SCFeedSkeleton,
     SCFeedUpdatesWidget,
     SCFollowAction,
     SCFooter,

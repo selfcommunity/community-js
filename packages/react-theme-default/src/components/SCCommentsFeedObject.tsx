@@ -36,7 +36,8 @@ const Component = {
           marginBottom: theme.spacing(4)
         }
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

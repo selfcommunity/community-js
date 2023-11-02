@@ -15,7 +15,8 @@ const Component = {
       '& .SCFeedUpdatesWidget-button-load-more': {
         textTransform: 'capitalize'
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

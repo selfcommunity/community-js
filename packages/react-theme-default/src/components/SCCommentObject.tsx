@@ -16,7 +16,7 @@ const Component = {
         },
         '& .SCBaseItem-text': {
           marginBottom: 0,
-					marginTop: theme.spacing(0.2)
+          marginTop: theme.spacing(0.2)
         }
       },
       '& .SCCommentObject-nested-comments': {
@@ -140,6 +140,31 @@ const Component = {
           },
           '& .SCBullet-root': {
             display: 'inline'
+          }
+        }
+      }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      paddingBottom: theme.spacing(),
+      overflow: 'visible',
+      '& > div': {
+        alignItems: 'flex-start'
+      },
+      '& .SCCommentObject-avatar': {
+        top: theme.spacing()
+      },
+      '& .SCCommentObject-primary-content': {
+        marginBottom: theme.spacing()
+      },
+      '&.SCWidget-root': {
+        '& .SCBaseItem-text': {
+          marginBottom: 0,
+          '& > .SCWidget-root': {
+            borderRadius: theme.shape.borderRadius * 0.5,
+            borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
+          },
+          '& .MuiCardContent-root': {
+            padding: theme.spacing(1)
           }
         }
       }

@@ -25,8 +25,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-
-const PREFIX = 'SCCommentsObject';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -41,9 +40,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CommentsObjectProps {
   /**

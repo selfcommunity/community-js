@@ -6,7 +6,7 @@ const Component = {
       display: 'flex',
       flexWrap: 'wrap',
       width: '100%',
-			paddingBottom: theme.spacing(),
+      paddingBottom: theme.spacing(),
       '& .SCCommentsObject-load-more-comments-button': {
         textTransform: 'initial',
         padding: theme.spacing()
@@ -33,6 +33,9 @@ const Component = {
           fontSize: '0.8rem'
         }
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      width: '100%'
     })
   }
 };

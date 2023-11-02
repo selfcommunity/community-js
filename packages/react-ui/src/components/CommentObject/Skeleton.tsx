@@ -5,34 +5,18 @@ import Skeleton from '@mui/material/Skeleton';
 import {CardContent, useTheme} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCCommentObjectSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   avatar: `${PREFIX}-avatar`,
   primaryContent: `${PREFIX}-primary-content`
 };
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`&.${classes.root}`]: {
-    paddingBottom: theme.spacing(),
-    overflow: 'visible',
-    '& > div': {
-      alignItems: 'flex-start'
-    }
-  },
-  [`& .${classes.avatar}`]: {
-    top: theme.spacing()
-  },
-  [`& .${classes.primaryContent}`]: {
-    marginBottom: theme.spacing()
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Comment Object Skeleton component. Learn about the available props and the CSS API.
@@ -45,13 +29,13 @@ const Root = styled(BaseItem, {
 
  #### Component Name
 
- The name `SCCommentObjectSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCommentObject-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCommentObjectSkeleton-root|Styles applied to the root element.|
+ |root|.SCCommentObject-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CommentObjectSkeleton(props): JSX.Element {
