@@ -1,7 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
-import {green, red} from '@mui/material/colors';
+import {Avatar, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {defineMessages, useIntl} from 'react-intl';
@@ -10,6 +9,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   accountBlocked: {
@@ -22,10 +22,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserBlockedNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-user-blocked-root`,
   unBlockedIcon: `${PREFIX}-unblocked-icon`,
   blockedIcon: `${PREFIX}-blocked-icon`,
   blockedText: `${PREFIX}-blocked-text`,
@@ -34,21 +32,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.unBlockedIcon}`]: {
-    backgroundColor: green[500],
-    color: '#FFF'
-  },
-  [`& .${classes.blockedIcon}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.blockedText}`]: {
-    color: theme.palette.text.primary
-  }
-}));
+  slot: 'UserBlockedRoot'
+})(() => ({}));
 
 export interface NotificationBlockedProps
   extends Pick<

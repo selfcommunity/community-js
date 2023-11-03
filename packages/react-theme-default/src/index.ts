@@ -64,7 +64,6 @@ import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
 import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
 import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
-import SCContributionNotification from './components/SCContributionNotification';
 import SCLightbox from './components/SCLightbox';
 import SCFollowAction from './components/SCFollowAction';
 import SCReactionAction from './components/SCReactionAction';
@@ -73,7 +72,6 @@ import SCShareAction from './components/SCShareAction';
 import SCVoteAction from './components/SCVoteAction';
 import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
-import SCCommentNotification from './components/SCCommentNotification';
 import MuiPopover from './components/MuiPopover';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
@@ -212,14 +210,12 @@ const theme = {
     SCCategoryTemplateSkeleton,
     SCChoices,
     SCCommentAction,
-    SCCommentNotification,
     SCCommentObject,
     SCCommentObjectReply,
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
     SCCategoryAutocomplete,
-    SCContributionNotification,
     SCContributorsFeedObject,
     SCContributionActionsMenu,
     SCCustomSnackMessage,

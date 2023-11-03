@@ -1,6 +1,6 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, Stack, Typography} from '@mui/material';
+import {Avatar, Button, Stack, Typography} from '@mui/material';
 import {SCNotificationIncubatorType} from '@selfcommunity/types';
 import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   incubatorApproved: {
@@ -18,10 +19,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCIncubatorApprovedNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-incubator-approved-root`,
   categoryIcon: `${PREFIX}-category-icon`,
   categoryApprovedText: `${PREFIX}-category-approved-text`,
   activeAt: `${PREFIX}-active-at`,
@@ -30,19 +29,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.categoryIcon}`]: {
-    borderRadius: 3
-  },
-  [`& .${classes.viewIncubatorButton}`]: {
-    padding: theme.spacing(),
-    paddingBottom: 0,
-    textTransform: 'initial',
-    marginLeft: -8
-  }
-}));
+  slot: 'IncubatorApprovedRoot'
+})(() => ({}));
 
 export interface NotificationIncubatorApprovedProps
   extends Pick<

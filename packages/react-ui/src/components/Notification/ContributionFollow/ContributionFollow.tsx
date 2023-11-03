@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   contributionFollow: {
@@ -20,10 +21,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCContributionFollowNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-contribution-follow-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   followText: `${PREFIX}-follow-text`,
@@ -33,31 +32,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.followText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    },
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  },
-  '& .MuiIcon-root': {
-    fontSize: '18px',
-    marginBottom: '0.5px'
-  }
-}));
+  slot: 'ContributionFollowRoot'
+})(() => ({}));
 
 export interface ContributionFollowProps
   extends Pick<

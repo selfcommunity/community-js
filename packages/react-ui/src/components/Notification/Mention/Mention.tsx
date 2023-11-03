@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   quotedYouOn: {
@@ -20,10 +21,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCNotificationMention';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-mention-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   mentionText: `${PREFIX}-mention-text`,
@@ -33,27 +32,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.mentionText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    },
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  }
-}));
+  slot: 'MentionRoot'
+})(() => ({}));
 
 export interface MentionNotificationProps
   extends Pick<

@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {red} from '@mui/material/colors';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -37,10 +37,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCollapsedForNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-collapsed-for-root`,
   flagIcon: `${PREFIX}-flag-icon`,
   flagText: `${PREFIX}-flag-text`,
   activeAt: `${PREFIX}-active-at`,
@@ -51,29 +49,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.flagIcon}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.flagText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionWrap}`]: {
-    padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+  slot: 'CollapsedForRoot'
+})(() => ({}));
 
 export interface NotificationCollapsedForProps
   extends Pick<

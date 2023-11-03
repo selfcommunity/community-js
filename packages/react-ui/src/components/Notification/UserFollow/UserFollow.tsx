@@ -11,6 +11,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   followUser: {
@@ -19,10 +20,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserFollowNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-user-follow-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   followText: `${PREFIX}-follow-text`,
@@ -31,20 +30,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.followText}`]: {
-    color: theme.palette.text.primary
-  }
-}));
+  slot: 'UserFollowRoot'
+})(() => ({}));
 
 export interface NotificationFollowProps
   extends Pick<

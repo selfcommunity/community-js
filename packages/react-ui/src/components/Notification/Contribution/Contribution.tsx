@@ -14,6 +14,7 @@ import Bullet from '../../../shared/Bullet';
 import VoteButton from '../../VoteButton';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   postOrStatus: {
@@ -34,10 +35,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCContributionNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-contribution-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   voteButton: `${PREFIX}-vote-button`,
@@ -48,9 +47,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ContributionRoot'
+})(() => ({}));
 
 export interface ContributionNotificationProps
   extends Pick<

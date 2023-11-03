@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
+import {Avatar, Stack, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import {SCNotificationConnectionAcceptType, SCNotificationConnectionRequestType, SCNotificationTypologyType} from '@selfcommunity/types';
@@ -11,6 +11,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   requestConnection: {
@@ -23,10 +24,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserConnectionNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-user-connection-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   connectionText: `${PREFIX}-connection-text`,
@@ -35,19 +34,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.connectionText}`]: {
-    color: theme.palette.text.primary
-  }
-}));
+  slot: 'UserConnectionRoot'
+})(() => ({}));
 
 export interface NotificationConnectionProps
   extends Pick<
