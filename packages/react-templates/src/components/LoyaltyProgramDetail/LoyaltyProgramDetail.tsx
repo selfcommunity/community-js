@@ -13,8 +13,7 @@ import PrizeItemSkeleton from './PrizeItemSkeleton';
 import PointsList from './PointsList';
 import {useSnackbar} from 'notistack';
 import {InfiniteScroll, ConfirmDialog} from '@selfcommunity/react-ui';
-
-const PREFIX = 'SCLoyaltyProgramDetailTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -35,9 +34,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface LoyaltyProgramDetailProps {
   /**

@@ -22,8 +22,7 @@ import classNames from 'classnames';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
-
-const PREFIX = 'SCExploreFeedTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -31,9 +30,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ExploreFeedProps {
   /**

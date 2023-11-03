@@ -8,8 +8,7 @@ import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCCategoryTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -18,13 +17,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.feed}`]: {
-    marginTop: theme.spacing(2)
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryProps {
   /**

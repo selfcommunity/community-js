@@ -28,14 +28,11 @@ import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCUserProfileTemplate from './components/SCUserProfileTemplate';
 import SCFeedObjectDetailTemplate from './components/SCFeedObjectDetailTemplate';
 import SCCommentObject from './components/SCCommentObject';
-import SCFeedObjectDetailTemplateSkeleton from './components/SCFeedObjectDetailTemplateSkeleton';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
-import SCCategoryTemplateSkeleton from './components/SCCategoryTemplateSkeleton';
 import SCPollObject from './components/SCPollObject';
 import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
-import SCLoyaltyProgramDetailTemplateSkeleton from './components/SCLoyaltyProgramDetailTemplateSkeleton';
 import SCPrivateMessageComponent from './components/SCPrivateMessageComponent';
 import MuiDialog from './components/MuiDialog';
 import SCCategories from './components/SCCategories';
@@ -94,7 +91,6 @@ import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
-import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
 import MuiDrawer from './components/MuiDrawer';
 import SCEmojiPicker from './components/SCEmojiPicker';
@@ -126,6 +122,10 @@ import SCUserCategoriesFollowedWidget from './components/SCUserCategoriesFollowe
 import SCUserFollowedUsersWidget from './components/SCUserFollowedUsersWidget';
 import SCUserFollowersWidget from './components/SCUserFollowersWidget';
 import SCUserSuggestionWidget from './components/SCUserSuggestionWidget';
+import SCExploreFeedTemplate from './components/SCExploreFeedTemplate';
+import SCMainFeedTemplate from './components/SCMainFeedTemplate';
+import SCNotificationFeedTemplate from './components/SCNotificationFeedTemplate';
+import SCUserFeedTemplate from './components/SCUserFeedTemplate';
 
 /**
  * Style fragments - Imports - End
@@ -207,7 +207,6 @@ const theme = {
     SCCategoryFollowersButton,
     SCCategoryHeader,
     SCCategoryTemplate,
-    SCCategoryTemplateSkeleton,
     SCChoices,
     SCCommentAction,
     SCCommentObject,
@@ -229,7 +228,6 @@ const theme = {
     SCFeed,
     SCFeedObject,
     SCFeedObjectDetailTemplate,
-    SCFeedObjectDetailTemplateSkeleton,
     SCFeedObjectSkeleton,
     SCFeedRelevantActivities,
     SCFeedUpdatesWidget,
@@ -239,7 +237,6 @@ const theme = {
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetailTemplate,
-    SCLoyaltyProgramDetailTemplateSkeleton,
     SCMediaFile,
     SCMediaLink,
     SCNavigationSettingsIconButton,
@@ -279,7 +276,6 @@ const theme = {
     SCIncubatorListWidget,
     SCIncubatorSuggestionWidget,
     SCIncubatorDetail,
-    SCPrizeItemSkeleton,
     SCNavigationMenuIconButton,
     SCUserAvatar,
     SCCategoriesPopularWidget,
@@ -297,7 +293,11 @@ const theme = {
     SCUserCategoriesFollowedWidget,
     SCUserFollowedUsersWidget,
     SCUserFollowersWidget,
-    SCUserSuggestionWidget
+    SCUserSuggestionWidget,
+    SCExploreFeedTemplate,
+    SCMainFeedTemplate,
+    SCNotificationFeedTemplate,
+    SCUserFeedTemplate
   },
   selfcommunity: {
     user: {
