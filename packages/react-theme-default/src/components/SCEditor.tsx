@@ -162,6 +162,137 @@ const Component = {
         top: theme.spacing(7),
         left: theme.spacing(2)
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({}),
+    emojiPluginRoot: ({theme}: any) => ({}),
+    floatingLinkPluginRoot: ({theme}: any) => ({
+      zIndex: 2000,
+      '& .MuiPaper-root': {
+        borderRadius: 5
+      }
+    }),
+    hashtagPluginRoot: ({theme}: any) => ({
+      position: 'absolute',
+      background: theme.palette.background.paper,
+      boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
+      borderRadius: 8,
+      marginLeft: 7,
+      marginTop: 18,
+      zIndex: 3000,
+      '& ul': {
+        padding: 0,
+        listStyle: 'none',
+        margin: 0,
+        borderRadius: 10,
+        '& li': {
+          padding: theme.spacing(1),
+          margin: 0,
+          minWidth: 180,
+          fontSize: theme.typography.body2.fontSize,
+          outline: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'left',
+          alignItems: 'center',
+          '&.selected': {
+            background: theme.palette.action.selected
+          },
+          '&.hovered': {
+            background: theme.palette.action.hover
+          },
+          '& .MuiAvatar-root': {
+            width: 20,
+            height: 20,
+            marginRight: theme.spacing()
+          }
+        }
+      }
+    }),
+    imagePluginRoot: ({theme}: any) => ({}),
+    mentionPluginRoot: ({theme}: any) => ({
+      position: 'absolute',
+      background: theme.palette.background.paper,
+      boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.3)',
+      borderRadius: 8,
+      marginLeft: 7,
+      marginTop: 18,
+      zIndex: 3000,
+      '& ul': {
+        padding: 0,
+        listStyle: 'none',
+        margin: 0,
+        borderRadius: 10,
+        '& li': {
+          padding: theme.spacing(1),
+          margin: 0,
+          minWidth: 180,
+          fontSize: theme.typography.body2.fontSize,
+          outline: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'left',
+          alignItems: 'center',
+          '&.selected': {
+            background: theme.palette.action.selected
+          },
+          '&.hovered': {
+            background: theme.palette.action.hover
+          },
+          '& .MuiAvatar-root': {
+            width: 20,
+            height: 20,
+            marginRight: theme.spacing()
+          }
+        }
+      }
+    }),
+    toolbarPluginRoot: ({theme}: any) => ({
+      borderRadius: theme.shape.borderRadius * 0.2,
+      borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+      borderWidth: 1,
+      borderStyle: 'solid',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'left',
+      marginBottom: theme.spacing(1),
+      padding: 0,
+      overflowX: 'scroll',
+      MsOverflowStyle: 'none',
+      scrollbarWidth: 'none',
+      '&::-webkit-scrollbar': {
+        display: 'none'
+      },
+      '& .MuiTextField-root': {
+        minWidth: 100,
+        margin: theme.spacing(0, 0.5)
+      },
+      '& .MuiButtonBase-root': {
+        margin: theme.spacing(0.5),
+        padding: theme.spacing(1),
+        fontSize: '1rem',
+        border: 0,
+        borderRadius: theme.shape.borderRadius * 0.2,
+        '&.Mui-disabled': {
+          border: 0
+        },
+        '&.MuiToggleButtonGroup-grouped:not(:last-of-type)': {
+          borderTopRightRadius: theme.shape.borderRadius * 0.2,
+          borderBottomRightRadius: theme.shape.borderRadius * 0.2
+        },
+        '&.MuiToggleButtonGroup-grouped:not(:first-of-type)': {
+          borderTopRightRadius: theme.shape.borderRadius * 0.2,
+          borderBottomRightRadius: theme.shape.borderRadius * 0.2,
+          borderTopLeftRadius: theme.shape.borderRadius * 0.2,
+          borderBottomLeftRadius: theme.shape.borderRadius * 0.2
+        }
+      },
+      '& .SCEditor-block-format .MuiIcon-root:first-of-type': {
+        display: 'inline-block',
+        marginRight: theme.spacing(1)
+      }
     })
   }
 };

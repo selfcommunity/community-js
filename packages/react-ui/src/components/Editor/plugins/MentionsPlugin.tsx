@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIsomorphicLayoutEffect} from '@selfcommunity/react-core';
 import {
   $getSelection,
@@ -15,7 +15,6 @@ import {
 } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {mergeRegister} from '@lexical/utils';
-import {createPortal} from 'react-dom';
 import {createMentionNode, MentionNode} from '../nodes/MentionNode';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserType} from '@selfcommunity/types';
@@ -23,6 +22,7 @@ import classNames from 'classnames';
 import {Avatar, Portal} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import {PREFIX} from '../constants';
 
 type MentionMatch = {
   leadOffset: number;
@@ -150,11 +150,7 @@ export function useDynamicPositioning(
   }, [targetElement, editor, onVisibilityChange, onReposition, resolution]);
 }
 
-export function useMenuAnchorRef(
-  resolution: Resolution | null,
-  setResolution: (r: Resolution | null) => void,
-  className?: string
-): HTMLElement {
+export function useMenuAnchorRef(resolution: Resolution | null, setResolution: (r: Resolution | null) => void, className?: string): HTMLElement {
   const [anchorElementRef, setAnchorElementRef] = useState<HTMLElement | null>(null);
   const [editor] = useLexicalComposerContext();
   //const anchorElementRef = useRef<HTMLElement>(null);
@@ -203,7 +199,7 @@ export function useMenuAnchorRef(
 
   useEffect(() => {
     if (resolution && !anchorElementRef) {
-      setAnchorElementRef(document.createElement('div'))
+      setAnchorElementRef(document.createElement('div'));
     }
   }, [resolution]);
 
@@ -655,17 +651,14 @@ function isSelectionOnEntityBoundary(editor: LexicalEditor, offset: number): boo
   });
 }
 
-const PREFIX = 'SCEditorMentionPlugin';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-mention-plugin-root`
 };
 
 const Root = styled(MentionsTypeahead, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'MentionPluginRoot'
+})(() => ({}));
 
 function useMentions(editor: LexicalEditor, anchorClassName = null): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);

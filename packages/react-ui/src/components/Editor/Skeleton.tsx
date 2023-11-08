@@ -1,18 +1,16 @@
 import React from 'react';
 import {GenericSkeleton} from '../Skeleton';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCEditorSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(GenericSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Editor Skeleton component. Learn about the available props and the CSS API.
 
@@ -24,13 +22,13 @@ const Root = styled(GenericSkeleton, {
 
  #### Component Name
 
- The name `SCEditorSkeleton` can be used when providing style overrides in the theme.
+ The name `SCEditor-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCEditorSkeleton-root|Styles applied to the root element.|
+ |root|.SCEditor-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function EditorSkeleton(): JSX.Element {

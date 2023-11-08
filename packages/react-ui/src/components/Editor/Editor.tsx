@@ -1,15 +1,7 @@
-import React, {
-  ForwardedRef,
-  forwardRef,
-  ForwardRefRenderFunction, useCallback,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useCallback, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import {Box, Stack, useTheme} from '@mui/material';
+import {Box, Stack} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import nodes from './nodes';
@@ -25,12 +17,10 @@ import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
-import {SCThemeType} from '@selfcommunity/react-core';
 import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
 import OnFocusPlugin from './plugins/OnFocusPlugin';
-
-const PREFIX = 'SCEditor';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -207,14 +197,20 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     apiRef.current.focus();
   };
 
-  const handleHasFocus = useCallback((event: FocusEvent) => {
-    setFocused(true);
-    onFocus && onFocus(event);
-  }, [onFocus]);
-  const handleHasBlur = useCallback((event: FocusEvent) => {
-    setFocused(false);
-    onBlur && onBlur(event);
-  }, [onBlur]);
+  const handleHasFocus = useCallback(
+    (event: FocusEvent) => {
+      setFocused(true);
+      onFocus && onFocus(event);
+    },
+    [onFocus]
+  );
+  const handleHasBlur = useCallback(
+    (event: FocusEvent) => {
+      setFocused(false);
+      onBlur && onBlur(event);
+    },
+    [onBlur]
+  );
 
   // EXPOSED METHODS
   useImperativeHandle(ref, () => ({

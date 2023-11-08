@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {CONTROLLED_TEXT_INSERTION_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Drawer, Fade, Icon, IconButton, Popover, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
+import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../../shared/EmojiPicker';
+import {PREFIX} from '../constants';
 
 function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
   // STATE
@@ -54,17 +55,14 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
   );
 }
 
-const PREFIX = 'SCEditorEmojiPlugin';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-emoji-plugin-root`
 };
 
 const Root = styled(Emoji, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'EmojiPluginRoot'
+})(() => ({}));
 
 export default function EmojiPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();

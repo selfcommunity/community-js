@@ -21,6 +21,7 @@ import {CategoryService, SCPaginatedResponse} from '@selfcommunity/api-services'
 import {SCCategoryType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {styled} from '@mui/material/styles';
+import {PREFIX} from '../constants';
 
 type HashtagMatch = {
   leadOffset: number;
@@ -509,17 +510,14 @@ function isSelectionOnEntityBoundary(editor: LexicalEditor, offset: number): boo
   });
 }
 
-const PREFIX = 'SCEditorHashtagPlugin';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-hashtag-plugin-root`
 };
 
 const Root = styled(HashtagsTypeahead, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'HashtagPluginRoot'
+})(() => ({}));
 
 function useHashtags(editor: LexicalEditor, containerSelector = null): JSX.Element {
   const [resolution, setResolution] = useState<Resolution | null>(null);

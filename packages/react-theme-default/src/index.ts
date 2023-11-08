@@ -78,14 +78,10 @@ import SCUserProfileEdit from './components/SCUserProfileEdit';
 import SCUserProfileBlocked from './components/SCUserProfileBlocked';
 import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
-import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
-import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
 import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCFooter from './components/SCFooter';
 import SCPlatformWidget from './components/SCPlatformWidget';
 import SCChangePictureButton from './components/SCChangePictureButton';
-import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
-import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
 import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
 import SCIncubator from './components/SCIncubator';
@@ -220,10 +216,6 @@ const theme = {
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCEditor,
-    SCEditorFloatingLinkPlugin,
-    SCEditorHashtagPlugin,
-    SCEditorMentionPlugin,
-    SCEditorToolbarPlugin,
     SCEmojiPicker,
     SCFeed,
     SCFeedObject,
