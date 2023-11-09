@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import CommentsObject, {CommentsObjectProps} from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentObjectProps} from '../../CommentObject';
@@ -13,21 +12,17 @@ import {useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useInView} from 'react-intersection-observer';
-
-const PREFIX = 'SCFeedObjectActivities';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-activities-root`,
   activities: `${PREFIX}-activities`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%'
-}));
+  slot: 'ActivitiesRoot'
+})(() => ({}));
 
 export interface ActivitiesProps {
   /**
@@ -107,12 +102,7 @@ export interface ActivitiesProps {
   [p: string]: any;
 }
 
-export default function Activities(inProps: ActivitiesProps): JSX.Element {
-  const props: ActivitiesProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
+export default function Activities(props: ActivitiesProps): JSX.Element {
   // PROPS
   const {
     id = `feed_object_activities_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,

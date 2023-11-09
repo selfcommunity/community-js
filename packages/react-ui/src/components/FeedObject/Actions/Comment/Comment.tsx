@@ -9,7 +9,7 @@ import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
-import {useThemeProps} from '@mui/system';
+import {PREFIX} from '../../constants';
 
 const messages = defineMessages({
   comments: {
@@ -22,21 +22,18 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentAction';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  divider: `${PREFIX}-divider`,
-  inline: `${PREFIX}-inline`,
-  button: `${PREFIX}-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`
+  root: `${PREFIX}-action-comment-root`,
+  divider: `${PREFIX}-action-comment-divider`,
+  inline: `${PREFIX}-action-comment-inline`,
+  button: `${PREFIX}-action-comment-button`,
+  viewAudienceButton: `${PREFIX}-action-comment-view-audience-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ActionCommentRoot'
+})(() => ({}));
 
 export interface CommentProps {
   /**
@@ -106,11 +103,7 @@ export interface CommentProps {
   [p: string]: any;
 }
 
-export default function Comment(inProps: CommentProps): JSX.Element {
-  const props: CommentProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
+export default function Comment(props: CommentProps): JSX.Element {
   // PROPS
   const {
     className,

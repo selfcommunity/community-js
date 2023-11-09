@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {Avatar, Typography} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import BaseItem from '../../../../../shared/BaseItem';
 import UserDeletedSnackBar from '../../../../../shared/UserDeletedSnackBar';
 import {getContributionHtml, getRouteData} from '../../../../../utils/contribution';
 import {MAX_SUMMARY_LENGTH} from '../../../../../constants/Feed';
+import {PREFIX} from '../../../constants';
 
 const messages = defineMessages({
   comment: {
@@ -19,40 +19,20 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentRelevantActivity';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`,
-  showMoreContent: `${PREFIX}-show-more-content`
+  root: `${PREFIX}-activity-comment-root`,
+  avatar: `${PREFIX}-activity-comment-avatar`,
+  username: `${PREFIX}-activity-comment-username`,
+  showMoreContent: `${PREFIX}-activity-comment-show-more-content`
 };
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  [`& .${classes.username}`]: {
-    color: 'inherit'
-  },
-  [`& .${classes.avatar}`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  },
-  '& .SCBaseItem-secondary': {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-  }
-}));
+  slot: 'ActivityCommentRoot'
+})(() => ({}));
 
-export default function CommentRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
+export default function CommentRelevantActivity(props: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
-  const props: ActionsRelevantActivityProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className = null, activityObject = null, ...rest} = props;
 
   // CONTEXT
@@ -96,12 +76,14 @@ export default function CommentRelevantActivity(inProps: ActionsRelevantActivity
               ),
               comment: (
                 <>
-                  {summaryHtml}
-                  <Link
-                    to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}
-                    className={classes.showMoreContent}>
-                    <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
-                  </Link>
+                  <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
+                  {summaryHtmlTruncated && (
+                    <Link
+                      to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}
+                      className={classes.showMoreContent}>
+                      <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
+                    </Link>
+                  )}
                 </>
               )
             })}

@@ -31,7 +31,7 @@ const Component = {
                 }
               }
             },
-            '& .SCFeedObjectSkeleton-snippet': {
+            '& .SCFeedObject-snippet': {
               marginLeft: theme.spacing(-2)
             }
           }

@@ -3,25 +3,22 @@ import {Box, Divider} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
-import {useThemeProps} from '@mui/system';
 import VoteButton from '../../../VoteButton';
 import VoteAudienceButton from '../../../VoteAudienceButton';
-
-const PREFIX = 'SCVoteAction';
+import {PREFIX} from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  divider: `${PREFIX}-divider`,
-  button: `${PREFIX}-button`,
-  inline: `${PREFIX}-inline`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`
+  root: `${PREFIX}-action-vote-root`,
+  divider: `${PREFIX}-action-vote-divider`,
+  button: `${PREFIX}-action-vote-button`,
+  inline: `${PREFIX}-action-vote-inline`,
+  viewAudienceButton: `${PREFIX}-action-vote-view-audience-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ActionVoteRoot'
+})(() => ({}));
 
 export interface VoteProps {
   /**
@@ -79,12 +76,7 @@ export interface VoteProps {
   [p: string]: any;
 }
 
-export default function Vote(inProps: VoteProps): JSX.Element {
-  const props: VoteProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
+export default function Vote(props: VoteProps): JSX.Element {
   // PROPS
   const {
     className = null,

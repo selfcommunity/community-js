@@ -10,42 +10,19 @@ import CentralProgress from '../../../shared/CentralProgress';
 import InfiniteScroll from '../../../shared/InfiniteScroll';
 import User from '../../User';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import ContributorsSkeleton from './Skeleton';
-
-const PREFIX = 'SCContributorsFeedObject';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  avatarGroup: `${PREFIX}-avatarGroup`,
-  btnParticipants: `${PREFIX}-btn-participants`
+  root: `${PREFIX}-contributors-root`,
+  avatarGroup: `${PREFIX}-contributors-avatarGroup`,
+  btnParticipants: `${PREFIX}-contributors-btn-participants`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({
-  minHeight: 28,
-  marginTop: 0,
-  marginBottom: 0,
-  [`& .${classes.btnParticipants}`]: {
-    marginLeft: -10
-  },
-  ['& .MuiAvatarGroup-root']: {
-    justifyContent: 'flex-end'
-  },
-  ['& .MuiAvatar-root']: {
-    backgroundColor: '#d5d5d5',
-    border: '2px solid #FFF !important',
-    color: '#FFF',
-    fontSize: '0.55rem',
-    width: theme.selfcommunity.user.avatar.sizeSmall,
-    height: theme.selfcommunity.user.avatar.sizeSmall,
-    marginLeft: theme.spacing(-1),
-    lineHeight: '24px'
-  }
-}));
+  slot: 'ContributorsRoot'
+})(() => ({}));
 
 export interface ContributorsFeedObjectProps {
   /**
@@ -87,13 +64,8 @@ export interface ContributorsFeedObjectProps {
   [p: string]: any;
 }
 
-export default function ContributorsFeedObject(inProps: ContributorsFeedObjectProps): JSX.Element {
+export default function ContributorsFeedObject(props: ContributorsFeedObjectProps): JSX.Element {
   // PROPS
-  const props: ContributorsFeedObjectProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
   const {
     className = null,
     feedObjectId = null,

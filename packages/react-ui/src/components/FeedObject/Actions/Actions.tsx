@@ -8,26 +8,17 @@ import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {useSCFetchFeedObject} from '@selfcommunity/react-core';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCFeedObjectActions';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  action: `${PREFIX}-action`
+  root: `${PREFIX}-actions-root`,
+  action: `${PREFIX}-actions-action`
 };
 
 const Root = styled(Grid, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(() => ({
-  margin: '0px 0px',
-  color: '#3A3A3A',
-  [`& .${classes.action}`]: {
-    textAlign: 'center'
-  }
-}));
+  slot: 'ActionsRoot'
+})(() => ({}));
 
 export interface ActionsProps {
   /**
@@ -100,12 +91,8 @@ export interface ActionsProps {
   ShareActionProps?: ShareProps;
 }
 
-export default function Actions(inProps: ActionsProps): JSX.Element {
+export default function Actions(props: ActionsProps): JSX.Element {
   // PROPS
-  const props: ActionsProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     className,
     feedObject,

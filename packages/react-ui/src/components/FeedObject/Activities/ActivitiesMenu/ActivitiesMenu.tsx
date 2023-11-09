@@ -11,7 +11,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
+import {PREFIX} from '../../constants';
 
 const messages = defineMessages({
   relevantActivities: {
@@ -36,18 +36,15 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCActivitiesMenu';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  selector: `${PREFIX}-selector`
+  root: `${PREFIX}-activities-menu-root`,
+  selector: `${PREFIX}-activities-menu-selector`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ActivitiesMenuRoot'
+})(() => ({}));
 
 export interface ActivitiesMenuProps {
   /**
@@ -75,12 +72,8 @@ export interface ActivitiesMenuProps {
    */
   [p: string]: any;
 }
-export default function ActivitiesMenu(inProps: ActivitiesMenuProps) {
+export default function ActivitiesMenu(props: ActivitiesMenuProps) {
   // PROPS
-  const props: ActivitiesMenuProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className = null, selectedActivities = null, hideRelevantActivitiesItem = false, onChange = null, ...rest} = props;
 
   // CONTEXT

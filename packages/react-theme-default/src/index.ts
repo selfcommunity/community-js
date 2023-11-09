@@ -17,7 +17,6 @@ import SCFeedObject from './components/SCFeedObject';
 import SCFeed from './components/SCFeed';
 import MuiButton from './components/MuiButton';
 import MuiAvatar from './components/MuiAvatar';
-import SCContributorsFeedObject from './components/SCContributorsFeedObject';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCBaseItem from './components/SCBaseItem';
 import SCCategoryHeader from './components/SCCategoryHeader';
@@ -29,8 +28,6 @@ import SCUserProfileTemplate from './components/SCUserProfileTemplate';
 import SCFeedObjectDetailTemplate from './components/SCFeedObjectDetailTemplate';
 import SCCommentObject from './components/SCCommentObject';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
-import SCPollObject from './components/SCPollObject';
-import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
 import SCPrivateMessageComponent from './components/SCPrivateMessageComponent';
@@ -39,7 +36,6 @@ import SCCategories from './components/SCCategories';
 import MuiIcon from './components/MuiIcon';
 import SCCategory from './components/SCCategory';
 import SCDateTimeAgo from './components/SCDateTimeAgo';
-import SCFeedRelevantActivities from './components/SCFeedRelevantActivities';
 import MuiIconButton from './components/MuiIconButton';
 import SCUser from './components/SCUser';
 import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
@@ -62,12 +58,7 @@ import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
 import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
 import SCLightbox from './components/SCLightbox';
-import SCFollowAction from './components/SCFollowAction';
 import SCReactionAction from './components/SCReactionAction';
-import SCCommentAction from './components/SCCommentAction';
-import SCShareAction from './components/SCShareAction';
-import SCVoteAction from './components/SCVoteAction';
-import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
 import MuiPopover from './components/MuiPopover';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
@@ -190,7 +181,6 @@ const theme = {
     SCAccountDelete,
     SCAccountReset,
     SCAccountVerify,
-    SCActivitiesMenu,
     SCBaseDialog,
     SCBaseItem,
     SCBaseItemButton,
@@ -204,14 +194,12 @@ const theme = {
     SCCategoryHeader,
     SCCategoryTemplate,
     SCChoices,
-    SCCommentAction,
     SCCommentObject,
     SCCommentObjectReply,
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
     SCCategoryAutocomplete,
-    SCContributorsFeedObject,
     SCContributionActionsMenu,
     SCCustomSnackMessage,
     SCDateTimeAgo,
@@ -220,10 +208,7 @@ const theme = {
     SCFeed,
     SCFeedObject,
     SCFeedObjectDetailTemplate,
-    SCFeedObjectSkeleton,
-    SCFeedRelevantActivities,
     SCFeedUpdatesWidget,
-    SCFollowAction,
     SCFooter,
     SCInlineComposerWidget,
     SCLightbox,
@@ -236,14 +221,12 @@ const theme = {
     SCNavigationToolbarMobile,
     SCNotification,
     SCNotificationItem,
-    SCPollObject,
     SCPreviewMediaDocument,
     SCPreviewMediaLink,
     SCPrivateMessageComponent,
     SCReactionAction,
     SCScrollContainer,
     SCSearchAutocomplete,
-    SCShareAction,
     SCSnippetNotifications,
     SCUser,
     SCUserActionIconButton,
@@ -253,7 +236,6 @@ const theme = {
     SCUserProfileHeader,
     SCUserProfileEdit,
     SCUserProfileTemplate,
-    SCVoteAction,
     SCVoteButton,
     SCVoteAudienceButton,
     SCWidget,
