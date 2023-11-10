@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.58...@selfcommunity/react-i18n@0.5.0-alpha.59) (2023-11-10)
+
+
+### Performance Improvements
+
+* refactored feed object component(+ subfolders). Fixed relevant activities comment translations + html ([52a15e8](https://github.com/selfcommunity/community-js/commit/52a15e80bed8afe297652b68e8785dd95b51b9a3))
+
+
+
+
+
 # [0.5.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.57...@selfcommunity/react-i18n@0.5.0-alpha.58) (2023-10-26)
 
 
