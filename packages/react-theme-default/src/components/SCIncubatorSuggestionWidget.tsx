@@ -4,7 +4,9 @@ const Component = {
       '& .MuiCardContent-root': {
         padding: theme.spacing(2)
       }
-    })
+    }),
+    dialogRoot: ({theme}: any) => ({}),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

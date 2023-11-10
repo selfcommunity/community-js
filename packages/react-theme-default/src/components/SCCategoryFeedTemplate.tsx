@@ -4,6 +4,9 @@ const Component = {
       '& .SCFeed-root > MuiGrid-item': {
         paddingTop: 0
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      marginTop: theme.spacing(2)
     })
   }
 };

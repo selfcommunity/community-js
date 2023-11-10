@@ -12,6 +12,7 @@ import {SCThemeType, SCUserContext, SCUserContextType, useSCFetchPrivateMessageS
 import {CacheStrategies} from '@selfcommunity/utils';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   placeholder: {
@@ -19,7 +20,6 @@ const messages = defineMessages({
     defaultMessage: 'ui.privateMessage.snippets.searchBar.placeholder'
   }
 });
-const PREFIX = 'SCPrivateMessageSnippets';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -32,9 +32,8 @@ const classes = {
 
 const Root = styled(Card, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface PrivateMessageSnippetsProps extends CardProps {
   /**

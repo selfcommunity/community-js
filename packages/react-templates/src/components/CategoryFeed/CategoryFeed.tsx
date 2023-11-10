@@ -23,8 +23,7 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {SnackbarKey, useSnackbar} from 'notistack';
 import {ContributionUtils} from '@selfcommunity/react-ui';
-
-const PREFIX = 'SCCategoryFeedTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -32,9 +31,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryFeedProps {
   /**

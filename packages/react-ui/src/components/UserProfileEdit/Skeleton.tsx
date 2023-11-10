@@ -2,17 +2,15 @@ import React from 'react';
 import {Box, Grid} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-
-const PREFIX = 'SCUserProfileEditSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'SkeletonRoot'
 })(() => ({}));
 
 /**
@@ -26,13 +24,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCUserProfileEditSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserProfileEdit-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserProfileEditSkeleton-root|Styles applied to the root element.|
+ |root|.SCUserProfileEdit-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function UserProfileEditSkeleton(): JSX.Element {

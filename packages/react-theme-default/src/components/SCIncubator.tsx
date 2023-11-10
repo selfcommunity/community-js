@@ -26,6 +26,20 @@ const Component = {
       '& .MuiCardActions-root': {
         marginLeft: theme.spacing(1)
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      width: '100%',
+      '& .MuiCardContent-root': {
+        '& .SCIncubator-secondary': {
+          marginTop: theme.spacing(1)
+        },
+        '& .SCIncubator-progress-bar': {
+          marginTop: theme.spacing(1)
+        }
+      },
+      '& .MuiCardActions-root': {
+        marginLeft: theme.spacing(2)
+      }
     })
   }
 };

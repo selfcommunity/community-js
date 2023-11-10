@@ -5,15 +5,17 @@ import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {useMediaQuery, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCPrivateMessageThreadItemSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(ListItem)(({theme}) => ({}));
+const Root = styled(ListItem, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS PrivateMessageThreadItem Skeleton component. Learn about the available props and the CSS API.
 
@@ -25,14 +27,14 @@ const Root = styled(ListItem)(({theme}) => ({}));
 
  #### Component Name
 
- The name `SCPrivateMessageThreadItemSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPrivateMessageThreadItem-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPrivateMessageThreadItemSkeleton-root|Styles applied to the root element.|
- |list|.SCPrivateMessageThreadItemSkeleton-list|Styles applied to the list element.|
+ |root|.SCPrivateMessageThreadItem-skeleton-root|Styles applied to the root element.|
+ |list|.SCPrivateMessageThreadItem-list|Styles applied to the list element.|
  *
  */
 export default function PrivateMessageThreadItemSkeleton(props): JSX.Element {

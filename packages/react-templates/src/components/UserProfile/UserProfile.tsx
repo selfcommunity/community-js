@@ -4,7 +4,8 @@ import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {
   ConnectionUserButton,
   FeedObjectProps,
-  FeedSidebarProps, LoyaltyProgramWidget,
+  FeedSidebarProps,
+  LoyaltyProgramWidget,
   SCFeedWidgetType,
   TagChip,
   UserActionIconButton,
@@ -17,7 +18,7 @@ import {
   UserFollowersWidget,
   UserProfileBlocked,
   UserProfileHeader,
-  UserProfileHeaderProps,
+  UserProfileHeaderProps
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
@@ -38,8 +39,7 @@ import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import UserFeedSkeleton from '../UserFeed/Skeleton';
-
-const PREFIX = 'SCUserProfileTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -52,8 +52,7 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 export interface UserProfileProps {
@@ -179,7 +178,7 @@ const WIDGETS_FOLLOWERS_MY_PROFILE = [
     componentProps: {},
     column: 'right',
     position: -1
-  },
+  }
 ];
 
 const WIDGETS_CONNECTIONS = [

@@ -16,10 +16,10 @@ const PREFERENCES = [
   SCPreferences.POINTS_APP_USED,
   SCPreferences.POINTS_DAILY_VISIT
 ];
-const PREFIX = 'SCLoyaltyProgramDetailPointsList';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-points-list-root`,
   element: `${PREFIX}-element`
 };
 
@@ -44,9 +44,8 @@ export function PointElement({message, points}: {message: React.ReactNode; point
 
 const Root = styled(Grid, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'PointsListRoot'
+})(() => ({}));
 
 export interface PointsListProps {
   className?: string;

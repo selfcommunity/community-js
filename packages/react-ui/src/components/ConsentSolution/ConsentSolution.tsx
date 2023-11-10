@@ -22,8 +22,7 @@ import {getDocumentBody, isDocumentApproved, isEmptyDocumentBody} from '../../ut
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {elementScrollTo} from 'seamless-scroll-polyfill';
 import AccountDataPortability from '../AccountDataPortability';
-
-const PREFIX = 'SCConsentSolution';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -47,94 +46,8 @@ const classes = {
 
 const Root = styled(Dialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.title}`]: {
-    display: 'flex',
-    justifyContent: 'center',
-    fontWeight: 800,
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '0.9rem'
-    }
-  },
-  [`& .${classes.titleBack}`]: {
-    display: 'flex',
-    justifyContent: 'left'
-  },
-  [`& .${classes.content}`]: {
-    padding: theme.spacing(2),
-    overflowX: 'hidden',
-    fontSize: '0.8rem',
-    [theme.breakpoints.down('sm')]: {
-      padding: 12,
-      '& h6': {
-        fontSize: '0.8rem'
-      },
-      '& span, p, li': {
-        fontSize: '0.7rem'
-      },
-      '& li': {
-        fontSize: '0.7rem'
-      },
-      '& button': {
-        fontSize: '0.6rem'
-      }
-    }
-  },
-  [`& .${classes.consent}`]: {
-    borderTop: 0,
-    overflowY: 'visible',
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: 5,
-      paddingBottom: 5
-    }
-  },
-  [`& .${classes.consentSwitch}`]: {
-    margin: `${theme.spacing()} 3px`,
-    '& > span:first-of-type': {
-      marginRight: 10
-    },
-    [theme.breakpoints.down('sm')]: {
-      '.MuiFormControlLabel-label': {
-        fontSize: '0.7rem'
-      }
-    }
-  },
-  [`& .${classes.deleteAccountButton}`]: {
-    cursor: 'pointer',
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.confirmDeleteAccountButton}`]: {
-    color: '#FFF !important',
-    marginRight: theme.spacing(2),
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.logoutAccountButton}`]: {
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.dataPortability}`]: {
-    marginBottom: theme.spacing(2)
-  },
-  [`& .${classes.alertAcceptDocument}`]: {
-    padding: theme.spacing(),
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '0.7rem',
-      padding: 5
-    }
-  },
-  [`& .${classes.acceptConditions}`]: {
-    fontSize: '0.8rem',
-    fontWeight: 300,
-    color: theme.palette.grey['A700'],
-    padding: `${theme.spacing()} ${theme.spacing()}`,
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '0.6rem'
-    }
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 /**
  * Translations

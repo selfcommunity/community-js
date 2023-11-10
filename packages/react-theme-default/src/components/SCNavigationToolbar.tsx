@@ -73,6 +73,34 @@ const Component = {
           marginLeft: theme.spacing(4.5)
         }
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      '& .SCNavigationToolbar-logo': {
+        width: 100,
+        height: 20
+      },
+      '& .SCNavigationToolbar-navigation': {
+        flexGrow: 1,
+        margin: theme.spacing(0, 20)
+      },
+      '& .SCNavigationToolbar-avatar': {
+        width: theme.selfcommunity.user.avatar.sizeMedium,
+        height: theme.selfcommunity.user.avatar.sizeMedium
+      }
+    }),
+    notificationsMenuRoot: ({theme}: any) => ({
+      '& .SCNavigationToolbar-paper': {
+        minWidth: 370,
+        padding: theme.spacing(2),
+        '& .MuiList-root': {
+          padding: 0
+        }
+      },
+      '& .SCNavigationToolbar-link': {
+        display: 'block',
+        textAlign: 'center',
+        margin: theme.spacing(0, 'auto')
+      }
     })
   }
 };

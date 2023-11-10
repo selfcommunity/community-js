@@ -4,17 +4,18 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import FeedObjectSkeleton from '../FeedObject/Skeleton';
 import {CardContent} from '@mui/material';
-
-const PREFIX = 'SCCategoryTrendingFeedWidgetSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Widget)(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
+
 /**
  * > API documentation for the Community-JS Trending Feed Widget Skeleton component. Learn about the available props and the CSS API.
 
@@ -26,13 +27,14 @@ const Root = styled(Widget)(({theme}) => ({
 
  #### Component Name
 
- The name `SCCategoryTrendingFeedWidgetSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoryTrendingFeedWidget-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryTrendingFeedWidgetSkeleton-root|Styles applied to the root element.|
+ |root|.SCCategoryTrendingFeedWidget-skeleton-root|Styles applied to the root element.|
+ |list|.SCCategoryTrendingFeedWidget-list|Styles applied to the list element.|
  *
  */
 export default function CategoryTrendingFeedWidgetSkeleton(props): JSX.Element {

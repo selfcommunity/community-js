@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCFeedObjectType, SCContributionType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import {Button, CardContent, CardHeader, Collapse, ListItem, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
@@ -11,7 +11,7 @@ import Choice from './Choice';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   showPoll: {
@@ -36,25 +36,22 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCPollObject';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  voters: `${PREFIX}-voters`,
-  votes: `${PREFIX}-votes`,
-  toggleButton: `${PREFIX}-toggle-button`,
-  title: `${PREFIX}-title`,
-  expiration: `${PREFIX}-expiration`,
-  closed: `${PREFIX}-closed`,
-  expandIcon: `${PREFIX}-expand-icon`,
-  collapsedIcon: `${PREFIX}-collapsed-icon`
+  root: `${PREFIX}-poll-object-root`,
+  voters: `${PREFIX}-poll-object-voters`,
+  votes: `${PREFIX}-poll-object-votes`,
+  toggleButton: `${PREFIX}-poll-object-toggle-button`,
+  title: `${PREFIX}-poll-object-title`,
+  expiration: `${PREFIX}-poll-object-expiration`,
+  closed: `${PREFIX}-poll-object-closed`,
+  expandIcon: `${PREFIX}-poll-object-expand-icon`,
+  collapsedIcon: `${PREFIX}-poll-object-collapsed-icon`
 };
 
 const Root = styled(Card, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'PollObjectRoot'
+})(() => ({}));
 
 export interface PollObjectProps {
   /**
@@ -96,12 +93,8 @@ export interface PollObjectProps {
   [p: string]: any;
 }
 
-export default function PollObject(inProps: PollObjectProps): JSX.Element {
+export default function PollObject(props: PollObjectProps): JSX.Element {
   //  PROPS
-  const props: PollObjectProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className, feedObject, pollObject, disabled, visible = true, onChange, onToggleVisibility, ...rest} = props;
 
   // INTL

@@ -4,6 +4,15 @@ const Component = {
       marginTop: 0,
       [theme.breakpoints.up('md')]: {
         marginTop: theme.spacing(4)
+      },
+      '& .SCCategoryTemplate-feed': {
+        marginTop: theme.spacing(2)
+      }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      marginTop: 0,
+      [theme.breakpoints.up('md')]: {
+        marginTop: 30
       }
     })
   }

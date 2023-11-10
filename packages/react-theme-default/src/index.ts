@@ -17,7 +17,6 @@ import SCFeedObject from './components/SCFeedObject';
 import SCFeed from './components/SCFeed';
 import MuiButton from './components/MuiButton';
 import MuiAvatar from './components/MuiAvatar';
-import SCContributorsFeedObject from './components/SCContributorsFeedObject';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCBaseItem from './components/SCBaseItem';
 import SCCategoryHeader from './components/SCCategoryHeader';
@@ -28,32 +27,23 @@ import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCUserProfileTemplate from './components/SCUserProfileTemplate';
 import SCFeedObjectDetailTemplate from './components/SCFeedObjectDetailTemplate';
 import SCCommentObject from './components/SCCommentObject';
-import SCFeedObjectDetailTemplateSkeleton from './components/SCFeedObjectDetailTemplateSkeleton';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
-import SCCategoryTemplateSkeleton from './components/SCCategoryTemplateSkeleton';
-import SCPollObject from './components/SCPollObject';
-import SCFeedObjectSkeleton from './components/SCFeedObjectSkeleton';
-import SCFeedSkeleton from './components/SCFeedSkeleton';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
-import SCLoyaltyProgramDetailTemplateSkeleton from './components/SCLoyaltyProgramDetailTemplateSkeleton';
 import SCPrivateMessageComponent from './components/SCPrivateMessageComponent';
 import MuiDialog from './components/MuiDialog';
 import SCCategories from './components/SCCategories';
 import MuiIcon from './components/MuiIcon';
 import SCCategory from './components/SCCategory';
 import SCDateTimeAgo from './components/SCDateTimeAgo';
-import SCFeedRelevantActivities from './components/SCFeedRelevantActivities';
 import MuiIconButton from './components/MuiIconButton';
 import SCUser from './components/SCUser';
 import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
-import SCLoyaltyProgramWidgetSkeleton from './components/SCLoyaltyProgramWidgetSkeleton';
 import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiSelect from './components/MuiSelect';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import MuiAutocomplete from './components/MuiAutocomplete';
 import SCPreviewMediaDocument from './components/SCPreviewMediaDocument';
-import SCCommentObjectSkeleton from './components/SCCommentObjectSkeleton';
 import SCChoices from './components/SCChoices';
 import SCNavigationToolbar from './components/SCNavigationToolbar';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
@@ -65,70 +55,64 @@ import SCPrivateMessageThread from './components/SCPrivateMessageThread';
 import SCPrivateMessageThreadItem from './components/SCPrivateMessageThreadItem';
 import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
 import SCPrivateMessageEditor from './components/SCPrivateMessageEditor';
-import SCNotificationsMenu from './components/SCNotificationsMenu';
 import SCNotificationItem from './components/SCNotificationItem';
 import SCNotification from './components/SCNotification';
-import SCContributionNotification from './components/SCContributionNotification';
-import SCSnippetNotificationsSkeleton from './components/SCSnippetNotificationsSkeleton';
-import SCPrivateMessageComponentSkeleton from './components/SCPrivateMessageComponentSkeleton';
-import SCPrivateMessageThreadSkeleton from './components/SCPrivateMessageThreadSkeleton';
-import SCPrivateMessageThreadItemDialog from './components/SCPrivateMessageThreadItemDialog';
 import SCLightbox from './components/SCLightbox';
-import SCFollowAction from './components/SCFollowAction';
 import SCReactionAction from './components/SCReactionAction';
-import SCCommentAction from './components/SCCommentAction';
-import SCShareAction from './components/SCShareAction';
-import SCVoteAction from './components/SCVoteAction';
-import SCCommentObjectVotes from './components/SCCommentObjectVotes';
-import SCActivitiesMenu from './components/SCActivitiesMenu';
 import MuiTooltip from './components/MuiTooltip';
-import SCCommentNotification from './components/SCCommentNotification';
 import MuiPopover from './components/MuiPopover';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
-import SCUserInfoDialog from './components/SCUserInfoDialog';
 import SCUserInfo from './components/SCUserInfo';
 import SCUserCounters from './components/SCUserCounters';
 import SCUserProfileEdit from './components/SCUserProfileEdit';
 import SCUserProfileBlocked from './components/SCUserProfileBlocked';
 import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
-import SCEditorToolbarPlugin from './components/SCEditorToolbarPlugin';
-import SCEditorFloatingLinkPlugin from './components/SCEditorFloatingLinkPlugin';
 import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCFooter from './components/SCFooter';
 import SCPlatformWidget from './components/SCPlatformWidget';
 import SCChangePictureButton from './components/SCChangePictureButton';
-import SCChangePictureDialog from './components/SCChangePictureDialog';
-import SCEditorMentionPlugin from './components/SCEditorMentionPlugin';
-import SCEditorHashtagPlugin from './components/SCEditorHashtagPlugin';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
 import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
 import SCIncubator from './components/SCIncubator';
-import SCIncubatorSkeleton from './components/SCIncubatorSkeleton';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
-import SCPrizeItemSkeleton from './components/SCPrizeItemSkeleton';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
 import MuiDrawer from './components/MuiDrawer';
 import SCEmojiPicker from './components/SCEmojiPicker';
 import SCBullet from './components/SCBullet';
 import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
-import SCUserProfileEditSectionAccountCredentials from './components/SCUserProfileEditSectionAccountCredentials';
-import SCUserProfileEditSectionAccount from './components/SCUserProfileEditSectionAccount';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCPreviewMediaLink from './components/SCPreviewMediaLink';
 import SCUserAvatar from './components/SCUserAvatar';
 import SCAccountReset from './components/SCAccountReset';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountVerify from './components/SCAccountVerify';
-import SCNavigationToolbarSkeleton from './components/SCNavigationToolbarSkeleton';
 import SCComposer from './components/SCComposer';
 import SCMediaLink from './components/SCMediaLink';
 import SCMediaFile from './components/SCMediaFile';
 import SCCategoriesPopularWidget from './components/SCCategoriesPopularWidget';
 import SCCategoriesSuggestionWidget from './components/SCCategoriesSuggestionWidget';
+import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
+import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersWidget';
+import SCConsentSolution from './components/SCConsentSolution';
+import SCCustomAdv from './components/SCCustomAdv';
+import SCPollSuggestionWidget from './components/SCPollSuggestionWidget';
+import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget';
+import SCToastNotifications from './components/SCToastNotifications';
+import SCUserConnectionsRequestsSentWidget from './components/SCUserConnectionsRequestsSentWidget';
+import SCUserConnectionsRequestsWidget from './components/SCUserConnectionsRequestsWidget';
+import SCUserConnectionsWidget from './components/SCUserConnectionsWidget';
+import SCUserCategoriesFollowedWidget from './components/SCUserCategoriesFollowedWidget';
+import SCUserFollowedUsersWidget from './components/SCUserFollowedUsersWidget';
+import SCUserFollowersWidget from './components/SCUserFollowersWidget';
+import SCUserSuggestionWidget from './components/SCUserSuggestionWidget';
+import SCExploreFeedTemplate from './components/SCExploreFeedTemplate';
+import SCMainFeedTemplate from './components/SCMainFeedTemplate';
+import SCNotificationFeedTemplate from './components/SCNotificationFeedTemplate';
+import SCUserFeedTemplate from './components/SCUserFeedTemplate';
 
 /**
  * Style fragments - Imports - End
@@ -197,7 +181,6 @@ const theme = {
     SCAccountDelete,
     SCAccountReset,
     SCAccountVerify,
-    SCActivitiesMenu,
     SCBaseDialog,
     SCBaseItem,
     SCBaseItemButton,
@@ -210,76 +193,49 @@ const theme = {
     SCCategoryFollowersButton,
     SCCategoryHeader,
     SCCategoryTemplate,
-    SCCategoryTemplateSkeleton,
     SCChoices,
-    SCCommentAction,
-    SCCommentNotification,
     SCCommentObject,
     SCCommentObjectReply,
-    SCCommentObjectSkeleton,
-    SCCommentObjectVotes,
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
     SCCategoryAutocomplete,
-    SCContributionNotification,
-    SCContributorsFeedObject,
     SCContributionActionsMenu,
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCEditor,
-    SCEditorFloatingLinkPlugin,
-    SCEditorHashtagPlugin,
-    SCEditorMentionPlugin,
-    SCEditorToolbarPlugin,
     SCEmojiPicker,
     SCFeed,
     SCFeedObject,
     SCFeedObjectDetailTemplate,
-    SCFeedObjectDetailTemplateSkeleton,
-    SCFeedObjectSkeleton,
-    SCFeedRelevantActivities,
-    SCFeedSkeleton,
     SCFeedUpdatesWidget,
-    SCFollowAction,
     SCFooter,
     SCInlineComposerWidget,
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetailTemplate,
-    SCLoyaltyProgramWidgetSkeleton,
-    SCLoyaltyProgramDetailTemplateSkeleton,
     SCMediaFile,
     SCMediaLink,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
-    SCNavigationToolbarSkeleton,
     SCNavigationToolbarMobile,
     SCNotification,
     SCNotificationItem,
-    SCNotificationsMenu,
-    SCPollObject,
     SCPreviewMediaDocument,
     SCPreviewMediaLink,
     SCPrivateMessageComponent,
     SCReactionAction,
     SCScrollContainer,
     SCSearchAutocomplete,
-    SCShareAction,
     SCSnippetNotifications,
-    SCSnippetNotificationsSkeleton,
     SCUser,
     SCUserActionIconButton,
     SCUserCounters,
     SCUserProfileBlocked,
     SCUserInfo,
-    SCUserInfoDialog,
     SCUserProfileHeader,
     SCUserProfileEdit,
-    SCUserProfileEditSectionAccount,
-    SCUserProfileEditSectionAccountCredentials,
     SCUserProfileTemplate,
-    SCVoteAction,
     SCVoteButton,
     SCVoteAudienceButton,
     SCWidget,
@@ -288,22 +244,34 @@ const theme = {
     SCPrivateMessageThread,
     SCPrivateMessageThreadItem,
     SCPrivateMessageEditor,
-    SCPrivateMessageComponentSkeleton,
-    SCPrivateMessageThreadSkeleton,
-    SCPrivateMessageThreadItemDialog,
     SCPlatformWidget,
     SCChangePictureButton,
-    SCChangePictureDialog,
     SCIncubator,
     SCIncubatorListWidget,
-    SCIncubatorSkeleton,
     SCIncubatorSuggestionWidget,
     SCIncubatorDetail,
-    SCPrizeItemSkeleton,
     SCNavigationMenuIconButton,
     SCUserAvatar,
     SCCategoriesPopularWidget,
-    SCCategoriesSuggestionWidget
+    SCCategoriesSuggestionWidget,
+    SCCategoryTrendingFeedWidget,
+    SCCategoryTrendingUsersWidget,
+    SCConsentSolution,
+    SCCustomAdv,
+    SCPollSuggestionWidget,
+    SCRelatedFeedObjectsWidget,
+    SCToastNotifications,
+    SCUserConnectionsRequestsSentWidget,
+    SCUserConnectionsRequestsWidget,
+    SCUserConnectionsWidget,
+    SCUserCategoriesFollowedWidget,
+    SCUserFollowedUsersWidget,
+    SCUserFollowersWidget,
+    SCUserSuggestionWidget,
+    SCExploreFeedTemplate,
+    SCMainFeedTemplate,
+    SCNotificationFeedTemplate,
+    SCUserFeedTemplate
   },
   selfcommunity: {
     user: {

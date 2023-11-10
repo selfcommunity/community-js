@@ -1,19 +1,17 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, CardContent } from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
-
-const PREFIX = 'SCFooterSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Footer Skeleton component. Learn about the available props and the CSS API.
 
@@ -25,13 +23,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCFooterSkeleton` can be used when providing style overrides in the theme.
+ The name `SCFooter-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFooterSkeleton-root|Styles applied to the root element.|
+ |root|.SCFooter-skeleton-root|Styles applied to the root element.|
  *
  */
 

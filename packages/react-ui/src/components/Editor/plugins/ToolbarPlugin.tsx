@@ -37,6 +37,7 @@ import {useThemeProps} from '@mui/system';
 import ImagePlugin from './ImagePlugin';
 import EmojiPlugin from './EmojiPlugin';
 import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
+import {PREFIX} from '../constants';
 
 const blockTypeToBlockIcon = {
   h1: 'format_heading_1',
@@ -168,18 +169,15 @@ function BlockFormatIconButton({
   );
 }
 
-const PREFIX = 'SCEditorToolbarPlugin';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-toolbar-plugin-root`,
   blockFormat: `${PREFIX}-block-format`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ToolbarPluginRoot'
+})(() => ({}));
 
 export interface ToolbarPluginProps {
   uploadImage: boolean;

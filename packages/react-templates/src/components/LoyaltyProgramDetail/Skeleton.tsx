@@ -3,11 +3,10 @@ import {styled} from '@mui/material/styles';
 import {Typography, Grid, Skeleton, Box, useTheme, useMediaQuery} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import PrizeItemSkeleton from './PrizeItemSkeleton';
-
-const PREFIX = 'SCLoyaltyProgramDetailTemplateSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   title: `${PREFIX}-title`,
   sectionTitle: `${PREFIX}-section-title`,
   subTitle: `${PREFIX}-sub-title`,
@@ -17,9 +16,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Loyalty Program Detail Skeleton component. Learn about the available props and the CSS API.
@@ -32,18 +30,18 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCLoyaltyProgramDetailTemplateSkeleton` can be used when providing style overrides in the theme.
+ The name `SCLoyaltyProgramDetailTemplate-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCLoyaltyProgramDetailTemplateSkeleton-root|Styles applied to the root element.|
- |title|.SCLoyaltyProgramDetailTemplateSkeleton-title|Styles applied to the title element.|
- |sectionTitle|.SCLoyaltyProgramDetailTemplateSkeleton-section-title|Styles applied to the section title element.|
- |subTitle|.SCLoyaltyProgramDetailTemplateSkeleton-subTitle|Styles applied to the subTitle element.|
- |pointsList|.SCLoyaltyProgramDetailTemplateSkeleton-points-list|Styles applied to the points list section.|
- |chip|.SCLoyaltyProgramDetailTemplateSkeleton-chip|Styles applied to the chip element.|
+ |root|.SCLoyaltyProgramDetailTemplate-skeleton-root|Styles applied to the root element.|
+ |title|.SCLoyaltyProgramDetailTemplate-title|Styles applied to the title element.|
+ |sectionTitle|.SCLoyaltyProgramDetailTemplate-section-title|Styles applied to the section title element.|
+ |subTitle|.SCLoyaltyProgramDetailTemplate-subTitle|Styles applied to the subTitle element.|
+ |pointsList|.SCLoyaltyProgramDetailTemplate-points-list|Styles applied to the points list section.|
+ |chip|.SCLoyaltyProgramDetailTemplate-chip|Styles applied to the chip element.|
  *
  */
 export default function LoyaltyProgramDetailSkeleton(): JSX.Element {

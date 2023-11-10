@@ -2,16 +2,16 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {CommentObjectSkeleton} from '../CommentObject';
 import {Box} from '@mui/material';
-
-const PREFIX = 'SCCommentsObjectSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
-const Root = styled(Box)(({theme}) => ({
-  width: '100%'
-}));
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Comments Object Skeleton component. Learn about the available props and the CSS API.
@@ -24,13 +24,13 @@ const Root = styled(Box)(({theme}) => ({
 
  #### Component Name
 
- The name `SCCommentsObjectSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCommentsObject-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCommentsObjectSkeleton-root|Styles applied to the root element.|
+ |root|.SCCommentsObject-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CommentsObjectSkeleton(props: {count?: number; CommentObjectSkeletonProps?: any; [p: string]: any}): JSX.Element {

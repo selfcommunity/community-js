@@ -9,6 +9,7 @@ import {useThemeProps} from '@mui/system';
 import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../shared/EmojiPicker';
 import {iOS} from '@selfcommunity/utils';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   placeholder: {
@@ -17,21 +18,18 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCPrivateMessageEditor';
-
 const classes = {
   root: `${PREFIX}-root`,
   ios: `${PREFIX}-ios`,
   messageInput: `${PREFIX}-message-input`,
-  uploadMediaSection: `${PREFIX}-upload-media-section`,
+  mediaUploader: `${PREFIX}-media-uploader`,
   emojiSection: `${PREFIX}-emoji-section`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface PrivateMessageEditorProps {
   /**
@@ -84,7 +82,7 @@ export interface PrivateMessageEditorProps {
  |---|---|---|
  |root|.SCPrivateMessageEditor-root|Styles applied to the root element.|
  |messageInput|.SCPrivateMessageEditor-card|Styles applied to the message input element.|
- |uploadMediaSection|.SCPrivateMessageEditor-upload-media-section|Styles applied to the upload media section.|
+ |mediaUploader|.SCPrivateMessageEditor-media-uploader|Styles applied to the message media uploader section.|
  |emojiSection|.SCPrivateMessageEditor-emoji-section|Styles applied to the emoji section.|
 
  * @param inProps
@@ -195,7 +193,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
       <>
         {openMediaSection ? (
           <MessageMediaUploader
-            className={classes.uploadMediaSection}
+            className={classes.mediaUploader}
             open={openMediaSection}
             onClose={handleMediaSectionClose}
             forwardMessageFile={handleMessageFiles}

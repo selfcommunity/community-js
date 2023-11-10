@@ -4,23 +4,17 @@ import {Box, BoxProps, Button} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
-
-const PREFIX = 'SCContributorsSkeleton';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-contributors-skeleton-root`,
   btnParticipants: `${PREFIX}-btn-participants`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.btnParticipants}`]: {
-    marginLeft: -10
-  }
-}));
+  slot: 'ContributorsSkeletonRoot'
+})(() => ({}));
 
 export interface ContributorsSkeleton extends BoxProps {
   /**
@@ -45,13 +39,13 @@ export interface ContributorsSkeleton extends BoxProps {
 
  #### Component Name
 
- The name `SCContributorsSkeleton` can be used when providing style overrides in the theme.
+ The name `SCFeedObject-contributors-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCContributorsSkeleton-root|Styles applied to the root element.|
+ |root|.SCFeedObject-contributors-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function ContributorsSkeleton(props): JSX.Element {

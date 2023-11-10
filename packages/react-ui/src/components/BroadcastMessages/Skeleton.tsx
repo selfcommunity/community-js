@@ -1,26 +1,22 @@
 import React from 'react';
-import {Box, Card, CardContent, CardHeader, Skeleton, useTheme} from '@mui/material';
+import {Box, CardContent, CardHeader, Skeleton, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const MESSAGE_PREFIX = 'SCBroadcastMessageSkeleton';
+import {PREFIX} from './constants';
 
 const messageClasses = {
-  root: `${MESSAGE_PREFIX}-root`,
-  header: `${MESSAGE_PREFIX}-header`,
-  title: `${MESSAGE_PREFIX}-title`,
-  media: `${MESSAGE_PREFIX}-media`,
-  content: `${MESSAGE_PREFIX}-content`
+  root: `${PREFIX}-message-skeleton-root`,
+  header: `${PREFIX}-header`,
+  title: `${PREFIX}-title`,
+  media: `${PREFIX}-media`,
+  content: `${PREFIX}-content`
 };
 
-const MessageRoot = styled(Widget, {
-  name: MESSAGE_PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+const MessageSkeletonRoot = styled(Widget, {
+  name: PREFIX,
+  slot: 'MessageSkeletonRoot'
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Broadcast Message Skeleton component. Learn about the available props and the CSS API.
 
@@ -32,27 +28,34 @@ const MessageRoot = styled(Widget, {
 
  #### Component Name
 
- The name `SCBroadcastMessageSkeleton` can be used when providing style overrides in the theme.
+ The name `SCBroadcastMessages-message-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCBroadcastMessageSkeleton-root|Styles applied to the root element.|
- |header|.SCBroadcastMessageSkeleton-header|Styles applied to the header element.|
- |title|.SCBroadcastMessageSkeleton-title|Styles applied to the title element.|
- |media|.SCBroadcastMessageSkeleton-media|Styles applied to the media element.|
- |content|.SCBroadcastMessageSkeleton-content|Styles applied to the content section.|
+ |root|.SCBroadcastMessages-message-skeleton-root|Styles applied to the root element.|
+ |header|.SCBroadcastMessages-header|Styles applied to the header element.|
+ |title|.SCBroadcastMessages-title|Styles applied to the title element.|
+ |media|.SCBroadcastMessages-media|Styles applied to the media element.|
+ |content|.SCBroadcastMessages-content|Styles applied to the content section.|
  *
  */
 export function MessageSkeleton(props): JSX.Element {
   const theme = useTheme<SCThemeType>();
 
   return (
-    <MessageRoot className={classes.root}>
+    <MessageSkeletonRoot className={messageClasses.root}>
       <CardHeader
         className={messageClasses.header}
-        avatar={<Skeleton animation="wave" variant="circular" width={theme.selfcommunity.user.avatar.sizeMedium} height={theme.selfcommunity.user.avatar.sizeMedium} />}
+        avatar={
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={theme.selfcommunity.user.avatar.sizeMedium}
+            height={theme.selfcommunity.user.avatar.sizeMedium}
+          />
+        }
         title={<Skeleton animation="wave" variant="rectangular" width={60} height={20} />}
       />
       <CardContent className={messageClasses.title}>
@@ -69,21 +72,18 @@ export function MessageSkeleton(props): JSX.Element {
           <Skeleton animation="wave" height={10} width={60} />
         </React.Fragment>
       </CardContent>
-    </MessageRoot>
+    </MessageSkeletonRoot>
   );
 }
 
-const PREFIX = 'SCBroadcastMessagesSkeleton';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Broadcast Messages Skeleton component. Learn about the available props and the CSS API.
@@ -96,13 +96,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCBroadcastMessagesSkeleton` can be used when providing style overrides in the theme.
+ The name `SCBroadcastMessages-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCBroadcastMessagesSkeleton-root|Styles applied to the root element.|
+ |root|.SCBroadcastMessages-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function BroadcastMessagesSkeleton(props): JSX.Element {

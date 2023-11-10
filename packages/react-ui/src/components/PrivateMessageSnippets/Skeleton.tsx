@@ -3,17 +3,19 @@ import List from '@mui/material/List';
 import {styled} from '@mui/material/styles';
 import PrivateMessageSnippetItemSkeleton from '../PrivateMessageSnippetItem/Skeleton';
 import {Button, Card, CardContent, Skeleton, Stack} from '@mui/material';
-
-const PREFIX = 'SCPrivateMessageSnippetsSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   searchBar: `${PREFIX}-search-bar`,
   button: `${PREFIX}-button`,
   list: `${PREFIX}-list`
 };
 
-const Root = styled(Card)(({theme}) => ({}));
+const Root = styled(Card, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS PrivateMessageSnippets Skeleton component. Learn about the available props and the CSS API.
@@ -26,16 +28,16 @@ const Root = styled(Card)(({theme}) => ({}));
 
  #### Component Name
 
- The name `SCPrivateMessageSnippetsSkeleton` can be used when providing style overrides in the theme.
+ The name `SCPrivateMessageSnippets-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPrivateMessageSnippetsSkeleton-root|Styles applied to the root element.|
- |searchBar|.SCPrivateMessageSnippetsSkeleton-search-bar|Styles applied to the search bar element.|
- |button|.SCPrivateMessageSnippetsSkeleton-button|Styles applied to the button element.|
- |list|.SCPrivateMessageSnippetsSkeleton-list|Styles applied to the list element.|
+ |root|.SCPrivateMessageSnippets-skeleton-root|Styles applied to the root element.|
+ |searchBar|.SCPrivateMessageSnippets-search-bar|Styles applied to the search bar element.|
+ |button|.SCPrivateMessageSnippets-button|Styles applied to the button element.|
+ |list|.SCPrivateMessageSnippets-list|Styles applied to the list element.|
  *
  */
 export default function PrivateMessageSnippetsSkeleton(props): JSX.Element {

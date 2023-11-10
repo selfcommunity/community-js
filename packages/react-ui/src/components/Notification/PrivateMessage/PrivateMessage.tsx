@@ -24,6 +24,7 @@ import NotificationItem, {NotificationItemProps} from '../../../shared/Notificat
 import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -32,10 +33,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCNotificationPrivateMessage';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-private-message-root`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   replyButton: `${PREFIX}-reply-button`,
@@ -48,52 +47,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    display: 'inline',
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.messageLabel}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.messageWrap}`]: {
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    WebkitLineClamp: '2',
-    lineClamp: 2,
-    WebkitBoxOrient: 'vertical',
-    '& p': {
-      margin: 0
-    }
-  },
-  [`& .${classes.message}`]: {
-    height: 20,
-    overflowY: 'hidden',
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden',
-    '&:hover': {
-      textDecoration: 'underline'
-    },
-    '& > p': {
-      overflowY: 'hidden',
-      textOverflow: 'ellipsis',
-      display: '-webkit-box',
-      WebkitLineClamp: '2',
-      lineClamp: 2,
-      WebkitBoxOrient: 'vertical'
-    }
-  },
-  [`& .${classes.actions}`]: {
-    fontSize: '13px',
-    maxWidth: '40%'
-  }
-}));
+  slot: 'PrivateMessageRoot'
+})(() => ({}));
 
 export interface NotificationPrivateMessageProps
   extends Pick<

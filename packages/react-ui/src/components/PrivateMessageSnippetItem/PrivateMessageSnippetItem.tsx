@@ -8,8 +8,7 @@ import {SCUserContextType, SCUserContext, SCPreferences, SCPreferencesContextTyp
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import UserAvatar from '../../shared/UserAvatar';
-
-const PREFIX = 'SCPrivateMessageSnippetItem';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -22,9 +21,8 @@ const classes = {
 
 const Root = styled(ListItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_STAFF_BADGE_ICON];
 export interface PrivateMessageSnippetItemProps {

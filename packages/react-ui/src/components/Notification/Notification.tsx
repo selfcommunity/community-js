@@ -39,6 +39,7 @@ import {
 } from '@selfcommunity/types';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -46,8 +47,6 @@ const messages = defineMessages({
     defaultMessage: 'ui.notification.receivePrivateMessage'
   }
 });
-
-const PREFIX = 'SCNotification';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -65,9 +64,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface NotificationProps extends CardProps, VirtualScrollerItemProps {
   /**

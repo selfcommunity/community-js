@@ -44,7 +44,8 @@ const Component = {
       '& .MuiPaper-root, MuiCard-root, SCWidget-root, SCPrivateMessageSnippets-root, MuiCardContent-root': {
         padding: theme.spacing(2)
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 export default Component;

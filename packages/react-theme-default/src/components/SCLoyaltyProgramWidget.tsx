@@ -27,6 +27,25 @@ const Component = {
           }
         }
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      '& .MuiCardContent-root': {
+        padding: theme.spacing(2)
+      },
+      '& .SCLoyaltyProgramWidget-actions, .MuiCardActions-root': {
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: theme.spacing(0, 3, 2, 2),
+        '& .SCLoyaltyProgramWidget-points': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        },
+        '& .SCLoyaltyProgramWidget-chip': {
+          borderRadius: theme.shape.borderRadius,
+          marginRight: theme.spacing(2)
+        }
+      }
     })
   }
 };

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {AutocompleteProps, Avatar, Box, Stack, Typography} from '@mui/material';
+import {Avatar, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationVoteUpType} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -12,6 +12,7 @@ import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   appreciated: {
@@ -20,10 +21,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCVoteUpNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-vote-up-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   voteUpText: `${PREFIX}-vote-up-text`,
@@ -33,25 +32,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.voteUpText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+  slot: 'VoteUpRoot'
+})(() => ({}));
 
 export interface NotificationVoteUpProps
   extends Pick<

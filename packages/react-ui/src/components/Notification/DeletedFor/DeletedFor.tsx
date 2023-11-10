@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {red} from '@mui/material/colors';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   deletedForAdvertising: {
@@ -38,10 +38,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCDeletedForNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-deleted-for-root`,
   flagIcon: `${PREFIX}-flag-icon`,
   flagText: `${PREFIX}-flag-text`,
   activeAt: `${PREFIX}-active-at`,
@@ -52,29 +50,9 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
+  slot: 'DeletedForRoot',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.flagIcon}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.flagText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionWrap}`]: {
-    marginBottom: theme.spacing(1),
-    padding: theme.spacing(2),
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+})(() => ({}));
 
 export interface NotificationDeletedForProps
   extends Pick<
@@ -124,7 +102,7 @@ export default function DeletedForNotification(inProps: NotificationDeletedForPr
    * Renders root object
    */
   return (
-    <NotificationItem
+    <Root
       id={id}
       className={classNames(classes.root, className, `${PREFIX}-${template}`)}
       template={template}

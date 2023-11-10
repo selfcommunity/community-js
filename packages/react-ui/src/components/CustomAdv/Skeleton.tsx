@@ -1,17 +1,15 @@
 import React from 'react';
 import {GenericSkeleton} from '../Skeleton';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCCustomAdvSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(GenericSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'SkeletonRoot'
 })(({theme}) => ({}));
 /**
  * > API documentation for the Community-JS Custom Adv Skeleton component. Learn about the available props and the CSS API.
@@ -24,13 +22,13 @@ const Root = styled(GenericSkeleton, {
 
  #### Component Name
 
- The name `SCCustomAdvSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCustomAdv-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCustomAdvSkeleton-root|Styles applied to the root element.|
+ |root|.SCCustomAdv-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CustomAdvSkeleton(): JSX.Element {

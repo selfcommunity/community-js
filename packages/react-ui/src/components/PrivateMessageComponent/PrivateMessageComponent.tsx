@@ -7,8 +7,7 @@ import {useThemeProps} from '@mui/system';
 import {SCFeatureName, SCPrivateMessageStatusType} from '@selfcommunity/types';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
-
-const PREFIX = 'SCPrivateMessageComponent';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -19,9 +18,8 @@ const classes = {
 
 const Root = styled(Grid, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface PrivateMessageComponentProps {
   /**

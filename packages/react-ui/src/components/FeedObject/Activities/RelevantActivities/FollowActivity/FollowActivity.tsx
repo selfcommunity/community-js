@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -9,6 +9,7 @@ import {useThemeProps} from '@mui/system';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import BaseItem from '../../../../../shared/BaseItem';
 import UserDeletedSnackBar from '../../../../../shared/UserDeletedSnackBar';
+import {PREFIX} from '../../../constants';
 
 const messages = defineMessages({
   follow: {
@@ -17,27 +18,16 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCFollowRelevantActivity';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`
+  root: `${PREFIX}-activity-follow-root`,
+  avatar: `${PREFIX}-activity-follow-avatar`,
+  username: `${PREFIX}-activity-follow-username`
 };
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({
-  [`& .${classes.username}`]: {
-    color: 'inherit'
-  },
-  [`& .${classes.avatar}`]: {
-    width: theme.selfcommunity.user.avatar.sizeMedium,
-    height: theme.selfcommunity.user.avatar.sizeMedium
-  }
-}));
+  slot: 'ActivityFollowRoot'
+})(() => ({}));
 
 export default function FollowRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS

@@ -38,8 +38,8 @@ const Component = {
         overflowY: 'hidden',
         overflowX: 'auto',
         justifyContent: 'center',
-        'MsOverflowStyle': 'none',  /* IE and Edge */
-        scrollbarWidth: 'none',  /* Firefox */
+        MsOverflowStyle: 'none' /* IE and Edge */,
+        scrollbarWidth: 'none' /* Firefox */,
         '&::-webkit-scrollbar': {
           display: 'none'
         },
@@ -266,11 +266,6 @@ const Component = {
               margin: '0 32px'
             }
           },
-          '& .SCFeedObject-medias-section': {
-            '& .SCFeedObjectMediaPreview-root': {
-              margin: theme.spacing(0, 1)
-            }
-          },
           '& .SCFeedObject-show-more': {
             padding: theme.spacing(0.5),
             marginTop: theme.spacing(-0.5)
@@ -280,12 +275,12 @@ const Component = {
           '&:last-of-type': {
             marginBottom: 0
           },
-          '& .SCFeedObjectActions-root': {
+          '& .SCFeedObject-actions-root': {
             margin: 0,
             padding: theme.spacing(0.2, 2, 0, 2),
-            '& .SCFeedObjectActions-action': {
+            '& .SCFeedObject-actions-action': {
               marginTop: 0,
-              '& .SCVoteAction-view-audience-button, & .SCCommentAction-view-audience-button, & .SCShareAction-view-audience-button, & .SCReactionAction-view-audience-button':
+              '& .SCFeedObject-action-vote-view-audience-button, & .SCFeedObject-action-comment-view-audience-button, & .SCFeedObject-action-share-view-audience-button, & .SCReactionAction-view-audience-button':
                 {
                   fontSize: '0.857rem',
                   fontWeight: theme.typography.fontWeightRegular,
@@ -299,21 +294,22 @@ const Component = {
               '& .MuiDivider-root': {
                 borderColor: theme.palette.grey[300]
               },
-              '& .SCVoteAction-button, & .SCCommentAction-button, & .SCShareAction-button, & .SCReactionAction-button': {
-                color: theme.palette.primary.main,
-                marginTop: theme.spacing(-0.5),
-                marginBottom: theme.spacing(0.5),
-                borderRadius: '50%',
-                padding: theme.spacing(1),
-                minWidth: 0,
-                '& .MuiIcon-root': {
-                  fontSize: '1.57rem'
-                },
-                '& > img': {
-                  width: '1.57rem',
-                  height: '1.57rem'
+              '& .SCFeedObject-action-vote-button, & .SCFeedObject-action-comment-button, & .SCFeedObject-action-share-button, & .SCReactionAction-button':
+                {
+                  color: theme.palette.primary.main,
+                  marginTop: theme.spacing(-0.5),
+                  marginBottom: theme.spacing(0.5),
+                  borderRadius: '50%',
+                  padding: theme.spacing(1),
+                  minWidth: 0,
+                  '& .MuiIcon-root': {
+                    fontSize: '1.57rem'
+                  },
+                  '& > img': {
+                    width: '1.57rem',
+                    height: '1.57rem'
+                  }
                 }
-              }
             }
           },
           '& .SCFeedObject-reply-content': {
@@ -348,7 +344,7 @@ const Component = {
           '& .SCFeedObject-activities-content': {
             paddingTop: 0,
             paddingBottom: 0,
-            '& .SCActivitiesMenu-selector': {
+            '& .SCFeedObject-activities-menu-selector': {
               '& .MuiButton-root': {
                 marginTop: theme.spacing(0.2),
                 fontSize: '0.857rem',
@@ -363,7 +359,7 @@ const Component = {
               paddingBottom: 0
             }
           },
-          '& .SCCommentObjectSkeleton-root': {
+          '& .SCCommentObject-skeleton-root': {
             background: 'transparent',
             marginTop: 5,
             marginBottom: '7px !important',
@@ -419,7 +415,286 @@ const Component = {
         boxShadow: 'none',
         border: '1px solid rgba(0, 0, 0, 0.12)'
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search': {
+        border: `0 none`,
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+        borderRadius: 0,
+        [theme.breakpoints.up('sm')]: {
+          borderRadius: theme.shape.borderRadius
+        }
+      },
+      '& .SCFeedObject-media': {
+        height: 250,
+        marginBottom: 20
+      },
+      '& .SCFeedObject-snippet > *': {
+        paddingLeft: 0,
+        paddingRight: 0
+      }
+    }),
+    mediaPreviewRoot: ({theme}: any) => ({
+      margin: theme.spacing(0, 1)
+    }),
+    actionsRoot: ({theme}: any) => ({
+      margin: '0px 0px',
+      color: '#3A3A3A',
+      '& .SCFeedObject-actions-action': {
+        textAlign: 'center'
+      }
+    }),
+    actionCommentRoot: ({theme}: any) => ({
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+      '&.SCFeedObject-action-share-inline': {
+        flexDirection: 'row-reverse'
+      },
+      '& .SCFeedObject-action-vote-divider': {
+        width: '100%',
+        borderBottom: 0
+      }
+    }),
+    actionFollowRoot: ({theme}: any) => ({
+      '& .SCFeedObject-action-follow-button': {
+        color: theme.palette.primary.main,
+        '&.SCFeedObject-action-follow-iconized': {
+          borderRadius: '50%',
+          padding: theme.spacing(1),
+          minWidth: 'auto',
+          fontSize: '1.429rem'
+        },
+        '&.SCFeedObject-action-follow-followed': {
+          color: theme.palette.secondary.main
+        }
+      }
+    }),
+    actionShareRoot: ({theme}: any) => ({
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+      '&.SCFeedObject-action-share-inline': {
+        flexDirection: 'row-reverse'
+      },
+      '& .SCFeedObject-action-vote-divider': {
+        width: '100%',
+        borderBottom: 0
+      }
+    }),
+    actionVoteRoot: ({theme}: any) => ({
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+      '&.SCFeedObject-action-vote-inline': {
+        flexDirection: 'row-reverse'
+      },
+      '& .SCFeedObject-action-vote-divider': {
+        width: '100%',
+        borderBottom: 0
+      }
+    }),
+    activitiesRoot: ({theme}: any) => ({
+      width: '100%'
+    }),
+    activitiesMenuRoot: ({theme}: any) => ({
+      '& .SCFeedObject-activities-menu-selector': {
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'flex-end'
+      },
+      '& .SCFeedObject-activities-menu-selector .MuiButton-root': {
+        textTransform: 'capitalize',
+        fontWeight: theme.typography.fontWeightBold
+      }
+    }),
+    contributorsRoot: ({theme}: any) => ({
+      '& .SCFeedObject-contributors-btn-participants': {
+        padding: theme.spacing(0.5),
+        marginLeft: theme.spacing(-0.5),
+        color: 'inherit',
+        fontWeight: theme.typography.fontWeightLight,
+        fontSize: '0.875rem'
+      },
+      minHeight: 28,
+      marginTop: 0,
+      marginBottom: 0,
+      ['& .MuiAvatarGroup-root']: {
+        justifyContent: 'flex-end'
+      },
+      ['& .MuiAvatar-root']: {
+        backgroundColor: '#d5d5d5',
+        border: '2px solid #FFF !important',
+        color: '#FFF',
+        fontSize: '0.55rem',
+        width: theme.selfcommunity.user.avatar.sizeSmall,
+        height: theme.selfcommunity.user.avatar.sizeSmall,
+        marginLeft: theme.spacing(-1),
+        lineHeight: '24px'
+      }
+    }),
+    contributorsSkeletonRoot: ({theme}: any) => ({
+      // [`& .${classes.btnParticipants}`]: {
+      //   marginLeft: -10
+      // }
+    }),
+    pollObjectRoot: ({theme}: any) => ({
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+      borderTop: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
+      borderBottom: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
+      boxShadow: 'none',
+      borderRadius: 0,
+      '& .MuiButton-root': {
+        '&:focus:not(:focus-visible)': {
+          borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
+        }
+      },
+      '& .MuiCardHeader-root': {
+        textAlign: 'center',
+        padding: theme.spacing(2),
+        '& .SCFeedObject-poll-object-toggle-button': {
+          fontSize: '0.875rem',
+          textTransform: 'uppercase',
+          '& .MuiButton-endIcon': {
+            display: 'none'
+          },
+          '& .SCFeedObject-poll-object-expand-icon': {
+            marginBottom: 2,
+            marginLeft: -2,
+            transition: theme.transitions.create('transform', {
+              duration: theme.transitions.duration.shortest
+            })
+          },
+          '& .SCFeedObject-poll-object-collapsed-icon': {
+            transform: 'rotate(180deg)'
+          }
+        }
+      },
+      '& .SCFeedObject-poll-object-title': {
+        textAlign: 'center',
+        color: theme.palette.text.primary,
+        marginBottom: theme.spacing(1),
+        fontWeight: theme.typography.fontWeightBold,
+        wordWrap: 'break-word'
+      },
+      '& .SCFeedObject-poll-object-voters, & .SCFeedObject-poll-object-votes': {
+        display: 'flex',
+        margin: theme.spacing(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+        '& .MuiIcon-root': {
+          width: '1em',
+          marginRight: theme.spacing(1)
+        }
+      },
+      '& .SCFeedObject-poll-object-expiration, & .SCFeedObject-poll-object-close, & .SCFeedObject-poll-object-voters': {
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+        marginBottom: theme.spacing(2.5),
+        fontWeight: theme.typography.fontWeightLight,
+        fontSize: '0.765rem'
+      },
+      '& .SCFeedObject-poll-object-voters .MuiTypography-root': {
+        fontWeight: theme.typography.fontWeightLight,
+        fontSize: '1rem'
+      },
+      '& ul': {
+        padding: theme.spacing(2.5),
+        marginBottom: theme.spacing(2.5),
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        borderRadius: theme.shape.borderRadius,
+        '& li': {
+          padding: 0
+        }
+      }
+    }),
+    pollObjectChoicesRoot: ({theme}: any) => ({
+      backgroundColor: 'transparent',
+      marginBottom: theme.spacing(3),
+      padding: 0,
+      width: '100%',
+      borderRadius: 0,
+      '& .SCFeedObject-poll-object-choices-label, & .SCFeedObject-poll-object-choices-vote': {
+        marginBottom: 0,
+        fontWeight: theme.typography.fontWeightBold
+      },
+      '& .SCFeedObject-poll-object-choices-progress': {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 0,
+        '& .MuiLinearProgress-root': {
+          height: 10,
+          borderRadius: theme.shape.borderRadius,
+          flexGrow: 2,
+          marginRight: theme.spacing(2),
+          backgroundColor: theme.palette.common.white
+        },
+        '& > .MuiTypography-root': {
+          fontSize: '0.987rem',
+          fontWeight: theme.typography.fontWeightLight
+        }
+      }
+    }),
+    relevantActivitiesRoot: ({theme}: any) => ({
+      '& .MuiList-root, & .SCFeedObject-relevant-activities-activity': {
+        padding: 0
+        // '& .SCBaseItem-content': {
+        //   alignItems: 'flex-start'
+        // }
+      },
+      '& .SCFeedObject-relevant-activities-activity': {
+        '& > .SCBaseItem-root': {
+          borderRadius: 0,
+          marginBottom: theme.spacing(2),
+          '& .SCBaseItem-text': {
+            margin: 0,
+            '& .SCBaseItem-primary': {
+              display: 'inline-block',
+              marginBottom: theme.spacing(0.5),
+              '& > a': {
+                fontWeight: theme.typography.fontWeightBold,
+                textDecoration: 'none'
+              }
+            },
+            '& .SCBaseItem-secondary': {
+              fontSize: '0.857rem'
+            }
+          }
+        },
+        '& .SCFeedObject-activity-comment-username, & .SCFeedObject-activity-follow-username, & .SCFeedObject-activity-poll-vote-username, & .SCFeedObject-activity-vote-up-username':
+          {
+            color: 'inherit'
+          },
+        '& .SCFeedObject-activity-comment-avatar, & .SCFeedObject-activity-follow-avatar, & .SCFeedObject-activity-poll-vote-avatar, & .SCFeedObject-activity-vote-up-avatar':
+          {
+            width: theme.selfcommunity.user.avatar.sizeMedium,
+            height: theme.selfcommunity.user.avatar.sizeMedium
+          }
+      }
+    }),
+    activityCommentRoot: ({theme}: any) => ({
+      '& .SCBaseItem-primary': {
+        display: 'flex !important',
+        flexDirection: 'row !important',
+        alignItems: 'center !important',
+        marginBottom: '0 !important',
+        '& .MuiTypography-root': {
+          marginBottom: 0
+        }
+      },
+      '& .SCFeedObject-activity-comment-username': {
+        marginRight: theme.spacing(0.5)
+      }
+    }),
+    activityFollowRoot: ({theme}: any) => ({}),
+    activityPollVoteRoot: ({theme}: any) => ({}),
+    activityVoteUpRoot: ({theme}: any) => ({})
   }
 };
 

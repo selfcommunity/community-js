@@ -2,16 +2,15 @@ import {Avatar, Box, styled, Typography} from '@mui/material';
 import React from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import UserInfo, { UserInfoProps, UserInfoSkeleton } from '../UserInfo';
+import UserInfo, {UserInfoProps, UserInfoSkeleton} from '../UserInfo';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {SCUserType} from '@selfcommunity/types';
 import {useSCFetchUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
-
-const PREFIX = 'SCUserInfoDialog';
+import {PREFIX} from '../UserInfo/constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-dialog-root`,
   caption: `${PREFIX}-caption`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`
@@ -19,9 +18,8 @@ const classes = {
 
 const Root = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'DialogRoot'
+})(() => ({}));
 
 export interface UserInfoDialogProps extends Pick<BaseDialogProps, Exclude<keyof BaseDialogProps, 'title' | 'subtitle'>> {
   /**

@@ -9,8 +9,7 @@ import {Logger} from '@selfcommunity/utils';
 import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FooterSkeleton from './Skeleton';
-
-const PREFIX = 'SCFooter';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -21,8 +20,7 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(({theme}) => ({}));
 
 export interface FooterProps {
@@ -76,7 +74,8 @@ export interface FooterProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCFooter-root|Styles applied to the root element.|
- |link|.SCFooter-link-item|Styles applied to the link item element.|
+ |item|.SCFooter-item|Styles applied to the item element.|
+ |itemList|.SCFooter-item-list|Styles applied to the item list element.|
  |copyright|.SCFooter-copyright|Styles applied to the copyright section.|
 
  * @param inProps
@@ -142,7 +141,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
           </Button>
         ))}
       </Box>
-			{endActions}
+      {endActions}
       <Typography textAlign="center" className={classes.copyright} variant="body2" dangerouslySetInnerHTML={{__html: copyright}} />
     </Root>
   );

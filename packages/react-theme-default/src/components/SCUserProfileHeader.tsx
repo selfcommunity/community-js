@@ -46,6 +46,22 @@ const Component = {
         right: 10,
         bottom: 10
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      position: 'relative',
+      '& .SCUserProfileHeader-avatar': {
+        position: 'absolute',
+        top: 190,
+        width: '100%',
+        [`& .MuiSkeleton-root`]: {
+          border: '#FFF solid 5px',
+          margin: '0 auto'
+        }
+      },
+      '& .SCUserProfileHeader-username': {
+        marginTop: 50,
+        textAlign: 'center'
+      }
     })
   }
 };

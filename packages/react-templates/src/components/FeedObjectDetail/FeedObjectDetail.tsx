@@ -26,8 +26,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-
-const PREFIX = 'SCFeedObjectDetailTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -35,9 +34,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface FeedObjectDetailProps {
   /**

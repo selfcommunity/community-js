@@ -1,30 +1,20 @@
-import React, { useContext, useMemo, useState } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import React, {useContext, useMemo, useState} from 'react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
-import { styled } from '@mui/material/styles';
-import {
-  Box,
-  Button,
-  Divider,
-  ListItemText,
-  Menu,
-  SwipeableDrawer,
-  Tooltip,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import { MEDIA_TYPE_SHARE } from '../../../../constants/Media';
-import { SCOPE_SC_UI } from '../../../../constants/Errors';
+import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
+import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
-import { useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import { SCContributionType, SCFeedObjectType, SCMediaType } from '@selfcommunity/types';
-import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
-import { copyTextToClipboard, Logger } from '@selfcommunity/utils';
+import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCPreferences,
@@ -37,12 +27,12 @@ import {
   useSCContext,
   useSCFetchFeedObject,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
-import { useThemeProps } from '@mui/system';
-import { getContributionRouteName, getRouteData } from '../../../../utils/contribution';
-import { FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE } from '../../../../constants/SocialShare';
+import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from '../../../../constants/SocialShare';
 import Composer from '../../../Composer';
+import {PREFIX} from '../../constants';
 
 const messages = defineMessages({
   shares: {
@@ -55,21 +45,18 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCShareAction';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  divider: `${PREFIX}-divider`,
-  inline: `${PREFIX}-inline`,
-  button: `${PREFIX}-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`
+  root: `${PREFIX}-action-share-root`,
+  divider: `${PREFIX}-action-share-divider`,
+  inline: `${PREFIX}-action-share-inline`,
+  button: `${PREFIX}-action-share-button`,
+  viewAudienceButton: `${PREFIX}-action-share-view-audience-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ActionShareRoot'
+})(() => ({}));
 
 export interface ShareProps {
   /**
@@ -121,13 +108,8 @@ export interface ShareProps {
   [p: string]: any;
 }
 
-export default function Share(inProps: ShareProps): JSX.Element {
+export default function Share(props: ShareProps): JSX.Element {
   // PROPS
-  const props: ShareProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
   const {
     className = null,
     feedObjectId = null,

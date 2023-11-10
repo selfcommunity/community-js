@@ -2,7 +2,6 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {red} from '@mui/material/colors';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationUnDeletedForType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
@@ -12,11 +11,10 @@ import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-
-const PREFIX = 'SCUndeletedForNotification';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-undeleted-for-root`,
   undeletedIcon: `${PREFIX}-undeleted-icon`,
   undeletedText: `${PREFIX}-undeleted-text`,
   activeAt: `${PREFIX}-active-at`,
@@ -27,29 +25,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.undeletedIcon}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.undeletedText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionWrap}`]: {
-    marginBottom: theme.spacing(1),
-    padding: theme.spacing(2),
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+  slot: 'UndeletedForRoot'
+})(() => ({}));
 
 export interface NotificationUndeletedProps
   extends Pick<

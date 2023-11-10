@@ -22,8 +22,7 @@ import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCNotificationFeedTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -31,9 +30,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface NotificationFeedProps {
   /**

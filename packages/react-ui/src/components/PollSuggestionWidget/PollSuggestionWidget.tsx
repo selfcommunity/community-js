@@ -19,8 +19,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {AxiosResponse} from 'axios';
-
-const PREFIX = 'SCPollSuggestionWidget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -28,20 +27,19 @@ const classes = {
   noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`,
   dialogRoot: `${PREFIX}-dialog-root`,
-  endMessage: `${PREFIX}-end-message`
+  endMessage: `${PREFIX}-end-message`,
+  pollSnippet: `${PREFIX}-poll-snippet`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  slot: 'DialogRoot'
+})(() => ({}));
 
 export interface PollSuggestionWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**
@@ -104,6 +102,7 @@ export interface PollSuggestionWidgetProps extends VirtualScrollerItemProps, Wid
  |showMore|.SCPollSuggestionWidget-show-more|Styles applied to show more button element.|
  |dialogRoot|.SCPollSuggestionWidget-dialog-root|Styles applied to the root dialog element.|
  |endMessage|.SCPollSuggestionWidget-end-message|Styles applied to the end message element.|
+ |pollSnippet|.SCPollSuggestionWidget-poll-snippet|Styles applied to the poll snippet element.|
 
  *
  * @param inProps
@@ -248,7 +247,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
           <List>
             {state.results.slice(0, state.visibleItems).map((obj) => (
               <ListItem key={obj.id}>
-                <PollSnippet elevation={0} feedObj={obj} {...PollSnippetProps} />
+                <PollSnippet className={classes.pollSnippet} elevation={0} feedObj={obj} {...PollSnippetProps} />
               </ListItem>
             ))}
           </List>
@@ -280,7 +279,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
             <List>
               {state.results.map((obj) => (
                 <ListItem key={obj.id}>
-                  <PollSnippet elevation={0} feedObj={obj} {...PollSnippetProps} />
+                  <PollSnippet className={classes.pollSnippet} elevation={0} feedObj={obj} {...PollSnippetProps} />
                 </ListItem>
               ))}
             </List>

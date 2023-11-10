@@ -1,6 +1,6 @@
-import { $isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $findMatchingParent, mergeRegister } from '@lexical/utils';
+import {$isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {$findMatchingParent, mergeRegister} from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
@@ -12,28 +12,25 @@ import {
   LexicalEditor,
   NodeSelection,
   RangeSelection,
-  SELECTION_CHANGE_COMMAND,
-  KEY_ARROW_LEFT_COMMAND
+  SELECTION_CHANGE_COMMAND
 } from 'lexical';
 import * as React from 'react';
-import { Dispatch, useCallback, useEffect, useState } from 'react';
-import { getSelectedNode } from '../../../utils/editor';
-import { isValidUrl } from '@selfcommunity/utils';
-import { styled } from '@mui/material/styles';
-import { IconButton, InputAdornment, Paper, Popper, TextField } from '@mui/material';
+import {Dispatch, useCallback, useEffect, useState} from 'react';
+import {getSelectedNode} from '../../../utils/editor';
+import {isValidUrl} from '@selfcommunity/utils';
+import {styled} from '@mui/material/styles';
+import {IconButton, InputAdornment, Paper, Popper, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
-
-const PREFIX = 'SCEditorFloatingLinkPlugin';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-floating-link-plugin-root`
 };
 
 const Root = styled(Popper, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'FloatingLinkPluginRoot'
+})(() => ({}));
 
 function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor; isLink: boolean; setIsLink: Dispatch<boolean>}): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -135,15 +132,16 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
   return (
     <Root className={classes.root} open={Boolean(anchorEl)} anchorEl={anchorEl} placement="right">
       <Paper>
-          <TextField
-            size="small"
-            value={linkUrl}
-            variant="outlined"
-            onChange={(event) => {
-              setLinkUrl(event.target.value);
-            }}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">
+        <TextField
+          size="small"
+          value={linkUrl}
+          variant="outlined"
+          onChange={(event) => {
+            setLinkUrl(event.target.value);
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
                 <IconButton
                   size="small"
                   tabIndex={0}
@@ -156,8 +154,9 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
                   <Icon>check</Icon>
                 </IconButton>
               </InputAdornment>
-            }}
-          />
+            )
+          }}
+        />
       </Paper>
     </Root>
   );

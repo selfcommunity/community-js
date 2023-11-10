@@ -1,24 +1,19 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import {
-  COMMAND_PRIORITY_EDITOR,
-  createCommand,
-  INSERT_PARAGRAPH_COMMAND,
-  LexicalCommand,
-  LexicalEditor,
-} from 'lexical';
-import { $insertNodeToNearestRoot } from '@lexical/utils';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { CircularProgress, Icon, IconButton, IconButtonProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, {forwardRef, useEffect, useState} from 'react';
+import {COMMAND_PRIORITY_EDITOR, createCommand, INSERT_PARAGRAPH_COMMAND, LexicalCommand, LexicalEditor} from 'lexical';
+import {$insertNodeToNearestRoot} from '@lexical/utils';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
+import {styled} from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import { Endpoints } from '@selfcommunity/api-services';
-import { SCMediaType } from '@selfcommunity/types';
-import { SCContextType, SCUserContextType, useSCContext, useSCUser } from '@selfcommunity/react-core';
+import {Endpoints} from '@selfcommunity/api-services';
+import {SCMediaType} from '@selfcommunity/types';
+import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import MediaChunkUploader from '../../../shared/MediaChunkUploader';
-import { SCMediaChunkType } from '../../../types/media';
-import { asUploadButton } from '@rpldy/upload-button';
-import { useSnackbar } from 'notistack';
-import { $createImageNode, ImageNode } from '../nodes/ImageNode';
+import {SCMediaChunkType} from '../../../types/media';
+import {asUploadButton} from '@rpldy/upload-button';
+import {useSnackbar} from 'notistack';
+import {$createImageNode, ImageNode} from '../nodes/ImageNode';
+import {PREFIX} from '../constants';
 
 export interface InsertImagePayload {
   altText: string;
@@ -111,17 +106,14 @@ function Image({editor, className = ''}: {editor: LexicalEditor; className?: str
   );
 }
 
-const PREFIX = 'SCEditorImagePlugin';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-image-plugin-root`
 };
 
 const Root = styled(Image, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ImagePluginRoot'
+})(() => ({}));
 
 export default function ImagePlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();

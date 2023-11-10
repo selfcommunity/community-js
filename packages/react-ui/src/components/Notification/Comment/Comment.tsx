@@ -14,6 +14,7 @@ import NotificationItem, {NotificationItemProps} from '../../../shared/Notificat
 import VoteButton from '../../VoteButton';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   comment: {
@@ -26,10 +27,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-comment-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   voteButton: `${PREFIX}-vote-button`,
@@ -40,9 +39,8 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'CommentRoot'
+})(() => ({}));
 
 export interface CommentNotificationProps
   extends Pick<

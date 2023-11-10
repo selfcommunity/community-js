@@ -19,8 +19,7 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {MessageSkeleton} from './Skeleton';
 import Widget from '../Widget';
-
-const PREFIX = 'SCBroadcastMessages';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -31,26 +30,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.boxLoadMore}`]: {
-    textAlign: 'center',
-    '& > div': {
-      paddingBottom: theme.spacing(2)
-    },
-    marginBottom: theme.spacing(2)
-  },
-  [`& .${classes.avatarLoadMore}`]: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    marginRight: theme.spacing()
-  },
-  [`& .${classes.buttonLoadMore}`]: {
-    textTransform: 'capitalize',
-    marginLeft: -10
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface BroadcastMessagesProps extends VirtualScrollerItemProps {
   /**

@@ -4,30 +4,18 @@ import {FormattedMessage} from 'react-intl';
 import React from 'react';
 import {useThemeProps} from '@mui/system';
 import SnippetNotifications, {SnippetNotificationsProps} from '../SnippetNotifications';
-
-const PREFIX = 'SCNotificationsMenu';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-notifications-menu-root`,
   paper: `${PREFIX}-paper`,
   notifications: `${PREFIX}-notifications`,
   link: `${PREFIX}-link`
 };
 const Root = styled(Menu, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.paper}`]: {
-    minWidth: 370,
-    padding: theme.spacing(2)
-  },
-  [`& .${classes.link}`]: {
-    display: 'block',
-    textAlign: 'center',
-    margin: theme.spacing(0, 'auto')
-  }
-}));
+  slot: 'NotificationsMenuRoot'
+})(() => ({}));
 
 export interface NotificationsMenuProps extends MenuProps {
   /**

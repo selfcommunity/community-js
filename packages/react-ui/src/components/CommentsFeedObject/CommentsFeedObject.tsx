@@ -16,8 +16,7 @@ import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {DEFAULT_PAGINATION_LIMIT} from '../../constants/Pagination';
-
-const PREFIX = 'SCCommentsFeedObject';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,9 +26,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CommentsFeedObjectProps {
   /**

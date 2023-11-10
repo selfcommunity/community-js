@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   name: {
@@ -22,10 +23,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCreateIncubatorDialog';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-create-dialog-root`,
   form: `${PREFIX}-form`,
   name: `${PREFIX}-name`,
   slogan: `${PREFIX}-slogan`,
@@ -35,31 +34,8 @@ const classes = {
 
 const Root = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  margin: 2,
-  [theme.breakpoints.down(500)]: {
-    minWidth: 300
-  },
-  [`& .${classes.intro}`]: {
-    whiteSpace: 'pre-line'
-  },
-  [`& .${classes.form}`]: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  },
-  [`& .${classes.name}`]: {
-    '& .MuiInputBase-root': {
-      height: '40px'
-    }
-  },
-  [`& .${classes.submittedMessage}`]: {
-    padding: theme.spacing(1),
-    borderRadius: '8px',
-    backgroundColor: '#bdd5bd'
-  }
-}));
+  slot: 'CreateDialogRoot'
+})(() => ({}));
 
 export interface CreateIncubatorDialogProps {
   /**

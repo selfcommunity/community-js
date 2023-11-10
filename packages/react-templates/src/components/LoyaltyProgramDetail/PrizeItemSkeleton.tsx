@@ -2,35 +2,33 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Typography, CardContent, Skeleton, CardActions, CardMedia, Button} from '@mui/material';
 import {Widget} from '@selfcommunity/react-ui';
-
-const PREFIX = 'SCPrizeItemSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-prize-item-skeleton-root`,
   content: `${PREFIX}-content`,
   actions: `${PREFIX}-actions`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'PrizeItemSkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS PrizeItemSkeleton Skeleton component. Learn about the available props and the CSS API.
 
  #### Component Name
 
- The name `SCPrizeItemSkeleton` can be used when providing style overrides in the theme.
+ The name `SCLoyaltyProgramDetailTemplate-prize-item-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCPrizeItemSkeleton-root|Styles applied to the root element.|
- |content|.SCPrizeItemSkeleton-content|Styles applied to the card content section.|
- |actions|.SCPrizeItemSkeleton-actions|Styles applied to the actions section.|
+ |root|.SCLoyaltyProgramDetailTemplate-prize-item-skeleton-root|Styles applied to the root element.|
+ |content|.SCLoyaltyProgramDetailTemplate-content|Styles applied to the card content section.|
+ |actions|.SCLoyaltyProgramDetailTemplate-actions|Styles applied to the actions section.|
  *
  */
 export default function PrizeItemSkeleton(): JSX.Element {

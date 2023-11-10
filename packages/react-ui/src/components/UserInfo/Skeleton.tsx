@@ -1,19 +1,17 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {Box, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-
-const PREFIX = 'SCUserInfoSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   field: `${PREFIX}-field`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'SkeletonRoot'
 })(() => ({}));
 
 /**
@@ -27,13 +25,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCUserProfileInfoSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserProfileInfo-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserProfileInfoSkeleton-root|Styles applied to the root element.|
+ |root|.SCUserProfileInfo-skeleton-root|Styles applied to the root element.|
  *
  */
 

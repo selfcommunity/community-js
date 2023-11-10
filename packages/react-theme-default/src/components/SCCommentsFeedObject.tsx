@@ -14,7 +14,7 @@ const Component = {
           background: 'transparent'
         }
       },
-      '& .SCCommentObjectSkeleton-root': {
+      '& .SCCommentObject-skeleton-root': {
         background: 'transparent',
         boxShadow: 'none',
         border: 0,
@@ -27,7 +27,7 @@ const Component = {
           }
         }
       },
-      '& .SCCommentsObjectSkeleton-root': {
+      '& .SCCommentsObject-skeleton-root': {
         marginBottom: theme.spacing(0.5)
       },
       '& .SCCommentObjectReply-root': {
@@ -36,7 +36,8 @@ const Component = {
           marginBottom: theme.spacing(4)
         }
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

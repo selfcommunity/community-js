@@ -59,7 +59,9 @@ const Component = {
         }
       },
       '& .SCPrivateMessageThreadItem-document': {
-        width: theme.spacing(32.5),
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(32.5)
+        },
         '& img': {
           height: '100%',
           width: '100%'
@@ -79,6 +81,13 @@ const Component = {
             marginLeft: theme.spacing(0.5)
           }
         }
+      }
+    }),
+    skeletonRoot: ({theme}: any) => ({}),
+    dialogRoot: ({theme}: any) => ({
+      '& h2 .MuiIconButton-root': {
+        top: theme.spacing(1),
+        fontSize: '1.57rem'
       }
     })
   }

@@ -51,6 +51,9 @@ const Component = {
           padding: 0
         }
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      maxWidth: 700
     })
   }
 };

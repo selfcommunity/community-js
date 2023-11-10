@@ -143,6 +143,20 @@ const Component = {
         }
       },
       '& .MuiList-root, .SCPrivateMessageThread-new-message-content': {flexGrow: 1}
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      height: '100%',
+      width: '100%',
+      borderRadius: 0,
+      '& .MuiCardContent-root': {
+        padding: 0,
+        '& .MuiList-root .MuiListItem-root': {
+          height: theme.spacing(10)
+        },
+        '&:last-child': {
+          paddingBottom: 0
+        }
+      }
     })
   }
 };

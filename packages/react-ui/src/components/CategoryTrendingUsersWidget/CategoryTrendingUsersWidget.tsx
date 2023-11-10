@@ -28,8 +28,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCUserType} from '@selfcommunity/types';
 import {AxiosResponse} from 'axios';
-
-const PREFIX = 'SCCategoryTrendingUsersWidget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -42,15 +41,13 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  slot: 'DialogRoot'
+})(() => ({}));
 
 export interface CategoryTrendingUsersWidgetProps extends VirtualScrollerItemProps, WidgetProps {
   /**

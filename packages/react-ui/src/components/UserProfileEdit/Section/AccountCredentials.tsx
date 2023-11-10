@@ -14,6 +14,7 @@ import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import Icon from '@mui/material/Icon';
 import {useSnackbar} from 'notistack';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   changePasswordTitle: {
@@ -25,15 +26,13 @@ const messages = defineMessages({
     defaultMessage: 'ui.userProfileEditAccountCredentials.confirmPassword.error'
   }
 });
-const PREFIX = 'SCUserProfileEditSectionAccountCredentials';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-account-credentials-root`,
   email: `${PREFIX}-email`,
   success: `${PREFIX}-success`,
   error: `${PREFIX}-error`,
-  dangerZone: `${PREFIX}-danger-zone`,
-  dialogRoot: `${PREFIX}-dialog-root`,
+  dialogRoot: `${PREFIX}-password-dialog-root`,
   form: `${PREFIX}-password-form`,
   formField: `${PREFIX}-form-field`,
   password: `${PREFIX}-password`,
@@ -42,14 +41,12 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'AccountCredentialsRoot'
 })(() => ({}));
 
 const PasswordDialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
+  slot: 'PasswordDialogRoot'
 })(() => ({}));
 
 export interface AccountCredentialProps {

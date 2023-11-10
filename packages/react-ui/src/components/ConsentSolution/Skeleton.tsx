@@ -2,11 +2,10 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {Box, DialogActions, DialogContent, DialogTitle} from '@mui/material';
-
-const PREFIX = 'SCConsentSolutionSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   title: `${PREFIX}-title`,
   content: `${PREFIX}-content`,
   consent: `${PREFIX}-consent`,
@@ -17,33 +16,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.title}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  [`& .${classes.content}`]: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(5)
-  },
-  [`& .${classes.consent}`]: {
-    borderTop: 0,
-    overflowY: 'visible',
-    display: 'flex'
-  },
-  [`& .${classes.consentSwitch}`]: {
-    width: 64,
-    height: 31,
-    borderRadius: 22,
-    marginRight: theme.spacing()
-  },
-  [`& .${classes.consentSwitchLabel}`]: {
-    marginTop: 23
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS ConsentSolution Skeleton component. Learn about the available props and the CSS API.
@@ -56,18 +30,18 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCConsentSolutionSkeleton` can be used when providing style overrides in the theme.
+ The name `SCConsentSolution-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCConsentSolutionSkeleton-root|Styles applied to the root element.|
- |title|.SCConsentSolutionSkeleton-title|Styles applied to the title element.|
- |content|.SCConsentSolutionSkeleton-content|Styles applied to the content element.|
- |consent|.SCConsentSolutionSkeleton-consent|Styles applied to the consent element.|
- |consentSwitch|.SCConsentSolutionSkeleton-consent-switch|Styles applied to the switch skeleton element.|
- |actions|.SCConsentSolutionSkeleton-actions|Styles applied to the actions section.|
+ |root|.SCConsentSolution-skeleton-root|Styles applied to the root element.|
+ |title|.SCConsentSolution-title|Styles applied to the title element.|
+ |content|.SCConsentSolution-content|Styles applied to the content element.|
+ |consent|.SCConsentSolution-consent|Styles applied to the consent element.|
+ |consentSwitch|.SCConsentSolution-consent-switch|Styles applied to the switch skeleton element.|
+ |actions|.SCConsentSolution-actions|Styles applied to the actions section.|
  *
  */
 export default function ConsentSolutionSkeleton(): JSX.Element {

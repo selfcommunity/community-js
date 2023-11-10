@@ -27,6 +27,9 @@ const Component = {
         margin: theme.spacing(1, 2, 2, 2),
         justifyContent: 'center'
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({
+      marginTop: theme.spacing(2)
     })
   }
 };

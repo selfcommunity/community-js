@@ -7,18 +7,17 @@ import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCChangePictureButton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  dialog: `${PREFIX}-dialog`
 };
 
 const Root = styled(Button, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ChangePictureProps {
   /**
@@ -69,6 +68,7 @@ export interface ChangePictureProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCChangePictureButton-root|Styles applied to the root element.|
+ |root|.SCChangePictureButton-dialog|Styles applied to the dialog element.|
 
  * @param inProps
  */
@@ -111,6 +111,7 @@ export default function ChangePicture(inProps: ChangePictureProps): JSX.Element 
         </Root>
         {openChangePictureDialog && (
           <ChangePictureDialog
+            className={classes.dialog}
             open={openChangePictureDialog}
             onChange={(avatar) => onChange && onChange(avatar)}
             onClose={() => setOpenChangePictureDialog(false)}

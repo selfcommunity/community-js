@@ -10,26 +10,17 @@ import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import {DEFAULT_SETTINGS} from '../../../constants/UserProfile';
 import {SCUserProfileSettings} from '../../../types';
-
-const PREFIX = 'SCUserProfileEditSectionSettings';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-settings-root`,
   control: `${PREFIX}-control`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.control}`]: {
-    margin: theme.spacing(0, 0, 2, 0),
-    ['& .MuiFormControl-root']: {
-      display: 'block'
-    }
-  }
-}));
+  slot: 'SettingsRoot'
+})(() => ({}));
 
 export interface SettingsProps {
   /**

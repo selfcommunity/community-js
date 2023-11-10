@@ -55,7 +55,8 @@ const Component = {
           }
         }
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

@@ -6,18 +6,16 @@ import {SCFeedObjectTemplateType} from '../../types/feedObject';
 import {CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-
-const PREFIX = 'SCFeedObjectSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   media: `${PREFIX}-media`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'SkeletonRoot'
 })(() => ({}));
 
 export interface FeedObjectSkeletonProps extends CardProps {
@@ -43,14 +41,14 @@ export interface FeedObjectSkeletonProps extends CardProps {
 
  #### Component Name
 
- The name `SCFeedObjectSkeleton` can be used when providing style overrides in the theme.
+ The name `SCFeedObject-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFeedObjectSkeleton-root|Styles applied to the root element.|
- |media|.SCFeedObjectSkeleton-media|Styles applied to the media element.|
+ |root|.SCFeedObject-skeleton-root|Styles applied to the root element.|
+ |media|.SCFeedObject-media|Styles applied to the media element.|
  *
  */
 export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTemplateType; [p: string]: any}): JSX.Element {

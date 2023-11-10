@@ -11,23 +11,20 @@ import {SCContributionType, SCFeedObjectType, SCTagType} from '@selfcommunity/ty
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
-import {useThemeProps} from '@mui/system';
 import {catchUnauthorizedActionByBlockedUser} from '../../../../utils/errors';
-
-const PREFIX = 'SCFollowAction';
+import {PREFIX} from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  button: `${PREFIX}-button`,
-  iconized: `${PREFIX}-iconized`,
-  followed: `${PREFIX}-followed`
+  root: `${PREFIX}-action-follow-root`,
+  button: `${PREFIX}-action-follow-button`,
+  iconized: `${PREFIX}-action-follow-iconized`,
+  followed: `${PREFIX}-action-follow-followed`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'ActionFollowRoot'
+})(() => ({}));
 
 export interface FollowProps {
   /**
@@ -71,12 +68,8 @@ export interface FollowProps {
   [p: string]: any;
 }
 
-export default function Follow(inProps: FollowProps): JSX.Element {
+export default function Follow(props: FollowProps): JSX.Element {
   // PROPS
-  const props: FollowProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     className = null,
     feedObjectId = null,

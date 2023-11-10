@@ -1,4 +1,4 @@
-import { alpha } from '@mui/system';
+import {alpha} from '@mui/system';
 
 const Component = {
   styleOverrides: {
@@ -44,7 +44,7 @@ const Component = {
         backgroundColor: theme.palette.grey['A200'],
         '& .MuiCardHeader-root': {
           paddingBottom: theme.spacing(0),
-          '& .SCMessageMediaUploader-close-button': {
+          '& .SCPrivateMessageEditor-close-button': {
             fontSize: '0.857rem',
             cursor: 'pointer',
             '&:hover': {
@@ -59,8 +59,8 @@ const Component = {
           overflow: 'auto',
           padding: theme.spacing(1),
           minHeight: theme.spacing(20),
-          '& .SCMessageMediaUploader-upload-section': {
-            '& .SCMessageMediaUploader-upload-button': {
+          '& .SCPrivateMessageEditor-upload-section': {
+            '& .SCPrivateMessageEditor-upload-button': {
               display: 'flex',
               margin: '0 auto',
               fontSize: '1.57rem'
@@ -70,7 +70,7 @@ const Component = {
             paddingTop: theme.spacing(0),
             paddingBottom: theme.spacing(0)
           },
-          '& .SCMessageMediaUploader-preview-content': {
+          '& .SCPrivateMessageEditor-preview-content': {
             position: 'relative',
             display: 'flex',
             margin: '0 auto',
@@ -89,10 +89,10 @@ const Component = {
                 height: theme.spacing(10)
               }
             },
-            '& .SCMessageMediaUploader-preview-actions': {
+            '& .SCPrivateMessageEditor-preview-actions': {
               height: '100%',
               background: 'transparent',
-              '&:hover, &:active, &.SCMessageMediaUploader-progress': {
+              '&:hover, &:active, &.SCPrivateMessageEditor-progress': {
                 background: 'rgba(0,0,0,0.5)'
               },
               '& .MuiButtonBase-root, .MuiTypography-root': {
@@ -103,7 +103,7 @@ const Component = {
                 transform: 'translate(-50%, -50%)'
               }
             },
-            '& .SCMessageMediaUploader-preview-info': {
+            '& .SCPrivateMessageEditor-preview-info': {
               position: 'absolute',
               left: '50%',
               bottom: 0,
@@ -121,7 +121,8 @@ const Component = {
       '&.SCPrivateMessageEditor-ios': {
         paddingBottom: '15px'
       }
-    })
+    }),
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 

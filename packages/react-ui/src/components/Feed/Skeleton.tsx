@@ -3,20 +3,18 @@ import {styled} from '@mui/material/styles';
 import {Grid, Hidden} from '@mui/material';
 import {GenericSkeleton} from '../Skeleton';
 import classNames from 'classnames';
-
-const PREFIX = 'SCFeedSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   left: `${PREFIX}-left`,
   right: `${PREFIX}-right`
 };
 
 const Root = styled(Grid, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 interface FeedSkeletonMap {
   /**
@@ -44,15 +42,15 @@ export type FeedSkeletonProps = React.PropsWithChildren<FeedSkeletonMap>;
 
  #### Component Name
 
- The name `SCFeedSkeleton` can be used when providing style overrides in the theme.
+ The name `SCFeed-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFeedSkeleton-root|Styles applied to the root element.|
- |left|.SCFeedSkeleton-left|Styles applied to the left section.|
- |right|.SCFeedSkeleton-right|Styles applied to the right section.|
+ |root|.SCFeed-skeleton-root|Styles applied to the root element.|
+ |left|.SCFeed-left|Styles applied to the left section.|
+ |right|.SCFeed-right|Styles applied to the right section.|
  *
  */
 export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {

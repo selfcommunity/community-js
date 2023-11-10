@@ -20,14 +20,12 @@ import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
-
-const PREFIX = 'SCToastNotifications';
+import {PREFIX} from './constants';
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ToastNotificationsProps extends BoxProps {
   /**

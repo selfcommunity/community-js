@@ -3,35 +3,18 @@ import {Box, Typography, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCUserProfileHeaderSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(() => ({
-  position: 'relative',
-  [`& .${classes.avatar}`]: {
-    position: 'absolute',
-    top: 190,
-    width: '100%',
-    [`& .MuiSkeleton-root`]: {
-      border: '#FFF solid 5px',
-      margin: '0 auto'
-    }
-  },
-  [`& .${classes.username}`]: {
-    marginTop: 50,
-    textAlign: 'center'
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS User Profile AppBar Skeleton component. Learn about the available props and the CSS API.
@@ -44,15 +27,15 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCUserProfileHeaderSkeleton` can be used when providing style overrides in the theme.
+ The name `SCUserProfileHeader-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCUserProfileHeaderSkeleton-root|Styles applied to the root element.|
- |avatar|.SCUserProfileHeaderSkeleton-avatar|Styles applied to the avatar element.|
- |username|.SCUserProfileHeaderSkeleton-username|Styles applied to the username element.|
+ |root|.SCUserProfileHeader-skeleton-root|Styles applied to the root element.|
+ |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
+ |username|.SCUserProfileHeader-username|Styles applied to the username element.|
  *
  */
 function UserProfileHeaderSkeleton(): JSX.Element {

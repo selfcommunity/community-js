@@ -25,7 +25,6 @@ import {
   SCContextType,
   SCRoutes,
   SCRoutingContextType,
-  SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
@@ -38,8 +37,7 @@ import VoteButton from '../VoteButton';
 import VoteAudienceButton from '../VoteAudienceButton';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
-
-const PREFIX = 'SCCommentObject';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -61,9 +59,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CommentObjectProps {
   /**
@@ -244,7 +241,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     CommentObjectReplyProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
-		CommentsObjectComponentProps = {},
+    CommentsObjectComponentProps = {},
     ...rest
   } = props;
 

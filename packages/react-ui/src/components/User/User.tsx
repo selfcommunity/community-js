@@ -23,6 +23,7 @@ import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   userFollowers: {
@@ -30,8 +31,6 @@ const messages = defineMessages({
     defaultMessage: 'ui.user.userFollowers'
   }
 });
-
-const PREFIX = 'SCUser';
 
 const classes = {
   root: `${PREFIX}-root`,

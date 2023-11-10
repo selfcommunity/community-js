@@ -12,6 +12,23 @@ const Component = {
           marginBottom: 0
         }
       }
+    }),
+    skeletonRoot: ({theme}: any) => ({}),
+    dialogRoot: ({theme}: any) => ({
+      '& .SCUserInfo-caption': {
+        marginTop: theme.spacing(-2),
+        textAlign: 'center',
+        '& .SCUserInfo-avatar': {
+          margin: theme.spacing(0, 'auto', 1),
+          width: theme.selfcommunity.user.avatar.sizeLarge,
+          height: theme.selfcommunity.user.avatar.sizeLarge
+        },
+        '& .SCUserInfo-username': {
+          fontWeight: theme.typography.fontWeightBold,
+          fontSize: '1.143rem',
+          marginBottom: theme.spacing(1)
+        }
+      }
     })
   }
 };
