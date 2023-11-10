@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.350](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.349...@selfcommunity/react-ui@0.7.0-alpha.350) (2023-11-10)
+
+
+### Bug Fixes
+
+* moderation ([5dd980d](https://github.com/selfcommunity/community-js/commit/5dd980def8d13bb89fa25206acc35ccb2a4b5ede))
+
+
+### Performance Improvements
+
+* refactored editor component ([6f75a97](https://github.com/selfcommunity/community-js/commit/6f75a97d8cb852a7c98b8fecb0dcf15777869b83))
+* refactored feed object component(+ subfolders). Fixed relevant activities comment translations + html ([52a15e8](https://github.com/selfcommunity/community-js/commit/52a15e80bed8afe297652b68e8785dd95b51b9a3))
+* refactored private message components (pm component, pm editor, pm snippet item, pm snippets, pm thread item, pm thread) ([3973add](https://github.com/selfcommunity/community-js/commit/3973add10a05b01f34cf0e6fa729d18ec9506de4))
+* refactored RelatedFeedObjectsWidget, SnippetNotifications, ToastNotifications components theme. ([6c94faa](https://github.com/selfcommunity/community-js/commit/6c94faadb2f48bf6d787877ed7275e8cab4d7810))
+* refactored theme for ui component CustomAdv ([94a2cde](https://github.com/selfcommunity/community-js/commit/94a2cde9d8c512333049dd44c40b62977d7207cf))
+* refactored theme for ui component PollSuggestionWidget ([0548a23](https://github.com/selfcommunity/community-js/commit/0548a233a5b6cec9974594001afc0aaffcc28f15))
+* refactored theme for ui components: ConsentSolution, Footer ([25c604b](https://github.com/selfcommunity/community-js/commit/25c604bf436ecebb047a7328c6f3495a0eddaf62))
+* refactored theme for ui components: IncubatorListWidget, IncubatorSuggestionWidget ([4134689](https://github.com/selfcommunity/community-js/commit/41346897ffa7c10cf0978b204faa7a3fc234547f))
+* refactored theme for ui components: LoyaltyProgramWidget, PlatformWidget ([4216a3f](https://github.com/selfcommunity/community-js/commit/4216a3f2e4586f7b61f920d5746b3f8c920975d3))
+* refactored theme for: CategoryHeader, CategoryTrendingFeedWidget, CategoryTrendingUsersWidget ([1d3fd62](https://github.com/selfcommunity/community-js/commit/1d3fd6210d2b5f4ef70cd956e9b28e479cbe4729))
+* refactored theme for: ChangePicture, Incubator ([c8e35ca](https://github.com/selfcommunity/community-js/commit/c8e35cab4349d3c445d890e34778f4817a33c8da))
+* refactored ui component UserProfileEdit ([d9e502e](https://github.com/selfcommunity/community-js/commit/d9e502e1516a0ed073c60d9af909f8cd510e03e7))
+* refactored ui component: NavigationToolbar.tsx ([a8088a1](https://github.com/selfcommunity/community-js/commit/a8088a15e493a2efb1ca72507f9a37432a176a23))
+* refactored ui component: Notification(+ subfolders). ([1e3442b](https://github.com/selfcommunity/community-js/commit/1e3442bbb116ac0a3badb4c8eea891c3d2982200))
+* refactored ui components: BroadcastMessages* ([e1461f0](https://github.com/selfcommunity/community-js/commit/e1461f0ae541b006cff2af76ed7d3fe8add8a610))
+* refactored ui components: CommentObject, CommentsObject, CommentsFeedObject, Feed, FeedUpdatesWidget ([c07cdfd](https://github.com/selfcommunity/community-js/commit/c07cdfd3ee18af616c09e780ea902aa49740d3af))
+* refactored ui components: User, UserConnectionsWidget, UserConnectionsRequestsWidget, UserConnectionsRequestsSentWidget ([1264cc0](https://github.com/selfcommunity/community-js/commit/1264cc064748e96abe837c1d8d929d7ec3964e63))
+* refactored ui components: UserFollowedCategoriesWidget, UserFollowedUsersWidget, UserFollowersWidget ([03b7136](https://github.com/selfcommunity/community-js/commit/03b713682e6819c53f34e6c3045e588d3a12cf79))
+* refactored ui components: UserInfo, UserInfoDialog, UserProfileHeader, UserSuggestionWidget ([c5b9655](https://github.com/selfcommunity/community-js/commit/c5b9655907b243da40aa5fb5cd00f96c6f5c6568))
+
+
+
+
+
 # [0.7.0-alpha.349](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.348...@selfcommunity/react-ui@0.7.0-alpha.349) (2023-10-30)
 
 
