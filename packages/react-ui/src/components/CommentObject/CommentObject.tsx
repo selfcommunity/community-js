@@ -386,7 +386,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Handle comment delete
    */
   function handleDelete(comment) {
-    if (comment.parent) {
+    if (comment.parent && obj.latest_comments) {
       const _latestComment = obj.latest_comments.map((c) => {
         if (c.id === comment.id) {
           c.deleted = !c.deleted;
@@ -405,7 +405,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Handle comment delete
    */
   function handleHide(comment) {
-    if (comment.parent) {
+    if (comment.parent && obj.latest_comments) {
       const _latestComment = obj.latest_comments.map((c) => {
         if (c.id === comment.id) {
           c.collapsed = !c.collapsed;
@@ -422,7 +422,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Handle comment restore
    */
   function handleRestore(comment) {
-    if (comment.parent) {
+    if (comment.parent && obj.latest_comments) {
       const _latestComment = obj.latest_comments.map((c) => {
         if (c.id === comment.id) {
           c.deleted = false;
