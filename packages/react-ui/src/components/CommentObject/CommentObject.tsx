@@ -137,6 +137,18 @@ export interface CommentObjectProps {
   onDelete?: (comment: SCCommentType) => void;
 
   /**
+   * Callback on restore the comment
+   * @default null
+   */
+  onRestore?: (comment: SCCommentType) => void;
+
+  /**
+   * Callback on collapsed the comment
+   * @default null
+   */
+  onCollapsed?: (comment: SCCommentType) => void;
+
+  /**
    * Show all summary initially (otherwise it will be truncated)
    * @default false
    */
@@ -234,6 +246,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     commentReply,
     onOpenReply,
     onDelete,
+    onCollapsed,
+    onRestore,
     onVote,
     elevation = 0,
     truncateContent = false,
@@ -386,53 +400,24 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Handle comment delete
    */
   function handleDelete(comment) {
-    if (comment.parent && obj.latest_comments) {
-      const _latestComment = obj.latest_comments.map((c) => {
-        if (c.id === comment.id) {
-          c.deleted = !c.deleted;
-        }
-        return c;
-      });
-      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
-    } else {
-      const _comment = Object.assign({}, obj, {deleted: !obj.deleted});
-      updateObject(Object.assign({}, obj, {deleted: !obj.deleted}));
-      onDelete && onDelete(_comment);
-    }
+    updateObject(comment);
+    onDelete && onDelete(comment);
   }
 
   /**
    * Handle comment delete
    */
   function handleHide(comment) {
-    if (comment.parent && obj.latest_comments) {
-      const _latestComment = obj.latest_comments.map((c) => {
-        if (c.id === comment.id) {
-          c.collapsed = !c.collapsed;
-        }
-        return c;
-      });
-      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
-    } else {
-      updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
-    }
+    updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
+    onCollapsed && onCollapsed(comment);
   }
 
   /**
    * Handle comment restore
    */
   function handleRestore(comment) {
-    if (comment.parent && obj.latest_comments) {
-      const _latestComment = obj.latest_comments.map((c) => {
-        if (c.id === comment.id) {
-          c.deleted = false;
-        }
-        return c;
-      });
-      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
-    } else {
-      updateObject(Object.assign({}, obj, {deleted: false}));
-    }
+    updateObject(Object.assign({}, obj, {deleted: false}));
+    onRestore && onRestore(comment);
   }
 
   /**
@@ -504,7 +489,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function renderComment(comment: SCCommentType) {
     if (
       comment.deleted &&
-      (!scUserContext.user || (scUserContext.user && (!UserUtils.isStaff(scUserContext.user) || scUserContext.user.id !== comment.author.id)))
+      (!scUserContext.user || (scUserContext.user && !UserUtils.isStaff(scUserContext.user) && scUserContext.user.id !== comment.author.id))
     ) {
       // render the comment if user is logged and is staff (admin, moderator)
       // or the comment author is the logged user

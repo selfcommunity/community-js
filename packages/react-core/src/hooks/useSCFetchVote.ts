@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Endpoints, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { CacheStrategies, Logger, LRUCache } from '@selfcommunity/utils';
-import { SCOPE_SC_CORE } from '../constants/Errors';
+import {useEffect, useMemo, useState} from 'react';
+import {Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import {SCOPE_SC_CORE} from '../constants/Errors';
 import {
   SCCommentType,
   SCContributionType,
@@ -13,11 +13,11 @@ import {
   SCTagType,
   SCVoteType,
 } from '@selfcommunity/types';
-import { getCommentObjectCacheKey, getFeedObjectCacheKey } from '../constants/Cache';
-import { SCContextType, SCUserContextType, SCVoteContextType } from '../types/context';
-import { useSCContext } from '../components/provider/SCContextProvider';
-import { useSCUser } from '../components/provider/SCUserProvider';
-import { useSCVote } from '../components/provider/SCVoteProvider';
+import {getCommentObjectCacheKey, getFeedObjectCacheKey} from '../constants/Cache';
+import {SCContextType, SCUserContextType, SCVoteContextType} from '../types/context';
+import {useSCContext} from '../components/provider/SCContextProvider';
+import {useSCUser} from '../components/provider/SCUserProvider';
+import {useSCVote} from '../components/provider/SCVoteProvider';
 
 interface FetchVoteProps {
   /**
@@ -85,7 +85,11 @@ export default function useSCFetchVote({
   const scUserContext: SCUserContextType = useSCUser();
   const scVoteContext: SCVoteContextType = useSCVote();
   const reactions = useMemo(() => {
-    return {default: scVoteContext.reactions.find((reaction) => reaction.id === 1), reactions: scVoteContext.reactions, isLoading: scVoteContext.isLoading};
+    return {
+      default: scVoteContext.reactions?.find((reaction) => reaction.id === 1),
+      reactions: scVoteContext.reactions,
+      isLoading: scVoteContext.isLoading,
+    };
   }, [scVoteContext.reactions, scVoteContext.isLoading]);
 
   const fetchObject = useMemo(
