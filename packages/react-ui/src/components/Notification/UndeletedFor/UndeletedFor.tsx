@@ -9,7 +9,6 @@ import {getContributionSnippet, getContributionType, getRouteData} from '../../.
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {PREFIX} from '../constants';
 
@@ -45,15 +44,11 @@ export interface NotificationUndeletedProps
 
 /**
  * This component render the content of the notification of type undeleted for
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function UndeletedForNotification(inProps: NotificationUndeletedProps): JSX.Element {
+export default function UndeletedForNotification(props: NotificationUndeletedProps): JSX.Element {
   // PROPS
-  const props: NotificationUndeletedProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

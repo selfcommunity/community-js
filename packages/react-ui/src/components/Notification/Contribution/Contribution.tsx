@@ -8,7 +8,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import Bullet from '../../../shared/Bullet';
 import VoteButton from '../../VoteButton';
@@ -73,15 +72,11 @@ export interface ContributionNotificationProps
 
 /**
  * This component render the content of the notification of type follow (contribution)
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function ContributionNotification(inProps: ContributionNotificationProps): JSX.Element {
+export default function ContributionNotification(props: ContributionNotificationProps): JSX.Element {
   // PROPS
-  const props: ContributionNotificationProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     onVote,

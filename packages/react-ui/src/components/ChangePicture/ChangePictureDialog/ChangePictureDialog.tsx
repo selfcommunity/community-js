@@ -11,7 +11,6 @@ import BaseDialog, {BaseDialogProps} from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
-import {useThemeProps} from '@mui/system';
 import {scroll} from 'seamless-scroll-polyfill';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -38,12 +37,8 @@ export interface CPDialogProps extends BaseDialogProps {
   onChange?: (avatar) => void;
 }
 
-export default function ChangePictureDialog(inProps: CPDialogProps): JSX.Element {
+export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
   //PROPS
-  const props: CPDialogProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {open, onChange, onClose, className, ...rest} = props;
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);

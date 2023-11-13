@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
+import {Avatar, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationUserFollowType} from '@selfcommunity/types';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
@@ -50,15 +49,11 @@ export interface NotificationFollowProps
 
 /**
  * This component render the content of the notification of type user follow
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function UserFollowNotification(inProps: NotificationFollowProps): JSX.Element {
+export default function UserFollowNotification(props: NotificationFollowProps): JSX.Element {
   // PROPS
-  const props: NotificationFollowProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

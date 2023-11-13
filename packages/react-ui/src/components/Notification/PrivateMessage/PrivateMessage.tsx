@@ -19,7 +19,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
@@ -67,15 +66,11 @@ export interface NotificationPrivateMessageProps
 
 /**
  * This component render the content of the notification of type private message
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function PrivateMessageNotification(inProps: NotificationPrivateMessageProps): JSX.Element {
+export default function PrivateMessageNotification(props: NotificationPrivateMessageProps): JSX.Element {
   // PROPS
-  const props: NotificationPrivateMessageProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

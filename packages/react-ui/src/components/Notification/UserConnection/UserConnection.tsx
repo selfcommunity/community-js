@@ -7,7 +7,6 @@ import {SCNotificationConnectionAcceptType, SCNotificationConnectionRequestType,
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
@@ -54,15 +53,11 @@ export interface NotificationConnectionProps
 
 /**
  * This component render the content of the notification of connection accept/request
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function UserConnectionNotification(inProps: NotificationConnectionProps): JSX.Element {
+export default function UserConnectionNotification(props: NotificationConnectionProps): JSX.Element {
   // PROPS
-  const props: NotificationConnectionProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['sid']}`,

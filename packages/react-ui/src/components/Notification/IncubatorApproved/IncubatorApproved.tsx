@@ -8,7 +8,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {PREFIX} from '../constants';
 
@@ -47,12 +46,8 @@ export interface NotificationIncubatorApprovedProps
   notificationObject: SCNotificationIncubatorType;
 }
 
-export default function IncubatorApprovedNotification(inProps: NotificationIncubatorApprovedProps): JSX.Element {
+export default function IncubatorApprovedNotification(props: NotificationIncubatorApprovedProps): JSX.Element {
   // PROPS
-  const props: NotificationIncubatorApprovedProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['feed_serialization_id']}`,

@@ -8,7 +8,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import {getContribution, getContributionType, getContributionSnippet, getRouteData, getContributionRouteName} from '../../../utils/contribution';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types/notification';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
@@ -52,15 +51,11 @@ export interface NotificationVoteUpProps
 
 /**
  * This component render the content of the notification of type vote up
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function VoteUpNotification(inProps: NotificationVoteUpProps): JSX.Element {
+export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.Element {
   // PROPS
-  const props: NotificationVoteUpProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

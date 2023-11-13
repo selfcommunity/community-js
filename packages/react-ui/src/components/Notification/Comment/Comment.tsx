@@ -9,7 +9,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import {getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import VoteButton from '../../VoteButton';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
@@ -65,15 +64,11 @@ export interface CommentNotificationProps
 
 /**
  * This component render the content of the notification of type comment/nested comment
- * @param inProps
+ * @param props
  * @constructor
  */
-export default function CommentNotification(inProps: CommentNotificationProps): JSX.Element {
+export default function CommentNotification(props: CommentNotificationProps): JSX.Element {
   // PROPS
-  const props: CommentNotificationProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     onVote,

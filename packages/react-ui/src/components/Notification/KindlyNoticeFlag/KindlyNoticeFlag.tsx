@@ -10,7 +10,6 @@ import {getContributionType, getContributionSnippet, getRouteData} from '../../.
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {PREFIX} from '../constants';
 
@@ -53,15 +52,11 @@ export interface NotificationKindlyNoticeFlagProps
 
 /**
  * This component render the content of the notification of type kindly notice flag
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function KindlyNoticeFlagNotification(inProps: NotificationKindlyNoticeFlagProps): JSX.Element {
+export default function KindlyNoticeFlagNotification(props: NotificationKindlyNoticeFlagProps): JSX.Element {
   // PROPS
-  const props: NotificationKindlyNoticeFlagProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

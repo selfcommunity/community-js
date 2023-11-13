@@ -11,7 +11,6 @@ import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity
 import {SCNotificationDeletedForType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {PREFIX} from '../constants';
 
@@ -71,15 +70,11 @@ export interface NotificationDeletedForProps
 
 /**
  * This component render the content of the notification of type deleted for
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function DeletedForNotification(inProps: NotificationDeletedForProps): JSX.Element {
+export default function DeletedForNotification(props: NotificationDeletedForProps): JSX.Element {
   // PROPS
-  const props: NotificationDeletedForProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['feed_serialization_id']}`,
