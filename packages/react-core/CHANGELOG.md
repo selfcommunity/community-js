@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.115...@selfcommunity/react-core@0.4.0-alpha.116) (2023-11-10)
+
+
+### Bug Fixes
+
+* moderation ([3702d61](https://github.com/selfcommunity/community-js/commit/3702d612e22148e5ddf7518797fa7c5ab563ab7b))
+
+
+
+
+
+# [0.4.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.114...@selfcommunity/react-core@0.4.0-alpha.115) (2023-11-10)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 # [0.4.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.113...@selfcommunity/react-core@0.4.0-alpha.114) (2023-10-26)
 
 

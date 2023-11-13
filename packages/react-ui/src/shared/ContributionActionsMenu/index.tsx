@@ -728,11 +728,11 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function handleConfirmedAction() {
     if (contributionObj && !isLoading && !currentActionLoading) {
       if (currentAction === DELETE_CONTRIBUTION) {
-        setCurrentActionLoading(RESTORE_CONTRIBUTION);
+        setCurrentActionLoading(DELETE_CONTRIBUTION);
         performDeleteContribution()
           .then((data) => {
-            setFeedObj(Object.assign({}, feedObj, {deleted: true}));
-            onDeleteContribution && onDeleteContribution(contributionObj);
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: true});
+            onDeleteContribution && onDeleteContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -743,8 +743,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performRestoreContribution()
           .then((data) => {
-            setFeedObj(Object.assign({}, feedObj, {deleted: false}));
-            onRestoreContribution && onRestoreContribution(contributionObj);
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
+            onRestoreContribution && onRestoreContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -755,10 +755,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(MODERATE_CONTRIBUTION_HIDDEN);
         performModerationContribution(MODERATION_TYPE_ACTION_HIDE, hideFlagType)
           .then((data) => {
+            const _contributionObj = Object.assign({}, contributionObj, {collapsed: !contributionObj.collapsed});
             setHideType(hideType === hideFlagType ? null : hideFlagType);
             setHideFlagType(null);
-            setFeedObj(Object.assign({}, feedObj, {collapsed: !feedObj.collapsed}));
-            onHideContribution && onHideContribution(contributionObj);
+            onHideContribution && onHideContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -769,10 +769,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(MODERATE_CONTRIBUTION_DELETED);
         performModerationContribution(MODERATION_TYPE_ACTION_DELETE, deleteFlagType)
           .then((data) => {
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: !contributionObj.deleted});
             setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
             setDeleteFlagType(null);
-            setFeedObj(Object.assign({}, feedObj, {deleted: !feedObj.deleted}));
-            onDeleteContribution && onDeleteContribution(contributionObj);
+            onDeleteContribution && onDeleteContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -839,7 +839,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         : section === HIDE_CONTRIBUTION_SECTION
         ? handleHideContribution
         : handleDeleteContribution;
-    let value = FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
+    let value = section === FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
     return REPORTS.map((report, index) => {
       return (
         <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
