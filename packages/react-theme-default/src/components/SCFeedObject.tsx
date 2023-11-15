@@ -315,10 +315,10 @@ const Component = {
           '& .SCFeedObject-reply-content': {
             marginLeft: 0,
             background: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
-            '& .SCCommentObjectReply-root': {
+            '& .SCCommentObject-reply-root': {
               background: 'transparent',
               marginBottom: 0,
-              '& .SCCommentObjectReply-comment': {
+              '& .SCCommentObject-reply-comment': {
                 background: 'transparent',
                 border: '0 none',
                 '& .SCEditor-root': {
@@ -333,7 +333,7 @@ const Component = {
                     bottom: 0
                   }
                 },
-                '&.SCCommentObjectReply-has-value .SCEditor-root .SCEditor-actions': {
+                '&.SCCommentObject-reply-has-value .SCEditor-root .SCEditor-actions': {
                   bottom: theme.spacing(-4)
                 }
               }
@@ -371,8 +371,8 @@ const Component = {
               }
             }
           },
-          '& .SCCommentObjectReply-root': {
-            '& .SCCommentObjectReply-comment': {
+          '& .SCCommentObject-reply-root': {
+            '& .SCCommentObject-reply-comment': {
               marginBottom: '0 !important',
               border: `1px solid ${theme.palette.grey[300]}`,
               '& .SCEditor-root': {
@@ -642,12 +642,6 @@ const Component = {
       }
     }),
     relevantActivitiesRoot: ({theme}: any) => ({
-      '& .MuiList-root, & .SCFeedObject-relevant-activities-activity': {
-        padding: 0
-        // '& .SCBaseItem-content': {
-        //   alignItems: 'flex-start'
-        // }
-      },
       '& .SCFeedObject-relevant-activities-activity': {
         '& > .SCBaseItem-root': {
           borderRadius: 0,
@@ -678,20 +672,7 @@ const Component = {
           }
       }
     }),
-    activityCommentRoot: ({theme}: any) => ({
-      '& .SCBaseItem-primary': {
-        display: 'flex !important',
-        flexDirection: 'row !important',
-        alignItems: 'center !important',
-        marginBottom: '0 !important',
-        '& .MuiTypography-root': {
-          marginBottom: 0
-        }
-      },
-      '& .SCFeedObject-activity-comment-username': {
-        marginRight: theme.spacing(0.5)
-      }
-    }),
+    activityCommentRoot: ({theme}: any) => ({}),
     activityFollowRoot: ({theme}: any) => ({}),
     activityPollVoteRoot: ({theme}: any) => ({}),
     activityVoteUpRoot: ({theme}: any) => ({})

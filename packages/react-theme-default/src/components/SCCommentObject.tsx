@@ -31,7 +31,7 @@ const Component = {
             paddingTop: 5
           }
         },
-        '& .SCCommentObjectReply-root .SCEditor-root': {
+        '& .SCCommentObject-reply-root .SCEditor-root': {
           padding: '6px'
         },
         [theme.breakpoints.up('sm')]: {
@@ -78,7 +78,7 @@ const Component = {
           textDecoration: 'none'
         }
       },
-      '& .SCCommentObject-avatar, & .SCCommentObjectReply-avatar': {
+      '& .SCCommentObject-avatar, & .SCCommentObject-reply-avatar': {
         top: theme.spacing(),
         width: theme.selfcommunity.user.avatar.sizeMedium,
         height: theme.selfcommunity.user.avatar.sizeMedium
@@ -167,6 +167,39 @@ const Component = {
             padding: theme.spacing(1)
           }
         }
+      }
+    }),
+    replyRoot: ({theme}: any) => ({
+      border: '0 none',
+      marginBottom: theme.spacing(1),
+      overflow: 'visible',
+      '& .SCBaseItem-content': {
+        alignItems: 'flex-start',
+        '& .SCBaseItem-text': {
+          marginTop: 0,
+          marginBottom: 0,
+          '& .SCBaseItem-secondary': {
+            overflow: 'visible'
+          }
+        },
+        '& .SCBaseItem-image': {
+          marginTop: theme.spacing(0.2),
+          '& .MuiBadge-badge': {
+            top: theme.spacing(1.25)
+          },
+          '& .SCCommentObject-reply-avatar': {
+            width: theme.selfcommunity.user.avatar.sizeMedium,
+            height: theme.selfcommunity.user.avatar.sizeMedium
+          }
+        }
+      },
+      '& .SCCommentObject-reply-comment': {
+        overflow: 'visible',
+        borderRadius: theme.shape.borderRadius * 0.5
+      },
+      '& .SCCommentObject-reply-actions': {
+        marginLeft: theme.spacing(),
+        paddingBottom: theme.spacing()
       }
     })
   }

@@ -69,7 +69,6 @@ import SCUserProfileEdit from './components/SCUserProfileEdit';
 import SCUserProfileBlocked from './components/SCUserProfileBlocked';
 import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
-import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCFooter from './components/SCFooter';
 import SCPlatformWidget from './components/SCPlatformWidget';
 import SCChangePictureButton from './components/SCChangePictureButton';
@@ -195,7 +194,6 @@ const theme = {
     SCCategoryTemplate,
     SCChoices,
     SCCommentObject,
-    SCCommentObjectReply,
     SCCommentsFeedObject,
     SCCommentsObject,
     SCComposer,
