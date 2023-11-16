@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Popover, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {formatHttpErrorCode, UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -73,15 +72,10 @@ export interface AccountCredentialProps {
    */
   [p: string]: any;
 }
-export default function AccountCredentials(inProps: AccountCredentialProps): JSX.Element {
+export default function AccountCredentials(props: AccountCredentialProps): JSX.Element {
   // PROPS
-  const props: AccountCredentialProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
-  // CONTEXT
   const {className = null, user, skipEmailValidation = false, ...rest} = props;
+
   const {enqueueSnackbar} = useSnackbar();
 
   // STATE

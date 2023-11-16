@@ -119,7 +119,7 @@ const Component = {
             textDecoration: 'underline'
           }
         },
-        '& .SCCommentObject-reply': {
+        '& .SCCommentObjectReply': {
           color: 'inherit',
           textDecorationStyle: 'solid',
           fontSize: '0.857rem',

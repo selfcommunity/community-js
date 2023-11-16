@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Typography} from '@mui/material';
+import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import BaseItem from '../../../../../shared/BaseItem';
 import UserDeletedSnackBar from '../../../../../shared/UserDeletedSnackBar';
-import {getContributionHtml, getRouteData} from '../../../../../utils/contribution';
-import {MAX_SUMMARY_LENGTH} from '../../../../../constants/Feed';
+import {getRouteData} from '../../../../../utils/contribution';
 import {PREFIX} from '../../../constants';
 
 const messages = defineMessages({
@@ -45,12 +44,13 @@ export default function CommentRelevantActivity(props: ActionsRelevantActivityPr
   const intl = useIntl();
 
   // RENDER
-  const summaryHtmlTruncated =
-    'summary_truncated' in activityObject.comment
-      ? activityObject.comment.summary_truncated
-      : activityObject.comment.html.length >= MAX_SUMMARY_LENGTH;
-  const commentHtml = 'summary_html' in activityObject.comment ? activityObject.comment.summary_html : activityObject.comment.summary;
-  const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
+  // const summaryHtmlTruncated =
+  //   'summary_truncated' in activityObject.comment
+  //     ? activityObject.comment.summary_truncated
+  //     : activityObject.comment.html.length >= MAX_SUMMARY_LENGTH;
+  // const commentHtml = 'summary_html' in activityObject.comment ? activityObject.comment.summary_html : activityObject.comment.summary;
+  // const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
+
   return (
     <>
       <Root
@@ -74,18 +74,19 @@ export default function CommentRelevantActivity(props: ActionsRelevantActivityPr
                   {activityObject.author.username}
                 </Link>
               ),
-              comment: (
-                <>
-                  <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
-                  {summaryHtmlTruncated && (
-                    <Link
-                      to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}
-                      className={classes.showMoreContent}>
-                      <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
-                    </Link>
-                  )}
-                </>
-              )
+              link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}>{chunks}</Link>
+              // comment: (
+              //   <>
+              //     <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
+              //     {summaryHtmlTruncated && (
+              //       <Link
+              //         to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}
+              //         className={classes.showMoreContent}>
+              //         <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
+              //       </Link>
+              //     )}
+              //   </>
+              // )
             })}
           </>
         }

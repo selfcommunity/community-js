@@ -10,7 +10,6 @@ import {getContributionType, getContributionSnippet, getRouteData} from '../../.
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {PREFIX} from '../constants';
 
@@ -69,15 +68,11 @@ export interface NotificationCollapsedForProps
 
 /**
  * This component render the content of the notification of type collapsed for
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function CollapsedForNotification(inProps: NotificationCollapsedForProps): JSX.Element {
+export default function CollapsedForNotification(props: NotificationCollapsedForProps): JSX.Element {
   // PROPS
-  const props: NotificationCollapsedForProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

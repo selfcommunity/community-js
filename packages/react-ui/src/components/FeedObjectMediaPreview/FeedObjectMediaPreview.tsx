@@ -8,15 +8,16 @@ import {SCMediaType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import {File, Link, Share} from '../../shared/Media';
 import classNames from 'classnames';
-import {PREFIX} from '../FeedObject/constants';
+
+const PREFIX = 'SCFeedObjectMediaPreview';
 
 const classes = {
-  root: `${PREFIX}-media-preview-root`
+  root: `${PREFIX}-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'MediaPreviewRoot'
+  slot: 'Root'
 })(() => ({}));
 
 export interface FeedObjectMediaPreviewProps extends BoxProps {
@@ -42,13 +43,13 @@ export interface FeedObjectMediaPreviewProps extends BoxProps {
  import {FeedObjectMediaPreview} from '@selfcommunity/react-ui';
  ```
  #### Component Name
- The name `SCFeedObject-media-preview-root` can be used when providing style overrides in the theme.
+ The name `SCFeedObjectMediaPreview` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFeedObject-media-preview-root|Styles applied to the root element.|
+ |root|.SCFeedObjectMediaPreview-root|Styles applied to the root element.|
 
 
  * @param inProps

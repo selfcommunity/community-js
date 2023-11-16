@@ -7,7 +7,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import {PREFIX} from '../constants';
 
@@ -51,15 +50,11 @@ export interface NotificationBlockedProps
 }
 /**
  * This component render the content of the notification of type user blocked
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function UserBlockedNotification(inProps: NotificationBlockedProps): JSX.Element {
+export default function UserBlockedNotification(props: NotificationBlockedProps): JSX.Element {
   // PROPS
-  const props: NotificationBlockedProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject = null,
     id = `n_${props.notificationObject['sid']}`,

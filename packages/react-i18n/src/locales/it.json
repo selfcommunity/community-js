@@ -282,7 +282,7 @@
   "ui.feedObject.poll.showPoll": "Vedi Sondaggio",
   "ui.feedObject.poll.voters": "{total, plural, =0 {# votanti} one {# votante} other {# votanti}}",
   "ui.feedObject.poll.votes": "{total, plural, =0 {# voti} one {# voto} other {# voti}}",
-  "ui.feedObject.relevantActivities.comment": "{username} ha commentato il contributo \"{comment}\"",
+  "ui.feedObject.relevantActivities.comment": "{username} ha <link>commentato</link> il contributo",
   "ui.feedObject.relevantActivities.follow": "{username} segue il contributo",
   "ui.feedObject.relevantActivities.noResults": "Non ci sono  attività rilevanti da vedere al momento.",
   "ui.feedObject.relevantActivities.pollVote": "{username} ha votato il sondaggio",

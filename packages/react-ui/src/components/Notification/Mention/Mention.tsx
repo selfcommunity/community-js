@@ -8,7 +8,6 @@ import {getRouteData, getContributionType, getContributionSnippet, getContributi
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
@@ -52,15 +51,11 @@ export interface MentionNotificationProps
 
 /**
  * This component render the content of the notification of type mention
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function MentionNotification(inProps: MentionNotificationProps): JSX.Element {
+export default function MentionNotification(props: MentionNotificationProps): JSX.Element {
   // PROPS
-  const props: MentionNotificationProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

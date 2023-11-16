@@ -5,7 +5,6 @@ import {SCFeedDiscussionType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import BaseItem from '../../../shared/BaseItem';
@@ -70,15 +69,10 @@ export interface PollSnippetProps {
  |title|.SCPollSuggestionWidget-title|Styles applied to the title element.|
  |activityAt|.SCPollSuggestionWidget-activity-at|Styles applied to activity section.|
 
- * @param inProps
+ * @param props
  */
-export default function PollSnippet(inProps: PollSnippetProps): JSX.Element {
+export default function PollSnippet(props: PollSnippetProps): JSX.Element {
   // PROPS
-  const props: PollSnippetProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
   const {feedObj = null, className = null, autoHide = false, ...rest} = props;
 
   // CONTEXT

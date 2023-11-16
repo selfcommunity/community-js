@@ -7,7 +7,6 @@ import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../../shared/BaseDialog';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
@@ -55,12 +54,8 @@ export interface CreateIncubatorDialogProps {
   onClose?: () => void;
 }
 
-export default function CreateIncubatorDialog(inProps: CreateIncubatorDialogProps): JSX.Element {
+export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps): JSX.Element {
   // PROPS
-  const props: CreateIncubatorDialogProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className, open, onClose, ...rest} = props;
 
   // CONTEXT

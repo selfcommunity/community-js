@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Typography} from '@mui/material';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import UserSocialAssociation from '../../UserSocialAssociation';
@@ -94,14 +93,10 @@ export interface AccountProps {
    */
   [p: string]: any;
 }
-export default function Account(inProps: AccountProps): JSX.Element {
-  // PROPS
-  const props: AccountProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
+export default function Account(props: AccountProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  // PROPS
   const {
     className = null,
     handleAssociationCreate,

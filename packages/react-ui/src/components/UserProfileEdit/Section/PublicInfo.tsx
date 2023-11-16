@@ -22,7 +22,6 @@ import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -107,12 +106,8 @@ export interface PublicInfoProps {
 const GENDERS = ['Male', 'Female', 'Unspecified'];
 const DATEPICKER_MINDATE = new Date(1000, 1, 1);
 
-export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
+export default function PublicInfo(props: PublicInfoProps): JSX.Element {
   // PROPS
-  const props: PublicInfoProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     id = null,
     className = null,

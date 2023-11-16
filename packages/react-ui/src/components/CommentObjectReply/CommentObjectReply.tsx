@@ -7,9 +7,9 @@ import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
-import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import UserAvatar from '../../shared/UserAvatar';
+import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCCommentObjectReply';
 
@@ -26,8 +26,7 @@ const classes = {
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'Root'
 })(() => ({}));
 
 export interface CommentObjectReplyProps extends WidgetProps {

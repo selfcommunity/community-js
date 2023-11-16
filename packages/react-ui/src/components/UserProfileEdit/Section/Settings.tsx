@@ -7,7 +7,6 @@ import {SCUserSettingsType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
-import {useThemeProps} from '@mui/system';
 import {DEFAULT_SETTINGS} from '../../../constants/UserProfile';
 import {SCUserProfileSettings} from '../../../types';
 import {PREFIX} from '../constants';
@@ -64,12 +63,8 @@ export interface SettingsProps {
   [p: string]: any;
 }
 
-export default function Settings(inProps: SettingsProps): JSX.Element {
+export default function Settings(props: SettingsProps): JSX.Element {
   // PROPS
-  const props: SettingsProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     id = null,
     className = null,

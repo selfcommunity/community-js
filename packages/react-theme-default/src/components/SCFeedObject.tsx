@@ -266,6 +266,11 @@ const Component = {
               margin: '0 32px'
             }
           },
+          '& .SCFeedObject-medias-section': {
+            '& .SCFeedObjectMediaPreview-root': {
+              margin: theme.spacing(0, 1)
+            }
+          },
           '& .SCFeedObject-show-more': {
             padding: theme.spacing(0.5),
             marginTop: theme.spacing(-0.5)
@@ -433,9 +438,6 @@ const Component = {
         paddingLeft: 0,
         paddingRight: 0
       }
-    }),
-    mediaPreviewRoot: ({theme}: any) => ({
-      margin: theme.spacing(0, 1)
     }),
     actionsRoot: ({theme}: any) => ({
       margin: '0px 0px',
@@ -642,28 +644,32 @@ const Component = {
       }
     }),
     relevantActivitiesRoot: ({theme}: any) => ({
-      '& .MuiList-root, & .SCFeedObject-relevant-activities-activity': {
-        padding: 0
-        // '& .SCBaseItem-content': {
-        //   alignItems: 'flex-start'
-        // }
-      },
       '& .SCFeedObject-relevant-activities-activity': {
         '& > .SCBaseItem-root': {
           borderRadius: 0,
           marginBottom: theme.spacing(2),
-          '& .SCBaseItem-text': {
-            margin: 0,
-            '& .SCBaseItem-primary': {
-              display: 'inline-block',
-              marginBottom: theme.spacing(0.5),
-              '& > a': {
-                fontWeight: theme.typography.fontWeightBold,
-                textDecoration: 'none'
+          '& .SCBaseItem-content': {
+            alignItems: 'flex-start',
+            '& .SCBaseItem-text': {
+              margin: 0,
+              '& .SCBaseItem-primary': {
+                display: 'inline-block',
+                marginBottom: theme.spacing(0.5),
+                '& a:nth-child(1)': {
+                  fontWeight: theme.typography.fontWeightBold,
+                  textDecoration: 'none'
+                },
+                '& a': {
+                  color: theme.palette.text.secondary,
+                  textDecoration: 'underlined',
+                  '&:hover': {
+                    textDecoration: 'none'
+                  }
+                }
+              },
+              '& .SCBaseItem-secondary': {
+                fontSize: '0.857rem'
               }
-            },
-            '& .SCBaseItem-secondary': {
-              fontSize: '0.857rem'
             }
           }
         },
@@ -678,20 +684,7 @@ const Component = {
           }
       }
     }),
-    activityCommentRoot: ({theme}: any) => ({
-      '& .SCBaseItem-primary': {
-        display: 'flex !important',
-        flexDirection: 'row !important',
-        alignItems: 'center !important',
-        marginBottom: '0 !important',
-        '& .MuiTypography-root': {
-          marginBottom: 0
-        }
-      },
-      '& .SCFeedObject-activity-comment-username': {
-        marginRight: theme.spacing(0.5)
-      }
-    }),
+    activityCommentRoot: ({theme}: any) => ({}),
     activityFollowRoot: ({theme}: any) => ({}),
     activityPollVoteRoot: ({theme}: any) => ({}),
     activityVoteUpRoot: ({theme}: any) => ({})

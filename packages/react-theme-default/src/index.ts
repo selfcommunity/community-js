@@ -14,6 +14,7 @@ import SCBroadcastMessages from './components/SCBroadcastMessages';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCScrollContainer from './components/SCScrollContainer';
 import SCFeedObject from './components/SCFeedObject';
+import SCFeedObjectMediaPreview from './components/SCFeedObjectMediaPreview';
 import SCFeed from './components/SCFeed';
 import MuiButton from './components/MuiButton';
 import MuiAvatar from './components/MuiAvatar';
@@ -27,6 +28,7 @@ import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCUserProfileTemplate from './components/SCUserProfileTemplate';
 import SCFeedObjectDetailTemplate from './components/SCFeedObjectDetailTemplate';
 import SCCommentObject from './components/SCCommentObject';
+import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
 import MuiContainer from './components/MuiContainer';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
@@ -69,7 +71,6 @@ import SCUserProfileEdit from './components/SCUserProfileEdit';
 import SCUserProfileBlocked from './components/SCUserProfileBlocked';
 import SCVoteButton from './components/SCVoteButton';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
-import SCCommentObjectReply from './components/SCCommentObjectReply';
 import SCFooter from './components/SCFooter';
 import SCPlatformWidget from './components/SCPlatformWidget';
 import SCChangePictureButton from './components/SCChangePictureButton';
@@ -207,6 +208,7 @@ const theme = {
     SCEmojiPicker,
     SCFeed,
     SCFeedObject,
+    SCFeedObjectMediaPreview,
     SCFeedObjectDetailTemplate,
     SCFeedUpdatesWidget,
     SCFooter,

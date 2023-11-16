@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
+import {Avatar, Stack, Typography} from '@mui/material';
 import {SCNotificationVoteUpType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -8,7 +8,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
-import {useThemeProps} from '@mui/system';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
@@ -52,15 +51,11 @@ export interface ContributionFollowProps
 
 /**
  * This component render the content of the notification of type follow (contribution)
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function ContributionFollowNotification(inProps: ContributionFollowProps): JSX.Element {
+export default function ContributionFollowNotification(props: ContributionFollowProps): JSX.Element {
   // PROPS
-  const props: ContributionFollowProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,

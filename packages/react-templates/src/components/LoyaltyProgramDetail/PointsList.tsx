@@ -4,7 +4,6 @@ import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfco
 import {Divider, Grid, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 
 const PREFERENCES = [
   SCPreferences.POINTS_MAKE_DISCUSSION,
@@ -53,15 +52,11 @@ export interface PointsListProps {
 
 /**
  *
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function PointsList(inProps: PointsListProps): JSX.Element {
+export default function PointsList(props: PointsListProps): JSX.Element {
   // PROPS
-  const props: PointsListProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className, ...rest} = props;
 
   // CONTEXT
