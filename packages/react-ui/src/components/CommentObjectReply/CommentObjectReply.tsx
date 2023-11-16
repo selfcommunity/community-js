@@ -9,22 +9,24 @@ import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import BaseItem from '../../shared/BaseItem';
 import UserAvatar from '../../shared/UserAvatar';
-import {PREFIX} from '../CommentObject/constants';
+import {useThemeProps} from '@mui/system';
+
+const PREFIX = 'SCCommentObjectReply';
 
 const classes = {
-  root: `${PREFIX}-reply-root`,
-  comment: `${PREFIX}-reply-comment`,
-  hasValue: `${PREFIX}-reply-has-value`,
-  avatar: `${PREFIX}-reply-avatar`,
-  actions: `${PREFIX}-reply-actions`,
-  buttonReply: `${PREFIX}-reply-button-reply`,
-  buttonSave: `${PREFIX}-reply-button-save`,
-  buttonCancel: `${PREFIX}-reply-button-cancel`
+  root: `${PREFIX}-root`,
+  comment: `${PREFIX}-comment`,
+  hasValue: `${PREFIX}-has-value`,
+  avatar: `${PREFIX}-avatar`,
+  actions: `${PREFIX}-actions`,
+  buttonReply: `${PREFIX}-button-reply`,
+  buttonSave: `${PREFIX}-button-save`,
+  buttonCancel: `${PREFIX}-button-cancel`
 };
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'ReplyRoot'
+  slot: 'Root'
 })(() => ({}));
 
 export interface CommentObjectReplyProps extends WidgetProps {
@@ -86,27 +88,31 @@ export interface CommentObjectReplyProps extends WidgetProps {
 
  #### Component Name
 
- The name `CommentObject-reply-root` can be used when providing style overrides in the theme.
+ The name `CommentObjectReply` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.CommentObject-reply-root|Styles applied to the root element.|
- |comment|.SCCommentObject-reply-comment|Styles applied to comment element.|
- |hasValue|.SCCommentObject-reply-has-value|Styles applied to the comment element when editor is not empty.|
- |avatar|.SCCommentObject-reply-avatar|Styles applied to the avatar element.|
- |actions|.SCCommentObject-reply-actions|Styles applied to the actions section.|
- |buttonReply|.SCCommentObject-reply-button-reply|Styles applied to reply button element.|
- |buttonSave|.SCCommentObject-reply-button-save|Styles applied to save button element.|
- |buttonCancel|.SCCommentObject-reply-button-cancel|Styles applied to the cancel button element.|
+ |root|.CommentObjectReply-root|Styles applied to the root element.|
+ |comment|.SCCommentObjectReply-comment|Styles applied to comment element.|
+ |hasValue|.SCCommentObjectReply-has-value|Styles applied to the comment element when editor is not empty.|
+ |avatar|.SCCommentObjectReply-avatar|Styles applied to the avatar element.|
+ |actions|.SCCommentObjectReply-actions|Styles applied to the actions section.|
+ |buttonReply|.SCCommentObjectReply-button-reply|Styles applied to reply button element.|
+ |buttonSave|.SCCommentObjectReply-button-save|Styles applied to save button element.|
+ |buttonCancel|.SCCommentObjectReply-button-cancel|Styles applied to the cancel button element.|
 
- * @param props
+ * @param inProps
  */
 
-export default function CommentObjectReply(props: CommentObjectReplyProps): JSX.Element {
+export default function CommentObjectReply(inProps: CommentObjectReplyProps): JSX.Element {
   // PROPS
+  const props: CommentObjectReplyProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
   const {
     id = 'CommentObjectReply',
     className,

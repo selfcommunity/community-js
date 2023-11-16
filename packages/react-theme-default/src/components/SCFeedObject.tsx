@@ -266,6 +266,11 @@ const Component = {
               margin: '0 32px'
             }
           },
+          '& .SCFeedObject-medias-section': {
+            '& .SCFeedObjectMediaPreview-root': {
+              margin: theme.spacing(0, 1)
+            }
+          },
           '& .SCFeedObject-show-more': {
             padding: theme.spacing(0.5),
             marginTop: theme.spacing(-0.5)
@@ -315,10 +320,10 @@ const Component = {
           '& .SCFeedObject-reply-content': {
             marginLeft: 0,
             background: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
-            '& .SCCommentObject-reply-root': {
+            '& .SCCommentObjectReply-root': {
               background: 'transparent',
               marginBottom: 0,
-              '& .SCCommentObject-reply-comment': {
+              '& .SCCommentObjectReply-comment': {
                 background: 'transparent',
                 border: '0 none',
                 '& .SCEditor-root': {
@@ -333,7 +338,7 @@ const Component = {
                     bottom: 0
                   }
                 },
-                '&.SCCommentObject-reply-has-value .SCEditor-root .SCEditor-actions': {
+                '&.SCCommentObjectReply-has-value .SCEditor-root .SCEditor-actions': {
                   bottom: theme.spacing(-4)
                 }
               }
@@ -371,8 +376,8 @@ const Component = {
               }
             }
           },
-          '& .SCCommentObject-reply-root': {
-            '& .SCCommentObject-reply-comment': {
+          '& .SCCommentObjectReply-root': {
+            '& .SCCommentObjectReply-comment': {
               marginBottom: '0 !important',
               border: `1px solid ${theme.palette.grey[300]}`,
               '& .SCEditor-root': {
@@ -433,9 +438,6 @@ const Component = {
         paddingLeft: 0,
         paddingRight: 0
       }
-    }),
-    mediaPreviewRoot: ({theme}: any) => ({
-      margin: theme.spacing(0, 1)
     }),
     actionsRoot: ({theme}: any) => ({
       margin: '0px 0px',
@@ -646,18 +648,28 @@ const Component = {
         '& > .SCBaseItem-root': {
           borderRadius: 0,
           marginBottom: theme.spacing(2),
-          '& .SCBaseItem-text': {
-            margin: 0,
-            '& .SCBaseItem-primary': {
-              display: 'inline-block',
-              marginBottom: theme.spacing(0.5),
-              '& > a': {
-                fontWeight: theme.typography.fontWeightBold,
-                textDecoration: 'none'
+          '& .SCBaseItem-content': {
+            alignItems: 'flex-start',
+            '& .SCBaseItem-text': {
+              margin: 0,
+              '& .SCBaseItem-primary': {
+                display: 'inline-block',
+                marginBottom: theme.spacing(0.5),
+                '& a:nth-child(1)': {
+                  fontWeight: theme.typography.fontWeightBold,
+                  textDecoration: 'none'
+                },
+                '& a': {
+                  color: theme.palette.text.secondary,
+                  textDecoration: 'underlined',
+                  '&:hover': {
+                    textDecoration: 'none'
+                  }
+                }
+              },
+              '& .SCBaseItem-secondary': {
+                fontSize: '0.857rem'
               }
-            },
-            '& .SCBaseItem-secondary': {
-              fontSize: '0.857rem'
             }
           }
         },

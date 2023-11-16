@@ -30,9 +30,9 @@ const Component = {
       '& .SCCommentsObject-skeleton-root': {
         marginBottom: theme.spacing(0.5)
       },
-      '& .SCCommentObject-reply-root': {
+      '& .SCCommentObjectReply-root': {
         background: 'transparent',
-        '& .SCCommentObject-reply-comment': {
+        '& .SCCommentObjectReply-comment': {
           marginBottom: theme.spacing(4)
         }
       }
