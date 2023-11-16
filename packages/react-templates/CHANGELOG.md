@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.345](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.344...@selfcommunity/react-templates@0.3.0-alpha.345) (2023-11-16)
+
+
+### Performance Improvements
+
+* removed useThemeProps from subfolders(refactoring theme) ([e113484](https://github.com/selfcommunity/community-js/commit/e1134844cc812089f3c59ca784ddf5a453b034ee))
+
+
+
+
+
 # [0.3.0-alpha.344](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.343...@selfcommunity/react-templates@0.3.0-alpha.344) (2023-11-10)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

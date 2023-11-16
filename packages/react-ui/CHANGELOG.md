@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.353](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.352...@selfcommunity/react-ui@0.7.0-alpha.353) (2023-11-16)
+
+
+### Bug Fixes
+
+* fixed relevant activity comment style(restored previous style), added CommentObjectReply style to CommentObject theme. ([a20ae7b](https://github.com/selfcommunity/community-js/commit/a20ae7b8342edc0151fef9f48cf5f7cdf8288782))
+* reverted theme for SCCommentObjectReply/SCFeedObjectMediaPreview. Fixed Relevant activities style ([cf769d4](https://github.com/selfcommunity/community-js/commit/cf769d423670f451032a3c95983e3f5084585bd1))
+
+
+### Performance Improvements
+
+* removed useThemeProps from subfolders(refactoring theme) ([e113484](https://github.com/selfcommunity/community-js/commit/e1134844cc812089f3c59ca784ddf5a453b034ee))
+
+
+
+
+
 # [0.7.0-alpha.352](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.351...@selfcommunity/react-ui@0.7.0-alpha.352) (2023-11-10)
 
 

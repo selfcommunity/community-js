@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.59...@selfcommunity/react-i18n@0.5.0-alpha.60) (2023-11-16)
+
+
+### Bug Fixes
+
+* reverted theme for SCCommentObjectReply/SCFeedObjectMediaPreview. Fixed Relevant activities style ([cf769d4](https://github.com/selfcommunity/community-js/commit/cf769d423670f451032a3c95983e3f5084585bd1))
+
+
+
+
+
 # [0.5.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.58...@selfcommunity/react-i18n@0.5.0-alpha.59) (2023-11-10)
 
 
