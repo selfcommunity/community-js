@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.354](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.353...@selfcommunity/react-ui@0.7.0-alpha.354) (2023-11-21)
+
+
+### Bug Fixes
+
+* fixed poll votes computing. Asana issue: https://app.asana.com/0/1202638443591994/1205975746625579/f ([9265547](https://github.com/selfcommunity/community-js/commit/926554792bd98ce956aaaecaa440d0f75b00fd69))
+
+
+
+
+
 # [0.7.0-alpha.353](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.352...@selfcommunity/react-ui@0.7.0-alpha.353) (2023-11-16)
 
 
