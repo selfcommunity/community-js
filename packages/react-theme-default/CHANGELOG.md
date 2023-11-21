@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.306](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.305...@selfcommunity/react-theme-default@0.1.0-alpha.306) (2023-11-16)
+
+
+### Bug Fixes
+
+* fixed relevant activity comment style(restored previous style), added CommentObjectReply style to CommentObject theme. ([a20ae7b](https://github.com/selfcommunity/community-js/commit/a20ae7b8342edc0151fef9f48cf5f7cdf8288782))
+* reverted theme for SCCommentObjectReply/SCFeedObjectMediaPreview. Fixed Relevant activities style ([cf769d4](https://github.com/selfcommunity/community-js/commit/cf769d423670f451032a3c95983e3f5084585bd1))
+
+
+
+
+
 # [0.1.0-alpha.305](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.304...@selfcommunity/react-theme-default@0.1.0-alpha.305) (2023-11-10)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
