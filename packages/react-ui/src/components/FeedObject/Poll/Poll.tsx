@@ -126,17 +126,18 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
       });
       setVotes((prevVotes) => prevVotes + 1);
     } else {
-      let isVoted = false;
       setChoices((prevChoices) => {
-        return prevChoices.map((choice) => {
-          isVoted = isVoted || choice.voted;
-          return Object.assign({}, choice, {
-            voted: choice.id === id ? true : false,
+        const updatedChoices = prevChoices.map((choice) => {
+          return {
+            ...choice,
+            voted: choice.id === id,
             vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count > 0 && choice.voted ? choice.vote_count - 1 : choice.vote_count
-          });
+          };
         });
+        const newVotes = updatedChoices.reduce((totalVotes, choice) => totalVotes + choice.vote_count, 0);
+        setVotes(newVotes);
+        return updatedChoices;
       });
-      !isVoted && setVotes((prevVotes) => prevVotes + 1);
     }
   };
 
