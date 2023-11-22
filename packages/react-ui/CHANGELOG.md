@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.355](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.354...@selfcommunity/react-ui@0.7.0-alpha.355) (2023-11-22)
+
+
+### Bug Fixes
+
+* fixed account data portability, private message file upload(added all types). Asana issues: https://app.asana.com/0/1202638443591994/1205975745273237/f and https://app.asana.com/0/1202638443591994/1205975745273253/f ([a54fc0c](https://github.com/selfcommunity/community-js/commit/a54fc0c4e1a25776041414d1b6e141114eeb0653))
+
+
+
+
+
 # [0.7.0-alpha.354](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.353...@selfcommunity/react-ui@0.7.0-alpha.354) (2023-11-21)
 
 
