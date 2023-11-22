@@ -16,6 +16,7 @@ import LightBox from '../../shared/Lightbox';
 import AutoPlayer from '../../shared/AutoPlayer';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
+import {isSupportedVideoFormat} from '../../utils/thumbnailCoverter';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -23,6 +24,8 @@ const classes = {
   img: `${PREFIX}-img`,
   document: `${PREFIX}-document`,
   video: `${PREFIX}-video`,
+  other: `${PREFIX}-other`,
+  iconButton: `${PREFIX}-icon-button`,
   messageTime: `${PREFIX}-message-time`,
   menuItem: `${PREFIX}-menu-item`,
   downloadButton: `${PREFIX}-download-button`,
@@ -101,6 +104,7 @@ export interface PrivateMessageThreadItemProps {
  |img|.SCPrivateMessageThreadItem-img|Styles applied to the img element.|
  |document|.SCPrivateMessageThreadItem-document|Styles applied to the message file element.|
  |video|.SCPrivateMessageThreadItem-video|Styles applied to the message video element.|
+ |other|.SCPrivateMessageThreadItem-other|Styles applied to other media type element.|
  |messageTime|.SCPrivateMessageThreadItem-message-time|Styles applied to the thread message time element.|
  |menuItem|.SCPrivateMessageThreadItem-menu-item|Styles applied to the thread message menu item element.|
  |dialogRoot|.SCPrivateMessageThreadItem-dialog-root|Styles applied to dialog root element.|
@@ -178,16 +182,22 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           section = (
             <Box className={classNames(classes.img, classes.video)}>
               <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
-              <IconButton onClick={() => setOpenDialog(true)}>
-                <Icon>play_circle_outline</Icon>
-              </IconButton>
+              {!isSupportedVideoFormat(m.file.filename) ? (
+                <Button onClick={() => handleDownload(m.file)} className={classes.iconButton}>
+                  <Icon>download</Icon>
+                </Button>
+              ) : (
+                <IconButton onClick={() => setOpenDialog(true)}>
+                  <Icon>play_circle_outline</Icon>
+                </IconButton>
+              )}
             </Box>
           );
           break;
         case type.startsWith(SCMessageFileType.DOCUMENT):
           section = (
-            <Box className={classes.document}>
-              <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
+            <Box className={m.file.filename.endsWith('.pdf') ? classes.document : classes.other}>
+              {m.file.filename.endsWith('.pdf') && <img src={m.file.thumbnail} loading="lazy" alt={'img'} />}
               <Button onClick={() => handleDownload(m.file)}>
                 <Icon>download</Icon>
                 <Typography>{m.file.filename}</Typography>
@@ -197,7 +207,16 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           );
           break;
         default:
-          section = <Icon>hide_image</Icon>;
+          // section = <Icon>hide_image</Icon>;
+          section = (
+            <Box className={classes.other}>
+              <Button onClick={() => handleDownload(m.file)}>
+                <Icon>download</Icon>
+                <Typography>{m.file.filename}</Typography>
+                <Typography>{bytesToSize(m.file.filesize)}</Typography>
+              </Button>
+            </Box>
+          );
           break;
       }
     }

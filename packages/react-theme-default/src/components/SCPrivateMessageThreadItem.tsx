@@ -56,6 +56,19 @@ const Component = {
               fontSize: '3rem'
             }
           }
+        },
+        '& .SCPrivateMessageThreadItem-icon-button': {
+          top: '40%',
+          [theme.breakpoints.up('sm')]: {
+            transform: 'translate(-70%, -40%)'
+          },
+          '& .MuiIcon-root': {
+            color: theme.palette.common.white,
+            fontSize: '3rem',
+            [theme.breakpoints.down('md')]: {
+              fontSize: '2rem'
+            }
+          }
         }
       },
       '& .SCPrivateMessageThreadItem-document': {
@@ -74,6 +87,17 @@ const Component = {
           color: 'rgba(255,255,255,0.9)',
           display: 'flex',
           borderRadius: 0,
+          '& .MuiTypography-root': {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            marginLeft: theme.spacing(0.5)
+          }
+        }
+      },
+      '& .SCPrivateMessageThreadItem-other': {
+        marginTop: theme.spacing(2),
+        '& .MuiButtonBase-root': {
           '& .MuiTypography-root': {
             whiteSpace: 'nowrap',
             overflow: 'hidden',

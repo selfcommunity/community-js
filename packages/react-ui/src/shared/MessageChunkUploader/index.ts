@@ -16,7 +16,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SCMessageChunkType} from '../../types/media';
 import {useIntl} from 'react-intl';
 import messages from '../../messages/common';
-import {createThumbnail, createVideoThumbnail, pdfToJpeg} from '../../utils/thumbnailCoverter';
+import {createThumbnail, createVideoThumbnail, createDocumentThumbnail, createAudioThumbnail} from '../../utils/thumbnailCoverter';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 
@@ -140,7 +140,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   };
 
   const generateImageThumbnail = (callBack, item, fileUrl) => {
-    callBack(fileUrl, item.file.name)
+    callBack(fileUrl, item)
       .then((file) => {
         uploadThumbnail(item, file);
       })
@@ -154,7 +154,11 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
   };
 
   useItemFinishListener((item) => {
-    const callBack = item.file.type.startsWith(SCMessageFileType.DOCUMENT) ? pdfToJpeg : createVideoThumbnail;
+    const callBack = item.file.type.startsWith(SCMessageFileType.VIDEO)
+      ? createVideoThumbnail
+      : item.file.type.startsWith(SCMessageFileType.AUDIO)
+      ? createAudioThumbnail
+      : createDocumentThumbnail;
     const formData = new FormData();
     formData.append('uuid', chunkStateRef.current.chunks[item.id].file_uuid);
     formData.append('filename', chunkStateRef.current.chunks[item.id].file.name);

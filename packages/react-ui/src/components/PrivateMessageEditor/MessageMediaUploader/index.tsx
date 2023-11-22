@@ -13,7 +13,7 @@ import Widget from '../../Widget';
 import MessageChunkUploader from '../../../shared/MessageChunkUploader';
 import UploadDropZone from '@rpldy/upload-drop-zone';
 import {FormattedMessage} from 'react-intl';
-import {pdfImagePlaceholder} from '../../../utils/thumbnailCoverter';
+import {documentPlaceholder, pdfImagePlaceholder} from '../../../utils/thumbnailCoverter';
 import classNames from 'classnames';
 import {bytesToSize} from '../../../utils/sizeCoverter';
 import {PREFIX} from '../constants';
@@ -151,17 +151,8 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     onTouchMove: mouseLeave
   });
 
-  const filterBySizeAndType = (file: File | any, index: number, files: File[]) => {
-    if (files.length > 1) {
-      return files.every(
-        (obj) =>
-          obj.type.startsWith(SCMessageFileType.IMAGE) || obj.type.startsWith(SCMessageFileType.VIDEO) || obj.type.startsWith(SCMessageFileType.PDF)
-      );
-    }
-    return (
-      file.size < MAX_FILE_SIZE &&
-      (file.type.startsWith(SCMessageFileType.IMAGE) || file.type.startsWith(SCMessageFileType.VIDEO) || file.type.startsWith(SCMessageFileType.PDF))
-    );
+  const filterBySizeAndType = (file: File) => {
+    return file.size < MAX_FILE_SIZE;
   };
 
   /**
@@ -220,7 +211,15 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
                       {'video_url' in item ? (
                         <video src={item.video_url} />
                       ) : (
-                        <img src={item.file.type.startsWith(SCMessageFileType.PDF) && !item.file_url ? pdfImagePlaceholder : item.file_url} />
+                        <img
+                          src={
+                            item.file.type.startsWith(SCMessageFileType.PDF) && !item.file_url
+                              ? pdfImagePlaceholder
+                              : !item.file_url
+                              ? documentPlaceholder
+                              : item.file_url
+                          }
+                        />
                       )}
                       <ImageListItemBar
                         className={classNames(classes.previewActions, {[classes.progress]: item.completed})}

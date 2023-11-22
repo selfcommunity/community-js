@@ -202,7 +202,9 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
         loading={(dataPortability && dataPortability.computing) || loading}
         disabled={
           !dataPortability ||
-          (dataPortability && (dataPortability.computing || differenceInHours(new Date(), parseISO(dataPortability.requested_at.toString())) < 24))
+          (dataPortability &&
+            (dataPortability.computing ||
+              (dataPortability.requested_at && differenceInHours(new Date(), parseISO(dataPortability.requested_at.toString())) < 24)))
         }
         loadingPosition="start"
         startIcon={<Icon>folder_open</Icon>}

@@ -147,7 +147,8 @@ export enum SCMessageFileType {
   DOCUMENT = 'application/',
   IMAGE = 'image/',
   VIDEO = 'video/',
-  PDF = 'application/pdf'
+  PDF = 'application/pdf',
+  AUDIO = 'audio/'
 }
 
 /**
