@@ -9,10 +9,12 @@ import { ReactSortable } from 'react-sortablejs';
 import DisplayComponent from './DisplayComponent';
 import { PREFIX } from './constants';
 import filter from './filter';
+import { MEDIA_TYPE_VIDEO } from '../../../constants/Media';
 
 const classes = {
   previewRoot: `${PREFIX}-preview-root`,
   media: `${PREFIX}-media`,
+  video: `${PREFIX}-media-video`,
   delete: `${PREFIX}-delete`
 };
 
@@ -43,7 +45,7 @@ const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: Re
     {medias.length > 0 && (
       <ReactSortable list={medias} setList={handleSort}>
         {medias.map((media) => (
-          <Box key={media.id} className={classes.media}>
+          <Box key={media.id} className={classNames(classes.media, { [classes.video]: media.embed.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO })}>
             <DisplayComponent medias={[media]} />
             <IconButton className={classes.delete} onClick={handleDelete(media.id)} size="small">
               <Icon>delete</Icon>
