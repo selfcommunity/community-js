@@ -59,6 +59,11 @@ const Component = {
           position: 'absolute',
           right: theme.spacing(2),
           top: theme.spacing(2)
+        },
+        '&.SCMediaLink-media-video .SCMediaLink-delete': {
+          background: theme.palette.common.white,
+          right: theme.spacing(1),
+          top: theme.spacing(1)
         }
       }
     }),

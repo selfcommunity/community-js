@@ -35,7 +35,7 @@ export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange' | '
    * @param value
    * @default empty object
    */
-  onClick?: (attribute: 'categories' | 'addressing') => void;
+  onClick?: (attribute: 'categories' | 'addressing' | 'location') => void;
 }
 
 export default (props: AttributesProps): JSX.Element => {
@@ -55,6 +55,12 @@ export default (props: AttributesProps): JSX.Element => {
   const handleClickTag = useCallback(() => {
     onClick && onClick('addressing');
   }, [onClick]);
+  const handleDeleteLocation = useCallback(() => {
+    onChange && onChange({...value, location: null})
+  }, [value, onChange]);
+  const handleClickLocation = useCallback(() => {
+    onClick && onClick('location');
+  }, [onClick]);
 
   return (
     <Root className={classNames(classes.root, className)}>
@@ -70,8 +76,8 @@ export default (props: AttributesProps): JSX.Element => {
         <Chip
           icon={<Icon>add_location_alt</Icon>}
           label={value?.location.location}
-          onDelete={() => null}
-          onClick={() => null}
+          onDelete={handleDeleteLocation}
+          onClick={handleClickLocation}
         />
       )}
     </Root>

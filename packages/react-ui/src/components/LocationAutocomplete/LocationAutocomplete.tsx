@@ -1,14 +1,14 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
+import React, { SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import {Autocomplete, AutocompleteProps} from '@mui/material';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import { Autocomplete, AutocompleteProps } from '@mui/material';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
 import { SCContributionLocation, SCLocalityType } from '@selfcommunity/types/src/index';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {useThemeProps} from '@mui/system';
+import { useThemeProps } from '@mui/system';
 
 const PREFIX = 'SCLocationAutocomplete';
 
@@ -136,7 +136,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
   // Handlers
 
   const handleChange = (event: SyntheticEvent, value: SCLocalityType) => {
-    setValue({ location: value.full_address, lat: value.lat, lon: value.lng });
+    setValue(value ? { location: value.full_address, lat: value.lat, lon: value.lng } : null);
     onChange && onChange(value);
   };
 
@@ -145,18 +145,23 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
   };
 
   // Render
+  const options = useMemo(() => {
+    if (!value || typeof value === 'string' || locations.find((loc: SCLocalityType) => value.lat === loc.lat && value.lon === loc.lng)) {
+      return locations;
+    }
+    return [...locations, {lat: value.lat, lng: value.lon, full_address: value.location}]
+  }, [value, locations])
 
   return (
     <Root
       className={classes.root}
-      options={locations || []}
+      options={options || []}
       // @ts-ignore
       getOptionLabel={(option: SCLocalityType | SCContributionLocation) => option?.full_address || option?.location || '' }
       filterOptions={(x) => x}
       autoComplete
       includeInputInList
-      filterSelectedOptions
-      value={value}
+      value={value || null}
       selectOnFocus
       handleHomeEndKeys
       disabled={disabled}
