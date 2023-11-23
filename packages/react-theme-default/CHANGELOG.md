@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.308](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.307...@selfcommunity/react-theme-default@0.1.0-alpha.308) (2023-11-22)
+
+
+### Bug Fixes
+
+* fixed account data portability, private message file upload(added all types). Asana issues: https://app.asana.com/0/1202638443591994/1205975745273237/f and https://app.asana.com/0/1202638443591994/1205975745273253/f ([a54fc0c](https://github.com/selfcommunity/community-js/commit/a54fc0c4e1a25776041414d1b6e141114eeb0653))
+
+
+
+
+
 # [0.1.0-alpha.307](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.306...@selfcommunity/react-theme-default@0.1.0-alpha.307) (2023-11-21)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
