@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.40...@selfcommunity/api-services@0.4.0-alpha.41) (2023-11-23)
+
+
+### Bug Fixes
+
+* fixed data portability endpoint ([587bcde](https://github.com/selfcommunity/community-js/commit/587bcde567a8422273987e5a5e5759f02f6357e6))
+
+
+
+
+
 # [0.4.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0-alpha.39...@selfcommunity/api-services@0.4.0-alpha.40) (2023-11-22)
 
 **Note:** Version bump only for package @selfcommunity/api-services
