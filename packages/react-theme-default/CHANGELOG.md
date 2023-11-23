@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.311](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.310...@selfcommunity/react-theme-default@0.1.0-alpha.311) (2023-11-23)
+
+
+### Bug Fixes
+
+* Fix delete button appearence on media link ([8390ab1](https://github.com/selfcommunity/community-js/commit/8390ab1eaf53449dacd1df3b172b4e604e493fbd))
+
+
+
+
+
 # [0.1.0-alpha.310](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.309...@selfcommunity/react-theme-default@0.1.0-alpha.310) (2023-11-23)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

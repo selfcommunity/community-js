@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.358](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.357...@selfcommunity/react-ui@0.7.0-alpha.358) (2023-11-23)
+
+
+### Bug Fixes
+
+* Fix composer location change ([225769b](https://github.com/selfcommunity/community-js/commit/225769bf9060687e9bccf70c31c74b16b187a3ae))
+* Fix delete button appearence on media link ([8390ab1](https://github.com/selfcommunity/community-js/commit/8390ab1eaf53449dacd1df3b172b4e604e493fbd))
+
+
+
+
+
 # [0.7.0-alpha.357](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.356...@selfcommunity/react-ui@0.7.0-alpha.357) (2023-11-23)
 
 
