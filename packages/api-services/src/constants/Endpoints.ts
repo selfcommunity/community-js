@@ -1109,7 +1109,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   DataPortabilityDownload: {
-    url: urlReplacer('/api/v2/udp/download'),
+    url: urlReplacer('/api/v2/udp/download/'),
     method: 'GET'
   },
   /**

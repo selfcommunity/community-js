@@ -118,7 +118,6 @@ export default function ContributionFollowNotification(props: ContributionFollow
           <React.Fragment>
             {template === SCNotificationObjectTemplateType.SNIPPET && (
               <>
-                :{' '}
                 <Link
                   to={scRoutingContext.url(
                     SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
