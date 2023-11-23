@@ -495,8 +495,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       case 'addressing':
         handleAddAudienceLayer();
         break;
+      case 'location':
+        handleAddLocationLayer();
+        break;
     }
-  }, [handleAddCategoryLayer, handleAddAudienceLayer]);
+  }, [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer]);
 
   const handleSubmit = useCallback((event: SyntheticEvent): void => {
     event.preventDefault();
@@ -698,7 +701,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
             {addressing === null || addressing.length === 0 ? <Icon>public</Icon> : <Icon>label</Icon>}
           </IconButton>
-          {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED] && (
+          {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>
               <Icon>add_location_alt</Icon>
             </IconButton>
