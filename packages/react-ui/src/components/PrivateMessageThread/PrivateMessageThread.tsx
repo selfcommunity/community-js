@@ -196,7 +196,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // HOOKS
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const {scUser} = useSCFetchUser({id: isNumber ? userObj : null, userObj});
+  const {scUser} = useSCFetchUser({id: userObj, userObj});
 
   const messagesEndRef = useRef(null);
 
@@ -358,7 +358,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             }
             setSingleMessageThread(false);
           } else {
-            if (role || _isFollower) {
+            if (role || _isFollower || UserUtils.getUserRole(scUser)) {
               setSingleMessageThread(true);
               setRecipients(_userObjId);
               onSingleMessageOpen(true);
@@ -600,7 +600,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         <PrivateMessageEditor
           className={classes.editor}
           send={handleSend}
-          autoHide={!isFollower && !role}
+          autoHide={!isFollower && (!role || !UserUtils.getUserRole(scUser))}
           autoHideDeletion={receiver?.deleted || scUser?.deleted}
           onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
           error={error}

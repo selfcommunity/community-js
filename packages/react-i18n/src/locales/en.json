@@ -32,6 +32,7 @@
   "templates.usersList.followings" : "Following",
   "templates.usersList.noMoreResults": "No more results",
   "ui.accountRecover.email.error.exist": "This email address is not associated with any account. Check that it is the one used to register",
+  "ui.accountRecover.email.error.invalid": "Enter a valid email address",
   "ui.accountDataPortability.generatedInfo": "You have requested the generation of the data portability file on {date} at {time}. You can request the file creation at maximum every 24h.",
   "ui.accountDataPortability.info": "<ul><li>Click on \"Create file\" to start.</li><li>Preparing the file may take several hours, but you can exit the screen while you wait.</li><li>We will send you an email as soon as your file is ready to download.</li><li>To make sure you can download your file, please do not delete your account until you receive an email notifying you that the file is ready.</li></ul>",
   "ui.accountDataPortability.title": "{username}, if you want to download a copy of your information, here's how:",

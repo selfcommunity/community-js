@@ -352,7 +352,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   }
 
   let actionItems = [];
-  if (privateMessagingEnabled && (isConnection || (scUserContext.user && scUserContext.user.role !== null) || isStaff)) {
+  if (privateMessagingEnabled && !isMe && (isConnection || (scUserContext.user && scUserContext.user.role !== null) || isStaff)) {
     actionItems = [
       {
         label: <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />,

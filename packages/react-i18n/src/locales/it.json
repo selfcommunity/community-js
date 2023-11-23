@@ -32,6 +32,7 @@
   "templates.usersList.followings" : "Seguiti",
   "templates.usersList.noMoreResults": "Nessun altro risultato",
   "ui.accountRecover.email.error.exist": "Questo indirizzo email non è associato ad alcun account.Verifica sia quello usato per registrarti",
+  "ui.accountRecover.email.error.invalid": "Inserisci un indirizzo email valido",
   "ui.accountDataPortability.generatedInfo": "Hai richiesto la generazione del file di portabilità dei dati il {date} alle {time}. Puoi richiedere la creazione del file al massimo ogni 24h.",
   "ui.accountDataPortability.info": "<ul><li>Clicca su \"Crea il file\" per iniziare.</li><li>La preparazione del file potrebbe richiedere diverse ore, ma puoi uscire dalla schermata durante l'attesa.</li><li>Ti invieremo un'email non appena il file sarà pronto per il download.</li><li>Per assicurarti di riuscire a scaricare il file, non eliminare il tuo account finché non avrai ricevuto un'e-mail in cui ti comunichiamo che il file è pronto.</li></ul>",
   "ui.accountDataPortability.title": "{username}, se vuoi scaricare una copia delle tue informazioni, ecco come fare:",
