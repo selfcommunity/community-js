@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.60...@selfcommunity/react-i18n@0.5.0-alpha.61) (2023-11-23)
+
+
+### Bug Fixes
+
+* fixed asana issue: ([fca7f5c](https://github.com/selfcommunity/community-js/commit/fca7f5c759baf69831651517839adc10d395524f))
+
+
+
+
+
 # [0.5.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.59...@selfcommunity/react-i18n@0.5.0-alpha.60) (2023-11-16)
 
 
