@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {Autocomplete, AutocompleteProps} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCContributionLocation, SCLocalityType} from '@selfcommunity/types/src/index';
-import {styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import {useThemeProps} from '@mui/system';
@@ -146,11 +146,11 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
 
   // Render
   const options = useMemo(() => {
-    if (!value || typeof value === 'string' || locations.find((loc: SCLocalityType) => value.lat === loc.lat && value.lon === loc.lng)) {
+    if (!value || typeof value === 'string' || locations.find((loc: SCLocalityType) => value.lat === loc.lat && value.lng === loc.lng)) {
       return locations;
     }
-    return [...locations, {lat: value.lat, lng: value.lon, full_address: value.location}]
-  }, [value, locations])
+    return [...locations, {lat: value.lat, lng: value.lng, full_address: value.location}];
+  }, [value, locations]);
 
   return (
     <Root
