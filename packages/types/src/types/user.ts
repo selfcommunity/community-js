@@ -231,6 +231,11 @@ export interface SCUserType {
   deleted_at?: Date;
 
   /**
+   * If the logged user is able to send a private message to the requested user (visible only in the get a specific user api response).
+   */
+  can_send_pm_to?: boolean;
+
+  /**
    * Custom user metadata fields
    */
   [p:string]: any;

@@ -129,7 +129,8 @@ const Component = {
         }
       },
       '& .SCNotification-follow-text': {
-        color: theme.palette.text.primary
+        color: theme.palette.text.primary,
+        fontWeight: theme.typography.fontWeightMedium
       },
       '& .SCNotification-contribution-text': {
         '&:hover': {

@@ -4,7 +4,7 @@ import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import {Autocomplete, AutocompleteProps} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import { SCContributionLocation, SCLocalityType } from '@selfcommunity/types/src/index';
+import {SCContributionLocation, SCLocalityType} from '@selfcommunity/types/src/index';
 import {styled} from '@mui/material/styles';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -136,7 +136,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
   // Handlers
 
   const handleChange = (event: SyntheticEvent, value: SCLocalityType) => {
-    setValue({ location: value.full_address, lat: value.lat, lon: value.lng });
+    setValue({location: value.full_address, lat: value.lat, lng: value.lng});
     onChange && onChange(value);
   };
 
@@ -151,7 +151,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
       className={classes.root}
       options={locations || []}
       // @ts-ignore
-      getOptionLabel={(option: SCLocalityType | SCContributionLocation) => option?.full_address || option?.location || '' }
+      getOptionLabel={(option: SCLocalityType | SCContributionLocation) => option?.full_address || option?.location || ''}
       filterOptions={(x) => x}
       autoComplete
       includeInputInList
@@ -163,7 +163,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
       noOptionsText={<FormattedMessage id="ui.locationAutocomplete.empty" defaultMessage="ui.locationAutocomplete.empty" />}
       onChange={handleChange}
       onInputChange={handleSearch}
-      isOptionEqualToValue={(option: SCLocalityType, value: SCContributionLocation) => value.lat === option.lat && value.lon === option.lng}
+      isOptionEqualToValue={(option: SCLocalityType, value: SCContributionLocation) => value.lat === option.lat && value.lng === option.lng}
       renderInput={(params) => {
         return (
           <TextField

@@ -390,7 +390,7 @@
   "ui.notification.contribution.newPostOrStatus":  "ha scritto un nuovo {contribution}",
   "ui.notification.contribution.snippet.discussion":  "ha scritto un nuovo articolo:",
   "ui.notification.contribution.snippet.newPostOrStatus":  "ha scritto un nuovo {contribution}:",
-  "ui.notification.contributionFollow.follow": "sta seguendo il tuo contributo",
+  "ui.notification.contributionFollow.follow": "sta seguendo il tuo contributo:",
   "ui.notification.deletedFor.deletedForAdvertising": "Il tuo contributo è stato rimosso perché la Community lo ha segnalato come \"spam\". Vedi il regolamento per ulteriori informazioni.",
   "ui.notification.deletedFor.deletedForAdvertisingSnippet": "Contributo rimosso perché segnalato come \"spam\"",
   "ui.notification.deletedFor.deletedForAggressive": "Il tuo contributo è stato rimosso perché la Community lo ha segnalato come \"spam\". Vedi il regolamento per ulteriori informazioni.",
