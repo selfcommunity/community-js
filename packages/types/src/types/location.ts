@@ -16,7 +16,7 @@ export interface SCContributionLocation {
   /**
    * Longitude
    */
-  lon?: number;
+  lng?: number;
 }
 
 /**

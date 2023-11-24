@@ -390,7 +390,7 @@
   "ui.notification.contribution.newPostOrStatus":  "created a new {contribution}",
   "ui.notification.contribution.snippet.discussion":  "created a new article:",
   "ui.notification.contribution.snippet.newPostOrStatus":  "created a new {contribution}:",
-  "ui.notification.contributionFollow.follow": "is following your contribution",
+  "ui.notification.contributionFollow.follow": "is following your contribution:",
   "ui.notification.deletedFor.deletedForAdvertising": "A contribution of yours has been removed because several users have flagged it as \"spam\". View the website rules for more info.",
   "ui.notification.deletedFor.deletedForAdvertisingSnippet": "Contribution removed because flagged it as \"spam\"",
   "ui.notification.deletedFor.deletedForAggressive": "A contribution of yours has been removed because several users have flagged it as \"aggressive\". View the website rules for more info.",

@@ -2,15 +2,10 @@ import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} fr
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
-  SCPreferences,
-  SCPreferencesContextType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
-  useSCFetchUser,
-  useSCPreferences,
-  SCConnectionsManagerType,
-  SCFollowersManagerType
+  useSCFetchUser
 } from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
@@ -146,25 +141,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const role = UserUtils.getUserRole(scUserContext['user']);
-  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const followEnabled = useMemo(
-    () =>
-      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
-    [scPreferencesContext.preferences]
-  );
-  const manager: SCFollowersManagerType | SCConnectionsManagerType = followEnabled
-    ? scUserContext.managers.followers
-    : scUserContext.managers.connections;
-  function checkFollowerOrConnection(user) {
-    if ('isFollower' in manager) {
-      return manager.isFollower(user);
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    return manager.status(user);
-  }
 
   // STATE
   const [value, setValue] = useState<string>('');
@@ -174,7 +150,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [loading, setLoading] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState({});
   const [followers, setFollowers] = useState<any[]>([]);
-  const [isFollower, setIsFollower] = useState<boolean>(false);
   const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const [singleMessageUser, setSingleMessageUser] = useState(null);
@@ -344,7 +319,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   function fetchThread() {
     if (userObj && typeof userObj !== 'string') {
       setLoadingMessageObjs(true);
-      const _isFollower = (scUser && checkFollowerOrConnection(scUser)) || (scUser && scUser.community_badge);
       const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
       PrivateMessageService.getAThread({user: _userObjId, limit: 10})
         .then((res: SCPaginatedResponse<SCPrivateMessageThreadType>) => {
@@ -358,7 +332,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
             }
             setSingleMessageThread(false);
           } else {
-            if (role || _isFollower || UserUtils.getUserRole(scUser)) {
+            if (scUser?.can_send_pm_to) {
               setSingleMessageThread(true);
               setRecipients(_userObjId);
               onSingleMessageOpen(true);
@@ -374,6 +348,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           console.log(error);
           Logger.error(SCOPE_SC_UI, {error});
         });
+    } else {
+      setSingleMessageUser(scUser);
     }
   }
 
@@ -499,15 +475,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   }, [value]);
 
   /**
-   * Checks is thread receiver is a user follower
-   */
-  useEffect(() => {
-    if (receiver) {
-      !receiver.community_badge && scUser ? setIsFollower(checkFollowerOrConnection(scUser)) : setIsFollower(true);
-    }
-  });
-
-  /**
    * On mount, if obj, fetches thread
    */
   useEffect(() => {
@@ -600,7 +567,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         <PrivateMessageEditor
           className={classes.editor}
           send={handleSend}
-          autoHide={!isFollower && (!role || !UserUtils.getUserRole(scUser))}
+          autoHide={!scUser?.can_send_pm_to}
           autoHideDeletion={receiver?.deleted || scUser?.deleted}
           onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
           error={error}

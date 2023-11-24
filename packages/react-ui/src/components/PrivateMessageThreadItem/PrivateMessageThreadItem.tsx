@@ -168,6 +168,15 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
       return null;
     }
     let section = null;
+    const defaultSection = (
+      <Box className={classes.other}>
+        <Button onClick={() => handleDownload(m.file)}>
+          <Icon>download</Icon>
+          <Typography>{m.file.filename}</Typography>
+          <Typography>{bytesToSize(m.file.filesize)}</Typography>
+        </Button>
+      </Box>
+    );
     if (m.file) {
       let type = m.file.mimetype;
       switch (true) {
@@ -179,20 +188,18 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           );
           break;
         case type.startsWith(SCMessageFileType.VIDEO):
-          section = (
-            <Box className={classNames(classes.img, classes.video)}>
-              <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
-              {!isSupportedVideoFormat(m.file.filename) ? (
-                <Button onClick={() => handleDownload(m.file)} className={classes.iconButton}>
-                  <Icon>download</Icon>
-                </Button>
-              ) : (
+          if (!isSupportedVideoFormat(m.file.filename)) {
+            section = defaultSection;
+          } else {
+            section = (
+              <Box className={classNames(classes.img, classes.video)}>
+                <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
                 <IconButton onClick={() => setOpenDialog(true)}>
                   <Icon>play_circle_outline</Icon>
                 </IconButton>
-              )}
-            </Box>
-          );
+              </Box>
+            );
+          }
           break;
         case type.startsWith(SCMessageFileType.DOCUMENT):
           section = (
@@ -208,15 +215,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           break;
         default:
           // section = <Icon>hide_image</Icon>;
-          section = (
-            <Box className={classes.other}>
-              <Button onClick={() => handleDownload(m.file)}>
-                <Icon>download</Icon>
-                <Typography>{m.file.filename}</Typography>
-                <Typography>{bytesToSize(m.file.filesize)}</Typography>
-              </Button>
-            </Box>
-          );
+          section = defaultSection;
           break;
       }
     }

@@ -301,7 +301,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     [scPreferencesContext.preferences]
   );
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
-  const isStaff = useMemo(() => user && user.community_badge, [user]);
+
   const _widgets = useMemo(() => {
     if (widgets !== null) {
       return widgets;
@@ -352,7 +352,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
   }
 
   let actionItems = [];
-  if (privateMessagingEnabled && !isMe && (isConnection || (scUserContext.user && scUserContext.user.role !== null) || isStaff)) {
+  if (privateMessagingEnabled && !isMe && user && user.can_send_pm_to) {
     actionItems = [
       {
         label: <FormattedMessage defaultMessage="templates.userProfile.send.pm" id="templates.userProfile.send.pm" />,
