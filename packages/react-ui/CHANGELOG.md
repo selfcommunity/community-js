@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.359](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.358...@selfcommunity/react-ui@0.7.0-alpha.359) (2023-11-24)
+
+
+### Bug Fixes
+
+* fixed feed object location param(lon->lng) ([f61bc97](https://github.com/selfcommunity/community-js/commit/f61bc97c50b1f0c30a8b1f09b4f42378ea2fb6be))
+* fixed feed object location param(lon->lng). Asana issue: https://app.asana.com/0/1202638443591994/1206016441538934/f and https://app.asana.com/0/1202638443591994/1206016441538977/f issue. ([12dcdbf](https://github.com/selfcommunity/community-js/commit/12dcdbf03b6a6e3b9e424f6f816cd0c2b044916a))
+
+
+
+
+
 # [0.7.0-alpha.358](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.357...@selfcommunity/react-ui@0.7.0-alpha.358) (2023-11-23)
 
 

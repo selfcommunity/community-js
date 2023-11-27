@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.17...@selfcommunity/types@0.5.0-alpha.18) (2023-11-24)
+
+
+### Bug Fixes
+
+* fixed feed object location param(lon->lng). Asana issue: https://app.asana.com/0/1202638443591994/1206016441538934/f and https://app.asana.com/0/1202638443591994/1206016441538977/f issue. ([12dcdbf](https://github.com/selfcommunity/community-js/commit/12dcdbf03b6a6e3b9e424f6f816cd0c2b044916a))
+
+
+
+
+
 # [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.16...@selfcommunity/types@0.5.0-alpha.17) (2023-11-22)
 
 
