@@ -1,12 +1,7 @@
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {
-  SCUserContext,
-  SCUserContextType,
-  UserUtils,
-  useSCFetchUser
-} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
@@ -348,8 +343,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           console.log(error);
           Logger.error(SCOPE_SC_UI, {error});
         });
-    } else {
-      setSingleMessageUser(scUser);
     }
   }
 
@@ -486,7 +479,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     } else {
       reset();
     }
-  }, [userObj, authUserId]);
+  }, [userObj, authUserId, scUser]);
 
   /**
    * Notification subscriber
