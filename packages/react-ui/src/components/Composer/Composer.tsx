@@ -1,13 +1,4 @@
-import React, {
-  forwardRef,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import React, {forwardRef, SyntheticEvent, useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {
   SCCategoryType,
   SCContributionLocation,
@@ -18,9 +9,9 @@ import {
   SCFeedStatusType,
   SCMediaType,
   SCPollType,
-  SCTagType,
+  SCTagType
 } from '@selfcommunity/types';
-import { Endpoints, formatHttpErrorCode, http, HttpResponse } from '@selfcommunity/api-services';
+import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -28,9 +19,9 @@ import {
   SCUserContextType,
   UserUtils,
   useSCPreferences,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import {
   Alert,
@@ -45,31 +36,31 @@ import {
   IconButton,
   Slide,
   Theme,
-  useMediaQuery,
+  useMediaQuery
 } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
-import { COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL } from '../../constants/Composer';
-import { MEDIA_TYPE_SHARE } from '../../constants/Media';
+import {styled, useTheme} from '@mui/material/styles';
+import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL} from '../../constants/Composer';
+import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import AudienceLayer from './Layer/AudienceLayer';
-import { iOS, random, stripHtml } from '@selfcommunity/utils';
+import {iOS, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { TransitionProps } from '@mui/material/transitions';
-import { EditorProps } from '../Editor';
-import { SCMediaObjectType } from '../../types/media';
+import {TransitionProps} from '@mui/material/transitions';
+import {EditorProps} from '../Editor';
+import {SCMediaObjectType} from '../../types/media';
 import ContentPoll from './Content/ContentPoll';
-import { useSnackbar } from 'notistack';
-import { useThemeProps } from '@mui/system';
-import { extractHashtags } from '../../utils/editor';
+import {useSnackbar} from 'notistack';
+import {useThemeProps} from '@mui/system';
+import {extractHashtags} from '../../utils/editor';
 import TypeSwitchButtonGroup from './TypeSwitchButtonGroup';
 import ContentPost from './Content/ContentPost';
 import CategoryLayer from './Layer/CategoryLayer';
-import { ComposerContentType, ComposerLayerType } from '../../types/composer';
+import {ComposerContentType, ComposerLayerType} from '../../types/composer';
 import LocationLayer from './Layer/LocationLayer';
 import ContentDiscussion from './Content/ContentDiscussion';
-import { File, Link, Share } from '../../shared/Media';
+import {File, Link, Share} from '../../shared/Media';
 import Attributes from './Attributes';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
 
@@ -241,7 +232,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   } = props;
 
   // Context
-  const { preferences, features }: SCPreferencesContextType = useSCPreferences();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -302,10 +293,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     return poll && poll.title.length > 0 && poll.title.length < COMPOSER_TITLE_MAX_LENGTH && poll.choices.length >= COMPOSER_POLL_MIN_CHOICES;
   }, [poll]);
   const canSubmit = useMemo(() => {
-    return !isLoading && (
-      (type === SCContributionType.DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
-      (type === SCContributionType.POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll)) ||
-      (type === COMPOSER_TYPE_POLL && hasPoll)
+    return (
+      !isLoading &&
+      ((type === SCContributionType.DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
+        (type === SCContributionType.POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll)) ||
+        (type === COMPOSER_TYPE_POLL && hasPoll))
     );
   }, [isLoading, type, title, html, medias, hasPoll]);
   const isIOS = useMemo(() => iOS(), []);
@@ -355,8 +347,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     const handleBlur = () => {
       dialogRef.current.focus();
     };
-    dialogRef.current.addEventListener("touchstart", handleBlur);
-    return () => dialogRef.current?.removeEventListener("touchstart", handleBlur);
+    dialogRef.current.addEventListener('touchstart', handleBlur);
+    return () => dialogRef.current?.removeEventListener('touchstart', handleBlur);
   }, [dialogRef.current, isIOS]);
 
   /* Handlers */
@@ -403,49 +395,61 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   }, []);
 
   const handleChangeCategories = useCallback((value: SCCategoryType[]) => {
-    dispatch({ type: 'categories', value });
+    dispatch({type: 'categories', value});
     setLayer(null);
   }, []);
 
-  const handleAddCategoryLayer = useCallback(() => handleAddLayer({
-    name: 'category',
-    Component: CategoryLayer,
-    ComponentProps: {
-      onClose: handleRemoveLayer,
-      onSave: handleChangeCategories,
-      defaultValue: categories
-    }
-  }), [handleAddLayer, handleRemoveLayer, handleChangeCategories, categories]);
+  const handleAddCategoryLayer = useCallback(
+    () =>
+      handleAddLayer({
+        name: 'category',
+        Component: CategoryLayer,
+        ComponentProps: {
+          onClose: handleRemoveLayer,
+          onSave: handleChangeCategories,
+          defaultValue: categories
+        }
+      }),
+    [handleAddLayer, handleRemoveLayer, handleChangeCategories, categories]
+  );
 
   const handleChangeAudience = useCallback((value: SCTagType[] | null) => {
-    dispatch({ type: 'addressing', value });
+    dispatch({type: 'addressing', value});
     setLayer(null);
   }, []);
 
-  const handleAddAudienceLayer = useCallback(() => handleAddLayer({
-    name: 'audience',
-    Component: AudienceLayer,
-    ComponentProps: {
-      onClose: handleRemoveLayer,
-      onSave: handleChangeAudience,
-      defaultValue: addressing
-    }
-  }), [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing]);
+  const handleAddAudienceLayer = useCallback(
+    () =>
+      handleAddLayer({
+        name: 'audience',
+        Component: AudienceLayer,
+        ComponentProps: {
+          onClose: handleRemoveLayer,
+          onSave: handleChangeAudience,
+          defaultValue: addressing
+        }
+      }),
+    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing]
+  );
 
   const handleChangeLocation = useCallback((value: SCContributionLocation | null) => {
-    dispatch({ type: 'location', value });
+    dispatch({type: 'location', value});
     setLayer(null);
   }, []);
 
-  const handleAddLocationLayer = useCallback(() => handleAddLayer({
-    name: 'location',
-    Component: LocationLayer,
-    ComponentProps: {
-      onClose: handleRemoveLayer,
-      onSave: handleChangeLocation,
-      defaultValue: location
-    }
-  }), [handleAddLayer, handleRemoveLayer, handleChangeLocation, location]);
+  const handleAddLocationLayer = useCallback(
+    () =>
+      handleAddLayer({
+        name: 'location',
+        Component: LocationLayer,
+        ComponentProps: {
+          onClose: handleRemoveLayer,
+          onSave: handleChangeLocation,
+          defaultValue: location
+        }
+      }),
+    [handleAddLayer, handleRemoveLayer, handleChangeLocation, location]
+  );
 
   const handleChangeMedias = useCallback((value: SCMediaType[] | null) => {
     const _medias = [...value];
@@ -466,19 +470,22 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     mediasRef.current.medias = _medias;
   }, []);
 
-  const handleMediaTriggerClick = useCallback((mediaObjectType: SCMediaObjectType) =>(event: React.MouseEvent<HTMLButtonElement>) => {
-    if (mediaObjectType.layerComponent) {
-      handleAddLayer({
-        name: mediaObjectType.name,
-        Component: mediaObjectType.layerComponent,
-        ComponentProps: {
-          onClose: handleRemoveLayer,
-          onSave: handleChangeMedias,
-          defaultValue: medias
-        }
-      })
-    }
-  }, [handleAddLayer, handleRemoveLayer, handleChangeMedias, medias]);
+  const handleMediaTriggerClick = useCallback(
+    (mediaObjectType: SCMediaObjectType) => (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (mediaObjectType.layerComponent) {
+        handleAddLayer({
+          name: mediaObjectType.name,
+          Component: mediaObjectType.layerComponent,
+          ComponentProps: {
+            onClose: handleRemoveLayer,
+            onSave: handleChangeMedias,
+            defaultValue: medias
+          }
+        });
+      }
+    },
+    [handleAddLayer, handleRemoveLayer, handleChangeMedias, medias]
+  );
 
   const handleChangeAttributes = useCallback((content: Omit<ComposerContentType, 'title' | 'html'>): void => {
     dispatch({
@@ -487,102 +494,129 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     });
   }, []);
 
-  const handleClickAttributes = useCallback((attr: string): void => {
-    switch (attr) {
-      case 'categories':
-        handleAddCategoryLayer();
-        break;
-      case 'addressing':
-        handleAddAudienceLayer();
-        break;
-      case 'location':
-        handleAddLocationLayer();
-        break;
-    }
-  }, [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer]);
+  const handleClickAttributes = useCallback(
+    (attr: string): void => {
+      switch (attr) {
+        case 'categories':
+          handleAddCategoryLayer();
+          break;
+        case 'addressing':
+          handleAddAudienceLayer();
+          break;
+        case 'location':
+          handleAddLocationLayer();
+          break;
+      }
+    },
+    [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer]
+  );
 
-  const handleSubmit = useCallback((event: SyntheticEvent): void => {
-    event.preventDefault();
-    event.stopPropagation();
-    if (UserUtils.isBlocked(scUserContext.user)) {
-      // deny submit action if authenticated user is blocked
-      enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning',
-        autoHideDuration: 3000
-      });
-      return;
-    }
-    // Extract hashtags and add to categories
-    const _categories: string[] = [...categories.map((c: SCCategoryType) => c.id), ...extractHashtags(html)];
-    const data: any = {
-      title,
-      text: html,
-      medias: medias.map((m) => m.id),
-      categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
-    };
-    if ((preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user)) && hasPoll) {
-      data.poll = poll;
-    }
-    if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && location) {
-      data.location = location;
-    }
-    if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
-      data.addressing = addressing.map((t) => t.id);
-    }
-    setIsSubmitting(true);
+  const handleSubmit = useCallback(
+    (event: SyntheticEvent): void => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        // deny submit action if authenticated user is blocked
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning',
+          autoHideDuration: 3000
+        });
+        return;
+      }
+      // Extract hashtags and add to categories
+      const _categories: string[] = [...categories.map((c: SCCategoryType) => c.id), ...extractHashtags(html)];
+      const data: any = {
+        title,
+        text: html,
+        medias: medias.map((m) => m.id),
+        categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
+      };
+      if ((preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user)) && hasPoll) {
+        data.poll = poll;
+      }
+      if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && location) {
+        data.location = location;
+      }
+      if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
+        data.addressing = addressing.map((t) => t.id);
+      }
+      setIsSubmitting(true);
 
-    // Finding right url
-    const _type = type === COMPOSER_TYPE_POLL ? SCContributionType.POST : type;
-    let url = Endpoints.Composer.url({type: _type});
-    let method = Endpoints.Composer.method;
-    if (editMode) {
-      url = Endpoints.ComposerEdit.url({type: feedObjectType ? feedObjectType : _type, id});
-      method = Endpoints.ComposerEdit.method;
-    }
+      // Finding right url
+      const _type = type === COMPOSER_TYPE_POLL ? SCContributionType.POST : type;
+      let url = Endpoints.Composer.url({type: _type});
+      let method = Endpoints.Composer.method;
+      if (editMode) {
+        url = Endpoints.ComposerEdit.url({type: feedObjectType ? feedObjectType : _type, id});
+        method = Endpoints.ComposerEdit.method;
+      }
 
-    // Perform request
-    http
-      .request({
-        url,
-        method,
-        data
-      })
-      .then((res: HttpResponse<any>) => {
-        onSuccess(res.data);
-        if (unloadRef.current) {
-          window.onbeforeunload = null;
-        }
+      // Perform request
+      http
+        .request({
+          url,
+          method,
+          data
+        })
+        .then((res: HttpResponse<any>) => {
+          onSuccess(res.data);
+          if (unloadRef.current) {
+            window.onbeforeunload = null;
+          }
+          dispatch({type: 'reset'});
+        })
+        .catch((error) => {
+          dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
+        })
+        .then(() => setIsSubmitting(false));
+    },
+    [scUserContext.user, feedObjectType, id, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]
+  );
+
+  const handleClose = useCallback(
+    (event: SyntheticEvent, reason?: string): void => {
+      if (unloadRef.current) {
+        window.onbeforeunload = null;
+      }
+      if (reason && canSubmit) {
+        handleAddLayer({
+          name: 'close',
+          Component: CloseLayer,
+          ComponentProps: {
+            onClose: handleRemoveLayer,
+            onSave: () => {
+              onClose && onClose(event);
+              setLayer(null);
+              dispatch({type: 'reset'});
+            }
+          }
+        });
+      } else {
+        onClose && onClose(event);
+        setLayer(null);
         dispatch({type: 'reset'});
-      })
-      .catch((error) => {
-        dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
-      })
-      .then(() => setIsSubmitting(false));
-  }, [scUserContext.user, feedObjectType, id, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]);
+      }
+    },
+    [onClose, canSubmit, handleRemoveLayer]
+  );
 
-  const handleClose = useCallback((event: SyntheticEvent): void => {
-    if (unloadRef.current) {
-      window.onbeforeunload = null;
-    }
-    onClose && onClose(event);
-    setLayer(null);
-    dispatch({type: 'reset'});
-  }, [onClose]);
-
-  const handleClosePrompt = useCallback((event: SyntheticEvent): void => {
-    if (canSubmit) {
-      handleAddLayer({
-        name: 'close',
-        Component: CloseLayer,
-        ComponentProps: {
-          onClose: handleRemoveLayer,
-          onSave: handleClose
-        }
-      })
-    } else {
-      handleClose(event);
-    }
-  }, [canSubmit, handleAddLayer, handleRemoveLayer, handleClose]);
+  const handleClosePrompt = useCallback(
+    (event: SyntheticEvent): void => {
+      if (canSubmit) {
+        handleAddLayer({
+          name: 'close',
+          Component: CloseLayer,
+          ComponentProps: {
+            onClose: handleRemoveLayer,
+            onSave: handleClose
+          }
+        });
+      } else {
+        handleClose(event);
+      }
+    },
+    [canSubmit, handleAddLayer, handleRemoveLayer, handleClose]
+  );
 
   // RENDER
   const hasMediaShare = useMemo(() => medias.findIndex((m) => m.type === MEDIA_TYPE_SHARE) !== -1, [medias]);
@@ -601,33 +635,45 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
     switch (type) {
       case COMPOSER_TYPE_POLL:
-        return <ContentPoll key={key} onChange={handleChangePoll} value={{html, categories, addressing, medias, poll, location}} error={pollError} disabled={isSubmitting} />;
+        return (
+          <ContentPoll
+            key={key}
+            onChange={handleChangePoll}
+            value={{html, categories, addressing, medias, poll, location}}
+            error={pollError}
+            disabled={isSubmitting}
+          />
+        );
       case SCContributionType.DISCUSSION:
-        return <ContentDiscussion
-          key={key}
-          value={{title, html, categories, addressing, medias, poll, location}}
-          error={{titleError, error}}
-          onChange={handleChangeDiscussion}
-          disabled={isSubmitting}
-          EditorProps={{
-            toolbar: true,
-            uploadImage: true,
-            ...EditorProps
-          }}
-        />;
+        return (
+          <ContentDiscussion
+            key={key}
+            value={{title, html, categories, addressing, medias, poll, location}}
+            error={{titleError, error}}
+            onChange={handleChangeDiscussion}
+            disabled={isSubmitting}
+            EditorProps={{
+              toolbar: true,
+              uploadImage: true,
+              ...EditorProps
+            }}
+          />
+        );
       default:
-        return <ContentPost
-          key={key}
-          value={{html, categories, addressing, medias, poll, location}}
-          error={{error}}
-          onChange={handleChangePost}
-          disabled={isSubmitting}
-          EditorProps={{
-            toolbar: false,
-            uploadImage: false,
-            ...EditorProps
-          }}
-        />;
+        return (
+          <ContentPost
+            key={key}
+            value={{html, categories, addressing, medias, poll, location}}
+            error={{error}}
+            onChange={handleChangePost}
+            disabled={isSubmitting}
+            EditorProps={{
+              toolbar: false,
+              uploadImage: false,
+              ...EditorProps
+            }}
+          />
+        );
     }
   }, [key, type, title, html, categories, addressing, medias, poll, pollError, location, error, handleChangePoll, handleChangePost, isSubmitting]);
 
@@ -645,8 +691,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       className={classNames(classes.root, {[classes.ios]: isIOS})}
       scroll="body"
       fullScreen={fullScreen}
-      tabIndex={-1}
-      >
+      tabIndex={-1}>
       <form onSubmit={handleSubmit} method="post">
         <DialogTitle className={classes.title}>
           <IconButton onClick={handleClosePrompt}>
@@ -657,33 +702,31 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           </LoadingButton>
         </DialogTitle>
         <DialogContent className={classes.content}>
-          <Attributes value={{categories, addressing, location}} className={classes.attributes} onChange={handleChangeAttributes} onClick={handleClickAttributes}/>
+          <Attributes
+            value={{categories, addressing, location}}
+            className={classes.attributes}
+            onChange={handleChangeAttributes}
+            onClick={handleClickAttributes}
+          />
           {content}
-          {medias && medias.length > 0 && <Box className={classes.medias}>
-            {
-              mediaObjectTypes.map((mediaObjectType: SCMediaObjectType) => {
+          {medias && medias.length > 0 && (
+            <Box className={classes.medias}>
+              {mediaObjectTypes.map((mediaObjectType: SCMediaObjectType) => {
                 if (mediaObjectType.previewComponent) {
-                  return <mediaObjectType.previewComponent
-                    key={mediaObjectType.name}
-                    value={medias}
-                    onChange={handleChangeMedias}
-                  />;
+                  return <mediaObjectType.previewComponent key={mediaObjectType.name} value={medias} onChange={handleChangeMedias} />;
                 } else if (mediaObjectType.displayComponent) {
-                  return <mediaObjectType.displayComponent
-                    key={mediaObjectType.name}
-                    medias={medias}
-                  />;
+                  return <mediaObjectType.displayComponent key={mediaObjectType.name} medias={medias} />;
                 }
-              })
-            }
-          </Box>}
+              })}
+            </Box>
+          )}
         </DialogContent>
         {!canSubmit && !editMode && <TypeSwitchButtonGroup className={classes.types} onChange={handleChangeType} size="small" value={type} />}
         <DialogActions className={classes.actions}>
           {mediaObjectTypes
             .filter((mediaObjectType: SCMediaObjectType) => mediaObjectType.triggerButton !== null)
             .map((mediaObjectType: SCMediaObjectType) => {
-              const props = mediaObjectType.layerComponent ? {onClick: handleMediaTriggerClick(mediaObjectType)} : {onAdd: handleAddMedia}
+              const props = mediaObjectType.layerComponent ? {onClick: handleMediaTriggerClick(mediaObjectType)} : {onAdd: handleAddMedia};
               return (
                 <mediaObjectType.triggerButton
                   key={mediaObjectType.name}
@@ -693,9 +736,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 />
               );
             })}
-          <IconButton
-            disabled={isSubmitting}
-            onClick={handleAddCategoryLayer}>
+          <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer}>
             <Icon>category</Icon>
           </IconButton>
           <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
@@ -708,9 +749,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           )}
         </DialogActions>
       </form>
-      {layer && <LayerTransitionRoot className={classes.layerTransitionRoot} in container={dialogRef.current} direction="left">
-        <layer.Component {...layer.ComponentProps} />
-      </LayerTransitionRoot>}
+      {layer && (
+        <LayerTransitionRoot className={classes.layerTransitionRoot} in container={dialogRef.current} direction="left">
+          <layer.Component {...layer.ComponentProps} />
+        </LayerTransitionRoot>
+      )}
     </Root>
   );
 }

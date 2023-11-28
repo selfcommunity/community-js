@@ -1,4 +1,4 @@
-import { alpha } from '@mui/system';
+import {alpha} from '@mui/system';
 
 const Component = {
   styleOverrides: {
@@ -56,9 +56,10 @@ const Component = {
         position: 'relative',
         margin: theme.spacing(1),
         '& .SCMediaLink-delete': {
+          background: theme.palette.common.white,
           position: 'absolute',
-          right: theme.spacing(2),
-          top: theme.spacing(2)
+          right: theme.spacing(0.5),
+          top: theme.spacing(0.5)
         },
         '&.SCMediaLink-media-video .SCMediaLink-delete': {
           background: theme.palette.common.white,
@@ -67,7 +68,7 @@ const Component = {
         }
       }
     }),
-    triggerRoot: ({theme}: any) => ({}),
+    triggerRoot: ({theme}: any) => ({})
   }
 };
 
