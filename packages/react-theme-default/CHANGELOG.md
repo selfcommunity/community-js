@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.314](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.313...@selfcommunity/react-theme-default@0.1.0-alpha.314) (2023-11-28)
+
+
+### Performance Improvements
+
+* added white background to SCMediaFile-delete class ([c21b120](https://github.com/selfcommunity/community-js/commit/c21b120a3d9b6be2dbcb458ba023dedd74c027a1))
+
+
+
+
+
 # [0.1.0-alpha.313](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.312...@selfcommunity/react-theme-default@0.1.0-alpha.313) (2023-11-27)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
