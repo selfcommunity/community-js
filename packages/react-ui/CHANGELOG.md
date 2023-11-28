@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.360](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.359...@selfcommunity/react-ui@0.7.0-alpha.360) (2023-11-27)
+
+
+### Bug Fixes
+
+* asana issue https://app.asana.com/0/1202638443591994/1206016441538977/f ([6e876f3](https://github.com/selfcommunity/community-js/commit/6e876f3e13427d3e9314559cd364f7c7d7fbdfbd))
+
+
+
+
+
 # [0.7.0-alpha.359](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.358...@selfcommunity/react-ui@0.7.0-alpha.359) (2023-11-24)
 
 
