@@ -572,7 +572,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     },
     [scUserContext.user, feedObjectType, id, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]
   );
-
+  //edited here
   const handleClose = useCallback(
     (event: SyntheticEvent, reason?: string): void => {
       if (unloadRef.current) {
