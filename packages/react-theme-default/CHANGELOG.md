@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.315](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.314...@selfcommunity/react-theme-default@0.1.0-alpha.315) (2023-11-29)
+
+
+### Performance Improvements
+
+* added white background to SCMediaLink-delete class/ added close layer on dialog backdrop/esc ([d779261](https://github.com/selfcommunity/community-js/commit/d779261a829401e55e1546b22ca58f5a157c877d))
+
+
+
+
+
 # [0.1.0-alpha.314](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.313...@selfcommunity/react-theme-default@0.1.0-alpha.314) (2023-11-28)
 
 
