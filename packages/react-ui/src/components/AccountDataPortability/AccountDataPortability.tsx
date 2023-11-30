@@ -105,7 +105,7 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
    */
   const handleDownloadDataPortabilityFile = () => {
     setDownloadingDataPortability(true);
-    DataPortabilityService.downloadDataPortability()
+    DataPortabilityService.downloadDataPortability({timeout: 30*60*1000})
       .then((res) => {
         const url = window.URL.createObjectURL(new Blob([res], {type: 'application/zip'}));
         const link = document.createElement('a');
