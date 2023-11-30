@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.363](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.362...@selfcommunity/react-ui@0.7.0-alpha.363) (2023-11-30)
+
+
+### Performance Improvements
+
+* added profile link to user snippets menu. Asana issue: https://app.asana.com/0/1202638443591994/1206016441538987/f ([80b0587](https://github.com/selfcommunity/community-js/commit/80b0587aa038840d1ef17eca3737d4fb9a2f2d74))
+
+
+
+
+
 # [0.7.0-alpha.362](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.361...@selfcommunity/react-ui@0.7.0-alpha.362) (2023-11-30)
 
 
