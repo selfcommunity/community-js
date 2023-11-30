@@ -465,6 +465,7 @@
   "ui.privateMessageSettingsIconButton.dialog.confirm": "Yes",
   "ui.privateMessageSettingsIconButton.dialog.msg": "Are you sure you want to delete this conversation?",
   "ui.privateMessageSettingsIconButton.item.delete" : "Delete",
+  "ui.privateMessageSettingsIconButton.item.profile" : "See Profile",
   "ui.relatedFeedObjectsWidget.button.showMore": "Show More",
   "ui.relatedFeedObjectsWidget.noMoreResults": "No more results",
   "ui.relatedFeedObjectsWidget.noResults": "No results found",
