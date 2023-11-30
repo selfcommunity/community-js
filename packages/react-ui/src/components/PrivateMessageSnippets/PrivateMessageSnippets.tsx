@@ -133,7 +133,10 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     }
     return el.receiver.username.includes(search.toLowerCase());
   });
-  const messageReceiver = (item, loggedUserId) => {
+  const messageReceiver = (item, loggedUserId, obj?: boolean) => {
+    if (obj) {
+      return item?.receiver?.id !== loggedUserId ? item?.receiver : item?.sender;
+    }
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
   };
 
@@ -303,6 +306,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                         <PrivateMessageSettingsIconButton
                           threadToDelete={messageReceiver(message, authUserId)}
                           onItemDeleteConfirm={() => handleDeleteConversation(messageReceiver(message, authUserId))}
+                          user={messageReceiver(message, authUserId, true)}
                         />
                       )}
                     </>

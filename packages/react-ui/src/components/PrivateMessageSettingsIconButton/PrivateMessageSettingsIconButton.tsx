@@ -5,10 +5,11 @@ import {FormattedMessage} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCThemeType} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {PrivateMessageService} from '@selfcommunity/api-services';
 import PubSub from 'pubsub-js';
+import {SCUserType} from '@selfcommunity/types';
 
 const PREFIX = 'SCPrivateMessageSettingsIconButton';
 
@@ -45,7 +46,7 @@ export interface PrivateMessageSettingsIconButtonProps extends IconButtonProps {
    */
   className?: string;
   /**
-   * Handles callback on menu item click
+   * Handles callback on menu item delete click
    */
   onMenuItemDeleteClick?: () => void;
   /**
@@ -56,6 +57,10 @@ export interface PrivateMessageSettingsIconButtonProps extends IconButtonProps {
    * The deleting thread id
    */
   threadToDelete?: any;
+  /**
+   * The user receiver context
+   */
+  user?: SCUserType;
   /**
    * Any other properties
    */
@@ -90,7 +95,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
     props: inProps,
     name: PREFIX
   });
-  const {className = null, onMenuItemDeleteClick, onItemDeleteConfirm, threadToDelete, ...rest} = props;
+  const {className = null, onMenuItemDeleteClick, user, onItemDeleteConfirm, threadToDelete, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -99,6 +104,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -143,6 +149,12 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
             <Icon fontSize="small">delete</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
+        </ListItem>,
+        <ListItem className={classes.item} key="profile" component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)}>
+          <ListItemIcon>
+            <Icon fontSize="small">people_alt</Icon>
+          </ListItemIcon>
+          <FormattedMessage id="ui.privateMessageSettingsIconButton.item.profile" defaultMessage="ui.privateMessageSettingsIconButton.item.profile" />
         </ListItem>
       ];
     } else {
@@ -152,6 +164,12 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
             <Icon fontSize="small">delete</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
+        </MenuItem>,
+        <MenuItem className={classes.item} component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)} key="profile">
+          <ListItemIcon>
+            <Icon fontSize="small">people_alt</Icon>
+          </ListItemIcon>
+          <FormattedMessage id="ui.privateMessageSettingsIconButton.item.profile" defaultMessage="ui.privateMessageSettingsIconButton.item.profile" />
         </MenuItem>
       ];
     }
