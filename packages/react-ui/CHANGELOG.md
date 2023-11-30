@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.362](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.361...@selfcommunity/react-ui@0.7.0-alpha.362) (2023-11-30)
+
+
+### Bug Fixes
+
+* Fix data portability download timeout ([b4a5b4b](https://github.com/selfcommunity/community-js/commit/b4a5b4b28ca13f7d76f4bc6774509e5ea20baa83))
+
+
+
+
+
+# [0.7.0-alpha.361](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.360...@selfcommunity/react-ui@0.7.0-alpha.361) (2023-11-29)
+
+
+### Performance Improvements
+
+* added white background to SCMediaLink-delete class/ added close layer on dialog backdrop/esc ([d779261](https://github.com/selfcommunity/community-js/commit/d779261a829401e55e1546b22ca58f5a157c877d))
+
+
+
+
+
 # [0.7.0-alpha.360](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.359...@selfcommunity/react-ui@0.7.0-alpha.360) (2023-11-27)
 
 
