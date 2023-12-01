@@ -367,22 +367,22 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
         user={scUser}
         {...UserProfileHeaderProps}
         actions={
-          // !isMe && scUser && Boolean((scUserContext.user && scUserContext.managers.blockedUsers.isBlocked(scUser)) || blockedBy) ? null : (
-          <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
-            {startActions}
-            {isMe ? editStartActions : viewStartActions}
-            {isMe ? (
-              <Button variant="contained" color="secondary" onClick={handleEdit}>
-                <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
-              </Button>
-            ) : (
-              <ConnectionUserButton user={scUser} />
-            )}
-            {isMe ? editEndActions : viewEndActions}
-            {endActions}
-            <UserActionIconButton user={scUser} items={actionItems} />
-          </Stack>
-          // )
+          !isMe && scUser && Boolean((scUserContext.user && scUserContext.managers.blockedUsers.isBlocked(scUser)) || blockedBy) ? null : (
+            <Stack key={`actions_${scUser.id}`} direction="row" spacing={2} className={classes.actions}>
+              {startActions}
+              {isMe ? editStartActions : viewStartActions}
+              {isMe ? (
+                <Button variant="contained" color="secondary" onClick={handleEdit}>
+                  <FormattedMessage defaultMessage="templates.userProfile.edit" id="templates.userProfile.edit" />
+                </Button>
+              ) : (
+                <ConnectionUserButton user={scUser} />
+              )}
+              {isMe ? editEndActions : viewEndActions}
+              {endActions}
+              <UserActionIconButton user={scUser} items={actionItems} />
+            </Stack>
+          )
         }
       />
       {scUserContext.user === undefined ||

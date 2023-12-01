@@ -57,17 +57,21 @@ const Component = {
     skeletonRoot: ({theme}: any) => ({
       position: 'relative',
       '& .SCUserProfileHeader-avatar': {
+        display: 'block',
         position: 'absolute',
-        top: 190,
-        width: '100%',
+        top: 270,
+        marginLeft: theme.spacing(4),
         [`& .MuiSkeleton-root`]: {
-          border: '#FFF solid 5px',
-          margin: '0 auto'
+          border: '#FFF solid 5px'
         }
       },
       '& .SCUserProfileHeader-username': {
-        marginTop: 50,
-        textAlign: 'center'
+        marginTop: 100,
+        textAlign: 'start',
+        [`& .MuiSkeleton-root`]: {
+          position: 'absolute',
+          marginLeft: theme.spacing(4)
+        }
       }
     })
   }
