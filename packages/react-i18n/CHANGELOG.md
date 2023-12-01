@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.62...@selfcommunity/react-i18n@0.5.0-alpha.63) (2023-11-30)
+
+
+### Performance Improvements
+
+* added profile link to user snippets menu. Asana issue: https://app.asana.com/0/1202638443591994/1206016441538987/f ([80b0587](https://github.com/selfcommunity/community-js/commit/80b0587aa038840d1ef17eca3737d4fb9a2f2d74))
+
+
+
+
+
 # [0.5.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.61...@selfcommunity/react-i18n@0.5.0-alpha.62) (2023-11-24)
 
 
