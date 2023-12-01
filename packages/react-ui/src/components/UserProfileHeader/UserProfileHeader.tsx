@@ -23,6 +23,8 @@ const classes = {
   root: `${PREFIX}-root`,
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
+  info: `${PREFIX}-info`,
+  infOpsSection: `${PREFIX}-infops-section`,
   username: `${PREFIX}-username`,
   realname: `${PREFIX}-realname`,
   changePicture: `${PREFIX}-change-picture`,
@@ -70,6 +72,10 @@ export interface UserProfileHeaderProps {
   ChangeCoverProps?: ChangeCoverProps;
 
   /**
+   *
+   */
+  actions?: React.ReactNode;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -100,6 +106,8 @@ export interface UserProfileHeaderProps {
  |root|.SCUserProfileHeader-root|Styles applied to the root element.|
  |cover|.SCUserProfileHeader-cover|Styles applied to the cover element.|
  |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
+ |infOpsSection|SCUserProfileHeader-infops-section|Styles applied to the section including info and actions.|
+ |info|SCUserProfileHeader-info|Styles applied to the info section.|
  |username|SCUserProfileHeader-username|Styles applied to the username element.|
  |realname|SCUserProfileHeader-realname|Styles applied to the realname element.|
  |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
@@ -113,7 +121,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
+  const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, actions, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -176,14 +184,19 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
           </>
         )}
       </Paper>
-      <Typography variant="h5" className={classes.username}>
-        @{isMe ? scUserContext.user.username : scUser.username}
-      </Typography>
-      {realName && (
-        <Typography variant="h5" className={classes.realname}>
-          {realName}
-        </Typography>
-      )}
+      <Box className={classes.infOpsSection}>
+        <Box className={classes.info}>
+          <Typography variant="h5" className={classes.username}>
+            @{isMe ? scUserContext.user.username : scUser.username}
+          </Typography>
+          {realName && (
+            <Typography variant="h5" className={classes.realname}>
+              {realName}
+            </Typography>
+          )}
+        </Box>
+        {actions && actions}
+      </Box>
     </Root>
   );
 }

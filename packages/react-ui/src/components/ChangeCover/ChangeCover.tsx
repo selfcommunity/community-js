@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Divider,
-  IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
@@ -26,8 +25,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-
-const PREFIX = 'SCChangeCoverButton';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -38,20 +36,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-  [theme.breakpoints.down('md')]: {
-    '& .MuiButtonBase-root': {
-      padding: 6,
-      borderRadius: 50,
-      minWidth: 'auto'
-    }
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 const messages = defineMessages({
   imageMaxSize: {
@@ -261,7 +247,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const cc = (
     <React.Fragment>
       <Button size="small" variant="contained" disabled={loading} onClick={handleOpen} {...rest}>
-        {isMobile ? <Icon>photo_camera</Icon> : <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />}
+        <Icon>photo_camera</Icon>
       </Button>
       <>
         {isMobile ? (
@@ -276,9 +262,9 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       </>
       {!isMobile && (
         <>
-          <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
+          <Button className={classes.helpPopover} variant="contained" onClick={handleClickHelpButton}>
             <Icon fontSize="small">help_outline</Icon>
-          </IconButton>
+          </Button>
           {isOpen && (
             <Popover
               open={isOpen}

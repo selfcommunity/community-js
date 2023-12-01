@@ -12,34 +12,41 @@ const Component = {
           borderRadius: theme.shape.borderRadius
         }
       },
+      '& .SCUserProfileHeader-infops-section': {
+        display: 'flex',
+        justifyContent: 'space-between'
+      },
       '& .SCUserProfileHeader-avatar': {
-        height: theme.selfcommunity.user.avatar.sizeXLarge,
-        width: theme.selfcommunity.user.avatar.sizeXLarge,
-        top: 250 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        height: theme.selfcommunity.user.avatar.sizeLarge,
+        width: theme.selfcommunity.user.avatar.sizeLarge,
+        top: 250 - 0.5 * theme.selfcommunity.user.avatar.sizeLarge,
         display: 'block',
-        position: 'relative',
-        margin: '0px auto',
+        position: 'absolute',
+        marginLeft: theme.spacing(2),
         borderRadius: '50%',
         border: `#FFF solid ${theme.spacing(0.5)}`,
         objectFit: 'cover'
       },
       '& .SCUserProfileHeader-change-picture': {
-        top: theme.selfcommunity.user.avatar.sizeXLarge,
-        left: 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        top: 270 - 0.5 * theme.selfcommunity.user.avatar.sizeLarge,
+        left: theme.selfcommunity.user.avatar.sizeLarge - 10,
         position: 'relative',
         display: 'flex',
-        margin: '0px auto'
+        marginLeft: theme.spacing(2)
       },
       '& .SCUserProfileHeader-username': {
-        marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeXLarge + 16,
+        marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeLarge + 16,
+        marginLeft: theme.spacing(2),
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.429rem',
-        textAlign: 'center'
+        textAlign: 'start'
       },
       '& .SCUserProfileHeader-realname': {
         fontSize: '1rem',
-        textAlign: 'center',
-        paddingBottom: theme.spacing()
+        textAlign: 'start',
+        paddingBottom: theme.spacing(),
+        marginTop: theme.spacing(1),
+        marginLeft: theme.spacing(2)
       },
       '& .SCUserProfileHeader-change-cover': {
         position: 'absolute',

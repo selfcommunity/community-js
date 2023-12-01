@@ -114,6 +114,7 @@ import SCExploreFeedTemplate from './components/SCExploreFeedTemplate';
 import SCMainFeedTemplate from './components/SCMainFeedTemplate';
 import SCNotificationFeedTemplate from './components/SCNotificationFeedTemplate';
 import SCUserFeedTemplate from './components/SCUserFeedTemplate';
+import SCChangeCoverButton from './components/SCChangeCoverButton';
 
 /**
  * Style fragments - Imports - End
@@ -273,7 +274,8 @@ const theme = {
     SCExploreFeedTemplate,
     SCMainFeedTemplate,
     SCNotificationFeedTemplate,
-    SCUserFeedTemplate
+    SCUserFeedTemplate,
+    SCChangeCoverButton
   },
   selfcommunity: {
     user: {

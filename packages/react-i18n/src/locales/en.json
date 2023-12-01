@@ -95,7 +95,6 @@
   "ui.categoryTrendingUsersWidget.noMoreResults": "No more results",
   "ui.categoryTrendingUsersWidget.noResults": "No results found",
   "ui.categoryTrendingUsersWidget.title": "Trending People",
-  "ui.changeCover.button.change": "Change Cover",
   "ui.changeCover.button.change.alertMaxSize": "Maximum size 5MB!",
   "ui.changeCover.button.change.alertErrorImage": "The image fails to load. Check that it is of the maximum format and size allowed.",
   "ui.changeCover.button.delete": "Delete Cover",
