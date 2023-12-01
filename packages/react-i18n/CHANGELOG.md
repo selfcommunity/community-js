@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.63...@selfcommunity/react-i18n@0.5.0-alpha.64) (2023-12-01)
+
+
+### Performance Improvements
+
+* changed user profile header layout. Asana issue: https://app.asana.com/0/1202638443591994/1206035214618937/f ([4a8cb13](https://github.com/selfcommunity/community-js/commit/4a8cb13911e825b0459d07f892867dbea858f970))
+
+
+
+
+
 # [0.5.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.0-alpha.62...@selfcommunity/react-i18n@0.5.0-alpha.63) (2023-11-30)
 
 
