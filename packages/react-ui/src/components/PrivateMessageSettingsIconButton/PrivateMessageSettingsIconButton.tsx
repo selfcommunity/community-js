@@ -144,32 +144,32 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
   const renderList = () => {
     if (isMobile) {
       return [
-        <ListItem className={classes.item} key="delete" onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick}>
-          <ListItemIcon>
-            <Icon fontSize="small">delete</Icon>
-          </ListItemIcon>
-          <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
-        </ListItem>,
         <ListItem className={classes.item} key="profile" component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)}>
           <ListItemIcon>
             <Icon fontSize="small">people_alt</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.profile" defaultMessage="ui.privateMessageSettingsIconButton.item.profile" />
-        </ListItem>
-      ];
-    } else {
-      return [
-        <MenuItem className={classes.item} onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick} key="delete">
+        </ListItem>,
+        <ListItem className={classes.item} key="delete" onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick}>
           <ListItemIcon>
             <Icon fontSize="small">delete</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
-        </MenuItem>,
+        </ListItem>
+      ];
+    } else {
+      return [
         <MenuItem className={classes.item} component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)} key="profile">
           <ListItemIcon>
             <Icon fontSize="small">people_alt</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.profile" defaultMessage="ui.privateMessageSettingsIconButton.item.profile" />
+        </MenuItem>,
+        <MenuItem className={classes.item} onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick} key="delete">
+          <ListItemIcon>
+            <Icon fontSize="small">delete</Icon>
+          </ListItemIcon>
+          <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
         </MenuItem>
       ];
     }
