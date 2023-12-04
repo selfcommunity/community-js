@@ -15,10 +15,7 @@ const Component = {
         color: '#FFF',
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
         height: 200,
-        borderRadius: 0,
-        [theme.breakpoints.up('md')]: {
-          borderRadius: theme.shape.borderRadius
-        }
+        borderRadius: 0
       },
       '& .SCCategoryHeader-info': {
         paddingLeft: theme.spacing(2),

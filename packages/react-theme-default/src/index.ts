@@ -283,7 +283,7 @@ const theme = {
         sizeSmall: 21,
         sizeMedium: 30,
         sizeLarge: 60,
-        sizeXLarge: 140
+        sizeXLarge: 90
       }
     },
     category: {

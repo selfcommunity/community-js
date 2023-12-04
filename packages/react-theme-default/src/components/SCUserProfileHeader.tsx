@@ -8,8 +8,8 @@ const Component = {
         borderRadius: 0,
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
         boxShadow: 'unset',
-        [theme.breakpoints.up('md')]: {
-          borderRadius: theme.shape.borderRadius
+        [theme.breakpoints.up('lg')]: {
+          margin: theme.spacing(0, -5, 0, -5)
         }
       },
       '& .SCUserProfileHeader-infops-section': {
@@ -17,25 +17,32 @@ const Component = {
         justifyContent: 'space-between'
       },
       '& .SCUserProfileHeader-avatar': {
-        height: theme.selfcommunity.user.avatar.sizeLarge,
-        width: theme.selfcommunity.user.avatar.sizeLarge,
-        top: 250 - 0.5 * theme.selfcommunity.user.avatar.sizeLarge,
+        height: theme.selfcommunity.user.avatar.sizeXLarge,
+        width: theme.selfcommunity.user.avatar.sizeXLarge,
+        top: 250 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        [theme.breakpoints.up('lg')]: {
+          left: theme.selfcommunity.user.avatar.sizeXLarge / 2,
+          marginLeft: 0
+        },
         display: 'block',
         position: 'absolute',
-        marginLeft: theme.spacing(2),
         borderRadius: '50%',
         border: `#FFF solid ${theme.spacing(0.5)}`,
-        objectFit: 'cover'
+        objectFit: 'cover',
+        marginLeft: theme.spacing(1)
       },
       '& .SCUserProfileHeader-change-picture': {
-        top: 270 - 0.5 * theme.selfcommunity.user.avatar.sizeLarge,
-        left: theme.selfcommunity.user.avatar.sizeLarge - 10,
+        top: 280 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        [theme.breakpoints.up('lg')]: {
+          left: 155 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge
+        },
+        left: 70,
         position: 'relative',
         display: 'flex',
         marginLeft: theme.spacing(2)
       },
       '& .SCUserProfileHeader-username': {
-        marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeLarge + 16,
+        marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeXLarge + 16,
         marginLeft: theme.spacing(2),
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.429rem',
@@ -59,14 +66,14 @@ const Component = {
       '& .SCUserProfileHeader-avatar': {
         display: 'block',
         position: 'absolute',
-        top: 270,
+        top: 300,
         marginLeft: theme.spacing(4),
         [`& .MuiSkeleton-root`]: {
           border: '#FFF solid 5px'
         }
       },
       '& .SCUserProfileHeader-username': {
-        marginTop: 100,
+        marginTop: 80,
         textAlign: 'start',
         [`& .MuiSkeleton-root`]: {
           position: 'absolute',
