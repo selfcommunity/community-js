@@ -2,9 +2,6 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       marginTop: 0,
-      [theme.breakpoints.up('md')]: {
-        marginTop: theme.spacing(4)
-      },
       '& .SCUserProfileTemplate-tags': {
         marginTop: theme.spacing(2),
         marginLeft: theme.spacing(2),
@@ -26,8 +23,11 @@ const Component = {
         marginTop: theme.spacing(2)
       },
       '& .SCUserProfileTemplate-actions': {
-        margin: theme.spacing(1, 2, 2, 2),
-        height: 'fit-content'
+        [theme.breakpoints.up('md')]: {
+          margin: theme.spacing(1, 2, 2, 2)
+        },
+        height: 'fit-content',
+        marginTop: theme.spacing(1)
       }
     }),
     skeletonRoot: ({theme}: any) => ({
