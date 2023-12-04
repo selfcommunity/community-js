@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.320](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.319...@selfcommunity/react-theme-default@0.1.0-alpha.320) (2023-12-04)
+
+
+### Performance Improvements
+
+* user profile header cover ([1786a29](https://github.com/selfcommunity/community-js/commit/1786a2945a0b5d74f66b866fe965628a6320c53f))
+
+
+
+
+
 # [0.1.0-alpha.319](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.318...@selfcommunity/react-theme-default@0.1.0-alpha.319) (2023-12-01)
 
 
