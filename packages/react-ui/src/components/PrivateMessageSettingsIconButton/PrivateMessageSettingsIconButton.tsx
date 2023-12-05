@@ -23,21 +23,18 @@ const classes = {
 
 const Root = styled(IconButton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.drawerRoot
-})(({theme}) => ({}));
+  slot: 'DrawerRoot'
+})(() => ({}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.menuRoot
-})(({theme}) => ({}));
+  slot: 'MenuRoot'
+})(() => ({}));
 
 export interface PrivateMessageSettingsIconButtonProps extends IconButtonProps {
   /**
@@ -137,7 +134,6 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
         console.log(error);
       });
   }
-
   /**
    *
    */
