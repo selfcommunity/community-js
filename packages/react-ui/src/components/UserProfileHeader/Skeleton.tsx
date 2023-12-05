@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Typography, useTheme} from '@mui/material';
+import {Box, Button, Icon, IconButton, Stack, Typography, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -8,6 +8,8 @@ import {PREFIX} from './constants';
 const classes = {
   root: `${PREFIX}-skeleton-root`,
   avatar: `${PREFIX}-avatar`,
+  actions: `${PREFIX}-actions`,
+  section: `${PREFIX}-section`,
   username: `${PREFIX}-username`
 };
 
@@ -35,6 +37,8 @@ const Root = styled(Box, {
  |---|---|---|
  |root|.SCUserProfileHeader-skeleton-root|Styles applied to the root element.|
  |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
+ |actions|.SCUserProfileHeader-actions|Styles applied to the actions section.|
+ |section|.SCUserProfileHeader-section|Styles applied to the info section.|
  |username|.SCUserProfileHeader-username|Styles applied to the username element.|
  *
  */
@@ -52,9 +56,19 @@ function UserProfileHeaderSkeleton(): JSX.Element {
           height={theme.selfcommunity.user.avatar.sizeXLarge}
         />
       </Box>
-      <Typography variant="h5" className={classes.username}>
-        <Skeleton animation="wave" sx={{height: 20, width: 100, margin: '0 auto'}} />
-      </Typography>
+      <Box className={classes.section}>
+        <Typography variant="h5" className={classes.username}>
+          <Skeleton animation="wave" sx={{height: 30, width: 100, margin: '0 auto'}} />
+        </Typography>
+        <Stack direction="row" className={classes.actions}>
+          <Button variant="contained" disabled>
+            <Skeleton animation="wave" sx={{height: 20, width: 60}} />
+          </Button>
+          <IconButton disabled>
+            <Icon>more_vert</Icon>
+          </IconButton>
+        </Stack>
+      </Box>
     </Root>
   );
 }

@@ -63,6 +63,11 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       position: 'relative',
+      '& .SCUserProfileHeader-cover': {
+        [theme.breakpoints.up('lg')]: {
+          margin: theme.spacing(0, -5, 0, -5)
+        }
+      },
       '& .SCUserProfileHeader-avatar': {
         display: 'block',
         position: 'absolute',
@@ -72,12 +77,23 @@ const Component = {
           border: '#FFF solid 5px'
         }
       },
-      '& .SCUserProfileHeader-username': {
-        marginTop: 80,
-        textAlign: 'start',
-        [`& .MuiSkeleton-root`]: {
-          position: 'absolute',
-          marginLeft: theme.spacing(4)
+      '& .SCUserProfileHeader-section': {
+        display: 'flex',
+        justifyContent: 'space-between',
+        '& .SCUserProfileHeader-username': {
+          marginTop: 60,
+          textAlign: 'start',
+          [`& .MuiSkeleton-root`]: {
+            position: 'absolute',
+            marginLeft: theme.spacing(4)
+          }
+        },
+        '& .SCUserProfileHeader-actions': {
+          [theme.breakpoints.up('md')]: {
+            margin: theme.spacing(1, 2, 2, 2)
+          },
+          height: 'fit-content',
+          marginTop: theme.spacing(1)
         }
       }
     })
