@@ -117,6 +117,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               key="composer"
               className={classNames(classes.composer, classes.action)}
               component={ComposerIconButton}
+              disableRipple
             />,
             scUserContext.user ? (
               <BottomNavigationAction

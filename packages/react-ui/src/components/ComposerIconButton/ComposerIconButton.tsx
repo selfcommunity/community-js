@@ -36,11 +36,6 @@ export interface ComposerIconButtonProps extends IconButtonProps {
    * @default null
    */
   ComposerProps?: ComposerProps;
-
-  /**
-   * Other props
-   */
-  items?: any;
 }
 
 /**
@@ -65,7 +60,7 @@ export interface ComposerIconButtonProps extends IconButtonProps {
 
  * @param inProps
  */
-export default function ComposerIconButton(inProps: ComposerIconButtonProps): ReactElement {
+export default React.forwardRef(function ComposerIconButton(inProps: ComposerIconButtonProps, ref: React.Ref<HTMLButtonElement>): ReactElement {
   // PROPS
   const props: ComposerIconButtonProps = useThemeProps({
     props: inProps,
@@ -124,10 +119,10 @@ export default function ComposerIconButton(inProps: ComposerIconButtonProps): Re
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} {...rest} onClick={handleClick}>
+      <Root className={classNames(classes.root, className)} {...rest} onClick={handleClick} ref={ref}>
         <Icon>add_circle_outline</Icon>
       </Root>
       <Composer open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />
     </>
   );
-}
+});
