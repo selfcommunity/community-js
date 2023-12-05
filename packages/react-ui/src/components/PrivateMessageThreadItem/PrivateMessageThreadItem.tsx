@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
@@ -7,7 +7,7 @@ import {SCPrivateMessageThreadType, SCMessageFileType, SCPrivateMessageStatusTyp
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCThemeType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import {bytesToSize} from '../../utils/sizeCoverter';
@@ -129,11 +129,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
   const hasFile = message ? message.file : null;
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const {enqueueSnackbar} = useSnackbar();
-  const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const messageReceiver = (item, loggedUserId) => {
-    return item?.receiver?.id !== loggedUserId ? item?.receiver : item?.sender;
-  };
+
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
     onMouseEnter: mouseEnter,
     onMouseLeave: mouseLeave,
@@ -238,9 +234,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
       secondaryAction={
         (isHovering || isMobile) &&
         showMenuIcon &&
-        message.status !== SCPrivateMessageStatusType.HIDDEN && (
-          <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} user={messageReceiver(message, authUserId)} />
-        )
+        message.status !== SCPrivateMessageStatusType.HIDDEN && <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} />
       }>
       <>
         {hasFile && message.status !== SCPrivateMessageStatusType.HIDDEN ? (
