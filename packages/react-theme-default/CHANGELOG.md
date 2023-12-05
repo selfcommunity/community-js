@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.321](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.320...@selfcommunity/react-theme-default@0.1.0-alpha.321) (2023-12-05)
+
+
+### Bug Fixes
+
+* user profile header skeleton ([824be5b](https://github.com/selfcommunity/community-js/commit/824be5b034fd7c0e73726a7dda7724fd6e7dfbcc))
+
+
+
+
+
 # [0.1.0-alpha.320](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.319...@selfcommunity/react-theme-default@0.1.0-alpha.320) (2023-12-04)
 
 

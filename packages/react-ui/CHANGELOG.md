@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.365](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.364...@selfcommunity/react-ui@0.7.0-alpha.365) (2023-12-05)
+
+
+### Bug Fixes
+
+* user profile header skeleton ([824be5b](https://github.com/selfcommunity/community-js/commit/824be5b034fd7c0e73726a7dda7724fd6e7dfbcc))
+
+
+
+
+
 # [0.7.0-alpha.364](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.363...@selfcommunity/react-ui@0.7.0-alpha.364) (2023-12-01)
 
 
