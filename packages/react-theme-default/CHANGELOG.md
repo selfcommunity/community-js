@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.322](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.321...@selfcommunity/react-theme-default@0.1.0-alpha.322) (2023-12-05)
+
+
+### Bug Fixes
+
+* asana issues: ([7eba010](https://github.com/selfcommunity/community-js/commit/7eba0101b77fb8948d8ee5a9425cf94a81fad1ae))
+* Fix margin top ([c488e05](https://github.com/selfcommunity/community-js/commit/c488e05f7135589f20d0eafda022410d298dbce5))
+
+
+
+
+
 # [0.1.0-alpha.321](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.320...@selfcommunity/react-theme-default@0.1.0-alpha.321) (2023-12-05)
 
 

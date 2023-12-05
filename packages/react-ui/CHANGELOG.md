@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.366](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.365...@selfcommunity/react-ui@0.7.0-alpha.366) (2023-12-05)
+
+
+### Bug Fixes
+
+* asana issues: ([7eba010](https://github.com/selfcommunity/community-js/commit/7eba0101b77fb8948d8ee5a9425cf94a81fad1ae))
+* Fix BottomNavigation.tsx error ([78820db](https://github.com/selfcommunity/community-js/commit/78820db777a31b0ab208df610fcd93e90f760ac2))
+
+
+
+
+
 # [0.7.0-alpha.365](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.364...@selfcommunity/react-ui@0.7.0-alpha.365) (2023-12-05)
 
 
