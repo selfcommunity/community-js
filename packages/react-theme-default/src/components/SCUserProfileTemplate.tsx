@@ -30,9 +30,7 @@ const Component = {
         marginTop: theme.spacing(1)
       }
     }),
-    skeletonRoot: ({theme}: any) => ({
-      marginTop: theme.spacing(2)
-    })
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 
