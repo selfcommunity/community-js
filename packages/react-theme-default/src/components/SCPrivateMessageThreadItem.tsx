@@ -80,9 +80,10 @@ const Component = {
           width: '100%'
         },
         '& .MuiButtonBase-root': {
-          width: 'inherit',
+          flexWrap: 'wrap',
+          width: 'calc(100% - 24px)',
           position: 'absolute',
-          bottom: '10%',
+          bottom: theme.spacing(4),
           backgroundColor: 'rgba(0,0,0,0.5)',
           color: 'rgba(255,255,255,0.9)',
           display: 'flex',
@@ -98,11 +99,17 @@ const Component = {
       '& .SCPrivateMessageThreadItem-other': {
         marginTop: theme.spacing(2),
         '& .MuiButtonBase-root': {
+          padding: theme.spacing(2, 1, 0, 1),
+          flexWrap: 'wrap',
           '& .MuiTypography-root': {
-            whiteSpace: 'nowrap',
+            marginRight: theme.spacing(1),
             overflow: 'hidden',
+            whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
-            marginLeft: theme.spacing(0.5)
+            maxWidth: '100%',
+            [theme.breakpoints.down('md')]: {
+              fontSize: theme.typography.fontSize
+            }
           }
         }
       }
