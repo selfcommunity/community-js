@@ -23,6 +23,8 @@ const Component = {
         display: 'flex',
         alignItems: 'center',
         zIndex: 1,
+        width: 'calc(100% - 24px)',
+        minWidth: 'calc(100% - 24px)',
         '& .MuiTypography-root': {
           fontSize: '1.143rem',
           whiteSpace: 'pre-line',
