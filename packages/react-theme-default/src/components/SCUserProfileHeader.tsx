@@ -66,12 +66,13 @@ const Component = {
       '& .SCUserProfileHeader-cover': {
         [theme.breakpoints.up('lg')]: {
           margin: theme.spacing(0, -5, 0, -5)
-        }
+        },
+        height: 250
       },
       '& .SCUserProfileHeader-avatar': {
         display: 'block',
         position: 'absolute',
-        top: 300,
+        top: 250 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
         marginLeft: theme.spacing(4),
         [`& .MuiSkeleton-root`]: {
           border: '#FFF solid 5px'
