@@ -7,6 +7,7 @@ import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
+  cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   section: `${PREFIX}-section`,
@@ -37,6 +38,7 @@ const Root = styled(Box, {
  |---|---|---|
  |root|.SCUserProfileHeader-skeleton-root|Styles applied to the root element.|
  |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
+ |cover|.SCUserProfileHeader-cover|Styles applied to the cover element.|
  |actions|.SCUserProfileHeader-actions|Styles applied to the actions section.|
  |section|.SCUserProfileHeader-section|Styles applied to the info section.|
  |username|.SCUserProfileHeader-username|Styles applied to the username element.|
@@ -47,7 +49,7 @@ function UserProfileHeaderSkeleton(): JSX.Element {
 
   return (
     <Root className={classes.root}>
-      <Skeleton sx={{height: 350}} animation="wave" variant="rectangular" />
+      <Skeleton className={classes.cover} animation="wave" variant="rectangular" />
       <Box className={classes.avatar}>
         <Skeleton
           animation="wave"
