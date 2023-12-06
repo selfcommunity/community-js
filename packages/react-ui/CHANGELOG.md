@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.368](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.367...@selfcommunity/react-ui@0.7.0-alpha.368) (2023-12-06)
+
+
+### Bug Fixes
+
+* warnings, userprofile header. ([e3b345b](https://github.com/selfcommunity/community-js/commit/e3b345b653b154b4a53f35317cdcdd5481cdd42b))
+
+
+
+
+
 # [0.7.0-alpha.367](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.366...@selfcommunity/react-ui@0.7.0-alpha.367) (2023-12-05)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
