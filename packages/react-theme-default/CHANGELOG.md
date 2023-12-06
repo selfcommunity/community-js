@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.325](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.324...@selfcommunity/react-theme-default@0.1.0-alpha.325) (2023-12-06)
+
+
+### Bug Fixes
+
+* fixed pm text/button overlap ([a290731](https://github.com/selfcommunity/community-js/commit/a29073142a052ab5f93c4668cae9c256ccd3a4fb))
+
+
+
+
+
 # [0.1.0-alpha.324](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.0-alpha.323...@selfcommunity/react-theme-default@0.1.0-alpha.324) (2023-12-06)
 
 
