@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.1-alpha.0...@selfcommunity/api-services@0.4.1-alpha.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* fixed md comments for developers-doc(escaped bracket/closed tag) ([2072ac3](https://github.com/selfcommunity/community-js/commit/2072ac375978f7eefeefd61dfb833cb70b1388f1))
+
+
+
+
+
 ## [0.4.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.0...@selfcommunity/api-services@0.4.1-alpha.0) (2023-12-07)
 
 
