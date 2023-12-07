@@ -183,7 +183,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint patches a specific user identified by \{id}
+   * This endpoint patches a specific user identified by ID.
    * @param id
    * @param data
    * @param config
@@ -193,7 +193,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint deletes a specific user identified by \{id}
+   * This endpoint deletes a specific user identified by ID.
    * @param id
    * @param hard
    * @param config
@@ -332,7 +332,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint retrieves the list of posts of the user identified by \{id}
+   * This endpoint retrieves the list of posts of the user identified  by ID.
    * @param id
    * @param config
    */
@@ -341,7 +341,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint retrieves the list of followers of a specific user identified by \{id}
+   * This endpoint retrieves the list of followers of a specific user identified  by ID.
    * @param id
    * @param mutual
    * @param config
@@ -351,7 +351,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint retrieves the list of following of a specific user identified by \{id}.
+   * This endpoint retrieves the list of following of a specific user identified  by ID..
    * @param id
    * @param mutual
    * @param config
@@ -361,7 +361,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint allows a user to follow another user identified by \{id}
+   * This endpoint allows a user to follow another user identified  by ID.
    * @param id
    * @param config
    */
@@ -428,7 +428,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint accepts a request connection of the user identified by \{id}
+   * This endpoint accepts a request connection of the user identified  by ID.
    * @param id
    * @param config
    */
@@ -437,7 +437,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint requests a connection to the user identified by \{id}
+   * This endpoint requests a connection to the user identified  by ID.
    * @param id
    * @param config
    */
@@ -446,7 +446,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint removes connection with the user identified by \{id}
+   * This endpoint removes connection with the user identified  by ID.
    * @param id
    * @param config
    */
@@ -455,7 +455,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint cancels reject connection to a user identified by \{id}
+   * This endpoint cancels reject connection to a user identified  by ID.
    * @param id
    * @param config
    */
@@ -477,7 +477,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint rejects a connection request sent from user identified by \{id}
+   * This endpoint rejects a connection request sent from user identified  by ID.
    * @param id
    * @param config
    */
@@ -486,7 +486,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint marks seen a connection request of user identified by \{id} for the authenticated user.
+   * This endpoint marks seen a connection request of user identified  by ID. for the authenticated user.
    * @param id
    * @param config
    */
@@ -495,7 +495,7 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint shows/hides a user (and its posts) identified by \{id} for the authenticated user.
+   * This endpoint shows/hides a user (and its posts) identified  by ID. for the authenticated user.
    * @param id
    * @param config
    */
