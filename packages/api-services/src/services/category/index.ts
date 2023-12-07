@@ -87,7 +87,7 @@ export class CategoryApiClient {
   }
 
   /**
-   * This endpoint deletes a specific category identified by {id}.
+   * This endpoint deletes a specific category identified by \{id}.
    * @param id
    * @param config
    */
