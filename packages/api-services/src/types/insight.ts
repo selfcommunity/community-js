@@ -54,7 +54,7 @@ export interface InsightEmbedParams extends InsightCommonParams {
    */
   grouped_by?: string;
   /**
-   * A json dict containing some TERM_KEYs (eg: {"authors": ["Umberto Eco", "Neil Gaiman"], "type": "book"}). Usable only if group_by is set.
+   * A json dict containing some TERM_KEYs (eg: \{"authors": ["Umberto Eco", "Neil Gaiman"], "type": "book"}). Usable only if group_by is set.
    */
   metadata?: {};
 }
