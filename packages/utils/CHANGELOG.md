@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0...@selfcommunity/utils@0.2.1-alpha.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* fixed md comments for developers-doc ([3b2507d](https://github.com/selfcommunity/community-js/commit/3b2507dbcd66edd27fd9e76cae8d1edf6e4c3757))
+
+
+
+
+
 # [0.2.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.13...@selfcommunity/utils@0.2.0) (2023-12-07)
 
 **Note:** Version bump only for package @selfcommunity/utils
