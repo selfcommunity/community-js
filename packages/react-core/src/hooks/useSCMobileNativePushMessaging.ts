@@ -27,10 +27,10 @@ import {isMobileNativeNotificationEnabled} from '../utils/notification';
  - unregister device (Android/iOS)
  !important: the device is registered only if exist in the global window
              object (or as keys in the localstorage) the follow:
-             - _platform: <android|iOS>
-             - _notification_service: <gcm:fcm:apns>
-             - _registration_id: <registration_id>
-             - _device_id: <device_id>
+             - _platform: `<android-iOS>`
+             - _notification_service: `<gcm-fcm-apns>`
+             - _registration_id: `<registration_id>`
+             - _device_id: `<device_id>`
  :::
  */
 export default function useSCMobileNativePushMessaging() {

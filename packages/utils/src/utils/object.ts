@@ -35,7 +35,7 @@ export function mergeDeep(target: object, source: object): object {
  * @param obj
  * @param keys
  */
-export function objectWithoutProperties<T>(obj: T | null, keys: string[]): T {
+export function objectWithoutProperties<T extends object>(obj: T | null, keys: string[]): T {
   let target: T = obj ? Object.assign({}, obj) : null;
   keys.forEach(function (i: string) {
     if (target && i in target) {
