@@ -1,7 +1,6 @@
-import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import ContributionActionsMenu from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 
 export default {
   title: 'Design System/React UI Shared/ContributionActionsMenu',
@@ -13,19 +12,19 @@ export default {
       table: {defaultValue: {summary: 379}}
     },
     feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
     }
   },
   args: {
     feedObjectId: 379, // 9,
-    feedObjectType: SCFeedObjectTypologyType.POST
+    feedObjectType: SCContributionType.POST
   }
-} as ComponentMeta<typeof ContributionActionsMenu>;
+} as Meta<typeof ContributionActionsMenu>;
 
-const Template: ComponentStory<typeof ContributionActionsMenu> = (args) => <ContributionActionsMenu {...args} />;
+const template = (args) => <ContributionActionsMenu {...args} />;
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<ContributionActionsMenu> = {
+  render: template
+};

@@ -1,22 +1,23 @@
 // @ts-nocheck
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {
+  Link,
   SCCache,
+  SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
-  useSCFetchFeed,
-  SCPreferences,
+  useIsComponentMountedRef,
   usePreviousValue,
-  Link
+  useSCFetchFeed
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import {CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
+import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
-import Sticky from 'react-stickynode';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
 import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
@@ -27,53 +28,40 @@ import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import VirtualizedScroller, {VirtualizedScrollerCommonProps, VirtualScrollChild} from '../../shared/VirtualizedScroller';
-import {WIDGET_PREFIX_KEY, DEFAULT_WIDGETS_NUMBER} from '../../constants/Feed';
+import {DEFAULT_WIDGETS_NUMBER, WIDGET_PREFIX_KEY} from '../../constants/Feed';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {widgetSort} from '../../utils/feed';
 import Footer from '../Footer';
 import FeedSkeleton from './Skeleton';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-
-const PREFIX = 'SCFeed';
+import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
-  right: `${PREFIX}-right`,
+  leftItems: `${PREFIX}-left-items`,
+  start: `${PREFIX}-start`,
   end: `${PREFIX}-end`,
+  endMessage: `${PREFIX}-end-message`,
+  right: `${PREFIX}-right`,
   refresh: `${PREFIX}-refresh`,
   paginationLink: `${PREFIX}-pagination-link`
 };
 
 const Root = styled(Grid, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(-2),
-  [`& .${classes.left}`]: {
-    padding: '0 2px 0 2px',
-    [theme.breakpoints.down('md')]: {
-      '& > .SCWidget-root, & > .SCCustomAdv-root': {
-        maxWidth: 850,
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }
-    }
-  },
-  [`& .${classes.end}, & .${classes.refresh}`]: {
-    textAlign: 'center'
-  },
-  [`& .${classes.paginationLink}`]: {
-    display: 'none'
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
-export interface FeedSidebarProps {
-  top: string | number;
-  bottomBoundary: string | number;
-}
+/**
+ * FeedSidebarProps has the same props as StickyBoxProps type
+ */
+export type FeedSidebarProps = StickyBoxProps;
 
+/**
+ * FeedRef props
+ */
 export type FeedRef = {
   addFeedData: (obj: any, syncPagination?: boolean) => void;
   refresh: () => void;
@@ -174,12 +162,12 @@ export interface FeedProps {
   /**
    * Callback invoked whenever data is loaded during paging next
    */
-  onNextData?: (data) => any;
+  onNextData?: (page: number, offset: number, total: number, data: any[]) => any;
 
   /**
    * Callback invoked whenever data is loaded during paging previous
    */
-  onPreviousData?: (data) => any;
+  onPreviousData?: (page: number, offset: number, total: number, data: any[]) => any;
 
   /**
    * Authenticated or not
@@ -193,8 +181,8 @@ export interface FeedProps {
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to single feed object
-   * @default {top: 0, bottomBoundary: `#${id}`}
+   * Props to spread to the sidebar
+   * @default {}
    */
   FeedSidebarProps?: FeedSidebarProps;
 
@@ -205,10 +193,24 @@ export interface FeedProps {
   CustomAdvProps?: CustomAdvProps;
 
   /**
+   * Props to programmatically enable the custom adv position in the feed
+   * @default [SCCustomAdvPosition.POSITION_FEED_SIDEBAR, SCCustomAdvPosition.POSITION_FEED]
+   */
+  enabledCustomAdvPositions?: SCCustomAdvPosition[];
+
+  /**
    * Prefetch data. Useful for SSR.
    * Use this to init the component (in particular useSCFetchFeed)
    */
   prefetchedData?: SCPaginatedResponse<SCFeedUnitType>;
+
+  /**
+   * If the feed is being rendered in a "scrollable container"
+   * (for example, if one of the parent elements of the list is
+   * styled with max-height and overflow: auto),
+   * then passing the "scrollableTargetId"
+   */
+  scrollableTargetId?: string;
 
   /**
    * Props to spread to VirtualizedScroller object.
@@ -239,12 +241,22 @@ export interface FeedProps {
    * @default {}
    */
   PaginationLinkProps?: Record<string, any>;
+
+  /**
+   * Show/hide adv banners
+   * @default false
+   */
+  hideAdvs?: boolean;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
  * > API documentation for the Community-JS Feed component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Feed)
 
  #### Import
 
@@ -294,16 +306,19 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     ItemSkeletonProps = {},
     onNextData,
     onPreviousData,
-    FeedSidebarProps = {top: 0, bottomBoundary: `#${id}`},
+    FeedSidebarProps = {},
     CustomAdvProps = {},
+    enabledCustomAdvPositions = [SCCustomAdvPosition.POSITION_FEED_SIDEBAR, SCCustomAdvPosition.POSITION_FEED],
     requireAuthentication = false,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     prefetchedData,
+    scrollableTargetId,
     VirtualizedScrollerProps = {},
     disablePaginationLinks = false,
     hidePaginationLinks = true,
     paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
-    PaginationLinkProps = {}
+    PaginationLinkProps = {},
+    hideAdvs = false
   } = props;
 
   // CONTEXT
@@ -321,6 +336,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return endpointQueryParams.offset || 0;
   }, [endpointQueryParams, prefetchedData]);
 
+  // REF
+  const isMountRef = useIsComponentMountedRef();
+  const containerRef = useRef(null);
+
   /**
    * Compute preferences
    */
@@ -333,7 +352,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }, [scPreferences.preferences]);
 
   // RENDER
-  const theme: Theme = useTheme();
+  const theme: Theme = useTheme<SCThemeType>();
   const oneColLayout = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
   const advEnabled = useMemo(
     () =>
@@ -389,7 +408,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     () =>
       [
         ...widgets,
-        ...(advEnabled
+        ...(advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED_SIDEBAR)
           ? [
               {
                 type: 'widget',
@@ -412,7 +431,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   /**
    * Compute Widgets for the left column in a specific position
    */
-  const _getLeftColumnWidgets: SCFeedWidgetType[] = (position = 1, total) => {
+  const _getLeftColumnWidgets = (position = 1, total): SCFeedWidgetType[] => {
     const tw = {
       type: 'widget',
       component: CustomAdv,
@@ -424,26 +443,37 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       position,
       id: `left_${position}`
     };
-    if (oneColLayout) {
+    if (oneColLayout && !hideAdvs) {
       const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total) : [];
       return [
         ..._widgets.filter((w) => w.position === position),
-        ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
+        ...(advEnabled &&
+        enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED) &&
+        position > 0 &&
+        position % DEFAULT_WIDGETS_NUMBER === 0
+          ? [tw]
+          : []),
         ...remainingWidgets
-      ];
+      ] as SCFeedWidgetType[];
     }
     const remainingWidgets = position === total - 1 ? _widgets.filter((w) => w.position >= total && w.column === 'left') : [];
     return [
       ..._widgets.filter((w) => w.position === position && w.column === 'left'),
-      ...(advEnabled && position > 0 && position % DEFAULT_WIDGETS_NUMBER === 0 ? [tw] : []),
+      ...(advEnabled &&
+      !hideAdvs &&
+      enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED) &&
+      position > 0 &&
+      position % DEFAULT_WIDGETS_NUMBER === 0
+        ? [tw]
+        : []),
       ...remainingWidgets
-    ];
+    ] as SCFeedWidgetType[];
   };
 
   /**
    * Compute Widgets for the right column
    */
-  const _getRightColumnWidgets: SCFeedWidgetType[] = () => {
+  const _getRightColumnWidgets = (): SCFeedWidgetType[] => {
     if (oneColLayout) {
       return [];
     }
@@ -482,6 +512,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // REFS
   const refreshSubscription = useRef(null);
+  const virtualScrollerState = useRef(null);
   const virtualScrollerMountState = useRef(false);
 
   // VIRTUAL SCROLL HELPERS
@@ -503,14 +534,32 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   );
 
   /**
+   * Callback on scroll mount
+   */
+  const onScrollerStateChange = useMemo(
+    () => (state) => {
+      virtualScrollerState.current = state;
+    },
+    []
+  );
+
+  /**
    * Callback on refresh
    */
-  const refresh = () => {
-    setHeadData([]);
-    setFeedDataLeft([]);
-    setFeedDataRight(_getFeedDataRight());
-    feedDataObject.reload();
-  };
+  const refresh = useMemo(
+    () => (): void => {
+      /**
+       * Only if the feedDataObject is loaded reload data
+       */
+      if (feedDataObject.componentLoaded) {
+        setHeadData([]);
+        setFeedDataLeft([]);
+        setFeedDataRight(_getFeedDataRight());
+        feedDataObject.reload();
+      }
+    },
+    [feedDataObject.componentLoaded, setHeadData, setFeedDataLeft, setFeedDataRight]
+  );
 
   /**
    * Callback subscribe events
@@ -528,7 +577,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
    */
   const renderHeaderComponent = () => {
     return (
-      <>
+      <Box className={classes.start}>
         {!feedDataObject.previous && (
           <>
             {virtualScrollerMountState.current && HeaderComponent}
@@ -540,9 +589,33 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             })}
           </>
         )}
-      </>
+      </Box>
     );
   };
+
+  /**
+   * Infinite scroll getNextPage
+   */
+  const getNextPage = useMemo(
+    () => () => {
+      if (isMountRef.current && feedDataObject.componentLoaded && !feedDataObject.isLoadingNext) {
+        feedDataObject.getNextPage();
+      }
+    },
+    [isMountRef.current, feedDataObject.componentLoaded, feedDataObject.isLoadingNext]
+  );
+
+  /**
+   * Infinite scroll getNextPage
+   */
+  const getPreviousPage = useMemo(
+    () => () => {
+      if (isMountRef.current && feedDataObject.componentLoaded && !feedDataObject.isLoadingPrevious) {
+        feedDataObject.getPreviousPage();
+      }
+    },
+    [isMountRef.current, feedDataObject.componentLoaded, feedDataObject.isLoadingPrevious]
+  );
 
   /**
    * Bootstrap initial data
@@ -552,41 +625,38 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       if (cacheStrategy === CacheStrategies.CACHE_FIRST && feedDataObject.componentLoaded) {
         // Set current cached feed or prefetched data
         setFeedDataLeft(_getFeedDataLeft(feedDataObject.results, feedDataObject.initialOffset, feedDataObject.count));
-      } else {
+        setFeedDataRight(_getFeedDataRight());
+      } else if (!feedDataObject.componentLoaded) {
         // Load next page
         feedDataObject.getNextPage();
+        setFeedDataRight(_getFeedDataRight());
       }
-      setFeedDataRight(_getFeedDataRight());
     },
-    [cacheStrategy, feedDataObject, endpointQueryParams]
+    [cacheStrategy, feedDataObject.componentLoaded, endpointQueryParams]
   );
 
   // EFFECTS
   useEffect(() => {
     /**
-     * Initialize authenticated feed
-     * Init feed data when the user is authenticated and there is no data prefetched
+     * Initialize feed
+     * Init feed data when the user is authenticated/un-authenticated
+     * Use setTimeout helper to delay the request and cancel the effect
+     * (ex. in strict-mode) if need it
      */
-    if (requireAuthentication && authUserId !== null && !prefetchedData) {
-      _initFeedData();
+    let _t;
+    if ((requireAuthentication && authUserId !== null && !prefetchedData) || (!requireAuthentication && !prefetchedData)) {
+      _t = setTimeout(_initFeedData);
     }
-  }, [authUserId]);
-
-  useEffect(() => {
-    /**
-     * Initialize un-authenticated feed
-     * Init feed if there is no data prefetched
-     */
-    if (!requireAuthentication && !prefetchedData) {
-      _initFeedData();
-    }
-  }, []);
+    return () => {
+      _t && clearTimeout(_t);
+    };
+  }, [requireAuthentication, authUserId, prefetchedData]);
 
   /**
    * If widgets changed, refresh the feed (it must recalculate the correct positions of the objects)
    */
   useDeepCompareEffectNoCheck(() => {
-    if (prevWidgets && widgets && prevWidgets !== widgets && feedDataObject.componentLoaded) {
+    if (prevWidgets && widgets && prevWidgets !== widgets) {
       refresh();
     }
   }, [widgets]);
@@ -599,7 +669,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, []);
+  }, [subscriber]);
 
   /**
    * Remove duplicated data when load previous page and
@@ -671,21 +741,34 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   const InnerItem = useMemo(
     () =>
       ({state: savedState, onHeightChange, onStateChange, children: item}) => {
+        const onItemHeightChange = () => {
+          if (savedState && savedState.firstShownItemIndex !== undefined) {
+            onHeightChange();
+          }
+        };
+        const onItemStateChange = (state) => {
+          onStateChange({...savedState, ...state});
+        };
         return (
-          <VirtualScrollChild virtualScrollerMountState onHeightChange={onHeightChange}>
+          <VirtualScrollChild onHeightChange={onItemHeightChange}>
             {item.type === 'widget' ? (
               <item.component
                 id={`${WIDGET_PREFIX_KEY}${item.position}`}
                 {...item.componentProps}
-                {...(item.publishEvents && {publicationChannel: id})}></item.component>
+                {...(item.publishEvents && {publicationChannel: id})}
+                {...savedState}
+                onStateChange={onItemStateChange}
+                onHeightChange={onItemHeightChange}
+              />
             ) : (
               <ItemComponent
                 id={`item_${itemIdGenerator(item)}`}
                 {...itemPropsGenerator(scUserContext.user, item)}
                 {...ItemProps}
                 sx={{width: '100%'}}
-                onChangeLayout={onStateChange}
                 {...savedState}
+                onStateChange={onItemStateChange}
+                onHeightChange={onItemHeightChange}
               />
             )}
           </VirtualScrollChild>
@@ -706,64 +789,75 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   return (
     <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
+      {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
+        <Grid item xs={12}>
+          <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
+        </Grid>
+      ) : null}
       <Grid item xs={12} md={7}>
-        <div className={classes.left} style={{overflow: 'visible'}}>
-          <InfiniteScroll
-            className={classes.left}
-            dataLength={feedDataLeft.length}
-            next={feedDataObject.getNextPage}
-            previous={feedDataObject.getPreviousPage}
-            hasMoreNext={Boolean(feedDataObject.next)}
-            hasMorePrevious={Boolean(feedDataObject.previous)}
-            header={PreviousPageLink}
-            footer={NextPageLink}
-            loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
-            loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
-            scrollThreshold={1}
-            endMessage={
-              <>
-                <Widget className={classes.end}>
-                  <CardContent>{endMessage}</CardContent>
-                </Widget>
-                {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
-              </>
-            }
-            refreshFunction={refresh}
-            pullDownToRefresh
-            pullDownToRefreshThreshold={1000}
-            pullDownToRefreshContent={null}
-            releaseToRefreshContent={
-              <Widget variant="outlined" className={classes.refresh}>
-                <CardContent>{refreshMessage}</CardContent>
+        <InfiniteScroll
+          ref={containerRef}
+          className={classes.left}
+          dataLength={feedDataLeft.length}
+          next={getNextPage}
+          previous={getPreviousPage}
+          hasMoreNext={Boolean(feedDataObject.next)}
+          hasMorePrevious={Boolean(feedDataObject.previous)}
+          header={PreviousPageLink}
+          footer={NextPageLink}
+          loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
+          loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
+          scrollThreshold={'90%'}
+          endMessage={
+            <Box className={classes.end}>
+              <Widget className={classes.endMessage}>
+                <CardContent>{endMessage}</CardContent>
               </Widget>
-            }
-            style={{overflow: 'visible'}}>
-            {renderHeaderComponent()}
-            <VirtualizedScroller
-              items={feedDataLeft}
-              itemComponent={InnerItem}
-              onMount={onScrollerMount}
-              getItemId={getScrollItemId}
-              preserveScrollPosition
-              preserveScrollPositionOnPrependItems
-              cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
-              cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
-              cacheStrategy={cacheStrategy}
-              {...VirtualizedScrollerProps}
-            />
-          </InfiniteScroll>
-        </div>
+              {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
+                <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
+              ) : null}
+              {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
+            </Box>
+          }
+          refreshFunction={refresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={1000}
+          pullDownToRefreshContent={null}
+          releaseToRefreshContent={
+            <Widget variant="outlined" className={classes.refresh}>
+              <CardContent>{refreshMessage}</CardContent>
+            </Widget>
+          }
+          style={{overflow: 'visible'}}
+          {...(scrollableTargetId && {scrollableTarget: scrollableTargetId})}>
+          {renderHeaderComponent()}
+          <VirtualizedScroller
+            className={classes.leftItems}
+            items={feedDataLeft}
+            itemComponent={InnerItem}
+            onMount={onScrollerMount}
+            onScrollerStateChange={onScrollerStateChange}
+            getItemId={getScrollItemId}
+            preserveScrollPosition
+            preserveScrollPositionOnPrependItems
+            cacheScrollStateKey={SCCache.getVirtualizedScrollStateCacheKey(id)}
+            cacheScrollerPositionKey={SCCache.getFeedSPCacheKey(id)}
+            cacheStrategy={cacheStrategy}
+            {...(scrollableTargetId && {getScrollableContainer: () => document.getElementById(scrollableTargetId)})}
+            {...VirtualizedScrollerProps}
+          />
+        </InfiniteScroll>
       </Grid>
-      {feedDataRight.length > 0 && (
+      {feedDataRight.length > 0 && !hideAdvs && (
         <Hidden smDown>
           <Grid item xs={12} md={5}>
-            <Sticky enabled className={classes.right} {...FeedSidebarProps}>
+            <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
               <React.Suspense fallback={<GenericSkeleton />}>
                 {feedDataRight.map((d, i) => (
                   <d.component key={i} {...d.componentProps}></d.component>
                 ))}
               </React.Suspense>
-            </Sticky>
+            </StickyBoxComp>
           </Grid>
         </Hidden>
       )}

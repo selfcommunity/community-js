@@ -1,7 +1,7 @@
 import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
-  CategoriesPopular,
+  CategoriesPopularWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -10,17 +10,19 @@ import {
   FeedRef,
   FeedSidebarProps,
   FeedProps,
-  InlineComposer,
-  LoyaltyProgram,
-  PeopleSuggestion,
-  Platform,
+  InlineComposerWidget,
+  LoyaltyProgramWidget,
+  UserSuggestionWidget,
+  PlatformWidget,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCExploreFeedTemplate';
+import {SCCustomAdvPosition} from '@selfcommunity/types';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -28,11 +30,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ExploreFeedProps {
   /**
@@ -79,28 +78,28 @@ export interface ExploreFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: Platform,
+    component: PlatformWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: LoyaltyProgram,
+    component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesPopular,
+    component: CategoriesPopularWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: PeopleSuggestion,
+    component: UserSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 3
@@ -109,6 +108,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Explore Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the template for explore feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/ExploreFeed)
 
  #### Import
 
@@ -136,11 +139,18 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   });
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
+  // CONTEXT
+  const {enqueueSnackbar} = useSnackbar();
+
   // REF
   const feedRef = useRef<FeedRef>();
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
     // Hydrate feedUnit
     const feedUnit = {
       type: feedObject.type,
@@ -180,8 +190,13 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
       FeedSidebarProps={FeedSidebarProps}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
       {...FeedProps}
     />
   );

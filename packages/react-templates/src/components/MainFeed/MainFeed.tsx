@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
-  CategoriesSuggestion,
+  CategoriesSuggestionWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -9,18 +9,21 @@ import {
   SCFeedObjectTemplateType,
   FeedSidebarProps,
   FeedProps,
-  InlineComposer,
-  LoyaltyProgram,
-  PeopleSuggestion,
-  Platform,
-  SCFeedWidgetType
+  InlineComposerWidget,
+  LoyaltyProgramWidget,
+  UserSuggestionWidget,
+  PlatformWidget,
+  SCFeedWidgetType,
+  FeedRef
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCMainFeedTemplate';
+import {SCCustomAdvPosition} from '@selfcommunity/types';
+import {useSnackbar} from 'notistack';
+import {FormattedMessage} from 'react-intl';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -28,11 +31,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface MainFeedProps {
   /**
@@ -79,28 +79,28 @@ export interface MainFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: Platform,
+    component: PlatformWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: LoyaltyProgram,
+    component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesSuggestion,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: PeopleSuggestion,
+    component: UserSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 3
@@ -109,6 +109,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Main Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the template for the main feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/MainFeed)
 
  #### Import
 
@@ -138,16 +142,37 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const {enqueueSnackbar} = useSnackbar();
+
+  // REF
+  const feedRef = useRef<FeedRef>();
 
   // Ckeck user is authenticated
   if (!scUserContext.user) {
     return null;
   }
 
+  // HANDLERS
+  const handleComposerSuccess = (feedObject) => {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
+    // Hydrate feedUnit
+    const feedUnit = {
+      type: feedObject.type,
+      [feedObject.type]: feedObject,
+      seen_by_id: [],
+      has_boost: false
+    };
+    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+  };
+
   return (
     <Root
       id={id}
       className={classNames(classes.root, className)}
+      ref={feedRef}
       endpoint={Endpoints.MainFeed}
       widgets={widgets}
       ItemComponent={FeedObject}
@@ -164,9 +189,14 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposer />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
       requireAuthentication={true}
       disablePaginationLinks={true}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
       {...FeedProps}
     />
   );

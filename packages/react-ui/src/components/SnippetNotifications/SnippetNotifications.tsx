@@ -40,43 +40,21 @@ import {
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
 import NotificationItem from '../../shared/NotificationItem';
-
-const PREFIX = 'SCSnippetNotifications';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
   notificationsWrap: `${PREFIX}-notifications-wrap`,
   emptyBoxNotifications: `${PREFIX}-empty-box-notifications`,
-  notificationsList: `${PREFIX}-notifications-list`,
+  list: `${PREFIX}-list`,
   broadcastMessagesBanner: `${PREFIX}-broadcast-messages-banner`,
-  notificationItem: `${PREFIX}-notification-item`
+  item: `${PREFIX}-item`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.notificationsWrap}`]: {
-    height: 330,
-    maxWidth: 320,
-    overflowY: 'hidden'
-  },
-  [`& .${classes.notificationItem}`]: {
-    padding: 0,
-    margin: `${theme.spacing()} 0px`,
-    whiteSpace: 'normal',
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
-      cursor: 'default'
-    }
-  },
-  '& a': {
-    textDecoration: 'none',
-    color: theme.palette.text.primary
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface SnippetNotificationsProps extends CardProps {
   /**
@@ -112,7 +90,7 @@ export interface SnippetNotificationsProps extends CardProps {
   /**
    * The obj key
    */
-  key: number;
+  key?: number;
 
   /**
    * Props to spread to ScrollContainer component
@@ -129,6 +107,12 @@ export interface SnippetNotificationsProps extends CardProps {
   onNotificationClick?: (event, notification) => void;
 
   /**
+   * Callback on fetch notifications
+   * @default null;
+   */
+  onFetchNotifications?: (data) => void;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -137,8 +121,11 @@ export interface SnippetNotificationsProps extends CardProps {
 const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
 
 /**
+ * > API documentation for the Community-JS SnippetNotifications component. Learn about the available props and the CSS API.
  *
- > API documentation for the Community-JS SnippetNotifications component. Learn about the available props and the CSS API.
+ *
+ * This component renders the notification list.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/SnippetNotifications)
 
  #### Import
 
@@ -158,8 +145,8 @@ const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_A
  |root|.SCSnippetNotification-root|Styles applied to the root element.|
  |notificationsWrap|.SCSnippetNotification-notification-wrap|Styles applied to the notifications wrap.|
  |emptyBoxNotifications|.SCSnippetNotification-empty-box-notifications|Styles applied to the box indicating that there are no notifications.|
- |notificationsList|.SCSnippetNotification-notifications-list|Styles applied to the list of notifications.|
- |notificationItem|.SCSnippetNotification-notification-item|Styles applied to the single notification.|
+ |list|.SCSnippetNotification-list|Styles applied to the list of notifications.|
+ |item|.SCSnippetNotification-item|Styles applied to the single notification.|
  |broadcastMessagesBanner|.SCSnippetNotification-broadcast-messages-banner|Styles applied to the broadcast message banner.|
 
  * @param inProps
@@ -179,6 +166,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
     handleNotification,
     ScrollContainerProps = {},
     onNotificationClick,
+    onFetchNotifications,
     ...rest
   } = props;
 
@@ -188,7 +176,8 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
 
   // STATE
   const [notifications, setNotifications] = useState<SCNotificationAggregatedType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [initialized, setInitialized] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // REFS
   const notificationSubscription = useRef(null);
@@ -208,7 +197,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
    * Perform vote
    */
   const performFetchNotifications = useMemo(
-    () => () => {
+    () => (): Promise<any> => {
       return http
         .request({
           url: Endpoints.UserNotificationList.url(),
@@ -228,34 +217,45 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
    * Handles vote
    * @param comment
    */
-  function fetchNotifications() {
-    setLoading(true);
-    performFetchNotifications()
-      .then((data) => {
-        setNotifications(data.results);
-        setLoading(false);
-        scUserContext.refreshNotificationCounters();
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
-  }
+  const fetchNotifications = useMemo(
+    () => (): void => {
+      setInitialized(true);
+      if (!loading) {
+        setLoading(true);
+        performFetchNotifications()
+          .then((data) => {
+            setNotifications(data.results);
+            setLoading(false);
+            scUserContext.refreshCounters();
+            onFetchNotifications && onFetchNotifications(data.results);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [loading, notifications.length, onFetchNotifications, setInitialized]
+  );
 
   /**
    * Fetch notifications
    */
   useEffect(() => {
-    if (scUserContext.user && loading) {
-      fetchNotifications();
+    let _t;
+    if (scUserContext.user && !initialized) {
+      _t = setTimeout(fetchNotifications);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
-  }, [scUserContext.user]);
+  }, [scUserContext.user, initialized]);
 
   /**
    * Notification subscriber
    * @param msg
    * @param data
    */
-  const notificationSubscriber = (msg, data) => {
+  const notificationSubscriber = (msg, data): void => {
     /**
      * Ignore notifications of type: notification_banner
      * (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER)
@@ -272,7 +272,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
     }
   };
 
-  const handleSingleNotificationClick = (e, n) => {
+  const handleSingleNotificationClick = (e, n): void => {
     if (onNotificationClick) {
       onNotificationClick(e, n);
     }
@@ -286,7 +286,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
     if (!loading) {
       notificationSubscription.current = PubSub.subscribe(SCNotificationTopicType.INTERACTION, notificationSubscriber);
     }
-    return () => {
+    return (): void => {
       notificationSubscription.current && PubSub.unsubscribe(notificationSubscription.current);
     };
   }, [loading]);
@@ -296,7 +296,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
    * @param n
    * @param i
    */
-  function renderAggregatedItem(n, i) {
+  const renderAggregatedItem = (n, i): JSX.Element => {
     const type = n.type;
     let content;
     if (type === SCNotificationTypologyType.COMMENT || type === SCNotificationTypologyType.NESTED_COMMENT) {
@@ -355,7 +355,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
       content = handleNotification(type, n, content);
     }
     return content;
-  }
+  };
 
   /**
    * Renders root object
@@ -363,58 +363,54 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Box className={classes.notificationsWrap}>
-        {loading ? (
+        {!initialized || loading ? (
           <Skeleton elevation={0} />
         ) : (
-          <>
-            {notifications.length === 0 ? (
-              <Box className={classes.emptyBoxNotifications}>
-                <FormattedMessage
-                  id="ui.snippetNotifications.noNotifications"
-                  defaultMessage="ui.snippetNotifications.noNotifications"></FormattedMessage>
-              </Box>
-            ) : (
-              <ScrollContainer {...ScrollContainerProps}>
-                <MenuList className={classes.notificationsList}>
-                  {scUserContext.user.unseen_notification_banners_counter ? (
-                    <MenuItem
-                      className={classNames(classes.notificationItem, classes.broadcastMessagesBanner)}
-                      key="banner"
-                      component={Link}
-                      to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
-                      <NotificationItem
-                        template={SCNotificationObjectTemplateType.SNIPPET}
-                        isNew
-                        disableTypography
-                        image={
-                          <Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />
-                        }
-                        primary={
-                          <Typography component={'div'}>
-                            {intl.formatMessage(
-                              {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
-                              {
-                                count: scUserContext.user.unseen_notification_banners_counter,
-                                b: (...chunks) => <strong>{chunks}</strong>,
-                                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>{chunks}</Link>
-                              }
-                            )}
-                          </Typography>
-                        }
-                      />
+          <ScrollContainer {...ScrollContainerProps}>
+            <MenuList className={classes.list} disabledItemsFocusable disableListWrap>
+              {scUserContext.user.unseen_notification_banners_counter ? (
+                <MenuItem
+                  className={classNames(classes.item, classes.broadcastMessagesBanner)}
+                  key="banner"
+                  component={Link}
+                  to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+                  <NotificationItem
+                    template={SCNotificationObjectTemplateType.SNIPPET}
+                    isNew
+                    disableTypography
+                    image={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />}
+                    primary={
+                      <Typography component={'div'}>
+                        {intl.formatMessage(
+                          {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
+                          {
+                            count: scUserContext.user.unseen_notification_banners_counter,
+                            b: (...chunks) => <strong>{chunks}</strong>,
+                            link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>{chunks}</Link>
+                          }
+                        )}
+                      </Typography>
+                    }
+                  />
+                </MenuItem>
+              ) : null}
+              {notifications.length === 0 ? (
+                <MenuItem className={classes.emptyBoxNotifications}>
+                  <FormattedMessage
+                    id="ui.snippetNotifications.noNotifications"
+                    defaultMessage="ui.snippetNotifications.noNotifications"></FormattedMessage>
+                </MenuItem>
+              ) : (
+                notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
+                  notificationObject.aggregated.map((n: SCNotificationType, k) => (
+                    <MenuItem className={classes.item} key={k} onClick={(e) => handleSingleNotificationClick(e, n)} disableRipple disableTouchRipple>
+                      {renderAggregatedItem(n, i)}
                     </MenuItem>
-                  ) : null}
-                  {notifications.slice(0, showMax).map((notificationObject: SCNotificationAggregatedType, i) =>
-                    notificationObject.aggregated.map((n: SCNotificationType, k) => (
-                      <MenuItem className={classes.notificationItem} key={k} onClick={(e) => handleSingleNotificationClick(e, n)}>
-                        {renderAggregatedItem(n, i)}
-                      </MenuItem>
-                    ))
-                  )}
-                </MenuList>
-              </ScrollContainer>
-            )}
-          </>
+                  ))
+                )
+              )}
+            </MenuList>
+          </ScrollContainer>
         )}
       </Box>
     </Root>

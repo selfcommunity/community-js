@@ -6,6 +6,7 @@ describe('Private Message Service Test', () => {
   let threadId;
   let message;
   let receiverId;
+  let receiverUsername;
   test('Get all snippets', () => {
     return PrivateMessageService.getAllSnippets().then((data) => {
       if (data.count !== 0) {
@@ -38,8 +39,19 @@ describe('Private Message Service Test', () => {
     return UserService.getUserFollowers(loggedUser).then((data) => {
       if (data.count !== 0) {
         receiverId = data.results[0].id;
+        receiverUsername = data.results[0].username;
       }
     });
+  });
+  test('Search User', () => {
+    if (receiverUsername) {
+      return PrivateMessageService.searchUser(receiverUsername).then((data) => {
+        expect(data.results).toBeInstanceOf(Array);
+        console.log(data, receiverUsername);
+      });
+    } else {
+      test.skip;
+    }
   });
   test('Send a message', () => {
     if (receiverId) {
@@ -54,7 +66,7 @@ describe('Private Message Service Test', () => {
   });
   test('Delete a message', () => {
     if (message) {
-      return PrivateMessageService.deleteAMessage(message.id).then((data) => {
+      return PrivateMessageService.deleteAMessage(message[0].id).then((data) => {
         expect(data).toBe('');
       });
     } else {
@@ -63,7 +75,7 @@ describe('Private Message Service Test', () => {
   });
   test('Delete a thread', () => {
     if (threadId) {
-      return PrivateMessageService.deleteAThread(threadId).then((data) => {
+      return PrivateMessageService.deleteAThread({thread: threadId}).then((data) => {
         expect(data).toBe('');
       });
     } else {

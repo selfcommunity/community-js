@@ -1,20 +1,17 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import CategoryHeaderSkeleton from './Skeleton';
 
 export default {
   title: 'Design System/React UI/Skeleton/CategoryHeader',
-  component: CategoryHeaderSkeleton,
-  argTypes: {},
-  args: {}
-} as ComponentMeta<typeof CategoryHeaderSkeleton>;
+  component: CategoryHeaderSkeleton
+} as Meta<typeof CategoryHeaderSkeleton>;
 
-const Template: ComponentStory<typeof CategoryHeaderSkeleton> = (args) => (
+const template = (args) => (
   <div style={{width: '100%'}}>
     <CategoryHeaderSkeleton {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {};
+export const Base: StoryObj<CategoryHeaderSkeleton> = {
+  render: template
+}

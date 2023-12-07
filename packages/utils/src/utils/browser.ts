@@ -6,6 +6,7 @@ export const loadVersionBrowser = () => {
   if ('userAgentData' in navigator) {
     // navigator.userAgentData is not available in
     // Firefox and Safari
+    // @ts-ignore
     const uaData: Array<any> = navigator['userAgentData'];
     // Outputs of navigator.userAgentData.brands[n].brand are e.g.
     // Chrome: 'Google Chrome'
@@ -28,7 +29,7 @@ export const loadVersionBrowser = () => {
           browsername = brand.substr(brand.indexOf(' ') + 1);
           return {
             name: browsername,
-            version: browserversion,
+            version: browserversion
           };
         }
       }
@@ -37,7 +38,7 @@ export const loadVersionBrowser = () => {
     if (chromeVersion !== null) {
       return {
         name: 'chrome',
-        version: chromeVersion,
+        version: chromeVersion
       };
     }
   }
@@ -64,6 +65,14 @@ export const loadVersionBrowser = () => {
   }
   return {
     name: M[0],
-    version: M[1],
+    version: M[1]
   };
+};
+
+export const iOS = () => {
+  return (
+    ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
+    // iPad on iOS 13 detection
+    (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+  );
 };

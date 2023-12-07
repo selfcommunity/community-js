@@ -2,7 +2,7 @@ import Endpoints from '../../constants/Endpoints';
 import {AccountCreateParams, AccountRecoverParams, AccountResetParams, AccountSearchParams, AccountVerifyParams} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {AxiosRequestConfig} from 'axios';
-import {SCUserType} from '@selfcommunity/types/src/types';
+import {SCUserType} from '@selfcommunity/types';
 
 export interface AccountApiClientInterface {
   create(data?: AccountCreateParams, config?: AxiosRequestConfig): Promise<SCUserType>;
@@ -34,6 +34,14 @@ export class AccountApiClient {
    */
   static verify(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, data, url: Endpoints.AccountVerify.url({}), method: Endpoints.AccountVerify.method});
+  }
+  /**
+   * This endpoint verify if a validation code is valid.
+   * @param data
+   * @param config
+   */
+  static verifyValidationCode(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, data, url: Endpoints.AccountVerifyValidationCode.url({}), method: Endpoints.AccountVerifyValidationCode.method});
   }
   /**
    * This endpoint recover an account.
@@ -104,6 +112,9 @@ export default class AccountService {
   }
   static async verify(data?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<any> {
     return AccountApiClient.verify(data, config);
+  }
+  static async verifyValidationCode(params?: AccountVerifyParams, config?: AxiosRequestConfig): Promise<SCUserType> {
+    return AccountApiClient.verifyValidationCode(params, config);
   }
   static async recover(data?: AccountRecoverParams, config?: AxiosRequestConfig): Promise<any> {
     return AccountApiClient.recover(data, config);

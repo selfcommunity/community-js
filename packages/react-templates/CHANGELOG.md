@@ -3,6 +3,3456 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.361](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.360...@selfcommunity/react-templates@0.3.0-alpha.361) (2023-12-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.360](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.359...@selfcommunity/react-templates@0.3.0-alpha.360) (2023-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.359](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.358...@selfcommunity/react-templates@0.3.0-alpha.359) (2023-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.358](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.357...@selfcommunity/react-templates@0.3.0-alpha.358) (2023-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.357](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.356...@selfcommunity/react-templates@0.3.0-alpha.357) (2023-12-01)
+
+
+### Performance Improvements
+
+* user profile header skeleton ([2e526c5](https://github.com/selfcommunity/community-js/commit/2e526c59f05ec09d5151d24b42003a23d0793b28))
+
+
+
+
+
+# [0.3.0-alpha.356](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.355...@selfcommunity/react-templates@0.3.0-alpha.356) (2023-12-01)
+
+
+### Performance Improvements
+
+* changed user profile header layout. Asana issue: https://app.asana.com/0/1202638443591994/1206035214618937/f ([4a8cb13](https://github.com/selfcommunity/community-js/commit/4a8cb13911e825b0459d07f892867dbea858f970))
+
+
+
+
+
+# [0.3.0-alpha.355](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.354...@selfcommunity/react-templates@0.3.0-alpha.355) (2023-11-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.354](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.353...@selfcommunity/react-templates@0.3.0-alpha.354) (2023-11-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.353](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.352...@selfcommunity/react-templates@0.3.0-alpha.353) (2023-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.352](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.351...@selfcommunity/react-templates@0.3.0-alpha.352) (2023-11-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.351](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.350...@selfcommunity/react-templates@0.3.0-alpha.351) (2023-11-24)
+
+
+### Bug Fixes
+
+* fixed feed object location param(lon->lng). Asana issue: https://app.asana.com/0/1202638443591994/1206016441538934/f and https://app.asana.com/0/1202638443591994/1206016441538977/f issue. ([12dcdbf](https://github.com/selfcommunity/community-js/commit/12dcdbf03b6a6e3b9e424f6f816cd0c2b044916a))
+
+
+
+
+
+# [0.3.0-alpha.350](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.349...@selfcommunity/react-templates@0.3.0-alpha.350) (2023-11-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.349](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.348...@selfcommunity/react-templates@0.3.0-alpha.349) (2023-11-23)
+
+
+### Bug Fixes
+
+* fixed asana issue: ([fca7f5c](https://github.com/selfcommunity/community-js/commit/fca7f5c759baf69831651517839adc10d395524f))
+
+
+
+
+
+# [0.3.0-alpha.348](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.347...@selfcommunity/react-templates@0.3.0-alpha.348) (2023-11-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.347](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.346...@selfcommunity/react-templates@0.3.0-alpha.347) (2023-11-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.346](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.345...@selfcommunity/react-templates@0.3.0-alpha.346) (2023-11-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.345](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.344...@selfcommunity/react-templates@0.3.0-alpha.345) (2023-11-16)
+
+
+### Performance Improvements
+
+* removed useThemeProps from subfolders(refactoring theme) ([e113484](https://github.com/selfcommunity/community-js/commit/e1134844cc812089f3c59ca784ddf5a453b034ee))
+
+
+
+
+
+# [0.3.0-alpha.344](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.343...@selfcommunity/react-templates@0.3.0-alpha.344) (2023-11-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.343](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.342...@selfcommunity/react-templates@0.3.0-alpha.343) (2023-11-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.342](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.341...@selfcommunity/react-templates@0.3.0-alpha.342) (2023-11-10)
+
+
+### Performance Improvements
+
+* refactored templates components theme. ([1d96f02](https://github.com/selfcommunity/community-js/commit/1d96f02753b6967020d2169858c71bbb5f7fbbeb))
+
+
+
+
+
+# [0.3.0-alpha.341](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.340...@selfcommunity/react-templates@0.3.0-alpha.341) (2023-10-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.340](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.339...@selfcommunity/react-templates@0.3.0-alpha.340) (2023-10-30)
+
+
+### Performance Improvements
+
+* Added LoyaltyProgramWidget.tsx to user profile ([091208d](https://github.com/selfcommunity/community-js/commit/091208d66353e53a7cc7d1e51b35b97186504a6f))
+
+
+
+
+
+# [0.3.0-alpha.339](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.338...@selfcommunity/react-templates@0.3.0-alpha.339) (2023-10-26)
+
+
+### Bug Fixes
+
+* UserProfile template ([24f991a](https://github.com/selfcommunity/community-js/commit/24f991a2f27cc13b67540f7894b71db5db91ad12))
+
+
+
+
+
+# [0.3.0-alpha.338](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.337...@selfcommunity/react-templates@0.3.0-alpha.338) (2023-10-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.337](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.336...@selfcommunity/react-templates@0.3.0-alpha.337) (2023-10-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.336](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.335...@selfcommunity/react-templates@0.3.0-alpha.336) (2023-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.335](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.334...@selfcommunity/react-templates@0.3.0-alpha.335) (2023-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.334](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.333...@selfcommunity/react-templates@0.3.0-alpha.334) (2023-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.333](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.332...@selfcommunity/react-templates@0.3.0-alpha.333) (2023-10-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.332](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.331...@selfcommunity/react-templates@0.3.0-alpha.332) (2023-10-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.331](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.330...@selfcommunity/react-templates@0.3.0-alpha.331) (2023-10-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.330](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.329...@selfcommunity/react-templates@0.3.0-alpha.330) (2023-10-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.329](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.328...@selfcommunity/react-templates@0.3.0-alpha.329) (2023-10-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.328](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.327...@selfcommunity/react-templates@0.3.0-alpha.328) (2023-10-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.327](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.326...@selfcommunity/react-templates@0.3.0-alpha.327) (2023-10-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.326](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.325...@selfcommunity/react-templates@0.3.0-alpha.326) (2023-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.325](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.324...@selfcommunity/react-templates@0.3.0-alpha.325) (2023-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.324](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.323...@selfcommunity/react-templates@0.3.0-alpha.324) (2023-10-16)
+
+
+### Bug Fixes
+
+* scrollIntoView ([5750ace](https://github.com/selfcommunity/community-js/commit/5750aceef6d0f38dc27c9f169566158a17a017b2))
+
+
+
+
+
+# [0.3.0-alpha.323](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.322...@selfcommunity/react-templates@0.3.0-alpha.323) (2023-10-16)
+
+
+### Bug Fixes
+
+* scrollIntoView ([fd72f43](https://github.com/selfcommunity/community-js/commit/fd72f437d9d90c12e5de59087a06c317366dac83))
+
+
+
+
+
+# [0.3.0-alpha.322](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.321...@selfcommunity/react-templates@0.3.0-alpha.322) (2023-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.321](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.320...@selfcommunity/react-templates@0.3.0-alpha.321) (2023-10-12)
+
+
+### Bug Fixes
+
+* scrollIntoView ([6bf9256](https://github.com/selfcommunity/community-js/commit/6bf9256173111f77d464cb514e51e180f9d8df5c))
+
+
+
+
+
+# [0.3.0-alpha.320](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.319...@selfcommunity/react-templates@0.3.0-alpha.320) (2023-10-10)
+
+
+### Bug Fixes
+
+* feed infinite scroll ([f3cceb6](https://github.com/selfcommunity/community-js/commit/f3cceb633c6688b848d886fd16134c7db2a08d2b))
+* feed infinite scroll ([03fc937](https://github.com/selfcommunity/community-js/commit/03fc93755c06762447ad8667108ebe0bdac84547))
+* feed infinite scroll ([b0f7b9e](https://github.com/selfcommunity/community-js/commit/b0f7b9e8216e9a263c59d32188cb89e867ec64a4))
+
+
+
+
+
+# [0.3.0-alpha.319](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.318...@selfcommunity/react-templates@0.3.0-alpha.319) (2023-10-10)
+
+
+### Performance Improvements
+
+* Update dependencies ([21fac75](https://github.com/selfcommunity/community-js/commit/21fac7587c6f91bbdce51f7b4f40ed7ae0eb1b63))
+
+
+
+
+
+# [0.3.0-alpha.318](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.317...@selfcommunity/react-templates@0.3.0-alpha.318) (2023-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.317](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.316...@selfcommunity/react-templates@0.3.0-alpha.317) (2023-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.316](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.315...@selfcommunity/react-templates@0.3.0-alpha.316) (2023-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.315](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.314...@selfcommunity/react-templates@0.3.0-alpha.315) (2023-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.314](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.313...@selfcommunity/react-templates@0.3.0-alpha.314) (2023-09-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.313](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.312...@selfcommunity/react-templates@0.3.0-alpha.313) (2023-09-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.312](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.311...@selfcommunity/react-templates@0.3.0-alpha.312) (2023-09-22)
+
+
+### Bug Fixes
+
+* editor ([a318f15](https://github.com/selfcommunity/community-js/commit/a318f15c55f646fa171ae4593bedfe9288a65efc))
+
+
+
+
+
+# [0.3.0-alpha.311](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.310...@selfcommunity/react-templates@0.3.0-alpha.311) (2023-09-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.310](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.309...@selfcommunity/react-templates@0.3.0-alpha.310) (2023-09-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.309](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.308...@selfcommunity/react-templates@0.3.0-alpha.309) (2023-09-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.308](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.307...@selfcommunity/react-templates@0.3.0-alpha.308) (2023-09-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.307](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.306...@selfcommunity/react-templates@0.3.0-alpha.307) (2023-09-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.306](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.305...@selfcommunity/react-templates@0.3.0-alpha.306) (2023-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.305](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.304...@selfcommunity/react-templates@0.3.0-alpha.305) (2023-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.304](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.303...@selfcommunity/react-templates@0.3.0-alpha.304) (2023-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.303](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.302...@selfcommunity/react-templates@0.3.0-alpha.303) (2023-09-14)
+
+
+### Bug Fixes
+
+* block staff user ([07dc21a](https://github.com/selfcommunity/community-js/commit/07dc21a36649493625df073346b8a384ece21073))
+
+
+
+
+
+# [0.3.0-alpha.302](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.301...@selfcommunity/react-templates@0.3.0-alpha.302) (2023-09-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.301](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.300...@selfcommunity/react-templates@0.3.0-alpha.301) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([a317be4](https://github.com/selfcommunity/community-js/commit/a317be4e517cd73a77bfcd359ab8f5e1c1b73f31))
+
+
+
+
+
+# [0.3.0-alpha.300](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.299...@selfcommunity/react-templates@0.3.0-alpha.300) (2023-09-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.299](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.298...@selfcommunity/react-templates@0.3.0-alpha.299) (2023-09-13)
+
+
+### Bug Fixes
+
+* build optimization ([1ceac97](https://github.com/selfcommunity/community-js/commit/1ceac97e8f92aa0187a9415f4a4db43dd5b5e302))
+* build optimization ([00f8f69](https://github.com/selfcommunity/community-js/commit/00f8f69859d7abe9581334523d76f498e30412a6))
+* build optimization ([49b80a5](https://github.com/selfcommunity/community-js/commit/49b80a5b6deb384a4af25e619fecfaa7d8c63cb7))
+* build optimization ([ce40be5](https://github.com/selfcommunity/community-js/commit/ce40be51278ad2f1ec1a8f5a14905a869a3ceb44))
+* build optimization ([8c37a63](https://github.com/selfcommunity/community-js/commit/8c37a6313daeb71056316d288cda856afd5a5238))
+* build optimization ([2f504dd](https://github.com/selfcommunity/community-js/commit/2f504dd914ddfaabf66da66ecb5f6731f9ad76d4))
+* build optimization ([b8d6766](https://github.com/selfcommunity/community-js/commit/b8d6766a764cf125ae0eda3b5eca9391c588a5ff))
+* build optimization ([bf7c81d](https://github.com/selfcommunity/community-js/commit/bf7c81d2fbf202f4b6a8b44be5741c7e5844d80e))
+* build optimization ([4c2c3b9](https://github.com/selfcommunity/community-js/commit/4c2c3b92d4ca535381bfdf12632e590ec52eb4e9))
+* build optimization ([e593518](https://github.com/selfcommunity/community-js/commit/e5935186b7866e2d35e9e7df69d33a003efdd0e5))
+* build optimization ([2a33924](https://github.com/selfcommunity/community-js/commit/2a33924523296726dd7a1948ca7755a93578e711))
+
+
+
+
+
+# [0.3.0-alpha.298](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.297...@selfcommunity/react-templates@0.3.0-alpha.298) (2023-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.297](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.296...@selfcommunity/react-templates@0.3.0-alpha.297) (2023-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.296](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.295...@selfcommunity/react-templates@0.3.0-alpha.296) (2023-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.295](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.294...@selfcommunity/react-templates@0.3.0-alpha.295) (2023-09-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.294](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.293...@selfcommunity/react-templates@0.3.0-alpha.294) (2023-09-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.293](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.292...@selfcommunity/react-templates@0.3.0-alpha.293) (2023-09-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.292](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.291...@selfcommunity/react-templates@0.3.0-alpha.292) (2023-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.291](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.290...@selfcommunity/react-templates@0.3.0-alpha.291) (2023-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.290](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.289...@selfcommunity/react-templates@0.3.0-alpha.290) (2023-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.289](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.288...@selfcommunity/react-templates@0.3.0-alpha.289) (2023-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.288](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.287...@selfcommunity/react-templates@0.3.0-alpha.288) (2023-09-07)
+
+
+### Bug Fixes
+
+* react-intl upgrade ([97987df](https://github.com/selfcommunity/community-js/commit/97987df2c5c8ca33d59a235ccd4e0d4b4c75b381))
+
+
+
+
+
+# [0.3.0-alpha.287](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.286...@selfcommunity/react-templates@0.3.0-alpha.287) (2023-09-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.286](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.285...@selfcommunity/react-templates@0.3.0-alpha.286) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([5e4547b](https://github.com/selfcommunity/community-js/commit/5e4547ba1e666b438326dbca1d6544d7c685002a))
+* bundles optimization ([ffe6738](https://github.com/selfcommunity/community-js/commit/ffe67381b72625009c3d86bb7cd7df971ececda4))
+
+
+
+
+
+# [0.3.0-alpha.285](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.284...@selfcommunity/react-templates@0.3.0-alpha.285) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+
+
+
+
+
+# [0.3.0-alpha.284](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.283...@selfcommunity/react-templates@0.3.0-alpha.284) (2023-08-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.283](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.282...@selfcommunity/react-templates@0.3.0-alpha.283) (2023-08-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.282](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.281...@selfcommunity/react-templates@0.3.0-alpha.282) (2023-08-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.281](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.280...@selfcommunity/react-templates@0.3.0-alpha.281) (2023-08-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.280](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.279...@selfcommunity/react-templates@0.3.0-alpha.280) (2023-08-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.279](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.278...@selfcommunity/react-templates@0.3.0-alpha.279) (2023-07-27)
+
+
+### Performance Improvements
+
+* Update [@material-ui](https://github.com/material-ui) lib ([da66df0](https://github.com/selfcommunity/community-js/commit/da66df03bc7f3f75c84128a3beda9aeae33a1418))
+
+
+
+
+
+# [0.3.0-alpha.278](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.277...@selfcommunity/react-templates@0.3.0-alpha.278) (2023-07-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.277](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.276...@selfcommunity/react-templates@0.3.0-alpha.277) (2023-07-24)
+
+
+### Bug Fixes
+
+* Fix topbar styles ([71eae18](https://github.com/selfcommunity/community-js/commit/71eae18979fe82338cf232433604fedf38a8d87f))
+
+
+
+
+
+# [0.3.0-alpha.276](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.275...@selfcommunity/react-templates@0.3.0-alpha.276) (2023-07-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.275](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.274...@selfcommunity/react-templates@0.3.0-alpha.275) (2023-07-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.274](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.273...@selfcommunity/react-templates@0.3.0-alpha.274) (2023-07-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.273](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.272...@selfcommunity/react-templates@0.3.0-alpha.273) (2023-07-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.272](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.271...@selfcommunity/react-templates@0.3.0-alpha.272) (2023-07-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.271](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.270...@selfcommunity/react-templates@0.3.0-alpha.271) (2023-07-20)
+
+
+### Features
+
+* Added customization parameter for toolbars and user profile page ([2d2de65](https://github.com/selfcommunity/community-js/commit/2d2de65a5b200697fd7c5e6d655ee8525ace976d))
+
+
+
+
+
+# [0.3.0-alpha.270](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.269...@selfcommunity/react-templates@0.3.0-alpha.270) (2023-07-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.269](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.268...@selfcommunity/react-templates@0.3.0-alpha.269) (2023-07-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.268](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.267...@selfcommunity/react-templates@0.3.0-alpha.268) (2023-07-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.267](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.266...@selfcommunity/react-templates@0.3.0-alpha.267) (2023-07-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.266](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.265...@selfcommunity/react-templates@0.3.0-alpha.266) (2023-07-18)
+
+
+### Bug Fixes
+
+* UserActionsMenu for authenticated user ([da70416](https://github.com/selfcommunity/community-js/commit/da70416cfd262cf24d29b52ac2a7cbce2ec8dc84))
+
+
+
+
+
+# [0.3.0-alpha.265](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.264...@selfcommunity/react-templates@0.3.0-alpha.265) (2023-07-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.264](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.263...@selfcommunity/react-templates@0.3.0-alpha.264) (2023-07-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.263](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.262...@selfcommunity/react-templates@0.3.0-alpha.263) (2023-07-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.262](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.261...@selfcommunity/react-templates@0.3.0-alpha.262) (2023-07-10)
+
+
+### Bug Fixes
+
+* UserProfile template ([32599d6](https://github.com/selfcommunity/community-js/commit/32599d6007adaf805c5ff3495c20a7a21f430287))
+
+
+
+
+
+# [0.3.0-alpha.261](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.260...@selfcommunity/react-templates@0.3.0-alpha.261) (2023-07-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.260](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.259...@selfcommunity/react-templates@0.3.0-alpha.260) (2023-07-05)
+
+
+### Bug Fixes
+
+* user profile ([4ee1e45](https://github.com/selfcommunity/community-js/commit/4ee1e456b105eb43f3364836198372637e7e3523))
+
+
+
+
+
+# [0.3.0-alpha.259](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.258...@selfcommunity/react-templates@0.3.0-alpha.259) (2023-07-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.258](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.257...@selfcommunity/react-templates@0.3.0-alpha.258) (2023-07-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.257](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.256...@selfcommunity/react-templates@0.3.0-alpha.257) (2023-07-04)
+
+
+### Bug Fixes
+
+* editProfileDialog mobile responsive tabs ([72689f1](https://github.com/selfcommunity/community-js/commit/72689f19988ba3875cfb55fe3eeb71d11b1eef21))
+
+
+
+
+
+# [0.3.0-alpha.256](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.255...@selfcommunity/react-templates@0.3.0-alpha.256) (2023-07-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.255](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.254...@selfcommunity/react-templates@0.3.0-alpha.255) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.254](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.253...@selfcommunity/react-templates@0.3.0-alpha.254) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.253](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.252...@selfcommunity/react-templates@0.3.0-alpha.253) (2023-07-03)
+
+
+### Bug Fixes
+
+* sync notification counters ([4d65faf](https://github.com/selfcommunity/community-js/commit/4d65fafc8cc6d3ac40bd1b3c4189028869a39c42))
+
+
+
+
+
+# [0.3.0-alpha.252](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.251...@selfcommunity/react-templates@0.3.0-alpha.252) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.251](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.250...@selfcommunity/react-templates@0.3.0-alpha.251) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.250](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.249...@selfcommunity/react-templates@0.3.0-alpha.250) (2023-07-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.249](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.248...@selfcommunity/react-templates@0.3.0-alpha.249) (2023-06-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.248](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.247...@selfcommunity/react-templates@0.3.0-alpha.248) (2023-06-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.247](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.246...@selfcommunity/react-templates@0.3.0-alpha.247) (2023-06-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.246](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.245...@selfcommunity/react-templates@0.3.0-alpha.246) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.245](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.244...@selfcommunity/react-templates@0.3.0-alpha.245) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.244](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.243...@selfcommunity/react-templates@0.3.0-alpha.244) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.243](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.242...@selfcommunity/react-templates@0.3.0-alpha.243) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.242](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.241...@selfcommunity/react-templates@0.3.0-alpha.242) (2023-06-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.241](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.240...@selfcommunity/react-templates@0.3.0-alpha.241) (2023-06-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.239...@selfcommunity/react-templates@0.3.0-alpha.240) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
+# [0.3.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.238...@selfcommunity/react-templates@0.3.0-alpha.239) (2023-06-19)
+
+
+### Bug Fixes
+
+* storybook v7 upgrade ([553c1bf](https://github.com/selfcommunity/community-js/commit/553c1bff2b3f8a5c4965a9190b7d887766473964))
+* storybook v7 upgrade ([8d86f19](https://github.com/selfcommunity/community-js/commit/8d86f19810793e04da433ad81ce100390bb2b5f2))
+* storybook v7 upgrade ([00f395b](https://github.com/selfcommunity/community-js/commit/00f395b17ab15d8aab551e995fe9defc2fde294e))
+* storybook v7 upgrade ([391cb8a](https://github.com/selfcommunity/community-js/commit/391cb8a18c1e265399b883c6c335db2a840acf32))
+
+
+
+
+
+# [0.3.0-alpha.238](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.237...@selfcommunity/react-templates@0.3.0-alpha.238) (2023-06-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.237](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.236...@selfcommunity/react-templates@0.3.0-alpha.237) (2023-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.236](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.235...@selfcommunity/react-templates@0.3.0-alpha.236) (2023-06-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.235](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.234...@selfcommunity/react-templates@0.3.0-alpha.235) (2023-06-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.234](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.233...@selfcommunity/react-templates@0.3.0-alpha.234) (2023-06-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.233](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.232...@selfcommunity/react-templates@0.3.0-alpha.233) (2023-06-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.232](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.231...@selfcommunity/react-templates@0.3.0-alpha.232) (2023-06-13)
+
+
+### Bug Fixes
+
+* add post to feed after creation ([cb787fb](https://github.com/selfcommunity/community-js/commit/cb787fb69b5efead7531829a9207b6dd03ed4ef4))
+
+
+
+
+
+# [0.3.0-alpha.231](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.230...@selfcommunity/react-templates@0.3.0-alpha.231) (2023-06-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.230](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.229...@selfcommunity/react-templates@0.3.0-alpha.230) (2023-06-12)
+
+
+### Bug Fixes
+
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+
+
+
+
+
+# [0.3.0-alpha.229](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.228...@selfcommunity/react-templates@0.3.0-alpha.229) (2023-06-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.228](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.227...@selfcommunity/react-templates@0.3.0-alpha.228) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed comments for doc ([ba897ba](https://github.com/selfcommunity/community-js/commit/ba897ba182dd196159fda9e241224186bb90049e))
+* user profile ([16bbc5a](https://github.com/selfcommunity/community-js/commit/16bbc5a4c72d2d366fdf5a1d2145fe4a00ad1544))
+
+
+### Performance Improvements
+
+* added links to sc-templates components comments for doc. ([a2c18ca](https://github.com/selfcommunity/community-js/commit/a2c18ca0d71609ca2e57826bf19b3789a2bdb0f0))
+
+
+
+
+
+# [0.3.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.226...@selfcommunity/react-templates@0.3.0-alpha.227) (2023-06-08)
+
+
+### Bug Fixes
+
+* remove log ([29c9698](https://github.com/selfcommunity/community-js/commit/29c96986697eaafa135b0f6ce2d97b6f012a3448))
+
+
+
+
+
+# [0.3.0-alpha.226](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.225...@selfcommunity/react-templates@0.3.0-alpha.226) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.225](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.224...@selfcommunity/react-templates@0.3.0-alpha.225) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.224](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.223...@selfcommunity/react-templates@0.3.0-alpha.224) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.223](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.222...@selfcommunity/react-templates@0.3.0-alpha.223) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.222](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.221...@selfcommunity/react-templates@0.3.0-alpha.222) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([75c4df6](https://github.com/selfcommunity/community-js/commit/75c4df603df69f8a472b65e69792411e16b6a39f))
+* block user ([baaf57c](https://github.com/selfcommunity/community-js/commit/baaf57c97a9344f9d3c48b39eac731566e9203c6))
+
+
+
+
+
+# [0.3.0-alpha.221](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.220...@selfcommunity/react-templates@0.3.0-alpha.221) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.220](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.219...@selfcommunity/react-templates@0.3.0-alpha.220) (2023-06-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.219](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.218...@selfcommunity/react-templates@0.3.0-alpha.219) (2023-06-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.218](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.217...@selfcommunity/react-templates@0.3.0-alpha.218) (2023-06-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.217](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.216...@selfcommunity/react-templates@0.3.0-alpha.217) (2023-06-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.216](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.215...@selfcommunity/react-templates@0.3.0-alpha.216) (2023-06-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.215](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.214...@selfcommunity/react-templates@0.3.0-alpha.215) (2023-06-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.214](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.213...@selfcommunity/react-templates@0.3.0-alpha.214) (2023-06-01)
+
+
+### Bug Fixes
+
+* Fix widgets for anonymous users on UserProfile.tsx ([d970eb6](https://github.com/selfcommunity/community-js/commit/d970eb671389918d9fce60f771344b1b62c70d37))
+* notification accept connection request ([decf702](https://github.com/selfcommunity/community-js/commit/decf7023f32b47fef0511e9735dec33f7080f260))
+
+
+
+
+
+# [0.3.0-alpha.213](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.212...@selfcommunity/react-templates@0.3.0-alpha.213) (2023-05-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.212](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.211...@selfcommunity/react-templates@0.3.0-alpha.212) (2023-05-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.211](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.210...@selfcommunity/react-templates@0.3.0-alpha.211) (2023-05-29)
+
+
+### Bug Fixes
+
+* UserProfile ([9d5c8fc](https://github.com/selfcommunity/community-js/commit/9d5c8fcb91b6fbe19e091a605b515ac05492e28b))
+
+
+
+
+
+# [0.3.0-alpha.210](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.209...@selfcommunity/react-templates@0.3.0-alpha.210) (2023-05-29)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.209](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.208...@selfcommunity/react-templates@0.3.0-alpha.209) (2023-05-29)
+
+
+### Bug Fixes
+
+* connections widgets ([c6c51ff](https://github.com/selfcommunity/community-js/commit/c6c51ff1402255197f0073a45a25c1b7d64dac5c))
+
+
+
+
+
+# [0.3.0-alpha.208](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.207...@selfcommunity/react-templates@0.3.0-alpha.208) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([33406f3](https://github.com/selfcommunity/community-js/commit/33406f31e721a8fa06ea855d956f75b5cbe4f96d))
+* friendship ([e305f03](https://github.com/selfcommunity/community-js/commit/e305f0313473f0dfddfcd9a4aee5d5fab20f916d))
+
+
+
+
+
+# [0.3.0-alpha.207](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.206...@selfcommunity/react-templates@0.3.0-alpha.207) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([cc0a0ab](https://github.com/selfcommunity/community-js/commit/cc0a0abe584763e80678bd98f1251c75ef7b4fdc))
+
+
+
+
+
+# [0.3.0-alpha.206](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.205...@selfcommunity/react-templates@0.3.0-alpha.206) (2023-05-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.205](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.204...@selfcommunity/react-templates@0.3.0-alpha.205) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.204](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.203...@selfcommunity/react-templates@0.3.0-alpha.204) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.203](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.202...@selfcommunity/react-templates@0.3.0-alpha.203) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix styles ([872f62a](https://github.com/selfcommunity/community-js/commit/872f62a10403caf9c66513dad087398abc76539f))
+* fixed loyalty prize item skeleton ([ae68262](https://github.com/selfcommunity/community-js/commit/ae6826210fefb7a831e03fdaa690f39542d0f166))
+
+
+
+
+
+# [0.3.0-alpha.202](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.201...@selfcommunity/react-templates@0.3.0-alpha.202) (2023-05-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.201](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.200...@selfcommunity/react-templates@0.3.0-alpha.201) (2023-05-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.200](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.199...@selfcommunity/react-templates@0.3.0-alpha.200) (2023-05-22)
+
+
+### Bug Fixes
+
+* Fix overflow in comments ([d04253d](https://github.com/selfcommunity/community-js/commit/d04253d690482908b60aa087d7f4985c23da86ba))
+
+
+
+
+
+# [0.3.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.198...@selfcommunity/react-templates@0.3.0-alpha.199) (2023-05-19)
+
+
+### Bug Fixes
+
+* loyalty detail skeleton ([07dfd69](https://github.com/selfcommunity/community-js/commit/07dfd698694bb08be2173ffa969626bb7f2bd64b))
+
+
+### Performance Improvements
+
+* loyalty program/loyalty program detail ([6beaec2](https://github.com/selfcommunity/community-js/commit/6beaec2764e159bf12829682f6075b408b1b9634))
+
+
+
+
+
+# [0.3.0-alpha.198](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.197...@selfcommunity/react-templates@0.3.0-alpha.198) (2023-05-19)
+
+
+### Bug Fixes
+
+* broadcastMessages, feed notifcations, feedUpdates ([bc18dc2](https://github.com/selfcommunity/community-js/commit/bc18dc2b13e988b9578540501cd966953f1be60a))
+
+
+
+
+
+# [0.3.0-alpha.197](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.196...@selfcommunity/react-templates@0.3.0-alpha.197) (2023-05-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.196](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.195...@selfcommunity/react-templates@0.3.0-alpha.196) (2023-05-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.195](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.194...@selfcommunity/react-templates@0.3.0-alpha.195) (2023-05-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.194](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.193...@selfcommunity/react-templates@0.3.0-alpha.194) (2023-05-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.192...@selfcommunity/react-templates@0.3.0-alpha.193) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.191...@selfcommunity/react-templates@0.3.0-alpha.192) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.191](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.190...@selfcommunity/react-templates@0.3.0-alpha.191) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.190](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.189...@selfcommunity/react-templates@0.3.0-alpha.190) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.189](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.188...@selfcommunity/react-templates@0.3.0-alpha.189) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.188](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.187...@selfcommunity/react-templates@0.3.0-alpha.188) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.187](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.186...@selfcommunity/react-templates@0.3.0-alpha.187) (2023-05-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.186](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.185...@selfcommunity/react-templates@0.3.0-alpha.186) (2023-05-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.185](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.184...@selfcommunity/react-templates@0.3.0-alpha.185) (2023-05-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.184](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.183...@selfcommunity/react-templates@0.3.0-alpha.184) (2023-05-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.183](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.182...@selfcommunity/react-templates@0.3.0-alpha.183) (2023-05-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.182](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.181...@selfcommunity/react-templates@0.3.0-alpha.182) (2023-05-15)
+
+
+### Performance Improvements
+
+* Moved Features into @selfcommunity/types package ([4d75469](https://github.com/selfcommunity/community-js/commit/4d75469e588761e45ea6028cb6adc60dd25d3d96))
+
+
+
+
+
+# [0.3.0-alpha.181](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.180...@selfcommunity/react-templates@0.3.0-alpha.181) (2023-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.180](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.179...@selfcommunity/react-templates@0.3.0-alpha.180) (2023-05-15)
+
+
+### Bug Fixes
+
+* widgets strict mode ([74e486a](https://github.com/selfcommunity/community-js/commit/74e486ad71b86873fbc68ca02c5ee2b46702e7ac))
+
+
+
+
+
+# [0.3.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.178...@selfcommunity/react-templates@0.3.0-alpha.179) (2023-05-11)
+
+
+### Performance Improvements
+
+* Added feature for PrivateMessages ([e907361](https://github.com/selfcommunity/community-js/commit/e907361e37f2f061389eeb185a7a3aaa56add60a))
+
+
+
+
+
+# [0.3.0-alpha.178](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.177...@selfcommunity/react-templates@0.3.0-alpha.178) (2023-05-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.177](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.176...@selfcommunity/react-templates@0.3.0-alpha.177) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix UserProfile.tsx ([10fc9d6](https://github.com/selfcommunity/community-js/commit/10fc9d6e3fabea3cf19e7cf99e9fb3327f977c04))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
+# [0.3.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.175...@selfcommunity/react-templates@0.3.0-alpha.176) (2023-05-09)
+
+
+### Bug Fixes
+
+* Fix abort request ([9cd66ee](https://github.com/selfcommunity/community-js/commit/9cd66eebb9d5ebe70fe92312bb9688682f092a3d))
+
+
+
+
+
+# [0.3.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.174...@selfcommunity/react-templates@0.3.0-alpha.175) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix UserProfile.tsx private messages button ([229f622](https://github.com/selfcommunity/community-js/commit/229f6220a85b2e513b4b5f65f46ef7bcd693ecd8))
+* fixed loyalty program detail loading ([c922f2d](https://github.com/selfcommunity/community-js/commit/c922f2d9680aa1e91bc666091a5633c53cb62d91))
+
+
+
+
+
+# [0.3.0-alpha.174](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.173...@selfcommunity/react-templates@0.3.0-alpha.174) (2023-05-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.173](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.172...@selfcommunity/react-templates@0.3.0-alpha.173) (2023-05-08)
+
+
+### Performance Improvements
+
+* Private Message is now a feature ([96e6b77](https://github.com/selfcommunity/community-js/commit/96e6b77f00ed2b43fc68f872054e2511ba15fd11))
+
+
+
+
+
+# [0.3.0-alpha.172](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.171...@selfcommunity/react-templates@0.3.0-alpha.172) (2023-05-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.171](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.170...@selfcommunity/react-templates@0.3.0-alpha.171) (2023-05-08)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail import ([734ff84](https://github.com/selfcommunity/community-js/commit/734ff8434b151e604813838d05efb127231a28d8))
+
+
+
+
+
+# [0.3.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.169...@selfcommunity/react-templates@0.3.0-alpha.170) (2023-05-08)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail imports ([ea80fb4](https://github.com/selfcommunity/community-js/commit/ea80fb426ef9401113f87ee87897a6b27354ebff))
+
+
+
+
+
+# [0.3.0-alpha.169](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.168...@selfcommunity/react-templates@0.3.0-alpha.169) (2023-05-05)
+
+
+### Bug Fixes
+
+* moved loyalty program detail to templates and fix prizes rendering ([d915409](https://github.com/selfcommunity/community-js/commit/d9154096ccf5e465c50c087e88dcc2efd451c5c6))
+
+
+
+
+
+# [0.3.0-alpha.168](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.167...@selfcommunity/react-templates@0.3.0-alpha.168) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.167](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.166...@selfcommunity/react-templates@0.3.0-alpha.167) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.166](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.165...@selfcommunity/react-templates@0.3.0-alpha.166) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.165](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.164...@selfcommunity/react-templates@0.3.0-alpha.165) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.164](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.163...@selfcommunity/react-templates@0.3.0-alpha.164) (2023-05-04)
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
+# [0.3.0-alpha.163](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.162...@selfcommunity/react-templates@0.3.0-alpha.163) (2023-05-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.162](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.161...@selfcommunity/react-templates@0.3.0-alpha.162) (2023-05-02)
+
+
+### Bug Fixes
+
+* Fix widgets behaviour and data load ([da1a0fb](https://github.com/selfcommunity/community-js/commit/da1a0fba75aaebf1954d77a58f3174148f9c322f))
+
+
+
+
+
+# [0.3.0-alpha.161](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.160...@selfcommunity/react-templates@0.3.0-alpha.161) (2023-04-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.159...@selfcommunity/react-templates@0.3.0-alpha.160) (2023-04-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.159](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.158...@selfcommunity/react-templates@0.3.0-alpha.159) (2023-04-26)
+
+
+### Performance Improvements
+
+* Update notistack lib ([67ea3cc](https://github.com/selfcommunity/community-js/commit/67ea3cc9e1ea4b7c2ae431d5fd566faf39323f62))
+
+
+
+
+
+# [0.3.0-alpha.158](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.157...@selfcommunity/react-templates@0.3.0-alpha.158) (2023-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.157](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.156...@selfcommunity/react-templates@0.3.0-alpha.157) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix deps ([6ab40e0](https://github.com/selfcommunity/community-js/commit/6ab40e0a5240d1ed51ad665d498c62254b9b6acd))
+
+
+
+
+
+# [0.3.0-alpha.156](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.155...@selfcommunity/react-templates@0.3.0-alpha.156) (2023-04-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.155](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.154...@selfcommunity/react-templates@0.3.0-alpha.155) (2023-04-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.154](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.153...@selfcommunity/react-templates@0.3.0-alpha.154) (2023-04-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.153](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.152...@selfcommunity/react-templates@0.3.0-alpha.153) (2023-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.152](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.151...@selfcommunity/react-templates@0.3.0-alpha.152) (2023-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.151](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.150...@selfcommunity/react-templates@0.3.0-alpha.151) (2023-04-18)
+
+
+### Bug Fixes
+
+* added suffix to inline composer component ([6f8d55d](https://github.com/selfcommunity/community-js/commit/6f8d55d6af3b3627bad4c10398bcd8b025ca048a))
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+### Performance Improvements
+
+* renamed components after ui refactoring ([754dfbc](https://github.com/selfcommunity/community-js/commit/754dfbc15be0128b7e62230fc0d176498cb1df37))
+
+
+
+
+
+# [0.3.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.149...@selfcommunity/react-templates@0.3.0-alpha.150) (2023-04-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.149](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.148...@selfcommunity/react-templates@0.3.0-alpha.149) (2023-04-14)
+
+
+### Bug Fixes
+
+* renamed components with suffix ([725e308](https://github.com/selfcommunity/community-js/commit/725e30831800d5b95408a72e43edd664ef96196d))
+
+
+
+
+
+# [0.3.0-alpha.148](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.147...@selfcommunity/react-templates@0.3.0-alpha.148) (2023-04-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.147](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.146...@selfcommunity/react-templates@0.3.0-alpha.147) (2023-04-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.146](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.145...@selfcommunity/react-templates@0.3.0-alpha.146) (2023-04-12)
+
+
+### Performance Improvements
+
+* Update material-ui ([a57c8bf](https://github.com/selfcommunity/community-js/commit/a57c8bf6a3fde7b1728e1e95b663f2ca48eebf9e))
+
+
+
+
+
+# [0.3.0-alpha.145](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.144...@selfcommunity/react-templates@0.3.0-alpha.145) (2023-04-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.144](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.143...@selfcommunity/react-templates@0.3.0-alpha.144) (2023-04-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.143](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.142...@selfcommunity/react-templates@0.3.0-alpha.143) (2023-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.142](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.141...@selfcommunity/react-templates@0.3.0-alpha.142) (2023-04-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.141](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.140...@selfcommunity/react-templates@0.3.0-alpha.141) (2023-04-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.140](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.139...@selfcommunity/react-templates@0.3.0-alpha.140) (2023-04-05)
+
+
+### Bug Fixes
+
+* fixed react-core package version ([45ebb1d](https://github.com/selfcommunity/community-js/commit/45ebb1d76bafaca25f46a06a91d6d2d3473da7df))
+
+
+
+
+
+# [0.3.0-alpha.139](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.138...@selfcommunity/react-templates@0.3.0-alpha.139) (2023-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.138](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.137...@selfcommunity/react-templates@0.3.0-alpha.138) (2023-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.137](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.136...@selfcommunity/react-templates@0.3.0-alpha.137) (2023-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.136](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.135...@selfcommunity/react-templates@0.3.0-alpha.136) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.135](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.134...@selfcommunity/react-templates@0.3.0-alpha.135) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.134](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.133...@selfcommunity/react-templates@0.3.0-alpha.134) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.133](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.132...@selfcommunity/react-templates@0.3.0-alpha.133) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.132](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.131...@selfcommunity/react-templates@0.3.0-alpha.132) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.131](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.130...@selfcommunity/react-templates@0.3.0-alpha.131) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.130](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.129...@selfcommunity/react-templates@0.3.0-alpha.130) (2023-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.129](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.128...@selfcommunity/react-templates@0.3.0-alpha.129) (2023-04-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.128](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.127...@selfcommunity/react-templates@0.3.0-alpha.128) (2023-04-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.127](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.126...@selfcommunity/react-templates@0.3.0-alpha.127) (2023-03-29)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.126](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.125...@selfcommunity/react-templates@0.3.0-alpha.126) (2023-03-29)
+
+
+### Performance Improvements
+
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+
+
+
+
+
+# [0.3.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.124...@selfcommunity/react-templates@0.3.0-alpha.125) (2023-03-23)
+
+
+### Performance Improvements
+
+* removed private messages template ([a0f1db4](https://github.com/selfcommunity/community-js/commit/a0f1db41ca10c410ac852c66ce628fd6f938a48d))
+
+
+
+
+
+# [0.3.0-alpha.124](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.123...@selfcommunity/react-templates@0.3.0-alpha.124) (2023-03-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.123](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.122...@selfcommunity/react-templates@0.3.0-alpha.123) (2023-03-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.122](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.121...@selfcommunity/react-templates@0.3.0-alpha.122) (2023-03-22)
+
+
+### Bug Fixes
+
+* Removed unused components ([5e22877](https://github.com/selfcommunity/community-js/commit/5e228775c5d5407f1c502f8e89a0d5783328b1fb))
+
+
+
+
+
+# [0.3.0-alpha.121](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.120...@selfcommunity/react-templates@0.3.0-alpha.121) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.119...@selfcommunity/react-templates@0.3.0-alpha.120) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.118...@selfcommunity/react-templates@0.3.0-alpha.119) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.117...@selfcommunity/react-templates@0.3.0-alpha.118) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.117](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.116...@selfcommunity/react-templates@0.3.0-alpha.117) (2023-03-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.115...@selfcommunity/react-templates@0.3.0-alpha.116) (2023-03-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.114...@selfcommunity/react-templates@0.3.0-alpha.115) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix user profile ([164ec55](https://github.com/selfcommunity/community-js/commit/164ec55a83fa3ddb791c6d8cc1ccd37827b4cf88))
+
+
+
+
+
+# [0.3.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.113...@selfcommunity/react-templates@0.3.0-alpha.114) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.112...@selfcommunity/react-templates@0.3.0-alpha.113) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
+# [0.3.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.111...@selfcommunity/react-templates@0.3.0-alpha.112) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.111](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.110...@selfcommunity/react-templates@0.3.0-alpha.111) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.110](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.109...@selfcommunity/react-templates@0.3.0-alpha.110) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.108...@selfcommunity/react-templates@0.3.0-alpha.109) (2023-03-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.108](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.107...@selfcommunity/react-templates@0.3.0-alpha.108) (2023-03-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.107](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.106...@selfcommunity/react-templates@0.3.0-alpha.107) (2023-03-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.105...@selfcommunity/react-templates@0.3.0-alpha.106) (2023-03-13)
+
+
+### Performance Improvements
+
+* Update material-ui ([d01b7bf](https://github.com/selfcommunity/community-js/commit/d01b7bf137344c4239e41c40e991fb6e32f28710))
+
+
+
+
+
+# [0.3.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.104...@selfcommunity/react-templates@0.3.0-alpha.105) (2023-03-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.103...@selfcommunity/react-templates@0.3.0-alpha.104) (2023-03-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.103](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.102...@selfcommunity/react-templates@0.3.0-alpha.103) (2023-03-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.102](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.101...@selfcommunity/react-templates@0.3.0-alpha.102) (2023-03-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.100...@selfcommunity/react-templates@0.3.0-alpha.101) (2023-03-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.100](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.99...@selfcommunity/react-templates@0.3.0-alpha.100) (2023-03-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.99](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.98...@selfcommunity/react-templates@0.3.0-alpha.99) (2023-03-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.98](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.97...@selfcommunity/react-templates@0.3.0-alpha.98) (2023-03-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.97](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.96...@selfcommunity/react-templates@0.3.0-alpha.97) (2023-03-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.96](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.95...@selfcommunity/react-templates@0.3.0-alpha.96) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.95](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.94...@selfcommunity/react-templates@0.3.0-alpha.95) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.94](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.93...@selfcommunity/react-templates@0.3.0-alpha.94) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.93](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.92...@selfcommunity/react-templates@0.3.0-alpha.93) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.92](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.91...@selfcommunity/react-templates@0.3.0-alpha.92) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.91](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.90...@selfcommunity/react-templates@0.3.0-alpha.91) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.90](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.89...@selfcommunity/react-templates@0.3.0-alpha.90) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.89](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.88...@selfcommunity/react-templates@0.3.0-alpha.89) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.88](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.87...@selfcommunity/react-templates@0.3.0-alpha.88) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.87](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.86...@selfcommunity/react-templates@0.3.0-alpha.87) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.86](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.85...@selfcommunity/react-templates@0.3.0-alpha.86) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.84...@selfcommunity/react-templates@0.3.0-alpha.85) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.83...@selfcommunity/react-templates@0.3.0-alpha.84) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.82...@selfcommunity/react-templates@0.3.0-alpha.83) (2023-03-01)
+
+
+### Bug Fixes
+
+* pm components + skeletons fixes ([538e030](https://github.com/selfcommunity/community-js/commit/538e0303f06821049d004f0b8fd0db90f67260f8))
+* removed state handling from private messages template ([5b17e56](https://github.com/selfcommunity/community-js/commit/5b17e566765ffdcbf956b28fcdc0d900dd3afbff))
+
+
+
+
+
+# [0.3.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.81...@selfcommunity/react-templates@0.3.0-alpha.82) (2023-02-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.80...@selfcommunity/react-templates@0.3.0-alpha.81) (2023-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.79...@selfcommunity/react-templates@0.3.0-alpha.80) (2023-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.78...@selfcommunity/react-templates@0.3.0-alpha.79) (2023-02-27)
+
+
+### Bug Fixes
+
+* private messages, uplifted snippets state ([d530921](https://github.com/selfcommunity/community-js/commit/d530921ac0ba997cbc2ca1c6392ec21d8a908bca))
+
+
+
+
+
+# [0.3.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.77...@selfcommunity/react-templates@0.3.0-alpha.78) (2023-02-27)
+
+
+### Bug Fixes
+
+* pm fixes ([9e0c2c9](https://github.com/selfcommunity/community-js/commit/9e0c2c9e31ec85afbb43840c1e94263c4cf0afe2))
+
+
+
+
+
+# [0.3.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.76...@selfcommunity/react-templates@0.3.0-alpha.77) (2023-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.75...@selfcommunity/react-templates@0.3.0-alpha.76) (2023-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.74...@selfcommunity/react-templates@0.3.0-alpha.75) (2023-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.73...@selfcommunity/react-templates@0.3.0-alpha.74) (2023-02-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.72...@selfcommunity/react-templates@0.3.0-alpha.73) (2023-02-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.71...@selfcommunity/react-templates@0.3.0-alpha.72) (2023-02-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.70...@selfcommunity/react-templates@0.3.0-alpha.71) (2023-02-21)
+
+
+### Bug Fixes
+
+* pm bugfixes ([e55a877](https://github.com/selfcommunity/community-js/commit/e55a877afb75756bd013e9fd249edbf4043f6e33))
+
+
+
+
+
+# [0.3.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.69...@selfcommunity/react-templates@0.3.0-alpha.70) (2023-02-20)
+
+
+### Bug Fixes
+
+* private messages bugfix ([6db1aab](https://github.com/selfcommunity/community-js/commit/6db1aab0fc0513d05ce561663e2b303ea63a5c37))
+
+
+
+
+
+# [0.3.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.68...@selfcommunity/react-templates@0.3.0-alpha.69) (2023-02-20)
+
+
+### Bug Fixes
+
+* fixed private messages template ([70249cf](https://github.com/selfcommunity/community-js/commit/70249cf61e82870847d3ee00106d6a8eb431d356))
+
+
+
+
+
+# [0.3.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.67...@selfcommunity/react-templates@0.3.0-alpha.68) (2023-02-16)
+
+
+### Bug Fixes
+
+* Fix templates margin top ([ed076fe](https://github.com/selfcommunity/community-js/commit/ed076fe0eb197489ad5e07c6dceebb6d24c7ce56))
+
+
+
+
+
+# [0.3.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.66...@selfcommunity/react-templates@0.3.0-alpha.67) (2023-02-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.65...@selfcommunity/react-templates@0.3.0-alpha.66) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.64...@selfcommunity/react-templates@0.3.0-alpha.65) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.63...@selfcommunity/react-templates@0.3.0-alpha.64) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.62...@selfcommunity/react-templates@0.3.0-alpha.63) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.61...@selfcommunity/react-templates@0.3.0-alpha.62) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.60...@selfcommunity/react-templates@0.3.0-alpha.61) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.59...@selfcommunity/react-templates@0.3.0-alpha.60) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.58...@selfcommunity/react-templates@0.3.0-alpha.59) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.57...@selfcommunity/react-templates@0.3.0-alpha.58) (2023-02-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.56...@selfcommunity/react-templates@0.3.0-alpha.57) (2023-02-06)
+
+
+### Bug Fixes
+
+* test sidebar ([d49528f](https://github.com/selfcommunity/community-js/commit/d49528f4965094fde14e0c247a581bdd986ebdcd))
+* test sidebar ([a8020f8](https://github.com/selfcommunity/community-js/commit/a8020f8c64ec0dce6d7cce14f51b7e3b540e06dc))
+* test sidebar ([8af1a8d](https://github.com/selfcommunity/community-js/commit/8af1a8de7617e28c093e96386feecd4e7a8ec469))
+
+
+
+
+
+# [0.3.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.55...@selfcommunity/react-templates@0.3.0-alpha.56) (2023-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.54...@selfcommunity/react-templates@0.3.0-alpha.55) (2023-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.53...@selfcommunity/react-templates@0.3.0-alpha.54) (2023-01-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.52...@selfcommunity/react-templates@0.3.0-alpha.53) (2023-01-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.51...@selfcommunity/react-templates@0.3.0-alpha.52) (2023-01-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.50...@selfcommunity/react-templates@0.3.0-alpha.51) (2023-01-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.49...@selfcommunity/react-templates@0.3.0-alpha.50) (2023-01-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.48...@selfcommunity/react-templates@0.3.0-alpha.49) (2023-01-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.47...@selfcommunity/react-templates@0.3.0-alpha.48) (2023-01-25)
+
+
+### Bug Fixes
+
+* Fix imports in theme ([6e62627](https://github.com/selfcommunity/community-js/commit/6e62627fcaccc563264ea2dd19c8aaa3e160bd22))
+
+
+
+
+
+# [0.3.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.46...@selfcommunity/react-templates@0.3.0-alpha.47) (2023-01-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.45...@selfcommunity/react-templates@0.3.0-alpha.46) (2023-01-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.44...@selfcommunity/react-templates@0.3.0-alpha.45) (2023-01-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.43...@selfcommunity/react-templates@0.3.0-alpha.44) (2023-01-17)
+
+
+### Bug Fixes
+
+* fixed templates imports ([37caffc](https://github.com/selfcommunity/community-js/commit/37caffc948f4e8dcd75a19064dff2af8f9dae04a))
+* removed unnecessary template ([42585eb](https://github.com/selfcommunity/community-js/commit/42585ebf4d032687f3ef2993371c0d2900d1a2b3))
+
+
+
+
+
+# [0.3.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.42...@selfcommunity/react-templates@0.3.0-alpha.43) (2023-01-17)
+
+
+### Bug Fixes
+
+* fixed template export ([2b75173](https://github.com/selfcommunity/community-js/commit/2b75173503af3fc12b2af766065779511cbbaa4d))
+
+
+
+
+
+# [0.3.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.41...@selfcommunity/react-templates@0.3.0-alpha.42) (2023-01-17)
+
+
+### Performance Improvements
+
+* added categories list template. Asana issue: https://app.asana.com/0/1202523699272956/1203748780124821/f ([fda9509](https://github.com/selfcommunity/community-js/commit/fda9509fda2d5b4cc9b72f214537dd7e1aa6573b))
+
+
+
+
+
+# [0.3.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.40...@selfcommunity/react-templates@0.3.0-alpha.41) (2023-01-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.39...@selfcommunity/react-templates@0.3.0-alpha.40) (2023-01-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.38...@selfcommunity/react-templates@0.3.0-alpha.39) (2023-01-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.37...@selfcommunity/react-templates@0.3.0-alpha.38) (2023-01-04)
+
+
+### Performance Improvements
+
+* added feed props to users list template ([c0597b2](https://github.com/selfcommunity/community-js/commit/c0597b28391cc54d62b55f0688cafac8c999dc43))
+* updated mui material from 5.10.16 to 5.11.3. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088632/f ([a0f00a7](https://github.com/selfcommunity/community-js/commit/a0f00a7f7f46d354bef83928b8d9c634c9737b70))
+
+
+
+
+
+# [0.3.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.36...@selfcommunity/react-templates@0.3.0-alpha.37) (2022-12-20)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.35...@selfcommunity/react-templates@0.3.0-alpha.36) (2022-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.34...@selfcommunity/react-templates@0.3.0-alpha.35) (2022-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.33...@selfcommunity/react-templates@0.3.0-alpha.34) (2022-12-19)
+
+
+### Bug Fixes
+
+* fixed props ([dedb620](https://github.com/selfcommunity/community-js/commit/dedb620795d943a5a6cbd11ec63b4f87edeb48be))
+
+
+
+
+
+# [0.3.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.32...@selfcommunity/react-templates@0.3.0-alpha.33) (2022-12-16)
+
+
+### Performance Improvements
+
+* added feed props to feedObjList template ([cf55cd3](https://github.com/selfcommunity/community-js/commit/cf55cd3f56519a4b16b08500d30a7b74d4b90e10))
+
+
+
+
+
+# [0.3.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.31...@selfcommunity/react-templates@0.3.0-alpha.32) (2022-12-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.30...@selfcommunity/react-templates@0.3.0-alpha.31) (2022-12-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.29...@selfcommunity/react-templates@0.3.0-alpha.30) (2022-12-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.28...@selfcommunity/react-templates@0.3.0-alpha.29) (2022-12-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.27...@selfcommunity/react-templates@0.3.0-alpha.28) (2022-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.26...@selfcommunity/react-templates@0.3.0-alpha.27) (2022-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.25...@selfcommunity/react-templates@0.3.0-alpha.26) (2022-12-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.24...@selfcommunity/react-templates@0.3.0-alpha.25) (2022-12-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.23...@selfcommunity/react-templates@0.3.0-alpha.24) (2022-12-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.22...@selfcommunity/react-templates@0.3.0-alpha.23) (2022-12-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.21...@selfcommunity/react-templates@0.3.0-alpha.22) (2022-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.20...@selfcommunity/react-templates@0.3.0-alpha.21) (2022-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.19...@selfcommunity/react-templates@0.3.0-alpha.20) (2022-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.18...@selfcommunity/react-templates@0.3.0-alpha.19) (2022-12-05)
+
+
+### Performance Improvements
+
+* added social account providers handling. ([66f4c72](https://github.com/selfcommunity/community-js/commit/66f4c729f4436d71904832967d200bd27cdff60c))
+
+
+
+
+
+# [0.3.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.17...@selfcommunity/react-templates@0.3.0-alpha.18) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fix build and ts-ignore ([1bf0b6a](https://github.com/selfcommunity/community-js/commit/1bf0b6ada567038d8558c383a75e614a486c1494))
+
+
+
+
+
+# [0.3.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.16...@selfcommunity/react-templates@0.3.0-alpha.17) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.15...@selfcommunity/react-templates@0.3.0-alpha.16) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.14...@selfcommunity/react-templates@0.3.0-alpha.15) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.13...@selfcommunity/react-templates@0.3.0-alpha.14) (2022-11-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.12...@selfcommunity/react-templates@0.3.0-alpha.13) (2022-11-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.11...@selfcommunity/react-templates@0.3.0-alpha.12) (2022-11-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.10...@selfcommunity/react-templates@0.3.0-alpha.11) (2022-11-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.9...@selfcommunity/react-templates@0.3.0-alpha.10) (2022-11-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.8...@selfcommunity/react-templates@0.3.0-alpha.9) (2022-11-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.7...@selfcommunity/react-templates@0.3.0-alpha.8) (2022-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.6...@selfcommunity/react-templates@0.3.0-alpha.7) (2022-11-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.5...@selfcommunity/react-templates@0.3.0-alpha.6) (2022-11-09)
+
+
+### Performance Improvements
+
+* added widgets to feedobjs list template ([3f7905a](https://github.com/selfcommunity/community-js/commit/3f7905a2e2d39a8b290529eb70f614c9af272da8))
+
+
+
+
+
+# [0.3.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.4...@selfcommunity/react-templates@0.3.0-alpha.5) (2022-11-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.3...@selfcommunity/react-templates@0.3.0-alpha.4) (2022-11-07)
+
+
+### Performance Improvements
+
+* added  feedobjs list template ([700411b](https://github.com/selfcommunity/community-js/commit/700411b261473ff991080cf6fd1e95db11934108))
+* added prop to show trending feed as  a page ([113e859](https://github.com/selfcommunity/community-js/commit/113e859365504f1d14715f2c805008e41b4afb43))
+
+
+
+
+
+# [0.3.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.2...@selfcommunity/react-templates@0.3.0-alpha.3) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.1...@selfcommunity/react-templates@0.3.0-alpha.2) (2022-11-04)
+
+
+### Performance Improvements
+
+* cleaned unused imports/deleted unused translations ([c5e7e2d](https://github.com/selfcommunity/community-js/commit/c5e7e2d1b6f4a2dba499b61b3265c85ed964bb68))
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.0-alpha.0...@selfcommunity/react-templates@0.3.0-alpha.1) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.26...@selfcommunity/react-templates@0.3.0-alpha.0) (2022-11-03)
+
+
+### Features
+
+* added users list template ([191e910](https://github.com/selfcommunity/community-js/commit/191e9104d8e9031b03cf8ef9b47b25fe8e095bed))
+
+
+
+
+
+## [0.2.4-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.25...@selfcommunity/react-templates@0.2.4-alpha.26) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.24...@selfcommunity/react-templates@0.2.4-alpha.25) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.23...@selfcommunity/react-templates@0.2.4-alpha.24) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.22...@selfcommunity/react-templates@0.2.4-alpha.23) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.21...@selfcommunity/react-templates@0.2.4-alpha.22) (2022-10-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.20...@selfcommunity/react-templates@0.2.4-alpha.21) (2022-10-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.19...@selfcommunity/react-templates@0.2.4-alpha.20) (2022-10-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.18...@selfcommunity/react-templates@0.2.4-alpha.19) (2022-10-27)
+
+
+### Bug Fixes
+
+* FeedObjectDetail ([849ff8f](https://github.com/selfcommunity/community-js/commit/849ff8f3d4d9144de559f9c7a35b01161ba10960))
+
+
+
+
+
+## [0.2.4-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.17...@selfcommunity/react-templates@0.2.4-alpha.18) (2022-10-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.16...@selfcommunity/react-templates@0.2.4-alpha.17) (2022-10-27)
+
+
+### Bug Fixes
+
+* notifications ([371a179](https://github.com/selfcommunity/community-js/commit/371a179ccabeaaec51de85b25425ea9f8f6e0a2f))
+
+
+
+
+
+## [0.2.4-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.15...@selfcommunity/react-templates@0.2.4-alpha.16) (2022-10-26)
+
+
+### Bug Fixes
+
+* fixed mobile private messages ([5aa99dd](https://github.com/selfcommunity/community-js/commit/5aa99dd490c594d0c73ebe009ef88b7e93257eaa))
+
+
+
+
+
+## [0.2.4-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.14...@selfcommunity/react-templates@0.2.4-alpha.15) (2022-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.13...@selfcommunity/react-templates@0.2.4-alpha.14) (2022-10-25)
+
+
+### Performance Improvements
+
+* Added Adv BELOW_TOPBAR position in Feed ([578c304](https://github.com/selfcommunity/community-js/commit/578c304dfeeaaff9dce1ef739791ad30e0c217c6))
+
+
+
+
+
+## [0.2.4-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.12...@selfcommunity/react-templates@0.2.4-alpha.13) (2022-10-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.11...@selfcommunity/react-templates@0.2.4-alpha.12) (2022-10-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.10...@selfcommunity/react-templates@0.2.4-alpha.11) (2022-10-21)
+
+
+### Bug Fixes
+
+* templates notification ([4738e8a](https://github.com/selfcommunity/community-js/commit/4738e8ad860a8410bb631db6dd2de78b5728dba3))
+
+
+
+
+
+## [0.2.4-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.9...@selfcommunity/react-templates@0.2.4-alpha.10) (2022-10-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.8...@selfcommunity/react-templates@0.2.4-alpha.9) (2022-10-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.7...@selfcommunity/react-templates@0.2.4-alpha.8) (2022-10-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.6...@selfcommunity/react-templates@0.2.4-alpha.7) (2022-10-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.5...@selfcommunity/react-templates@0.2.4-alpha.6) (2022-10-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.4...@selfcommunity/react-templates@0.2.4-alpha.5) (2022-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.3...@selfcommunity/react-templates@0.2.4-alpha.4) (2022-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.2...@selfcommunity/react-templates@0.2.4-alpha.3) (2022-10-14)
+
+
+### Bug Fixes
+
+* user profile ([6093eae](https://github.com/selfcommunity/community-js/commit/6093eaed3881e6d236b6e189a6a88febc205b3a6))
+
+
+
+
+
+## [0.2.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.1...@selfcommunity/react-templates@0.2.4-alpha.2) (2022-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.4-alpha.0...@selfcommunity/react-templates@0.2.4-alpha.1) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.2.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.3...@selfcommunity/react-templates@0.2.4-alpha.0) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.2.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.2.3-alpha.23...@selfcommunity/react-templates@0.2.3) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

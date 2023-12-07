@@ -6,12 +6,19 @@ import {useSCUser} from '../components/provider/SCUserProvider';
 import {WSClientType} from '@selfcommunity/utils';
 import {WSClient} from '@selfcommunity/utils';
 import {SCNotificationMapping, SCNotificationTopics} from '../constants/Notification';
-import {WS_FACILITY_NOTIFY, WS_PROTOCOL_PREFIX, WS_HEARTBEAT_MESSAGE} from '../constants/WebSocket';
+import {
+  WS_FACILITY_NOTIFY,
+  WS_SUB_PROTOCOL_PREFIX,
+  WS_HEARTBEAT_MESSAGE,
+  WS_PROTOCOL_SECURE,
+  WS_PROTOCOL_INSECURE,
+  WS_PREFIX_PATH,
+} from '../constants/WebSocket';
 import PubSub from 'pubsub-js';
 
 /**
  :::info
- This custom hook is used to to init web socket.
+ This custom hook is used to init web socket.
  :::
  */
 export default function useSCWebSocket() {
@@ -19,11 +26,16 @@ export default function useSCWebSocket() {
   const scUserContext: SCUserContextType = useSCUser();
   const [wsInstance, setWsInstance] = useState<WSClientType>(null);
 
-  // Websocket uri and protocols
-  const _wsUri = `wss://${new URL(scContext.settings.portal).hostname}/ws/${WS_FACILITY_NOTIFY}?subscribe-user`;
+  // Websocket uri, prefixPath, protocols and sub-protocols
   const _wsProtocol =
+    scContext.settings.notifications.webSocket.secure || !('secure' in scContext.settings.notifications.webSocket)
+      ? WS_PROTOCOL_SECURE
+      : WS_PROTOCOL_INSECURE;
+  const _wsPrefixPath = scContext.settings.notifications.webSocket.prefixPath || WS_PREFIX_PATH;
+  const _wsUri = `${_wsProtocol}://${new URL(scContext.settings.portal).hostname}/${_wsPrefixPath}/${WS_FACILITY_NOTIFY}?subscribe-user`;
+  const _wsSubProtocol =
     scContext.settings.session.authToken && scContext.settings.session.authToken.accessToken
-      ? `${WS_PROTOCOL_PREFIX}${scContext.settings.session.authToken.accessToken}`
+      ? `${WS_SUB_PROTOCOL_PREFIX}${scContext.settings.session.authToken.accessToken}`
       : null;
 
   /**
@@ -40,12 +52,12 @@ export default function useSCWebSocket() {
    * If there is an error, it means there is no session.
    */
   useEffect(() => {
-    if (scUserContext.user && !wsInstance && _wsUri && _wsProtocol) {
+    if (scUserContext.user && !wsInstance && _wsUri && _wsSubProtocol) {
       setWsInstance(
         WSClient.getInstance({
           uri: _wsUri,
           heartbeatMsg: WS_HEARTBEAT_MESSAGE,
-          protocols: [_wsProtocol],
+          protocols: [_wsSubProtocol],
           receiveMessage: receiveMessage,
         })
       );

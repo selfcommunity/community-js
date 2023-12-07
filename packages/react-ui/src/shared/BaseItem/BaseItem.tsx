@@ -9,6 +9,7 @@ const PREFIX = 'SCBaseItem';
 
 const classes = {
   root: `${PREFIX}-root`,
+  withActions: `${PREFIX}-with-actions`,
   content: `${PREFIX}-content`,
   image: `${PREFIX}-image`,
   text: `${PREFIX}-text`,
@@ -21,55 +22,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`&.${classes.root}`]: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    '&.MuiPaper-elevation': {
-      paddingTop: theme.spacing(),
-      paddingBottom: theme.spacing(),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      '&.MuiPaper-elevation0': {
-        paddingTop: 0,
-        paddingBottom: 0,
-        paddingLeft: 0,
-        paddingRight: 0,
-        [`& .${classes.actions}`]: {
-          right: 0
-        }
-      }
-    }
-  },
-  [`& .${classes.content}`]: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%'
-  },
-  [`& .${classes.image}`]: {
-    flexShrink: 0,
-    marginRight: theme.spacing(2)
-  },
-  [`& .${classes.text}`]: {
-    flex: '1 1 auto',
-    marginTop: theme.spacing(),
-    marginBottom: theme.spacing(),
-    textAlign: 'left',
-    width: '100%'
-  },
-  [`& .${classes.primary}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.secondary}`]: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    color: theme.palette.text.secondary
-  }
-}));
+})(({theme}) => ({}));
 
 export interface BaseItemProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
   /**
@@ -171,7 +124,7 @@ export default function BaseItem(inProps: BaseItemProps): JSX.Element {
 
   // RENDER
   return (
-    <Root id={id} {...rest} className={classNames(classes.root, className)}>
+    <Root id={id} {...rest} className={classNames(classes.root, className, {[classes.withActions]: Boolean(actions)})}>
       <Box className={classes.content}>
         {image && <Box className={classes.image}>{image}</Box>}
         <Box className={classes.text}>

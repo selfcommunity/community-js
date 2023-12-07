@@ -19,3 +19,28 @@ export const arraysEqual = (a, b) => {
   }
   return true;
 };
+
+/**
+ * Group items from an array together by some criteria or value.
+ * @param  {Array}           arr      The array to group items from
+ * @param  {String|Function} criteria The criteria to group by
+ * @return {Object}                   The grouped object
+ */
+export const groupBy = (arr, criteria) => {
+  return arr.reduce(function (obj, item) {
+    // Check if the criteria is a function to run on the item or a property of it
+    let key = typeof criteria === 'function' ? criteria(item) : item[criteria];
+
+    // If the key doesn't exist yet, create it
+    // eslint-disable-next-line no-prototype-builtins
+    if (!obj.hasOwnProperty(key)) {
+      obj[key] = [];
+    }
+
+    // Push the value to the object
+    obj[key].push(item);
+
+    // Return the object to the next item in the loop
+    return obj;
+  }, {});
+};

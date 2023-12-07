@@ -1,16 +1,22 @@
-import React, {ChangeEvent, LegacyRef, Suspense, useCallback, useEffect, useRef, useState} from 'react';
+import React, {LegacyRef, Suspense, useCallback, useEffect, useRef} from 'react';
 import {
   $getNodeByKey,
   $getSelection,
   $isNodeSelection,
+  $setSelection,
   CLICK_COMMAND,
   COMMAND_PRIORITY_LOW,
   DecoratorNode,
+  DOMExportOutput,
   EditorConfig,
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
+  KEY_ENTER_COMMAND,
+  KEY_ESCAPE_COMMAND,
+  LexicalEditor,
   LexicalNode,
   NodeKey,
+  SELECTION_CHANGE_COMMAND,
   SerializedLexicalNode,
   Spread,
   TextNode
@@ -19,29 +25,6 @@ import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 
 import {mergeRegister} from '@lexical/utils';
-import {createPortal} from 'react-dom';
-import {styled} from '@mui/material/styles';
-import {FormattedMessage} from 'react-intl';
-import {Icon, IconButton, InputAdornment, Stack, TextField} from '@mui/material';
-
-const PREFIX = 'SCEditorImagePluginResizer';
-
-const classes = {
-  root: `${PREFIX}-root`
-};
-
-const Root = styled(Stack, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  position: 'fixed',
-  zIndex: 2000,
-  paddingTop: theme.spacing(),
-  backgroundColor: theme.palette.background.paper,
-  minWidth: 200,
-  paddingBottom: theme.spacing()
-}));
 
 export interface ImagePayload {
   altText: string;
@@ -52,78 +35,6 @@ export interface ImagePayload {
   src: string;
   width?: 'inherit' | number;
 }
-
-const ImageEdit = ({
-  onResize,
-  onDelete,
-  imageRef
-}: {
-  imageRef: any;
-  onResize: (width: number | 'inherit', height: number | 'inherit') => void;
-  onDelete: () => void;
-}): JSX.Element => {
-  // STATE
-  const [width, setWidth] = useState(imageRef.current.width);
-  const [height, setHeight] = useState(imageRef.current.height);
-  const [positioning, setPositioning] = useState(imageRef.current.getBoundingClientRect());
-
-  // EFFECT
-  useEffect(() => {
-    if (width !== imageRef.current.width || height !== imageRef.current.height) {
-      onResize(width, height);
-    }
-  }, [width, height]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, {passive: true});
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // HANDLERS
-  const handleScroll = () => {
-    setPositioning(imageRef.current.getBoundingClientRect());
-  };
-
-  const handleChangeWidth = (event: ChangeEvent<HTMLInputElement>) => {
-    setWidth(event.target.value);
-  };
-
-  const handleChangeHeight = (event: ChangeEvent<HTMLInputElement>) => {
-    setHeight(event.target.value);
-  };
-
-  // RENDER
-  return (
-    <Root className={classes.root} direction="row" sx={{top: positioning.top, left: positioning.left, width: positioning.width}} spacing={1}>
-      <TextField
-        value={width}
-        size="small"
-        type="number"
-        onChange={handleChangeWidth}
-        label={<FormattedMessage id="ui.editor.imagePluginResizer.width" defaultMessage="ui.editor.imagePluginResizer.width" />}
-        InputProps={{
-          endAdornment: <InputAdornment position="start">px</InputAdornment>
-        }}
-      />
-      <TextField
-        value={height}
-        size="small"
-        type="number"
-        onChange={handleChangeHeight}
-        label={<FormattedMessage id="ui.editor.imagePluginResizer.height" defaultMessage="ui.editor.imagePluginResizer.height" />}
-        InputProps={{
-          endAdornment: <InputAdornment position="start">px</InputAdornment>
-        }}
-      />
-      <IconButton onClick={onDelete} size="small">
-        <Icon>close</Icon>
-      </IconButton>
-    </Root>
-  );
-};
 
 const imageCache = new Set();
 
@@ -161,52 +72,91 @@ function ImageComponent({
   src,
   altText,
   nodeKey,
-  width,
-  height,
-  maxWidth,
-  resizable
+  maxWidth
 }: {
   altText: string;
-  height: 'inherit' | number;
-  maxWidth: number | string;
+  maxWidth: string | number;
   nodeKey: NodeKey;
-  resizable: boolean;
   src: string;
-  width: 'inherit' | number;
 }): JSX.Element {
-  const ref = useRef(null);
+  const imageRef = useRef<null | HTMLImageElement>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
   const [editor] = useLexicalComposerContext();
-  const [selection, setSelection] = useState(null);
+  const activeEditorRef = useRef<LexicalEditor | null>(null);
 
-  const onDelete = useCallback(() => {
-    if (isSelected) {
-      editor.update(() => {
+  const onDelete = useCallback(
+    (payload: KeyboardEvent) => {
+      if (isSelected && $isNodeSelection($getSelection())) {
+        const event: KeyboardEvent = payload;
+        event.preventDefault();
         const node = $getNodeByKey(nodeKey);
         if ($isImageNode(node)) {
           node.remove();
         }
         setSelected(false);
-      });
-    }
-    return false;
-  }, [editor, isSelected, nodeKey, setSelected]);
+      }
+      return false;
+    },
+    [isSelected, nodeKey, setSelected]
+  );
+
+  const onEnter = useCallback(
+    (event: KeyboardEvent) => {
+      const latestSelection = $getSelection();
+      const buttonElem = buttonRef.current;
+      if (isSelected && $isNodeSelection(latestSelection) && latestSelection.getNodes().length === 1) {
+        if (buttonElem !== null && buttonElem !== document.activeElement) {
+          event.preventDefault();
+          buttonElem.focus();
+          return true;
+        }
+      }
+      return false;
+    },
+    [isSelected]
+  );
+
+  const onEscape = useCallback(
+    (event: KeyboardEvent) => {
+      if (buttonRef.current === event.target) {
+        $setSelection(null);
+        editor.update(() => {
+          setSelected(true);
+          const parentRootElement = editor.getRootElement();
+          if (parentRootElement !== null) {
+            parentRootElement.focus();
+          }
+        });
+        return true;
+      }
+      return false;
+    },
+    [editor, setSelected]
+  );
 
   useEffect(() => {
-    return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
-        setSelection(editorState.read(() => $getSelection()));
-      }),
+    const unregister = mergeRegister(
       editor.registerCommand(
+        SELECTION_CHANGE_COMMAND,
+        (_, activeEditor) => {
+          activeEditorRef.current = activeEditor;
+          return false;
+        },
+        COMMAND_PRIORITY_LOW
+      ),
+      editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
-        (payload: MouseEvent) => {
+        (payload) => {
           const event = payload;
 
-          if (event.target === ref.current) {
-            if (!event.shiftKey) {
+          if (event.target === imageRef.current) {
+            if (event.shiftKey) {
+              setSelected(!isSelected);
+            } else {
               clearSelection();
+              setSelected(true);
             }
-            setSelected(!isSelected);
             return true;
           }
 
@@ -215,55 +165,41 @@ function ImageComponent({
         COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW)
+      editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
     );
-  }, [clearSelection, editor, isSelected, nodeKey, onDelete, setSelected]);
-
-  const onResize = (nextWidth, nextHeight) => {
-    editor.update(() => {
-      const node = $getNodeByKey(nodeKey);
-      if ($isImageNode(node)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        node.setWidthAndHeight(nextWidth, nextHeight);
-      }
-    });
-  };
+    return () => {
+      unregister();
+    };
+  }, [clearSelection, editor, isSelected, nodeKey, onDelete, onEnter, onEscape, setSelected]);
 
   return (
     <Suspense fallback={null}>
-      <>
-        <LazyImage
-          className={isSelected ? 'focused' : null}
-          src={src}
-          altText={altText}
-          imageRef={ref}
-          width={width}
-          height={height}
-          maxWidth={maxWidth}
-        />
-        {resizable &&
-          $isNodeSelection(selection) &&
-          isSelected &&
-          createPortal(<ImageEdit imageRef={ref} onResize={onResize} onDelete={onDelete} />, document.body)}
-      </>
+      <LazyImage
+        className={isSelected ? `selected` : null}
+        src={src}
+        altText={altText}
+        imageRef={imageRef}
+        maxWidth={maxWidth}
+      />
     </Suspense>
   );
 }
 
 function convertImageElement(domNode) {
-  const image = domNode;
-  return {
-    node: $createImageNode({src: image.getAttribute('src') as string, altText: image.getAttribute('alt'), maxWidth: '100%'})
-  };
+  if (domNode instanceof HTMLImageElement) {
+    const {alt: altText, src} = domNode;
+    const node = $createImageNode({altText, src, maxWidth: '100%'});
+    return {node};
+  }
+  return null;
 }
 export type SerializedImageNode = Spread<
   {
     altText: string;
-    height?: number;
     maxWidth: number | string;
     src: string;
-    width?: number;
     type: 'image';
     version: 1;
   },
@@ -273,8 +209,6 @@ export type SerializedImageNode = Spread<
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
-  __width: 'inherit' | number;
-  __height: 'inherit' | number;
   __maxWidth: number | string;
 
   static getType(): string {
@@ -282,16 +216,14 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   static clone(node: ImageNode): ImageNode {
-    return new ImageNode(node.__src, node.__altText, node.__maxWidth, node.__width, node.__height, node.__key);
+    return new ImageNode(node.__src, node.__altText, node.__maxWidth, node.__key);
   }
 
-  constructor(src: string, altText: string, maxWidth: number | string, width?: 'inherit' | number, height?: 'inherit' | number, key?: NodeKey) {
+  constructor(src: string, altText: string, maxWidth: number | string, key?: NodeKey) {
     super(key);
     this.__src = src;
     this.__altText = altText;
     this.__maxWidth = maxWidth;
-    this.__width = width || 'inherit';
-    this.__height = height || 'inherit';
   }
 
   setWidthAndHeight(width: 'inherit' | number, height: 'inherit' | number): void {
@@ -306,13 +238,13 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   // View
 
   createDOM(config: EditorConfig): HTMLElement {
-    const span = document.createElement('span');
+    const div = document.createElement('div');
     const theme = config.theme;
     const className = theme.image;
     if (className !== undefined) {
-      span.className = className;
+      div.className = className;
     }
-    return span;
+    return div;
   }
 
   updateDOM(): false {
@@ -332,28 +264,24 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     };
   }
 
+  exportDOM(): DOMExportOutput {
+    const element = document.createElement('img');
+    element.setAttribute('src', this.__src);
+    element.setAttribute('alt', this.__altText);
+    element.setAttribute('style', `max-width: ${this.__maxWidth}px;`);
+    return {element};
+  }
+
   decorate(): JSX.Element {
-    return (
-      <ImageComponent
-        src={this.__src}
-        altText={this.__altText}
-        width={this.__width}
-        height={this.__height}
-        maxWidth={this.__maxWidth}
-        nodeKey={this.getKey()}
-        resizable={true}
-      />
-    );
+    return <ImageComponent src={this.__src} altText={this.__altText} maxWidth={this.__maxWidth} nodeKey={this.getKey()} />;
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const {altText, height, width, maxWidth, src} = serializedNode;
+    const {altText, maxWidth, src} = serializedNode;
     const node = $createImageNode({
       altText,
-      height,
-      maxWidth,
       src,
-      width
+      maxWidth
     });
     return node;
   }
@@ -361,18 +289,16 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   exportJSON(): SerializedImageNode {
     return {
       altText: this.getAltText(),
-      height: this.__height === 'inherit' ? 0 : this.__height,
       maxWidth: this.__maxWidth,
       src: this.getSrc(),
       type: 'image',
-      version: 1,
-      width: this.__width === 'inherit' ? 0 : this.__width
+      version: 1
     };
   }
 }
 
-export function $createImageNode({src, altText, maxWidth, width = null, height = null}: ImagePayload): ImageNode {
-  return new ImageNode(src, altText, maxWidth, width, height);
+export function $createImageNode({src, altText, maxWidth}: ImagePayload): ImageNode {
+  return new ImageNode(src, altText, maxWidth);
 }
 
 export function $isImageNode(node?: LexicalNode): boolean {

@@ -1,18 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Tooltip, Typography} from '@mui/material';
-import {SCFeedObjectTypologyType, SCNotificationContributionType} from '@selfcommunity/types';
+import {Avatar, Stack, Typography} from '@mui/material';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCNotificationContributionType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import {getContributionSnippet, getContributionType, getRouteData} from '../../../utils/contribution';
-import {useThemeProps} from '@mui/system';
-import NotificationItem from '../../../shared/NotificationItem';
+import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
 import Bullet from '../../../shared/Bullet';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
+import VoteButton from '../../VoteButton';
+import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../../shared/UserAvatar';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   postOrStatus: {
@@ -33,10 +34,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCContributionNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-contribution-root`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   voteButton: `${PREFIX}-vote-button`,
@@ -45,48 +44,19 @@ const classes = {
   bullet: `${PREFIX}-bullet`
 };
 
-const Root = styled(Box, {
+const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    fontWeight: 700,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.voteButton}`]: {
-    marginLeft: '-1px',
-    minWidth: '30px',
-    paddingTop: 3,
-    '& > span': {
-      fontSize: '15px'
-    }
-  },
-  [`& .${classes.contributionText}`]: {
-    color: theme.palette.text.primary,
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+  slot: 'ContributionRoot'
+})(() => ({}));
 
-export interface ContributionNotificationProps {
-  /**
-   * Id of the feedObject
-   * @default `n_<notificationObject.sid>`
-   */
-  id?: string;
-
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
+export interface ContributionNotificationProps
+  extends Pick<
+    NotificationItemProps,
+    Exclude<
+      keyof NotificationItemProps,
+      'image' | 'disableTypography' | 'primary' | 'primaryTypographyProps' | 'secondary' | 'secondaryTypographyProps' | 'actions' | 'footer' | 'isNew'
+    >
+  > {
   /**
    * Notification obj
    * @default null
@@ -94,50 +64,22 @@ export interface ContributionNotificationProps {
   notificationObject: SCNotificationContributionType;
 
   /**
-   * Notification Object template type
-   * @default 'detail'
-   */
-  template?: SCNotificationObjectTemplateType;
-  /**
-   * Index
-   * @default null
-   */
-  index?: number;
-
-  /**
    * Handles action on vote
    * @default null
    */
-  onVote?: (i, v) => void;
-
-  /**
-   * The id of the loading vote
-   * @default null
-   */
-  loadingVote?: number;
-
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
+  onVote?: (contribution: SCFeedObjectType | SCCommentType) => any;
 }
 
 /**
  * This component render the content of the notification of type follow (contribution)
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function ContributionNotification(inProps: ContributionNotificationProps): JSX.Element {
+export default function ContributionNotification(props: ContributionNotificationProps): JSX.Element {
   // PROPS
-  const props: ContributionNotificationProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
-    index,
     onVote,
-    loadingVote,
     id = `n_${props.notificationObject['sid']}`,
     className,
     template = SCNotificationObjectTemplateType.DETAIL,
@@ -148,54 +90,67 @@ export default function ContributionNotification(inProps: ContributionNotificati
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CONST
-  const contributionType = getContributionType(notificationObject);
+  const contributionType: SCContributionType = getContributionType(notificationObject);
 
   // INTL
   const intl = useIntl();
-  /**
-   * Handle vote
-   */
-  function handleVote() {
-    return onVote && index !== undefined && onVote(index, notificationObject[contributionType]);
-  }
+
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
+  // HANDLERS
+  const handleVote = (contribution: SCFeedObjectType | SCCommentType) => {
+    return onVote && onVote(contribution);
+  };
 
   /**
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <NotificationItem
+    <>
+      <Root
+        id={id}
+        className={classNames(classes.root, className, `${PREFIX}-${template}`)}
         template={template}
         isNew={notificationObject.is_new}
         disableTypography
         image={
-          <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)}>
-            <Avatar
-              alt={notificationObject[contributionType].author.username}
-              variant="circular"
-              src={notificationObject[contributionType].author.avatar}
-              classes={{root: classes.avatar}}
-            />
+          <Link
+            {...(!notificationObject[contributionType].author.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)
+            })}
+            onClick={notificationObject[contributionType].author.deleted ? () => setOpenAlert(true) : null}>
+            <UserAvatar hide={!notificationObject[contributionType].author.community_badge} smaller={true}>
+              <Avatar
+                alt={notificationObject[contributionType].author.username}
+                variant="circular"
+                src={notificationObject[contributionType].author.avatar}
+                classes={{root: classes.avatar}}
+              />
+            </UserAvatar>
           </Link>
         }
         primary={
           <>
             <Link
-              to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)}
+              {...(!notificationObject[contributionType].author.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject[contributionType].author)
+              })}
+              onClick={notificationObject[contributionType].author.deleted ? () => setOpenAlert(true) : null}
               className={classes.username}>
               {notificationObject[contributionType].author.username}
             </Link>{' '}
             {template === SCNotificationObjectTemplateType.SNIPPET ? (
               <>
-                {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-                notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+                {notificationObject[contributionType]['type'] === SCContributionType.POST ||
+                notificationObject[contributionType]['type'] === SCContributionType.STATUS
                   ? intl.formatMessage(messages.postOrStatusSnippet, {contribution: notificationObject[contributionType]['type']})
                   : intl.formatMessage(messages.discussionSnippet)}
               </>
             ) : (
               <>
-                {notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.POST ||
-                notificationObject[contributionType]['type'] === SCFeedObjectTypologyType.STATUS
+                {notificationObject[contributionType]['type'] === SCContributionType.POST ||
+                notificationObject[contributionType]['type'] === SCContributionType.STATUS
                   ? intl.formatMessage(messages.postOrStatus, {contribution: notificationObject[contributionType]['type']})
                   : intl.formatMessage(messages.discussion)}
               </>
@@ -210,7 +165,7 @@ export default function ContributionNotification(inProps: ContributionNotificati
                   SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                   getRouteData(notificationObject[contributionType])
                 )}>
-                <Typography variant="body2" className={classes.contributionText} gutterBottom component={'div'}>
+                <Typography variant="body2" className={classes.contributionText} component={'div'}>
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
@@ -219,55 +174,41 @@ export default function ContributionNotification(inProps: ContributionNotificati
               <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                 <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
                 <Bullet className={classes.bullet} />
-                <LoadingButton
-                  color={'inherit'}
-                  size={'small'}
-                  classes={{root: classes.voteButton}}
-                  variant={'text'}
-                  onClick={handleVote}
-                  disabled={loadingVote === index}
-                  loading={loadingVote === index}>
-                  {notificationObject[contributionType].voted ? (
-                    <Tooltip
-                      title={
-                        <FormattedMessage id={'ui.notification.contribution.voteDown'} defaultMessage={'ui.notification.contribution.voteDown'} />
-                      }>
-                      <Icon fontSize={'small'} color={'primary'}>
-                        thumb_up_alt
-                      </Icon>
-                    </Tooltip>
-                  ) : (
-                    <Tooltip
-                      title={<FormattedMessage id={'ui.notification.contribution.voteUp'} defaultMessage={'ui.notification.contribution.voteUp'} />}>
-                      <Icon fontSize={'small'} color="inherit">
-                        thumb_up_off_alt
-                      </Icon>
-                    </Tooltip>
-                  )}
-                </LoadingButton>
+                <VoteButton
+                  className={classes.voteButton}
+                  variant="text"
+                  size="small"
+                  contributionId={notificationObject[contributionType].id}
+                  contributionType={contributionType}
+                  contribution={notificationObject[contributionType]}
+                  onVote={handleVote}
+                />
               </Stack>
+            )}
+            {template === SCNotificationObjectTemplateType.SNIPPET && (
+              <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
             )}
           </React.Fragment>
         }
         footer={
-          <React.Fragment>
-            {template === SCNotificationObjectTemplateType.TOAST && (
-              <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary" component={'div'}>
-                  <Link
-                    to={scRoutingContext.url(
-                      SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                      getRouteData(notificationObject[contributionType])
-                    )}>
-                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
-                  </Link>
-                </Typography>
-              </Stack>
-            )}
-          </React.Fragment>
+          template === SCNotificationObjectTemplateType.TOAST && (
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+              <DateTimeAgo date={notificationObject.active_at} />
+              <Typography color="primary" component={'div'}>
+                <Link
+                  to={scRoutingContext.url(
+                    SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
+                    getRouteData(notificationObject[contributionType])
+                  )}>
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                </Link>
+              </Typography>
+            </Stack>
+          )
         }
+        {...rest}
       />
-    </Root>
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

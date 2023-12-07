@@ -1,35 +1,50 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {styled} from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import {FormattedMessage} from 'react-intl';
+import DialogContent, {DialogContentProps} from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Title from './title';
 import classNames from 'classnames';
+import {useTheme} from '@mui/material';
+import {SCThemeType} from '@selfcommunity/react-core';
+import MuiDialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCBaseDialog';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  titleRoot: `${PREFIX}-title-root`
+};
+
+const DialogTitleRoot = styled(MuiDialogTitle, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.titleRoot
+})(({theme}) => ({}));
+
+const DialogTitle = ({children = null, onClose = null}): JSX.Element => {
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+
+  return (
+    <DialogTitleRoot className={classes.titleRoot}>
+      <span>{children}</span>
+      {onClose ? (
+        <IconButton aria-label="close" onClick={onClose}>
+          <Icon>{isMobile ? 'arrow_back' : 'close'}</Icon>
+        </IconButton>
+      ) : null}
+    </DialogTitleRoot>
+  );
 };
 
 const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [theme.breakpoints.down(500)]: {
-    minWidth: 300
-  },
-  [theme.breakpoints.only('xs')]: {
-    '& .MuiDialogContent-root': {
-      padding: 0
-    }
-  },
-  minWidth: 500
-}));
+})(({theme}) => ({}));
 
 export interface BaseDialogProps {
   /**
@@ -43,6 +58,16 @@ export interface BaseDialogProps {
    */
   title?: any;
   /**
+   * Dialog subtitle
+   * @default ''
+   */
+  subtitle?: any;
+  /**
+   * Dialog content props
+   * @default {dividers: !isMobile}
+   */
+  DialogContentProps?: DialogContentProps;
+  /**
    * Handles dialog opening
    * @default false
    */
@@ -53,18 +78,35 @@ export interface BaseDialogProps {
    */
   onClose?: () => any;
   /**
+   * Actions for the dialog
+   */
+  actions?: ReactNode;
+  /**
    * Any other properties
    */
   [p: string]: any;
 }
 
 export default function BaseDialog(props: BaseDialogProps) {
-  // PROPS
-  const {className, title = '', open = false, onClose = null, ...rest} = props;
-  const {children} = rest;
-
   // OPTIONS
-  const fullScreen = useMediaQuery((theme) => theme['breakpoints'].down('sm'), {noSsr: typeof window !== 'undefined'});
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+  const fullScreen = isMobile;
+
+  // PROPS
+  const {
+    className = '',
+    title = '',
+    subtitle = null,
+    DialogContentProps = {dividers: !isMobile},
+    open = false,
+    onClose = null,
+    actions = null,
+    children,
+    maxWidth = 'sm',
+    scroll = 'body',
+    ...rest
+  } = props;
 
   /**
    * Renders root object
@@ -76,15 +118,13 @@ export default function BaseDialog(props: BaseDialogProps) {
       fullWidth
       open={open}
       onClose={onClose}
-      maxWidth={rest.maxWidth ? rest.maxWidth : 'sm'}
-      scroll="body">
-      <Title onClose={onClose}>{title}</Title>
-      <DialogContent dividers>{children}</DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary" autoFocus variant={'outlined'}>
-          <FormattedMessage id="ui.baseDialog.button.close" defaultMessage="ui.baseDialog.button.close" />
-        </Button>
-      </DialogActions>
+      maxWidth={maxWidth}
+      scroll={scroll}
+      {...rest}>
+      <DialogTitle onClose={onClose}>{title}</DialogTitle>
+      {subtitle && subtitle}
+      <DialogContent {...DialogContentProps}>{children}</DialogContent>
+      {actions && <DialogActions>{actions}</DialogActions>}
     </Root>
   );
 }

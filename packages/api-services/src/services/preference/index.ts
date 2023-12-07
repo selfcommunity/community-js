@@ -1,6 +1,6 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
-import {SCPreferenceType} from '@selfcommunity/types/src/types';
+import {SCPreferenceType} from '@selfcommunity/types';
 import {SCPaginatedResponse} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';

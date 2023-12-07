@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
@@ -11,13 +11,12 @@ import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Typography from '@mui/material/Typography';
 import {getContribution} from '../../utils/contribution';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {useSCFetchCommentObject, useSCFetchCommentObjects} from '@selfcommunity/react-core';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {DEFAULT_PAGINATION_LIMIT} from '../../constants/Pagination';
-
-const PREFIX = 'SCCommentsFeedObject';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,18 +26,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.noComments}`]: {
-    padding: theme.spacing(),
-    paddingLeft: 0
-  },
-  [`& .${classes.commentNotFound}`]: {
-    padding: theme.spacing()
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CommentsFeedObjectProps {
   /**
@@ -67,9 +56,9 @@ export interface CommentsFeedObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Id of the comment object
@@ -171,25 +160,29 @@ export interface CommentsFeedObjectProps {
 }
 
 /**
- *> API documentation for the Community-JS Comments Object component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Comments Feed Object component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a list of comment items.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CommentsFeedObject)
 
  #### Import
 
  ```jsx
- import {CommentsObject} from '@selfcommunity/react-ui';
+ import {CommentsFeedObject} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCCommentsObject` can be used when providing style overrides in the theme.
+ The name `SCCommentsFeedObject` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCommentsObject-root|Styles applied to the root element.|
- |commentNotFound|.SCCommentsObject-comment-not-found|Styles applied to the label 'Comment not found'.|
- |noComments|.SCCommentsObject-no-comments|Styles applied to the 'no comments' section.|
+ |root|.SCCommentsFeedObject-root|Styles applied to the root element.|
+ |noComments|.SCCommentsFeedObject-no-comments|Styles applied to the 'no comments' section.|
+ |commentNotFound|.SCCommentsFeedObject-comment-not-found|Styles applied to the label 'Comment not found'.|
 
  * @param inProps
  */
@@ -206,7 +199,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentObjectId,
     commentObject,
     CommentComponent = CommentObject,
@@ -244,6 +237,9 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   // CONST
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
   const commentObjId = commentObj ? commentObj.id : null;
+
+  // REFS
+  const commentsContainerRef = useRef();
 
   /**
    * Total number of comments
@@ -329,10 +325,10 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     // Add (window.innerHeight / 2) to scroll
     // (usually >= (topBar + offset) and in center of the screen)
     setTimeout(() => {
-      const el = document.querySelector(`#comment_object_${comment.id}`);
+      // Get the comment inside commentsContainer
+      const el = commentsContainerRef.current ? (commentsContainerRef.current as HTMLElement).querySelector(`#comment_object_${comment.id}`) : null;
       if (el) {
-        const y = el.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 2;
-        window.scrollTo({top: y, behavior: 'smooth'});
+        el.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
     }, 300);
   }
@@ -387,7 +383,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
         commentsObject.getNextPage();
       }
     }
-  }, [objId, commentObjId, errorCommentObj]);
+  }, [objId, commentObjId]);
 
   /**
    * Render comments
@@ -439,7 +435,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest} ref={commentsContainerRef}>
       {renderTitle()}
       {commentsRendered}
     </Root>

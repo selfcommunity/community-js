@@ -1,25 +1,23 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
+import Editor, { EditorProps } from './index';
 
-import Editor from './index';
-
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Editor',
   component: Editor
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Editor>;
+} as Meta<typeof Editor>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Editor> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <Editor {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-  defaultValue: 'ciao <mention id="1" ext-id="5">@username</mention>'
+export const Base: StoryObj<EditorProps> = {
+  args: {
+    defaultValue: '<p class="SCEditor-paragraph"><br></p><p class="SCEditor-paragraph" dir="ltr"><span style="white-space: pre-wrap;">asdsad asd </span><b><strong class="SCEditor-textBold" style="white-space: pre-wrap;">asd </strong></b><mention id="13" ext-id="null">@zulayafi</mention></p><p class="SCEditor-paragraph"><br></p><p class="SCEditor-paragraph" dir="ltr"><span style="white-space: pre-wrap;">asdasdasd</span></p><p class="SCEditor-paragraph"><br></p><p class="SCEditor-paragraph"><br></p><p class="SCEditor-paragraph" dir="ltr"><span style="white-space: pre-wrap;">asdasdasd</span></p><p class="SCEditor-paragraph"><div style="position: relative;padding-bottom:141.61220043572985%"><img src="https://static.quentrix.com/dhpyt711mb8h2n3m/upfiles/cache/71/47/7147e54e19d51b1b06c03cc326ea0bfc.jpg" alt="null" style="position: absolute;width:100%;height:100%;" data-width="459" data-height="650"></div></p><p class="SCEditor-paragraph"><br></p>',
+    onChange: (value) => console.log(value),
+    toolbar: false,
+    uploadImage: false
+  },
+  render: template
 };

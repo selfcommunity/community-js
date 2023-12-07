@@ -9,6 +9,7 @@ const PREFIX = 'SCBaseItemButton';
 
 const classes = {
   root: `${PREFIX}-root`,
+  withActions: `${PREFIX}-with-actions`,
   content: `${PREFIX}-content`,
   image: `${PREFIX}-image`,
   text: `${PREFIX}-text`,
@@ -21,59 +22,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`&.${classes.root}`]: {
-    position: 'relative',
-    width: '100%',
-    '&.MuiPaper-elevation': {
-      paddingTop: theme.spacing(),
-      paddingBottom: theme.spacing(),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      '&.MuiPaper-elevation0': {
-        paddingTop: 0,
-        paddingBottom: 0,
-        paddingLeft: 0,
-        paddingRight: 0,
-        [`& .${classes.actions}`]: {
-          right: 0
-        }
-      }
-    }
-  },
-  [`& .${classes.content}`]: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%'
-  },
-  [`& .${classes.image}`]: {
-    flexShrink: 0,
-    marginRight: theme.spacing(2)
-  },
-  [`& .${classes.text}`]: {
-    flex: '1 1 auto',
-    marginTop: theme.spacing(),
-    marginBottom: theme.spacing(),
-    textAlign: 'left'
-  },
-  [`& .${classes.primary}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.secondary}`]: {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    color: theme.palette.text.secondary
-  },
-  [`& .${classes.actions}`]: {
-    position: 'absolute',
-    right: theme.spacing(),
-    top: '50%',
-    transform: 'translateY(-50%)'
-  }
-}));
+})(({theme}) => ({}));
 
 export interface BaseItemButtonProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
   /**
@@ -188,7 +137,7 @@ export default function BaseItemButton(inProps: BaseItemButtonProps): JSX.Elemen
 
   // RENDER
   return (
-    <Root id={id} {...rest} className={classNames(classes.root, className)}>
+    <Root id={id} {...rest} className={classNames(classes.root, className, {[classes.withActions]: Boolean(actions)})}>
       <ButtonBase className={classes.content} {...ButtonBaseProps}>
         {image && <Box className={classes.image}>{image}</Box>}
         <Box className={classes.text}>

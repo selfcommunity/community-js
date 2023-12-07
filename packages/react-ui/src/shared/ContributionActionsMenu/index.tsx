@@ -5,9 +5,9 @@ import Popper from '@mui/material/Popper';
 import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {copyTextToClipboard} from '@selfcommunity/utils';
+import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
-import {getRouteData, getContributionRouteName} from '../../utils/contribution';
+import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import classNames from 'classnames';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -24,26 +24,29 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Typography
+  SwipeableDrawer,
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
+  MODERATION_CONTRIBUTION_STATE_DELETED,
+  MODERATION_CONTRIBUTION_STATE_HIDDEN,
+  MODERATION_TYPE_ACTION_DELETE,
+  MODERATION_TYPE_ACTION_HIDE,
   REPORT_AGGRESSIVE,
   REPORT_OFFTOPIC,
   REPORT_POORCONTENT,
   REPORT_SPAM,
   REPORT_VULGAR,
-  REPORTS,
-  MODERATION_TYPE_ACTION_HIDE,
-  MODERATION_TYPE_ACTION_DELETE,
-  MODERATION_CONTRIBUTION_STATE_HIDDEN,
-  MODERATION_CONTRIBUTION_STATE_DELETED
+  REPORTS
 } from '../../constants/Flagging';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCContext,
   SCContextType,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
@@ -51,19 +54,19 @@ import {
   useSCFetchFeedObject,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {
-  GENERAL_SECTION,
   DELETE_CONTRIBUTION,
   DELETE_CONTRIBUTION_SECTION,
   EDIT_CONTRIBUTION,
   FLAG_CONTRIBUTION_SECTION,
+  GENERAL_SECTION,
   GET_CONTRIBUTION_PERMALINK,
   HIDE_CONTRIBUTION_SECTION,
-  RESTORE_CONTRIBUTION,
-  SUSPEND_NOTIFICATION_CONTRIBUTION,
+  MODERATE_CONTRIBUTION_DELETED,
   MODERATE_CONTRIBUTION_HIDDEN,
-  MODERATE_CONTRIBUTION_DELETED
+  RESTORE_CONTRIBUTION,
+  SUSPEND_NOTIFICATION_CONTRIBUTION
 } from '../../constants/ContributionsActionsMenu';
 
 const PREFIX = 'SCContributionActionsMenu';
@@ -81,7 +84,7 @@ const classes = {
   selectedIcon: `${PREFIX}-selected-icon`,
   sectionBadge: `${PREFIX}-section-badge`,
   sectionWithSelectionIcon: `${PREFIX}-section-with-selection-icon`,
-  visibilityBadge: `${PREFIX}-visibility-badge`
+  visibilityIcons: `${PREFIX}-visibility-icons`
 };
 
 const PopperRoot = styled(Popper, {
@@ -130,15 +133,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(() => ({
-  [`& .${classes.visibilityBadge}`]: {
-    color: 'red',
-    '& > span': {
-      padding: 12,
-      fontSize: 15
-    }
-  }
-}));
+})(() => ({}));
 
 const messages = defineMessages({
   title: {
@@ -194,7 +189,7 @@ export interface ContributionActionsMenuProps {
    * Feed obj type
    * @default 'post'
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * CommentObject id
@@ -229,6 +224,11 @@ export interface ContributionActionsMenuProps {
   onRestoreContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
 
   /**
+   * Handle flag notification obj
+   */
+  onFlagContribution?: (obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => void;
+
+  /**
    * Handle suspend notification obj
    */
   onSuspendNotificationContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
@@ -251,9 +251,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentObjectId,
     commentObject,
+    onFlagContribution,
     onEditContribution,
     onHideContribution,
     onDeleteContribution,
@@ -267,6 +268,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const intl = useIntl();
 
   // CONTEXT
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scContext: SCContextType = useContext(SCContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -310,7 +313,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const getExtraSections = useMemo(
     () => () => {
       let _extra = [];
-      if (scUserContext.user && Boolean(contributionObj) && scUserId !== contributionObj.author.id) {
+      if (
+        scUserContext.user &&
+        Boolean(contributionObj) &&
+        scUserId !== contributionObj.author.id &&
+        !contributionObj.deleted &&
+        !contributionObj.collapsed
+      ) {
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
       // Enable when backend is ready
@@ -394,7 +403,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     setCurrentActionLoading(SUSPEND_NOTIFICATION_CONTRIBUTION);
     performSuspendNotification()
       .then((data) => {
-        const _feedObj = Object.assign(feedObj, {suspended: !feedObj.suspended});
+        const _feedObj = Object.assign({}, feedObj, {suspended: !feedObj.suspended});
         setFeedObj(_feedObj);
         onSuspendNotificationContribution && onSuspendNotificationContribution(_feedObj);
         setCurrentActionLoading(null);
@@ -480,10 +489,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       return http
         .request({
           url:
-            contributionType === SCCommentTypologyType
+            contributionType === SCContributionType.COMMENT
               ? Endpoints.DeleteComment.url({id: contributionObj.id})
               : Endpoints.DeleteFeedObject.url({type: contributionType, id: contributionObj.id}),
-          method: contributionType === SCCommentTypologyType ? Endpoints.DeleteComment.method : Endpoints.DeleteFeedObject.method
+          method: contributionType === SCContributionType.COMMENT ? Endpoints.DeleteComment.method : Endpoints.DeleteFeedObject.method
         })
         .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
@@ -504,10 +513,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       return http
         .request({
           url:
-            contributionType === SCCommentTypologyType
+            contributionType === SCContributionType.COMMENT
               ? Endpoints.RestoreComment.url({id: contributionObj.id})
               : Endpoints.RestoreFeedObject.url({type: contributionType, id: contributionObj.id}),
-          method: contributionType === SCCommentTypologyType ? Endpoints.RestoreComment.method : Endpoints.RestoreFeedObject.method
+          method: contributionType === SCContributionType.COMMENT ? Endpoints.RestoreComment.method : Endpoints.RestoreFeedObject.method
         })
         .then((res: HttpResponse<any>) => {
           if (res.status >= 300) {
@@ -579,9 +588,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         .then((data) => {
           setFlagType(flagType === type ? null : type);
           setIsFlagging(false);
+          onFlagContribution && onFlagContribution(contributionObj, type, flagType !== type);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
         });
     }
   }
@@ -714,11 +728,11 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function handleConfirmedAction() {
     if (contributionObj && !isLoading && !currentActionLoading) {
       if (currentAction === DELETE_CONTRIBUTION) {
-        setCurrentActionLoading(RESTORE_CONTRIBUTION);
+        setCurrentActionLoading(DELETE_CONTRIBUTION);
         performDeleteContribution()
           .then((data) => {
-            setFeedObj(Object.assign(feedObj, {deleted: true}));
-            onDeleteContribution && onDeleteContribution(contributionObj);
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: true});
+            onDeleteContribution && onDeleteContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -729,8 +743,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performRestoreContribution()
           .then((data) => {
-            setFeedObj(Object.assign(feedObj, {deleted: false}));
-            onRestoreContribution && onRestoreContribution(contributionObj);
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
+            onRestoreContribution && onRestoreContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -741,10 +755,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(MODERATE_CONTRIBUTION_HIDDEN);
         performModerationContribution(MODERATION_TYPE_ACTION_HIDE, hideFlagType)
           .then((data) => {
+            const _contributionObj = Object.assign({}, contributionObj, {collapsed: !contributionObj.collapsed});
             setHideType(hideType === hideFlagType ? null : hideFlagType);
             setHideFlagType(null);
-            setFeedObj(Object.assign(feedObj, {collapsed: !feedObj.collapsed}));
-            onHideContribution && onHideContribution(contributionObj);
+            onHideContribution && onHideContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -755,10 +769,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(MODERATE_CONTRIBUTION_DELETED);
         performModerationContribution(MODERATION_TYPE_ACTION_DELETE, deleteFlagType)
           .then((data) => {
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: !contributionObj.deleted});
             setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
             setDeleteFlagType(null);
-            setFeedObj(Object.assign(feedObj, {deleted: !feedObj.deleted}));
-            onDeleteContribution && onDeleteContribution(contributionObj);
+            onDeleteContribution && onDeleteContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -825,7 +839,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         : section === HIDE_CONTRIBUTION_SECTION
         ? handleHideContribution
         : handleDeleteContribution;
-    let value = FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
+    let value = section === FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
     return REPORTS.map((report, index) => {
       return (
         <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
@@ -1012,7 +1026,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function canSuspendNotificationContribution(): boolean {
     return (
-      scUserContext.user && scUserContext.user.id !== contributionObj.author.id && contributionObj && contributionObj.type !== SCCommentTypologyType
+      scUserContext.user &&
+      scUserContext.user.id !== contributionObj.author.id &&
+      contributionObj &&
+      contributionObj.type !== SCContributionType.COMMENT
     );
   }
 
@@ -1083,7 +1100,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               {currentActionLoading === SUSPEND_NOTIFICATION_CONTRIBUTION ? (
                 <CircularProgress size={20} />
               ) : contributionObj['suspended'] ? (
-                <Icon>notifications</Icon>
+                <Icon>notifications_active</Icon>
               ) : (
                 <Icon>notifications_off</Icon>
               )}
@@ -1112,6 +1129,27 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   }
 
   /**
+   * Renders contribution menu content
+   */
+  function renderContent() {
+    return (
+      <Box>
+        {isLoading || (!feedObj && !commentObj) ? (
+          <CentralProgress size={30} />
+        ) : (
+          <MenuList>
+            {renderGeneralSection()}
+            {Boolean(extraSections.length) && <Divider />}
+            {extraSections.map((s, i) => (
+              <Box key={`es_${i}`}>{extraSectionsRenders[s]()}</Box>
+            ))}
+          </MenuList>
+        )}
+      </Box>
+    );
+  }
+
+  /**
    * Renders component
    */
   return (
@@ -1123,50 +1161,51 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         aria-haspopup="true"
         onClick={handleOpen}
         className={classes.button}
-        size="medium">
-        {contributionObj.collapsed || contributionObj.deleted ? (
-          <Badge
-            badgeContent={contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
-            classes={{badge: classes.visibilityBadge}}>
-            <Icon>more_vert</Icon>
-          </Badge>
+        size="small">
+        {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
+          <span className={classes.visibilityIcons}>
+            {contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
+            <Icon>expand_more</Icon>
+          </span>
         ) : (
           <Icon>more_vert</Icon>
         )}
       </IconButton>
-      <PopperRoot
-        open={open}
-        anchorEl={popperRef.current}
-        role={undefined}
-        transition
-        className={classes.popper}
-        {...PopperProps}
-        placement="bottom-end">
-        {({TransitionProps, placement}) => (
-          <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-            <Paper variant={'outlined'} className={classes.paper}>
-              <ClickAwayListener onClickAway={handleClose}>
-                <Box>
-                  {isLoading || (!feedObj && !commentObj) ? (
-                    <CentralProgress size={30} />
-                  ) : (
-                    <MenuList>
-                      {renderGeneralSection()}
-                      {Boolean(extraSections.length) && <Divider />}
-                      {extraSections.map((s, i) => (
-                        <Box key={`es_${i}`}>{extraSectionsRenders[s]()}</Box>
-                      ))}
-                    </MenuList>
-                  )}
-                </Box>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </PopperRoot>
+      {isMobile ? (
+        <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
+          {renderContent()}
+        </SwipeableDrawer>
+      ) : (
+        <PopperRoot
+          open={open}
+          anchorEl={popperRef.current}
+          role={undefined}
+          transition
+          className={classes.popper}
+          {...PopperProps}
+          placement="bottom-end">
+          {({TransitionProps, placement}) => (
+            <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+              <Paper variant={'outlined'} className={classes.paper}>
+                <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </PopperRoot>
+      )}
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}
+          {...(currentAction === DELETE_CONTRIBUTION
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.deleteContributionInfo"
+                    defaultMessage="ui.contributionActionMenu.deleteContributionInfo"
+                  />
+                )
+              }
+            : {})}
           onConfirm={handleConfirmedAction}
           isUpdating={Boolean(currentActionLoading)}
           onClose={() => setOpenConfirmDialog(false)}

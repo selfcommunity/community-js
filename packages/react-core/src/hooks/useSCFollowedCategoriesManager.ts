@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import { useEffect, useMemo } from "react";
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
@@ -20,7 +20,8 @@ import {Logger} from '@selfcommunity/utils';
  :::
  */
 export default function useSCFollowedCategoriesManager(user?: SCUserType, updateUser?: (info) => void) {
-  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, isLoading} = useSCCachingManager();
+  const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
+  const authUserId = user ? user.id : null;
 
   /**
    * Memoized refresh all categories
@@ -63,7 +64,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
   const follow = useMemo(
     () =>
       (category: SCCategoryType): Promise<any> => {
-        setLoading((prev) => [...prev, ...[category.id]]);
+        setLoading(category.id);
         return http
           .request({
             url: Endpoints.FollowCategory.url({id: category.id}),
@@ -76,7 +77,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
             updateCache([category.id]);
             const isFollowed = data.includes(category.id);
             setData((prev) => (isFollowed ? prev.filter((id) => id !== category.id) : [...[category.id], ...prev]));
-            setLoading((prev) => prev.filter((c) => c !== category.id));
+            setUnLoading(category.id);
             updateUser({categories_counter: isFollowed ? data.length - 1 : data.length + 1});
             return Promise.resolve(res.data);
           });
@@ -91,7 +92,7 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
    * @param category
    */
   const checkIsCategoryFollowed = (category: SCCategoryType): void => {
-    setLoading((prev) => (prev.includes(category.id) ? prev : [...prev, ...[category.id]]));
+    setLoading(category.id);
     http
       .request({
         url: Endpoints.CheckCategoryIsFollowed.url({id: category.id}),
@@ -103,13 +104,13 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
         }
         updateCache([category.id]);
         setData((prev) => (res.data.is_followed ? [...[category.id], ...prev] : prev.filter((id) => id !== category.id)));
-        setLoading((prev) => prev.filter((c) => c !== category.id));
+        setUnLoading(category.id);
         return Promise.resolve(res.data);
       });
   };
 
   /**
-   * Bypass remote check if the user is followed
+   * Bypass remote check if the category is followed
    */
   const getFollowStatus = useMemo(
     () => (category: SCCategoryType) => {
@@ -129,19 +130,31 @@ export default function useSCFollowedCategoriesManager(user?: SCUserType, update
   const isFollowed = useMemo(
     () =>
       (category: SCCategoryType): boolean => {
+        // Cache is valid also for anonymous user
         if (cache.includes(category.id)) {
           return Boolean(data.includes(category.id));
         }
-        if ('followed' in category) {
-          return getFollowStatus(category);
-        }
-        if (!loading.includes(category.id)) {
-          checkIsCategoryFollowed(category);
+        if (authUserId) {
+          if ('followed' in category) {
+            return getFollowStatus(category);
+          }
+          if (!isLoading(category)) {
+            checkIsCategoryFollowed(category);
+          }
         }
         return false;
       },
-    [data, loading, cache]
+    [data, loading, cache, authUserId]
   );
+
+  /**
+   * Empty cache on logout
+   */
+  useEffect(() => {
+    if (!authUserId) {
+      emptyCache();
+    }
+  }, [authUserId]);
 
   if (!user) {
     return {categories: data, loading, isLoading};

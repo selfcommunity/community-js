@@ -11,9 +11,8 @@ import {WidgetProps} from '../Widget';
 import CommentsObjectSkeleton from './Skeleton';
 import {InView} from 'react-intersection-observer';
 import {getContributionRouteName, getRouteData} from '../../utils/contribution';
-import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {appendURLSearchParams} from '@selfcommunity/utils';
-import {scrollIntoView} from 'seamless-scroll-polyfill';
+import {SCCommentType, SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
+import {appendURLSearchParams, CacheStrategies} from '@selfcommunity/utils';
 import {DEFAULT_PAGINATION_QUERY_PARAM_NAME} from '../../constants/Pagination';
 import {
   Link,
@@ -26,8 +25,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-
-const PREFIX = 'SCCommentsObject';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -42,30 +40,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  boxShadow: 'none',
-  position: 'relative',
-  display: 'flex',
-  flexWrap: 'wrap',
-  width: '100%',
-  [`& .${classes.loadNextCommentsButton}`]: {
-    textTransform: 'initial'
-  },
-  [`& .${classes.loadPreviousCommentsButton}`]: {
-    textTransform: 'initial'
-  },
-  [`& .${classes.commentsCounter}`]: {
-    paddingRight: theme.spacing()
-  },
-  [`& .${classes.pagination}`]: {
-    width: '100%'
-  },
-  [`& .${classes.paginationLink}`]: {
-    display: 'none'
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CommentsObjectProps {
   /**
@@ -94,9 +70,9 @@ export interface CommentsObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * CommentComponent component
@@ -200,6 +176,12 @@ export interface CommentsObjectProps {
   hidePaginationLinks?: boolean;
 
   /**
+   * Load more contents in place
+   * rather than opening a new page
+   */
+  inPlaceLoadMoreContents?: boolean;
+
+  /**
    * Page query parameter name
    * @default 'page'
    */
@@ -231,6 +213,12 @@ export interface CommentsObjectProps {
   infiniteScrolling?: boolean;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -238,7 +226,7 @@ export interface CommentsObjectProps {
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 /**
- *> API documentation for the Community-JS Comments Object component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Comments Object component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -274,7 +262,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     CommentComponent = CommentObject,
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
@@ -297,8 +285,10 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     hideAdvertising = false,
     disablePaginationLinks = false,
     hidePaginationLinks = true,
+    inPlaceLoadMoreContents = true,
     paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
     PaginationLinkProps = {},
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     ...rest
   } = props;
 
@@ -306,7 +296,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const commentsIds = comments.map((c) => c.id);
   const advPosition = Math.floor(Math.random() * (Math.min(comments.length, 5) - 1 + 1) + 1);
 
@@ -351,7 +341,7 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
     setTimeout(() => {
       const element = document.getElementById(`reply-${comment.id}`);
       if (element) {
-        scrollIntoView(element, {behavior: 'smooth', block: 'center', inline: 'center'});
+        element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
     }, 200);
   }
@@ -385,7 +375,12 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
           <>
             <Button
               variant="text"
-              onClick={handlePrevious}
+              {...(inPlaceLoadMoreContents
+                ? {onClick: handlePrevious}
+                : {
+                    component: Link,
+                    to: `${scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject))}`
+                  })}
               disabled={isLoadingPrevious}
               color="inherit"
               classes={{root: classes.loadPreviousCommentsButton}}>
@@ -419,7 +414,22 @@ export default function CommentsObject(inProps: CommentsObjectProps): JSX.Elemen
           <>
             <InView as="div" onChange={handleScrollEnd} threshold={0.5}>
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                <Button variant="text" onClick={handleNext} disabled={isLoadingNext} color="inherit" classes={{root: classes.loadNextCommentsButton}}>
+                <Button
+                  variant="text"
+                  {...(inPlaceLoadMoreContents
+                    ? {onClick: handleNext}
+                    : {
+                        component: Link,
+                        to:
+                          nextPage && next
+                            ? `${appendURLSearchParams(scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject)), [
+                                {[paginationLinksPageQueryParam]: nextPage}
+                              ])}`
+                            : `${scRoutingContext.url(getContributionRouteName(feedObject), getRouteData(feedObject))}`
+                      })}
+                  disabled={isLoadingNext}
+                  color="inherit"
+                  classes={{root: classes.loadNextCommentsButton}}>
                   <FormattedMessage id="ui.commentsObject.loadMoreComments" defaultMessage="ui.commentsObject.loadMoreComments" />
                 </Button>
                 {showCommentsCounter() && (

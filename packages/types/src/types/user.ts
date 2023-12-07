@@ -3,6 +3,7 @@
  * User Schema.
  */
 import {SCTagType} from './tag';
+import {SCLanguageType} from './locale';
 
 /**
  * User status
@@ -39,6 +40,11 @@ export interface SCUserType {
    * Email is valid. Default: False.
    */
   email_isvalid?: boolean;
+
+  /**
+   * The user is approved and can access the community
+   */
+  reg_approved?: boolean;
 
   /**
    * Date joined to the community.
@@ -81,6 +87,11 @@ export interface SCUserType {
   gender: string;
 
   /**
+   * User language
+   */
+  language?: SCLanguageType;
+
+  /**
    * User status. Values: a (approved), b (blocked), d (deleted; soft deleted), u (unregistered). Default: a.
    * A blocked user can't:
    *    - create contribution (post/discussion/status)
@@ -97,7 +108,7 @@ export interface SCUserType {
    *    - follow/unfollow a category
    *    - unfollow user
    */
-  status: string;
+  status?: string;
 
   /**
    * User website.
@@ -128,6 +139,11 @@ export interface SCUserType {
    * User reputation.
    */
   reputation: number;
+
+  /**
+   * If the user has the community badge active.
+   */
+  community_badge?: boolean;
 
   /**
    * List of user permission. Only for the resource /user/me/.
@@ -192,7 +208,7 @@ export interface SCUserType {
   /**
    *  User role
    */
-  role: string;
+  role?: string;
 
   /**
    * interactions counter
@@ -203,6 +219,26 @@ export interface SCUserType {
    * notification banner counter
    */
   unseen_notification_banners_counter?: number;
+
+  /**
+   * If the user account has been deleted
+   */
+  deleted?: boolean;
+
+  /**
+   * Datetime of the account deletion
+   */
+  deleted_at?: Date;
+
+  /**
+   * If the logged user is able to send a private message to the requested user (visible only in the get a specific user api response).
+   */
+  can_send_pm_to?: boolean;
+
+  /**
+   * Custom user metadata fields
+   */
+  [p:string]: any;
 }
 
 /**
@@ -604,6 +640,10 @@ export interface SCUserProviderAssociationType {
    * Profile url of the user in the external provider
    */
   profile_url?: string;
+  /**
+   * An optional flag to indicate if the social association can be showed in the user profile.
+   */
+  show_in_profile?: boolean;
   /**
    * Optional json metadata
    */

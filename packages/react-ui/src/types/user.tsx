@@ -11,7 +11,8 @@ export enum SCUserProfileFields {
   DESCRIPTION = 'description',
   GENDER = 'gender',
   WEBSITE = 'website',
-  TAGS = 'tags'
+  TAGS = 'tags',
+  SOCIAL_ASSOCIATIONS = 'social_associations'
 }
 
 /**
@@ -21,4 +22,14 @@ export enum SCUserProfileSettings {
   NOTIFICATION = 'notification',
   INTERACTION = 'interaction',
   PRIVATE_MESSAGE = 'private_message'
+}
+
+/**
+ * User Profile Settings
+ */
+export enum SCUserSocialAssociations {
+  GOOGLE = 'google',
+  FACEBOOK = 'facebook',
+  TWITTER = 'twitter',
+  LINKEDIN = 'linkedin'
 }

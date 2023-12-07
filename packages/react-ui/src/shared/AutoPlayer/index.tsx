@@ -31,6 +31,11 @@ export interface AutoPlayerProps {
    */
   muted?: boolean;
   /**
+   * Applies the playsinline attribute where supported
+   * @default true
+   */
+  playsinline?: boolean;
+  /**
    * Handles player controls
    * @default true
    */
@@ -57,7 +62,17 @@ export interface AutoPlayerProps {
 
 export default function AutoPlayer(props: AutoPlayerProps) {
   // PROPS
-  const {enableAutoplay = true, loop = false, muted = true, controls = true, stopOnUnmount = true, pip = true, onVideoWatch, ...rest} = props;
+  const {
+    enableAutoplay = true,
+    loop = false,
+    muted = true,
+    playsinline = true,
+    controls = true,
+    stopOnUnmount = true,
+    pip = true,
+    onVideoWatch,
+    ...rest
+  } = props;
 
   // STATE
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
@@ -101,6 +116,7 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           onProgress={(progress) => {
             setPlayed(progress.playedSeconds);
           }}
+          playsinline={playsinline}
           config={{
             youtube: {
               embedOptions: {
@@ -110,6 +126,7 @@ export default function AutoPlayer(props: AutoPlayerProps) {
             },
             vimeo: {
               playerOptions: {
+                autoplay: enableAutoplay,
                 autopause: true,
                 dnt: true,
                 transparent: false

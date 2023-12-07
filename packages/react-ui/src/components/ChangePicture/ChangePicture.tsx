@@ -7,18 +7,17 @@ import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCChangePictureButton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  dialog: `${PREFIX}-dialog`
 };
 
-const CPButton = styled(Button, {
+const Root = styled(Button, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ChangePictureProps {
   /**
@@ -49,6 +48,10 @@ export interface ChangePictureProps {
 
 /**
  * > API documentation for the Community-JS Change Picture component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a button that allows users to manage their profile pictures.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/ChangePicture)
 
  #### Import
 
@@ -65,6 +68,7 @@ export interface ChangePictureProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCChangePictureButton-root|Styles applied to the root element.|
+ |root|.SCChangePictureButton-dialog|Styles applied to the dialog element.|
 
  * @param inProps
  */
@@ -92,28 +96,28 @@ export default function ChangePicture(inProps: ChangePictureProps): JSX.Element 
    */
   if (!autoHide) {
     return (
-      <React.Fragment>
-        <CPButton
+      <>
+        <Root
           className={classNames(classes.root, className)}
           size="small"
           variant="contained"
           onClick={() => setOpenChangePictureDialog(true)}
-          style={iconButton ? {padding: 6, borderRadius: 50, minWidth: 'auto'} : {}}
           {...rest}>
           {iconButton ? (
             <Icon>photo_camera</Icon>
           ) : (
             <FormattedMessage id="ui.changePicture.button.change" defaultMessage="ui.changePicture.button.change" />
           )}
-        </CPButton>
+        </Root>
         {openChangePictureDialog && (
           <ChangePictureDialog
+            className={classes.dialog}
             open={openChangePictureDialog}
             onChange={(avatar) => onChange && onChange(avatar)}
             onClose={() => setOpenChangePictureDialog(false)}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
   return null;

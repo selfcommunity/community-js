@@ -1,8 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Typography, Box, Grid, TextField} from '@mui/material';
-import {Endpoints, CategoryService} from '@selfcommunity/api-services';
-import {Link, SCUserContext, SCUserContextType, useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {Box, Grid, TextField, Typography} from '@mui/material';
+import {CategoryService, Endpoints} from '@selfcommunity/api-services';
+import {AxiosRequestConfig} from 'axios';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useIsComponentMountedRef
+} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategoriesSkeleton, {CategoriesSkeletonProps} from './Skeleton';
 import Category, {CategoryProps} from '../Category';
@@ -11,8 +19,8 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-
-const PREFIX = 'SCCategories';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -24,25 +32,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.filters}`]: {
-    marginTop: theme.spacing(),
-    marginBottom: theme.spacing(2)
-  },
-  [`& .${classes.category}`]: {
-    '& > div': {
-      cursor: 'default'
-    },
-    ' .SCCategory-category-image': {
-      minWidth: 56,
-      height: '100%',
-      borderTopLeftRadius: theme.shape.borderRadius,
-      borderBottomLeftRadius: theme.shape.borderRadius
-    }
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoriesProps {
   /**
@@ -111,6 +102,10 @@ export interface CategoriesProps {
 /**
  * > API documentation for the Community-JS Categories component. Learn about the available props and the CSS API.
  *
+ *
+ * The Categories component renders the list of all available categories.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
+
  #### Import
  ```jsx
  import {Categories} from '@selfcommunity/react-ui';
@@ -130,7 +125,7 @@ export interface CategoriesProps {
 
  * @param inProps
  */
-export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Element {
+export default function Categories(inProps: CategoriesProps): JSX.Element {
   // PROPS
   const props: CategoriesProps = useThemeProps({
     props: inProps,
@@ -140,7 +135,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
   const {
     className,
     CategoryComponent = Category,
-    CategoryComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: 'true', component: Box}},
+    CategoryComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     CategoriesSkeletonComponent = CategoriesSkeleton,
     CategoriesSkeletonProps = {},
     showFilters = true,
@@ -151,12 +146,16 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
   } = props;
 
   // STATE
-  const [categories, setCategories] = useState<SCCategoryType[]>(prefetchedCategories);
-  const [loading, setLoading] = useState<boolean>(!prefetchedCategories.length);
-  const [filterName, setFilterName] = useState<string>(null);
+  const [categories, setCategories] = useState<SCCategoryType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [filterName, setFilterName] = useState<string>('');
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const contentAvailability =
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -168,7 +167,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
    * Fetches categories list
    */
   const fetchCategories = async (next: string = Endpoints.CategoryList.url({})): Promise<[]> => {
-    const data: any = await CategoryService.getAllCategories({active: true}, {url: next});
+    const data: any = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchCategories(data.next)) : data.results;
   };
 
@@ -176,7 +175,12 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
    * On mount, fetches categories list
    */
   useEffect(() => {
-    if (scUserContext.user && !prefetchedCategories.length) {
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (prefetchedCategories.length) {
+      setCategories(prefetchedCategories);
+      setLoading(false);
+    } else {
       fetchCategories()
         .then((data: any) => {
           if (isMountedRef.current) {
@@ -188,7 +192,7 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [authUserId, prefetchedCategories]);
+  }, [contentAvailability, authUserId, prefetchedCategories.length]);
 
   /**
    * Get categories filtered
@@ -235,37 +239,36 @@ export default function CategoriesSuggestion(inProps: CategoriesProps): JSX.Elem
           )}
         </Grid>
       )}
-      <Grid container spacing={{xs: 3}} className={classes.categories}>
-        {loading ? (
-          <Grid item>
-            <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
-          </Grid>
-        ) : (
-          <>
-            {!filteredCategories.length ? (
-              <Grid item>
-                <Typography className={classes.noResults} variant="body2">
-                  <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
-                </Typography>
-              </Grid>
-            ) : (
-              <>
-                {filteredCategories.map((category: SCCategoryType) => (
-                  <Grid item xs={12} sm={6} md={4} key={category.id}>
-                    <CategoryComponent category={category} {...CategoryComponentProps} className={classes.category} />
-                  </Grid>
-                ))}
-              </>
-            )}
-          </>
-        )}
-      </Grid>
+      {loading ? (
+        <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
+      ) : (
+        <Grid container spacing={{xs: 3}} className={classes.categories}>
+          {!filteredCategories.length ? (
+            <Grid item>
+              <Typography className={classes.noResults} variant="body2">
+                <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
+              </Typography>
+            </Grid>
+          ) : (
+            <>
+              {filteredCategories.map((category: SCCategoryType) => (
+                <Grid item xs={12} sm={6} md={4} key={category.id}>
+                  <CategoryComponent category={category} {...CategoryComponentProps} className={classes.category} />
+                </Grid>
+              ))}
+            </>
+          )}
+        </Grid>
+      )}
     </>
   );
 
   /**
-   * Renders root object
+   * Renders root object (if content availability community option is false and user is anonymous, component is hidden)
    */
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {c}

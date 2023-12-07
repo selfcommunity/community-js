@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {
   Avatar,
   Box,
@@ -23,7 +23,6 @@ import MarkRead from '../../shared/MarkRead';
 import Widget from '../Widget';
 import {SCBroadcastMessageTemplateType} from '../../types';
 import classNames from 'classnames';
-import {red} from '@mui/material/colors';
 import {SCBroadcastMessageType} from '@selfcommunity/types';
 import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -36,10 +35,10 @@ import {
   SCRoutingContextType,
   useSCRouting
 } from '@selfcommunity/react-core';
-
-const PREFIX = 'SCBroadcastMessage';
+import {PREFIX} from './constants';
 
 const classes = {
+  root: `${PREFIX}-message-root`,
   header: `${PREFIX}-header`,
   title: `${PREFIX}-title`,
   media: `${PREFIX}-media`,
@@ -52,35 +51,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  marginBottom: theme.spacing(2),
-  [`& .${classes.header} .MuiAvatar-img`]: {
-    objectFit: 'fill'
-  },
-  [`& .${classes.title}`]: {
-    padding: '4px 16px'
-  },
-  [`& .${classes.listItemSnippet}`]: {
-    padding: '0px 5px',
-    alignItems: 'center'
-  },
-  [`& .${classes.listItemSnippetNew}`]: {
-    borderLeft: '2px solid red'
-  },
-  [`& .${classes.messageIconWrap}`]: {
-    minWidth: 'auto',
-    paddingRight: 10
-  },
-  [`& .${classes.messageIconSnippet}`]: {
-    backgroundColor: red[500],
-    color: '#FFF',
-    width: 30,
-    height: 30
-  }
-}));
+  slot: 'MessageRoot'
+})(() => ({}));
 
 export interface MessageProps extends CardProps {
   /**
@@ -99,6 +71,12 @@ export interface MessageProps extends CardProps {
    * Banner of the message
    */
   message: SCBroadcastMessageType;
+
+  /**
+   * Bypass mark read message
+   * @default false
+   */
+  disableMarkRead?: boolean;
 
   /**
    * Handler triggered when message is closed
@@ -132,6 +110,7 @@ export default function Message(props: MessageProps): JSX.Element {
     id = `message_${props.message.id}`,
     className,
     message,
+    disableMarkRead = false,
     onClose = null,
     onRead = null,
     template = SCBroadcastMessageTemplateType.DETAIL,
@@ -156,6 +135,9 @@ export default function Message(props: MessageProps): JSX.Element {
   }, [scPrefernces.preferences]);
 
   // HANDLERS
+  /**
+   * Handle dispose message
+   */
   const handleClose = () => {
     setClosing(true);
     http
@@ -176,6 +158,20 @@ export default function Message(props: MessageProps): JSX.Element {
       });
   };
 
+  /**
+   * Handle on read message
+   * @param res
+   */
+  const handleOnRead = (res) => {
+    if (res.status < 300) {
+      onRead && onRead(message);
+    }
+  };
+
+  useEffect(() => {
+    setOpen(message.disposed_at === null);
+  }, [message]);
+
   // RENDER
   const renderContent = (banner) => {
     return (
@@ -184,16 +180,22 @@ export default function Message(props: MessageProps): JSX.Element {
           <Typography variant="h6">{banner.title}</Typography>
         </CardContent>
         {banner.image && <CardMedia className={classes.media} component="img" image={banner.image} alt={banner.title} />}
-        <CardContent className={classes.content}>
-          <Typography variant="body2" color="text.secondary">
-            {banner.body_text}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <a href={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
-              {banner.link_text}
-            </a>
-          </Typography>
-        </CardContent>
+        {(banner.body_text || banner.link_text) && (
+          <CardContent className={classes.content}>
+            {banner.body_text && (
+              <Typography variant="body1" color="text.secondary">
+                {banner.body_text}
+              </Typography>
+            )}
+            {banner.link_text && (
+              <Typography variant="body1" color="text.secondary">
+                <a href={banner.link} target={banner.open_in_new_tab ? '_blank' : '_self'}>
+                  {banner.link_text}
+                </a>
+              </Typography>
+            )}
+          </CardContent>
+        )}
       </>
     );
   };
@@ -207,10 +209,12 @@ export default function Message(props: MessageProps): JSX.Element {
      * Include also MarkRead component to
      */
     return (
-      <Root id={id} className={className} {...rest}>
+      <Root id={id} className={classNames(classes.root, className)} {...rest}>
         <Fade in={open} unmountOnExit>
           <Box>
-            {message.viewed_at === null && <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} />}
+            {message.viewed_at === null && !disableMarkRead && (
+              <MarkRead endpoint={Endpoints.BroadcastMessagesMarkRead} data={{banner_ids: [message.id]}} callback={handleOnRead} />
+            )}
             <CardHeader
               className={classes.header}
               avatar={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />}

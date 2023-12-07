@@ -4,25 +4,26 @@ import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import {
-  CategoriesFollowed,
   Feed,
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  SCFeedObjectTemplateType,
+  FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FeedProps,
-  InlineComposer,
+  InlineComposerWidget,
+  SCFeedObjectTemplateType,
   SCFeedWidgetType,
-  UserFollowers,
-  UsersFollowed
+  UserFollowedCategoriesWidget,
+  UserFollowedUsersWidget,
+  UserFollowersWidget
 } from '@selfcommunity/react-ui';
 import {UserFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCUserFeedTemplate';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -30,11 +31,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface UserFeedProps {
   /**
@@ -63,7 +61,7 @@ export interface UserFeedProps {
 
   /**
    * Widgets to be rendered into the feed
-   * @default [CategoriesFollowed, UserFollowed]
+   * @default [UserFollowedCategoriesWidget, UserFollowedUsersWidget]
    */
   widgets?: SCFeedWidgetType[] | null;
 
@@ -93,21 +91,21 @@ export interface UserFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: CategoriesFollowed,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UsersFollowed,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserFollowers,
+    component: UserFollowersWidget,
     componentProps: {},
     column: 'right',
     position: 2
@@ -116,6 +114,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS User Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific user's feed template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/UserFeed)
 
  #### Import
 
@@ -145,6 +147,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
 
   // Context
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // Hooks
   const {scUser} = useSCFetchUser({id: userId, user});
@@ -154,6 +157,10 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
+    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
     // Hydrate feedUnit
     const feedUnit = {
       type: feedObject.type,
@@ -199,7 +206,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      {...(scUserContext.user ? {HeaderComponent: <InlineComposer onSuccess={handleComposerSuccess} />} : {})}
+      {...(scUserContext.user ? {HeaderComponent: <InlineComposerWidget onSuccess={handleComposerSuccess} />} : {})}
       FeedSidebarProps={FeedSidebarProps}
       {...FeedProps}
     />

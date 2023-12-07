@@ -2,51 +2,27 @@ import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCUserType} from '@selfcommunity/types';
-import {Avatar, AvatarGroup, Box, Button, List, ListItem} from '@mui/material';
+import {SCContributionType, SCFeedObjectType, SCUserType} from '@selfcommunity/types';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import CentralProgress from '../../../shared/CentralProgress';
 import InfiniteScroll from '../../../shared/InfiniteScroll';
 import User from '../../User';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import ContributorsSkeleton from './Skeleton';
-
-const PREFIX = 'SCContributorsFeedObject';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  avatarGroup: `${PREFIX}-avatarGroup`,
-  avatar: `${PREFIX}-avatar`,
-  btnParticipants: `${PREFIX}-btn-participants`
+  root: `${PREFIX}-contributors-root`,
+  avatarGroup: `${PREFIX}-contributors-avatarGroup`,
+  btnParticipants: `${PREFIX}-contributors-btn-participants`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  minHeight: 40,
-  marginTop: 0,
-  marginBottom: 0,
-  [`& .${classes.btnParticipants}`]: {
-    marginLeft: -10
-  },
-  ['& .MuiAvatarGroup-root']: {
-    justifyContent: 'flex-end'
-  },
-  ['& .MuiAvatar-root']: {
-    backgroundColor: '#d5d5d5',
-    border: '2px solid #FFF !important',
-    color: '#FFF',
-    fontSize: '0.55rem',
-    width: 24,
-    height: 24,
-    marginLeft: -7,
-    lineHeight: '24px'
-  }
-}));
+  slot: 'ContributorsRoot'
+})(() => ({}));
 
 export interface ContributorsFeedObjectProps {
   /**
@@ -68,7 +44,7 @@ export interface ContributorsFeedObjectProps {
   /**
    * feedObjectType
    */
-  feedObjectType: SCFeedObjectTypologyType;
+  feedObjectType: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * AvatarGroupSkeleton props
@@ -88,13 +64,8 @@ export interface ContributorsFeedObjectProps {
   [p: string]: any;
 }
 
-export default function ContributorsFeedObject(inProps: ContributorsFeedObjectProps): JSX.Element {
+export default function ContributorsFeedObject(props: ContributorsFeedObjectProps): JSX.Element {
   // PROPS
-  const props: ContributorsFeedObjectProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
   const {
     className = null,
     feedObjectId = null,
@@ -172,14 +143,12 @@ export default function ContributorsFeedObject(inProps: ContributorsFeedObjectPr
                         loaderNext={<CentralProgress size={30} />}
                         height={400}
                         endMessage={
-                          <p style={{textAlign: 'center'}}>
-                            <b>
-                              <FormattedMessage
-                                id="ui.feedObject.contributors.noOtherContributors"
-                                defaultMessage="ui.feedObject.contributors.noOtherContributors"
-                              />
-                            </b>
-                          </p>
+                          <Typography variant="body2" align="center" fontWeight="bold">
+                            <FormattedMessage
+                              id="ui.feedObject.contributors.noOtherContributors"
+                              defaultMessage="ui.feedObject.contributors.noOtherContributors"
+                            />
+                          </Typography>
                         }>
                         <List>
                           {contributorsObject.contributors.map((c, i) => (

@@ -1,34 +1,28 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-import CommentsObject from '../../CommentsObject';
+import CommentsObject, {CommentsObjectProps} from '../../CommentsObject';
 import ActivitiesMenu from './ActivitiesMenu';
 import {CommentObjectProps} from '../../CommentObject';
 import RelevantActivities from './RelevantActivities';
-import {CommentsObjectProps} from '../../CommentsObject';
 import {SCFeedObjectActivitiesType} from '../../../types/feedObject';
 import {useSCFetchCommentObjects} from '@selfcommunity/react-core';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useInView} from 'react-intersection-observer';
-
-const PREFIX = 'SCFeedObjectActivities';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-activities-root`,
   activities: `${PREFIX}-activities`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%'
-}));
+  slot: 'ActivitiesRoot'
+})(() => ({}));
 
 export interface ActivitiesProps {
   /**
@@ -57,9 +51,9 @@ export interface ActivitiesProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Feed Object latest activities
@@ -91,6 +85,12 @@ export interface ActivitiesProps {
   CommentsObjectProps?: CommentsObjectProps;
 
   /**
+   * Props to spread to comments object skeleton
+   * @default {variant: 'oulined'}
+   */
+  CommentComponentProps?: CommentObjectProps;
+
+  /**
    * Caching strategies
    * @default CacheStrategies.CACHE_FIRST
    */
@@ -102,25 +102,21 @@ export interface ActivitiesProps {
   [p: string]: any;
 }
 
-export default function Activities(inProps: ActivitiesProps): JSX.Element {
-  const props: ActivitiesProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
+export default function Activities(props: ActivitiesProps): JSX.Element {
   // PROPS
   const {
     id = `feed_object_activities_${props.feedObjectId ? props.feedObjectId : props.feedObject ? props.feedObject.id : ''}`,
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
-    CommentsObjectProps = {CommentComponentProps: {variant: 'outlined'} as CommentObjectProps},
+    feedObjectType = SCContributionType.POST,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    CommentsObjectProps = {},
+    CommentComponentProps = {variant: 'outlined'},
     feedObjectActivities = [],
     comments = [],
     onSetSelectedActivities,
     activitiesType = SCFeedObjectActivitiesType.RECENT_COMMENTS,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
     ...rest
   } = props;
 
@@ -133,18 +129,18 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
     id: feedObjectId,
     feedObject,
     feedObjectType,
-    pageSize: 3,
+    cacheStrategy,
+    pageSize: 2,
     orderBy:
       selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
         ? SCCommentsOrderBy.CONNECTION_DESC
         : selectedActivities === SCFeedObjectActivitiesType.FIRST_COMMENTS
         ? SCCommentsOrderBy.ADDED_AT_ASC
-        : SCCommentsOrderBy.ADDED_AT_DESC,
-    cacheStrategy
+        : SCCommentsOrderBy.ADDED_AT_DESC
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-  const skeletonsCount = Math.min(5, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 3);
+  const skeletonsCount = Math.min(3, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 2);
   const existFeedObjectActivities = feedObjectActivities && feedObjectActivities.length > 0;
 
   /**
@@ -180,6 +176,13 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
   }
 
   /**
+   * Load comments
+   */
+  function handleNext() {
+    commentsObject.getNextPage();
+  }
+
+  /**
    * Render comments of feedObject
    */
   function renderComments() {
@@ -192,12 +195,20 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
             startComments={comments}
             next={commentsObject.next}
             isLoadingNext={commentsObject.isLoadingNext}
-            handleNext={commentsObject.getNextPage}
+            handleNext={handleNext}
             totalLoadedComments={commentsObject.comments.length + comments.length}
             totalComments={commentsObject.feedObject.comment_count}
             hideAdvertising
-            CommentsObjectSkeletonProps={{count: skeletonsCount}}
             {...CommentsObjectProps}
+            cacheStrategy={cacheStrategy}
+            CommentsObjectSkeletonProps={{count: skeletonsCount}}
+            CommentComponentProps={{
+              ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {}),
+              ...{truncateContent: true},
+              ...CommentComponentProps,
+              ...{cacheStrategy}
+            }}
+            inPlaceLoadMoreContents={false}
           />
         )}
       </>
@@ -214,7 +225,9 @@ export default function Activities(inProps: ActivitiesProps): JSX.Element {
         (feedObjectActivities && feedObjectActivities.length > 0) ||
         comments.length > 0 ||
         (feedObject && feedObject.comment_count > 0)) ? (
-        <Box className={classes.activities} {...(existFeedObjectActivities ? {} : {style: {minHeight: `${skeletonsCount * 80}px`}})}>
+        <Box
+          className={classes.activities}
+          {...(existFeedObjectActivities ? {} : {style: {minHeight: `${Math.min(skeletonsCount, feedObject.comment_count) * 80}px`}})}>
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!existFeedObjectActivities}

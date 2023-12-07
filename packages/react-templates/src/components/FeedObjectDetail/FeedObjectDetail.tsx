@@ -1,23 +1,23 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, Hidden} from '@mui/material';
-import Sticky from 'react-stickynode';
-import FeedObjectDetailSkeleton from './Skeleton';
-import {useThemeProps} from '@mui/system';
-import classNames from 'classnames';
-import {scrollIntoView} from 'seamless-scroll-polyfill';
-import {FormattedMessage} from 'react-intl';
-import {SCCommentType, SCCustomAdvPosition, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
 import {
+  CommentsFeedObject,
   CommentsFeedObjectProps,
   CustomAdv,
   FeedObject,
   FeedObjectProps,
-  RelatedFeedObjects,
+  FeedSidebarProps,
+  RelatedFeedObjectsWidget,
+  RelatedFeedObjectWidgetProps,
   SCFeedObjectTemplateType,
-  CommentsFeedObject,
-  RelatedFeedObjectsProps
+  StickyBox
 } from '@selfcommunity/react-ui';
+import FeedObjectDetailSkeleton from './Skeleton';
+import {useThemeProps} from '@mui/system';
+import classNames from 'classnames';
+import {FormattedMessage} from 'react-intl';
+import {SCCommentType, SCContributionType, SCCustomAdvPosition, SCFeedObjectType} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -26,8 +26,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-
-const PREFIX = 'SCFeedObjectDetailTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -35,11 +34,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface FeedObjectDetailProps {
   /**
@@ -68,15 +64,21 @@ export interface FeedObjectDetailProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Props to spread to single feed object
    * @default empty object
    */
   FeedObjectProps?: FeedObjectProps;
+
+  /**
+   * Props to spread to the sidebar
+   * @default {}
+   */
+  FeedSidebarProps?: FeedSidebarProps;
 
   /**
    * Props to spread to CommentsFeedObject
@@ -88,13 +90,17 @@ export interface FeedObjectDetailProps {
    * Props to spread to RelatedFeedObject
    * @default empty object
    */
-  RelatedFeedObjectProps?: RelatedFeedObjectsProps;
+  RelatedFeedObjectProps?: RelatedFeedObjectWidgetProps;
 }
 
 const PREFERENCES = [SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED, SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED];
 
 /**
  * > API documentation for the Community-JS Feed Object Detail Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific feed object detail template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/FeedObjectDetail)
 
  #### Import
 
@@ -128,6 +134,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     feedObject,
     feedObjectType,
     FeedObjectProps = {},
+    FeedSidebarProps = {},
     CommentsFeedObjectProps = {},
     RelatedFeedObjectProps = {autoHide: false}
   } = props;
@@ -177,7 +184,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
     setTimeout(() => {
       const element = document.getElementById(`comment_object_${comment.id}`);
       if (element) {
-        scrollIntoView(element, {behavior: 'smooth', block: 'center', inline: 'center'});
+        element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }
     }, 300);
   }
@@ -203,9 +210,9 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden mdDown>
-            <Sticky enabled top={15} bottomBoundary={`#${id}`}>
-              <RelatedFeedObjects key={`related_${obj.id}`} feedObject={obj} {...RelatedFeedObjectProps} />
-            </Sticky>
+            <StickyBox {...FeedSidebarProps}>
+              <RelatedFeedObjectsWidget key={`related_${obj.id}`} feedObject={obj} {...RelatedFeedObjectProps} />
+            </StickyBox>
           </Hidden>
         </Grid>
       </Grid>

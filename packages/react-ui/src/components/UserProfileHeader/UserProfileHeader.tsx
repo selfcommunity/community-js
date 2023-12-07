@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Paper, Typography} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
@@ -17,58 +17,24 @@ import {
 import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCUserProfileHeader';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
+  info: `${PREFIX}-info`,
+  infOpsSection: `${PREFIX}-infops-section`,
   username: `${PREFIX}-username`,
+  realname: `${PREFIX}-realname`,
   changePicture: `${PREFIX}-change-picture`,
   changeCover: `${PREFIX}-change-cover`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.cover}`]: {
-    position: 'relative',
-    minHeight: 350,
-    background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)'
-  },
-  [`& .${classes.avatar}`]: {
-    display: 'block',
-    position: 'relative',
-    margin: '0px auto',
-    top: 190,
-    width: 200,
-    height: 200,
-    borderRadius: 120,
-    border: '#FFF solid 5px'
-  },
-  [`& .${classes.username}`]: {
-    marginTop: 50,
-    textAlign: 'center'
-  },
-  [`& .${classes.changePicture}`]: {
-    position: 'relative',
-    display: 'flex',
-    margin: '0px auto',
-    top: 110,
-    left: 90
-  },
-  [`& .${classes.changeCover}`]: {
-    position: 'absolute',
-    right: 10,
-    bottom: 10,
-    [theme.breakpoints.down('md')]: {
-      bottom: 310
-    }
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface UserProfileHeaderProps {
   /**
@@ -106,13 +72,21 @@ export interface UserProfileHeaderProps {
   ChangeCoverProps?: ChangeCoverProps;
 
   /**
+   *
+   */
+  actions?: React.ReactNode;
+  /**
    * Any other properties
    */
   [p: string]: any;
 }
 
 /**
- * > API documentation for the Community-JS User Profile Header component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS User Profile AppBar component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the user profile's top section.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserProfileHeader)
 
  #### Import
 
@@ -132,8 +106,10 @@ export interface UserProfileHeaderProps {
  |root|.SCUserProfileHeader-root|Styles applied to the root element.|
  |cover|.SCUserProfileHeader-cover|Styles applied to the cover element.|
  |avatar|.SCUserProfileHeader-avatar|Styles applied to the avatar element.|
- |info|SCUserProfileHeader-info|Styles applied to the info element.|
+ |infOpsSection|SCUserProfileHeader-infops-section|Styles applied to the section including info and actions.|
+ |info|SCUserProfileHeader-info|Styles applied to the info section.|
  |username|SCUserProfileHeader-username|Styles applied to the username element.|
+ |realname|SCUserProfileHeader-realname|Styles applied to the realname element.|
  |changePicture|.SCUserProfileHeader-change-picture|Styles applied to changePicture element.|
  |changeCover|.SCUserProfileHeader-change-cover`|Styles applied to changeCover element.|
 
@@ -145,7 +121,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, ...rest} = props;
+  const {id = null, className = null, userId = null, user = null, ChangePictureProps = {}, ChangeCoverProps = {}, actions, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -157,6 +133,9 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
   // HOOKS
   const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
 
+  // CONST
+  const isMe = useMemo(() => scUserContext.user && scUser?.id === scUserContext.user.id, [scUserContext.user, scUser]);
+
   /**
    * Handles Change Avatar
    * Only if scUser.id === scUserContext.user.id
@@ -167,7 +146,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
     if (scUser.id === scUserContext.user.id && avatar) {
       setSCUser(Object.assign({}, scUser, {avatar: avatar.avatar}));
     } else {
-      setSCUser(Object.assign({}, scUser, {avatar: `${scContext.settings.portal}/avatar/${scUser.username}`}));
+      setSCUser(Object.assign({}, scUser, {avatar: `${scContext.settings.portal}/api/v2/avatar/${scUser.id}`}));
     }
   }
 
@@ -186,13 +165,12 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
   if (!scUser) {
     return <UserProfileHeaderSkeleton />;
   }
-  const isMe = scUserContext.user && scUser.id === scUserContext.user.id;
   const _backgroundCover = {
     ...(scUser.cover
       ? {background: `url('${scUser.cover}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
-
+  const realName = (isMe && scUserContext.user.real_name) || scUser.real_name;
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
@@ -206,9 +184,19 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
           </>
         )}
       </Paper>
-      <Typography variant="h5" className={classes.username}>
-        {scUser.username}
-      </Typography>
+      <Box className={classes.infOpsSection}>
+        <Box className={classes.info}>
+          <Typography variant="h5" className={classes.username}>
+            @{isMe ? scUserContext.user.username : scUser.username}
+          </Typography>
+          {realName && (
+            <Typography variant="h5" className={classes.realname}>
+              {realName}
+            </Typography>
+          )}
+        </Box>
+        {actions && actions}
+      </Box>
     </Root>
   );
 }

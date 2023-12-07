@@ -35,13 +35,18 @@ export const userActionTypes = {
 function userReducer(state, action) {
   switch (action.type) {
     case userActionTypes.LOGIN_LOADING:
-      return {user: null, session: Object.assign({}, state.session), error: null, loading: true};
+      return {session: Object.assign({}, state.session), error: null, loading: true};
 
     case userActionTypes.LOGIN_SUCCESS:
       return {user: action.payload.user, error: null, session: Object.assign({}, state.session), loading: false};
 
     case userActionTypes.LOGIN_FAILURE:
-      return {user: null, session: Object.assign({}, state.session), error: action.payload.error, loading: false};
+      return {
+        user: null,
+        session: Object.assign({}, state.session),
+        error: action.payload && action.payload.error ? action.payload.error : null,
+        loading: false,
+      };
 
     case userActionTypes.REFRESH_TOKEN_SUCCESS:
       const newAuthToken = Object.assign({}, state.session.authToken, {
@@ -61,7 +66,7 @@ function userReducer(state, action) {
       return {user: null, session: Object.assign({}, state.session), loading: null, error: action.payload.error};
 
     case userActionTypes.LOGOUT:
-      return {user: null, session: null, error: null, loading: null};
+      return {user: undefined, session: {}, error: null, loading: null};
 
     case userActionTypes.UPDATE_USER:
       return {...state, user: {...state.user, ...action.payload}};
@@ -80,7 +85,7 @@ function userReducer(state, action) {
  */
 function stateInitializer(session: SCSessionType): any {
   let _session: SCSessionType = Object.assign({}, session);
-  let _isLoading = false;
+  let _isLoading = true;
   /**
    * Set http authorization if session type is OAuth or JWT
    * Configure http object (Authorization, etc...)
@@ -88,13 +93,25 @@ function stateInitializer(session: SCSessionType): any {
   if ([Session.OAUTH_SESSION, Session.JWT_SESSION].includes(_session.type)) {
     if (_session.authToken && _session.authToken.accessToken) {
       http.setAuthorizeToken(_session.authToken.accessToken);
-      _isLoading = true;
     } else {
       http.setAuthorizeToken();
     }
+  } else if (_session.type === Session.COOKIE_SESSION) {
+    /**
+     * if the session is of type Cookie -> reset header token
+     * and keep the session on loading to recover the logged user
+     */
+    http.setAuthorizeToken();
   }
   http.setSupportWithCredentials(_session.type === Session.COOKIE_SESSION);
-  return {user: null, session: _session, error: null, loading: _isLoading, isSessionRefreshing: false, refreshSession: false};
+  return {
+    user: _isLoading ? undefined : null,
+    session: _session,
+    error: null,
+    loading: _isLoading,
+    isSessionRefreshing: false,
+    refreshSession: false,
+  };
 }
 
 /**
@@ -136,6 +153,13 @@ export default function useAuth(initialSession: SCSessionType) {
   const accessToken = state.session.authToken && state.session.authToken.accessToken ? state.session.authToken.accessToken : null;
 
   /**
+   * Reset session if initial conf changed
+   */
+  useDeepCompareEffect(() => {
+    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
+  }, [initialSession]);
+
+  /**
    * Refresh session
    */
   const refreshSession = useMemo(
@@ -161,6 +185,20 @@ export default function useAuth(initialSession: SCSessionType) {
       return Promise.reject(new Error('Unable to refresh session. Unauthenticated user.'));
     },
     [accessToken]
+  );
+
+  /**
+   * Logout session
+   */
+  const logoutSession = useMemo(
+    () => () => {
+      dispatch({type: userActionTypes.LOGOUT});
+      const session: SCSessionType = state.session;
+      if (session.handleLogout) {
+        session.handleLogout();
+      }
+    },
+    []
   );
 
   /**
@@ -259,12 +297,5 @@ export default function useAuth(initialSession: SCSessionType) {
     };
   }, [userId, accessToken]);
 
-  /**
-   * Reset session if initial conf changed
-   */
-  useDeepCompareEffect(() => {
-    dispatch({type: userActionTypes.REFRESH_SESSION, payload: {conf: stateInitializer(initialSession)}});
-  }, [initialSession]);
-
-  return {state, dispatch, helpers: {refreshSession}};
+  return {state, dispatch, helpers: {refreshSession, logoutSession}};
 }

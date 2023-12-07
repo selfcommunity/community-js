@@ -1,10 +1,7 @@
-import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import ContributorsFeedObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/ContributorsFeedObject',
   component: ContributorsFeedObject,
@@ -15,25 +12,24 @@ export default {
       table: {defaultValue: {summary: 17}}
     },
     feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
     }
   },
   args: {
     feedObjectId: 17,
-    feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+    feedObjectType: SCContributionType.DISCUSSION
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof ContributorsFeedObject>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ContributorsFeedObject> = (args) => (
-  <div style={{width: 800}}>
-    <ContributorsFeedObject {...args} />
-  </div>
-);
+} as Meta<typeof ContributorsFeedObject>;
 
-export const Preview = Template.bind({});
+const template = (args) => {
+	return (  <div style={{width: 800}}>
+		<ContributorsFeedObject {...args} />
+	</div>);
+};
 
-Preview.args = {};
+export const Base: StoryObj<ContributorsFeedObject> = {
+	render: template
+};

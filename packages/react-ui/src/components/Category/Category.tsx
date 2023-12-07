@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
-import FollowButton, {FollowCategoryButtonProps} from '../FollowCategoryButton';
+import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -17,8 +18,6 @@ const messages = defineMessages({
     defaultMessage: 'ui.category.categoryFollowers'
   }
 });
-
-const PREFIX = 'SCCategory';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -29,17 +28,8 @@ const classes = {
 
 const Root = styled(BaseItemButton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  '& .SCBaseItemButton-primary, & .SCBaseItemButton-secondary': {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    display: 'block',
-    width: '44%'
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryProps extends WidgetProps {
   /**
@@ -61,13 +51,12 @@ export interface CategoryProps extends WidgetProps {
    * Props to spread to follow button
    * @default {}
    */
-  followCategoryButtonProps?: FollowCategoryButtonProps;
+  categoryFollowButtonProps?: CategoryFollowButtonProps;
   /**
    * Prop to show category followers as secondary text
    * @default true
    */
   showFollowers?: boolean;
-
   /**
    * Any other properties
    */
@@ -77,7 +66,11 @@ export interface CategoryProps extends WidgetProps {
 /**
  * > API documentation for the Community-JS Category component. Learn about the available props and the CSS API.
  *
- * #### Import
+ *
+ * This component renders a category item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Category)
+
+ #### Import
  ```jsx
  import {Category} from '@selfcommunity/react-ui';
  ```
@@ -108,8 +101,9 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     className = null,
     elevation,
     autoHide = false,
-    followCategoryButtonProps = {},
+    categoryFollowButtonProps = {},
     showFollowers = true,
+    ButtonBaseProps = null,
     ...rest
   } = props;
 
@@ -118,6 +112,12 @@ export default function Category(inProps: CategoryProps): JSX.Element {
 
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
+
+  // MEMO
+  const _ButtonBaseProps = useMemo(
+    () => (ButtonBaseProps ? ButtonBaseProps : {component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}),
+    [ButtonBaseProps, scRoutingContext, scCategory]
+  );
 
   // INTL
   const intl = useIntl();
@@ -132,11 +132,11 @@ export default function Category(inProps: CategoryProps): JSX.Element {
       <Root
         elevation={elevation}
         className={classNames(classes.root, className)}
-        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}}
+        ButtonBaseProps={_ButtonBaseProps}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
         primary={scCategory.name}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
-        actions={<FollowButton category={scCategory} {...followCategoryButtonProps} />}
+        actions={<CategoryFollowButton category={scCategory} {...categoryFollowButtonProps} />}
         {...rest}
       />
     );

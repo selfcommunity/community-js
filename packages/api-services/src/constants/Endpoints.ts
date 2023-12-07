@@ -2,7 +2,7 @@ import {urlReplacer} from '@selfcommunity/utils';
 import {HttpMethod} from '../client';
 
 export interface EndpointType {
-  url: (params?: object) => string;
+  url: (params?: any) => string;
   method: HttpMethod;
 }
 
@@ -16,6 +16,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   AccountVerify: {
     url: urlReplacer('/api/v2/account/verify/'),
+    method: 'POST'
+  },
+  AccountVerifyValidationCode: {
+    url: urlReplacer('/api/v2/account/verify/validation_code/'),
     method: 'POST'
   },
   AccountRecover: {
@@ -35,6 +39,13 @@ const Endpoints: {[key: string]: EndpointType} = {
    */
   InviteCode: {
     url: urlReplacer('/api/v2/invite_code/$(code)/'),
+    method: 'GET'
+  },
+  /**
+   * Promo Code Endpoints
+   */
+  PromoCode: {
+    url: urlReplacer('/api/v2/promo_code/$(code)/'),
     method: 'GET'
   },
   /**
@@ -311,6 +322,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/hidden_users/'),
     method: 'GET'
   },
+  ListHiddenUsersId: {
+    url: urlReplacer('/api/v2/user/hidden_users_id/'),
+    method: 'GET'
+  },
   UserAutocomplete: {
     url: urlReplacer('/api/v2/user/autocomplete/'),
     method: 'GET'
@@ -344,7 +359,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'PATCH'
   },
   ConfirmUserChangeMail: {
-    url: urlReplacer('/api/v2/user/$(id)/change_email/'),
+    url: urlReplacer('/api/v2/user/$(id)/confirm_email/'),
     method: 'POST'
   },
   ChangeUserPassword: {
@@ -383,7 +398,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/followers/'),
     method: 'GET'
   },
-  UsersFollowed: {
+  UserFollowings: {
     url: urlReplacer('/api/v2/user/$(id)/followings/'),
     method: 'GET'
   },
@@ -407,12 +422,16 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/is_connection/'),
     method: 'GET'
   },
+  UserCheckConnectionStatus: {
+    url: urlReplacer('/api/v2/user/$(id)/connection_status/'),
+    method: 'GET'
+  },
   UserConnectionRequests: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/requests/'),
+    url: urlReplacer('/api/v2/user/connection/requests/'),
     method: 'GET'
   },
   UserRequestConnectionsSent: {
-    url: urlReplacer('/api/v2/user/$(id)/connection/requests_sent/'),
+    url: urlReplacer('/api/v2/user/connection/requests_sent/'),
     method: 'GET'
   },
   UserAcceptRequestConnection: {
@@ -468,7 +487,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   CheckEmailToken: {
-    url: urlReplacer('/api/v2/user/check_email_token/'),
+    url: urlReplacer('/api/v2/user/$(id)/check_email_token/'),
     method: 'GET'
   },
   AddAvatar: {
@@ -573,7 +592,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/suggestion/user/'),
     method: 'GET'
   },
-
+  SearchSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/'),
+    method: 'GET'
+  },
   /**
    * Follow
    */
@@ -842,8 +864,12 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'DELETE'
   },
   DeleteAThread: {
-    url: urlReplacer('/api/v2/pm/$(id)/?hide=1'),
+    url: urlReplacer('/api/v2/pm/'),
     method: 'DELETE'
+  },
+  PrivateMessageSearchUser: {
+    url: urlReplacer('/api/v2/pm/search/?user=$(search)'),
+    method: 'GET'
   },
 
   /**
@@ -948,6 +974,21 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   GetIncubatorSubscribers: {
     url: urlReplacer('/api/v2/incubator/$(id)/subscribers/'),
+    method: 'GET'
+  },
+  /**
+   * Custom Menu
+   */
+  GetCustomMenus: {
+    url: urlReplacer('/api/v2/custom_menu/'),
+    method: 'GET'
+  },
+  CustomMenu: {
+    url: urlReplacer('/api/v2/custom_menu/$(id)/'),
+    method: 'GET'
+  },
+  CustomMenuSearch: {
+    url: urlReplacer('/api/v2/custom_menu/search/'),
     method: 'GET'
   },
   /**
@@ -1068,7 +1109,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   DataPortabilityDownload: {
-    url: urlReplacer('/api/v2/udp/download'),
+    url: urlReplacer('/api/v2/udp/download/'),
     method: 'GET'
   },
   /**

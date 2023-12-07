@@ -8,41 +8,19 @@ import Icon from '@mui/material/Icon';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCChoices';
+import {PREFIX} from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  label: `${PREFIX}-label`,
-  vote: `${PREFIX}-vote`,
-  progress: `${PREFIX}-progress`
+  root: `${PREFIX}-poll-object-choices-root`,
+  label: `${PREFIX}-poll-object-choices-label`,
+  vote: `${PREFIX}-poll-object-choices-vote`,
+  progress: `${PREFIX}-poll-object-choices-progress`
 };
 
 const Root = styled(Card, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  background: theme.palette.grey['A200'],
-  marginBottom: theme.spacing(2),
-  padding: theme.spacing(2),
-  width: '100%',
-  [`& .${classes.label}, & .${classes.vote}`]: {
-    marginBottom: theme.spacing()
-  },
-  [`& .${classes.progress}`]: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: theme.spacing(),
-    '& .MuiLinearProgress-root': {
-      flexGrow: 2,
-      marginRight: theme.spacing(2),
-      backgroundColor: theme.palette.common.white
-    }
-  }
-}));
+  slot: 'PollObjectChoicesRoot'
+})(() => ({}));
 
 export interface ChoiceObjectProps {
   /**
@@ -87,12 +65,8 @@ export interface ChoiceProps {
    */
   [p: string]: any;
 }
-export default function Choice(inProps: ChoiceProps): JSX.Element {
+export default function Choice(props: ChoiceProps): JSX.Element {
   //PROPS
-  const props: ChoiceProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className = null, choiceObj = null, feedObject = null, vote = null, votes = null, isVoting = null, votable = null, ...rest} = props;
   const disabled = !feedObject;
   // CONTEXT

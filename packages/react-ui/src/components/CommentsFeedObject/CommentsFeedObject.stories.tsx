@@ -1,11 +1,8 @@
-import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import CommentsFeedObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {SCCommentsOrderBy} from '../../types/comments';
+import { SCCommentsOrderBy } from '../../types/comments';
+import { SCContributionType } from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/CommentsFeedObject',
   component: CommentsFeedObject,
@@ -16,10 +13,10 @@ export default {
       table: {defaultValue: {summary: 360}}
     },
     feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.',
-      table: {defaultValue: {summary: SCFeedObjectTypologyType.POST}}
+      table: {defaultValue: {summary: SCContributionType.POST}}
     },
     elevation: {
       control: {type: 'number'},
@@ -35,41 +32,55 @@ export default {
   },
   args: {
     feedObjectId: 554,
-    feedObjectType: SCFeedObjectTypologyType.POST,
+    feedObjectType: SCContributionType.POST,
     infiniteScrolling: true,
     commentsOrderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     showTitle: true,
     // onChangePage: (p) => console.log(p),
     // page: 2
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof CommentsFeedObject>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CommentsFeedObject> = (args) => (
+} as Meta<typeof CommentsFeedObject>;
+
+const template = (args) => (
   <div style={{width: '100%', maxWidth: 800}}>
     <CommentsFeedObject {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
+const templateContainerFixed = (args) => (
+	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
+		<CommentsFeedObject {...args} />
+	</div>);
 
-Base.args = {
-  CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
-  CommentComponentProps: {
-    ReplyCommentObjectProps: {elevation: 0, WidgetProps: {elevation: 0, variant: 'outlined'}},
-    variant: 'outlined'
-  }
+export const Base: StoryObj<CommentsFeedObject> = {
+  args: {
+    CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
+    CommentComponentProps: {
+      CommentObjectReplyProps: {elevation: 0, WidgetProps: {elevation: 0, variant: 'outlined'}},
+      variant: 'outlined'
+    }
+  },
+  render: template
 };
 
-export const CommentFirstLevel = Template.bind({});
-
-CommentFirstLevel.args = {
-  commentObjectId: 1146
+export const CommentFirstLevel: StoryObj<CommentsFeedObject> = {
+  args: {
+    commentObjectId: 1585
+  },
+  render: template
 };
 
-export const CommentSecondLevel = Template.bind({});
+export const CommentSecondLevel: StoryObj<CommentsFeedObject> = {
+  args: {
+    commentObjectId: 1119
+  },
+  render: template
+};
 
-CommentSecondLevel.args = {
-  commentObjectId: 1119
+export const CommentFirstLevelContainerFixed: StoryObj<CommentsFeedObject> = {
+	args: {
+		commentObjectId: 1585
+	},
+	render: templateContainerFixed
 };

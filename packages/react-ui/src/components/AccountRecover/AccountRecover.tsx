@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {Box, Button, ButtonProps, TextFieldProps, Alert} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';
 import {useThemeProps} from '@mui/system';
-import {AccountService, formatHttpError} from '@selfcommunity/api-services';
+import {AccountService, formatHttpErrorCode} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCAccountRecover';
 
@@ -67,7 +67,11 @@ export interface AccountRecoverProps {
 }
 
 /**
- * > API documentation for the Community-JS AccountVerify component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Categories component. Learn about the available props and the CSS API.
+ *
+ *
+ * The Categories component renders the list of all available categories.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountRecover)
 
  #### Import
 
@@ -98,7 +102,14 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
     name: PREFIX
   });
   // PROPS
-  const {className, onSuccess = null, TextFieldProps = {variant: 'outlined', fullWidth: true}, ButtonProps = {variant: 'contained'}, successAction = null, ...rest} = props;
+  const {
+    className,
+    onSuccess = null,
+    TextFieldProps = {variant: 'outlined', fullWidth: true},
+    ButtonProps = {variant: 'contained'},
+    successAction = null,
+    ...rest
+  } = props;
 
   // STATE
   const [email, setEmail] = useState<string>('');
@@ -127,7 +138,7 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
         onSuccess && onSuccess();
       })
       .catch((error) => {
-        const _error = formatHttpError(error);
+        const _error = formatHttpErrorCode(error);
         if (_error.emailError) {
           setEmailError(_error.emailError.error);
         }
@@ -146,15 +157,13 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {isSucceed ? (
-        <>
-          <Typography className={classes.success}>
-            {intl.formatMessage(
-              {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
-              {email, bold: (chunks) => <b>{chunks}</b>}
-            )}
-          </Typography>
+        <Alert severity="success" className={classes.success}>
+          {intl.formatMessage(
+            {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
+            {email, bold: (chunks) => <b>{chunks}</b>}
+          )}
           {successAction}
-        </>
+        </Alert>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
           <EmailTextField
@@ -165,7 +174,11 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
             value={email}
             onChange={handleChange}
             error={Boolean(emailError)}
-            helperText={emailError}
+            helperText={
+              emailError && (
+                <FormattedMessage id={`ui.accountRecover.email.error.${emailError}`} defaultMessage={`ui.accountRecover.email.error.${emailError}`} />
+              )
+            }
           />
           <Button type="submit" {...ButtonProps} disabled={!email || Boolean(emailError) || isSubmitting}>
             <FormattedMessage id="ui.accountRecover.submit" defaultMessage="ui.accountRecover.submit" />

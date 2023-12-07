@@ -2,27 +2,27 @@ import React, {useContext} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   BroadcastMessages,
-  CategoriesSuggestion,
+  CategoriesSuggestionWidget,
   Feed,
   SCFeedObjectTemplateType,
   FeedSidebarProps,
   FeedProps,
-  FeedUpdates,
-  LoyaltyProgram,
+  FeedUpdatesWidget,
+  LoyaltyProgramWidget,
   Notification,
   NotificationProps,
   NotificationSkeleton,
-  PeopleSuggestion,
-  Platform,
-  SCFeedWidgetType
+  UserSuggestionWidget,
+  PlatformWidget,
+  SCFeedWidgetType,
+  getUnseenNotificationCounter
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCNotificationTopicType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCNotificationFeedTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -30,11 +30,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface NotificationFeedProps {
   /**
@@ -81,7 +78,7 @@ export interface NotificationFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: FeedUpdates,
+    component: FeedUpdatesWidget,
     componentProps: {subscriptionChannel: SCNotificationTopicType.INTERACTION, publicationChannel: 'notifications_feed'},
     column: 'left',
     position: 0,
@@ -96,28 +93,28 @@ const WIDGETS: SCFeedWidgetType[] = [
   },
   {
     type: 'widget',
-    component: Platform,
+    component: PlatformWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: LoyaltyProgram,
+    component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesSuggestion,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: PeopleSuggestion,
+    component: UserSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 3
@@ -126,6 +123,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Notification Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders the template for the notification feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/NotificationFeed)
 
  #### Import
 
@@ -161,6 +162,22 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
     return null;
   }
 
+  /**
+   * Update user unseen notification counter
+   * @param page
+   * @param offset
+   * @param total
+   * @param data
+   */
+  const handleFetchData = (page: number, offset: number, total: number, data: any[]) => {
+    let _unviewed = getUnseenNotificationCounter(data);
+    _unviewed > 0 && scUserContext.setUnseenInteractionsCounter(scUserContext.user.unseen_interactions_counter - _unviewed);
+    if (!_unviewed) {
+      // Sync counters
+      void scUserContext.refreshCounters();
+    }
+  };
+
   return (
     <Root
       id={id}
@@ -180,6 +197,8 @@ export default function NotificationFeed(inProps: NotificationFeedProps): JSX.El
       FeedSidebarProps={FeedSidebarProps}
       requireAuthentication={true}
       disablePaginationLinks={true}
+      onNextData={handleFetchData}
+      onPreviousData={handleFetchData}
       {...FeedProps}
     />
   );

@@ -1,22 +1,36 @@
-import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
+import React, {ChangeEvent, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField} from '@mui/material';
+import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {camelCase, Logger} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCContext,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {DEFAULT_FIELDS} from '../../../constants/UserProfile';
 import classNames from 'classnames';
 import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import UsernameTextField from '../../../shared/UsernameTextField';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {useThemeProps} from '@mui/system';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {format, isBefore, isValid, parseISO, startOfHour} from 'date-fns';
+import itLocale from 'date-fns/locale/it';
+import enLocale from 'date-fns/locale/en-US';
+import {LoadingButton} from '@mui/lab';
+import {useSnackbar} from 'notistack';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   genderMale: {
@@ -33,25 +47,16 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUserProfileEditSectionPublicInfo';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  field: `${PREFIX}-field`
+  root: `${PREFIX}-public-info-root`,
+  field: `${PREFIX}-field`,
+  btnSave: `${PREFIX}-btn-save`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.field}`]: {
-    margin: theme.spacing(1, 0, 1, 0)
-  },
-  ['& .${classes.field} .MuiSelect-icon']: {
-    right: theme.spacing(5)
-  }
-}));
+  slot: 'PublicInfoRoot'
+})(() => ({}));
 
 export interface PublicInfoProps {
   /**
@@ -73,7 +78,24 @@ export interface PublicInfoProps {
   /**
    * Callback on edit data with success
    */
-  onEditSuccess?: () => void;
+  onEditSuccess?: (editedField?: Record<string, any>) => void;
+
+  /**
+   * Callback on edit data with error
+   */
+  onEditFailure?: (editedField?: Record<string, any>) => void;
+
+  /**
+   * Actions to be inserted at the start
+   * @default null
+   */
+  startActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted at the end
+   * @default null
+   */
+  endActions?: React.ReactNode | null;
 
   /**
    * Any other properties
@@ -82,17 +104,25 @@ export interface PublicInfoProps {
 }
 
 const GENDERS = ['Male', 'Female', 'Unspecified'];
+const DATEPICKER_MINDATE = new Date(1000, 1, 1);
 
-export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
+export default function PublicInfo(props: PublicInfoProps): JSX.Element {
   // PROPS
-  const props: PublicInfoProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-  const {id = null, className = null, fields = [...DEFAULT_FIELDS], onEditSuccess = null, ...rest} = props;
+  const {
+    id = null,
+    className = null,
+    fields = [...DEFAULT_FIELDS],
+    onEditSuccess = null,
+    onEditFailure = null,
+    startActions = null,
+    endActions = null,
+    ...rest
+  } = props;
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {enqueueSnackbar} = useSnackbar();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -102,7 +132,6 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
       } catch (e) {
         Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
-        console.log(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS]);
         return {};
       }
     }
@@ -110,7 +139,9 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
   }, [scPreferences.preferences]);
 
   // STATE
-  const [user, setUser] = useState<SCUserType>(scUserContext.user);
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [user, setUser] = useState<SCUserType>();
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
@@ -120,51 +151,59 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
 
   // EFFECTS
   useDeepCompareEffectNoCheck(() => {
-    setUser(scUserContext.user);
+    if (scUserContext.user) {
+      setUser({...scUserContext.user});
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      return () => {};
+    }
   }, [scUserContext.user]);
 
   // HANDLERS
-  const handleEdit = (field: SCUserProfileFields) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSave = () => {
+    setSaving([...editing]);
+    setError({});
+    const data = {};
+    editing.map((f) => {
+      data[f] = f === SCUserProfileFields.DATE_OF_BIRTH && user[f] ? format(user[f], 'yyyy-MM-dd') : user[f];
+    });
+    http
+      .request({
+        url: Endpoints.UserPatch.url({id: user.id}),
+        method: Endpoints.UserPatch.method,
+        data
+      })
+      .then((res: HttpResponse<SCUserType>) => {
+        scUserContext.updateUser(res.data);
+        setEditing([]);
+        setSaving([]);
+        enqueueSnackbar(<FormattedMessage id="ui.userInfo.save.success" defaultMessage="ui.userInfo.save.success" />, {
+          variant: 'success',
+          autoHideDuration: 3000
+        });
+        onEditSuccess && onEditSuccess();
+      })
+      .catch((e) => {
+        setError({...error, ...formatHttpErrorCode(e)});
+        setSaving([]);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+        onEditFailure && onEditFailure();
+      });
+  };
+
+  const handleChange = (field: SCUserProfileFields) => {
+    return (event: ChangeEvent<HTMLInputElement>) => {
+      setUser({...user, [event.target.name]: event.target.value});
       setEditing([...editing, field]);
-      if (error[`${camelCase(field)}Error`]) {
-        delete error[`${camelCase(field)}Error`];
+      if (!event.target.value && event.target.name in metadataDefinitions && metadataDefinitions[event.target.name].mandatory) {
+        setError({...error, ...{[`${camelCase(event.target.name)}Error`]: {error: 'invalid'}}});
+      } else if (error[`${camelCase(event.target.name)}Error`]) {
+        delete error[`${camelCase(event.target.name)}Error`];
         setError(error);
       }
     };
-  };
-
-  const handleSave = (field: SCUserProfileFields) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
-      if (user[field] === scUserContext.user[field]) {
-        setEditing(editing.filter((f) => f !== field));
-        return;
-      }
-      setSaving([...saving, field]);
-      http
-        .request({
-          url: Endpoints.UserPatch.url({id: user.id}),
-          method: Endpoints.UserPatch.method,
-          data: {[field]: user[field]}
-        })
-        .then((res: HttpResponse<SCUserType>) => {
-          scUserContext.updateUser(res.data);
-        })
-        .catch((error) => {
-          setError({...error, ...formatHttpError(error)});
-        })
-        .then(() => {
-          setEditing(editing.filter((f) => f !== field));
-          setSaving(saving.filter((f) => f !== field));
-          if (onEditSuccess) {
-            onEditSuccess();
-          }
-        });
-    };
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUser({...user, [event.target.name]: event.target.value});
   };
 
   // RENDER
@@ -173,28 +212,17 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     const isSaving = saving.includes(field);
     const camelField = camelCase(field);
     const _error = error !== null && error[`${camelField}Error`] && error[`${camelField}Error`].error;
-    const component = {element: TextField};
-    let label = intl.formatMessage({
-      id: `ui.userProfileInfo.${camelField}`,
-      defaultMessage: `ui.userProfileInfo.${field}`
-    });
+    const component: any = {element: TextField};
+    let label = metadataDefinitions[field]
+      ? metadataDefinitions[field].label
+      : intl.formatMessage({
+          id: `ui.userInfo.${camelField}`,
+          defaultMessage: `ui.userInfo.${camelField}`
+        });
+
     let props: any = {
       InputProps: {
-        endAdornment: (
-          <InputAdornment position="end">
-            {!isEditing ? (
-              <IconButton onClick={handleEdit(field)} edge="end">
-                <Icon>edit</Icon>
-              </IconButton>
-            ) : isSaving ? (
-              <CircularProgress size={10} />
-            ) : (
-              <IconButton onClick={handleSave(field)} edge="end" color={user[field] === scUserContext.user[field] ? 'default' : 'primary'}>
-                <Icon>check</Icon>
-              </IconButton>
-            )}
-          </InputAdornment>
-        )
+        endAdornment: <InputAdornment position="end">{isSaving && <CircularProgress size={10} />}</InputAdornment>
       }
     };
     let content = null;
@@ -207,27 +235,72 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         return null;
       case SCUserProfileFields.DATE_OF_BIRTH:
         return (
-          <LocalizationProvider dateAdapter={AdapterDateFns} key={field}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            key={field}
+            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
             <DatePicker
               label={intl.formatMessage({
-                id: `ui.userProfileInfo.${camelCase(field)}`,
-                defaultMessage: `ui.userProfileInfo.${field}`
+                id: `ui.userInfo.${camelCase(field)}`,
+                defaultMessage: `ui.userInfo.${field}`
               })}
-              value={user[field]}
+              defaultValue={user[field] ? parseISO(user[field]) : null}
+              minDate={DATEPICKER_MINDATE}
               onChange={(newValue) => {
-                setUser({...user, [field]: newValue.toJSON().split('T')[0]}); // FIX for ensuring API format
+                const u = user;
+                const field = SCUserProfileFields.DATE_OF_BIRTH;
+                const camelField = camelCase(field);
+                if ((isValid(newValue) && isBefore(startOfHour(DATEPICKER_MINDATE), newValue) && isBefore(newValue, new Date())) || !newValue) {
+                  if (error[`${camelField}Error`]) {
+                    const _error = {...error};
+                    delete _error[`${camelField}Error`];
+                    setError(_error);
+                  }
+                  u[field] = newValue;
+                } else {
+                  u[field] = null;
+                  setError({
+                    [`${camelField}Error`]: {
+                      error: intl.formatMessage({id: 'ui.publicInfo.dateOfBirth.error', defaultMessage: 'ui.publicInfo.dateOfBirth.error'})
+                    }
+                  });
+                }
+                setUser(u);
+                setEditing([...editing, field]);
               }}
               disableFuture
-              disabled={!isEditing || isSaving}
-              renderInput={(params) => {
-                const {InputProps, ...rest} = params;
-                InputProps.endAdornment = (
-                  <>
-                    {InputProps.endAdornment}
-                    {props.InputProps.endAdornment}
-                  </>
-                );
-                return <TextField {...rest} className={classes.field} fullWidth InputProps={InputProps} />;
+              disabled={isSaving}
+              slots={{
+                inputAdornment: (params) => {
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  const {children, ...rest} = params.children.props;
+                  return (
+                    <InputAdornment position={'end'}>
+                      <IconButton {...rest}>{children}</IconButton>
+                      {isSaving && <CircularProgress size={10} />}
+                    </InputAdornment>
+                  );
+                }
+              }}
+              // onAccept={isMobile ? handleSave(SCUserProfileFields.DATE_OF_BIRTH) : null}
+              slotProps={{
+                textField: {
+                  className: classes.field,
+                  fullWidth: true,
+                  variant: 'outlined',
+                  helperText: _error || null,
+                  InputProps: {
+                    endAdornment: isMobile && (
+                      <>
+                        <IconButton disabled={!isEditing}>
+                          <Icon>CalendarIcon</Icon>
+                        </IconButton>
+                        {isSaving ? <CircularProgress size={10} /> : null}
+                      </>
+                    )
+                  }
+                }
               }}
             />
           </LocalizationProvider>
@@ -254,18 +327,21 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         if (metadataDefinitions && metadataDefinitions[field]) {
           return (
             <MetadataField
+              id={field}
               key={field}
-              {...props}
               className={classes.field}
               name={field}
               fullWidth
               label={label}
               value={user[field] || ''}
-              onChange={handleChange}
-              disabled={!isEditing || isSaving}
-              error={_error}
-              helperText={_error}
+              onChange={handleChange(field)}
+              disabled={isSaving}
+              error={Boolean(_error)}
+              helperText={
+                _error && <FormattedMessage id={`ui.userInfo.metadata.error.${_error}`} defaultMessage={`ui.userInfo.metadata.error.${_error}`} />
+              }
               metadata={metadataDefinitions[field]}
+              {...props}
             />
           );
         }
@@ -273,6 +349,7 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
     }
     return (
       <component.element
+        id={field}
         key={field}
         {...props}
         className={classes.field}
@@ -280,24 +357,41 @@ export default function PublicInfo(inProps: PublicInfoProps): JSX.Element {
         fullWidth
         label={label}
         value={user[field] || ''}
-        onChange={handleChange}
-        disabled={!isEditing || isSaving}
-        error={_error}
-        helperText={_error}>
+        onChange={handleChange(field)}
+        disabled={isSaving}
+        error={Boolean(_error)}
+        helperText={
+          _error && <FormattedMessage id={`ui.userInfo.${camelField}.error.${_error}`} defaultMessage={`ui.userInfo.${camelField}.error.${_error}`} />
+        }>
         {content}
       </component.element>
     );
   };
 
-  if (fields.length === 0 || !user) {
+  // FIELDS
+  const _fields: string[] = [...fields, ...Object.keys(metadataDefinitions)];
+
+  if (_fields.length === 0 || !user) {
     return null;
   }
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {fields.map((field) => {
+      {startActions}
+      {_fields.map((field) => {
         return renderField(field);
       })}
+      <LoadingButton
+        className={classes.btnSave}
+        fullWidth
+        variant="contained"
+        color="secondary"
+        onClick={handleSave}
+        loading={saving.length > 0}
+        disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
+        <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
+      </LoadingButton>
+      {endActions}
     </Root>
   );
 }

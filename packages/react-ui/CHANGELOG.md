@@ -3,6 +3,4585 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.368](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.367...@selfcommunity/react-ui@0.7.0-alpha.368) (2023-12-06)
+
+
+### Bug Fixes
+
+* warnings, userprofile header. ([e3b345b](https://github.com/selfcommunity/community-js/commit/e3b345b653b154b4a53f35317cdcdd5481cdd42b))
+
+
+
+
+
+# [0.7.0-alpha.367](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.366...@selfcommunity/react-ui@0.7.0-alpha.367) (2023-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.366](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.365...@selfcommunity/react-ui@0.7.0-alpha.366) (2023-12-05)
+
+
+### Bug Fixes
+
+* asana issues: ([7eba010](https://github.com/selfcommunity/community-js/commit/7eba0101b77fb8948d8ee5a9425cf94a81fad1ae))
+* Fix BottomNavigation.tsx error ([78820db](https://github.com/selfcommunity/community-js/commit/78820db777a31b0ab208df610fcd93e90f760ac2))
+
+
+
+
+
+# [0.7.0-alpha.365](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.364...@selfcommunity/react-ui@0.7.0-alpha.365) (2023-12-05)
+
+
+### Bug Fixes
+
+* user profile header skeleton ([824be5b](https://github.com/selfcommunity/community-js/commit/824be5b034fd7c0e73726a7dda7724fd6e7dfbcc))
+
+
+
+
+
+# [0.7.0-alpha.364](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.363...@selfcommunity/react-ui@0.7.0-alpha.364) (2023-12-01)
+
+
+### Performance Improvements
+
+* changed user profile header layout. Asana issue: https://app.asana.com/0/1202638443591994/1206035214618937/f ([4a8cb13](https://github.com/selfcommunity/community-js/commit/4a8cb13911e825b0459d07f892867dbea858f970))
+
+
+
+
+
+# [0.7.0-alpha.363](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.362...@selfcommunity/react-ui@0.7.0-alpha.363) (2023-11-30)
+
+
+### Performance Improvements
+
+* added profile link to user snippets menu. Asana issue: https://app.asana.com/0/1202638443591994/1206016441538987/f ([80b0587](https://github.com/selfcommunity/community-js/commit/80b0587aa038840d1ef17eca3737d4fb9a2f2d74))
+
+
+
+
+
+# [0.7.0-alpha.362](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.361...@selfcommunity/react-ui@0.7.0-alpha.362) (2023-11-30)
+
+
+### Bug Fixes
+
+* Fix data portability download timeout ([b4a5b4b](https://github.com/selfcommunity/community-js/commit/b4a5b4b28ca13f7d76f4bc6774509e5ea20baa83))
+
+
+
+
+
+# [0.7.0-alpha.361](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.360...@selfcommunity/react-ui@0.7.0-alpha.361) (2023-11-29)
+
+
+### Performance Improvements
+
+* added white background to SCMediaLink-delete class/ added close layer on dialog backdrop/esc ([d779261](https://github.com/selfcommunity/community-js/commit/d779261a829401e55e1546b22ca58f5a157c877d))
+
+
+
+
+
+# [0.7.0-alpha.360](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.359...@selfcommunity/react-ui@0.7.0-alpha.360) (2023-11-27)
+
+
+### Bug Fixes
+
+* asana issue https://app.asana.com/0/1202638443591994/1206016441538977/f ([6e876f3](https://github.com/selfcommunity/community-js/commit/6e876f3e13427d3e9314559cd364f7c7d7fbdfbd))
+
+
+
+
+
+# [0.7.0-alpha.359](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.358...@selfcommunity/react-ui@0.7.0-alpha.359) (2023-11-24)
+
+
+### Bug Fixes
+
+* fixed feed object location param(lon->lng) ([f61bc97](https://github.com/selfcommunity/community-js/commit/f61bc97c50b1f0c30a8b1f09b4f42378ea2fb6be))
+* fixed feed object location param(lon->lng). Asana issue: https://app.asana.com/0/1202638443591994/1206016441538934/f and https://app.asana.com/0/1202638443591994/1206016441538977/f issue. ([12dcdbf](https://github.com/selfcommunity/community-js/commit/12dcdbf03b6a6e3b9e424f6f816cd0c2b044916a))
+
+
+
+
+
+# [0.7.0-alpha.358](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.357...@selfcommunity/react-ui@0.7.0-alpha.358) (2023-11-23)
+
+
+### Bug Fixes
+
+* Fix composer location change ([225769b](https://github.com/selfcommunity/community-js/commit/225769bf9060687e9bccf70c31c74b16b187a3ae))
+* Fix delete button appearence on media link ([8390ab1](https://github.com/selfcommunity/community-js/commit/8390ab1eaf53449dacd1df3b172b4e604e493fbd))
+
+
+
+
+
+# [0.7.0-alpha.357](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.356...@selfcommunity/react-ui@0.7.0-alpha.357) (2023-11-23)
+
+
+### Bug Fixes
+
+* fixed asana issue: ([fca7f5c](https://github.com/selfcommunity/community-js/commit/fca7f5c759baf69831651517839adc10d395524f))
+
+
+
+
+
+# [0.7.0-alpha.356](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.355...@selfcommunity/react-ui@0.7.0-alpha.356) (2023-11-23)
+
+
+### Bug Fixes
+
+* asana issue https://app.asana.com/0/1202638443591994/1205975745273241/f ([b754f15](https://github.com/selfcommunity/community-js/commit/b754f156f5cbfd70ec01cdbf7a3ccc198c483e92))
+
+
+
+
+
+# [0.7.0-alpha.355](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.354...@selfcommunity/react-ui@0.7.0-alpha.355) (2023-11-22)
+
+
+### Bug Fixes
+
+* fixed account data portability, private message file upload(added all types). Asana issues: https://app.asana.com/0/1202638443591994/1205975745273237/f and https://app.asana.com/0/1202638443591994/1205975745273253/f ([a54fc0c](https://github.com/selfcommunity/community-js/commit/a54fc0c4e1a25776041414d1b6e141114eeb0653))
+
+
+
+
+
+# [0.7.0-alpha.354](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.353...@selfcommunity/react-ui@0.7.0-alpha.354) (2023-11-21)
+
+
+### Bug Fixes
+
+* fixed poll votes computing. Asana issue: https://app.asana.com/0/1202638443591994/1205975746625579/f ([9265547](https://github.com/selfcommunity/community-js/commit/926554792bd98ce956aaaecaa440d0f75b00fd69))
+
+
+
+
+
+# [0.7.0-alpha.353](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.352...@selfcommunity/react-ui@0.7.0-alpha.353) (2023-11-16)
+
+
+### Bug Fixes
+
+* fixed relevant activity comment style(restored previous style), added CommentObjectReply style to CommentObject theme. ([a20ae7b](https://github.com/selfcommunity/community-js/commit/a20ae7b8342edc0151fef9f48cf5f7cdf8288782))
+* reverted theme for SCCommentObjectReply/SCFeedObjectMediaPreview. Fixed Relevant activities style ([cf769d4](https://github.com/selfcommunity/community-js/commit/cf769d423670f451032a3c95983e3f5084585bd1))
+
+
+### Performance Improvements
+
+* removed useThemeProps from subfolders(refactoring theme) ([e113484](https://github.com/selfcommunity/community-js/commit/e1134844cc812089f3c59ca784ddf5a453b034ee))
+
+
+
+
+
+# [0.7.0-alpha.352](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.351...@selfcommunity/react-ui@0.7.0-alpha.352) (2023-11-10)
+
+
+### Bug Fixes
+
+* moderation ([3702d61](https://github.com/selfcommunity/community-js/commit/3702d612e22148e5ddf7518797fa7c5ab563ab7b))
+
+
+
+
+
+# [0.7.0-alpha.351](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.350...@selfcommunity/react-ui@0.7.0-alpha.351) (2023-11-10)
+
+
+### Bug Fixes
+
+* moderation ([ad7dce0](https://github.com/selfcommunity/community-js/commit/ad7dce0d60d70dd86ffd950430350e480fddf9b8))
+
+
+
+
+
+# [0.7.0-alpha.350](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.349...@selfcommunity/react-ui@0.7.0-alpha.350) (2023-11-10)
+
+
+### Bug Fixes
+
+* moderation ([5dd980d](https://github.com/selfcommunity/community-js/commit/5dd980def8d13bb89fa25206acc35ccb2a4b5ede))
+
+
+### Performance Improvements
+
+* refactored editor component ([6f75a97](https://github.com/selfcommunity/community-js/commit/6f75a97d8cb852a7c98b8fecb0dcf15777869b83))
+* refactored feed object component(+ subfolders). Fixed relevant activities comment translations + html ([52a15e8](https://github.com/selfcommunity/community-js/commit/52a15e80bed8afe297652b68e8785dd95b51b9a3))
+* refactored private message components (pm component, pm editor, pm snippet item, pm snippets, pm thread item, pm thread) ([3973add](https://github.com/selfcommunity/community-js/commit/3973add10a05b01f34cf0e6fa729d18ec9506de4))
+* refactored RelatedFeedObjectsWidget, SnippetNotifications, ToastNotifications components theme. ([6c94faa](https://github.com/selfcommunity/community-js/commit/6c94faadb2f48bf6d787877ed7275e8cab4d7810))
+* refactored theme for ui component CustomAdv ([94a2cde](https://github.com/selfcommunity/community-js/commit/94a2cde9d8c512333049dd44c40b62977d7207cf))
+* refactored theme for ui component PollSuggestionWidget ([0548a23](https://github.com/selfcommunity/community-js/commit/0548a233a5b6cec9974594001afc0aaffcc28f15))
+* refactored theme for ui components: ConsentSolution, Footer ([25c604b](https://github.com/selfcommunity/community-js/commit/25c604bf436ecebb047a7328c6f3495a0eddaf62))
+* refactored theme for ui components: IncubatorListWidget, IncubatorSuggestionWidget ([4134689](https://github.com/selfcommunity/community-js/commit/41346897ffa7c10cf0978b204faa7a3fc234547f))
+* refactored theme for ui components: LoyaltyProgramWidget, PlatformWidget ([4216a3f](https://github.com/selfcommunity/community-js/commit/4216a3f2e4586f7b61f920d5746b3f8c920975d3))
+* refactored theme for: CategoryHeader, CategoryTrendingFeedWidget, CategoryTrendingUsersWidget ([1d3fd62](https://github.com/selfcommunity/community-js/commit/1d3fd6210d2b5f4ef70cd956e9b28e479cbe4729))
+* refactored theme for: ChangePicture, Incubator ([c8e35ca](https://github.com/selfcommunity/community-js/commit/c8e35cab4349d3c445d890e34778f4817a33c8da))
+* refactored ui component UserProfileEdit ([d9e502e](https://github.com/selfcommunity/community-js/commit/d9e502e1516a0ed073c60d9af909f8cd510e03e7))
+* refactored ui component: NavigationToolbar.tsx ([a8088a1](https://github.com/selfcommunity/community-js/commit/a8088a15e493a2efb1ca72507f9a37432a176a23))
+* refactored ui component: Notification(+ subfolders). ([1e3442b](https://github.com/selfcommunity/community-js/commit/1e3442bbb116ac0a3badb4c8eea891c3d2982200))
+* refactored ui components: BroadcastMessages* ([e1461f0](https://github.com/selfcommunity/community-js/commit/e1461f0ae541b006cff2af76ed7d3fe8add8a610))
+* refactored ui components: CommentObject, CommentsObject, CommentsFeedObject, Feed, FeedUpdatesWidget ([c07cdfd](https://github.com/selfcommunity/community-js/commit/c07cdfd3ee18af616c09e780ea902aa49740d3af))
+* refactored ui components: User, UserConnectionsWidget, UserConnectionsRequestsWidget, UserConnectionsRequestsSentWidget ([1264cc0](https://github.com/selfcommunity/community-js/commit/1264cc064748e96abe837c1d8d929d7ec3964e63))
+* refactored ui components: UserFollowedCategoriesWidget, UserFollowedUsersWidget, UserFollowersWidget ([03b7136](https://github.com/selfcommunity/community-js/commit/03b713682e6819c53f34e6c3045e588d3a12cf79))
+* refactored ui components: UserInfo, UserInfoDialog, UserProfileHeader, UserSuggestionWidget ([c5b9655](https://github.com/selfcommunity/community-js/commit/c5b9655907b243da40aa5fb5cd00f96c6f5c6568))
+
+
+
+
+
+# [0.7.0-alpha.349](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.348...@selfcommunity/react-ui@0.7.0-alpha.349) (2023-10-30)
+
+
+### Bug Fixes
+
+* PlatformWidget ([ada83cc](https://github.com/selfcommunity/community-js/commit/ada83ccac393882bc059c567670702a4eb497301))
+
+
+
+
+
+# [0.7.0-alpha.348](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.347...@selfcommunity/react-ui@0.7.0-alpha.348) (2023-10-30)
+
+
+### Performance Improvements
+
+* Added LoyaltyProgramWidget.tsx to user profile ([091208d](https://github.com/selfcommunity/community-js/commit/091208d66353e53a7cc7d1e51b35b97186504a6f))
+
+
+
+
+
+# [0.7.0-alpha.347](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.346...@selfcommunity/react-ui@0.7.0-alpha.347) (2023-10-26)
+
+
+### Performance Improvements
+
+* refactored theme for: Category, Categories, CategoriesPopularWidget, CategoriesSuggestionWidget components ([ffc8bea](https://github.com/selfcommunity/community-js/commit/ffc8bea81a681c3ab691966e3cac5dfcacad985e))
+
+
+
+
+
+# [0.7.0-alpha.346](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.345...@selfcommunity/react-ui@0.7.0-alpha.346) (2023-10-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.345](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.344...@selfcommunity/react-ui@0.7.0-alpha.345) (2023-10-26)
+
+
+### Bug Fixes
+
+* Fix fix: Fix MentionsPlugin.tsx document reference ([d3d6599](https://github.com/selfcommunity/community-js/commit/d3d6599b959044c802330ccbe1535c35400e2312))
+* Fix poll error text ([373f521](https://github.com/selfcommunity/community-js/commit/373f521c647fc77f0232289ffd507b7387720b79))
+
+
+### Performance Improvements
+
+* Remove deprecation ([42d5217](https://github.com/selfcommunity/community-js/commit/42d5217e36905d43c85d0070f4c1eb6278ae3794))
+
+
+
+
+
+# [0.7.0-alpha.344](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.343...@selfcommunity/react-ui@0.7.0-alpha.344) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix footer style ([5e4373f](https://github.com/selfcommunity/community-js/commit/5e4373f84d779b1275f4ddbbcf2538b68bbfac70))
+* Fix MentionsPlugin.tsx document reference ([06ae2aa](https://github.com/selfcommunity/community-js/commit/06ae2aa12e94550c5a6a33b0af99cb878e679840))
+
+
+
+
+
+# [0.7.0-alpha.343](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.342...@selfcommunity/react-ui@0.7.0-alpha.343) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix NavigationMenuIconButton.tsx when content_availability is false the left sidebar is hidden for anonymous users ([5a92443](https://github.com/selfcommunity/community-js/commit/5a92443f76dc07691e46c0179fba0e4ab7a33d56))
+
+
+
+
+
+# [0.7.0-alpha.342](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.341...@selfcommunity/react-ui@0.7.0-alpha.342) (2023-10-25)
+
+
+### Bug Fixes
+
+* Fix styles ([ffe2c5b](https://github.com/selfcommunity/community-js/commit/ffe2c5bbd2674ddf165006f8c9c44eb25b98031d))
+
+
+
+
+
+# [0.7.0-alpha.341](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.340...@selfcommunity/react-ui@0.7.0-alpha.341) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([977d37e](https://github.com/selfcommunity/community-js/commit/977d37e8597514a36716eceff6a9f4afb5295064))
+
+
+
+
+
+# [0.7.0-alpha.340](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.339...@selfcommunity/react-ui@0.7.0-alpha.340) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix i18n ([81c5487](https://github.com/selfcommunity/community-js/commit/81c5487445b02f845fde4290e326fbb1716ac5c3))
+
+
+
+
+
+# [0.7.0-alpha.339](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.338...@selfcommunity/react-ui@0.7.0-alpha.339) (2023-10-24)
+
+
+### Bug Fixes
+
+* Fix media share ([36efdb4](https://github.com/selfcommunity/community-js/commit/36efdb420fbc2f6493e3e2c701af8f9dad56bcf4))
+
+
+
+
+
+# [0.7.0-alpha.338](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.337...@selfcommunity/react-ui@0.7.0-alpha.338) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix layout ([918e97c](https://github.com/selfcommunity/community-js/commit/918e97c3a356353985e3fbe6cdff675a503a4050))
+
+
+
+
+
+# [0.7.0-alpha.337](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.336...@selfcommunity/react-ui@0.7.0-alpha.337) (2023-10-23)
+
+
+### Bug Fixes
+
+* Fix close virtual keyboard on ios devices ([f8ae0cf](https://github.com/selfcommunity/community-js/commit/f8ae0cfe3d582affe06f44df5c70da62bd1e34b5))
+
+
+
+
+
+# [0.7.0-alpha.336](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.335...@selfcommunity/react-ui@0.7.0-alpha.336) (2023-10-19)
+
+
+### Bug Fixes
+
+* Fix Lightbox.tsx ([06d0bdb](https://github.com/selfcommunity/community-js/commit/06d0bdb473c1b2b9fd6c4c7a712e04bec8542a17))
+
+
+
+
+
+# [0.7.0-alpha.335](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.334...@selfcommunity/react-ui@0.7.0-alpha.335) (2023-10-19)
+
+
+### Bug Fixes
+
+* broadcast message ([d1e988a](https://github.com/selfcommunity/community-js/commit/d1e988aa887bc02074c6202b788ebd2484623aa8))
+* padding FeedObject ([132c981](https://github.com/selfcommunity/community-js/commit/132c9814d8455277f8282d21c302aac0413e5d13))
+
+
+
+
+
+# [0.7.0-alpha.334](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.333...@selfcommunity/react-ui@0.7.0-alpha.334) (2023-10-16)
+
+
+### Bug Fixes
+
+* editor mentions plugin ([89a3e34](https://github.com/selfcommunity/community-js/commit/89a3e3486df3c2fcdac15365d2c412c1ee221dc0))
+
+
+
+
+
+# [0.7.0-alpha.333](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.332...@selfcommunity/react-ui@0.7.0-alpha.333) (2023-10-16)
+
+
+### Bug Fixes
+
+* editor mentions plugin ([de82ca8](https://github.com/selfcommunity/community-js/commit/de82ca83589a26defe481d7e887bc08cb75a724d))
+* editor mentions plugin ([3b9ff05](https://github.com/selfcommunity/community-js/commit/3b9ff059660f238177ac353bb2595d2323844891))
+* editor mentions plugin ([99a8aa8](https://github.com/selfcommunity/community-js/commit/99a8aa833863f8deb59cb261a08d2af6f7c22f10))
+
+
+
+
+
+# [0.7.0-alpha.332](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.331...@selfcommunity/react-ui@0.7.0-alpha.332) (2023-10-16)
+
+
+### Bug Fixes
+
+* commentsFeedObject ([a0aa237](https://github.com/selfcommunity/community-js/commit/a0aa237143cbe2bed37ddabf8c61bb6560a62d14))
+* scrollIntoView ([5750ace](https://github.com/selfcommunity/community-js/commit/5750aceef6d0f38dc27c9f169566158a17a017b2))
+
+
+
+
+
+# [0.7.0-alpha.331](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.330...@selfcommunity/react-ui@0.7.0-alpha.331) (2023-10-16)
+
+
+### Bug Fixes
+
+* scrollIntoView ([dc6fd5d](https://github.com/selfcommunity/community-js/commit/dc6fd5d277006d5d11cfa4fbbf3f12e7fe74b245))
+* scrollIntoView ([fd72f43](https://github.com/selfcommunity/community-js/commit/fd72f437d9d90c12e5de59087a06c317366dac83))
+
+
+
+
+
+# [0.7.0-alpha.330](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.329...@selfcommunity/react-ui@0.7.0-alpha.330) (2023-10-12)
+
+
+### Bug Fixes
+
+* scrollIntoView ([bba1547](https://github.com/selfcommunity/community-js/commit/bba1547b085d64b0df64e937db7ad2893ea84ea5))
+
+
+
+
+
+# [0.7.0-alpha.329](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.328...@selfcommunity/react-ui@0.7.0-alpha.329) (2023-10-12)
+
+
+### Bug Fixes
+
+* scrollIntoView ([6bf9256](https://github.com/selfcommunity/community-js/commit/6bf9256173111f77d464cb514e51e180f9d8df5c))
+
+
+
+
+
+# [0.7.0-alpha.328](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.327...@selfcommunity/react-ui@0.7.0-alpha.328) (2023-10-10)
+
+
+### Bug Fixes
+
+* feed infinite scroll ([735d503](https://github.com/selfcommunity/community-js/commit/735d5033ee8b48ce363e46f3f2be5ff81ceb8f44))
+* feed infinite scroll ([f3cceb6](https://github.com/selfcommunity/community-js/commit/f3cceb633c6688b848d886fd16134c7db2a08d2b))
+* feed infinite scroll ([03fc937](https://github.com/selfcommunity/community-js/commit/03fc93755c06762447ad8667108ebe0bdac84547))
+* feed infinite scroll ([b0f7b9e](https://github.com/selfcommunity/community-js/commit/b0f7b9e8216e9a263c59d32188cb89e867ec64a4))
+
+
+
+
+
+# [0.7.0-alpha.327](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.326...@selfcommunity/react-ui@0.7.0-alpha.327) (2023-10-10)
+
+
+### Performance Improvements
+
+* Update dependencies ([21fac75](https://github.com/selfcommunity/community-js/commit/21fac7587c6f91bbdce51f7b4f40ed7ae0eb1b63))
+
+
+
+
+
+# [0.7.0-alpha.326](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.325...@selfcommunity/react-ui@0.7.0-alpha.326) (2023-09-26)
+
+
+### Bug Fixes
+
+* Fix image command ([1d4f360](https://github.com/selfcommunity/community-js/commit/1d4f360d68e1f744a2ffaf835c1fc06e7e890384))
+* snippetHtml ([d5c4715](https://github.com/selfcommunity/community-js/commit/d5c4715eb4e759a1193ef55d30e5ac5c5102e0fa))
+
+
+
+
+
+# [0.7.0-alpha.325](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.324...@selfcommunity/react-ui@0.7.0-alpha.325) (2023-09-25)
+
+
+### Bug Fixes
+
+* editor ([d56a525](https://github.com/selfcommunity/community-js/commit/d56a525da097ad87fd64bd0042e0124f16fb77f8))
+* snippetHtml ([0f4f3eb](https://github.com/selfcommunity/community-js/commit/0f4f3eba1394182cc489a513318c9747e4a65a7f))
+* snippetHtml ([c6157a4](https://github.com/selfcommunity/community-js/commit/c6157a4c9326f9297fa4d81ceb30ce9e75ef7290))
+
+
+
+
+
+# [0.7.0-alpha.324](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.323...@selfcommunity/react-ui@0.7.0-alpha.324) (2023-09-25)
+
+
+### Bug Fixes
+
+* feed ([60d5188](https://github.com/selfcommunity/community-js/commit/60d5188ba807f83d9c185f74c943701d9975a6da))
+* feedObject ([2b5d19c](https://github.com/selfcommunity/community-js/commit/2b5d19cf128518717ef7b7f8d95aa29673a9337b))
+* snippetHtml ([5357912](https://github.com/selfcommunity/community-js/commit/53579122decb7007f94e8fb07c0b374471d0aab1))
+
+
+
+
+
+# [0.7.0-alpha.323](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.322...@selfcommunity/react-ui@0.7.0-alpha.323) (2023-09-25)
+
+
+### Bug Fixes
+
+* feed ([f33bb98](https://github.com/selfcommunity/community-js/commit/f33bb98cca5843a0310590dd3953f279f8e0313f))
+* feed ([70cf47b](https://github.com/selfcommunity/community-js/commit/70cf47b91f4294e53b193853be5397da2476bf4c))
+
+
+
+
+
+# [0.7.0-alpha.322](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.321...@selfcommunity/react-ui@0.7.0-alpha.322) (2023-09-22)
+
+
+### Bug Fixes
+
+* snippetHtml ([b41b16d](https://github.com/selfcommunity/community-js/commit/b41b16d8dbbc6b908a3b99fb38351ca91d837816))
+
+
+
+
+
+# [0.7.0-alpha.321](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.320...@selfcommunity/react-ui@0.7.0-alpha.321) (2023-09-22)
+
+
+### Bug Fixes
+
+* snippetHtml ([517739c](https://github.com/selfcommunity/community-js/commit/517739c852a51350386efd88083b97d6404a829f))
+* snippetHtml ([c9d78db](https://github.com/selfcommunity/community-js/commit/c9d78db4224dc4d3c866718d0ee28e8ef291f19b))
+* snippetHtml ([34c0d2d](https://github.com/selfcommunity/community-js/commit/34c0d2d4d1129a0f5a79776fee00df93c37b1c05))
+
+
+
+
+
+# [0.7.0-alpha.320](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.319...@selfcommunity/react-ui@0.7.0-alpha.320) (2023-09-22)
+
+
+### Bug Fixes
+
+* editor ([c18d761](https://github.com/selfcommunity/community-js/commit/c18d761d992335af9ea854dd081fc21bf8ba2ac7))
+* editor ([a318f15](https://github.com/selfcommunity/community-js/commit/a318f15c55f646fa171ae4593bedfe9288a65efc))
+* snippetHtml ([d9794fc](https://github.com/selfcommunity/community-js/commit/d9794fcb8f8535241f9dd678969df88bd62ceacd))
+
+
+
+
+
+# [0.7.0-alpha.319](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.318...@selfcommunity/react-ui@0.7.0-alpha.319) (2023-09-21)
+
+
+### Bug Fixes
+
+* fixed private message editor emoji selection ([7e47e24](https://github.com/selfcommunity/community-js/commit/7e47e244308b66e32611f1aadfd6e01eae45482d))
+* snippetHtml ([504831a](https://github.com/selfcommunity/community-js/commit/504831ad18c68be178dec168f836777d3c6915bc))
+
+
+
+
+
+# [0.7.0-alpha.318](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.317...@selfcommunity/react-ui@0.7.0-alpha.318) (2023-09-20)
+
+
+### Bug Fixes
+
+* snippetHtml ([4970e89](https://github.com/selfcommunity/community-js/commit/4970e89d570b0c3098a95496cd23edce15e28ed9))
+
+
+
+
+
+# [0.7.0-alpha.317](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.316...@selfcommunity/react-ui@0.7.0-alpha.317) (2023-09-20)
+
+
+### Bug Fixes
+
+* snippetHtml ([3879b03](https://github.com/selfcommunity/community-js/commit/3879b0337a080ca8d67ab3922ece0545003bced9))
+* snippetHtml ([f95eaf4](https://github.com/selfcommunity/community-js/commit/f95eaf4f76246f12022975178444c0f26b9afe4b))
+* snippetHtml ([d916437](https://github.com/selfcommunity/community-js/commit/d916437014ea80f6208691daac0ab93988bd47f9))
+* widgets ([9429284](https://github.com/selfcommunity/community-js/commit/9429284f7d154691c62ee21684423321cc0d7563))
+
+
+
+
+
+# [0.7.0-alpha.316](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.315...@selfcommunity/react-ui@0.7.0-alpha.316) (2023-09-20)
+
+
+### Bug Fixes
+
+* editor ([a71b015](https://github.com/selfcommunity/community-js/commit/a71b0153fda22b782c9a3a7f509788de6c05980c))
+
+
+
+
+
+# [0.7.0-alpha.315](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.314...@selfcommunity/react-ui@0.7.0-alpha.315) (2023-09-19)
+
+
+### Bug Fixes
+
+* feed ([490a70e](https://github.com/selfcommunity/community-js/commit/490a70ed88498e0ce39b368bbf63374cfc5fd003))
+* feed ([bd5fff2](https://github.com/selfcommunity/community-js/commit/bd5fff2aa531d708cdcd4315ae3abb3d89003a0b))
+* feed threshold scroll ([1c8ddc5](https://github.com/selfcommunity/community-js/commit/1c8ddc5ce69c6d1724c6a4d52d7d544e10ce998b))
+* Fix editor image ([a03170e](https://github.com/selfcommunity/community-js/commit/a03170e15f255d9a27d92c26cea10fc976b65704))
+
+
+
+
+
+# [0.7.0-alpha.314](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.313...@selfcommunity/react-ui@0.7.0-alpha.314) (2023-09-18)
+
+
+### Bug Fixes
+
+* fix image upload on text editor ([19974dd](https://github.com/selfcommunity/community-js/commit/19974dddf5f49ac4d6fae9a9bc22ab9e8db958ea))
+
+
+
+
+
+# [0.7.0-alpha.313](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.312...@selfcommunity/react-ui@0.7.0-alpha.313) (2023-09-15)
+
+
+### Bug Fixes
+
+* scrollbars import ([f1b8517](https://github.com/selfcommunity/community-js/commit/f1b851738d907a06b5596ee249ce58e9cac3c526))
+
+
+
+
+
+# [0.7.0-alpha.312](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.311...@selfcommunity/react-ui@0.7.0-alpha.312) (2023-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.311](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.310...@selfcommunity/react-ui@0.7.0-alpha.311) (2023-09-14)
+
+
+### Bug Fixes
+
+* block staff user ([07dc21a](https://github.com/selfcommunity/community-js/commit/07dc21a36649493625df073346b8a384ece21073))
+* removed target blank ([d15fe26](https://github.com/selfcommunity/community-js/commit/d15fe26b1569a0e08b5ad4bd433b3e58db228d63))
+* upgrade react-scrollbars ([1f8d9a5](https://github.com/selfcommunity/community-js/commit/1f8d9a56575b9d8938e3d0702b5cb7560d209e83))
+
+
+
+
+
+# [0.7.0-alpha.310](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.309...@selfcommunity/react-ui@0.7.0-alpha.310) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([0b1a57b](https://github.com/selfcommunity/community-js/commit/0b1a57b5c1351f529f4bfa2c20d99809886df10b))
+* build optimization ([cc05c9b](https://github.com/selfcommunity/community-js/commit/cc05c9b144ba867922af8c06185fc1d2dc60de2b))
+
+
+### Performance Improvements
+
+* Added autofocus props on SearchAutocomplete.tsx ([92eaca9](https://github.com/selfcommunity/community-js/commit/92eaca9f42a0cd619a2411c30c3faa1fe0210b17))
+* Added home button in BottomNavigation.tsx for anonymous users ([7013637](https://github.com/selfcommunity/community-js/commit/701363743588034f3aac18c64dcb1f339aa55f41))
+
+
+
+
+
+# [0.7.0-alpha.309](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.308...@selfcommunity/react-ui@0.7.0-alpha.309) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([a317be4](https://github.com/selfcommunity/community-js/commit/a317be4e517cd73a77bfcd359ab8f5e1c1b73f31))
+
+
+
+
+
+# [0.7.0-alpha.308](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.307...@selfcommunity/react-ui@0.7.0-alpha.308) (2023-09-13)
+
+
+### Bug Fixes
+
+* Fix close NavigationSettingsIconButton.tsx after click ([cbc276d](https://github.com/selfcommunity/community-js/commit/cbc276d6e43373aae2551d5c2235171165ef7be5))
+* Fix emoji type in PrivateMessageEditor.tsx ([26eae0b](https://github.com/selfcommunity/community-js/commit/26eae0bd7c7ed7cca5b8908caac1eac93951e48d))
+
+
+
+
+
+# [0.7.0-alpha.307](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.306...@selfcommunity/react-ui@0.7.0-alpha.307) (2023-09-13)
+
+
+### Bug Fixes
+
+* build optimization ([1ceac97](https://github.com/selfcommunity/community-js/commit/1ceac97e8f92aa0187a9415f4a4db43dd5b5e302))
+* build optimization ([00f8f69](https://github.com/selfcommunity/community-js/commit/00f8f69859d7abe9581334523d76f498e30412a6))
+* build optimization ([49b80a5](https://github.com/selfcommunity/community-js/commit/49b80a5b6deb384a4af25e619fecfaa7d8c63cb7))
+* build optimization ([ce40be5](https://github.com/selfcommunity/community-js/commit/ce40be51278ad2f1ec1a8f5a14905a869a3ceb44))
+* build optimization ([8c37a63](https://github.com/selfcommunity/community-js/commit/8c37a6313daeb71056316d288cda856afd5a5238))
+* build optimization ([2f504dd](https://github.com/selfcommunity/community-js/commit/2f504dd914ddfaabf66da66ecb5f6731f9ad76d4))
+* build optimization ([8dd1429](https://github.com/selfcommunity/community-js/commit/8dd1429ff900a8c0874f5ae453a5e36bcbd2e081))
+* build optimization ([b8d6766](https://github.com/selfcommunity/community-js/commit/b8d6766a764cf125ae0eda3b5eca9391c588a5ff))
+* build optimization ([e593518](https://github.com/selfcommunity/community-js/commit/e5935186b7866e2d35e9e7df69d33a003efdd0e5))
+* build optimization ([2a33924](https://github.com/selfcommunity/community-js/commit/2a33924523296726dd7a1948ca7755a93578e711))
+* Fix CommentObjectReply theme ([e9df623](https://github.com/selfcommunity/community-js/commit/e9df623822827424bb0d39ef0e1c8ac79adae28b))
+
+
+
+
+
+# [0.7.0-alpha.306](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.305...@selfcommunity/react-ui@0.7.0-alpha.306) (2023-09-12)
+
+
+### Bug Fixes
+
+* Fix 401 session reload on file upload ([c14e24e](https://github.com/selfcommunity/community-js/commit/c14e24ea21165e8a9f206e8e9ecc1ab26d2823e7))
+
+
+
+
+
+# [0.7.0-alpha.305](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.304...@selfcommunity/react-ui@0.7.0-alpha.305) (2023-09-12)
+
+
+### Bug Fixes
+
+* Fix link edit on mobile device ([3cd3c63](https://github.com/selfcommunity/community-js/commit/3cd3c63b76d380df543b0895f47b60198d479c25))
+
+
+
+
+
+# [0.7.0-alpha.304](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.303...@selfcommunity/react-ui@0.7.0-alpha.304) (2023-09-12)
+
+
+### Bug Fixes
+
+* fix ios bottom bar ([b725210](https://github.com/selfcommunity/community-js/commit/b725210d5799d0d81f6a56d19d57f9ed2a60e3b9))
+
+
+
+
+
+# [0.7.0-alpha.303](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.302...@selfcommunity/react-ui@0.7.0-alpha.303) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix toolbar theme height ([be03347](https://github.com/selfcommunity/community-js/commit/be03347ce763f4ebecc04577546dca104861a500))
+
+
+
+
+
+# [0.7.0-alpha.302](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.301...@selfcommunity/react-ui@0.7.0-alpha.302) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix iOS bottom border ([113a81c](https://github.com/selfcommunity/community-js/commit/113a81ce533909eb92c7c7efe41809cc495ffe68))
+* Fix ux of url input ([c7a7829](https://github.com/selfcommunity/community-js/commit/c7a7829dae062dd5c66a1de8a01c593be11174a8))
+* Remove focus on mobile devices ([f1a4827](https://github.com/selfcommunity/community-js/commit/f1a48273e6f4061140eb6d3e4299ae90b7fc442b))
+
+
+
+
+
+# [0.7.0-alpha.301](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.300...@selfcommunity/react-ui@0.7.0-alpha.301) (2023-09-11)
+
+
+### Bug Fixes
+
+* Style fixes ([1acf482](https://github.com/selfcommunity/community-js/commit/1acf48295aac72fd45f06d11003dc142056d1922))
+
+
+
+
+
+# [0.7.0-alpha.300](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.299...@selfcommunity/react-ui@0.7.0-alpha.300) (2023-09-08)
+
+
+### Bug Fixes
+
+* PrivateMessageComponent ([204df52](https://github.com/selfcommunity/community-js/commit/204df52fc274b07f9e1197b2a4a27afa5cd5a39e))
+
+
+
+
+
+# [0.7.0-alpha.299](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.298...@selfcommunity/react-ui@0.7.0-alpha.299) (2023-09-08)
+
+
+### Bug Fixes
+
+* PrivateMessageComponent ([c466857](https://github.com/selfcommunity/community-js/commit/c4668575b57e6ea7bb4e994ee64022b758d4656a))
+
+
+
+
+
+# [0.7.0-alpha.298](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.297...@selfcommunity/react-ui@0.7.0-alpha.298) (2023-09-08)
+
+
+### Bug Fixes
+
+* PrivateMessageComponent ([5c8af19](https://github.com/selfcommunity/community-js/commit/5c8af19adb8bf734b8ab3c6b488255324e70a150))
+
+
+
+
+
+# [0.7.0-alpha.297](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.296...@selfcommunity/react-ui@0.7.0-alpha.297) (2023-09-08)
+
+
+### Bug Fixes
+
+* Fix lib component export ([0f0ee7a](https://github.com/selfcommunity/community-js/commit/0f0ee7aa4ca8808f0beb7c638f75fdbce63abdc5))
+* PrivateMessageComponent ([a01a9dc](https://github.com/selfcommunity/community-js/commit/a01a9dc6e126a915bf35e03c7ca8947f84131c16))
+
+
+
+
+
+# [0.7.0-alpha.296](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.295...@selfcommunity/react-ui@0.7.0-alpha.296) (2023-09-07)
+
+
+### Bug Fixes
+
+* react-intl upgrade ([97987df](https://github.com/selfcommunity/community-js/commit/97987df2c5c8ca33d59a235ccd4e0d4b4c75b381))
+* types ([e39201c](https://github.com/selfcommunity/community-js/commit/e39201c39b77cd6eb895ebde12193baa1d730838))
+
+
+
+
+
+# [0.7.0-alpha.295](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.294...@selfcommunity/react-ui@0.7.0-alpha.295) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([cbc95aa](https://github.com/selfcommunity/community-js/commit/cbc95aa3c516372b49c48bd1421874f042e669ce))
+
+
+
+
+
+# [0.7.0-alpha.294](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.293...@selfcommunity/react-ui@0.7.0-alpha.294) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([5e4547b](https://github.com/selfcommunity/community-js/commit/5e4547ba1e666b438326dbca1d6544d7c685002a))
+* bundles optimization ([ffe6738](https://github.com/selfcommunity/community-js/commit/ffe67381b72625009c3d86bb7cd7df971ececda4))
+
+
+
+
+
+# [0.7.0-alpha.293](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.292...@selfcommunity/react-ui@0.7.0-alpha.293) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+* fixed translation string formatting ([665c8ad](https://github.com/selfcommunity/community-js/commit/665c8ade8d6ef5bbfad6e6326e1ae3d16633f02c))
+
+
+### Performance Improvements
+
+* Added export of WidgetProps ([ff04006](https://github.com/selfcommunity/community-js/commit/ff0400668a695667d05b33cc6660113d50f80613))
+
+
+
+
+
+# [0.7.0-alpha.292](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.291...@selfcommunity/react-ui@0.7.0-alpha.292) (2023-08-22)
+
+
+### Bug Fixes
+
+* actions NavigationToolbar ([145d938](https://github.com/selfcommunity/community-js/commit/145d938142e8fc72eacdea95d0c0ab1700444f73))
+
+
+
+
+
+# [0.7.0-alpha.291](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.290...@selfcommunity/react-ui@0.7.0-alpha.291) (2023-08-22)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([c7a5d78](https://github.com/selfcommunity/community-js/commit/c7a5d78d74de2c1ff3ca03afb0c293728a3dbc8c))
+
+
+
+
+
+# [0.7.0-alpha.290](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.289...@selfcommunity/react-ui@0.7.0-alpha.290) (2023-08-21)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([0268821](https://github.com/selfcommunity/community-js/commit/0268821b724830740ef12c14a8c0519947b693e3))
+
+
+
+
+
+# [0.7.0-alpha.289](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.288...@selfcommunity/react-ui@0.7.0-alpha.289) (2023-08-21)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([235b02c](https://github.com/selfcommunity/community-js/commit/235b02c817bb735d9ace8caae54b1981ff449d8e))
+
+
+
+
+
+# [0.7.0-alpha.288](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.287...@selfcommunity/react-ui@0.7.0-alpha.288) (2023-08-11)
+
+
+### Bug Fixes
+
+* profile edit section ([05fa433](https://github.com/selfcommunity/community-js/commit/05fa43370b5519f7a51c97049799c193e940aa7f))
+
+
+
+
+
+# [0.7.0-alpha.287](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.286...@selfcommunity/react-ui@0.7.0-alpha.287) (2023-07-27)
+
+
+### Performance Improvements
+
+* Update [@material-ui](https://github.com/material-ui) lib ([da66df0](https://github.com/selfcommunity/community-js/commit/da66df03bc7f3f75c84128a3beda9aeae33a1418))
+
+
+
+
+
+# [0.7.0-alpha.286](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.285...@selfcommunity/react-ui@0.7.0-alpha.286) (2023-07-25)
+
+
+### Performance Improvements
+
+* Added export of Lightbox for external use ([6289c33](https://github.com/selfcommunity/community-js/commit/6289c3352729744746aeb6c68f3150d7d89ce60d))
+
+
+
+
+
+# [0.7.0-alpha.285](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.284...@selfcommunity/react-ui@0.7.0-alpha.285) (2023-07-24)
+
+
+### Bug Fixes
+
+* Fix topbar styles ([71eae18](https://github.com/selfcommunity/community-js/commit/71eae18979fe82338cf232433604fedf38a8d87f))
+
+
+
+
+
+# [0.7.0-alpha.284](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.283...@selfcommunity/react-ui@0.7.0-alpha.284) (2023-07-21)
+
+
+### Bug Fixes
+
+* preview image ([066e68a](https://github.com/selfcommunity/community-js/commit/066e68af9a4a5e00aeb63d482eee6489c6caf61e))
+
+
+
+
+
+# [0.7.0-alpha.283](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.282...@selfcommunity/react-ui@0.7.0-alpha.283) (2023-07-21)
+
+
+### Bug Fixes
+
+* preview image ([b1414d9](https://github.com/selfcommunity/community-js/commit/b1414d9e0ff85d9b74bbc5b837d0f4e123c0bd9b))
+
+
+
+
+
+# [0.7.0-alpha.282](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.281...@selfcommunity/react-ui@0.7.0-alpha.282) (2023-07-21)
+
+
+### Bug Fixes
+
+* preview image ([e9f8ee1](https://github.com/selfcommunity/community-js/commit/e9f8ee1f379c9ce7d64b5ba89f8a0d2fae838b21))
+
+
+
+
+
+# [0.7.0-alpha.281](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.280...@selfcommunity/react-ui@0.7.0-alpha.281) (2023-07-21)
+
+
+### Bug Fixes
+
+* preview image ([1c3a17a](https://github.com/selfcommunity/community-js/commit/1c3a17a6157ebb9acdfc88f3f7937146a2435865))
+
+
+
+
+
+# [0.7.0-alpha.280](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.279...@selfcommunity/react-ui@0.7.0-alpha.280) (2023-07-20)
+
+
+### Performance Improvements
+
+* Added options to disable single built-in action button from toolbar ([60dbd84](https://github.com/selfcommunity/community-js/commit/60dbd84b0ef4e9780675d169ad626062cdb26b88))
+
+
+
+
+
+# [0.7.0-alpha.279](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.278...@selfcommunity/react-ui@0.7.0-alpha.279) (2023-07-20)
+
+
+### Features
+
+* Added customization parameter for toolbars and user profile page ([2d2de65](https://github.com/selfcommunity/community-js/commit/2d2de65a5b200697fd7c5e6d655ee8525ace976d))
+
+
+
+
+
+# [0.7.0-alpha.278](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.277...@selfcommunity/react-ui@0.7.0-alpha.278) (2023-07-19)
+
+
+### Performance Improvements
+
+* New composer ([46f82b8](https://github.com/selfcommunity/community-js/commit/46f82b8557e045500c435d782cd4dbb7a894759f))
+
+
+
+
+
+# [0.7.0-alpha.277](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.276...@selfcommunity/react-ui@0.7.0-alpha.277) (2023-07-19)
+
+
+### Bug Fixes
+
+* AccountCredentials ([86b5f37](https://github.com/selfcommunity/community-js/commit/86b5f37cd2f2003a0f4bd88b2f09e4f39fffacc2))
+
+
+
+
+
+# [0.7.0-alpha.276](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.275...@selfcommunity/react-ui@0.7.0-alpha.276) (2023-07-19)
+
+
+### Bug Fixes
+
+* pm bugfix/ux ([c6dd7fd](https://github.com/selfcommunity/community-js/commit/c6dd7fd3d61c1eda60a1c3dfc953271053432605))
+
+
+
+
+
+# [0.7.0-alpha.275](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.274...@selfcommunity/react-ui@0.7.0-alpha.275) (2023-07-19)
+
+
+### Bug Fixes
+
+* AccountCredentials ([f21823d](https://github.com/selfcommunity/community-js/commit/f21823d00667711c60533556db0c006052bbc3a3))
+* loader lightbox ([9b7a3b7](https://github.com/selfcommunity/community-js/commit/9b7a3b726115ac79500c7505fbc8f6661215c10d))
+
+
+
+
+
+# [0.7.0-alpha.274](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.273...@selfcommunity/react-ui@0.7.0-alpha.274) (2023-07-18)
+
+
+### Bug Fixes
+
+* Account Verify Email ([98ab5f8](https://github.com/selfcommunity/community-js/commit/98ab5f8077cef5e8f9d3f0a7bfe5686b2361302e))
+* Fix CommentObjectReply.tsx icons ([14950f6](https://github.com/selfcommunity/community-js/commit/14950f6e3e71ea36ed70bc9151a6c2865def1e94))
+* Fix Editor ToolbarPlugin.tsx icons on safari ([06422f8](https://github.com/selfcommunity/community-js/commit/06422f87f57e75ba5d26400f08b3b6cc360f0826))
+* Fix media link when preview has no images ([887357c](https://github.com/selfcommunity/community-js/commit/887357cea6422a260ebdae442d1c2a50a3de5b63))
+* padding media preview ([6a01fdb](https://github.com/selfcommunity/community-js/commit/6a01fdb176bb113ee8dc3fce13ff092fb26e2db0))
+* padding preview image ([8aa4fd0](https://github.com/selfcommunity/community-js/commit/8aa4fd03dfccd1623281c4dc4b2699150db8590a))
+* Replace url with domain name in Link media preview ([c37678a](https://github.com/selfcommunity/community-js/commit/c37678aad1a8c44caae634f85a35971939c5e08e))
+* UserActionsMenu for authenticated user ([da70416](https://github.com/selfcommunity/community-js/commit/da70416cfd262cf24d29b52ac2a7cbce2ec8dc84))
+* UserProfile ([99f6ac9](https://github.com/selfcommunity/community-js/commit/99f6ac9e8a375131e9cb3121484c6b7bb99761bc))
+* UserProfileEdit ([3b4d855](https://github.com/selfcommunity/community-js/commit/3b4d855896678d48f4a7dca6d7da205a2e2a2d83))
+
+
+
+
+
+# [0.7.0-alpha.273](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.272...@selfcommunity/react-ui@0.7.0-alpha.273) (2023-07-12)
+
+
+### Bug Fixes
+
+* CustomAdv padding ([bf74bc7](https://github.com/selfcommunity/community-js/commit/bf74bc78b22621b2e3bd1be3ba80af9e3f05afb0))
+
+
+
+
+
+# [0.7.0-alpha.272](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.271...@selfcommunity/react-ui@0.7.0-alpha.272) (2023-07-12)
+
+
+### Bug Fixes
+
+* ContributionActionsMenu ([d74082c](https://github.com/selfcommunity/community-js/commit/d74082c3be629d79095007ea98c28fe0a586597d))
+* Lightbox ([9c45163](https://github.com/selfcommunity/community-js/commit/9c4516377de8aa121f469a767beaaf64f4aae1bc))
+* Lightbox toolbar ([b0a80fa](https://github.com/selfcommunity/community-js/commit/b0a80fa1c91b322e394cf14e9879661b91732cac))
+* styles ([af14783](https://github.com/selfcommunity/community-js/commit/af14783bd3b22e22f682de060b123f29ef5aa012))
+
+
+
+
+
+# [0.7.0-alpha.271](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.270...@selfcommunity/react-ui@0.7.0-alpha.271) (2023-07-11)
+
+
+### Bug Fixes
+
+* Lightbox ([3d3a24f](https://github.com/selfcommunity/community-js/commit/3d3a24fe5f429bbeccfa89f9cedb772cfaec6b51))
+* Lightbox ([d17a11e](https://github.com/selfcommunity/community-js/commit/d17a11e797df6e3699363eee11e2b17251e833af))
+
+
+
+
+
+# [0.7.0-alpha.270](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.269...@selfcommunity/react-ui@0.7.0-alpha.270) (2023-07-10)
+
+
+### Bug Fixes
+
+* styles ([2b7ce51](https://github.com/selfcommunity/community-js/commit/2b7ce511f65a36fd7c4d07ba404a9d41d3df19f4))
+
+
+
+
+
+# [0.7.0-alpha.269](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.268...@selfcommunity/react-ui@0.7.0-alpha.269) (2023-07-07)
+
+
+### Bug Fixes
+
+* ChangeCover error ([7e00ac3](https://github.com/selfcommunity/community-js/commit/7e00ac3514721bf78de7ac02b0685b1a03393cb7))
+* fixed pm autocomplete. Asana issue: https://app.asana.com/0/1202638443591994/1204963785403758/f ([d703c36](https://github.com/selfcommunity/community-js/commit/d703c3693cfe662493a15946eefe25a6b3facbbe))
+* fixed: ([48c68d4](https://github.com/selfcommunity/community-js/commit/48c68d4de69e9b31ca0cf90f8cc4d425a26d472c))
+* pollObject collapsed ([db375b0](https://github.com/selfcommunity/community-js/commit/db375b05064ecefdcae396f299e3307259b74bef))
+* PublicInfo, PreviewImage ([9dbcd98](https://github.com/selfcommunity/community-js/commit/9dbcd9898054f1a1f3c2c3b9b9483869027f364e))
+
+
+### Performance Improvements
+
+* added user avatar component for user badge ([6cc208f](https://github.com/selfcommunity/community-js/commit/6cc208fbb620d948c395ae4debc4e02e98945286))
+* pm palette, updated font ([547349c](https://github.com/selfcommunity/community-js/commit/547349c8019f6287d64ac0ac489d6dbe4f486ff0))
+
+
+
+
+
+# [0.7.0-alpha.268](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.267...@selfcommunity/react-ui@0.7.0-alpha.268) (2023-07-05)
+
+
+### Bug Fixes
+
+* account verify validation code ([ae59246](https://github.com/selfcommunity/community-js/commit/ae59246f6fcb2488aa59c4cdbe73313b52f69e8e))
+* user profile ([4ee1e45](https://github.com/selfcommunity/community-js/commit/4ee1e456b105eb43f3364836198372637e7e3523))
+
+
+
+
+
+# [0.7.0-alpha.267](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.266...@selfcommunity/react-ui@0.7.0-alpha.267) (2023-07-05)
+
+
+### Bug Fixes
+
+* poll collapsed ts ([0c8d09b](https://github.com/selfcommunity/community-js/commit/0c8d09b35ab49e105ed06e2d1e3060619567ef7c))
+* styles ([e25c7b2](https://github.com/selfcommunity/community-js/commit/e25c7b264607572f9fd1ddfbaef2d52832e8d2f9))
+* UserInfo & feedObject poll collapsed in feed ([62e86d1](https://github.com/selfcommunity/community-js/commit/62e86d1b13416c64ee21b0ada4496c23c6fdf0a0))
+
+
+
+
+
+# [0.7.0-alpha.266](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.265...@selfcommunity/react-ui@0.7.0-alpha.266) (2023-07-04)
+
+
+### Bug Fixes
+
+* UserInfo ([631cd59](https://github.com/selfcommunity/community-js/commit/631cd5910cf33347b590ea94f198e90017ee3b3c))
+
+
+
+
+
+# [0.7.0-alpha.265](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.264...@selfcommunity/react-ui@0.7.0-alpha.265) (2023-07-04)
+
+
+### Bug Fixes
+
+* editProfileDialog mobile responsive tabs ([72689f1](https://github.com/selfcommunity/community-js/commit/72689f19988ba3875cfb55fe3eeb71d11b1eef21))
+* skeleton ([3fefe6f](https://github.com/selfcommunity/community-js/commit/3fefe6fb1542a9f5f8244282368fe5ab23cb90f8))
+
+
+
+
+
+# [0.7.0-alpha.264](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.263...@selfcommunity/react-ui@0.7.0-alpha.264) (2023-07-04)
+
+
+### Bug Fixes
+
+* account verify validation code ([9e9400b](https://github.com/selfcommunity/community-js/commit/9e9400b38ee7d393b1846c77745cbedf6c635986))
+
+
+
+
+
+# [0.7.0-alpha.263](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.262...@selfcommunity/react-ui@0.7.0-alpha.263) (2023-07-03)
+
+
+### Bug Fixes
+
+* Fix media link PreviewComponent.tsx ([83869c4](https://github.com/selfcommunity/community-js/commit/83869c41ddc193102ba632e5b42fed0560e721fc))
+* Fix media link PreviewComponent.tsx ([a688390](https://github.com/selfcommunity/community-js/commit/a68839051f31d2b445aa1f9cf4a007e5dc4f4123))
+* Upload concurrency ([fd59805](https://github.com/selfcommunity/community-js/commit/fd59805468fd5122a8beca50e064b0321d700220))
+
+
+
+
+
+# [0.7.0-alpha.262](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.261...@selfcommunity/react-ui@0.7.0-alpha.262) (2023-07-03)
+
+
+### Bug Fixes
+
+* Fix chunk upload images ([063cc73](https://github.com/selfcommunity/community-js/commit/063cc7394f18e7b19e13a472c1f1c865e4067981))
+
+
+
+
+
+# [0.7.0-alpha.261](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.260...@selfcommunity/react-ui@0.7.0-alpha.261) (2023-07-03)
+
+
+### Bug Fixes
+
+* image preview post/status/discussion ([466f55f](https://github.com/selfcommunity/community-js/commit/466f55f03c33023081ca369e9fc7b5d401e43db3))
+* video preview autoplay ([57ce4f8](https://github.com/selfcommunity/community-js/commit/57ce4f82a98abf119a03945d1e93368398df7297))
+
+
+
+
+
+# [0.7.0-alpha.260](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.259...@selfcommunity/react-ui@0.7.0-alpha.260) (2023-07-03)
+
+
+### Bug Fixes
+
+* fixed component/props import name ([bcb9cfc](https://github.com/selfcommunity/community-js/commit/bcb9cfc1f7a809fbf40b0ead4cac3cc03779a210))
+
+
+
+
+
+# [0.7.0-alpha.259](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.258...@selfcommunity/react-ui@0.7.0-alpha.259) (2023-07-03)
+
+
+### Bug Fixes
+
+* UsernameTextfield ([5ca35e8](https://github.com/selfcommunity/community-js/commit/5ca35e81ee844e626dc2603aa3231372b613f12d))
+* UsernameTextfield ([e50f162](https://github.com/selfcommunity/community-js/commit/e50f162297e2e808c00b7a228413264316a97ff9))
+
+
+
+
+
+# [0.7.0-alpha.258](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.257...@selfcommunity/react-ui@0.7.0-alpha.258) (2023-06-30)
+
+
+### Bug Fixes
+
+* recover layout ([be42d4f](https://github.com/selfcommunity/community-js/commit/be42d4f2ff18f08742b0f0377f930da337d1f7aa))
+
+
+
+
+
+# [0.7.0-alpha.257](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.256...@selfcommunity/react-ui@0.7.0-alpha.257) (2023-06-30)
+
+
+### Bug Fixes
+
+* changed user profile edit save icon color ([d74d4dc](https://github.com/selfcommunity/community-js/commit/d74d4dcbb5df94b867e53f8072441b5bdc0a297d))
+* fixed translations, user block button status. Asana issues: ([0cff53d](https://github.com/selfcommunity/community-js/commit/0cff53dc2737acdd10abdabec53fa2e26ee226a2))
+* issue https://app.asana.com/0/1202638443591994/1204923697931064/f ([8af1812](https://github.com/selfcommunity/community-js/commit/8af181285b118fbc0f035527065b292d11863172))
+
+
+
+
+
+# [0.7.0-alpha.256](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.255...@selfcommunity/react-ui@0.7.0-alpha.256) (2023-06-28)
+
+
+### Bug Fixes
+
+* categories component ([cda16d4](https://github.com/selfcommunity/community-js/commit/cda16d46ab58d725963dd66deb10a4e47fd44d8a))
+
+
+
+
+
+# [0.7.0-alpha.255](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.254...@selfcommunity/react-ui@0.7.0-alpha.255) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.254](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.253...@selfcommunity/react-ui@0.7.0-alpha.254) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.253](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.252...@selfcommunity/react-ui@0.7.0-alpha.253) (2023-06-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.252](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.251...@selfcommunity/react-ui@0.7.0-alpha.252) (2023-06-21)
+
+
+### Performance Improvements
+
+* added collapsed content for feed object share template ([748856f](https://github.com/selfcommunity/community-js/commit/748856f5c1cfd5cad3643a8fe0c17e9573c654e2))
+
+
+
+
+
+# [0.7.0-alpha.251](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.250...@selfcommunity/react-ui@0.7.0-alpha.251) (2023-06-20)
+
+
+### Bug Fixes
+
+* fixed user settings calendar on mobile. Asana issue: https://app.asana.com/0/1202638443591994/1204856037629472/f ([9d059d6](https://github.com/selfcommunity/community-js/commit/9d059d6a740886345b4842a88fadd949022d42c4))
+
+
+
+
+
+# [0.7.0-alpha.250](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.249...@selfcommunity/react-ui@0.7.0-alpha.250) (2023-06-20)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.249](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.248...@selfcommunity/react-ui@0.7.0-alpha.249) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([a656b89](https://github.com/selfcommunity/community-js/commit/a656b893c79385402c6f164959ecb78a29529f82))
+
+
+
+
+
+# [0.7.0-alpha.248](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.247...@selfcommunity/react-ui@0.7.0-alpha.248) (2023-06-19)
+
+
+### Bug Fixes
+
+* fixed selectable users for new message ([2f0e02b](https://github.com/selfcommunity/community-js/commit/2f0e02bf006d505705a535ff06d251755ad912c4))
+* storybook v7 upgrade ([553c1bf](https://github.com/selfcommunity/community-js/commit/553c1bff2b3f8a5c4965a9190b7d887766473964))
+* storybook v7 upgrade ([bd599bc](https://github.com/selfcommunity/community-js/commit/bd599bc84bf1980687112e30a2df4e77d7e87479))
+* storybook v7 upgrade ([3d1bb57](https://github.com/selfcommunity/community-js/commit/3d1bb57a2e9f154955ddad015ca2265987106b40))
+* storybook v7 upgrade ([8d86f19](https://github.com/selfcommunity/community-js/commit/8d86f19810793e04da433ad81ce100390bb2b5f2))
+* storybook v7 upgrade ([e59718d](https://github.com/selfcommunity/community-js/commit/e59718d8161846ea114d3858f6d28f61928fda51))
+* storybook v7 upgrade ([391cb8a](https://github.com/selfcommunity/community-js/commit/391cb8a18c1e265399b883c6c335db2a840acf32))
+
+
+
+
+
+# [0.7.0-alpha.247](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.246...@selfcommunity/react-ui@0.7.0-alpha.247) (2023-06-19)
+
+
+### Bug Fixes
+
+* fixed deleted user snackbar alert ([308b9e2](https://github.com/selfcommunity/community-js/commit/308b9e23681d1491db0e68858c4305c8ff734f3e))
+
+
+
+
+
+# [0.7.0-alpha.246](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.245...@selfcommunity/react-ui@0.7.0-alpha.246) (2023-06-16)
+
+
+### Bug Fixes
+
+* counters ([441d2ac](https://github.com/selfcommunity/community-js/commit/441d2ac08dd8aa97f447d0730e473cc1193400e7))
+
+
+
+
+
+# [0.7.0-alpha.245](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.244...@selfcommunity/react-ui@0.7.0-alpha.245) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
+# [0.7.0-alpha.244](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.243...@selfcommunity/react-ui@0.7.0-alpha.244) (2023-06-15)
+
+
+### Bug Fixes
+
+* counters ([9701069](https://github.com/selfcommunity/community-js/commit/9701069c3be197a9bd9bbf21bf8c838410f4b27e))
+* fixed navbar menu logo padding/drawer closing on navigation ([9104488](https://github.com/selfcommunity/community-js/commit/9104488cbfae08c402576ed2e026deb6404f8508))
+
+
+
+
+
+# [0.7.0-alpha.243](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.242...@selfcommunity/react-ui@0.7.0-alpha.243) (2023-06-14)
+
+
+### Bug Fixes
+
+* fixed warning ([bc2b0c9](https://github.com/selfcommunity/community-js/commit/bc2b0c956af49ac930a5f88b2b883eb1c5da900d))
+
+
+
+
+
+# [0.7.0-alpha.242](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.241...@selfcommunity/react-ui@0.7.0-alpha.242) (2023-06-14)
+
+
+### Features
+
+* added menu component for navigation bar ([1a38a44](https://github.com/selfcommunity/community-js/commit/1a38a44c54accfdafac2eba2626abef8717d6f87))
+
+
+
+
+
+# [0.7.0-alpha.241](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.240...@selfcommunity/react-ui@0.7.0-alpha.241) (2023-06-13)
+
+
+### Bug Fixes
+
+* add post to feed after creation ([cb787fb](https://github.com/selfcommunity/community-js/commit/cb787fb69b5efead7531829a9207b6dd03ed4ef4))
+* visibility icons feedObject ([71bfb0f](https://github.com/selfcommunity/community-js/commit/71bfb0f471815dbb520a577f4976db130d11be1d))
+
+
+
+
+
+# [0.7.0-alpha.240](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.239...@selfcommunity/react-ui@0.7.0-alpha.240) (2023-06-12)
+
+
+### Bug Fixes
+
+* location composer ([bcc953a](https://github.com/selfcommunity/community-js/commit/bcc953ae61f1069f080f22ae453c8c0a6aa98796))
+
+
+
+
+
+# [0.7.0-alpha.239](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.238...@selfcommunity/react-ui@0.7.0-alpha.239) (2023-06-12)
+
+
+### Bug Fixes
+
+* ComposerIconButton ([c48158e](https://github.com/selfcommunity/community-js/commit/c48158ed46636a2ee122adeb75f84162fdb1f716))
+* Feed component ([4957727](https://github.com/selfcommunity/community-js/commit/49577274d122b3814566829223e68460485864f6))
+* Fix focus on composer open ([087fffd](https://github.com/selfcommunity/community-js/commit/087fffd7fe6da252d120b508748f4a70477100cb))
+* fixed metadata error in user field edit component. Asana issue: https://app.asana.com/0/1202638443591994/1204785197222173/f ([65562e7](https://github.com/selfcommunity/community-js/commit/65562e77a319cabe42b2e71962e82e5cee301dfe))
+* SCContributionActionsMenu ([fe3a261](https://github.com/selfcommunity/community-js/commit/fe3a2612e05c6aa3b6b1094e1d280df22d149f0c))
+
+
+### Performance Improvements
+
+* added generic error to composer ([0be2ae7](https://github.com/selfcommunity/community-js/commit/0be2ae741cf9f03e1530a9b5e4bb537087bf9cc8))
+
+
+
+
+
+# [0.7.0-alpha.238](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.237...@selfcommunity/react-ui@0.7.0-alpha.238) (2023-06-09)
+
+
+### Bug Fixes
+
+* restore post ([df8e55c](https://github.com/selfcommunity/community-js/commit/df8e55cf6805bb06558edd09b86805c72aa17003))
+* ts warning ([8aa1a8e](https://github.com/selfcommunity/community-js/commit/8aa1a8ed4e259f82fbeb5a61bc254e776928e799))
+* user profile date of birth ([4333afa](https://github.com/selfcommunity/community-js/commit/4333afa629c37368c4311204bcac4beba0145a29))
+
+
+
+
+
+# [0.7.0-alpha.237](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.236...@selfcommunity/react-ui@0.7.0-alpha.237) (2023-06-09)
+
+
+### Bug Fixes
+
+* fixed comments for doc ([ef9283c](https://github.com/selfcommunity/community-js/commit/ef9283ca85db8beaf6dee47890197d883fbaff7b))
+* fixed comments for doc ([ba897ba](https://github.com/selfcommunity/community-js/commit/ba897ba182dd196159fda9e241224186bb90049e))
+* fixed errors for media/message chunk uploader, fixed asana issues about change picture/change cover. ([c810377](https://github.com/selfcommunity/community-js/commit/c81037793387d2b0f21fc687a508734324f7dfe4))
+* poll title/error on field title. Asana issue: https://app.asana.com/0/1202638443591994/1204784688546920/f ([d044cf1](https://github.com/selfcommunity/community-js/commit/d044cf1a37461356c7061d7064f587b80a319d69))
+* removed unnecessary variables from user profile edit publicInfo. ([91d1add](https://github.com/selfcommunity/community-js/commit/91d1addb72c4b44fe95b3a7fd173656b66e8a279))
+* user profile ([16bbc5a](https://github.com/selfcommunity/community-js/commit/16bbc5a4c72d2d366fdf5a1d2145fe4a00ad1544))
+* user profile ([04c79eb](https://github.com/selfcommunity/community-js/commit/04c79ebe61cf931311170a5a248a735c08f4ef88))
+* UserCounters ([6779577](https://github.com/selfcommunity/community-js/commit/67795774633fd447947cece675fe68e252a3261d))
+
+
+
+
+
+# [0.7.0-alpha.236](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.235...@selfcommunity/react-ui@0.7.0-alpha.236) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.235](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.234...@selfcommunity/react-ui@0.7.0-alpha.235) (2023-06-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.234](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.233...@selfcommunity/react-ui@0.7.0-alpha.234) (2023-06-08)
+
+
+### Bug Fixes
+
+* fixed account credential theme(wasn't applying style) ([14552fc](https://github.com/selfcommunity/community-js/commit/14552fc3c4eba7c4c8719337a5ede733f2f39827))
+
+
+### Performance Improvements
+
+* format errors by their codes. ([d6ade5a](https://github.com/selfcommunity/community-js/commit/d6ade5a4729c08839c7c54aead22e7e624a141be))
+
+
+
+
+
+# [0.7.0-alpha.233](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.232...@selfcommunity/react-ui@0.7.0-alpha.233) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix ssr cache ([d89110b](https://github.com/selfcommunity/community-js/commit/d89110b5420de9e5ffd89016d7227eb4df28ca35))
+
+
+
+
+
+# [0.7.0-alpha.232](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.231...@selfcommunity/react-ui@0.7.0-alpha.232) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([768eba0](https://github.com/selfcommunity/community-js/commit/768eba0bb8c2a4b6b47a90d33b8e9c5e2d99d714))
+
+
+
+
+
+# [0.7.0-alpha.231](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.230...@selfcommunity/react-ui@0.7.0-alpha.231) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([372542a](https://github.com/selfcommunity/community-js/commit/372542a5a8ed1a33ae0f8c9044565bd154de6f2a))
+* block user ([75c4df6](https://github.com/selfcommunity/community-js/commit/75c4df603df69f8a472b65e69792411e16b6a39f))
+* block user ([baaf57c](https://github.com/selfcommunity/community-js/commit/baaf57c97a9344f9d3c48b39eac731566e9203c6))
+
+
+
+
+
+# [0.7.0-alpha.230](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.229...@selfcommunity/react-ui@0.7.0-alpha.230) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix edit profile buttons order ([5eb2629](https://github.com/selfcommunity/community-js/commit/5eb2629586f2247b77b7087fb9f5884dab32dcd4))
+
+
+
+
+
+# [0.7.0-alpha.229](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.228...@selfcommunity/react-ui@0.7.0-alpha.229) (2023-06-07)
+
+
+### Features
+
+* Added AccountDataPortability.tsx, AccountDataPortabilityButton.tsx, AccountDelete.tsx, AccountDeleteButton.tsx ([62a4b86](https://github.com/selfcommunity/community-js/commit/62a4b86862879fc88e93b8b08487e995104de11a))
+
+
+
+
+
+# [0.7.0-alpha.228](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.227...@selfcommunity/react-ui@0.7.0-alpha.228) (2023-06-06)
+
+
+### Performance Improvements
+
+* replaced data-fns relative time transl with react-intl FormattedRelativeTime ([79a0bd1](https://github.com/selfcommunity/community-js/commit/79a0bd16391e7f3636fd640b52e2dbf6d9a04da5))
+
+
+
+
+
+# [0.7.0-alpha.227](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.226...@selfcommunity/react-ui@0.7.0-alpha.227) (2023-06-06)
+
+
+### Bug Fixes
+
+* Fix account verify loader ([3977119](https://github.com/selfcommunity/community-js/commit/3977119b66d6b6cf2a4ec23a179eb8d70a20ae20))
+* fixed new message icon position, translations. Asana issues: ([637cffb](https://github.com/selfcommunity/community-js/commit/637cffb78276203de6a0f3dd7c764812379d8140))
+* fixed private messages. (pubsub update, scroll bottom when e new message is sent, snippet menu button overlap) ([77edd3c](https://github.com/selfcommunity/community-js/commit/77edd3cb7a9cb8554a07eafa30c0cc4d32e764c1))
+* fixed scroll, removed moment for relative datetime ([6a94db8](https://github.com/selfcommunity/community-js/commit/6a94db89cd863554f351f379b362e86ebc2fbe13))
+* UserCounters ([27b7dca](https://github.com/selfcommunity/community-js/commit/27b7dca9a5cd3f96abf343922e952e360bfa8082))
+
+
+
+
+
+# [0.7.0-alpha.226](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.225...@selfcommunity/react-ui@0.7.0-alpha.226) (2023-06-05)
+
+
+### Bug Fixes
+
+* disable feedObject notifications ([c042cf3](https://github.com/selfcommunity/community-js/commit/c042cf3a9223687a588ce64ab936e75ad9cf980c))
+* Fix default avatar url ([5b9dce9](https://github.com/selfcommunity/community-js/commit/5b9dce92ff2a95f6ea80406f081eb7e7cedf98e6))
+* Fix notifications item style ([3fdf51e](https://github.com/selfcommunity/community-js/commit/3fdf51e6a002982f878e7c6807e31bb72455d706))
+* suggestion widgets ([5509f49](https://github.com/selfcommunity/community-js/commit/5509f49f6bb7638ea8ac43de21b465d1743ee080))
+
+
+### Performance Improvements
+
+* Removed link from Categories list ([1026da4](https://github.com/selfcommunity/community-js/commit/1026da405f18cc718cbabaaa84cc595ce5601480))
+
+
+
+
+
+# [0.7.0-alpha.225](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.224...@selfcommunity/react-ui@0.7.0-alpha.225) (2023-06-01)
+
+
+### Bug Fixes
+
+* share actions ([419532f](https://github.com/selfcommunity/community-js/commit/419532f66b5b4dc27ae2be7df3f5df049192bd56))
+
+
+
+
+
+# [0.7.0-alpha.224](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.223...@selfcommunity/react-ui@0.7.0-alpha.224) (2023-06-01)
+
+
+### Bug Fixes
+
+* icon notification ([b7e29db](https://github.com/selfcommunity/community-js/commit/b7e29dbad0ce61fd755a6d6e2962b470aff94d64))
+
+
+
+
+
+# [0.7.0-alpha.223](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.222...@selfcommunity/react-ui@0.7.0-alpha.223) (2023-06-01)
+
+
+### Bug Fixes
+
+* Fix Change password submit button behaviour after errors from server ([e5e913a](https://github.com/selfcommunity/community-js/commit/e5e913a12977fdf26914ce3179713069d3c51da7))
+* Fix Composer.tsx title length check for submit button ([1f042a8](https://github.com/selfcommunity/community-js/commit/1f042a8c684cc2d1f1f38eb21f9458d44dbe2b95))
+* Fix Footer.tsx text replacement ([eb198be](https://github.com/selfcommunity/community-js/commit/eb198beb7393d91bab8a8e558a1de0bf94cfc8c0))
+* form edit date ([d125341](https://github.com/selfcommunity/community-js/commit/d125341bee3786729cdbd0ec26c25203cadd2f67))
+* LoyaltyProgramWidget loading snap, lengthened pm editor in thread component skeleton ([edff05b](https://github.com/selfcommunity/community-js/commit/edff05b96c7b006f15cd845c8ccf1243b3dac463))
+* notification accept connection request ([decf702](https://github.com/selfcommunity/community-js/commit/decf7023f32b47fef0511e9735dec33f7080f260))
+* notification links ([1b1f954](https://github.com/selfcommunity/community-js/commit/1b1f954cd59028931fadca8397d94adb30e03adb))
+
+
+### Performance Improvements
+
+* cleaned translation files ([ea2cc2d](https://github.com/selfcommunity/community-js/commit/ea2cc2df3882cbce0ed558581c20f07cd9ae1a75))
+* fixed comments for doc(react-ui) ([46cfd30](https://github.com/selfcommunity/community-js/commit/46cfd30a4a07f3822d920f10d5b66d8c55d37b79))
+
+
+
+
+
+# [0.7.0-alpha.222](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.221...@selfcommunity/react-ui@0.7.0-alpha.222) (2023-05-31)
+
+
+### Bug Fixes
+
+* LoyaltyProgramWidget rerender. Asana issue: https://app.asana.com/0/1202638443591994/1204721434773093/f ([cc107eb](https://github.com/selfcommunity/community-js/commit/cc107eb78333d4bf68a39a4e66fc41d81349ca7b))
+
+
+
+
+
+# [0.7.0-alpha.221](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.220...@selfcommunity/react-ui@0.7.0-alpha.221) (2023-05-31)
+
+
+### Bug Fixes
+
+* FollowButton ([4e1f393](https://github.com/selfcommunity/community-js/commit/4e1f3934d33bead930ac23e4698b86a40e9c6967))
+
+
+
+
+
+# [0.7.0-alpha.220](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.219...@selfcommunity/react-ui@0.7.0-alpha.220) (2023-05-29)
+
+
+### Bug Fixes
+
+* friendship widgets ([71a4dc0](https://github.com/selfcommunity/community-js/commit/71a4dc04c5b77ea64d5b531f5d86ca64468d371e))
+
+
+
+
+
+# [0.7.0-alpha.219](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.218...@selfcommunity/react-ui@0.7.0-alpha.219) (2023-05-29)
+
+
+### Bug Fixes
+
+* connections widgets ([8f20e5a](https://github.com/selfcommunity/community-js/commit/8f20e5ac9e20798b6aa78da7973874e38dfaa623))
+* connections widgets ([c6c51ff](https://github.com/selfcommunity/community-js/commit/c6c51ff1402255197f0073a45a25c1b7d64dac5c))
+* fixed pm thread/pm notification when connection enabled ([4e34003](https://github.com/selfcommunity/community-js/commit/4e34003b25a6527e1f5faa0bfd11ce770a10536c))
+
+
+
+
+
+# [0.7.0-alpha.218](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.217...@selfcommunity/react-ui@0.7.0-alpha.218) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([1cb483a](https://github.com/selfcommunity/community-js/commit/1cb483ad7d929350d98998b99103f92031257dc1))
+
+
+
+
+
+# [0.7.0-alpha.217](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.216...@selfcommunity/react-ui@0.7.0-alpha.217) (2023-05-26)
+
+
+### Bug Fixes
+
+* friendship ([8896f19](https://github.com/selfcommunity/community-js/commit/8896f191678f10e830fa256ab171bf7967971c50))
+* friendship ([cc0a0ab](https://github.com/selfcommunity/community-js/commit/cc0a0abe584763e80678bd98f1251c75ef7b4fdc))
+
+
+
+
+
+# [0.7.0-alpha.216](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.215...@selfcommunity/react-ui@0.7.0-alpha.216) (2023-05-26)
+
+
+### Bug Fixes
+
+* category autoFollow ([28593fe](https://github.com/selfcommunity/community-js/commit/28593fe435e9f2340fd03c297cacf53b6008a3c4))
+* friendship ([1837ffc](https://github.com/selfcommunity/community-js/commit/1837ffceae25065c4ba9d39e3bf62f3d732a5eba))
+
+
+
+
+
+# [0.7.0-alpha.215](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.214...@selfcommunity/react-ui@0.7.0-alpha.215) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix NavigationToolbar.tsx props ([34bfd25](https://github.com/selfcommunity/community-js/commit/34bfd25e6497f0e42f1b6e6c72c54e05d8300ab5))
+* Fix Service API call ([ea28d13](https://github.com/selfcommunity/community-js/commit/ea28d13fd7d80e5d6c44e299f0de802429983118))
+
+
+
+
+
+# [0.7.0-alpha.214](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.213...@selfcommunity/react-ui@0.7.0-alpha.214) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix NavigationToolbar.tsx props ([906971c](https://github.com/selfcommunity/community-js/commit/906971c537320a5c49867ace8c7aef0d5a5f5675))
+
+
+
+
+
+# [0.7.0-alpha.213](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.212...@selfcommunity/react-ui@0.7.0-alpha.213) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix styles ([872f62a](https://github.com/selfcommunity/community-js/commit/872f62a10403caf9c66513dad087398abc76539f))
+
+
+
+
+
+# [0.7.0-alpha.212](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.211...@selfcommunity/react-ui@0.7.0-alpha.212) (2023-05-24)
+
+
+### Bug Fixes
+
+* Fix media link error ([788856c](https://github.com/selfcommunity/community-js/commit/788856c20502aa8c5c7da6dacb7d2b6fc1d25198))
+* NotificationMenu ([bf33e32](https://github.com/selfcommunity/community-js/commit/bf33e32b8713946d53395c0eaeed2a936808159f))
+* suggestion widgets ([d173ab2](https://github.com/selfcommunity/community-js/commit/d173ab2b7b1042a066ed4f0fe1295541c6010bd7))
+
+
+
+
+
+# [0.7.0-alpha.211](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.210...@selfcommunity/react-ui@0.7.0-alpha.211) (2023-05-23)
+
+
+### Bug Fixes
+
+* Fix export of FooterSkeleton ([ebbc055](https://github.com/selfcommunity/community-js/commit/ebbc0550f62152a81ffaabde54a4143e7043a890))
+* reactions caching, SCVoteProvider ([530b953](https://github.com/selfcommunity/community-js/commit/530b95327c8c77038dc21b08caffc3bc34bee465))
+
+
+
+
+
+# [0.7.0-alpha.210](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.209...@selfcommunity/react-ui@0.7.0-alpha.210) (2023-05-22)
+
+
+### Bug Fixes
+
+* Fix media upload with preview ([228a2fb](https://github.com/selfcommunity/community-js/commit/228a2fb88849ba1a90d06a8bc0bc24a1f8c9dae9))
+* Fix responsiveness ([dca0ad5](https://github.com/selfcommunity/community-js/commit/dca0ad5c3af04877440fb1a4ca3f29c4ecd4f24b))
+* Fix VoteButton.tsx on touch devices ([b765488](https://github.com/selfcommunity/community-js/commit/b765488037c8f3223174bfd9f31d67ab603023c4))
+
+
+
+
+
+# [0.7.0-alpha.209](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.208...@selfcommunity/react-ui@0.7.0-alpha.209) (2023-05-19)
+
+
+### Performance Improvements
+
+* loyalty program/loyalty program detail ([6beaec2](https://github.com/selfcommunity/community-js/commit/6beaec2764e159bf12829682f6075b408b1b9634))
+* thread skeleton/autocomplete placeholder on newmessagethread user load ([aa15940](https://github.com/selfcommunity/community-js/commit/aa1594055c5bc0947efda893b4c1af7977e3b832))
+
+
+
+
+
+# [0.7.0-alpha.208](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.207...@selfcommunity/react-ui@0.7.0-alpha.208) (2023-05-19)
+
+
+### Bug Fixes
+
+* broadcastMessages, feed notifcations, feedUpdates ([bc18dc2](https://github.com/selfcommunity/community-js/commit/bc18dc2b13e988b9578540501cd966953f1be60a))
+
+
+
+
+
+# [0.7.0-alpha.207](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.206...@selfcommunity/react-ui@0.7.0-alpha.207) (2023-05-19)
+
+
+### Bug Fixes
+
+* fixed pm file uploading errors ([0c64e40](https://github.com/selfcommunity/community-js/commit/0c64e4065ce56a03825cbf227b1b1f4b28250700))
+
+
+
+
+
+# [0.7.0-alpha.206](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.205...@selfcommunity/react-ui@0.7.0-alpha.206) (2023-05-18)
+
+
+### Bug Fixes
+
+* broadcastMessages ([a9de029](https://github.com/selfcommunity/community-js/commit/a9de02910271515dfdb97d740c8161c30652badd))
+
+
+
+
+
+# [0.7.0-alpha.205](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.204...@selfcommunity/react-ui@0.7.0-alpha.205) (2023-05-18)
+
+
+### Bug Fixes
+
+* fixed pm file uploading error handling ([e948023](https://github.com/selfcommunity/community-js/commit/e948023bf7887b23cac4aff7794c3e5619695521))
+
+
+
+
+
+# [0.7.0-alpha.204](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.203...@selfcommunity/react-ui@0.7.0-alpha.204) (2023-05-18)
+
+
+### Bug Fixes
+
+* fixed pm  uploading section style, deleted message update ([87e1803](https://github.com/selfcommunity/community-js/commit/87e1803532d310e30c268c5356f658d3c7f39fc4))
+
+
+### Performance Improvements
+
+* moved snippet updated/added to the top of the list ([d0a096c](https://github.com/selfcommunity/community-js/commit/d0a096cd61941150ef515f07c3056d6b46b40954))
+
+
+
+
+
+# [0.7.0-alpha.203](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.202...@selfcommunity/react-ui@0.7.0-alpha.203) (2023-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.202](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.201...@selfcommunity/react-ui@0.7.0-alpha.202) (2023-05-17)
+
+
+### Bug Fixes
+
+* Fix FeedObject.tsx for deleted object ([1204927](https://github.com/selfcommunity/community-js/commit/1204927db513bc08c099bfc6e39834261a231a95))
+
+
+
+
+
+# [0.7.0-alpha.201](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.200...@selfcommunity/react-ui@0.7.0-alpha.201) (2023-05-17)
+
+
+### Bug Fixes
+
+* FeedObject now renders null if user cannot see the object ([3423262](https://github.com/selfcommunity/community-js/commit/3423262946493a8f6a43ddafd5c6b38d13f9bffa))
+* Fix css for feed and toolbar ([675961f](https://github.com/selfcommunity/community-js/commit/675961f2ff33fc706b058a32a1fba1c089628a2e))
+* fixed pm multiple file uploading ([19903a8](https://github.com/selfcommunity/community-js/commit/19903a8bc98474d286470403a5be7f56fde6c3ce))
+
+
+
+
+
+# [0.7.0-alpha.200](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.199...@selfcommunity/react-ui@0.7.0-alpha.200) (2023-05-17)
+
+
+### Performance Improvements
+
+* Added location to FeedObject ([3021d88](https://github.com/selfcommunity/community-js/commit/3021d88ace2ef1e94dffd1fa748792a2c3956b2c))
+
+
+
+
+
+# [0.7.0-alpha.199](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.198...@selfcommunity/react-ui@0.7.0-alpha.199) (2023-05-17)
+
+
+### Bug Fixes
+
+* fixed pm thread pagination on scroll(duplicate results on fetchPrev) ([f80cea6](https://github.com/selfcommunity/community-js/commit/f80cea63b90744738614a98e6b144b60c5a49d05))
+* revert input autofill bug chrome ([046d6cd](https://github.com/selfcommunity/community-js/commit/046d6cd6bab5249593cf0c2a0d62e2233e8dd23b))
+
+
+
+
+
+# [0.7.0-alpha.198](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.197...@selfcommunity/react-ui@0.7.0-alpha.198) (2023-05-17)
+
+
+### Bug Fixes
+
+* input autofill bug chrome ([0093b21](https://github.com/selfcommunity/community-js/commit/0093b21342c0e3c5146210d25ee77f158bb97319))
+* input autofill bug chrome ([144bc0e](https://github.com/selfcommunity/community-js/commit/144bc0e2a0ea21d14d64919a1cff008962814223))
+
+
+
+
+
+# [0.7.0-alpha.197](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.196...@selfcommunity/react-ui@0.7.0-alpha.197) (2023-05-16)
+
+
+### Bug Fixes
+
+* input autofill bug chrome ([dd0ae95](https://github.com/selfcommunity/community-js/commit/dd0ae95f5ce6603d55315b061bf312d36ed349da))
+
+
+
+
+
+# [0.7.0-alpha.196](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.195...@selfcommunity/react-ui@0.7.0-alpha.196) (2023-05-16)
+
+
+### Bug Fixes
+
+* Added CategoryAutocomplete into Composer for posts ([3d2db68](https://github.com/selfcommunity/community-js/commit/3d2db68093b60e67b6979ae7fc3879e7ab92fcb3))
+* Fix close Share Drawer ([9fd8a04](https://github.com/selfcommunity/community-js/commit/9fd8a043bb171b9326edb85e3566f625d82de9a4))
+* input autofill bug chrome ([a66fd6b](https://github.com/selfcommunity/community-js/commit/a66fd6bd14173c52d9ed3f972d581abec159d3fa))
+
+
+### Performance Improvements
+
+* edited infinite scroll component for private messages inverse scroll ([8667f22](https://github.com/selfcommunity/community-js/commit/8667f22a1e28e3f2b8ab64af604f5250c7fe17e8))
+
+
+
+
+
+# [0.7.0-alpha.195](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.194...@selfcommunity/react-ui@0.7.0-alpha.195) (2023-05-16)
+
+
+### Bug Fixes
+
+* CategoriesPopularWidget ([660720b](https://github.com/selfcommunity/community-js/commit/660720bdb899d65458a86b8db166b119232d46fc))
+* CategoryFollowersButton ([fa82185](https://github.com/selfcommunity/community-js/commit/fa82185b0fe38a312e956f04d1d4f3ab0e1d8142))
+* fixed new message autocomplete ([7f500c4](https://github.com/selfcommunity/community-js/commit/7f500c403389800f4b27197af7f79c794f373495))
+
+
+
+
+
+# [0.7.0-alpha.194](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.193...@selfcommunity/react-ui@0.7.0-alpha.194) (2023-05-16)
+
+
+### Bug Fixes
+
+* CategoriesPopularWidget ([06c8e15](https://github.com/selfcommunity/community-js/commit/06c8e15f25b829f36adc6cb2e4c1ec50e9d9b594))
+
+
+### Performance Improvements
+
+* removed unused autohide prop from pm components, fixed message hidden status ([103b781](https://github.com/selfcommunity/community-js/commit/103b7816473f26042dec345eabf2197da0684adb))
+
+
+
+
+
+# [0.7.0-alpha.193](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.192...@selfcommunity/react-ui@0.7.0-alpha.193) (2023-05-16)
+
+
+### Bug Fixes
+
+* fixed imports ([e491bc5](https://github.com/selfcommunity/community-js/commit/e491bc56446f1339249ebdf73b85bc276b33df22))
+* widgets strict mode ([5c556d5](https://github.com/selfcommunity/community-js/commit/5c556d5bc4f6edc7ac01769767a96fc2a1ade788))
+
+
+
+
+
+# [0.7.0-alpha.192](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.191...@selfcommunity/react-ui@0.7.0-alpha.192) (2023-05-15)
+
+
+### Bug Fixes
+
+* widgets strict mode ([5aed870](https://github.com/selfcommunity/community-js/commit/5aed870372b1ad66dc67df08625ac8fbea0b5daa))
+* widgets strict mode ([a630976](https://github.com/selfcommunity/community-js/commit/a63097652368bd5bf01ae1a2f6b0c1a8bceeef43))
+
+
+### Performance Improvements
+
+* Moved Features into @selfcommunity/types package ([4d75469](https://github.com/selfcommunity/community-js/commit/4d75469e588761e45ea6028cb6adc60dd25d3d96))
+
+
+
+
+
+# [0.7.0-alpha.191](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.190...@selfcommunity/react-ui@0.7.0-alpha.191) (2023-05-15)
+
+
+### Bug Fixes
+
+* fixed single message(file) deletion update ([eee035b](https://github.com/selfcommunity/community-js/commit/eee035bc3ddc474a4731560d09269f98f27496f9))
+
+
+### Performance Improvements
+
+* added infinte scroll to thread pagination, fixed single message delete ([f1031cd](https://github.com/selfcommunity/community-js/commit/f1031cdbc9ba4cf1265f63d656147858b0e45c49))
+
+
+
+
+
+# [0.7.0-alpha.190](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.189...@selfcommunity/react-ui@0.7.0-alpha.190) (2023-05-15)
+
+
+### Bug Fixes
+
+* Fix composer audience ux ([ada4dcc](https://github.com/selfcommunity/community-js/commit/ada4dccf2263bec9198f9930e7c0fa71320dab25))
+* fixed private message uploader emoji section ([2ce3ab8](https://github.com/selfcommunity/community-js/commit/2ce3ab88d95f69263eaf15ec51337325cf75439d))
+* types ([d5ab3d8](https://github.com/selfcommunity/community-js/commit/d5ab3d8482471d576f20dc0e77eeddb2b308a4b4))
+* widgets strict mode ([0892016](https://github.com/selfcommunity/community-js/commit/0892016eb560f1548e93784136988fdc1251a135))
+* widgets strict mode ([4d15a0e](https://github.com/selfcommunity/community-js/commit/4d15a0e08ce42ccb13a47aed0601e09957c53a9a))
+* widgets strict mode ([edf696f](https://github.com/selfcommunity/community-js/commit/edf696ffa568e9da1125bb47abc0573a613708a4))
+* widgets strict mode ([953c929](https://github.com/selfcommunity/community-js/commit/953c929d6730abfbb551edb0e4128377fee402b1))
+* widgets strict mode ([a414c1b](https://github.com/selfcommunity/community-js/commit/a414c1b0b47b41cea8a9b72a9e57806130c81cf0))
+* widgets strict mode ([74e486a](https://github.com/selfcommunity/community-js/commit/74e486ad71b86873fbc68ca02c5ee2b46702e7ac))
+
+
+### Performance Improvements
+
+* Added borderRadious to category icon ([ba92c24](https://github.com/selfcommunity/community-js/commit/ba92c2401e9c44ceb422f87fa998ae4447ae4c05))
+* added multiple file upload ([3a11c56](https://github.com/selfcommunity/community-js/commit/3a11c56d3e04aec276a3f692855435680540d6df))
+* Removed arrows on Lightbox when it has only one image ([e37f3ce](https://github.com/selfcommunity/community-js/commit/e37f3ce435ad196014eb095ba4e92cf786c97ce4))
+
+
+
+
+
+# [0.7.0-alpha.189](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.188...@selfcommunity/react-ui@0.7.0-alpha.189) (2023-05-11)
+
+
+### Performance Improvements
+
+* Added feature for PrivateMessages ([e907361](https://github.com/selfcommunity/community-js/commit/e907361e37f2f061389eeb185a7a3aaa56add60a))
+
+
+
+
+
+# [0.7.0-alpha.188](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.187...@selfcommunity/react-ui@0.7.0-alpha.188) (2023-05-11)
+
+
+### Bug Fixes
+
+* Fix drawer ([df79ea6](https://github.com/selfcommunity/community-js/commit/df79ea6ea7c287f7f31f5370b3f8c0e1ce0ce1c0))
+
+
+### Performance Improvements
+
+* Fix private message styles ([928698a](https://github.com/selfcommunity/community-js/commit/928698a937f1e5a4c82850841d5729ca479ed92b))
+
+
+
+
+
+# [0.7.0-alpha.187](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.186...@selfcommunity/react-ui@0.7.0-alpha.187) (2023-05-10)
+
+
+### Bug Fixes
+
+* Fix image plugin resize ([1b260b3](https://github.com/selfcommunity/community-js/commit/1b260b3e8e92262ad770098586442efa3cb85ab2))
+* Fix UserProfile.tsx ([10fc9d6](https://github.com/selfcommunity/community-js/commit/10fc9d6e3fabea3cf19e7cf99e9fb3327f977c04))
+* message chunk uploader fix. Asana issue: https://app.asana.com/0/1202638443591994/1204521980449396/f ([0140002](https://github.com/selfcommunity/community-js/commit/014000214add22caace5c48485ac176103ac0ced))
+
+
+### Performance Improvements
+
+* SwipeableDrawer styled correctly ([beeda17](https://github.com/selfcommunity/community-js/commit/beeda17bfc106d120b557808d84c6e9ac162e20d))
+* SwipeableDrawer styled correctly ([5f7d279](https://github.com/selfcommunity/community-js/commit/5f7d2796b21fa2f4785f7e6152f5583920be9c76))
+
+
+
+
+
+# [0.7.0-alpha.186](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.185...@selfcommunity/react-ui@0.7.0-alpha.186) (2023-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.185](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.184...@selfcommunity/react-ui@0.7.0-alpha.185) (2023-05-08)
+
+
+### Bug Fixes
+
+* Added lightbox for pm image preview  Asana issue: https://app.asana.com/0/1202638443591994/1204521980449388/f ([e6fde9b](https://github.com/selfcommunity/community-js/commit/e6fde9bcfad0c76172baca3b28276d08c3dda7d3))
+
+
+
+
+
+# [0.7.0-alpha.184](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.183...@selfcommunity/react-ui@0.7.0-alpha.184) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix legal page type ([113abc3](https://github.com/selfcommunity/community-js/commit/113abc3b82d5ea708acb4cc72cfae5e425799665))
+
+
+
+
+
+# [0.7.0-alpha.183](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.182...@selfcommunity/react-ui@0.7.0-alpha.183) (2023-05-08)
+
+
+### Features
+
+* Added image resize before chunk upload ([c241aee](https://github.com/selfcommunity/community-js/commit/c241aee8e1dd3fed12f38885de9bb141f4ffed1a))
+
+
+### Performance Improvements
+
+* Private Message is now a feature ([96e6b77](https://github.com/selfcommunity/community-js/commit/96e6b77f00ed2b43fc68f872054e2511ba15fd11))
+
+
+
+
+
+# [0.7.0-alpha.182](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.181...@selfcommunity/react-ui@0.7.0-alpha.182) (2023-05-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.181](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.180...@selfcommunity/react-ui@0.7.0-alpha.181) (2023-05-05)
+
+
+### Bug Fixes
+
+* moved loyalty program detail to templates and fix prizes rendering ([d915409](https://github.com/selfcommunity/community-js/commit/d9154096ccf5e465c50c087e88dcc2efd451c5c6))
+
+
+
+
+
+# [0.7.0-alpha.180](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.179...@selfcommunity/react-ui@0.7.0-alpha.180) (2023-05-05)
+
+
+### Bug Fixes
+
+* consentSolution ([19ffbc0](https://github.com/selfcommunity/community-js/commit/19ffbc06c712d20fba68642698c6ff4c55fd7faf))
+* consentSolution ([b3c4c47](https://github.com/selfcommunity/community-js/commit/b3c4c472c8b5455b6fedd8a470f406731b78b874))
+
+
+
+
+
+# [0.7.0-alpha.179](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.178...@selfcommunity/react-ui@0.7.0-alpha.179) (2023-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.178](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.177...@selfcommunity/react-ui@0.7.0-alpha.178) (2023-05-05)
+
+
+### Bug Fixes
+
+* fixed incubators. Asana issue: https://app.asana.com/0/1202523699272956/1204529315335506/f ([86f345d](https://github.com/selfcommunity/community-js/commit/86f345dc3faf98508a2435a72af5c90b14154998))
+* Lightbox and MediaPreview ([62335ba](https://github.com/selfcommunity/community-js/commit/62335ba643d4fd305a44d853e04d62b56fd8a680))
+
+
+
+
+
+# [0.7.0-alpha.177](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.176...@selfcommunity/react-ui@0.7.0-alpha.177) (2023-05-05)
+
+
+### Bug Fixes
+
+* Lightbox and MediaPreview ([6f22139](https://github.com/selfcommunity/community-js/commit/6f22139291809fa360ec1d8abdb7de983ac58105))
+
+
+
+
+
+# [0.7.0-alpha.176](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.175...@selfcommunity/react-ui@0.7.0-alpha.176) (2023-05-04)
+
+
+### Bug Fixes
+
+* consentSolution ([54b95c6](https://github.com/selfcommunity/community-js/commit/54b95c69793d08848e8c73aca7add831cde5478d))
+* Fix Widgets and react strict mode ([7acc95c](https://github.com/selfcommunity/community-js/commit/7acc95c1b548047490d4a45c426ddbe08785d9ca))
+
+
+### Performance Improvements
+
+* Rename widgets state ([74ae744](https://github.com/selfcommunity/community-js/commit/74ae744f61724aebbc637e55cfd6ab26d3aca02f))
+
+
+
+
+
+# [0.7.0-alpha.175](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.174...@selfcommunity/react-ui@0.7.0-alpha.175) (2023-05-04)
+
+
+### Bug Fixes
+
+* categories ([69ea711](https://github.com/selfcommunity/community-js/commit/69ea711f8039fb97a8f8182993a8208443d79855))
+* feed fetching ([39c3107](https://github.com/selfcommunity/community-js/commit/39c310780f4a5b1b70fa958d760f314ec9b4d6bf))
+* feed story ([09bdb9a](https://github.com/selfcommunity/community-js/commit/09bdb9aa8a7912dfcc7f77a611b20bfa810a6c53))
+* Fix widgets ([2255a71](https://github.com/selfcommunity/community-js/commit/2255a71b5c039d3ed7b1f5e2ac2294003ed7ebdd))
+
+
+
+
+
+# [0.7.0-alpha.174](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.173...@selfcommunity/react-ui@0.7.0-alpha.174) (2023-05-02)
+
+
+### Bug Fixes
+
+* categories ([52b2dec](https://github.com/selfcommunity/community-js/commit/52b2decd60d30c4999865273839f4c93ce7174a3))
+* Fix PublicInfo.tsx type error ([b521e72](https://github.com/selfcommunity/community-js/commit/b521e7217c5d6741fbee4d5fa3b0bae4f0f08271))
+* Fix widgets behaviour and data load ([da1a0fb](https://github.com/selfcommunity/community-js/commit/da1a0fba75aaebf1954d77a58f3174148f9c322f))
+
+
+
+
+
+# [0.7.0-alpha.173](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.172...@selfcommunity/react-ui@0.7.0-alpha.173) (2023-04-28)
+
+
+### Bug Fixes
+
+* Fix CategoryHeader.tsx ([f8f1efd](https://github.com/selfcommunity/community-js/commit/f8f1efdae735fa7416af10f94267ed00915d5391))
+
+
+### Performance Improvements
+
+* integrated new pm endpoint search user, fixed pm component heights ([f6fe0a1](https://github.com/selfcommunity/community-js/commit/f6fe0a14bd2448f0f5d07e7a69b9703bfc71fe6a))
+
+
+
+
+
+# [0.7.0-alpha.172](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.171...@selfcommunity/react-ui@0.7.0-alpha.172) (2023-04-26)
+
+
+### Bug Fixes
+
+* Fix LoyaltyProgramWidget.tsx on anonymous users ([969309e](https://github.com/selfcommunity/community-js/commit/969309e4528e9305ac9c0b75eaba84c17502cc84))
+
+
+
+
+
+# [0.7.0-alpha.171](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.170...@selfcommunity/react-ui@0.7.0-alpha.171) (2023-04-26)
+
+
+### Bug Fixes
+
+* Fix editor default value ([63cadaa](https://github.com/selfcommunity/community-js/commit/63cadaaf537e2dc267859682904ce21aa76258aa))
+
+
+### Performance Improvements
+
+* Update notistack lib ([fd22a68](https://github.com/selfcommunity/community-js/commit/fd22a68106438cf106e9c542283efcd6498b853e))
+* Update notistack lib ([67ea3cc](https://github.com/selfcommunity/community-js/commit/67ea3cc9e1ea4b7c2ae431d5fd566faf39323f62))
+
+
+
+
+
+# [0.7.0-alpha.170](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.169...@selfcommunity/react-ui@0.7.0-alpha.170) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix editor selection ([c7959f1](https://github.com/selfcommunity/community-js/commit/c7959f158d66cfae2afddeb56aa77f3110754baf))
+* Fix footer theme ([feb8333](https://github.com/selfcommunity/community-js/commit/feb833399d99641ded7173375585efe4eae55caa))
+
+
+
+
+
+# [0.7.0-alpha.169](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.168...@selfcommunity/react-ui@0.7.0-alpha.169) (2023-04-24)
+
+
+### Bug Fixes
+
+* Fix deps ([6ab40e0](https://github.com/selfcommunity/community-js/commit/6ab40e0a5240d1ed51ad665d498c62254b9b6acd))
+* Fix SearchAutocomplete.tsx clear button ([7eb4cbd](https://github.com/selfcommunity/community-js/commit/7eb4cbdcb6f1ee81ae6daed4e64a6d418632486c))
+* rollback editor ([0374a06](https://github.com/selfcommunity/community-js/commit/0374a0641819ebd571cd5524b01fb3c227051d5e))
+
+
+### Features
+
+* Added hashtags to the editor ([d64cd69](https://github.com/selfcommunity/community-js/commit/d64cd693f7bcfcf87d3a7d3271b1e03b3b317716))
+
+
+### Performance Improvements
+
+* Update Editor Story ([6120c9b](https://github.com/selfcommunity/community-js/commit/6120c9b5532eea632d0ad4c9f647c0cf21d6c823))
+
+
+
+
+
+# [0.7.0-alpha.168](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.167...@selfcommunity/react-ui@0.7.0-alpha.168) (2023-04-21)
+
+
+### Bug Fixes
+
+* fixed feedObj mention when expanded ([ad86f00](https://github.com/selfcommunity/community-js/commit/ad86f000cc1410d91912e04e4b4f565a7938ebe4))
+* fixed style(removed inline style) ([cb0154c](https://github.com/selfcommunity/community-js/commit/cb0154c9da918faf576476cab306367f442d5119))
+* pm components bugfix(fixed message opening from notifications/user profile page) ([30fb141](https://github.com/selfcommunity/community-js/commit/30fb141c34fc0b9699cac704ff9e54f830c813fe))
+
+
+
+
+
+# [0.7.0-alpha.167](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.166...@selfcommunity/react-ui@0.7.0-alpha.167) (2023-04-21)
+
+
+### Bug Fixes
+
+* Fix copy paste in editor ([2ba5a9d](https://github.com/selfcommunity/community-js/commit/2ba5a9d2653a0daa86554c5765f469b58734b4d9))
+* iOS & MacOsx Safari web push notification (to test) ([832dc1d](https://github.com/selfcommunity/community-js/commit/832dc1d479a8b59072dcb24835200997312e3759))
+
+
+### Performance Improvements
+
+* Added horizontal rule to the editor ([a4c6e66](https://github.com/selfcommunity/community-js/commit/a4c6e66bcbcfa9b14f0009780be0cead9896480c))
+
+
+
+
+
+# [0.7.0-alpha.166](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.165...@selfcommunity/react-ui@0.7.0-alpha.166) (2023-04-20)
+
+
+### Bug Fixes
+
+* editor ([7ba1ad4](https://github.com/selfcommunity/community-js/commit/7ba1ad43ef293178aa99e3266cc6977af7f20747))
+
+
+### Performance Improvements
+
+* Added image upload in toolbar when is discussion ([12addc8](https://github.com/selfcommunity/community-js/commit/12addc85630ae5e1fb6fa6c49f43526c73f9a1af))
+
+
+
+
+
+# [0.7.0-alpha.165](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.164...@selfcommunity/react-ui@0.7.0-alpha.165) (2023-04-19)
+
+
+### Bug Fixes
+
+* Fix editor toolbar layout ([ab963a2](https://github.com/selfcommunity/community-js/commit/ab963a2166bf4d5eb65521536bec638c71ac2435))
+
+
+
+
+
+# [0.7.0-alpha.164](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.163...@selfcommunity/react-ui@0.7.0-alpha.164) (2023-04-19)
+
+
+### Bug Fixes
+
+* fixed pm component functioning on mobile view ([5eae45c](https://github.com/selfcommunity/community-js/commit/5eae45c08b8c1587764d5ec84be5b4579402d45b))
+
+
+### Performance Improvements
+
+* added component to handle thread deletion ([756d747](https://github.com/selfcommunity/community-js/commit/756d747c1c22d9cea427cae4124e0e3a7900609d))
+
+
+
+
+
+# [0.7.0-alpha.163](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.162...@selfcommunity/react-ui@0.7.0-alpha.163) (2023-04-18)
+
+
+### Bug Fixes
+
+* added suffix to inline composer component ([26f9f69](https://github.com/selfcommunity/community-js/commit/26f9f69ddeffc9ed195d349808e4e59729ffcbc4))
+* Fix reply comment object button ([7adb3c8](https://github.com/selfcommunity/community-js/commit/7adb3c871b0468c874ae1b6c2000399f67f66dad))
+* Fix Vote reaction popover menu behaviour ([5857ce8](https://github.com/selfcommunity/community-js/commit/5857ce8c7cf92daa9b83010fb9f9fff43dd8ad8e))
+* fixed broken build ([526ace0](https://github.com/selfcommunity/community-js/commit/526ace0d7f7f8a6f551c87320029913f118c51af))
+* fixed build ([7d9b36e](https://github.com/selfcommunity/community-js/commit/7d9b36e4d812717c0399cc18bd5bd34d807a117d))
+* fixed translations ([b42d9d0](https://github.com/selfcommunity/community-js/commit/b42d9d04154b6d66bb8330643d46956f005836e1))
+* fixed ui components translations after refactoring ([c884cb8](https://github.com/selfcommunity/community-js/commit/c884cb87ae884423c8907bbb9183f3526c09fef2))
+* Minor fixes to buttons ([56ef76a](https://github.com/selfcommunity/community-js/commit/56ef76af5193c4853b161594e8fe4301d899ae91))
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+### Performance Improvements
+
+* Added show more button to feed obj content. Asana issue: https://app.asana.com/0/1202523699272956/1201911997047090/f ([71d212b](https://github.com/selfcommunity/community-js/commit/71d212bc7860ecfde7db0f1c9a9bc8c9890ae87a))
+* added suffix widget to react ui  components showed in feed templates ([c8a7d7e](https://github.com/selfcommunity/community-js/commit/c8a7d7e633c4664642675f2ef8ed8a131c2c90e3))
+* fixed inline composer translations after renaming ([0ad860b](https://github.com/selfcommunity/community-js/commit/0ad860b4fd4008a78b880b8b68120e59fbe6997c))
+
+
+
+
+
+# [0.7.0-alpha.162](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.161...@selfcommunity/react-ui@0.7.0-alpha.162) (2023-04-14)
+
+
+### Bug Fixes
+
+* added card title class ([7499ac1](https://github.com/selfcommunity/community-js/commit/7499ac14924e62f481c17175f14ec3eadf94bcda))
+* fixed unique key prop warning ([0d4c7c2](https://github.com/selfcommunity/community-js/commit/0d4c7c2fb999727877de23070fd94fa81cadd0c2))
+
+
+
+
+
+# [0.7.0-alpha.161](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.160...@selfcommunity/react-ui@0.7.0-alpha.161) (2023-04-14)
+
+
+### Bug Fixes
+
+* fixed key warning ([423544f](https://github.com/selfcommunity/community-js/commit/423544f32adc6b7f740e1242f61edfb42a8303f7))
+* fixed loyalty components + skeletons ([c6602f6](https://github.com/selfcommunity/community-js/commit/c6602f6883f2054c4981ade5e94373f983767c77))
+
+
+### Performance Improvements
+
+* added suffix to ui components showed in main/explore/notification feed ([5d33d30](https://github.com/selfcommunity/community-js/commit/5d33d30714ca03d36dd3dc47a8c884c577b6ed82))
+
+
+
+
+
+# [0.7.0-alpha.160](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.159...@selfcommunity/react-ui@0.7.0-alpha.160) (2023-04-13)
+
+
+### Bug Fixes
+
+* fixed loyalty program detail skeleton ([33399db](https://github.com/selfcommunity/community-js/commit/33399db21b38fb4aff1f540d0d5a3bfc56529e4a))
+
+
+
+
+
+# [0.7.0-alpha.159](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.158...@selfcommunity/react-ui@0.7.0-alpha.159) (2023-04-13)
+
+
+### Bug Fixes
+
+* Fix editor theme ([473319c](https://github.com/selfcommunity/community-js/commit/473319c292e99f88cde4af4c73d68d281ac88df4))
+
+
+
+
+
+# [0.7.0-alpha.158](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.157...@selfcommunity/react-ui@0.7.0-alpha.158) (2023-04-12)
+
+
+### Bug Fixes
+
+* Added export of ComposerIconButton ([b909127](https://github.com/selfcommunity/community-js/commit/b909127df8407eaabc06738ea272d0c7531a5fdf))
+* Fix feed object when not available ([11cc304](https://github.com/selfcommunity/community-js/commit/11cc304cb7debdcb28f9d67a8cde9177386a8d5b))
+* Fix stories ([911b4c8](https://github.com/selfcommunity/community-js/commit/911b4c89b829c5b842d337ca81813b72976f2c5b))
+* fixed loyalty program component ([0d1568d](https://github.com/selfcommunity/community-js/commit/0d1568df2d5a64278e673e1ee161d84b86aad97d))
+* fixed snippets simultaneous insert/update ([e08a41f](https://github.com/selfcommunity/community-js/commit/e08a41f499cb3599fbaed5e81d996abc566f8cd0))
+
+
+### Features
+
+* Added ComposerIconButton.tsx to toolbars ([368d38a](https://github.com/selfcommunity/community-js/commit/368d38aa80306d52ca85cfbc08a5775305dd94a6))
+
+
+### Performance Improvements
+
+* added points list section for loyalty program detail component ([9b089ce](https://github.com/selfcommunity/community-js/commit/9b089ce01365bb6353944954e4e8f013add59cb7))
+* Added toolbar to Editor, added possibility to editing link ([dd810cf](https://github.com/selfcommunity/community-js/commit/dd810cfb60705de629afb59a97a99baaae135738))
+* Update material-ui ([a57c8bf](https://github.com/selfcommunity/community-js/commit/a57c8bf6a3fde7b1728e1e95b663f2ca48eebf9e))
+
+
+
+
+
+# [0.7.0-alpha.157](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.156...@selfcommunity/react-ui@0.7.0-alpha.157) (2023-04-11)
+
+
+### Bug Fixes
+
+* Fix category autocomplete ([100822a](https://github.com/selfcommunity/community-js/commit/100822a44b30e9732c1f3a9832643b8671ac5115))
+
+
+
+
+
+# [0.7.0-alpha.156](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.155...@selfcommunity/react-ui@0.7.0-alpha.156) (2023-04-11)
+
+
+### Bug Fixes
+
+* Fix CategoryAutocomplete.tsx ([ab55ab7](https://github.com/selfcommunity/community-js/commit/ab55ab743c4200e79ec563bdff239ede89c5f1a5))
+
+
+
+
+
+# [0.7.0-alpha.155](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.154...@selfcommunity/react-ui@0.7.0-alpha.155) (2023-04-07)
+
+
+### Bug Fixes
+
+* fixed snippets search case ([4e8c5fe](https://github.com/selfcommunity/community-js/commit/4e8c5fedc9abd8bdb0a7e9972ba640ffe53e1f61))
+* fixed thread item menu visibility on mobile view ([d41832e](https://github.com/selfcommunity/community-js/commit/d41832e9c07e95f06b1e9011561012430ec13cdd))
+* fixed thread skeleton ([40f57d9](https://github.com/selfcommunity/community-js/commit/40f57d9cc1f41d41827ebbb8d2ea8675c6183bfd))
+* fixed video thumbnail generation on chrome ([1e8715c](https://github.com/selfcommunity/community-js/commit/1e8715cf5e22f82152d5fa9b48810c43c3976ee5))
+
+
+### Performance Improvements
+
+* cleaned loyalty program component ([e0663dd](https://github.com/selfcommunity/community-js/commit/e0663dd54715b9a59ba8eacfc18aa231223ba349))
+
+
+
+
+
+# [0.7.0-alpha.154](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.153...@selfcommunity/react-ui@0.7.0-alpha.154) (2023-04-06)
+
+
+### Bug Fixes
+
+* Fix CategoryAutocomplete.tsx ([4e3dc9a](https://github.com/selfcommunity/community-js/commit/4e3dc9a211918858dae84514b76e48d14e979a6c))
+
+
+
+
+
+# [0.7.0-alpha.153](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.152...@selfcommunity/react-ui@0.7.0-alpha.153) (2023-04-06)
+
+
+### Performance Improvements
+
+* Moved pdfjs-dist as peer-dependencies ([058f86b](https://github.com/selfcommunity/community-js/commit/058f86b2684b1cd5d45fc59b8f7da51c0f962b6e))
+
+
+
+
+
+# [0.7.0-alpha.152](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.151...@selfcommunity/react-ui@0.7.0-alpha.152) (2023-04-05)
+
+
+### Bug Fixes
+
+* fixed react-core package version ([45ebb1d](https://github.com/selfcommunity/community-js/commit/45ebb1d76bafaca25f46a06a91d6d2d3473da7df))
+
+
+
+
+
+# [0.7.0-alpha.151](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.150...@selfcommunity/react-ui@0.7.0-alpha.151) (2023-04-05)
+
+
+### Performance Improvements
+
+* added dialog for pm media preview ([0ed1ec7](https://github.com/selfcommunity/community-js/commit/0ed1ec7af6a397352ed571c4b5fcb3e84a75ee85))
+
+
+
+
+
+# [0.7.0-alpha.150](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.149...@selfcommunity/react-ui@0.7.0-alpha.150) (2023-04-05)
+
+
+### Bug Fixes
+
+* fixed thread skeleton ([3ad8567](https://github.com/selfcommunity/community-js/commit/3ad85672eea32ab19e8651aebca4c1badce78545))
+
+
+
+
+
+# [0.7.0-alpha.149](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.148...@selfcommunity/react-ui@0.7.0-alpha.149) (2023-04-05)
+
+
+### Bug Fixes
+
+* Fix imports ([f1743f7](https://github.com/selfcommunity/community-js/commit/f1743f7cc2f8dc216dc5e4c85086e28b13477649))
+
+
+
+
+
+# [0.7.0-alpha.148](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.147...@selfcommunity/react-ui@0.7.0-alpha.148) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix category and locations atocompletes ([da3804a](https://github.com/selfcommunity/community-js/commit/da3804a522b798e7fb04945ec53817cff15decf9))
+
+
+
+
+
+# [0.7.0-alpha.147](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.146...@selfcommunity/react-ui@0.7.0-alpha.147) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix imports ([9d61e2f](https://github.com/selfcommunity/community-js/commit/9d61e2fd9e8a85b58339e0b3c4470bd1f3c2074c))
+
+
+
+
+
+# [0.7.0-alpha.146](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.145...@selfcommunity/react-ui@0.7.0-alpha.146) (2023-04-04)
+
+
+### Performance Improvements
+
+* Refactor Composer.tsx internal components ([ffb9cf5](https://github.com/selfcommunity/community-js/commit/ffb9cf5a06055bf70c17e4a8abc26473b3089ef6))
+
+
+
+
+
+# [0.7.0-alpha.145](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.144...@selfcommunity/react-ui@0.7.0-alpha.145) (2023-04-04)
+
+
+### Performance Improvements
+
+* renamed pm component callback ([5b6341c](https://github.com/selfcommunity/community-js/commit/5b6341c37b6d242c3763e5fa2d5cf5036c298712))
+
+
+
+
+
+# [0.7.0-alpha.144](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.143...@selfcommunity/react-ui@0.7.0-alpha.144) (2023-04-04)
+
+
+### Bug Fixes
+
+* Fix feed object search template ([75676da](https://github.com/selfcommunity/community-js/commit/75676da86350122b98a1ff2cee2f29febe6f0390))
+
+
+
+
+
+# [0.7.0-alpha.143](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.142...@selfcommunity/react-ui@0.7.0-alpha.143) (2023-04-04)
+
+
+### Performance Improvements
+
+* Added search template for feedObject.ts ([0ba3f82](https://github.com/selfcommunity/community-js/commit/0ba3f82a7a0c3876fb00773117341fb2b323028b))
+
+
+
+
+
+# [0.7.0-alpha.142](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.141...@selfcommunity/react-ui@0.7.0-alpha.142) (2023-04-04)
+
+
+### Bug Fixes
+
+* fixed message chunk uploader error ([2f38d72](https://github.com/selfcommunity/community-js/commit/2f38d7291f2e5d7b71004ef27c85fc33a4ca8ac6))
+* fixed pm thumbnail rendering, autocomplete warning ([aa0e573](https://github.com/selfcommunity/community-js/commit/aa0e5737e75ff901bf6626a21a646b63b73a6e4d))
+
+
+### Performance Improvements
+
+* moved pm message error from thread to editor ([7ccf35e](https://github.com/selfcommunity/community-js/commit/7ccf35ed06a1537af7da410654e8d91a38a1c2e3))
+
+
+
+
+
+# [0.7.0-alpha.141](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.140...@selfcommunity/react-ui@0.7.0-alpha.141) (2023-04-03)
+
+
+### Bug Fixes
+
+* Fix VoteAudienceButton ([a71eea1](https://github.com/selfcommunity/community-js/commit/a71eea152455f30aae5eefb549010160ab3576ea))
+
+
+
+
+
+# [0.7.0-alpha.140](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.139...@selfcommunity/react-ui@0.7.0-alpha.140) (2023-04-03)
+
+
+### Bug Fixes
+
+* Fix feed object search params ([f997b1a](https://github.com/selfcommunity/community-js/commit/f997b1a985b93cfb54e9cc970de07453312f246d))
+* temporary fallback image + upload file filter ([0a6e372](https://github.com/selfcommunity/community-js/commit/0a6e372e3a090520a81727cd36ed34b16c35999e))
+
+
+### Features
+
+* added pdfjs lib to generate thumbnails ([b364607](https://github.com/selfcommunity/community-js/commit/b364607cce46d198efa1abf64831171327c4510d))
+
+
+### Performance Improvements
+
+* added thumbnail converter util for message media uploader ([5d8a297](https://github.com/selfcommunity/community-js/commit/5d8a2978e32a36f93177636f979ca2793f973604))
+* added thumbnail upload to message chunk uploader ([82ffedf](https://github.com/selfcommunity/community-js/commit/82ffedf4bc34eb554a18aaaa5ed8186b5ce22660))
+
+
+
+
+
+# [0.7.0-alpha.139](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.138...@selfcommunity/react-ui@0.7.0-alpha.139) (2023-03-29)
+
+
+### Bug Fixes
+
+* fixed pm component skeleton on mobile viewport ([6f8dd68](https://github.com/selfcommunity/community-js/commit/6f8dd6899cfb6b56691481d742f04fc45238fb66))
+
+
+
+
+
+# [0.7.0-alpha.138](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.137...@selfcommunity/react-ui@0.7.0-alpha.138) (2023-03-29)
+
+
+### Bug Fixes
+
+* Fix build ([2a28d36](https://github.com/selfcommunity/community-js/commit/2a28d361e02aef1a1c7d21a0a348d5da1e93c14b))
+* fixed broken build ([6c90723](https://github.com/selfcommunity/community-js/commit/6c907239387ec806c968c03de02aaed70a11fce6))
+* fixed pm components skeletons ([4fdc455](https://github.com/selfcommunity/community-js/commit/4fdc455027400b31ac0c456b4c2536e239abb663))
+* fixed thread loading state ([9ac17db](https://github.com/selfcommunity/community-js/commit/9ac17db75b0d8cadb083fd8a8c8011b4f981bc74))
+
+
+### Performance Improvements
+
+* clenup imports ([cec9a83](https://github.com/selfcommunity/community-js/commit/cec9a83b657b3d2f7ffc66497b9adcc9a6da3fb6))
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+* Refactor vote audience component ([ec30368](https://github.com/selfcommunity/community-js/commit/ec30368a6e4a606e28b4be4efd2fd692a75b740a))
+* Refactor vote components ([9862018](https://github.com/selfcommunity/community-js/commit/9862018f9ed71d2f303a1bf7b71e402575591fad))
+* Refactor votes on notifications ([9c050ad](https://github.com/selfcommunity/community-js/commit/9c050ad6006bc1d9b60e3012abbfa7450a1f52d7))
+
+
+
+
+
+# [0.7.0-alpha.137](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.136...@selfcommunity/react-ui@0.7.0-alpha.137) (2023-03-23)
+
+
+### Bug Fixes
+
+* refactored pm components ([4e30744](https://github.com/selfcommunity/community-js/commit/4e307440e38d6319585e08863eac564718bb7080))
+
+
+
+
+
+# [0.7.0-alpha.136](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.135...@selfcommunity/react-ui@0.7.0-alpha.136) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix toolbars ([183bedd](https://github.com/selfcommunity/community-js/commit/183beddb400b534335536cfa0cb1d7217970f3de))
+* profile edit notification settings ([0239e32](https://github.com/selfcommunity/community-js/commit/0239e3204b5115638c666e15f37680ba72be0485))
+
+
+
+
+
+# [0.7.0-alpha.135](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.134...@selfcommunity/react-ui@0.7.0-alpha.135) (2023-03-22)
+
+
+### Bug Fixes
+
+* settings manager ([d7abca5](https://github.com/selfcommunity/community-js/commit/d7abca57c238bfa3906c4c81ddaf99feb1ef7d16))
+
+
+
+
+
+# [0.7.0-alpha.134](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.133...@selfcommunity/react-ui@0.7.0-alpha.134) (2023-03-22)
+
+
+### Bug Fixes
+
+* Fix theme ([2f423a7](https://github.com/selfcommunity/community-js/commit/2f423a71571b671c85d619b59e2324f50b1f5f8a))
+* Fix Warning: Unknown event handler property `onStateChange`. It will be ignored. ([ad381dd](https://github.com/selfcommunity/community-js/commit/ad381dd4390bc75d150c49cbb6cb8e4c71380108))
+* Removed unused components ([5e22877](https://github.com/selfcommunity/community-js/commit/5e228775c5d5407f1c502f8e89a0d5783328b1fb))
+
+
+
+
+
+# [0.7.0-alpha.133](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.132...@selfcommunity/react-ui@0.7.0-alpha.133) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix endpoint ([527a643](https://github.com/selfcommunity/community-js/commit/527a64309122baa2fabaa1022bc9749a1da525d3))
+
+
+
+
+
+# [0.7.0-alpha.132](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.131...@selfcommunity/react-ui@0.7.0-alpha.132) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix endpoint ([8bd277e](https://github.com/selfcommunity/community-js/commit/8bd277ede9f49d97371c2ee7bb0a6594ff238b02))
+
+
+
+
+
+# [0.7.0-alpha.131](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.130...@selfcommunity/react-ui@0.7.0-alpha.131) (2023-03-21)
+
+
+### Bug Fixes
+
+* Fix key props in list ([4c6bd08](https://github.com/selfcommunity/community-js/commit/4c6bd088e5acd5725f89b6edd74f55b21d7a335e))
+
+
+
+
+
+# [0.7.0-alpha.130](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.129...@selfcommunity/react-ui@0.7.0-alpha.130) (2023-03-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.129](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.128...@selfcommunity/react-ui@0.7.0-alpha.129) (2023-03-17)
+
+
+### Bug Fixes
+
+* fixed pm colors/style ([bd94abf](https://github.com/selfcommunity/community-js/commit/bd94abf68e813697c9e150f288547f5376d7ffd9))
+
+
+
+
+
+# [0.7.0-alpha.128](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.127...@selfcommunity/react-ui@0.7.0-alpha.128) (2023-03-17)
+
+
+### Bug Fixes
+
+* Fix user info and edit ([575745c](https://github.com/selfcommunity/community-js/commit/575745c1a862b67ada996348267105c2f25043d6))
+
+
+
+
+
+# [0.7.0-alpha.127](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.126...@selfcommunity/react-ui@0.7.0-alpha.127) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix update user ([23e81a4](https://github.com/selfcommunity/community-js/commit/23e81a433f00534f1c61d538855f2934d74ae914))
+* Fix user profile ([164ec55](https://github.com/selfcommunity/community-js/commit/164ec55a83fa3ddb791c6d8cc1ccd37827b4cf88))
+
+
+
+
+
+# [0.7.0-alpha.126](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.125...@selfcommunity/react-ui@0.7.0-alpha.126) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix user profile edit layout ([4c2916a](https://github.com/selfcommunity/community-js/commit/4c2916ac39cfb7470725a7b8beade28e3ea1c55a))
+
+
+
+
+
+# [0.7.0-alpha.125](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.124...@selfcommunity/react-ui@0.7.0-alpha.125) (2023-03-16)
+
+
+### Features
+
+* Added new user profile page ([96c1e70](https://github.com/selfcommunity/community-js/commit/96c1e70f23ed2b641dd136922457f6e6f2cb8fd6))
+
+
+
+
+
+# [0.7.0-alpha.124](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.123...@selfcommunity/react-ui@0.7.0-alpha.124) (2023-03-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.123](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.122...@selfcommunity/react-ui@0.7.0-alpha.123) (2023-03-16)
+
+
+### Bug Fixes
+
+* pm bugfixing ([c55945d](https://github.com/selfcommunity/community-js/commit/c55945d21f0b78032245927f85089c018861e2e4))
+
+
+
+
+
+# [0.7.0-alpha.122](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.121...@selfcommunity/react-ui@0.7.0-alpha.122) (2023-03-16)
+
+
+### Bug Fixes
+
+* Fix feed skeleton ([975e825](https://github.com/selfcommunity/community-js/commit/975e82513248735fe5a45c24ca8621735c3ab499))
+* Fix notification layout ([a78fc3c](https://github.com/selfcommunity/community-js/commit/a78fc3c9fc27bdb3033fd31c86586ffece71b200))
+
+
+
+
+
+# [0.7.0-alpha.121](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.120...@selfcommunity/react-ui@0.7.0-alpha.121) (2023-03-15)
+
+
+### Bug Fixes
+
+* pm components fixed thread delete with new params, fixed snippets selected status ([033f8a3](https://github.com/selfcommunity/community-js/commit/033f8a3bb8c5217430a7d5fa5c010725a2e6fa28))
+
+
+### Performance Improvements
+
+* renamed pm upload media params ([e4597ca](https://github.com/selfcommunity/community-js/commit/e4597cac008f9d3190dcef95106ebe075e988b28))
+
+
+
+
+
+# [0.7.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.119...@selfcommunity/react-ui@0.7.0-alpha.120) (2023-03-15)
+
+
+### Performance Improvements
+
+* Update default theme with make it goods ([e957797](https://github.com/selfcommunity/community-js/commit/e9577971d7706067df213db3dd88028ca045df7c))
+
+
+
+
+
+# [0.7.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.118...@selfcommunity/react-ui@0.7.0-alpha.119) (2023-03-14)
+
+
+### Bug Fixes
+
+* renamed pm component callback, fixed recipient for single message thread option and autohide on message editor ([bfe8327](https://github.com/selfcommunity/community-js/commit/bfe8327c253703a0ce2a564dcbfcc44e8362863f))
+
+
+### Performance Improvements
+
+* added alert to message editor on autohide prop ([986fd09](https://github.com/selfcommunity/community-js/commit/986fd09aa0c3eeca1f25851c2d9216728cf68dee))
+
+
+
+
+
+# [0.7.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.117...@selfcommunity/react-ui@0.7.0-alpha.118) (2023-03-13)
+
+
+### Performance Improvements
+
+* Update material-ui ([d01b7bf](https://github.com/selfcommunity/community-js/commit/d01b7bf137344c4239e41c40e991fb6e32f28710))
+
+
+
+
+
+# [0.7.0-alpha.117](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.116...@selfcommunity/react-ui@0.7.0-alpha.117) (2023-03-13)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.115...@selfcommunity/react-ui@0.7.0-alpha.116) (2023-03-10)
+
+
+### Bug Fixes
+
+* message uploader fixes ([5494847](https://github.com/selfcommunity/community-js/commit/5494847c09aff9b476e603d1ee47991e276691d8))
+
+
+
+
+
+# [0.7.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.114...@selfcommunity/react-ui@0.7.0-alpha.115) (2023-03-10)
+
+
+### Bug Fixes
+
+* fixed message chunk uploader ([82337d5](https://github.com/selfcommunity/community-js/commit/82337d565f93849cd407f70e155dd56767c8a787))
+* fixed pm component ([c208890](https://github.com/selfcommunity/community-js/commit/c208890076a7cd2dadb5249e9bacd79eb8f2f474))
+* fixed private message editor/private message editor uploader ([81cde03](https://github.com/selfcommunity/community-js/commit/81cde03ee888664fede2f116384d0466124f4bdd))
+* removed unnecessary ui components ([d6e105a](https://github.com/selfcommunity/community-js/commit/d6e105a8592b545929db737e6cd29ddea2403390))
+
+
+
+
+
+# [0.7.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.113...@selfcommunity/react-ui@0.7.0-alpha.114) (2023-03-07)
+
+
+### Bug Fixes
+
+* fixed pm component ([adc0244](https://github.com/selfcommunity/community-js/commit/adc02447be188d788c5da3a806e377c369b9e2af))
+* fixed pm snippets/thread skeletons ([64318d7](https://github.com/selfcommunity/community-js/commit/64318d7c295f512860939a263dcc86f5e5944ac9))
+
+
+
+
+
+# [0.7.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.112...@selfcommunity/react-ui@0.7.0-alpha.113) (2023-03-07)
+
+
+### Bug Fixes
+
+* Fix LoyaltyProgram.tsx ([c2a8990](https://github.com/selfcommunity/community-js/commit/c2a899076da6410effdfeee74571a716413cee6a))
+* Fix NavigationToolbarMobile behaviour ([1f413e8](https://github.com/selfcommunity/community-js/commit/1f413e84a359ba1f4be4049fad42b8bf35c194f5))
+* Fix search autocomplete ([1feed4d](https://github.com/selfcommunity/community-js/commit/1feed4d881bca7f716d2ef03632991fd60c01db1))
+* pm component fixes ([676b121](https://github.com/selfcommunity/community-js/commit/676b121284c3e239d0aaab72fe041a4931600b9b))
+
+
+
+
+
+# [0.7.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.111...@selfcommunity/react-ui@0.7.0-alpha.112) (2023-03-07)
+
+
+### Performance Improvements
+
+* updated private messages update with new api response ([3f3505c](https://github.com/selfcommunity/community-js/commit/3f3505c768d34bfefd8a511baa8a30e8000d94e3))
+
+
+
+
+
+# [0.7.0-alpha.111](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.110...@selfcommunity/react-ui@0.7.0-alpha.111) (2023-03-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.110](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.109...@selfcommunity/react-ui@0.7.0-alpha.110) (2023-03-03)
+
+
+### Bug Fixes
+
+* added new prop to pm component ([90663df](https://github.com/selfcommunity/community-js/commit/90663df58cb21c2b5467dd7841fa01240ccf759e))
+
+
+
+
+
+# [0.7.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.108...@selfcommunity/react-ui@0.7.0-alpha.109) (2023-03-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.108](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.107...@selfcommunity/react-ui@0.7.0-alpha.108) (2023-03-02)
+
+
+### Bug Fixes
+
+* fix ([77c6f41](https://github.com/selfcommunity/community-js/commit/77c6f41948bfffe6408dda20fba3f1109917c6d0))
+
+
+
+
+
+# [0.7.0-alpha.107](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.106...@selfcommunity/react-ui@0.7.0-alpha.107) (2023-03-02)
+
+
+### Bug Fixes
+
+* fixes ([f669045](https://github.com/selfcommunity/community-js/commit/f66904588f1cc9b6968f8d68ecb0e9d4315199ab))
+
+
+
+
+
+# [0.7.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.105...@selfcommunity/react-ui@0.7.0-alpha.106) (2023-03-02)
+
+
+### Bug Fixes
+
+* changed string with type for new message ([e9efebf](https://github.com/selfcommunity/community-js/commit/e9efebf9bdb1227333659b6b70e768d4d87fa9a1))
+* fetch thread with user id ([d071809](https://github.com/selfcommunity/community-js/commit/d07180965e4ff5b8b1cb321027824b71d5fad8dc))
+
+
+
+
+
+# [0.7.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.104...@selfcommunity/react-ui@0.7.0-alpha.105) (2023-03-02)
+
+
+### Bug Fixes
+
+* fix newMessage opening ([c4f24c3](https://github.com/selfcommunity/community-js/commit/c4f24c34460ecd49b3d57edc4d588c82a1496cc9))
+
+
+
+
+
+# [0.7.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.103...@selfcommunity/react-ui@0.7.0-alpha.104) (2023-03-02)
+
+
+### Bug Fixes
+
+* fix threadObj type check ([345a3c6](https://github.com/selfcommunity/community-js/commit/345a3c68b51bc6608c9dcd635673958702c3f375))
+
+
+
+
+
+# [0.7.0-alpha.103](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.102...@selfcommunity/react-ui@0.7.0-alpha.103) (2023-03-02)
+
+
+### Bug Fixes
+
+* added some logs to debug ([0cf4d63](https://github.com/selfcommunity/community-js/commit/0cf4d6387f23c68f4ef54afcff2b91d77bfb54cd))
+
+
+
+
+
+# [0.7.0-alpha.102](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.101...@selfcommunity/react-ui@0.7.0-alpha.102) (2023-03-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.100...@selfcommunity/react-ui@0.7.0-alpha.101) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.100](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.99...@selfcommunity/react-ui@0.7.0-alpha.100) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.99](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.98...@selfcommunity/react-ui@0.7.0-alpha.99) (2023-03-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.98](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.97...@selfcommunity/react-ui@0.7.0-alpha.98) (2023-03-01)
+
+
+### Bug Fixes
+
+* fix pm component skeleton imports ([c38f643](https://github.com/selfcommunity/community-js/commit/c38f6435aecee1a1dad55a5219bcb0d35d47dbd3))
+
+
+
+
+
+# [0.7.0-alpha.97](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.96...@selfcommunity/react-ui@0.7.0-alpha.97) (2023-03-01)
+
+
+### Bug Fixes
+
+* fix thread receiver ([b469d4d](https://github.com/selfcommunity/community-js/commit/b469d4d04026c1374f70d2a11d69f773ed919e2c))
+
+
+
+
+
+# [0.7.0-alpha.96](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.95...@selfcommunity/react-ui@0.7.0-alpha.96) (2023-03-01)
+
+
+### Bug Fixes
+
+* fix thread id ([e7e7f7e](https://github.com/selfcommunity/community-js/commit/e7e7f7e4fb3654093ecf291074bacfc832b8320c))
+
+
+
+
+
+# [0.7.0-alpha.95](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.94...@selfcommunity/react-ui@0.7.0-alpha.95) (2023-03-01)
+
+
+### Bug Fixes
+
+* pm components + skeletons fixes ([538e030](https://github.com/selfcommunity/community-js/commit/538e0303f06821049d004f0b8fd0db90f67260f8))
+
+
+### Performance Improvements
+
+* created private messages ui component (handles both snippets and thread state) ([8b0d059](https://github.com/selfcommunity/community-js/commit/8b0d0594831bce5f25356d78e20f00945470a1af))
+
+
+
+
+
+# [0.7.0-alpha.94](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.93...@selfcommunity/react-ui@0.7.0-alpha.94) (2023-02-28)
+
+
+### Bug Fixes
+
+* bugfix ([e6b1fe0](https://github.com/selfcommunity/community-js/commit/e6b1fe073ed7a91e6e400269190091e111a3ce8d))
+
+
+
+
+
+# [0.7.0-alpha.93](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.92...@selfcommunity/react-ui@0.7.0-alpha.93) (2023-02-27)
+
+
+### Bug Fixes
+
+* fix snippet id prop ([72f9372](https://github.com/selfcommunity/community-js/commit/72f9372a625b1cc6b03d28486e9ef82b4e5a1da5))
+
+
+
+
+
+# [0.7.0-alpha.92](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.91...@selfcommunity/react-ui@0.7.0-alpha.92) (2023-02-27)
+
+
+### Bug Fixes
+
+* fix thread id prop ([f8b2ed2](https://github.com/selfcommunity/community-js/commit/f8b2ed26ab5a938540ac90270ad625b4143fd1e2))
+
+
+
+
+
+# [0.7.0-alpha.91](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.90...@selfcommunity/react-ui@0.7.0-alpha.91) (2023-02-27)
+
+
+### Bug Fixes
+
+* private messages, uplifted snippets state ([d530921](https://github.com/selfcommunity/community-js/commit/d530921ac0ba997cbc2ca1c6392ec21d8a908bca))
+
+
+
+
+
+# [0.7.0-alpha.90](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.89...@selfcommunity/react-ui@0.7.0-alpha.90) (2023-02-27)
+
+
+### Bug Fixes
+
+* pm fixes ([9e0c2c9](https://github.com/selfcommunity/community-js/commit/9e0c2c9e31ec85afbb43840c1e94263c4cf0afe2))
+
+
+
+
+
+# [0.7.0-alpha.89](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.88...@selfcommunity/react-ui@0.7.0-alpha.89) (2023-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.88](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.87...@selfcommunity/react-ui@0.7.0-alpha.88) (2023-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.87](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.86...@selfcommunity/react-ui@0.7.0-alpha.87) (2023-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.86](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.85...@selfcommunity/react-ui@0.7.0-alpha.86) (2023-02-23)
+
+
+### Bug Fixes
+
+* pm snippets bugfix ([6cc7561](https://github.com/selfcommunity/community-js/commit/6cc75615b5a11631e2823da9683a90c0763e850f))
+
+
+
+
+
+# [0.7.0-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.84...@selfcommunity/react-ui@0.7.0-alpha.85) (2023-02-22)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.83...@selfcommunity/react-ui@0.7.0-alpha.84) (2023-02-22)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.82...@selfcommunity/react-ui@0.7.0-alpha.83) (2023-02-21)
+
+
+### Bug Fixes
+
+* pm bugfixes ([e55a877](https://github.com/selfcommunity/community-js/commit/e55a877afb75756bd013e9fd249edbf4043f6e33))
+
+
+### Performance Improvements
+
+* added pm action menu/drawer ([fcb8b1b](https://github.com/selfcommunity/community-js/commit/fcb8b1b9da2a4bb7accfef8de0098afb1bcf30b2))
+
+
+
+
+
+# [0.7.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.81...@selfcommunity/react-ui@0.7.0-alpha.82) (2023-02-20)
+
+
+### Bug Fixes
+
+* private messages bugfix ([6db1aab](https://github.com/selfcommunity/community-js/commit/6db1aab0fc0513d05ce561663e2b303ea63a5c37))
+
+
+
+
+
+# [0.7.0-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.80...@selfcommunity/react-ui@0.7.0-alpha.81) (2023-02-20)
+
+
+### Bug Fixes
+
+* fixed ui private messages components ([8f758da](https://github.com/selfcommunity/community-js/commit/8f758da445ca75233b3c89d241a1a1c610975ed8))
+
+
+
+
+
+# [0.7.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.79...@selfcommunity/react-ui@0.7.0-alpha.80) (2023-02-15)
+
+
+### Performance Improvements
+
+* Added theme to notifications ([54c4a28](https://github.com/selfcommunity/community-js/commit/54c4a284c6c929fb853a620b74943eff8a100aeb))
+
+
+
+
+
+# [0.7.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.78...@selfcommunity/react-ui@0.7.0-alpha.79) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix NavigationToolbar.tsx ([06950f2](https://github.com/selfcommunity/community-js/commit/06950f24deb286a7019448660028ed263f99b64b))
+
+
+
+
+
+# [0.7.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.77...@selfcommunity/react-ui@0.7.0-alpha.78) (2023-02-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.76...@selfcommunity/react-ui@0.7.0-alpha.77) (2023-02-09)
+
+
+### Bug Fixes
+
+* Fix personalization of Navigation ([661a1b4](https://github.com/selfcommunity/community-js/commit/661a1b428e4c3984c0bbd51a201b7b931011de89))
+
+
+
+
+
+# [0.7.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.75...@selfcommunity/react-ui@0.7.0-alpha.76) (2023-02-09)
+
+
+### Performance Improvements
+
+* Added capability to customize navigation toolbars ([fbb4cf9](https://github.com/selfcommunity/community-js/commit/fbb4cf92d411dd99daaf2e2936d127deda06531c))
+
+
+
+
+
+# [0.7.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.74...@selfcommunity/react-ui@0.7.0-alpha.75) (2023-02-08)
+
+
+### Bug Fixes
+
+* Refactor and remove AppBar.tsx ([c782c2a](https://github.com/selfcommunity/community-js/commit/c782c2a30f8b06033ff5102d23f8832d46d8b951))
+
+
+
+
+
+# [0.7.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.73...@selfcommunity/react-ui@0.7.0-alpha.74) (2023-02-08)
+
+
+### Bug Fixes
+
+* Fix snippet notifications when no notifications available in the list ([0803b18](https://github.com/selfcommunity/community-js/commit/0803b1807902678bfd0d032d87ae23f3af3e0666))
+
+
+
+
+
+# [0.7.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.72...@selfcommunity/react-ui@0.7.0-alpha.73) (2023-02-08)
+
+
+### Performance Improvements
+
+* BottomNavigation.tsx themed ([e088174](https://github.com/selfcommunity/community-js/commit/e0881741ba6c2e94392f56c433ad628dc9f83d9a))
+* NavigationToolbar.tsx themed ([065a88d](https://github.com/selfcommunity/community-js/commit/065a88d9c9eb543ac10a1e44324e15abd378526a))
+
+
+
+
+
+# [0.7.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.71...@selfcommunity/react-ui@0.7.0-alpha.72) (2023-02-08)
+
+
+### Bug Fixes
+
+* Fix import in SettingsDrawer.tsx and SettingsMenu.tsx ([84cd273](https://github.com/selfcommunity/community-js/commit/84cd273cb32a0111a02cad87ea7ccc6c29f9ed7c))
+* Removed navigation routes ([58fc3f8](https://github.com/selfcommunity/community-js/commit/58fc3f8fd64cda273ddf4cd7f2622fbc22a750a8))
+* SCNavigationRoutesType ([baee325](https://github.com/selfcommunity/community-js/commit/baee3256b36ed4289cb248778fdf27352887fd9f))
+
+
+
+
+
+# [0.7.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.70...@selfcommunity/react-ui@0.7.0-alpha.71) (2023-02-08)
+
+
+### Bug Fixes
+
+* Header refactoring ([393cfab](https://github.com/selfcommunity/community-js/commit/393cfab85b38289a3c5c308cc4ff98d3d4a535b7))
+* Header refactoring ([b5f295b](https://github.com/selfcommunity/community-js/commit/b5f295b4d02c90da273866669ed4ecf99b1d215a))
+
+
+
+
+
+# [0.7.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.69...@selfcommunity/react-ui@0.7.0-alpha.70) (2023-02-06)
+
+
+### Bug Fixes
+
+* fixed tabs warnings ([b92a691](https://github.com/selfcommunity/community-js/commit/b92a691dddd789e23c3bb5d5d0cd3badd4061500))
+* test sidebar ([d49528f](https://github.com/selfcommunity/community-js/commit/d49528f4965094fde14e0c247a581bdd986ebdcd))
+* test sidebar ([a8020f8](https://github.com/selfcommunity/community-js/commit/a8020f8c64ec0dce6d7cce14f51b7e3b540e06dc))
+* test sidebar ([8af1a8d](https://github.com/selfcommunity/community-js/commit/8af1a8de7617e28c093e96386feecd4e7a8ec469))
+
+
+### Performance Improvements
+
+* set search default value/chip element as span in user component ([b9ebd79](https://github.com/selfcommunity/community-js/commit/b9ebd79a2027af91fc624e28bc93d01f2f0e552a))
+
+
+
+
+
+# [0.7.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.68...@selfcommunity/react-ui@0.7.0-alpha.69) (2023-02-01)
+
+
+### Bug Fixes
+
+* Fix error if ack is undefined in ConsentSolution.tsx ([61ad54d](https://github.com/selfcommunity/community-js/commit/61ad54d8922c1392b18eedbcac72d55929a441f6))
+
+
+
+
+
+# [0.7.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.67...@selfcommunity/react-ui@0.7.0-alpha.68) (2023-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.66...@selfcommunity/react-ui@0.7.0-alpha.67) (2023-01-31)
+
+
+### Bug Fixes
+
+* restored anonymous header, added see more link to snippets snippets pop up content ([2420b13](https://github.com/selfcommunity/community-js/commit/2420b13af9c639cc05023c813a28f325db5c119e))
+
+
+
+
+
+# [0.7.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.65...@selfcommunity/react-ui@0.7.0-alpha.66) (2023-01-31)
+
+
+### Bug Fixes
+
+* fixed searchbar width ([46d17c9](https://github.com/selfcommunity/community-js/commit/46d17c94b0f4cb76c22244f407becc207157b251))
+* fixes ([3dabeed](https://github.com/selfcommunity/community-js/commit/3dabeed32d03a5a3faa2494cbabb85ebdcf968e6))
+
+
+
+
+
+# [0.7.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.64...@selfcommunity/react-ui@0.7.0-alpha.65) (2023-01-31)
+
+
+### Bug Fixes
+
+* fixed mobile header searchbar appearance ([ce0add6](https://github.com/selfcommunity/community-js/commit/ce0add68e157fec8b91b389f4e60f17a921dc995))
+
+
+
+
+
+# [0.7.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.63...@selfcommunity/react-ui@0.7.0-alpha.64) (2023-01-27)
+
+
+### Bug Fixes
+
+* editor ssr ([486120b](https://github.com/selfcommunity/community-js/commit/486120bec09ed4b467e7a33001081a86ac7497be))
+
+
+
+
+
+# [0.7.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.62...@selfcommunity/react-ui@0.7.0-alpha.63) (2023-01-27)
+
+
+### Bug Fixes
+
+* fixed header ([967c3ac](https://github.com/selfcommunity/community-js/commit/967c3ac7b8400741782726c097451f5da759835d))
+* fixed reactions bugfixes + style ([8380212](https://github.com/selfcommunity/community-js/commit/838021222076b3889fa1162be104886765c92861))
+* header components fixes ([0316ab6](https://github.com/selfcommunity/community-js/commit/0316ab63b4c919fce069688b783a156326e2b1f3))
+* mobileSearchbar position and width ([eec95d0](https://github.com/selfcommunity/community-js/commit/eec95d07b0382a8a6472344073e566f7ac2878ba))
+
+
+### Performance Improvements
+
+* Removed hidden parameter in Header.tsx ([6b6d481](https://github.com/selfcommunity/community-js/commit/6b6d48169d925be07107c6a1cb8e18ba08723b80))
+
+
+
+
+
+# [0.7.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.61...@selfcommunity/react-ui@0.7.0-alpha.62) (2023-01-25)
+
+
+### Bug Fixes
+
+* Fix default theme var ([5219400](https://github.com/selfcommunity/community-js/commit/521940024862e348fd0b5c92a7111656834fd0c7))
+
+
+
+
+
+# [0.7.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.60...@selfcommunity/react-ui@0.7.0-alpha.61) (2023-01-25)
+
+
+### Bug Fixes
+
+* Fix imports in theme ([6e62627](https://github.com/selfcommunity/community-js/commit/6e62627fcaccc563264ea2dd19c8aaa3e160bd22))
+* fixed alignment ([5f9b6ee](https://github.com/selfcommunity/community-js/commit/5f9b6ee72340be7cace062dfb922a8bac1831688))
+* fixed build errors ([57ab29c](https://github.com/selfcommunity/community-js/commit/57ab29c72a3c7d15ede0e92888e7c0c9d0b70aaa))
+* fixed reaction icon size ([cb46af3](https://github.com/selfcommunity/community-js/commit/cb46af39892de18f0cb6d485a8a8c32ccabf280f))
+
+
+### Features
+
+* New theme ([37b4b86](https://github.com/selfcommunity/community-js/commit/37b4b8694cdc722b112ba18b0bff6478a787df25))
+* New theme ([34a4b62](https://github.com/selfcommunity/community-js/commit/34a4b62e1c904e01df3fc7488593b406830dca6a))
+
+
+### Performance Improvements
+
+* added reaction to comment objects. Asana issue: https://app.asana.com/0/1202523699272956/1203780410176755/f ([600e3e6](https://github.com/selfcommunity/community-js/commit/600e3e691c70e4ed01ae097b3f51ccca556afa52))
+
+
+
+
+
+# [0.7.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.59...@selfcommunity/react-ui@0.7.0-alpha.60) (2023-01-23)
+
+
+### Performance Improvements
+
+* added hidden prop to hide header component ([124215d](https://github.com/selfcommunity/community-js/commit/124215d31d78511e9a4bcc9cb22d19749d9e9aa8))
+
+
+
+
+
+# [0.7.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.58...@selfcommunity/react-ui@0.7.0-alpha.59) (2023-01-18)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.57...@selfcommunity/react-ui@0.7.0-alpha.58) (2023-01-17)
+
+
+### Bug Fixes
+
+* Fix component name ([4ef1333](https://github.com/selfcommunity/community-js/commit/4ef133352066f4958915c460d9c8bce581e4c9d9))
+
+
+### Performance Improvements
+
+* added content availability check in react ui components ([ac65e55](https://github.com/selfcommunity/community-js/commit/ac65e55de95781317ca09b17925d6c159c0776d8))
+
+
+
+
+
+# [0.7.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.56...@selfcommunity/react-ui@0.7.0-alpha.57) (2023-01-17)
+
+
+### Bug Fixes
+
+* fixed react-ui imports, added highlight function util ([a78254f](https://github.com/selfcommunity/community-js/commit/a78254fc49aa6f4d883908121f3d2aec3142eead))
+
+
+### Performance Improvements
+
+* added highlight for search. Asana issue: https://app.asana.com/0/1202523699272956/1202819955319930/f ([645fd9d](https://github.com/selfcommunity/community-js/commit/645fd9d87c3706dc9f245064f2db02e1453c23b5))
+
+
+
+
+
+# [0.7.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.55...@selfcommunity/react-ui@0.7.0-alpha.56) (2023-01-17)
+
+
+### Performance Improvements
+
+* added exports ([5a716c7](https://github.com/selfcommunity/community-js/commit/5a716c76d882985dab018623c23bb97488f35315))
+
+
+
+
+
+# [0.7.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.54...@selfcommunity/react-ui@0.7.0-alpha.55) (2023-01-16)
+
+
+### Bug Fixes
+
+* add new core config for websocket secure/insecure ([deeb8f8](https://github.com/selfcommunity/community-js/commit/deeb8f8a6717a74529fd8328f4303182f0aa89da))
+
+
+
+
+
+# [0.7.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.53...@selfcommunity/react-ui@0.7.0-alpha.54) (2023-01-12)
+
+
+### Bug Fixes
+
+* fixed suggestion component bug. Asana issue: https://app.asana.com/0/1202523699272956/1203700925991379/f ([cd26ffc](https://github.com/selfcommunity/community-js/commit/cd26ffccc4f8e6dc63558fd9d5d9dc3d6d4d1249))
+
+
+
+
+
+# [0.7.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.52...@selfcommunity/react-ui@0.7.0-alpha.53) (2023-01-11)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.51...@selfcommunity/react-ui@0.7.0-alpha.52) (2023-01-04)
+
+
+### Bug Fixes
+
+* fix search. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088626/f ([0b31d6c](https://github.com/selfcommunity/community-js/commit/0b31d6cb0840eb33c29fd9c2a9efce2f532b3a27))
+
+
+### Performance Improvements
+
+* updated mui material from 5.10.16 to 5.11.3. Asana issue: https://app.asana.com/0/1202523699272956/1203647078088632/f ([a0f00a7](https://github.com/selfcommunity/community-js/commit/a0f00a7f7f46d354bef83928b8d9c634c9737b70))
+
+
+
+
+
+# [0.7.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.50...@selfcommunity/react-ui@0.7.0-alpha.51) (2022-12-20)
+
+
+### Performance Improvements
+
+* fixed loyalty program/loyalty program detail skeletons ([99682dd](https://github.com/selfcommunity/community-js/commit/99682dd5de327de16f63ca435dd43d54fa1fe929))
+
+
+
+
+
+# [0.7.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.49...@selfcommunity/react-ui@0.7.0-alpha.50) (2022-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.48...@selfcommunity/react-ui@0.7.0-alpha.49) (2022-12-19)
+
+
+### Performance Improvements
+
+* added header url ([fea9daf](https://github.com/selfcommunity/community-js/commit/fea9daf75f6f2c1c23cfd8d342eaca0144ac5a66))
+
+
+
+
+
+# [0.7.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.47...@selfcommunity/react-ui@0.7.0-alpha.48) (2022-12-16)
+
+
+### Performance Improvements
+
+* added end adornemnt in SCPasswordTextField component ([cdaf16d](https://github.com/selfcommunity/community-js/commit/cdaf16d88dea66645149de241eb3bd7c45c46b8d))
+* Asana issue: https://app.asana.com/0/1202523699272956/1203542099033251/f ([896492e](https://github.com/selfcommunity/community-js/commit/896492e51d1b1daa8ab9731af49cd255ee1f21e3))
+
+
+
+
+
+# [0.7.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.46...@selfcommunity/react-ui@0.7.0-alpha.47) (2022-12-13)
+
+
+### Bug Fixes
+
+* fixed import ([19fb121](https://github.com/selfcommunity/community-js/commit/19fb121a63f5e61d7dc3cc29b458a45bdd2b25e4))
+
+
+
+
+
+# [0.7.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.45...@selfcommunity/react-ui@0.7.0-alpha.46) (2022-12-13)
+
+
+### Bug Fixes
+
+* moved social account settings in a separate section ([b97eb30](https://github.com/selfcommunity/community-js/commit/b97eb302007eb9b18b7c4cc9a6f2ea3ae3b42de3))
+
+
+
+
+
+# [0.7.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.44...@selfcommunity/react-ui@0.7.0-alpha.45) (2022-12-12)
+
+
+### Bug Fixes
+
+* fixed social association component ([e6cb7f3](https://github.com/selfcommunity/community-js/commit/e6cb7f3e66f0381382176bb32a81d23a9711267a))
+
+
+
+
+
+# [0.7.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.43...@selfcommunity/react-ui@0.7.0-alpha.44) (2022-12-09)
+
+
+### Bug Fixes
+
+* fixed delete association ([6e749b7](https://github.com/selfcommunity/community-js/commit/6e749b7f98dbb7c374347ea49c275bdcab6de426))
+
+
+
+
+
+# [0.7.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.42...@selfcommunity/react-ui@0.7.0-alpha.43) (2022-12-09)
+
+
+### Bug Fixes
+
+* removed delete social association, added callback ([8dc0df2](https://github.com/selfcommunity/community-js/commit/8dc0df2c16c60224a263adda8c7c20cad6cfa843))
+
+
+
+
+
+# [0.7.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.41...@selfcommunity/react-ui@0.7.0-alpha.42) (2022-12-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.40...@selfcommunity/react-ui@0.7.0-alpha.41) (2022-12-07)
+
+
+### Bug Fixes
+
+* fixed social association rendering ([4a7aeea](https://github.com/selfcommunity/community-js/commit/4a7aeea51e3fa698a1a306f51c20c3a16e1c5425))
+
+
+
+
+
+# [0.7.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.39...@selfcommunity/react-ui@0.7.0-alpha.40) (2022-12-06)
+
+
+### Bug Fixes
+
+* bugfixes ([aefd074](https://github.com/selfcommunity/community-js/commit/aefd07431b9169c93b48191768a4c39e662bd3c0))
+
+
+
+
+
+# [0.7.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.38...@selfcommunity/react-ui@0.7.0-alpha.39) (2022-12-06)
+
+
+### Bug Fixes
+
+* social association fixes ([ec40dae](https://github.com/selfcommunity/community-js/commit/ec40daec93e75937b52d1c400329b81d20a9f39e))
+
+
+
+
+
+# [0.7.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.37...@selfcommunity/react-ui@0.7.0-alpha.38) (2022-12-05)
+
+
+### Bug Fixes
+
+* fixed user social association disabled icon rendering ([1ab0134](https://github.com/selfcommunity/community-js/commit/1ab013485025f6d1917333f3aa654f55d0cab022))
+
+
+
+
+
+# [0.7.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.36...@selfcommunity/react-ui@0.7.0-alpha.37) (2022-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.35...@selfcommunity/react-ui@0.7.0-alpha.36) (2022-12-05)
+
+
+### Bug Fixes
+
+* added default fields export ([1655e13](https://github.com/selfcommunity/community-js/commit/1655e13c07b2e2f09cda9a8ae6ff95262a67cbc0))
+
+
+
+
+
+# [0.7.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.34...@selfcommunity/react-ui@0.7.0-alpha.35) (2022-12-05)
+
+
+### Bug Fixes
+
+* fixed import ([2fa3f01](https://github.com/selfcommunity/community-js/commit/2fa3f01eca56937485d73c8afcb836a438dcd3df))
+* fixed social association section update on edit ([63ef717](https://github.com/selfcommunity/community-js/commit/63ef717e319bc7996a9b6e2821b653810b27ccf1))
+
+
+### Performance Improvements
+
+* added social account providers handling. ([66f4c72](https://github.com/selfcommunity/community-js/commit/66f4c729f4436d71904832967d200bd27cdff60c))
+
+
+
+
+
+# [0.7.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.33...@selfcommunity/react-ui@0.7.0-alpha.34) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fix build and ts-ignore ([1bf0b6a](https://github.com/selfcommunity/community-js/commit/1bf0b6ada567038d8558c383a75e614a486c1494))
+
+
+### Performance Improvements
+
+* Update Editor ([475cf04](https://github.com/selfcommunity/community-js/commit/475cf040d4b60a23aa49e97f1795b4eb4e0ecc9d))
+
+
+
+
+
+# [0.7.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.32...@selfcommunity/react-ui@0.7.0-alpha.33) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.31...@selfcommunity/react-ui@0.7.0-alpha.32) (2022-11-24)
+
+
+### Bug Fixes
+
+* Fix Metadata field warning ([375fb71](https://github.com/selfcommunity/community-js/commit/375fb7194e6cfe3022f7b18a1e303c5243565018))
+
+
+
+
+
+# [0.7.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.30...@selfcommunity/react-ui@0.7.0-alpha.31) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.29...@selfcommunity/react-ui@0.7.0-alpha.30) (2022-11-22)
+
+
+### Bug Fixes
+
+* reverted ([12a5bf2](https://github.com/selfcommunity/community-js/commit/12a5bf25f55069ce39d686d5cc10ae3b1291ea59))
+
+
+
+
+
+# [0.7.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.28...@selfcommunity/react-ui@0.7.0-alpha.29) (2022-11-21)
+
+
+### Bug Fixes
+
+* fixed widget cached results when react strict is enabled ([5a5b0f3](https://github.com/selfcommunity/community-js/commit/5a5b0f3ed437529b4efcef397f5b40730e123f7c))
+
+
+
+
+
+# [0.7.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.27...@selfcommunity/react-ui@0.7.0-alpha.28) (2022-11-18)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.26...@selfcommunity/react-ui@0.7.0-alpha.27) (2022-11-15)
+
+
+### Bug Fixes
+
+* fixed cached components ([d125bcf](https://github.com/selfcommunity/community-js/commit/d125bcfe2e9b83cd10c9b98178432f2070fb186a))
+
+
+
+
+
+# [0.7.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.25...@selfcommunity/react-ui@0.7.0-alpha.26) (2022-11-15)
+
+
+### Bug Fixes
+
+* init widget tools caching ([b9ff9b3](https://github.com/selfcommunity/community-js/commit/b9ff9b388faae91f2b1a67d02b23bd00522c915a))
+
+
+### Performance Improvements
+
+* cached feed widgets components. ([919af07](https://github.com/selfcommunity/community-js/commit/919af07371af5818b3db1c30b4546df7bc86914d))
+
+
+
+
+
+# [0.7.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.24...@selfcommunity/react-ui@0.7.0-alpha.25) (2022-11-14)
+
+
+### Bug Fixes
+
+* fixed publicInfo component autofocus/ datepicker endAdornment icon bug ([c3e8485](https://github.com/selfcommunity/community-js/commit/c3e848504fb3051c8b1dce5f9245d9f5ec90f225))
+
+
+
+
+
+# [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.23...@selfcommunity/react-ui@0.7.0-alpha.24) (2022-11-11)
+
+
+### Performance Improvements
+
+* asana issue : https://app.asana.com/0/1202523699272956/1203310518624016/f ([df7411d](https://github.com/selfcommunity/community-js/commit/df7411d6c264c344b15e67892b662557a6face84))
+
+
+
+
+
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.22...@selfcommunity/react-ui@0.7.0-alpha.23) (2022-11-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.21...@selfcommunity/react-ui@0.7.0-alpha.22) (2022-11-09)
+
+
+### Bug Fixes
+
+* fixed searchbar container margin ([750d6a5](https://github.com/selfcommunity/community-js/commit/750d6a5beac9d73079099401f89c9d091fcfb1f1))
+
+
+
+
+
+# [0.7.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.20...@selfcommunity/react-ui@0.7.0-alpha.21) (2022-11-09)
+
+
+### Bug Fixes
+
+* fixed autocomplete value on searchbar ([b6d6e66](https://github.com/selfcommunity/community-js/commit/b6d6e661ccaa50e3c79b2e5e07a73cbf07c427f6))
+
+
+
+
+
+# [0.7.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.19...@selfcommunity/react-ui@0.7.0-alpha.20) (2022-11-07)
+
+
+### Bug Fixes
+
+* fixed searchbar style ([c9c0a1d](https://github.com/selfcommunity/community-js/commit/c9c0a1d149ddb4e3ac667ed317a67b0dceea9e0c))
+
+
+### Performance Improvements
+
+* added images to search autocomplete results ([c401c7c](https://github.com/selfcommunity/community-js/commit/c401c7c805ffe969bb32b8271855f4460f7c9c92))
+* added prop to show trending feed as  a page ([113e859](https://github.com/selfcommunity/community-js/commit/113e859365504f1d14715f2c805008e41b4afb43))
+
+
+
+
+
+# [0.7.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.18...@selfcommunity/react-ui@0.7.0-alpha.19) (2022-11-04)
+
+
+### Bug Fixes
+
+* feed ([10d6812](https://github.com/selfcommunity/community-js/commit/10d68128a835f8f833a523fc63d91ed581fa20f3))
+* fixed mobile searchbar width ([9966e18](https://github.com/selfcommunity/community-js/commit/9966e184b0d03e84298694802452bd4a710633a1))
+* private messages components bugfixing ([367a061](https://github.com/selfcommunity/community-js/commit/367a0610d02feb3cba7d98e459feeb8994d1125d))
+
+
+
+
+
+# [0.7.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.17...@selfcommunity/react-ui@0.7.0-alpha.18) (2022-11-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.16...@selfcommunity/react-ui@0.7.0-alpha.17) (2022-11-03)
+
+
+### Performance Improvements
+
+* added prop to feed component to hide adv banners ([71e2945](https://github.com/selfcommunity/community-js/commit/71e294521d85f26f1c65a263a9056ca5e286596f))
+
+
+
+
+
+# [0.7.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.15...@selfcommunity/react-ui@0.7.0-alpha.16) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.14...@selfcommunity/react-ui@0.7.0-alpha.15) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed searchbar ([bf72ea5](https://github.com/selfcommunity/community-js/commit/bf72ea5936c05658a4510fae8f77a30392681bef))
+
+
+
+
+
+# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.13...@selfcommunity/react-ui@0.7.0-alpha.14) (2022-11-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.12...@selfcommunity/react-ui@0.7.0-alpha.13) (2022-11-02)
+
+
+### Bug Fixes
+
+* fix search ([6e6d17c](https://github.com/selfcommunity/community-js/commit/6e6d17cdb9e9ac94699ace1af11c6aadcbe8e710))
+
+
+
+
+
+# [0.7.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.11...@selfcommunity/react-ui@0.7.0-alpha.12) (2022-10-31)
+
+
+### Bug Fixes
+
+* fix autocomplete ([5166f7c](https://github.com/selfcommunity/community-js/commit/5166f7c09c4df6f26d17d7b99e9911d84e1b1fa2))
+
+
+
+
+
+# [0.7.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.10...@selfcommunity/react-ui@0.7.0-alpha.11) (2022-10-31)
+
+
+### Bug Fixes
+
+* fixed searchbar autocomplete ([d61cbce](https://github.com/selfcommunity/community-js/commit/d61cbce5e3772df66f0929574d527c74c87b5ff8))
+
+
+
+
+
+# [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.9...@selfcommunity/react-ui@0.7.0-alpha.10) (2022-10-28)
+
+
+### Bug Fixes
+
+* feed ([2fc2ca7](https://github.com/selfcommunity/community-js/commit/2fc2ca7f45db96fa244fe3daf1d57e038c0ed8c8))
+* feed ([4654190](https://github.com/selfcommunity/community-js/commit/4654190b7488d54904955f7bf8b11d4325c6ee41))
+* feed ([77a3af0](https://github.com/selfcommunity/community-js/commit/77a3af055cd8100792db0f6eb8a0510cd2320d53))
+* feed ([9fbc244](https://github.com/selfcommunity/community-js/commit/9fbc244bff3f71fd11b578d53c2f1ff37f7f7836))
+
+
+### Performance Improvements
+
+* added header search autocomplete ([d3b0441](https://github.com/selfcommunity/community-js/commit/d3b0441139afae0b582f55b80d5387b6db00d337))
+
+
+
+
+
+# [0.7.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.8...@selfcommunity/react-ui@0.7.0-alpha.9) (2022-10-27)
+
+
+### Bug Fixes
+
+* CommentsObject ([3006415](https://github.com/selfcommunity/community-js/commit/3006415cafb719a342e2e5b8eca6c5f45e58d769))
+
+
+
+
+
+# [0.7.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.7...@selfcommunity/react-ui@0.7.0-alpha.8) (2022-10-27)
+
+
+### Bug Fixes
+
+* feed ([894614d](https://github.com/selfcommunity/community-js/commit/894614d28600f8128046f7b418427a7c5ac42594))
+* feed ([13ef374](https://github.com/selfcommunity/community-js/commit/13ef3749c27e2a95f43e32c692d8876eccc7b744))
+
+
+
+
+
+# [0.7.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.6...@selfcommunity/react-ui@0.7.0-alpha.7) (2022-10-27)
+
+
+### Bug Fixes
+
+* feed ([b47524c](https://github.com/selfcommunity/community-js/commit/b47524c5b604692f580d0008eb20fa92f7d370b5))
+* feed ([c49f68f](https://github.com/selfcommunity/community-js/commit/c49f68f5785c77c9c1ff96bfe17407e99598e38a))
+* virtual scroller ([762c437](https://github.com/selfcommunity/community-js/commit/762c437cfac67703a3e8fa52c5529f3f6736792f))
+
+
+
+
+
+# [0.7.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.5...@selfcommunity/react-ui@0.7.0-alpha.6) (2022-10-26)
+
+
+### Bug Fixes
+
+* fixed mobile private messages ([5aa99dd](https://github.com/selfcommunity/community-js/commit/5aa99dd490c594d0c73ebe009ef88b7e93257eaa))
+
+
+
+
+
+# [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.4...@selfcommunity/react-ui@0.7.0-alpha.5) (2022-10-25)
+
+
+### Performance Improvements
+
+* Removed Adv from Footer component and move logic to Feed ([8a9c3f1](https://github.com/selfcommunity/community-js/commit/8a9c3f1a7e4afa36b3247c99e50cd4c2f1995be8))
+
+
+
+
+
+# [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.3...@selfcommunity/react-ui@0.7.0-alpha.4) (2022-10-25)
+
+
+### Performance Improvements
+
+* Added Adv BELOW_TOPBAR position in Feed ([578c304](https://github.com/selfcommunity/community-js/commit/578c304dfeeaaff9dce1ef739791ad30e0c217c6))
+
+
+
+
+
+# [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.2...@selfcommunity/react-ui@0.7.0-alpha.3) (2022-10-25)
+
+
+### Bug Fixes
+
+* fixed mobile emoji drawer width ([9abe44f](https://github.com/selfcommunity/community-js/commit/9abe44f65a5698272bf504d882446a4cf46f20e0))
+
+
+
+
+
+# [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.1...@selfcommunity/react-ui@0.7.0-alpha.2) (2022-10-24)
+
+
+### Bug Fixes
+
+* ads ([73dee76](https://github.com/selfcommunity/community-js/commit/73dee76134a91d6fba56814c70a09c70a11d9f94))
+* mobile view fixes ([3798df9](https://github.com/selfcommunity/community-js/commit/3798df96abdf19a0b2e4d96cd74bc93e50aed776))
+
+
+### Performance Improvements
+
+* added drawer for emojiplugin ([0efb2a4](https://github.com/selfcommunity/community-js/commit/0efb2a43ef9a7737d7ba4f7d9fcc3545c41d6b04))
+
+
+
+
+
+# [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.0-alpha.0...@selfcommunity/react-ui@0.7.0-alpha.1) (2022-10-21)
+
+
+### Bug Fixes
+
+* ssr VirtualScroller ([f15b909](https://github.com/selfcommunity/community-js/commit/f15b9098502e0a789501e3eff1ab9adac9a1a839))
+
+
+
+
+
+# [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.8...@selfcommunity/react-ui@0.7.0-alpha.0) (2022-10-21)
+
+
+### Bug Fixes
+
+* Media preview ([af42c60](https://github.com/selfcommunity/community-js/commit/af42c60a055255336314416c261d9a082e9e3a2c))
+* Media preview and comment votes ([d2b9374](https://github.com/selfcommunity/community-js/commit/d2b937475f3d00b0734d912eda82d03ec9791616))
+
+
+### Features
+
+* added base drawer component ([aabedac](https://github.com/selfcommunity/community-js/commit/aabedac29abd53e84d0983fd220c7fe2f7848da8))
+
+
+### Performance Improvements
+
+* adapted modal dialogs to mobile view ([d9e0378](https://github.com/selfcommunity/community-js/commit/d9e03787743f7273363865a9aa987f62a09fa5d7))
+* added drawer for change cover component when mobile ([85051c8](https://github.com/selfcommunity/community-js/commit/85051c8f397710d7cd226607d99fcdf02c498116))
+* added drawer to contributionActionMenu ([a991fbe](https://github.com/selfcommunity/community-js/commit/a991fbea35a5adb582283a3d0d6fdf6394475aec))
+* added drawer to share(feed obj) ([d254755](https://github.com/selfcommunity/community-js/commit/d2547551addf0514cc3986f3ee357158e2165f78))
+
+
+
+
+
+## [0.6.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.7...@selfcommunity/react-ui@0.6.1-alpha.8) (2022-10-19)
+
+
+### Bug Fixes
+
+* feed medias ([84df580](https://github.com/selfcommunity/community-js/commit/84df580d37f18f5c747ae97f4fc2efa16b2c5dbe))
+* fixed votes dialog update when performing vote(reaction component) ([4be4c34](https://github.com/selfcommunity/community-js/commit/4be4c34e3fef24675837f26c4f26cf0768585bf4))
+* reactions component; -fixed votes loading on dialog opening (default feedObj type given in next url was wrong); ([42b22a2](https://github.com/selfcommunity/community-js/commit/42b22a2b0d7f9671658429abf70f6b273e0224bc))
+
+
+
+
+
+## [0.6.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.6...@selfcommunity/react-ui@0.6.1-alpha.7) (2022-10-18)
+
+
+### Performance Improvements
+
+* added community badge to user component. Asana issue: https://app.asana.com/0/1202523699272956/1203176346726554/f ([41ee41f](https://github.com/selfcommunity/community-js/commit/41ee41f37a90b3f9a6c205d8343538598d5f7e00))
+
+
+
+
+
+## [0.6.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.5...@selfcommunity/react-ui@0.6.1-alpha.6) (2022-10-17)
+
+
+### Bug Fixes
+
+* fixed popover flickering ([7f2d671](https://github.com/selfcommunity/community-js/commit/7f2d671ba0a78de96c2bae18fce7c39bf5866dc9))
+
+
+
+
+
+## [0.6.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.4...@selfcommunity/react-ui@0.6.1-alpha.5) (2022-10-14)
+
+
+### Bug Fixes
+
+* fixed reaction vote action alignment, popover hovering ([be82b21](https://github.com/selfcommunity/community-js/commit/be82b21d632225585884939bb1e98312a1df6a26))
+
+
+
+
+
+## [0.6.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.3...@selfcommunity/react-ui@0.6.1-alpha.4) (2022-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.6.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.2...@selfcommunity/react-ui@0.6.1-alpha.3) (2022-10-14)
+
+
+### Bug Fixes
+
+* user profile ([6093eae](https://github.com/selfcommunity/community-js/commit/6093eaed3881e6d236b6e189a6a88febc205b3a6))
+* user profile ([fd54617](https://github.com/selfcommunity/community-js/commit/fd546177650b03e3d34a49de6f83c3a2b2737f57))
+
+
+
+
+
+## [0.6.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.1...@selfcommunity/react-ui@0.6.1-alpha.2) (2022-10-14)
+
+
+### Bug Fixes
+
+* fixed reaction components ([814d794](https://github.com/selfcommunity/community-js/commit/814d794ebcef70ad1fc15fefbb216f7863d33f4d))
+
+
+### Performance Improvements
+
+* added props to show reaction badge on avatar ([4b6f4cd](https://github.com/selfcommunity/community-js/commit/4b6f4cde5928a23d31ff6ba3b3ca23f01637514d))
+
+
+
+
+
+## [0.6.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.1-alpha.0...@selfcommunity/react-ui@0.6.1-alpha.1) (2022-10-12)
+
+
+### Bug Fixes
+
+* ssr MentionsPlugin ([67ded90](https://github.com/selfcommunity/community-js/commit/67ded90e09395674b65f4e38264e41dc402bb16e))
+
+
+
+
+
+## [0.6.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0...@selfcommunity/react-ui@0.6.1-alpha.0) (2022-10-12)
+
+
+### Bug Fixes
+
+* ssr VirtualScroller ([70dffb8](https://github.com/selfcommunity/community-js/commit/70dffb8f45fbc117aaa2c011c48e6f9542770dd2))
+
+
+
+
+
 # [0.6.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.6.0-alpha.15...@selfcommunity/react-ui@0.6.0) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

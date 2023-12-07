@@ -1,20 +1,24 @@
 import {
+  BatchItem,
+  PreSendResponse,
   StartEventResponse,
   useChunkFinishListener,
   useChunkStartListener,
   useItemErrorListener,
   useItemFinishListener,
-  useRequestPreSend
+  useRequestPreSend,
 } from '@rpldy/chunked-uploady';
-import {http, Endpoints, formatHttpError, HttpResponse} from '@selfcommunity/api-services';
-import {SCMediaType} from '@selfcommunity/types';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import {useItemProgressListener, useItemStartListener} from '@rpldy/uploady';
-import {md5} from '../../utils/hash';
-import React, {useEffect, useRef, useState} from 'react';
-import {SCMediaChunkType} from '../../types/media';
-import {useIntl} from 'react-intl';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
+import { SCMediaType } from '@selfcommunity/types';
+import { SCContextType, SCUserContextType, useSCContext, useSCUser } from '@selfcommunity/react-core';
+import { useItemProgressListener, useItemStartListener, useUploady } from '@rpldy/uploady';
+import { md5 } from '../../utils/hash';
+import React, { useEffect, useRef, useState } from 'react';
+import { SCMediaChunkType } from '../../types/media';
+import { useIntl } from 'react-intl';
 import messages from '../../messages/common';
+import { Logger, resizeImage } from '@selfcommunity/utils';
+import { SCOPE_SC_UI } from '../../constants/Errors';
 
 export interface MediaChunkUploaderProps {
   /**
@@ -38,6 +42,7 @@ export interface MediaChunkUploaderProps {
    */
   onError: (chunk: SCMediaChunkType, error: string) => void;
 }
+
 export default (props: MediaChunkUploaderProps): JSX.Element => {
   // PROPS
   const {type = null, onSuccess = null, onProgress = null, onError = null} = props;
@@ -47,11 +52,15 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   const chunkStateRef = React.useRef({chunks: {}, setChunk: null, setChunks: null});
 
   // STATE
-  const [chunks, setChunks] = useState({});
-  const setChunk: Function = (chunk: SCMediaChunkType) => {
-    const _chunks = {...chunks, [chunk.id]: {...chunks[chunk.id], ...chunk}};
-    setChunks(_chunks);
+  const [chunks, _setChunks] = useState({});
+  const setChunk: any = (chunk: SCMediaChunkType) => {
+    const _chunks = {...chunkStateRef.current.chunks, [chunk.id]: {...chunkStateRef.current.chunks[chunk.id], ...chunk}};
+    _setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
+  };
+  const setChunks = (chunks: SCMediaChunkType) => {
+    _setChunks(chunks);
+    chunkStateRef.current.chunks = chunks;
   };
 
   // Using refs to have the correct chunks values in the callbacks
@@ -60,6 +69,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const {refreshSession}: SCUserContextType = useSCUser();
 
   // INTL
   const intl = useIntl();
@@ -80,7 +90,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       reader.onload = (e) => {
         chunkStateRef.current.setChunk({id: item.id, image: e.target.result});
       };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
@@ -105,14 +115,16 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           headers: {'Content-Type': 'multipart/form-data'}
         })
         .then((res: HttpResponse<any>) => {
-          const _chunks = {...chunkStateRef.current.chunks};
-          delete _chunks[item.id];
-          chunkStateRef.current.setChunks(_chunks);
-          onSuccess(res.data);
+          setTimeout(() => {
+            const _chunks = {...chunkStateRef.current.chunks};
+            delete _chunks[item.id];
+            chunkStateRef.current.setChunks(_chunks);
+            onSuccess(res.data);
+          }, 0);
         })
         .catch((error) => {
-          error = formatHttpError(error);
-          onError({...chunkStateRef.current.chunks[item.id]}, error.error);
+          console.log(error);
+          onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.fileUploadErrorGeneric));
           const _chunks = {...chunkStateRef.current.chunks};
           delete _chunks[item.id];
           chunkStateRef.current.setChunks(_chunks);
@@ -121,7 +133,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useItemErrorListener((item) => {
-    onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.error));
+    onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.fileUploadErrorGeneric));
     const _chunks = {...chunkStateRef.current.chunks};
     delete _chunks[item.id];
     chunkStateRef.current.setChunks(_chunks);
@@ -132,8 +144,13 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
       sendOptions: {
         paramName: 'image',
-        headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`},
-        method: Endpoints.ComposerChunkUploadMedia.method
+        method: Endpoints.ComposerChunkUploadMedia.method,
+        formatServerResponse: async (response: string, status: number, headers: Record<string, string> | undefined) => {
+          if (status === 401) {
+            await refreshSession();
+          }
+          return Promise.resolve(JSON.parse(response));
+        }
       }
     };
     if (chunkStateRef.current.chunks[data.item.id].upload_id) {
@@ -144,19 +161,45 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
     return res;
   });
 
-  useChunkFinishListener((data) => {
-    chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: data.uploadData.response.data.upload_id});
+  useChunkFinishListener(async (data) => {
+    const _data = await data.uploadData.response.data;
+    chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: _data.upload_id});
   });
 
-  useRequestPreSend(({items, options}) => {
+  useRequestPreSend(async ({items, options}): Promise<PreSendResponse> => {
+    const destination = ['JWT', 'OAuth'].includes(scContext.settings.session.type) ? {
+      headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}
+    } : {};
+
     if (items.length == 0) {
-      return Promise.resolve({options});
+      return Promise.resolve({options, destination});
     }
+
     //returned object can be wrapped with a promise
-    return Promise.resolve({
-      options: {
-        inputFieldName: options.inputFieldName
-      }
+    return new Promise((resolve) => {
+      Promise.all(
+        items.map(async (item) => {
+          return {...item, file: item.file.type.startsWith('image/') && item.file.type !== 'image/gif' ? await resizeImage(item.file) : item.file};
+        })
+      )
+        .then((items) => {
+          resolve({
+            items: items as BatchItem[],
+            options: {
+              inputFieldName: options.inputFieldName,
+              destination
+            }
+          });
+        })
+        .catch((error) => {
+          Logger.error(error, SCOPE_SC_UI);
+          resolve({
+            options: {
+              inputFieldName: options.inputFieldName,
+              destination
+            }
+          });
+        });
     });
   });
 

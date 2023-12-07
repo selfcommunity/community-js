@@ -20,7 +20,11 @@ export interface ModerationApiClientInterface {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCFlagType>>;
   moderateAContribution(id: number | string, data: ModerateContributionParams, config?: AxiosRequestConfig): Promise<any>;
-  getContributionModerationStatus(id: number | string, contribution_type: SCContributionType, config?: AxiosRequestConfig): Promise<SCContributionStatus>;
+  getContributionModerationStatus(
+    id: number | string,
+    contribution_type: SCContributionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCContributionStatus>;
 }
 /**
  * Contains all the endpoints needed to manage moderation.
@@ -45,7 +49,13 @@ export class ModerationApiClient {
    * @param hard
    * @param config
    */
-  static moderateASpecificUser(id: number | string, status: SCUserStatus, days_blocked?: string, hard?: number, config?: AxiosRequestConfig): Promise<any> {
+  static moderateASpecificUser(
+    id: number | string,
+    status: SCUserStatus,
+    days_blocked?: string,
+    hard?: number,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
     const p = urlParams({...(days_blocked && {days_blocked: days_blocked}), ...(hard && {hard: hard})});
     return apiRequest({
       ...config,

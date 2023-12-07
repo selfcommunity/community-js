@@ -1,6 +1,6 @@
 import React from 'react';
 import {SCRoutes} from '@selfcommunity/react-core';
-import {SCCommentTypologyType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {SCContributionType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 
 /**
@@ -8,14 +8,14 @@ import {FormattedMessage} from 'react-intl';
  * @param obj
  */
 export function getContributionType(obj) {
-  return SCFeedObjectTypologyType.DISCUSSION in obj
-    ? SCFeedObjectTypologyType.DISCUSSION
-    : SCFeedObjectTypologyType.POST in obj
-    ? SCFeedObjectTypologyType.POST
-    : SCFeedObjectTypologyType.STATUS in obj
-    ? SCFeedObjectTypologyType.STATUS
-    : SCCommentTypologyType in obj
-    ? SCCommentTypologyType
+  return SCContributionType.DISCUSSION in obj
+    ? SCContributionType.DISCUSSION
+    : SCContributionType.POST in obj
+    ? SCContributionType.POST
+    : SCContributionType.STATUS in obj
+    ? SCContributionType.STATUS
+    : SCContributionType.COMMENT in obj
+    ? SCContributionType.COMMENT
     : null;
 }
 
@@ -24,14 +24,14 @@ export function getContributionType(obj) {
  * @param obj
  */
 export function getContribution(obj) {
-  return SCFeedObjectTypologyType.DISCUSSION in obj
-    ? obj[SCFeedObjectTypologyType.DISCUSSION]
-    : SCFeedObjectTypologyType.POST in obj
-    ? obj[SCFeedObjectTypologyType.POST]
-    : SCFeedObjectTypologyType.STATUS in obj
-    ? obj[SCFeedObjectTypologyType.STATUS]
-    : SCCommentTypologyType in obj
-    ? obj[SCCommentTypologyType]
+  return SCContributionType.DISCUSSION in obj
+    ? obj[SCContributionType.DISCUSSION]
+    : SCContributionType.POST in obj
+    ? obj[SCContributionType.POST]
+    : SCContributionType.STATUS in obj
+    ? obj[SCContributionType.STATUS]
+    : SCContributionType.COMMENT in obj
+    ? obj[SCContributionType.COMMENT]
     : null;
 }
 
@@ -40,7 +40,7 @@ export function getContribution(obj) {
  * @param obj (Discussion, Post, Status, Comment)
  */
 export function getContributionSnippet(obj) {
-  if (obj.type === SCFeedObjectTypologyType.DISCUSSION) {
+  if (obj.type === SCContributionType.DISCUSSION) {
     return obj.summary ? <span dangerouslySetInnerHTML={{__html: obj.summary}}></span> : obj.title;
   } else {
     return obj.summary ? (
@@ -54,12 +54,12 @@ export function getContributionSnippet(obj) {
 /**
  * Get the contribution text
  * Hydrate text with mention, etc.
- * @param obj Object of types: Discussion, Post, Status, Comment
+ * @param html Html of the contribution
  * @param handleUrl Func that handle urls
  */
-export function getContributionHtml(obj, handleUrl) {
-  return obj.html.replace(/<mention.*? id="([0-9]+)"{1}.*?>@([a-z\d_]+)<\/mention>/gi, (match, id, username) => {
-    return `<a target='_blank' href='${handleUrl(SCRoutes.USER_PROFILE_ROUTE_NAME, {id, username})}'>@${username}</a>`;
+export function getContributionHtml(html, handleUrl) {
+  return html.replace(/<mention.*? id="([0-9]+)"{1}.*?>@([a-z\d_]+)<\/mention>/gi, (match, id, username) => {
+    return `<a href='${handleUrl(SCRoutes.USER_PROFILE_ROUTE_NAME, {id, username})}'>@${username}</a>`;
   });
 }
 
@@ -82,25 +82,21 @@ export function getContributionRouteName(obj) {
 export function getRouteData(obj) {
   let data = {};
   if (obj) {
-    if (
-      obj.type === SCFeedObjectTypologyType.DISCUSSION ||
-      obj.type === SCFeedObjectTypologyType.POST ||
-      obj.type === SCFeedObjectTypologyType.STATUS
-    ) {
+    if (obj.type === SCContributionType.DISCUSSION || obj.type === SCContributionType.POST || obj.type === SCContributionType.STATUS) {
       data = {
         ...obj,
         contribution_type: obj.type,
         contribution_id: obj.id,
         contribution_slug: obj.slug
       };
-    } else if (obj.type === SCCommentTypologyType) {
-      const contribution_type = getContributionType(obj);
-      const isContributionTypeObj = obj[contribution_type] && typeof obj[contribution_type] === 'object';
+    } else if (obj.type === SCContributionType.COMMENT) {
+      const contributionType = getContributionType(obj);
+      const isContributionTypeObj = obj[contributionType] && typeof obj[contributionType] === 'object';
       data = {
         ...obj,
-        contribution_type,
-        contribution_id: isContributionTypeObj ? obj[contribution_type].id : obj[contribution_type],
-        contribution_slug: isContributionTypeObj ? obj[contribution_type].slug : contribution_type
+        contribution_type: contributionType,
+        contribution_id: isContributionTypeObj ? obj[contributionType].id : obj[contributionType],
+        contribution_slug: isContributionTypeObj ? obj[contributionType].slug : contributionType
       };
     }
   }

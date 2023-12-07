@@ -1,27 +1,29 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
+  CategoryTrendingFeedWidget,
+  CategoryTrendingUsersWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
   FeedObjectSkeleton,
-  SCFeedObjectTemplateType,
+  FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FeedProps,
-  InlineComposer,
-  SCFeedWidgetType,
-  TrendingFeed,
-  TrendingPeople
+  InlineComposerWidget,
+  SCFeedObjectTemplateType,
+  SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {useSCFetchCategory} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCCategoryFeedTemplate';
+import {FormattedMessage} from 'react-intl';
+import {SnackbarKey, useSnackbar} from 'notistack';
+import {ContributionUtils} from '@selfcommunity/react-ui';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -29,11 +31,8 @@ const classes = {
 
 const Root = styled(Feed, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryFeedProps {
   /**
@@ -92,14 +91,14 @@ export interface CategoryFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: TrendingPeople,
+    component: CategoryTrendingUsersWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: TrendingFeed,
+    component: CategoryTrendingFeedWidget,
     componentProps: {},
     column: 'right',
     position: 1
@@ -108,6 +107,10 @@ const WIDGETS: SCFeedWidgetType[] = [
 
 /**
  * > API documentation for the Community-JS Category Feed Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific category's feed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/CategoryFeed)
 
  #### Import
 
@@ -144,6 +147,10 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     FeedProps = {}
   } = props;
 
+  // CONTEXT
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {enqueueSnackbar} = useSnackbar();
+
   // REF
   const feedRef = useRef<FeedRef>();
 
@@ -154,6 +161,15 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   const handleComposerSuccess = (feedObject) => {
     // Not insert if the category does not match
     if (feedObject.categories.findIndex((c) => c.id === scCategory.id) === -1) {
+      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+        action: (snackbarId: SnackbarKey) => (
+          <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
+            <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
+          </Link>
+        ),
+        variant: 'success',
+        autoHideDuration: 7000
+      });
       return;
     }
 
@@ -207,8 +223,13 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposer onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
+      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scCategory.id]}}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
       {...FeedProps}
     />
   );

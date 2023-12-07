@@ -1,18 +1,63 @@
 /**
- * Interface SCPrivateMessageType.
- * Private Message Schema.
+ * Interface SCPrivateMessageThreadType.
+ * Thread Private Message Schema.
  */
 import {SCUserType} from './user';
 
-export interface SCPrivateMessageType {
-  /**
-   * Message status: created, deleted or hidden message
-   */
-  status: string;
+export interface SCPrivateMessageThreadType {
   /**
    * Id of the message
    */
   id: number;
+
+  /**
+   * Sender User
+   */
+  sender: SCUserType;
+
+  /**
+   *Receiver User
+   */
+  receiver: SCUserType;
+
+  /**
+   * Message content
+   */
+  message: string;
+
+  /**
+   * Send date time
+   */
+  created_at: Date | string;
+
+  /**
+   * Message status: created, deleted or hidden message
+   */
+  status: string;
+
+  /**
+   * file
+   */
+  file?: SCPrivateMessageFileType;
+}
+/**
+ * Interface SCPrivateMessageSnippetType.
+ * Snippet Private Message Schema.
+ */
+export interface SCPrivateMessageSnippetType {
+  /**
+   * Id of the message
+   */
+  id: number;
+
+  /**
+   * Headline
+   */
+  headline: string;
+  /**
+   * Message
+   */
+  message: string;
 
   /**
    * Sender User
@@ -24,14 +69,10 @@ export interface SCPrivateMessageType {
   receiver: SCUserType;
 
   /**
-   * Message
-   */
-  html: string;
-
-  /**
    * Send date time
    */
   created_at: Date | string;
+
   /**
    * Last interaction date time
    */
@@ -41,19 +82,6 @@ export interface SCPrivateMessageType {
    * Message status: created, deleted or hidden message
    */
   thread_status: SCPrivateMessageStatusType;
-
-  /**
-   * file
-   */
-  file?: SCPrivateMessageFileType;
-  /**
-   * Headline
-   */
-  headline: string;
-  /**
-   * Message content
-   */
-  message: string;
 }
 
 /**
@@ -118,7 +146,9 @@ export interface SCPrivateMessageFileType {
 export enum SCMessageFileType {
   DOCUMENT = 'application/',
   IMAGE = 'image/',
-  VIDEO = 'video/'
+  VIDEO = 'video/',
+  PDF = 'application/pdf',
+  AUDIO = 'audio/'
 }
 
 /**

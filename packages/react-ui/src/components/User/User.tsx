@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
-import {Avatar, Button} from '@mui/material';
+import {Avatar, Badge, Button, Chip} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchUser, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCFetchUser,
+  useSCPreferences,
+  useSCRouting
+} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
 import classNames from 'classnames';
@@ -12,6 +21,9 @@ import ConnectionUserButton from '../ConnectionUserButton';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   userFollowers: {
@@ -20,17 +32,17 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCUser';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  staffBadgeLabel: `${PREFIX}-staff-badge-label`
 };
 
 const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({theme}: any) => ({}));
 
 export interface UserProps extends WidgetProps {
   /**
@@ -59,13 +71,22 @@ export interface UserProps extends WidgetProps {
    */
   showFollowers?: boolean;
   /**
+   * Badge content to show as user avatar badge if show reaction is true.
+   */
+  badgeContent?: any;
+  /**
    * Any other properties
    */
   [p: string]: any;
 }
+const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_STAFF_BADGE_ICON];
 
 /**
  * > API documentation for the Community-JS User component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a user item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
 
  #### Import
 
@@ -83,7 +104,10 @@ export interface UserProps extends WidgetProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUser-root|Styles applied to the root element.|
+ |avatar|.SCUser-avatar|Styles applied to the avatar element.|
+ |staffBadgeLabel|.SCUser-staff-badge-label|Styles applied to the staff badge label element.|
 
+ *
  * @param inProps
  */
 export default function User(inProps: UserProps): JSX.Element {
@@ -100,6 +124,7 @@ export default function User(inProps: UserProps): JSX.Element {
     followConnectUserButtonProps = {},
     showFollowers = false,
     elevation,
+    badgeContent = null,
     ...rest
   } = props;
 
@@ -108,6 +133,16 @@ export default function User(inProps: UserProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
+  const hasBadge = scUser && scUser.community_badge;
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   // INTL
   const intl = useIntl();
@@ -140,15 +175,39 @@ export default function User(inProps: UserProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root
-      elevation={elevation}
-      {...rest}
-      className={classNames(classes.root, className)}
-      ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}}
-      image={<Avatar alt={scUser.username} src={scUser.avatar} />}
-      primary={scUser.username}
-      secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
-      actions={renderAuthenticatedActions()}
-    />
+    <>
+      <Root
+        elevation={elevation}
+        {...rest}
+        className={classNames(classes.root, className)}
+        ButtonBaseProps={
+          scUser.deleted ? {onClick: () => setOpenAlert(true)} : {component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}
+        }
+        image={
+          badgeContent ? (
+            <Badge overlap="circular" anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} badgeContent={badgeContent}>
+              <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
+            </Badge>
+          ) : (
+            <UserAvatar hide={!hasBadge}>
+              <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
+            </UserAvatar>
+          )
+        }
+        primary={
+          hasBadge && preferences ? (
+            <>
+              {scUser.username}
+              <Chip component="span" className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
+            </>
+          ) : (
+            scUser.username
+          )
+        }
+        secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
+        actions={renderAuthenticatedActions()}
+      />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

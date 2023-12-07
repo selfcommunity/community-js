@@ -1,20 +1,18 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import BaseItemButton from './index';
+import BaseItem from '../BaseItem';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI Shared/BaseItemButton',
   component: BaseItemButton
-} as ComponentMeta<typeof BaseItemButton>;
+} as Meta<typeof BaseItemButton>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof BaseItemButton> = (args) => <BaseItemButton {...args} />;
+const template = (args) => <BaseItemButton {...args} />;
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-  primary: 'TITOLO',
-  secondary: 'caption'
+export const Base: StoryObj<BaseItemButton> = {
+  args: {
+    primary: 'TITOLO',
+    secondary: 'caption'
+  },
+  render: template
 };

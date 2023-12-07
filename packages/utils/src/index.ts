@@ -10,12 +10,15 @@ import {
   updateQueryStringParameter
 } from './utils/url';
 import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
-import {mergeDeep, isObject} from './utils/object';
-import {arraysEqual} from './utils/array';
-import {loadVersionBrowser} from './utils/browser';
+import {mergeDeep, isObject, objectWithoutProperties, isFunc} from './utils/object';
+import {isInteger} from './utils/number';
+import {arraysEqual, groupBy} from './utils/array';
+import {loadVersionBrowser, iOS} from './utils/browser';
+import {LocalStorageDB} from './utils/localStorage';
 import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
 import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
+import {resizeImage} from './utils/image';
 
 /**
  * Export all utilities
@@ -44,13 +47,20 @@ export {
   Logger,
   mergeDeep,
   isObject,
+  objectWithoutProperties,
+  isFunc,
+  isInteger,
   arraysEqual,
+  groupBy,
   WSClient,
   WSClientType,
   WSClientPropTypes,
   loadVersionBrowser,
+  iOS,
+  LocalStorageDB,
   LRUCache,
   LruCache,
   LruCacheType,
-  CacheStrategies
+  CacheStrategies,
+  resizeImage
 };

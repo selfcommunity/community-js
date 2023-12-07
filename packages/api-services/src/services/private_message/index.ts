@@ -7,27 +7,32 @@ import {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   SCPaginatedResponse,
-  ThreadParams
+  ThreadParams,
+  ThreadDeleteParams
 } from '../../types';
 import {
-  SCPrivateMessageType,
+  SCPrivateMessageSnippetType,
+  SCPrivateMessageThreadType,
   SCPrivateMessageUploadMediaChunkType,
   SCPrivateMessageUploadMediaType,
-  SCPrivateMessageUploadThumbnailType
+  SCPrivateMessageUploadThumbnailType,
+  SCUserType
 } from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
+import {urlParams} from '../../utils/url';
 
 export interface PrivateMessageApiClientInterface {
-  getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>>;
-  getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>>;
-  getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageType>;
-  sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageType>;
+  getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>>;
+  getAThread(params: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>>;
+  getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
+  sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType>;
   deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  deleteAThread(params: ThreadDeleteParams, config?: AxiosRequestConfig): Promise<any>;
   uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType>;
   uploadThumbnail(data: MessageThumbnailUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadThumbnailType>;
   uploadMediaInChunks(data: MessageMediaChunksParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaChunkType>;
   chunkUploadDone(data: MessageChunkUploadDoneParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType>;
+  searchUser(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 }
 /**
  * Contains all the endpoints needed to manage private messages.
@@ -38,17 +43,18 @@ export class PrivateMessageApiClient {
    * This endpoint retrieves all snippets.
    * @param config
    */
-  static getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+  static getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>> {
     return apiRequest({...config, url: Endpoints.GetSnippets.url({}), method: Endpoints.GetSnippets.method});
   }
 
   /**
    * This endpoint retrieves all messages in a thread.
-   * @param data
+   * @param params
    * @param config
    */
-  static getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
-    return apiRequest({...config, url: Endpoints.GetAThread.url({}), method: Endpoints.GetAThread.method, data: data});
+  static getAThread(params: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetAThread.url({})}?${p.toString()}`, method: Endpoints.GetAThread.method});
   }
 
   /**
@@ -56,7 +62,7 @@ export class PrivateMessageApiClient {
    * @param id
    * @param config
    */
-  static getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return apiRequest({...config, url: Endpoints.GetASingleMessage.url({id}), method: Endpoints.GetASingleMessage.method});
   }
 
@@ -65,8 +71,8 @@ export class PrivateMessageApiClient {
    * @param data
    * @param config
    */
-  static sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
-    return apiRequest({...config, url: Endpoints.SendMessage.url({}), method: Endpoints.SendMessage.method, data: data});
+  static sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
+    return apiRequest({...config, data, url: Endpoints.SendMessage.url({}), method: Endpoints.SendMessage.method});
   }
 
   /**
@@ -80,11 +86,12 @@ export class PrivateMessageApiClient {
 
   /**
    * This endpoint deletes a thread.
-   * @param id
+   * @param params
    * @param config
    */
-  static deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.DeleteAThread.url({id}), method: Endpoints.DeleteAThread.method});
+  static deleteAThread(params: ThreadDeleteParams, config?: AxiosRequestConfig): Promise<any> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.DeleteAThread.url({})}?${p.toString()}`, method: Endpoints.DeleteAThread.method});
   }
 
   /**
@@ -93,7 +100,7 @@ export class PrivateMessageApiClient {
    * @param config
    */
   static uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType> {
-    return apiRequest({...config, url: Endpoints.PrivateMessageUploadMedia.url({}), method: Endpoints.PrivateMessageUploadMedia.method, data: data});
+    return apiRequest({...config, data, url: Endpoints.PrivateMessageUploadMedia.url({}), method: Endpoints.PrivateMessageUploadMedia.method});
   }
 
   /**
@@ -104,9 +111,9 @@ export class PrivateMessageApiClient {
   static uploadThumbnail(data: MessageThumbnailUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadThumbnailType> {
     return apiRequest({
       ...config,
+      data,
       url: Endpoints.PrivateMessageUploadThumbnail.url({}),
-      method: Endpoints.PrivateMessageUploadThumbnail.method,
-      data: data
+      method: Endpoints.PrivateMessageUploadThumbnail.method
     });
   }
 
@@ -118,9 +125,9 @@ export class PrivateMessageApiClient {
   static uploadMediaInChunks(data: MessageMediaChunksParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaChunkType> {
     return apiRequest({
       ...config,
+      data,
       url: Endpoints.PrivateMessageUploadMediaInChunks.url({}),
-      method: Endpoints.PrivateMessageUploadMediaInChunks.method,
-      data: data
+      method: Endpoints.PrivateMessageUploadMediaInChunks.method
     });
   }
 
@@ -135,6 +142,18 @@ export class PrivateMessageApiClient {
       url: Endpoints.PrivateMessageChunkUploadDone.url({}),
       method: Endpoints.PrivateMessageChunkUploadDone.method,
       data: data
+    });
+  }
+  /**
+   * This endpoint performs users search.
+   * @param search
+   * @param config
+   */
+  static searchUser(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.PrivateMessageSearchUser.url({search}),
+      method: Endpoints.PrivateMessageSearchUser.method
     });
   }
 }
@@ -175,23 +194,23 @@ export class PrivateMessageApiClient {
  :::
  */
 export default class PrivateMessageService {
-  static async getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
+  static async getAllSnippets(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageSnippetType>> {
     return PrivateMessageApiClient.getAllSnippets(config);
   }
-  static async getAThread(data: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageType>> {
-    return PrivateMessageApiClient.getAThread(data, config);
+  static async getAThread(params: ThreadParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrivateMessageThreadType>> {
+    return PrivateMessageApiClient.getAThread(params, config);
   }
-  static async getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static async getASingleMessage(id: number | string, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return PrivateMessageApiClient.getASingleMessage(id, config);
   }
-  static async sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageType> {
+  static async sendAMessage(data: MessageCreateParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageThreadType> {
     return PrivateMessageApiClient.sendAMessage(data, config);
   }
   static async deleteAMessage(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return PrivateMessageApiClient.deleteAMessage(id, config);
   }
-  static async deleteAThread(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return PrivateMessageApiClient.deleteAThread(id, config);
+  static async deleteAThread(params: ThreadDeleteParams, config?: AxiosRequestConfig): Promise<any> {
+    return PrivateMessageApiClient.deleteAThread(params, config);
   }
   static async uploadMedia(data: MessageMediaUploadParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType> {
     return PrivateMessageApiClient.uploadMedia(data, config);
@@ -204,5 +223,8 @@ export default class PrivateMessageService {
   }
   static async chunkUploadDone(data: MessageChunkUploadDoneParams, config?: AxiosRequestConfig): Promise<SCPrivateMessageUploadMediaType> {
     return PrivateMessageApiClient.chunkUploadDone(data, config);
+  }
+  static async searchUser(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return PrivateMessageApiClient.searchUser(search, config);
   }
 }

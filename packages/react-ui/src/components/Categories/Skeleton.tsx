@@ -3,30 +3,17 @@ import {styled} from '@mui/material/styles';
 import {Box, Grid} from '@mui/material';
 import CategorySkeleton from '../Category/Skeleton';
 import classNames from 'classnames';
-
-const PREFIX = 'SCCategoriesSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   categories: `${PREFIX}-categories`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.categories}`]: {
-    ' .SCBaseItem-image': {
-      borderTopLeftRadius: theme.shape.borderRadius,
-      borderBottomLeftRadius: theme.shape.borderRadius,
-      '& > span': {
-        width: '56px !important',
-        height: '56px !important'
-      }
-    }
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 export interface CategoriesSkeletonProps {
   /**
@@ -53,14 +40,14 @@ export interface CategoriesSkeletonProps {
 
  #### Component Name
 
- The name `SCCategoriesSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategories-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoriesSkeleton-root|Styles applied to the root element.|
- |categories|.SCCategoriesSkeleton-categories|Styles applied to the categories element.|
+ |root|.SCCategories-skeleton-root|Styles applied to the root element.|
+ |categories|.SCCategories-categories|Styles applied to the categories' element.|
  *
  */
 export default function CategoriesSkeleton(inProps: CategoriesSkeletonProps): JSX.Element {

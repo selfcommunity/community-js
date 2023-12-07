@@ -1,24 +1,9 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {MenuItem, TextField} from '@mui/material';
+import {FormControlLabel, MenuItem, TextField, TextFieldProps, Checkbox} from '@mui/material';
 import {SCMetadataType, SCMetadataTypeFieldType} from '@selfcommunity/types';
 import EmailTextField from '../EmailTextField';
 import UrlTextField from '../UrlTextField';
 import PhoneTextField from '../PhoneTextField';
-import classNames from 'classnames';
-import {TextFieldProps} from '@mui/material/TextField';
-
-const PREFIX = 'SCMetadataField';
-
-const classes = {
-  root: `${PREFIX}-root`
-};
-
-const Root = styled(React.Fragment, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
 
 export type MetadataFieldProps = TextFieldProps & {
   metadata: SCMetadataType;
@@ -26,26 +11,25 @@ export type MetadataFieldProps = TextFieldProps & {
 
 const MetadataField = (props: MetadataFieldProps): JSX.Element => {
   // PROPS
-  const {metadata, className = '', ...rest} = props;
+  const {metadata, className = '', label, ...rest} = props;
 
   // RENDER
   let component = null;
+  const _label = label ?? metadata.label;
 
   switch (metadata?.type) {
     case SCMetadataTypeFieldType.EMAIL:
-      component = <EmailTextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} />;
+      component = <EmailTextField {...rest} className={className} label={_label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.URL:
-      component = (
-        <UrlTextField {...rest} type="url" className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} />
-      );
+      component = <UrlTextField {...rest} type="url" className={className} label={_label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.PHONE_NUMBER:
-      component = <PhoneTextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} />;
+      component = <PhoneTextField {...rest} className={className} label={_label} required={metadata?.mandatory} />;
       break;
     case SCMetadataTypeFieldType.ENUM:
       component = (
-        <TextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} select>
+        <TextField {...rest} className={className} label={_label} required={metadata?.mandatory} select>
           {metadata?.type_options.map((option: string) => (
             <MenuItem key={option} value={option}>
               {option}
@@ -54,11 +38,17 @@ const MetadataField = (props: MetadataFieldProps): JSX.Element => {
         </TextField>
       );
       break;
+    case SCMetadataTypeFieldType.CHECKBOX:
+      const {value} = rest;
+      component = (
+        <FormControlLabel className={className} control={<Checkbox required={metadata?.mandatory} checked={Boolean(value)} />} label={_label} />
+      );
+      break;
     default:
-      component = <TextField {...rest} className={classNames(className, classes.root)} label={metadata.label} required={metadata?.mandatory} />;
+      component = <TextField {...rest} className={className} label={_label} required={metadata?.mandatory} />;
       break;
   }
-  return <Root>{component}</Root>;
+  return <React.Fragment>{component}</React.Fragment>;
 };
 
 export default MetadataField;

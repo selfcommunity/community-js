@@ -16,9 +16,17 @@ export interface AccountCreateParams {
    */
   password: string;
   /**
-   * 	Optional Invite Code field for confirm invitation
+   * 	Optional Invite Code field
    */
   invite_code?: string;
+  /**
+   * 	Optional Promo Code field
+   */
+  promo_code?: string;
+  /**
+   * Any other properties available in user_metadata_definition
+   */
+  [p: string]: any;
 }
 
 export interface AccountVerifyParams {

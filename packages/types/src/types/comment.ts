@@ -1,9 +1,5 @@
 import {SCUserType} from './user';
-
-/**
- * Typology Comment
- */
-export const SCCommentTypologyType = 'comment';
+import {SCReactionType} from './reaction';
 
 /**
  * Interface SCCommentType.
@@ -49,6 +45,16 @@ export interface SCCommentType {
    * Summary
    */
   summary: string;
+
+  /**
+   * Summary html
+   */
+  summary_html?: string;
+
+  /**
+   * True if summary_html is truncated
+   */
+  summary_truncated?: boolean;
 
   /**
    * If the comments is deleted
@@ -104,6 +110,16 @@ export interface SCCommentType {
    * Type: comment
    */
   type: string;
+
+  /**
+   * Reactions number and objs
+   */
+  reactions_count: [];
+
+  /**
+   * Reaction obj
+   */
+  reaction: SCReactionType;
 }
 
 /**

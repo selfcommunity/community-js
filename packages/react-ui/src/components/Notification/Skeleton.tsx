@@ -1,19 +1,20 @@
 import React from 'react';
 import CardContent from '@mui/material/CardContent';
 import {styled} from '@mui/material/styles';
-import {CardHeader} from '@mui/material';
+import {CardHeader, useTheme} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Widget from '../Widget';
-
-const PREFIX = 'SCNotificationSkeleton';
+import {SCThemeType} from '@selfcommunity/react-core';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
-const Root = styled(Widget)(({theme}) => ({
-  marginBottom: theme.spacing(2)
-}));
+const Root = styled(Widget, {
+  name: PREFIX,
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Notification Skeleton component. Learn about the available props and the CSS API.
@@ -26,20 +27,28 @@ const Root = styled(Widget)(({theme}) => ({
 
  #### Component Name
 
- The name `SCNotificationSkeleton` can be used when providing style overrides in the theme.
+ The name `SCNotification-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCNotificationSkeleton-root|Styles applied to the root element.|
+ |root|.SCNotification-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function NotificationSkeleton(props): JSX.Element {
+  const theme = useTheme<SCThemeType>();
   const notification = (
     <>
       <CardHeader
-        avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+        avatar={
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={theme.selfcommunity.user.avatar.sizeMedium}
+            height={theme.selfcommunity.user.avatar.sizeMedium}
+          />
+        }
         title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
         subheader={<Skeleton animation="wave" height={10} width="40%" />}
       />

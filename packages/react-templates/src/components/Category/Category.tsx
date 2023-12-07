@@ -8,20 +8,17 @@ import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-
-const PREFIX = 'SCCategoryTemplate';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  feed: `${PREFIX}-feed`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CategoryProps {
   /**
@@ -74,6 +71,10 @@ export interface CategoryProps {
 }
 /**
  * > API documentation for the Community-JS Category Template. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a specific category's template.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/Category)
 
  #### Import
 
@@ -90,6 +91,7 @@ export interface CategoryProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCategoryTemplate-root|Styles applied to the root element.|
+ |feed|.SCCategoryTemplate-feed|Styles applied to the feed element.|
  *
  * @param inProps
  */
@@ -112,6 +114,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     <Root id={id} className={classNames(classes.root, className)}>
       <CategoryHeader category={scCategory} />
       <CategoryFeed
+        className={classes.feed}
         category={scCategory}
         widgets={widgets}
         FeedObjectProps={FeedObjectProps}

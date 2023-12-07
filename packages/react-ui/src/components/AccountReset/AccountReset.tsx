@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Alert, Box, Button, ButtonProps, TextFieldProps, Typography} from '@mui/material';
+import {Alert, Box, Button, ButtonProps, CircularProgress, TextFieldProps, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
-import {AccountService, formatHttpError} from '@selfcommunity/api-services';
+import {AccountService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import PasswordTextField from '../../shared/PasswordTextField';
 
 const PREFIX = 'SCAccountReset';
@@ -15,7 +15,8 @@ const classes = {
   form: `${PREFIX}-form`,
   password: `${PREFIX}-password`,
   success: `${PREFIX}-success`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  validating: `${PREFIX}-validating`
 };
 
 const Root = styled(Box, {
@@ -28,6 +29,15 @@ const Root = styled(Box, {
   },
   [`& .${classes.form} .MuiTypography-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
+  },
+  [`& .${classes.validating}`]: {
+    [`& span`]: {
+      marginRight: 12,
+      float: 'left'
+    },
+    [`& p`]: {
+      paddingTop: 12
+    }
   }
 }));
 
@@ -68,18 +78,33 @@ export interface AccountResetProps {
   successAction?: React.ReactNode;
 
   /**
+   * Callback triggered on error sign in
+   * @default null
+   */
+  onError?: (res: any) => void;
+
+  /**
+   * Action component to display after error message
+   * */
+  errorAction?: React.ReactNode;
+
+  /**
    * Other props
    */
   [p: string]: any;
 }
 
 /**
- * > API documentation for the Community-JS AccountVerify component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Account Reset component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component allows users to log in to the application with their usernames and passwords.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/AccountReset)
 
  #### Import
 
  ```jsx
- import {AccountVerify} from '@selfcommunity/react-ui';
+ import {AccountReset} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -108,15 +133,18 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   // PROPS
   const {
     className,
-    onSuccess = null,
+    onSuccess,
+    onError,
     TextFieldProps = {variant: 'outlined', fullWidth: true},
     ButtonProps = {variant: 'contained'},
     validationCode,
     successAction = null,
+    errorAction = null,
     ...rest
   } = props;
 
   // STATE
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const [validationCodeError, setValidationCodeError] = useState<string>('');
@@ -127,6 +155,30 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
   const intl = useIntl();
 
+  /**
+   * Verify the validation code before enable the form
+   */
+  useEffect(() => {
+    if (!scUserContext.user) {
+      if (validationCode) {
+        AccountService.verifyValidationCode({validation_code: validationCode})
+          .then((res: any) => {
+            if (res.status >= 300 || (res && !res.is_valid)) {
+              setValidationCodeError(intl.formatMessage({id: 'ui.accountReset.code.error', defaultMessage: 'ui.accountReset.code.error'}));
+            }
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            const _error = formatHttpErrorCode(error);
+            if (_error.validationCodeError) {
+              setValidationCodeError(_error.validationCodeError.error);
+            }
+            setIsLoading(false);
+          });
+      }
+    }
+  }, [validationCode]);
+
   // HANDLERS
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -136,20 +188,20 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
     event.preventDefault();
     event.stopPropagation();
     setIsSubmitting(true);
-
     AccountService.reset({validation_code: validationCode, password})
       .then((res: any) => {
         setIsSucceed(true);
         onSuccess && onSuccess(res);
       })
       .catch((error) => {
-        const _error = formatHttpError(error);
+        const _error = formatHttpErrorCode(error);
         if (_error.passwordError) {
           setPasswordError(_error.passwordError.error);
         }
         if (_error.validationCodeError) {
           setValidationCodeError(_error.validationCodeError.error);
         }
+        onError && onError(error)
       })
       .then(() => setIsSubmitting(false));
 
@@ -172,7 +224,15 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
       ) : validationCodeError ? (
         <Alert severity="error" className={classes.error}>
           <FormattedMessage id="ui.accountReset.code.error" defaultMessage="ui.accountReset.code.error" />
+          {errorAction}
         </Alert>
+      ) : isLoading ? (
+        <Box className={classes.validating}>
+          <CircularProgress />
+          <p>
+            <FormattedMessage id="ui.accountReset.code.validatingToken" defaultMessage="ui.accountReset.code.validatingToken" />
+          </p>
+        </Box>
       ) : (
         <form className={classes.form} onSubmit={handleSubmit}>
           <PasswordTextField
@@ -183,7 +243,14 @@ export default function AccountReset(inProps: AccountResetProps): JSX.Element {
             value={password}
             onChange={handleChange}
             error={Boolean(passwordError)}
-            helperText={passwordError}
+            helperText={
+              passwordError && (
+                <FormattedMessage
+                  id={`ui.accountReset.password.error.${passwordError}`}
+                  defaultMessage={`ui.accountReset.password.error.${passwordError}`}
+                />
+              )
+            }
           />
           <Button type="submit" {...ButtonProps} disabled={!password || isSubmitting}>
             <FormattedMessage id="ui.accountReset.submit" defaultMessage="ui.accountReset.submit" />

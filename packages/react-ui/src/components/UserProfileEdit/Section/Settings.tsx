@@ -2,35 +2,24 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCUserSettingsType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import SettingsSkeleton from './SettingsSkeleton';
 import {useSnackbar} from 'notistack';
-import {useThemeProps} from '@mui/system';
 import {DEFAULT_SETTINGS} from '../../../constants/UserProfile';
 import {SCUserProfileSettings} from '../../../types';
-
-const PREFIX = 'SCUserProfileEditSectionSettings';
+import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-settings-root`,
   control: `${PREFIX}-control`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.control}`]: {
-    margin: theme.spacing(0, 0, 2, 0),
-    ['& .MuiFormControl-root']: {
-      display: 'block'
-    }
-  }
-}));
+  slot: 'SettingsRoot'
+})(() => ({}));
 
 export interface SettingsProps {
   /**
@@ -57,18 +46,34 @@ export interface SettingsProps {
   onEditSuccess?: () => void;
 
   /**
+   * Actions to be inserted at the start
+   * @default null
+   */
+  startActions?: React.ReactNode | null;
+
+  /**
+   * Actions to be inserted at the end
+   * @default null
+   */
+  endActions?: React.ReactNode | null;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
 }
 
-export default function Settings(inProps: SettingsProps): JSX.Element {
+export default function Settings(props: SettingsProps): JSX.Element {
   // PROPS
-  const props: SettingsProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-  const {id = null, className = null, settings = [...DEFAULT_SETTINGS], onEditSuccess = null, ...rest} = props;
+  const {
+    id = null,
+    className = null,
+    settings = [...DEFAULT_SETTINGS],
+    onEditSuccess = null,
+    startActions = null,
+    endActions = null,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -82,32 +87,17 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
   // EFFECTS
   useEffect(() => {
     if (scUserContext.user) {
-      http
-        .request({
-          url: Endpoints.UserSettings.url({id: scUserContext.user.id}),
-          method: Endpoints.UserSettings.method
-        })
-        .then((res: HttpResponse<SCUserSettingsType>) => {
-          setSetting(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      setSetting(scUserContext.managers.settings.all());
     }
-  }, [scUserContext.user]);
+  }, [scUserContext.user, scUserContext.managers.settings.all]);
 
   // HANDLERS
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSetting({..._settings, [event.target.name]: event.target.value});
-    http
-      .request({
-        url: Endpoints.UserSettingsPatch.url({id: scUserContext.user.id}),
-        method: Endpoints.UserSettingsPatch.method,
-        data: {[event.target.name]: parseInt(event.target.value, 10)}
-      })
-      .then((res: HttpResponse<SCUserSettingsType>) => {
-        setSetting(res.data);
+    scUserContext.managers.settings
+      .update(event.target.name, parseInt(event.target.value, 10))
+      .then((res: SCUserSettingsType) => {
+        setSetting(res);
         if (onEditSuccess) {
           onEditSuccess();
         } else {
@@ -150,7 +140,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
                 <RadioGroup
                   aria-labelledby="notification settings"
                   value={_settings.show_toast_notifications}
-                  name="show_toast_notifications"
+                  name={SCNotification.NOTIFICATIONS_SETTINGS_SHOW_TOAST}
                   onChange={handleChange}>
                   <FormControlLabel
                     value={1}
@@ -175,7 +165,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
           <RadioGroup
             aria-labelledby="notification sound settings"
             value={_settings.toast_notifications_emit_sound}
-            name="toast_notifications_emit_sound"
+            name={SCNotification.NOTIFICATIONS_SETTINGS_TOAST_EMIT_SOUND}
             onChange={handleChange}>
             <FormControlLabel
               value={1}
@@ -204,7 +194,11 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
                 <FormLabel>
                   <FormattedMessage id="ui.userProfileEditSettings.interaction.label" defaultMessage="ui.userProfileEditSettings.interaction.label" />
                 </FormLabel>
-                <RadioGroup aria-labelledby="email notification settings" value={_settings.qa_frequency} name="qa_frequency" onChange={handleChange}>
+                <RadioGroup
+                  aria-labelledby="email notification settings"
+                  value={_settings.qa_frequency}
+                  name={SCNotification.NOTIFICATIONS_SETTINGS_QA_FREQUENCY}
+                  onChange={handleChange}>
                   <FormControlLabel
                     value={-1}
                     control={<Radio size="small" />}
@@ -260,7 +254,7 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
                 <RadioGroup
                   aria-labelledby="email notification settings"
                   value={_settings.email_notification_not_qa}
-                  name="email_notification_not_qa"
+                  name={SCNotification.NOTIFICATIONS_SETTINGS_EMAIL_NOT_QA}
                   onChange={handleChange}>
                   <FormControlLabel
                     value={1}
@@ -294,7 +288,9 @@ export default function Settings(inProps: SettingsProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
+      {startActions}
       {settings.map((setting) => renderSetting(setting))}
+      {endActions}
     </Root>
   );
 }

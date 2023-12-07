@@ -1,32 +1,29 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Tooltip, Typography} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
+import {Avatar, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
-import Votes from './Votes';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import CommentObjectSkeleton from './Skeleton';
-import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import {SCCommentsOrderBy} from '../../types/comments';
-import ReplyCommentObject from './ReplyComment';
+import CommentsObject, {CommentsObjectProps} from '../CommentsObject';
+import CommentObjectReply from '../CommentObjectReply';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getContribution, getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
+import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
-import CommentsObject from '../CommentsObject';
 import BaseItem from '../../shared/BaseItem';
-import {SCCommentType, SCCommentTypologyType, SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger, LRUCache} from '@selfcommunity/utils';
+import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
   Link,
+  SCCache,
   SCContextType,
   SCRoutes,
-  SCCache,
   SCRoutingContextType,
   SCUserContext,
   SCUserContextType,
@@ -36,128 +33,34 @@ import {
   useSCFetchCommentObjects,
   useSCRouting
 } from '@selfcommunity/react-core';
-
-const messages = defineMessages({
-  reply: {
-    id: 'ui.commentObject.reply',
-    defaultMessage: 'ui.commentObject.reply'
-  },
-  voteUp: {
-    id: 'ui.commentObject.voteUp',
-    defaultMessage: 'ui.commentObject.voteUp'
-  },
-  voteDown: {
-    id: 'ui.commentObject.voteDown',
-    defaultMessage: 'ui.commentObject.voteDown'
-  }
-});
-
-const PREFIX = 'SCCommentObject';
+import VoteButton from '../VoteButton';
+import VoteAudienceButton from '../VoteAudienceButton';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
-  nestedComments: `${PREFIX}-nestedComments`,
+  nestedComments: `${PREFIX}-nested-comments`,
   avatar: `${PREFIX}-avatar`,
   content: `${PREFIX}-content`,
+  showMoreContent: `${PREFIX}-show-more-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
-  btnVotes: `${PREFIX}-btn-votes`,
-  votes: `${PREFIX}-votes`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`,
   deleted: `${PREFIX}-deleted`,
   activityAt: `${PREFIX}-activity-at`,
+  vote: `${PREFIX}-vote`,
+  voteAudience: `${PREFIX}-vote-audience`,
   reply: `${PREFIX}-reply`,
   contentSubSection: `${PREFIX}-comment-sub-section`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  overflow: 'visible',
-  width: '100%',
-  '& .MuiIcon-root': {
-    fontSize: '18px',
-    marginBottom: '0.5px'
-  },
-  [`& .${classes.comment}`]: {
-    paddingBottom: 0,
-    overflow: 'visible',
-    '& > div': {
-      alignItems: 'flex-start'
-    }
-  },
-  [`& .${classes.nestedComments}`]: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: 25,
-    '& ul.MuiList-root': {
-      paddingTop: 0,
-      paddingBottom: 0,
-      width: '100%',
-      '& li.MuiListItem-root': {
-        paddingTop: 5
-      }
-    },
-    [theme.breakpoints.up('sm')]: {
-      paddingLeft: 55
-    }
-  },
-  [`& .${classes.content}`]: {
-    position: 'relative',
-    display: 'flex',
-    '& .MuiCardContent-root': {
-      padding: '7px 13px 7px 13px',
-      flexGrow: 1
-    }
-  },
-  [`& .${classes.avatar}`]: {
-    top: theme.spacing()
-  },
-  [`& .${classes.author}`]: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-    '& span': {
-      fontWeight: '600'
-    }
-  },
-  [`& .${classes.textContent}`]: {
-    '& a': {
-      color: theme.palette.text.primary
-    },
-    '& p': {
-      marginBlockStart: '0.3em',
-      marginBlockEnd: '0.3em'
-    },
-    '& img': {
-      maxWidth: '100%'
-    }
-  },
-  [`& .${classes.commentActionsMenu}`]: {
-    alignItems: 'flexStart'
-  },
-  [`& .${classes.deleted}`]: {
-    opacity: 0.3
-  },
-  [`& .${classes.contentSubSection}`]: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    color: theme.palette.text.secondary
-  },
-  [`& .${classes.activityAt}`]: {
-    display: 'flex',
-    textDecoration: 'none',
-    color: 'inherit'
-  },
-  [`& .${classes.reply}`]: {
-    textTransform: 'capitalize',
-    textDecoration: 'underline',
-    textDecorationStyle: 'dotted'
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface CommentObjectProps {
   /**
@@ -192,9 +95,9 @@ export interface CommentObjectProps {
 
   /**
    * Type of feed object
-   * @default SCFeedObjectTypologyType.POST
+   * @default SCContributionType.POST
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * comments per page (latest_comments)
@@ -234,16 +137,40 @@ export interface CommentObjectProps {
   onDelete?: (comment: SCCommentType) => void;
 
   /**
+   * Callback on restore the comment
+   * @default null
+   */
+  onRestore?: (comment: SCCommentType) => void;
+
+  /**
+   * Callback on collapsed the comment
+   * @default null
+   */
+  onCollapsed?: (comment: SCCommentType) => void;
+
+  /**
+   * Show all summary initially (otherwise it will be truncated)
+   * @default false
+   */
+  truncateContent?: boolean;
+
+  /**
    * Props to spread to single comment object skeleton
    * @default {elevation: 0}
    */
   CommentObjectSkeletonProps?: CardProps;
 
   /**
-   * Props to spread to single comment object ReplyCommentObject
+   * Props to spread to single comment object CommentObjectReply
    * @default {elevation: 0}
    */
-  ReplyCommentObjectProps?: CardProps;
+  CommentObjectReplyProps?: CardProps;
+
+  /**
+   * Props to spread to sub comments object
+   * @default {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps}
+   */
+  CommentsObjectComponentProps?: CommentsObjectProps;
 
   /**
    * If datetime is linkable or not
@@ -252,13 +179,23 @@ export interface CommentObjectProps {
   linkableCommentDateTime?: boolean;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
    * Other props
    */
   [p: string]: any;
 }
 
 /**
- *> API documentation for the Community-JS Comment Object component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Comment Object component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a comment item.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/CommentObject)
 
  #### Import
 
@@ -282,8 +219,8 @@ export interface CommentObjectProps {
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
- |btnVotes|.SCCommentObject-btn-votes|Styles applied to the vote button element.|
- |votes|.SCCommentObject-votes|Styles applied to the votes section.|
+ |vote|.SCCommentObject-vote|Styles applied to the votes section.|
+ |btnVotes|.SCCommentObject-vote-audience|Styles applied to the votes audience section.|
  |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
  |deleted|.SCCommentObject-deleted|Styles applied to tdeleted element.|
  |activityAt|.SCCommentObject-activity-at|Styles applied to activity at section.|
@@ -305,15 +242,20 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     commentObject,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     commentReply,
     onOpenReply,
     onDelete,
+    onCollapsed,
+    onRestore,
     onVote,
     elevation = 0,
+    truncateContent = false,
     CommentObjectSkeletonProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
-    ReplyCommentObjectProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
+    CommentObjectReplyProps = {elevation, WidgetProps: {variant: 'outlined'} as WidgetProps},
     linkableCommentDateTime = true,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    CommentsObjectComponentProps = {},
     ...rest
   } = props;
 
@@ -322,11 +264,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
-  const intl = useIntl();
 
   // STATE
-  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject});
-  const [loadingVote, setLoadingVote] = useState(false);
+  const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
   const [replyComment, setReplyComment] = useState<SCCommentType>(commentReply);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
@@ -336,12 +276,20 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     feedObject,
     feedObjectType,
     orderBy: SCCommentsOrderBy.ADDED_AT_DESC,
-    parent: commentObject ? commentObject.id : commentObjectId
+    parent: commentObject ? commentObject.id : commentObjectId,
+    cacheStrategy
   });
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
+  // HANDLERS
+  const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
+    setObj(contribution as SCCommentType);
+    onVote && onVote(contribution as SCCommentType);
+  };
 
   /**
    * Update state object
-   * @param obj
+   * @param newObj
    */
   function updateObject(newObj) {
     LRUCache.set(SCCache.getCommentObjectCacheKey(obj.id), newObj);
@@ -369,46 +317,15 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   }
 
   /**
-   * Render vote action
-   * @param comment
-   */
-  function renderActionVote(comment) {
-    return (
-      <LoadingButton variant={'text'} sx={{minWidth: 30}} onClick={() => vote(comment)} disabled={loadingVote} color="inherit">
-        {comment.voted ? (
-          <Tooltip title={<FormattedMessage id={'ui.commentObject.voteDown'} defaultMessage={'ui.commentObject.voteDown'} />}>
-            <Icon fontSize={'small'} color="primary">
-              thumb_up_alt
-            </Icon>
-          </Tooltip>
-        ) : (
-          <Tooltip title={<FormattedMessage id={'ui.commentObject.voteUp'} defaultMessage={'ui.commentObject.voteUp'} />}>
-            <Icon fontSize={'small'} color="inherit">
-              thumb_up_off_alt
-            </Icon>
-          </Tooltip>
-        )}
-      </LoadingButton>
-    );
-  }
-
-  /**
-   * Render Reply action
+   * Render CommentObjectReply action
    * @param comment
    */
   function renderActionReply(comment) {
     return (
-      <Button className={classes.reply} variant="text" onClick={() => reply(comment)} color="inherit">
-        {intl.formatMessage(messages.reply)}
+      <Button className={classes.reply} variant="text" onClick={() => reply(comment)}>
+        <FormattedMessage id="ui.commentObject.reply" defaultMessage="ui.commentObject.reply" />
       </Button>
     );
-  }
-
-  /**
-   * Render Votes counter
-   */
-  function renderVotes(comment) {
-    return <Votes commentObject={comment} sx={{display: {xs: 'none', sm: 'block'}}} />;
   }
 
   /**
@@ -421,61 +338,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     } else {
       setReplyComment(comment);
       onOpenReply && onOpenReply(comment);
-    }
-  }
-
-  /**
-   * Perform vote comment
-   */
-  const performVoteComment = useMemo(
-    () => (comment) => {
-      return http
-        .request({
-          url: Endpoints.Vote.url({type: SCCommentTypologyType, id: comment.id}),
-          method: Endpoints.Vote.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
-    [obj]
-  );
-
-  /**
-   * Handle vote comment
-   * @param comment
-   */
-  function vote(comment) {
-    if (!scUserContext.user) {
-      scContext.settings.handleAnonymousAction();
-    } else {
-      if (UserUtils.isBlocked(scUserContext.user)) {
-        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-          variant: 'warning',
-          autoHideDuration: 3000
-        });
-      } else {
-        setLoadingVote(true);
-        performVoteComment(comment)
-          .then((data) => {
-            const newObj = obj;
-            obj.voted = !obj.voted;
-            obj.vote_count = obj.vote_count - (obj.voted ? -1 : 1);
-            updateObject(obj);
-            setLoadingVote(false);
-            onVote && onVote(comment);
-          })
-          .catch((error) => {
-            Logger.error(SCOPE_SC_UI, error);
-            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-              variant: 'error',
-              autoHideDuration: 3000
-            });
-          });
-      }
     }
   }
 
@@ -516,7 +378,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
-          updateObject({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, data]}});
+          // if add a comment -> the comment must be untruncated
+          const _data: SCCommentType = data;
+          _data.summary_truncated = false;
+          updateObject({...obj, ...{comment_count: obj.comment_count + 1, latest_comments: [...obj.latest_comments, _data]}});
           setReplyComment(null);
           setIsReplying(false);
         })
@@ -535,53 +400,24 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Handle comment delete
    */
   function handleDelete(comment) {
-    if (comment.parent) {
-      const _latestComment = obj.latest_comments.map((c) => {
-        if (c.id === comment.id) {
-          c.deleted = !c.deleted;
-        }
-        return c;
-      });
-      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
-    } else {
-      const _comment = Object.assign({}, obj, {deleted: !obj.deleted});
-      updateObject(Object.assign({}, obj, {deleted: !obj.deleted}));
-      onDelete && onDelete(_comment);
-    }
+    updateObject(comment);
+    onDelete && onDelete(comment);
   }
 
   /**
    * Handle comment delete
    */
   function handleHide(comment) {
-    if (comment.parent) {
-      const _latestComment = obj.latest_comments.map((c) => {
-        if (c.id === comment.id) {
-          c.collapsed = !c.collapsed;
-        }
-        return c;
-      });
-      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
-    } else {
-      updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
-    }
+    updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
+    onCollapsed && onCollapsed(comment);
   }
 
   /**
    * Handle comment restore
    */
   function handleRestore(comment) {
-    if (comment.parent) {
-      const _latestComment = obj.latest_comments.map((c) => {
-        if (c.id === comment.id) {
-          c.deleted = false;
-        }
-        return c;
-      });
-      updateObject(Object.assign({}, obj, {latest_comments: _latestComment}));
-    } else {
-      updateObject(Object.assign({}, obj, {deleted: false}));
-    }
+    updateObject(Object.assign({}, obj, {deleted: false}));
+    onRestore && onRestore(comment);
   }
 
   /**
@@ -653,24 +489,27 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function renderComment(comment: SCCommentType) {
     if (
       comment.deleted &&
-      (!scUserContext.user || (scUserContext.user && (!UserUtils.isStaff(scUserContext.user) || scUserContext.user.id !== comment.author.id)))
+      (!scUserContext.user || (scUserContext.user && !UserUtils.isStaff(scUserContext.user) && scUserContext.user.id !== comment.author.id))
     ) {
       // render the comment if user is logged and is staff (admin, moderator)
       // or the comment author is the logged user
       return null;
     }
+    const summaryHtmlTruncated = 'summary_truncated' in comment ? comment.summary_truncated : false;
+    const commentHtml = 'summary_html' in comment && truncateContent && summaryHtmlTruncated ? comment.summary_html : comment.html;
+    const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
         {editComment && editComment.id === comment.id ? (
           <Box className={classes.comment}>
-            <ReplyCommentObject
+            <CommentObjectReply
               text={comment.html}
               autoFocus
               id={`edit-${comment.id}`}
               onSave={handleSave}
               onCancel={handleCancel}
               editable={!isReplying || !isSavingComment}
-              {...ReplyCommentObjectProps}
+              {...CommentObjectReplyProps}
             />
           </Box>
         ) : (
@@ -678,8 +517,12 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
             elevation={0}
             className={classes.comment}
             image={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
-                <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
+              <Link
+                {...(!comment.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)})}
+                onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
+                <UserAvatar hide={!obj.author.community_badge}>
+                  <Avatar alt={obj.author.username} variant="circular" src={comment.author.avatar} className={classes.avatar} />
+                </UserAvatar>
               </Link>
             }
             disableTypography
@@ -687,14 +530,18 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
               <>
                 <Widget className={classes.content} elevation={elevation} {...rest}>
                   <CardContent className={classNames({[classes.deleted]: obj && obj.deleted})}>
-                    <Link className={classes.author} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)}>
+                    <Link
+                      className={classes.author}
+                      {...(!comment.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, comment.author)})}
+                      onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
-                    <Typography
-                      className={classes.textContent}
-                      variant="body2"
-                      gutterBottom
-                      dangerouslySetInnerHTML={{__html: getContributionHtml(comment, scRoutingContext.url)}}></Typography>
+                    <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
+                    {summaryHtmlTruncated && truncateContent && (
+                      <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>
+                        <FormattedMessage id="ui.commentObject.showMore" defaultMessage="ui.commentObject.showMore" />
+                      </Link>
+                    )}
                   </CardContent>
                   {scUserContext.user && (
                     <Box className={classes.commentActionsMenu}>
@@ -711,10 +558,23 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                 <Box component="span" className={classes.contentSubSection}>
                   {renderTimeAgo(comment)}
                   <Bullet />
-                  {renderActionVote(comment)}
+                  <VoteButton
+                    size="small"
+                    className={classes.vote}
+                    contributionId={comment.id}
+                    contributionType={SCContributionType.COMMENT}
+                    contribution={comment}
+                    onVote={handleVoteSuccess}
+                  />
                   <Bullet />
                   {renderActionReply(comment)}
-                  {renderVotes(comment)}
+                  <VoteAudienceButton
+                    size="small"
+                    className={classes.voteAudience}
+                    contributionId={comment.id}
+                    contributionType={SCContributionType.COMMENT}
+                    contribution={comment}
+                  />
                 </Box>
               </>
             }
@@ -723,14 +583,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
         {comment.comment_count > 0 && <Box className={classes.nestedComments}>{renderLatestComment(comment)}</Box>}
         {scUserContext.user && replyComment && (replyComment.id === comment.id || replyComment.parent === comment.id) && !comment.parent && (
           <Box className={classes.nestedComments}>
-            <ReplyCommentObject
+            <CommentObjectReply
               text={`@${replyComment.author.username}, `}
               autoFocus
               key={`reply-${replyComment.id}`}
               id={`reply-${replyComment.id}`}
               onReply={handleReply}
               editable={!isReplying}
-              {...ReplyCommentObjectProps}
+              {...CommentObjectReplyProps}
             />
           </Box>
         )}
@@ -744,28 +604,29 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    */
   function renderLatestComment(comment) {
     return (
-      <>
-        {Boolean(comment.comment_count) && (
-          <CommentsObject
-            feedObject={commentsObject.feedObject}
-            feedObjectType={commentsObject.feedObject ? commentsObject.feedObject.type : feedObjectType}
-            hideAdvertising={true}
-            comments={[].concat(commentsObject.comments).reverse()}
-            endComments={comment.latest_comments}
-            previous={comment.comment_count > comment.latest_comments.length ? commentsObject.next : null}
-            isLoadingPrevious={commentsObject.isLoadingNext}
-            handlePrevious={commentsObject.getNextPage}
-            CommentComponentProps={{
-              onOpenReply: reply,
-              CommentObjectSkeletonProps,
-              elevation: elevation,
-              linkableCommentDateTime: linkableCommentDateTime,
-              ...rest
-            }}
-            CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
-          />
-        )}
-      </>
+      <CommentsObject
+        feedObject={commentsObject.feedObject}
+        feedObjectType={commentsObject.feedObject ? commentsObject.feedObject.type : feedObjectType}
+        hideAdvertising={true}
+        comments={[].concat(commentsObject.comments).reverse()}
+        endComments={comment.latest_comments}
+        previous={comment.comment_count > comment.latest_comments.length ? commentsObject.next : null}
+        isLoadingPrevious={commentsObject.isLoadingNext}
+        handlePrevious={commentsObject.getNextPage}
+        CommentComponentProps={{
+          onOpenReply: reply,
+          CommentObjectSkeletonProps,
+          elevation: elevation,
+          linkableCommentDateTime: linkableCommentDateTime,
+          ...rest,
+          cacheStrategy,
+          truncateContent
+        }}
+        CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
+        inPlaceLoadMoreContents={true}
+        {...CommentsObjectComponentProps}
+        cacheStrategy={cacheStrategy}
+      />
     );
   }
 
@@ -783,8 +644,11 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Render object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className)}>
-      {comment}
-    </Root>
+    <>
+      <Root id={id} className={classNames(classes.root, className)}>
+        {comment}
+      </Root>
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

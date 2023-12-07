@@ -4,24 +4,24 @@ import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, ListItemText, Menu, Tooltip} from '@mui/material';
+import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Composer from '../../../Composer';
 import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCMediaType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContextType,
   UserUtils,
   useSCContext,
@@ -29,9 +29,10 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {useThemeProps} from '@mui/system';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
-import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../../../constants/SocialShare';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from '../../../../constants/SocialShare';
+import Composer from '../../../Composer';
+import {PREFIX} from '../../constants';
 
 const messages = defineMessages({
   shares: {
@@ -41,56 +42,21 @@ const messages = defineMessages({
   share: {
     id: 'ui.feedObject.share.share',
     defaultMessage: 'ui.feedObject.share.share'
-  },
-  shareInCategories: {
-    id: 'ui.feedObject.share.shareInCategories',
-    defaultMessage: 'ui.feedObject.share.shareInCategories'
   }
 });
 
-const PREFIX = 'SCShareObject';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  divider: `${PREFIX}-divider`,
-  inline: `${PREFIX}-inline`,
-  actionButton: `${PREFIX}-action-button`,
-  inlineActionButton: `${PREFIX}-inline-action-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`,
-  shareMenuIcon: `${PREFIX}-share-Menu-icon`
+  root: `${PREFIX}-action-share-root`,
+  divider: `${PREFIX}-action-share-divider`,
+  inline: `${PREFIX}-action-share-inline`,
+  button: `${PREFIX}-action-share-button`,
+  viewAudienceButton: `${PREFIX}-action-share-view-audience-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-  [`&.${classes.inline}`]: {
-    flexDirection: 'row-reverse'
-  },
-  [`& .${classes.inlineActionButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.divider}`]: {
-    width: '100%',
-    borderBottom: 0
-  },
-  [`& .${classes.viewAudienceButton}`]: {
-    height: 32,
-    fontSize: 15,
-    textTransform: 'capitalize',
-    '& p': {
-      fontSize: '0.9rem'
-    }
-  },
-  [`&.${classes.shareMenuIcon}`]: {
-    minWidth: 30
-  }
-}));
+  slot: 'ActionShareRoot'
+})(() => ({}));
 
 export interface ShareProps {
   /**
@@ -115,7 +81,7 @@ export interface ShareProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Show audience
@@ -142,18 +108,13 @@ export interface ShareProps {
   [p: string]: any;
 }
 
-export default function Share(inProps: ShareProps): JSX.Element {
+export default function Share(props: ShareProps): JSX.Element {
   // PROPS
-  const props: ShareProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-
   const {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     withAction = true,
     withAudience = true,
     inlineAction = false,
@@ -161,6 +122,8 @@ export default function Share(inProps: ShareProps): JSX.Element {
   } = props;
 
   // STATE
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [isComposerOpen, setIsComposerOpen] = useState<boolean>(false);
@@ -281,6 +244,18 @@ export default function Share(inProps: ShareProps): JSX.Element {
   }
 
   /**
+   * Get permalink
+   */
+  function getPermalink() {
+    copyTextToClipboard(url).then(() => {
+      enqueueSnackbar(<FormattedMessage id="ui.common.permanentLinkCopied" defaultMessage="ui.common.permanentLinkCopied" />, {
+        variant: 'success',
+        autoHideDuration: 3000
+      });
+    });
+  }
+
+  /**
    * Renders audience with detail dialog
    * @return {JSX.Element}
    */
@@ -302,7 +277,6 @@ export default function Share(inProps: ShareProps): JSX.Element {
               size="small"
               onClick={handleToggleSharesDialog}
               disabled={sharesCount < 1}
-              color="inherit"
               classes={{root: classes.viewAudienceButton}}>
               {`${intl.formatMessage(messages.shares, {total: sharesCount})}`}
             </Button>
@@ -316,6 +290,52 @@ export default function Share(inProps: ShareProps): JSX.Element {
     return audience;
   }
 
+  function renderShareMenuItems() {
+    return (
+      <Box>
+        <MenuItem onClick={() => share(false)}>
+          <ListItemIcon>
+            <Icon fontSize="small">redo</Icon>
+          </ListItemIcon>
+          <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
+        </MenuItem>
+        {facebookShareEnabled && (
+          <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
+            <ListItemIcon>
+              <Icon fontSize="small">facebook</Icon>
+            </ListItemIcon>
+            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
+          </MenuItem>
+        )}
+        {twitterShareEnabled && (
+          <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
+            <ListItemIcon>
+              <Icon fontSize="small">twitter</Icon>
+            </ListItemIcon>
+            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
+          </MenuItem>
+        )}
+        {linkedinShareEnabled && (
+          <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
+            <ListItemIcon>
+              <Icon fontSize="small">linkedin</Icon>
+            </ListItemIcon>
+            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
+          </MenuItem>
+        )}
+        <MenuItem>
+          <ListItemIcon>
+            <Icon fontSize="small">link</Icon>
+          </ListItemIcon>
+          <ListItemText
+            primary={<FormattedMessage id="ui.feedObject.share.permanentLink" defaultMessage="ui.feedObject.share.permanentLink" />}
+            onClick={() => getPermalink()}
+          />
+        </MenuItem>
+      </Box>
+    );
+  }
+
   /**
    * Renders vote action if withAction==true
    * @return {JSX.Element}
@@ -327,82 +347,55 @@ export default function Share(inProps: ShareProps): JSX.Element {
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
-              <LoadingButton
-                loading={isSharing}
-                onClick={handleOpenShareMenu}
-                color="inherit"
-                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                <Icon fontSize={'large'}>share</Icon>
+              <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} className={classes.button}>
+                <Icon>share</Icon>
               </LoadingButton>
             </Tooltip>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0
-                  }
-                }
-              }}
-              transformOrigin={{horizontal: 'right', vertical: 'top'}}
-              anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
-              <MenuItem onClick={() => share(false)}>
-                <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                  <Icon fontSize="small">redo</Icon>
-                </ListItemIcon>
-                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
-              </MenuItem>
-              {obj.categories.length > 0 && (
-                <MenuItem onClick={() => share(true)}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">share</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={intl.formatMessage(messages.shareInCategories, {categories: obj.categories.map((c) => c.name).join(', ')})}
-                  />
-                </MenuItem>
+            <>
+              {!isMobile ? (
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  slotProps={{
+                    paper: {
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '&:before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0
+                        }
+                      }
+                    }
+                  }}
+                  transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}>
+                  {renderShareMenuItems()}
+                </Menu>
+              ) : (
+                <SwipeableDrawer
+                  open={Boolean(anchorEl)}
+                  onClick={handleClose}
+                  onClose={handleClose}
+                  onOpen={handleOpenShareMenu}
+                  anchor="bottom"
+                  disableSwipeToOpen>
+                  {renderShareMenuItems()}
+                </SwipeableDrawer>
               )}
-              {facebookShareEnabled && (
-                <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">facebook</Icon>
-                  </ListItemIcon>
-                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
-                </MenuItem>
-              )}
-              {twitterShareEnabled && (
-                <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">twitter</Icon>
-                  </ListItemIcon>
-                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
-                </MenuItem>
-              )}
-              {linkedinShareEnabled && (
-                <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
-                  <ListItemIcon classes={{root: classes.shareMenuIcon}}>
-                    <Icon fontSize="small">linkedin</Icon>
-                  </ListItemIcon>
-                  <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
-                </MenuItem>
-              )}
-            </Menu>
+            </>
             {isComposerOpen && (
               <Composer
                 open={isComposerOpen}
@@ -411,7 +404,6 @@ export default function Share(inProps: ShareProps): JSX.Element {
                 onSuccess={handleComposerOnSuccess}
                 maxWidth="sm"
                 fullWidth
-                scroll="body"
               />
             )}
           </React.Fragment>

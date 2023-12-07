@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {useIntl} from 'react-intl';
+import {FormattedRelativeTime, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import moment from 'moment';
+import {getRelativeTime} from '../../utils/formatRelativeTime';
 
 const PREFIX = 'SCDateTimeAgo';
 
@@ -39,12 +38,6 @@ export interface DateTimeAgoProps {
   className?: string;
 
   /**
-   * Handles live option
-   * @default true
-   */
-  live?: boolean;
-
-  /**
    * Date obj
    * @default null
    */
@@ -65,15 +58,6 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
   // PROPS
   const {className, date = null, showStartIcon = true, ...rest} = props;
 
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
-
-  useEffect(() => {
-    if (moment.locale() !== scContext.settings.locale.default) {
-      moment.locale(scContext.settings.locale.default);
-    }
-  }, [scContext.settings.locale.default]);
-
   // INTL
   const intl = useIntl();
 
@@ -82,6 +66,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
    */
 
   if (date) {
+    const formattedDate = getRelativeTime(date);
     return (
       <Root component="span" className={classNames(classes.root, className)} {...rest}>
         {showStartIcon && <Icon>access_time</Icon>}
@@ -89,7 +74,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
           title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}
           enterTouchDelay={0}>
           <Typography variant={'body2'} component={'span'}>
-            {moment(date).fromNow()}
+            <FormattedRelativeTime value={-formattedDate.value} unit={formattedDate.unit as any} numeric="auto" />
           </Typography>
         </Tooltip>
       </Root>

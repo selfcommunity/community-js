@@ -23,6 +23,31 @@ export class ReactionApiClient {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetReactions.url({})}?${p.toString()}`, method: Endpoints.GetReactions.method});
   }
+
+  /**
+   * This endpoint retrieves all reactions data without pagination.
+   * @param params
+   * @param config
+   */
+  static async getAllReactionsList(params?: ReactionParams, config?: AxiosRequestConfig): Promise<SCReactionType[]> {
+    const p = urlParams(params);
+    const response = await apiRequest({
+      ...config,
+      url: `${Endpoints.GetReactions.url({})}?${p.toString()}`,
+      method: Endpoints.GetReactions.method
+    });
+    if (response.next) {
+      return response.results.concat(
+        await ReactionApiClient.getAllReactionsList(params, {
+          ...config,
+          url: response.next,
+          method: Endpoints.GetReactions.method
+        })
+      );
+    }
+    return response.results;
+  }
+
   /**
    * This endpoint retrieves a specific reaction.
    * @param id
@@ -64,6 +89,9 @@ export class ReactionApiClient {
 export default class ReactionService {
   static async getAllReactions(params?: ReactionParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCReactionType>> {
     return ReactionApiClient.getAllReactions(params, config);
+  }
+  static async getAllReactionsList(params?: ReactionParams, config?: AxiosRequestConfig): Promise<SCReactionType[]> {
+    return ReactionApiClient.getAllReactionsList(params, config);
   }
   static async getSpecificReaction(id: number, config?: AxiosRequestConfig): Promise<SCReactionType> {
     return ReactionApiClient.getSpecificReaction(id, config);

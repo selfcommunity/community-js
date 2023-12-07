@@ -5,6 +5,7 @@ import {EndpointType, http, HttpResponse, SCPaginatedResponse} from '@selfcommun
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getFeedCacheKey, getStateFeedCacheKey} from '../constants/Cache';
 import {appendURLSearchParams} from '@selfcommunity/utils';
+import useIsComponentMountedRef from '../utils/hooks/useIsComponentMountedRef';
 
 /**
  * Interface SCPaginatedFeedType
@@ -38,6 +39,7 @@ export const feedDataActionTypes = {
   DATA_RELOAD: '_data_reload',
   DATA_RELOADED: '_data_reloaded',
   UPDATE_DATA: '_data_update',
+  RESET: '_reset',
 };
 
 /**
@@ -48,7 +50,7 @@ export const feedDataActionTypes = {
  * @param action
  */
 function feedDataReducer(state, action) {
-  let _state;
+  let _state = {...state};
   switch (action.type) {
     case feedDataActionTypes.LOADING_NEXT:
       _state = {...state, isLoadingNext: true, isLoadingPrevious: false};
@@ -115,6 +117,11 @@ function feedDataReducer(state, action) {
     case feedDataActionTypes.UPDATE_DATA:
       _state = {
         ...state,
+        ...action.payload,
+      };
+      break;
+    case feedDataActionTypes.RESET:
+      _state = {
         ...action.payload,
       };
       break;
@@ -188,15 +195,23 @@ export default function useSCFetchFeed(props: {
   const queryParams = useMemo(() => Object.assign({limit: 10, offset: 0}, endpointQueryParams), [endpointQueryParams]);
 
   /**
+   * Track component initialization
+   */
+  const isMountedRef = useIsComponentMountedRef();
+
+  /**
    * Get next url
    */
-  const getInitialNextUrl = () => {
-    const _initialEndpoint = appendURLSearchParams(
-      endpoint.url({}),
-      Object.keys(queryParams).map((k) => ({[k]: queryParams[k]}))
-    );
-    return _initialEndpoint;
-  };
+  const getInitialNextUrl = useMemo(
+    () => () => {
+      const _initialEndpoint = appendURLSearchParams(
+        endpoint.url({}),
+        Object.keys(queryParams).map((k) => ({[k]: queryParams[k]}))
+      );
+      return _initialEndpoint;
+    },
+    [queryParams]
+  );
 
   // STATE
   const [state, dispatch] = useReducer(feedDataReducer, {}, () =>
@@ -235,7 +250,7 @@ export default function useSCFetchFeed(props: {
   /**
    * Get Feed data
    */
-  const performFetchData = (url, seekCache = true) => {
+  const performFetchData = (url, seekCache = true, source?: any) => {
     const __feedDataCacheKey = getFeedCacheKey(id, url);
     if (seekCache && LRUCache.hasKey(__feedDataCacheKey) && cacheStrategy !== CacheStrategies.NETWORK_ONLY) {
       return Promise.resolve(LRUCache.get(__feedDataCacheKey));
@@ -244,6 +259,7 @@ export default function useSCFetchFeed(props: {
       .request({
         url,
         method: endpoint.method,
+        ...(source ? {cancelToken: source.token} : {}),
       })
       .then((res: HttpResponse<any>) => {
         if (res.status >= 300) {
@@ -262,25 +278,27 @@ export default function useSCFetchFeed(props: {
       dispatch({type: feedDataActionTypes.LOADING_PREVIOUS});
       performFetchData(state.previous)
         .then((res) => {
-          let currentOffset = Math.max(getCurrentOffset(state.previous), 0);
-          let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
-          let previousPage = res.previous ? currentPage - 1 : null;
-          let count = res.count || state.count + res.results.length + 1;
-          dispatch({
-            type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
-            payload: {
-              currentPage,
-              previousPage,
-              currentOffset,
-              count,
-              initialOffset: currentOffset,
-              results: res.results,
-              previous: res.previous,
-            },
-          });
-          onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res.results);
-          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
-            revalidate(state.next, false);
+          if (isMountedRef.current) {
+            let currentOffset = Math.max(getCurrentOffset(state.previous), 0);
+            let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
+            let previousPage = res.previous ? currentPage - 1 : null;
+            let count = res.count || state.count + res.results.length + 1;
+            dispatch({
+              type: feedDataActionTypes.DATA_PREVIOUS_LOADED,
+              payload: {
+                currentPage,
+                previousPage,
+                currentOffset,
+                count,
+                initialOffset: currentOffset,
+                results: res.results,
+                previous: res.previous,
+              },
+            });
+            onPreviousPage && onPreviousPage(currentPage, currentOffset, count, res.results);
+            if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+              revalidate(state.next, true);
+            }
           }
         })
         .catch((error) => {
@@ -292,33 +310,35 @@ export default function useSCFetchFeed(props: {
   /**
    * Fetch next data
    */
-  function getNextPage() {
+  function getNextPage(source = false) {
     if (endpoint && state.next && !state.isLoadingNext) {
       dispatch({type: feedDataActionTypes.LOADING_NEXT});
-      performFetchData(state.next)
+      performFetchData(state.next, null, source)
         .then((res) => {
-          let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, state.results.length);
-          let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
-          let nextPage = res.next ? currentPage + 1 : null;
-          let count = res.count || state.count + res.results.length + 1;
-          dispatch({
-            type: feedDataActionTypes.DATA_NEXT_LOADED,
-            payload: {
-              currentPage,
-              nextPage,
-              currentOffset,
-              count,
-              results: res.results,
-              next: res.next,
-              componentLoaded: true,
-              ...(queryParams.offset && state.results.length === 0
-                ? {previous: res.previous, previousPage: res.previous ? currentPage - 1 : null}
-                : {}),
-            },
-          });
-          onNextPage && onNextPage(currentPage, currentOffset, count, res.results);
-          if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
-            revalidate(state.next, true);
+          if (isMountedRef.current) {
+            let currentOffset = Math.max(getCurrentOffset(res.next) - queryParams.limit, state.results.length);
+            let currentPage = Math.ceil(currentOffset / queryParams.limit + 1);
+            let nextPage = res.next ? currentPage + 1 : null;
+            let count = res.count || (state.count === 0 && res.results.length === 0 ? 0 : state.count + res.results.length + 1);
+            dispatch({
+              type: feedDataActionTypes.DATA_NEXT_LOADED,
+              payload: {
+                currentPage,
+                nextPage,
+                currentOffset,
+                count,
+                results: res.results,
+                next: res.next,
+                componentLoaded: true,
+                ...(queryParams.offset && state.results.length === 0
+                  ? {previous: res.previous, previousPage: res.previous ? currentPage - 1 : null}
+                  : {}),
+              },
+            });
+            onNextPage && onNextPage(currentPage, currentOffset, count, res.results);
+            if (cacheStrategy === CacheStrategies.STALE_WHILE_REVALIDATE) {
+              revalidate(state.next, true);
+            }
           }
         })
         .catch((error) => {
@@ -340,6 +360,27 @@ export default function useSCFetchFeed(props: {
   }
 
   /**
+   * Update component state
+   * Re-sync next/previous url
+   * When an element is added in the head of a rendered list, fix the next/previous url
+   * to avoid importing posts already in the list
+   * @param payload
+   */
+  function updateState(payload) {
+    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
+  }
+
+  /**
+   * Reset state component
+   */
+  function reset() {
+    dispatch({
+      type: feedDataActionTypes.RESET,
+      payload: stateInitializer({id, endpoint, queryParams, next: getInitialNextUrl(), cacheStrategy, prefetchedData}),
+    });
+  }
+
+  /**
    * Reload fetch data
    */
   useEffect(() => {
@@ -351,16 +392,11 @@ export default function useSCFetchFeed(props: {
     }
   }, [state.reload]);
 
-  /**
-   * Update component state
-   * Re-sync next/previous url
-   * When an element is added in the head of a rendered list, fix the next/previous url
-   * to avoid importing posts already in the list
-   * @param payload
-   */
-  function updateState(payload) {
-    dispatch({type: feedDataActionTypes.UPDATE_DATA, payload: payload});
-  }
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, []);
 
   return {
     ...state,
@@ -368,5 +404,6 @@ export default function useSCFetchFeed(props: {
     getNextPage,
     getPreviousPage,
     reload,
+    reset,
   };
 }

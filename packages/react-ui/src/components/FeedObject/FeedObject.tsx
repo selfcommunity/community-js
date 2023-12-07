@@ -6,13 +6,11 @@ import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
-import MediasPreview, {MediaPreviewProps} from '../../shared/MediasPreview';
 import Actions, {ActionsProps} from './Actions';
 import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';
-import Composer from '../Composer';
 import {SCFeedObjectActivitiesType, SCFeedObjectTemplateType} from '../../types/feedObject';
 import MarkRead from '../../shared/MarkRead';
 import classNames from 'classnames';
@@ -23,13 +21,15 @@ import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import Activities, {ActivitiesProps} from './Activities';
-import ReplyCommentObject, {ReplyCommentObjectProps} from '../CommentObject/ReplyComment';
+import CommentObjectReply, {CommentObjectReplyProps} from '../CommentObjectReply';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCFeedObjectType, SCFeedObjectTypologyType, SCPollType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
   Link,
   SCCache,
@@ -43,6 +43,12 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import UserAvatar from '../../shared/UserAvatar';
+import {MAX_SUMMARY_LENGTH} from '../../constants/Feed';
+import Composer from '../Composer';
+import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from '../FeedObjectMediaPreview';
+import {PREFIX} from './constants';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -51,17 +57,19 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCFeedObject';
-
 const classes = {
   root: `${PREFIX}-root`,
   deleted: `${PREFIX}-deleted`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
+  avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   activityAt: `${PREFIX}-activity-at`,
   tag: `${PREFIX}-tag`,
+  location: `${PREFIX}-location`,
   content: `${PREFIX}-content`,
+  showMore: `${PREFIX}-show-more`,
+  error: `${PREFIX}-error`,
   titleSection: `${PREFIX}-title-section`,
   title: `${PREFIX}-title`,
   textSection: `${PREFIX}-text-section`,
@@ -80,133 +88,10 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  [`&.${classes.root}`]: {
-    width: '100%',
-    paddingBottom: 5
-  },
-  [`& .${classes.header}`]: {
-    paddingBottom: 0
-  },
-  [`& .${classes.titleSection}`]: {
-    '& a': {
-      textDecoration: 'none'
-    },
-    '& a:hover': {
-      textDecoration: 'underline'
-    }
-  },
-  [`& .${classes.title}`]: {
-    fontWeight: 600,
-    color: '#3e3e3e',
-    padding: `0px ${theme.spacing(2)}`
-  },
-  [`& .${classes.username}`]: {
-    color: '#000',
-    fontWeight: 600,
-    fontSize: '15px',
-    textDecoration: 'none'
-  },
-  [`& .${classes.header}`]: {
-    '& .MuiCardHeader-subheader': {
-      display: 'flex',
-      alignItems: 'center'
-    }
-  },
-  [`& .${classes.category}`]: {
-    textAlign: 'center',
-    color: '#939598',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    '& a': {
-      textDecoration: 'none',
-      color: '#3e3e3e'
-    },
-    '& a::after': {
-      content: '"\\2022"',
-      padding: theme.spacing()
-    },
-    '& a:last-child::after': {
-      display: 'none'
-    },
-    '& span': {
-      textTransform: 'initial'
-    }
-  },
-  [`& .${classes.content}`]: {
-    padding: `${theme.spacing()} 0px`
-  },
-  [`& .${classes.textSection}`]: {
-    '& a': {
-      color: theme.palette.text.primary,
-      textDecoration: 'none'
-    },
-    '& img': {
-      maxWidth: '100%'
-    }
-  },
-  [`& .${classes.text}`]: {
-    padding: `${theme.spacing()} ${theme.spacing(2)}`,
-    marginBottom: 0,
-    '& a': {
-      color: theme.palette.text.primary
-    }
-  },
-  [`& .${classes.snippet}`]: {
-    '& > div': {
-      alignItems: 'flex-start'
-    },
-    '& .SCBaseItem-text': {
-      marginTop: 0
-    }
-  },
-  [`& .${classes.snippetContent}`]: {
-    textDecoration: 'none',
-    color: '#3e3e3e'
-  },
-  [`& .${classes.tag}`]: {
-    display: 'inline-flex'
-  },
-  [`& .${classes.actionsSection}`]: {
-    padding: 0,
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  [`& .${classes.replyContent}`]: {
-    width: '100%',
-    boxSizing: 'border-box',
-    margin: 0,
-    padding: theme.spacing(2)
-  },
-  [`& .${classes.activitiesContent}`]: {
-    paddingTop: 3,
-    '&:last-child': {
-      paddingBottom: 5
-    }
-  },
-  [`& .${classes.infoSection}`]: {
-    padding: `0px ${theme.spacing(2)}`
-  },
-  [`& .${classes.activityAt}`]: {
-    textDecoration: 'none',
-    color: 'inherit',
-    marginTop: 3
-  },
-  [`& .${classes.deleted}`]: {
-    opacity: 0.3,
-    '&:hover': {
-      opacity: 1
-    }
-  },
-  '& .MuiIcon-root': {
-    fontSize: '18px',
-    marginBottom: '0.5px'
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
-export interface FeedObjectProps extends CardProps {
+export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   /**
    * Id of the feedObject
    * @default `feed_object_<feedObjectType>_<feedObjectId | feedObject.id>`
@@ -234,7 +119,7 @@ export interface FeedObjectProps extends CardProps {
    * Feed Object type
    * @default 'post'
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Mark the FeedObject as read when enter in viewport
@@ -261,16 +146,36 @@ export interface FeedObjectProps extends CardProps {
   hideFollowAction?: boolean;
 
   /**
+   * Show all summary initially (otherwise it will be truncated)
+   * @default false
+   */
+  summaryExpanded?: boolean;
+
+  /**
    * Show activities as default
    * @default false
    */
   activitiesExpanded?: boolean;
 
   /**
+   * Activities type shown initially. If not set, they are shown in order:
+   * RELEVANCE_ACTIVITIES, RECENT_COMMENTS
+   * If the obj has no comments/activites, or activitiesExpanded == false
+   * nothing will be shown
+   */
+  activitiesExpandedType?: SCFeedObjectActivitiesType;
+
+  /**
    * Hide Participants preview
    * @default false
    */
   hideParticipantsPreview?: boolean;
+
+  /**
+   * Show poll as default if exist
+   * @default false
+   */
+  pollVisible?: boolean;
 
   /**
    * Props to spread to ContributionActionsMenu component
@@ -306,7 +211,7 @@ export interface FeedObjectProps extends CardProps {
    * Props to spread to MediasPreview component
    * @default {}
    */
-  MediasPreviewProps?: MediaPreviewProps;
+  FeedObjectMediaPreviewProps?: FeedObjectMediaPreviewProps;
 
   /**
    * Props to spread to PollObject component
@@ -315,17 +220,17 @@ export interface FeedObjectProps extends CardProps {
   PollObjectProps?: PollObjectProps;
 
   /**
-   * ReplyCommentComponent component
-   * Usefull to override the single ReplyComment render component
+   * CommentObjectReplyComponent component
+   * Usefull to override the single CommentObjectReply render component
    * @default CommentObject
    */
-  ReplyCommentComponent?: (inProps: ReplyCommentObjectProps) => JSX.Element;
+  CommentObjectReplyComponent?: (inProps: CommentObjectReplyProps) => JSX.Element;
 
   /**
    * Props to spread to single reply comment object
    * @default {variant: 'outlined'}
    */
-  ReplyCommentComponentProps?: ReplyCommentObjectProps;
+  CommentObjectReplyComponentProps?: CommentObjectReplyProps;
 
   /**
    * Props to spread to ContributorsFeedObject component
@@ -356,13 +261,6 @@ export interface FeedObjectProps extends CardProps {
    * @default CacheStrategies.CACHE_FIRST
    */
   cacheStrategy?: CacheStrategies;
-
-  /**
-   * When an action of feedObject change the layout of the element
-   * @param s
-   */
-  onChangeLayout?: (s) => void;
-
   /**
    * Other props
    */
@@ -371,6 +269,10 @@ export interface FeedObjectProps extends CardProps {
 
 /**
  * > API documentation for the Community-JS Feed Object component. Learn about the available props and the CSS API.
+ *
+ *
+ * This component renders a feed object item (post, discussion or status).
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/FeedObject)
 
  #### Import
 
@@ -388,13 +290,18 @@ export interface FeedObjectProps extends CardProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCFeedObject-root|Styles applied to the root element.|
+ |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
+ |category|.SCFeedObject-category|Styles applied to the category element.|
+ |avatar|.SCFeedObject-avatar|Styles applied to the avatar element.|
+ |username|.SCFeedObject-username|Styles applied to the username element.|
+ |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
  |tag|.SCFeedObject-tag|Styles applied to the tag element.|
+ |location|.SCFeedObject-location|Styles applied to the location element.|
+ |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
+ |error|.SCFeedObject-error|Styles applied to the error element.|
  |title-section|.SCFeedObject-title-section|Styles applied to the title section.|
  |title|.SCFeedObject-title|Styles applied to the title element.|
- |username|.SCFeedObject-username|Styles applied to the username element.|
- |category|.SCFeedObject-category|Styles applied to the category element.|
- |content|.SCFeedObject-content|Styles applied to the content section. Content section include: title-section, text-section, snippetContent, subContent, medias-section, polls-section, info-section.|
  |text-section|.SCFeedObject-text-section|Styles applied to the text section.|
  |text|.SCFeedObject-text|Styles applied to the text element.|
  |snippet|.SCFeedObject-snippet|Styles applied to snippet element.|
@@ -402,13 +309,11 @@ export interface FeedObjectProps extends CardProps {
  |medias-section|.SCFeedObject-medias-section|Styles applied to the medias section.|
  |polls-section|.SCFeedObject-polls-section|Styles applied to the polls section.|
  |info-section|.SCFeedObject-info-section|Styles applied to the info section.|
- |subContent|.SCFeedObject-sub-content|Styles applied to the sub content (container placed immediately after the content, similar to a footer). Wrap the contributors and the follow button.|
  |actions-section|.SCFeedObject-actions-section|Styles applied to the actions container.|
  |reply-content|.SCFeedObject-reply-content|Styles applied to the reply box.|
  |activitiesSection|.SCFeedObject-activities-section|Styles applied to the activities section element.|
  |activitiesContent|.SCFeedObject-activities-content|Styles applied to the activities content element.|
- |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
- |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
+ |followButton|.SCFeedObject-follow-button|Styles applied to the follow button element.|
 
  * @param inProps
  */
@@ -424,27 +329,32 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.DISCUSSION,
+    feedObjectType = null,
     feedObjectActivities = null,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     markRead = false,
     template = SCFeedObjectTemplateType.PREVIEW,
     hideFollowAction = false,
+    summaryExpanded = false,
     activitiesExpanded = true,
+    activitiesExpandedType,
     hideParticipantsPreview = false,
+    pollVisible = false,
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
-    ReplyCommentComponent = ReplyCommentObject,
-    ReplyCommentComponentProps = {WidgetProps: {variant: 'outlined'}},
+    CommentObjectReplyComponent = CommentObjectReply,
+    CommentObjectReplyComponentProps = {WidgetProps: {variant: 'outlined'}},
     CommentComponentProps = {variant: 'outlined'},
     CommentObjectSkeletonProps = {elevation: 0, WidgetProps: {variant: 'outlined'} as WidgetProps},
     ContributionActionsMenuProps = {},
-    MediasPreviewProps = {},
+    FeedObjectMediaPreviewProps = {},
+    ActivitiesProps = {cacheStrategy},
     PollObjectProps = {elevation: 0},
     ContributorsFeedObjectProps = {},
     onReply,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
-    onChangeLayout,
+    onHeightChange,
+    onStateChange,
     ...rest
   } = props;
 
@@ -454,16 +364,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
-  // RETRIVE OBJECTS
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
+  // OBJECTS
+  const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   /**
-   * Get initial expanded activities
+   * Get initial expanded activities type
    */
-  function geExpandedActivities() {
+  const geExpandedActivities = (): boolean => {
     return obj && activitiesExpanded && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0));
-  }
+  };
 
   // STATE
   const [composerOpen, setComposerOpen] = useState<boolean>(false);
@@ -471,23 +382,41 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [comments, setComments] = useState<SCCommentType[]>([]);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
+  const [expanded, setExpanded] = useState(summaryExpanded);
 
   // INTL
   const intl = useIntl();
 
   /**
+   * Notify changes to Feed if the FeedObject is contained in the feed
+   */
+  const notifyFeedChanges = useMemo(
+    () =>
+      (state?: Record<string, any>): void => {
+        if (onStateChange && state) {
+          onStateChange(state);
+        }
+        onHeightChange && onHeightChange();
+      },
+    [onStateChange, onHeightChange]
+  );
+
+  /**
    * Update state object
    * @param obj
    */
-  function updateObject(newObj) {
-    LRUCache.set(SCCache.getFeedObjectCacheKey(obj.id, obj.type), newObj);
+  const updateObject = (newObj): void => {
     setObj(newObj);
-  }
+    notifyFeedChanges();
+  };
 
   /**
    * Get initial selected activities section
    */
   function getInitialSelectedActivitiesType() {
+    if (activitiesExpandedType) {
+      return activitiesExpandedType;
+    }
     if (feedObjectActivities && feedObjectActivities.length > 0) {
       return SCFeedObjectActivitiesType.RELEVANCE_ACTIVITIES;
     }
@@ -498,24 +427,45 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Open expanded activities
    */
   useEffect(() => {
-    setExpandedActivities(geExpandedActivities());
-  }, [objId]);
+    const _e = geExpandedActivities();
+    setExpandedActivities(_e);
+    notifyFeedChanges({activitiesExpanded: _e, activitiesExpandedType: selectedActivities, cacheStrategy: CacheStrategies.CACHE_FIRST});
+  }, [objId, selectedActivities]);
 
   /**
    * Handle change/update poll: votes
    */
-  function handleChangePoll(pollObject: SCPollType) {
-    const newObj = obj;
-    obj['poll'] = pollObject;
-    setObj(newObj);
-  }
+  const handleChangePoll = useCallback(
+    (pollObject: SCPollType) => {
+      updateObject(Object.assign({}, obj, {poll: pollObject}));
+    },
+    [obj]
+  );
+
+  /**
+   * Handle change poll visibility
+   */
+  const handleTogglePollVisibility = useCallback(
+    (visible: boolean) => {
+      notifyFeedChanges({pollVisible: visible});
+    },
+    [pollVisible, notifyFeedChanges]
+  );
+
+  /**
+   * Handle toggle summary
+   */
+  const handleToggleSummary = useCallback(() => {
+    setExpanded(!expanded);
+    notifyFeedChanges({summaryExpanded: !expanded});
+  }, [expanded, notifyFeedChanges]);
 
   /**
    * Render header action
    * if author = authenticated user -> render edit action
    * else render ContributionActionsMenu
    */
-  function renderHeaderAction() {
+  const renderHeaderAction = (): JSX.Element => {
     return (
       <ContributionActionsMenu
         feedObject={obj}
@@ -525,37 +475,64 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
         onDeleteContribution={handleDelete}
         onRestoreContribution={handleRestore}
         onSuspendNotificationContribution={handleSuspendNotification}
+        onFlagContribution={handleFlag}
         {...ContributionActionsMenuProps}
       />
     );
-  }
+  };
+
+  /**
+   * Handle flag obj
+   */
+  const handleFlag = useCallback((obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => {
+    enqueueSnackbar(
+      flagged ? (
+        <FormattedMessage id="ui.feedObject.flagSent" defaultMessage="ui.feedObject.flagSent" />
+      ) : (
+        <FormattedMessage id="ui.feedObject.flagRemoved" defaultMessage="ui.feedObject.flagRemoved" />
+      ),
+      {
+        autoHideDuration: 3000
+      }
+    );
+  }, []);
 
   /**
    * Handle restore obj
    */
   const handleRestore = useCallback(() => {
-    updateObject(Object.assign(obj, {deleted: false}));
+    updateObject(Object.assign({}, obj, {deleted: false}));
   }, [obj]);
 
   /**
    * Handle restore obj
    */
   const handleHide = useCallback(() => {
-    updateObject(Object.assign(obj, {collapsed: !obj.collapsed}));
+    updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
   }, [obj]);
 
   /**
    * Handle delete obj
    */
   const handleDelete = useCallback(() => {
-    updateObject(Object.assign(obj, {deleted: !obj.deleted}));
+    updateObject(Object.assign({}, obj, {deleted: !obj.deleted}));
   }, [obj]);
 
   /**
    * Handle suspend notification obj
    */
   const handleSuspendNotification = useCallback(() => {
-    updateObject(Object.assign(obj, {suspended: !obj.suspended}));
+    updateObject(Object.assign({}, obj, {suspended: !obj.suspended}));
+    enqueueSnackbar(
+      obj.suspended ? (
+        <FormattedMessage id="ui.feedObject.notificationsEnabled" defaultMessage="ui.feedObject.notificationsEnabled" />
+      ) : (
+        <FormattedMessage id="ui.feedObject.notificationsDisabled" defaultMessage="ui.feedObject.notificationsDisabled" />
+      ),
+      {
+        autoHideDuration: 3000
+      }
+    );
   }, [obj]);
 
   /**
@@ -573,7 +550,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (data) => {
       updateObject(data);
       setComposerOpen(false);
-      onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
     },
     [obj, composerOpen]
   );
@@ -583,7 +559,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleVoteSuccess = useCallback(
     (data) => {
-      updateObject(Object.assign(obj, {voted: data.voted, vote_count: data.vote_count}));
+      updateObject(
+        Object.assign({}, obj, {voted: data.voted, vote_count: data.vote_count, reactions_count: data.reactions_count, reaction: data.reaction})
+      );
     },
     [obj]
   );
@@ -593,12 +571,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    */
   const handleExpandActivities = useCallback(() => {
     if (scUserContext.user) {
-      onChangeLayout && onChangeLayout({activitiesExpanded: !expandedActivities});
-      setExpandedActivities((prev) => !prev);
+      const _e = !expandedActivities;
+      setExpandedActivities(_e);
+      notifyFeedChanges({activitiesExpanded: _e});
     } else {
       scContext.settings.handleAnonymousAction();
     }
-  }, [scUserContext.user]);
+  }, [expandedActivities, scUserContext.user, notifyFeedChanges, selectedActivities]);
 
   /**
    * Handle follow obj
@@ -624,9 +603,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     (type) => {
       setSelectedActivities(type);
       setComments([]);
-      onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
+      notifyFeedChanges({activitiesExpandedType: type});
     },
-    [obj]
+    [obj, expandedActivities]
   );
 
   /**
@@ -634,30 +613,31 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Comment of first level
    */
   const performReply = useMemo(
-    () => (comment: SCCommentType) => {
-      return http
-        .request({
-          url: Endpoints.NewComment.url({}),
-          method: Endpoints.NewComment.method,
-          data: {
-            [`${obj.type}`]: obj.id,
-            text: comment
-          }
-        })
-        .then((res: HttpResponse<SCCommentType>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
-    },
+    () =>
+      (comment: SCCommentType): Promise<SCCommentType> => {
+        return http
+          .request({
+            url: Endpoints.NewComment.url({}),
+            method: Endpoints.NewComment.method,
+            data: {
+              [`${obj.type}`]: obj.id,
+              text: comment
+            }
+          })
+          .then((res: HttpResponse<SCCommentType>) => {
+            if (res.status >= 300) {
+              return Promise.reject(res);
+            }
+            return Promise.resolve(res.data);
+          });
+      },
     [objId]
   );
 
   /**
    * Handle comment
    */
-  function handleReply(comment: SCCommentType) {
+  const handleReply = (comment: SCCommentType): void => {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else if (UserUtils.isBlocked(scUserContext.user)) {
@@ -669,36 +649,121 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       setIsReplying(true);
       performReply(comment)
         .then((data: SCCommentType) => {
+          // if add a comment -> the comment must be untruncated
+          const _data: SCCommentType = data;
+          _data.summary_truncated = false;
           if (selectedActivities !== SCFeedObjectActivitiesType.RECENT_COMMENTS) {
             setComments([]);
             setSelectedActivities(SCFeedObjectActivitiesType.RECENT_COMMENTS);
           } else {
-            setComments([...[data], ...comments]);
+            setComments([...[_data], ...comments]);
           }
           setIsReplying(false);
-          const newObj = Object.assign(obj, {comment_count: obj.comment_count + 1});
+          const newObj = Object.assign({}, obj, {comment_count: obj.comment_count + 1});
           updateObject(newObj);
           LRUCache.deleteKeysWithPrefix(SCCache.getCommentObjectsCachePrefixKeys(obj.id, obj.type));
-          onChangeLayout && onChangeLayout({activitiesExpanded: expandedActivities});
           onReply && onReply(data);
+          notifyFeedChanges({
+            activitiesExpanded: expandedActivities,
+            activitiesExpandedType: SCFeedObjectActivitiesType.RECENT_COMMENTS
+          });
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
+          if (!catchUnauthorizedActionByBlockedUser(error, scUserContext.managers.blockedUsers.isBlocked(obj.author), enqueueSnackbar)) {
+            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+              variant: 'error',
+              autoHideDuration: 3000
+            });
+          }
         });
     }
-  }
+  };
+
+  /**
+   * Get contribution summary
+   */
+  const getContributionSummary = useCallback(
+    (obj: SCFeedObjectType, template: SCFeedObjectTemplateType): React.ReactNode => {
+      const contributionHtml = 'summary_html' in obj ? obj.summary_html : obj.summary;
+      const summaryHtmlTruncated = 'summary_truncated' in obj ? obj.summary_truncated : obj.html.length >= MAX_SUMMARY_LENGTH;
+      const summaryHtml =
+        expanded || template === SCFeedObjectTemplateType.DETAIL
+          ? getContributionHtml(obj.html, scRoutingContext.url)
+          : getContributionHtml(contributionHtml, scRoutingContext.url);
+      if (template === SCFeedObjectTemplateType.SHARE) {
+        return (
+          <>
+            <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
+              <Typography
+                component="div"
+                className={classes.text}
+                variant="body2"
+                gutterBottom
+                dangerouslySetInnerHTML={{
+                  __html: summaryHtml
+                }}
+              />
+            </Link>
+            {!expanded && summaryHtmlTruncated && (
+              <Button size="small" variant="text" color="inherit" className={classes.showMore} onClick={handleToggleSummary}>
+                <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+              </Button>
+            )}
+          </>
+        );
+      } else if (template === SCFeedObjectTemplateType.DETAIL) {
+        return (
+          <Typography
+            component="div"
+            gutterBottom
+            className={classes.text}
+            dangerouslySetInnerHTML={{
+              __html: summaryHtml
+            }}
+          />
+        );
+      } else {
+        return (
+          <Typography component="div" gutterBottom className={classes.text}>
+            <Typography
+              component="span"
+              dangerouslySetInnerHTML={{
+                __html: summaryHtml
+              }}
+            />
+            {!expanded && summaryHtmlTruncated && (
+              <Button size="small" variant="text" color="inherit" className={classes.showMore} onClick={handleToggleSummary}>
+                <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
+              </Button>
+            )}
+          </Typography>
+        );
+      }
+    },
+    [obj, template, expanded]
+  );
 
   /**
    * Render the obj object
    * Manage variants:
-   * SNIPPET, PREVIEW, DETAIL
+   * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement;
-  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL) {
+  if (
+    (!obj && error) ||
+    (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))
+  ) {
+    objElement = (
+      <CardContent className={classNames(classes.error, classes.content)}>
+        <FormattedMessage id="ui.feedObject.error" defaultMessage="ui.feedObject.error" />
+      </CardContent>
+    );
+  } else if (
+    template === SCFeedObjectTemplateType.PREVIEW ||
+    template === SCFeedObjectTemplateType.DETAIL ||
+    template === SCFeedObjectTemplateType.SEARCH
+  ) {
     objElement = (
       <React.Fragment>
         {obj ? (
@@ -713,16 +778,23 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </div>
             )}
             <CardHeader
-              classes={{root: classes.header}}
+              className={classes.header}
               avatar={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar}>
-                    {obj.author.username}
-                  </Avatar>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
+                  <UserAvatar hide={!obj.author.community_badge}>
+                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                      {obj.author.username}
+                    </Avatar>
+                  </UserAvatar>
                 </Link>
               }
               title={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
                   {obj.author.username}
                 </Link>
               }
@@ -731,10 +803,19 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                     <DateTimeAgo component={'span'} date={obj.added_at} />
                   </Link>
+                  {obj.location && (
+                    <>
+                      <Bullet />
+                      <Box className={classes.location}>
+                        <Icon>add_location_alt</Icon>
+                        {obj.location?.location}
+                      </Box>
+                    </>
+                  )}
                   <Bullet />
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
-                      <Tags tags={obj.addressing} />
+                      <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
                         <Icon color="disabled" fontSize="small">
@@ -765,27 +846,25 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   </>
                 )}
               </Box>
-              <Box className={classes.textSection}>
-                {template === SCFeedObjectTemplateType.DETAIL ? (
-                  <Typography
-                    component="div"
-                    gutterBottom
-                    className={classes.text}
-                    dangerouslySetInnerHTML={{
-                      __html: getContributionHtml(obj, scRoutingContext.url)
-                    }}
-                  />
-                ) : (
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>
-                    <Typography component="div" gutterBottom className={classes.text} dangerouslySetInnerHTML={{__html: obj.summary}} />
-                  </Link>
-                )}
-              </Box>
+              <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
+                <FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
-                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+                {obj['poll'] && (
+                  <PollObject
+                    visible={
+                      pollVisible ||
+                      template === SCFeedObjectTemplateType.DETAIL ||
+                      Boolean(obj.type !== SCContributionType.DISCUSSION && !obj.html && !obj.medias.length)
+                    }
+                    feedObject={obj}
+                    pollObject={obj['poll']}
+                    onChange={handleChangePoll}
+                    onToggleVisibility={handleTogglePollVisibility}
+                    {...PollObjectProps}
+                  />
+                )}
               </Box>
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
@@ -803,24 +882,27 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             </CardContent>
             <CardActions className={classes.actionsSection}>
               <Actions
+                feedObjectId={feedObjectId}
+                feedObjectType={feedObjectType}
                 feedObject={obj}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
-                handleExpandActivities={handleExpandActivities}
+                handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
               {(template === SCFeedObjectTemplateType.DETAIL || expandedActivities) && (
                 <Box className={classes.replyContent}>
-                  <ReplyCommentComponent
+                  <CommentObjectReplyComponent
+                    id={`reply-feedObject-${obj.id}`}
                     onReply={handleReply}
                     editable={!isReplying || Boolean(obj)}
                     key={Number(isReplying)}
-                    {...ReplyCommentComponentProps}
+                    {...CommentObjectReplyComponentProps}
                   />
                 </Box>
               )}
             </CardActions>
-            {template === SCFeedObjectTemplateType.PREVIEW && (
+            {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
               <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
                 <CardContent className={classes.activitiesContent}>
                   <Activities
@@ -831,24 +913,20 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     onSetSelectedActivities={handleSelectedActivities}
                     comments={comments}
                     CommentsObjectProps={{
-                      CommentComponentProps: {...{onDelete: handleDeleteComment}, ...CommentComponentProps},
+                      CommentComponentProps: {
+                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
+                        ...CommentComponentProps
+                      },
                       CommentObjectSkeletonProps: CommentObjectSkeletonProps
                     }}
                     cacheStrategy={cacheStrategy}
+                    {...ActivitiesProps}
                   />
                 </CardContent>
               </Collapse>
             )}
             {composerOpen && (
-              <Composer
-                open={composerOpen}
-                feedObject={obj}
-                onClose={handleToggleEdit}
-                onSuccess={handleEditSuccess}
-                maxWidth="sm"
-                fullWidth
-                scroll="body"
-              />
+              <Composer open={composerOpen} feedObject={obj} onClose={handleToggleEdit} onSuccess={handleEditSuccess} maxWidth="sm" fullWidth />
             )}
           </Box>
         ) : (
@@ -873,14 +951,22 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             <CardHeader
               classes={{root: classes.header}}
               avatar={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
-                  <Avatar aria-label="recipe" src={obj.author.avatar}>
-                    {obj.author.username}
-                  </Avatar>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
+                  <UserAvatar hide={!obj.author.community_badge}>
+                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                      {obj.author.username}
+                    </Avatar>
+                  </UserAvatar>
                 </Link>
               }
               title={
-                <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
                   {obj.author.username}
                 </Link>
               }
@@ -900,16 +986,20 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   </Link>
                 )}
               </Box>
-              <Box className={classes.textSection}>
-                <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
-                  <Typography component="div" className={classes.text} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: obj.html}} />
-                </Link>
-              </Box>
+              <Box className={classes.textSection}>{getContributionSummary(obj, template)}</Box>
               <Box className={classes.mediasSection}>
-                <MediasPreview medias={obj.medias} {...MediasPreviewProps} />
+                <FeedObjectMediaPreview medias={obj.medias} {...FeedObjectMediaPreviewProps} />
               </Box>
               <Box className={classes.pollsSection}>
-                {obj['poll'] && <PollObject feedObject={obj} pollObject={obj['poll']} onChange={handleChangePoll} {...PollObjectProps} />}
+                {obj['poll'] && (
+                  <PollObject
+                    feedObject={obj}
+                    pollObject={obj['poll']}
+                    onChange={handleChangePoll}
+                    visible={Boolean(obj.type !== SCContributionType.DISCUSSION && !obj.html && !obj.medias.length)}
+                    {...PollObjectProps}
+                  />
+                )}
               </Box>
             </CardContent>
           </React.Fragment>
@@ -926,32 +1016,42 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
             elevation={0}
             className={classes.snippet}
             image={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)}>
-                <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} />
+              <Link
+                {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
+                <UserAvatar hide={!obj.author.community_badge}>
+                  <Avatar alt={obj.author.username} variant="circular" src={obj.author.avatar} className={classes.avatar} />
+                </UserAvatar>
               </Link>
             }
             primary={
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)} className={classes.username}>
-                {obj.author.username}
-              </Link>
+              <Box>
+                <Link
+                  {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
+                  onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
+                  {obj.author.username}
+                </Link>
+                <Typography variant="body2" className={classes.snippetContent}>
+                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}>{getContributionSnippet(obj)}</Link>
+                </Typography>
+              </Box>
             }
             disableTypography
             secondary={
-              <Box>
-                <Typography variant="body2">
-                  <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.snippetContent}>
-                    {getContributionSnippet(obj)}
-                  </Link>
-                </Typography>
+              <Stack direction="row" justifyContent="space-between" spacing={2} alignItems="center">
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                   <DateTimeAgo component="span" date={obj.added_at} />
                 </Link>
-              </Box>
-            }
-            actions={
-              <Button component={Link} to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} variant="outlined">
-                <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
-              </Button>
+                <Button
+                  component={Link}
+                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                  variant="text"
+                  color="secondary"
+                  size="small">
+                  <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
+                </Button>
+              </Stack>
             }
           />
         ) : (
@@ -965,9 +1065,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
-      {objElement}
-    </Root>
+    <>
+      <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
+        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
+        {objElement}
+      </Root>
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

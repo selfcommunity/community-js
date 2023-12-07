@@ -1,32 +1,32 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import ConsentSolutionButton from './index';
+import type { Meta, StoryObj } from '@storybook/react';
+import ConsentSolutionButton, {ConsentSolutionButtonProps} from './index';
 import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/ConsentSolution Button',
   component: ConsentSolutionButton,
-} as ComponentMeta<typeof ConsentSolutionButton>;
+} as Meta<typeof ConsentSolutionButton>;
 
-const Template: ComponentStory<typeof ConsentSolutionButton> = (args) => (
+const template = (args) => (
   <div style={{width: 800}}>
     <ConsentSolutionButton {...args} />
   </div>
 );
 
-export const Tec = Template.bind({});
-
-Tec.args = {
-  ConsentSolutionProps: {
-    legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
-  }
+export const Tec: StoryObj<ConsentSolutionButtonProps> = {
+  args: {
+    ConsentSolutionProps: {
+      legalPolicies: [SCLegalPagePoliciesType.TERMS_AND_CONDITIONS]
+    }
+  },
+  render: template
 };
 
-export const Privacy = Template.bind({});
-
-Privacy.args = {
-  ConsentSolutionProps: {
-    legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
-  }
+export const Privacy: StoryObj<ConsentSolutionButtonProps> = {
+  args: {
+    ConsentSolutionProps: {
+      legalPolicies: [SCLegalPagePoliciesType.PRIVACY]
+    }
+  },
+  render: template
 };

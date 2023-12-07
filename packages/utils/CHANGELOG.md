@@ -3,6 +3,186 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.11...@selfcommunity/utils@0.2.0-alpha.12) (2023-10-19)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+# [0.2.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.10...@selfcommunity/utils@0.2.0-alpha.11) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([a317be4](https://github.com/selfcommunity/community-js/commit/a317be4e517cd73a77bfcd359ab8f5e1c1b73f31))
+
+
+
+
+
+# [0.2.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.9...@selfcommunity/utils@0.2.0-alpha.10) (2023-09-13)
+
+
+### Bug Fixes
+
+* build optimization ([1ceac97](https://github.com/selfcommunity/community-js/commit/1ceac97e8f92aa0187a9415f4a4db43dd5b5e302))
+* build optimization ([00f8f69](https://github.com/selfcommunity/community-js/commit/00f8f69859d7abe9581334523d76f498e30412a6))
+* build optimization ([49b80a5](https://github.com/selfcommunity/community-js/commit/49b80a5b6deb384a4af25e619fecfaa7d8c63cb7))
+* build optimization ([ce40be5](https://github.com/selfcommunity/community-js/commit/ce40be51278ad2f1ec1a8f5a14905a869a3ceb44))
+* build optimization ([8c37a63](https://github.com/selfcommunity/community-js/commit/8c37a6313daeb71056316d288cda856afd5a5238))
+* build optimization ([b8d6766](https://github.com/selfcommunity/community-js/commit/b8d6766a764cf125ae0eda3b5eca9391c588a5ff))
+* build optimization ([bf7c81d](https://github.com/selfcommunity/community-js/commit/bf7c81d2fbf202f4b6a8b44be5741c7e5844d80e))
+* build optimization ([4c2c3b9](https://github.com/selfcommunity/community-js/commit/4c2c3b92d4ca535381bfdf12632e590ec52eb4e9))
+* build optimization ([e593518](https://github.com/selfcommunity/community-js/commit/e5935186b7866e2d35e9e7df69d33a003efdd0e5))
+* build optimization ([2a33924](https://github.com/selfcommunity/community-js/commit/2a33924523296726dd7a1948ca7755a93578e711))
+
+
+
+
+
+# [0.2.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.8...@selfcommunity/utils@0.2.0-alpha.9) (2023-09-11)
+
+
+### Bug Fixes
+
+* Fix iOS bottom border ([113a81c](https://github.com/selfcommunity/community-js/commit/113a81ce533909eb92c7c7efe41809cc495ffe68))
+
+
+
+
+
+# [0.2.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.7...@selfcommunity/utils@0.2.0-alpha.8) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([cbc95aa](https://github.com/selfcommunity/community-js/commit/cbc95aa3c516372b49c48bd1421874f042e669ce))
+
+
+
+
+
+# [0.2.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.6...@selfcommunity/utils@0.2.0-alpha.7) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([5e4547b](https://github.com/selfcommunity/community-js/commit/5e4547ba1e666b438326dbca1d6544d7c685002a))
+* bundles optimization ([ffe6738](https://github.com/selfcommunity/community-js/commit/ffe67381b72625009c3d86bb7cd7df971ececda4))
+
+
+
+
+
+# [0.2.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.5...@selfcommunity/utils@0.2.0-alpha.6) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+
+
+
+
+
+# [0.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.4...@selfcommunity/utils@0.2.0-alpha.5) (2023-06-21)
+
+
+### Bug Fixes
+
+* mobile push ([1348b2e](https://github.com/selfcommunity/community-js/commit/1348b2ed9b8a24f42cbf6e398f2cc3868c161da7))
+
+
+
+
+
+# [0.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.3...@selfcommunity/utils@0.2.0-alpha.4) (2023-06-20)
+
+
+### Bug Fixes
+
+* typescript compiler ([54613e0](https://github.com/selfcommunity/community-js/commit/54613e04b72781bd14f861ef7dad5317edce7846))
+
+
+
+
+
+# [0.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.2...@selfcommunity/utils@0.2.0-alpha.3) (2023-06-07)
+
+
+### Bug Fixes
+
+* Fix ssr cache ([d89110b](https://github.com/selfcommunity/community-js/commit/d89110b5420de9e5ffd89016d7227eb4df28ca35))
+
+
+
+
+
+# [0.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.1...@selfcommunity/utils@0.2.0-alpha.2) (2023-06-07)
+
+
+### Bug Fixes
+
+* block user ([372542a](https://github.com/selfcommunity/community-js/commit/372542a5a8ed1a33ae0f8c9044565bd154de6f2a))
+
+
+
+
+
+# [0.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.0-alpha.0...@selfcommunity/utils@0.2.0-alpha.1) (2023-05-15)
+
+
+### Bug Fixes
+
+* widgets strict mode ([953c929](https://github.com/selfcommunity/community-js/commit/953c929d6730abfbb551edb0e4128377fee402b1))
+
+
+
+
+
+# [0.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.44-alpha.2...@selfcommunity/utils@0.2.0-alpha.0) (2023-05-08)
+
+
+### Features
+
+* Added image resize before chunk upload ([c241aee](https://github.com/selfcommunity/community-js/commit/c241aee8e1dd3fed12f38885de9bb141f4ffed1a))
+
+
+
+
+
+## [0.1.44-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.44-alpha.1...@selfcommunity/utils@0.1.44-alpha.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* categories ([69ea711](https://github.com/selfcommunity/community-js/commit/69ea711f8039fb97a8f8182993a8208443d79855))
+
+
+
+
+
+## [0.1.44-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.44-alpha.0...@selfcommunity/utils@0.1.44-alpha.1) (2023-01-16)
+
+
+### Bug Fixes
+
+* add new core config for websocket secure/insecure ([deeb8f8](https://github.com/selfcommunity/community-js/commit/deeb8f8a6717a74529fd8328f4303182f0aa89da))
+
+
+
+
+
+## [0.1.44-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.43...@selfcommunity/utils@0.1.44-alpha.0) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
 ## [0.1.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.1.43-alpha.2...@selfcommunity/utils@0.1.43) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/utils

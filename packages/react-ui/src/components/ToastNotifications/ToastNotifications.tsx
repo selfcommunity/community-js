@@ -1,10 +1,10 @@
 import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, BoxProps} from '@mui/material';
-import {SCContextType, SCNotification, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCNotification, SCUserContextType, useSCAlertMessages, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
-import {useSnackbar} from 'notistack';
+import {BaseVariant, useSnackbar} from 'notistack';
 import CustomSnackMessage from '../../shared/CustomSnackMessage';
 import {SCBroadcastMessageTemplateType, SCNotificationObjectTemplateType} from '../../types';
 import CommentNotification from '../Notification/Comment';
@@ -20,22 +20,14 @@ import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
-
-const PREFIX = 'SCToastNotifications';
+import {PREFIX} from './constants';
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'Root'
+})(() => ({}));
 
 export interface ToastNotificationsProps extends BoxProps {
-  /**
-   * Props for toast message
-   * @default null
-   */
-  ToastMessageProps?: any;
-
   /**
    * Handle notification
    */
@@ -52,8 +44,7 @@ export interface ToastNotificationsProps extends BoxProps {
   [p: string]: any;
 }
 /**
- *
- > API documentation for the Community-JS Toast Notifications component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Toast Notifications component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -84,16 +75,18 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
     name: PREFIX
   });
 
-  const {ToastMessageProps = {}, handleNotification, disableToastNotification = false} = props;
+  const {handleNotification, disableToastNotification = false} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // REFS
   const notificationSubscription = useRef(null);
 
   // CONTEXT
   const {enqueueSnackbar} = useSnackbar();
+  const {options, setOptions} = useSCAlertMessages();
 
   /**
    * Render every single notification content
@@ -152,7 +145,8 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
       (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER || SCNotification.SCNotificationMapping[data.data.activity_type]) &&
       !SCNotification.SCSilentToastNotifications.includes(data.data.activity_type) &&
       !disableToastNotification &&
-      !scContext.settings.notifications.webSocket.disableToastMessage
+      !scContext.settings.notifications.webSocket.disableToastMessage &&
+      scUserContext.managers.settings.get(SCNotification.NOTIFICATIONS_SETTINGS_SHOW_TOAST)
     ) {
       /**
        * !IMPORTANT
@@ -160,22 +154,17 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
        * - the enqueue message is persistent (it remains on the screen while the others replace each other) if type notification_banner
        */
       const messageKey = data.data.feed_serialization_id ? data.data.feed_serialization_id : data.data.id;
-      enqueueSnackbar(
-        null,
-        Object.assign(
-          {},
-          {
-            content: <CustomSnackMessage id={messageKey} message={getContent(data.data)} />,
-            preventDuplicate: true,
-            key: messageKey,
-            variant: 'default',
-            persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
-            anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
-            action: null
-          },
-          ToastMessageProps
-        )
-      );
+      enqueueSnackbar(getContent(data.data), {
+        preventDuplicate: true,
+        key: messageKey,
+        variant: 'notification' as BaseVariant,
+        persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
+        anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
+        action: null,
+        SnackbarProps: {
+          id: messageKey
+        }
+      });
     }
   };
 
@@ -188,7 +177,11 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
     return () => {
       PubSub.unsubscribe(notificationSubscription.current);
     };
-  }, []);
+  }, [scUserContext.managers.settings.all]);
 
-  return <Root></Root>;
+  useEffect(() => {
+    setOptions({...options, Components: {...options?.Components, notification: CustomSnackMessage}});
+  }, [scUserContext.managers.settings.all]);
+
+  return <Root />;
 }

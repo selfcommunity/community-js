@@ -1,25 +1,27 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import AccountReset from './index';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/Account Reset',
   component: AccountReset
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof AccountReset>;
+} as Meta<typeof AccountReset>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof AccountReset> = (args) => (
+const template = (args) => (
   <div style={{width: 400}}>
     <AccountReset {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
+export const Base: StoryObj<AccountReset> = {
+  args: {
+    validationCode: ''
+  },
+  render: template
+};
 
-Base.args = {
-  /* the args you need here will depend on your component */
-  validationCode: ''
+export const ValidCode: StoryObj<AccountReset> = {
+  args: {
+    validationCode: 'e35a766ad2fa750e45509b97ee4283878c1'
+  },
+  render: template
 };

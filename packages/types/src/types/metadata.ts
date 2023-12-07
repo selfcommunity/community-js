@@ -6,7 +6,8 @@ export enum SCMetadataTypeFieldType {
   EMAIL = 'email',
   URL = 'url',
   ENUM = 'enum',
-  PHONE_NUMBER = 'phone_number'
+  PHONE_NUMBER = 'phone_number',
+  CHECKBOX = 'checkbox'
 }
 
 /**

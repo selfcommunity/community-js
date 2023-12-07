@@ -5,6 +5,7 @@ import {SCPollType} from './poll';
 import {SCMediaType} from './media';
 import {SCTagType} from './tag';
 import {SCReactionType} from './reaction';
+import {SCContributionType} from './contribution';
 
 /**
  * Typology of feed
@@ -15,15 +16,6 @@ export enum SCFeedTypologyType {
 }
 
 /**
- * Typology of feedObject
- */
-export enum SCFeedObjectTypologyType {
-  DISCUSSION = 'discussion',
-  POST = 'post',
-  STATUS = 'status'
-}
-
-/**
  * Interface SCFeedUnitType.
  * FeedUnit Schema.
  */
@@ -31,7 +23,7 @@ export interface SCFeedUnitType {
   /**
    * The type of the object, can be discussion, post or status
    */
-  type: SCFeedObjectTypologyType;
+  type: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Discussion object
@@ -159,6 +151,16 @@ export interface SCFeedObjectType {
   summary: string;
 
   /**
+   * Summary html
+   */
+  summary_html?: string;
+
+  /**
+   * True if summary_html is truncated
+   */
+  summary_truncated?: boolean;
+
+  /**
    * True if the object is deleted
    */
   deleted: boolean;
@@ -184,9 +186,17 @@ export interface SCFeedObjectType {
   followed?: boolean;
 
   /**
+   * Number of views
+   */
+  view_count: number;
+  /**
    * Number of votes
    */
   vote_count: number;
+  /**
+   * Number of followers
+   */
+  follower_count: number;
   /**
    * Reaction obj
    */
@@ -194,7 +204,7 @@ export interface SCFeedObjectType {
   /**
    * Reactions number and objs
    */
-  reactions_count: [];
+  reactions_count: any[];
   /**
    * True if the logged user has already voted this object
    */
@@ -213,7 +223,7 @@ export interface SCFeedObjectType {
   /**
    * Type: discussion, post, status
    */
-  type: SCFeedObjectTypologyType;
+  type: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Suspended notification

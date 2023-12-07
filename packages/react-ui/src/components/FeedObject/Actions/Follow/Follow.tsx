@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {styled} from '@mui/material/styles';
 import {Box, Tooltip} from '@mui/material';
@@ -7,38 +7,24 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Icon from '@mui/material/Icon';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCTagType} from '@selfcommunity/types';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {SCContributionType, SCFeedObjectType, SCTagType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
-import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCFollowObject';
+import {catchUnauthorizedActionByBlockedUser} from '../../../../utils/errors';
+import {PREFIX} from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  followButton: `${PREFIX}-follow-button`,
-  iconizedButton: `${PREFIX}-button-iconized`
+  root: `${PREFIX}-action-follow-root`,
+  button: `${PREFIX}-action-follow-button`,
+  iconized: `${PREFIX}-action-follow-iconized`,
+  followed: `${PREFIX}-action-follow-followed`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.followButton}`]: {
-    backgroundColor: theme.palette.grey[100],
-    color: theme.palette.grey[700],
-    boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-      boxShadow: 'none'
-    }
-  },
-  [`& .${classes.iconizedButton}`]: {
-    minWidth: 45
-  }
-}));
+  slot: 'ActionFollowRoot'
+})(() => ({}));
 
 export interface FollowProps {
   /**
@@ -63,7 +49,7 @@ export interface FollowProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Handle follow object
@@ -74,7 +60,7 @@ export interface FollowProps {
   /**
    * Iconized Button
    */
-  iconizedButton?: boolean;
+  iconized?: boolean;
 
   /**
    * Any other properties
@@ -82,19 +68,15 @@ export interface FollowProps {
   [p: string]: any;
 }
 
-export default function Follow(inProps: FollowProps): JSX.Element {
+export default function Follow(props: FollowProps): JSX.Element {
   // PROPS
-  const props: FollowProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     className = null,
     feedObjectId = null,
     feedObject = null,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     handleFollow,
-    iconizedButton = true,
+    iconized = true,
     ...rest
   } = props;
 
@@ -146,10 +128,13 @@ export default function Follow(inProps: FollowProps): JSX.Element {
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
+          if (!catchUnauthorizedActionByBlockedUser(error, scUserContext.managers.blockedUsers.isBlocked(obj.author), enqueueSnackbar)) {
+            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+              variant: 'error',
+              autoHideDuration: 3000
+            });
+          }
+          setIsFollowing(false);
         });
     }
   }
@@ -168,25 +153,12 @@ export default function Follow(inProps: FollowProps): JSX.Element {
         {scUserContext.user && obj.author.id !== scUserContext.user.id && !obj.deleted && (
           <Tooltip title={btnLabel}>
             <LoadingButton
-              classes={{root: classNames(classes.followButton, {[classes.iconizedButton]: classes.iconizedButton})}}
+              className={classNames(classes.button, {[classes.iconized]: iconized, [classes.followed]: obj.followed})}
               loading={isFollowing}
-              variant={iconizedButton ? 'text' : 'contained'}
-              size="small"
+              variant={iconized ? 'text' : 'contained'}
               disabled={isFollowing}
               onClick={follow}>
-              {obj.followed ? (
-                <>
-                  {iconizedButton ? (
-                    <Icon fontSize="large" color="primary">
-                      bookmark_added
-                    </Icon>
-                  ) : (
-                    btnLabel
-                  )}
-                </>
-              ) : (
-                <>{iconizedButton ? <Icon fontSize="large">bookmark_border</Icon> : btnLabel}</>
-              )}
+              {iconized ? <Icon>{obj.followed ? 'bookmark_added' : 'bookmark_border'}</Icon> : btnLabel}
             </LoadingButton>
           </Tooltip>
         )}

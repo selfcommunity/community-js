@@ -53,6 +53,17 @@ export interface AccountVerifyProps {
   successAction?: React.ReactNode;
 
   /**
+   * Callback triggered on error
+   * @default null
+   */
+  onError?: (res: any) => void;
+
+  /**
+   * Action component to display after error message
+   * */
+  errorAction?: React.ReactNode;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -90,10 +101,9 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
   });
 
   // PROPS
-  const {className, onSuccess = null, validationCode, successAction = null, ...rest} = props;
+  const {className, onSuccess, onError, validationCode, successAction = null, errorAction = null, ...rest} = props;
 
   // STATE
-  const [isValidating, setIsValidating] = useState<boolean>(true);
   const [succeed, setSucceed] = useState<boolean | string>(false);
   const [error, setError] = useState<boolean>(false);
 
@@ -102,15 +112,19 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
 
   // EFFECTS
   useEffect(() => {
-    setIsValidating(true);
+    if (!validationCode) {
+      return;
+    }
     setError(false);
     AccountService.verify({validation_code: validationCode})
       .then((res: any) => {
         setSucceed(res.token ? true : res.user_awaiting_approval);
         onSuccess && onSuccess(res);
       })
-      .catch(() => setError(true))
-      .then(() => setIsValidating(false));
+      .catch((error) => {
+        setError(true);
+        onError && onError(error);
+      });
   }, [validationCode]);
 
   if (scUserContext.user !== null) {
@@ -129,6 +143,7 @@ export default function AccountVerify(inProps: AccountVerifyProps): JSX.Element 
       ) : error ? (
         <Alert severity="error" className={classes.error}>
           <FormattedMessage id="ui.accountVerify.error" defaultMessage="ui.accountVerify.error" />
+          {errorAction}
         </Alert>
       ) : (
         <>

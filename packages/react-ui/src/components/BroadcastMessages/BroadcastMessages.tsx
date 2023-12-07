@@ -1,27 +1,25 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, CardContent} from '@mui/material';
+import PubSub from 'pubsub-js';
+import {useThemeProps} from '@mui/system';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {SCBroadcastMessageType, SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
-import {http, Endpoints} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies} from '@selfcommunity/utils';
 import {
   SCPreferences,
-  SCPreferencesContext,
   SCPreferencesContextType,
   SCUserContextType,
+  useSCFetchBroadcastMessages,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 import Message, {MessageProps} from './Message';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {MessageSkeleton} from './Skeleton';
 import Widget from '../Widget';
-import PubSub from 'pubsub-js';
-import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCBroadcastMessages';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -32,28 +30,10 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.boxLoadMore}`]: {
-    textAlign: 'center',
-    '& > div': {
-      paddingBottom: theme.spacing(2)
-    },
-    marginBottom: theme.spacing(2)
-  },
-  [`& .${classes.avatarLoadMore}`]: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    marginRight: theme.spacing()
-  },
-  [`& .${classes.buttonLoadMore}`]: {
-    textTransform: 'capitalize',
-    marginLeft: -10
-  }
-}));
+  slot: 'Root'
+})(() => ({}));
 
-export interface BroadcastMessagesProps {
+export interface BroadcastMessagesProps extends VirtualScrollerItemProps {
   /**
    * Id of the BroadcastMessages
    * @default 'broadcast_messages'
@@ -80,6 +60,24 @@ export interface BroadcastMessagesProps {
   subscriptionChannel?: string;
 
   /**
+   * Caching strategies
+   * @default CacheStrategies.CACHE_FIRST
+   */
+  cacheStrategy?: CacheStrategies;
+
+  /**
+   * Disable skeleton loader
+   * @default false
+   */
+  disableLoader?: boolean;
+
+  /**
+   * View all messages initially loaded
+   * @default false
+   */
+  viewAllMessages?: boolean;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -88,9 +86,12 @@ export interface BroadcastMessagesProps {
 const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO_MOBILE, SCPreferences.TEXT_APPLICATION_NAME];
 
 /**
- > API documentation for the Community-JS Broadcast Messages component. Learn about the available props and the CSS API.
- > This component handles message broadcasts. It initially displays unseen messages. If all messages have been viewed it will show at most one message.
+ * > API documentation for the Community-JS Broadcast Messages component. Learn about the available props and the CSS API.
  *
+ *
+ * This component handles message broadcasts. It initially displays unseen messages. If all messages have been viewed it will show at most one message.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/BroadcastMessages)
+
  #### Import
  ```jsx
  import {BroadcastMessages} from '@selfcommunity/react-ui';
@@ -121,27 +122,16 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     className = null,
     MessageProps = {},
     subscriptionChannel = `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.NOTIFICATION_BANNER}`,
+    disableLoader = false,
+    viewAllMessages = false,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
+    onStateChange,
+    onHeightChange,
     ...rest
   } = props;
 
-  // STATE
-  const broadcastMessagesRefreshUrl = `${Endpoints.BroadcastMessagesList.url()}?limit=3`;
-  const [loading, setLoading] = useState<boolean>(null);
-  const [next, setNext] = useState<string>(broadcastMessagesRefreshUrl);
-  const [messages, setMessages] = useState<SCBroadcastMessageType[]>([]);
-  const [viewAll, setViewAll] = useState<boolean>(false);
-
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-
-  // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const unViewedMessages = messages.filter((m) => !m.viewed_at);
-  const viewedMessageCounter = messages.length - unViewedMessages.length;
-
-  // REFS
-  const refreshSubscription = useRef(null);
-
   // Compute preferences
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const preferences = useMemo(() => {
@@ -150,66 +140,69 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     return _preferences;
   }, [scPreferences.preferences]);
 
+  // REFS
+  const refreshSubscription = useRef(null);
+
+  // STATE
+  const [viewAll, setViewAll] = useState<boolean>(viewAllMessages);
+  const {data, loading, fetchMessages, setMessages} = useSCFetchBroadcastMessages({cacheStrategy});
+
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const unViewedMessages = data.results.filter((m: SCBroadcastMessageType) => !m.viewed_at);
+  const viewedMessageCounter = data.count - unViewedMessages.length + 1;
+
+  /**
+   * Dispose a broadcast message
+   * @param message
+   */
   const handleDisposeMessage = (message) => {
-    setMessages(messages.filter((m) => m.id != message.id));
-    if (messages.length <= 1) {
+    const _data = setMessages(data.results.filter((m: SCBroadcastMessageType) => m.id != message.id));
+    if (_data.results.length <= 1) {
       fetchMessages(true);
     }
   };
 
   /**
-   * Fetch broadcast messages
-   * Loads until the messages are already seen
+   * Handle mark read message
+   * @param message
    */
-  const performFetchMessages = async (next: string): Promise<{data: SCBroadcastMessageType[]; next: null}> => {
-    const response = await http.request({
-      url: next,
-      method: Endpoints.BroadcastMessagesList.method
+  const handleMarkRead = (message) => {
+    const _data = [...data.results];
+    data.results.map((m, i) => {
+      if (m.id === message.id) {
+        _data[i] = {...m, viewed_at: new Date()};
+      }
     });
-    const data: any = response.data;
-    if (data.next && !data.results[data.results.length - 1]['viewed_at']) {
-      return {data: data.results.concat((await performFetchMessages(data.next)).data), next: data.next};
-    }
-    return {data: data.results, next: data.next};
-  };
-
-  /**
-   * Fetch broadcast messages
-   */
-  const fetchMessages = (refresh = false) => {
-    setLoading(true);
-    performFetchMessages(refresh ? broadcastMessagesRefreshUrl : next)
-      .then((res) => {
-        setMessages(refresh ? res.data : [...messages, ...res.data]);
-        setNext(res.next);
-        setLoading(false);
-        const unviewd = res.data.filter((m) => !m.viewed_at).length;
-        if (unviewd > 0) {
-          scUserContext.setUnseenNotificationBannersCounter(scUserContext.user.unseen_notification_banners_counter - unviewd);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
+    scUserContext.setUnseenNotificationBannersCounter(scUserContext.user.unseen_notification_banners_counter - 1);
+    setMessages(_data);
   };
 
   /**
    * if messages.length < unViewedMessages.length show other message
    * if the difference between the 2 arrays is small fetch remote messages
    */
-  const fetchOtherMessages = () => {
-    setViewAll(true);
-    if ((next && viewAll) || (next && !viewAll && viewedMessageCounter <= 2)) {
-      fetchMessages();
-    }
-  };
+  const fetchOtherMessages = useMemo(
+    () => () => {
+      setViewAll(true);
+      if ((data.next && viewAll) || (data.next && !viewAll && viewedMessageCounter <= 2)) {
+        fetchMessages();
+      }
+    },
+    [setViewAll, viewAll, viewedMessageCounter, data.next, fetchMessages]
+  );
 
   /**
    * On mount, fetch first page of notifications
    */
   useEffect(() => {
-    if (authUserId !== null) {
-      fetchMessages();
+    let _t;
+    if (authUserId !== null && cacheStrategy !== CacheStrategies.CACHE_FIRST) {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      _t = setTimeout(fetchMessages);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
   }, [authUserId]);
 
@@ -218,6 +211,7 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
    */
   const subscriber = (msg, data) => {
     fetchMessages(true);
+    setViewAll(false);
   };
 
   /**
@@ -230,16 +224,24 @@ export default function BroadcastMessages(inProps: BroadcastMessagesProps): JSX.
     };
   }, []);
 
-  const messagesToShow = [...unViewedMessages, ...messages.slice(unViewedMessages.length, viewAll ? viewedMessageCounter : 1)];
+  /**
+   * Feed virtual update
+   */
+  useEffect(() => {
+    onStateChange && onStateChange({viewAllMessages: viewAll, cacheStrategy: CacheStrategies.CACHE_FIRST, disableLoader: true});
+    onHeightChange && onHeightChange();
+  }, [data.results.length, loading, viewAll, cacheStrategy]);
+
+  const messagesToShow = [...unViewedMessages, ...data.results.slice(unViewedMessages.length, viewAll ? viewedMessageCounter : 1)];
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {messagesToShow.map((message, index) => (
         <Box key={index}>
-          <Message message={message} {...MessageProps} onClose={handleDisposeMessage} />
+          <Message message={message} {...MessageProps} onClose={handleDisposeMessage} onRead={handleMarkRead} />
         </Box>
       ))}
-      {loading && <MessageSkeleton />}
-      {loading !== null && !loading && (next || (viewedMessageCounter > 0 && !viewAll)) && (
+      {loading && !disableLoader && <MessageSkeleton />}
+      {loading !== null && !loading && (data.next || (data.count > 1 && viewedMessageCounter > 0 && !viewAll)) && (
         <Widget className={classes.boxLoadMore}>
           <CardContent>
             <Button variant="text" onClick={fetchOtherMessages} disabled={loading} color="inherit" classes={{root: classes.buttonLoadMore}}>

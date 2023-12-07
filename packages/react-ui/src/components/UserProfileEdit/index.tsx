@@ -2,6 +2,7 @@ import UserProfileEdit, {UserProfileEditProps} from './UserProfileEdit';
 import UserProfileEditSkeleton from './Skeleton';
 import UserProfileEditSectionPublicInfo, {PublicInfoProps as UserProfileEditSectionPublicInfoProps} from './Section/PublicInfo';
 import UserProfileEditSectionSettings, {SettingsProps as UserProfileEditSectionSettingsProps} from './Section/Settings';
+import UserProfileEditSectionAccount, {AccountProps as UserProfileEditSectionAccountProps} from './Section/Account';
 export default UserProfileEdit;
 export {
   UserProfileEditProps,
@@ -9,5 +10,7 @@ export {
   UserProfileEditSectionPublicInfo,
   UserProfileEditSectionPublicInfoProps,
   UserProfileEditSectionSettings,
-  UserProfileEditSectionSettingsProps
+  UserProfileEditSectionSettingsProps,
+  UserProfileEditSectionAccount,
+  UserProfileEditSectionAccountProps
 };

@@ -10,9 +10,8 @@ import {getContributionType, getContributionSnippet, getRouteData} from '../../.
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
-import {useThemeProps} from '@mui/system';
-import NotificationItem from '../../../shared/NotificationItem';
-import {red} from '@mui/material/colors';
+import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   collapsedForAdvertising: {
@@ -37,10 +36,8 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCollapsedForNotification';
-
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-collapsed-for-root`,
   flagIcon: `${PREFIX}-flag-icon`,
   flagText: `${PREFIX}-flag-text`,
   activeAt: `${PREFIX}-active-at`,
@@ -49,74 +46,33 @@ const classes = {
   contributionText: `${PREFIX}-contribution-text`
 };
 
-const Root = styled(Box, {
+const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  width: '100%',
-  [`& .${classes.flagIcon}`]: {
-    backgroundColor: red[500],
-    color: '#FFF'
-  },
-  [`& .${classes.flagText}`]: {
-    color: theme.palette.text.primary
-  },
-  [`& .${classes.contributionWrap}`]: {
-    padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  },
-  [`& .${classes.contributionText}`]: {
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}));
+  slot: 'CollapsedForRoot'
+})(() => ({}));
 
-export interface NotificationCollapsedForProps {
-  /**
-   * Id of the feedObject
-   * @default `n_<notificationObject.sid>`
-   */
-  id?: string;
-
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
-
+export interface NotificationCollapsedForProps
+  extends Pick<
+    NotificationItemProps,
+    Exclude<
+      keyof NotificationItemProps,
+      'image' | 'disableTypography' | 'primary' | 'primaryTypographyProps' | 'secondary' | 'secondaryTypographyProps' | 'actions' | 'footer' | 'isNew'
+    >
+  > {
   /**
    * Notification obj
    * @default null
    */
   notificationObject: SCNotificationDeletedForType;
-
-  /**
-   * Notification Object template type
-   * @default 'detail'
-   */
-  template?: SCNotificationObjectTemplateType;
-
-  /**
-   * Any other properties
-   */
-  [p: string]: any;
 }
 
 /**
  * This component render the content of the notification of type collapsed for
- * @param inProps
  * @constructor
+ * @param props
  */
-export default function CollapsedForNotification(inProps: NotificationCollapsedForProps): JSX.Element {
+export default function CollapsedForNotification(props: NotificationCollapsedForProps): JSX.Element {
   // PROPS
-  const props: NotificationCollapsedForProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {
     notificationObject,
     id = `n_${props.notificationObject['sid']}`,
@@ -139,60 +95,59 @@ export default function CollapsedForNotification(inProps: NotificationCollapsedF
    * Renders root object
    */
   return (
-    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-      <NotificationItem
-        template={template}
-        isNew={notificationObject.is_new}
-        disableTypography
-        image={
-          <Avatar variant="circular" classes={{root: classes.flagIcon}}>
-            <Icon>outlined_flag</Icon>
-          </Avatar>
-        }
-        primary={
+    <Root
+      id={id}
+      className={classNames(classes.root, className, `${PREFIX}-${template}`)}
+      template={template}
+      isNew={notificationObject.is_new}
+      disableTypography
+      image={
+        <Avatar variant="circular" classes={{root: classes.flagIcon}}>
+          <Icon>outlined_flag</Icon>
+        </Avatar>
+      }
+      primary={
+        <>
+          {isSnippetTemplate ? (
+            <Link
+              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
+              <Typography component="div" color="inherit" className={classes.flagText}>
+                <FormattedMessage
+                  id={`ui.notification.collapsedFor.${camelCase(notificationObject.type)}Snippet`}
+                  defaultMessage={`ui.notification.collapsedFor.${camelCase(notificationObject.type)}Snippet`}
+                />
+              </Typography>
+            </Link>
+          ) : (
+            <Typography component="div" color="inherit" className={classes.flagText}>
+              {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+            </Typography>
+          )}
+        </>
+      }
+      secondary={
+        (template === SCNotificationObjectTemplateType.DETAIL || template === SCNotificationObjectTemplateType.SNIPPET) && (
+          <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
+        )
+      }
+      footer={
+        isSnippetTemplate ? null : (
           <>
-            {isSnippetTemplate ? (
+            <Box className={classes.contributionWrap}>
+              <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+                <FormattedMessage id="ui.notification.collapsedFor.youWrote" defaultMessage="ui.notification.collapsedFor.youWrote" />
+              </Typography>
               <Link
                 to={scRoutingContext.url(
                   SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                   getRouteData(notificationObject[contributionType])
-                )}>
-                <Typography component="div" color="inherit" className={classes.flagText}>
-                  <FormattedMessage
-                    id={`ui.notification.collapsedFor.${camelCase(notificationObject.type)}Snippet`}
-                    defaultMessage={`ui.notification.collapsedFor.${camelCase(notificationObject.type)}Snippet`}
-                  />
+                )}
+                className={classes.contributionText}>
+                <Typography component={'span'} variant="body2" gutterBottom>
+                  {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
-            ) : (
-              <Typography component="div" color="inherit" className={classes.flagText}>
-                {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
-              </Typography>
-            )}
-          </>
-        }
-        secondary={
-          template === SCNotificationObjectTemplateType.DETAIL && <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-        }
-        footer={
-          <>
-            {!isSnippetTemplate && (
-              <Box className={classes.contributionWrap}>
-                <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
-                  <FormattedMessage id="ui.notification.collapsedFor.youWrote" defaultMessage="ui.notification.collapsedFor.youWrote" />
-                </Typography>
-                <Link
-                  to={scRoutingContext.url(
-                    SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
-                    getRouteData(notificationObject[contributionType])
-                  )}
-                  className={classes.contributionText}>
-                  <Typography component={'span'} variant="body2" gutterBottom>
-                    {getContributionSnippet(notificationObject[contributionType])}
-                  </Typography>
-                </Link>
-              </Box>
-            )}
+            </Box>
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
@@ -208,8 +163,9 @@ export default function CollapsedForNotification(inProps: NotificationCollapsedF
               </Stack>
             )}
           </>
-        }
-      />
-    </Root>
+        )
+      }
+      {...rest}
+    />
   );
 }

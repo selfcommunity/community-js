@@ -3,6 +3,383 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.17...@selfcommunity/types@0.5.0-alpha.18) (2023-11-24)
+
+
+### Bug Fixes
+
+* fixed feed object location param(lon->lng). Asana issue: https://app.asana.com/0/1202638443591994/1206016441538934/f and https://app.asana.com/0/1202638443591994/1206016441538977/f issue. ([12dcdbf](https://github.com/selfcommunity/community-js/commit/12dcdbf03b6a6e3b9e424f6f816cd0c2b044916a))
+
+
+
+
+
+# [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.16...@selfcommunity/types@0.5.0-alpha.17) (2023-11-22)
+
+
+### Bug Fixes
+
+* fixed account data portability, private message file upload(added all types). Asana issues: https://app.asana.com/0/1202638443591994/1205975745273237/f and https://app.asana.com/0/1202638443591994/1205975745273253/f ([a54fc0c](https://github.com/selfcommunity/community-js/commit/a54fc0c4e1a25776041414d1b6e141114eeb0653))
+
+
+
+
+
+# [0.5.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.15...@selfcommunity/types@0.5.0-alpha.16) (2023-10-19)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+# [0.5.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.14...@selfcommunity/types@0.5.0-alpha.15) (2023-09-20)
+
+
+### Bug Fixes
+
+* snippetHtml ([3879b03](https://github.com/selfcommunity/community-js/commit/3879b0337a080ca8d67ab3922ece0545003bced9))
+* snippetHtml ([d916437](https://github.com/selfcommunity/community-js/commit/d916437014ea80f6208691daac0ab93988bd47f9))
+
+
+
+
+
+# [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.13...@selfcommunity/types@0.5.0-alpha.14) (2023-09-18)
+
+
+### Bug Fixes
+
+* fix image upload on text editor ([19974dd](https://github.com/selfcommunity/community-js/commit/19974dddf5f49ac4d6fae9a9bc22ab9e8db958ea))
+
+
+
+
+
+# [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.12...@selfcommunity/types@0.5.0-alpha.13) (2023-09-14)
+
+
+### Bug Fixes
+
+* build optimization ([a317be4](https://github.com/selfcommunity/community-js/commit/a317be4e517cd73a77bfcd359ab8f5e1c1b73f31))
+
+
+
+
+
+# [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.11...@selfcommunity/types@0.5.0-alpha.12) (2023-09-13)
+
+
+### Bug Fixes
+
+* build optimization ([1ceac97](https://github.com/selfcommunity/community-js/commit/1ceac97e8f92aa0187a9415f4a4db43dd5b5e302))
+* build optimization ([00f8f69](https://github.com/selfcommunity/community-js/commit/00f8f69859d7abe9581334523d76f498e30412a6))
+* build optimization ([49b80a5](https://github.com/selfcommunity/community-js/commit/49b80a5b6deb384a4af25e619fecfaa7d8c63cb7))
+* build optimization ([ce40be5](https://github.com/selfcommunity/community-js/commit/ce40be51278ad2f1ec1a8f5a14905a869a3ceb44))
+* build optimization ([2f504dd](https://github.com/selfcommunity/community-js/commit/2f504dd914ddfaabf66da66ecb5f6731f9ad76d4))
+* build optimization ([bf7c81d](https://github.com/selfcommunity/community-js/commit/bf7c81d2fbf202f4b6a8b44be5741c7e5844d80e))
+* build optimization ([29644f1](https://github.com/selfcommunity/community-js/commit/29644f1f5fcbb84691379a97a04439de8e7b2dca))
+* build optimization ([4c2c3b9](https://github.com/selfcommunity/community-js/commit/4c2c3b92d4ca535381bfdf12632e590ec52eb4e9))
+* build optimization ([11de68f](https://github.com/selfcommunity/community-js/commit/11de68ff6aea9d9816206220a647132865b72296))
+
+
+
+
+
+# [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.10...@selfcommunity/types@0.5.0-alpha.11) (2023-09-04)
+
+
+### Bug Fixes
+
+* bundles optimization ([5e4547b](https://github.com/selfcommunity/community-js/commit/5e4547ba1e666b438326dbca1d6544d7c685002a))
+* bundles optimization ([ffe6738](https://github.com/selfcommunity/community-js/commit/ffe67381b72625009c3d86bb7cd7df971ececda4))
+
+
+
+
+
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.9...@selfcommunity/types@0.5.0-alpha.10) (2023-08-30)
+
+
+### Bug Fixes
+
+* bundle analyzers ([829abef](https://github.com/selfcommunity/community-js/commit/829abef65a9eee109a1275f30445dde0f103e82b))
+
+
+
+
+
+# [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.8...@selfcommunity/types@0.5.0-alpha.9) (2023-08-21)
+
+
+### Bug Fixes
+
+* LanguageSwitcher ([235b02c](https://github.com/selfcommunity/community-js/commit/235b02c817bb735d9ace8caae54b1981ff449d8e))
+
+
+
+
+
+# [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.7...@selfcommunity/types@0.5.0-alpha.8) (2023-06-21)
+
+
+### Bug Fixes
+
+* mobile native push ([d773d66](https://github.com/selfcommunity/community-js/commit/d773d669a3fd5b98601e606bb809297ebcc5b7be))
+* mobile push ([1348b2e](https://github.com/selfcommunity/community-js/commit/1348b2ed9b8a24f42cbf6e398f2cc3868c161da7))
+
+
+
+
+
+# [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.6...@selfcommunity/types@0.5.0-alpha.7) (2023-06-16)
+
+
+### Performance Improvements
+
+* user deleted managing in react-ui components Links ([3f759a0](https://github.com/selfcommunity/community-js/commit/3f759a038cab04f4596f258caec5040ef9534c05))
+
+
+
+
+
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.5...@selfcommunity/types@0.5.0-alpha.6) (2023-06-06)
+
+
+### Bug Fixes
+
+* Fix account verify loader ([3977119](https://github.com/selfcommunity/community-js/commit/3977119b66d6b6cf2a4ec23a179eb8d70a20ae20))
+
+
+
+
+
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.4...@selfcommunity/types@0.5.0-alpha.5) (2023-05-26)
+
+
+### Bug Fixes
+
+* category autoFollow ([28593fe](https://github.com/selfcommunity/community-js/commit/28593fe435e9f2340fd03c297cacf53b6008a3c4))
+* friendship ([1837ffc](https://github.com/selfcommunity/community-js/commit/1837ffceae25065c4ba9d39e3bf62f3d732a5eba))
+
+
+
+
+
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.3...@selfcommunity/types@0.5.0-alpha.4) (2023-05-15)
+
+
+### Performance Improvements
+
+* Moved Features into @selfcommunity/types package ([4d75469](https://github.com/selfcommunity/community-js/commit/4d75469e588761e45ea6028cb6adc60dd25d3d96))
+
+
+
+
+
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.2...@selfcommunity/types@0.5.0-alpha.3) (2023-05-08)
+
+
+### Bug Fixes
+
+* Fix legal page type ([697581e](https://github.com/selfcommunity/community-js/commit/697581eeb10de5bd9ac7c142b3a1274b62364667))
+
+
+
+
+
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.1...@selfcommunity/types@0.5.0-alpha.2) (2023-05-05)
+
+
+### Bug Fixes
+
+* consentSolution ([61f30ad](https://github.com/selfcommunity/community-js/commit/61f30ada454c0d5cc6ae4651b0ad340f210632ab))
+
+
+
+
+
+# [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.0-alpha.0...@selfcommunity/types@0.5.0-alpha.1) (2023-05-04)
+
+
+### Bug Fixes
+
+* consentSolution ([54b95c6](https://github.com/selfcommunity/community-js/commit/54b95c69793d08848e8c73aca7add831cde5478d))
+
+
+
+
+
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.14...@selfcommunity/types@0.5.0-alpha.0) (2023-04-18)
+
+
+### Features
+
+* Footer refactoring adding new API ([f1c3886](https://github.com/selfcommunity/community-js/commit/f1c38867de46814d5504edad3696c1436c1c2294))
+
+
+
+
+
+## [0.4.1-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.13...@selfcommunity/types@0.4.1-alpha.14) (2023-04-12)
+
+
+### Performance Improvements
+
+* added loyalty points dynamic preferences ([b55a8d9](https://github.com/selfcommunity/community-js/commit/b55a8d94ba7f8b5c624c6cd5dcd0754b03b2d91a))
+
+
+
+
+
+## [0.4.1-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.12...@selfcommunity/types@0.4.1-alpha.13) (2023-04-11)
+
+
+### Bug Fixes
+
+* Fix category autocomplete ([100822a](https://github.com/selfcommunity/community-js/commit/100822a44b30e9732c1f3a9832643b8671ac5115))
+
+
+
+
+
+## [0.4.1-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.11...@selfcommunity/types@0.4.1-alpha.12) (2023-04-04)
+
+
+### Performance Improvements
+
+* Added search template for feedObject.ts ([0ba3f82](https://github.com/selfcommunity/community-js/commit/0ba3f82a7a0c3876fb00773117341fb2b323028b))
+
+
+
+
+
+## [0.4.1-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.10...@selfcommunity/types@0.4.1-alpha.11) (2023-04-03)
+
+
+### Bug Fixes
+
+* add pm file type ([4d22865](https://github.com/selfcommunity/community-js/commit/4d22865ff6bb0d8fb3eb6eab85b0f25121c003c8))
+
+
+
+
+
+## [0.4.1-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.9...@selfcommunity/types@0.4.1-alpha.10) (2023-03-29)
+
+
+### Performance Improvements
+
+* Refactor types of Contribution.tsx ([b6fb690](https://github.com/selfcommunity/community-js/commit/b6fb6900745cd7d33b104f524eba265e48973c6a))
+
+
+
+
+
+## [0.4.1-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.8...@selfcommunity/types@0.4.1-alpha.9) (2023-02-20)
+
+
+### Bug Fixes
+
+* fixed  private messages types ([95bb206](https://github.com/selfcommunity/community-js/commit/95bb2069108343da32e0071ffeae442380268cad))
+
+
+
+
+
+## [0.4.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.7...@selfcommunity/types@0.4.1-alpha.8) (2023-02-01)
+
+
+### Bug Fixes
+
+* Renaming preferences and added types ([2703a5f](https://github.com/selfcommunity/community-js/commit/2703a5fbc500eb77402c4c9cb5e7001116e55966))
+
+
+
+
+
+## [0.4.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.6...@selfcommunity/types@0.4.1-alpha.7) (2023-01-25)
+
+
+### Performance Improvements
+
+* added params to comment type ([d5c7873](https://github.com/selfcommunity/community-js/commit/d5c7873592d07f43f9b8b8fea5842fd1c8e23a6c))
+
+
+
+
+
+## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.5...@selfcommunity/types@0.4.1-alpha.6) (2022-12-05)
+
+
+### Performance Improvements
+
+* added field to SCUserProviderAssociationType ([89273ea](https://github.com/selfcommunity/community-js/commit/89273ea5eb717e1a8ad0db532bb1d10aef6dc0d5))
+
+
+
+
+
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.4...@selfcommunity/types@0.4.1-alpha.5) (2022-11-24)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.3...@selfcommunity/types@0.4.1-alpha.4) (2022-11-24)
+
+
+### Performance Improvements
+
+* Update user type and account service signature to support new parameters ([219a2f4](https://github.com/selfcommunity/community-js/commit/219a2f44dcc587cf3d42fec563e2cb20901ac35b))
+
+
+
+
+
+## [0.4.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.2...@selfcommunity/types@0.4.1-alpha.3) (2022-11-02)
+
+
+### Bug Fixes
+
+* fixed legal pages types ([6d37027](https://github.com/selfcommunity/community-js/commit/6d370277fb675ea010706cfc4936f4b7742312dd))
+
+
+
+
+
+## [0.4.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.1...@selfcommunity/types@0.4.1-alpha.2) (2022-10-28)
+
+
+### Performance Improvements
+
+* added suggestion type ([931370a](https://github.com/selfcommunity/community-js/commit/931370a6c0cca249bd6537ef1e5038dd1bc3c662))
+
+
+
+
+
+## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.1-alpha.0...@selfcommunity/types@0.4.1-alpha.1) (2022-10-18)
+
+
+### Performance Improvements
+
+* added community badge to user component. Asana issue: https://app.asana.com/0/1202523699272956/1203176346726554/f ([41ee41f](https://github.com/selfcommunity/community-js/commit/41ee41f37a90b3f9a6c205d8343538598d5f7e00))
+
+
+
+
+
+## [0.4.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.0...@selfcommunity/types@0.4.1-alpha.0) (2022-10-12)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 # [0.4.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.4.0-alpha.3...@selfcommunity/types@0.4.0) (2022-10-12)
 
 **Note:** Version bump only for package @selfcommunity/types

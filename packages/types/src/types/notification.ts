@@ -1,5 +1,5 @@
 import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
-import {SCPrivateMessageType} from './privateMessage';
+import {SCPrivateMessageThreadType, SCPrivateMessageSnippetType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
 import {SCIncubatorType} from './incubator';
@@ -15,7 +15,7 @@ export enum SCNotificationTypologyType {
   CONNECTION_REMOVE = 'connection_remove',
   CONNECTION_REJECT = 'connection_reject',
   CONNECTION_CANCEL_REJECT = 'connection_cancel_reject',
-  CONNECTION_CANCEL_REQUEST = 'connection_cancel_reject',
+  CONNECTION_CANCEL_REQUEST = 'connection_cancel_request',
   MENTION = 'mention',
   VOTE_UP = 'vote_up',
   FOLLOW = 'follow',
@@ -221,7 +221,7 @@ export interface SCNotificationPrivateMessageType extends SCNotificationType {
   /**
    * Private message
    */
-  message: SCPrivateMessageType;
+  message: SCPrivateMessageThreadType;
 }
 
 /**

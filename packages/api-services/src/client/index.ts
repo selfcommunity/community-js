@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import axios, {AxiosInstance, AxiosResponse, CreateAxiosDefaults} from 'axios';
 
 /**
  * List of all Http methods
@@ -35,14 +35,7 @@ export type AxiosResponseHeaders = Record<string, string> & {
 /**
  * General HttpResponse
  */
-export interface HttpResponse<T = unknown, D = any> {
-  data: T;
-  status: number;
-  statusText: string;
-  headers: AxiosResponseHeaders;
-  config: AxiosRequestConfig<D>;
-  request?: any;
-}
+export type HttpResponse<T = unknown, D = any> = AxiosResponse<T, D>;
 
 /**
  * Interface for the ApiClient
@@ -73,12 +66,12 @@ export class ApiClient implements ApiClientInterface {
         ...(config && config.accessToken && {Authorization: `Token ${config.accessToken}`})
       },
       timeout: ApiClient.DEFAULT_TIMEOUT
-    });
+    } as CreateAxiosDefaults<any>);
   }
 
   constructor(config?: any) {
     this.client = this.createClient(config);
-    this.setDefaultHeader({name: 'Content-Type', value: 'application/x-www-form-urlencoded', methods: ['post']});
+    this.setDefaultHeader({name: 'Content-Type', value: 'application/json', methods: ['post']});
   }
 
   /**

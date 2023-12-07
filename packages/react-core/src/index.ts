@@ -10,6 +10,7 @@ import {
   SCSessionType,
   SCFollowedManagerType,
   SCFollowersManagerType,
+  SCSettingsManagerType,
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
   SCLocaleType,
@@ -19,6 +20,11 @@ import {
   SCRoutingContextType,
   SCLocaleContextType,
   SCAlertMessagesContextType,
+  SCThemeAvatarVariableType,
+  SCThemeCategoryIconVariableType,
+  SCThemeCategoryVariableType,
+  SCThemeVariablesType,
+  SCThemeType,
 } from './types';
 
 /**
@@ -69,6 +75,8 @@ import * as SCCache from './constants/Cache';
  * Custom Hooks
  */
 import useSCFetchUser from './hooks/useSCFetchUser';
+import useSCFetchUserProviders from './hooks/useSCFetchUserProviders';
+import useSCFetchVote from './hooks/useSCFetchVote';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
@@ -81,7 +89,10 @@ import useSCFetchIncubator from './hooks/useSCFetchIncubator';
 import useSCMediaClick from './hooks/useSCMediaClick';
 import useSCFetchContributors from './hooks/useSCFetchContributors';
 import useSCFetchFeed from './hooks/useSCFetchFeed';
-import useSCFetchReactions from './hooks/useSCFetchReactions';
+import useSCFetchPrivateMessageSnippets from './hooks/useSCFetchPrivateMessageSnippets';
+import useSCFetchBroadcastMessages from './hooks/useSCFetchBroadcastMessages';
+import useSCFetchUserBlockedBy from './hooks/useSCFetchUserBlockedBy';
+import useSCUserIsBlocked from './hooks/useSCUserIsBlocked';
 
 /**
  * Routing component
@@ -94,7 +105,7 @@ import * as SCRoutes from './constants/Routes';
  * User, hooks (useIsComponentMountedRef)
  */
 import * as UserUtils from './utils/user';
-import {useIsComponentMountedRef, usePreviousValue} from './utils/hooks';
+import {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect, useEffectOnce, useNoInitialEffect} from './utils/hooks';
 
 /**
  * Constants:
@@ -112,6 +123,7 @@ export {
   SCContextType,
   SCSettingsType,
   SCSessionType,
+  SCSettingsManagerType,
   SCFollowedManagerType,
   SCFollowersManagerType,
   SCConnectionsManagerType,
@@ -123,6 +135,11 @@ export {
   SCRoutingContextType,
   SCLocaleContextType,
   SCAlertMessagesContextType,
+  SCThemeAvatarVariableType,
+  SCThemeCategoryIconVariableType,
+  SCThemeCategoryVariableType,
+  SCThemeVariablesType,
+  SCThemeType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -158,6 +175,8 @@ export {
   UserUtils,
   Locale,
   useSCFetchUser,
+  useSCFetchUserProviders,
+  useSCFetchVote,
   useSCFetchFeedObject,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
@@ -172,5 +191,11 @@ export {
   useSCFetchFeed,
   useIsComponentMountedRef,
   usePreviousValue,
-  useSCFetchReactions,
+  useIsomorphicLayoutEffect,
+  useEffectOnce,
+  useNoInitialEffect,
+  useSCFetchPrivateMessageSnippets,
+  useSCFetchBroadcastMessages,
+  useSCFetchUserBlockedBy,
+  useSCUserIsBlocked,
 };

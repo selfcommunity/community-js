@@ -1,20 +1,16 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {FeedObjectSkeleton, SCFeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerSkeleton} from '@selfcommunity/react-ui';
-
-const PREFIX = 'SCExploreFeedTemplateSkeleton';
+import {FeedObjectSkeleton, SCFeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerWidgetSkeleton} from '@selfcommunity/react-ui';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(FeedSkeleton, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Explore Feed Skeleton Template. Learn about the available props and the CSS API.
@@ -27,13 +23,13 @@ const Root = styled(FeedSkeleton, {
 
  #### Component Name
 
- The name `SCExploreFeedTemplateSkeleton` can be used when providing style overrides in the theme.
+ The name `SCExploreFeedTemplate-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCExploreFeedTemplateSkeleton-root|Styles applied to the root element.|
+ |root|.SCExploreFeedTemplate-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function ExploreFeedSkeleton(): JSX.Element {
@@ -46,7 +42,7 @@ export default function ExploreFeedSkeleton(): JSX.Element {
           <GenericSkeleton sx={{mb: 2}} />
         </React.Fragment>
       }>
-      <InlineComposerSkeleton />
+      <InlineComposerWidgetSkeleton />
       {Array.from({length: 5}).map((e, i) => (
         <FeedObjectSkeleton key={i} template={SCFeedObjectTemplateType.DETAIL} />
       ))}

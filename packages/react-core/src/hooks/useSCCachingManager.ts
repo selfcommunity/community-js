@@ -6,8 +6,13 @@ import {useMemo, useRef, useState} from 'react';
  :::
  */
 export default function useSCCachingManager() {
+  // Elements(id) already loaded
   const cache = useRef<number[]>([]);
-  const [loading, setLoading] = useState<number[]>([]);
+  // Elements(id) current in loading
+  const loadingCache = useRef<number[]>([]);
+
+  // Trigger state changes
+  const [loading, setDataLoading] = useState([]);
   const [data, setData] = useState([]);
 
   /**
@@ -34,6 +39,7 @@ export default function useSCCachingManager() {
   const emptyCache = useMemo(
     () => (): void => {
       cache.current = [];
+      loadingCache.current = [];
     },
     [cache]
   );
@@ -46,11 +52,32 @@ export default function useSCCachingManager() {
    */
   const isLoading = useMemo(
     () =>
-      (obj: {id: number}): boolean => {
-        return loading.includes(obj.id);
+      (v: {id: number} | number): boolean => {
+        if (typeof v === 'number') {
+          return loadingCache.current.includes(v);
+        }
+        return loadingCache.current.includes(v.id);
       },
-    [loading]
+    [loading, loadingCache]
   );
 
-  return {cache: cache.current, updateCache, emptyCache, data, setData, loading, setLoading, isLoading};
+  const setLoading = useMemo(
+    () =>
+      (id: number): void => {
+        loadingCache.current = loadingCache.current.includes(id) ? loadingCache.current : [...loadingCache.current, ...[id]];
+        setDataLoading((prev) => (prev.includes(id) ? prev : [...prev, ...[id]]));
+      },
+    [loadingCache, loading]
+  );
+
+  const setUnLoading = useMemo(
+    () =>
+      (id: number): void => {
+        loadingCache.current = loadingCache.current.filter((u) => u !== id);
+        setDataLoading((prev) => prev.filter((u) => u !== id));
+      },
+    [loadingCache, loading]
+  );
+
+  return {cache: cache.current, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading};
 }

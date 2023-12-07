@@ -48,6 +48,10 @@ export interface UserScoreParams {
   user: number;
 }
 
+export interface UserGetParams extends BaseGetParams {
+  mutual?: number;
+}
+
 /**
  * UserSearchParams interface.
  */
@@ -118,5 +122,5 @@ export interface DeleteProviderAssociation {
   /**
    * The external id of the user in the provider platform
    */
-  ext_id: string;
+  ext_id: number;
 }

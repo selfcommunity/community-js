@@ -8,20 +8,25 @@ import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import useSCFollowedCategoriesManager from '../../../hooks/useSCFollowedCategoriesManager';
 import useSCFollowedManager from '../../../hooks/useSCFollowedManager';
+import useSCSettingsManager from '../../../hooks/useSCSettingsManager';
 import useSCFollowersManager from '../../../hooks/useSCFollowersManager';
 import useSCConnectionsManager from '../../../hooks/useSCConnectionsManager';
+import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus, SCUserCounterType} from '@selfcommunity/types';
+import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
+import useSCBlockedUsersManager from '../../../hooks/useSCBlockedUsersManager';
+import * as Session from '../../../constants/Session';
 import {
   SCUserContextType,
   SCContextType,
   SCSessionType,
+  SCSettingsManagerType,
   SCFollowedCategoriesManagerType,
   SCFollowedManagerType,
   SCFollowersManagerType,
   SCConnectionsManagerType,
   SCSubscribedIncubatorsManagerType,
+  SCBlockedUsersManagerType,
 } from '../../../types';
-import {SCUserType, SCNotificationTopicType, SCNotificationTypologyType, SCUserStatus} from '@selfcommunity/types';
-import useSCSubscribedIncubatorsManager from '../../../hooks/useSCSubscribedIncubatorsManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -69,14 +74,15 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
-   * Managers followed, categories
+   * Managers followed, connections, blocked users, categories, incubators, settings
    */
+  const settingsManager: SCSettingsManagerType = useSCSettingsManager(state.user);
   const followedManager: SCFollowedManagerType = useSCFollowedManager(state.user);
   const followersManager: SCFollowersManagerType = useSCFollowersManager(state.user);
   const subscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = useSCSubscribedIncubatorsManager(state.user);
   const connectionsManager: SCConnectionsManagerType = useSCConnectionsManager(state.user);
   const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user, updateUser);
-
+  const blockedUsersManager: SCBlockedUsersManagerType = useSCBlockedUsersManager(state.user);
   /**
    * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
    */
@@ -89,7 +95,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * If there is an error, it means there is no session.
    */
   useDeepCompareEffectNoCheck(() => {
-    if (state.session.authToken && state.session.authToken.accessToken) {
+    if ((state.session.authToken && state.session.authToken.accessToken) || state.session.type === Session.COOKIE_SESSION) {
       dispatch({type: userActionTypes.LOGIN_LOADING});
       UserService.getCurrentUser()
         .then((user: SCUserType) => {
@@ -99,6 +105,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
           Logger.error(SCOPE_SC_CORE, 'Unable to retrieve the authenticated user.');
           dispatch({type: userActionTypes.LOGIN_FAILURE, payload: {error}});
         });
+    } else {
+      dispatch({type: userActionTypes.LOGIN_FAILURE});
     }
   }, [state.session]);
 
@@ -108,9 +116,9 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * and document is in foreground refresh the cache
    */
   useEffect(() => {
-    typeof window !== 'undefined' && document.addEventListener('visibilitychange', handleVisibilityChange);
+    typeof window !== 'undefined' && window.document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
-      typeof window !== 'undefined' && document.removeEventListener('visibilitychange', handleVisibilityChange);
+      typeof window !== 'undefined' && window.document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   });
 
@@ -120,10 +128,13 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    */
   function handleVisibilityChange() {
     if (isClientSideRendering() && !window.document.hidden && state.user) {
+      settingsManager.refresh && settingsManager.refresh();
+      refreshCounters();
       categoriesManager.refresh && categoriesManager.refresh();
       followedManager.refresh && followedManager.refresh();
       connectionsManager.refresh && connectionsManager.refresh();
       subscribedIncubatorsManager.refresh && subscribedIncubatorsManager.refresh();
+      blockedUsersManager.refresh && blockedUsersManager.refresh();
     }
   }
 
@@ -154,14 +165,14 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * Handle change unseen interactions counter
    */
   function setUnseenInteractionsCounter(counter): void {
-    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_interactions_counter: counter}});
+    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_interactions_counter: Math.max(counter, 0)}});
   }
 
   /**
    * Handle change unseen notification banners counter
    */
   function setUnseenNotificationBannersCounter(counter): void {
-    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_notification_banners_counter: counter}});
+    dispatch({type: userActionTypes.UPDATE_USER, payload: {unseen_notification_banners_counter: Math.max(counter, 0)}});
   }
 
   /**
@@ -172,11 +183,11 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   }
 
   /**
-   * Helper to refresh the notification counter
-   * Use getCurrentUser service since the notification counters
+   * Helper to refresh counters
+   * Use getCurrentUser service since the counters
    * have been inserted into the serialized user object
    */
-  const refreshNotificationCounters = useMemo(
+  const refreshCounters = useMemo(
     () => () => {
       if (state.user) {
         return UserService.getCurrentUser()
@@ -186,11 +197,23 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
               payload: {
                 unseen_interactions_counter: user.unseen_interactions_counter,
                 unseen_notification_banners_counter: user.unseen_notification_banners_counter,
+                ...(user.followers_counter ? {followers_counter: user.followers_counter} : {}),
+                ...(user.followings_counter ? {followings_counter: user.followings_counter} : {}),
+                ...(user.categories_counter ? {categories_counter: user.categories_counter} : {}),
+                ...(user.discussions_counter ? {discussions_counter: user.discussions_counter} : {}),
+                ...(user.posts_counter ? {posts_counter: user.posts_counter} : {}),
+                ...(user.statuses_counter ? {status_counter: user.statuses_counter} : {}),
+                ...(user.polls_counter ? {polls_counter: user.polls_counter} : {}),
+                ...(user.connections_counter ? {connections_counter: user.connections_counter} : {}),
+                ...(user.connection_requests_sent_counter ? {connection_requests_sent_counter: user.connection_requests_sent_counter} : {}),
+                ...(user.connection_requests_received_counter
+                  ? {connection_requests_received_counter: user.connection_requests_received_counter}
+                  : {}),
               },
             });
           })
           .catch((error) => {
-            Logger.error(SCOPE_SC_CORE, `Unable to refresh notification counters. Error: ${error.response.toString()}`);
+            Logger.error(SCOPE_SC_CORE, `Unable to refresh counters. Error: ${error.response.toString()}`);
           });
       }
       return Promise.reject();
@@ -203,7 +226,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * from the state.
    */
   function logout(): void {
-    dispatch({type: userActionTypes.LOGOUT});
+    helpers.logoutSession();
   }
 
   /**
@@ -226,19 +249,23 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       updateUser,
       setUnseenInteractionsCounter,
       setUnseenNotificationBannersCounter,
-      refreshNotificationCounters,
+      refreshCounters,
       logout,
       refreshSession,
       managers: {
+        settings: settingsManager,
         categories: categoriesManager,
         followed: followedManager,
         followers: followersManager,
         connections: connectionsManager,
         incubators: subscribedIncubatorsManager,
+        blockedUsers: blockedUsersManager,
       },
     }),
     [
       state,
+      settingsManager.all,
+      settingsManager.isLoading,
       categoriesManager.loading,
       categoriesManager.categories,
       followedManager.loading,
@@ -247,6 +274,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       followersManager.followers,
       connectionsManager.loading,
       connectionsManager.connections,
+      blockedUsersManager.blocked,
       subscribedIncubatorsManager.loading,
       subscribedIncubatorsManager.incubators,
     ]

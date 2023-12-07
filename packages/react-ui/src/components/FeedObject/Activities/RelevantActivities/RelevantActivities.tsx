@@ -9,27 +9,17 @@ import VoteUpRelevantActivity from './VoteUpActivity';
 import FollowRelevantActivity from './FollowActivity';
 import PollVoteRelevantActivity from './PollVoteActivity';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCFeedRelevantActivities';
+import {PREFIX} from '../../constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  activity: `${PREFIX}-activity`
+  root: `${PREFIX}-relevant-activities-root`,
+  activity: `${PREFIX}-relevant-activities-activity`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .MuiList-root, & .${classes.activity}`]: {
-    padding: 0,
-    '& .SCBaseItem-content': {
-      alignItems: 'flex-start'
-    }
-  }
-}));
+  slot: 'RelevantActivitiesRoot'
+})(() => ({}));
 
 export interface RelevantActivitiesProps {
   /**
@@ -53,12 +43,8 @@ export interface RelevantActivitiesProps {
   [p: string]: any;
 }
 
-export default function RelevantActivities(inProps: RelevantActivitiesProps): JSX.Element {
+export default function RelevantActivities(props: RelevantActivitiesProps): JSX.Element {
   //PROPS
-  const props: RelevantActivitiesProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
   const {className = null, activities = [], showMaxRelevantActivities = 5, ...rest} = props;
 
   // STATE

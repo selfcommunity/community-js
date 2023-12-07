@@ -222,7 +222,7 @@ describe('User Service Test', () => {
   });
   test('Check email ', () => {
     const e = generateString();
-    return UserService.checkUserEmailToken(e).then((data) => {
+    return UserService.checkUserEmailToken(user.id, e).then((data) => {
       expect(data).toHaveProperty('is_valid');
     });
   });

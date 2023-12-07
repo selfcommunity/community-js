@@ -1,17 +1,31 @@
 import React, {useContext, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Menu, MenuItem, ListItemIcon, Typography, Button, Popover, Divider, IconButton, Box} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {
+  Alert,
+  Box,
+  Button,
+  Divider,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Popover,
+  SwipeableDrawer,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
 import Icon from '@mui/material/Icon';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCChangeCoverButton';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -22,13 +36,19 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  alignItems: 'center',
-  flexWrap: 'wrap'
-}));
+  slot: 'Root'
+})(() => ({}));
+
+const messages = defineMessages({
+  imageMaxSize: {
+    id: 'ui.changeCover.button.change.alertMaxSize',
+    defaultMessage: 'ui.changeCover.button.change.alertMaxSize'
+  },
+  errorLoadImage: {
+    id: 'ui.changeCover.button.change.alertErrorImage',
+    defaultMessage: 'ui.changeCover.button.change.alertErrorImage'
+  }
+});
 
 export interface ChangeCoverProps {
   /**
@@ -53,8 +73,12 @@ export interface ChangeCoverProps {
 }
 
 /**
- *> API documentation for the Community-JS Change Cover component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Change Cover component. Learn about the available props and the CSS API.
  *
+ *
+ * This component renders a button that allows users to edit their profile cover and a popover that specifies format and sizes allowed.
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/ChangeCover)
+
  #### Import
  ```jsx
  import {ChangeCover} from '@selfcommunity/react-ui';
@@ -86,6 +110,8 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   //STATE
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   let fileInput = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -93,9 +119,13 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
   const [openDeleteCoverDialog, setOpenDeleteCoverDialog] = useState<boolean>(false);
   const [isDeletingCover, setIsDeletingCover] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [alert, setAlert] = useState<string | null>(null);
+
+  // INTL
+  const intl = useIntl();
 
   // HANDLERS
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -120,14 +150,19 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
    * Handles file upload
    * @param event
    */
-  function handleUpload(event) {
-    fileInput = event.target.files[0];
-    handleSave();
-  }
+  const handleUpload = (event) => {
+    const maxSize = 5 * 1024 * 1024;
+    if (event.target.files[0]?.size <= maxSize) {
+      fileInput = event.target.files[0];
+      handleSave();
+    } else {
+      setAlert(intl.formatMessage(messages.imageMaxSize));
+      setAnchorEl(null);
+    }
+  };
 
   /**
    * Handles deletion of a specific cover
-   * @param id
    */
   function deleteCover() {
     setIsDeletingCover(true);
@@ -167,27 +202,25 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
         }
       })
       .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
         setLoading(false);
-        console.log(error);
+        setAlert(intl.formatMessage(messages.errorLoadImage));
       });
   }
 
   /**
-   * Renders change cover card
+   * Renders change cover menu items
    */
-  const cc = (
-    <React.Fragment>
-      <Button size="small" variant="contained" disabled={loading} onClick={handleClick} {...rest}>
-        <FormattedMessage id="ui.changeCover.button.change" defaultMessage="ui.changeCover.button.change" />
-      </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+  function renderMenuItems() {
+    return (
+      <Box>
         {loading ? (
           <MenuItem sx={{justifyContent: 'center'}}>
             <CircularProgress size={15} />
           </MenuItem>
         ) : (
-          <Box>
-            <input type="file" onChange={() => handleUpload(event)} ref={fileInput} hidden />
+          <>
+            <input type="file" onChange={handleUpload} ref={fileInput} hidden accept=".gif,.png,.jpg,.jpeg" />
             <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
                 <Icon fontSize="small">add_circle_outline</Icon>
@@ -202,41 +235,68 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
                 <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
               </MenuItem>
             )}
-          </Box>
+          </>
         )}
-      </Menu>
-      <IconButton className={classes.helpPopover} color="primary" aria-label="upload picture" component="span" onClick={handleClickHelpButton}>
-        <Icon fontSize="small">help_outline</Icon>
-      </IconButton>
-      {isOpen && (
-        <Popover
-          open={isOpen}
-          anchorEl={anchorElPopover}
-          onClose={handleCloseHelpPopover}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}>
-          <Box sx={{p: '10px'}}>
-            <Typography component="h3">
-              <FormattedMessage id="ui.changeCover.button.uploadA" defaultMessage="ui.changeCover.button.uploadA" />
-            </Typography>
-            <Divider />
-            <Typography component="span">
-              <ul className="list">
-                <li>
-                  <FormattedMessage id="ui.changeCover.listF" defaultMessage="ui.changeCover.listF" />
-                </li>
-                <li>
-                  <FormattedMessage id="ui.changeCover.listD" defaultMessage="ui.changeCover.listF" />
-                </li>
-                <li>
-                  <FormattedMessage id="ui.changeCover.listW" defaultMessage="ui.changeCover.listF" />
-                </li>
-              </ul>
-            </Typography>
-          </Box>
-        </Popover>
+      </Box>
+    );
+  }
+
+  /**
+   * Renders change cover menu
+   */
+  const cc = (
+    <React.Fragment>
+      <Button size="small" variant="contained" disabled={loading} onClick={handleOpen} {...rest}>
+        <Icon>photo_camera</Icon>
+      </Button>
+      <>
+        {isMobile ? (
+          <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
+            {renderMenuItems()}
+          </SwipeableDrawer>
+        ) : (
+          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+            {renderMenuItems()}
+          </Menu>
+        )}
+      </>
+      {!isMobile && (
+        <>
+          <Button className={classes.helpPopover} variant="contained" onClick={handleClickHelpButton}>
+            <Icon fontSize="small">help_outline</Icon>
+          </Button>
+          {isOpen && (
+            <Popover
+              open={isOpen}
+              anchorEl={anchorElPopover}
+              onClose={handleCloseHelpPopover}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right'
+              }}>
+              <Box sx={{p: '10px'}}>
+                <Typography component="h3">
+                  <FormattedMessage id="ui.changeCover.button.uploadA" defaultMessage="ui.changeCover.button.uploadA" />
+                </Typography>
+                <Divider />
+                <Typography component="span">
+                  <FormattedMessage
+                    id="ui.changeCover.info"
+                    defaultMessage="ui.changeCover.info"
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      li: (chunks) => <li>{chunks}</li>,
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      ul: (chunks) => <ul>{chunks}</ul>
+                    }}
+                  />
+                </Typography>
+              </Box>
+            </Popover>
+          )}
+        </>
       )}
       {openDeleteCoverDialog && (
         <ConfirmDialog
@@ -252,6 +312,17 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       )}
     </React.Fragment>
   );
+
+  /**
+   * If there is an error
+   */
+  if (alert) {
+    return (
+      <Alert color="error" onClose={() => setAlert(null)}>
+        {alert}
+      </Alert>
+    );
+  }
 
   /**
    * Renders root object (if not hidden by autoHide prop)

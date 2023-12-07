@@ -1,10 +1,21 @@
 {
   "name": "@selfcommunity/utils",
-  "version": "0.1.43",
+  "version": "0.2.0-alpha.12",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
+  "exports": {
+    ".": {
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js"
+    },
+    "./*": {
+      "require": "./lib/cjs/*",
+      "import": "./lib/esm/*"
+    }
+  },
+  "sideEffects": false,
   "description": "Utilities to integrate a Community.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "keywords": [
@@ -28,6 +39,7 @@
     "build:commonjs": "tsc -b tsconfig-cjs.build.json",
     "build:esm": "tsc -b tsconfig-esm.build.json",
     "build:umd": "webpack --mode production",
+    "build:umd:analyze": "webpack --mode production --profile --json > ./lib/umd/stats.json && webpack-bundle-analyzer ./lib/umd/stats.json",
     "build": "yarn clean:lib && yarn build:commonjs && yarn build:esm && yarn build:umd",
     "prerelease": "yarn run clean:lib && yarn run build"
   },
@@ -43,17 +55,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.13",
-    "@babel/core": "^7.12.13",
-    "@babel/plugin-proposal-class-properties": "^7.12.13",
-    "@babel/plugin-proposal-export-default-from": "^7.12.13",
-    "@babel/plugin-proposal-export-namespace-from": "^7.12.13",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.13",
-    "@babel/plugin-proposal-object-rest-spread": "^7.12.13",
-    "@babel/plugin-transform-modules-commonjs": "^7.12.13",
-    "@babel/preset-modules": "^0.1.4",
-    "@babel/preset-react": "^7.12.13",
-    "@babel/preset-typescript": "^7.12.13",
     "@types/chai": "^4.2.14",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
@@ -63,8 +64,6 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "babel-jest": "^26.6.3",
-    "babel-loader": "^8.2.2",
-    "babel-preset-jason": "^6.3.0",
     "chai": "^4.2.0",
     "cherry-pick": "^0.5.0",
     "enzyme": "^3.10.0",
@@ -85,9 +84,11 @@
     "rimraf": "^3.0.2",
     "sass": "^1.32.6",
     "sinon": "^9.2.4",
+    "tslib": "^2.6.2",
     "typescript": "^4.1.3",
     "webpack": "^5.20.1",
     "webpack-atoms": "^17.1.0",
+    "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^4.5.0"
   },
   "prettier": {

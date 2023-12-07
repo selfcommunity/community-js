@@ -4,10 +4,10 @@ import {WebhookParamType, WebhookEventsType} from './webhook';
 import {SSOSignUpParams} from './sso';
 import {CommentListParams, CommentCreateParams} from './comment';
 import {IncubatorCreateParams, IncubatorSearchParams} from './incubator';
-import {LoyaltyPrizeParams} from './prize';
+import {LoyaltyPrizeParams, LoyaltyGetPrizeParams} from './prize';
 import {ModerationParams, ModerateContributionParams, FlaggedContributionParams} from './moderation';
 import {CustomNotificationParams} from './notification';
-import {UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
+import {UserGetParams, UserAutocompleteParams, UserScoreParams, UserSearchParams} from './user';
 import {TagParams, TagGetParams} from './tag';
 import {MediaCreateParams, MediaTypes, ChunkUploadParams, ChunkUploadCompleteParams} from './media';
 import {
@@ -16,7 +16,8 @@ import {
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,
   MessageChunkUploadDoneParams,
-  MessageMediaChunksParams
+  MessageMediaChunksParams,
+  ThreadDeleteParams
 } from './privateMessage';
 import {CategoryParams} from './category';
 import {CustomAdvParams} from './customAdv';
@@ -46,10 +47,12 @@ export {
   IncubatorCreateParams,
   IncubatorSearchParams,
   LoyaltyPrizeParams,
+  LoyaltyGetPrizeParams,
   ModerationParams,
   ModerateContributionParams,
   FlaggedContributionParams,
   CustomNotificationParams,
+  UserGetParams,
   UserAutocompleteParams,
   UserScoreParams,
   UserSearchParams,
@@ -60,6 +63,7 @@ export {
   ChunkUploadCompleteParams,
   ChunkUploadParams,
   ThreadParams,
+  ThreadDeleteParams,
   MessageCreateParams,
   MessageMediaUploadParams,
   MessageThumbnailUploadParams,

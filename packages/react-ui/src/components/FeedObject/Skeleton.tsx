@@ -3,26 +3,20 @@ import Widget from '../Widget';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import {Box, CardContent, CardHeader, CardProps} from '@mui/material';
-
-const PREFIX = 'SCFeedObjectSkeleton';
+import {CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
+import {SCThemeType} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   media: `${PREFIX}-media`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginBottom: theme.spacing(2),
-  [`& .${classes.media}`]: {
-    height: 250,
-    marginBottom: 20
-  }
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 export interface FeedObjectSkeletonProps extends CardProps {
   /**
@@ -47,25 +41,32 @@ export interface FeedObjectSkeletonProps extends CardProps {
 
  #### Component Name
 
- The name `SCFeedObjectSkeleton` can be used when providing style overrides in the theme.
+ The name `SCFeedObject-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFeedObjectSkeleton-root|Styles applied to the root element.|
- |media|.SCFeedObjectSkeleton-media|Styles applied to the media element.|
+ |root|.SCFeedObject-skeleton-root|Styles applied to the root element.|
+ |media|.SCFeedObject-media|Styles applied to the media element.|
  *
  */
 export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTemplateType; [p: string]: any}): JSX.Element {
-  const {template, ...rest} = props;
-  const _template = template || SCFeedObjectTemplateType.SNIPPET;
+  const {template = SCFeedObjectTemplateType.SNIPPET, ...rest} = props;
+  const theme = useTheme<SCThemeType>();
   let obj;
-  if (_template === SCFeedObjectTemplateType.PREVIEW || _template === SCFeedObjectTemplateType.DETAIL) {
+  if (template === SCFeedObjectTemplateType.PREVIEW || template === SCFeedObjectTemplateType.DETAIL || template === SCFeedObjectTemplateType.SEARCH) {
     obj = (
       <React.Fragment>
         <CardHeader
-          avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+          avatar={
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={theme.selfcommunity.user.avatar.sizeMedium}
+              height={theme.selfcommunity.user.avatar.sizeMedium}
+            />
+          }
           title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
@@ -83,7 +84,14 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
     obj = (
       <React.Fragment>
         <CardHeader
-          avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+          avatar={
+            <Skeleton
+              animation="wave"
+              variant="circular"
+              width={theme.selfcommunity.user.avatar.sizeMedium}
+              height={theme.selfcommunity.user.avatar.sizeMedium}
+            />
+          }
           title={<Skeleton animation="wave" height={10} width="80%" style={{marginBottom: 6}} />}
           subheader={<Skeleton animation="wave" height={10} width="40%" />}
         />
@@ -99,8 +107,8 @@ export default function FeedObjectSkeleton(props: {template?: SCFeedObjectTempla
   }
 
   return (
-    <Root className={classes.root} {...rest}>
-      <Box className={`${PREFIX}-${_template}`}>{obj}</Box>
+    <Root className={classNames(classes.root, `${PREFIX}-${template}`)} {...rest}>
+      {obj}
     </Root>
   );
 }

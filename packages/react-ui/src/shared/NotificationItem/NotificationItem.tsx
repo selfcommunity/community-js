@@ -5,15 +5,13 @@ import classNames from 'classnames';
 import Widget, {WidgetProps} from '../../components/Widget';
 import {useThemeProps} from '@mui/system';
 import NewChip from '../NewChip/NewChip';
-import {grey, red} from '@mui/material/colors';
 import {SCNotificationObjectTemplateType} from '../../types/notification';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCNotificationItem';
 
 const classes = {
   root: `${PREFIX}-root`,
-  content: `${PREFIX}-content`,
-  dense: `${PREFIX}-dense`,
   header: `${PREFIX}-header`,
   image: `${PREFIX}-image`,
   snippetImage: `${PREFIX}-snippet-image`,
@@ -23,7 +21,7 @@ const classes = {
   actions: `${PREFIX}-actions`,
   footer: `${PREFIX}-footer`,
   snippet: `${PREFIX}-snippet`,
-  newSnippet: `${PREFIX}-new-snippet`,
+  new: `${PREFIX}-new`,
   newChip: `${PREFIX}-new-chip`
 };
 
@@ -31,110 +29,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`&.${classes.root}`]: {
-    backgroundColor: 'transparent',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: theme.spacing(),
-    boxSizing: 'border-box',
-    '&.MuiPaper-elevation': {
-      padding: `${theme.spacing()} ${theme.spacing(2)}`
-    },
-    '&.MuiPaper-elevation0': {
-      borderRadius: 0,
-      [`& .${classes.actions}`]: {
-        right: 0
-      }
-    }
-  },
-  [`&.${classes.dense}`]: {
-    '& .SCNotificationItem-header': {
-      alignItems: 'center'
-    },
-    marginTop: 0,
-    padding: `0px ${theme.spacing()} !important`
-  },
-  [`&.${classes.snippet}`]: {
-    '&:before': {
-      borderRadius: '5px',
-      width: '4px',
-      left: 1,
-      height: '100%',
-      display: 'block',
-      zIndex: '20',
-      position: 'absolute',
-      content: '" "',
-      backgroundColor: `${grey[200]}`
-    },
-    '& .SCNotificationItem-header': {
-      alignItems: 'flex-start'
-    },
-    '& .SCNotificationItem-content': {
-      padding: `5px ${theme.spacing()}`
-    }
-  },
-  [`&.${classes.newSnippet}`]: {
-    '&:before': {
-      backgroundColor: theme.palette.primary.main
-    }
-  },
-  [`& .${classes.content}`]: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  [`& .${classes.header}`]: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: '100%',
-    flex: 1
-  },
-  [`& .${classes.image}`]: {
-    flexShrink: 0,
-    marginRight: theme.spacing(1)
-  },
-  [`& .${classes.snippetImage}`]: {
-    paddingLeft: `${theme.spacing()}`,
-    '& .MuiAvatar-root': {
-      width: 25,
-      height: 25
-    }
-  },
-  [`& .${classes.title}`]: {
-    flex: '1 1 auto',
-    textAlign: 'left',
-    width: '100%'
-  },
-  [`& .${classes.primary}`]: {
-    color: theme.palette.text.primary,
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden'
-  },
-  [`& .${classes.secondary}`]: {
-    textOverflow: 'ellipsis',
-    display: 'inline',
-    overflow: 'hidden',
-    color: theme.palette.text.secondary
-  },
-  [`& .${classes.actions}`]: {
-    '> div': {
-      justifyContent: 'flex-end'
-    },
-    flex: 1
-  },
-  [`& .${classes.footer}`]: {
-    padding: `0px ${theme.spacing()}`,
-    width: '100%'
-  }
-}));
+})(({theme}: {theme: SCThemeType}) => ({}));
 
 export interface NotificationItemProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
   /**
@@ -142,11 +37,6 @@ export interface NotificationItemProps extends Pick<WidgetProps, Exclude<keyof W
    * @default null
    */
   id?: string;
-  /**
-   * Overrides or extends the styles applied to the component.
-   * @default null
-   */
-  className?: string;
   /**
    * Notification Object template type
    * @default 'detail'
@@ -218,7 +108,7 @@ export interface NotificationItemProps extends Pick<WidgetProps, Exclude<keyof W
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCBaseItem-root|Styles applied to the root element.|
- |newSnippet|.SCBaseItem-new-snippet|Styles applied to the root element when notification is marked as new.|
+ |new|.SCBaseItem-new-snippet|Styles applied to the root element when notification is marked as new.|
  |content|.SCBaseItem-content|Styles applied to the content element.|
  |header|.SCBaseItem-header|Styles applied to the header element.|
  |image|.SCBaseItem-image|Styles applied to image section.|
@@ -256,40 +146,32 @@ export default function NotificationItem(inProps: NotificationItemProps): JSX.El
     ...rest
   } = props;
 
-  const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
-  const isDetailTemplate = template === SCNotificationObjectTemplateType.DETAIL;
-  const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
-
   // RENDER
   return (
     <Root
       id={id}
       {...rest}
-      className={classNames(classes.root, className, {
-        [classes.dense]: isSnippetTemplate || isToastTemplate,
-        [classes.snippet]: isSnippetTemplate,
-        [classes.newSnippet]: isSnippetTemplate && isNew
+      className={classNames(classes.root, className, `${PREFIX}-${template}`, {
+        [classes.new]: isNew
       })}
       elevation={elevation}>
-      <Box className={classes.content}>
-        <Box className={classes.header}>
-          {image && <Box className={classNames(classes.image, {[classes.snippetImage]: isSnippetTemplate})}>{image}</Box>}
-          <Box className={classes.title}>
-            {primary && (
-              <Box className={classes.primary}>
-                {isDetailTemplate && isNew && <NewChip className={classes.newChip} />}
-                {disableTypography ? primary : <Typography {...primaryTypographyProps}>{primary}</Typography>}
-              </Box>
-            )}
-            {secondary && (
-              <Box className={classes.secondary}>
-                {disableTypography ? secondary : <Typography {...secondaryTypographyProps}>{secondary}</Typography>}
-              </Box>
-            )}
-          </Box>
+      <Box className={classes.header}>
+        {image && <Box className={classNames(classes.image)}>{image}</Box>}
+        <Box className={classes.title}>
+          {primary && (
+            <Box className={classes.primary}>
+              {template === SCNotificationObjectTemplateType.DETAIL && isNew && <NewChip className={classes.newChip} />}
+              {disableTypography ? primary : <Typography {...primaryTypographyProps}>{primary}</Typography>}
+            </Box>
+          )}
+          {secondary && (
+            <Box className={classes.secondary}>
+              {disableTypography ? secondary : <Typography {...secondaryTypographyProps}>{secondary}</Typography>}
+            </Box>
+          )}
         </Box>
-        {actions && <Box className={classes.actions}>{actions}</Box>}
       </Box>
+      {actions && <Box className={classes.actions}>{actions}</Box>}
       {footer && <Box className={classes.footer}>{footer}</Box>}
     </Root>
   );

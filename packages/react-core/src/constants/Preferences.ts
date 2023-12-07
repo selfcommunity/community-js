@@ -1,3 +1,5 @@
+import {SCPreferenceName, SCPreferenceSection} from '@selfcommunity/types';
+
 /**
  * DEFAULT CONF VALIDATION OPTION
  */
@@ -10,156 +12,159 @@ export const DEFAULT_GLOBAL_PREFERENCES_OPTION = {};
 /**
  * TEXT
  */
-export const TEXT_APPLICATION_NAME = 'text.application_name';
-export const TEXT_APPLICATION_SLOGAN1 = 'text.application_slogan1';
-export const TEXT_APPLICATION_SLOGAN2 = 'text.application_slogan2';
-export const TEXT_APPLICATION_COPYRIGHT = 'text.application_copyright';
+export const TEXT_APPLICATION_NAME = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_NAME}`;
+export const TEXT_APPLICATION_SLOGAN1 = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_SLOGAN1}`;
+export const TEXT_APPLICATION_SLOGAN2 = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_SLOGAN2}`;
+export const TEXT_APPLICATION_COPYRIGHT = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_COPYRIGHT}`;
 
 /**
  * STYLES
  */
-export const FONT_FAMILY = 'style.font_family';
+export const STYLE_FONT_FAMILY = `${SCPreferenceSection.STYLE}.${SCPreferenceName.FONT_FAMILY}`;
 
 /**
  * LOGO
  */
-export const LOGO_NAVBAR_LOGO = 'logo.navbar_logo';
-export const LOGO_NAVBAR_LOGO_MOBILE = 'logo.navbar_logo_mobile';
+export const LOGO_NAVBAR_LOGO = `${SCPreferenceSection.LOGO}.${SCPreferenceName.NAVBAR_LOGO}`;
+export const LOGO_NAVBAR_LOGO_MOBILE = `${SCPreferenceSection.LOGO}.${SCPreferenceName.NAVBAR_LOGO_MOBILE}`;
 
 /**
  * COLORS
  */
-export const COLORS_COLORBACK = 'colors.colorback';
-export const COLORS_COLORPRIMARY = 'colors.colorprimary';
-export const COLORS_COLORSECONDARY = 'colors.colorsecondary';
-export const COLORS_NAVBARBACK = 'colors.navbarback';
-export const COLORS_SUBMENUBACK = 'colors.submenuback';
-export const COLORS_COLORFONT = 'colors.font_color';
+export const COLORS_COLORBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORBACK}`;
+export const COLORS_COLORPRIMARY = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORPRIMARY}`;
+export const COLORS_COLORSECONDARY = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORSECONDARY}`;
+export const COLORS_NAVBARBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceName.NAVBARBACK}`;
+export const COLORS_SUBMENUBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceName.SUBMENUBACK}`;
+export const COLORS_COLORFONT = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORFONT}`;
 
 /**
  * COVERS
  */
-export const COVERS_COVER_1_HP_M1920 = 'covers.cover_1_hp_m1920';
-export const COVERS_COVER_2_HP_M1920 = 'covers.cover_2_hp_m1920';
-export const COVERS_COVER_3_HP_M1920 = 'covers.cover_3_hp_m1920';
-export const COVERS_COVER_4_HP_M1920 = 'covers.cover_4_hp_m1920';
-export const COVERS_VISIBILITY = 'covers.covers_visibility';
+export const COVERS_COVER_1_HP_M1920 = `${SCPreferenceSection.COVERS}.${SCPreferenceName.COVER_1_HP_M1920}`;
+export const COVERS_COVER_2_HP_M1920 = `${SCPreferenceSection.COVERS}.${SCPreferenceName.COVER_2_HP_M1920}`;
+export const COVERS_COVER_3_HP_M1920 = `${SCPreferenceSection.COVERS}.${SCPreferenceName.COVER_3_HP_M1920}`;
+export const COVERS_COVER_4_HP_M1920 = `${SCPreferenceSection.COVERS}.${SCPreferenceName.COVER_4_HP_M1920}`;
+export const COVERS_VISIBILITY = `${SCPreferenceSection.COVERS}.${SCPreferenceName.COVERS_VISIBILITY}`;
 
 /**
  * IMAGES
  */
-export const IMAGES_APP_ICON = 'images.app_icon';
-export const IMAGES_USER_DEFAULT_COVER = 'images.user_default_cover';
-export const IMAGES_ERROR_404 = 'images.error_404';
-export const IMAGES_ERROR_503 = 'images.error_503';
-export const IMAGES_ERRORPAGES_IMAGE = 'images.errorpages_image';
+export const IMAGES_APP_ICON = `${SCPreferenceSection.IMAGES}.${SCPreferenceName.APP_ICON}`;
+export const IMAGES_USER_DEFAULT_COVER = `${SCPreferenceSection.IMAGES}.${SCPreferenceName.USER_DEFAULT_COVER}`;
+export const IMAGES_ERROR_404 = `${SCPreferenceSection.IMAGES}.${SCPreferenceName.ERROR_404}`;
+export const IMAGES_ERROR_503 = `${SCPreferenceSection.IMAGES}.${SCPreferenceName.ERROR_503}`;
+export const IMAGES_ERRORPAGES_IMAGE = `${SCPreferenceSection.IMAGES}.${SCPreferenceName.ERRORPAGES_IMAGE}`;
 
 /**
  * STAFF
  */
-export const STAFF_STAFF_BADGE_ICON = 'staff.staff_badge_icon';
+export const STAFF_STAFF_BADGE_ICON = `${SCPreferenceSection.STAFF}.${SCPreferenceName.STAFF_BADGE_ICON}`;
+export const STAFF_STAFF_BADGE_LABEL = `${SCPreferenceSection.STAFF}.${SCPreferenceName.STAFF_BADGE_LABEL}`;
 
 /**
  * LOYALTY
  */
-export const LOYALTY_PRIZE_A_IMAGE = 'loyalty.prize_a_image';
-export const LOYALTY_PRIZE_B_IMAGE = 'loyalty.prize_b_image';
-export const LOYALTY_PRIZE_C_IMAGE = 'loyalty.prize_c_image';
+export const LOYALTY_PRIZE_A_IMAGE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.PRIZE_A_IMAGE}`;
+export const LOYALTY_PRIZE_B_IMAGE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.PRIZE_B_IMAGE}`;
+export const LOYALTY_PRIZE_C_IMAGE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.PRIZE_C_IMAGE}`;
+export const POINTS_MAKE_DISCUSSION = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_MAKE_DISCUSSION}`;
+export const POINTS_MAKE_POST = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_MAKE_POST}`;
+export const POINTS_MAKE_COMMENT = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_MAKE_COMMENT}`;
+export const POINTS_RECEIVE_VOTE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_RECEIVE_VOTE}`;
+export const POINTS_CONNECTION_OR_FOLLOWER = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_CONNECTION_OR_FOLLOWER}`;
+export const POINTS_SOCIAL_SHARE = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_SOCIAL_SHARE}`;
+export const POINTS_APP_USED = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_APP_USED}`;
+export const POINTS_DAILY_VISIT = `${SCPreferenceSection.LOYALTY}.${SCPreferenceName.POINTS_DAILY_VISIT}`;
 
 /**
  * ADDONS
  */
-export const ADDONS_AFFINIDY_ENABLED = 'addons.affinity_enabled';
-export const ADDONS_CLOSED_COMMUNITY = 'addons.closed_community';
-export const ADDONS_INCUBATOR_ENABLED = 'addons.incubator_enabled';
-export const ADDONS_INCUBATOR_SUBSCRIBERS = 'addons.incubator_subscribers';
-export const ADDONS_INVITE_CODE = 'addons.invite_code';
-export const ADDONS_LOYALTY_POINTS_COLLECTION = 'addons.loyalty_points_collection';
-export const ADDONS_POLLS_ENABLED = 'addons.polls_enabled';
-export const ADDONS_REGISTRATION_WIZARD = 'addons.registration_wizard';
-export const ADDONS_VIDEO_UPLOAD_ENABLED = 'addons.video_upload_enabled';
-export const ADDONS_VIMEO_TOKEN_UPLOAD = 'addons.vimeo_token_upload';
-export const ADDONS_VIMEO_TOKEN_DELETE = 'addons.vimeo_token_delete';
-export const ADDONS_VIDEO_UPLOAD_ONLY_FOR_STAFF = 'addons.video_upload_only_for_staff';
-export const ADDONS_POST_GEOLOCATION_ENABLED = 'addons.post_geolocation_enabled';
-export const ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED = 'addons.share_post_on_facebook_enabled';
-export const ADDONS_SHARE_POST_ON_TWITTER_ENABLED = 'addons.share_post_on_twitter_enabled';
-export const ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED = 'addons.share_post_on_linkedin_enabled';
-
-/**
- * ANALYTICS
- */
-export const ANALYTICS_HOTJAR_STATS_ENABLED = 'analytics.hotjar_stats_enabled';
-export const ANALYTICS_HOTJAR_STATS_TRACKING_CODE = 'analytics.hotjar_stats_tracking_code';
-export const ANALYTICS_GOOGLE_ANALYTICS_STATS_ENABLED = 'analytics.google_analytics_stats_enabled';
-export const ANALYTICS_GOOGLE_ANALYTICS_STATS_ENABLED_DEBUG = 'analytics.google_analytics_stats_debug_enabled';
-export const ANALYTICS_GOOGLE_ANALYTICS_STATS_ID = 'analytics.google_analytics_stats_property_id';
+export const ADDONS_AFFINIDY_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.AFFINIDY_ENABLED}`;
+export const ADDONS_CLOSED_COMMUNITY = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.CLOSED_COMMUNITY}`;
+export const ADDONS_INCUBATOR_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.INCUBATOR_ENABLED}`;
+export const ADDONS_INCUBATOR_SUBSCRIBERS = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.INCUBATOR_SUBSCRIBERS}`;
+export const ADDONS_LOYALTY_POINTS_COLLECTION = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.LOYALTY_POINTS_COLLECTION}`;
+export const ADDONS_POLLS_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.POLLS_ENABLED}`;
+export const ADDONS_REGISTRATION_WIZARD = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.REGISTRATION_WIZARD}`;
+export const ADDONS_VIDEO_UPLOAD_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIDEO_UPLOAD_ENABLED}`;
+export const ADDONS_VIMEO_TOKEN_UPLOAD = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIMEO_TOKEN_UPLOAD}`;
+export const ADDONS_VIMEO_TOKEN_DELETE = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIMEO_TOKEN_DELETE}`;
+export const ADDONS_VIDEO_UPLOAD_ONLY_FOR_STAFF = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIDEO_UPLOAD_ONLY_FOR_STAFF}`;
+export const ADDONS_POST_GEOLOCATION_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.POST_GEOLOCATION_ENABLED}`;
+export const ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.SHARE_POST_ON_FACEBOOK_ENABLED}`;
+export const ADDONS_SHARE_POST_ON_TWITTER_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.SHARE_POST_ON_TWITTER_ENABLED}`;
+export const ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.SHARE_POST_ON_LINKEDIN_ENABLED}`;
 
 /**
  * ADVERTISING
  */
-export const ADVERTISING_CUSTOM_ADV_ENABLED = 'advertising.custom_adv_enabled';
-export const ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED = 'advertising.custom_adv_only_for_anonymous_users_enabled';
+export const ADVERTISING_CUSTOM_ADV_ENABLED = `${SCPreferenceSection.ADVERTISING}.${SCPreferenceName.CUSTOM_ADV_ENABLED}`;
+export const ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED = `${SCPreferenceSection.ADVERTISING}.${SCPreferenceName.CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED}`;
 
 /**
  * CONFIGURATIONS
  */
-export const CONFIGURATIONS_FOLLOW_ENABLED = 'configurations.follow_enabled';
-export const CONFIGURATIONS_EXPLORE_STREAM_ENABLED = 'configurations.explore_stream_enabled';
-export const CONFIGURATIONS_EXPLORE_STREAM_ORDER_BY = 'configurations.explore_stream_order_by';
-export const CONFIGURATIONS_HOME_STREAM_ORDER_BY = 'configurations.home_stream_order_by';
-export const CONFIGURATIONS_MANUAL_CATEGORIES_ORDER_ENABLED = 'configurations.manual_categories_order_enabled';
-export const CONFIGURATIONS_PEOPLE_SEARCH_ENABLED = 'configurations.people_search_enabled';
-export const CONFIGURATIONS_POST_ONLY_STAFF_ENABLED = 'configurations.post_only_staff_enabled';
-export const CONFIGURATIONS_STREAM_QUALITY = 'configurations.stream_quality';
-export const CONFIGURATIONS_CONTENT_AVAILABILITY = 'configurations.content_availability';
-export const CONFIGURATIONS_USERS_APPROVAL_ENABLED = 'configurations.users_approval_enabled';
-export const CONFIGURATIONS_POST_TYPE_ENABLED = 'configurations.post_type_enabled';
-export const CONFIGURATIONS_DISCUSSION_TYPE_ENABLED = 'configurations.discussion_type_enabled';
-export const CONFIGURATIONS_STATUS_TYPE_ENABLED = 'configurations.status_type_enabled';
-export const CONFIGURATIONS_URL_TEMPLATE_POST = 'configurations.url_template_post';
-export const CONFIGURATIONS_URL_TEMPLATE_DISCUSSION = 'configurations.url_template_discussion';
-export const CONFIGURATIONS_URL_TEMPLATE_STATUS = 'configurations.url_template_status';
-export const CONFIGURATIONS_URL_TEMPLATE_COMMENT = 'configurations.url_template_comment';
-export const CONFIGURATIONS_URL_TEMPLATE_CATEGORY = 'configurations.url_template_category';
-export const CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST = 'configurations.url_template_categories_list';
-export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE = 'configurations.url_template_profile';
-export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS = 'configurations.url_template_profile_settings';
-export const CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS = 'configurations.url_template_notifications';
-export const CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES = 'configurations.url_template_private_message';
-export const CONFIGURATIONS_URL_TEMPLATE_INCUBATOR = 'configurations.url_template_incubator';
-export const CONFIGURATIONS_USER_METADATA_DEFINITIONS = 'configurations.user_metadata_definition';
-export const CONFIGURATIONS_TAG_MANAGER_CONTAINER_ID = 'configurations.tag_manager_container_id';
-export const CONFIGURATIONS_GDPR_COOKIE_CONSENT_EXTERNAL_HTML = 'configurations.gdpr_cookie_consent_external_html';
-export const CONFIGURATIONS_GDPR_SIGNUP_ACCEPT_HTML = 'configurations.gdpr_signup_accept_html';
+export const CONFIGURATIONS_FOLLOW_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.FOLLOW_ENABLED}`;
+export const CONFIGURATIONS_EXPLORE_STREAM_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.EXPLORE_STREAM_ENABLED}`;
+export const CONFIGURATIONS_EXPLORE_STREAM_ORDER_BY = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.EXPLORE_STREAM_ORDER_BY}`;
+export const CONFIGURATIONS_HOME_STREAM_ORDER_BY = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.HOME_STREAM_ORDER_BY}`;
+export const CONFIGURATIONS_MANUAL_CATEGORIES_ORDER_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.MANUAL_CATEGORIES_ORDER_ENABLED}`;
+export const CONFIGURATIONS_PEOPLE_SEARCH_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.PEOPLE_SEARCH_ENABLED}`;
+export const CONFIGURATIONS_POST_ONLY_STAFF_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.POST_ONLY_STAFF_ENABLED}`;
+export const CONFIGURATIONS_STREAM_QUALITY = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.STREAM_QUALITY}`;
+export const CONFIGURATIONS_CONTENT_AVAILABILITY = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.CONTENT_AVAILABILITY}`;
+export const CONFIGURATIONS_USERS_APPROVAL_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.USERS_APPROVAL_ENABLED}`;
+export const CONFIGURATIONS_POST_TYPE_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.POST_TYPE_ENABLED}`;
+export const CONFIGURATIONS_DISCUSSION_TYPE_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.DISCUSSION_TYPE_ENABLED}`;
+export const CONFIGURATIONS_STATUS_TYPE_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.STATUS_TYPE_ENABLED}`;
+export const CONFIGURATIONS_URL_TEMPLATE_EMAIL_SETTINGS = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_EMAIL_SETTINGS}`;
+export const CONFIGURATIONS_URL_TEMPLATE_EMAIL_UNSUBSCRIBE = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_EMAIL_UNSUBSCRIBE}`;
+export const CONFIGURATIONS_URL_TEMPLATE_PASSWORD_RECOVER = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_PASSWORD_RECOVER}`;
+export const CONFIGURATIONS_URL_TEMPLATE_VERIFY_EMAIL = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_VERIFY_EMAIL}`;
+export const CONFIGURATIONS_URL_TEMPLATE_POST = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_POST}`;
+export const CONFIGURATIONS_URL_TEMPLATE_DISCUSSION = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_DISCUSSION}`;
+export const CONFIGURATIONS_URL_TEMPLATE_STATUS = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_STATUS}`;
+export const CONFIGURATIONS_URL_TEMPLATE_COMMENT = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_COMMENT}`;
+export const CONFIGURATIONS_URL_TEMPLATE_CATEGORY = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_CATEGORY}`;
+export const CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_CATEGORIES_LIST}`;
+export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_USER_PROFILE}`;
+export const CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_USER_PROFILE_SETTINGS}`;
+export const CONFIGURATIONS_URL_TEMPLATE_NOTIFICATIONS = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_NOTIFICATIONS}`;
+export const CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_USER_PRIVATE_MESSAGES}`;
+export const CONFIGURATIONS_URL_TEMPLATE_INCUBATOR = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.URL_TEMPLATE_INCUBATOR}`;
+export const CONFIGURATIONS_USER_METADATA_DEFINITIONS = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.USER_METADATA_DEFINITIONS}`;
+export const CONFIGURATIONS_TAG_MANAGER_CONTAINER_ID = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.TAG_MANAGER_CONTAINER_ID}`;
+export const CONFIGURATIONS_GDPR_COOKIE_CONSENT_EXTERNAL_HTML = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.GDPR_COOKIE_CONSENT_EXTERNAL_HTML}`;
+export const CONFIGURATIONS_GDPR_SIGNUP_ACCEPT_HTML = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.GDPR_SIGNUP_ACCEPT_HTML}`;
 
 /**
  * PROVIDERS
  */
-export const PROVIDERS_APP_URL_ON_APP_STORE = 'providers.app_url_on_app_store';
-export const PROVIDERS_APP_URL_ON_GOOGLE_PLAY = 'providers.app_url_on_google_play';
-export const PROVIDERS_FACEBOOK_SIGNIN_ENABLED = 'providers.facebook_signin_enabled';
-export const PROVIDERS_FACEBOOK_APP_KEY = 'providers.facebook_app_key';
-export const PROVIDERS_FACEBOOK_APP_SECRET = 'providers.facebook_app_secret';
-export const PROVIDERS_LINKEDIN_SIGNIN_ENABLED = 'providers.linkedin_signin_enabled';
-export const PROVIDERS_LINKEDIN_APP_KEY = 'providers.linkedin_app_key';
-export const PROVIDERS_LINKEDIN_APP_SECRET = 'providers.linkedin_app_secret';
-export const PROVIDERS_TWITTER_SIGNIN_ENABLED = 'providers.twitter_signin_enabled';
-export const PROVIDERS_TWITTER_APP_KEY = 'providers.twitter_app_key';
-export const PROVIDERS_TWITTER_APP_SECRET = 'providers.twitter_app_secret';
-export const PROVIDERS_GOOGLE_GEOCODING_API_KEY = 'providers.google_geocoding_api_key';
-export const PROVIDERS_GOOGLE_SIGNIN_ENABLED = 'providers.google_signin_enabled';
-export const PROVIDERS_GOOGLE_APP_KEY = 'providers.google_app_key';
-export const PROVIDERS_GOOGLE_APP_SECRET = 'providers.google_app_secret';
-export const PROVIDERS_WEB_PUSH_PUBLIC_KEY = 'providers.web_push_public_key';
-export const PROVIDERS_WEB_PUSH_ENABLED = 'providers.web_push_enabled';
+export const PROVIDERS_APP_URL_ON_APP_STORE = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.APP_URL_ON_APP_STORE}`;
+export const PROVIDERS_APP_URL_ON_GOOGLE_PLAY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.APP_URL_ON_GOOGLE_PLAY}`;
+export const PROVIDERS_FACEBOOK_SIGNIN_ENABLED = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.FACEBOOK_SIGNIN_ENABLED}`;
+export const PROVIDERS_FACEBOOK_APP_KEY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.FACEBOOK_APP_KEY}`;
+export const PROVIDERS_FACEBOOK_APP_SECRET = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.FACEBOOK_APP_SECRET}`;
+export const PROVIDERS_LINKEDIN_SIGNIN_ENABLED = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.LINKEDIN_SIGNIN_ENABLED}`;
+export const PROVIDERS_LINKEDIN_APP_KEY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.LINKEDIN_APP_KEY}`;
+export const PROVIDERS_LINKEDIN_APP_SECRET = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.LINKEDIN_APP_SECRET}`;
+export const PROVIDERS_TWITTER_SIGNIN_ENABLED = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.TWITTER_SIGNIN_ENABLED}`;
+export const PROVIDERS_TWITTER_APP_KEY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.TWITTER_APP_KEY}`;
+export const PROVIDERS_TWITTER_APP_SECRET = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.TWITTER_APP_SECRET}`;
+export const PROVIDERS_GOOGLE_GEOCODING_API_KEY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.GOOGLE_GEOCODING_API_KEY}`;
+export const PROVIDERS_GOOGLE_SIGNIN_ENABLED = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.GOOGLE_SIGNIN_ENABLED}`;
+export const PROVIDERS_GOOGLE_APP_KEY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.GOOGLE_APP_KEY}`;
+export const PROVIDERS_GOOGLE_APP_SECRET = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.GOOGLE_APP_SECRET}`;
+export const PROVIDERS_WEB_PUSH_PUBLIC_KEY = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.WEB_PUSH_PUBLIC_KEY}`;
+export const PROVIDERS_WEB_PUSH_ENABLED = `${SCPreferenceSection.PROVIDERS}.${SCPreferenceName.WEB_PUSH_ENABLED}`;
 
 /**
  * WEBMASTERS
  */
-export const WEBMASTER_META_ROBOTS = 'webmaster.meta_robots';
-export const WEBMASTER_META_TITLE_HOME_NOT_LOGGED = 'webmaster.meta_title_home_not_logged';
-export const WEBMASTER_META_DESCRIPTION = 'webmaster.meta_description';
+export const WEBMASTER_META_ROBOTS = `${SCPreferenceSection.WEBMASTER}.${SCPreferenceName.META_ROBOTS}`;
+export const WEBMASTER_META_TITLE_HOME_NOT_LOGGED = `${SCPreferenceSection.WEBMASTER}.${SCPreferenceName.META_TITLE_HOME_NOT_LOGGED}`;
+export const WEBMASTER_META_DESCRIPTION = `${SCPreferenceSection.WEBMASTER}.${SCPreferenceName.META_DESCRIPTION}`;
 
 const booleanType = (value) => {
   if (value === 'True') {
@@ -223,6 +228,7 @@ export const DATA_TYPES = {
   [IMAGES_ERROR_503]: stringType,
   [IMAGES_ERRORPAGES_IMAGE]: stringType,
   [STAFF_STAFF_BADGE_ICON]: stringType,
+  [STAFF_STAFF_BADGE_LABEL]: stringType,
   [LOYALTY_PRIZE_A_IMAGE]: stringType,
   [LOYALTY_PRIZE_B_IMAGE]: stringType,
   [LOYALTY_PRIZE_C_IMAGE]: stringType,
@@ -230,7 +236,6 @@ export const DATA_TYPES = {
   [ADDONS_CLOSED_COMMUNITY]: booleanType,
   [ADDONS_INCUBATOR_ENABLED]: booleanType,
   [ADDONS_INCUBATOR_SUBSCRIBERS]: integerType,
-  [ADDONS_INVITE_CODE]: booleanType,
   [ADDONS_LOYALTY_POINTS_COLLECTION]: booleanType,
   [ADDONS_POLLS_ENABLED]: booleanType,
   [ADDONS_REGISTRATION_WIZARD]: booleanType,
@@ -242,11 +247,6 @@ export const DATA_TYPES = {
   [ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED]: booleanType,
   [ADDONS_SHARE_POST_ON_TWITTER_ENABLED]: booleanType,
   [ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED]: booleanType,
-  [ANALYTICS_HOTJAR_STATS_ENABLED]: booleanType,
-  [ANALYTICS_HOTJAR_STATS_TRACKING_CODE]: stringType,
-  [ANALYTICS_GOOGLE_ANALYTICS_STATS_ENABLED]: booleanType,
-  [ANALYTICS_GOOGLE_ANALYTICS_STATS_ENABLED_DEBUG]: booleanType,
-  [ANALYTICS_GOOGLE_ANALYTICS_STATS_ID]: stringType,
   [CONFIGURATIONS_FOLLOW_ENABLED]: booleanType,
   [CONFIGURATIONS_EXPLORE_STREAM_ENABLED]: booleanType,
   [CONFIGURATIONS_EXPLORE_STREAM_ORDER_BY]: stringType,
@@ -259,6 +259,10 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_USERS_APPROVAL_ENABLED]: booleanType,
   [CONFIGURATIONS_DISCUSSION_TYPE_ENABLED]: booleanType,
   [CONFIGURATIONS_STATUS_TYPE_ENABLED]: booleanType,
+  [CONFIGURATIONS_URL_TEMPLATE_EMAIL_SETTINGS]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_EMAIL_UNSUBSCRIBE]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_PASSWORD_RECOVER]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_VERIFY_EMAIL]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_POST]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_DISCUSSION]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_STATUS]: stringType,
@@ -267,7 +271,7 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_URL_TEMPLATE_CATEGORIES_LIST]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_USER_PROFILE_SETTINGS]: stringType,
-  [CONFIGURATIONS_URL_TEMPLATE_USER_NOTIFICATIONS]: stringType,
+  [CONFIGURATIONS_URL_TEMPLATE_NOTIFICATIONS]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_USER_PRIVATE_MESSAGES]: stringType,
   [CONFIGURATIONS_URL_TEMPLATE_INCUBATOR]: stringType,
   [CONFIGURATIONS_USER_METADATA_DEFINITIONS]: stringType,

@@ -1,5 +1,5 @@
 import {BaseGetParams} from './baseParams';
-import {SCContributionLocation, SCPollType} from '@selfcommunity/types/src/types';
+import {SCContributionLocation, SCPollType} from '@selfcommunity/types';
 /**
  * FeedObjGetParams interface
  */

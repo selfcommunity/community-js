@@ -6,8 +6,7 @@ import MainFeed, {MainFeedProps, MainFeedSkeleton} from './components/MainFeed';
 import NotificationFeed, {NotificationFeedProps, NotificationFeedSkeleton} from './components/NotificationFeed';
 import UserFeed, {UserFeedProps, UserFeedSkeleton} from './components/UserFeed';
 import UserProfile, {UserProfileProps, UserProfileSkeleton} from './components/UserProfile';
-import PrivateMessages, {PrivateMessagesProps, PrivateMessagesSkeleton} from './components/PrivateMessages';
-
+import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
 export {
   Category,
   CategoryProps,
@@ -33,7 +32,7 @@ export {
   UserProfile,
   UserProfileProps,
   UserProfileSkeleton,
-  PrivateMessages,
-  PrivateMessagesProps,
-  PrivateMessagesSkeleton
+  LoyaltyProgramDetail,
+  LoyaltyProgramDetailProps,
+  LoyaltyProgramDetailSkeleton
 };

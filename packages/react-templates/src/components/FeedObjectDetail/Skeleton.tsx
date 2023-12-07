@@ -1,21 +1,17 @@
 import React from 'react';
-import {CommentsFeedObjectSkeleton, FeedObjectSkeleton, SCFeedObjectTemplateType, RelatedFeedObjectsSkeleton} from '@selfcommunity/react-ui';
+import {CommentsFeedObjectSkeleton, FeedObjectSkeleton, SCFeedObjectTemplateType, RelatedFeedObjectsWidgetSkeleton} from '@selfcommunity/react-ui';
 import {Box, Grid} from '@mui/material';
 import {styled} from '@mui/material/styles';
-
-const PREFIX = 'SCFeedObjectDetailTemplateSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Feed Object Detail Skeleton Template. Learn about the available props and the CSS API.
@@ -28,13 +24,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCFeedObjectDetailTemplateSkeleton` can be used when providing style overrides in the theme.
+ The name `SCFeedObjectDetailTemplate-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCFeedObjectDetailTemplateSkeleton-root|Styles applied to the root element.|
+ |root|.SCFeedObjectDetailTemplate-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function FeedObjectDetailSkeleton(props): JSX.Element {
@@ -47,7 +43,7 @@ export default function FeedObjectDetailSkeleton(props): JSX.Element {
           <CommentsFeedObjectSkeleton count={4} {...CommentsFeedObjectSkeletonProps} />
         </Grid>
         <Grid item xs={12} md={5}>
-          <RelatedFeedObjectsSkeleton {...RelatedFeedObjectsSkeletonProps} />
+          <RelatedFeedObjectsWidgetSkeleton {...RelatedFeedObjectsSkeletonProps} />
         </Grid>
       </Grid>
     </Root>

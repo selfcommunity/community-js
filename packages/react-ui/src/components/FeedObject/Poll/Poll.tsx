@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCFeedObjectType, SCFeedObjectTypologyType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
 import {Button, CardContent, CardHeader, Collapse, ListItem, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import List from '@mui/material/List';
@@ -11,7 +11,7 @@ import Choice from './Choice';
 import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
+import {PREFIX} from '../constants';
 
 const messages = defineMessages({
   showPoll: {
@@ -36,79 +36,22 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCPollObject';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  poll: `${PREFIX}-poll`,
-  voters: `${PREFIX}-voters`,
-  votes: `${PREFIX}-votes`,
-  toggleButton: `${PREFIX}-toggleButton`,
-  title: `${PREFIX}-title`,
-  expiration: `${PREFIX}-expiration`,
-  closed: `${PREFIX}-closed`,
-  expandIcon: `${PREFIX}-expand-icon`,
-  collapsedIcon: `${PREFIX}-collapsed-icon`
+  root: `${PREFIX}-poll-object-root`,
+  voters: `${PREFIX}-poll-object-voters`,
+  votes: `${PREFIX}-poll-object-votes`,
+  toggleButton: `${PREFIX}-poll-object-toggle-button`,
+  title: `${PREFIX}-poll-object-title`,
+  expiration: `${PREFIX}-poll-object-expiration`,
+  closed: `${PREFIX}-poll-object-closed`,
+  expandIcon: `${PREFIX}-poll-object-expand-icon`,
+  collapsedIcon: `${PREFIX}-poll-object-collapsed-icon`
 };
 
 const Root = styled(Card, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-  borderTop: `1px solid ${theme.palette.grey['A200']}`,
-  borderBottom: `1px solid ${theme.palette.grey['A200']}`,
-  boxShadow: 'none',
-  '& .MuiCardHeader-root': {
-    textAlign: 'center',
-    width: '100%',
-    maxHeight: '10px'
-  },
-  [`& .${classes.poll}`]: {
-    textAlign: 'center'
-  },
-  [`& .${classes.voters}`]: {
-    display: 'flex',
-    margin: theme.spacing(1),
-    alignItems: 'center',
-    justifyContent: 'center',
-    '& .MuiIcon-root': {
-      marginRight: '5px'
-    }
-  },
-  [`& .${classes.votes}`]: {
-    display: 'flex',
-    margin: theme.spacing(1),
-    alignItems: 'center',
-    justifyContent: 'center',
-    '& .MuiIcon-root': {
-      width: '1em',
-      marginRight: '5px'
-    }
-  },
-  [`& .${classes.toggleButton}`]: {
-    textTransform: 'uppercase'
-  },
-  [`& .${classes.expandIcon}`]: {
-    marginBottom: 2,
-    marginLeft: -2,
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  [`& .${classes.collapsedIcon}`]: {
-    transform: 'rotate(180deg)'
-  },
-  '& .MuiTypography-root': {
-    fontSize: '1rem'
-  },
-  [`& .${classes.title}, & .${classes.expiration}, & .${classes.closed}`]: {
-    marginBottom: theme.spacing(),
-    textAlign: 'center'
-  }
-}));
+  slot: 'PollObjectRoot'
+})(() => ({}));
 
 export interface PollObjectProps {
   /**
@@ -126,10 +69,20 @@ export interface PollObjectProps {
    */
   disabled?: boolean;
   /**
+   * If `false`, the poll is collapsed
+   * @default false
+   */
+  visible?: boolean;
+  /**
    * Callback to sync poll obj of the feedObject
    * @param value
    */
   onChange?: (value: any) => void;
+  /**
+   * Callback onToggle poll visibility
+   * @param value
+   */
+  onToggleVisibility?: (visible: any) => void;
   /**
    * Feed object
    */
@@ -140,13 +93,9 @@ export interface PollObjectProps {
   [p: string]: any;
 }
 
-export default function PollObject(inProps: PollObjectProps): JSX.Element {
+export default function PollObject(props: PollObjectProps): JSX.Element {
   //  PROPS
-  const props: PollObjectProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
-  const {className, feedObject, pollObject, disabled, onChange, ...rest} = props;
+  const {className, feedObject, pollObject, disabled, visible = true, onChange, onToggleVisibility, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -156,9 +105,7 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
   const [votes, setVotes] = useState(getVotes());
   const [choices, setChoices] = useState(pollObject.choices);
   const [isVoting, setIsVoting] = useState<number>(null);
-  const [collapsed, setCollapsed] = useState<boolean>(
-    Boolean(feedObject && (feedObject.type === SCFeedObjectTypologyType.DISCUSSION || feedObject.html || feedObject.medias.length))
-  );
+  const [collapsed, setCollapsed] = useState<boolean>(!visible);
 
   // CONST
   const multipleChoices = pollObject['multiple_choices'];
@@ -179,17 +126,18 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
       });
       setVotes((prevVotes) => prevVotes + 1);
     } else {
-      let isVoted = false;
       setChoices((prevChoices) => {
-        return prevChoices.map((choice) => {
-          isVoted = isVoted || choice.voted;
-          return Object.assign({}, choice, {
-            voted: choice.id === id ? true : false,
+        const updatedChoices = prevChoices.map((choice) => {
+          return {
+            ...choice,
+            voted: choice.id === id,
             vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count > 0 && choice.voted ? choice.vote_count - 1 : choice.vote_count
-          });
+          };
         });
+        const newVotes = updatedChoices.reduce((totalVotes, choice) => totalVotes + choice.vote_count, 0);
+        setVotes(newVotes);
+        return updatedChoices;
       });
-      !isVoted && setVotes((prevVotes) => prevVotes + 1);
     }
   };
 
@@ -252,9 +200,10 @@ export default function PollObject(inProps: PollObjectProps): JSX.Element {
    */
   const handleToggleCollapsedClick = useMemo(
     () => () => {
+      onToggleVisibility && onToggleVisibility(collapsed);
       setCollapsed((prev) => !prev);
     },
-    [collapsed]
+    [setCollapsed, onToggleVisibility]
   );
 
   /**

@@ -1,0 +1,3 @@
+import PrivateMessageSettingsIconButton, {PrivateMessageSettingsIconButtonProps} from './PrivateMessageSettingsIconButton';
+export default PrivateMessageSettingsIconButton;
+export {PrivateMessageSettingsIconButtonProps};

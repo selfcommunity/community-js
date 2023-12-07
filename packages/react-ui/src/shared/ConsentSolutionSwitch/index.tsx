@@ -33,15 +33,15 @@ const Root = styled(Switch, {
     position: 'relative',
     color: theme.palette.primary.main,
     fontSize: '1.2rem',
-    top: 3,
-    left: 3
+    top: 5,
+    left: 5
   },
   [`& .${classes.thumbUnChecked}`]: {
     position: 'relative',
     color: theme.palette.grey[500],
     fontSize: '1.2rem',
-    top: 3,
-    left: 3
+    top: 4,
+    left: 5
   },
   [`& .${classes.thumbLoader}`]: {
     position: 'relative',

@@ -1,11 +1,11 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {SCPrizeType, SCPrizeUserStatusType, SCPrizeUserType} from '@selfcommunity/types';
-import {SCPaginatedResponse, LoyaltyPrizeParams} from '../../types';
+import {SCPaginatedResponse, LoyaltyPrizeParams, LoyaltyGetPrizeParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 
 export interface LoyaltyApiClientInterface {
-  getPrizes(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>>;
+  getPrizes(params?: LoyaltyGetPrizeParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>>;
   createPrize(data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
   getSpecificPrize(id: number | string, config?: AxiosRequestConfig): Promise<SCPrizeType>;
   updatePrize(id: number | string, data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType>;
@@ -22,10 +22,11 @@ export interface LoyaltyApiClientInterface {
 export class LoyaltyApiClient {
   /**
    * This endpoint retrieves all prizes.
+   * @param params
    * @param config
    */
-  static getPrizes(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>> {
-    return apiRequest({...config, url: Endpoints.GetPrizes.url({}), method: Endpoints.GetPrizes.method});
+  static getPrizes(params?: LoyaltyGetPrizeParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>> {
+    return apiRequest({...config, params, url: Endpoints.GetPrizes.url({}), method: Endpoints.GetPrizes.method});
   }
 
   /**
@@ -140,8 +141,8 @@ export class LoyaltyApiClient {
  :::
  */
 export default class LoyaltyService {
-  static async getPrizes(config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>> {
-    return LoyaltyApiClient.getPrizes(config);
+  static async getPrizes(params?: LoyaltyGetPrizeParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPrizeType>> {
+    return LoyaltyApiClient.getPrizes(params, config);
   }
 
   static async createPrize(data: LoyaltyPrizeParams, config?: AxiosRequestConfig): Promise<SCPrizeType> {

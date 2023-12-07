@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -8,6 +8,8 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {ActionsRelevantActivityProps} from '../ActionsRelevantActivity';
 import BaseItem from '../../../../../shared/BaseItem';
+import UserDeletedSnackBar from '../../../../../shared/UserDeletedSnackBar';
+import {PREFIX} from '../../../constants';
 
 const messages = defineMessages({
   follow: {
@@ -16,23 +18,16 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCFollowRelevantActivity';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  avatar: `${PREFIX}-avatar`,
-  username: `${PREFIX}-username`
+  root: `${PREFIX}-activity-follow-root`,
+  avatar: `${PREFIX}-activity-follow-avatar`,
+  username: `${PREFIX}-activity-follow-username`
 };
 
 const Root = styled(BaseItem, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  [`& .${classes.username}`]: {
-    color: 'inherit'
-  }
-}));
+  slot: 'ActivityFollowRoot'
+})(() => ({}));
 
 export default function FollowRelevantActivity(inProps: ActionsRelevantActivityProps): JSX.Element {
   // PROPS
@@ -45,31 +40,42 @@ export default function FollowRelevantActivity(inProps: ActionsRelevantActivityP
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // STATE
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
   // INTL
   const intl = useIntl();
 
   // RENDER
   return (
-    <Root
-      {...rest}
-      className={classNames(classes.root, className)}
-      image={
-        <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)}>
-          <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
-        </Link>
-      }
-      primary={
-        <>
-          {intl.formatMessage(messages.follow, {
-            username: (
-              <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)} className={classes.username}>
-                {activityObject.author.username}
-              </Link>
-            )
-          })}
-        </>
-      }
-      secondary={<DateTimeAgo date={activityObject.active_at} />}
-    />
+    <>
+      <Root
+        {...rest}
+        className={classNames(classes.root, className)}
+        image={
+          <Link
+            {...(!activityObject.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)})}
+            onClick={activityObject.author.deleted ? () => setOpenAlert(true) : null}>
+            <Avatar alt={activityObject.author.username} variant="circular" src={activityObject.author.avatar} className={classes.avatar} />
+          </Link>
+        }
+        primary={
+          <>
+            {intl.formatMessage(messages.follow, {
+              username: (
+                <Link
+                  {...(!activityObject.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, activityObject.author)})}
+                  onClick={activityObject.author.deleted ? () => setOpenAlert(true) : null}
+                  className={classes.username}>
+                  {activityObject.author.username}
+                </Link>
+              )
+            })}
+          </>
+        }
+        secondary={<DateTimeAgo date={activityObject.active_at} />}
+      />
+      {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
+    </>
   );
 }

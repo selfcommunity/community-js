@@ -3,20 +3,16 @@ import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import CategoryFeedSkeleton from '../CategoryFeed/Skeleton';
 import {CategoryHeaderSkeleton} from '@selfcommunity/react-ui';
-
-const PREFIX = 'SCCategoryTemplateSkeleton';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-skeleton-root`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  marginTop: theme.spacing(2)
-}));
+  slot: 'SkeletonRoot'
+})(() => ({}));
 
 /**
  * > API documentation for the Community-JS Category Skeleton Template. Learn about the available props and the CSS API.
@@ -29,13 +25,13 @@ const Root = styled(Box, {
 
  #### Component Name
 
- The name `SCCategoryTemplateSkeleton` can be used when providing style overrides in the theme.
+ The name `SCCategoryTemplate-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryTemplateSkeleton-root|Styles applied to the root element.|
+ |root|.SCCategoryTemplate-skeleton-root|Styles applied to the root element.|
  *
  */
 export default function CategorySkeleton(): JSX.Element {

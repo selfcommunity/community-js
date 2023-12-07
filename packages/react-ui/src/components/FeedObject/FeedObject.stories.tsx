@@ -1,11 +1,8 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import FeedObject from './index';
-import {SCFeedObjectTypologyType} from '@selfcommunity/types';
-import {SCFeedObjectTemplateType} from '../../types/feedObject';
+import { SCFeedObjectTemplateType } from '../../types/feedObject';
+import { SCContributionType } from '@selfcommunity/types';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design System/React UI/FeedObject',
   component: FeedObject,
@@ -16,12 +13,12 @@ export default {
       table: {defaultValue: {summary: 9}}
     },
     feedObjectType: {
-      options: [SCFeedObjectTypologyType.POST, SCFeedObjectTypologyType.DISCUSSION, SCFeedObjectTypologyType.STATUS],
+      options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
       control: {type: 'select'},
       description: 'Object type. Used only with args id.'
     },
     template: {
-      options: [SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL, SCFeedObjectTemplateType.SHARE],
+      options: [SCFeedObjectTemplateType.SEARCH, SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL, SCFeedObjectTemplateType.SHARE],
       control: {type: 'select'},
       description: 'Object template. Used only with args id.',
       table: {defaultValue: {summary: SCFeedObjectTemplateType.SNIPPET}}
@@ -39,68 +36,74 @@ export default {
     }
   },
   args: {
-    template: SCFeedObjectTemplateType.PREVIEW,
+    template: SCFeedObjectTemplateType.DETAIL,
     elevation: 0,
     variant: 'outlined'
   }
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof FeedObject>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof FeedObject> = (args) => {
+} as Meta<typeof FeedObject>;
+
+const template = (args) => {
   return (<div style={{width: '100%', maxWidth: 800}}>
     <FeedObject {...args} />
   </div>);
 };
 
-export const Base = Template.bind({});
 
-Base.args = {
-  feedObjectId: 492,
-  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+export const Base: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 1453,
+    feedObjectType: SCContributionType.POST
+  },
+  render: template
+};
+
+export const CacheBase: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 1372,
+    feedObjectType: SCContributionType.DISCUSSION
+  },
+  render: template
+};
+
+export const BaseWithImage: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 404,
+    feedObjectType: SCContributionType.DISCUSSION
+  },
+  render: template
 };
 
 
-export const CacheBase = Template.bind({});
-
-CacheBase.args = {
-  feedObjectId: 327,
-  feedObjectType: SCFeedObjectTypologyType.POST
+export const BaseWithImage2: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 328,
+    feedObjectType: SCContributionType.POST
+  },
+  render: template
 };
 
-export const BaseWithImage = Template.bind({});
-
-BaseWithImage.args = {
-  feedObjectId: 404,
-  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
+export const BaseWithImage3: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 380,
+    feedObjectType: SCContributionType.POST
+  },
+  render: template
 };
 
-export const BaseWithImage2 = Template.bind({});
-
-BaseWithImage2.args = {
-  feedObjectId: 328,
-  feedObjectType: SCFeedObjectTypologyType.POST
+export const BaseWithImage3More: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 1377,
+    feedObjectType: SCContributionType.POST
+  },
+  render: template
 };
 
-export const BaseWithImage3 = Template.bind({});
-
-BaseWithImage3.args = {
-  feedObjectId: 380,
-  feedObjectType: SCFeedObjectTypologyType.POST
+export const BaseWithVideo: StoryObj<FeedObject> = {
+  args: {
+    feedObjectId: 55,
+    feedObjectType: SCContributionType.DISCUSSION
+  },
+  render: template
 };
-
-export const BaseWithImage3More = Template.bind({});
-
-BaseWithImage3More.args = {
-  feedObjectId: 412,
-  feedObjectType: SCFeedObjectTypologyType.POST
-};
-
-export const BaseWithVideo = Template.bind({});
-
-BaseWithVideo.args = {
-  feedObjectId: 55,
-  feedObjectType: SCFeedObjectTypologyType.DISCUSSION
-};
-
 

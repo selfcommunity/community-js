@@ -1,5 +1,13 @@
 import React, {ReactNode} from 'react';
-import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType} from '@selfcommunity/types';
+import {
+  SCAuthTokenType,
+  SCIncubatorType,
+  SCCategoryType,
+  SCUserType,
+  SCUserSettingsType,
+  SCReactionType
+} from "@selfcommunity/types";
+import {SCThemeType} from './theme';
 
 /**
  * Interface SCSettingsType
@@ -23,7 +31,7 @@ export interface SCSettingsType {
   /**
    * Object conf of session.
    */
-  theme?: Record<string, any>;
+  theme?: SCThemeType;
 
   /**
    * Object conf of router.
@@ -33,7 +41,12 @@ export interface SCSettingsType {
   /**
    * Object conf of preferences.
    */
-  preferences?: SCPreferencesContextType;
+  preferences?: SCPreferencesType;
+
+  /**
+   * Vote conf
+   */
+  vote?: SCVoteType;
 
   /**
    * Object conf of notification.
@@ -69,6 +82,31 @@ export interface SCLocaleType {
    * Overrides default messages.
    */
   messages?: Record<string, any>;
+}
+
+/**
+ * Interface SCPreferencesType
+ */
+export interface SCPreferencesType {
+  /**
+   * List of all community preferences
+   */
+  preferences: Record<string, any>;
+
+  /**
+   * List of all community enabled features
+   */
+  features: string[];
+}
+
+/**
+ * Interface SCVoteType
+ */
+export interface SCVoteType {
+  /**
+   * List of all reactions
+   */
+  reactions: SCReactionType[];
 }
 
 /**
@@ -122,20 +160,49 @@ export interface SCUserContextType {
 
   /**
    * Handle refresh user notification counters
-   * Interactions, BroadcastMessages
+   * Interactions, BroadcastMessages, Followers, Followings, Categories, etc.
    */
-  refreshNotificationCounters: () => Promise<any>;
+  refreshCounters: () => Promise<any>;
 
   /**
    * Managers: followed, connections, categories, incubators, etc...
    */
   managers: {
+    settings?: SCSettingsManagerType;
     followed?: SCFollowedManagerType;
     followers?: SCFollowersManagerType;
     connections?: SCConnectionsManagerType;
     categories: SCFollowedCategoriesManagerType;
     incubators?: SCSubscribedIncubatorsManagerType;
+    blockedUsers?: SCBlockedUsersManagerType;
   };
+}
+
+export interface SCSettingsManagerType {
+  /**
+   * Get a settings
+   */
+  get?: (p) => any;
+
+  /**
+   * Get all settings
+   */
+  all?: () => SCUserSettingsType;
+
+  /**
+   * Update a settings
+   */
+  update?: (p, v) => any;
+
+  /**
+   * Refresh settings
+   */
+  refresh?: () => void;
+
+  /**
+   * Check if component is loading
+   */
+  isLoading: () => boolean;
 }
 
 export interface SCFollowedManagerType {
@@ -261,6 +328,16 @@ export interface SCConnectionsManagerType {
   requestConnection?: (user: SCUserType) => Promise<any>;
 
   /**
+   * Handle cancel request connection
+   */
+  cancelRequestConnection?: (user: SCUserType) => Promise<any>;
+
+  /**
+   * Handle remove connection
+   */
+  removeConnection?: (user: SCUserType) => Promise<any>;
+
+  /**
    * Handle accept connection
    */
   acceptConnection?: (user: SCUserType) => Promise<any>;
@@ -279,6 +356,38 @@ export interface SCConnectionsManagerType {
    * Empty cache to revalidate all categories
    */
   emptyCache?: () => void;
+}
+
+export interface SCBlockedUsersManagerType {
+  /**
+   * List of all blocked users
+   */
+  blocked: number[];
+
+  /**
+   * Loading state
+   */
+  loading: boolean;
+
+  /**
+   * List of current user in loading state
+   */
+  isLoading: () => boolean;
+
+  /**
+   * Handle user block/unblock
+   */
+  block?: (user: SCUserType) => Promise<any>;
+
+  /**
+   * Handle check if a user is blocked
+   */
+  isBlocked?: (user: SCUserType) => boolean;
+
+  /**
+   * Refresh blocked user list
+   */
+  refresh?: () => Promise<any>;
 }
 
 export interface SCSubscribedIncubatorsManagerType {
@@ -341,6 +450,11 @@ export interface SCSessionType {
    * Callback to refresh the token.
    */
   handleRefreshToken?: (currentSession) => Promise<SCAuthTokenType>;
+
+  /**
+   * Callback on logout.
+   */
+  handleLogout?: () => void;
 }
 
 /**
@@ -374,7 +488,7 @@ export interface SCContextProviderType {
 }
 
 /**
- * Interface SCPreferencesType
+ * Interface SCPreferencesContextType
  */
 export interface SCPreferencesContextType {
   /**
@@ -389,13 +503,33 @@ export interface SCPreferencesContextType {
 }
 
 /**
+ * Interface SCVoteContextType
+ */
+export interface SCVoteContextType {
+  /**
+   * List of all reactions
+   */
+  reactions: SCReactionType[];
+
+  /**
+   * Is loading the list of reactions?
+   */
+  isLoading: boolean;
+
+  /**
+   * Refresh reactions
+   */
+  refreshReactions: () => Promise<SCReactionType[]>;
+}
+
+/**
  * Interface SCThemeContextType
  */
 export interface SCThemeContextType {
   /**
    * Theme
    */
-  theme: Record<string, any>;
+  theme: SCThemeType;
 
   /**
    * Change theme
@@ -441,12 +575,26 @@ export interface SCNotificationsType {
    * Web push messaging notification
    */
   webPushMessaging?: SCNotificationsWebPushMessagingType;
+  /**
+   * Mobile native push messaging
+   */
+  mobileNativePushMessaging?: SCNotificationsMobileNativePushMessagingType;
 }
 
 /**
  * Interface SCNotificationsWebSocketType
  */
 export interface SCNotificationsWebSocketType {
+  /**
+   * Set websocket protocol: wss or ws.
+   * Default: wss
+   */
+  secure?: boolean;
+  /**
+   * Set websocket prefix path
+   * Default: ws
+   */
+  prefixPath?: string;
   /**
    * Disable toast message
    */
@@ -466,6 +614,16 @@ export interface SCNotificationsWebPushMessagingType {
    * applicationServerKey - Public key
    */
   applicationServerKey?: boolean;
+}
+
+/**
+ * Interface SCNotificationsMobileNativePushMessagingType
+ */
+export interface SCNotificationsMobileNativePushMessagingType {
+  /**
+   * Disable
+   */
+  disable?: boolean;
 }
 
 /**
@@ -501,6 +659,11 @@ export interface SCNotificationContextType {
    * wp subscription
    */
   wpSubscription: any;
+
+  /**
+   * mobile native push instance
+   */
+  mnpmInstance?: any;
 }
 
 /**

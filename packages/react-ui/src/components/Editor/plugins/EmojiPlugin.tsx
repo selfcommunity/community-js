@@ -1,32 +1,36 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {CONTROLLED_TEXT_INSERTION_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Fade, Icon, IconButton, Popover} from '@mui/material';
+import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
-// import deps only if csr
-let Picker;
-typeof window !== 'undefined' &&
-  import('emoji-picker-react').then((_module) => {
-    Picker = _module.default;
-  });
+import {SCThemeType} from '@selfcommunity/react-core';
+import {EmojiClickData} from 'emoji-picker-react';
+import EmojiPicker from '../../../shared/EmojiPicker';
+import {PREFIX} from '../constants';
 
 function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
   // STATE
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
 
   // HANDLERS
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setEmojiAnchorEl(emojiAnchorEl ? null : event.currentTarget);
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setEmojiAnchorEl(event.currentTarget);
   };
 
-  const handleEmojiClick = (event: SyntheticEvent, emoji) => {
+  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
     editor.focus();
-    editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emoji.emoji);
+    editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emojiData.emoji);
   };
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>
-      <IconButton className={className} onClick={handleClick} color="inherit">
+      <IconButton className={className} onClick={handleOpen}>
         <Icon>sentiment_satisfied_alt</Icon>
       </IconButton>
       <Popover
@@ -45,23 +49,20 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
         sx={(theme) => {
           return {zIndex: theme.zIndex.tooltip};
         }}>
-        {Picker && <Picker onEmojiClick={handleEmojiClick} />}
+        <EmojiPicker onEmojiClick={handleEmojiClick} />
       </Popover>
     </>
   );
 }
 
-const PREFIX = 'SCEditorEmojiPlugin';
-
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-emoji-plugin-root`
 };
 
 const Root = styled(Emoji, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  slot: 'EmojiPluginRoot'
+})(() => ({}));
 
 export default function EmojiPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();

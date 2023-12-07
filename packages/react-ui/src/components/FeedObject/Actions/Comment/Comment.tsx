@@ -2,14 +2,14 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {SCRoutingContextType, useSCFetchFeedObject, useSCRouting, Link} from '@selfcommunity/react-core';
-import {SCFeedObjectType, SCFeedObjectTypologyType} from '@selfcommunity/types';
+import {Link, SCRoutingContextType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
+import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import classNames from 'classnames';
 import Skeleton from '@mui/material/Skeleton';
-import {useThemeProps} from '@mui/system';
+import {PREFIX} from '../../constants';
 
 const messages = defineMessages({
   comments: {
@@ -22,45 +22,18 @@ const messages = defineMessages({
   }
 });
 
-const PREFIX = 'SCCommentObject';
-
 const classes = {
-  root: `${PREFIX}-root`,
-  divider: `${PREFIX}-divider`,
-  inline: `${PREFIX}-inline`,
-  actionButton: `${PREFIX}-action-button`,
-  inlineActionButton: `${PREFIX}-inline-action-button`,
-  viewAudienceButton: `${PREFIX}-view-audience-button`
+  root: `${PREFIX}-action-comment-root`,
+  divider: `${PREFIX}-action-comment-divider`,
+  inline: `${PREFIX}-action-comment-inline`,
+  button: `${PREFIX}-action-comment-button`,
+  viewAudienceButton: `${PREFIX}-action-comment-view-audience-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
-  [`&.${classes.inline}`]: {
-    flexDirection: 'row-reverse'
-  },
-  [`& .${classes.inlineActionButton}`]: {
-    minWidth: 30
-  },
-  [`& .${classes.divider}`]: {
-    width: '100%',
-    borderBottom: 0
-  },
-  [`& .${classes.viewAudienceButton}`]: {
-    height: 32,
-    fontSize: 15,
-    textTransform: 'capitalize',
-    '& p': {
-      fontSize: '0.9rem'
-    }
-  }
-}));
+  slot: 'ActionCommentRoot'
+})(() => ({}));
 
 export interface CommentProps {
   /**
@@ -85,7 +58,7 @@ export interface CommentProps {
    * Feed object type
    * @default 'post' type
    */
-  feedObjectType?: SCFeedObjectTypologyType;
+  feedObjectType?: Exclude<SCContributionType, SCContributionType.COMMENT>;
 
   /**
    * Feed Object template type
@@ -130,17 +103,13 @@ export interface CommentProps {
   [p: string]: any;
 }
 
-export default function Comment(inProps: CommentProps): JSX.Element {
-  const props: CommentProps = useThemeProps({
-    props: inProps,
-    name: PREFIX
-  });
+export default function Comment(props: CommentProps): JSX.Element {
   // PROPS
   const {
     className,
     feedObjectId,
     feedObject,
-    feedObjectType = SCFeedObjectTypologyType.POST,
+    feedObjectType = SCContributionType.POST,
     feedObjectTemplate = SCFeedObjectTemplateType,
     withAction = true,
     withAudience = true,
@@ -185,7 +154,6 @@ export default function Comment(inProps: CommentProps): JSX.Element {
                   <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
                 ) : (
                   <Button
-                    color="inherit"
                     variant="text"
                     size="small"
                     component={Link}
@@ -208,17 +176,21 @@ export default function Comment(inProps: CommentProps): JSX.Element {
    * @return {JSX.Element}
    */
   function renderCommentButton() {
+    let ButtonProps = {};
+    if (!onCommentAction) {
+      ButtonProps = {
+        component: Link,
+        to: scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))
+      };
+    }
     return (
       <>
         {withAction && (
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.comment)}`}>
-              <Button
-                onClick={onCommentAction}
-                color="inherit"
-                classes={{root: classNames(classes.actionButton, {[classes.inlineActionButton]: inlineAction})}}>
-                <Icon fontSize={'large'}>chat_bubble_outline</Icon>
+              <Button onClick={onCommentAction} className={classes.button} {...ButtonProps}>
+                <Icon>chat_bubble_outline</Icon>
               </Button>
             </Tooltip>
           </React.Fragment>

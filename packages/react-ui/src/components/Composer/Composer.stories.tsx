@@ -1,28 +1,25 @@
-import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
+import Composer, { ComposerProps } from './index';
 
-import Composer from './index';
-
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design System/React UI/Composer',
+  title: 'Design System/React UI /Composer',
   component: Composer
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Composer>;
+} as Meta<typeof Composer>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Composer> = (args) => (
-  <div style={{width: 400}}>
+const template = (args) => (
+  <div style={{maxWidth: 400}}>
     <Composer {...args} />
   </div>
 );
 
-export const Base = Template.bind({});
-
-Base.args = {
-  /* the args you need here will depend on your component */
-  maxWidth: 'sm',
-  fullWidth: true,
-  scroll: 'body',
-  open: false
+export const Base: StoryObj<ComposerProps> = {
+  args: {
+    /* the args you need here will depend on your component */
+    maxWidth: 'sm',
+    fullWidth: true,
+    scroll: 'body',
+    open: false
+  },
+  render: template
 };
+

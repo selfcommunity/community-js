@@ -11,7 +11,7 @@ import Endpoints, {EndpointType} from './constants/Endpoints';
 /**
  * Utils
  */
-import {formatHttpError} from './utils/http';
+import {formatHttpError, formatHttpErrorCode, getCancelTokenSourceRequest} from './utils/http';
 import {generateJWTToken, parseJwt} from './utils/token';
 import {apiRequest} from './utils/apiRequest';
 import {urlParams} from './utils/url';
@@ -23,6 +23,7 @@ import AccountService, {AccountApiClient, AccountApiClientInterface} from './ser
 import CategoryService, {CategoryApiClient, CategoryApiClientInterface} from './services/category';
 import CommentService, {CommentApiClient, CommentApiClientInterface} from './services/comment';
 import CustomAdvService, {CustomAdvApiClient, CustomAdvApiClientInterface} from './services/custom_adv';
+import CustomMenuService, {CustomMenuApiClient, CustomMenuApiClientInterface} from './services/custom_menu';
 import CustomPageService, {CustomPageApiClient, CustomPageApiClientInterface} from './services/custom_page';
 import DataPortabilityService, {DataPortabilityApiClient, DataPortabilityApiClientInterface} from './services/data_portability';
 import EmbedService, {EmbedApiClient, EmbedApiClientInterface} from './services/embed';
@@ -40,6 +41,7 @@ import ModerationService, {ModerationApiClient, ModerationApiClientInterface} fr
 import NotificationService, {NotificationApiClient, NotificationApiClientInterface} from './services/notification';
 import PreferenceService, {PreferenceApiClient, PreferenceApiClientInterface} from './services/preference';
 import PrivateMessageService, {PrivateMessageApiClient, PrivateMessageApiClientInterface} from './services/private_message';
+import PromoService, {PromoApiClient, PromoApiClientInterface} from './services/promo';
 import ScoreService, {ScoreApiClient, ScoreApiClientInterface} from './services/score';
 import SSOService, {SSOApiClient, SSOApiClientInterface} from './services/sso';
 import SuggestionService, {SuggestionApiClient, SuggestionApiClientInterface} from './services/suggestion';
@@ -56,6 +58,7 @@ import {
   AccountVerifyParams,
   AccountResetParams,
   AccountRecoverParams,
+  AccountSearchParams,
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,
@@ -65,6 +68,7 @@ import {
   IncubatorCreateParams,
   IncubatorSearchParams,
   LoyaltyPrizeParams,
+  LoyaltyGetPrizeParams,
   ModerationParams,
   ModerateContributionParams,
   FlaggedContributionParams,
@@ -115,6 +119,8 @@ export {
   HttpMethod,
   apiRequest,
   formatHttpError,
+  formatHttpErrorCode,
+  getCancelTokenSourceRequest,
   generateJWTToken,
   parseJwt,
   urlParams,
@@ -141,6 +147,9 @@ export {
   CustomAdvService,
   CustomAdvApiClient,
   CustomAdvApiClientInterface,
+  CustomMenuService,
+  CustomMenuApiClient,
+  CustomMenuApiClientInterface,
   CustomPageService,
   CustomPageApiClient,
   CustomPageApiClientInterface,
@@ -186,6 +195,9 @@ export {
   PrivateMessageService,
   PrivateMessageApiClient,
   PrivateMessageApiClientInterface,
+  PromoService,
+  PromoApiClient,
+  PromoApiClientInterface,
   ScoreService,
   ScoreApiClient,
   ScoreApiClientInterface,
@@ -204,6 +216,7 @@ export {
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,
+	AccountSearchParams,
   AccountCreateParams,
   AccountVerifyParams,
   AccountResetParams,
@@ -214,6 +227,7 @@ export {
   SSOSignUpParams,
   CommentListParams,
   LoyaltyPrizeParams,
+  LoyaltyGetPrizeParams,
   ModerationParams,
   FlaggedContributionParams,
   ModerateContributionParams,
