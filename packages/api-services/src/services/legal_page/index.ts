@@ -103,7 +103,7 @@ export class LegalPageApiClient {
 
 /**
  *
- :::tipLegalPage service can be used in the following way:
+ :::tip LegalPage service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

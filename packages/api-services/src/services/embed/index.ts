@@ -101,7 +101,7 @@ export class EmbedApiClient {
 
 /**
  *
- :::tipEmbed service can be used in the following way:
+ :::tip Embed service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

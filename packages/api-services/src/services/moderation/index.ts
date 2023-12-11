@@ -132,7 +132,7 @@ export class ModerationApiClient {
 
 /**
  *
- :::tipModeration service can be used in the following way:
+ :::tip Moderation service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

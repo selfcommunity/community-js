@@ -5,7 +5,7 @@ import {SnackbarProvider} from 'notistack';
 /**
  * Creates Global Context
  *
- :::tipContext can be consumed in one of the following ways:
+ :::tip Context can be consumed in one of the following ways:
  ```jsx
  1. <SCAlertMessagesContext.Consumer>{(options,) => (...)}</SCAlertMessagesContext.Consumer>
  ```

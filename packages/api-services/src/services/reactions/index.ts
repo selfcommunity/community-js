@@ -60,7 +60,7 @@ export class ReactionApiClient {
 
 /**
  *
- :::tipFeature service can be used in the following way:
+ :::tip Feature service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

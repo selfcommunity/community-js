@@ -65,7 +65,7 @@ export class PreferenceApiClient {
 
 /**
  *
- :::tipPreference service can be used in the following way:
+ :::tip Preference service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

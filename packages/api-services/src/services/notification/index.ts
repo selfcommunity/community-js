@@ -118,7 +118,7 @@ export class NotificationApiClient {
 
 /**
  *
- :::tipNotification service can be used in the following way:
+ :::tip Notification service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

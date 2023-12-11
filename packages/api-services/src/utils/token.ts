@@ -2,7 +2,7 @@ import * as jose from 'jose';
 
 /**
  * Generate a JWT
- :::tipContext can be consumed as following:
+ :::tip Context can be consumed as following:
  ```jsx
  1. const token = await generateJWTToken(userId, secretKey, expirationTime);
  ```

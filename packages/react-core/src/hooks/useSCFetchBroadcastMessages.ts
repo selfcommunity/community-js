@@ -26,7 +26,7 @@ const initialData: SCPaginatedResponse = {results: [], next: broadcastMessagesRe
  @param object
  @param object.cacheStrategy
 
- :::tipContext can be consumed in this way:
+ :::tip Context can be consumed in this way:
 
  ```jsx
  const {messages, isLoading} = useSCFetchBroadcastMessages();

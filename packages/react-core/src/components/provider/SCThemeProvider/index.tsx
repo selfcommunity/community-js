@@ -10,7 +10,7 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 /**
  * Creates Global Context
  *
- :::tipContext can be consumed in one of the following ways:
+ :::tip Context can be consumed in one of the following ways:
 
  ```jsx
  1. <SCThemeContext.Consumer>{(theme,) => (...)}</SCThemeContext.Consumer>

@@ -45,7 +45,7 @@ const Link = ({children, ...other}, ref) => {
  ```jsx
  import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
  ````
- :::tipUsage Example:
+ :::tip Usage Example:
 
  ```jsx
  const scRoutingContext: SCRoutingContextType = useSCRouting();

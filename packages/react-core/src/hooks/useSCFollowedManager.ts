@@ -19,7 +19,7 @@ const STATUS_FOLLOWED = 'followed';
  :::info
  This custom hook is used to manage followed users.
  :::
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx

@@ -127,7 +127,7 @@ function stateInitializer(session: SCSessionType): any {
  import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
  ````
 
- :::tipUsage Example:
+ :::tip Usage Example:
 
  ```jsx
  const scRoutingContext: SCRoutingContextType = useSCRouting();
