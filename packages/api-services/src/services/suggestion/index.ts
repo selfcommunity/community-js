@@ -66,7 +66,7 @@ export class SuggestionApiClient {
 
 /**
  *
- :::tipSuggestion service can be used in the following way:
+ :::tip Suggestion service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

@@ -597,7 +597,7 @@ export class FeedObjectApiClient {
 
 /**
  *
- :::tipFeed Object service can be used in the following way:
+ :::tip Feed Object service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

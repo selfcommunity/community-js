@@ -7,7 +7,7 @@ import {useSCUser} from '../components/provider/SCUserProvider';
  :::info
  This custom hook is used to check if the user is blocked by me or I am blocked by him.
  :::
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx

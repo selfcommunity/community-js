@@ -107,7 +107,7 @@ export class LoyaltyApiClient {
 
 /**
  *
- :::tipLoyalty service can be used in the following way:
+ :::tip Loyalty service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

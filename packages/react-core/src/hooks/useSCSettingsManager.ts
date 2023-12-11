@@ -8,7 +8,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
  :::info
  This custom hook is used to manage user settings.
  :::
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx
