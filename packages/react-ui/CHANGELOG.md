@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.1-alpha.4...@selfcommunity/react-ui@0.7.1-alpha.5) (2023-12-20)
+
+
+### Performance Improvements
+
+* Trigger build ([78279de](https://github.com/selfcommunity/community-js/commit/78279de8ba6a9c1e5fe06b884274471cabd780eb))
+
+
+
+
+
 ## [0.7.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.1-alpha.3...@selfcommunity/react-ui@0.7.1-alpha.4) (2023-12-20)
 
 
