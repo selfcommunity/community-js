@@ -64,7 +64,7 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
       editor.isEditable()
     ) {
       setAnchorEl(nativeSelection.focusNode?.parentElement);
-      setLastSelection(selection);
+      setLastSelection(selection as any);
     } else if (!activeElement) {
       setAnchorEl(null);
       setLastSelection(null);
