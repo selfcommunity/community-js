@@ -587,7 +587,7 @@ export const validateReactions = (value, vote) => {
       errors.push(ValidationError.ERROR_INVALID_VOTE_REACTIONS);
     }
     if (Array.isArray(value) && value.length > 0) {
-      let _validValuesCounts = value.filter((e) => e.id !== null && e.label !== null && e.sentiment && e.image && e.active !== null).length;
+      let _validValuesCounts = value.filter((e) => e.id !== null && e.label !== null && e.sentiment !== null && e.image && e.active !== null).length;
       if (_validValuesCounts < value.length) {
         errors.push(ValidationError.ERROR_INVALID_VOTE_REACTIONS_STRUCTURE);
       }
