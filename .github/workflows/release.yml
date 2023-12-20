@@ -15,9 +15,9 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: "0"
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: '16.x'
+        node-version: '18.x'
     - run: yarn bootstrap
     - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
       env:
