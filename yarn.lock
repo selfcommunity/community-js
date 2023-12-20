@@ -4091,7 +4091,7 @@
   dependencies:
     "@lexical/utils" "0.12.5"
 
-"@lexical/html@0.12.5", "@lexical/html@^0.12.2", "@lexical/html@^0.12.5":
+"@lexical/html@0.12.5", "@lexical/html@^0.12.5":
   version "0.12.5"
   resolved "https://registry.yarnpkg.com/@lexical/html/-/html-0.12.5.tgz#86d31d76abde29497801ba949938734cca0e2cd8"
   integrity sha512-OzsWKVcr9wUGvAbgyUdG+32/cI2RclI4I4JmIyfLbiYMBYdafu+j160cjohNWu9gQFjVFszIjG4CBxfwRM+Sag==
@@ -4147,7 +4147,7 @@
   resolved "https://registry.yarnpkg.com/@lexical/plain-text/-/plain-text-0.12.5.tgz#5e5fffb735715f5c1bd71c5a754cfb1249fac75e"
   integrity sha512-n24aQvTIy4AN+LaoQce6BIuSY4pUshiTp4OpiRh48o5c9NU0DmzEa0l9fBS1GfvjZL9bN5luiINFYn/bMB49nA==
 
-"@lexical/react@^0.12.2", "@lexical/react@^0.12.5":
+"@lexical/react@^0.12.5":
   version "0.12.5"
   resolved "https://registry.yarnpkg.com/@lexical/react/-/react-0.12.5.tgz#76167b655ae9de46662e51eb5a674e789b483d79"
   integrity sha512-pAbJQksin223Yp1p1VsPKxkRtSppVij+HcLTzP89q2QuSA0z0p/T+f5jZjs8eV6tecMtmrjizhdLTbk0jkej1w==
@@ -4972,47 +4972,6 @@
     "@rpldy/shared" "1.7.0"
     "@rpldy/shared-ui" "1.7.0"
     "@rpldy/uploader" "1.7.0"
-
-"@selfcommunity/react-ui@^0.7.1-alpha.4":
-  version "0.7.1-alpha.4"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/react-ui/-/react-ui-0.7.1-alpha.4.tgz#8a23d3344aff306ef0d223d811b8cb4a234b35f2"
-  integrity sha512-67RHQcfDKXPMczxYzb7TsBqYv4yaSqHYy5nF8OG3FJJ2GOKKV/HmpBgStcT1/WWXbwEBtM4be3cneMWpYSLEpg==
-  dependencies:
-    "@lexical/html" "^0.12.2"
-    "@lexical/react" "^0.12.2"
-    "@selfcommunity/api-services" "^0.4.1-alpha.4"
-    "@selfcommunity/react-core" "^0.4.1-alpha.4"
-    "@selfcommunity/react-i18n" "^0.5.1-alpha.0"
-    "@selfcommunity/types" "^0.5.1-alpha.0"
-    "@selfcommunity/utils" "^0.2.1-alpha.0"
-    "@types/classnames" "^2.3.1"
-    "@types/sortablejs" "1"
-    autosuggest-highlight "^3.1.1"
-    classnames "^2.3.2"
-    date-fns "^2.30.0"
-    emoji-picker-react "^4.5.2"
-    lexical "^0.12.2"
-    libphonenumber-js "^1.10.30"
-    prop-types "^15.8.1"
-    prop-types-extra "^1.1.1"
-    pubsub-js "^1.9.4"
-    react-custom-scrollbars-2 "^4.5.0"
-    react-intersection-observer "^9.4.3"
-    react-lazyload "^3.2.0"
-    react-photo-view "^1.2.3"
-    react-player "^2.12.0"
-    react-share "^4.4.1"
-    react-sortablejs "^6.1.4"
-    react-waypoint "^10.3.0"
-    resize-observer-polyfill "^1.5.1"
-    seamless-scroll-polyfill "^2.3.4"
-    sortablejs "^1.15.0"
-    spark-md5 "~3.0.2"
-    throttle-debounce "^2.1.0"
-    use-deep-compare-effect "^1.8.1"
-    use-resize-observer "^9.1.0"
-    virtual-scroller "^1.12.3"
-    yjs "^13.6.7"
 
 "@sinclair/typebox@^0.25.16":
   version "0.25.24"
@@ -7440,7 +7399,7 @@ autoprefixer@^10.3.1:
     picocolors "^1.0.0"
     postcss-value-parser "^4.2.0"
 
-autosuggest-highlight@^3.1.1, autosuggest-highlight@^3.3.4:
+autosuggest-highlight@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/autosuggest-highlight/-/autosuggest-highlight-3.3.4.tgz#d71b575ba8eab40b5adba73df9244e9ba88cc387"
   integrity sha512-j6RETBD2xYnrVcoV1S5R4t3WxOlWZKyDQjkwnggDPSjF5L4jV98ZltBpvPvbkM1HtoSe5o+bNrTHyjPbieGeYA==
@@ -9504,7 +9463,7 @@ emittery@^0.7.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha512-A8OG5SR/ij3SsJdWDJdkkSYUjQdCUx6APQXem0SaEePBSRg4eymGYwBkKo1Y6DU+af/Jn2dBQqDBvjnr9Vi8nQ==
 
-emoji-picker-react@4.5.16, emoji-picker-react@^4.5.2:
+emoji-picker-react@4.5.16:
   version "4.5.16"
   resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.5.16.tgz#12111f89a7fd2bd74965337d53806f4153d65dc6"
   integrity sha512-RXaOH1EapmqbtRSMaHnwJWMfA6kiPipg/gN4cFOQRQKvrTQIA3K5+yUyzFuq8O7umIEtXUi1C1tf2dPvyyn44Q==
@@ -12991,7 +12950,7 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lexical@0.12.5, lexical@^0.12.2:
+lexical@0.12.5:
   version "0.12.5"
   resolved "https://registry.yarnpkg.com/lexical/-/lexical-0.12.5.tgz#e8de986032721a7482a073a6d6e2d66e69a3d170"
   integrity sha512-ZMqisIxNe+JBqaUa1Qmz7ghpvnmARHxgYz+F0rcXRtSPZtgEL8OT2c9xk8CJ4ccVpf+qRQlONzCEIZfQQHd/RA==
@@ -13024,7 +12983,7 @@ libnpmpublish@^4.0.0:
     semver "^7.1.3"
     ssri "^8.0.1"
 
-libphonenumber-js@^1.10.30, libphonenumber-js@^1.10.52:
+libphonenumber-js@^1.10.52:
   version "1.10.52"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.52.tgz#786d7743e75aba1996824057b60003bb539f8daa"
   integrity sha512-6vCuCHgem+OW1/VCAKgkasfegItCea8zIT7s9/CG/QxdCMIM7GfzbEBG5d7lGO3rzipjt5woOQL3DiHa8Fy78Q==
