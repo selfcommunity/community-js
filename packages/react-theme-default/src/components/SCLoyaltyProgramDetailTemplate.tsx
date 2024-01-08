@@ -11,7 +11,7 @@ const Component = {
       '& .SCLoyaltyProgramDetailTemplate-title': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.286rem',
-        marginBottom: theme.spacing(2),
+        margin: theme.spacing(2, 0, 2, 0),
         [theme.breakpoints.down('md')]: {
           textAlign: 'center'
         }
