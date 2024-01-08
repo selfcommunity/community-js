@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.2-alpha.0...@selfcommunity/react-theme-default@0.1.2-alpha.1) (2024-01-08)
+
+
+### Bug Fixes
+
+* fixed loyalty program template top margin ([d3d886b](https://github.com/selfcommunity/community-js/commit/d3d886bb1220d0832cb823637683faa87d810fd2))
+
+
+
+
+
 ## [0.1.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.1...@selfcommunity/react-theme-default@0.1.2-alpha.0) (2024-01-08)
 
 
