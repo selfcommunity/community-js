@@ -113,7 +113,7 @@ export class MediaApiClient {
 
 /**
  *
- :::tipMedia service can be used in the following way:
+ :::tip Media service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

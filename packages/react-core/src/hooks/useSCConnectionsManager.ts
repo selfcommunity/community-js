@@ -17,7 +17,7 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
  This custom hook is used to manage to manage friends.
  :::
 
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import {useEffect, useMemo} from 'react';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
@@ -9,7 +9,7 @@ import useSCCachingManager from './useSCCachingManager';
  :::info
  This custom hook is used to manage to manage subscribed incubators.
  :::
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx

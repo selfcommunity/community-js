@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import {useEffect, useMemo} from 'react';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCCategoryType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
@@ -10,7 +10,7 @@ import {Logger} from '@selfcommunity/utils';
  This custom hook is used to manage the categories followed.
  :::
 
- :::tipHow to use it:
+ :::tip How to use it:
  Follow these steps:
  ```jsx
  1. const scUserContext: SCUserContextType = useSCUser();

@@ -1,8 +1,9 @@
 <p align="center">
   <a href="https://www.selfcommunity.com/" rel="noopener" target="_blank">
-    <img width="150" src="https://make.selfcommunity.com/assets/images/logo.png" alt="SelfCommunity logo">
+    <img width="150" src="https://make.selfcommunity.com/assets/images/logo.png" alt="SelfCommunity logo"/>
   </a>
 </p>
+
 
 <h1 align="center">Community JS</h1>
 

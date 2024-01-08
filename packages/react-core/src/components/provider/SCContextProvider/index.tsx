@@ -8,7 +8,7 @@ import useIsComponentMountedRef from '../../../utils/hooks/useIsComponentMounted
 /**
  * Creates Global Context
  *
- :::tipContext can be consumed in one of the following ways:
+ :::tip Context can be consumed in one of the following ways:
  ```jsx
  1. <SCContext.Consumer>{settings => (...)}</SCContext.Consumer>
  ```

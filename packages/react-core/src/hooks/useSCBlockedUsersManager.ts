@@ -9,7 +9,7 @@ import {UserService} from '@selfcommunity/api-services';
  :::info
  This custom hook is used to manage blocked users.
  :::
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx

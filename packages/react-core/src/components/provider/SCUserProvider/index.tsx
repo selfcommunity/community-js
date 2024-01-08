@@ -31,7 +31,7 @@ import {
 /**
  * SCUserContext (Authentication Context)
  *
- :::tipContext can be consumed in one of the following ways:
+ :::tip Context can be consumed in one of the following ways:
 
 
  ```jsx

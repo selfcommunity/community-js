@@ -87,7 +87,7 @@ export class CategoryApiClient {
   }
 
   /**
-   * This endpoint deletes a specific category identified by {id}.
+   * This endpoint deletes a specific category identified by ID.
    * @param id
    * @param config
    */
@@ -191,7 +191,7 @@ export class CategoryApiClient {
 
 /**
  *
- :::tipCategory service can be used in the following way:
+ :::tip Category service can be used in the following way:
  ```jsx
  1. Import the service from our library:
 

@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.1-alpha.4...@selfcommunity/react-core@0.4.1-alpha.5) (2023-12-20)
+
+
+### Bug Fixes
+
+* reactions ([ef422e3](https://github.com/selfcommunity/community-js/commit/ef422e305182e2d333c07b684717343db5230b21))
+
+
+
+
+
+## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.1-alpha.3...@selfcommunity/react-core@0.4.1-alpha.4) (2023-12-11)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.1-alpha.2...@selfcommunity/react-core@0.4.1-alpha.3) (2023-12-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.1-alpha.1...@selfcommunity/react-core@0.4.1-alpha.2) (2023-12-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.1-alpha.0...@selfcommunity/react-core@0.4.1-alpha.1) (2023-12-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0...@selfcommunity/react-core@0.4.1-alpha.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* fixed md comments for developers-doc ([3b2507d](https://github.com/selfcommunity/community-js/commit/3b2507dbcd66edd27fd9e76cae8d1edf6e4c3757))
+
+
+
+
+
 # [0.4.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.0-alpha.124...@selfcommunity/react-core@0.4.0) (2023-12-07)
 
 **Note:** Version bump only for package @selfcommunity/react-core

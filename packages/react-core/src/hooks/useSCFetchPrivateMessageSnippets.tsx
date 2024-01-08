@@ -30,7 +30,7 @@ const hydrate = (ids: number[]) => {
  This custom hook is used to fetch snippets.
  @param object.cacheStrategy
 
- :::tipContext can be consumed in this way:
+ :::tip Context can be consumed in this way:
 
  ```jsx
  const {snippets, isLoading} = useSCFetchPrivateMessageSnippets();

@@ -12,7 +12,7 @@ import {SCNotificationMapping} from '../constants/Notification';
  :::info
  This custom hook is used to manage followers users.
  :::
- :::tipHow to use it:
+ :::tip How to use it:
 
  Follow these steps:
  ```jsx

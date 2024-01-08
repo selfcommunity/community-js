@@ -45,7 +45,7 @@ export class DataPortabilityApiClient {
 
 /**
  *
- :::tipData Portability service can be used in the following way:
+ :::tip Data Portability service can be used in the following way:
 
  ```jsx
  1. Import the service from our library:

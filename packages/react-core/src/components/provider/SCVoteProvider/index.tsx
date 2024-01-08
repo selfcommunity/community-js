@@ -1,16 +1,16 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { ReactionService } from '@selfcommunity/api-services';
-import { SCContextType, SCPreferencesContextType, SCVoteContextType } from '../../../types/context';
-import { Logger } from '@selfcommunity/utils';
-import { SCOPE_SC_CORE } from '../../../constants/Errors';
-import { useSCContext } from '../SCContextProvider';
-import { SCFeatureName, SCReactionType } from '@selfcommunity/types';
-import { SCPreferencesContext } from '../SCPreferencesProvider';
+import React, {createContext, useCallback, useContext, useEffect, useState} from 'react';
+import {ReactionService} from '@selfcommunity/api-services';
+import {SCContextType, SCPreferencesContextType, SCVoteContextType} from '../../../types/context';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_CORE} from '../../../constants/Errors';
+import {useSCContext} from '../SCContextProvider';
+import {SCFeatureName, SCReactionType} from '@selfcommunity/types';
+import {SCPreferencesContext} from '../SCPreferencesProvider';
 
 /**
  * Creates Vote Context
  *
- :::tipContext can be consumed in one of the following ways:
+ :::tip Context can be consumed in one of the following ways:
 
 
  ```jsx
@@ -40,14 +40,19 @@ export default function SCVoteProvider({children = null}: {children: React.React
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const [reactions, setReactions] = useState<SCReactionType[]>(scContext.settings.vote.reactions);
   const [, setError] = useState<any>();
-  const [initialized, setInitialized] = useState<boolean>((scPreferencesContext.features && !scPreferencesContext.features.includes(SCFeatureName.REACTION)) || scContext.settings.vote.reactions !== null);
-  const [isLoading, setIsLoading] = useState<boolean>(scPreferencesContext.features && scPreferencesContext.features.includes(SCFeatureName.REACTION) && scContext.settings.vote.reactions === null);
+  const [initialized, setInitialized] = useState<boolean>(
+    (scPreferencesContext.features && !scPreferencesContext.features.includes(SCFeatureName.REACTION)) || scContext.settings.vote.reactions !== null
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(
+    scPreferencesContext.features && scPreferencesContext.features.includes(SCFeatureName.REACTION) && scContext.settings.vote.reactions === null
+  );
 
   /**
    * Helper to refresh reactions list
    */
   const refreshReactions = useCallback(
-    () => ReactionService.getAllReactionsList().then((data: SCReactionType[]) => {
+    () =>
+      ReactionService.getAllReactionsList().then((data: SCReactionType[]) => {
         setReactions(data);
         return data;
       }),
@@ -58,23 +63,20 @@ export default function SCVoteProvider({children = null}: {children: React.React
    * Initialize component
    * Load all reactions if the feature 'reaction' is enabled
    */
-  const _initComponent = useCallback(
-    (): void => {
-      if (!initialized) {
-        setInitialized(true);
-        setIsLoading(true);
-        refreshReactions()
-          .then(() => {
-            setIsLoading(false);
-          })
-          .catch((_error) => {
-            Logger.error(SCOPE_SC_CORE, _error);
-            setError(_error);
-          });
-      }
-    },
-    [isLoading, initialized]
-  );
+  const _initComponent = useCallback((): void => {
+    if (!initialized) {
+      setInitialized(true);
+      setIsLoading(true);
+      refreshReactions()
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((_error) => {
+          Logger.error(SCOPE_SC_CORE, _error);
+          setError(_error);
+        });
+    }
+  }, [isLoading, initialized]);
 
   // EFFECTS
   useEffect(() => {
