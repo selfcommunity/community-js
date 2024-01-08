@@ -11,24 +11,24 @@ const Component = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: 270,
+        minHeight: 150,
         color: '#FFF',
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
-        height: 200,
+        height: 150,
         borderRadius: 0
       },
       '& .SCCategoryHeader-info': {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
         marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(2),
         '& .SCCategoryHeader-name, & .SCCategoryHeader-slogan': {
           display: 'block',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           textAlign: 'center',
-          marginBottom: theme.spacing(2)
+          marginBottom: `${theme.spacing(1)} !important`
         },
         '& .SCCategoryHeader-name': {
           fontSize: '1.857rem',
@@ -45,6 +45,7 @@ const Component = {
           marginBottom: theme.spacing(2)
         },
         '& .SCCategoryHeader-followed': {
+          marginBottom: `${theme.spacing(1)} !important`,
           '& .SCCategoryHeader-followed-counter': {
             fontSize: '1rem',
             fontWeight: theme.typography.fontWeightRegular,
