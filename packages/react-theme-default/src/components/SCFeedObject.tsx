@@ -655,7 +655,7 @@ const Component = {
               '& .SCBaseItem-primary': {
                 display: 'inline-block',
                 marginBottom: theme.spacing(0.5),
-                '& a:nth-child(1)': {
+                '& a:nth-of-type(1)': {
                   fontWeight: theme.typography.fontWeightBold,
                   textDecoration: 'none'
                 },

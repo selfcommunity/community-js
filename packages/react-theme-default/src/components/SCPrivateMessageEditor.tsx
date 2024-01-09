@@ -67,8 +67,12 @@ const Component = {
             }
           },
           '& .MuiList-root': {
-            paddingTop: theme.spacing(0),
-            paddingBottom: theme.spacing(0)
+            '& .MuiListItem-root:first-of-type': {
+              paddingTop: theme.spacing(1)
+            },
+            [theme.breakpoints.up('sm')]: {
+              paddingTop: theme.spacing(0)
+            }
           },
           '& .SCPrivateMessageEditor-preview-content': {
             position: 'relative',
@@ -91,10 +95,10 @@ const Component = {
             },
             '& .SCPrivateMessageEditor-preview-actions': {
               height: '100%',
-              background: 'transparent',
-              '&:hover, &:active, &.SCPrivateMessageEditor-progress': {
-                background: 'rgba(0,0,0,0.5)'
-              },
+              // background: 'transparent',
+              // '&:hover, &:active, &.SCPrivateMessageEditor-progress': {
+              background: 'rgba(0,0,0,0.5)',
+              // },
               '& .MuiButtonBase-root, .MuiTypography-root': {
                 color: theme.palette.common.white,
                 position: 'absolute',
