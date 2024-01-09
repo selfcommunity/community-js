@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.2-alpha.2...@selfcommunity/react-theme-default@0.1.2-alpha.3) (2024-01-09)
+
+
+### Performance Improvements
+
+* updated lib deps, removed console.log, fixed theme ([18f749d](https://github.com/selfcommunity/community-js/commit/18f749d7c361ffd7e56ad35ed24e96bb8b3bb3e5))
+
+
+
+
+
+## [0.1.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.2-alpha.1...@selfcommunity/react-theme-default@0.1.2-alpha.2) (2024-01-09)
+
+
+### Bug Fixes
+
+* fixed loyalty program template  margins ([52b3aee](https://github.com/selfcommunity/community-js/commit/52b3aee750ed209a34054e871d0dd7ce30c808ea))
+
+
+
+
+
+## [0.1.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.2-alpha.0...@selfcommunity/react-theme-default@0.1.2-alpha.1) (2024-01-08)
+
+
+### Bug Fixes
+
+* fixed loyalty program template top margin ([d3d886b](https://github.com/selfcommunity/community-js/commit/d3d886bb1220d0832cb823637683faa87d810fd2))
+
+
+
+
+
+## [0.1.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.1...@selfcommunity/react-theme-default@0.1.2-alpha.0) (2024-01-08)
+
+
+### Bug Fixes
+
+* asana issues: https://app.asana.com/0/1202638443591994/1206286308710201/f and https://app.asana.com/0/1202638443591994/1206286308710193/f ([0de315d](https://github.com/selfcommunity/community-js/commit/0de315dc3f3c1736fa688e66dc4e37d9a8bd1a6b))
+
+
+
+
+
 ## [0.1.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.1-alpha.7...@selfcommunity/react-theme-default@0.1.1) (2024-01-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

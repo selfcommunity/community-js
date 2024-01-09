@@ -11,7 +11,8 @@ const Component = {
       '& .SCLoyaltyProgramDetailTemplate-title': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.286rem',
-        marginBottom: theme.spacing(5),
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
         [theme.breakpoints.down('md')]: {
           textAlign: 'center'
         }
@@ -22,10 +23,7 @@ const Component = {
         marginBottom: theme.spacing(1)
       },
       '& .SCLoyaltyProgramDetailTemplate-section-info': {
-        marginBottom: theme.spacing(5),
-        [theme.breakpoints.down('md')]: {
-          marginBottom: theme.spacing(3)
-        }
+        marginBottom: theme.spacing(2)
       },
       '& .SCLoyaltyProgramDetailTemplate-user-points': {
         marginLeft: theme.spacing(2),
@@ -106,7 +104,7 @@ const Component = {
       },
       '& .SCLoyaltyProgramDetailTemplate-points-list-root': {
         marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(5),
+        marginBottom: theme.spacing(2),
         '& .MuiGrid-item': {
           paddingTop: theme.spacing(1),
           '& .SCLoyaltyProgramDetailTemplate-element': {

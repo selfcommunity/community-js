@@ -118,7 +118,7 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
     onAdd && onAdd(media);
   }, [onAdd]);
   const handleProgress = useCallback((chunks: any) => {
-    console.log(chunks);
+    //console.log(chunks);
     setIsUploading(Object.keys(chunks).length > 0);
   }, []);
   const handleError = useCallback((chunk: SCMediaChunkType, error: string) => {
