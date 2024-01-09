@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.2-alpha.0...@selfcommunity/react-ui@0.7.2-alpha.1) (2024-01-09)
+
+
+### Performance Improvements
+
+* updated lib deps, removed console.log, fixed theme ([18f749d](https://github.com/selfcommunity/community-js/commit/18f749d7c361ffd7e56ad35ed24e96bb8b3bb3e5))
+
+
+
+
+
 ## [0.7.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.1...@selfcommunity/react-ui@0.7.2-alpha.0) (2024-01-08)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
