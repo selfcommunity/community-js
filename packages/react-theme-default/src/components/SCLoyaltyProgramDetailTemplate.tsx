@@ -11,7 +11,8 @@ const Component = {
       '& .SCLoyaltyProgramDetailTemplate-title': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.286rem',
-        margin: theme.spacing(2, 0, 2, 0),
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
         [theme.breakpoints.down('md')]: {
           textAlign: 'center'
         }
@@ -46,7 +47,6 @@ const Component = {
         }
       },
       '& .SCLoyaltyProgramDetailTemplate-card': {
-        width: 270,
         boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.3)',
         [theme.breakpoints.down('md')]: {
           borderRadius: 0
