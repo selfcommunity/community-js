@@ -35,7 +35,7 @@ const Root = styled(Box, {
 export default function CategoryHeaderSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      <Skeleton sx={{height: 270}} animation="wave" variant="rectangular" />
+      <Skeleton sx={{height: 150}} animation="wave" variant="rectangular" />
       <Box>
         <Skeleton animation="wave" sx={{height: 20, maxWidth: 300, width: '100%', margin: '0 auto'}} />
       </Box>
