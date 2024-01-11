@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-i18n",
-  "version": "0.5.2-alpha.0",
+  "version": "0.5.2",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
