@@ -2,6 +2,9 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       marginTop: 0,
+      '& > p: nth-of-type(2)': {
+        marginTop: theme.spacing(1)
+      },
       '& .SCUserProfileTemplate-tags': {
         marginTop: theme.spacing(2),
         marginLeft: theme.spacing(2),
@@ -15,7 +18,6 @@ const Component = {
         flexWrap: 'wrap'
       },
       '& .SCUserProfileTemplate-info': {
-        marginTop: theme.spacing(1),
         marginLeft: theme.spacing(2),
         textAlign: 'start'
       },

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.2...@selfcommunity/react-templates@0.3.3-alpha.0) (2024-01-11)
+
+
+### Performance Improvements
+
+* updated react-templates/react-theme-default peer deps ([c949e52](https://github.com/selfcommunity/community-js/commit/c949e527c1c182a73ab5f0fc71a7ffcce0f1186c))
+
+
+
+
+
 ## [0.3.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.2-alpha.2...@selfcommunity/react-templates@0.3.2) (2024-01-09)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

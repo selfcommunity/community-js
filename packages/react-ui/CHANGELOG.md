@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.2...@selfcommunity/react-ui@0.7.3-alpha.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* fixed user profile paddings + category/user skeletons. Asana issue: https://app.asana.com/0/1202638443591994/1206317208804732/f ([ae1831e](https://github.com/selfcommunity/community-js/commit/ae1831e285c0a15e81b9ee58fda2ea7ca17feb10))
+
+
+
+
+
 ## [0.7.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.2-alpha.2...@selfcommunity/react-ui@0.7.2) (2024-01-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
