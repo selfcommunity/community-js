@@ -38,14 +38,14 @@ const Component = {
         '& .SCCategoryHeader-slogan': {
           fontSize: '1rem',
           fontWeight: theme.typography.fontWeightMedium,
-          marginBottom: theme.spacing(2)
+          marginBottom: `${theme.spacing(0)} !important`
         },
         '& .SCCategoryHeader-followed, & .SCCategoryHeader-action': {
           textAlign: 'center',
           marginBottom: theme.spacing(2)
         },
         '& .SCCategoryHeader-followed': {
-          marginBottom: `${theme.spacing(1)} !important`,
+          marginBottom: `${theme.spacing(0)} !important`,
           '& .SCCategoryHeader-followed-counter': {
             fontSize: '1rem',
             fontWeight: theme.typography.fontWeightRegular,
