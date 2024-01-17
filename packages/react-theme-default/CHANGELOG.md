@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.1...@selfcommunity/react-theme-default@0.1.5-alpha.2) (2024-01-17)
+
+
+### Bug Fixes
+
+* Fix LanguageSwitcher style ([f37f97e](https://github.com/selfcommunity/community-js/commit/f37f97eeefa77024a445f8f03bd983c993a101cd))
+
+
+
+
+
 ## [0.1.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.0...@selfcommunity/react-theme-default@0.1.5-alpha.1) (2024-01-17)
 
 
