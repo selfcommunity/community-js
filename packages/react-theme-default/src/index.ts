@@ -144,6 +144,24 @@ const theme = {
     fontWeightRegular: '400',
     fontWeightMedium: '500',
     fontWeightBold: '700',
+    h1: {
+      fontSize: '3.4 rem'
+    },
+    h2: {
+      fontSize: '1.7 rem'
+    },
+    h3: {
+      fontSize: '1.5 rem'
+    },
+    h4: {
+      fontSize: '1.2 rem'
+    },
+    h5: {
+      fontSize: '1.1 rem'
+    },
+    h6: {
+      fontSize: '1rem'
+    },
     body1: {
       fontSize: '1rem'
     }
