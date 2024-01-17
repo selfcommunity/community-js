@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.4...@selfcommunity/react-theme-default@0.1.5-alpha.0) (2024-01-17)
+
+
+### Performance Improvements
+
+* Update font for heading ([9a868b7](https://github.com/selfcommunity/community-js/commit/9a868b70420a298734aeb1bcfa7021e6e15047fd))
+
+
+
+
+
 ## [0.1.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.4-alpha.1...@selfcommunity/react-theme-default@0.1.4) (2024-01-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
