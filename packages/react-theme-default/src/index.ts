@@ -145,19 +145,19 @@ const theme = {
     fontWeightMedium: '500',
     fontWeightBold: '700',
     h1: {
-      fontSize: '3.4 rem'
+      fontSize: '3.4rem'
     },
     h2: {
-      fontSize: '1.7 rem'
+      fontSize: '1.7rem'
     },
     h3: {
-      fontSize: '1.5 rem'
+      fontSize: '1.5rem'
     },
     h4: {
-      fontSize: '1.2 rem'
+      fontSize: '1.2rem'
     },
     h5: {
-      fontSize: '1.1 rem'
+      fontSize: '1.1rem'
     },
     h6: {
       fontSize: '1rem'
