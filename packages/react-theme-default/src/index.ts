@@ -116,6 +116,7 @@ import SCNotificationFeedTemplate from './components/SCNotificationFeedTemplate'
 import SCUserFeedTemplate from './components/SCUserFeedTemplate';
 import SCChangeCoverButton from './components/SCChangeCoverButton';
 import SCPrivateMessageSettingsIconButton from './components/SCPrivateMessageSettingsIconButton';
+import SCLanguageSwitcher from './components/SCLanguageSwitcher';
 
 /**
  * Style fragments - Imports - End
@@ -233,6 +234,7 @@ const theme = {
     SCFeedUpdatesWidget,
     SCFooter,
     SCInlineComposerWidget,
+    SCLanguageSwitcher,
     SCLightbox,
     SCLoyaltyProgramWidget,
     SCLoyaltyProgramDetailTemplate,

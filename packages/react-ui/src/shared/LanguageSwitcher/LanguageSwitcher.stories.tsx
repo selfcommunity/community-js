@@ -8,6 +8,6 @@ export default {
 
 const template = (args) => <LanguageSwitcher {...args} />;
 
-export const Base: StoryObj<LanguageSwitcher> = {
+export const Base: StoryObj<typeof LanguageSwitcher> = {
   render: template
 };
