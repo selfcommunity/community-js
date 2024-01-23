@@ -7,7 +7,6 @@ import Icon from '@mui/material/Icon';
 import { useInView } from 'react-intersection-observer';
 import { PREFIX } from './constants';
 import filter from './filter';
-import { MAX_GRID_IMAGES, MEDIA_TYPE_DOCUMENT } from '../../../constants/Media';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
