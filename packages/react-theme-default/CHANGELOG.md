@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.2...@selfcommunity/react-theme-default@0.1.5-alpha.3) (2024-01-23)
+
+
+### Bug Fixes
+
+* Fix image scroll on mobile devices for composer ([f48cb94](https://github.com/selfcommunity/community-js/commit/f48cb9435488c15ea628f3bd2c0f31e51834c47c))
+
+
+
+
+
 ## [0.1.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.1...@selfcommunity/react-theme-default@0.1.5-alpha.2) (2024-01-17)
 
 
