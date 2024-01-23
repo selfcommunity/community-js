@@ -182,7 +182,7 @@
   "ui.composer.media.file.photo": "Camera",
   "ui.composer.media.file.gallery": "Gallery",
   "ui.composer.media.file.document": "Documents",
-  "ui.composer.media.link.add.error.URLError.invalid": "Please enter a valid URL.",
+  "ui.composer.media.link.add.error.urlError.invalid": "Please enter a valid URL.",
   "ui.composer.media.link.add.help": "Insert a valid URL (youtube, vimeo or web page).",
   "ui.composer.media.link.add.label": "Link URL",
   "ui.composer.media.link.add.submit": "OK",
