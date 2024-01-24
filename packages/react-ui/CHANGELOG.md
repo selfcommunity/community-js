@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.2...@selfcommunity/react-ui@0.7.5-alpha.3) (2024-01-24)
+
+
+### Bug Fixes
+
+* copy&paste lexical editor ([341bb3f](https://github.com/selfcommunity/community-js/commit/341bb3fac9abc87f5e9fdea93045746ec2edd592))
+
+
+
+
+
 ## [0.7.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.1...@selfcommunity/react-ui@0.7.5-alpha.2) (2024-01-23)
 
 
