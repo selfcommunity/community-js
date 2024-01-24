@@ -283,6 +283,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   // REFS
   const dialogRef = useRef<any>();
   const unloadRef = useRef<boolean>(false);
+  const pointerStartY = useRef(null);
 
   // Create a ref for medias because of state update error on chunk upload
   const mediasRef = useRef({medias});
@@ -340,15 +341,46 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     }
   }, [state, canSubmit]);
 
+  /**
+   * On iOS, since it is not possible to anchor meadiaObject actions
+   * to the bottom of the viewport, detect 'pan' gesture to close the
+   * soft keyboard on device and show actions
+   */
   useEffect(() => {
     if (!dialogRef.current || !isIOS) {
       return;
     }
-    const handleBlur = () => {
-      dialogRef.current.focus();
+
+    /**
+     * On touchStart event save the initial Y
+     * @param event
+     */
+    const handleTouchStart = (event) => {
+      pointerStartY.current = event.touches[0].clientY;
     };
-    dialogRef.current.addEventListener('touchstart', handleBlur);
-    return () => dialogRef.current?.removeEventListener('touchstart', handleBlur);
+
+    /**
+     * Perform blur only if gesture is a pan (bottom direction)
+     * @param event
+     */
+    const handleTouchmove = (event) => {
+      const currentY = event.touches[0].clientY;
+      const deltaY = currentY - pointerStartY.current;
+      pointerStartY.current = currentY;
+      if (deltaY > 0) {
+        dialogRef.current.focus();
+      }
+    };
+
+    /**
+     * Attach touchstart, touchmove necessary to detect the pan gesture
+     */
+    dialogRef.current.addEventListener('touchstart', handleTouchStart);
+    dialogRef.current.addEventListener('touchmove', handleTouchmove);
+    return () => {
+      dialogRef.current?.removeEventListener('touchstart', handleTouchStart);
+      dialogRef.current?.removeEventListener('touchmove', handleTouchmove);
+    };
   }, [dialogRef.current, isIOS]);
 
   /* Handlers */
