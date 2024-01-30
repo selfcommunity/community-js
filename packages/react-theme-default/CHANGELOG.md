@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.4...@selfcommunity/react-theme-default@0.1.5-alpha.5) (2024-01-30)
+
+
+### Bug Fixes
+
+* Added community badge to user profile header ([9a818ef](https://github.com/selfcommunity/community-js/commit/9a818ef9c13c5cf7cb46d0bd5f092e87e74c0427))
+* Fix inline composer behaviour ([c29d3c5](https://github.com/selfcommunity/community-js/commit/c29d3c526882326b46b17a7fb9862f40d17c31ed))
+* Fix margin on logo mobile ([4abcf9b](https://github.com/selfcommunity/community-js/commit/4abcf9be18143f6d5312768442d27b356394ec71))
+
+
+
+
+
 ## [0.1.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.3...@selfcommunity/react-theme-default@0.1.5-alpha.4) (2024-01-24)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.3...@selfcommunity/react-ui@0.7.5-alpha.4) (2024-01-30)
+
+
+### Bug Fixes
+
+* Added community badge to user profile header ([9a818ef](https://github.com/selfcommunity/community-js/commit/9a818ef9c13c5cf7cb46d0bd5f092e87e74c0427))
+
+
+
+
+
 ## [0.7.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.2...@selfcommunity/react-ui@0.7.5-alpha.3) (2024-01-24)
 
 
