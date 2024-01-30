@@ -3,7 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       marginBottom: theme.spacing(2),
       '& .SCInlineComposerWidget-content, & .SCInlineComposerWidget-content:last-child': {
-        padding: theme.spacing(0.5, 1),
+        padding: theme.spacing(0.5, 2),
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -14,7 +14,7 @@ const Component = {
           display: 'flex',
           flexGrow: 2,
           '& .MuiButton-root': {
-            fontWeight: theme.typography.fontWeightLight,
+            fontWeight: theme.typography.fontWeightMedium,
             letterSpacing: '0.17px',
             padding: theme.spacing(0.5, 0),
             '&:hover': {

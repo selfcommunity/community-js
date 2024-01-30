@@ -21,11 +21,7 @@ const Root = styled(FormControl, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => [styles.root]
-})(({theme}) => ({
-  [`& .${classes.label}`]: {
-    fontWeight: theme.typography.fontWeightBold
-  }
-}));
+})(() => ({}));
 
 export interface LanguageSwitcherProps {
   /**
@@ -135,7 +131,7 @@ export default function LanguageSwitcher(inProps: LanguageSwitcherProps): JSX.El
       <Select disabled={updating} labelId="language" id="language" value={intl.locale} onChange={handleChange} size="small" {...SelectComponentProps}>
         {languages.map((l) => (
           <MenuItem value={l} key={l}>
-            {minimized ? l : <FormattedMessage id={`ui.languageSwitcher.language.${l}`} defaultMessage={`ui.languageSwitcher.language.${l}`} />}
+            {minimized ? l.toUpperCase() : <FormattedMessage id={`ui.languageSwitcher.language.${l}`} defaultMessage={`ui.languageSwitcher.language.${l}`} />}
           </MenuItem>
         ))}
       </Select>

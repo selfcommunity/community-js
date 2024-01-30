@@ -8,7 +8,7 @@ import nodes from './nodes';
 import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
+import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
 import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
