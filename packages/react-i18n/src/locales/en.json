@@ -356,6 +356,8 @@
   "ui.loyaltyProgramWidget.discover": "Discover more",
   "ui.loyaltyProgramWidget.points": "Your points",
   "ui.loyaltyProgramWidget.title":"Loyalty Program",
+  "ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll": "See all",
+  "ui.navigationMenuIconButton.defaultDrawerContent.category.title": "Categories",
   "ui.navigationSettingsIconButton.comments": "My comments",
   "ui.navigationSettingsIconButton.communityTour": "Community tour",
   "ui.navigationSettingsIconButton.connections": "Connections",

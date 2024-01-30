@@ -17,6 +17,13 @@ const Component = {
           maxHeight: theme.mixins.toolbar.minHeight,
           paddingLeft: theme.spacing(1.5)
         }
+      },
+      '& .MuiTypography-subtitle1': {
+        fontSize: '1.286rem',
+        padding: theme.spacing(0, 2),
+        '& MuiButton-root': {
+          padding: theme.spacing(1, 1, 1, 2)
+        }
       }
     })
   }
