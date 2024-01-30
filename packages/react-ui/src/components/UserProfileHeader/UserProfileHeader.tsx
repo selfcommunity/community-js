@@ -18,6 +18,7 @@ import UserProfileHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
+import UserAvatar from '../../shared/UserAvatar';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -171,10 +172,15 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
   const realName = (isMe && scUserContext.user.real_name) || scUser.real_name;
+  const hasBadge = scUser && scUser.community_badge;
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-        <img src={scUser.avatar ? scUser.avatar : ''} className={classes.avatar} />
+        <Box className={classes.avatar}>
+          <UserAvatar hide={!hasBadge}>
+            <img src={scUser.avatar ? scUser.avatar : ''} />
+          </UserAvatar>
+        </Box>
         {isMe && (
           <>
             <ChangePicture iconButton={true} onChange={handleChangeAvatar} className={classes.changePicture} {...ChangePictureProps} />

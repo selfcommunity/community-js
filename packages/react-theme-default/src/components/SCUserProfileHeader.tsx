@@ -17,8 +17,6 @@ const Component = {
         justifyContent: 'space-between'
       },
       '& .SCUserProfileHeader-avatar': {
-        height: theme.selfcommunity.user.avatar.sizeXLarge,
-        width: theme.selfcommunity.user.avatar.sizeXLarge,
         top: 150 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
         [theme.breakpoints.up('lg')]: {
           left: theme.selfcommunity.user.avatar.sizeXLarge / 2,
@@ -26,10 +24,14 @@ const Component = {
         },
         display: 'block',
         position: 'absolute',
-        borderRadius: '50%',
-        border: `#FFF solid ${theme.spacing(0.5)}`,
-        objectFit: 'cover',
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(1),
+        '& > .MuiBadge-root > img': {
+          height: theme.selfcommunity.user.avatar.sizeXLarge,
+          width: theme.selfcommunity.user.avatar.sizeXLarge,
+          borderRadius: '50%',
+          border: `#FFF solid ${theme.spacing(0.5)}`,
+          objectFit: 'cover',
+        }
       },
       '& .SCUserProfileHeader-change-picture': {
         top: 180 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
