@@ -31,6 +31,10 @@ const Component = {
           borderRadius: '50%',
           border: `#FFF solid ${theme.spacing(0.5)}`,
           objectFit: 'cover',
+        },
+        '& .MuiBadge-badge .SCUserAvatar-badge-content': {
+          width: 32,
+          height: 32
         }
       },
       '& .SCUserProfileHeader-change-picture': {

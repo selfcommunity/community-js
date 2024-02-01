@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileHeader from './index';
 
 export default {
-  title: 'Design System/React UI/User Profile AppBar ',
+  title: 'Design System/React UI/User Profile Header',
   component: UserProfileHeader,
   argTypes: {
     userId: {
