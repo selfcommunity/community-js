@@ -138,7 +138,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
     CategoryComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     CategoriesSkeletonComponent = CategoriesSkeleton,
     CategoriesSkeletonProps = {},
-    showFilters = true,
+    showFilters = false,
     filters,
     handleFilterCategories,
     prefetchedCategories = [],
