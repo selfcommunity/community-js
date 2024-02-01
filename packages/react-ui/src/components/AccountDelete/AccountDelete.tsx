@@ -140,7 +140,7 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Typography className={classes.message}>
+      <Typography className={classes.message} component={Box}>
         <FormattedMessage
           id="ui.accountDelete.message"
           defaultMessage="ui.accountDelete.message"
@@ -155,7 +155,7 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
           }}
         />
       </Typography>
-      <Typography className={classes.confirm}>
+      <Typography className={classes.confirm} component={Box}>
         <FormattedMessage
           id="ui.accountDelete.confirmMessage"
           defaultMessage="ui.accountDelete.confirmMessage"
