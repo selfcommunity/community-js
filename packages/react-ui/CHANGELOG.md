@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5...@selfcommunity/react-ui@0.7.6-alpha.0) (2024-02-01)
+
+
+### Bug Fixes
+
+* Fix staff badge in user profile header ([47a5aa6](https://github.com/selfcommunity/community-js/commit/47a5aa6ddf55720854fb123eab11427d9f494963))
+
+
+
+
+
 ## [0.7.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.6...@selfcommunity/react-ui@0.7.5) (2024-01-30)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
