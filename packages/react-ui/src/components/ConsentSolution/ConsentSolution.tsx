@@ -5,7 +5,7 @@ import {Alert, Button, Checkbox, DialogProps, FormControlLabel, Typography} from
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import {LegalPageService, UserService} from '@selfcommunity/api-services';
-import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType} from '@selfcommunity/types';
+import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType, SCUserType} from '@selfcommunity/types';
 import {arraysEqual, capitalize, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import ConsentSolutionSwitch from '../../shared/ConsentSolutionSwitch';
@@ -89,7 +89,7 @@ export interface ConsentSolutionProps extends Pick<DialogProps, Exclude<keyof Di
   /**
    * Callback when delete account rejecting policy document
    */
-  onDeleteAccount?: () => void;
+  onDeleteAccount?: (user?: SCUserType) => void;
 
   /**
    * Any other properties
@@ -250,7 +250,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
     UserService.userDelete(scUserContext.user.id, 0)
       .then(() => {
         setLoadingDeleteAccount(false);
-        onDeleteAccount && onDeleteAccount();
+        onDeleteAccount && onDeleteAccount(scUserContext.user);
         handleLogout();
       })
       .catch((_error) => {
@@ -306,7 +306,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   /**
    * Render main view
    */
-  const renderMainView: Function = () => {
+  const renderMainView = () => {
     if (!doc) {
       return null;
     }
@@ -387,7 +387,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   /**
    * Render document detail view
    */
-  const renderRejectionView: Function = () => {
+  const renderRejectionView = () => {
     const doc = documents[currentDocument];
     if (!doc) {
       return null;
@@ -450,7 +450,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   /**
    * Render delete account view
    */
-  const renderDeleteAccountView: Function = () => {
+  const renderDeleteAccountView = () => {
     return (
       <>
         <DialogTitle className={classNames(classes.title, classes.titleBack)}>
@@ -498,7 +498,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   /**
    * Set content dialog component
    */
-  let content: Function = () => null;
+  let content = () => null;
   if (ready && doc && !loading) {
     switch (_view) {
       case ACCEPT_VIEW:

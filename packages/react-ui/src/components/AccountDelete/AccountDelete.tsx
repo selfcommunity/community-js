@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import {UserService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCUserType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage, useIntl} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -34,7 +35,7 @@ export interface AccountDeleteProps extends BoxProps {
   /**
    * Callback when delete account rejecting policy document
    */
-  onDeleteAccount?: () => void;
+  onDeleteAccount?: (user?: SCUserType) => void;
 
   /**
    * Any other properties
@@ -107,7 +108,7 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
     UserService.userDelete(scUserContext.user.id, 0)
       .then(() => {
         setIsDeleting(false);
-        onDeleteAccount && onDeleteAccount();
+        onDeleteAccount && onDeleteAccount(scUserContext.user);
         handleLogout();
       })
       .catch((_error) => {
