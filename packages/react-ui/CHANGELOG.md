@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.6...@selfcommunity/react-ui@0.7.7-alpha.0) (2024-02-01)
+
+
+### Bug Fixes
+
+* AccountDeleteDialog component ([d2e93b4](https://github.com/selfcommunity/community-js/commit/d2e93b47fd1649dfa7ba75d5b29af136b3d73e47))
+* onDeleteAccount callback for ConsentSolution, AccountDeleteButton components ([8206a01](https://github.com/selfcommunity/community-js/commit/8206a016042129e2b54e0a17c43dd544d4931f95))
+
+
+
+
+
 ## [0.7.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.6-alpha.1...@selfcommunity/react-ui@0.7.6) (2024-02-01)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
