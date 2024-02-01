@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.6-alpha.1...@selfcommunity/react-theme-default@0.1.6) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.6-alpha.0...@selfcommunity/react-theme-default@0.1.6-alpha.1) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5...@selfcommunity/react-theme-default@0.1.6-alpha.0) (2024-02-01)
+
+
+### Bug Fixes
+
+* Fix staff badge in user profile header ([47a5aa6](https://github.com/selfcommunity/community-js/commit/47a5aa6ddf55720854fb123eab11427d9f494963))
+
+
+
+
+
+## [0.1.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.7...@selfcommunity/react-theme-default@0.1.5) (2024-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.6...@selfcommunity/react-theme-default@0.1.5-alpha.7) (2024-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.5...@selfcommunity/react-theme-default@0.1.5-alpha.6) (2024-01-30)
+
+
+### Bug Fixes
+
+* Fix NavigationMenuIconButton default content ([39d43bb](https://github.com/selfcommunity/community-js/commit/39d43bbbe1844e4227dce776a4e984245fe79e72))
+
+
+
+
+
+## [0.1.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.4...@selfcommunity/react-theme-default@0.1.5-alpha.5) (2024-01-30)
+
+
+### Bug Fixes
+
+* Added community badge to user profile header ([9a818ef](https://github.com/selfcommunity/community-js/commit/9a818ef9c13c5cf7cb46d0bd5f092e87e74c0427))
+* Fix inline composer behaviour ([c29d3c5](https://github.com/selfcommunity/community-js/commit/c29d3c526882326b46b17a7fb9862f40d17c31ed))
+* Fix margin on logo mobile ([4abcf9b](https://github.com/selfcommunity/community-js/commit/4abcf9be18143f6d5312768442d27b356394ec71))
+
+
+
+
+
+## [0.1.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.3...@selfcommunity/react-theme-default@0.1.5-alpha.4) (2024-01-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.2...@selfcommunity/react-theme-default@0.1.5-alpha.3) (2024-01-23)
+
+
+### Bug Fixes
+
+* Fix image scroll on mobile devices for composer ([f48cb94](https://github.com/selfcommunity/community-js/commit/f48cb9435488c15ea628f3bd2c0f31e51834c47c))
+
+
+
+
+
+## [0.1.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.1...@selfcommunity/react-theme-default@0.1.5-alpha.2) (2024-01-17)
+
+
+### Bug Fixes
+
+* Fix LanguageSwitcher style ([f37f97e](https://github.com/selfcommunity/community-js/commit/f37f97eeefa77024a445f8f03bd983c993a101cd))
+
+
+
+
+
+## [0.1.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.5-alpha.0...@selfcommunity/react-theme-default@0.1.5-alpha.1) (2024-01-17)
+
+
+### Performance Improvements
+
+* Update font for heading ([e674196](https://github.com/selfcommunity/community-js/commit/e6741968d6db554b42c4533bb1b5c91e21e56128))
+
+
+
+
+
+## [0.1.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.4...@selfcommunity/react-theme-default@0.1.5-alpha.0) (2024-01-17)
+
+
+### Performance Improvements
+
+* Update font for heading ([9a868b7](https://github.com/selfcommunity/community-js/commit/9a868b70420a298734aeb1bcfa7021e6e15047fd))
+
+
+
+
+
 ## [0.1.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.4-alpha.1...@selfcommunity/react-theme-default@0.1.4) (2024-01-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

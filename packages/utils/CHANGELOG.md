@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.6-alpha.1...@selfcommunity/utils@0.2.6) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.2.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.6-alpha.0...@selfcommunity/utils@0.2.6-alpha.1) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.2.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.5...@selfcommunity/utils@0.2.6-alpha.0) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.2.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.5-alpha.1...@selfcommunity/utils@0.2.5) (2024-01-30)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.2.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.5-alpha.0...@selfcommunity/utils@0.2.5-alpha.1) (2024-01-30)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
+## [0.2.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.4...@selfcommunity/utils@0.2.5-alpha.0) (2024-01-17)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
 ## [0.2.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.4-alpha.1...@selfcommunity/utils@0.2.4) (2024-01-12)
 
 **Note:** Version bump only for package @selfcommunity/utils

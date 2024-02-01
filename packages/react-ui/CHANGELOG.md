@@ -3,6 +3,112 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.6-alpha.1...@selfcommunity/react-ui@0.7.6) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.6-alpha.0...@selfcommunity/react-ui@0.7.6-alpha.1) (2024-02-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5...@selfcommunity/react-ui@0.7.6-alpha.0) (2024-02-01)
+
+
+### Bug Fixes
+
+* Fix staff badge in user profile header ([47a5aa6](https://github.com/selfcommunity/community-js/commit/47a5aa6ddf55720854fb123eab11427d9f494963))
+
+
+
+
+
+## [0.7.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.6...@selfcommunity/react-ui@0.7.5) (2024-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.5...@selfcommunity/react-ui@0.7.5-alpha.6) (2024-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.4...@selfcommunity/react-ui@0.7.5-alpha.5) (2024-01-30)
+
+
+### Bug Fixes
+
+* Fix NavigationMenuIconButton default content ([39d43bb](https://github.com/selfcommunity/community-js/commit/39d43bbbe1844e4227dce776a4e984245fe79e72))
+
+
+
+
+
+## [0.7.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.3...@selfcommunity/react-ui@0.7.5-alpha.4) (2024-01-30)
+
+
+### Bug Fixes
+
+* Added community badge to user profile header ([9a818ef](https://github.com/selfcommunity/community-js/commit/9a818ef9c13c5cf7cb46d0bd5f092e87e74c0427))
+
+
+
+
+
+## [0.7.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.2...@selfcommunity/react-ui@0.7.5-alpha.3) (2024-01-24)
+
+
+### Bug Fixes
+
+* copy&paste lexical editor ([341bb3f](https://github.com/selfcommunity/community-js/commit/341bb3fac9abc87f5e9fdea93045746ec2edd592))
+
+
+
+
+
+## [0.7.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.1...@selfcommunity/react-ui@0.7.5-alpha.2) (2024-01-23)
+
+
+### Bug Fixes
+
+* Fix image scroll on mobile devices for composer ([f48cb94](https://github.com/selfcommunity/community-js/commit/f48cb9435488c15ea628f3bd2c0f31e51834c47c))
+
+
+
+
+
+## [0.7.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.5-alpha.0...@selfcommunity/react-ui@0.7.5-alpha.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* Fix LanguageSwitcher style ([f37f97e](https://github.com/selfcommunity/community-js/commit/f37f97eeefa77024a445f8f03bd983c993a101cd))
+
+
+
+
+
+## [0.7.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.4...@selfcommunity/react-ui@0.7.5-alpha.0) (2024-01-17)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.7.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.4-alpha.1...@selfcommunity/react-ui@0.7.4) (2024-01-12)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
