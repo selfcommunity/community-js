@@ -11,7 +11,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import AccountCredentials, {AccountCredentialProps} from './AccountCredentials';
 import AccountDataPortabilityButton from '../../AccountDataPortabilityButton';
-import AccountDeleteButton from '../../AccountDeleteButton';
+import AccountDeleteButton, {AccountDeleteButtonProps} from '../../AccountDeleteButton';
 import LanguageSwitcher, {LanguageSwitcherProps} from '../../../shared/LanguageSwitcher';
 import {PREFIX} from '../constants';
 
@@ -89,6 +89,11 @@ export interface AccountProps {
    */
   AccountCredentialProps?: AccountCredentialProps;
   /**
+   * Props to apply to Account delete button
+   * @default {}
+   */
+  AccountDeleteButtonProps?: AccountDeleteButtonProps;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -103,6 +108,7 @@ export default function Account(props: AccountProps): JSX.Element {
     showSocialAccountSection = true,
     showCredentialsSection = false,
     AccountCredentialProps = {},
+    AccountDeleteButtonProps = {},
     showLanguageSwitcher = false,
     LanguageSwitcherProps = {},
     startActions = null,
@@ -175,7 +181,7 @@ export default function Account(props: AccountProps): JSX.Element {
       {endActions}
       <Box className={classes.dangerZone}>
         <AccountDataPortabilityButton fullWidth variant="outlined" color="primary" />
-        <AccountDeleteButton fullWidth variant="contained" color="secondary" />
+        <AccountDeleteButton fullWidth variant="contained" color="secondary" {...AccountDeleteButtonProps} />
       </Box>
     </Root>
   );

@@ -5,6 +5,7 @@ import {useThemeProps} from '@mui/system';
 import {Button, ButtonProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCUserType} from '@selfcommunity/types';
 import BaseDialog from '../../shared/BaseDialog';
 import AccountDelete from '../AccountDelete';
 
@@ -28,6 +29,10 @@ const DialogRoot = styled(BaseDialog, {
 })(({theme}) => ({}));
 
 export interface AccountDeleteButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled'>> {
+  /**
+   * Callback when delete account
+   */
+  onDeleteAccount?: (user?: SCUserType) => void;
   /**
    * Others properties
    */
@@ -65,7 +70,7 @@ export default function AccountDeleteButton(inProps: AccountDeleteButtonProps): 
     props: inProps,
     name: PREFIX
   });
-  const {className, ...rest} = props;
+  const {className, onDeleteAccount, ...rest} = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -79,6 +84,11 @@ export default function AccountDeleteButton(inProps: AccountDeleteButtonProps): 
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleDelete = (user: SCUserType) => {
+    onDeleteAccount && onDeleteAccount(user);
+    handleClose();
   };
 
   // RENDER
@@ -96,7 +106,7 @@ export default function AccountDeleteButton(inProps: AccountDeleteButtonProps): 
           onClose={handleClose}
           open={open}
           DialogContentProps={{}}>
-          <AccountDelete onDeleteAccount={handleClose} />
+          <AccountDelete onDeleteAccount={handleDelete} />
         </DialogRoot>
       )}
     </>

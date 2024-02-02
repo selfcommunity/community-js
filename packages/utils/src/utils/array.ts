@@ -44,3 +44,19 @@ export const groupBy = (arr, criteria) => {
     return obj;
   }, {});
 };
+
+/**
+ * Sort an array of objects by attr.
+ * @param arr The array to group items from
+ * @param attr Order attribute
+ * @param asc Sort asc/desc
+ */
+export const sortByAttr = (arr, attr, asc = true) => {
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+  const f = asc
+    ? (a: Record<string, any>, b: Record<string, any>) => a[attr] - b[attr]
+    : (a: Record<string, any>, b: Record<string, any>) => b[attr] - a[attr];
+  return arr.sort(f);
+};

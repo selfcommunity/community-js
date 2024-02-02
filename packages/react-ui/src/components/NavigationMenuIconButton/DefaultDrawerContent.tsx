@@ -1,12 +1,16 @@
-import { Button, ListItem, Typography, Zoom } from '@mui/material';
+import {Button, ListItem, Typography, Zoom} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategories, useSCRouting} from '@selfcommunity/react-core';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Category from '../Category';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
+import {sortByAttr} from '@selfcommunity/utils';
+import {SCCategoryType} from '@selfcommunity/types';
 
 export default function DefaultDrawerContent() {
   // HOOKS
   const {categories} = useSCFetchCategories();
+  const [categoriesOrdered, setCategoriesOrdered] = useState<SCCategoryType[]>([]);
+
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   //STATE
@@ -25,6 +29,11 @@ export default function DefaultDrawerContent() {
     });
   };
 
+  // Order categories
+  useEffect(() => {
+    setCategoriesOrdered(sortByAttr(categories, 'order'));
+  }, [categories]);
+
   const getMouseEvents = (mouseEnter, mouseLeave) => ({
     onMouseEnter: mouseEnter,
     onMouseLeave: mouseLeave,
@@ -32,10 +41,22 @@ export default function DefaultDrawerContent() {
     onTouchMove: mouseLeave
   });
 
+  //order
   return (
     <>
-      <Typography variant="subtitle1"><FormattedMessage id="ui.navigationMenuIconButton.defaultDrawerContent.category.title" defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title" /> <Button variant="text" component={Link} to={scRoutingContext.url(SCRoutes.CATEGORIES_LIST_ROUTE_NAME, {})}><FormattedMessage id="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll" defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll" /></Button></Typography>
-      {categories.map((c, index) => (
+      <Typography variant="subtitle1">
+        <FormattedMessage
+          id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
+          defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
+        />{' '}
+        <Button variant="text" component={Link} to={scRoutingContext.url(SCRoutes.CATEGORIES_LIST_ROUTE_NAME, {})}>
+          <FormattedMessage
+            id="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll"
+            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll"
+          />
+        </Button>
+      </Typography>
+      {categoriesOrdered.map((c: SCCategoryType, index: number) => (
         <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
           <ListItem key={c.id}>
             <Category
