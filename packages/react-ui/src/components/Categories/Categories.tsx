@@ -18,7 +18,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
+import {Logger, sortByAttr} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
 
@@ -218,7 +218,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
   /**
    * Renders categories list
    */
-  const filteredCategories = getFilteredCategories();
+  const filteredCategories = sortByAttr(getFilteredCategories(), 'order');
   const c = (
     <>
       {showFilters && (
