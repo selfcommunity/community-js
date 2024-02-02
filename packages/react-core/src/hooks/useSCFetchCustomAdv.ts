@@ -68,11 +68,11 @@ export default function useSCFetchCustomAdv({
       }
       return http
         .request({
-          url: Endpoints.CustomAdvSearch.url(),
+          url: Endpoints.CustomAdvSearch.url({}),
           method: Endpoints.CustomAdvSearch.method,
           params: {
             ...(position && {position: position}),
-            ...(categoriesId && {categories: `[${categoriesId.toString()}]`}),
+            ...{categories: categoriesId ? `[${categoriesId.toString()}]` : '[]'},
           },
         })
         .then((res: HttpResponse<any>) => {
