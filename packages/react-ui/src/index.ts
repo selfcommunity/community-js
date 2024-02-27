@@ -1,83 +1,63 @@
 /**
  * Components
  */
-import AccountDataPortability, { AccountDataPortabilityProps } from './components/AccountDataPortability';
-import AccountDataPortabilityButton, {
-  AccountDataPortabilityButtonProps,
-} from './components/AccountDataPortabilityButton';
-import AccountDelete, { AccountDeleteProps } from './components/AccountDelete';
-import AccountDeleteButton, { AccountDeleteButtonProps } from './components/AccountDeleteButton';
-import NavigationSettingsIconButton, {
-  NavigationSettingsIconButtonProps,
-  NavigationSettingsItem,
-} from './components/NavigationSettingsIconButton';
-import NavigationToolbar, { NavigationToolbarProps, NavigationToolbarSkeleton } from './components/NavigationToolbar';
-import NavigationToolbarMobile, {
-  NavigationToolbarMobileProps,
-  NavigationToolbarMobileSkeleton,
-} from './components/NavigationToolbarMobile';
-import NavigationMenuIconButton, { NavigationMenuIconButtonProps } from './components/NavigationMenuIconButton';
-import BottomNavigation, { BottomNavigationProps } from './components/BottomNavigation';
-import BroadcastMessages, { BroadcastMessagesProps, BroadcastMessagesSkeleton } from './components/BroadcastMessages';
-import Category, { CategoryProps, CategorySkeleton } from './components/Category';
-import CategoryAutocomplete, { CategoryAutocompleteProps } from './components/CategoryAutocomplete';
-import CategoryFollowersButton, { CategoryFollowersButtonProps } from './components/CategoryFollowersButton';
-import CategoryHeader, { CategoryHeaderProps, CategoryHeaderSkeleton } from './components/CategoryHeader';
-import Categories, { CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps } from './components/Categories';
+import AccountDataPortability, {AccountDataPortabilityProps} from './components/AccountDataPortability';
+import AccountDataPortabilityButton, {AccountDataPortabilityButtonProps} from './components/AccountDataPortabilityButton';
+import AccountDelete, {AccountDeleteProps} from './components/AccountDelete';
+import AccountDeleteButton, {AccountDeleteButtonProps} from './components/AccountDeleteButton';
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps, NavigationSettingsItem} from './components/NavigationSettingsIconButton';
+import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
+import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
+import NavigationMenuIconButton, {NavigationMenuContent, NavigationMenuIconButtonProps} from './components/NavigationMenuIconButton';
+import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
+import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
+import Category, {CategoryProps, CategorySkeleton} from './components/Category';
+import CategoryAutocomplete, {CategoryAutocompleteProps} from './components/CategoryAutocomplete';
+import CategoryFollowersButton, {CategoryFollowersButtonProps} from './components/CategoryFollowersButton';
+import CategoryHeader, {CategoryHeaderProps, CategoryHeaderSkeleton} from './components/CategoryHeader';
+import Categories, {CategoriesProps, CategoriesSkeleton, CategoriesSkeletonProps} from './components/Categories';
 import UserFollowedCategoriesWidget, {
   UserFollowedCategoriesWidgetProps,
-  UserFollowedCategoriesWidgetSkeleton,
+  UserFollowedCategoriesWidgetSkeleton
 } from './components/UserFollowedCategoriesWidget';
-import CategoriesPopularWidget, { CategoriesPopularWidgetSkeleton } from './components/CategoriesPopularWidget';
+import CategoriesPopularWidget, {CategoriesPopularWidgetSkeleton} from './components/CategoriesPopularWidget';
 import CategoriesSuggestionWidget, {
   CategoriesSuggestionWidgetProps,
-  CategoriesSuggestionWidgetSkeleton,
+  CategoriesSuggestionWidgetSkeleton
 } from './components/CategoriesSuggestionWidget';
-import ChangeCover, { ChangeCoverProps } from './components/ChangeCover';
-import ChangePicture, { ChangePictureProps } from './components/ChangePicture';
-import FriendshipUserButton, { FriendshipButtonProps } from './components/FriendshipUserButton';
-import Composer, { ComposerProps } from './components/Composer';
-import ComposerIconButton, { ComposerIconButtonProps } from './components/ComposerIconButton';
-import Editor, { EditorProps, EditorSkeleton } from './components/Editor';
-import User, { UserProps, UserSkeleton } from './components/User';
-import Feed, { FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton } from './components/Feed';
-import FeedObject, { FeedObjectProps, FeedObjectSkeleton } from './components/FeedObject';
-import FeedUpdatesWidget, { FeedUpdatesWidgetProps, FeedUpdatesWidgetSkeleton } from './components/FeedUpdatesWidget';
-import CategoryFollowButton, { CategoryFollowButtonProps } from './components/CategoryFollowButton';
-import FollowUserButton, { FollowUserButtonProps } from './components/FollowUserButton';
+import ChangeCover, {ChangeCoverProps} from './components/ChangeCover';
+import ChangePicture, {ChangePictureProps} from './components/ChangePicture';
+import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
+import Composer, {ComposerProps} from './components/Composer';
+import ComposerIconButton, {ComposerIconButtonProps} from './components/ComposerIconButton';
+import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
+import User, {UserProps, UserSkeleton} from './components/User';
+import Feed, {FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton} from './components/Feed';
+import FeedObject, {FeedObjectProps, FeedObjectSkeleton} from './components/FeedObject';
+import FeedUpdatesWidget, {FeedUpdatesWidgetProps, FeedUpdatesWidgetSkeleton} from './components/FeedUpdatesWidget';
+import CategoryFollowButton, {CategoryFollowButtonProps} from './components/CategoryFollowButton';
+import FollowUserButton, {FollowUserButtonProps} from './components/FollowUserButton';
 import ConnectionUserButton from './components/ConnectionUserButton';
-import InlineComposerWidget, {
-  InlineComposerWidgetProps,
-  InlineComposerWidgetSkeleton,
-} from './components/InlineComposerWidget';
-import UserSuggestionWidget, {
-  UserSuggestionWidgetProps,
-  UserSuggestionWidgetSkeleton,
-} from './components/UserSuggestionWidget';
-import PlatformWidget, { PlatformWidgetProps, PlatformWidgetSkeleton } from './components/PlatformWidget';
-import PrivateMessageSnippets, {
-  PrivateMessageSnippetsProps,
-  PrivateMessageSnippetsSkeleton,
-} from './components/PrivateMessageSnippets';
-import LocationAutocomplete, { LocationAutocompleteProps } from './components/LocationAutocomplete';
-import LoyaltyProgramWidget, {
-  LoyaltyProgramWidgetProps,
-  LoyaltyProgramWidgetSkeleton,
-} from './components/LoyaltyProgramWidget';
+import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
+import UserSuggestionWidget, {UserSuggestionWidgetProps, UserSuggestionWidgetSkeleton} from './components/UserSuggestionWidget';
+import PlatformWidget, {PlatformWidgetProps, PlatformWidgetSkeleton} from './components/PlatformWidget';
+import PrivateMessageSnippets, {PrivateMessageSnippetsProps, PrivateMessageSnippetsSkeleton} from './components/PrivateMessageSnippets';
+import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
+import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
 import CategoryTrendingFeedWidget, {
   CategoryTrendingFeedWidgetProps,
-  CategoryTrendingFeedWidgetSkeleton,
+  CategoryTrendingFeedWidgetSkeleton
 } from './components/CategoryTrendingFeedWidget';
 import CategoryTrendingUsersWidget, {
   CategoryTrendingPeopleWidgetSkeleton,
-  CategoryTrendingUsersWidgetProps,
+  CategoryTrendingUsersWidgetProps
 } from './components/CategoryTrendingUsersWidget';
-import UserActionIconButton, { UserActionIconButtonProps } from './components/UserActionIconButton';
-import UserCounters, { UserCountersProps } from './components/UserCounters';
-import UserProfileHeader, { UserProfileHeaderProps, UserProfileHeaderSkeleton } from './components/UserProfileHeader';
-import UserInfoDialog, { UserInfoDialogProps } from './components/UserInfoDialog';
-import UserInfo, { UserInfoProps, UserInfoSkeleton } from './components/UserInfo';
-import UserProfileBlocked, { UserProfileBlockedProps } from './components/UserProfileBlocked';
+import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
+import UserCounters, {UserCountersProps} from './components/UserCounters';
+import UserProfileHeader, {UserProfileHeaderProps, UserProfileHeaderSkeleton} from './components/UserProfileHeader';
+import UserInfoDialog, {UserInfoDialogProps} from './components/UserInfoDialog';
+import UserInfo, {UserInfoProps, UserInfoSkeleton} from './components/UserInfo';
+import UserProfileBlocked, {UserProfileBlockedProps} from './components/UserProfileBlocked';
 import UserProfileEdit, {
   UserProfileEditProps,
   UserProfileEditSectionAccount,
@@ -86,74 +66,39 @@ import UserProfileEdit, {
   UserProfileEditSectionPublicInfoProps,
   UserProfileEditSectionSettings,
   UserProfileEditSectionSettingsProps,
-  UserProfileEditSkeleton,
+  UserProfileEditSkeleton
 } from './components/UserProfileEdit';
-import UserFollowedUsersWidget, {
-  UserFollowedUsersWidgetProps,
-  UserFollowedUsersWidgetSkeleton,
-} from './components/UserFollowedUsersWidget';
-import UserSocialAssociation, { UserSocialAssociationProps } from './components/UserSocialAssociation';
-import UserFollowersWidget, {
-  UserFollowersWidgetProps,
-  UserFollowersWidgetSkeleton,
-} from './components/UserFollowersWidget';
-import UserConnectionsWidget, {
-  UserConnectionsWidgetProps,
-  UserConnectionsWidgetSkeleton,
-} from './components/UserConnectionsWidget';
+import UserFollowedUsersWidget, {UserFollowedUsersWidgetProps, UserFollowedUsersWidgetSkeleton} from './components/UserFollowedUsersWidget';
+import UserSocialAssociation, {UserSocialAssociationProps} from './components/UserSocialAssociation';
+import UserFollowersWidget, {UserFollowersWidgetProps, UserFollowersWidgetSkeleton} from './components/UserFollowersWidget';
+import UserConnectionsWidget, {UserConnectionsWidgetProps, UserConnectionsWidgetSkeleton} from './components/UserConnectionsWidget';
 import UserConnectionsRequestsWidget, {
   UserConnectionsRequestsWidgetProps,
-  UserConnectionsRequestsWidgetSkeleton,
+  UserConnectionsRequestsWidgetSkeleton
 } from './components/UserConnectionsRequestsWidget';
 import UserConnectionsRequestsSentWidget, {
   UserConnectionsRequestsSentWidgetProps,
-  UserConnectionsRequestsSentWidgetSkeleton,
+  UserConnectionsRequestsSentWidgetSkeleton
 } from './components/UserConnectionsRequestsSentWidget';
-import RelatedFeedObjectsWidget, {
-  RelatedFeedObjectsWidgetSkeleton,
-  RelatedFeedObjectWidgetProps,
-} from './components/RelatedFeedObjectsWidget';
-import CommentObject, { CommentObjectProps, CommentObjectSkeleton } from './components/CommentObject';
+import RelatedFeedObjectsWidget, {RelatedFeedObjectsWidgetSkeleton, RelatedFeedObjectWidgetProps} from './components/RelatedFeedObjectsWidget';
+import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from './components/CommentObject';
 import CommentObjectReply from './components/CommentObjectReply';
-import ReplyComment, { CommentObjectReplyProps } from './components/CommentObjectReply';
-import CommentsObject, { CommentsObjectProps, CommentsObjectSkeleton } from './components/CommentsObject';
-import CommentsFeedObject, {
-  CommentsFeedObjectProps,
-  CommentsFeedObjectSkeleton,
-} from './components/CommentsFeedObject';
-import CustomAdv, { CustomAdvProps, CustomAdvSkeleton } from './components/CustomAdv';
-import { AvatarGroupSkeleton, GenericSkeleton } from './components/Skeleton';
-import PrivateMessageSnippetItem, {
-  PrivateMessageSnippetItemProps,
-  PrivateMessageSnippetItemSkeleton,
-} from './components/PrivateMessageSnippetItem';
-import PrivateMessageThreadItem, {
-  PrivateMessageThreadItemProps,
-  PrivateMessageThreadItemSkeleton,
-} from './components/PrivateMessageThreadItem';
-import PrivateMessageEditor, {
-  PrivateMessageEditorProps,
-  PrivateMessageEditorSkeleton,
-} from './components/PrivateMessageEditor';
-import PrivateMessageThread, {
-  PrivateMessageThreadProps,
-  PrivateMessageThreadSkeleton,
-} from './components/PrivateMessageThread';
-import ToastNotifications, {
-  ToastNotificationsProps,
-  ToastNotificationsSkeleton,
-} from './components/ToastNotifications';
-import SnippetNotifications, {
-  SnippetNotificationsProps,
-  SnippetNotificationsSkeleton,
-} from './components/SnippetNotifications';
-import Notification, { NotificationProps, NotificationSkeleton } from './components/Notification';
-import AccountRecover, { AccountRecoverProps } from './components/AccountRecover';
-import AccountReset, { AccountResetProps } from './components/AccountReset';
-import AccountVerify, { AccountVerifyProps } from './components/AccountVerify';
-import AccountChangeMailValidation, {
-  AccountChangeMailValidationProps,
-} from './components/AccountChangeMailValidation';
+import ReplyComment, {CommentObjectReplyProps} from './components/CommentObjectReply';
+import CommentsObject, {CommentsObjectProps, CommentsObjectSkeleton} from './components/CommentsObject';
+import CommentsFeedObject, {CommentsFeedObjectProps, CommentsFeedObjectSkeleton} from './components/CommentsFeedObject';
+import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
+import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
+import PrivateMessageSnippetItem, {PrivateMessageSnippetItemProps, PrivateMessageSnippetItemSkeleton} from './components/PrivateMessageSnippetItem';
+import PrivateMessageThreadItem, {PrivateMessageThreadItemProps, PrivateMessageThreadItemSkeleton} from './components/PrivateMessageThreadItem';
+import PrivateMessageEditor, {PrivateMessageEditorProps, PrivateMessageEditorSkeleton} from './components/PrivateMessageEditor';
+import PrivateMessageThread, {PrivateMessageThreadProps, PrivateMessageThreadSkeleton} from './components/PrivateMessageThread';
+import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
+import SnippetNotifications, {SnippetNotificationsProps, SnippetNotificationsSkeleton} from './components/SnippetNotifications';
+import Notification, {NotificationProps, NotificationSkeleton} from './components/Notification';
+import AccountRecover, {AccountRecoverProps} from './components/AccountRecover';
+import AccountReset, {AccountResetProps} from './components/AccountReset';
+import AccountVerify, {AccountVerifyProps} from './components/AccountVerify';
+import AccountChangeMailValidation, {AccountChangeMailValidationProps} from './components/AccountChangeMailValidation';
 import {
   SCBroadcastMessageTemplateType,
   SCCommentsOrderBy,
@@ -165,61 +110,48 @@ import {
   SCNotificationObjectTemplateType,
   SCUserProfileFields,
   SCUserProfileSettings,
-  SCUserSocialAssociations,
+  SCUserSocialAssociations
 } from './types';
-import Widget, { WidgetProps } from './components/Widget';
+import Widget, {WidgetProps} from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
 import LanguageSwitcher from './shared/LanguageSwitcher';
-import BaseItem, { BaseItemProps } from './shared/BaseItem';
-import BaseDialog, { BaseDialogProps } from './shared/BaseDialog';
-import MediaChunkUploader, { MediaChunkUploaderProps } from './shared/MediaChunkUploader';
-import { File, EditMediaProps, Link, Share } from './shared/Media';
+import BaseItem, {BaseItemProps} from './shared/BaseItem';
+import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
+import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
+import {File, EditMediaProps, Link, Share} from './shared/Media';
 import UrlTextField from './shared/UrlTextField';
 import UsernameTextField from './shared/UsernameTextField';
 import EmailTextField from './shared/EmailTextField';
 import PasswordTextField from './shared/PasswordTextField';
 import PhoneTextField from './shared/PhoneTextField';
-import StickyBox, { StickyBoxComponent, StickyBoxProps, useStickyBox, UseStickyBoxProps } from './shared/StickyBox';
-import TagChip, { TagChipProps } from './shared/TagChip';
-import UserDeletedSnackBar, { UserDeletedSnackBarProps } from './shared/UserDeletedSnackBar';
-import UserAvatar, { UserAvatarProps } from './shared/UserAvatar';
+import StickyBox, {StickyBoxComponent, StickyBoxProps, useStickyBox, UseStickyBoxProps} from './shared/StickyBox';
+import TagChip, {TagChipProps} from './shared/TagChip';
+import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
+import UserAvatar, {UserAvatarProps} from './shared/UserAvatar';
 import Lightbox from './shared/Lightbox';
-import { MEDIA_TYPE_EMBED } from './constants/Media';
-import PollSuggestionWidget, { PollSuggestionWidgetProps } from './components/PollSuggestionWidget';
-import ConsentSolution, { ConsentSolutionProps, ConsentSolutionSkeleton } from './components/ConsentSolution';
-import ConsentSolutionButton, { ConsentSolutionButtonProps } from './components/ConsentSolutionButton';
-import Incubator, { IncubatorProps } from './components/Incubator';
-import IncubatorSubscribeButton, { IncubatorSubscribeButtonProps } from './components/IncubatorSubscribeButton';
-import IncubatorListWidget, { IncubatorListWidgetProps } from './components/IncubatorListWidget';
-import IncubatorDetail, { IncubatorDetailProps } from './components/IncubatorDetail';
-import IncubatorSuggestionWidget, { IncubatorSuggestionWidgetProps } from './components/IncubatorSuggestionWidget';
-import Footer, { FooterProps, FooterSkeleton } from './components/Footer';
-import SearchAutocomplete, { SearchAutocompleteProps } from './components/SearchAutocomplete';
-import SearchDialog, { SearchDialogProps } from './components/SearchDialog';
-import PrivateMessageSettingsIconButton, {
-  PrivateMessageSettingsIconButtonProps,
-} from './components/PrivateMessageSettingsIconButton';
-import PrivateMessageComponent, {
-  PrivateMessageComponentProps,
-  PrivateMessageComponentSkeleton,
-} from './components/PrivateMessageComponent';
+import {MEDIA_TYPE_EMBED} from './constants/Media';
+import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/PollSuggestionWidget';
+import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
+import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
+import Incubator, {IncubatorProps} from './components/Incubator';
+import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './components/IncubatorSubscribeButton';
+import IncubatorListWidget, {IncubatorListWidgetProps} from './components/IncubatorListWidget';
+import IncubatorDetail, {IncubatorDetailProps} from './components/IncubatorDetail';
+import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
+import Footer, {FooterProps, FooterSkeleton} from './components/Footer';
+import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAutocomplete';
+import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
+import PrivateMessageSettingsIconButton, {PrivateMessageSettingsIconButtonProps} from './components/PrivateMessageSettingsIconButton';
+import PrivateMessageComponent, {PrivateMessageComponentProps, PrivateMessageComponentSkeleton} from './components/PrivateMessageComponent';
 /**
  * Constants
  */
-import { DEFAULT_WIDGETS_NUMBER } from './constants/Feed';
-import {
-  DEFAULT_PAGINATION_LIMIT,
-  DEFAULT_PAGINATION_OFFSET,
-  DEFAULT_PAGINATION_QUERY_PARAM_NAME,
-} from './constants/Pagination';
-import { FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE } from './constants/SocialShare';
-import {
-  DEFAULT_PRELOAD_OFFSET_VIEWPORT,
-  MAX_PRELOAD_OFFSET_VIEWPORT,
-  MIN_PRELOAD_OFFSET_VIEWPORT,
-} from './constants/LazyLoad';
-import { LEGAL_POLICIES } from './constants/LegalPolicies';
-import { DEFAULT_FIELDS } from './constants/UserProfile';
+import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from './constants/Pagination';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
+import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
+import {LEGAL_POLICIES} from './constants/LegalPolicies';
+import {DEFAULT_FIELDS} from './constants/UserProfile';
 
 /**
  * Utilities
@@ -228,11 +160,11 @@ import * as ContributionUtils from './utils/contribution';
 import MetadataField from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
-import { bytesToSize } from './utils/sizeCoverter';
-import { getUnseenNotification, getUnseenNotificationCounter } from './utils/feed';
+import {bytesToSize} from './utils/sizeCoverter';
+import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
-import { getRelativeTime } from './utils/formatRelativeTime';
-import FeedObjectMediaPreview, { FeedObjectMediaPreviewProps } from './components/FeedObjectMediaPreview';
+import {getRelativeTime} from './utils/formatRelativeTime';
+import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from './components/FeedObjectMediaPreview';
 /**
  * List all exports
  */
@@ -263,6 +195,7 @@ export {
   NavigationToolbarProps,
   NavigationToolbarSkeleton,
   NavigationMenuIconButton,
+  NavigationMenuContent,
   NavigationMenuIconButtonProps,
   BottomNavigation,
   BottomNavigationProps,

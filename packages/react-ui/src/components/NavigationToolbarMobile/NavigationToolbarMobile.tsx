@@ -1,5 +1,5 @@
-import { Button, IconButton, styled, Toolbar, ToolbarProps } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import {Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import React, {useCallback, useState} from 'react';
 import {
   Link,
   SCPreferences,
@@ -9,19 +9,18 @@ import {
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
-import { useThemeProps } from '@mui/system';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarMobileSkeleton from './Skeleton';
-import { FormattedMessage } from 'react-intl';
-import { SearchAutocompleteProps } from '../SearchAutocomplete';
+import {FormattedMessage} from 'react-intl';
+import {SearchAutocompleteProps} from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
-import NavigationSettingsIconButton, { NavigationSettingsIconButtonProps } from '../NavigationSettingsIconButton';
-import NavigationMenuIconButton from '../NavigationMenuIconButton';
-import { PREFIX } from './constants';
-
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
+import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -56,11 +55,14 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   endActions?: React.ReactNode | null;
   /**
+   * Component for Navigation Menu Icon Button
+   */
+  NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
+  /**
    * Component for Navigation Settings
    */
   NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
 }
-
 
 /**
  * > API documentation for the Community-JS Navigation Toolbar Mobile component. Learn about the available props and the CSS API.
@@ -107,6 +109,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     children = null,
     startActions = null,
     endActions = null,
+    NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
     ...rest
   } = props;
@@ -136,7 +139,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
 
   const _children = children || (
     <>
-      <NavigationMenuIconButton />
+      <NavigationMenuIconButtonComponent />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
       </Link>
