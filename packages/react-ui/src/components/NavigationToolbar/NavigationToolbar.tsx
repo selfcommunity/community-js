@@ -21,7 +21,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import NavigationMenuIconButton from '../NavigationMenuIconButton';
+import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -71,6 +71,10 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * Actions to be inserted after Private Messages IconButton
    */
   endActions?: React.ReactNode | null;
+  /**
+   * Component for Navigation Menu Icon Button
+   */
+  NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
   /**
    * Component for Navigation Settings
    */
@@ -158,6 +162,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
+    NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     children = null,
     NotificationMenuProps = {},
     ComposerIconButtonProps = {},
@@ -224,7 +229,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <NavigationMenuIconButton />
+      <NavigationMenuIconButtonComponent />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
