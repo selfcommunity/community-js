@@ -1,12 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  SCAuthTokenType,
-  SCIncubatorType,
-  SCCategoryType,
-  SCUserType,
-  SCUserSettingsType,
-  SCReactionType
-} from "@selfcommunity/types";
+import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType, SCUserSettingsType, SCReactionType, SCGroupType} from '@selfcommunity/types';
 import {SCThemeType} from './theme';
 
 /**
@@ -165,7 +158,7 @@ export interface SCUserContextType {
   refreshCounters: () => Promise<any>;
 
   /**
-   * Managers: followed, connections, categories, incubators, etc...
+   * Managers: followed, connections, categories, incubators, groups, etc...
    */
   managers: {
     settings?: SCSettingsManagerType;
@@ -175,6 +168,7 @@ export interface SCUserContextType {
     categories: SCFollowedCategoriesManagerType;
     incubators?: SCSubscribedIncubatorsManagerType;
     blockedUsers?: SCBlockedUsersManagerType;
+    groups?: SCSubscribedGroupsManagerType;
   };
 }
 
@@ -302,6 +296,43 @@ export interface SCFollowedCategoriesManagerType {
 
   /**
    * Empty cache to revalidate all categories
+   */
+  emptyCache?: () => void;
+}
+
+export interface SCSubscribedGroupsManagerType {
+  /**
+   * List of all groups ids followed by the authenticated user
+   */
+  groups: number[];
+
+  /**
+   * List of all groups in loading state
+   */
+  loading: number[];
+
+  /**
+   * List of current groups in loading state
+   */
+  isLoading: (group: SCGroupType) => boolean;
+
+  /**
+   * Handle user subscription to a group
+   */
+  subscribe?: (group: SCGroupType) => Promise<any>;
+
+  /**
+   * Handles a user subscription status to a group, caching data
+   */
+  subscriptionStatus?: (group: SCGroupType) => string;
+
+  /**
+   * Refresh groups
+   */
+  refresh?: () => void;
+
+  /**
+   * Empty cache to revalidate all groups
    */
   emptyCache?: () => void;
 }

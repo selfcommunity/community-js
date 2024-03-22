@@ -31,6 +31,7 @@ import {FeatureParams} from './feature';
 import {ScoreParams} from './score';
 import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContributionParams} from './insight';
 import {ReactionParams} from './reaction';
+import {GroupCreateParams, GroupFeedParams} from './group';
 
 export {
   AccountCreateParams,
@@ -88,5 +89,7 @@ export {
   InsightUserParams,
   InsightEmbedParams,
   InsightCommonParams,
-  ReactionParams
+  ReactionParams,
+  GroupCreateParams,
+  GroupFeedParams
 };

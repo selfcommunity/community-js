@@ -23,6 +23,10 @@ export const getCategoriesObjectCacheKey = () => `${CATEGORIES_OBJECT_CACHE_PREF
 export const CATEGORY_OBJECT_CACHE_PREFIX_KEY = '_ca_';
 export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** GROUP OBJECT **/
+export const GROUP_OBJECT_CACHE_PREFIX_KEY = '_grp_';
+export const getGroupObjectCacheKey = (id) => `${GROUP_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
 /** INCUBATOR OBJECT **/
 export const INCUBATOR_OBJECT_CACHE_PREFIX_KEY = '_inc_';
 export const getIncubatorObjectCacheKey = (id) => `${INCUBATOR_OBJECT_CACHE_PREFIX_KEY}${id}`;
@@ -83,4 +87,6 @@ export const PEOPLE_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
 export const INCUBATOR_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_iListWidget_';
 export const INCUBATOR_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_iSugWidget_';
 export const POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
+export const GROUP_MEMBERS_TOOLS_STATE_CACHE_PREFIX_KEY = '_gMemWidget_';
+export const GROUP_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY = '_gReqWidget_';
 export const getWidgetStateCacheKey = (p, id = undefined) => `${p}${id !== undefined ? id : ''}`;

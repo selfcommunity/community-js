@@ -1137,6 +1137,74 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetSpecificReaction: {
     url: urlReplacer('/api/v2/reaction/$(id)/'),
     method: 'GET'
+  },
+
+  /**
+   * Groups
+   */
+  GetUserGroups: {
+    url: urlReplacer('/api/v2/group/'),
+    method: 'GET'
+  },
+  GetGroupInfo: {
+    url: urlReplacer('/api/v2/group/$(id)/'),
+    method: 'GET'
+  },
+  GetGroupFeed: {
+    url: urlReplacer('/api/v2/group/$(id)/feed/'),
+    method: 'GET'
+  },
+  SearchGroups: {
+    url: urlReplacer('/api/v2/group/$(id)/search/'),
+    method: 'GET'
+  },
+  CreateGroup: {
+    url: urlReplacer('/api/v2/group/'),
+    method: 'POST'
+  },
+  UpdateGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/'),
+    method: 'PUT'
+  },
+  PatchGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/'),
+    method: 'PATCH'
+  },
+  GetGroupSuggestedUsers: {
+    url: urlReplacer('/api/v2/group/$(id)/user/?search=$(search)'),
+    method: 'GET'
+  },
+  GetGroupsSuggestedUsers: {
+    url: urlReplacer('/api/v2/group/user/?search=$(search)'),
+    method: 'GET'
+  },
+  InviteOrAcceptGroupRequest: {
+    url: urlReplacer('/api/v2/group/$(id)/invite/'),
+    method: 'POST'
+  },
+  GetGroupInvitedUsers: {
+    url: urlReplacer('/api/v2/group/$(id)/invite/'),
+    method: 'GET'
+  },
+  GetGroupSubscriptionStatus: {
+    url: urlReplacer('/api/v2/group/$(id)/status/'),
+    method: 'GET'
+  },
+  SubscribeToGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/subscribe/'),
+    method: 'POST'
+  },
+  GetGroupSubscribers: {
+    url: urlReplacer('/api/v2/group/$(id)/subscribe/'),
+    method: 'GET'
+  },
+  GetGroupWaitingApprovalSubscribers: {
+    url: urlReplacer('/api/v2/group/$(id)/request_subscribe/'),
+    method: 'GET'
+  },
+  UnsubscribeFromGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/subscribe/'),
+    method: 'DELETE'
   }
 };
 
