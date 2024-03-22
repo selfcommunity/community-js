@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.0...@selfcommunity/react-ui@0.7.9-alpha.1) (2024-02-27)
+
+
+### Performance Improvements
+
+* added prop to NavigationToolbarMobile to customize NavigationMenuIconButton/ exported its drawer default content ([c9e3878](https://github.com/selfcommunity/community-js/commit/c9e3878cb23b901816c893de1eac48869a75e6fb))
+
+
+
+
+
 ## [0.7.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.8...@selfcommunity/react-ui@0.7.9-alpha.0) (2024-02-27)
 
 
