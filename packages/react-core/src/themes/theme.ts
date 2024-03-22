@@ -50,6 +50,14 @@ const getTheme = (options, preferences): SCThemeType => {
         sizeLarge: 50,
       },
     },
+    group: {
+      avatar: {
+        sizeSmall: 40,
+        sizeMedium: 60,
+        sizeLarge: 90,
+        sizeXLarge: 120,
+      },
+    },
   };
   const defaultOptions = preferences
     ? {

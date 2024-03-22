@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { SCCategoryType, SCMediaType, SCPollType, SCTagType } from '@selfcommunity/types';
+import React, {useCallback, useState} from 'react';
+import {SCCategoryType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
@@ -9,18 +9,18 @@ import {
   UserUtils,
   useSCContext,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
-import { Avatar, Box, Button, CardContent } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { SCMediaObjectType } from '../../types/media';
-import { FormattedMessage } from 'react-intl';
-import { useSnackbar } from 'notistack';
-import Widget, { WidgetProps } from '../Widget';
-import { useThemeProps } from '@mui/system';
+import {Avatar, Box, Button, CardContent} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {SCMediaObjectType} from '../../types/media';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
+import Widget, {WidgetProps} from '../Widget';
+import {useThemeProps} from '@mui/system';
 import Composer from '../Composer';
-import { File, Link as MediaLink } from '../../shared/Media';
-import { PREFIX } from './constants';
+import {File, Link as MediaLink} from '../../shared/Media';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -59,6 +59,10 @@ export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultVal
    * @default null
    */
   onSuccess?: (res: any) => void;
+  /**
+   * The label showed inside the composer
+   */
+  label?: any;
 }
 
 /**
@@ -93,7 +97,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     props: inProps,
     name: PREFIX
   });
-  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, ...rest} = props;
+  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, label, ...rest} = props;
 
   // Context
   const scContext: SCContextType = useSCContext();
@@ -106,19 +110,19 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
 
   // Handlers
   const handleOpen = useCallback(() => {
-      if (scUserContext.user) {
-        if (UserUtils.isBlocked(scUserContext.user)) {
-          enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-            variant: 'warning',
-            autoHideDuration: 3000
-          });
-        } else {
-          setOpen(true);
-        }
+    if (scUserContext.user) {
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning',
+          autoHideDuration: 3000
+        });
       } else {
-        scContext.settings.handleAnonymousAction();
+        setOpen(true);
       }
-    }, [scUserContext.user, scContext.settings]);
+    } else {
+      scContext.settings.handleAnonymousAction();
+    }
+  }, [scUserContext.user, scContext.settings]);
 
   const handleClose = useCallback(() => {
     setOpen(false);
@@ -142,7 +146,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
         <CardContent className={classes.content}>
           <Box className={classes.input}>
             <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen} fullWidth color="inherit">
-              <FormattedMessage id="ui.inlineComposerWidget.label" defaultMessage="ui.inlineComposerWidget.label" />
+              {label ?? <FormattedMessage id="ui.inlineComposerWidget.label" defaultMessage="ui.inlineComposerWidget.label" />}
             </Button>
           </Box>
           <Box className={classes.avatar}>

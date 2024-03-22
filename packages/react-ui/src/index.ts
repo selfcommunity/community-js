@@ -143,6 +143,18 @@ import SearchAutocomplete, {SearchAutocompleteProps} from './components/SearchAu
 import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
 import PrivateMessageSettingsIconButton, {PrivateMessageSettingsIconButtonProps} from './components/PrivateMessageSettingsIconButton';
 import PrivateMessageComponent, {PrivateMessageComponentProps, PrivateMessageComponentSkeleton} from './components/PrivateMessageComponent';
+import ChangeGroupCover, {ChangeGroupCoverProps} from './components/ChangeGroupCover';
+import ChangeGroupPicture, {ChangeGroupPictureProps} from './components/ChangeGroupPicture';
+import GroupHeader, {GroupHeaderProps, GroupHeaderSkeleton} from './components/GroupHeader';
+import GroupMembersButton, {GroupMembersButtonProps} from './components/GroupMembersButton';
+import CreateGroupButton from './components/CreateGroupButton';
+import CreateButton, {CreateGroupButtonProps} from './components/CreateGroupButton';
+import GroupInviteButton, {GroupInviteButtonProps} from './components/GroupInviteButton';
+import GroupInfoWidget, {GroupInfoWidgetProps, GroupInfoWidgetSkeleton} from './components/GroupInfoWidget';
+import Group, {GroupProps} from './components/Group';
+import GroupSubscribeButton, {GroupSubscribeButtonProps} from './components/GroupSubscribeButton';
+import GroupMembersWidget, {GroupMembersWidgetProps, GroupMembersWidgetSkeleton} from './components/GroupMembersWidget';
+import GroupRequestsWidget, {GroupRequestsWidgetProps, GroupRequestsWidgetSkeleton} from './components/GroupRequestsWidget';
 /**
  * Constants
  */
@@ -384,6 +396,33 @@ export {
   SCMediaChunkType,
   SCNotificationObjectTemplateType,
   SCBroadcastMessageTemplateType,
+  ChangeGroupCover,
+  ChangeGroupCoverProps,
+  ChangeGroupPicture,
+  ChangeGroupPictureProps,
+  GroupHeader,
+  GroupHeaderProps,
+  GroupHeaderSkeleton,
+  GroupMembersButton,
+  GroupMembersButtonProps,
+  CreateGroupButton,
+  CreateButton,
+  CreateGroupButtonProps,
+  GroupInviteButton,
+  GroupInviteButtonProps,
+  GroupInfoWidget,
+  GroupInfoWidgetProps,
+  GroupInfoWidgetSkeleton,
+  Group,
+  GroupProps,
+  GroupSubscribeButton,
+  GroupSubscribeButtonProps,
+  GroupMembersWidget,
+  GroupMembersWidgetProps,
+  GroupMembersWidgetSkeleton,
+  GroupRequestsWidget,
+  GroupRequestsWidgetProps,
+  GroupRequestsWidgetSkeleton,
   /* SC UI SHARED */
   UrlTextField,
   UsernameTextField,
