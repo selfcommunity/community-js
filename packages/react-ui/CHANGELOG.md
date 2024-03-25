@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.1...@selfcommunity/react-ui@0.7.9-alpha.2) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
 ## [0.7.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.0...@selfcommunity/react-ui@0.7.9-alpha.1) (2024-02-27)
 
 
