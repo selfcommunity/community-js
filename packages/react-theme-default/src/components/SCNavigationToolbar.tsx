@@ -13,7 +13,7 @@ const Component = {
         flexGrow: 1,
         textAlign: 'center',
         alignSelf: 'end',
-        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
+        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore, & .SCNavigationToolbar-groups': {
           paddingTop: 12,
           paddingLeft: theme.spacing(1),
           paddingRight: theme.spacing(1),

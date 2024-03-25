@@ -1,10 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
-import {FeedObjectProps, FeedSidebarProps, GroupHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
+import {FeedObjectProps, FeedSidebarProps, GroupHeader, GroupInviteButton, SCFeedWidgetType} from '@selfcommunity/react-ui';
 import {useSCFetchGroup} from '@selfcommunity/react-core';
 import {SCGroupType} from '@selfcommunity/types';
-import CategorySkeleton from './Skeleton';
+import GroupSkeletonTemplate from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
@@ -107,12 +107,12 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
   if (!scGroup) {
-    return <CategorySkeleton />;
+    return <GroupSkeletonTemplate />;
   }
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <GroupHeader groupId={scGroup.id} />
+      <GroupHeader groupId={scGroup.id} actions={<GroupInviteButton group={scGroup} groupId={scGroup.id} />} />
       <GroupFeed
         showJustHome={true}
         className={classes.feed}

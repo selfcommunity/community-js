@@ -130,6 +130,7 @@ import SCGroupTemplate from './components/SCGroupTemplate';
 import SCGroupFeedTemplate from './components/SCGroupFeedTemplate';
 import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
+import SCGroups from './components/SCGroups';
 
 /**
  * Style fragments - Imports - End
@@ -324,7 +325,8 @@ const theme = {
     SCGroupTemplate,
     SCGroupFeedTemplate,
     SCGroupMembersWidget,
-    SCGroupRequestsWidget
+    SCGroupRequestsWidget,
+    SCGroups
   },
   selfcommunity: {
     user: {

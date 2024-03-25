@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import CategoryFeedSkeleton from '../CategoryFeed/Skeleton';
+import GroupFeedSkeleton from '../GroupFeed/Skeleton';
 import {GroupHeaderSkeleton} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
 
@@ -38,7 +38,7 @@ export default function GroupSkeletonTemplate(): JSX.Element {
   return (
     <Root className={classes.root}>
       <GroupHeaderSkeleton />
-      <CategoryFeedSkeleton />
+      <GroupFeedSkeleton />
     </Root>
   );
 }

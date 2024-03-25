@@ -29,10 +29,12 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
+import GroupInviteButton from '../GroupInviteButton';
 
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
+  button: `${PREFIX}-button`,
   noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`,
   dialogRoot: `${PREFIX}-dialog-root`,
@@ -331,6 +333,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
           </InfiniteScroll>
         </DialogRoot>
       )}
+      <GroupInviteButton className={classes.button} groupId={scGroup?.id} group={scGroup} />
     </CardContent>
   );
   return (
