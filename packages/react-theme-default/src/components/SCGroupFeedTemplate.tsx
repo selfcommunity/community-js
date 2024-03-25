@@ -15,9 +15,16 @@ const Component = {
           backgroundColor: 'transparent'
         },
         '& .MuiTabs-indicatorSpan': {
-          maxWidth: '30%',
+          maxWidth: '40%',
           width: '100%',
           backgroundColor: theme.palette.secondary.main
+        }
+      },
+      '& .SCGroupFeedTemplate-tab-content': {
+        '& .SCGroupFeedTemplate-members': {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: theme.spacing(2)
         }
       }
     }),

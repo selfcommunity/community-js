@@ -30,7 +30,7 @@ const classes = {
   root: `${PREFIX}-root`,
   ios: `${PREFIX}-ios`,
   action: `${PREFIX}-action`,
-  composer: `${PREFIX}-composer`,
+  composer: `${PREFIX}-composer`
 };
 
 const Root = styled(MuiBottomNavigation, {
@@ -40,7 +40,6 @@ const Root = styled(MuiBottomNavigation, {
 })(() => ({}));
 
 export type BottomNavigationProps = MuiBottomNavigationProps;
-
 
 /**
  * > API documentation for the Community-JS Bottom Navigation component. Learn about the available props and the CSS API.
@@ -86,6 +85,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
 
   // MEMO
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
   const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
@@ -119,6 +119,16 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               component={ComposerIconButton}
               disableRipple
             />,
+            groupsEnabled && scUserContext.user ? (
+              <BottomNavigationAction
+                key="groups"
+                className={classes.action}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}
+                icon={<Icon>groups</Icon>}
+              />
+            ) : null,
             scUserContext.user ? (
               <BottomNavigationAction
                 key="notifications"

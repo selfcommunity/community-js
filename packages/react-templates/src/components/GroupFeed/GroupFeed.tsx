@@ -10,12 +10,13 @@ import {
   FeedSidebarProps,
   GroupInfoWidget,
   GroupMembersWidget,
+  GroupRequestsWidget,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition, SCGroupFeedType, SCGroupType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -181,7 +182,14 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   const feedRef = useRef<FeedRef>();
 
   // Hooks
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const scUserContext: SCUserContextType = useSCUser();
+  const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
+
+  // CONST
+  const canEdit = useMemo(
+    () => scUserContext.user && (scGroup?.created_by?.id || scGroup?.managed_by?.id) === scUserContext.user.id,
+    [scUserContext.user, scGroup?.created_by?.id, scGroup?.managed_by?.id]
+  );
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
@@ -328,7 +336,12 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
                 {...FeedProps}
               />
             )}
-            {tab === SCGroupFeedType.MEMBERS && <></>}
+            {tab === SCGroupFeedType.MEMBERS && (
+              <Box className={classes.members}>
+                <GroupRequestsWidget group={scGroup} groupId={scGroup?.id} />
+                {canEdit && <GroupMembersWidget group={scGroup} groupId={scGroup?.id} />}
+              </Box>
+            )}
             {tab === SCGroupFeedType.MESSAGES && <></>}
           </Box>
         </Root>

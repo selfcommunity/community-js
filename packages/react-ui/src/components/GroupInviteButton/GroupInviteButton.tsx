@@ -224,8 +224,10 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
       GroupService.inviteOrAcceptGroupRequest(scGroup.id, data)
         .then(() => {
           setIsSending(false);
+          setOpen(false);
         })
         .catch((error) => {
+          setOpen(false);
           setLoading(false);
           Logger.error(SCOPE_SC_UI, error);
         });
@@ -288,7 +290,8 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
         className={classNames(classes.root, className)}
         onClick={handleClose}
         size="small"
-        variant="outlined"
+        variant={scGroup ? 'contained' : 'outlined'}
+        color={scGroup ? 'secondary' : 'inherit'}
         startIcon={<Icon fontSize="small">add</Icon>}
         {...rest}>
         <FormattedMessage id="ui.groupInviteButton" defaultMessage="ui.groupInviteButton" />

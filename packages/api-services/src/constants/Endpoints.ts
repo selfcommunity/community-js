@@ -1154,8 +1154,12 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/group/$(id)/feed/'),
     method: 'GET'
   },
+  GetAllGroups: {
+    url: urlReplacer('/api/v2/group/'),
+    method: 'GET'
+  },
   SearchGroups: {
-    url: urlReplacer('/api/v2/group/$(id)/search/'),
+    url: urlReplacer('/api/v2/group/search/'),
     method: 'GET'
   },
   CreateGroup: {

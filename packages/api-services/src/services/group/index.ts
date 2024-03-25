@@ -8,6 +8,7 @@ import {GroupCreateParams} from '../../types';
 
 export interface GroupApiClientInterface {
   getUserGroups(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
+  getAllGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
   searchGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
   getSpecificGroupInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCGroupType>;
   getGroupFeed(id: number | string, params?: GroupFeedParams, config?: AxiosRequestConfig): Promise<any>;
@@ -42,6 +43,16 @@ export class GroupApiClient {
   static getUserGroups(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetUserGroups.url({})}?${p.toString()}`, method: Endpoints.GetUserGroups.method});
+  }
+
+  /**
+   * This endpoint performs groups search
+   * @param params
+   * @param config
+   */
+  static getAllGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetAllGroups.url({})}?${p.toString()}`, method: Endpoints.GetAllGroups.method});
   }
 
   /**
@@ -256,6 +267,9 @@ export class GroupApiClient {
 export default class GroupService {
   static async getUserGroups(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     return GroupApiClient.getUserGroups(params, config);
+  }
+  static async getAllGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
+    return GroupApiClient.getAllGroups(params, config);
   }
   static async searchGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     return GroupApiClient.searchGroups(params, config);

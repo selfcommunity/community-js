@@ -155,6 +155,7 @@ import Group, {GroupProps} from './components/Group';
 import GroupSubscribeButton, {GroupSubscribeButtonProps} from './components/GroupSubscribeButton';
 import GroupMembersWidget, {GroupMembersWidgetProps, GroupMembersWidgetSkeleton} from './components/GroupMembersWidget';
 import GroupRequestsWidget, {GroupRequestsWidgetProps, GroupRequestsWidgetSkeleton} from './components/GroupRequestsWidget';
+import Groups, {GroupsProps, GroupsSkeleton} from './components/Groups';
 /**
  * Constants
  */
@@ -423,6 +424,9 @@ export {
   GroupRequestsWidget,
   GroupRequestsWidgetProps,
   GroupRequestsWidgetSkeleton,
+  Groups,
+  GroupsProps,
+  GroupsSkeleton,
   /* SC UI SHARED */
   UrlTextField,
   UsernameTextField,
