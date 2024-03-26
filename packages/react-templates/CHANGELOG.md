@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.4...@selfcommunity/react-templates@0.3.9-alpha.5) (2024-03-26)
+
+
+### Bug Fixes
+
+* group template export ([88dc3e7](https://github.com/selfcommunity/community-js/commit/88dc3e7ab23b333e1ce2da7c689b3dea0f238345))
+
+
+
+
+
 ## [0.3.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.3...@selfcommunity/react-templates@0.3.9-alpha.4) (2024-03-26)
 
 
