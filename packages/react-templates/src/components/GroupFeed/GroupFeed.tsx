@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   Feed,
@@ -10,14 +10,13 @@ import {
   FeedSidebarProps,
   GroupInfoWidget,
   GroupMembersWidget,
-  GroupRequestsWidget,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
-import {SCCustomAdvPosition, SCGroupFeedType, SCGroupType} from '@selfcommunity/types';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
+import {SCCustomAdvPosition, SCGroupType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -25,26 +24,14 @@ import {SnackbarKey, useSnackbar} from 'notistack';
 import {ContributionUtils} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
 import GroupFeedSkeleton from './Skeleton';
-import {Box, Tab, Tabs} from '@mui/material';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  tabs: `${PREFIX}-tabs`,
-  tabItem: `${PREFIX}-tab-item`,
-  tabContent: `${PREFIX}-tab-content`,
-  home: `${PREFIX}-home`,
-  members: `${PREFIX}-members`,
-  messages: `${PREFIX}-messages`
+  root: `${PREFIX}-root`
 };
 
-const Root = styled(Box, {
+const Root = styled(Feed, {
   name: PREFIX,
   slot: 'Root'
-})(() => ({}));
-
-const TabRoot = styled(Tab, {
-  name: PREFIX,
-  slot: 'TabRoot'
 })(() => ({}));
 
 export interface GroupFeedProps {
@@ -74,7 +61,7 @@ export interface GroupFeedProps {
 
   /**
    * Widgets to be rendered into the feed
-   * @default [CategoriesFollowed, UserFollowed]
+   * @default [GroupMembersWidget, GroupInfoWidget]
    */
   widgets?: SCFeedWidgetType[] | null;
 
@@ -98,12 +85,6 @@ export interface GroupFeedProps {
     FeedProps,
     'endpoint' | 'widgets' | 'ItemComponent' | 'itemPropsGenerator' | 'itemIdGenerator' | 'ItemSkeleton' | 'ItemSkeletonProps' | 'FeedSidebarProps'
   >;
-
-  /**
-   * If true renders just the feed
-   * @default false
-   */
-  showJustHome?: boolean;
 }
 
 // Widgets for feed
@@ -139,13 +120,13 @@ const WIDGETS: SCFeedWidgetType[] = [
 
  #### Component Name
 
- The name `SCCategoryFeedTemplate` can be used when providing style overrides in the theme.
+ The name `SCGroupFeedTemplate` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCategoryFeedTemplate-root|Styles applied to the root element.|
+ |root|.SCGroupFeedTemplate-root|Styles applied to the root element.|
  *
  * @param inProps
  */
@@ -155,24 +136,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {
-    id = 'group_feed',
-    className,
-    group,
-    groupId,
-    widgets = WIDGETS,
-    FeedObjectProps = {},
-    FeedSidebarProps = null,
-    FeedProps = {},
-    showJustHome = false
-  } = props;
-
-  // STATE
-  const [tab, setTab] = useState<SCGroupFeedType>(SCGroupFeedType.HOME);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: SCGroupFeedType) => {
-    setTab(newValue);
-  };
+  const {id = 'group_feed', className, group, groupId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -182,19 +146,12 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   const feedRef = useRef<FeedRef>();
 
   // Hooks
-  const scUserContext: SCUserContextType = useSCUser();
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
-
-  // CONST
-  const canEdit = useMemo(
-    () => scUserContext.user && (scGroup?.created_by?.id || scGroup?.managed_by?.id) === scUserContext.user.id,
-    [scUserContext.user, scGroup?.created_by?.id, scGroup?.managed_by?.id]
-  );
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
     // Not insert if the group does not match
-    if (feedObject.categories.findIndex((c) => c.id === scGroup.id) === -1) {
+    if (feedObject.groups.findIndex((g) => g.id === scGroup.id) === -1) {
       enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
         action: (snackbarId: SnackbarKey) => (
           <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
@@ -234,118 +191,43 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   }
 
   return (
-    <>
-      {showJustHome ? (
-        <Feed
-          id={id}
-          className={classes.root}
-          ref={feedRef}
-          endpoint={{
-            ...Endpoints.CategoryFeed,
-            url: () => Endpoints.CategoryFeed.url({id: scGroup.id})
-          }}
-          widgets={_widgets}
-          ItemComponent={FeedObject}
-          itemPropsGenerator={(scUser, item) => ({
-            feedObject: item[item.type],
-            feedObjectType: item.type,
-            feedObjectActivities: item.activities ? item.activities : null,
-            markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
-          })}
-          itemIdGenerator={(item) => item[item.type].id}
-          ItemProps={FeedObjectProps}
-          ItemSkeleton={FeedObjectSkeleton}
-          ItemSkeletonProps={{
-            template: SCFeedObjectTemplateType.PREVIEW
-          }}
-          FeedSidebarProps={FeedSidebarProps}
-          HeaderComponent={
-            <InlineComposerWidget
-              onSuccess={handleComposerSuccess}
-              defaultValue={{categories: [scGroup]}}
-              label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
-            />
-          }
-          CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scGroup.id]}}
-          enabledCustomAdvPositions={[
-            SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
-            SCCustomAdvPosition.POSITION_FEED,
-            SCCustomAdvPosition.POSITION_BELOW_TOPBAR
-          ]}
-          {...FeedProps}
+    <Root
+      className={classNames(classes.root, className)}
+      id={id}
+      ref={feedRef}
+      endpoint={{
+        ...Endpoints.GetGroupFeed,
+        url: () => Endpoints.GetGroupFeed.url({id: scGroup.id})
+      }}
+      widgets={_widgets}
+      ItemComponent={FeedObject}
+      itemPropsGenerator={(scUser, item) => ({
+        feedObject: item[item.type],
+        feedObjectType: item.type,
+        feedObjectActivities: item.activities ? item.activities : null,
+        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+      })}
+      itemIdGenerator={(item) => item[item.type].id}
+      ItemProps={FeedObjectProps}
+      ItemSkeleton={FeedObjectSkeleton}
+      ItemSkeletonProps={{
+        template: SCFeedObjectTemplateType.PREVIEW
+      }}
+      FeedSidebarProps={FeedSidebarProps}
+      HeaderComponent={
+        <InlineComposerWidget
+          onSuccess={handleComposerSuccess}
+          defaultValue={{group: scGroup}}
+          label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
         />
-      ) : (
-        <Root className={classNames(classes.root, className)}>
-          <Tabs
-            className={classes.tabs}
-            value={tab}
-            onChange={handleChange}
-            variant="fullWidth"
-            TabIndicatorProps={{children: <span className="MuiTabs-indicatorSpan" />}}>
-            <TabRoot
-              value={SCGroupFeedType.HOME}
-              label={<FormattedMessage id="templates.groupFeed.tab.home.label" defaultMessage="templates.groupFeed.tab.home.label" />}
-            />
-            <TabRoot
-              value={SCGroupFeedType.MEMBERS}
-              label={<FormattedMessage id="templates.groupFeed.tab.members.label" defaultMessage="templates.groupFeed.tab.members.label" />}
-            />
-            <TabRoot
-              value={SCGroupFeedType.MESSAGES}
-              label={<FormattedMessage id="templates.groupFeed.tab.messages.label" defaultMessage="templates.groupFeed.tab.messages.label" />}
-            />
-          </Tabs>
-          <Box className={classes.tabContent}>
-            {tab === SCGroupFeedType.HOME && (
-              <Feed
-                id={id}
-                className={classes.home}
-                ref={feedRef}
-                endpoint={{
-                  ...Endpoints.CategoryFeed,
-                  url: () => Endpoints.CategoryFeed.url({id: scGroup.id})
-                }}
-                widgets={_widgets}
-                ItemComponent={FeedObject}
-                itemPropsGenerator={(scUser, item) => ({
-                  feedObject: item[item.type],
-                  feedObjectType: item.type,
-                  feedObjectActivities: item.activities ? item.activities : null,
-                  markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
-                })}
-                itemIdGenerator={(item) => item[item.type].id}
-                ItemProps={FeedObjectProps}
-                ItemSkeleton={FeedObjectSkeleton}
-                ItemSkeletonProps={{
-                  template: SCFeedObjectTemplateType.PREVIEW
-                }}
-                FeedSidebarProps={FeedSidebarProps}
-                HeaderComponent={
-                  <InlineComposerWidget
-                    onSuccess={handleComposerSuccess}
-                    defaultValue={{categories: [scGroup]}}
-                    label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
-                  />
-                }
-                CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, categoriesId: [scGroup.id]}}
-                enabledCustomAdvPositions={[
-                  SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
-                  SCCustomAdvPosition.POSITION_FEED,
-                  SCCustomAdvPosition.POSITION_BELOW_TOPBAR
-                ]}
-                {...FeedProps}
-              />
-            )}
-            {tab === SCGroupFeedType.MEMBERS && (
-              <Box className={classes.members}>
-                <GroupRequestsWidget group={scGroup} groupId={scGroup?.id} />
-                {canEdit && <GroupMembersWidget group={scGroup} groupId={scGroup?.id} />}
-              </Box>
-            )}
-            {tab === SCGroupFeedType.MESSAGES && <></>}
-          </Box>
-        </Root>
-      )}
-    </>
+      }
+      CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, groupsId: [scGroup.id]}}
+      enabledCustomAdvPositions={[
+        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+        SCCustomAdvPosition.POSITION_FEED,
+        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+      ]}
+      {...FeedProps}
+    />
   );
 }

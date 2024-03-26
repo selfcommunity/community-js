@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardActions, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, SCPaginatedResponse, GroupService} from '@selfcommunity/api-services';
@@ -34,7 +34,7 @@ import GroupInviteButton from '../GroupInviteButton';
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
-  button: `${PREFIX}-button`,
+  actions: `${PREFIX}-actions`,
   noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`,
   dialogRoot: `${PREFIX}-dialog-root`,
@@ -275,66 +275,70 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
   }
 
   const content = (
-    <CardContent>
-      <Typography className={classes.title} variant="h5">
-        <FormattedMessage id="ui.groupMembersWidget.title" defaultMessage="ui.groupMembersWidget.title" />
-      </Typography>
-      {!state.count ? (
-        <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.groupMembersWidget.subtitle.noResults" defaultMessage="" />
+    <>
+      <CardContent>
+        <Typography className={classes.title} variant="h5">
+          <FormattedMessage id="ui.groupMembersWidget.title" defaultMessage="ui.groupMembersWidget.title" />
         </Typography>
-      ) : (
-        <React.Fragment>
-          <List>
-            {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
-              <ListItem key={user.id}>
-                <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
-              </ListItem>
-            ))}
-          </List>
-          {state.count > state.visibleItems && (
-            <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.groupMembersWidget.button.showMore" defaultMessage="ui.groupMembersWidget.button.showMore" />
-            </Button>
-          )}
-        </React.Fragment>
-      )}
-      {openDialog && (
-        <DialogRoot
-          className={classes.dialogRoot}
-          title={
-            <FormattedMessage
-              defaultMessage="ui.groupMembersWidget.dialogTitle"
-              id="ui.groupMembersWidget.dialogTitle"
-              values={{total: scGroup.subscribers_counter}}
-            />
-          }
-          onClose={handleToggleDialogOpen}
-          open={openDialog}
-          {...DialogProps}>
-          <InfiniteScroll
-            dataLength={state.results.length}
-            next={handleNext}
-            hasMoreNext={Boolean(state.next)}
-            loaderNext={<UserSkeleton elevation={0} {...UserProps} />}
-            height={isMobile ? '100%' : 400}
-            endMessage={
-              <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.groupMembersWidget.noMoreResults" defaultMessage="ui.groupMembersWidget.noMoreResults" />
-              </Typography>
-            }>
+        {!state.count ? (
+          <Typography className={classes.noResults} variant="body2">
+            <FormattedMessage id="ui.groupMembersWidget.subtitle.noResults" defaultMessage="" />
+          </Typography>
+        ) : (
+          <React.Fragment>
             <List>
-              {state.results.map((user: SCUserType) => (
+              {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
                 <ListItem key={user.id}>
                   <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
                 </ListItem>
               ))}
             </List>
-          </InfiniteScroll>
-        </DialogRoot>
-      )}
-      <GroupInviteButton className={classes.button} groupId={scGroup?.id} group={scGroup} />
-    </CardContent>
+            {state.count > state.visibleItems && (
+              <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
+                <FormattedMessage id="ui.groupMembersWidget.button.showMore" defaultMessage="ui.groupMembersWidget.button.showMore" />
+              </Button>
+            )}
+          </React.Fragment>
+        )}
+        {openDialog && (
+          <DialogRoot
+            className={classes.dialogRoot}
+            title={
+              <FormattedMessage
+                defaultMessage="ui.groupMembersWidget.dialogTitle"
+                id="ui.groupMembersWidget.dialogTitle"
+                values={{total: scGroup.subscribers_counter}}
+              />
+            }
+            onClose={handleToggleDialogOpen}
+            open={openDialog}
+            {...DialogProps}>
+            <InfiniteScroll
+              dataLength={state.results.length}
+              next={handleNext}
+              hasMoreNext={Boolean(state.next)}
+              loaderNext={<UserSkeleton elevation={0} {...UserProps} />}
+              height={isMobile ? '100%' : 400}
+              endMessage={
+                <Typography className={classes.endMessage}>
+                  <FormattedMessage id="ui.groupMembersWidget.noMoreResults" defaultMessage="ui.groupMembersWidget.noMoreResults" />
+                </Typography>
+              }>
+              <List>
+                {state.results.map((user: SCUserType) => (
+                  <ListItem key={user.id}>
+                    <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
+                  </ListItem>
+                ))}
+              </List>
+            </InfiniteScroll>
+          </DialogRoot>
+        )}
+      </CardContent>
+      <CardActions className={classes.actions}>
+        <GroupInviteButton groupId={scGroup?.id} group={scGroup} />
+      </CardActions>
+    </>
   );
   return (
     <Root className={classNames(classes.root, className)} {...rest}>

@@ -115,7 +115,7 @@ import {
   type SCGcmDeviceType,
   type SCSuggestionType,
   type SCContributionStatus,
-  type SCGroupType,
+  type SCGroupType
 } from './types';
 
 /**
@@ -150,7 +150,6 @@ import {
   SCPrivateMessageStatusType,
   SCMetadataTypeFieldType,
   SCGroupPrivacyType,
-  SCGroupFeedType,
   SCGroupSubscriptionStatusType
 } from './types';
 
@@ -186,7 +185,6 @@ export {
   SCPrivateMessageStatusType,
   SCMetadataTypeFieldType,
   SCGroupPrivacyType,
-  SCGroupFeedType,
   SCGroupSubscriptionStatusType
 };
 export {

@@ -12,6 +12,7 @@ import {FormattedMessage} from 'react-intl';
 import Bullet from '../../shared/Bullet';
 import ChangeGroupPicture, {ChangeGroupPictureProps} from '../ChangeGroupPicture';
 import GroupMembersButton, {GroupMembersButtonProps} from '../GroupMembersButton';
+import EditGroupButton from '../EditGroupButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -143,8 +144,8 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
 
   // CONST
   const canEdit = useMemo(
-    () => scUserContext.user && (scGroup?.created_by?.id || scGroup?.managed_by?.id) === scUserContext.user.id,
-    [scUserContext.user, scGroup?.created_by?.id, scGroup?.managed_by?.id]
+    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
+    [scUserContext.user, scGroup?.managed_by?.id]
   );
 
   /**
@@ -195,6 +196,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
         )}
       </Paper>
       <Box className={classes.info}>
+        {canEdit && <EditGroupButton group={scGroup} groupId={scGroup.id} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} />}
         <Typography variant="h5" className={classes.name}>
           {scGroup.name}
         </Typography>

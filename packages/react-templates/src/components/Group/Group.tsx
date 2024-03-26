@@ -103,7 +103,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
   });
   const {id = 'group', className, group, groupId, widgets, FeedObjectProps, FeedSidebarProps, GroupFeedProps = {}} = props;
 
-  // Hooks
+  // HOOKS
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
   if (!scGroup) {
@@ -114,7 +114,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
     <Root id={id} className={classNames(classes.root, className)}>
       <GroupHeader groupId={scGroup.id} actions={<GroupInviteButton group={scGroup} groupId={scGroup.id} />} />
       <GroupFeed
-        showJustHome={true}
         className={classes.feed}
         group={scGroup}
         widgets={widgets}

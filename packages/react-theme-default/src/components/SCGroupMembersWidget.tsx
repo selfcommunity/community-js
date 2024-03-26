@@ -1,8 +1,8 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCGroupMembersWidget-button': {
-        marginTop: theme.spacing(1)
+      '& .SCGroupMembersWidget-actions': {
+        margin: theme.spacing(0, 0, 2, 1)
       }
     }),
     skeletonRoot: ({theme}: any) => ({}),

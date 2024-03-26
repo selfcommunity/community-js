@@ -147,8 +147,8 @@ import ChangeGroupCover, {ChangeGroupCoverProps} from './components/ChangeGroupC
 import ChangeGroupPicture, {ChangeGroupPictureProps} from './components/ChangeGroupPicture';
 import GroupHeader, {GroupHeaderProps, GroupHeaderSkeleton} from './components/GroupHeader';
 import GroupMembersButton, {GroupMembersButtonProps} from './components/GroupMembersButton';
-import CreateGroupButton from './components/CreateGroupButton';
-import CreateButton, {CreateGroupButtonProps} from './components/CreateGroupButton';
+import CreateGroupButton, {CreateGroupButtonProps} from './components/CreateGroupButton';
+import EditGroupButton, {EditGroupButtonProps} from './components/EditGroupButton';
 import GroupInviteButton, {GroupInviteButtonProps} from './components/GroupInviteButton';
 import GroupInfoWidget, {GroupInfoWidgetProps, GroupInfoWidgetSkeleton} from './components/GroupInfoWidget';
 import Group, {GroupProps} from './components/Group';
@@ -156,6 +156,7 @@ import GroupSubscribeButton, {GroupSubscribeButtonProps} from './components/Grou
 import GroupMembersWidget, {GroupMembersWidgetProps, GroupMembersWidgetSkeleton} from './components/GroupMembersWidget';
 import GroupRequestsWidget, {GroupRequestsWidgetProps, GroupRequestsWidgetSkeleton} from './components/GroupRequestsWidget';
 import Groups, {GroupsProps, GroupsSkeleton} from './components/Groups';
+import GroupForm, {GroupFormProps} from './components/GroupForm';
 /**
  * Constants
  */
@@ -407,8 +408,9 @@ export {
   GroupMembersButton,
   GroupMembersButtonProps,
   CreateGroupButton,
-  CreateButton,
   CreateGroupButtonProps,
+  EditGroupButton,
+  EditGroupButtonProps,
   GroupInviteButton,
   GroupInviteButtonProps,
   GroupInfoWidget,
@@ -427,6 +429,8 @@ export {
   Groups,
   GroupsProps,
   GroupsSkeleton,
+  GroupForm,
+  GroupFormProps,
   /* SC UI SHARED */
   UrlTextField,
   UsernameTextField,

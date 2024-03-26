@@ -3,8 +3,11 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .MuiIcon-root': {
-        fontSize: '1rem !important'
+      '& .MuiButton-startIcon': {
+        marginRight: theme.spacing(0.5),
+        '& .MuiIcon-root': {
+          fontSize: '0.75rem !important'
+        }
       }
     }),
     dialogRoot: ({theme}: any) => ({

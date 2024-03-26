@@ -15,7 +15,7 @@ export default {
 
 
 const template = (args) => (
-  <div style={{width: 400}}>
+  <div style={{maxWidth: 1280}}>
     <Groups {...args} />
   </div>
 );

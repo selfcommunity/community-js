@@ -1,4 +1,4 @@
-import { alpha } from '@mui/system';
+import {alpha} from '@mui/system';
 
 const Component = {
   styleOverrides: {
@@ -54,7 +54,7 @@ const Component = {
                 left: theme.spacing(0.2),
                 marginBottom: 0,
                 backgroundColor: theme.palette.background.paper
-              },
+              }
             }
           }
         },
@@ -82,7 +82,7 @@ const Component = {
         '& .SCComposer-general-error': {
           marginBottom: theme.spacing(2),
           color: theme.palette.error.main
-        },
+        }
       },
       [theme.breakpoints.up('md')]: {
         '& .MuiDialog-paper': {
@@ -97,7 +97,7 @@ const Component = {
           '& .MuiDialogActions-root': {
             justifyContent: 'center'
           }
-        },
+        }
       }
     }),
     attributesRoot: ({theme}: any) => ({}),
@@ -127,9 +127,10 @@ const Component = {
     }),
     contentPollRoot: ({theme}: any) => ({
       padding: theme.spacing(2),
-      '& .SCComposer-content-poll-title, & .SCComposer-content-poll-choices, & .SCComposer-content-poll-choice-new, & .SCComposer-content-poll-metadata': {
-        marginBottom: theme.spacing(3)
-      },
+      '& .SCComposer-content-poll-title, & .SCComposer-content-poll-choices, & .SCComposer-content-poll-choice-new, & .SCComposer-content-poll-metadata':
+        {
+          marginBottom: theme.spacing(3)
+        },
       '& .SCComposer-content-poll-choices .MuiTextField-root': {
         marginBottom: theme.spacing()
       },
@@ -172,6 +173,7 @@ const Component = {
       }
     }),
     layerCategoryRoot: ({theme}: any) => ({}),
+    layerGroupRoot: ({theme}: any) => ({}),
     layerCloseRoot: ({theme}: any) => ({
       '& .SCComposer-layer-content': {
         '& .MuiTypography-root': {
@@ -211,7 +213,7 @@ const Component = {
           paddingRight: theme.spacing(4)
         }
       }
-    }),
+    })
   }
 };
 

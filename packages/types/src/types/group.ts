@@ -121,12 +121,3 @@ export interface SCGroupType {
    */
   subscribers_counter: number;
 }
-
-/**
- * SCGroupPrivacyType enum
- */
-export enum SCGroupFeedType {
-  HOME = 'home',
-  MEMBERS = 'members',
-  MESSAGES = 'messages'
-}

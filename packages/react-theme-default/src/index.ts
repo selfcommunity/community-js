@@ -122,7 +122,7 @@ import SCChangeGroupCoverButton from './components/SCChangeGroupCoverButton';
 import SCChangeGroupPictureButton from './components/SCChangeGroupPictureButton';
 import SCGroupMembersButton from './components/SCGroupMembersButton';
 import SCCreateGroupButton from './components/SCCreateGroupButton';
-import SCCreateGroup from './components/SCCreateGroup';
+import SCGroupForm from './components/SCGroupForm';
 import SCGroupInviteButton from './components/SCGroupInviteButton';
 import SCGroupInfoWidget from './components/SCGroupInfoWidget';
 import SCGroup from './components/SCGroup';
@@ -131,7 +131,8 @@ import SCGroupFeedTemplate from './components/SCGroupFeedTemplate';
 import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
 import SCGroups from './components/SCGroups';
-
+import SCEditGroupButton from './components/SCEditGroupButton';
+import SCGroupAutocomplete from './components/SCGroupAutocomplete';
 /**
  * Style fragments - Imports - End
  */
@@ -318,7 +319,7 @@ const theme = {
     SCChangeGroupPictureButton,
     SCGroupMembersButton,
     SCCreateGroupButton,
-    SCCreateGroup,
+    SCGroupForm,
     SCGroupInviteButton,
     SCGroupInfoWidget,
     SCGroup,
@@ -326,7 +327,9 @@ const theme = {
     SCGroupFeedTemplate,
     SCGroupMembersWidget,
     SCGroupRequestsWidget,
-    SCGroups
+    SCGroups,
+    SCEditGroupButton,
+    SCGroupAutocomplete
   },
   selfcommunity: {
     user: {

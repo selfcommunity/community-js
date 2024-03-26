@@ -1,12 +1,12 @@
-import React, { useCallback } from 'react';
-import { Box, BoxProps, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, {useCallback} from 'react';
+import {Box, BoxProps, TextField, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
-import Editor, { EditorProps } from '../../../Editor';
-import { ComposerContentType } from '../../../../types/composer';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { COMPOSER_TITLE_MAX_LENGTH } from '../../../../constants/Composer';
-import { PREFIX } from '../../constants';
+import Editor, {EditorProps} from '../../../Editor';
+import {ComposerContentType} from '../../../../types/composer';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {COMPOSER_TITLE_MAX_LENGTH} from '../../../../constants/Composer';
+import {PREFIX} from '../../constants';
 
 const classes = {
   root: `${PREFIX}-content-discussion-root`,
@@ -27,6 +27,7 @@ const Root = styled(Box, {
 const DEFAULT_DISCUSSION: ComposerContentType = {
   title: '',
   categories: [],
+  group: null,
   medias: [],
   html: '',
   addressing: []
@@ -66,36 +67,42 @@ export interface ContentDiscussionProps extends Omit<BoxProps, 'value' | 'onChan
 
 export default (props: ContentDiscussionProps): JSX.Element => {
   // PROPS
-  const {
-    className = null,
-    value = {...DEFAULT_DISCUSSION},
-    error = {},
-    disabled=false,
-    onChange,
-    EditorProps = {}
-  } = props;
+  const {className = null, value = {...DEFAULT_DISCUSSION}, error = {}, disabled = false, onChange, EditorProps = {}} = props;
   const {titleError = null, error: generalError = null} = {...error};
 
   // HOOKS
   const intl = useIntl();
 
   // HANDLERS
-  const handleChangeTitle = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({...value, title: event.target.value});
-  }, [value]);
+  const handleChangeTitle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange({...value, title: event.target.value});
+    },
+    [value]
+  );
 
-  const handleChangeHtml = useCallback((html: string) => {
-    onChange({...value, html});
-  }, [value]);
+  const handleChangeHtml = useCallback(
+    (html: string) => {
+      onChange({...value, html});
+    },
+    [value]
+  );
 
   // RENDER
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && <Typography className={classes.generalError}><FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} /></Typography>}
+      {generalError && (
+        <Typography className={classes.generalError}>
+          <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
+        </Typography>
+      )}
       <TextField
         className={classes.title}
-        placeholder={intl.formatMessage({id: "ui.composer.content.discussion.title.label", defaultMessage: "ui.composer.content.discussion.title.label"})}
+        placeholder={intl.formatMessage({
+          id: 'ui.composer.content.discussion.title.label',
+          defaultMessage: 'ui.composer.content.discussion.title.label'
+        })}
         autoFocus
         fullWidth
         variant="outlined"
@@ -109,13 +116,7 @@ export default (props: ContentDiscussionProps): JSX.Element => {
         helperText={titleError}
         disabled={disabled}
       />
-      <Editor
-        {...EditorProps}
-        editable={!disabled}
-        className={classes.editor}
-        onChange={handleChangeHtml}
-        defaultValue={value.html}
-      />
+      <Editor {...EditorProps} editable={!disabled} className={classes.editor} onChange={handleChangeHtml} defaultValue={value.html} />
     </Root>
   );
 };

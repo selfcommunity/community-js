@@ -320,6 +320,10 @@ export interface SCSubscribedGroupsManagerType {
    * Handle user subscription to a group
    */
   subscribe?: (group: SCGroupType) => Promise<any>;
+  /**
+   * Handle user unsubscription from a group
+   */
+  unsubscribe?: (group: SCGroupType) => Promise<any>;
 
   /**
    * Handles a user subscription status to a group, caching data

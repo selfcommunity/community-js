@@ -27,6 +27,10 @@ export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX
 export const GROUP_OBJECT_CACHE_PREFIX_KEY = '_grp_';
 export const getGroupObjectCacheKey = (id) => `${GROUP_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** GROUPS OBJECT **/
+export const GROUPS_OBJECT_CACHE_PREFIX_KEY = '_grps_';
+export const getGroupsObjectCacheKey = () => `${GROUPS_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** INCUBATOR OBJECT **/
 export const INCUBATOR_OBJECT_CACHE_PREFIX_KEY = '_inc_';
 export const getIncubatorObjectCacheKey = (id) => `${INCUBATOR_OBJECT_CACHE_PREFIX_KEY}${id}`;
