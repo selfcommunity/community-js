@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {ButtonProps} from '@mui/material/Button/Button';
 import classNames from 'classnames';
-import CreateGroup, {CreateGroupProps} from '../CreateGroup';
+import GroupForm, {GroupFormProps} from '../GroupForm';
 
 const PREFIX = 'SCCreateGroupButton';
 
@@ -30,7 +30,7 @@ export interface CreateGroupButtonProps extends ButtonProps {
    * Props to spread to CreateGroup component
    * @default empty object
    */
-  CreateGroupProps?: CreateGroupProps;
+  GroupFormProps?: GroupFormProps;
 
   /**
    * Any other properties
@@ -63,7 +63,7 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className, CreateGroupProps = {}, ...rest} = props;
+  const {className, GroupFormProps = {}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -78,7 +78,7 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
    * Handle click on button
    */
   const handleClick = () => {
-    setOpen((p) => !p);
+    setOpen((o) => !o);
   };
 
   /**
@@ -96,13 +96,12 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
       <Root
         className={classNames(classes.root, className)}
         onClick={handleClick}
-        size="small"
         variant="contained"
         startIcon={<Icon fontSize="small">add</Icon>}
         {...rest}>
-        <FormattedMessage id="ui.createGroupButton" defaultMessage="ui.createGroupButton" />
+        {children ?? <FormattedMessage id="ui.createGroupButton" defaultMessage="ui.createGroupButton" />}
       </Root>
-      {open && <CreateGroup {...CreateGroupProps} open onClose={handleClick} />}
+      {open && <GroupForm {...GroupFormProps} open onClose={handleClick} />}
     </React.Fragment>
   );
 }

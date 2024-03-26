@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {SCCategoryType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
+import {SCCategoryType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
@@ -48,6 +48,7 @@ export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultVal
     title?: string;
     text?: string;
     categories?: SCCategoryType[];
+    group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];
     medias?: SCMediaType[];

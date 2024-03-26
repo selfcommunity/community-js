@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof GroupsSkeleton>;
 
 const template = (args) => (
-  <div style={{width: 400}}>
+  <div>
     <GroupsSkeleton {...args} />
   </div>
 );

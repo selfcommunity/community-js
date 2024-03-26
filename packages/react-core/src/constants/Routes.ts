@@ -68,6 +68,6 @@ export const defaultRoutes: {[k: string]: string} = {
   [RECOVER_ROUTE_NAME]: '/recover/',
   [CUSTOM_PAGES_ROUTE_NAME]: '/:id/:slug/',
   [LEGAL_PAGES_ROUTE_NAME]: '/legal/:policy/',
-  [GROUP_ROUTE_NAME]: '/group/:id/',
+  [GROUP_ROUTE_NAME]: '/group/:id/:slug/',
   [GROUPS_ROUTE_NAME]: '/groups/',
 };

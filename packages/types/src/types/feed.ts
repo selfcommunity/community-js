@@ -6,6 +6,7 @@ import {SCMediaType} from './media';
 import {SCTagType} from './tag';
 import {SCReactionType} from './reaction';
 import {SCContributionType} from './contribution';
+import {SCGroupType} from './group';
 
 /**
  * Typology of feed
@@ -109,6 +110,10 @@ export interface SCFeedObjectType {
    * List of categories.
    */
   categories?: SCCategoryType[];
+  /**
+   * The id of the group.
+   */
+  group?: SCGroupType;
 
   /**
    * List of medias

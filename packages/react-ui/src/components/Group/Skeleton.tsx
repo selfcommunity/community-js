@@ -47,8 +47,8 @@ export default function GroupSkeleton(props: WidgetProps): JSX.Element {
         <Skeleton
           animation="wave"
           variant="circular"
-          width={theme.selfcommunity.user.avatar.sizeMedium}
-          height={theme.selfcommunity.user.avatar.sizeMedium}
+          width={theme.selfcommunity.group.avatar.sizeSmall}
+          height={theme.selfcommunity.group.avatar.sizeSmall}
         />
       }
       primary={<Skeleton animation="wave" height={10} width={120} style={{marginBottom: 10}} />}

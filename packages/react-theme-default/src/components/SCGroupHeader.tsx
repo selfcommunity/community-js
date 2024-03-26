@@ -41,6 +41,10 @@ const Component = {
             alignItems: 'center',
             gap: theme.spacing(0.5)
           }
+        },
+        '& .SCEditGroupButton-root': {
+          marginLeft: 'auto',
+          marginTop: theme.spacing(2)
         }
       },
       '& .SCGroupHeader-avatar': {
@@ -65,7 +69,6 @@ const Component = {
         display: 'flex'
       },
       '& .SCGroupHeader-name': {
-        marginTop: 0.5 * theme.selfcommunity.group.avatar.sizeLarge + 8,
         marginBottom: theme.spacing(2),
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.429rem',

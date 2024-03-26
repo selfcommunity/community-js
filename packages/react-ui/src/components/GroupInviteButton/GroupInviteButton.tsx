@@ -3,7 +3,7 @@ import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserContext, SCUserContextType, useSCFetchGroup} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
 import {ButtonProps} from '@mui/material/Button/Button';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
@@ -146,11 +146,13 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
     return [invited];
   }, [invited]);
 
-  // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-
   // HOOKS
   const {scGroup} = useSCFetchGroup({id: groupId, group});
+
+  const canEdit = useMemo(
+    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
+    [scUserContext.user, scGroup?.managed_by?.id]
+  );
 
   // INTL
   const intl = useIntl();
@@ -277,7 +279,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   /**
    * If there's no authUserId, component is hidden.
   //  */
-  if (!authUserId) {
+  if (!canEdit) {
     return null;
   }
 
@@ -289,7 +291,6 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
       <Root
         className={classNames(classes.root, className)}
         onClick={handleClose}
-        size="small"
         variant={scGroup ? 'contained' : 'outlined'}
         color={scGroup ? 'secondary' : 'inherit'}
         startIcon={<Icon fontSize="small">add</Icon>}

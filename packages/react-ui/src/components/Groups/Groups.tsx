@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useReducer} from 'react';
 import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Box, Button, ListItem, Typography} from '@mui/material';
+import {Box, Button, Grid, Typography} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {http, EndpointType} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
@@ -15,9 +14,11 @@ import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
 import Group, {GroupProps} from '../Group';
+import {AxiosResponse} from 'axios';
 
 const classes = {
   root: `${PREFIX}-root`,
+  groups: `${PREFIX}-groups`,
   item: `${PREFIX}-item`,
   noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`,
@@ -51,7 +52,7 @@ export interface GroupsProps {
   cacheStrategy?: CacheStrategies;
 
   /**
-   * Props to spread to single user object
+   * Props to spread to single group object
    * @default empty object
    */
   GroupProps?: GroupProps;
@@ -102,12 +103,12 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const {
     endpoint,
     autoHide = false,
-    limit = 5,
+    limit = 6,
     className,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     onHeightChange,
     onStateChange,
-    GroupProps = {},
+    GroupProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     ...rest
   } = props;
 
@@ -216,20 +217,20 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   }, []);
 
   // HANDLERS
-  // const handleNext = useMemo(
-  //   () => (): void => {
-  //     dispatch({type: actionWidgetTypes.LOADING_NEXT});
-  //     http
-  //       .request({
-  //         url: state.next,
-  //         method: endpoint
-  //       })
-  //       .then((res: AxiosResponse<any>) => {
-  //         dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
-  //       });
-  //   },
-  //   [dispatch, state.next, state.isLoadingNext, state.initialized]
-  // );
+  const handleNext = useMemo(
+    () => (): void => {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      http
+        .request({
+          url: state.next,
+          method: endpoint.method
+        })
+        .then((res: AxiosResponse<any>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
+        });
+    },
+    [dispatch, state.next, state.isLoadingNext, state.initialized, endpoint.method]
+  );
 
   // RENDER
   if ((autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !endpoint) {
@@ -247,22 +248,15 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
         </Typography>
       ) : (
         <React.Fragment>
-          <List>
+          <Grid container spacing={{xs: 3}} className={classes.groups}>
             {state.results.slice(0, state.visibleItems).map((group: SCGroupType) => (
-              <ListItem key={group.id} className={classes.item}>
-                <Group
-                  elevation={1}
-                  actions={<></>}
-                  group={group}
-                  groupId={group.id}
-                  buttonProps={{onClick: () => console.log(group)}}
-                  {...GroupProps}
-                />
-              </ListItem>
+              <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
+                <Group actions={<></>} group={group} groupId={group.id} buttonProps={{onClick: () => console.log(group)}} {...GroupProps} />
+              </Grid>
             ))}
-          </List>
+          </Grid>
           {state.count > state.visibleItems && (
-            <Button className={classes.showMore} onClick={() => console.log('load more')}>
+            <Button className={classes.showMore} onClick={handleNext}>
               <FormattedMessage id="ui.groupRequestsWidget.button.showMore" defaultMessage="ui.groupRequestsWidget.button.showMore" />
             </Button>
           )}

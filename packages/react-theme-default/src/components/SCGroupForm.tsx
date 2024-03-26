@@ -3,11 +3,11 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      '& .SCCreateGroup-cover': {
+      '& .SCGroupForm-cover': {
         position: 'relative',
         height: 120,
         minHeight: 120,
-        '& .SCCreateGroup-avatar': {
+        '& .SCGroupForm-avatar': {
           top: 120,
           display: 'block',
           position: 'absolute',
@@ -38,11 +38,14 @@ const Component = {
           bottom: theme.spacing(2)
         }
       },
-      '& .SCCreateGroup-header': {
+      '& .SCGroupForm-header': {
         marginTop: theme.spacing(4.5),
         color: theme.palette.text.secondary
       },
-      '& .SCCreateGroup-switch': {
+      '& .SCGroupForm-error': {
+        color: theme.palette.error.main
+      },
+      '& .SCGroupForm-switch': {
         '& .MuiButtonBase-root': {
           '&.Mui-checked': {
             color: theme.palette.secondary.main,
@@ -52,30 +55,30 @@ const Component = {
           }
         }
       },
-      '& .SCCreateGroup-switch-label': {
+      '& .SCGroupForm-switch-label': {
         fontWeight: theme.typography.fontWeightMedium,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         gap: theme.spacing(0.5)
       },
-      '& .SCCreateGroup-active': {
+      '& .SCGroupForm-active': {
         color: theme.palette.secondary.main
       },
-      '& .SCCreateGroup-privacy-section': {
+      '& .SCGroupForm-privacy-section': {
         marginTop: theme.spacing(2),
-        '& .SCCreateGroup-privacy-section-info': {
+        '& .SCGroupForm-privacy-section-info': {
           marginBottom: theme.spacing(2)
         }
       },
-      '& .SCCreateGroup-visibility-section-info': {
+      '& .SCGroupForm-visibility-section-info': {
         marginTop: theme.spacing(1)
       },
       '& .MuiDivider-root': {
         marginTop: theme.spacing(2),
         border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`
       },
-      '& .SCCreateGroup-invite-section': {
+      '& .SCGroupForm-invite-section': {
         marginTop: theme.spacing(2),
         display: 'flex',
         justifyContent: 'center',
