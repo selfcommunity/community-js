@@ -227,6 +227,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
         .then(() => {
           setIsSending(false);
           setOpen(false);
+          setInvited([]);
         })
         .catch((error) => {
           setOpen(false);

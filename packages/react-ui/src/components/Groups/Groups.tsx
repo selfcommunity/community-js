@@ -251,7 +251,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
           <Grid container spacing={{xs: 3}} className={classes.groups}>
             {state.results.slice(0, state.visibleItems).map((group: SCGroupType) => (
               <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
-                <Group actions={<></>} group={group} groupId={group.id} buttonProps={{onClick: () => console.log(group)}} {...GroupProps} />
+                <Group group={group} groupId={group.id} {...GroupProps} />
               </Grid>
             ))}
           </Grid>
