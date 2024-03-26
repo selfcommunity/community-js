@@ -132,6 +132,7 @@ import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
 import SCGroups from './components/SCGroups';
 import SCEditGroupButton from './components/SCEditGroupButton';
+import SCGroupAutocomplete from './components/SCGroupAutocomplete';
 /**
  * Style fragments - Imports - End
  */
@@ -327,7 +328,8 @@ const theme = {
     SCGroupMembersWidget,
     SCGroupRequestsWidget,
     SCGroups,
-    SCEditGroupButton
+    SCEditGroupButton,
+    SCGroupAutocomplete
   },
   selfcommunity: {
     user: {

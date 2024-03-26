@@ -121,11 +121,22 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       });
   };
 
+  const unsubscribe = () => {
+    scGroupsManager
+      .unsubscribe(scGroup)
+      .then(() => {
+        // onJoin && onJoin(scGroup, !joined);
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+      });
+  };
+
   const handleSubscribeAction = () => {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      subscribe();
+      SCGroupSubscriptionStatusType.SUBSCRIBED ? unsubscribe() : subscribe();
     }
   };
 

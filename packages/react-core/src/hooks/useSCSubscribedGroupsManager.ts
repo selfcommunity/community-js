@@ -85,6 +85,33 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   );
 
   /**
+   * Memoized subscribe Group
+   * Toggle action
+   */
+  const unsubscribe = useMemo(
+    () =>
+      (group: SCGroupType): Promise<any> => {
+        setLoading(group.id);
+        return http
+          .request({
+            url: Endpoints.UnsubscribeFromGroup.url({id: group.id}),
+            method: Endpoints.UnsubscribeFromGroup.method,
+          })
+          .then((res: HttpResponse<any>) => {
+            if (res.status >= 300) {
+              return Promise.reject(res);
+            }
+            updateCache([group.id]);
+            const isSubscribed = data.includes(group.id);
+            setData((prev) => (isSubscribed ? prev.filter((id) => id !== group.id) : [...[group.id], ...prev]));
+            setUnLoading(group.id);
+            return Promise.resolve(res.data);
+          });
+      },
+    [data, loading, cache]
+  );
+
+  /**
    * Check the authenticated user subscription status to the group
    * Update the groups cached
    * Update groups subscription statuses
@@ -196,5 +223,5 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   if (!user) {
     return {groups: data, loading, isLoading};
   }
-  return {groups: data, loading, isLoading, subscribe, subscriptionStatus, refresh, emptyCache};
+  return {groups: data, loading, isLoading, subscribe, unsubscribe, subscriptionStatus, refresh, emptyCache};
 }

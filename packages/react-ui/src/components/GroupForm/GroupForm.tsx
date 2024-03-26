@@ -139,7 +139,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     name: group ? group.name : '',
     description: group ? group.description : '',
     isPublic: group && group.privacy === SCGroupPrivacyType.PUBLIC,
-    isVisible: group ? group.visible : false,
+    isVisible: group ? group.visible : true,
     invitedUsers: null,
     isSubmitting: false
   };
@@ -161,6 +161,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
   };
 
   function handleChangeAvatar(avatar) {
+    setField((prev: any) => ({...prev, ['imageOriginalFile']: avatar}));
     const reader = new FileReader();
     reader.onloadend = () => {
       setField((prev: any) => ({...prev, ['imageOriginal']: reader.result}));
@@ -173,6 +174,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
   }
 
   function handleChangeCover(cover) {
+    setField((prev: any) => ({...prev, ['emotionalImageOriginalFile']: cover}));
     const reader = new FileReader();
     reader.onloadend = () => {
       setField((prev: any) => ({...prev, ['emotionalImageOriginal']: reader.result}));
@@ -191,10 +193,10 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     formData.append('description', field.description);
     formData.append('privacy', field.isPublic ? SCGroupPrivacyType.PUBLIC : SCGroupPrivacyType.PRIVATE);
     formData.append('visible', field.isVisible);
-    if (!group || (group && group.image_medium !== field.imageOriginal)) {
+    if (field.imageOriginalFile) {
       formData.append('image_original', field.imageOriginalFile);
     }
-    if (!group || (group && group.emotional_image !== field.emotionalImageOriginal)) {
+    if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
     for (const key in field.invitedUsers) {

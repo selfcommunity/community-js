@@ -5,7 +5,7 @@ import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {AutocompleteProps, Chip} from '@mui/material';
+import {AutocompleteProps, Avatar, Box, Chip, Typography} from '@mui/material';
 import {useSCFetchGroups} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {SCGroupType} from '@selfcommunity/types/src/index';
@@ -146,6 +146,7 @@ const GroupAutocomplete = (inProps: GroupAutocompleteProps): JSX.Element => {
   // Render
   return (
     <Root
+      freeSolo
       className={classes.root}
       open={open}
       onOpen={handleOpen}
@@ -162,26 +163,25 @@ const GroupAutocomplete = (inProps: GroupAutocompleteProps): JSX.Element => {
       noOptionsText={<FormattedMessage id="ui.groupAutocomplete.empty" defaultMessage="ui.groupAutocomplete.empty" />}
       onChange={handleChange}
       isOptionEqualToValue={(option: SCGroupType, value: SCGroupType) => value.id === option.id}
-      renderTags={(value, getTagProps) => {
-        return value.map((option: any, index) => <Chip key={option.id} id={option.id} label={option.name} {...getTagProps({index})} />);
-      }}
+      // renderTags={(value, getTagProps) => {
+      //   return value.map((option: any, index) => (
+      //     <Chip key={option.id} id={option.id} label={option.name} color={option.color} {...getTagProps({index})} />
+      //   ));
+      // }}
       renderOption={(props, option: SCGroupType, {inputValue}) => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
         return (
-          <li {...props}>
-            <Chip
-              label={
-                <React.Fragment>
-                  {parts.map((part, index) => (
-                    <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
-                      {part.text}
-                    </span>
-                  ))}
-                </React.Fragment>
-              }
-            />
-          </li>
+          <Box component="li" {...props}>
+            <Avatar alt={option.name} src={option.image_small} sx={{marginRight: 1}} />
+            <React.Fragment>
+              {parts.map((part, index) => (
+                <Typography key={index} sx={{fontWeight: part.highlight ? 700 : 400, marginRight: 0.2}}>
+                  {part.text}
+                </Typography>
+              ))}
+            </React.Fragment>
+          </Box>
         );
       }}
       renderInput={(params) => {

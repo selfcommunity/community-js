@@ -11,7 +11,7 @@ import {WidgetProps} from '../Widget';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import {PREFIX} from './constants';
 import GroupSkeleton from './Skeleton';
-import GroupSubscribeButton from '../GroupSubscribeButton';
+import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
 
 const messages = defineMessages({
   groupMembers: {
@@ -38,22 +38,16 @@ export interface GroupProps extends WidgetProps {
    * @default null
    */
   group?: SCGroupType;
-
   /**
    * Id of the group for filter the feed
    * @default null
    */
   groupId?: number;
   /**
-   * Handles actions ignore
-   * @default null
+   * Props to spread to group subscribe/unsubscribe button
+   * @default {}
    */
-  handleIgnoreAction?: (u) => void;
-  // /**
-  //  * Props to spread to follow/friendship button
-  //  * @default {}
-  //  */
-  // followConnectUserButtonProps?: FollowUserButtonProps | FriendshipButtonProps;
+  groupSubscribeButtonProps?: GroupSubscribeButtonProps;
   /**
    * Badge content to show as group avatar badge if show reaction is true.
    */
@@ -111,10 +105,10 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const {
     groupId = null,
     group = null,
-    handleIgnoreAction,
     className = null,
     elevation,
     hideActions = false,
+    groupSubscribeButtonProps = {},
     buttonProps = {},
     visible = true,
     ...rest
@@ -138,13 +132,8 @@ export default function Group(inProps: GroupProps): JSX.Element {
   function renderAuthenticatedActions() {
     return (
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
-        {/*{handleIgnoreAction && (*/}
-        {/*  <Button size="small" onClick={handleIgnoreAction}>*/}
-        {/*    <FormattedMessage defaultMessage="ui.group.ignore" id="ui.group.ignore" />*/}
-        {/*  </Button>*/}
-        {/*)}*/}
         <Icon>{!visible ? 'private' : 'public'}</Icon>
-        <GroupSubscribeButton group={group} groupId={groupId} />
+        <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
       </Stack>
     );
   }

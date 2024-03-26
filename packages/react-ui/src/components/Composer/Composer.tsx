@@ -64,7 +64,7 @@ import Attributes from './Attributes';
 import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
-import GroupLayer from './Layer/GroupLayer';
+import {AudienceTypes} from './Layer/AudienceLayer/AudienceLayer';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -451,29 +451,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     [handleAddLayer, handleRemoveLayer, handleChangeCategories, categories]
   );
 
-  const handleChangeGroup = useCallback((value: SCGroupType | null) => {
-    dispatch({type: 'group', value});
-    setLayer(null);
-  }, []);
-
-  const handleAddGroupLayer = useCallback(
-    () =>
-      handleAddLayer({
-        name: 'group',
-        Component: GroupLayer,
-        ComponentProps: {
-          onClose: handleRemoveLayer,
-          onSave: handleChangeGroup,
-          defaultValue: group
-        }
-      }),
-    [handleAddLayer, handleRemoveLayer, handleChangeGroup, group]
+  const handleChangeAudience = useCallback(
+    (value: SCTagType[] | SCGroupType | null) => {
+      if (group) {
+        dispatch({type: 'group', value});
+      } else {
+        dispatch({type: 'addressing', value});
+      }
+      setLayer(null);
+    },
+    [group]
   );
-
-  const handleChangeAudience = useCallback((value: SCTagType[] | null) => {
-    dispatch({type: 'addressing', value});
-    setLayer(null);
-  }, []);
 
   const handleAddAudienceLayer = useCallback(
     () =>
@@ -483,10 +471,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeAudience,
-          defaultValue: addressing
+          defaultValue: group ? group : addressing,
+          defaultType: group ? AudienceTypes.AUDIENCE_GROUP : addressing ? AudienceTypes.AUDIENCE_TAG : AudienceTypes.AUDIENCE_ALL
         }
       }),
-    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing]
+    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, group]
   );
 
   const handleChangeLocation = useCallback((value: SCContributionLocation | null) => {
@@ -557,9 +546,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         case 'categories':
           handleAddCategoryLayer();
           break;
-        case 'group':
-          handleAddGroupLayer();
-          break;
         case 'addressing':
           handleAddAudienceLayer();
           break;
@@ -568,7 +554,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           break;
       }
     },
-    [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer, handleAddGroupLayer]
+    [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer]
   );
 
   const handleSubmit = useCallback(
@@ -824,11 +810,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>
               <Icon>add_location_alt</Icon>
-            </IconButton>
-          )}
-          {features.includes(SCFeatureName.GROUPING) && (
-            <IconButton disabled={isSubmitting} onClick={handleAddGroupLayer}>
-              <Icon>groups</Icon>
             </IconButton>
           )}
         </DialogActions>
