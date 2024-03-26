@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.3...@selfcommunity/react-ui@0.7.9-alpha.4) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixed composer audience section for groups ([ff2c76b](https://github.com/selfcommunity/community-js/commit/ff2c76bf7e96e4125cc141ea29279533d993d317))
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
 ## [0.7.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.2...@selfcommunity/react-ui@0.7.9-alpha.3) (2024-03-25)
 
 
