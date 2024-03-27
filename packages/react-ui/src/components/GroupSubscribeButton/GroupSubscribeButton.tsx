@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCContextType, SCSubscribedGroupsManagerType, SCUserContextType, useSCContext, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
@@ -100,6 +100,11 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
 
+  const canEdit = useMemo(
+    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
+    [scUserContext.user, scGroup?.managed_by?.id]
+  );
+
   useEffect(() => {
     /**
      * Call scGroupsManager.subscriptionStatus inside an effect
@@ -161,7 +166,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     return _status;
   };
 
-  if (!scGroup || (scGroup && !scGroup.subscription_status)) {
+  if (!scGroup || (scGroup && !scGroup.subscription_status) || canEdit) {
     return null;
   }
 

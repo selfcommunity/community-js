@@ -98,23 +98,12 @@ const Component = {
           border: '#FFF solid 5px'
         }
       },
-      '& .SCGroupHeader-section': {
+      '& .SCGroupHeader-info': {
         display: 'flex',
         justifyContent: 'center',
-        '& .SCGroupHeader-name': {
-          marginTop: 50,
-          textAlign: 'start',
-          [`& .MuiSkeleton-root`]: {
-            justifyContent: 'center'
-          }
-        },
-        '& .SCGroupHeader-actions': {
-          [theme.breakpoints.up('md')]: {
-            margin: theme.spacing(1, 2, 2, 2)
-          },
-          height: 'fit-content',
-          marginTop: theme.spacing(1)
-        }
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: 60
       }
     })
   }
