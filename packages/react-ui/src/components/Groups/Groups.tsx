@@ -1,11 +1,17 @@
-import React, {useEffect, useMemo, useReducer} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Grid, Typography} from '@mui/material';
+import {Box, Grid, Typography} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {http, EndpointType} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCCache, SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
+import {Logger} from '@selfcommunity/utils';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useIsComponentMountedRef,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -32,30 +38,25 @@ const Root = styled(Box, {
 
 export interface GroupsProps {
   /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: string;
+  /**
    * Endpoint to call
    */
   endpoint: EndpointType;
   /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
-   * Limit the number of users to show
-   * @default false
-   */
-  limit?: number;
-  /**
-   * Caching strategies
-   * @default CacheStrategies.CACHE_FIRST
-   */
-  cacheStrategy?: CacheStrategies;
-
-  /**
    * Props to spread to single group object
-   * @default empty object
+   * @default {variant: 'outlined', ButtonBaseProps: {disableRipple: 'true'}}
    */
-  GroupProps?: GroupProps;
+  GroupComponentProps?: GroupProps;
+  /**
+   * Prefetch groups. Useful for SSR.
+   * Use this to init the component with groups
+   * @default null
+   */
+  prefetchedGroups?: SCGroupType[];
 
   /**
    * Other props
@@ -102,28 +103,15 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   });
   const {
     endpoint,
-    autoHide = false,
-    limit = 6,
     className,
-    cacheStrategy = CacheStrategies.NETWORK_ONLY,
-    onHeightChange,
-    onStateChange,
-    GroupProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
+    GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
+    prefetchedGroups = [],
     ...rest
   } = props;
 
   // STATE
-  const [state, dispatch] = useReducer(
-    dataWidgetReducer,
-    {
-      isLoadingNext: false,
-      next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.GROUPS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY),
-      cacheStrategy,
-      visibleItems: limit
-    },
-    stateWidgetInitializer
-  );
+  const [groups, setGroups] = useState<SCGroupType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -137,130 +125,76 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     [scPreferencesContext.preferences]
   );
 
-  // HOOKS
-  // const theme = useTheme<SCThemeType>();
-  // const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
+  // REFS
+  const isMountedRef = useIsComponentMountedRef();
 
   /**
-   * Initialize component
-   * Fetch data only if the component is not initialized, and it is not loading data
+   * Fetches groups list
    */
-  const _initComponent = useMemo(
-    () => (): void => {
-      if (!state.initialized && !state.isLoadingNext) {
-        dispatch({type: actionWidgetTypes.LOADING_NEXT});
-        http
-          .request({
-            url: endpoint.url({limit}),
-            method: endpoint.method
-          })
-          .then((payload: any) => {
-            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload.data, initialized: true}});
-          })
-          .catch((error) => {
-            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-            Logger.error(SCOPE_SC_UI, error);
-          });
-      }
-    },
-    [state.isLoadingNext, state.initialized, endpoint, limit, dispatch]
-  );
+  const fetchGroups = async (next: string = endpoint.url({})): Promise<[]> => {
+    const response: AxiosResponse<any> = await http.request({
+      url: next,
+      method: endpoint.method
+    });
+    const data = response.data;
+    return data.next ? data.results.concat(await fetchGroups(data.next)) : data.results;
+  };
 
-  // EFFECTS
+  /**
+   * On mount, fetches groups list
+   */
   useEffect(() => {
-    let _t;
-    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && scUserContext.user !== undefined) {
-      _t = setTimeout(_initComponent);
-      return (): void => {
-        _t && clearTimeout(_t);
-      };
-    }
-  }, [scUserContext.user, contentAvailability]);
-
-  useEffect(() => {
-    if (state.next && state.results.length === limit && state.initialized) {
-      dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      http
-        .request({
-          url: endpoint.url({offset: limit, limit: 10}),
-          method: endpoint.method
-        })
-        .then((payload: any) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: payload.data});
+    if (!contentAvailability && !authUserId) {
+      return;
+    } else if (prefetchedGroups.length) {
+      setGroups(prefetchedGroups);
+      setLoading(false);
+    } else {
+      fetchGroups()
+        .then((data: any) => {
+          if (isMountedRef.current) {
+            setGroups(data);
+            setLoading(false);
+          }
         })
         .catch((error) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [state.next, state.results.length, state.initialized, limit]);
-
-  /**
-   * Virtual feed update
-   */
-  useEffect(() => {
-    onHeightChange && onHeightChange();
-  }, [state.results]);
-
-  useEffect(() => {
-    if (!endpoint || (!contentAvailability && !scUserContext.user)) {
-      return;
-    } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
-      onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
-    }
-  }, [scUserContext.user, endpoint, contentAvailability]);
-
-  useEffect(() => {
-    if (!endpoint || !scUserContext.user || !state.initialized) {
-      return;
-    }
-  }, []);
-
-  // HANDLERS
-  const handleNext = useMemo(
-    () => (): void => {
-      dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      http
-        .request({
-          url: state.next,
-          method: endpoint.method
-        })
-        .then((res: AxiosResponse<any>) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
-        });
-    },
-    [dispatch, state.next, state.isLoadingNext, state.initialized, endpoint.method]
-  );
+  }, [contentAvailability, authUserId, prefetchedGroups.length]);
 
   // RENDER
-  if ((autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !endpoint) {
+  if (!contentAvailability && !scUserContext.user) {
     return <HiddenPlaceholder />;
   }
-  if (!state.initialized) {
-    return <Skeleton />;
-  }
-
   const content = (
     <>
-      {!state.count ? (
-        <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.groupRequestsWidget.subtitle.noResults" defaultMessage="" />
-        </Typography>
+      {loading ? (
+        <Skeleton />
       ) : (
-        <React.Fragment>
-          <Grid container spacing={{xs: 3}} className={classes.groups}>
-            {state.results.slice(0, state.visibleItems).map((group: SCGroupType) => (
-              <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
-                <Group group={group} groupId={group.id} {...GroupProps} />
-              </Grid>
-            ))}
-          </Grid>
-          {state.count > state.visibleItems && (
-            <Button className={classes.showMore} onClick={handleNext}>
-              <FormattedMessage id="ui.groupRequestsWidget.button.showMore" defaultMessage="ui.groupRequestsWidget.button.showMore" />
-            </Button>
+        <Grid container spacing={{xs: 3}} className={classes.groups}>
+          {!groups.length ? (
+            <Box className={classes.noResults}>
+              <Typography variant="h4">
+                <FormattedMessage id="ui.groups.noGroups.title" defaultMessage="ui.groups.noGroups.title" />
+              </Typography>
+              <Typography variant="body1">
+                <FormattedMessage id="ui.groups.noGroups.subtitle" defaultMessage="ui.groups.noGroups.subtitle" />
+              </Typography>
+            </Box>
+          ) : (
+            <>
+              {groups.map((group: SCGroupType) => (
+                <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
+                  <Group group={group} groupId={group.id} {...GroupComponentProps} />
+                </Grid>
+              ))}
+            </>
           )}
-        </React.Fragment>
+        </Grid>
       )}
     </>
   );

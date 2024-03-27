@@ -205,7 +205,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        markRead: scUser ? !item?.seen_by_id?.includes(scUser.id) : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}

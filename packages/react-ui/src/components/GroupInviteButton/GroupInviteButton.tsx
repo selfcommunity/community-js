@@ -278,9 +278,9 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   };
 
   /**
-   * If there's no authUserId, component is hidden.
+   * If in group edit mode and logged-in user is not also the group manager, the component is hidden.
   //  */
-  if (!canEdit) {
+  if (group && !canEdit) {
     return null;
   }
 
@@ -311,7 +311,13 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
               <Typography className={classes.dialogTitle}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.title" defaultMessage="ui.groupInviteButton.dialog.title" />
               </Typography>
-              <LoadingButton size="small" color="secondary" variant="contained" onClick={handleSendInvitations} loading={isSending}>
+              <LoadingButton
+                size="small"
+                color="secondary"
+                variant="contained"
+                onClick={handleSendInvitations}
+                loading={isSending}
+                disabled={!invited.length}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.button.end" defaultMessage="ui.groupInviteButton.dialog.button.end" />
               </LoadingButton>
             </>
