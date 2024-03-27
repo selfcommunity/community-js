@@ -109,7 +109,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
     elevation,
     hideActions = false,
     groupSubscribeButtonProps = {},
-    buttonProps = {},
     visible = true,
     ...rest
   } = props;
@@ -154,7 +153,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
         elevation={elevation}
         {...rest}
         className={classNames(classes.root, className)}
-        ButtonBaseProps={buttonProps ?? {component: Link, to: scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}}
+        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}}
         image={<Avatar alt={scGroup.name} src={scGroup.image_medium} className={classes.avatar} />}
         primary={scGroup.name}
         secondary={`${intl.formatMessage(messages.groupMembers, {total: scGroup.subscribers_counter})}`}

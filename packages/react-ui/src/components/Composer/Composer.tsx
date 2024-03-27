@@ -64,7 +64,6 @@ import Attributes from './Attributes';
 import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
-import {AudienceTypes} from './Layer/AudienceLayer/AudienceLayer';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -453,7 +452,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   const handleChangeAudience = useCallback(
     (value: SCTagType[] | SCGroupType | null) => {
-      if (group) {
+      if (group || typeof value === 'object') {
         dispatch({type: 'group', value});
       } else {
         dispatch({type: 'addressing', value});
@@ -471,8 +470,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeAudience,
-          defaultValue: group ? group : addressing,
-          defaultType: group ? AudienceTypes.AUDIENCE_GROUP : addressing ? AudienceTypes.AUDIENCE_TAG : AudienceTypes.AUDIENCE_ALL
+          defaultValue: group || typeof addressing === 'object' ? group : addressing
         }
       }),
     [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, group]
@@ -805,7 +803,13 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Icon>category</Icon>
           </IconButton>
           <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
-            {addressing === null || addressing.length === 0 ? <Icon>public</Icon> : <Icon>label</Icon>}
+            {addressing === null || addressing.length === 0 ? (
+              <Icon>public</Icon>
+            ) : typeof addressing === 'object' ? (
+              <Icon>groups</Icon>
+            ) : (
+              <Icon>label</Icon>
+            )}
           </IconButton>
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>

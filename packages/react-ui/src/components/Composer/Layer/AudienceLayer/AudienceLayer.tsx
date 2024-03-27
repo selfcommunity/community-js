@@ -36,7 +36,6 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface AudienceLayerProps extends Omit<BoxProps, 'defaultValue'>, ComposerLayerProps {
-  defaultType: AudienceTypes;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   defaultValue: SCTagType[] | SCGroupType;
@@ -49,7 +48,6 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
     className,
     onClose,
     onSave,
-    defaultType = AudienceTypes.AUDIENCE_TAG,
     defaultValue = AudienceTypes.AUDIENCE_TAG ? [] : null,
     TextFieldProps = {
       variant: 'outlined',
@@ -65,7 +63,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
     // @ts-ignore
     defaultValue === null || defaultValue.length === 0
       ? AudienceTypes.AUDIENCE_ALL
-      : defaultType === AudienceTypes.AUDIENCE_GROUP
+      : typeof defaultValue === 'object'
       ? AudienceTypes.AUDIENCE_GROUP
       : AudienceTypes.AUDIENCE_TAG
   );
@@ -80,7 +78,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
   const handleSave = useCallback(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    () => (defaultType === AudienceTypes.AUDIENCE_GROUP ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null)),
+    () => (typeof defaultValue === 'object' ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null)),
     [value, onSave]
   );
   const handleChange = useCallback((event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
@@ -111,13 +109,17 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
           />
           <Tab
-            disabled={defaultType === AudienceTypes.AUDIENCE_TAG}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            disabled={defaultValue && defaultValue.length !== 0}
             value={AudienceTypes.AUDIENCE_GROUP}
             icon={<Icon>groups</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
           />
           <Tab
-            disabled={defaultType === AudienceTypes.AUDIENCE_GROUP}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            disabled={typeof defaultValue === 'object'}
             value={AudienceTypes.AUDIENCE_TAG}
             icon={<Icon>label</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.tag" defaultMessage="ui.composer.layer.audience.tag" />}

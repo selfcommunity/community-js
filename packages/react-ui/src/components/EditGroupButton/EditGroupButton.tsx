@@ -2,7 +2,7 @@ import React from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import {useSCFetchGroup} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import CreateGroupButton, {CreateGroupButtonProps} from '../CreateGroupButton';
 import {SCGroupType} from '@selfcommunity/types';
@@ -69,12 +69,16 @@ export default function EditGroupButton(inProps: EditGroupButtonProps): JSX.Elem
   });
   const {className, groupId, group, onEditSuccess, ...rest} = props;
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
+  const scUserContext: SCUserContextType = useSCUser();
 
   const handleSuccess = (data: SCGroupType) => {
     setSCGroup(data);
     onEditSuccess && onEditSuccess(data);
   };
 
+  if (!scUserContext.user) {
+    return null;
+  }
   /**
    * Renders root object
    */

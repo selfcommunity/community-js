@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button, Icon, IconButton, Stack, Typography, useTheme} from '@mui/material';
+import {Box, Typography, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -9,9 +9,7 @@ const classes = {
   root: `${PREFIX}-skeleton-root`,
   cover: `${PREFIX}-cover`,
   avatar: `${PREFIX}-avatar`,
-  actions: `${PREFIX}-actions`,
-  section: `${PREFIX}-section`,
-  username: `${PREFIX}-username`
+  info: `${PREFIX}-info`
 };
 
 const Root = styled(Box, {
@@ -20,7 +18,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 /**
- * > API documentation for the Community-JS Group Headerr Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Group Header Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
@@ -39,9 +37,7 @@ const Root = styled(Box, {
  |root|.SCGroupHeader-skeleton-root|Styles applied to the root element.|
  |avatar|.SCGroupHeader-avatar|Styles applied to the avatar element.|
  |cover|.SCGroupHeader-cover|Styles applied to the cover element.|
- |actions|.SCGroupHeader-actions|Styles applied to the actions section.|
- |section|.SCGroupHeader-section|Styles applied to the info section.|
- |username|.SCGroupHeader-username|Styles applied to the username element.|
+ |info|.SCGroupHeader-info|Styles applied to the info info.|
  *
  */
 function GroupHeaderSkeleton(): JSX.Element {
@@ -58,18 +54,16 @@ function GroupHeaderSkeleton(): JSX.Element {
           height={theme.selfcommunity.group.avatar.sizeLarge}
         />
       </Box>
-      <Box className={classes.section}>
-        <Typography variant="h5" className={classes.username}>
-          <Skeleton animation="wave" sx={{height: 30, width: 100}} />
+      <Box className={classes.info}>
+        <Typography variant="h5">
+          <Skeleton animation="wave" sx={{height: 30, width: 200}} />
         </Typography>
-        {/*<Stack direction="row" className={classes.actions}>*/}
-        {/*  <Button variant="contained" disabled>*/}
-        {/*    <Skeleton animation="wave" sx={{height: 20, width: 60}} />*/}
-        {/*  </Button>*/}
-        {/*  <IconButton disabled>*/}
-        {/*    <Icon>more_vert</Icon>*/}
-        {/*  </IconButton>*/}
-        {/*</Stack>*/}
+        <Typography>
+          <Skeleton animation="wave" sx={{height: 20, width: 150}} />
+        </Typography>
+        <Typography>
+          <Skeleton animation="wave" sx={{height: 20, width: 100}} />
+        </Typography>
       </Box>
     </Root>
   );
