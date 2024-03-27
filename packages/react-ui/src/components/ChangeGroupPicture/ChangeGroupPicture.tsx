@@ -15,8 +15,8 @@ import {LoadingButton} from '@mui/lab';
 
 const messages = defineMessages({
   errorLoadImage: {
-    id: 'ui.changeGroupCover.button.change.alertErrorImage',
-    defaultMessage: 'ui.changeGroupCover.button.change.alertErrorImage'
+    id: 'ui.changeGroupPicture.alert',
+    defaultMessage: 'ui.changeGroupPicture.alert'
   }
 });
 
@@ -115,10 +115,26 @@ export default function ChangeGroupPicture(inProps: ChangeGroupPictureProps): JS
    * @param event
    */
   function handleUpload(event) {
-    fileInput = event.target.files[0];
-    isCreationMode ? onChange && onChange(fileInput) : handleSave();
+    const fileInput = event.target.files[0];
+    if (fileInput) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          if (img.width < 600 && img.height < 600) {
+            setAlert(intl.formatMessage(messages.errorLoadImage));
+          } else {
+            isCreationMode ? onChange && onChange(fileInput) : handleSave();
+          }
+        };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(fileInput);
+    }
   }
-
+  // ui.changeGroupPicture.alert
   /**
    * Performs save avatar after upload
    */

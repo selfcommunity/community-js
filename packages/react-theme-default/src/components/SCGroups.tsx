@@ -11,6 +11,20 @@ const Component = {
             padding: theme.spacing(1)
           }
         }
+      },
+      '& .SCGroups-no-results': {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& h4': {
+          fontWeight: theme.typography.fontWeightBold,
+          fontSize: theme.typography.h4.fontSize
+        },
+        '& .MuiTypography-body1': {
+          fontWeight: theme.typography.fontWeightMedium,
+          fontSize: theme.typography.body1.fontSize
+        }
       }
     }),
     skeletonRoot: ({theme}: any) => ({

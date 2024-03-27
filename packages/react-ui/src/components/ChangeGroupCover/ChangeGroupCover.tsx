@@ -26,6 +26,10 @@ const messages = defineMessages({
   errorLoadImage: {
     id: 'ui.changeGroupCover.button.change.alertErrorImage',
     defaultMessage: 'ui.changeGroupCover.button.change.alertErrorImage'
+  },
+  errorImageSize: {
+    id: 'ui.changeGroupCover.alert',
+    defaultMessage: 'ui.changeGroupCover.alert'
   }
 });
 
@@ -114,7 +118,25 @@ export default function ChangeGroupCover(inProps: ChangeGroupCoverProps): JSX.El
    */
   const handleUpload = (event) => {
     fileInput = event.target.files[0];
-    isCreationMode ? onChange && onChange(fileInput) : handleSave();
+    if (fileInput) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          if (img.width < 1920) {
+            setAlert(intl.formatMessage(messages.errorImageSize));
+          } else {
+            isCreationMode ? onChange && onChange(fileInput) : handleSave();
+          }
+        };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        img.src = e.target.result;
+      };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      reader.readAsDataURL(fileInput);
+    }
   };
 
   /**
