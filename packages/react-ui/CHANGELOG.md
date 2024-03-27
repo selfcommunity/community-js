@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.6...@selfcommunity/react-ui@0.7.9-alpha.7) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
 ## [0.7.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.5...@selfcommunity/react-ui@0.7.9-alpha.6) (2024-03-27)
 
 

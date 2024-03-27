@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.3...@selfcommunity/react-i18n@0.5.9-alpha.4) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
 ## [0.5.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.2...@selfcommunity/react-i18n@0.5.9-alpha.3) (2024-03-26)
 
 
