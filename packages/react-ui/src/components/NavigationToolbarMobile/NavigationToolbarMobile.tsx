@@ -43,6 +43,10 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   disableSearch?: boolean;
   /**
+   * Preserve the same as the desktop version
+   */
+  preserveDesktopLogo?: boolean;
+  /**
    * Props spread to SearchAutocomplete component
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
@@ -105,6 +109,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const {
     className = '',
     disableSearch = false,
+    preserveDesktopLogo = false,
     SearchAutocompleteProps = {},
     children = null,
     startActions = null,
@@ -141,7 +146,11 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     <>
       <NavigationMenuIconButtonComponent />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
-        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
+        {!preserveDesktopLogo ? (
+          <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
+        ) : (
+          <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO].value} alt="logo" />
+        )}
       </Link>
     </>
   );

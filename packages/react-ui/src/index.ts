@@ -119,6 +119,7 @@ import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import {File, EditMediaProps, Link, Share} from './shared/Media';
+import HiddenPlaceholder from './shared/HiddenPlaceholder';
 import UrlTextField from './shared/UrlTextField';
 import UsernameTextField from './shared/UsernameTextField';
 import EmailTextField from './shared/EmailTextField';
@@ -432,6 +433,7 @@ export {
   GroupForm,
   GroupFormProps,
   /* SC UI SHARED */
+	HiddenPlaceholder,
   UrlTextField,
   UsernameTextField,
   EmailTextField,

@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?bf7hns');
-  src:  url('./community/icons.eot?bf7hns#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?bf7hns') format('woff2'),
-  url('./community/icons.ttf?bf7hns') format('truetype'),
-  url('./community/icons.woff?bf7hns') format('woff'),
-  url('./community/icons.svg?bf7hns#community') format('svg');
+  src:  url('./community/icons.eot?nahfha');
+  src:  url('./community/icons.eot?nahfha#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?nahfha') format('woff2'),
+  url('./community/icons.ttf?nahfha') format('truetype'),
+  url('./community/icons.woff?nahfha') format('woff'),
+  url('./community/icons.svg?nahfha#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-my_community:before {
+	content: "\e967";
+}
+.icon-magic_wand:before {
+	content: "\e968";
+}
 .icon-private:before {
   content: "\e966";
 }
