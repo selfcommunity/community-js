@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.7...@selfcommunity/react-theme-default@0.1.9-alpha.8) (2024-03-28)
+
+
+### Bug Fixes
+
+* icons, toolbar ([74aa183](https://github.com/selfcommunity/community-js/commit/74aa183f64131bb71c2840ed1f34c6a96e064e0b))
+
+
+
+
+
 ## [0.1.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.6...@selfcommunity/react-theme-default@0.1.9-alpha.7) (2024-03-27)
 
 
