@@ -62,6 +62,9 @@ export const Actions: StoryObj<NavigationToolbarMobileProps> = {
       </IconButton>
     </>,
     endActions: <>
+			<IconButton>
+				<Icon>my_community</Icon>
+			</IconButton>
       <IconButton>
         <Icon>download</Icon>
       </IconButton>
