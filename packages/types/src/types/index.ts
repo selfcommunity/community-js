@@ -119,6 +119,7 @@ import {
   type SCDeviceGcmTypeEnum,
   SCDeviceTypeEnum
 } from './device';
+import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType} from './group';
 /**
  * Exports all types
  */
@@ -265,5 +266,8 @@ export {
   type SCGcmDeviceType,
   SCDeviceApnsTypeEnum,
   type SCDeviceGcmTypeEnum,
-  SCDeviceTypeEnum
+  SCDeviceTypeEnum,
+  type SCGroupType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType
 };

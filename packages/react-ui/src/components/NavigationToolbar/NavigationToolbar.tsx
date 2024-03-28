@@ -21,7 +21,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import NavigationMenuIconButton from '../NavigationMenuIconButton';
+import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -31,6 +31,7 @@ const classes = {
   navigation: `${PREFIX}-navigation`,
   home: `${PREFIX}-home`,
   explore: `${PREFIX}-explore`,
+  groups: `${PREFIX}-groups`,
   search: `${PREFIX}-search`,
   composer: `${PREFIX}-composer`,
   profile: `${PREFIX}-profile`,
@@ -71,6 +72,10 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * Actions to be inserted after Private Messages IconButton
    */
   endActions?: React.ReactNode | null;
+  /**
+   * Component for Navigation Menu Icon Button
+   */
+  NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
   /**
    * Component for Navigation Settings
    */
@@ -158,6 +163,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
+    NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     children = null,
     NotificationMenuProps = {},
     ComposerIconButtonProps = {},
@@ -178,6 +184,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     return _preferences;
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
+  const groupsEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.GROUPING), [scPreferences.features]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);
@@ -219,12 +226,21 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
             <Icon>explore</Icon>
           </IconButton>
         )}
+      {groupsEnabled && scUserContext.user && (
+        <IconButton
+          className={classNames(classes.groups, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {}))})}
+          aria-label="Groups"
+          to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}
+          component={Link}>
+          <Icon>groups</Icon>
+        </IconButton>
+      )}
     </Box>
   );
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <NavigationMenuIconButton />
+      <NavigationMenuIconButtonComponent />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>

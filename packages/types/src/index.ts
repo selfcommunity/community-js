@@ -114,7 +114,8 @@ import {
   type SCApnsDeviceType,
   type SCGcmDeviceType,
   type SCSuggestionType,
-	type SCContributionStatus,
+  type SCContributionStatus,
+  type SCGroupType
 } from './types';
 
 /**
@@ -147,7 +148,9 @@ import {
   SCUserStatus,
   SuggestionType,
   SCPrivateMessageStatusType,
-  SCMetadataTypeFieldType
+  SCMetadataTypeFieldType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType
 } from './types';
 
 /**
@@ -180,7 +183,9 @@ export {
   SCUserStatus,
   SuggestionType,
   SCPrivateMessageStatusType,
-  SCMetadataTypeFieldType
+  SCMetadataTypeFieldType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType
 };
 export {
   type SCBannerType,
@@ -271,8 +276,8 @@ export {
   type SCWebhookEndpointAttemptType,
   type SCWebhookEndpointSecretType,
   type SCWebhookEventsType,
-	type SCContributionStatus,
-	type SCVoteType,
+  type SCContributionStatus,
+  type SCVoteType,
   type SCFlagType,
   type SCCustomPageType,
   type SCDataPortabilityType,
@@ -295,5 +300,6 @@ export {
   type SCDeviceType,
   type SCApnsDeviceType,
   type SCGcmDeviceType,
-  type SCSuggestionType
+  type SCSuggestionType,
+  type SCGroupType
 };

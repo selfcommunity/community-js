@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.6...@selfcommunity/react-templates@0.3.9-alpha.7) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
+## [0.3.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.5...@selfcommunity/react-templates@0.3.9-alpha.6) (2024-03-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.4...@selfcommunity/react-templates@0.3.9-alpha.5) (2024-03-26)
+
+
+### Bug Fixes
+
+* group template export ([88dc3e7](https://github.com/selfcommunity/community-js/commit/88dc3e7ab23b333e1ce2da7c689b3dea0f238345))
+
+
+
+
+
+## [0.3.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.3...@selfcommunity/react-templates@0.3.9-alpha.4) (2024-03-26)
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.3.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.2...@selfcommunity/react-templates@0.3.9-alpha.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.3.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.1...@selfcommunity/react-templates@0.3.9-alpha.2) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.3.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.0...@selfcommunity/react-templates@0.3.9-alpha.1) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.8...@selfcommunity/react-templates@0.3.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.3.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.8-alpha.1...@selfcommunity/react-templates@0.3.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

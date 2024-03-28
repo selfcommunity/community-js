@@ -91,8 +91,8 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
   const {
     className = null,
     DrawerProps = {anchor: 'left'},
-    drawerContent = <DefaultDrawerContent />,
-    drawerHeaderContent = <DefaultHeaderContent />,
+		drawerHeaderContent = <DefaultHeaderContent />,
+		drawerContent = <DefaultDrawerContent />,
     ScrollContainerProps = {},
     ...rest
   } = props;

@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import UserSkeleton from './Skeleton';
-import {Avatar, Badge, Button, Chip} from '@mui/material';
+import {Avatar, Badge, Button, ButtonBaseProps, Chip} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {
   Link,
@@ -75,6 +75,16 @@ export interface UserProps extends WidgetProps {
    */
   badgeContent?: any;
   /**
+   * Prop to add actions
+   * @default null
+   */
+  actions?: React.ReactNode;
+  /**
+   * Props to spread to the button
+   * @default {}
+   */
+  buttonProps?: ButtonBaseProps;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -125,6 +135,8 @@ export default function User(inProps: UserProps): JSX.Element {
     showFollowers = false,
     elevation,
     badgeContent = null,
+    actions = null,
+    buttonProps = {},
     ...rest
   } = props;
 
@@ -181,7 +193,10 @@ export default function User(inProps: UserProps): JSX.Element {
         {...rest}
         className={classNames(classes.root, className)}
         ButtonBaseProps={
-          scUser.deleted ? {onClick: () => setOpenAlert(true)} : {component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)}
+          buttonProps ??
+          (scUser.deleted
+            ? {onClick: () => setOpenAlert(true)}
+            : {component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)})
         }
         image={
           badgeContent ? (
@@ -205,7 +220,7 @@ export default function User(inProps: UserProps): JSX.Element {
           )
         }
         secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
-        actions={renderAuthenticatedActions()}
+        actions={actions ?? renderAuthenticatedActions()}
       />
       {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
     </>

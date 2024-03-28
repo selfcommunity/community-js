@@ -3,6 +3,99 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.6...@selfcommunity/react-ui@0.7.9-alpha.7) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
+## [0.7.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.5...@selfcommunity/react-ui@0.7.9-alpha.6) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed composer ([81c3bea](https://github.com/selfcommunity/community-js/commit/81c3bea197394ad1576d4690a4fd904660e185a7))
+
+
+
+
+
+## [0.7.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.4...@selfcommunity/react-ui@0.7.9-alpha.5) (2024-03-26)
+
+
+### Bug Fixes
+
+* group template export ([88dc3e7](https://github.com/selfcommunity/community-js/commit/88dc3e7ab23b333e1ce2da7c689b3dea0f238345))
+
+
+
+
+
+## [0.7.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.3...@selfcommunity/react-ui@0.7.9-alpha.4) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixed composer audience section for groups ([ff2c76b](https://github.com/selfcommunity/community-js/commit/ff2c76bf7e96e4125cc141ea29279533d993d317))
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.7.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.2...@selfcommunity/react-ui@0.7.9-alpha.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.7.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.1...@selfcommunity/react-ui@0.7.9-alpha.2) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.7.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.0...@selfcommunity/react-ui@0.7.9-alpha.1) (2024-02-27)
+
+
+### Performance Improvements
+
+* added prop to NavigationToolbarMobile to customize NavigationMenuIconButton/ exported its drawer default content ([c9e3878](https://github.com/selfcommunity/community-js/commit/c9e3878cb23b901816c893de1eac48869a75e6fb))
+
+
+
+
+
+## [0.7.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.8...@selfcommunity/react-ui@0.7.9-alpha.0) (2024-02-27)
+
+
+### Performance Improvements
+
+* added prop to NavigationToolbar to customize NavigationMenuIconButton ([aff7e1e](https://github.com/selfcommunity/community-js/commit/aff7e1e864e8f7b14988318dac123441f6e3bfb0))
+
+
+
+
+
 ## [0.7.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.8-alpha.1...@selfcommunity/react-ui@0.7.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

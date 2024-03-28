@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.2...@selfcommunity/types@0.5.9-alpha.3) (2024-03-26)
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.5.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.1...@selfcommunity/types@0.5.9-alpha.2) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.5.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.0...@selfcommunity/types@0.5.9-alpha.1) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.5.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.8...@selfcommunity/types@0.5.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.5.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.8-alpha.1...@selfcommunity/types@0.5.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/types

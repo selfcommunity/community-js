@@ -53,6 +53,11 @@ export interface CustomAdvProps extends VirtualScrollerItemProps {
   categoriesId?: Array<number> | null;
 
   /**
+   * Group ids if the adv must be related to specific groups
+   */
+  groupsId?: Array<number> | null;
+
+  /**
    * Prefixed height. Usefull to re-mount item on scroll feed.
    */
   prefixedHeight?: number;

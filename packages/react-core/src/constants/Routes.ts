@@ -32,6 +32,8 @@ export const SIGNUP_ROUTE_NAME = 'signup';
 export const RECOVER_ROUTE_NAME = 'recover';
 export const CUSTOM_PAGES_ROUTE_NAME = 'custom_pages';
 export const LEGAL_PAGES_ROUTE_NAME = 'legal_pages';
+export const GROUP_ROUTE_NAME = 'group';
+export const GROUPS_ROUTE_NAME = 'groups';
 
 /**
  * Default Routes
@@ -66,4 +68,6 @@ export const defaultRoutes: {[k: string]: string} = {
   [RECOVER_ROUTE_NAME]: '/recover/',
   [CUSTOM_PAGES_ROUTE_NAME]: '/:id/:slug/',
   [LEGAL_PAGES_ROUTE_NAME]: '/legal/:policy/',
+  [GROUP_ROUTE_NAME]: '/group/:id/:slug/',
+  [GROUPS_ROUTE_NAME]: '/groups/',
 };
