@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.4...@selfcommunity/react-i18n@0.5.9-alpha.5) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
 ## [0.5.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.3...@selfcommunity/react-i18n@0.5.9-alpha.4) (2024-03-27)
 
 

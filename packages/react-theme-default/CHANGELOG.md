@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.8...@selfcommunity/react-theme-default@0.1.9-alpha.9) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
 ## [0.1.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.7...@selfcommunity/react-theme-default@0.1.9-alpha.8) (2024-03-28)
 
 
