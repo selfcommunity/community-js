@@ -175,7 +175,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     return _status;
   };
 
-  if (!scGroup || (isGroupAdmin && userId === scUserContext.user.id)) {
+  if (!scGroup || (isGroupAdmin && userId === scUserContext.user.id) || (isGroupAdmin && !userId)) {
     return null;
   }
 
