@@ -1,6 +1,6 @@
 import {useEffect, useMemo} from 'react';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCGroupType, SCUserType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -63,23 +63,46 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
    */
   const subscribe = useMemo(
     () =>
-      (group: SCGroupType): Promise<any> => {
+      (group: SCGroupType, userId?: number): Promise<any> => {
         setLoading(group.id);
-        return http
-          .request({
-            url: Endpoints.SubscribeToGroup.url({id: group.id}),
-            method: Endpoints.SubscribeToGroup.method,
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status >= 300) {
-              return Promise.reject(res);
-            }
-            updateCache([group.id]);
-            const isSubscribed = data.includes(group.id);
-            setData((prev) => (isSubscribed ? prev.filter((id) => id !== group.id) : [...[group.id], ...prev]));
-            setUnLoading(group.id);
-            return Promise.resolve(res.data);
-          });
+        if (userId) {
+          return http
+            .request({
+              url: Endpoints.InviteOrAcceptGroupRequest.url({id: group.id}),
+              method: Endpoints.InviteOrAcceptGroupRequest.method,
+              data: {users: [userId]},
+            })
+            .then((res: HttpResponse<any>) => {
+              if (res.status >= 300) {
+                return Promise.reject(res);
+              }
+              updateCache([group.id]);
+              setData((prev) => getDataUpdated(prev, group.id, SCGroupSubscriptionStatusType.SUBSCRIBED));
+              setUnLoading(group.id);
+              return Promise.resolve(res.data);
+            });
+        } else {
+          return http
+            .request({
+              url: Endpoints.SubscribeToGroup.url({id: group.id}),
+              method: Endpoints.SubscribeToGroup.method,
+            })
+            .then((res: HttpResponse<any>) => {
+              if (res.status >= 300) {
+                return Promise.reject(res);
+              }
+              updateCache([group.id]);
+              setData((prev) =>
+                getDataUpdated(
+                  prev,
+                  group.id,
+                  group.privacy === SCGroupPrivacyType.PRIVATE ? SCGroupSubscriptionStatusType.REQUESTED : SCGroupSubscriptionStatusType.SUBSCRIBED
+                )
+              );
+              setUnLoading(group.id);
+              return Promise.resolve(res.data);
+            });
+        }
       },
     [data, loading, cache]
   );
@@ -91,22 +114,23 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   const unsubscribe = useMemo(
     () =>
       (group: SCGroupType): Promise<any> => {
-        setLoading(group.id);
-        return http
-          .request({
-            url: Endpoints.UnsubscribeFromGroup.url({id: group.id}),
-            method: Endpoints.UnsubscribeFromGroup.method,
-          })
-          .then((res: HttpResponse<any>) => {
-            if (res.status >= 300) {
-              return Promise.reject(res);
-            }
-            updateCache([group.id]);
-            const isSubscribed = data.includes(group.id);
-            setData((prev) => (isSubscribed ? prev.filter((id) => id !== group.id) : [...[group.id], ...prev]));
-            setUnLoading(group.id);
-            return Promise.resolve(res.data);
-          });
+        if (group.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED) {
+          setLoading(group.id);
+          return http
+            .request({
+              url: Endpoints.UnsubscribeFromGroup.url({id: group.id}),
+              method: Endpoints.UnsubscribeFromGroup.method,
+            })
+            .then((res: HttpResponse<any>) => {
+              if (res.status >= 300) {
+                return Promise.reject(res);
+              }
+              updateCache([group.id]);
+              setData((prev) => getDataUpdated(prev, group.id, null));
+              setUnLoading(group.id);
+              return Promise.resolve(res.data);
+            });
+        }
       },
     [data, loading, cache]
   );

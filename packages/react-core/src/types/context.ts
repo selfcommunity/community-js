@@ -319,7 +319,7 @@ export interface SCSubscribedGroupsManagerType {
   /**
    * Handle user subscription to a group
    */
-  subscribe?: (group: SCGroupType) => Promise<any>;
+  subscribe?: (group: SCGroupType, userId?: number) => Promise<any>;
   /**
    * Handle user unsubscription from a group
    */

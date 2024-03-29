@@ -20,6 +20,10 @@ export interface ThreadParams {
    */
   from_message?: number;
   /**
+   * The id of the group.
+   */
+  group?: number;
+  /**
    * 	Number of results to return per page.
    */
   limit?: number;

@@ -158,6 +158,7 @@ import GroupMembersWidget, {GroupMembersWidgetProps, GroupMembersWidgetSkeleton}
 import GroupRequestsWidget, {GroupRequestsWidgetProps, GroupRequestsWidgetSkeleton} from './components/GroupRequestsWidget';
 import Groups, {GroupsProps, GroupsSkeleton} from './components/Groups';
 import GroupForm, {GroupFormProps} from './components/GroupForm';
+import GroupSettingsIconButton, {GroupSettingsIconButtonProps} from './components/GroupSettingsIconButton';
 /**
  * Constants
  */
@@ -506,5 +507,7 @@ export {
   BaseItem,
   BaseItemProps,
   BaseDialog,
-  BaseDialogProps
+  BaseDialogProps,
+  GroupSettingsIconButton,
+  GroupSettingsIconButtonProps
 };

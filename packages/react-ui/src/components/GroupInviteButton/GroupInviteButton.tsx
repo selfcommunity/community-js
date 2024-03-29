@@ -149,7 +149,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   // HOOKS
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
-  const canEdit = useMemo(
+  const isGroupAdmin = useMemo(
     () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scGroup?.managed_by?.id]
   );
@@ -280,7 +280,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   /**
    * If in group edit mode and logged-in user is not also the group manager, the component is hidden.
   //  */
-  if (group && !canEdit) {
+  if (group && !isGroupAdmin) {
     return null;
   }
 

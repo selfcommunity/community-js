@@ -7,8 +7,8 @@ export default {
   component: Groups,
   argTypes: {
     endpoint: {
-      ...Endpoints.GetAllGroups,
-      url: () => Endpoints.GetAllGroups.url()
+      ...Endpoints.SearchGroups,
+      url: () => Endpoints.SearchGroups.url()
     }
   }
 } as Meta<typeof Groups>;
@@ -23,8 +23,8 @@ const template = (args) => (
 export const Base: StoryObj<Groups> = {
   args: {
     endpoint: {
-      ...Endpoints.GetAllGroups,
-      url: () => Endpoints.GetAllGroups.url()
+      ...Endpoints.SearchGroups,
+      url: () => Endpoints.SearchGroups.url()
     }
   },
   render: template

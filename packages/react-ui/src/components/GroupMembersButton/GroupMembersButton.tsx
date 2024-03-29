@@ -5,9 +5,9 @@ import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {FormattedMessage} from 'react-intl';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import User, {UserSkeleton} from '../User';
-import {GroupService, Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCThemeType, useSCFetchGroup} from '@selfcommunity/react-core';
-import {SCGroupType, SCUserType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -55,7 +55,11 @@ export interface GroupMembersButtonProps extends Pick<ButtonProps, Exclude<keyof
    * @default {}
    */
   DialogProps?: BaseDialogProps;
-
+  /**
+   * Hides this component
+   * @default false
+   */
+  autoHide?: boolean;
   /**
    * Any other properties
    */
@@ -90,7 +94,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
     name: PREFIX
   });
 
-  const {className, groupId, group, DialogProps = {}, ...rest} = props;
+  const {className, groupId, group, DialogProps = {}, autoHide = false, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -104,7 +108,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
-    if (!scGroup) {
+    if (!scGroup || (scGroup && scGroup.privacy !== SCGroupPrivacyType.PUBLIC && autoHide)) {
       return;
     }
     if (members.length === 0) {

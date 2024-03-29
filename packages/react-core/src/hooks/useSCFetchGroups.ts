@@ -52,10 +52,10 @@ const useSCFetchGroups = (props?: {cacheStrategy?: CacheStrategies}) => {
   /**
    * Fetch groups
    */
-  const fetchGroups = async (next: string = Endpoints.GetAllGroups.url()): Promise<[]> => {
+  const fetchGroups = async (next: string = Endpoints.SearchGroups.url()): Promise<[]> => {
     const response = await http.request({
       url: next,
-      method: Endpoints.GetAllGroups.method,
+      method: Endpoints.SearchGroups.method,
     });
     const data: any = response.data;
     if (data.next) {

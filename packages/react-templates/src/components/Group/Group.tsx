@@ -112,7 +112,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <GroupHeader groupId={scGroup.id} actions={<GroupInviteButton group={scGroup} groupId={scGroup.id} />} />
+      <GroupHeader groupId={scGroup.id} />
       <GroupFeed
         className={classes.feed}
         group={scGroup}
