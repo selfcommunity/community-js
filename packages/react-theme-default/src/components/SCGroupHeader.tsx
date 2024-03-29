@@ -16,6 +16,7 @@ const Component = {
         }
       },
       '& .SCGroupHeader-info': {
+        marginTop: 50,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -45,6 +46,9 @@ const Component = {
         '& .SCEditGroupButton-root': {
           marginLeft: 'auto',
           marginTop: theme.spacing(2)
+        },
+        '& .SCGroupSubscribeButton-root': {
+          marginTop: theme.spacing(1)
         }
       },
       '& .SCGroupHeader-avatar': {
@@ -69,7 +73,7 @@ const Component = {
         display: 'flex'
       },
       '& .SCGroupHeader-name': {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(1),
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.429rem',
         textAlign: 'center'

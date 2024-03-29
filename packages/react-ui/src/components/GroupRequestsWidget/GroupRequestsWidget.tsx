@@ -29,6 +29,7 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
+import GroupSubscribeButton from '../GroupSubscribeButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -61,11 +62,6 @@ export interface GroupRequestsWidgetProps extends VirtualScrollerItemProps, Widg
    * @default null
    */
   groupId?: number | string;
-  /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
   /**
    * Limit the number of users to show
    * @default false
@@ -135,7 +131,6 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   const {
     groupId,
     group,
-    autoHide = false,
     limit = 5,
     className,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
@@ -176,6 +171,11 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const isGroupAdmin = useMemo(
+    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
+    [scUserContext.user, scGroup?.managed_by?.id]
+  );
 
   /**
    * Initialize component
@@ -264,8 +264,20 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
     setOpenDialog((prev) => !prev);
   };
 
+  const handleSubscribeAction = useMemo(
+    () =>
+      (userId): void => {
+        const newRequests = [...state.results];
+        const index = newRequests.findIndex((u) => u.id === userId);
+        if (index !== -1) {
+          dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newRequests}});
+        }
+      },
+    [dispatch, state.count, state.results]
+  );
+
   // RENDER
-  if ((autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scGroup) {
+  if ((!state.count && state.initialized) || (!contentAvailability && !isGroupAdmin) || !scGroup || !state.count) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -277,26 +289,27 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.groupRequestsWidget.title" defaultMessage="ui.groupRequestsWidget.title" />
       </Typography>
-      {!state.count ? (
-        <Typography className={classes.noResults} variant="body2">
-          <FormattedMessage id="ui.groupRequestsWidget.subtitle.noResults" defaultMessage="" />
-        </Typography>
-      ) : (
-        <React.Fragment>
-          <List>
-            {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
-              <ListItem key={user.id}>
-                <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
-              </ListItem>
-            ))}
-          </List>
-          {state.count > state.visibleItems && (
-            <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
-              <FormattedMessage id="ui.groupRequestsWidget.button.showMore" defaultMessage="ui.groupRequestsWidget.button.showMore" />
-            </Button>
-          )}
-        </React.Fragment>
-      )}
+      <React.Fragment>
+        <List>
+          {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
+            <ListItem key={user.id}>
+              <User
+                elevation={0}
+                actions={
+                  <GroupSubscribeButton group={scGroup} groupId={scGroup?.id} userId={user.id} onSubscribe={() => handleSubscribeAction(user.id)} />
+                }
+                user={user}
+                userId={user.id}
+              />
+            </ListItem>
+          ))}
+        </List>
+        {state.count > state.visibleItems && (
+          <Button className={classes.showMore} onClick={handleToggleDialogOpen}>
+            <FormattedMessage id="ui.groupRequestsWidget.button.showMore" defaultMessage="ui.groupRequestsWidget.button.showMore" />
+          </Button>
+        )}
+      </React.Fragment>
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
@@ -324,7 +337,12 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
             <List>
               {state.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
+                  <User
+                    elevation={0}
+                    actions={<GroupSubscribeButton group={scGroup} groupId={scGroup?.id} userId={user.id} />}
+                    user={user}
+                    userId={user.id}
+                  />
                 </ListItem>
               ))}
             </List>

@@ -1,6 +1,7 @@
 import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
+  ContributionUtils,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -21,7 +22,6 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {SnackbarKey, useSnackbar} from 'notistack';
-import {ContributionUtils} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
 import GroupFeedSkeleton from './Skeleton';
 

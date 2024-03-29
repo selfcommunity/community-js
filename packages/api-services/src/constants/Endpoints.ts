@@ -1154,10 +1154,6 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/group/$(id)/feed/'),
     method: 'GET'
   },
-  GetAllGroups: {
-    url: urlReplacer('/api/v2/group/'),
-    method: 'GET'
-  },
   SearchGroups: {
     url: urlReplacer('/api/v2/group/search/'),
     method: 'GET'
@@ -1209,6 +1205,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   UnsubscribeFromGroup: {
     url: urlReplacer('/api/v2/group/$(id)/subscribe/'),
     method: 'DELETE'
+  },
+  RemoveUserFromGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/subscribe/?user=$(user)'),
+    method: 'GET'
   }
 };
 

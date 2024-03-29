@@ -13,6 +13,8 @@ import Bullet from '../../shared/Bullet';
 import ChangeGroupPicture, {ChangeGroupPictureProps} from '../ChangeGroupPicture';
 import GroupMembersButton, {GroupMembersButtonProps} from '../GroupMembersButton';
 import EditGroupButton from '../EditGroupButton';
+import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
+import GroupInviteButton from '../GroupInviteButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -68,15 +70,15 @@ export interface GroupHeaderProps {
    */
   ChangeCoverProps?: ChangeGroupCoverProps;
   /**
+   * Props to spread category button followed
+   * @default {}
+   */
+  GroupSubscribeButtonProps?: Pick<GroupSubscribeButtonProps, Exclude<keyof GroupSubscribeButtonProps, 'group' | 'onSubscribe'>>;
+  /**
    * Props to spread to the group memebers button
    * @default {}
    */
   GroupMembersButtonProps?: GroupMembersButtonProps;
-
-  /**
-   *
-   */
-  actions?: React.ReactNode;
   /**
    * Any other properties
    */
@@ -128,8 +130,8 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
     groupId = null,
     ChangePictureProps = {},
     ChangeCoverProps = {},
+    GroupSubscribeButtonProps = {},
     GroupMembersButtonProps = {},
-    actions,
     ...rest
   } = props;
 
@@ -143,7 +145,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
   // CONST
-  const canEdit = useMemo(
+  const isGroupAdmin = useMemo(
     () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scGroup?.managed_by?.id]
   );
@@ -153,7 +155,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    * @param avatar
    */
   function handleChangeAvatar(avatar) {
-    if (canEdit) {
+    if (isGroupAdmin) {
       setSCGroup(Object.assign({}, scGroup, {image_bigger: avatar}));
     }
   }
@@ -163,10 +165,17 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    * @param cover
    */
   function handleChangeCover(cover) {
-    if (canEdit) {
+    if (isGroupAdmin) {
       setSCGroup(Object.assign({}, scGroup, {emotional_image: cover}));
     }
   }
+
+  /**
+   * Handles callback subscribe/unsubscribe group
+   */
+  const handleSubscribe = (group, status) => {
+    setSCGroup({...group, subscribers_counter: group.subscribers_counter + (status ? 1 : -1)});
+  };
 
   // RENDER
   if (!scGroup) {
@@ -186,7 +195,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             <img alt="group" src={scGroup.image_bigger ? scGroup.image_bigger : ''} />
           </Avatar>
         </Box>
-        {canEdit && (
+        {isGroupAdmin && (
           <>
             <ChangeGroupPicture groupId={scGroup.id} onChange={handleChangeAvatar} className={classes.changePicture} {...ChangePictureProps} />
             <div className={classes.changeCover}>
@@ -196,7 +205,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
         )}
       </Paper>
       <Box className={classes.info}>
-        {canEdit && <EditGroupButton group={scGroup} groupId={scGroup.id} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} />}
+        {isGroupAdmin && <EditGroupButton group={scGroup} groupId={scGroup.id} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} />}
         <Typography variant="h5" className={classes.name}>
           {scGroup.name}
         </Typography>
@@ -225,13 +234,21 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             </Typography>
           )}
         </Box>
-        <Box className={classes.members}>
-          <Typography className={classes.membersCounter} component="div">
-            <FormattedMessage id="ui.groupHeader.members" defaultMessage="ui.groupHeader.members" values={{total: scGroup.subscribers_counter}} />
-          </Typography>
-          <GroupMembersButton groupId={scGroup?.id} group={scGroup} {...GroupMembersButtonProps} />
-        </Box>
-        {actions && actions}
+        <>
+          {((scGroup && scGroup.privacy === SCGroupPrivacyType.PUBLIC) || isGroupAdmin) && (
+            <Box className={classes.members}>
+              <Typography className={classes.membersCounter} component="div">
+                <FormattedMessage id="ui.groupHeader.members" defaultMessage="ui.groupHeader.members" values={{total: scGroup.subscribers_counter}} />
+              </Typography>
+              <GroupMembersButton groupId={scGroup?.id} group={scGroup} autoHide={!isGroupAdmin} {...GroupMembersButtonProps} />
+            </Box>
+          )}
+        </>
+        {isGroupAdmin ? (
+          <GroupInviteButton group={scGroup} groupId={scGroup.id} />
+        ) : (
+          <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
+        )}
       </Box>
     </Root>
   );

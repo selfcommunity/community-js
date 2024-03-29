@@ -40,11 +40,17 @@ export interface GroupSubscribeButtonProps {
   groupId?: number;
 
   /**
-   * onJoin callback
+   * id of the user to be accepted into the group
+   * @default null
+   */
+  userId?: number;
+
+  /**
+   * onSubscribe callback
    * @param user
    * @param joined
    */
-  onJoin?: (group: SCGroupType, member: boolean) => any;
+  onSubscribe?: (group: SCGroupType, status: string | null) => any;
 
   /**
    * Others properties
@@ -81,7 +87,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     name: PREFIX
   });
 
-  const {className, groupId, group, onJoin, ...rest} = props;
+  const {className, groupId, group, userId, onSubscribe, ...rest} = props;
 
   // STATE
   const [status, setStatus] = useState<string>(null);
@@ -100,7 +106,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
 
-  const canEdit = useMemo(
+  const isGroupAdmin = useMemo(
     () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scGroup?.managed_by?.id]
   );
@@ -115,11 +121,11 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     }
   }, [authUserId, scGroupsManager.subscriptionStatus]);
 
-  const subscribe = () => {
+  const subscribe = (userId?: number) => {
     scGroupsManager
-      .subscribe(scGroup)
+      .subscribe(scGroup, userId)
       .then(() => {
-        // onJoin && onJoin(scGroup, !joined);
+        onSubscribe && onSubscribe(scGroup, SCGroupSubscriptionStatusType.SUBSCRIBED);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -130,7 +136,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     scGroupsManager
       .unsubscribe(scGroup)
       .then(() => {
-        // onJoin && onJoin(scGroup, !joined);
+        onSubscribe && onSubscribe(scGroup, null);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -141,7 +147,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      SCGroupSubscriptionStatusType.SUBSCRIBED ? unsubscribe() : subscribe();
+      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !userId ? unsubscribe() : userId ? subscribe(userId) : subscribe();
     }
   };
 
@@ -152,21 +158,24 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     let _status;
     switch (status) {
       case SCGroupSubscriptionStatusType.REQUESTED:
-        _status = <FormattedMessage defaultMessage="ui.groupJoinButton.waitingApproval" id="ui.groupJoinButton.waitingApproval" />;
+        _status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.waitingApproval" id="ui.groupSubscribeButton.waitingApproval" />;
         break;
       case SCGroupSubscriptionStatusType.SUBSCRIBED:
         _status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.exit" id="ui.groupSubscribeButton.exit" />;
         break;
+      case SCGroupSubscriptionStatusType.INVITED:
+        _status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" />;
+        break;
       default:
         scGroup.privacy === SCGroupPrivacyType.PUBLIC
           ? (_status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.enter" id="ui.groupSubscribeButton.enter" />)
-          : (_status = <FormattedMessage defaultMessage="ui.groupJoinButton.requestAccess" id="ui.groupJoinButton.requestAccess" />);
+          : (_status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.requestAccess" id="ui.groupSubscribeButton.requestAccess" />);
         break;
     }
     return _status;
   };
 
-  if (!scGroup || (scGroup && !scGroup.subscription_status) || canEdit) {
+  if (!scGroup || (isGroupAdmin && userId === scUserContext.user.id)) {
     return null;
   }
 
@@ -176,9 +185,10 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       variant="outlined"
       onClick={handleSubscribeAction}
       loading={scUserContext.user ? scGroupsManager.isLoading(scGroup) : null}
+      disabled={status === SCGroupSubscriptionStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>
-      {getStatus()}
+      {isGroupAdmin ? <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" /> : getStatus()}
     </Root>
   );
 }

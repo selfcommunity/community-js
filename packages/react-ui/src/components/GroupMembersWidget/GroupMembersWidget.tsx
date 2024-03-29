@@ -30,6 +30,7 @@ import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
 import GroupInviteButton from '../GroupInviteButton';
+import GroupSettingsIconButton from '../GroupSettingsIconButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -167,6 +168,12 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
+  // CONST
+  const isGroupAdmin = useMemo(
+    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
+    [scUserContext.user, scGroup?.managed_by?.id]
+  );
+
   // MEMO
   const contentAvailability = useMemo(
     () =>
@@ -289,7 +296,20 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
             <List>
               {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
                 <ListItem key={user.id}>
-                  <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
+                  <User
+                    elevation={0}
+                    actions={
+                      isGroupAdmin ? (
+                        <GroupSettingsIconButton group={scGroup} user={user} />
+                      ) : (
+                        <Button>
+                          <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
+                        </Button>
+                      )
+                    }
+                    user={user}
+                    userId={user.id}
+                  />
                 </ListItem>
               ))}
             </List>
@@ -327,7 +347,20 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
               <List>
                 {state.results.map((user: SCUserType) => (
                   <ListItem key={user.id}>
-                    <User elevation={0} actions={<></>} user={user} userId={user.id} buttonProps={{onClick: () => console.log(user)}} />
+                    <User
+                      elevation={0}
+                      actions={
+                        isGroupAdmin ? (
+                          <GroupSettingsIconButton group={scGroup} user={user} />
+                        ) : (
+                          <Button>
+                            <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
+                          </Button>
+                        )
+                      }
+                      user={user}
+                      userId={user.id}
+                    />
                   </ListItem>
                 ))}
               </List>

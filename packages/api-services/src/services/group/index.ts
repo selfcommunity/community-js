@@ -8,7 +8,6 @@ import {GroupCreateParams} from '../../types';
 
 export interface GroupApiClientInterface {
   getUserGroups(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
-  getAllGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
   searchGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
   getSpecificGroupInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCGroupType>;
   getGroupFeed(id: number | string, params?: GroupFeedParams, config?: AxiosRequestConfig): Promise<any>;
@@ -19,6 +18,7 @@ export interface GroupApiClientInterface {
   getGroupMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getGroupSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getGroupsSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any>;
   getGroupInvitedUsers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   subscribeToGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   unsubscribeFromGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -43,16 +43,6 @@ export class GroupApiClient {
   static getUserGroups(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetUserGroups.url({})}?${p.toString()}`, method: Endpoints.GetUserGroups.method});
-  }
-
-  /**
-   * This endpoint performs groups search
-   * @param params
-   * @param config
-   */
-  static getAllGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetAllGroups.url({})}?${p.toString()}`, method: Endpoints.GetAllGroups.method});
   }
 
   /**
@@ -157,6 +147,20 @@ export class GroupApiClient {
       ...config,
       url: Endpoints.GetGroupsSuggestedUsers.url({search}),
       method: Endpoints.GetGroupsSuggestedUsers.method
+    });
+  }
+
+  /**
+   * This endpoint removes the user specified from the group.
+   * @param id
+   * @param user
+   * @param config
+   */
+  static removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.RemoveUserFromGroup.url({id, user}),
+      method: Endpoints.RemoveUserFromGroup.method
     });
   }
 
@@ -268,9 +272,6 @@ export default class GroupService {
   static async getUserGroups(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     return GroupApiClient.getUserGroups(params, config);
   }
-  static async getAllGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
-    return GroupApiClient.getAllGroups(params, config);
-  }
   static async searchGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     return GroupApiClient.searchGroups(params, config);
   }
@@ -300,6 +301,9 @@ export default class GroupService {
   }
   static async getGroupsSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return GroupApiClient.getGroupsSuggestedUsers(search, config);
+  }
+  static async removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return GroupApiClient.removeUserFromGroup(id, user, config);
   }
   static async getGroupInvitedUsers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return GroupApiClient.getGroupInvitedUsers(id, config);
