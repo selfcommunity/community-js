@@ -268,16 +268,17 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
     () =>
       (userId): void => {
         const newRequests = [...state.results];
-        const index = newRequests.findIndex((u) => u.id === userId);
-        if (index !== -1) {
-          dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newRequests}});
-        }
+        const _updated = newRequests.findIndex((u) => u.id !== userId);
+        dispatch({
+          type: actionWidgetTypes.SET_RESULTS,
+          payload: {results: newRequests.length > 1 ? _updated : []}
+        });
       },
     [dispatch, state.count, state.results]
   );
 
   // RENDER
-  if ((!state.count && state.initialized) || (!contentAvailability && !isGroupAdmin) || !scGroup || !state.count) {
+  if ((!state.count && state.initialized) || (!contentAvailability && !isGroupAdmin) || !scGroup || !state.count || !state.results.length) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

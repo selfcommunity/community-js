@@ -30,3 +30,14 @@ export const Base: StoryObj<Groups> = {
   render: template
 };
 
+export const UserGroups: StoryObj<Groups> = {
+  args: {
+    endpoint: {
+      ...Endpoints.GetUserGroups,
+      url: () => Endpoints.GetUserGroups.url()
+    }
+  },
+  render: template
+};
+
+

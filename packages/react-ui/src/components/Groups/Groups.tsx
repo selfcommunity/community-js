@@ -166,6 +166,12 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     }
   }, [contentAvailability, authUserId, prefetchedGroups.length]);
 
+  const handleSubscribe = (group) => {
+    const newGroups = [...groups];
+    const _updated = newGroups.filter((g) => g.id !== group.id);
+    setGroups(_updated);
+  };
+
   // RENDER
   if (!contentAvailability && !scUserContext.user) {
     return <HiddenPlaceholder />;
@@ -189,7 +195,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             <>
               {groups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
-                  <Group group={group} groupId={group.id} {...GroupComponentProps} />
+                  <Group group={group} groupId={group.id} groupSubscribeButtonProps={{onSubscribe: handleSubscribe}} {...GroupComponentProps} />
                 </Grid>
               ))}
             </>
