@@ -32,6 +32,7 @@ export const Base: StoryObj<Groups> = {
 
 export const UserGroups: StoryObj<Groups> = {
   args: {
+    general: true,
     endpoint: {
       ...Endpoints.GetUserGroups,
       url: () => Endpoints.GetUserGroups.url()

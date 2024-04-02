@@ -70,10 +70,10 @@ export interface GroupHeaderProps {
    */
   ChangeCoverProps?: ChangeGroupCoverProps;
   /**
-   * Props to spread category button followed
+   * Props to spread group button followed
    * @default {}
    */
-  GroupSubscribeButtonProps?: Pick<GroupSubscribeButtonProps, Exclude<keyof GroupSubscribeButtonProps, 'group' | 'onSubscribe'>>;
+  GroupSubscribeButtonProps?: GroupSubscribeButtonProps;
   /**
    * Props to spread to the group memebers button
    * @default {}
