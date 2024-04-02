@@ -58,6 +58,10 @@ export interface GroupsProps {
    */
   prefetchedGroups?: SCGroupType[];
 
+  /** If true, it means that the endpoint fetches all groups available
+   * @default null
+   */
+  general?: boolean;
   /**
    * Other props
    */
@@ -106,6 +110,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     className,
     GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     prefetchedGroups = [],
+    general,
     ...rest
   } = props;
 
@@ -167,9 +172,11 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   }, [contentAvailability, authUserId, prefetchedGroups.length]);
 
   const handleSubscribe = (group) => {
-    const newGroups = [...groups];
-    const _updated = newGroups.filter((g) => g.id !== group.id);
-    setGroups(_updated);
+    if (general) {
+      const newGroups = [...groups];
+      const _updated = newGroups.filter((g) => g.id !== group.id);
+      setGroups(_updated);
+    }
   };
 
   // RENDER
