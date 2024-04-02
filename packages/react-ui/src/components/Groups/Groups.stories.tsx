@@ -22,6 +22,7 @@ const template = (args) => (
 
 export const Base: StoryObj<Groups> = {
   args: {
+    general: true,
     endpoint: {
       ...Endpoints.SearchGroups,
       url: () => Endpoints.SearchGroups.url()
@@ -32,7 +33,6 @@ export const Base: StoryObj<Groups> = {
 
 export const UserGroups: StoryObj<Groups> = {
   args: {
-    general: true,
     endpoint: {
       ...Endpoints.GetUserGroups,
       url: () => Endpoints.GetUserGroups.url()

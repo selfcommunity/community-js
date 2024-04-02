@@ -172,7 +172,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   }, [contentAvailability, authUserId, prefetchedGroups.length]);
 
   const handleSubscribe = (group) => {
-    if (general) {
+    if (!general) {
       const newGroups = [...groups];
       const _updated = newGroups.filter((g) => g.id !== group.id);
       setGroups(_updated);
