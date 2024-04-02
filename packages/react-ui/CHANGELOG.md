@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.10...@selfcommunity/react-ui@0.7.9-alpha.11) (2024-03-29)
+
+
+### Bug Fixes
+
+* groups/groups request update on subscribe/unsubscribe ([c1b8e17](https://github.com/selfcommunity/community-js/commit/c1b8e171b397166a8904cfe95e8db40de20e3476))
+
+
+
+
+
 ## [0.7.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.9...@selfcommunity/react-ui@0.7.9-alpha.10) (2024-03-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
