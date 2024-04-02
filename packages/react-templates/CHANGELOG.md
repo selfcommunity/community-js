@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.11...@selfcommunity/react-templates@0.3.9-alpha.12) (2024-04-02)
+
+
+### Bug Fixes
+
+* fixed group template, ui groups component ([cc5a61a](https://github.com/selfcommunity/community-js/commit/cc5a61a06c96d7ff94da9f29a328066ae7c90313))
+
+
+
+
+
 ## [0.3.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.10...@selfcommunity/react-templates@0.3.9-alpha.11) (2024-03-29)
 
 
