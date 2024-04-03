@@ -11,10 +11,10 @@ const Component = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: 150,
+        minHeight: 250,
         color: '#FFF',
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
-        height: 150,
+        height: 250,
         borderRadius: 0
       },
       '& .SCCategoryHeader-info': {
