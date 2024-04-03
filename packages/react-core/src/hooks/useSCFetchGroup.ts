@@ -77,7 +77,7 @@ export default function useSCFetchGroup({
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [__groupId]);
+  }, [__groupId, authUserId]);
 
   useDeepCompareEffectNoCheck(() => {
     if (group) {
@@ -85,7 +85,7 @@ export default function useSCFetchGroup({
       setSCGroup(_c);
       LRUCache.set(__groupCacheKey, _c);
     }
-  }, [group]);
+  }, [group, authUserId]);
 
   return {scGroup, setSCGroup, error};
 }
