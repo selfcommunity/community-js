@@ -68,11 +68,6 @@ export interface GroupProps {
    * @default {}
    */
   GroupFeedProps?: GroupFeedProps;
-
-  /** Prop to add a tab layout view
-   *@default null
-   */
-  tabSection?: ReactNode | null;
 }
 /**
  * > API documentation for the Community-JS Category Template. Learn about the available props and the CSS API.
@@ -106,7 +101,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'group', className, group, groupId, widgets, FeedObjectProps, FeedSidebarProps, GroupFeedProps = {}, tabSection = null} = props;
+  const {id = 'group', className, group, groupId, widgets, FeedObjectProps, FeedSidebarProps, GroupFeedProps = {}} = props;
 
   // HOOKS
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
@@ -122,7 +117,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <GroupHeader groupId={scGroup.id} GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
-      {tabSection && tabSection}
       <GroupFeed
         className={classes.feed}
         group={scGroup}
