@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.14...@selfcommunity/react-theme-default@0.1.9-alpha.15) (2024-04-03)
+
+
+### Bug Fixes
+
+* category header ([ff64d50](https://github.com/selfcommunity/community-js/commit/ff64d5070bdc0cdaed1d7215add68e31c66ab208))
+* navigationToolbar logo ([1a2da63](https://github.com/selfcommunity/community-js/commit/1a2da63f53cac684d9ea21bc3b3099950488aa21))
+* profile header ([d33bcaf](https://github.com/selfcommunity/community-js/commit/d33bcaf6eecfb4e553b22537a633404d6779d542))
+
+
+
+
+
 ## [0.1.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.13...@selfcommunity/react-theme-default@0.1.9-alpha.14) (2024-04-02)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
