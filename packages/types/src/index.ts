@@ -150,7 +150,8 @@ import {
   SCPrivateMessageStatusType,
   SCMetadataTypeFieldType,
   SCGroupPrivacyType,
-  SCGroupSubscriptionStatusType
+  SCGroupSubscriptionStatusType,
+  SCPrivateMessageType
 } from './types';
 
 /**
@@ -185,7 +186,8 @@ export {
   SCPrivateMessageStatusType,
   SCMetadataTypeFieldType,
   SCGroupPrivacyType,
-  SCGroupSubscriptionStatusType
+  SCGroupSubscriptionStatusType,
+  SCPrivateMessageType
 };
 export {
   type SCBannerType,

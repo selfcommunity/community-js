@@ -1,8 +1,14 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField, useTheme} from '@mui/material';
 import PubSub from 'pubsub-js';
-import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
+import {
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCPrivateMessageSnippetType,
+  SCPrivateMessageStatusType,
+  SCPrivateMessageType
+} from '@selfcommunity/types';
 import PrivateMessageSnippetsSkeleton from './Skeleton';
 import PrivateMessageSnippetItem from '../PrivateMessageSnippetItem';
 import classNames from 'classnames';
@@ -55,7 +61,7 @@ export interface PrivateMessageSnippetsProps extends CardProps {
    *
    */
   snippetActions?: {
-    onSnippetClick?: (msg) => void;
+    onSnippetClick?: (msg, type) => void;
     onNewMessageClick?: () => void;
     onDeleteConfirm?: (msg) => void;
   };
@@ -64,10 +70,10 @@ export interface PrivateMessageSnippetsProps extends CardProps {
    */
   [p: string]: any;
   /**
-   * thread user object
+   * thread user/ group object
    * @default null
    */
-  userObj?: any;
+  threadObj?: any;
 }
 /**
  * > API documentation for the Community-JS PrivateMessageSnippets component. Learn about the available props and the CSS API.
@@ -107,16 +113,17 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     name: PREFIX
   });
 
-  const {className = null, userObj = null, snippetActions, clearSearch, ...rest} = props;
+  const {className = null, threadObj = null, snippetActions, clearSearch, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {data, updateSnippets} = useSCFetchPrivateMessageSnippets({cacheStrategy: CacheStrategies.CACHE_FIRST});
   const [search, setSearch] = useState<string>('');
-  const isObj = typeof userObj === 'object';
+  const isObj = typeof threadObj === 'object';
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const [type, setType] = useState<SCPrivateMessageType | null>(null);
 
   // INTL
   const intl = useIntl();
@@ -133,12 +140,24 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     }
     return el.receiver.username.includes(search.toLowerCase());
   });
+
   const messageReceiver = (item, loggedUserId, obj?: boolean) => {
     if (obj) {
       return item?.receiver?.id !== loggedUserId ? item?.receiver : item?.sender;
     }
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
   };
+
+  const isSelected = useMemo(() => {
+    return (message): boolean => {
+      if (type === SCPrivateMessageType.GROUP) {
+        return message?.group?.id === (isObj ? threadObj?.group?.id : threadObj);
+      } else if (type === SCPrivateMessageType.USER) {
+        return messageReceiver(message, authUserId) === (isObj ? messageReceiver(threadObj, authUserId) : threadObj);
+      }
+      return false;
+    };
+  }, [threadObj, authUserId, type]);
 
   //HANDLERS
   const handleChange = (event) => {
@@ -158,7 +177,9 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   };
 
   function handleOpenThread(msg) {
-    snippetActions && snippetActions.onSnippetClick(msg);
+    const _type = msg.group !== null ? SCPrivateMessageType.GROUP : SCPrivateMessageType.USER;
+    setType(_type);
+    snippetActions && snippetActions.onSnippetClick(msg, _type);
     handleClear();
     updateSnippetsParams(msg.id, 'seen');
   }
@@ -311,10 +332,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                       )}
                     </>
                   }
-                  selected={
-                    userObj !== SCPrivateMessageStatusType.NEW &&
-                    messageReceiver(message, authUserId) === (isObj ? messageReceiver(userObj, authUserId) : userObj)
-                  }
+                  selected={isSelected(message)}
                 />
               ))}
             </List>

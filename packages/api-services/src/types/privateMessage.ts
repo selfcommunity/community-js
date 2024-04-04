@@ -52,9 +52,13 @@ export interface ThreadDeleteParams {
  */
 export interface MessageCreateParams {
   /**
-   * The id(s) of the recipient(s) of the message
+   * The id(s) of the recipient(s) of the message. If present, group is null.
    */
-  recipients: number | number[];
+  recipients?: number | number[];
+  /**
+   * The id of the group where the message is sent. If present, recipients is null.
+   */
+  group?: number;
   /**
    * 	The content of the message. It is required when file_uuid param is missing.
    */
