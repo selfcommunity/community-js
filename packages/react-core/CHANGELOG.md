@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.7...@selfcommunity/react-core@0.4.9-alpha.8) (2024-04-03)
+
+
+### Bug Fixes
+
+* fixed fetch group ([67bc1fa](https://github.com/selfcommunity/community-js/commit/67bc1fa8633c2b53a29f829f8d91160b2c4b7498))
+
+
+
+
+
 ## [0.4.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.6...@selfcommunity/react-core@0.4.9-alpha.7) (2024-04-02)
 
 

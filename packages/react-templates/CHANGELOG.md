@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.15...@selfcommunity/react-templates@0.3.9-alpha.16) (2024-04-03)
+
+
+### Bug Fixes
+
+* fixed fetch group ([67bc1fa](https://github.com/selfcommunity/community-js/commit/67bc1fa8633c2b53a29f829f8d91160b2c4b7498))
+
+
+
+
+
 ## [0.3.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.14...@selfcommunity/react-templates@0.3.9-alpha.15) (2024-04-02)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
