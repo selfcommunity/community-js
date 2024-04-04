@@ -2,7 +2,13 @@ import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} fr
 import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
-import {SCNotificationTopicType, SCNotificationTypologyType, SCPrivateMessageStatusType, SCPrivateMessageThreadType} from '@selfcommunity/types';
+import {
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCPrivateMessageStatusType,
+  SCPrivateMessageThreadType,
+  SCPrivateMessageType
+} from '@selfcommunity/types';
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -57,7 +63,7 @@ export interface PrivateMessageThreadProps extends CardProps {
    * Thread object or thread id
    * default null
    */
-  userObj?: any;
+  threadObj?: any;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -83,6 +89,10 @@ export interface PrivateMessageThreadProps extends CardProps {
    * @default null
    */
   onSingleMessageOpen?: (open: boolean) => void;
+  /**
+   * The Thread type
+   */
+  type?: SCPrivateMessageType;
   /**
    * Any other properties
    */
@@ -132,7 +142,16 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     props: inProps,
     name: PREFIX
   });
-  const {userObj, openNewMessage = false, onNewMessageClose = null, onNewMessageSent = null, onSingleMessageOpen = null, className, ...rest} = props;
+  const {
+    threadObj,
+    openNewMessage = false,
+    onNewMessageClose = null,
+    onNewMessageSent = null,
+    onSingleMessageOpen = null,
+    className,
+    type,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -145,7 +164,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [loading, setLoading] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState({});
   const [followers, setFollowers] = useState<any[]>([]);
-  const isNew = userObj && userObj === SCPrivateMessageStatusType.NEW;
+  const isNew = threadObj && threadObj === SCPrivateMessageStatusType.NEW;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const [singleMessageUser, setSingleMessageUser] = useState(null);
   const [receiver, setReceiver] = useState(null);
@@ -154,7 +173,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   const [openDeleteMessageDialog, setOpenDeleteMessageDialog] = useState<boolean>(false);
   const [recipients, setRecipients] = useState<any>([]);
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
-  const isNumber = typeof userObj === 'number';
+  const isNumber = typeof threadObj === 'number';
   const messageReceiver = (item, loggedUserId) => {
     return item?.receiver?.id !== loggedUserId ? item?.receiver?.id : item?.sender?.id;
   };
@@ -166,7 +185,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // HOOKS
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const {scUser} = useSCFetchUser({id: userObj, userObj});
+  const {scUser} = useSCFetchUser({id: threadObj, threadObj});
 
   const messagesEndRef = useRef(null);
 
@@ -312,9 +331,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Fetches thread
    */
   function fetchThread() {
-    if (userObj && typeof userObj !== 'string') {
+    if (threadObj && typeof threadObj !== 'string' && type !== SCPrivateMessageType.GROUP) {
       setLoadingMessageObjs(true);
-      const _userObjId = isNumber ? userObj : messageReceiver(userObj, authUserId);
+      const _userObjId = isNumber ? threadObj : messageReceiver(threadObj, authUserId);
       PrivateMessageService.getAThread({user: _userObjId, limit: 10})
         .then((res: SCPaginatedResponse<SCPrivateMessageThreadType>) => {
           setMessageObjs(res.results);
@@ -336,6 +355,18 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
               setSingleMessageThread(false);
             }
           }
+          setLoadingMessageObjs(false);
+        })
+        .catch((error) => {
+          setLoadingMessageObjs(false);
+          console.log(error);
+          Logger.error(SCOPE_SC_UI, {error});
+        });
+    } else if (type === SCPrivateMessageType.GROUP) {
+      PrivateMessageService.getAThread({group: isNumber ? threadObj : threadObj.group.id, limit: 10})
+        .then((res: SCPaginatedResponse<SCPrivateMessageThreadType>) => {
+          setMessageObjs(res.results);
+          setPrevious(res.next && updateAndDeleteURLParameters(res.next, 'before_message', res.results[0].id, 'offset'));
           setLoadingMessageObjs(false);
         })
         .catch((error) => {
@@ -418,7 +449,15 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           url: Endpoints.SendMessage.url(),
           method: Endpoints.SendMessage.method,
           data: {
-            recipients: openNewMessage || isNew || singleMessageThread ? ids : [isNumber && userObj ? userObj : messageReceiver(userObj, authUserId)],
+            ...(type === SCPrivateMessageType.GROUP
+              ? {group: isNumber ? threadObj : threadObj.group.id}
+              : {
+                  recipients:
+                    openNewMessage || isNew || singleMessageThread
+                      ? ids
+                      : [isNumber && threadObj ? threadObj : messageReceiver(threadObj, authUserId)]
+                }),
+            // recipients: openNewMessage || isNew || singleMessageThread ? ids : [isNumber && threadObj ? threadObj : messageReceiver(threadObj, authUserId)],
             message: message,
             file_uuid: file && !message ? file : null
           }
@@ -474,12 +513,12 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     if (!authUserId) {
       return;
     }
-    if (userObj) {
+    if (threadObj) {
       fetchThread();
     } else {
       reset();
     }
-  }, [userObj, authUserId, scUser]);
+  }, [threadObj, authUserId, scUser]);
 
   /**
    * Notification subscriber
@@ -495,7 +534,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     if (index !== -1) {
       setMessageObjs((prev) => [...prev, res.notification_obj.message]);
     }
-    if (isNumber ? userObj === res.thread_id : userObj.id === res.thread_id) {
+    if (isNumber ? threadObj === res.thread_id : threadObj.id === res.thread_id) {
       scrollToBottom();
     }
   };
@@ -560,9 +599,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         <PrivateMessageEditor
           className={classes.editor}
           send={handleSend}
-          autoHide={!scUser?.can_send_pm_to}
-          autoHideDeletion={receiver?.deleted || scUser?.deleted}
-          onThreadChangeId={isNumber ? userObj : userObj.receiver.id}
+          autoHide={type === SCPrivateMessageType.USER && !scUser?.can_send_pm_to}
+          autoHideDeletion={type === SCPrivateMessageType.USER && (receiver?.deleted || scUser?.deleted)}
+          onThreadChangeId={isNumber ? threadObj : type === SCPrivateMessageType.USER ? threadObj.receiver.id : threadObj.group.id}
           error={error}
           onErrorRemove={() => setError(false)}
         />
@@ -664,7 +703,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    */
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
-      {userObj !== null && !isNew && !singleMessageThread ? renderThread() : renderNewOrNoMessageBox()}
+      {threadObj !== null && !isNew && !singleMessageThread ? renderThread() : renderNewOrNoMessageBox()}
     </Root>
   );
 }

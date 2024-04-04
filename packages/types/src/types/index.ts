@@ -42,7 +42,8 @@ import {
   type SCPrivateMessageSnippetType,
   type SCPrivateMessageUploadMediaChunkType,
   type SCPrivateMessageUploadMediaType,
-  type SCPrivateMessageUploadThumbnailType
+  type SCPrivateMessageUploadThumbnailType,
+  SCPrivateMessageType
 } from './privateMessage';
 import {SCIncubatorStatusType, type SCIncubatorSubscriptionType, type SCIncubatorType} from './incubator';
 import {type SCCustomNotificationType} from './customNotification';
@@ -192,6 +193,7 @@ export {
   type SCPrivateMessageUploadMediaType,
   type SCPrivateMessageUploadThumbnailType,
   type SCPrivateMessageUploadMediaChunkType,
+  SCPrivateMessageType,
   type SCPromoType,
   SCNotificationTypologyType,
   type SCNotificationAggregatedType,

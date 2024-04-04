@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem, Badge} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
@@ -101,10 +101,12 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
 
   // STATE
   const hasBadge = () => {
-    if (message?.receiver.id !== scUserContext?.user?.id) {
-      return message?.receiver.community_badge;
+    if (message.receiver) {
+      if (message?.receiver.id !== scUserContext?.user?.id) {
+        return message?.receiver.community_badge;
+      }
+      return message?.sender.community_badge;
     }
-    return message?.sender.community_badge;
   };
 
   if (!message) {
@@ -121,17 +123,25 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
         classes={{root: classNames({[classes.unread]: message.thread_status === SCPrivateMessageStatusType.NEW})}}>
         <ListItemAvatar>
           <UserAvatar hide={!hasBadge()}>
-            <Avatar
-              alt={scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
-              src={scUserContext?.user?.username === message.receiver.username ? message.sender.avatar : message.receiver.avatar}
-            />
+            {message.group ? (
+              <Avatar alt={message.group.name} src={message.group.image_bigger} />
+            ) : (
+              <Avatar
+                alt={scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
+                src={scUserContext?.user?.username === message.receiver.username ? message.sender.avatar : message.receiver.avatar}
+              />
+            )}
           </UserAvatar>
         </ListItemAvatar>
         <ListItemText
           primary={
             <>
               <Typography component="span" className={classes.username}>
-                {scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}
+                {message.group
+                  ? message.group.name
+                  : scUserContext?.user?.username === message.receiver.username
+                  ? message.sender.username
+                  : message.receiver.username}
               </Typography>
               {hasBadge() && preferences && (
                 <Chip component="span" className={classes.badgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
