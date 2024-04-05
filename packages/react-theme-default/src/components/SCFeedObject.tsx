@@ -62,8 +62,12 @@ const Component = {
           }
         },
         '& .SCFeedObject-group': {
-          position: 'absolute',
-          left: theme.spacing(4.5)
+          position: 'relative',
+          right: '10%',
+          [theme.breakpoints.up('sm')]: {
+            right: '30%'
+          },
+          transform: 'translateX(-50%)'
         }
       },
       '& .SCFeedObject-group': {
