@@ -278,7 +278,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   );
 
   // RENDER
-  if ((!state.count && state.initialized) || (!contentAvailability && !isGroupAdmin) || !scGroup || !state.count || !state.results.length) {
+  if ((!state.count && state.initialized) || !contentAvailability || !scGroup || !state.count || !state.results.length || !isGroupAdmin) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
