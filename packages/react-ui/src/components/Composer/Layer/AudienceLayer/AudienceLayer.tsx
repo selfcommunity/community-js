@@ -63,7 +63,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
     // @ts-ignore
     defaultValue === null || defaultValue.length === 0
       ? AudienceTypes.AUDIENCE_ALL
-      : typeof defaultValue === 'object'
+      : defaultValue && typeof defaultValue === 'object'
       ? AudienceTypes.AUDIENCE_GROUP
       : AudienceTypes.AUDIENCE_TAG
   );
@@ -78,9 +78,10 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
   const handleSave = useCallback(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    () => (typeof defaultValue === 'object' ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null)),
-    [value, onSave]
+    () => (audience === AudienceTypes.AUDIENCE_GROUP ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null)),
+    [value, onSave, audience]
   );
+
   const handleChange = useCallback((event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
   const handleGroupChange = useCallback((group: SCGroupType) => setValue(group), []);
 
@@ -111,7 +112,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           <Tab
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            disabled={defaultValue && defaultValue.length !== 0}
+            disabled={defaultValue && typeof defaultValue !== 'object'}
             value={AudienceTypes.AUDIENCE_GROUP}
             icon={<Icon>groups</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
@@ -119,7 +120,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           <Tab
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            disabled={typeof defaultValue === 'object'}
+            disabled={value && typeof defaultValue === 'object'}
             value={AudienceTypes.AUDIENCE_TAG}
             icon={<Icon>label</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.tag" defaultMessage="ui.composer.layer.audience.tag" />}

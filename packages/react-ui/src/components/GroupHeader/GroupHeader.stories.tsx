@@ -13,7 +13,7 @@ export default {
     }
   },
   args: {
-    groupId: 1
+    groupId: 6
   }
 } as Meta<typeof GroupHeader>;
 
@@ -25,7 +25,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof GroupHeader> = {
   args: {
-    groupId: 1
+    groupId: 6
   },
   render: template
 };

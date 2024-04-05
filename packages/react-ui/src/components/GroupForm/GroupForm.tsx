@@ -311,47 +311,49 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
               endAdornment: <Typography variant="body2">{GROUP_DESCRIPTION_MAX_LENGTH - field.description.length}</Typography>
             }}
           />
-          <Box className={classes.privacySection}>
-            <Typography variant="h4">
-              <FormattedMessage
-                id="ui.groupForm.privacy.title"
-                defaultMessage="ui.groupForm.privacy.title"
-                values={{b: (chunks) => <strong>{chunks}</strong>}}
-              />
-            </Typography>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
-                <Icon>private</Icon>
-                <FormattedMessage id="ui.groupForm.privacy.private" defaultMessage="ui.groupForm.privacy.private" />
-              </Typography>
-              <Switch
-                className={classes.switch}
-                checked={field.isPublic}
-                onClick={() => setField((prev: any) => ({...prev, ['isPublic']: !field.isPublic}))}
-              />
-              <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
-                <Icon>public</Icon>
-                <FormattedMessage id="ui.groupForm.privacy.public" defaultMessage="ui.groupForm.privacy.public" />
-              </Typography>
-            </Stack>
-            <Typography variant="body2" className={classes.privacySectionInfo}>
-              {field.isPublic ? (
+          {(!group || (group && group.privacy !== SCGroupPrivacyType.PRIVATE)) && (
+            <Box className={classes.privacySection}>
+              <Typography variant="h4">
                 <FormattedMessage
-                  id="ui.groupForm.privacy.public.info"
-                  defaultMessage="ui.groupForm.privacy.public.info"
+                  id="ui.groupForm.privacy.title"
+                  defaultMessage="ui.groupForm.privacy.title"
                   values={{b: (chunks) => <strong>{chunks}</strong>}}
                 />
-              ) : (
-                <FormattedMessage
-                  id="ui.groupForm.privacy.private.info"
-                  defaultMessage="ui.groupForm.private.public.info"
-                  values={{b: (chunks) => <strong>{chunks}</strong>}}
+              </Typography>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
+                  <Icon>private</Icon>
+                  <FormattedMessage id="ui.groupForm.privacy.private" defaultMessage="ui.groupForm.privacy.private" />
+                </Typography>
+                <Switch
+                  className={classes.switch}
+                  checked={field.isPublic}
+                  onClick={() => setField((prev: any) => ({...prev, ['isPublic']: !field.isPublic}))}
                 />
-              )}
-            </Typography>
-          </Box>
+                <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
+                  <Icon>public</Icon>
+                  <FormattedMessage id="ui.groupForm.privacy.public" defaultMessage="ui.groupForm.privacy.public" />
+                </Typography>
+              </Stack>
+              <Typography variant="body2" className={classes.privacySectionInfo}>
+                {field.isPublic ? (
+                  <FormattedMessage
+                    id="ui.groupForm.privacy.public.info"
+                    defaultMessage="ui.groupForm.privacy.public.info"
+                    values={{b: (chunks) => <strong>{chunks}</strong>}}
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="ui.groupForm.privacy.private.info"
+                    defaultMessage="ui.groupForm.private.public.info"
+                    values={{b: (chunks) => <strong>{chunks}</strong>}}
+                  />
+                )}
+              </Typography>
+            </Box>
+          )}
           <Box className={classes.visibilitySection}>
-            {!field.isPublic && (
+            {((!field.isPublic && !group) || (group && !field.isPublic)) && (
               <>
                 <Typography variant="h4">
                   <FormattedMessage

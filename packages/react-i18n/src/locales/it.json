@@ -260,7 +260,7 @@
   "ui.groupForm.visibility.title": "<b>Visibilità:</b>",
   "ui.groupForm.privacy.public": "Pubblico",
   "ui.groupForm.privacy.public.info": "<b>Pubblico: </b>Tutti possono iscriversi, vedere chi fa parte del gruppo e cosa pubblica nella pagina del gruppo. <b>Nota:</b> Puoi rendere il gruppo privato adesso o in un secondo momento.",
-  "ui.groupForm.privacy.private": "Private",
+  "ui.groupForm.privacy.private": "Privato",
   "ui.groupForm.privacy.private.info": "<b>Privato: </b>Solo i membri possono vedere chi fa parte del gruppo e cosa pubblica, si può entrare solo su invito o su richiesta. <b>Nota:</b> Non potrai rendere questo gruppo pubblico in un secondo momento.",
   "ui.groupForm.visibility.hidden": "Nascosto",
   "ui.groupForm.visibility.hidden.info": "<b>Nascosto: </b>solo i membri possono trovare questo gruppo e accedervi solo su invito.",

@@ -60,6 +60,26 @@ const Component = {
             textTransform: 'initial',
             fontWeight: theme.typography.fontWeightBold
           }
+        },
+        '& .SCFeedObject-group': {
+          position: 'absolute',
+          left: theme.spacing(4.5)
+        }
+      },
+      '& .SCFeedObject-group': {
+        justifyContent: 'flex-start',
+        padding: theme.spacing(0.5),
+        '& a': {
+          padding: theme.spacing(0.5),
+          marginBottom: theme.spacing(0.5),
+          color: theme.palette.common.white,
+          '&:hover': {
+            backgroundColor: theme.palette.common.black
+          },
+          '& span': {
+            color: theme.palette.common.white,
+            textTransform: 'initial'
+          }
         }
       },
       '& .SCFeedObject-content': {
@@ -121,7 +141,20 @@ const Component = {
         },
         '& .SCFeedObject-category': {
           borderBottom: '1px solid rgba(221, 221, 221, 1)',
-          margin: theme.spacing(0, 2)
+          margin: theme.spacing(0, 2),
+          '& .SCFeedObject-group': {
+            borderBottom: 'none',
+            margin: theme.spacing(0),
+            '& .MuiChip-icon': {
+              marginLeft: theme.spacing(1),
+              marginRight: theme.spacing(-1),
+              fontWeight: theme.typography.fontWeightRegular
+            }
+          }
+        },
+        '& .SCFeedObject-group': {
+          borderBottom: '1px solid rgba(221, 221, 221, 1)',
+          margin: theme.spacing(1, 2, 0, 2)
         },
         '& .SCFeedObject-header': {
           '& .MuiCardHeader-avatar': {

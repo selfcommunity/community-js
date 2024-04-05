@@ -156,7 +156,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    */
   function handleChangeAvatar(avatar) {
     if (isGroupAdmin) {
-      setSCGroup(Object.assign({}, scGroup, {image_bigger: avatar}));
+      setSCGroup(Object.assign({}, scGroup, {image_big: avatar}));
     }
   }
 
@@ -192,7 +192,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <Box className={classes.avatar}>
           <Avatar>
-            <img alt="group" src={scGroup.image_bigger ? scGroup.image_bigger : ''} />
+            <img alt="group" src={scGroup.image_big ? scGroup.image_big : ''} />
           </Avatar>
         </Box>
         {isGroupAdmin && (

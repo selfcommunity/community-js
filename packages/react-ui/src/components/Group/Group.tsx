@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, ButtonBaseProps, Icon, Stack} from '@mui/material';
-import {SCGroupType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
@@ -102,16 +102,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {
-    groupId = null,
-    group = null,
-    className = null,
-    elevation,
-    hideActions = false,
-    groupSubscribeButtonProps = {},
-    visible = true,
-    ...rest
-  } = props;
+  const {groupId = null, group = null, className = null, elevation, hideActions = false, groupSubscribeButtonProps = {}, ...rest} = props;
 
   // STATE
   const {scGroup} = useSCFetchGroup({id: groupId, group});
@@ -131,7 +122,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
   function renderAuthenticatedActions() {
     return (
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
-        <Icon>{!visible ? 'private' : 'public'}</Icon>
+        <Icon>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
         <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
       </Stack>
     );

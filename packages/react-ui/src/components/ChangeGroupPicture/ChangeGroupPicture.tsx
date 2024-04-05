@@ -94,13 +94,13 @@ export default function ChangeGroupPicture(inProps: ChangeGroupPictureProps): JS
   });
   const {groupId, onChange, autoHide, className, isCreationMode = false, ...rest} = props;
 
-  //STATE
-  const [loading, setLoading] = useState<boolean>(false);
-  const [alert, setAlert] = useState<string | null>(null);
-  let fileInput = useRef(null);
-
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+
+  //STATE
+  let fileInput = useRef(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [alert, setAlert] = useState<string | null>(null);
 
   // INTL
   const intl = useIntl();
@@ -114,8 +114,9 @@ export default function ChangeGroupPicture(inProps: ChangeGroupPictureProps): JS
    * Handles avatar upload
    * @param event
    */
-  function handleUpload(event) {
-    const fileInput = event.target.files[0];
+
+  const handleUpload = (event) => {
+    fileInput = event.target.files[0];
     if (fileInput) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -131,26 +132,30 @@ export default function ChangeGroupPicture(inProps: ChangeGroupPictureProps): JS
         // @ts-ignore
         img.src = e.target.result;
       };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       reader.readAsDataURL(fileInput);
     }
-  }
-  // ui.changeGroupPicture.alert
+  };
+
   /**
    * Performs save avatar after upload
    */
   function handleSave() {
     setLoading(true);
-    const formData: any = new FormData();
+    const formData = new FormData();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     formData.append('image_original', fileInput);
     GroupService.changeGroupAvatarOrCover(groupId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
       .then((data: SCGroupType) => {
+        onChange && onChange(data.image_big);
         setLoading(false);
-        onChange && onChange(data.image_bigger);
       })
       .catch((error) => {
-        setAlert(intl.formatMessage(messages.errorLoadImage));
-        setLoading(false);
         Logger.error(SCOPE_SC_UI, error);
+        setLoading(false);
+        setAlert(intl.formatMessage(messages.errorLoadImage));
       });
   }
 

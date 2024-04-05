@@ -150,28 +150,25 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
-    // Not insert if the group does not match
-    if (feedObject.groups.findIndex((g) => g.id === scGroup.id) === -1) {
-      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
-        action: (snackbarId: SnackbarKey) => (
-          <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
-            <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
-          </Link>
-        ),
-        variant: 'success',
-        autoHideDuration: 7000
-      });
-      return;
+    enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+      action: (snackbarId: SnackbarKey) => (
+        <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
+          <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
+        </Link>
+      ),
+      variant: 'success',
+      autoHideDuration: 7000
+    });
+    if (feedObject.group?.id === scGroup.id) {
+      // Hydrate feedUnit
+      const feedUnit = {
+        type: feedObject.type,
+        [feedObject.type]: feedObject,
+        seen_by_id: [],
+        has_boost: false
+      };
+      feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
     }
-
-    // Hydrate feedUnit
-    const feedUnit = {
-      type: feedObject.type,
-      [feedObject.type]: feedObject,
-      seen_by_id: [],
-      has_boost: false
-    };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
