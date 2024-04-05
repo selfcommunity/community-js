@@ -7,13 +7,17 @@ import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, SCPaginatedResponse, GroupService} from '@selfcommunity/api-services';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {
+  Link,
   SCCache,
   SCPreferences,
   SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
   SCThemeType,
   SCUserContextType,
   useSCFetchGroup,
   useSCPreferences,
+  useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
@@ -165,6 +169,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
@@ -301,11 +306,15 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                     actions={
                       isGroupAdmin ? (
                         <GroupSettingsIconButton group={scGroup} user={user} />
-                      ) : (
-                        <Button>
+                      ) : scUserContext?.user?.id !== user.id ? (
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          component={Link}
+                          to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
                           <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
                         </Button>
-                      )
+                      ) : null
                     }
                     user={user}
                     userId={user.id}
