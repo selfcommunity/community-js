@@ -106,7 +106,8 @@ export enum SCPrivateMessageStatusType {
  */
 export enum SCPrivateMessageType {
   GROUP = 'group',
-  USER = 'user'
+  USER = 'user',
+  NEW = 'new'
 }
 
 export interface SCPrivateMessageFileType {

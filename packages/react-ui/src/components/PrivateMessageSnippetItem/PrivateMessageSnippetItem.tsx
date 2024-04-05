@@ -124,7 +124,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
         <ListItemAvatar>
           <UserAvatar hide={!hasBadge()}>
             {message.group ? (
-              <Avatar alt={message.group.name} src={message.group.image_bigger} />
+              <Avatar alt={message.group.name} src={message.group.image_big} />
             ) : (
               <Avatar
                 alt={scUserContext?.user?.username === message.receiver.username ? message.sender.username : message.receiver.username}

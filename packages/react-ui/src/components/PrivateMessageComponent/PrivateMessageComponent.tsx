@@ -31,7 +31,7 @@ export interface PrivateMessageComponentProps {
    * Handler on message click
    * @default null
    */
-  onItemClick?: (id) => void;
+  onItemClick?: (id, type) => void;
   /**
    * Handler on single message open
    * @default null
@@ -123,7 +123,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * @param type
    */
   const handleThreadOpening = (item, type) => {
-    onItemClick && onItemClick(item.group ? item.group.id : messageReceiver(item, authUserId));
+    onItemClick && onItemClick(item.group ? item.group.id : messageReceiver(item, authUserId), type);
     setType(type);
     setObj(item.group ? item : messageReceiver(item, authUserId));
     setOpenNewMessage(false);
@@ -142,7 +142,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
     setObj(SCPrivateMessageStatusType.NEW);
-    onItemClick && onItemClick(SCPrivateMessageStatusType.NEW);
+    onItemClick && onItemClick(SCPrivateMessageStatusType.NEW, SCPrivateMessageType.NEW);
   };
 
   /**
@@ -166,7 +166,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    * Handles state update when a new message is sent
    */
   const handleOnNewMessageSent = (msg, isOne) => {
-    onItemClick && onItemClick(isOne ? messageReceiver(msg, authUserId) : '');
+    onItemClick && onItemClick(isOne ? messageReceiver(msg, authUserId) : '', msg.group ? SCPrivateMessageType.GROUP : SCPrivateMessageType.USER);
     setObj(isOne ? messageReceiver(msg, authUserId) : null);
     setOpenNewMessage(false);
   };

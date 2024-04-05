@@ -354,7 +354,7 @@ const theme = {
         sizeSmall: 40,
         sizeMedium: 60,
         sizeLarge: 90,
-        sizeXLarge: 120
+        sizeXLarge: 205
       }
     }
   }
