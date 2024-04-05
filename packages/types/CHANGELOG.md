@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.3...@selfcommunity/types@0.5.9-alpha.4) (2024-04-04)
+
+
+### Performance Improvements
+
+* changed private message components for group feature ([78e2f74](https://github.com/selfcommunity/community-js/commit/78e2f740ba2e9ffc437af43adcad83997070d886))
+
+
+
+
+
 ## [0.5.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.2...@selfcommunity/types@0.5.9-alpha.3) (2024-03-26)
 
 

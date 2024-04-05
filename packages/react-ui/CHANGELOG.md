@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.15...@selfcommunity/react-ui@0.7.9-alpha.16) (2024-04-04)
+
+
+### Performance Improvements
+
+* changed private message components for group feature ([78e2f74](https://github.com/selfcommunity/community-js/commit/78e2f740ba2e9ffc437af43adcad83997070d886))
+
+
+
+
+
 ## [0.7.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.14...@selfcommunity/react-ui@0.7.9-alpha.15) (2024-04-03)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
