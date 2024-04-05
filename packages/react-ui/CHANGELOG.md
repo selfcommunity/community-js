@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.16...@selfcommunity/react-ui@0.7.9-alpha.17) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
 ## [0.7.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.15...@selfcommunity/react-ui@0.7.9-alpha.16) (2024-04-04)
 
 
