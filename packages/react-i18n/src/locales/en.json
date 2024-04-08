@@ -332,6 +332,7 @@
   "ui.feedObject.sharesDialog.title": "Shares",
   "ui.feedObject.unfollow": "Unfollow",
   "ui.feedObject.visibleToAll": "Visible to all",
+  "ui.feedObject.visibleToGroup": "Visible to {group} group",
   "ui.feedObject.notificationsEnabled": "Notifications for this contribution have been enabled",
   "ui.feedObject.notificationsDisabled": "Notifications for this contribution have been disabled",
   "ui.feedObject.flagSent": "Report sent",

@@ -54,6 +54,10 @@ const messages = defineMessages({
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
     defaultMessage: 'ui.feedObject.visibleToAll'
+  },
+  visibleToGroup: {
+    id: 'ui.feedObject.visibleToGroup',
+    defaultMessage: 'ui.feedObject.visibleToGroup'
   }
 });
 
@@ -847,6 +851,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
                       <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
+                    ) : obj.group ? (
+                      <Tooltip title={`${intl.formatMessage(messages.visibleToGroup, {group: obj.group.name})}`}>
+                        <Icon color="disabled" fontSize="small">
+                          groups
+                        </Icon>
+                      </Tooltip>
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
                         <Icon color="disabled" fontSize="small">
