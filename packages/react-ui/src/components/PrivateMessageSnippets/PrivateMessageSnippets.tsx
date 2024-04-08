@@ -135,7 +135,9 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   const filteredSnippets = data.snippets.filter((el) => {
     if (search === '') {
       return el;
-    } else if (el.receiver.id === authUserId) {
+    } else if (el.group) {
+      return el.group.slug.includes(search.toLowerCase());
+    } else if (el?.receiver?.id === authUserId) {
       return el.sender.username.includes(search.toLowerCase());
     }
     return el.receiver.username.includes(search.toLowerCase());

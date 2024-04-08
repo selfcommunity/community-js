@@ -802,7 +802,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer}>
             <Icon>category</Icon>
           </IconButton>
-          <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group)} onClick={handleAddAudienceLayer}>
+          <IconButton
+            disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group)}
+            onClick={handleAddAudienceLayer}>
             {(!group && addressing === null) || addressing?.length === 0 ? <Icon>public</Icon> : group ? <Icon>groups</Icon> : <Icon>label</Icon>}
           </IconButton>
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (

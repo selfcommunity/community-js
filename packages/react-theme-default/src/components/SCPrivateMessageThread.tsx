@@ -49,7 +49,7 @@ const Component = {
                     position: 'absolute',
                     border: `${theme.spacing(3)} solid transparent`,
                     borderTop: `${theme.spacing(3)} solid ${theme.palette.common.white}`,
-                    top: theme.spacing(1),
+                    top: theme.spacing(0),
                     left: theme.spacing(-2)
                   }
                 },
@@ -63,11 +63,22 @@ const Component = {
                     position: 'absolute',
                     border: `${theme.spacing(3)} solid transparent`,
                     borderTop: `${theme.spacing(3)} solid ${theme.palette.grey[300]}`,
-                    top: theme.spacing(1),
+                    top: theme.spacing(0),
                     right: theme.spacing(-2)
                   }
                 }
               }
+            }
+          }
+        },
+        '& .SCPrivateMessageThread-item': {
+          display: 'flex',
+          marginBottom: theme.spacing(1),
+          '& .SCPrivateMessageThread-avatar': {
+            marginRight: theme.spacing(6),
+            '& img': {
+              height: theme.selfcommunity.group.avatar.sizeMedium,
+              width: theme.selfcommunity.group.avatar.sizeMedium
             }
           }
         }

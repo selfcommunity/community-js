@@ -12,7 +12,7 @@ import {
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Box, Card, CardContent, CardProps, IconButton, List, ListSubheader, TextField, Typography} from '@mui/material';
+import {Avatar, Box, Card, CardContent, CardProps, IconButton, List, ListItemAvatar, ListSubheader, TextField, Typography} from '@mui/material';
 import PrivateMessageEditor from '../PrivateMessageEditor';
 import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
@@ -48,6 +48,8 @@ const classes = {
   newMessageContent: `${PREFIX}-new-message-content`,
   sender: `${PREFIX}-sender`,
   receiver: `${PREFIX}-receiver`,
+  avatar: `${PREFIX}-avatar`,
+  item: `${PREFIX}-item`,
   autocomplete: `${PREFIX}-autocomplete`,
   autocompleteDialog: `${PREFIX}-autocomplete-dialog`,
   editor: `${PREFIX}-editor`
@@ -578,18 +580,25 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                     </Typography>
                   </ListSubheader>
                   {formattedMessages[key].map((msg: SCPrivateMessageThreadType) => (
-                    <PrivateMessageThreadItem
-                      className={authUserId === msg.sender.id ? classes.sender : classes.receiver}
-                      message={msg}
-                      key={msg.id}
-                      mouseEvents={{
-                        onMouseEnter: () => handleMouseEnter(msg.id),
-                        onMouseLeave: () => handleMouseLeave(msg.id)
-                      }}
-                      isHovering={isHovered[msg.id]}
-                      showMenuIcon={authUserId === msg.sender.id}
-                      onMenuIconClick={() => handleOpenDeleteMessageDialog(msg)}
-                    />
+                    <Box className={classes.item} key={msg.id}>
+                      {msg.group && scUserContext?.user?.username !== msg.sender.username && (
+                        <ListItemAvatar>
+                          <Avatar alt={msg.sender.username} src={msg.sender.avatar} className={classes.avatar} />
+                        </ListItemAvatar>
+                      )}
+                      <PrivateMessageThreadItem
+                        className={authUserId === msg.sender.id ? classes.sender : classes.receiver}
+                        message={msg}
+                        key={msg.id}
+                        mouseEvents={{
+                          onMouseEnter: () => handleMouseEnter(msg.id),
+                          onMouseLeave: () => handleMouseLeave(msg.id)
+                        }}
+                        isHovering={isHovered[msg.id]}
+                        showMenuIcon={authUserId === msg.sender.id}
+                        onMenuIconClick={() => handleOpenDeleteMessageDialog(msg)}
+                      />
+                    </Box>
                   ))}
                 </ul>
               </li>
