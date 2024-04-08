@@ -17,6 +17,11 @@ export interface SCPrivateMessageThreadType {
   sender: SCUserType;
 
   /**
+   * Group obj
+   */
+  group: SCGroupType;
+
+  /**
    *Receiver User
    */
   receiver: SCUserType;
