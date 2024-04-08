@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.19...@selfcommunity/react-ui@0.7.9-alpha.20) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([1e728e0](https://github.com/selfcommunity/community-js/commit/1e728e041db7ec2399e4cc720ad2f3442338be35))
+
+
+
+
+
 ## [0.7.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.18...@selfcommunity/react-ui@0.7.9-alpha.19) (2024-04-05)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.20...@selfcommunity/react-theme-default@0.1.9-alpha.21) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([1e728e0](https://github.com/selfcommunity/community-js/commit/1e728e041db7ec2399e4cc720ad2f3442338be35))
+
+
+
+
+
 ## [0.1.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.19...@selfcommunity/react-theme-default@0.1.9-alpha.20) (2024-04-05)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
