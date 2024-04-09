@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.21...@selfcommunity/react-ui@0.7.9-alpha.22) (2024-04-09)
+
+
+### Bug Fixes
+
+* group skeleton export ([131fb71](https://github.com/selfcommunity/community-js/commit/131fb71cea676caf36f489c757856036882d7968))
+
+
+
+
+
 ## [0.7.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.20...@selfcommunity/react-ui@0.7.9-alpha.21) (2024-04-09)
 
 
