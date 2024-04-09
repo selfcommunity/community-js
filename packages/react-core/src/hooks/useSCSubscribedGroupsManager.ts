@@ -96,7 +96,9 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
                 getDataUpdated(
                   prev,
                   group.id,
-                  group.privacy === SCGroupPrivacyType.PRIVATE ? SCGroupSubscriptionStatusType.REQUESTED : SCGroupSubscriptionStatusType.SUBSCRIBED
+                  group.privacy === SCGroupPrivacyType.PRIVATE && group.subscription_status !== SCGroupSubscriptionStatusType.INVITED
+                    ? SCGroupSubscriptionStatusType.REQUESTED
+                    : SCGroupSubscriptionStatusType.SUBSCRIBED
                 )
               );
               setUnLoading(group.id);
