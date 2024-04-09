@@ -152,7 +152,7 @@ import CreateGroupButton, {CreateGroupButtonProps} from './components/CreateGrou
 import EditGroupButton, {EditGroupButtonProps} from './components/EditGroupButton';
 import GroupInviteButton, {GroupInviteButtonProps} from './components/GroupInviteButton';
 import GroupInfoWidget, {GroupInfoWidgetProps, GroupInfoWidgetSkeleton} from './components/GroupInfoWidget';
-import Group, {GroupProps} from './components/Group';
+import Group, {GroupProps, GroupSkeleton} from './components/Group';
 import GroupSubscribeButton, {GroupSubscribeButtonProps} from './components/GroupSubscribeButton';
 import GroupMembersWidget, {GroupMembersWidgetProps, GroupMembersWidgetSkeleton} from './components/GroupMembersWidget';
 import GroupRequestsWidget, {GroupRequestsWidgetProps, GroupRequestsWidgetSkeleton} from './components/GroupRequestsWidget';
@@ -420,6 +420,7 @@ export {
   GroupInfoWidgetSkeleton,
   Group,
   GroupProps,
+  GroupSkeleton,
   GroupSubscribeButton,
   GroupSubscribeButtonProps,
   GroupMembersWidget,
@@ -434,7 +435,7 @@ export {
   GroupForm,
   GroupFormProps,
   /* SC UI SHARED */
-	HiddenPlaceholder,
+  HiddenPlaceholder,
   UrlTextField,
   UsernameTextField,
   EmailTextField,
