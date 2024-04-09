@@ -278,6 +278,19 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
     setOpenDialog((prev) => !prev);
   };
 
+  const handleRefresh = useMemo(
+    () =>
+      (userId): void => {
+        const newMembers = [...state.results];
+        const _updated = newMembers.filter((u) => u.id !== userId);
+        dispatch({
+          type: actionWidgetTypes.SET_RESULTS,
+          payload: {results: newMembers.length > 1 ? _updated : []}
+        });
+      },
+    [dispatch, state.count, state.results]
+  );
+
   // RENDER
   if ((autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scGroup) {
     return <HiddenPlaceholder />;
@@ -305,7 +318,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                     elevation={0}
                     actions={
                       isGroupAdmin ? (
-                        <GroupSettingsIconButton group={scGroup} user={user} />
+                        <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
                       ) : scUserContext?.user?.id !== user.id ? (
                         <Button
                           size="small"
@@ -360,7 +373,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                       elevation={0}
                       actions={
                         isGroupAdmin ? (
-                          <GroupSettingsIconButton group={scGroup} user={user} />
+                          <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
                         ) : (
                           <Button>
                             <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />

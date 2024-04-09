@@ -268,7 +268,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
     () =>
       (userId): void => {
         const newRequests = [...state.results];
-        const _updated = newRequests.findIndex((u) => u.id !== userId);
+        const _updated = newRequests.filter((u) => u.id !== userId);
         dispatch({
           type: actionWidgetTypes.SET_RESULTS,
           payload: {results: newRequests.length > 1 ? _updated : []}
@@ -297,7 +297,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
               <User
                 elevation={0}
                 actions={
-                  <GroupSubscribeButton group={scGroup} groupId={scGroup?.id} userId={user.id} onSubscribe={() => handleSubscribeAction(user.id)} />
+                  <GroupSubscribeButton group={scGroup} groupId={scGroup?.id} user={user} onSubscribe={() => handleSubscribeAction(user.id)} />
                 }
                 user={user}
                 userId={user.id}
@@ -340,7 +340,9 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
                 <ListItem key={user.id}>
                   <User
                     elevation={0}
-                    actions={<GroupSubscribeButton group={scGroup} groupId={scGroup?.id} userId={user.id} />}
+                    actions={
+                      <GroupSubscribeButton group={scGroup} groupId={scGroup?.id} user={user} onSubscribe={() => handleSubscribeAction(user.id)} />
+                    }
                     user={user}
                     userId={user.id}
                   />
