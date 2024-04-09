@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.5...@selfcommunity/types@0.5.9-alpha.6) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([23a7cc2](https://github.com/selfcommunity/community-js/commit/23a7cc27ce199ba80a3834ca5013d9fa0f3b1bbd))
+
+
+
+
+
 ## [0.5.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.4...@selfcommunity/types@0.5.9-alpha.5) (2024-04-05)
 
 

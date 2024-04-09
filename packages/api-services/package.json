@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/api-services",
-  "version": "0.4.9-alpha.6",
+  "version": "0.4.9-alpha.7",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -58,7 +58,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@selfcommunity/types": "^0.5.9-alpha.5",
+    "@selfcommunity/types": "^0.5.9-alpha.6",
     "@selfcommunity/utils": "^0.2.9-alpha.0",
     "axios": "^1.4.0",
     "jose": "^4.14.4"
