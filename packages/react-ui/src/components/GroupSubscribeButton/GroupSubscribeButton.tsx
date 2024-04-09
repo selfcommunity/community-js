@@ -184,11 +184,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       size="small"
       variant="outlined"
       onClick={handleSubscribeAction}
-      loading={
-        (user && user.group_status === SCGroupSubscriptionStatusType.REQUESTED) || (!user && scUserContext.user)
-          ? status === null || scGroupsManager.isLoading(scGroup)
-          : null
-      }
+      loading={scUserContext.user ? scGroupsManager.isLoading(scGroup) : null}
       disabled={status === SCGroupSubscriptionStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>
