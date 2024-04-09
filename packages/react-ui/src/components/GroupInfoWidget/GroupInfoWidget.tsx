@@ -106,12 +106,12 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             <>
               <Typography className={classes.privacyTitle}>
                 <Icon>public</Icon>
-                <FormattedMessage id="ui.groupForm.privacy.public" defaultMessage="ui.groupForm.privacy.public" />
+                <FormattedMessage id="ui.groupInfoWidget.privacy.public" defaultMessage="ui.groupInfoWidget.privacy.public" />
               </Typography>
               <Typography variant="body2">
                 <FormattedMessage
-                  id="ui.groupForm.privacy.public.info"
-                  defaultMessage="ui.groupForm.privacy.public.info"
+                  id="ui.groupInfoWidget.privacy.public.info"
+                  defaultMessage="ui.groupInfoWidget.privacy.public.info"
                   values={{b: (chunks) => <strong>{chunks}</strong>}}
                 />
               </Typography>
@@ -120,12 +120,12 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             <>
               <Typography className={classes.privacyTitle}>
                 <Icon>private</Icon>
-                <FormattedMessage id="ui.groupForm.privacy.private" defaultMessage="ui.groupForm.privacy.private" />
+                <FormattedMessage id="ui.groupInfoWidget.privacy.private" defaultMessage="ui.groupInfoWidget.privacy.private" />
               </Typography>
               <Typography variant="body2">
                 <FormattedMessage
-                  id="ui.groupForm.privacy.private.info"
-                  defaultMessage="ui.groupForm.private.public.info"
+                  id="ui.groupInfoWidget.privacy.private.info"
+                  defaultMessage="ui.groupInfoWidget.private.public.info"
                   values={{b: (chunks) => <strong>{chunks}</strong>}}
                 />
               </Typography>

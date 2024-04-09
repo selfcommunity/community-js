@@ -14,7 +14,7 @@ const template = (args) => (
 
 export const Base: StoryObj<EditGroupButtonProps> = {
   args: {
-    groupId: 2
+    groupId: 6
   },
   render: template
 };

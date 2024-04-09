@@ -107,6 +107,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
   const handleSubscribe = (group, status) => {
+    console.log(status, 'status');
     setSCGroup(Object.assign({}, scGroup, {subscription_status: status}));
   };
 
