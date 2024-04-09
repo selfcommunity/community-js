@@ -5,7 +5,7 @@ export default {
   title: 'Design System/React UI/Group Invite Button',
   component: GroupInviteButton,
   args: {
-    groupId: 1
+    groupId: 6
   }
 } as Meta<typeof GroupInviteButton>;
 
@@ -17,7 +17,7 @@ const template = (args) => (
 
 export const Base: StoryObj<GroupInviteButtonProps> = {
   args: {
-    groupId: 1
+    groupId: 6
   },
   render: template
 };
