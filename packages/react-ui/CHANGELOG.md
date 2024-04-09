@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.20...@selfcommunity/react-ui@0.7.9-alpha.21) (2024-04-09)
+
+
+### Bug Fixes
+
+* fixed group settings icon actions, group members/requests widgets. ([8e3c3d3](https://github.com/selfcommunity/community-js/commit/8e3c3d382ee374390ebd16375c87eca1a11f007c))
+
+
+
+
+
 ## [0.7.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.19...@selfcommunity/react-ui@0.7.9-alpha.20) (2024-04-08)
 
 
