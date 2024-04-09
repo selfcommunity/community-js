@@ -2,8 +2,8 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {FeedObjectProps, FeedSidebarProps, GroupHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
-import {SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
-import {SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {useSCFetchGroup} from '@selfcommunity/react-core';
+import {SCGroupType} from '@selfcommunity/types';
 import GroupSkeletonTemplate from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -103,9 +103,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
   });
   const {id = 'group', className, group, groupId, widgets, FeedObjectProps, FeedSidebarProps, GroupFeedProps = {}} = props;
 
-  //CONTEXT
-  const scUserContext: SCUserContextType = useSCUser();
-
   // HOOKS
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
@@ -119,13 +116,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <GroupHeader
-        groupId={scGroup.id}
-        GroupSubscribeButtonProps={{
-          onSubscribe: handleSubscribe,
-          user: scGroup.subscription_status === SCGroupSubscriptionStatusType.INVITED ? scUserContext?.user : null
-        }}
-      />
+      <GroupHeader groupId={scGroup.id} GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
       <GroupFeed
         className={classes.feed}
         group={scGroup}
