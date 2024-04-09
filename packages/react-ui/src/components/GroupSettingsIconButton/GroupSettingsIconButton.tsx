@@ -8,6 +8,7 @@ import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
+import {GroupService} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCGroupSettingsIconButton';
 
@@ -41,25 +42,17 @@ export interface GroupSettingsIconButtonProps extends IconButtonProps {
    */
   className?: string;
   /**
-   * Handles callback on menu item delete click
+   * Handles callback on delete success
    */
-  onMenuItemRemoveClick?: () => void;
-  /**
-   * Handles callback on delete confirm
-   */
-  onItemRemoveConfirm?: () => void;
-  /**
-   * The deleting thread id
-   */
-  userToRemove?: any;
+  onRemoveSuccess?: () => void;
   /**
    * The user
    */
-  user?: SCUserType;
+  user: SCUserType;
   /**
    * The group obj
    */
-  group?: SCGroupType;
+  group: SCGroupType;
   /**
    * Any other properties
    */
@@ -94,7 +87,7 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
     props: inProps,
     name: PREFIX
   });
-  const {className = null, onMenuItemRemoveClick, group, user, onItemRemoveConfirm, userToRemove, ...rest} = props;
+  const {className = null, group, user, onRemoveSuccess, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -123,22 +116,20 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
   const handleCloseDialog = () => {
     setOpenConfirmDialog(false);
     setAnchorEl(null);
-    onItemRemoveConfirm && onItemRemoveConfirm();
+    onRemoveSuccess && onRemoveSuccess();
   };
   /**
    * Handles thread deletion
    */
   function handleRemoveUser() {
-    console.log(userToRemove);
-    // GroupService.removeUserFromGroup(group.id, userToRemove)
-    //   .then(() => {
-    //     PubSub.publish('snippetsChannelDelete', userToRemove);
-    //     handleCloseDialog();
-    //   })
-    //   .catch((error) => {
-    //     setOpenConfirmDialog(false);
-    //     console.log(error);
-    //   });
+    GroupService.removeUserFromGroup(group.id, user.id)
+      .then(() => {
+        handleCloseDialog();
+      })
+      .catch((error) => {
+        setOpenConfirmDialog(false);
+        console.log(error);
+      });
   }
 
   if (scUserContext.user.id === user.id) {
@@ -153,10 +144,7 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
         <ListItem className={classes.item} key="message" component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
           <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
         </ListItem>,
-        <ListItem className={classes.item} key="report" onClick={() => console.log('report')}>
-          <FormattedMessage id="ui.groupSettingsIconButton.item.report" defaultMessage="ui.groupSettingsIconButton.item.report" />
-        </ListItem>,
-        <ListItem className={classes.item} key="delete" onClick={userToRemove ? handleOpenDialog : onMenuItemRemoveClick}>
+        <ListItem className={classes.item} key="delete" onClick={handleOpenDialog}>
           <FormattedMessage id="ui.groupSettingsIconButton.item.remove" defaultMessage="ui.groupSettingsIconButton.item.remove" />
         </ListItem>
       ];
@@ -165,10 +153,7 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
         <MenuItem className={classes.item} component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)} key="message">
           <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
         </MenuItem>,
-        <MenuItem className={classes.item} onClick={() => console.log('report')} key="report">
-          <FormattedMessage id="ui.groupSettingsIconButton.item.report" defaultMessage="ui.groupSettingsIconButton.item.report" />
-        </MenuItem>,
-        <MenuItem className={classes.item} onClick={userToRemove ? handleOpenDialog : onMenuItemRemoveClick} key="delete">
+        <MenuItem className={classes.item} onClick={handleOpenDialog} key="delete">
           <FormattedMessage id="ui.groupSettingsIconButton.item.remove" defaultMessage="ui.groupSettingsIconButton.item.remove" />
         </MenuItem>
       ];
@@ -204,7 +189,13 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}
-          title={<FormattedMessage id="ui.groupSettingsIconButton.dialog.msg" defaultMessage="ui.groupSettingsIconButton.dialog.msg" />}
+          title={
+            <FormattedMessage
+              id="ui.groupSettingsIconButton.dialog.msg"
+              defaultMessage="ui.groupSettingsIconButton.dialog.msg"
+              values={{b: (...chunks) => <strong>{chunks}</strong>, user: user.username, group: group.name}}
+            />
+          }
           btnConfirm={<FormattedMessage id="ui.groupSettingsIconButton.dialog.confirm" defaultMessage="ui.groupSettingsIconButton.dialog.confirm" />}
           onConfirm={handleRemoveUser}
           onClose={handleCloseDialog}

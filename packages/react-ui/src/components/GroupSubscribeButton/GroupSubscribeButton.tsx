@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCContextType, SCSubscribedGroupsManagerType, SCUserContextType, useSCContext, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
-import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -40,10 +40,10 @@ export interface GroupSubscribeButtonProps {
   groupId?: number;
 
   /**
-   * id of the user to be accepted into the group
+   * The user to be accepted into the group
    * @default null
    */
-  userId?: number;
+  user?: SCUserType;
 
   /**
    * onSubscribe callback
@@ -87,7 +87,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     name: PREFIX
   });
 
-  const {className, groupId, group, userId, onSubscribe, ...rest} = props;
+  const {className, groupId, group, user, onSubscribe, ...rest} = props;
 
   // STATE
   const [status, setStatus] = useState<string>(null);
@@ -147,7 +147,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !userId ? unsubscribe() : userId ? subscribe(userId) : subscribe();
+      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !user?.id ? unsubscribe() : user?.id ? subscribe(user?.id) : subscribe();
     }
   };
 
@@ -175,7 +175,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     return _status;
   };
 
-  if (!scGroup || (isGroupAdmin && userId === scUserContext.user.id) || (isGroupAdmin && !userId)) {
+  if (!scGroup || (isGroupAdmin && user?.id === scUserContext.user.id) || (isGroupAdmin && !user?.id)) {
     return null;
   }
 
@@ -184,7 +184,11 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       size="small"
       variant="outlined"
       onClick={handleSubscribeAction}
-      loading={scUserContext.user ? scGroupsManager.isLoading(scGroup) : null}
+      loading={
+        (user && user.group_status === SCGroupSubscriptionStatusType.REQUESTED) || (!user && scUserContext.user)
+          ? status === null || scGroupsManager.isLoading(scGroup)
+          : null
+      }
       disabled={status === SCGroupSubscriptionStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>

@@ -387,7 +387,7 @@
   "ui.groupInviteButton.searchBar.placeholder": "Cerca persone da invitare",
   "ui.groupInviteButton.list.suggested": "Suggeriti",
   "ui.groupSettingsIconButton.dialog.confirm": "Sì",
-  "ui.groupSettingsIconButton.dialog.msg": "Sei sicuro di voler rimuovere l'utente dal gruppo ?",
+  "ui.groupSettingsIconButton.dialog.msg": "Sei sicuro di voler rimuovere <b>{user}</b> dal gruppo {gruppo} ?",
   "ui.groupSettingsIconButton.item.remove" : "Rimuovi dal gruppo",
   "ui.groupSettingsIconButton.item.message" : "Messaggio Privato",
   "ui.groupSettingsIconButton.item.report" : "Segnala",
