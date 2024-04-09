@@ -121,8 +121,10 @@ export default function Group(inProps: GroupProps): JSX.Element {
     <Root id={id} className={classNames(classes.root, className)}>
       <GroupHeader
         groupId={scGroup.id}
-        userId={scGroup.subscription_status === SCGroupSubscriptionStatusType.INVITED ? scUserContext?.user.id : null}
-        GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}}
+        GroupSubscribeButtonProps={{
+          onSubscribe: handleSubscribe,
+          user: scGroup.subscription_status === SCGroupSubscriptionStatusType.INVITED ? scUserContext?.user : null
+        }}
       />
       <GroupFeed
         className={classes.feed}
