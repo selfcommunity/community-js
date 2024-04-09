@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.8...@selfcommunity/react-i18n@0.5.9-alpha.9) (2024-04-09)
+
+
+### Performance Improvements
+
+* group form/group info widget ([8a29d7d](https://github.com/selfcommunity/community-js/commit/8a29d7dc0fa6076928e3ce85079f1769d13ca754))
+
+
+
+
+
 ## [0.5.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.7...@selfcommunity/react-i18n@0.5.9-alpha.8) (2024-04-09)
 
 

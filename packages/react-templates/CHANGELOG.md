@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.23...@selfcommunity/react-templates@0.3.9-alpha.24) (2024-04-09)
+
+
+### Performance Improvements
+
+* group form/group info widget ([8a29d7d](https://github.com/selfcommunity/community-js/commit/8a29d7dc0fa6076928e3ce85079f1769d13ca754))
+
+
+
+
+
 ## [0.3.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.22...@selfcommunity/react-templates@0.3.9-alpha.23) (2024-04-09)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
