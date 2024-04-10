@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.6...@selfcommunity/types@0.5.9-alpha.7) (2024-04-10)
+
+
+### Performance Improvements
+
+* added groups to search autocomplete suggestion ([20f0f55](https://github.com/selfcommunity/community-js/commit/20f0f55c67c91cc0f86a4b0167c616c2deffa6bb))
+
+
+
+
+
 ## [0.5.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.5...@selfcommunity/types@0.5.9-alpha.6) (2024-04-08)
 
 
