@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.7...@selfcommunity/types@0.5.9-alpha.8) (2024-04-10)
+
+
+### Bug Fixes
+
+* added group to SCSuggestionType ([5cc36cd](https://github.com/selfcommunity/community-js/commit/5cc36cdc8293b6bfa80ba3fc6a220ccdd3f745be))
+
+
+
+
+
 ## [0.5.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.6...@selfcommunity/types@0.5.9-alpha.7) (2024-04-10)
 
 
