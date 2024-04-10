@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.26...@selfcommunity/react-templates@0.3.9-alpha.27) (2024-04-09)
+
+
+### Bug Fixes
+
+* group manager ([4b321c0](https://github.com/selfcommunity/community-js/commit/4b321c0dd14c7ba05f8ee6275869300df10ed2ec))
+
+
+
+
+
 ## [0.3.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.25...@selfcommunity/react-templates@0.3.9-alpha.26) (2024-04-09)
 
 

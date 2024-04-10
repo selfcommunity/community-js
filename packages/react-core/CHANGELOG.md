@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.15...@selfcommunity/react-core@0.4.9-alpha.16) (2024-04-09)
+
+
+### Bug Fixes
+
+* group manager ([4b321c0](https://github.com/selfcommunity/community-js/commit/4b321c0dd14c7ba05f8ee6275869300df10ed2ec))
+
+
+
+
+
 ## [0.4.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.14...@selfcommunity/react-core@0.4.9-alpha.15) (2024-04-09)
 
 **Note:** Version bump only for package @selfcommunity/react-core
