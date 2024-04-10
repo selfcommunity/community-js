@@ -6,7 +6,8 @@ import {SCUserType} from './user';
 
 export enum SuggestionType {
   USER = 'user',
-  CATEGORY = 'category'
+  CATEGORY = 'category',
+  GROUP = 'group'
 }
 
 /**
