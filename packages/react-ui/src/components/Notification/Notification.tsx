@@ -33,6 +33,7 @@ import {
   SCCommentType,
   SCFeedObjectType,
   SCNotificationAggregatedType,
+  SCNotificationGroupActivityType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
   SCNotificationTypologyType
@@ -40,6 +41,7 @@ import {
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
+import GroupNotification from './Group';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -232,7 +234,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
 
   /**
    * Handles vote
-   * @param comment
+   * @param index
    */
   const handleVote = (index) => {
     return (contribution: SCFeedObjectType | SCCommentType) => {
@@ -299,6 +301,59 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                 total: notificationObject.aggregated.length,
                 b: (...chunks) => <strong>{chunks}</strong>
               })}
+            </>
+          }
+        />
+      );
+    }
+    /**
+     * Group notifications header
+     */
+    if (
+      notificationObject.aggregated &&
+      (notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ADDED_TO_GROUP ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP)
+    ) {
+      let groupNotification: SCNotificationGroupActivityType = notificationObject.aggregated[0] as SCNotificationGroupActivityType;
+      return (
+        <CardHeader
+          className={classes.header}
+          avatar={
+            <Link
+              {...(!groupNotification.user.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, groupNotification.user)
+              })}
+              onClick={groupNotification.user.deleted ? () => setOpenAlert(true) : null}>
+              <UserAvatar hide={!groupNotification.user.community_badge} smaller={true}>
+                <Avatar className={classes.avatar} alt={groupNotification.user.username} variant="circular" src={groupNotification.user.avatar} />
+              </UserAvatar>
+            </Link>
+          }
+          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          title={
+            <>
+              {notificationObject.aggregated[0].type !== SCNotificationTypologyType.USER_ADDED_TO_GROUP && (
+                <>
+                  <Link
+                    {...(!groupNotification.user.deleted && {
+                      to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, groupNotification.user)
+                    })}
+                    onClick={groupNotification.user.deleted ? () => setOpenAlert(true) : null}
+                    className={classes.username}>
+                    {groupNotification.user.username}
+                  </Link>{' '}
+                </>
+              )}
+              <FormattedMessage
+                id={`ui.notification.${notificationObject.aggregated[0].type}`}
+                defaultMessage={`ui.notification.${notificationObject.aggregated[0].type}`}
+                values={{
+                  group: groupNotification.group.name,
+                  link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, groupNotification.group)}>{chunks}</Link>
+                }}
+              />
             </>
           }
         />
@@ -418,6 +473,13 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       handleCustomNotification && handleCustomNotification(n);
     } else if (n.type === SCNotificationTypologyType.CONTRIBUTION) {
       return <ContributionNotification notificationObject={n} key={i} onVote={handleVote(i)} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_GROUP ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
+    ) {
+      return <GroupNotification notificationObject={n} key={i} />;
     }
     return null;
   }

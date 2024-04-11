@@ -21,6 +21,7 @@ import Message from '../BroadcastMessages/Message';
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
 import {PREFIX} from './constants';
+import GroupNotification from '../Notification/Group';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -120,6 +121,13 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         content = <IncubatorApprovedNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.CONTRIBUTION) {
         content = <ContributionNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (
+        type === SCNotificationTypologyType.USER_ADDED_TO_GROUP ||
+        type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP ||
+        type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP ||
+        type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
+      ) {
+        content = <GroupNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }
     }
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
