@@ -3,8 +3,8 @@ const Component = {
     root: ({theme}: any) => ({
       '& .SCUserProfileHeader-cover': {
         position: 'relative',
-        height: 250,
-        minHeight: 250,
+        height: 230,
+        minHeight: 230,
         borderRadius: 0,
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
         boxShadow: 'unset',
