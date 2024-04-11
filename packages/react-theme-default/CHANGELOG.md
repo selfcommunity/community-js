@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.28...@selfcommunity/react-theme-default@0.1.9-alpha.29) (2024-04-11)
+
+
+### Bug Fixes
+
+* category/user-profile header ([e0c48f9](https://github.com/selfcommunity/community-js/commit/e0c48f98f46e01653811524be0afc01fb814c9a0))
+
+
+
+
+
 ## [0.1.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.27...@selfcommunity/react-theme-default@0.1.9-alpha.28) (2024-04-10)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
