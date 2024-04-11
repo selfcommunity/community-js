@@ -207,18 +207,26 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
         markRead: scUser ? !item?.seen_by_id?.includes(scUser.id) : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
-      ItemProps={FeedObjectProps}
+      ItemProps={
+        scGroup &&
+        scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED && {
+          ActionsProps: {hideVoteAction: true, hideShareAction: true, hideCommentAction: true}
+        }
+      }
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={
-        <InlineComposerWidget
-          onSuccess={handleComposerSuccess}
-          defaultValue={{group: scGroup}}
-          label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
-        />
+        scGroup &&
+        scGroup.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED && (
+          <InlineComposerWidget
+            onSuccess={handleComposerSuccess}
+            defaultValue={{group: scGroup}}
+            label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
+          />
+        )
       }
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, groupsId: [scGroup.id]}}
       enabledCustomAdvPositions={[
