@@ -4,6 +4,9 @@ const Component = {
       marginTop: 0,
       '& .SCCategoryTemplate-feed': {
         marginTop: theme.spacing(2)
+      },
+      '& .SCGroupInfoWidget-root': {
+        marginTop: theme.spacing(2)
       }
     }),
     skeletonRoot: ({theme}: any) => ({
