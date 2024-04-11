@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.9...@selfcommunity/react-i18n@0.5.9-alpha.10) (2024-04-11)
+
+
+### Performance Improvements
+
+* added group notifications ([09fa3c5](https://github.com/selfcommunity/community-js/commit/09fa3c5871962a08375d9e1ea7fa5431cbc808c0))
+
+
+
+
+
 ## [0.5.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.8...@selfcommunity/react-i18n@0.5.9-alpha.9) (2024-04-09)
 
 

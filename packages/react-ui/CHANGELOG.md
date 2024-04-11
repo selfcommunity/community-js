@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.27...@selfcommunity/react-ui@0.7.9-alpha.28) (2024-04-11)
+
+
+### Performance Improvements
+
+* added group notifications ([09fa3c5](https://github.com/selfcommunity/community-js/commit/09fa3c5871962a08375d9e1ea7fa5431cbc808c0))
+
+
+
+
+
 ## [0.7.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.26...@selfcommunity/react-ui@0.7.9-alpha.27) (2024-04-10)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
