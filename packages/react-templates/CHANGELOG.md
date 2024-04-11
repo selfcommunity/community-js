@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.30...@selfcommunity/react-templates@0.3.9-alpha.31) (2024-04-11)
+
+
+### Bug Fixes
+
+* group feed composer/feed obj actions visibility ([e2ae9dd](https://github.com/selfcommunity/community-js/commit/e2ae9dd99e7a7331512ce3e360a4a691773f47a7))
+
+
+
+
+
 ## [0.3.9-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.29...@selfcommunity/react-templates@0.3.9-alpha.30) (2024-04-11)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
