@@ -210,6 +210,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
       ItemProps={
         scGroup &&
         scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED && {
+          hideFollowAction: true,
           ActionsProps: {hideVoteAction: true, hideShareAction: true, hideCommentAction: true}
         }
       }

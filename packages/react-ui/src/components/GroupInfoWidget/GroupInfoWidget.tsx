@@ -9,6 +9,7 @@ import {PREFIX} from './constants';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCGroupType, SCGroupPrivacyType} from '@selfcommunity/types';
 import {useSCFetchGroup} from '@selfcommunity/react-core';
+import GroupInfoWidgetSkeleton from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -88,6 +89,10 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
   const {scGroup} = useSCFetchGroup({id: groupId, group});
   // INTL
   const intl = useIntl();
+
+  if (!scGroup) {
+    return <GroupInfoWidgetSkeleton />;
+  }
 
   /**
    * Renders root object
