@@ -29,7 +29,7 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
-import GroupSubscribeButton from '../GroupSubscribeButton';
+import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -84,7 +84,17 @@ export interface GroupRequestsWidgetProps extends VirtualScrollerItemProps, Widg
    * @default {}
    */
   DialogProps?: BaseDialogProps;
+  /**
+   * Props to spread to group subscribe button component
+   * @default {}
+   */
+  GroupSubscribeButtonProps?: GroupSubscribeButtonProps;
 
+  /**
+   * onSubscribeAction callback
+   * @param user
+   */
+  onSubscribeActon?: (userId: number | string) => any;
   /**
    * Other props
    */
@@ -138,6 +148,8 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
     onStateChange,
     UserProps = {},
     DialogProps = {},
+    GroupSubscribeButtonProps = {},
+    onSubscribeActon,
     ...rest
   } = props;
 
@@ -266,15 +278,16 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
 
   const handleSubscribeAction = useMemo(
     () =>
-      (userId): void => {
+      (user): void => {
         const newRequests = [...state.results];
-        const _updated = newRequests.filter((u) => u.id !== userId);
+        const _updated = newRequests.filter((u) => u.id !== user.id);
         dispatch({
           type: actionWidgetTypes.SET_RESULTS,
           payload: {results: newRequests.length > 1 ? _updated : []}
         });
+        onSubscribeActon && onSubscribeActon(user);
       },
-    [dispatch, state.count, state.results]
+    [dispatch, state.count, state.results, onSubscribeActon]
   );
 
   // RENDER
@@ -297,7 +310,13 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
               <User
                 elevation={0}
                 actions={
-                  <GroupSubscribeButton group={scGroup} groupId={scGroup?.id} user={user} onSubscribe={() => handleSubscribeAction(user.id)} />
+                  <GroupSubscribeButton
+                    group={scGroup}
+                    groupId={scGroup?.id}
+                    user={user}
+                    onSubscribe={() => handleSubscribeAction(user)}
+                    {...GroupSubscribeButtonProps}
+                  />
                 }
                 user={user}
                 userId={user.id}
@@ -341,7 +360,13 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
                   <User
                     elevation={0}
                     actions={
-                      <GroupSubscribeButton group={scGroup} groupId={scGroup?.id} user={user} onSubscribe={() => handleSubscribeAction(user.id)} />
+                      <GroupSubscribeButton
+                        group={scGroup}
+                        groupId={scGroup?.id}
+                        user={user}
+                        onSubscribe={() => handleSubscribeAction(user)}
+                        {...GroupSubscribeButtonProps}
+                      />
                     }
                     user={user}
                     userId={user.id}

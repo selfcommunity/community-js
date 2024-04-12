@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
@@ -16,7 +16,7 @@ import {getContributionHtml, getContributionType, getRouteData} from '../../util
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
-import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCGroupSubscriptionStatusType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {
@@ -25,6 +25,7 @@ import {
   SCContextType,
   SCRoutes,
   SCRoutingContextType,
+  SCSubscribedGroupsManagerType,
   SCUserContext,
   SCUserContextType,
   UserUtils,
@@ -262,6 +263,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -280,12 +282,22 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     cacheStrategy
   });
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>(null);
 
   // HANDLERS
   const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
     setObj(contribution as SCCommentType);
     onVote && onVote(contribution as SCCommentType);
   };
+
+  /**
+   * If the obj has a group, checks the subscription status for the authenticated user
+   */
+  useEffect(() => {
+    if (scUserContext?.user?.id && feedObject?.group) {
+      setStatus(scGroupsManager.subscriptionStatus(feedObject?.group));
+    }
+  }, [scUserContext?.user?.id, scGroupsManager.subscriptionStatus, feedObject?.group]);
 
   /**
    * Update state object
@@ -335,6 +347,11 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function reply(comment) {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
+    } else if (feedObject?.group && status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.group.actions.unsubscribed" defaultMessage="ui.common.group.actions.unsubscribed" />, {
+        variant: 'warning',
+        autoHideDuration: 3000
+      });
     } else {
       setReplyComment(comment);
       onOpenReply && onOpenReply(comment);
