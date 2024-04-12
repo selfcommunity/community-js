@@ -149,6 +149,7 @@
   "ui.common.error.username": "The username field can only consist of alphanumeric characters, including the hyphen and underscore (- and _ ).",
   "ui.common.error.usernameOrEmail": "Please, enter a valid username (alphanumeric characters _ and - are allowed) or insert a valid email",
   "ui.common.fileUpload.error": "Unfortunately an error occurred while uploading the file.",
+  "ui.common.group.actions.unsubscribed": "To be able to participate, you need to join the group",
   "ui.common.nextPage": "Next page",
   "ui.common.no": "No",
   "ui.common.permanentLinkCopied": "Link copied!",

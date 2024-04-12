@@ -1,5 +1,6 @@
 import {SCUserType} from './user';
 import {SCReactionType} from './reaction';
+import { SCGroupType } from './group';
 
 /**
  * Interface SCCommentType.
@@ -120,6 +121,10 @@ export interface SCCommentType {
    * Reaction obj
    */
   reaction: SCReactionType;
+  /**
+   * The group obj
+   */
+  group?: SCGroupType;
 }
 
 /**
