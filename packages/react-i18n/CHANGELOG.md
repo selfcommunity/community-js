@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.11...@selfcommunity/react-i18n@0.5.9-alpha.12) (2024-04-12)
+
+
+### Bug Fixes
+
+* feedobj actions with group, private messages notifications for group messages ([36f44ca](https://github.com/selfcommunity/community-js/commit/36f44ca2b33fefc5848357b1430500f6839a81d0))
+
+
+
+
+
 ## [0.5.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.10...@selfcommunity/react-i18n@0.5.9-alpha.11) (2024-04-11)
 
 
