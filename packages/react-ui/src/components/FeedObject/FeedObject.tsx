@@ -25,7 +25,7 @@ import CommentObjectReply, {CommentObjectReplyProps} from '../CommentObjectReply
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCGroupSubscriptionStatusType, SCPollType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
@@ -36,6 +36,7 @@ import {
   SCContextType,
   SCRoutes,
   SCRoutingContextType,
+  SCSubscribedGroupsManagerType,
   SCUserContextType,
   UserUtils,
   useSCContext,
@@ -368,6 +369,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const {enqueueSnackbar} = useSnackbar();
 
   // OBJECTS
@@ -389,6 +391,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
   const [expanded, setExpanded] = useState(summaryExpanded);
+  const [status, setStatus] = useState<string>(null);
 
   // INTL
   const intl = useIntl();
@@ -428,6 +431,15 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     }
     return SCFeedObjectActivitiesType.RECENT_COMMENTS;
   }
+
+  /**
+   * If the obj has a group, checks the subscription status for the authenticated user
+   */
+  useEffect(() => {
+    if (scUserContext?.user?.id && feedObject?.group) {
+      setStatus(scGroupsManager.subscriptionStatus(feedObject?.group));
+    }
+  }, [scUserContext?.user?.id, scGroupsManager.subscriptionStatus, feedObject?.group]);
 
   /**
    * Open expanded activities
@@ -648,6 +660,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       scContext.settings.handleAnonymousAction();
     } else if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+        variant: 'warning',
+        autoHideDuration: 3000
+      });
+    } else if (feedObject?.group && status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
+      enqueueSnackbar(<FormattedMessage id="ui.common.group.actions.unsubscribed" defaultMessage="ui.common.group.actions.unsubscribed" />, {
         variant: 'warning',
         autoHideDuration: 3000
       });

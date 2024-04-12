@@ -207,13 +207,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
         markRead: scUser ? !item?.seen_by_id?.includes(scUser.id) : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
-      ItemProps={
-        scGroup &&
-        scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED && {
-          hideFollowAction: true,
-          ActionsProps: {hideVoteAction: true, hideShareAction: true, hideCommentAction: true}
-        }
-      }
+      ItemProps={FeedObjectProps}
       ItemSkeleton={FeedObjectSkeleton}
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW

@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -12,7 +12,7 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType, SCGroupSubscriptionStatusType, SCMediaType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {
@@ -21,6 +21,7 @@ import {
   SCPreferencesContext,
   SCPreferencesContextType,
   SCRoutingContextType,
+  SCSubscribedGroupsManagerType,
   SCThemeType,
   SCUserContextType,
   UserUtils,
@@ -130,6 +131,7 @@ export default function Share(props: ShareProps): JSX.Element {
   const [composerShareProps, setComposerShareProps] = useState<any>(null);
   const [openSharesDialog, setOpenSharesDialog] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [status, setStatus] = useState<string>(null);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -145,6 +147,7 @@ export default function Share(props: ShareProps): JSX.Element {
     SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
   const scUserContext: SCUserContextType = useSCUser();
+  const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const {enqueueSnackbar} = useSnackbar();
   const domain = typeof location !== 'undefined' && location.origin ? location.origin : '';
   const url = domain + scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj));
@@ -183,6 +186,15 @@ export default function Share(props: ShareProps): JSX.Element {
     setObj(Object.assign({}, obj, {share_count: obj.share_count + 1}));
     handleComposerOnClose();
   }
+
+  /**
+   * If the obj has a group, checks the subscription status for the authenticated user
+   */
+  useEffect(() => {
+    if (scUserContext?.user?.id && obj?.group) {
+      setStatus(scGroupsManager.subscriptionStatus(obj?.group));
+    }
+  }, [scUserContext?.user?.id, scGroupsManager.subscriptionStatus, obj?.group]);
 
   /**
    * Performs follow/unfollow
@@ -225,6 +237,11 @@ export default function Share(props: ShareProps): JSX.Element {
     } else {
       if (UserUtils.isBlocked(scUserContext.user)) {
         enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning',
+          autoHideDuration: 3000
+        });
+      } else if (obj?.group && status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.group.actions.unsubscribed" defaultMessage="ui.common.group.actions.unsubscribed" />, {
           variant: 'warning',
           autoHideDuration: 3000
         });
