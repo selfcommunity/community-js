@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.9...@selfcommunity/types@0.5.9-alpha.10) (2024-04-12)
+
+
+### Bug Fixes
+
+* feedobj actions with group, private messages notifications for group messages ([36f44ca](https://github.com/selfcommunity/community-js/commit/36f44ca2b33fefc5848357b1430500f6839a81d0))
+
+
+
+
+
 ## [0.5.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.8...@selfcommunity/types@0.5.9-alpha.9) (2024-04-11)
 
 
