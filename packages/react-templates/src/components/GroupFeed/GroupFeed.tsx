@@ -17,7 +17,7 @@ import {
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
-import {SCCustomAdvPosition, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {SCCustomAdvPosition, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -185,7 +185,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
 
   if (!scGroup) {
     return <GroupFeedSkeleton />;
-  } else if (scGroup && scGroup.privacy !== SCGroupPrivacyType.PUBLIC && scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
+  } else if (scGroup && scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
     return <GroupInfoWidget className={classes.root} groupId={scGroup?.id} />;
   }
 

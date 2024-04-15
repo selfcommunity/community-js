@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Icon, Paper, Typography} from '@mui/material';
-import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchGroup, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import GroupHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
@@ -235,7 +235,9 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
           )}
         </Box>
         <>
-          {((scGroup && scGroup.privacy === SCGroupPrivacyType.PUBLIC) || isGroupAdmin) && (
+          {((scGroup && scGroup.privacy === SCGroupPrivacyType.PUBLIC) ||
+            scGroup.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED ||
+            isGroupAdmin) && (
             <Box className={classes.members}>
               <Typography className={classes.membersCounter} component="div">
                 <FormattedMessage id="ui.groupHeader.members" defaultMessage="ui.groupHeader.members" values={{total: scGroup.subscribers_counter}} />
