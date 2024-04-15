@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.31...@selfcommunity/react-ui@0.7.9-alpha.32) (2024-04-15)
+
+
+### Bug Fixes
+
+* fixed reply action on 2 level comment if group, group requests callback added ([7ddfd43](https://github.com/selfcommunity/community-js/commit/7ddfd4320ac79388a85bd14c3b88414c505097cc))
+
+
+
+
+
 ## [0.7.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.30...@selfcommunity/react-ui@0.7.9-alpha.31) (2024-04-12)
 
 
