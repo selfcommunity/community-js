@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.34...@selfcommunity/react-templates@0.3.9-alpha.35) (2024-04-15)
+
+
+### Bug Fixes
+
+* fixed reply action on 2 level comment if group, group requests callback added ([7ddfd43](https://github.com/selfcommunity/community-js/commit/7ddfd4320ac79388a85bd14c3b88414c505097cc))
+
+
+
+
+
 ## [0.3.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.33...@selfcommunity/react-templates@0.3.9-alpha.34) (2024-04-12)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
