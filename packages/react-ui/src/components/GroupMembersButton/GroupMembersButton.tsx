@@ -7,7 +7,7 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import User, {UserSkeleton} from '../User';
 import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCThemeType, useSCFetchGroup} from '@selfcommunity/react-core';
-import {SCGroupPrivacyType, SCGroupType, SCUserType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -108,7 +108,13 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
-    if (!scGroup || (scGroup && scGroup.privacy !== SCGroupPrivacyType.PUBLIC && autoHide)) {
+    if (
+      !scGroup ||
+      (scGroup &&
+        scGroup.privacy !== SCGroupPrivacyType.PUBLIC &&
+        scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED &&
+        autoHide)
+    ) {
       return;
     }
     if (members.length === 0) {
