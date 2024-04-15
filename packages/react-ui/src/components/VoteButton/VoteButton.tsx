@@ -1,21 +1,12 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCGroupSubscriptionStatusType, SCReactionType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme} from '@mui/material';
-import {
-  SCContextType,
-  SCSubscribedGroupsManagerType,
-  SCThemeType,
-  SCUserContextType,
-  UserUtils,
-  useSCContext,
-  useSCFetchVote,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
@@ -104,7 +95,6 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [status, setStatus] = useState<string>(null);
 
   // REF
   const timeoutRef = useRef(null);
@@ -112,7 +102,6 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
@@ -130,15 +119,6 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   };
 
   /**
-   * If the obj has a group, checks the subscription status for the authenticated user
-   */
-  useEffect(() => {
-    if (scUserContext?.user?.id && contribution?.group) {
-      setStatus(scGroupsManager.subscriptionStatus(contribution?.group));
-    }
-  }, [scUserContext?.user?.id, scGroupsManager.subscriptionStatus, contribution?.group]);
-
-  /**
    * Perform vote action
    * @param reaction
    */
@@ -147,11 +127,6 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
       scContext.settings.handleAnonymousAction();
     } else if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-        variant: 'warning',
-        autoHideDuration: 3000
-      });
-    } else if (contribution?.group && status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.group.actions.unsubscribed" defaultMessage="ui.common.group.actions.unsubscribed" />, {
         variant: 'warning',
         autoHideDuration: 3000
       });
