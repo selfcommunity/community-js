@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {styled} from '@mui/material/styles';
@@ -7,17 +7,10 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Icon from '@mui/material/Icon';
-import {SCContributionType, SCFeedObjectType, SCGroupSubscriptionStatusType, SCTagType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType, SCTagType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {
-  SCContextType,
-  SCSubscribedGroupsManagerType,
-  SCUserContextType,
-  useSCContext,
-  useSCFetchFeedObject,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCContextType, SCUserContextType, useSCContext, useSCFetchFeedObject, useSCUser} from '@selfcommunity/react-core';
 import {catchUnauthorizedActionByBlockedUser} from '../../../../utils/errors';
 import {PREFIX} from '../../constants';
 
@@ -90,22 +83,11 @@ export default function Follow(props: FollowProps): JSX.Element {
   // STATE
   const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>(null);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const {enqueueSnackbar} = useSnackbar();
-
-  /**
-   * If the obj has a group, checks the subscription status for the authenticated user
-   */
-  useEffect(() => {
-    if (scUserContext?.user?.id && obj?.group) {
-      setStatus(scGroupsManager.subscriptionStatus(obj?.group));
-    }
-  }, [scUserContext?.user?.id, scGroupsManager.subscriptionStatus, obj?.group]);
 
   /**
    * Perform follow/unfollow
@@ -135,11 +117,6 @@ export default function Follow(props: FollowProps): JSX.Element {
   function follow() {
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
-    } else if (obj?.group && status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
-      enqueueSnackbar(<FormattedMessage id="ui.common.group.actions.unsubscribed" defaultMessage="ui.common.group.actions.unsubscribed" />, {
-        variant: 'warning',
-        autoHideDuration: 3000
-      });
     } else {
       setIsFollowing(true);
       performFollow()
