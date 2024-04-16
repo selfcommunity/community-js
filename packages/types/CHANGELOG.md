@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.10...@selfcommunity/types@0.5.9-alpha.11) (2024-04-15)
+
+
+### Performance Improvements
+
+* removed unecessary code ([01f7f73](https://github.com/selfcommunity/community-js/commit/01f7f7377bb0fad9efffb87d92fa00ddd722af7e))
+
+
+
+
+
 ## [0.5.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.9...@selfcommunity/types@0.5.9-alpha.10) (2024-04-12)
 
 
