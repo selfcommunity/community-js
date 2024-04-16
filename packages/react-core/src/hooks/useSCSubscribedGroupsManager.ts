@@ -43,7 +43,6 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
-            console.log(res);
             const groupsIds = res.data.results.map((g: SCGroupType) => g.id);
             updateCache(groupsIds);
             setData(groupsIds);

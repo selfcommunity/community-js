@@ -125,7 +125,13 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     scGroupsManager
       .subscribe(scGroup, userId)
       .then(() => {
-        onSubscribe && onSubscribe(scGroup, SCGroupSubscriptionStatusType.SUBSCRIBED);
+        onSubscribe &&
+          onSubscribe(
+            scGroup,
+            scGroup.privacy === SCGroupPrivacyType.PRIVATE && scGroup.subscription_status !== SCGroupSubscriptionStatusType.INVITED
+              ? SCGroupSubscriptionStatusType.REQUESTED
+              : SCGroupSubscriptionStatusType.SUBSCRIBED
+          );
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);

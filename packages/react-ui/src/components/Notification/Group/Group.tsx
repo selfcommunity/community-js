@@ -10,7 +10,7 @@ import {
   SCUserContextType,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCGroupSubscriptionStatusType, SCGroupType, SCNotificationGroupActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {SCGroupSubscriptionStatusType, SCGroupType, SCNotificationGroupActivityType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -109,18 +109,14 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
         }
         primary={
           <Box>
-            {notificationObject.type !== SCNotificationTypologyType.USER_ADDED_TO_GROUP && (
-              <>
-                <Link
-                  {...(!notificationObject.user.deleted && {
-                    to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
-                  })}
-                  onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
-                  className={classes.username}>
-                  {notificationObject.user.username}
-                </Link>{' '}
-              </>
-            )}
+            <Link
+              {...(!notificationObject.user.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+              })}
+              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
+              className={classes.username}>
+              {notificationObject.user.username}
+            </Link>{' '}
             <FormattedMessage
               id={`ui.notification.${notificationObject.type}`}
               defaultMessage={`ui.notification.${notificationObject.type}`}
