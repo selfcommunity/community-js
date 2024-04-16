@@ -116,7 +116,6 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
   const handleCloseDialog = () => {
     setOpenConfirmDialog(false);
     setAnchorEl(null);
-    onRemoveSuccess && onRemoveSuccess();
   };
   /**
    * Handles thread deletion
@@ -124,6 +123,7 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
   function handleRemoveUser() {
     GroupService.removeUserFromGroup(group.id, user.id)
       .then(() => {
+        onRemoveSuccess && onRemoveSuccess();
         handleCloseDialog();
       })
       .catch((error) => {
