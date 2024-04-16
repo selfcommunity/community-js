@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.23...@selfcommunity/react-core@0.4.9-alpha.24) (2024-04-16)
+
+
+### Bug Fixes
+
+* group notifications ([f4397e0](https://github.com/selfcommunity/community-js/commit/f4397e07e6cea00fd67e73dfd91316d10f16b6e0))
+
+
+
+
+
 ## [0.4.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.22...@selfcommunity/react-core@0.4.9-alpha.23) (2024-04-16)
 
 
