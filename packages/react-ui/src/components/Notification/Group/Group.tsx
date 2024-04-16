@@ -25,7 +25,7 @@ const classes = {
   root: `${PREFIX}-group-root`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
-  replyButton: `${PREFIX}-reply-button`,
+  acceptButton: `${PREFIX}-reply-button`,
   activeAt: `${PREFIX}-active-at`,
   username: `${PREFIX}-username`
 };
@@ -165,7 +165,7 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
                 color={'primary'}
                 variant="outlined"
                 size="small"
-                classes={{root: classes.replyButton}}
+                classes={{root: classes.acceptButton}}
                 component={Link}
                 loading={scUserContext.user ? status === null || manager.isLoading(notificationObject.group as SCGroupType) : null}
                 to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)}>

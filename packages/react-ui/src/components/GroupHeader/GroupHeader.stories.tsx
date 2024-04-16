@@ -8,12 +8,11 @@ export default {
   argTypes: {
     groupId: {
       control: {type: 'number'},
-      description: 'Group Id',
-      table: {defaultValue: {summary: 1}}
+      description: 'Group Id'
     }
   },
   args: {
-    groupId: 6
+    groupId: 3
   }
 } as Meta<typeof GroupHeader>;
 
@@ -25,7 +24,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof GroupHeader> = {
   args: {
-    groupId: 6
+    groupId: 3
   },
   render: template
 };
