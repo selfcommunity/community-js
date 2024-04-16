@@ -16,7 +16,7 @@ const Component = {
         }
       },
       '& .SCGroupHeader-info': {
-        marginTop: 50,
+        marginTop: theme.spacing(6.5),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -45,7 +45,7 @@ const Component = {
         },
         '& .SCEditGroupButton-root': {
           marginLeft: 'auto',
-          marginTop: theme.spacing(2)
+          marginTop: theme.spacing(-4.25)
         },
         '& .SCGroupSubscribeButton-root': {
           marginTop: theme.spacing(1)

@@ -281,6 +281,7 @@ const Component = {
         maxWidth: '40%'
       }
     }),
+    groupRoot: ({theme}: any) => ({}),
     undeletedForRoot: ({theme}: any) => ({
       '& .SCNotification-undeleted-icon': {
         backgroundColor: red[500],
