@@ -334,18 +334,14 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
           title={
             <>
-              {notificationObject.aggregated[0].type !== SCNotificationTypologyType.USER_ADDED_TO_GROUP && (
-                <>
-                  <Link
-                    {...(!groupNotification.user.deleted && {
-                      to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, groupNotification.user)
-                    })}
-                    onClick={groupNotification.user.deleted ? () => setOpenAlert(true) : null}
-                    className={classes.username}>
-                    {groupNotification.user.username}
-                  </Link>{' '}
-                </>
-              )}
+              <Link
+                {...(!groupNotification.user.deleted && {
+                  to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, groupNotification.user)
+                })}
+                onClick={groupNotification.user.deleted ? () => setOpenAlert(true) : null}
+                className={classes.username}>
+                {groupNotification.user.username}
+              </Link>{' '}
               <FormattedMessage
                 id={`ui.notification.${notificationObject.aggregated[0].type}`}
                 defaultMessage={`ui.notification.${notificationObject.aggregated[0].type}`}
