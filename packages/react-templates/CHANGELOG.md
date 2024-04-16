@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.37...@selfcommunity/react-templates@0.3.9-alpha.38) (2024-04-16)
+
+
+### Bug Fixes
+
+* group header skeleton, subscribed group manager ([b263ae7](https://github.com/selfcommunity/community-js/commit/b263ae728f1bc12d2d666bd5db45e839df9b534c))
+
+
+
+
+
 ## [0.3.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.36...@selfcommunity/react-templates@0.3.9-alpha.37) (2024-04-16)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
