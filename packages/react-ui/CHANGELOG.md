@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.36...@selfcommunity/react-ui@0.7.9-alpha.37) (2024-04-17)
+
+
+### Bug Fixes
+
+* fixed private message thread ([0652474](https://github.com/selfcommunity/community-js/commit/06524749cfac6d5b8cfa6fd399d0057f2aaaeef1))
+
+
+
+
+
 ## [0.7.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.35...@selfcommunity/react-ui@0.7.9-alpha.36) (2024-04-16)
 
 
