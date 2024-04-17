@@ -374,11 +374,15 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                       actions={
                         isGroupAdmin ? (
                           <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
-                        ) : (
-                          <Button>
+                        ) : scUserContext?.user?.id !== user.id ? (
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            component={Link}
+                            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
                             <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
                           </Button>
-                        )
+                        ) : null
                       }
                       user={user}
                       userId={user.id}
