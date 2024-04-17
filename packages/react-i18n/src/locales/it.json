@@ -377,7 +377,7 @@
   "ui.groupSubscribeButton.requestAccess": "Richiedi Accesso",
   "ui.groupSubscribeButton.waitingApproval": "In attesa di approvazione",
   "ui.groupMembersButton.dialogTitle": "Membri ({total})",
-  "ui.groupMembersButton.noOtherMembers": "Non ci sono altri memebri.",
+  "ui.groupMembersButton.noOtherMembers": "Non ci sono altri membri.",
   "ui.groupInfoWidget.title": "Informazioni del Gruppo",
   "ui.groupInfoWidget.date": "Creato il {date}",
   "ui.groupInfoWidget.privacy.public": "Pubblico",

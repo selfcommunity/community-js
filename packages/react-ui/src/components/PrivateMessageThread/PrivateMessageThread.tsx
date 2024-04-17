@@ -608,7 +608,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         <PrivateMessageEditor
           className={classes.editor}
           send={handleSend}
-          autoHide={type === SCPrivateMessageType.USER && !scUser?.can_send_pm_to}
+          autoHide={type !== SCPrivateMessageType.GROUP && !scUser?.can_send_pm_to}
           autoHideDeletion={type === SCPrivateMessageType.USER && (receiver?.deleted || scUser?.deleted)}
           onThreadChangeId={isNumber ? threadObj : type === SCPrivateMessageType.USER ? threadObj.receiver.id : threadObj.group.id}
           error={error}
