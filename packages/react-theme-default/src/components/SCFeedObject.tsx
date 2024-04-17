@@ -62,12 +62,7 @@ const Component = {
           }
         },
         '& .SCFeedObject-group': {
-          position: 'relative',
-          right: '10%',
-          [theme.breakpoints.up('sm')]: {
-            right: '30%'
-          },
-          transform: 'translateX(-50%)'
+          marginRight: `${theme.spacing(1)} !important`
         }
       },
       '& .SCFeedObject-group': {
