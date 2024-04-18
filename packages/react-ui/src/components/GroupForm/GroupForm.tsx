@@ -217,8 +217,10 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
-    for (const key in field.invitedUsers) {
-      formData.append(key, field.invitedUsers[key]);
+    if (!group) {
+      for (const key in field.invitedUsers) {
+        formData.append(key, field.invitedUsers[key]);
+      }
     }
     let groupService;
     if (group) {
@@ -424,10 +426,14 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             )}
           </Box>
         </FormGroup>
-        <Divider />
-        <Box className={classes.inviteSection}>
-          <GroupInviteButton handleInvitations={handleInviteSection} />
-        </Box>
+        {!group && (
+          <>
+            <Divider />
+            <Box className={classes.inviteSection}>
+              <GroupInviteButton handleInvitations={handleInviteSection} />
+            </Box>
+          </>
+        )}
       </>
     </Root>
   );

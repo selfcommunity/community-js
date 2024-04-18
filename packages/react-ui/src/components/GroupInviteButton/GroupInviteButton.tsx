@@ -3,7 +3,7 @@ import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserContext, SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, useSCFetchGroup} from '@selfcommunity/react-core';
 import {ButtonProps} from '@mui/material/Button/Button';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
@@ -127,11 +127,11 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   const [invited, setInvited] = useState<any>([]);
 
   function convertToInvitedUsersObject(data) {
-    const invited_users = {};
+    const invite_users = {};
     data.forEach((user, index) => {
-      invited_users[`invited_users[${index}]`] = user.id;
+      invite_users[`invite_users[${index}]`] = user.id;
     });
-    return invited_users;
+    return invite_users;
   }
 
   /**

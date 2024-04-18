@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, ButtonBaseProps, Icon, Stack} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -109,6 +109,13 @@ export default function Group(inProps: GroupProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // CONST
+  const isGroupAdmin = useMemo(
+    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
+    [scUserContext.user, scGroup?.managed_by?.id]
+  );
 
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 
@@ -123,6 +130,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
     return (
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
         <Icon>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
+        {isGroupAdmin && <Icon>face</Icon>}
         <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
       </Stack>
     );

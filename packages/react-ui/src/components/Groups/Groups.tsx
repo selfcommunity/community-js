@@ -1,9 +1,9 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, Typography} from '@mui/material';
+import {Box, Grid, TextField, Typography} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {http, EndpointType} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {Logger, sortByAttr} from '@selfcommunity/utils';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -24,6 +24,7 @@ import {AxiosResponse} from 'axios';
 
 const classes = {
   root: `${PREFIX}-root`,
+  filters: `${PREFIX}-filter`,
   groups: `${PREFIX}-groups`,
   item: `${PREFIX}-item`,
   noResults: `${PREFIX}-no-results`,
@@ -61,7 +62,26 @@ export interface GroupsProps {
   /** If true, it means that the endpoint fetches all groups available
    * @default null
    */
+
   general?: boolean;
+
+  /**
+   * Show/Hide filters
+   * @default false
+   */
+  showFilters?: boolean;
+
+  /**
+   * Override filter func
+   * @default null
+   */
+  handleFilterGroups?: (groups: SCGroupType[]) => SCGroupType[];
+
+  /**
+   * Filters component
+   * @param props
+   */
+  filters?: JSX.Element;
   /**
    * Other props
    */
@@ -110,6 +130,9 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     className,
     GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     prefetchedGroups = [],
+    showFilters = false,
+    filters,
+    handleFilterGroups,
     general,
     ...rest
   } = props;
@@ -117,6 +140,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   // STATE
   const [groups, setGroups] = useState<SCGroupType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [filterName, setFilterName] = useState<string>('');
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -179,12 +203,51 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     }
   };
 
-  // RENDER
-  if (!contentAvailability && !scUserContext.user) {
-    return <HiddenPlaceholder />;
-  }
+  /**
+   * Get groups filtered
+   */
+  const getFilteredGroups = () => {
+    if (handleFilterGroups) {
+      return handleFilterGroups(groups);
+    }
+    if (filterName) {
+      return groups.filter((g) => g.name.toLowerCase().includes(filterName.toLowerCase()));
+    }
+    return groups;
+  };
+
+  /**
+   * Handle change filter name
+   * @param event
+   */
+  const handleOnChangeFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterName(event.target.value);
+  };
+
+  /**
+   * Renders groups list
+   */
+  const filteredGroups = sortByAttr(getFilteredGroups(), 'order');
   const content = (
     <>
+      {showFilters && (
+        <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
+          {filters ? (
+            filters
+          ) : (
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                value={filterName}
+                label={<FormattedMessage id="ui.groups.filterByName" defaultMessage="ui.groups.filterByName" />}
+                variant="outlined"
+                onChange={handleOnChangeFilterName}
+                disabled={loading}
+              />
+            </Grid>
+          )}
+        </Grid>
+      )}
       {loading ? (
         <Skeleton />
       ) : (
@@ -200,7 +263,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             </Box>
           ) : (
             <Grid container spacing={{xs: 3}} className={classes.groups}>
-              {groups.map((group: SCGroupType) => (
+              {filteredGroups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} groupSubscribeButtonProps={{onSubscribe: handleSubscribe}} {...GroupComponentProps} />
                 </Grid>
@@ -211,6 +274,11 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
       )}
     </>
   );
+  // RENDER
+  if (!contentAvailability && !scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {content}
