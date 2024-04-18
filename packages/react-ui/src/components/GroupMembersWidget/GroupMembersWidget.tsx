@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
-import {Button, CardActions, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Button, CardActions, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, SCPaginatedResponse, GroupService} from '@selfcommunity/api-services';
@@ -35,11 +35,13 @@ import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
 import GroupInviteButton from '../GroupInviteButton';
 import GroupSettingsIconButton from '../GroupSettingsIconButton';
+import Icon from '@mui/material/Icon';
 
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   actions: `${PREFIX}-actions`,
+  badge: `${PREFIX}-badge`,
   noResults: `${PREFIX}-no-results`,
   showMore: `${PREFIX}-show-more`,
   dialogRoot: `${PREFIX}-dialog-root`,
@@ -329,6 +331,13 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                         </Button>
                       ) : null
                     }
+                    badgeContent={
+                      scGroup?.managed_by?.id === user.id ? (
+                        <Avatar className={classes.badge}>
+                          <Icon>face</Icon>
+                        </Avatar>
+                      ) : null
+                    }
                     user={user}
                     userId={user.id}
                   />
@@ -382,6 +391,13 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                             to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
                             <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
                           </Button>
+                        ) : null
+                      }
+                      badgeContent={
+                        scGroup?.managed_by?.id === user.id ? (
+                          <Avatar className={classes.badge}>
+                            <Icon>face</Icon>
+                          </Avatar>
                         ) : null
                       }
                       user={user}

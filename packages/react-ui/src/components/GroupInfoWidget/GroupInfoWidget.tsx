@@ -21,6 +21,7 @@ const classes = {
   privacyTitle: `${PREFIX}-privacy-title`,
   visibility: `${PREFIX}-visibility`,
   visibilityTitle: `${PREFIX}-visibility-title`,
+  admin: `${PREFIX}-admin`,
   date: `${PREFIX}-date`
 };
 
@@ -206,6 +207,13 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             id="ui.groupInfoWidget.date"
             defaultMessage="ui.groupInfoWidget.date"
             values={{date: intl.formatDate(scGroup.created_at, {day: 'numeric', year: 'numeric', month: 'long'})}}
+          />
+        </Typography>
+        <Typography variant="body2" className={classes.admin}>
+          <FormattedMessage
+            id="ui.groupInfoWidget.admin"
+            defaultMessage="ui.groupInfoWidget.admin"
+            values={{b: (chunks) => <strong>{chunks}</strong>, admin: scGroup?.managed_by.username}}
           />
         </Typography>
       </CardContent>

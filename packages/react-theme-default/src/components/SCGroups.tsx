@@ -1,6 +1,10 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCGroups-filters': {
+        marginTop: theme.spacing(),
+        marginBottom: theme.spacing(2)
+      },
       '& .SCGroups-groups': {
         marginTop: theme.spacing(3),
         '& .SCGroups-item': {

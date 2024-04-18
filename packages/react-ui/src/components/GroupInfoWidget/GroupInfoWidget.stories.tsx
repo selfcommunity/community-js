@@ -14,7 +14,7 @@ const template = (args) => (
 
 export const Base: StoryObj<GroupInfoWidget> = {
   args: {
-    groupId: 1
+    groupId: 3
   },
   render: template
 };

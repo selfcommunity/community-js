@@ -5,11 +5,12 @@ import { Endpoints } from '@selfcommunity/api-services';
 export default {
   title: 'Design System/React UI/Groups',
   component: Groups,
-  argTypes: {
+  args: {
     endpoint: {
       ...Endpoints.SearchGroups,
       url: () => Endpoints.SearchGroups.url()
-    }
+    },
+    showFilters: 1,
   }
 } as Meta<typeof Groups>;
 
