@@ -45,7 +45,7 @@ export interface GroupsProps {
   /**
    * Endpoint to call
    */
-  endpoint: EndpointType;
+  endpoint?: EndpointType;
   /**
    * Props to spread to single group object
    * @default {variant: 'outlined', ButtonBaseProps: {disableRipple: 'true'}}
