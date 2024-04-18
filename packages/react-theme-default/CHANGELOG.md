@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.41...@selfcommunity/react-theme-default@0.1.9-alpha.42) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups no results layout ([ecfc83a](https://github.com/selfcommunity/community-js/commit/ecfc83a781a8dfd2bd15c3b60a393bea3a8d75fc))
+
+
+
+
+
 ## [0.1.9-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.40...@selfcommunity/react-theme-default@0.1.9-alpha.41) (2024-04-17)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.38...@selfcommunity/react-ui@0.7.9-alpha.39) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups no results layout ([ee09806](https://github.com/selfcommunity/community-js/commit/ee09806347169ecd1845b272e4b47c460916dd45))
+* groups no results layout ([ecfc83a](https://github.com/selfcommunity/community-js/commit/ecfc83a781a8dfd2bd15c3b60a393bea3a8d75fc))
+* groups sync events ([3848feb](https://github.com/selfcommunity/community-js/commit/3848febafe7ccd03e8faeafb7e5842dea806ea24))
+
+
+
+
+
 ## [0.7.9-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.37...@selfcommunity/react-ui@0.7.9-alpha.38) (2024-04-17)
 
 

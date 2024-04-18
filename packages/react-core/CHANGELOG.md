@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.25...@selfcommunity/react-core@0.4.9-alpha.26) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups sync events ([759c412](https://github.com/selfcommunity/community-js/commit/759c412df95be881a38451b2de8400b2d71cacaa))
+* groups sync events ([3848feb](https://github.com/selfcommunity/community-js/commit/3848febafe7ccd03e8faeafb7e5842dea806ea24))
+
+
+
+
+
 ## [0.4.9-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.24...@selfcommunity/react-core@0.4.9-alpha.25) (2024-04-17)
 
 **Note:** Version bump only for package @selfcommunity/react-core
