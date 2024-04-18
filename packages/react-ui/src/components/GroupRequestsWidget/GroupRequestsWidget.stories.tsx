@@ -8,7 +8,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'Group Id',
-      table: {defaultValue: {summary: 6}}
+      table: {defaultValue: {summary: 3}}
     }
   }
 } as Meta<typeof GroupRequestsWidget>;
@@ -20,9 +20,10 @@ const template = (args) => (
   </div>
 );
 
+// @ts-ignore
 export const Base: StoryObj<GroupRequestsWidget> = {
   args: {
-    groupId: 6
+    groupId: 3
   },
   render: template
 };

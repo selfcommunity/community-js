@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Icon, Paper, Typography} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
@@ -15,6 +15,8 @@ import GroupMembersButton, {GroupMembersButtonProps} from '../GroupMembersButton
 import EditGroupButton from '../EditGroupButton';
 import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
 import GroupInviteButton from '../GroupInviteButton';
+import {SCEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
+import PubSub from 'pubsub-js';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -79,6 +81,7 @@ export interface GroupHeaderProps {
    * @default {}
    */
   GroupMembersButtonProps?: GroupMembersButtonProps;
+
   /**
    * Any other properties
    */
@@ -144,6 +147,9 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   // HOOKS
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
+  // REFS
+  const updatesSubscription = useRef(null);
+
   // CONST
   const isGroupAdmin = useMemo(
     () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
@@ -154,7 +160,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    * Handles Change Avatar
    * @param avatar
    */
-  function handleChangeAvatar(avatar) {
+  function handleChangeAvatar(avatar: any) {
     if (isGroupAdmin) {
       setSCGroup(Object.assign({}, scGroup, {image_big: avatar}));
     }
@@ -164,7 +170,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    * Handles Change Cover
    * @param cover
    */
-  function handleChangeCover(cover) {
+  function handleChangeCover(cover: any) {
     if (isGroupAdmin) {
       setSCGroup(Object.assign({}, scGroup, {emotional_image: cover}));
     }
@@ -176,6 +182,37 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const handleSubscribe = (group, status) => {
     setSCGroup({...group, subscribers_counter: group.subscribers_counter + (status ? 1 : -1)});
   };
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onChangeGroupMembersHandler = useCallback(
+    (msg: string, data: SCGroupMembersEventType) => {
+      if (data && data.group.id === scGroup.id) {
+        let _group = {...scGroup};
+        if (msg === `${SCTopicType.GROUP}.${SCEventType.ADD_MEMBER}`) {
+          _group.subscribers_counter = _group.subscribers_counter + 1;
+        } else if (msg === `${SCTopicType.GROUP}.${SCEventType.REMOVE_MEMBER}`) {
+          _group.subscribers_counter = Math.max(_group.subscribers_counter - 1, 0);
+        }
+        console.log(_group);
+        setSCGroup(_group);
+      }
+    },
+    [scGroup, setSCGroup]
+  );
+
+  /**
+   * On mount, subscribe to receive groups updates (only edit)
+   */
+  useEffect(() => {
+    if (scGroup) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCEventType.MEMBERS}`, onChangeGroupMembersHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [scGroup]);
 
   // RENDER
   if (!scGroup) {
@@ -242,7 +279,13 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
               <Typography className={classes.membersCounter} component="div">
                 <FormattedMessage id="ui.groupHeader.members" defaultMessage="ui.groupHeader.members" values={{total: scGroup.subscribers_counter}} />
               </Typography>
-              <GroupMembersButton groupId={scGroup?.id} group={scGroup} autoHide={!isGroupAdmin} {...GroupMembersButtonProps} />
+              <GroupMembersButton
+                key={scGroup.subscribers_counter}
+                groupId={scGroup?.id}
+                group={scGroup}
+                autoHide={!isGroupAdmin}
+                {...GroupMembersButtonProps}
+              />
             </Box>
           )}
         </>

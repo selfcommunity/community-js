@@ -8,6 +8,8 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCGroupSubscribeButton';
 
@@ -121,17 +123,27 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     }
   }, [authUserId, scGroupsManager.subscriptionStatus]);
 
-  const subscribe = (userId?: number) => {
+  /**
+   * Notify UI when a member is added to a group
+   * @param group
+   * @param user
+   */
+  function notifyChanges(group: SCGroupType, user: SCUserType) {
+    if (group && user) {
+      PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.ADD_MEMBER}`, {group, user});
+    }
+  }
+
+  const subscribe = (user?: SCUserType) => {
     scGroupsManager
-      .subscribe(scGroup, userId)
+      .subscribe(scGroup, user?.id)
       .then(() => {
-        onSubscribe &&
-          onSubscribe(
-            scGroup,
-            scGroup.privacy === SCGroupPrivacyType.PRIVATE && scGroup.subscription_status !== SCGroupSubscriptionStatusType.INVITED
-              ? SCGroupSubscriptionStatusType.REQUESTED
-              : SCGroupSubscriptionStatusType.SUBSCRIBED
-          );
+        const _status =
+          scGroup.privacy === SCGroupPrivacyType.PRIVATE && scGroup.subscription_status !== SCGroupSubscriptionStatusType.INVITED
+            ? SCGroupSubscriptionStatusType.REQUESTED
+            : SCGroupSubscriptionStatusType.SUBSCRIBED;
+        notifyChanges(scGroup, user);
+        onSubscribe && onSubscribe(scGroup, _status);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -153,7 +165,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !user?.id ? unsubscribe() : user?.id ? subscribe(user?.id) : subscribe();
+      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !user?.id ? unsubscribe() : user?.id ? subscribe(user) : subscribe();
     }
   };
 

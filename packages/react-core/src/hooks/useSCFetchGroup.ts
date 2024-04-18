@@ -36,8 +36,14 @@ export default function useSCFetchGroup({
   const __groupCacheKey = getGroupObjectCacheKey(__groupId);
   const __group = authUserId ? group : objectWithoutProperties<SCGroupType>(group, ['subscription_status']);
 
-  const [scGroup, setSCGroup] = useState<SCGroupType>(cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__groupCacheKey, __group) : null);
+  const [scGroup, setScGroup] = useState<SCGroupType>(cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__groupCacheKey, __group) : null);
   const [error, setError] = useState<string>(null);
+
+  const setSCGroup = (group: SCGroupType) => {
+    const _c: SCGroupType = authUserId ? group : objectWithoutProperties<SCGroupType>(group, ['subscription_status']);
+    setScGroup(_c);
+    LRUCache.set(__groupCacheKey, _c);
+  };
 
   /**
    * Memoized fetchTag
@@ -66,9 +72,7 @@ export default function useSCFetchGroup({
     if (__groupId && (!scGroup || (scGroup && __groupId !== scGroup.id))) {
       fetchGroup()
         .then((obj: SCGroupType) => {
-          const _c: SCGroupType = authUserId ? obj : objectWithoutProperties<SCGroupType>(obj, ['subscription_status']);
-          setSCGroup(_c);
-          LRUCache.set(__groupCacheKey, _c);
+          setSCGroup(obj);
         })
         .catch((err) => {
           LRUCache.delete(__groupCacheKey);
@@ -81,9 +85,7 @@ export default function useSCFetchGroup({
 
   useDeepCompareEffectNoCheck(() => {
     if (group) {
-      const _c: SCGroupType = authUserId ? group : objectWithoutProperties<SCGroupType>(group, ['subscription_status']);
-      setSCGroup(_c);
-      LRUCache.set(__groupCacheKey, _c);
+      setSCGroup(group);
     }
   }, [group, authUserId]);
 
