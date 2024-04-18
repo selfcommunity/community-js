@@ -12,10 +12,12 @@ import ChangeGroupPicture from '../ChangeGroupPicture';
 import ChangeGroupCover from '../ChangeGroupCover';
 import {GROUP_DESCRIPTION_MAX_LENGTH, GROUP_TITLE_MAX_LENGTH} from '../../constants/Group';
 import GroupInviteButton from '../GroupInviteButton';
+import PubSub from 'pubsub-js';
 import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {formatHttpErrorCode, GroupService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
+import {SCEventType, SCTopicType} from '../../constants/PubSub';
 
 const messages = defineMessages({
   name: {
@@ -186,6 +188,22 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     }
   }
 
+  /**
+   * Notify when a group info changed
+   * @param data
+   */
+  function notifyChanges(data: SCGroupType) {
+    if (data) {
+      if (group) {
+        // Edit group
+        PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.EDIT}`, data);
+      } else {
+        // Create group
+        PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.CREATE}`, data);
+      }
+    }
+  }
+
   const handleSubmit = () => {
     setField((prev: any) => ({...prev, ['isSubmitting']: true}));
     const formData: any = new FormData();
@@ -211,6 +229,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     groupService
       .then((data: SCGroupType) => {
         onSuccess && onSuccess(data);
+        notifyChanges(data);
         onClose && onClose();
         setField((prev: any) => ({...prev, ['isSubmitting']: false}));
       })

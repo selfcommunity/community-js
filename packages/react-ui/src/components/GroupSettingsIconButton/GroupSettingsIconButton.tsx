@@ -9,6 +9,8 @@ import {Link, SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, us
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {GroupService} from '@selfcommunity/api-services';
+import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCGroupSettingsIconButton';
 
@@ -117,12 +119,25 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
     setOpenConfirmDialog(false);
     setAnchorEl(null);
   };
+
+  /**
+   * Notify UI when a user is removed from a group
+   * @param group
+   * @param user
+   */
+  function notifyChanges(group: SCGroupType, user: SCUserType) {
+    if (group && user) {
+      PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.REMOVE_MEMBER}`, {group, user});
+    }
+  }
+
   /**
    * Handles thread deletion
    */
   function handleRemoveUser() {
     GroupService.removeUserFromGroup(group.id, user.id)
       .then(() => {
+        notifyChanges(group, user);
         onRemoveSuccess && onRemoveSuccess();
         handleCloseDialog();
       })

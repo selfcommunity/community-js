@@ -1,9 +1,10 @@
 import {useEffect, useMemo} from 'react';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
+import {SCFeatureName, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
+import {SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 
 /**
  :::info
@@ -21,7 +22,9 @@ import {Logger} from '@selfcommunity/utils';
  */
 export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const authUserId = user ? user.id : null;
+  const groupsDisabled = scPreferencesContext.features && !scPreferencesContext.features.includes(SCFeatureName.GROUPING);
 
   /**
    * Memoized refresh all groups
@@ -246,7 +249,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
     }
   }, [authUserId]);
 
-  if (!user) {
+  if (groupsDisabled || !user) {
     return {groups: data, loading, isLoading};
   }
   return {groups: data, loading, isLoading, subscribe, unsubscribe, subscriptionStatus, refresh, emptyCache};

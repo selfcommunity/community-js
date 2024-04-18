@@ -19,6 +19,7 @@ const template = (args) => (
   </div>
 );
 
+// @ts-ignore
 export const Base: StoryObj<GroupMembersWidget> = {
   args: {
     groupId: 3

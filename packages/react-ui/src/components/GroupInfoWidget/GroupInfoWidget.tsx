@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {CardContent, Icon, Typography} from '@mui/material';
 import classNames from 'classnames';
@@ -8,8 +8,10 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {PREFIX} from './constants';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCGroupType, SCGroupPrivacyType} from '@selfcommunity/types';
+import PubSub from 'pubsub-js';
 import {useSCFetchGroup} from '@selfcommunity/react-core';
 import GroupInfoWidgetSkeleton from './Skeleton';
+import {SCEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -86,10 +88,39 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
   });
   const {className, group, groupId, onHeightChange, onStateChange, ...rest} = props;
   // HOOKS
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
   // INTL
   const intl = useIntl();
+  // REFS
+  const updatesSubscription = useRef(null);
 
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onChangeGroupHandler = useCallback(
+    (_msg: string, data: SCGroupType) => {
+      if (data && scGroup.id === data.id) {
+        setSCGroup(data);
+      }
+    },
+    [scGroup, setSCGroup]
+  );
+
+  /**
+   * On mount, subscribe to receive groups updates (only edit)
+   */
+  useEffect(() => {
+    if (scGroup) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCEventType.EDIT}`, onChangeGroupHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [scGroup]);
+
+  /**
+   * Loading group
+   */
   if (!scGroup) {
     return <GroupInfoWidgetSkeleton />;
   }

@@ -113,7 +113,7 @@ export default function FeedUpdatesWidget(inProps: FeedUpdatesWidgetProps): JSX.
   // REFS
   const updatesSubscription = useRef(null);
 
-  // Subscripber for pubsub callback
+  // Subscriber for pubsub callback
   const subscriber = (msg, data) => {
     if (subscriptionChannelUpdatesCallback(msg, data)) {
       setUpdates(true);
