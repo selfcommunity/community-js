@@ -4,7 +4,8 @@ import {SCFeatureName, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGrou
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-import {SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
+import {SCPreferencesContextType} from '../types';
 
 /**
  :::info
