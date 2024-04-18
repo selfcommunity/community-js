@@ -13,6 +13,7 @@ const Component = {
         }
       },
       '& .SCGroups-no-results': {
+        marginTop: theme.spacing(3),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

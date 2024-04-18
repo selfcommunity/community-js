@@ -188,7 +188,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
       {loading ? (
         <Skeleton />
       ) : (
-        <Grid container spacing={{xs: 3}} className={classes.groups}>
+        <>
           {!groups.length ? (
             <Box className={classes.noResults}>
               <Typography variant="h4">
@@ -199,15 +199,15 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
               </Typography>
             </Box>
           ) : (
-            <>
+            <Grid container spacing={{xs: 3}} className={classes.groups}>
               {groups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} groupSubscribeButtonProps={{onSubscribe: handleSubscribe}} {...GroupComponentProps} />
                 </Grid>
               ))}
-            </>
+            </Grid>
           )}
-        </Grid>
+        </>
       )}
     </>
   );
