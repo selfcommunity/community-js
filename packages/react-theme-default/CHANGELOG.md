@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.45...@selfcommunity/react-theme-default@0.1.9-alpha.46) (2024-04-19)
+
+
+### Bug Fixes
+
+* bugfix-> groups alignment, private messages new message bug, translations. ([5ce7c40](https://github.com/selfcommunity/community-js/commit/5ce7c40f40867e2f1c5ead3f023cfc977b7ae548))
+
+
+
+
+
+## [0.1.9-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.44...@selfcommunity/react-theme-default@0.1.9-alpha.45) (2024-04-19)
+
+
+### Bug Fixes
+
+* private message styles ([a7ace1a](https://github.com/selfcommunity/community-js/commit/a7ace1a27c834fb77c0ea2ae7594eb0671d22e07))
+* styles cover ([4e73a05](https://github.com/selfcommunity/community-js/commit/4e73a052ec3b55d6902c4087f90dc397d2f230cf))
+
+
+
+
+
 ## [0.1.9-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.43...@selfcommunity/react-theme-default@0.1.9-alpha.44) (2024-04-19)
 
 
