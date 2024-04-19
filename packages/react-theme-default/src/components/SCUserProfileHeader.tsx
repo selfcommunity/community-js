@@ -70,8 +70,8 @@ const Component = {
     skeletonRoot: ({theme}: any) => ({
       position: 'relative',
       '& .SCUserProfileHeader-cover': {
-        [theme.breakpoints.up('lg')]: {
-          margin: theme.spacing(0, -5, 0, -5)
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         },
         height: 230
       },

@@ -57,7 +57,13 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({theme}: any) => ({})
+    skeletonRoot: ({theme}: any) => ({
+      '& .SCCategoryHeader-skeleton-cover': {
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
+        }
+      }
+    })
   }
 };
 
