@@ -19,7 +19,7 @@ export interface GroupApiClientInterface {
   getGroupSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getGroupsSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any>;
-  getGroupInvitedUsers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getGroupInvitedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   subscribeToGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   unsubscribeFromGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   inviteOrAcceptGroupRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
@@ -167,10 +167,12 @@ export class GroupApiClient {
   /**
    * This endpoint returns a list of invited users.
    * @param id
+   * @param params
    * @param config
    */
-  static getGroupInvitedUsers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({...config, url: Endpoints.GetGroupInvitedUsers.url({id}), method: Endpoints.GetGroupInvitedUsers.method});
+  static getGroupInvitedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetGroupInvitedUsers.url({id})}?${p.toString()}`, method: Endpoints.GetGroupInvitedUsers.method});
   }
 
   /**
@@ -305,8 +307,12 @@ export default class GroupService {
   static async removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
     return GroupApiClient.removeUserFromGroup(id, user, config);
   }
-  static async getGroupInvitedUsers(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return GroupApiClient.getGroupInvitedUsers(id, config);
+  static async getGroupInvitedUsers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return GroupApiClient.getGroupInvitedUsers(id, params, config);
   }
   static async subscribeToGroup(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return GroupApiClient.subscribeToGroup(id, config);
