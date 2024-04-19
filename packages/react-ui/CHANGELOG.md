@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.39...@selfcommunity/react-ui@0.7.9-alpha.40) (2024-04-18)
+
+
+### Bug Fixes
+
+* fixed create group invitation, hidden invite button in group edit mode, added group admin badges/info inside group info widget. Added searchbar for groups component. ([24b4adf](https://github.com/selfcommunity/community-js/commit/24b4adf109b59fcf84371df2ef41f203d0b9844a))
+
+
+
+
+
 ## [0.7.9-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.38...@selfcommunity/react-ui@0.7.9-alpha.39) (2024-04-18)
 
 

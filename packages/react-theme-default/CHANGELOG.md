@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.42...@selfcommunity/react-theme-default@0.1.9-alpha.43) (2024-04-18)
+
+
+### Bug Fixes
+
+* fixed create group invitation, hidden invite button in group edit mode, added group admin badges/info inside group info widget. Added searchbar for groups component. ([24b4adf](https://github.com/selfcommunity/community-js/commit/24b4adf109b59fcf84371df2ef41f203d0b9844a))
+
+
+
+
+
 ## [0.1.9-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.41...@selfcommunity/react-theme-default@0.1.9-alpha.42) (2024-04-18)
 
 
