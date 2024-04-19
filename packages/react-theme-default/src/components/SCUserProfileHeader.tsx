@@ -4,12 +4,12 @@ const Component = {
       '& .SCUserProfileHeader-cover': {
         position: 'relative',
         height: 230,
-        minHeight: 230,
+        minHeight: 150,
         borderRadius: 0,
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
         boxShadow: 'unset',
-        [theme.breakpoints.up('lg')]: {
-          margin: theme.spacing(0, -5, 0, -5)
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         }
       },
       '& .SCUserProfileHeader-infops-section': {
@@ -30,7 +30,7 @@ const Component = {
           width: theme.selfcommunity.user.avatar.sizeXLarge,
           borderRadius: '50%',
           border: `#FFF solid ${theme.spacing(0.5)}`,
-          objectFit: 'cover',
+          objectFit: 'cover'
         },
         '& .MuiBadge-badge .SCUserAvatar-badge-content': {
           width: 32,
