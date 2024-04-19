@@ -35,7 +35,8 @@ const messages = defineMessages({
 const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
-  staffBadgeLabel: `${PREFIX}-staff-badge-label`
+  staffBadgeLabel: `${PREFIX}-staff-badge-label`,
+  groupAdminBadgeLabel: `${PREFIX}-group-admin-badge-label`
 };
 
 const Root = styled(BaseItemButton, {
@@ -74,6 +75,11 @@ export interface UserProps extends WidgetProps {
    * Badge content to show as user avatar badge if show reaction is true.
    */
   badgeContent?: any;
+  /**
+   * If true, shows a custom label next to the user username
+   * @default false
+   */
+  isGroupAdmin?: boolean;
   /**
    * Prop to add actions
    * @default null
@@ -136,6 +142,7 @@ export default function User(inProps: UserProps): JSX.Element {
     elevation,
     badgeContent = null,
     actions = null,
+    isGroupAdmin = false,
     buttonProps = {},
     ...rest
   } = props;
@@ -210,10 +217,21 @@ export default function User(inProps: UserProps): JSX.Element {
           )
         }
         primary={
-          hasBadge && preferences ? (
+          (hasBadge && preferences) || isGroupAdmin ? (
             <>
               {scUser.username}
-              <Chip component="span" className={classes.staffBadgeLabel} size="small" label={preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]} />
+              <Chip
+                component="span"
+                className={isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel}
+                size="small"
+                label={
+                  isGroupAdmin ? (
+                    <FormattedMessage defaultMessage="ui.user.group.admin" id="ui.user.group.admin" />
+                  ) : (
+                    preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]
+                  )
+                }
+              />
             </>
           ) : (
             scUser.username

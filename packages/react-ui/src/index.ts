@@ -159,6 +159,8 @@ import GroupRequestsWidget, {GroupRequestsWidgetProps, GroupRequestsWidgetSkelet
 import Groups, {GroupsProps, GroupsSkeleton} from './components/Groups';
 import GroupForm, {GroupFormProps} from './components/GroupForm';
 import GroupSettingsIconButton, {GroupSettingsIconButtonProps} from './components/GroupSettingsIconButton';
+import GroupInvitedWidget, {GroupInvitedWidgetProps, GroupInvitedWidgetSkeleton} from './components/GroupInvitedWidget';
+
 /**
  * Constants
  */
@@ -434,6 +436,9 @@ export {
   GroupsSkeleton,
   GroupForm,
   GroupFormProps,
+  GroupInvitedWidget,
+  GroupInvitedWidgetProps,
+  GroupInvitedWidgetSkeleton,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,

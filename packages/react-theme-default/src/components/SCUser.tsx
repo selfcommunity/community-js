@@ -22,6 +22,11 @@ const Component = {
         borderRadius: 0,
         fontSize: '0.5rem'
       },
+      '& .SCUser-group-admin-badge-label': {
+        marginLeft: theme.spacing(1),
+        fontSize: '0.75rem',
+        color: theme.palette.secondary.main
+      },
       '& .SCBaseItemButton-primary': {
         fontWeight: theme.typography.fontWeightBold
       },
