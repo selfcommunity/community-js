@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.16...@selfcommunity/react-i18n@0.5.9-alpha.17) (2024-04-19)
+
+
+### Bug Fixes
+
+* bugfix-> groups alignment, private messages new message bug, translations. ([5ce7c40](https://github.com/selfcommunity/community-js/commit/5ce7c40f40867e2f1c5ead3f023cfc977b7ae548))
+
+
+
+
+
 ## [0.5.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.15...@selfcommunity/react-i18n@0.5.9-alpha.16) (2024-04-19)
 
 
