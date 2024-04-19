@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.43...@selfcommunity/react-theme-default@0.1.9-alpha.44) (2024-04-19)
+
+
+### Performance Improvements
+
+* added group invite users widget. Changed user admin badge ([3e7dd83](https://github.com/selfcommunity/community-js/commit/3e7dd83279ffc75b90b03a55de8d56b97aad91da))
+
+
+
+
+
 ## [0.1.9-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.42...@selfcommunity/react-theme-default@0.1.9-alpha.43) (2024-04-18)
 
 

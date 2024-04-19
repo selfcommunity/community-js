@@ -14,7 +14,7 @@ const template = (args) => (
 
 export const Base: StoryObj<PrivateMessageThread> = {
   args: {
-    userObj: 7
+    userObj: 16
   },
   render: template
 };

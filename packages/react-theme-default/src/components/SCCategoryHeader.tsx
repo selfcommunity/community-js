@@ -11,11 +11,14 @@ const Component = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: 230,
+        minHeight: 150,
         color: '#FFF',
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
         height: 230,
-        borderRadius: 0
+        borderRadius: 0,
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
+        }
       },
       '& .SCCategoryHeader-info': {
         paddingLeft: theme.spacing(2),
