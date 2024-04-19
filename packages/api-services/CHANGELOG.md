@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.13...@selfcommunity/api-services@0.4.9-alpha.14) (2024-04-19)
+
+
+### Performance Improvements
+
+* added group invite users widget. Changed user admin badge ([3e7dd83](https://github.com/selfcommunity/community-js/commit/3e7dd83279ffc75b90b03a55de8d56b97aad91da))
+
+
+
+
+
 ## [0.4.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.12...@selfcommunity/api-services@0.4.9-alpha.13) (2024-04-15)
 
 **Note:** Version bump only for package @selfcommunity/api-services
