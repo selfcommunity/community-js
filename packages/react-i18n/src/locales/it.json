@@ -401,7 +401,7 @@
   "ui.groupSettingsIconButton.dialog.confirm": "Sì",
   "ui.groupSettingsIconButton.dialog.msg": "Sei sicuro di voler rimuovere <b>{user}</b> dal gruppo {group} ?",
   "ui.groupSettingsIconButton.item.remove" : "Rimuovi dal gruppo",
-  "ui.groupSettingsIconButton.item.message" : "Messaggio Privato",
+  "ui.groupSettingsIconButton.item.message" : "Messaggio",
   "ui.groupSettingsIconButton.item.report" : "Segnala",
   "ui.header.button.explore": "Esplora",
   "ui.header.notifications.button.seeMore": "Vedi di più",

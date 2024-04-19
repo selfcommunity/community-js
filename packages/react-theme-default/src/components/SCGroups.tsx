@@ -1,14 +1,19 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .MuiGrid-container': {
+        justifyContent: 'center'
+      },
       '& .SCGroups-filters': {
         marginTop: theme.spacing(),
         marginBottom: theme.spacing(2)
       },
       '& .SCGroups-groups': {
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(2),
         '& .SCGroups-item': {
-          padding: theme.spacing(2),
+          [theme.breakpoints.up('md')]: {
+            padding: theme.spacing(2)
+          },
           width: 'auto',
           '& > div': {
             cursor: 'default',

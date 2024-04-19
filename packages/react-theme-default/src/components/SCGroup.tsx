@@ -18,7 +18,12 @@ const Component = {
         }
       },
       '& .SCBaseItemButton-primary': {
-        fontWeight: theme.typography.fontWeightBold
+        display: 'flex',
+        alignItems: 'center',
+        fontWeight: theme.typography.fontWeightBold,
+        '& .SCGroup-icon': {
+          marginLeft: theme.spacing(0.5)
+        }
       },
       '& .SCBaseItemButton-secondary': {
         fontSize: '0.857rem'

@@ -262,7 +262,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
               </Typography>
             </Box>
           ) : (
-            <Grid container spacing={{xs: 3}} className={classes.groups}>
+            <Grid container spacing={{xs: 2}} className={classes.groups}>
               {filteredGroups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} groupSubscribeButtonProps={{onSubscribe: handleSubscribe}} {...GroupComponentProps} />

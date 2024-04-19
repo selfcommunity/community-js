@@ -23,7 +23,8 @@ const messages = defineMessages({
 const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
-  actions: `${PREFIX}-actions`
+  actions: `${PREFIX}-actions`,
+  icon: `${PREFIX}-icon`
 };
 
 const Root = styled(BaseItemButton, {
@@ -92,6 +93,9 @@ export interface GroupProps extends WidgetProps {
  |---|---|---|
  |root|.SCGroup-root|Styles applied to the root element.|
  |avatar|.SCGroup-avatar|Styles applied to the avatar element.|
+ |actions|.SCGroup-actions|Styles applied to the actions section.|
+ |icon|.SCGroup-icon|Styles applied to the group privacy icon element.|
+
 
  *
  * @param inProps
@@ -129,7 +133,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
   function renderAuthenticatedActions() {
     return (
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
-        <Icon>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
         {isGroupAdmin && <Icon>face</Icon>}
         <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
       </Stack>
@@ -154,7 +157,11 @@ export default function Group(inProps: GroupProps): JSX.Element {
         className={classNames(classes.root, className)}
         ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}}
         image={<Avatar alt={scGroup.name} src={scGroup.image_medium} className={classes.avatar} />}
-        primary={scGroup.name}
+        primary={
+          <>
+            {scGroup.name} <Icon className={classes.icon}>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
+          </>
+        }
         secondary={`${intl.formatMessage(messages.groupMembers, {total: scGroup.subscribers_counter})}`}
         actions={hideActions ? null : renderAuthenticatedActions()}
       />
