@@ -5,7 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       height: '100%',
       width: '100%',
-      backgroundColor: alpha(theme.palette.common.white, theme.palette.action.selectedOpacity),
+      backgroundColor: alpha(theme.palette.common.white, 0.5),
       borderRadius: 0,
       '& .MuiCardContent-root': {
         display: 'flex',
@@ -96,7 +96,7 @@ const Component = {
         height: theme.mixins.toolbar.minHeight,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.activatedOpacity),
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         '& .SCPrivateMessageThread-new-message-header-content': {
           display: 'flex',
           alignItems: 'center',
