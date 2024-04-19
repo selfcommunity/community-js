@@ -87,7 +87,7 @@ const Component = {
         [theme.breakpoints.up('lg')]: {
           margin: theme.spacing(0, -5, 0, -5)
         },
-        height: 150
+        height: 230
       },
       '& .SCGroupHeader-avatar': {
         top: 150,
