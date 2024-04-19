@@ -142,6 +142,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
     setObj(SCPrivateMessageStatusType.NEW);
+    setType(SCPrivateMessageType.NEW);
     onItemClick && onItemClick(SCPrivateMessageStatusType.NEW, SCPrivateMessageType.NEW);
   };
 
