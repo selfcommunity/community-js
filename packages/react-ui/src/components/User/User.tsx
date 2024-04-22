@@ -89,7 +89,7 @@ export interface UserProps extends WidgetProps {
    * Props to spread to the button
    * @default {}
    */
-  buttonProps?: ButtonBaseProps;
+  buttonProps?: ButtonBaseProps | null;
   /**
    * Any other properties
    */
@@ -143,7 +143,7 @@ export default function User(inProps: UserProps): JSX.Element {
     badgeContent = null,
     actions = null,
     isGroupAdmin = false,
-    buttonProps = {},
+    buttonProps = null,
     ...rest
   } = props;
 
