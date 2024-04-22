@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.48...@selfcommunity/react-theme-default@0.1.9-alpha.49) (2024-04-22)
+
+
+### Performance Improvements
+
+* added username in thread item for group messages ([60e5344](https://github.com/selfcommunity/community-js/commit/60e5344af5c5c531daadf4ae7ee48de9ccb79ced))
+
+
+
+
+
 ## [0.1.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.47...@selfcommunity/react-theme-default@0.1.9-alpha.48) (2024-04-19)
 
 
