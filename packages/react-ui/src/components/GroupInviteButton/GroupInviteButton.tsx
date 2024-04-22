@@ -14,6 +14,8 @@ import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
+import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import PubSub from 'pubsub-js';
 
 const messages = defineMessages({
   placeholder: {
@@ -126,6 +128,17 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   const [loading, setLoading] = useState<boolean>(false);
   const [invited, setInvited] = useState<any>([]);
 
+  /**
+   * Notify UI when a member is invited to a group
+   * @param group
+   * @param usersInvited
+   */
+  function notifyChanges(group: SCGroupType, usersInvited: SCUserType[]) {
+    if (group && usersInvited) {
+      PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.INVITE_MEMBER}`, usersInvited);
+    }
+  }
+
   function convertToInvitedUsersObject(data) {
     const invite_users = {};
     data.forEach((user, index) => {
@@ -228,6 +241,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
           setIsSending(false);
           setOpen(false);
           setInvited([]);
+          notifyChanges(scGroup, invited);
         })
         .catch((error) => {
           setOpen(false);
