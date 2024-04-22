@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.46...@selfcommunity/react-ui@0.7.9-alpha.47) (2024-04-22)
+
+
+### Bug Fixes
+
+* user clickable username ([88497be](https://github.com/selfcommunity/community-js/commit/88497be17cad90d3e9d12048b5a52a6f0b9b03fa))
+
+
+
+
+
 ## [0.7.9-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.45...@selfcommunity/react-ui@0.7.9-alpha.46) (2024-04-22)
 
 
