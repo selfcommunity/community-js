@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import TagChip from '../../../shared/TagChip';
 import {ComposerContentType} from '../../../types/composer';
 import {PREFIX} from '../constants';
-import {SCGroupType} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-attributes-root`
@@ -84,7 +83,14 @@ export default (props: AttributesProps): JSX.Element => {
           <Chip key={c.id} label={c.name} onDelete={handleDeleteCategory(c.id)} icon={<Icon>category</Icon>} onClick={handleClickCategory} />
         ))}
       {value?.group && (
-        <Chip key={value?.group.id} label={value?.group.name} onDelete={handleDeleteGroup} icon={<Icon>groups</Icon>} onClick={handleClickGroup} disabled={!value?.group?.subscription_status}/>
+        <Chip
+          key={value?.group.id}
+          label={value?.group.name}
+          onDelete={handleDeleteGroup}
+          icon={<Icon>groups</Icon>}
+          onClick={handleClickGroup}
+          disabled={!value?.group?.subscription_status}
+        />
       )}
       {value?.addressing?.length > 0 &&
         value?.addressing.map((t: SCTagType) => (

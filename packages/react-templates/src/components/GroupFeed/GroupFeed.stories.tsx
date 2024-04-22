@@ -17,7 +17,7 @@ export const Base: StoryObj<typeof GroupFeedTemplate> = {
     </div>)
 };
 
-export const BaseContainerFixed: StoryObj<typeof CategoryTemplate> = {
+export const BaseContainerFixed: StoryObj<typeof GroupFeedTemplate> = {
 	args: {
 		groupId: 3
 	},
