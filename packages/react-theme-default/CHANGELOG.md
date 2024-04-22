@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.47...@selfcommunity/react-theme-default@0.1.9-alpha.48) (2024-04-19)
+
+
+### Bug Fixes
+
+* styles cover ([8c44196](https://github.com/selfcommunity/community-js/commit/8c441965871738ccab3fae908d7bdba0eb940a48))
+
+
+
+
+
 ## [0.1.9-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.46...@selfcommunity/react-theme-default@0.1.9-alpha.47) (2024-04-19)
 
 
