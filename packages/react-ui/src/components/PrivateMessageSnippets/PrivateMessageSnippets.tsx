@@ -152,12 +152,12 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
 
   const isSelected = useMemo(() => {
     return (message): boolean => {
-      if (type === SCPrivateMessageType.GROUP) {
+      if (threadObj && type === SCPrivateMessageType.GROUP) {
         return message?.group?.id === (isObj ? threadObj?.group?.id : threadObj);
-      } else if (type === SCPrivateMessageType.USER) {
+      } else if (threadObj && type === SCPrivateMessageType.USER) {
         return messageReceiver(message, authUserId) === (isObj ? messageReceiver(threadObj, authUserId) : threadObj);
       }
-      return false;
+      return null;
     };
   }, [threadObj, authUserId, type]);
 

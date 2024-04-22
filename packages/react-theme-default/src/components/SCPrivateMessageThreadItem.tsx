@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      flexDirection: 'column',
       borderRadius: theme.shape.borderRadius,
       padding: theme.spacing(2, 4, 4, 2),
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
@@ -18,6 +19,10 @@ const Component = {
         bottom: theme.spacing(0),
         right: theme.spacing(3),
         padding: theme.spacing(0.5, 0, 0.5, 0)
+      },
+      '& .SCPrivateMessageThreadItem-username': {
+        marginRight: 'auto',
+        marginBottom: theme.spacing(1)
       },
       '& .SCPrivateMessageThreadItem-text': {
         display: 'flex',

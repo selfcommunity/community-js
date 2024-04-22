@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
@@ -29,6 +29,8 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
+import PubSub from 'pubsub-js';
+import {SCEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -175,6 +177,9 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
     [scUserContext.user, scGroup?.managed_by?.id]
   );
 
+  // REFS
+  const updatesSubscription = useRef(null);
+
   /**
    * Initialize component
    * Fetch data only if the component is not initialized and it is not loading data
@@ -242,6 +247,31 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
     }
   }, []);
 
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onChangeGroupHandler = useCallback(
+    (_msg: string, newInvited: SCGroupType[]) => {
+      dispatch({
+        type: actionWidgetTypes.SET_RESULTS,
+        payload: {results: [...state.results, ...newInvited]}
+      });
+    },
+    [scGroup, dispatch, state.results]
+  );
+
+  /**
+   * On mount, subscribe to receive groups updates (only edit)
+   */
+  useEffect(() => {
+    if (scGroup && state.results) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCEventType.INVITE_MEMBER}`, onChangeGroupHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [scGroup, state.results]);
+
   // HANDLERS
   const handleNext = useMemo(
     () => (): void => {
@@ -249,7 +279,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
       http
         .request({
           url: state.next,
-          method: Endpoints.GetGroupWaitingApprovalSubscribers.method
+          method: Endpoints.getGroupInvitedUsers.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});

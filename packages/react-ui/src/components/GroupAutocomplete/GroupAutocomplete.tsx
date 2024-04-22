@@ -5,7 +5,7 @@ import TextField, {TextFieldProps} from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {AutocompleteProps, Avatar, Box, Chip, Typography} from '@mui/material';
+import {AutocompleteProps, Avatar, Box, Typography} from '@mui/material';
 import {useSCFetchGroups} from '@selfcommunity/react-core';
 import {styled} from '@mui/material/styles';
 import {SCGroupType} from '@selfcommunity/types/src/index';
@@ -146,7 +146,6 @@ const GroupAutocomplete = (inProps: GroupAutocompleteProps): JSX.Element => {
   // Render
   return (
     <Root
-      freeSolo
       className={classes.root}
       open={open}
       onOpen={handleOpen}

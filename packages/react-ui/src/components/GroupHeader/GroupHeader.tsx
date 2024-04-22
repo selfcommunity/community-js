@@ -188,7 +188,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    */
   const onChangeGroupMembersHandler = useCallback(
     (msg: string, data: SCGroupMembersEventType) => {
-      if (data && data.group.id === scGroup.id) {
+      if (data && data?.group?.id === scGroup?.id) {
         let _group = {...scGroup};
         if (msg === `${SCTopicType.GROUP}.${SCEventType.ADD_MEMBER}`) {
           _group.subscribers_counter = _group.subscribers_counter + 1;

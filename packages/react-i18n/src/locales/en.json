@@ -352,7 +352,7 @@
   "ui.friendshipUserButton.removeConnection": "Remove connection",
   "ui.friendshipUserButton.requestConnection": "Connect",
   "ui.groupAutocomplete.label": "Groups",
-  "ui.groupAutocomplete.empty": "Search for group",
+  "ui.groupAutocomplete.empty": "No groups available",
   "ui.group.members": "{total, plural, =0 {# members} one {# member} other {# members}}",
   "ui.groupHeader.members": "{total, plural, =0 {# members} one {# member} other {# members}}",
   "ui.groupHeader.visibility.private": "Private group",

@@ -63,10 +63,11 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
     // @ts-ignore
     defaultValue === null || defaultValue.length === 0
       ? AudienceTypes.AUDIENCE_ALL
-      : defaultValue && typeof defaultValue === 'object'
+      : defaultValue && Object.prototype.hasOwnProperty.call(defaultValue, 'managed_by')
       ? AudienceTypes.AUDIENCE_GROUP
       : AudienceTypes.AUDIENCE_TAG
   );
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const [value, setValue] = useState<SCTagType[] | SCGroupType>(defaultValue || undefined);
@@ -112,7 +113,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           <Tab
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            disabled={defaultValue && typeof defaultValue !== 'object'}
+            disabled={defaultValue && !Object.prototype.hasOwnProperty.call(value, 'managed_by')}
             value={AudienceTypes.AUDIENCE_GROUP}
             icon={<Icon>groups</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
@@ -120,7 +121,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           <Tab
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            disabled={value && typeof defaultValue === 'object'}
+            disabled={value && Object.prototype.hasOwnProperty.call(value, 'managed_by')}
             value={AudienceTypes.AUDIENCE_TAG}
             icon={<Icon>label</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.tag" defaultMessage="ui.composer.layer.audience.tag" />}

@@ -452,7 +452,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   const handleChangeAudience = useCallback(
     (value: SCTagType[] | SCGroupType | null) => {
-      if (group || typeof value === 'object') {
+      if (group || Object.prototype.hasOwnProperty.call(value, 'managed_by')) {
         dispatch({type: 'group', value});
       } else {
         dispatch({type: 'addressing', value});

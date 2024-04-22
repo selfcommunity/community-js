@@ -161,6 +161,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('mobile');
     setOpenNewMessage(false);
     setObj(null);
+    setType(null);
     onThreadBack && onThreadBack();
   };
   /**
