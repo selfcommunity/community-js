@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.17...@selfcommunity/react-i18n@0.5.9-alpha.18) (2024-04-22)
+
+
+### Bug Fixes
+
+* Fixed composer tag. Issue: https://linear.app/quentral/issue/QUE-208/errore-con-assegnazione-tag ([bc6d689](https://github.com/selfcommunity/community-js/commit/bc6d689d54c75e4f479d158165e0bf177d0954b4))
+
+
+
+
+
 ## [0.5.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.16...@selfcommunity/react-i18n@0.5.9-alpha.17) (2024-04-19)
 
 

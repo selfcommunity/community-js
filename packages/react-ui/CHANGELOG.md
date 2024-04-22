@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.45...@selfcommunity/react-ui@0.7.9-alpha.46) (2024-04-22)
+
+
+### Bug Fixes
+
+* added pusub for invite users action ([dbb12b8](https://github.com/selfcommunity/community-js/commit/dbb12b80229bb6a79a7f8fc0902a94a137327409))
+* Fixed composer tag. Issue: https://linear.app/quentral/issue/QUE-208/errore-con-assegnazione-tag ([bc6d689](https://github.com/selfcommunity/community-js/commit/bc6d689d54c75e4f479d158165e0bf177d0954b4))
+* pm issue: https://linear.app/quentral/issue/QUE-205/messaggi-privati ([1dae3d9](https://github.com/selfcommunity/community-js/commit/1dae3d91a1de0ee39d06610c150ba40647a85330))
+
+
+### Performance Improvements
+
+* added username in thread item for group messages ([60e5344](https://github.com/selfcommunity/community-js/commit/60e5344af5c5c531daadf4ae7ee48de9ccb79ced))
+
+
+
+
+
 ## [0.7.9-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.44...@selfcommunity/react-ui@0.7.9-alpha.45) (2024-04-19)
 
 

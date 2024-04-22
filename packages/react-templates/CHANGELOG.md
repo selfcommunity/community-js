@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.48...@selfcommunity/react-templates@0.3.9-alpha.49) (2024-04-22)
+
+
+### Bug Fixes
+
+* Fixed composer tag. Issue: https://linear.app/quentral/issue/QUE-208/errore-con-assegnazione-tag ([bc6d689](https://github.com/selfcommunity/community-js/commit/bc6d689d54c75e4f479d158165e0bf177d0954b4))
+
+
+
+
+
 ## [0.3.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.47...@selfcommunity/react-templates@0.3.9-alpha.48) (2024-04-19)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
