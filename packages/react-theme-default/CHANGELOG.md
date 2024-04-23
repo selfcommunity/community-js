@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.52...@selfcommunity/react-theme-default@0.1.9-alpha.53) (2024-04-23)
+
+
+### Bug Fixes
+
+* groups searching, group invite button, group header ([f211d62](https://github.com/selfcommunity/community-js/commit/f211d623ac874b18afb3cfe9e2607e5c75d3793d))
+
+
+
+
+
 ## [0.1.9-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.51...@selfcommunity/react-theme-default@0.1.9-alpha.52) (2024-04-23)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
