@@ -27,6 +27,11 @@ export interface GroupsSkeletonProps {
    * @default null
    */
   GroupSkeletonProps?: any;
+
+  /**
+   * @default 10
+   */
+  groupsNumber?: number;
 }
 
 /**
@@ -51,12 +56,12 @@ export interface GroupsSkeletonProps {
  *
  */
 export default function GroupsSkeleton(inProps: GroupsSkeletonProps): JSX.Element {
-  const {className, GroupSkeletonProps = {}, ...rest} = inProps;
+  const {className, GroupSkeletonProps = {}, groupsNumber = 10, ...rest} = inProps;
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container spacing={{xs: 3}} className={classes.groups}>
-        {[...Array(15)].map((category, index) => (
+        {[...Array(groupsNumber)].map((category, index) => (
           <Grid item xs={12} sm={8} md={6} key={index}>
             <GroupSkeleton elevation={0} variant={'outlined'} {...GroupSkeletonProps} />
           </Grid>

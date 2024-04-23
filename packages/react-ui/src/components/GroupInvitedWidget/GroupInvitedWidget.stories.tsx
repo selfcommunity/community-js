@@ -23,7 +23,7 @@ const template = (args) => (
 // @ts-ignore
 export const Base: StoryObj<GroupInvitedWidget> = {
   args: {
-    groupId: 3
+    groupId: 74
   },
   render: template
 };

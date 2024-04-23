@@ -12,7 +12,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
-import Group, {GroupProps, GroupSkeleton} from '../Group';
+import Group, {GroupProps} from '../Group';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 
@@ -53,19 +53,13 @@ export interface GroupsProps {
    * @default true
    */
 
-  general: boolean;
+  general?: boolean;
 
   /**
    * Show/Hide filters
    * @default false
    */
   showFilters?: boolean;
-
-  /**
-   * Override filter func
-   * @default null
-   */
-  handleFilterGroups?: (groups: SCGroupType[]) => SCGroupType[];
 
   /**
    * Filters component
@@ -121,7 +115,6 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     showFilters = false,
     filters,
-    handleFilterGroups,
     general = true,
     ...rest
   } = props;
@@ -130,7 +123,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const [groups, setGroups] = useState<SCGroupType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
-  const [filterName, setFilterName] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -158,9 +151,9 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const fetchGroups = () => {
     let groupService;
     if (general) {
-      groupService = GroupService.searchGroups(endpointQueryParams);
+      groupService = GroupService.searchGroups({...endpointQueryParams, ...(search !== '' && {search: search})});
     } else {
-      groupService = GroupService.getUserGroups(endpointQueryParams);
+      groupService = GroupService.getUserGroups({...endpointQueryParams, ...(search !== '' && {search: search})});
     }
     groupService
       .then((res: SCPaginatedResponse<SCGroupType>) => {
@@ -182,7 +175,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     } else {
       fetchGroups();
     }
-  }, [contentAvailability, authUserId]);
+  }, [contentAvailability, authUserId, search]);
 
   const handleSubscribe = (group) => {
     if (!general) {
@@ -216,11 +209,8 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
    * Get groups filtered
    */
   const getFilteredGroups = () => {
-    if (handleFilterGroups) {
-      return handleFilterGroups(groups);
-    }
-    if (filterName) {
-      return groups.filter((g) => g.name.toLowerCase().includes(filterName.toLowerCase()));
+    if (search) {
+      return groups.filter((g) => g.name.toLowerCase().includes(search.toLowerCase()));
     }
     return groups;
   };
@@ -230,7 +220,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
    * @param event
    */
   const handleOnChangeFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterName(event.target.value);
+    setSearch(event.target.value);
   };
 
   /**
@@ -247,7 +237,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
-                value={filterName}
+                value={search}
                 label={<FormattedMessage id="ui.groups.filterByName" defaultMessage="ui.groups.filterByName" />}
                 variant="outlined"
                 onChange={handleOnChangeFilterName}
@@ -272,7 +262,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             dataLength={groups.length}
             next={handleNext}
             hasMoreNext={Boolean(next)}
-            loaderNext={<GroupSkeleton />}
+            loaderNext={<Skeleton groupsNumber={2} />}
             endMessage={
               <Typography component="div" className={classes.endMessage}>
                 <FormattedMessage
