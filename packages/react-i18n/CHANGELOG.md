@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.18...@selfcommunity/react-i18n@0.5.9-alpha.19) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed groups component loading logic ([72e68e8](https://github.com/selfcommunity/community-js/commit/72e68e8a1dd6cdd3ee47f87f87547851648c936b))
+
+
+
+
+
 ## [0.5.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.17...@selfcommunity/react-i18n@0.5.9-alpha.18) (2024-04-22)
 
 

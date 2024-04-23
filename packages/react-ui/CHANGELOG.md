@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.47...@selfcommunity/react-ui@0.7.9-alpha.48) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed groups component loading logic ([72e68e8](https://github.com/selfcommunity/community-js/commit/72e68e8a1dd6cdd3ee47f87f87547851648c936b))
+
+
+
+
+
 ## [0.7.9-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.46...@selfcommunity/react-ui@0.7.9-alpha.47) (2024-04-22)
 
 
