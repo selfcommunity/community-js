@@ -46,6 +46,10 @@ export const SCNotificationMapping = {
   83: SCNotificationTypologyType.UNBLOCKED_USER,
   96: SCNotificationTypologyType.INCUBATOR_APPROVED,
   99: SCNotificationTypologyType.CUSTOM_NOTIFICATION,
+  31: SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP,
+  32: SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP,
+  33: SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP,
+  34: SCNotificationTypologyType.USER_ADDED_TO_GROUP
 };
 
 /**
