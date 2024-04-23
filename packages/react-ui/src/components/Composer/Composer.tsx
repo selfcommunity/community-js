@@ -452,7 +452,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   const handleChangeAudience = useCallback(
     (value: SCTagType[] | SCGroupType | null) => {
-      if (group || Object.prototype.hasOwnProperty.call(value, 'managed_by')) {
+      if (group || (value && Object.prototype.hasOwnProperty.call(value, 'managed_by'))) {
         dispatch({type: 'group', value});
       } else {
         dispatch({type: 'addressing', value});
@@ -470,7 +470,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeAudience,
-          defaultValue: group || typeof addressing === 'object' ? group : addressing
+          defaultValue: group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'managed_by')) ? group : addressing
         }
       }),
     [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, group]

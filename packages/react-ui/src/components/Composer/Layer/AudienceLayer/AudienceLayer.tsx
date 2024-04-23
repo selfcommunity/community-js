@@ -36,9 +36,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface AudienceLayerProps extends Omit<BoxProps, 'defaultValue'>, ComposerLayerProps {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  defaultValue: SCTagType[] | SCGroupType;
+  defaultValue: SCTagType[] | SCGroupType | any;
   TextFieldProps?: TextFieldProps;
 }
 
@@ -70,18 +68,15 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const [value, setValue] = useState<SCTagType[] | SCGroupType>(defaultValue || undefined);
+  const [value, setValue] = useState<SCTagType[] | SCGroupType | any>(defaultValue || undefined);
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: autocompleteOpen});
 
   // HANDLERS
-  const handleSave = useCallback(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    () => (audience === AudienceTypes.AUDIENCE_GROUP ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null)),
-    [value, onSave, audience]
-  );
+  const handleSave = useCallback(() => {
+    audience === AudienceTypes.AUDIENCE_GROUP ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null);
+  }, [value, onSave, audience]);
 
   const handleChange = useCallback((event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
   const handleGroupChange = useCallback((group: SCGroupType) => setValue(group), []);
@@ -111,16 +106,12 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
           />
           <Tab
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            disabled={defaultValue && !Object.prototype.hasOwnProperty.call(value, 'managed_by')}
+            disabled={value && Boolean(value?.length)}
             value={AudienceTypes.AUDIENCE_GROUP}
             icon={<Icon>groups</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
           />
           <Tab
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             disabled={value && Object.prototype.hasOwnProperty.call(value, 'managed_by')}
             value={AudienceTypes.AUDIENCE_TAG}
             icon={<Icon>label</Icon>}
@@ -147,7 +138,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             multiple
             options={scAddressingTags || []}
             getOptionLabel={(option: SCTagType) => option.name || ''}
-            value={value as any}
+            value={value}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
@@ -194,7 +185,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             }}
           />
         )}
-        {audience === AudienceTypes.AUDIENCE_GROUP && <GroupAutocomplete onChange={handleGroupChange} defaultValue={defaultValue as any} />}
+        {audience === AudienceTypes.AUDIENCE_GROUP && <GroupAutocomplete onChange={handleGroupChange} defaultValue={defaultValue} />}
       </DialogContent>
     </Root>
   );
