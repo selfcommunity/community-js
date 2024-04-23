@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.49...@selfcommunity/react-ui@0.7.9-alpha.50) (2024-04-23)
+
+
+### Bug Fixes
+
+* groups searching, group invite button, group header ([f211d62](https://github.com/selfcommunity/community-js/commit/f211d623ac874b18afb3cfe9e2607e5c75d3793d))
+
+
+
+
+
 ## [0.7.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.48...@selfcommunity/react-ui@0.7.9-alpha.49) (2024-04-23)
 
 
