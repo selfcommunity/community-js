@@ -35,6 +35,17 @@ const Component = {
           fontWeight: theme.typography.fontWeightMedium,
           fontSize: theme.typography.body1.fontSize
         }
+      },
+      '& .SCGroups-end-message': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        '& .MuiButtonBase-root': {
+          paddingLeft: theme.spacing(1),
+          '&.Mui-selected, &:hover': {
+            backgroundColor: 'transparent'
+          }
+        }
       }
     }),
     skeletonRoot: ({theme}: any) => ({

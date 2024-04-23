@@ -377,6 +377,7 @@
   "ui.groups.noGroups.subtitle": "Make your activity in the Community even more interesting with the people you prefer.",
   "ui.groups.noOtherGroups": "There are no other contents",
   "ui.groups.filterByName": "Search Group...",
+  "ui.groups.endMessage": "There is no other content. <button>Scroll up</button>",
   "ui.groupSubscribeButton.enter": "Join",
   "ui.groupSubscribeButton.exit": "Exit Group",
   "ui.groupSubscribeButton.requestAccess": "Request Access",
