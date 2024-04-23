@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.31...@selfcommunity/react-core@0.4.9-alpha.32) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed composer/toast notifications for groups ([8829b3b](https://github.com/selfcommunity/community-js/commit/8829b3b87e87a921b0dc05a25aced44a01501f80))
+
+
+
+
+
 ## [0.4.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.30...@selfcommunity/react-core@0.4.9-alpha.31) (2024-04-23)
 
 
