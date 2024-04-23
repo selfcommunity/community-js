@@ -377,6 +377,7 @@
   "ui.groups.noGroups.subtitle": "Rendi ancora più interessante la tua attività nella Community con le persone che preferisci.",
   "ui.groups.noOtherGroups": "Non ci sono altri contenuti",
   "ui.groups.filterByName": "Cerca Gruppo...",
+  "ui.groups.endMessage": "Non ci sono altri contenuti. <button> Torna in alto</button>",
   "ui.groupSubscribeButton.enter": "Entra",
   "ui.groupSubscribeButton.exit": "Esci dal gruppo",
   "ui.groupSubscribeButton.accept": "Accetta",

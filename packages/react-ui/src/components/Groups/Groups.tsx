@@ -1,17 +1,10 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid, TextField, Typography} from '@mui/material';
+import {Box, Button, Grid, TextField, Typography} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
-import {http, EndpointType} from '@selfcommunity/api-services';
+import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
-import {
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useIsComponentMountedRef,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -19,8 +12,9 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
-import Group, {GroupProps} from '../Group';
-import {AxiosResponse} from 'axios';
+import Group, {GroupProps, GroupSkeleton} from '../Group';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import InfiniteScroll from '../../shared/InfiniteScroll';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -44,26 +38,22 @@ export interface GroupsProps {
    */
   className?: string;
   /**
-   * Endpoint to call
+   * Feed API Query Params
+   * @default [{'limit': 10, 'offset': 0}]
    */
-  endpoint?: EndpointType;
+  endpointQueryParams?: Record<string, string | number>;
+
   /**
    * Props to spread to single group object
    * @default {variant: 'outlined', ButtonBaseProps: {disableRipple: 'true'}}
    */
   GroupComponentProps?: GroupProps;
-  /**
-   * Prefetch groups. Useful for SSR.
-   * Use this to init the component with groups
-   * @default null
-   */
-  prefetchedGroups?: SCGroupType[];
 
   /** If true, it means that the endpoint fetches all groups available
-   * @default null
+   * @default true
    */
 
-  general?: boolean;
+  general: boolean;
 
   /**
    * Show/Hide filters
@@ -126,20 +116,20 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     name: PREFIX
   });
   const {
-    endpoint,
+    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
-    prefetchedGroups = [],
     showFilters = false,
     filters,
     handleFilterGroups,
-    general,
+    general = true,
     ...rest
   } = props;
 
   // STATE
   const [groups, setGroups] = useState<SCGroupType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [next, setNext] = useState<string>(null);
   const [filterName, setFilterName] = useState<string>('');
 
   // CONTEXT
@@ -157,19 +147,30 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  // REFS
-  const isMountedRef = useIsComponentMountedRef();
+  // HANDLERS
+  const handleScrollUp = () => {
+    window.scrollTo({left: 0, top: 0, behavior: 'smooth'});
+  };
 
   /**
    * Fetches groups list
    */
-  const fetchGroups = async (next: string = endpoint.url({})): Promise<[]> => {
-    const response: AxiosResponse<any> = await http.request({
-      url: next,
-      method: endpoint.method
-    });
-    const data = response.data;
-    return data.next ? data.results.concat(await fetchGroups(data.next)) : data.results;
+  const fetchGroups = () => {
+    let groupService;
+    if (general) {
+      groupService = GroupService.searchGroups(endpointQueryParams);
+    } else {
+      groupService = GroupService.getUserGroups(endpointQueryParams);
+    }
+    groupService
+      .then((res: SCPaginatedResponse<SCGroupType>) => {
+        setGroups(res.results);
+        setNext(res.next);
+        setLoading(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
   };
 
   /**
@@ -178,22 +179,10 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   useEffect(() => {
     if (!contentAvailability && !authUserId) {
       return;
-    } else if (prefetchedGroups.length) {
-      setGroups(prefetchedGroups);
-      setLoading(false);
     } else {
-      fetchGroups()
-        .then((data: any) => {
-          if (isMountedRef.current) {
-            setGroups(data);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
+      fetchGroups();
     }
-  }, [contentAvailability, authUserId, prefetchedGroups.length]);
+  }, [contentAvailability, authUserId]);
 
   const handleSubscribe = (group) => {
     if (!general) {
@@ -202,6 +191,26 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
       setGroups(_updated);
     }
   };
+
+  const handleNext = useMemo(
+    () => () => {
+      if (!next) {
+        return;
+      }
+      return http
+        .request({
+          url: next,
+          method: general ? Endpoints.SearchGroups.method : Endpoints.GetUserGroups.method
+        })
+        .then((res: HttpResponse<any>) => {
+          setGroups([...groups, ...res.data.results]);
+          setNext(res.data.next);
+        })
+        .catch((error) => console.log(error))
+        .then(() => setLoading(false));
+    },
+    [next]
+  );
 
   /**
    * Get groups filtered
@@ -248,20 +257,37 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
           )}
         </Grid>
       )}
-      {loading ? (
-        <Skeleton />
-      ) : (
-        <>
-          {!groups.length ? (
-            <Box className={classes.noResults}>
-              <Typography variant="h4">
-                <FormattedMessage id="ui.groups.noGroups.title" defaultMessage="ui.groups.noGroups.title" />
+      <>
+        {!groups.length ? (
+          <Box className={classes.noResults}>
+            <Typography variant="h4">
+              <FormattedMessage id="ui.groups.noGroups.title" defaultMessage="ui.groups.noGroups.title" />
+            </Typography>
+            <Typography variant="body1">
+              <FormattedMessage id="ui.groups.noGroups.subtitle" defaultMessage="ui.groups.noGroups.subtitle" />
+            </Typography>
+          </Box>
+        ) : (
+          <InfiniteScroll
+            dataLength={groups.length}
+            next={handleNext}
+            hasMoreNext={Boolean(next)}
+            loaderNext={<GroupSkeleton />}
+            endMessage={
+              <Typography component="div" className={classes.endMessage}>
+                <FormattedMessage
+                  id="ui.groups.endMessage"
+                  defaultMessage="ui.groups.endMessage"
+                  values={{
+                    button: (chunk) => (
+                      <Button color="secondary" variant="text" onClick={handleScrollUp}>
+                        {chunk}
+                      </Button>
+                    )
+                  }}
+                />
               </Typography>
-              <Typography variant="body1">
-                <FormattedMessage id="ui.groups.noGroups.subtitle" defaultMessage="ui.groups.noGroups.subtitle" />
-              </Typography>
-            </Box>
-          ) : (
+            }>
             <Grid container spacing={{xs: 2}} className={classes.groups}>
               {filteredGroups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
@@ -269,14 +295,17 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                 </Grid>
               ))}
             </Grid>
-          )}
-        </>
-      )}
+          </InfiniteScroll>
+        )}
+      </>
     </>
   );
   // RENDER
   if (!contentAvailability && !scUserContext.user) {
     return <HiddenPlaceholder />;
+  }
+  if (loading) {
+    return <Skeleton />;
   }
 
   return (

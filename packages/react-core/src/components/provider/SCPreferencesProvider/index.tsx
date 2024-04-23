@@ -50,7 +50,7 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
     Promise.all([PreferenceService.getAllPreferences(), FeatureService.getAllFeatures()])
       .then(function ([preferences, features]) {
         setPreferences(preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {}));
-        setFeatures(features['results'].map((f) => f.name));
+        setFeatures(features['results'].filter((f) => f.enabled).map((f) => f.name));
         setLoading(false);
       })
       .catch((_error) => {
