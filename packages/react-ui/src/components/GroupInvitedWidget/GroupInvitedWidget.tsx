@@ -254,7 +254,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
     (_msg: string, newInvited: SCGroupType[]) => {
       dispatch({
         type: actionWidgetTypes.SET_RESULTS,
-        payload: {results: [...state.results, ...newInvited]}
+        payload: {results: [...state.results, ...newInvited], count: state.count + newInvited.length}
       });
     },
     [scGroup, dispatch, state.results]
@@ -312,7 +312,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
               <User
                 elevation={0}
                 actions={
-                  <Button disabled={true} variant="outlined" size="small">
+                  <Button disabled={true} size="small">
                     <FormattedMessage id="ui.groupInvitedWidget.status" defaultMessage="ui.groupInvitedWidget.status" />
                   </Button>
                 }
@@ -335,7 +335,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
             <FormattedMessage
               defaultMessage="ui.groupInvitedWidget.dialogTitle"
               id="ui.groupInvitedWidget.dialogTitle"
-              values={{total: scGroup.subscribers_counter}}
+              values={{total: state?.results?.length}}
             />
           }
           onClose={handleToggleDialogOpen}
@@ -358,7 +358,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
                   <User
                     elevation={0}
                     actions={
-                      <Button disabled={true} variant="outlined" size="small">
+                      <Button disabled={true} size="small">
                         <FormattedMessage id="ui.groupInvitedWidget.status" defaultMessage="ui.groupInvitedWidget.status" />
                       </Button>
                     }

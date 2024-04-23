@@ -49,7 +49,7 @@ const Component = {
         }
       },
       '& .SCGroupHeader-avatar': {
-        top: 150,
+        top: 230,
         display: 'block',
         position: 'absolute',
         transform: 'translate(-50%, -50%)',
@@ -63,7 +63,7 @@ const Component = {
         }
       },
       '& .SCGroupHeader-change-picture': {
-        top: 150,
+        top: 230,
         left: '50%',
         transform: 'translate(90%, -50%)',
         position: 'relative',
@@ -90,7 +90,7 @@ const Component = {
         height: 230
       },
       '& .SCGroupHeader-avatar': {
-        top: 150,
+        top: 230,
         display: 'block',
         position: 'absolute',
         transform: 'translate(-50%, -50%)',

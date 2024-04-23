@@ -1,6 +1,11 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCGroups-skeleton-root ': {
+        '& .MuiGrid-item': {
+          paddingTop: 0
+        }
+      },
       '& .MuiGrid-container': {
         justifyContent: 'center'
       },
@@ -52,7 +57,7 @@ const Component = {
       '& .SCGroups-groups': {
         marginTop: theme.spacing(3),
         '& .SCGroup-skeleton-root': {
-          padding: theme.spacing(1.5),
+          padding: theme.spacing(1),
           width: 'auto'
         }
       }
