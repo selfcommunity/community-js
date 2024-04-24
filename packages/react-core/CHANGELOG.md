@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.33...@selfcommunity/react-core@0.4.9-alpha.34) (2024-04-24)
+
+
+### Bug Fixes
+
+* fixed subscribed groups button. Issue: https://linear.app/quentral/issue/QUE-201/problema-sync-subscribe-button-gruppi. ([5506973](https://github.com/selfcommunity/community-js/commit/5506973fa5c3011caa4378a13058bb50673c1235))
+
+
+
+
+
 ## [0.4.9-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.32...@selfcommunity/react-core@0.4.9-alpha.33) (2024-04-23)
 
 **Note:** Version bump only for package @selfcommunity/react-core
