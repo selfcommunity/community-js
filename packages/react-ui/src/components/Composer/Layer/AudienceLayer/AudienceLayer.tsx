@@ -84,7 +84,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
   const handleChangeAudience = useCallback((event: SyntheticEvent, data: AudienceTypes) => setAudience(data), []);
   const handleAutocompleteOpen = useCallback(() => setAutocompleteOpen(true), []);
   const handleAutocompleteClose = useCallback(() => setAutocompleteOpen(false), []);
-
+  console.log(defaultValue);
   return (
     <Root ref={ref} className={classNames(className, classes.root)} {...rest}>
       <DialogTitle className={classes.title}>
@@ -106,7 +106,11 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
           />
           <Tab
-            disabled={(value && Boolean(value?.length)) || (value && !Object.prototype.hasOwnProperty.call(value, 'managed_by'))}
+            disabled={
+              (Boolean(value?.length) && !Object.prototype.hasOwnProperty.call(value, 'managed_by')) ||
+              (value !== undefined && Boolean(!value?.length) && audience !== AudienceTypes.AUDIENCE_ALL) ||
+              (Boolean(value?.length === 0) && audience === AudienceTypes.AUDIENCE_ALL && Boolean(defaultValue?.length !== 0))
+            }
             value={AudienceTypes.AUDIENCE_GROUP}
             icon={<Icon>groups</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
