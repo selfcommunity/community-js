@@ -13,7 +13,7 @@ import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
 import Group, {GroupProps} from '../Group';
-import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 
 const classes = {
@@ -39,7 +39,7 @@ export interface GroupsProps {
   className?: string;
   /**
    * Feed API Query Params
-   * @default [{'limit': 10, 'offset': 0}]
+   * @default [{'limit': 20, 'offset': 0}]
    */
   endpointQueryParams?: Record<string, string | number>;
 
@@ -110,7 +110,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     name: PREFIX
   });
   const {
-    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
+    endpointQueryParams = {limit: 20, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
     showFilters = false,

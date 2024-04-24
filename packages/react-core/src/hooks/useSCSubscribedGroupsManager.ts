@@ -49,7 +49,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
             }
             const groupsIds = res.data.results.map((g: SCGroupType) => g.id);
             updateCache(groupsIds);
-            setData(groupsIds);
+            setData(res.data.results.map((g: SCGroupType) => ({[g.id]: g.subscription_status})));
             return Promise.resolve(res.data);
           })
           .catch((e) => {
