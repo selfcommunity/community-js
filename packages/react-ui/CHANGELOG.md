@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.51...@selfcommunity/react-ui@0.7.9-alpha.52) (2024-04-24)
+
+
+### Bug Fixes
+
+* fix composer ([69e35d9](https://github.com/selfcommunity/community-js/commit/69e35d926e93f3e552dd585b53a08c3eed4a8a7e))
+
+
+
+
+
 ## [0.7.9-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.50...@selfcommunity/react-ui@0.7.9-alpha.51) (2024-04-23)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
