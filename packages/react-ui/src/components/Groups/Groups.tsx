@@ -1,10 +1,10 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Grid, TextField, Typography} from '@mui/material';
+import {Box, Button, Grid, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -12,7 +12,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
-import Group, {GroupProps} from '../Group';
+import Group, {GroupProps, GroupSkeleton} from '../Group';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 
@@ -124,6 +124,8 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
   const [search, setSearch] = useState<string>('');
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -262,7 +264,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             dataLength={groups.length}
             next={handleNext}
             hasMoreNext={Boolean(next)}
-            loaderNext={<Skeleton groupsNumber={2} />}
+            loaderNext={isMobile ? <GroupSkeleton /> : <Skeleton groupsNumber={2} />}
             endMessage={
               <Typography component="div" className={classes.endMessage}>
                 <FormattedMessage
