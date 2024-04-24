@@ -29,7 +29,7 @@ export interface GroupsSkeletonProps {
   GroupSkeletonProps?: any;
 
   /**
-   * @default 10
+   * @default 20
    */
   groupsNumber?: number;
 }
@@ -56,7 +56,7 @@ export interface GroupsSkeletonProps {
  *
  */
 export default function GroupsSkeleton(inProps: GroupsSkeletonProps): JSX.Element {
-  const {className, GroupSkeletonProps = {}, groupsNumber = 10, ...rest} = inProps;
+  const {className, GroupSkeletonProps = {}, groupsNumber = 20, ...rest} = inProps;
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
