@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.53...@selfcommunity/react-ui@0.7.9-alpha.54) (2024-04-24)
+
+
+### Performance Improvements
+
+* groups skeleton/ group template skeleton ([0b60fcd](https://github.com/selfcommunity/community-js/commit/0b60fcdbe7e67ebd584e87ae607932a78f47060d))
+
+
+
+
+
 ## [0.7.9-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.52...@selfcommunity/react-ui@0.7.9-alpha.53) (2024-04-24)
 
 
