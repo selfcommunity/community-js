@@ -35,7 +35,10 @@ const Component = {
       },
       '& .SCGroupInviteButton-invited-box': {
         marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
+        '& .MuiChip-root': {
+          marginBottom: theme.spacing(1)
+        }
       },
       '& .SCGroupInviteButton-suggested': {
         '& h4': {

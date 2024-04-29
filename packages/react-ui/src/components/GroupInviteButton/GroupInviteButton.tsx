@@ -123,6 +123,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   const [open, setOpen] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
+  const [suggested, setSuggested] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [invited, setInvited] = useState<any>([]);
@@ -171,16 +172,23 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
 
   function fetchResults() {
     setLoading(true);
-    let service;
-    if (scGroup) {
-      service = GroupService.getGroupSuggestedUsers(scGroup?.id, value);
-    } else {
-      service = GroupService.getGroupsSuggestedUsers(value);
-    }
-    service
+    GroupService.getGroupSuggestedUsers(scGroup?.id, value)
       .then((data) => {
         setLoading(false);
-        setList(data.results);
+        setSuggested(data.results);
+      })
+      .catch((error) => {
+        setLoading(false);
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }
+
+  function fetchGeneralResults() {
+    setLoading(true);
+    GroupService.getGroupsSuggestedUsers(value)
+      .then((data) => {
+        setLoading(false);
+        setSuggested(data.results);
       })
       .catch((error) => {
         setLoading(false);
@@ -189,8 +197,28 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   }
 
   useEffect(() => {
-    fetchResults();
-  }, [scGroup?.id, value]);
+    if (scGroup?.id) {
+      GroupService.getGroupSuggestedUsers(scGroup?.id, value).then((data) => {
+        setLoading(false);
+        setList(data.results);
+      });
+    } else {
+      GroupService.getGroupsSuggestedUsers(value).then((data) => {
+        setLoading(false);
+        setList(data.results);
+      });
+    }
+  }, [scGroup?.id]);
+  /**
+   * If a value is entered in new message field, it fetches user suggested
+   */
+  useEffect(() => {
+    if (scGroup) {
+      fetchResults();
+    } else {
+      fetchGeneralResults();
+    }
+  }, [value, scGroup]);
 
   /**
    * Handles dialog close
@@ -230,7 +258,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
     switch (reason) {
       case 'input':
         setValue(value);
-        !value && setList([]);
+        !value && setSuggested([]);
         break;
       case 'reset':
         setValue(value);
@@ -262,6 +290,14 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   const handleDelete = (option) => {
     setInvited(invited.filter((v) => v !== option));
     setList((prev) => [...prev, option]);
+  };
+
+  const filterOptions = (options, {inputValue}) => {
+    return options.filter((option) => {
+      const usernameMatch = option.username.toLowerCase().includes(inputValue.toLowerCase());
+      const nameMatch = option.real_name.toLowerCase().includes(inputValue.toLowerCase());
+      return usernameMatch || nameMatch;
+    });
   };
 
   /**
@@ -317,10 +353,11 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
               multiple
               freeSolo
               disableClearable
-              options={list}
+              options={suggested}
               onChange={handleChange}
               onInputChange={handleInputChange}
               inputValue={value}
+              filterOptions={filterOptions}
               value={invited}
               getOptionLabel={(option) => (option ? option.username : '...')}
               isOptionEqualToValue={(option, value) => (option ? value.id === option.id : false)}
