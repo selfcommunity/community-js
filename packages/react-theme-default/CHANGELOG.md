@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.57...@selfcommunity/react-theme-default@0.1.9-alpha.58) (2024-04-29)
+
+
+### Bug Fixes
+
+* Moved notifications icon to topbar for mobile view when grouping is enabled, fixed GroupInviteButton. Linear issues: https://linear.app/quentral/issue/QUE-219/limitare-le-icone-nella-bottom-bar-a-un-massimo-di-5 and https://linear.app/quentral/issue/QUE-217/la-ricerca-utenti-da-invitare-in-un-gruppo-non-va ([2f7d2f0](https://github.com/selfcommunity/community-js/commit/2f7d2f0381ccf0386986c139e5c5bbf748d738ff))
+
+
+
+
+
 ## [0.1.9-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.56...@selfcommunity/react-theme-default@0.1.9-alpha.57) (2024-04-24)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
