@@ -1,5 +1,5 @@
-import {Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
-import React, {useCallback, useState} from 'react';
+import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Link,
   SCPreferences,
@@ -21,12 +21,14 @@ import SearchDialog from '../SearchDialog';
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
+import {SCFeatureName} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
   search: `${PREFIX}-search`,
   searchDialog: `${PREFIX}-search-dialog`,
+  notifications: `${PREFIX}-notifications`,
   settings: `${PREFIX}-settings`,
   settingsDialog: `${PREFIX}-settings-dialog`,
   login: `${PREFIX}-login`
@@ -94,6 +96,7 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
  |logo|.SCNavigationToolbarMobile-logo|Styles applied to the logo element.|
  |search|.SCNavigationToolbarMobile-search|Styles applied to the search button element|
  |searchDialog|.SCNavigationToolbarMobile-search-dialog|Styles applied to the search dialog element|
+ |notifications|.SCNavigationToolbarMobile-notifications|Styles applied to the notifications button element|
  |settings|.SCNavigationToolbarMobile-settings|Styles applied to the settings button element|
  |settingsDialog|.SCNavigationToolbarMobile-settingsDialog|Styles applied to the settings dialog elements|
  |login|.SCNavigationToolbarMobile-login|Styles applied to the login element.|
@@ -124,10 +127,13 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
+
+  // MEMO
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
 
   // HANDLERS
   const handleOpenSearch = useCallback(() => {
@@ -172,6 +178,15 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         </>
       )}
       {endActions}
+      {scUserContext.user && groupsEnabled && (
+        <IconButton className={classes.notifications} component={Link} to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+          <Badge
+            badgeContent={scUserContext.user.unseen_notification_banners_counter + scUserContext.user.unseen_interactions_counter}
+            color="secondary">
+            <Icon>notifications_active</Icon>
+          </Badge>
+        </IconButton>
+      )}
       {scUserContext.user ? (
         <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
       ) : (

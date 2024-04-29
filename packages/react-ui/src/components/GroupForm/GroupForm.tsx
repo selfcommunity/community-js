@@ -329,7 +329,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             name="description"
             onChange={handleChange}
             InputProps={{
-              endAdornment: <Typography variant="body2">{GROUP_DESCRIPTION_MAX_LENGTH - field.description.length}</Typography>
+              endAdornment: (
+                <Typography variant="body2">
+                  {field.description?.length ? GROUP_DESCRIPTION_MAX_LENGTH - field.description.length : GROUP_DESCRIPTION_MAX_LENGTH}
+                </Typography>
+              )
             }}
           />
           <Box className={classes.privacySection}>
