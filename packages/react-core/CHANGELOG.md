@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.35...@selfcommunity/react-core@0.4.9-alpha.36) (2024-04-30)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-228/default-miei-gruppi ([3d9c8fe](https://github.com/selfcommunity/community-js/commit/3d9c8fee9209adeaf7e99145ed4149911f269d8b))
+
+
+
+
+
 ## [0.4.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.34...@selfcommunity/react-core@0.4.9-alpha.35) (2024-04-30)
 
 

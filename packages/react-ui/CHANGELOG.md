@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.58...@selfcommunity/react-ui@0.7.9-alpha.59) (2024-04-30)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-228/default-miei-gruppi ([3d9c8fe](https://github.com/selfcommunity/community-js/commit/3d9c8fee9209adeaf7e99145ed4149911f269d8b))
+
+
+
+
+
 ## [0.7.9-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.57...@selfcommunity/react-ui@0.7.9-alpha.58) (2024-04-30)
 
 
