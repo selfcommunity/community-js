@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Button, ButtonBaseProps, Icon, Stack} from '@mui/material';
-import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
@@ -148,9 +148,9 @@ export default function Group(inProps: GroupProps): JSX.Element {
     return (
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
         {isGroupAdmin && <Icon>face</Icon>}
-        {actionRedirect && !isGroupAdmin ? (
+        {actionRedirect ? (
           <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}>
-            {scGroup.privacy === SCGroupPrivacyType.PUBLIC ? (
+            {scGroup.privacy === SCGroupPrivacyType.PUBLIC || scGroup.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED  || isGroupAdmin ? (
               <FormattedMessage defaultMessage="ui.groupSubscribeButton.enter" id="ui.groupSubscribeButton.enter" />
             ) : (
               <FormattedMessage defaultMessage="ui.groupSubscribeButton.requestAccess" id="ui.groupSubscribeButton.requestAccess" />
