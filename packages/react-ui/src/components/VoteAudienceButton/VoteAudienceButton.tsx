@@ -245,6 +245,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
                           )}
                         </Avatar>
                       }
+                      onClick={handleClose}
                     />
                   </ListItem>
                 ))}

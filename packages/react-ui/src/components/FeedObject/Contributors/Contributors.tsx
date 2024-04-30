@@ -153,7 +153,7 @@ export default function ContributorsFeedObject(props: ContributorsFeedObjectProp
                         <List>
                           {contributorsObject.contributors.map((c, i) => (
                             <ListItem key={i}>
-                              <User elevation={0} user={c} key={c.id} sx={{m: 0}} />
+                              <User elevation={0} user={c} key={c.id} sx={{m: 0}} onClick={()=> setOpenContributorsDialog(false)}/>
                             </ListItem>
                           ))}
                         </List>

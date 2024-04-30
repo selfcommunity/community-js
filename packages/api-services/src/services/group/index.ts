@@ -8,6 +8,7 @@ import {GroupCreateParams} from '../../types';
 
 export interface GroupApiClientInterface {
   getUserGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
+  getUserSubscribedGroups(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
   searchGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>>;
   getSpecificGroupInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCGroupType>;
   getGroupFeed(id: number | string, params?: GroupFeedParams, config?: AxiosRequestConfig): Promise<any>;
@@ -43,6 +44,25 @@ export class GroupApiClient {
   static getUserGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetUserGroups.url({})}?${p.toString()}`, method: Endpoints.GetUserGroups.method});
+  }
+
+  /**
+   * This endpoint retrieves a specific user groups.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getUserSubscribedGroups(
+    id: number | string,
+    params?: BaseSearchParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCGroupType>> {
+    const p = urlParams(params);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetUserSubscribedGroups.url({id})}?${p.toString()}`,
+      method: Endpoints.GetUserSubscribedGroups.method
+    });
   }
 
   /**
@@ -273,6 +293,13 @@ export class GroupApiClient {
 export default class GroupService {
   static async getUserGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     return GroupApiClient.getUserGroups(params, config);
+  }
+  static async getUserSubscribedGroups(
+    id: number | string,
+    params?: BaseSearchParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCGroupType>> {
+    return GroupApiClient.getUserSubscribedGroups(id, params, config);
   }
   static async searchGroups(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCGroupType>> {
     return GroupApiClient.searchGroups(params, config);

@@ -18,7 +18,7 @@ import {
   UserFollowersWidget,
   UserProfileBlocked,
   UserProfileHeader,
-  UserProfileHeaderProps
+  UserProfileHeaderProps, UserSubscribedGroupsWidget,
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
@@ -168,6 +168,13 @@ const WIDGETS_FOLLOWERS = [
     componentProps: {},
     column: 'right',
     position: 2
+  },
+  {
+    type: 'widget',
+    component: UserSubscribedGroupsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 3
   }
 ];
 
@@ -195,6 +202,13 @@ const WIDGETS_CONNECTIONS = [
     componentProps: {},
     column: 'right',
     position: 1
+  },
+  {
+    type: 'widget',
+    component: UserSubscribedGroupsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 2
   }
 ];
 

@@ -1,9 +1,9 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, ButtonBaseProps, Icon, Stack} from '@mui/material';
+import {Avatar, Button, ButtonBaseProps, Icon, Stack} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
@@ -59,6 +59,11 @@ export interface GroupProps extends WidgetProps {
    */
   hideActions?: boolean;
   /**
+   * Prop to redirect the user to the group page
+   * @default false
+   */
+  actionRedirect?: boolean;
+  /**
    * Props to spread to the button
    * @default {}
    */
@@ -106,7 +111,16 @@ export default function Group(inProps: GroupProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {groupId = null, group = null, className = null, elevation, hideActions = false, groupSubscribeButtonProps = {}, ...rest} = props;
+  const {
+    groupId = null,
+    group = null,
+    className = null,
+    elevation,
+    hideActions = false,
+    actionRedirect = false,
+    groupSubscribeButtonProps = {},
+    ...rest
+  } = props;
 
   // STATE
   const {scGroup} = useSCFetchGroup({id: groupId, group});
@@ -134,7 +148,17 @@ export default function Group(inProps: GroupProps): JSX.Element {
     return (
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
         {isGroupAdmin && <Icon>face</Icon>}
-        <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
+        {actionRedirect ? (
+          <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}>
+            {scGroup.privacy === SCGroupPrivacyType.PUBLIC ? (
+              <FormattedMessage defaultMessage="ui.groupSubscribeButton.enter" id="ui.groupSubscribeButton.enter" />
+            ) : (
+              <FormattedMessage defaultMessage="ui.groupSubscribeButton.requestAccess" id="ui.groupSubscribeButton.requestAccess" />
+            )}
+          </Button>
+        ) : (
+          <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
+        )}
       </Stack>
     );
   }
