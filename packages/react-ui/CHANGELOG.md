@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.55...@selfcommunity/react-ui@0.7.9-alpha.56) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
 ## [0.7.9-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.54...@selfcommunity/react-ui@0.7.9-alpha.55) (2024-04-29)
 
 
