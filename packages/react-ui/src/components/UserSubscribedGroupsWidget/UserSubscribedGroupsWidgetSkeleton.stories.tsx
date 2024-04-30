@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import UserFollowedCategoriesWidget from './UserFollowedCategoriesWidget';
+import UserSubscribedGroupsWidgetSkeleton from './Skeleton';
 
 export default {
-  title: 'Design System/React UI/User Followed Categories Widget',
-  component: UserFollowedCategoriesWidget,
+  title: 'Design System/React UI/Skeleton/User Subscribed Groups Widget',
+  component: UserSubscribedGroupsWidgetSkeleton,
   argTypes: {
     variant: {
       options: ['elevation', 'outlined'],
@@ -21,17 +21,14 @@ export default {
     elevation: 1,
     variant: 'elevation'
   }
-} as Meta<typeof UserFollowedCategoriesWidget>;
+} as Meta<typeof UserSubscribedGroupsWidgetSkeleton>;
 
 const template = (args) => (
   <div style={{width: 400}}>
-    <UserFollowedCategoriesWidget {...args} />
+    <UserSubscribedGroupsWidgetSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserFollowedCategoriesWidget> = {
-  args: {
-    userId: 9
-  },
+export const Base: StoryObj<UserSubscribedGroupsWidgetSkeleton> = {
   render: template
 };

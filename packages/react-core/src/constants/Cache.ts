@@ -94,4 +94,5 @@ export const POLL_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_pSugWidget_';
 export const GROUP_MEMBERS_TOOLS_STATE_CACHE_PREFIX_KEY = '_gMemWidget_';
 export const GROUP_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY = '_gReqWidget_';
 export const GROUPS_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_glIST_';
+export const GROUPS_SUBSCRIBED_TOOLS_STATE_CACHE_PREFIX_KEY = '_gSubWidget_';
 export const getWidgetStateCacheKey = (p, id = undefined) => `${p}${id !== undefined ? id : ''}`;

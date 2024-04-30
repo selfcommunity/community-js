@@ -179,14 +179,6 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     }
   }, [contentAvailability, authUserId, search]);
 
-  const handleSubscribe = (group) => {
-    if (!general) {
-      const newGroups = [...groups];
-      const _updated = newGroups.filter((g) => g.id !== group.id);
-      setGroups(_updated);
-    }
-  };
-
   const handleNext = useMemo(
     () => () => {
       if (!next) {
@@ -283,7 +275,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             <Grid container spacing={{xs: 2}} className={classes.groups}>
               {filteredGroups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
-                  <Group group={group} groupId={group.id} groupSubscribeButtonProps={{onSubscribe: handleSubscribe}} {...GroupComponentProps} />
+                  <Group group={group} groupId={group.id} actionRedirect={true} {...GroupComponentProps} />
                 </Grid>
               ))}
             </Grid>

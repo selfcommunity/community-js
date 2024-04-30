@@ -160,6 +160,10 @@ import Groups, {GroupsProps, GroupsSkeleton} from './components/Groups';
 import GroupForm, {GroupFormProps} from './components/GroupForm';
 import GroupSettingsIconButton, {GroupSettingsIconButtonProps} from './components/GroupSettingsIconButton';
 import GroupInvitedWidget, {GroupInvitedWidgetProps, GroupInvitedWidgetSkeleton} from './components/GroupInvitedWidget';
+import UserSubscribedGroupsWidget, {
+  UserSubscribedGroupsWidgetProps,
+  UserSubscribedGroupsWidgetSkeleton
+} from './components/UserSubscribedGroupsWidget';
 
 /**
  * Constants
@@ -439,6 +443,9 @@ export {
   GroupInvitedWidget,
   GroupInvitedWidgetProps,
   GroupInvitedWidgetSkeleton,
+  UserSubscribedGroupsWidget,
+  UserSubscribedGroupsWidgetProps,
+  UserSubscribedGroupsWidgetSkeleton,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,

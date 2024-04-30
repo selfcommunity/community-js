@@ -1209,6 +1209,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   RemoveUserFromGroup: {
     url: urlReplacer('/api/v2/group/$(id)/subscribe/?user=$(user)'),
     method: 'DELETE'
+  },
+  GetUserSubscribedGroups: {
+    url: urlReplacer('/api/v2/user/$(id)/groups/'),
+    method: 'GET'
   }
 };
 
