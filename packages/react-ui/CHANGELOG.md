@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.59...@selfcommunity/react-ui@0.7.9-alpha.60) (2024-04-30)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-226/problema-cambio-tab-coi-gruppi-da-cui-ho-ricevuto-un-invito ([26df349](https://github.com/selfcommunity/community-js/commit/26df34971c9fbbd31c508e2f2a7cd549ac48310b))
+
+
+
+
+
 ## [0.7.9-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.58...@selfcommunity/react-ui@0.7.9-alpha.59) (2024-04-30)
 
 
