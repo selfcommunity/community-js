@@ -238,7 +238,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
         }
         return null;
       },
-    [data, loading, cache, authUserId]
+    [loading, cache, authUserId]
   );
 
   /**

@@ -8,7 +8,7 @@ export default {
 
 export const Base: StoryObj<typeof CategoryTemplate> = {
   args: {
-    categoryId: 1,
+    categoryId: 9,
 
   },
   render: (args) => (
