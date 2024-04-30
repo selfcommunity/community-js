@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.57...@selfcommunity/react-ui@0.7.9-alpha.58) (2024-04-30)
+
+
+### Bug Fixes
+
+* fixed groups button label ([4ef8793](https://github.com/selfcommunity/community-js/commit/4ef879309872e9fd79e439b3c06010b3b9f521de))
+
+
+
+
+
 ## [0.7.9-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.56...@selfcommunity/react-ui@0.7.9-alpha.57) (2024-04-30)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
