@@ -228,9 +228,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
         )}
       {groupsEnabled && scUserContext.user && (
         <IconButton
-          className={classNames(classes.groups, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {}))})}
+          className={classNames(classes.groups, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {}))})}
           aria-label="Groups"
-          to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}
+          to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
           component={Link}>
           <Icon>groups</Icon>
         </IconButton>

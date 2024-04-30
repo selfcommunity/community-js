@@ -36,6 +36,7 @@ export const GROUP_ROUTE_NAME = 'group';
 export const GROUP_MEMBERS_ROUTE_NAME = 'group_members';
 export const GROUP_MESSAGES_ROUTE_NAME = 'group_messages';
 export const GROUPS_ROUTE_NAME = 'groups';
+export const GROUPS_SUBSCRIBED_ROUTE_NAME = 'groups_subscribed';
 
 /**
  * Default Routes
@@ -74,4 +75,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [GROUP_MEMBERS_ROUTE_NAME]: '/group/:id/:slug/members/',
   [GROUP_MESSAGES_ROUTE_NAME]: '/group/:id/:slug/messages/',
   [GROUPS_ROUTE_NAME]: '/groups/',
+  [GROUPS_SUBSCRIBED_ROUTE_NAME]: '/groups/subscribed/',
 };
