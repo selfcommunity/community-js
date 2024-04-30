@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.36...@selfcommunity/react-core@0.4.9-alpha.37) (2024-04-30)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-226/problema-cambio-tab-coi-gruppi-da-cui-ho-ricevuto-un-invito ([4063c14](https://github.com/selfcommunity/community-js/commit/4063c14fb5fcf7fdce1a97035ec09aa52ec88192))
+
+
+
+
+
 ## [0.4.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.35...@selfcommunity/react-core@0.4.9-alpha.36) (2024-04-30)
 
 

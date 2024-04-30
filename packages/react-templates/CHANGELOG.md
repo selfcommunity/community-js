@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.63...@selfcommunity/react-templates@0.3.9-alpha.64) (2024-04-30)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-226/problema-cambio-tab-coi-gruppi-da-cui-ho-ricevuto-un-invito ([4063c14](https://github.com/selfcommunity/community-js/commit/4063c14fb5fcf7fdce1a97035ec09aa52ec88192))
+
+
+
+
+
 ## [0.3.9-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.62...@selfcommunity/react-templates@0.3.9-alpha.63) (2024-04-30)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
