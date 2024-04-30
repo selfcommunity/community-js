@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.19...@selfcommunity/react-i18n@0.5.9-alpha.20) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
 ## [0.5.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.18...@selfcommunity/react-i18n@0.5.9-alpha.19) (2024-04-23)
 
 
