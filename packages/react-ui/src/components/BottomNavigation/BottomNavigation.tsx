@@ -124,8 +124,8 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 key="groups"
                 className={classes.action}
                 component={Link}
-                to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}
-                value={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}
+                to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
                 icon={<Icon>groups</Icon>}
               />
             ) : null,
