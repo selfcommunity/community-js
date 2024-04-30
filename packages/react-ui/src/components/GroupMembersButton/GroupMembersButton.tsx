@@ -221,7 +221,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
             <List>
               {members.map((member: SCUserType) => (
                 <ListItem key={member.id}>
-                  <User elevation={0} user={member} />
+                  <User elevation={0} user={member} onClick={handleToggleDialogOpen} />
                 </ListItem>
               ))}
             </List>
