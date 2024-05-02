@@ -161,7 +161,12 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
     } else {
       return [
         user && (
-          <MenuItem className={classes.item} component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)} key="profile">
+          <MenuItem
+            className={classes.item}
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)}
+            key="profile"
+            onClick={handleCloseDialog}>
             <ListItemIcon>
               <Icon fontSize="small">people_alt</Icon>
             </ListItemIcon>
