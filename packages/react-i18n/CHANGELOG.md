@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.20...@selfcommunity/react-i18n@0.5.9-alpha.21) (2024-05-02)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-229/lista-tutti-i-gruppi-il-bottone-entra-ha-due-significati ([e3902be](https://github.com/selfcommunity/community-js/commit/e3902bec38c51204cda653e5983361b21966562d))
+
+
+
+
+
 ## [0.5.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.19...@selfcommunity/react-i18n@0.5.9-alpha.20) (2024-04-30)
 
 
