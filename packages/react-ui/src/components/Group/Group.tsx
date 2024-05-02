@@ -141,30 +141,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const intl = useIntl();
 
   /**
-   * Get current translated status
-   */
-  const getStatus = (status: string): JSX.Element => {
-    let _status;
-    switch (status) {
-      case SCGroupSubscriptionStatusType.REQUESTED:
-        _status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.waitingApproval" id="ui.groupSubscribeButton.waitingApproval" />;
-        break;
-      case SCGroupSubscriptionStatusType.SUBSCRIBED:
-        _status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.enter" id="ui.groupSubscribeButton.enter" />;
-        break;
-      case SCGroupSubscriptionStatusType.INVITED:
-        _status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" />;
-        break;
-      default:
-        scGroup.privacy === SCGroupPrivacyType.PUBLIC
-          ? (_status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.enter" id="ui.groupSubscribeButton.enter" />)
-          : (_status = <FormattedMessage defaultMessage="ui.groupSubscribeButton.requestAccess" id="ui.groupSubscribeButton.requestAccess" />);
-        break;
-    }
-    return _status;
-  };
-
-  /**
    * Render authenticated actions
    * @return {JSX.Element}
    */
@@ -174,7 +150,11 @@ export default function Group(inProps: GroupProps): JSX.Element {
         {isGroupAdmin && <Icon>face</Icon>}
         {actionRedirect ? (
           <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}>
-            {getStatus(scGroup.subscription_status)}
+            {scGroup.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED ? (
+              <FormattedMessage defaultMessage="ui.group.status.enter" id="ui.group.status.enter" />
+            ) : (
+              <FormattedMessage defaultMessage="ui.group.status.discover" id="ui.group.status.discover" />
+            )}
           </Button>
         ) : (
           <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
