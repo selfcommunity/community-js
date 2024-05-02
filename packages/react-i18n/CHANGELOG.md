@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.21...@selfcommunity/react-i18n@0.5.9-alpha.22) (2024-05-02)
+
+
+### Bug Fixes
+
+* linear issues: https://linear.app/quentral/issue/QUE-230/andando-al-profilo-utente-dai-messaggi-privati-resta-aperto-il-popup, https://linear.app/quentral/issue/QUE-229/lista-tutti-i-gruppi-il-bottone-entra-ha-due-significati, https://linear.app/quentral/issue/QUE-231/copy-derrore-nei-messaggi-privati ([f45a0d8](https://github.com/selfcommunity/community-js/commit/f45a0d871b0d197a8b2784ed5e3bc3049ba95041))
+
+
+
+
+
 ## [0.5.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.20...@selfcommunity/react-i18n@0.5.9-alpha.21) (2024-05-02)
 
 
