@@ -14,7 +14,6 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {SCFeatureName} from '@selfcommunity/types';
 import {
   Link,
   SCPreferences,
@@ -73,7 +72,8 @@ export interface NavigationSettingsIconButtonProps extends IconButtonProps {
 const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED,
   SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED,
-  SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED
+  SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED,
+  SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION
 ];
 
 /**
@@ -181,7 +181,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        scPreferences.features.includes(SCFeatureName.LOYALTY) && (
+        preferences[SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION] && (
           <ListItem className={classes.item} key="loyaltyProgram">
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
               <FormattedMessage id="ui.navigationSettingsIconButton.loyalty" defaultMessage="ui.navigationSettingsIconButton.loyalty" />
@@ -285,7 +285,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.connections" defaultMessage="ui.navigationSettingsIconButton.connections" />
           </MenuItem>
         ),
-        scPreferences.features.includes(SCFeatureName.LOYALTY) && (
+        preferences[SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION] && (
           <MenuItem className={classes.item} key="loyaltyProgram" component={Link} to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
             <FormattedMessage id="ui.navigationSettingsIconButton.loyalty" defaultMessage="ui.navigationSettingsIconButton.loyalty" />
           </MenuItem>
