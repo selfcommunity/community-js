@@ -1,13 +1,16 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {SCCategoryType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -21,6 +24,7 @@ import {useThemeProps} from '@mui/system';
 import Composer from '../Composer';
 import {File, Link as MediaLink} from '../../shared/Media';
 import {PREFIX} from './constants';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -106,6 +110,13 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
+  // PREFERENCES
+  const preferences: SCPreferencesContextType = useSCPreferences();
+  const onlyStaffEnabled = useMemo(
+    () => preferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value,
+    [preferences.preferences]
+  );
+
   // State variables
   const [open, setOpen] = useState<boolean>(false);
 
@@ -140,6 +151,10 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     }
     setOpen(false);
   };
+
+  if (!UserUtils.isStaff(scUserContext.user) && onlyStaffEnabled) {
+    return <HiddenPlaceholder />;
+  }
 
   return (
     <React.Fragment>
