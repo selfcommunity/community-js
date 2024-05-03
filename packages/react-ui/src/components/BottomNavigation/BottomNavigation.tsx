@@ -14,6 +14,7 @@ import {
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
+  UserUtils,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -113,12 +114,15 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 icon={<Icon>explore</Icon>}
               />
             ) : null,
-            <BottomNavigationAction
-              key="composer"
-              className={classNames(classes.composer, classes.action)}
-              component={ComposerIconButton}
-              disableRipple
-            />,
+            !preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value ||
+            (UserUtils.isStaff(scUserContext.user) && preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value) ? (
+              <BottomNavigationAction
+                key="composer"
+                className={classNames(classes.composer, classes.action)}
+                component={ComposerIconButton}
+                disableRipple
+              />
+            ) : null,
             groupsEnabled && scUserContext.user ? (
               <BottomNavigationAction
                 key="groups"

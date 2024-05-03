@@ -17,6 +17,7 @@ import {
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
+  UserUtils,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -228,7 +229,9 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
         )}
       {groupsEnabled && scUserContext.user && (
         <IconButton
-          className={classNames(classes.groups, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {}))})}
+          className={classNames(classes.groups, {
+            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {}))
+          })}
           aria-label="Groups"
           to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
           component={Link}>
@@ -258,7 +261,11 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {startActions}
       {scUserContext.user ? (
         <>
-          {!disableComposer && <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>}
+          {!disableComposer ||
+            !preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value ||
+            (UserUtils.isStaff(scUserContext.user) && preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value && (
+              <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>
+            ))}
           <Tooltip title={scUserContext.user.username}>
             <IconButton
               component={Link}
