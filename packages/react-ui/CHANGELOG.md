@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.63...@selfcommunity/react-ui@0.7.9-alpha.64) (2024-05-03)
+
+
+### Bug Fixes
+
+* Hidden composer when posting is enabled only for staff members. Linear issue: https://linear.app/quentral/issue/QUE-239/il-composer-deve-essere-visibile-solo-ad-utenti-staff-nella-community ([b9e8ecb](https://github.com/selfcommunity/community-js/commit/b9e8ecb974c6dc4090c44ad7626dcac18ac01c40))
+
+
+
+
+
 ## [0.7.9-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.62...@selfcommunity/react-ui@0.7.9-alpha.63) (2024-05-02)
 
 

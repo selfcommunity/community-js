@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.16...@selfcommunity/api-services@0.4.9-alpha.17) (2024-05-03)
+
+
+### Bug Fixes
+
+* linear issues:  https://linear.app/quentral/issue/QUE-238/sidebar-e-wizard-devono-filtrare-solo-le-categorie-attive-ignorando ([70fe23c](https://github.com/selfcommunity/community-js/commit/70fe23cb9b5518c5321dda06f7d38b0b37d9cae3))
+
+
+
+
+
 ## [0.4.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.15...@selfcommunity/api-services@0.4.9-alpha.16) (2024-04-30)
 
 
