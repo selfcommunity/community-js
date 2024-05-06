@@ -520,6 +520,7 @@
   "ui.notification.user_requested_to_join_group": "ha richiesto di partecipare al gruppo <link>{group}</link>",
   "ui.notification.user_accepted_to_join_group": "ha accettato di partecipare al gruppo <link>{group}</link>",
   "ui.notification.user_added_to_group": "ti ha aggiunto al gruppo <link>{group}</link>",
+  "ui.notification.group.button.see":  "Vedi",
   "ui.notification.showOthers": "Vedi altro",
   "ui.notification.undeletedFor.restoredContent": "Un tuo contenuto, precedentemente rimosso, è stato ripristinato",
   "ui.notification.undeletedFor.restoredContentSnippet": "Un tuo contenuto rimosso è stato ripristinato",

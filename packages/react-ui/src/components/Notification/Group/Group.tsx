@@ -134,7 +134,7 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
               {status && status !== SCGroupSubscriptionStatusType.SUBSCRIBED && (
                 <Typography color="primary">
                   <Link to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)}>
-                    <FormattedMessage id="ui.groupSubscribeButton.accept" defaultMessage="ui.groupSubscribeButton.accept" />
+                    <FormattedMessage id="ui.notification.group.button.see" defaultMessage="ui.notification.group.button.see" />
                   </Link>
                 </Typography>
               )}
@@ -165,7 +165,7 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
                 component={Link}
                 loading={scUserContext.user ? status === null || manager.isLoading(notificationObject.group as SCGroupType) : null}
                 to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)}>
-                <FormattedMessage id="ui.groupSubscribeButton.accept" defaultMessage="ui.groupSubscribeButton.accept" />
+                <FormattedMessage id="ui.notification.group.button.see" defaultMessage="ui.notification.group.button.see" />
               </LoadingButton>
             )}
           </Stack>
