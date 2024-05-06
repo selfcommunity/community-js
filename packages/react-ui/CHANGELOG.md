@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.64...@selfcommunity/react-ui@0.7.9-alpha.65) (2024-05-03)
+
+
+### Bug Fixes
+
+* i18n ([5dc7075](https://github.com/selfcommunity/community-js/commit/5dc7075466570cb389fad868597b24988bfc63c2))
+* linear issue: https://linear.app/quentral/issue/QUE-185/fetures-visivbile-anche-se-non-attiva-da-make ([4cc266d](https://github.com/selfcommunity/community-js/commit/4cc266d3f9db5cf8f3296190e6d2eb77d2151e98))
+
+
+
+
+
 ## [0.7.9-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.63...@selfcommunity/react-ui@0.7.9-alpha.64) (2024-05-03)
 
 
