@@ -94,7 +94,6 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
    * @param n
    */
   const getContent = (n) => {
-    console.log(n.notification_obj, 'notification');
     let content;
     let type;
     if (n.notification_obj) {
