@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.70...@selfcommunity/react-theme-default@0.1.9-alpha.71) (2024-05-07)
+
+
+### Bug Fixes
+
+* mobile paddings. https://linear.app/quentral/issue/QUE-263/fix-grafici-mobile ([b029568](https://github.com/selfcommunity/community-js/commit/b02956807e71085368ccb2de618f6bb475743224))
+
+
+
+
+
 ## [0.1.9-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.69...@selfcommunity/react-theme-default@0.1.9-alpha.70) (2024-05-06)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
