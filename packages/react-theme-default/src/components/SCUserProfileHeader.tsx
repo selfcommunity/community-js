@@ -17,7 +17,7 @@ const Component = {
         justifyContent: 'space-between'
       },
       '& .SCUserProfileHeader-avatar': {
-        top: 150 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        top: 180,
         [theme.breakpoints.up('lg')]: {
           left: theme.selfcommunity.user.avatar.sizeXLarge / 2,
           marginLeft: 0
@@ -38,7 +38,7 @@ const Component = {
         }
       },
       '& .SCUserProfileHeader-change-picture': {
-        top: 180 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        top: 215,
         [theme.breakpoints.up('lg')]: {
           left: 155 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge
         },
