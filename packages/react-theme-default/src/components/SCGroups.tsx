@@ -55,6 +55,7 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCGroups-groups': {
+        justifyContent: 'center',
         marginTop: theme.spacing(3),
         '& .SCGroup-skeleton-root': {
           padding: theme.spacing(1),

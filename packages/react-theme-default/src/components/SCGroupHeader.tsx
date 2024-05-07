@@ -42,7 +42,8 @@ const Component = {
         },
         '& .SCEditGroupButton-root': {
           marginLeft: 'auto',
-          marginTop: theme.spacing(-4.25)
+          marginTop: theme.spacing(-4.25),
+          marginRight: theme.spacing(1)
         },
         '& .SCGroupSubscribeButton-root': {
           marginTop: theme.spacing(1)
