@@ -341,7 +341,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
               <FormattedMessage
                 id="ui.groupForm.privacy.title"
                 defaultMessage="ui.groupForm.privacy.title"
-                values={{b: (chunks) => <strong>{chunks}</strong>}}
+                values={{
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
+                  b: (chunks) => <strong>{chunks}</strong>
+                }}
               />
             </Typography>
             <Stack direction="row" spacing={1} alignItems="center">
@@ -365,7 +369,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                 <FormattedMessage
                   id="ui.groupForm.privacy.public.info"
                   defaultMessage="ui.groupForm.privacy.public.info"
-                  values={{b: (chunks) => <strong>{chunks}</strong>}}
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
                 />
               ) : (
                 <>
@@ -373,13 +381,21 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                     <FormattedMessage
                       id="ui.groupForm.privacy.private.info.edit"
                       defaultMessage="ui.groupForm.private.public.info.edit"
-                      values={{b: (chunks) => <strong>{chunks}</strong>}}
+                      values={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        b: (chunks) => <strong>{chunks}</strong>
+                      }}
                     />
                   ) : (
                     <FormattedMessage
                       id="ui.groupForm.privacy.private.info"
                       defaultMessage="ui.groupForm.private.public.info"
-                      values={{b: (chunks) => <strong>{chunks}</strong>}}
+                      values={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        b: (chunks) => <strong>{chunks}</strong>
+                      }}
                     />
                   )}
                 </>
@@ -393,7 +409,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                   <FormattedMessage
                     id="ui.groupForm.visibility.title"
                     defaultMessage="ui.groupForm.visibility.title"
-                    values={{b: (chunks) => <strong>{chunks}</strong>}}
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
                   />
                 </Typography>
                 <Stack direction="row" spacing={1} alignItems="center">
@@ -416,13 +436,21 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                     <FormattedMessage
                       id="ui.groupForm.visibility.hidden.info"
                       defaultMessage="ui.groupForm.visibility.hidden.info"
-                      values={{b: (chunks) => <strong>{chunks}</strong>}}
+                      values={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        b: (chunks) => <strong>{chunks}</strong>
+                      }}
                     />
                   ) : (
                     <FormattedMessage
                       id="ui.groupForm.visibility.visible.info"
                       defaultMessage="ui.groupForm.visibility.visible.info"
-                      values={{b: (chunks) => <strong>{chunks}</strong>}}
+                      values={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        b: (chunks) => <strong>{chunks}</strong>
+                      }}
                     />
                   )}
                 </Typography>

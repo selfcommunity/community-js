@@ -263,6 +263,8 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                   id="ui.groups.endMessage"
                   defaultMessage="ui.groups.endMessage"
                   values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
                     button: (chunk) => (
                       <Button color="secondary" variant="text" onClick={handleScrollUp}>
                         {chunk}

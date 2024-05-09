@@ -149,7 +149,11 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                 <FormattedMessage
                   id="ui.groupInfoWidget.privacy.public.info"
                   defaultMessage="ui.groupInfoWidget.privacy.public.info"
-                  values={{b: (chunks) => <strong>{chunks}</strong>}}
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
                 />
               </Typography>
             </>
@@ -163,7 +167,11 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                 <FormattedMessage
                   id="ui.groupInfoWidget.privacy.private.info"
                   defaultMessage="ui.groupInfoWidget.private.public.info"
-                  values={{b: (chunks) => <strong>{chunks}</strong>}}
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
                 />
               </Typography>
             </>
@@ -181,7 +189,11 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                   <FormattedMessage
                     id="ui.groupForm.visibility.visible.info"
                     defaultMessage="ui.groupForm.visibility.visible.info"
-                    values={{b: (chunks) => <strong>{chunks}</strong>}}
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
                   />
                 </Typography>
               </>
@@ -195,7 +207,11 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                   <FormattedMessage
                     id="ui.groupForm.visibility.hidden.info"
                     defaultMessage="ui.groupForm.visibility.hidden.info"
-                    values={{b: (chunks) => <strong>{chunks}</strong>}}
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
                   />
                 </Typography>
               </>

@@ -208,7 +208,13 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
             <FormattedMessage
               id="ui.groupSettingsIconButton.dialog.msg"
               defaultMessage="ui.groupSettingsIconButton.dialog.msg"
-              values={{b: (...chunks) => <strong>{chunks}</strong>, user: user.username, group: group.name}}
+              values={{
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                b: (...chunks) => <strong>{chunks}</strong>,
+                user: user.username,
+                group: group.name
+              }}
             />
           }
           btnConfirm={<FormattedMessage id="ui.groupSettingsIconButton.dialog.confirm" defaultMessage="ui.groupSettingsIconButton.dialog.confirm" />}
