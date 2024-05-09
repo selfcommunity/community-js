@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.68...@selfcommunity/react-ui@0.7.9-alpha.69) (2024-05-09)
+
+
+### Bug Fixes
+
+* added ts ignore for developers doc build fix ([45300f7](https://github.com/selfcommunity/community-js/commit/45300f73baf638f71eb8fe7e9684bf9e19c9bba6))
+
+
+
+
+
 ## [0.7.9-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.67...@selfcommunity/react-ui@0.7.9-alpha.68) (2024-05-09)
 
 
