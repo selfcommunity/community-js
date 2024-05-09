@@ -229,7 +229,12 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
           <FormattedMessage
             id="ui.groupInfoWidget.admin"
             defaultMessage="ui.groupInfoWidget.admin"
-            values={{b: (chunks) => <strong>{chunks}</strong>, admin: scGroup?.managed_by.username}}
+            values={{
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              b: (chunks) => <strong>{chunks}</strong>,
+              admin: scGroup?.managed_by.username
+            }}
           />
         </Typography>
       </CardContent>
