@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.67...@selfcommunity/react-ui@0.7.9-alpha.68) (2024-05-09)
+
+
+### Bug Fixes
+
+* poll. Linear issue: https://linear.app/quentral/issue/QUE-211/problema-voto-sui-poll-facilmente-replicabile ([a4f7627](https://github.com/selfcommunity/community-js/commit/a4f76272d8bd4776dd070ada873e4e06a96e0324))
+
+
+
+
+
 ## [0.7.9-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.66...@selfcommunity/react-ui@0.7.9-alpha.67) (2024-05-06)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
