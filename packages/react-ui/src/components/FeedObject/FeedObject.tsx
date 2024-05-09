@@ -25,7 +25,7 @@ import CommentObjectReply, {CommentObjectReplyProps} from '../CommentObjectReply
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
@@ -442,8 +442,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle change/update poll: votes
    */
   const handleChangePoll = useCallback(
-    (pollObject: SCPollType) => {
-      updateObject(Object.assign({}, obj, {poll: pollObject}));
+    (pollChoices: SCPollChoiceType[]) => {
+      if ('poll' in obj) {
+        updateObject(Object.assign({}, obj, {poll: {...obj.poll, choices: pollChoices}}));
+      }
     },
     [obj]
   );
