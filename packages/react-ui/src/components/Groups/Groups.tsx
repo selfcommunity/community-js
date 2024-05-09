@@ -266,9 +266,9 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
                     button: (chunk) => (
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
                       <Button color="secondary" variant="text" onClick={handleScrollUp}>
+                        {/*eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
+                        {/*@ts-ignore*/}
                         {chunk}
                       </Button>
                     )
