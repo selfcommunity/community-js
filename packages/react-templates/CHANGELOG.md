@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.71...@selfcommunity/react-templates@0.3.9-alpha.72) (2024-05-09)
+
+
+### Bug Fixes
+
+* poll. Linear issue: https://linear.app/quentral/issue/QUE-211/problema-voto-sui-poll-facilmente-replicabile ([a4f7627](https://github.com/selfcommunity/community-js/commit/a4f76272d8bd4776dd070ada873e4e06a96e0324))
+
+
+
+
+
 ## [0.3.9-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.70...@selfcommunity/react-templates@0.3.9-alpha.71) (2024-05-07)
 
 
