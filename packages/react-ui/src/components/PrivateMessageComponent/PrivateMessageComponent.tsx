@@ -28,6 +28,11 @@ export interface PrivateMessageComponentProps {
    */
   id?: number | string;
   /**
+   * Thread type
+   * @default null
+   */
+  type?: SCPrivateMessageType;
+  /**
    * Handler on message click
    * @default null
    */
@@ -83,7 +88,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, onItemClick = null, onThreadBack = null, onSingleMessageOpen = null, ...rest} = props;
+  const {id = null, type = null, className = null, onItemClick = null, onThreadBack = null, onSingleMessageOpen = null, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -95,7 +100,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [layout, setLayout] = useState('default');
   const [obj, setObj] = useState<any>(id ?? null);
-  const [type, setType] = useState<SCPrivateMessageType | null>(null);
+  const [_type, _setType] = useState<SCPrivateMessageType>(type);
   const isNew = obj && obj === SCPrivateMessageStatusType.NEW;
   const [openNewMessage, setOpenNewMessage] = useState<boolean>(isNew ?? false);
   const mobileSnippetsView = (layout === 'default' && !obj) || (layout === 'mobile' && !obj);
@@ -116,6 +121,10 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     setObj(id ?? null);
   }, [id]);
 
+  useEffect(() => {
+    _setType(type ?? null);
+  }, [type]);
+
   //  HANDLERS
   /**
    * Handles thread opening on click
@@ -124,7 +133,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   const handleThreadOpening = (item, type) => {
     onItemClick && onItemClick(item.group ? item.group.id : messageReceiver(item, authUserId), type);
-    setType(type);
+    _setType(type);
     setObj(item.group ? item : messageReceiver(item, authUserId));
     setOpenNewMessage(false);
   };
@@ -142,7 +151,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   const handleOpenNewMessage = () => {
     setOpenNewMessage(!openNewMessage);
     setObj(SCPrivateMessageStatusType.NEW);
-    setType(SCPrivateMessageType.NEW);
+    _setType(SCPrivateMessageType.NEW);
     onItemClick && onItemClick(SCPrivateMessageStatusType.NEW, SCPrivateMessageType.NEW);
   };
 
@@ -161,7 +170,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     id && setLayout('mobile');
     setOpenNewMessage(false);
     setObj(null);
-    setType(null);
+    _setType(null);
     onThreadBack && onThreadBack();
   };
   /**
@@ -196,6 +205,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           threadObj={obj}
           clearSearch={clear}
           elevation={0}
+          type={_type}
         />
       </Grid>
     );
@@ -208,7 +218,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
       <Grid item xs={12} md={7} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
         <PrivateMessageThread
           threadObj={obj}
-          type={type}
+          type={_type}
           openNewMessage={openNewMessage}
           onNewMessageClose={handleMessageBack}
           onNewMessageSent={handleOnNewMessageSent}

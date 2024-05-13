@@ -74,6 +74,11 @@ export interface PrivateMessageSnippetsProps extends CardProps {
    * @default null
    */
   threadObj?: any;
+  /**
+   * Thread type
+   * @default SCPrivateMessageType.USER
+   */
+  type?: SCPrivateMessageType;
 }
 /**
  * > API documentation for the Community-JS PrivateMessageSnippets component. Learn about the available props and the CSS API.
@@ -113,7 +118,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     name: PREFIX
   });
 
-  const {className = null, threadObj = null, snippetActions, clearSearch, ...rest} = props;
+  const {className = null, threadObj = null, type = null, snippetActions, clearSearch, ...rest} = props;
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -123,7 +128,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   const isObj = typeof threadObj === 'object';
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const [type, setType] = useState<SCPrivateMessageType | null>(null);
+  const [_type, _setType] = useState<SCPrivateMessageType | null>(type);
 
   // INTL
   const intl = useIntl();
@@ -152,14 +157,14 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
 
   const isSelected = useMemo(() => {
     return (message): boolean => {
-      if (threadObj && type === SCPrivateMessageType.GROUP) {
+      if (threadObj && _type === SCPrivateMessageType.GROUP) {
         return message?.group?.id === (isObj ? threadObj?.group?.id : threadObj);
-      } else if (threadObj && type === SCPrivateMessageType.USER) {
+      } else if (threadObj && threadObj !== SCPrivateMessageType.NEW) {
         return messageReceiver(message, authUserId) === (isObj ? messageReceiver(threadObj, authUserId) : threadObj);
       }
       return null;
     };
-  }, [threadObj, authUserId, type]);
+  }, [threadObj, authUserId, _type]);
 
   //HANDLERS
   const handleChange = (event) => {
@@ -180,7 +185,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
 
   function handleOpenThread(msg) {
     const _type = msg.group !== null ? SCPrivateMessageType.GROUP : SCPrivateMessageType.USER;
-    setType(_type);
+    _setType(_type);
     snippetActions && snippetActions.onSnippetClick(msg, _type);
     handleClear();
     updateSnippetsParams(msg.id, 'seen');
