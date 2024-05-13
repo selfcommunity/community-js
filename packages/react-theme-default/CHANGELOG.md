@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.77...@selfcommunity/react-theme-default@0.1.9-alpha.78) (2024-05-13)
+
+
+### Bug Fixes
+
+* private messages document button width, removed change group pictures image limits, hidden share actions for private group posts. Linear issues: https://linear.app/quentral/issue/QUE-311/se-il-gruppo-e-privato-i-post-nel-bottone-condividi-devono-avere-solo, https://linear.app/quentral/issue/QUE-307/upload-di-immagini-png ([f55a91c](https://github.com/selfcommunity/community-js/commit/f55a91ccadb1d3d6a63753349a06e90579716880))
+
+
+
+
+
 ## [0.1.9-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.76...@selfcommunity/react-theme-default@0.1.9-alpha.77) (2024-05-13)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
