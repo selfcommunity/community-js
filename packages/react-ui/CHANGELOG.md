@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.72...@selfcommunity/react-ui@0.7.9-alpha.73) (2024-05-13)
+
+
+### Bug Fixes
+
+* export props ([22fa336](https://github.com/selfcommunity/community-js/commit/22fa336d915a35aa923058f7a8361fbc75a96e0c))
+
+
+
+
+
 ## [0.7.9-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.71...@selfcommunity/react-ui@0.7.9-alpha.72) (2024-05-13)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
