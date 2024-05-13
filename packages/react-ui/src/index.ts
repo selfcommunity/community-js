@@ -110,7 +110,8 @@ import {
   SCNotificationObjectTemplateType,
   SCUserProfileFields,
   SCUserProfileSettings,
-  SCUserSocialAssociations
+  SCUserSocialAssociations,
+  VirtualScrollerItemProps
 } from './types';
 import Widget, {WidgetProps} from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
@@ -360,6 +361,7 @@ export {
   UserSocialAssociation,
   UserSocialAssociationProps,
   SCUserSocialAssociations,
+  VirtualScrollerItemProps,
   CustomAdv,
   CustomAdvProps,
   CustomAdvSkeleton,
