@@ -123,11 +123,12 @@ export default function ChangeGroupCover(inProps: ChangeGroupCoverProps): JSX.El
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          if (img.width < 1920) {
-            setAlert(intl.formatMessage(messages.errorImageSize));
-          } else {
-            isCreationMode ? onChange && onChange(fileInput) : handleSave();
-          }
+          isCreationMode ? onChange && onChange(fileInput) : handleSave();
+          // if (img.width < 1920) {
+          //   setAlert(intl.formatMessage(messages.errorImageSize));
+          // } else {
+          //   isCreationMode ? onChange && onChange(fileInput) : handleSave();
+          // }
         };
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

@@ -122,11 +122,12 @@ export default function ChangeGroupPicture(inProps: ChangeGroupPictureProps): JS
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          if (img.width < 600 && img.height < 600) {
-            setAlert(intl.formatMessage(messages.errorLoadImage));
-          } else {
-            isCreationMode ? onChange && onChange(fileInput) : handleSave();
-          }
+          isCreationMode ? onChange && onChange(fileInput) : handleSave();
+          // if (img.width < 600 && img.height < 600) {
+          //   setAlert(intl.formatMessage(messages.errorLoadImage));
+          // } else {
+          //   isCreationMode ? onChange && onChange(fileInput) : handleSave();
+          // }
         };
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
