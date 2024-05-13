@@ -12,7 +12,7 @@ import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
 import Skeleton from '@mui/material/Skeleton';
-import {SCContributionType, SCFeedObjectType, SCMediaType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType, SCGroupPrivacyType, SCMediaType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {
@@ -148,6 +148,7 @@ export default function Share(props: ShareProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
   const domain = typeof location !== 'undefined' && location.origin ? location.origin : '';
   const url = domain + scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj));
+  const isGroupPublic = useMemo(() => feedObject.group && feedObject.group.privacy === SCGroupPrivacyType.PUBLIC, [feedObject.group]);
 
   // INTL
   const intl = useIntl();
@@ -293,35 +294,39 @@ export default function Share(props: ShareProps): JSX.Element {
   function renderShareMenuItems() {
     return (
       <Box>
-        <MenuItem onClick={() => share(false)}>
-          <ListItemIcon>
-            <Icon fontSize="small">redo</Icon>
-          </ListItemIcon>
-          <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
-        </MenuItem>
-        {facebookShareEnabled && (
-          <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
-            <ListItemIcon>
-              <Icon fontSize="small">facebook</Icon>
-            </ListItemIcon>
-            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
-          </MenuItem>
-        )}
-        {twitterShareEnabled && (
-          <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
-            <ListItemIcon>
-              <Icon fontSize="small">twitter</Icon>
-            </ListItemIcon>
-            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
-          </MenuItem>
-        )}
-        {linkedinShareEnabled && (
-          <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
-            <ListItemIcon>
-              <Icon fontSize="small">linkedin</Icon>
-            </ListItemIcon>
-            <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
-          </MenuItem>
+        {(!feedObject.group || isGroupPublic) && (
+          <>
+            <MenuItem onClick={() => share(false)}>
+              <ListItemIcon>
+                <Icon fontSize="small">redo</Icon>
+              </ListItemIcon>
+              <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
+            </MenuItem>
+            {facebookShareEnabled && (
+              <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
+                <ListItemIcon>
+                  <Icon fontSize="small">facebook</Icon>
+                </ListItemIcon>
+                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
+              </MenuItem>
+            )}
+            {twitterShareEnabled && (
+              <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
+                <ListItemIcon>
+                  <Icon fontSize="small">twitter</Icon>
+                </ListItemIcon>
+                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
+              </MenuItem>
+            )}
+            {linkedinShareEnabled && (
+              <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
+                <ListItemIcon>
+                  <Icon fontSize="small">linkedin</Icon>
+                </ListItemIcon>
+                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
+              </MenuItem>
+            )}
+          </>
         )}
         <MenuItem>
           <ListItemIcon>
