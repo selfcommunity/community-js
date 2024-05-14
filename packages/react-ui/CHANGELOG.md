@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.76...@selfcommunity/react-ui@0.7.9-alpha.77) (2024-05-14)
+
+
+### Bug Fixes
+
+* sort footer menu ([f299c0c](https://github.com/selfcommunity/community-js/commit/f299c0cbf8fe910d4e322d8d53174b2567867dae))
+
+
+
+
+
 ## [0.7.9-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.75...@selfcommunity/react-ui@0.7.9-alpha.76) (2024-05-14)
 
 
