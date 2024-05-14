@@ -184,9 +184,9 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   };
 
   function handleOpenThread(msg) {
-    const _type = msg.group !== null ? SCPrivateMessageType.GROUP : SCPrivateMessageType.USER;
-    _setType(_type);
-    snippetActions && snippetActions.onSnippetClick(msg, _type);
+    const threadType = msg.group !== null ? SCPrivateMessageType.GROUP : SCPrivateMessageType.USER;
+    _setType(threadType);
+    snippetActions && snippetActions.onSnippetClick(msg, threadType);
     handleClear();
     updateSnippetsParams(msg.id, 'seen');
   }

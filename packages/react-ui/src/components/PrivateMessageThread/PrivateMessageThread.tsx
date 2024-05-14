@@ -370,6 +370,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
           setMessageObjs(res.results);
           setPrevious(res.next && updateAndDeleteURLParameters(res.next, 'before_message', res.results[0].id, 'offset'));
           setLoadingMessageObjs(false);
+          setSingleMessageThread(false);
         })
         .catch((error) => {
           setLoadingMessageObjs(false);
