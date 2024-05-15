@@ -1,5 +1,5 @@
-import { Button, IconButton, styled, Toolbar, ToolbarProps } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Link,
   SCPreferences,
@@ -9,25 +9,26 @@ import {
   SCUserContextType,
   useSCPreferences,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
 import Icon from '@mui/material/Icon';
-import { useThemeProps } from '@mui/system';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarMobileSkeleton from './Skeleton';
-import { FormattedMessage } from 'react-intl';
-import { SearchAutocompleteProps } from '../SearchAutocomplete';
+import {FormattedMessage} from 'react-intl';
+import {SearchAutocompleteProps} from '../SearchAutocomplete';
 import SearchDialog from '../SearchDialog';
-import NavigationSettingsIconButton, { NavigationSettingsIconButtonProps } from '../NavigationSettingsIconButton';
-import NavigationMenuIconButton from '../NavigationMenuIconButton';
-import { PREFIX } from './constants';
-
+import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
+import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
+import {PREFIX} from './constants';
+import {SCFeatureName} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
   search: `${PREFIX}-search`,
   searchDialog: `${PREFIX}-search-dialog`,
+  notifications: `${PREFIX}-notifications`,
   settings: `${PREFIX}-settings`,
   settingsDialog: `${PREFIX}-settings-dialog`,
   login: `${PREFIX}-login`
@@ -44,6 +45,10 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   disableSearch?: boolean;
   /**
+   * Preserve the same as the desktop version
+   */
+  preserveDesktopLogo?: boolean;
+  /**
    * Props spread to SearchAutocomplete component
    */
   SearchAutocompleteProps?: SearchAutocompleteProps;
@@ -56,11 +61,14 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   endActions?: React.ReactNode | null;
   /**
+   * Component for Navigation Menu Icon Button
+   */
+  NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
+  /**
    * Component for Navigation Settings
    */
   NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
 }
-
 
 /**
  * > API documentation for the Community-JS Navigation Toolbar Mobile component. Learn about the available props and the CSS API.
@@ -88,6 +96,7 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
  |logo|.SCNavigationToolbarMobile-logo|Styles applied to the logo element.|
  |search|.SCNavigationToolbarMobile-search|Styles applied to the search button element|
  |searchDialog|.SCNavigationToolbarMobile-search-dialog|Styles applied to the search dialog element|
+ |notifications|.SCNavigationToolbarMobile-notifications|Styles applied to the notifications button element|
  |settings|.SCNavigationToolbarMobile-settings|Styles applied to the settings button element|
  |settingsDialog|.SCNavigationToolbarMobile-settingsDialog|Styles applied to the settings dialog elements|
  |login|.SCNavigationToolbarMobile-login|Styles applied to the login element.|
@@ -103,10 +112,12 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const {
     className = '',
     disableSearch = false,
+    preserveDesktopLogo = false,
     SearchAutocompleteProps = {},
     children = null,
     startActions = null,
     endActions = null,
+    NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
     ...rest
   } = props;
@@ -116,10 +127,13 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
+
+  // MEMO
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
 
   // HANDLERS
   const handleOpenSearch = useCallback(() => {
@@ -136,9 +150,13 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
 
   const _children = children || (
     <>
-      <NavigationMenuIconButton />
+      <NavigationMenuIconButtonComponent />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
-        <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
+        {!preserveDesktopLogo ? (
+          <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
+        ) : (
+          <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO].value} alt="logo" />
+        )}
       </Link>
     </>
   );
@@ -160,6 +178,15 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         </>
       )}
       {endActions}
+      {scUserContext.user && groupsEnabled && (
+        <IconButton className={classes.notifications} component={Link} to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+          <Badge
+            badgeContent={scUserContext.user.unseen_notification_banners_counter + scUserContext.user.unseen_interactions_counter}
+            color="secondary">
+            <Icon>notifications_active</Icon>
+          </Badge>
+        </IconButton>
+      )}
       {scUserContext.user ? (
         <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
       ) : (

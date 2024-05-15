@@ -25,6 +25,7 @@ import {
   SCThemeCategoryVariableType,
   SCThemeVariablesType,
   SCThemeType,
+  SCSubscribedGroupsManagerType,
 } from './types';
 
 /**
@@ -93,6 +94,8 @@ import useSCFetchPrivateMessageSnippets from './hooks/useSCFetchPrivateMessageSn
 import useSCFetchBroadcastMessages from './hooks/useSCFetchBroadcastMessages';
 import useSCFetchUserBlockedBy from './hooks/useSCFetchUserBlockedBy';
 import useSCUserIsBlocked from './hooks/useSCUserIsBlocked';
+import useSCFetchGroup from './hooks/useSCFetchGroup';
+import useSCFetchGroups from './hooks/useSCFetchGroups';
 
 /**
  * Routing component
@@ -140,6 +143,7 @@ export {
   SCThemeCategoryVariableType,
   SCThemeVariablesType,
   SCThemeType,
+  SCSubscribedGroupsManagerType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -198,4 +202,6 @@ export {
   useSCFetchBroadcastMessages,
   useSCFetchUserBlockedBy,
   useSCUserIsBlocked,
+  useSCFetchGroup,
+  useSCFetchGroups,
 };

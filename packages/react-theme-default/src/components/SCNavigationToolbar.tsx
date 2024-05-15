@@ -6,14 +6,14 @@ const Component = {
         marginRight: theme.spacing(2),
         '& img': {
           verticalAlign: 'middle',
-          maxHeight: theme.mixins.toolbar.minHeight
+          maxHeight: theme.mixins.toolbar.minHeight-10
         }
       },
       '& .SCNavigationToolbar-navigation': {
         flexGrow: 1,
         textAlign: 'center',
         alignSelf: 'end',
-        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
+        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore, & .SCNavigationToolbar-groups': {
           paddingTop: 12,
           paddingLeft: theme.spacing(1),
           paddingRight: theme.spacing(1),

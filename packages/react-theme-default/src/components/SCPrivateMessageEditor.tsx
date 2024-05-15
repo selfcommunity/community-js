@@ -4,9 +4,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-      '& .MuiIcon-root': {
-        fontSize: '1.57rem'
-      },
+
       '& .SCPrivateMessageEditor-message-input': {
         width: '100%'
       },

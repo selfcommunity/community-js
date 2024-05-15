@@ -24,9 +24,8 @@ export const SCContext = createContext<SCContextType>({} as SCContextType);
 
 /**
  * This component imports all providers
- * @param object
- * @param object.conf
- * @param object.children
+ * @param conf
+ * @param children
  * @return
  * ```jsx
  * <SCContext.Provider value={{settings}}>

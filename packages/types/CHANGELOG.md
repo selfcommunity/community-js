@@ -3,6 +3,135 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.10...@selfcommunity/types@0.5.9-alpha.11) (2024-04-15)
+
+
+### Performance Improvements
+
+* removed unecessary code ([01f7f73](https://github.com/selfcommunity/community-js/commit/01f7f7377bb0fad9efffb87d92fa00ddd722af7e))
+
+
+
+
+
+## [0.5.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.9...@selfcommunity/types@0.5.9-alpha.10) (2024-04-12)
+
+
+### Bug Fixes
+
+* feedobj actions with group, private messages notifications for group messages ([36f44ca](https://github.com/selfcommunity/community-js/commit/36f44ca2b33fefc5848357b1430500f6839a81d0))
+
+
+
+
+
+## [0.5.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.8...@selfcommunity/types@0.5.9-alpha.9) (2024-04-11)
+
+
+### Performance Improvements
+
+* added group notifications ([09fa3c5](https://github.com/selfcommunity/community-js/commit/09fa3c5871962a08375d9e1ea7fa5431cbc808c0))
+
+
+
+
+
+## [0.5.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.7...@selfcommunity/types@0.5.9-alpha.8) (2024-04-10)
+
+
+### Bug Fixes
+
+* added group to SCSuggestionType ([5cc36cd](https://github.com/selfcommunity/community-js/commit/5cc36cdc8293b6bfa80ba3fc6a220ccdd3f745be))
+
+
+
+
+
+## [0.5.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.6...@selfcommunity/types@0.5.9-alpha.7) (2024-04-10)
+
+
+### Performance Improvements
+
+* added groups to search autocomplete suggestion ([20f0f55](https://github.com/selfcommunity/community-js/commit/20f0f55c67c91cc0f86a4b0167c616c2deffa6bb))
+
+
+
+
+
+## [0.5.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.5...@selfcommunity/types@0.5.9-alpha.6) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([23a7cc2](https://github.com/selfcommunity/community-js/commit/23a7cc27ce199ba80a3834ca5013d9fa0f3b1bbd))
+
+
+
+
+
+## [0.5.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.4...@selfcommunity/types@0.5.9-alpha.5) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
+## [0.5.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.3...@selfcommunity/types@0.5.9-alpha.4) (2024-04-04)
+
+
+### Performance Improvements
+
+* changed private message components for group feature ([78e2f74](https://github.com/selfcommunity/community-js/commit/78e2f740ba2e9ffc437af43adcad83997070d886))
+
+
+
+
+
+## [0.5.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.2...@selfcommunity/types@0.5.9-alpha.3) (2024-03-26)
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.5.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.1...@selfcommunity/types@0.5.9-alpha.2) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.5.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.9-alpha.0...@selfcommunity/types@0.5.9-alpha.1) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.5.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.8...@selfcommunity/types@0.5.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.5.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.8-alpha.1...@selfcommunity/types@0.5.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/types

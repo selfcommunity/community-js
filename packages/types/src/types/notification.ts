@@ -1,5 +1,5 @@
-import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCUserType} from '../index';
-import {SCPrivateMessageThreadType, SCPrivateMessageSnippetType} from './privateMessage';
+import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCGroupType, SCUserType} from '../index';
+import {SCPrivateMessageThreadType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
 import {SCIncubatorType} from './incubator';
@@ -45,7 +45,11 @@ export enum SCNotificationTypologyType {
   INCUBATOR_APPROVED = 'incubator_approved',
   CUSTOM_NOTIFICATION = 'custom_notification',
   NOTIFICATION_BANNER = 'notification_banner',
-  CONTRIBUTION = 'contribution'
+  CONTRIBUTION = 'contribution',
+  USER_INVITED_TO_JOIN_GROUP = 'user_invited_to_join_group',
+  USER_REQUESTED_TO_JOIN_GROUP = 'user_requested_to_join_group',
+  USER_ACCEPTED_TO_JOIN_GROUP = 'user_accepted_to_join_group',
+  USER_ADDED_TO_GROUP = 'user_added_to_group'
 }
 
 /**
@@ -90,6 +94,12 @@ export interface SCNotificationAggregatedType {
    * if it is a status. For some types of notifications it will not be present.
    */
   status?: SCFeedStatusType;
+
+  /**
+   * Primary object involved (object that is common to notifications group)
+   * if it is a group. For some types of notifications it will not be present.
+   */
+  group?: SCGroupType;
 
   /**
    * List of aggregated notifications by type.
@@ -519,4 +529,18 @@ export interface SCNotificationContributionType extends SCNotificationType {
    * If the contribution type is status
    */
   status?: SCFeedStatusType;
+}
+
+/**
+ * Interface SCNotificationGroupActivityType.
+ */
+export interface SCNotificationGroupActivityType extends SCNotificationType {
+  /**
+   * The user who performed the action
+   */
+  user: SCUserType;
+  /**
+   * The Group obj
+   */
+  group: Partial<SCGroupType>;
 }

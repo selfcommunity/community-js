@@ -3,6 +3,875 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.80...@selfcommunity/react-ui@0.7.9-alpha.81) (2024-05-15)
+
+
+### Performance Improvements
+
+* group components comments for doc. ([9d0e787](https://github.com/selfcommunity/community-js/commit/9d0e7878ee9f14bcf3e8e985c86f1196196b93f6))
+
+
+
+
+
+## [0.7.9-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.79...@selfcommunity/react-ui@0.7.9-alpha.80) (2024-05-15)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([ae824a2](https://github.com/selfcommunity/community-js/commit/ae824a27bd24c4950fa8209b3b7b769f84e787c2))
+
+
+
+
+
+## [0.7.9-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.78...@selfcommunity/react-ui@0.7.9-alpha.79) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.77...@selfcommunity/react-ui@0.7.9-alpha.78) (2024-05-15)
+
+
+### Performance Improvements
+
+* updated lexical packages, cleaned comments for doc generation ([c97c1b0](https://github.com/selfcommunity/community-js/commit/c97c1b0d2c3a67c449b7e1e5039c90c18d68be39))
+
+
+
+
+
+## [0.7.9-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.76...@selfcommunity/react-ui@0.7.9-alpha.77) (2024-05-14)
+
+
+### Bug Fixes
+
+* sort footer menu ([f299c0c](https://github.com/selfcommunity/community-js/commit/f299c0cbf8fe910d4e322d8d53174b2567867dae))
+
+
+
+
+
+## [0.7.9-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.75...@selfcommunity/react-ui@0.7.9-alpha.76) (2024-05-14)
+
+
+### Bug Fixes
+
+* fixed pm ([33dc5aa](https://github.com/selfcommunity/community-js/commit/33dc5aa72acc5d0c2b849b8a71de4641f540e187))
+
+
+
+
+
+## [0.7.9-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.74...@selfcommunity/react-ui@0.7.9-alpha.75) (2024-05-13)
+
+
+### Bug Fixes
+
+* fixed pm selected status(added type to component) ([5484533](https://github.com/selfcommunity/community-js/commit/548453388d850266d6b024386d32f29d80a6ce05))
+
+
+
+
+
+## [0.7.9-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.73...@selfcommunity/react-ui@0.7.9-alpha.74) (2024-05-13)
+
+
+### Bug Fixes
+
+* private messages document button width, removed change group pictures image limits, hidden share actions for private group posts. Linear issues: https://linear.app/quentral/issue/QUE-311/se-il-gruppo-e-privato-i-post-nel-bottone-condividi-devono-avere-solo, https://linear.app/quentral/issue/QUE-307/upload-di-immagini-png ([f55a91c](https://github.com/selfcommunity/community-js/commit/f55a91ccadb1d3d6a63753349a06e90579716880))
+
+
+
+
+
+## [0.7.9-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.72...@selfcommunity/react-ui@0.7.9-alpha.73) (2024-05-13)
+
+
+### Bug Fixes
+
+* export props ([22fa336](https://github.com/selfcommunity/community-js/commit/22fa336d915a35aa923058f7a8361fbc75a96e0c))
+
+
+
+
+
+## [0.7.9-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.71...@selfcommunity/react-ui@0.7.9-alpha.72) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.70...@selfcommunity/react-ui@0.7.9-alpha.71) (2024-05-09)
+
+
+### Bug Fixes
+
+* added ts ignore for developers doc build fix ([56bd8ec](https://github.com/selfcommunity/community-js/commit/56bd8ecd99d905863c7f38e8dfa7bd523e4320a3))
+
+
+
+
+
+## [0.7.9-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.69...@selfcommunity/react-ui@0.7.9-alpha.70) (2024-05-09)
+
+
+### Bug Fixes
+
+* added ts ignore for developers doc build fix ([3344358](https://github.com/selfcommunity/community-js/commit/3344358a0b048e354cabc78f8ae04cea38154cc5))
+
+
+
+
+
+## [0.7.9-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.68...@selfcommunity/react-ui@0.7.9-alpha.69) (2024-05-09)
+
+
+### Bug Fixes
+
+* added ts ignore for developers doc build fix ([45300f7](https://github.com/selfcommunity/community-js/commit/45300f73baf638f71eb8fe7e9684bf9e19c9bba6))
+
+
+
+
+
+## [0.7.9-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.67...@selfcommunity/react-ui@0.7.9-alpha.68) (2024-05-09)
+
+
+### Bug Fixes
+
+* poll. Linear issue: https://linear.app/quentral/issue/QUE-211/problema-voto-sui-poll-facilmente-replicabile ([a4f7627](https://github.com/selfcommunity/community-js/commit/a4f76272d8bd4776dd070ada873e4e06a96e0324))
+
+
+
+
+
+## [0.7.9-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.66...@selfcommunity/react-ui@0.7.9-alpha.67) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.65...@selfcommunity/react-ui@0.7.9-alpha.66) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.64...@selfcommunity/react-ui@0.7.9-alpha.65) (2024-05-03)
+
+
+### Bug Fixes
+
+* i18n ([5dc7075](https://github.com/selfcommunity/community-js/commit/5dc7075466570cb389fad868597b24988bfc63c2))
+* linear issue: https://linear.app/quentral/issue/QUE-185/fetures-visivbile-anche-se-non-attiva-da-make ([4cc266d](https://github.com/selfcommunity/community-js/commit/4cc266d3f9db5cf8f3296190e6d2eb77d2151e98))
+
+
+
+
+
+## [0.7.9-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.63...@selfcommunity/react-ui@0.7.9-alpha.64) (2024-05-03)
+
+
+### Bug Fixes
+
+* Hidden composer when posting is enabled only for staff members. Linear issue: https://linear.app/quentral/issue/QUE-239/il-composer-deve-essere-visibile-solo-ad-utenti-staff-nella-community ([b9e8ecb](https://github.com/selfcommunity/community-js/commit/b9e8ecb974c6dc4090c44ad7626dcac18ac01c40))
+
+
+
+
+
+## [0.7.9-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.62...@selfcommunity/react-ui@0.7.9-alpha.63) (2024-05-02)
+
+
+### Bug Fixes
+
+* linear issues: https://linear.app/quentral/issue/QUE-230/andando-al-profilo-utente-dai-messaggi-privati-resta-aperto-il-popup, https://linear.app/quentral/issue/QUE-229/lista-tutti-i-gruppi-il-bottone-entra-ha-due-significati, https://linear.app/quentral/issue/QUE-231/copy-derrore-nei-messaggi-privati ([f45a0d8](https://github.com/selfcommunity/community-js/commit/f45a0d871b0d197a8b2784ed5e3bc3049ba95041))
+
+
+
+
+
+## [0.7.9-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.61...@selfcommunity/react-ui@0.7.9-alpha.62) (2024-05-02)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-229/lista-tutti-i-gruppi-il-bottone-entra-ha-due-significati ([e3902be](https://github.com/selfcommunity/community-js/commit/e3902bec38c51204cda653e5983361b21966562d))
+
+
+
+
+
+## [0.7.9-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.60...@selfcommunity/react-ui@0.7.9-alpha.61) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.59...@selfcommunity/react-ui@0.7.9-alpha.60) (2024-04-30)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-226/problema-cambio-tab-coi-gruppi-da-cui-ho-ricevuto-un-invito ([26df349](https://github.com/selfcommunity/community-js/commit/26df34971c9fbbd31c508e2f2a7cd549ac48310b))
+
+
+
+
+
+## [0.7.9-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.58...@selfcommunity/react-ui@0.7.9-alpha.59) (2024-04-30)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-228/default-miei-gruppi ([3d9c8fe](https://github.com/selfcommunity/community-js/commit/3d9c8fee9209adeaf7e99145ed4149911f269d8b))
+
+
+
+
+
+## [0.7.9-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.57...@selfcommunity/react-ui@0.7.9-alpha.58) (2024-04-30)
+
+
+### Bug Fixes
+
+* fixed groups button label ([4ef8793](https://github.com/selfcommunity/community-js/commit/4ef879309872e9fd79e439b3c06010b3b9f521de))
+
+
+
+
+
+## [0.7.9-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.56...@selfcommunity/react-ui@0.7.9-alpha.57) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.55...@selfcommunity/react-ui@0.7.9-alpha.56) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
+## [0.7.9-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.54...@selfcommunity/react-ui@0.7.9-alpha.55) (2024-04-29)
+
+
+### Bug Fixes
+
+* Moved notifications icon to topbar for mobile view when grouping is enabled, fixed GroupInviteButton. Linear issues: https://linear.app/quentral/issue/QUE-219/limitare-le-icone-nella-bottom-bar-a-un-massimo-di-5 and https://linear.app/quentral/issue/QUE-217/la-ricerca-utenti-da-invitare-in-un-gruppo-non-va ([2f7d2f0](https://github.com/selfcommunity/community-js/commit/2f7d2f0381ccf0386986c139e5c5bbf748d738ff))
+
+
+
+
+
+## [0.7.9-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.53...@selfcommunity/react-ui@0.7.9-alpha.54) (2024-04-24)
+
+
+### Performance Improvements
+
+* groups skeleton/ group template skeleton ([0b60fcd](https://github.com/selfcommunity/community-js/commit/0b60fcdbe7e67ebd584e87ae607932a78f47060d))
+
+
+
+
+
+## [0.7.9-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.52...@selfcommunity/react-ui@0.7.9-alpha.53) (2024-04-24)
+
+
+### Bug Fixes
+
+* fixed subscribed groups button. Issue: https://linear.app/quentral/issue/QUE-201/problema-sync-subscribe-button-gruppi. ([5506973](https://github.com/selfcommunity/community-js/commit/5506973fa5c3011caa4378a13058bb50673c1235))
+
+
+
+
+
+## [0.7.9-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.51...@selfcommunity/react-ui@0.7.9-alpha.52) (2024-04-24)
+
+
+### Bug Fixes
+
+* fix composer ([69e35d9](https://github.com/selfcommunity/community-js/commit/69e35d926e93f3e552dd585b53a08c3eed4a8a7e))
+
+
+
+
+
+## [0.7.9-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.50...@selfcommunity/react-ui@0.7.9-alpha.51) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.49...@selfcommunity/react-ui@0.7.9-alpha.50) (2024-04-23)
+
+
+### Bug Fixes
+
+* groups searching, group invite button, group header ([f211d62](https://github.com/selfcommunity/community-js/commit/f211d623ac874b18afb3cfe9e2607e5c75d3793d))
+
+
+
+
+
+## [0.7.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.48...@selfcommunity/react-ui@0.7.9-alpha.49) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed composer/toast notifications for groups ([8829b3b](https://github.com/selfcommunity/community-js/commit/8829b3b87e87a921b0dc05a25aced44a01501f80))
+
+
+
+
+
+## [0.7.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.47...@selfcommunity/react-ui@0.7.9-alpha.48) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed groups component loading logic ([72e68e8](https://github.com/selfcommunity/community-js/commit/72e68e8a1dd6cdd3ee47f87f87547851648c936b))
+
+
+
+
+
+## [0.7.9-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.46...@selfcommunity/react-ui@0.7.9-alpha.47) (2024-04-22)
+
+
+### Bug Fixes
+
+* user clickable username ([88497be](https://github.com/selfcommunity/community-js/commit/88497be17cad90d3e9d12048b5a52a6f0b9b03fa))
+
+
+
+
+
+## [0.7.9-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.45...@selfcommunity/react-ui@0.7.9-alpha.46) (2024-04-22)
+
+
+### Bug Fixes
+
+* added pusub for invite users action ([dbb12b8](https://github.com/selfcommunity/community-js/commit/dbb12b80229bb6a79a7f8fc0902a94a137327409))
+* Fixed composer tag. Issue: https://linear.app/quentral/issue/QUE-208/errore-con-assegnazione-tag ([bc6d689](https://github.com/selfcommunity/community-js/commit/bc6d689d54c75e4f479d158165e0bf177d0954b4))
+* pm issue: https://linear.app/quentral/issue/QUE-205/messaggi-privati ([1dae3d9](https://github.com/selfcommunity/community-js/commit/1dae3d91a1de0ee39d06610c150ba40647a85330))
+
+
+### Performance Improvements
+
+* added username in thread item for group messages ([60e5344](https://github.com/selfcommunity/community-js/commit/60e5344af5c5c531daadf4ae7ee48de9ccb79ced))
+
+
+
+
+
+## [0.7.9-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.44...@selfcommunity/react-ui@0.7.9-alpha.45) (2024-04-19)
+
+
+### Bug Fixes
+
+* styles cover ([8c44196](https://github.com/selfcommunity/community-js/commit/8c441965871738ccab3fae908d7bdba0eb940a48))
+
+
+
+
+
+## [0.7.9-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.43...@selfcommunity/react-ui@0.7.9-alpha.44) (2024-04-19)
+
+
+### Bug Fixes
+
+* styles cover ([19621fb](https://github.com/selfcommunity/community-js/commit/19621fb64f4a044496f7626f5e1689da00023689))
+
+
+
+
+
+## [0.7.9-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.42...@selfcommunity/react-ui@0.7.9-alpha.43) (2024-04-19)
+
+
+### Bug Fixes
+
+* bugfix-> groups alignment, private messages new message bug, translations. ([5ce7c40](https://github.com/selfcommunity/community-js/commit/5ce7c40f40867e2f1c5ead3f023cfc977b7ae548))
+
+
+
+
+
+## [0.7.9-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.41...@selfcommunity/react-ui@0.7.9-alpha.42) (2024-04-19)
+
+
+### Bug Fixes
+
+* styles cover ([4e73a05](https://github.com/selfcommunity/community-js/commit/4e73a052ec3b55d6902c4087f90dc397d2f230cf))
+
+
+
+
+
+## [0.7.9-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.40...@selfcommunity/react-ui@0.7.9-alpha.41) (2024-04-19)
+
+
+### Performance Improvements
+
+* added group invite users widget. Changed user admin badge ([3e7dd83](https://github.com/selfcommunity/community-js/commit/3e7dd83279ffc75b90b03a55de8d56b97aad91da))
+
+
+
+
+
+## [0.7.9-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.39...@selfcommunity/react-ui@0.7.9-alpha.40) (2024-04-18)
+
+
+### Bug Fixes
+
+* fixed create group invitation, hidden invite button in group edit mode, added group admin badges/info inside group info widget. Added searchbar for groups component. ([24b4adf](https://github.com/selfcommunity/community-js/commit/24b4adf109b59fcf84371df2ef41f203d0b9844a))
+
+
+
+
+
+## [0.7.9-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.38...@selfcommunity/react-ui@0.7.9-alpha.39) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups no results layout ([ee09806](https://github.com/selfcommunity/community-js/commit/ee09806347169ecd1845b272e4b47c460916dd45))
+* groups no results layout ([ecfc83a](https://github.com/selfcommunity/community-js/commit/ecfc83a781a8dfd2bd15c3b60a393bea3a8d75fc))
+* groups sync events ([3848feb](https://github.com/selfcommunity/community-js/commit/3848febafe7ccd03e8faeafb7e5842dea806ea24))
+
+
+
+
+
+## [0.7.9-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.37...@selfcommunity/react-ui@0.7.9-alpha.38) (2024-04-17)
+
+
+### Bug Fixes
+
+* group members widget actions ([7772609](https://github.com/selfcommunity/community-js/commit/77726090d9e67aca879f31d7e694278424dc358c))
+
+
+
+
+
+## [0.7.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.36...@selfcommunity/react-ui@0.7.9-alpha.37) (2024-04-17)
+
+
+### Bug Fixes
+
+* fixed private message thread ([0652474](https://github.com/selfcommunity/community-js/commit/06524749cfac6d5b8cfa6fd399d0057f2aaaeef1))
+
+
+
+
+
+## [0.7.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.35...@selfcommunity/react-ui@0.7.9-alpha.36) (2024-04-16)
+
+
+### Bug Fixes
+
+* group notifications ([f4397e0](https://github.com/selfcommunity/community-js/commit/f4397e07e6cea00fd67e73dfd91316d10f16b6e0))
+
+
+
+
+
+## [0.7.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.34...@selfcommunity/react-ui@0.7.9-alpha.35) (2024-04-16)
+
+
+### Bug Fixes
+
+* group header skeleton, subscribed group manager ([b263ae7](https://github.com/selfcommunity/community-js/commit/b263ae728f1bc12d2d666bd5db45e839df9b534c))
+
+
+
+
+
+## [0.7.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.33...@selfcommunity/react-ui@0.7.9-alpha.34) (2024-04-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.32...@selfcommunity/react-ui@0.7.9-alpha.33) (2024-04-15)
+
+
+### Performance Improvements
+
+* removed unecessary code ([01f7f73](https://github.com/selfcommunity/community-js/commit/01f7f7377bb0fad9efffb87d92fa00ddd722af7e))
+
+
+
+
+
+## [0.7.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.31...@selfcommunity/react-ui@0.7.9-alpha.32) (2024-04-15)
+
+
+### Bug Fixes
+
+* fixed reply action on 2 level comment if group, group requests callback added ([7ddfd43](https://github.com/selfcommunity/community-js/commit/7ddfd4320ac79388a85bd14c3b88414c505097cc))
+
+
+
+
+
+## [0.7.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.30...@selfcommunity/react-ui@0.7.9-alpha.31) (2024-04-12)
+
+
+### Bug Fixes
+
+* fixed reply action on 2 level comment if group, group requests callback added ([992b8d0](https://github.com/selfcommunity/community-js/commit/992b8d0d5648295b930a4995c1a99ba83668c759))
+
+
+
+
+
+## [0.7.9-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.29...@selfcommunity/react-ui@0.7.9-alpha.30) (2024-04-12)
+
+
+### Bug Fixes
+
+* feedobj actions with group, private messages notifications for group messages ([36f44ca](https://github.com/selfcommunity/community-js/commit/36f44ca2b33fefc5848357b1430500f6839a81d0))
+
+
+
+
+
+## [0.7.9-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.28...@selfcommunity/react-ui@0.7.9-alpha.29) (2024-04-11)
+
+
+### Bug Fixes
+
+* bugfix ([c862162](https://github.com/selfcommunity/community-js/commit/c862162e54fda63b9e87eabe2108b8dc4c8db9db))
+
+
+
+
+
+## [0.7.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.27...@selfcommunity/react-ui@0.7.9-alpha.28) (2024-04-11)
+
+
+### Performance Improvements
+
+* added group notifications ([09fa3c5](https://github.com/selfcommunity/community-js/commit/09fa3c5871962a08375d9e1ea7fa5431cbc808c0))
+
+
+
+
+
+## [0.7.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.26...@selfcommunity/react-ui@0.7.9-alpha.27) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.25...@selfcommunity/react-ui@0.7.9-alpha.26) (2024-04-10)
+
+
+### Performance Improvements
+
+* added groups to search autocomplete suggestion ([20f0f55](https://github.com/selfcommunity/community-js/commit/20f0f55c67c91cc0f86a4b0167c616c2deffa6bb))
+
+
+
+
+
+## [0.7.9-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.24...@selfcommunity/react-ui@0.7.9-alpha.25) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.23...@selfcommunity/react-ui@0.7.9-alpha.24) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.22...@selfcommunity/react-ui@0.7.9-alpha.23) (2024-04-09)
+
+
+### Performance Improvements
+
+* group form/group info widget ([8a29d7d](https://github.com/selfcommunity/community-js/commit/8a29d7dc0fa6076928e3ce85079f1769d13ca754))
+
+
+
+
+
+## [0.7.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.21...@selfcommunity/react-ui@0.7.9-alpha.22) (2024-04-09)
+
+
+### Bug Fixes
+
+* group skeleton export ([131fb71](https://github.com/selfcommunity/community-js/commit/131fb71cea676caf36f489c757856036882d7968))
+
+
+
+
+
+## [0.7.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.20...@selfcommunity/react-ui@0.7.9-alpha.21) (2024-04-09)
+
+
+### Bug Fixes
+
+* fixed group settings icon actions, group members/requests widgets. ([8e3c3d3](https://github.com/selfcommunity/community-js/commit/8e3c3d382ee374390ebd16375c87eca1a11f007c))
+
+
+
+
+
+## [0.7.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.19...@selfcommunity/react-ui@0.7.9-alpha.20) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([1e728e0](https://github.com/selfcommunity/community-js/commit/1e728e041db7ec2399e4cc720ad2f3442338be35))
+
+
+
+
+
+## [0.7.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.18...@selfcommunity/react-ui@0.7.9-alpha.19) (2024-04-05)
+
+
+### Bug Fixes
+
+* fixed group members/requests widgets ([747ac69](https://github.com/selfcommunity/community-js/commit/747ac69a5477f6ea83c6691f582a6d5b2405c7aa))
+
+
+
+
+
+## [0.7.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.17...@selfcommunity/react-ui@0.7.9-alpha.18) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.16...@selfcommunity/react-ui@0.7.9-alpha.17) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
+## [0.7.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.15...@selfcommunity/react-ui@0.7.9-alpha.16) (2024-04-04)
+
+
+### Performance Improvements
+
+* changed private message components for group feature ([78e2f74](https://github.com/selfcommunity/community-js/commit/78e2f740ba2e9ffc437af43adcad83997070d886))
+
+
+
+
+
+## [0.7.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.14...@selfcommunity/react-ui@0.7.9-alpha.15) (2024-04-03)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.13...@selfcommunity/react-ui@0.7.9-alpha.14) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.12...@selfcommunity/react-ui@0.7.9-alpha.13) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.11...@selfcommunity/react-ui@0.7.9-alpha.12) (2024-04-02)
+
+
+### Bug Fixes
+
+* fixed group template, ui groups component ([cc5a61a](https://github.com/selfcommunity/community-js/commit/cc5a61a06c96d7ff94da9f29a328066ae7c90313))
+
+
+
+
+
+## [0.7.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.10...@selfcommunity/react-ui@0.7.9-alpha.11) (2024-03-29)
+
+
+### Bug Fixes
+
+* groups/groups request update on subscribe/unsubscribe ([c1b8e17](https://github.com/selfcommunity/community-js/commit/c1b8e171b397166a8904cfe95e8db40de20e3476))
+
+
+
+
+
+## [0.7.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.9...@selfcommunity/react-ui@0.7.9-alpha.10) (2024-03-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.8...@selfcommunity/react-ui@0.7.9-alpha.9) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
+## [0.7.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.7...@selfcommunity/react-ui@0.7.9-alpha.8) (2024-03-28)
+
+
+### Bug Fixes
+
+* icons, toolbar ([74aa183](https://github.com/selfcommunity/community-js/commit/74aa183f64131bb71c2840ed1f34c6a96e064e0b))
+
+
+
+
+
+## [0.7.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.6...@selfcommunity/react-ui@0.7.9-alpha.7) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
+## [0.7.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.5...@selfcommunity/react-ui@0.7.9-alpha.6) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed composer ([81c3bea](https://github.com/selfcommunity/community-js/commit/81c3bea197394ad1576d4690a4fd904660e185a7))
+
+
+
+
+
+## [0.7.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.4...@selfcommunity/react-ui@0.7.9-alpha.5) (2024-03-26)
+
+
+### Bug Fixes
+
+* group template export ([88dc3e7](https://github.com/selfcommunity/community-js/commit/88dc3e7ab23b333e1ce2da7c689b3dea0f238345))
+
+
+
+
+
+## [0.7.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.3...@selfcommunity/react-ui@0.7.9-alpha.4) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixed composer audience section for groups ([ff2c76b](https://github.com/selfcommunity/community-js/commit/ff2c76bf7e96e4125cc141ea29279533d993d317))
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.7.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.2...@selfcommunity/react-ui@0.7.9-alpha.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.7.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.1...@selfcommunity/react-ui@0.7.9-alpha.2) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.7.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.0...@selfcommunity/react-ui@0.7.9-alpha.1) (2024-02-27)
+
+
+### Performance Improvements
+
+* added prop to NavigationToolbarMobile to customize NavigationMenuIconButton/ exported its drawer default content ([c9e3878](https://github.com/selfcommunity/community-js/commit/c9e3878cb23b901816c893de1eac48869a75e6fb))
+
+
+
+
+
+## [0.7.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.8...@selfcommunity/react-ui@0.7.9-alpha.0) (2024-02-27)
+
+
+### Performance Improvements
+
+* added prop to NavigationToolbar to customize NavigationMenuIconButton ([aff7e1e](https://github.com/selfcommunity/community-js/commit/aff7e1e864e8f7b14988318dac123441f6e3bfb0))
+
+
+
+
+
 ## [0.7.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.8-alpha.1...@selfcommunity/react-ui@0.7.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

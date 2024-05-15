@@ -32,6 +32,11 @@ export const SIGNUP_ROUTE_NAME = 'signup';
 export const RECOVER_ROUTE_NAME = 'recover';
 export const CUSTOM_PAGES_ROUTE_NAME = 'custom_pages';
 export const LEGAL_PAGES_ROUTE_NAME = 'legal_pages';
+export const GROUP_ROUTE_NAME = 'group';
+export const GROUP_MEMBERS_ROUTE_NAME = 'group_members';
+export const GROUP_MESSAGES_ROUTE_NAME = 'group_messages';
+export const GROUPS_ROUTE_NAME = 'groups';
+export const GROUPS_SUBSCRIBED_ROUTE_NAME = 'groups_subscribed';
 
 /**
  * Default Routes
@@ -66,4 +71,9 @@ export const defaultRoutes: {[k: string]: string} = {
   [RECOVER_ROUTE_NAME]: '/recover/',
   [CUSTOM_PAGES_ROUTE_NAME]: '/:id/:slug/',
   [LEGAL_PAGES_ROUTE_NAME]: '/legal/:policy/',
+  [GROUP_ROUTE_NAME]: '/group/:id/:slug/',
+  [GROUP_MEMBERS_ROUTE_NAME]: '/group/:id/:slug/members/',
+  [GROUP_MESSAGES_ROUTE_NAME]: '/group/:id/:slug/messages/',
+  [GROUPS_ROUTE_NAME]: '/groups/',
+  [GROUPS_SUBSCRIBED_ROUTE_NAME]: '/groups/subscribed/',
 };

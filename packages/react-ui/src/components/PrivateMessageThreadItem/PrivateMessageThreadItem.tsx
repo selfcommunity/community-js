@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
@@ -7,7 +7,7 @@ import {SCPrivateMessageThreadType, SCMessageFileType, SCPrivateMessageStatusTyp
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCThemeType} from '@selfcommunity/react-core';
+import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import {bytesToSize} from '../../utils/sizeCoverter';
@@ -20,6 +20,7 @@ import {isSupportedVideoFormat} from '../../utils/thumbnailCoverter';
 
 const classes = {
   root: `${PREFIX}-root`,
+  username: `${PREFIX}-username`,
   text: `${PREFIX}-text`,
   img: `${PREFIX}-img`,
   document: `${PREFIX}-document`,
@@ -122,6 +123,9 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
 
   // INTL
   const intl = useIntl();
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // STATE
   const theme = useTheme<SCThemeType>();
@@ -236,6 +240,11 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         showMenuIcon &&
         message.status !== SCPrivateMessageStatusType.HIDDEN && <PrivateMessageSettingsIconButton onMenuItemDeleteClick={handleMenuItemClick} />
       }>
+      {message.group && scUserContext?.user?.username !== message.sender.username && (
+        <Typography color="secondary" variant="h4" className={classes.username}>
+          {message.sender.username}
+        </Typography>
+      )}
       <>
         {hasFile && message.status !== SCPrivateMessageStatusType.HIDDEN ? (
           renderMessageFile(message)

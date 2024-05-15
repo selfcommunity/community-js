@@ -31,7 +31,7 @@ const template = (args) => (
 
 export const Base: StoryObj<UserFollowedCategoriesWidget> = {
   args: {
-    userId: 1
+    userId: 9
   },
   render: template
 };

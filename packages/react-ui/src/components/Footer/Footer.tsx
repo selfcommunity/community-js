@@ -5,7 +5,7 @@ import {Box, Button, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {CustomMenuService} from '@selfcommunity/api-services';
 import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
+import { Logger, sortByAttr } from '@selfcommunity/utils';
 import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FooterSkeleton from './Skeleton';
@@ -135,7 +135,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     <Root {...rest} className={classNames(classes.root, className)}>
       {startActions}
       <Box className={classes.itemList}>
-        {_menu.items.map((item: SCCustomMenuItemType, index) => (
+        {sortByAttr(_menu.items, 'order').map((item: SCCustomMenuItemType, index) => (
           <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
             {item.label}
           </Button>

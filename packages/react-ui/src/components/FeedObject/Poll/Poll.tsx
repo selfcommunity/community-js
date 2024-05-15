@@ -115,44 +115,42 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
    * Handles choice upvote
    */
   const handleVote = (id) => {
+    const prevChoices = [...choices];
+    let updatedChoices;
     if (multipleChoices) {
-      setChoices((prevChoices) => {
-        return prevChoices.map((choice) =>
-          Object.assign({}, choice, {
-            voted: choice.id === id ? true : choice.voted,
-            vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count
-          })
-        );
-      });
+      updatedChoices = prevChoices.map((choice) =>
+        Object.assign({}, choice, {
+          voted: choice.id === id ? true : choice.voted,
+          vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count
+        })
+      );
       setVotes((prevVotes) => prevVotes + 1);
     } else {
-      setChoices((prevChoices) => {
-        const updatedChoices = prevChoices.map((choice) => {
-          return {
-            ...choice,
-            voted: choice.id === id,
-            vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count > 0 && choice.voted ? choice.vote_count - 1 : choice.vote_count
-          };
-        });
-        const newVotes = updatedChoices.reduce((totalVotes, choice) => totalVotes + choice.vote_count, 0);
-        setVotes(newVotes);
-        return updatedChoices;
-      });
+      updatedChoices = prevChoices.map((choice) =>
+        Object.assign({}, choice, {
+          voted: choice.id === id,
+          vote_count: choice.id === id ? choice.vote_count + 1 : choice.vote_count > 0 && choice.voted ? choice.vote_count - 1 : choice.vote_count
+        })
+      );
+      setVotes(updatedChoices.reduce((totalVotes, choice) => totalVotes + choice.vote_count, 0));
     }
+    setChoices(updatedChoices);
+    onChange(updatedChoices);
   };
 
   /**
    * Handles choice unvote
    */
   const handleUnVote = (id) => {
-    setChoices((prevChoices) => {
-      return prevChoices.map((choice) =>
-        Object.assign({}, choice, {
-          voted: choice.id === id ? false : choice.voted,
-          vote_count: choice.id === id && choice.vote_count > 0 ? choice.vote_count - 1 : choice.vote_count
-        })
-      );
-    });
+    const prevChoices = [...choices];
+    const updatedChoices = prevChoices.map((choice) =>
+      Object.assign({}, choice, {
+        voted: choice.id === id ? false : choice.voted,
+        vote_count: choice.id === id && choice.vote_count > 0 ? choice.vote_count - 1 : choice.vote_count
+      })
+    );
+    setChoices(updatedChoices);
+    onChange(updatedChoices);
     setVotes((prevVotes) => prevVotes - 1);
   };
 

@@ -7,13 +7,13 @@ import {
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
-  GridSelection,
   KEY_ESCAPE_COMMAND,
   LexicalEditor,
   NodeSelection,
   RangeSelection,
   SELECTION_CHANGE_COMMAND
 } from 'lexical';
+import {TableSelection} from '@lexical/table';
 import * as React from 'react';
 import {Dispatch, useCallback, useEffect, useState} from 'react';
 import {getSelectedNode} from '../../../utils/editor';
@@ -36,7 +36,7 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [linkUrl, setLinkUrl] = useState('');
   const [hideForUrl, setHideForUrl] = useState<string | null>(null);
-  const [lastSelection, setLastSelection] = useState<RangeSelection | GridSelection | NodeSelection | null>(null);
+  const [lastSelection, setLastSelection] = useState<RangeSelection | TableSelection | NodeSelection | null>(null);
 
   const updateLinkEditor = useCallback(() => {
     const selection = $getSelection();

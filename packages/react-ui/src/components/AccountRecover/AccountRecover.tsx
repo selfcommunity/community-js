@@ -160,7 +160,12 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
         <Alert severity="success" className={classes.success}>
           {intl.formatMessage(
             {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
-            {email, bold: (chunks) => <b>{chunks}</b>}
+            {
+              email,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              b: (chunks) => <b>{chunks}</b>
+            }
           )}
           {successAction}
         </Alert>

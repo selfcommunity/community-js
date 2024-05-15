@@ -3,6 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       height: '100%',
       width: '100%',
+      borderRadius: 0,
       '& .MuiCardContent-root': {
         display: 'flex',
         flexDirection: 'column',

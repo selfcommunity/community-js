@@ -33,6 +33,16 @@ export interface SCThemeUserVariableType {
 }
 
 /**
+ * Interface SCThemeGroupVariableType
+ */
+export interface SCThemeGroupVariableType {
+  /**
+   * Avatar variables
+   */
+  avatar: SCThemeAvatarVariableType;
+}
+
+/**
  * Interface SCThemeCategoryVariableType
  */
 export interface SCThemeCategoryIconVariableType {
@@ -72,6 +82,10 @@ export interface SCThemeVariablesType {
    * Category
    */
   category: SCThemeCategoryVariableType;
+  /**
+   * Group
+   */
+  group: SCThemeGroupVariableType;
 }
 
 export interface SCThemeType extends MuiTheme {

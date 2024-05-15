@@ -1,7 +1,7 @@
 import React from 'react';
-import { OnChangePlugin as LexicalOnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { EditorState, LexicalEditor } from 'lexical';
-import { $generateHtmlFromNodes } from '@lexical/html';
+import {OnChangePlugin as LexicalOnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
+import {EditorState, LexicalEditor} from 'lexical';
+import {$generateHtmlFromNodes} from '@lexical/html';
 
 const OnChangePlugin = (props): JSX.Element => {
   // PROPS

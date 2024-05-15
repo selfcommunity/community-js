@@ -3,6 +3,7 @@
  * Thread Private Message Schema.
  */
 import {SCUserType} from './user';
+import {SCGroupType} from './group';
 
 export interface SCPrivateMessageThreadType {
   /**
@@ -14,6 +15,11 @@ export interface SCPrivateMessageThreadType {
    * Sender User
    */
   sender: SCUserType;
+
+  /**
+   * Group obj
+   */
+  group: SCGroupType;
 
   /**
    *Receiver User
@@ -67,6 +73,10 @@ export interface SCPrivateMessageSnippetType {
    *Receiver User
    */
   receiver: SCUserType;
+  /**
+   *Group item
+   */
+  group?: SCGroupType;
 
   /**
    * Send date time
@@ -92,6 +102,16 @@ export enum SCPrivateMessageStatusType {
   CREATED = 'created',
   DELETED = 'deleted',
   HIDDEN = 'hidden',
+  NEW = 'new'
+}
+
+/**
+ * Private Message type:
+ * it can be user or group type
+ */
+export enum SCPrivateMessageType {
+  GROUP = 'group',
+  USER = 'user',
   NEW = 'new'
 }
 

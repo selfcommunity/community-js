@@ -20,6 +20,7 @@ import {
   SCRoutingContextType,
   SCLocaleContextType,
   SCAlertMessagesContextType,
+  SCSubscribedGroupsManagerType,
 } from './context';
 
 import {
@@ -59,4 +60,5 @@ export {
   SCThemeCategoryVariableType,
   SCThemeVariablesType,
   SCThemeType,
+  SCSubscribedGroupsManagerType,
 };

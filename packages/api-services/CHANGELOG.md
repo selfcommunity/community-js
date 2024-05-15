@@ -3,6 +3,188 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.17...@selfcommunity/api-services@0.4.9-alpha.18) (2024-05-15)
+
+
+### Performance Improvements
+
+* updated lexical packages, cleaned comments for doc generation ([c97c1b0](https://github.com/selfcommunity/community-js/commit/c97c1b0d2c3a67c449b7e1e5039c90c18d68be39))
+
+
+
+
+
+## [0.4.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.16...@selfcommunity/api-services@0.4.9-alpha.17) (2024-05-03)
+
+
+### Bug Fixes
+
+* linear issues:  https://linear.app/quentral/issue/QUE-238/sidebar-e-wizard-devono-filtrare-solo-le-categorie-attive-ignorando ([70fe23c](https://github.com/selfcommunity/community-js/commit/70fe23cb9b5518c5321dda06f7d38b0b37d9cae3))
+
+
+
+
+
+## [0.4.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.15...@selfcommunity/api-services@0.4.9-alpha.16) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
+## [0.4.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.14...@selfcommunity/api-services@0.4.9-alpha.15) (2024-04-23)
+
+
+### Bug Fixes
+
+* groups searching, group invite button, group header ([f211d62](https://github.com/selfcommunity/community-js/commit/f211d623ac874b18afb3cfe9e2607e5c75d3793d))
+
+
+
+
+
+## [0.4.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.13...@selfcommunity/api-services@0.4.9-alpha.14) (2024-04-19)
+
+
+### Performance Improvements
+
+* added group invite users widget. Changed user admin badge ([3e7dd83](https://github.com/selfcommunity/community-js/commit/3e7dd83279ffc75b90b03a55de8d56b97aad91da))
+
+
+
+
+
+## [0.4.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.12...@selfcommunity/api-services@0.4.9-alpha.13) (2024-04-15)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.11...@selfcommunity/api-services@0.4.9-alpha.12) (2024-04-12)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.10...@selfcommunity/api-services@0.4.9-alpha.11) (2024-04-11)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.9...@selfcommunity/api-services@0.4.9-alpha.10) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.8...@selfcommunity/api-services@0.4.9-alpha.9) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.7...@selfcommunity/api-services@0.4.9-alpha.8) (2024-04-09)
+
+
+### Bug Fixes
+
+* fixed group settings icon actions, group members/requests widgets. ([8e3c3d3](https://github.com/selfcommunity/community-js/commit/8e3c3d382ee374390ebd16375c87eca1a11f007c))
+
+
+
+
+
+## [0.4.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.6...@selfcommunity/api-services@0.4.9-alpha.7) (2024-04-08)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.5...@selfcommunity/api-services@0.4.9-alpha.6) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.4...@selfcommunity/api-services@0.4.9-alpha.5) (2024-04-04)
+
+
+### Performance Improvements
+
+* changed private message components for group feature ([78e2f74](https://github.com/selfcommunity/community-js/commit/78e2f740ba2e9ffc437af43adcad83997070d886))
+
+
+
+
+
+## [0.4.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.3...@selfcommunity/api-services@0.4.9-alpha.4) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
+## [0.4.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.2...@selfcommunity/api-services@0.4.9-alpha.3) (2024-03-26)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.4.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.1...@selfcommunity/api-services@0.4.9-alpha.2) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.4.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.9-alpha.0...@selfcommunity/api-services@0.4.9-alpha.1) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.4.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.8...@selfcommunity/api-services@0.4.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.4.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.8-alpha.1...@selfcommunity/api-services@0.4.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/api-services

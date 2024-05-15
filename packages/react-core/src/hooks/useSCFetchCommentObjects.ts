@@ -1,12 +1,12 @@
-import { useEffect, useReducer } from 'react';
-import { SCOPE_SC_CORE } from '../constants/Errors';
-import { SCCommentsOrderBy, SCCommentType, SCContributionType, SCFeedObjectType } from '@selfcommunity/types';
-import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
-import { CacheStrategies, Logger, LRUCache } from '@selfcommunity/utils';
+import {useEffect, useReducer} from 'react';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {SCCommentsOrderBy, SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
-import { getCommentObjectCacheKey, getCommentObjectsCacheKey } from '../constants/Cache';
-import { useIsComponentMountedRef } from '../utils/hooks';
-import { getCurrentPage } from '../utils/pagination';
+import {getCommentObjectCacheKey, getCommentObjectsCacheKey} from '../constants/Cache';
+import {useIsComponentMountedRef} from '../utils/hooks';
+import {getCurrentPage} from '../utils/pagination';
 
 /**
  * Interface SCCommentsObjectType
@@ -161,13 +161,7 @@ function stateInitializer(data): SCCommentsObjectType {
  :::info
  This custom hooks is used to fetch paginated comments.
  :::
- * @param id
- * @param feedObject
- * @param feedObjectType
- * @param offset
- * @param pageSize
- * @param orderBy
- * @param parent
+ * @param props
  */
 export default function useSCFetchCommentObjects(props: {
   id?: number;
@@ -195,7 +189,6 @@ export default function useSCFetchCommentObjects(props: {
 
   // FeedObject
   const {obj, setObj} = useSCFetchFeedObject({id, feedObject, feedObjectType, cacheStrategy});
-  const objId = obj ? obj.id : null;
 
   /**
    * Get next url

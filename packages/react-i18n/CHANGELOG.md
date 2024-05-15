@@ -3,6 +3,280 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.23...@selfcommunity/react-i18n@0.5.9-alpha.24) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.5.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.22...@selfcommunity/react-i18n@0.5.9-alpha.23) (2024-05-03)
+
+
+### Bug Fixes
+
+* i18n ([5dc7075](https://github.com/selfcommunity/community-js/commit/5dc7075466570cb389fad868597b24988bfc63c2))
+
+
+
+
+
+## [0.5.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.21...@selfcommunity/react-i18n@0.5.9-alpha.22) (2024-05-02)
+
+
+### Bug Fixes
+
+* linear issues: https://linear.app/quentral/issue/QUE-230/andando-al-profilo-utente-dai-messaggi-privati-resta-aperto-il-popup, https://linear.app/quentral/issue/QUE-229/lista-tutti-i-gruppi-il-bottone-entra-ha-due-significati, https://linear.app/quentral/issue/QUE-231/copy-derrore-nei-messaggi-privati ([f45a0d8](https://github.com/selfcommunity/community-js/commit/f45a0d871b0d197a8b2784ed5e3bc3049ba95041))
+
+
+
+
+
+## [0.5.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.20...@selfcommunity/react-i18n@0.5.9-alpha.21) (2024-05-02)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-229/lista-tutti-i-gruppi-il-bottone-entra-ha-due-significati ([e3902be](https://github.com/selfcommunity/community-js/commit/e3902bec38c51204cda653e5983361b21966562d))
+
+
+
+
+
+## [0.5.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.19...@selfcommunity/react-i18n@0.5.9-alpha.20) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
+## [0.5.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.18...@selfcommunity/react-i18n@0.5.9-alpha.19) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed groups component loading logic ([72e68e8](https://github.com/selfcommunity/community-js/commit/72e68e8a1dd6cdd3ee47f87f87547851648c936b))
+
+
+
+
+
+## [0.5.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.17...@selfcommunity/react-i18n@0.5.9-alpha.18) (2024-04-22)
+
+
+### Bug Fixes
+
+* Fixed composer tag. Issue: https://linear.app/quentral/issue/QUE-208/errore-con-assegnazione-tag ([bc6d689](https://github.com/selfcommunity/community-js/commit/bc6d689d54c75e4f479d158165e0bf177d0954b4))
+
+
+
+
+
+## [0.5.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.16...@selfcommunity/react-i18n@0.5.9-alpha.17) (2024-04-19)
+
+
+### Bug Fixes
+
+* bugfix-> groups alignment, private messages new message bug, translations. ([5ce7c40](https://github.com/selfcommunity/community-js/commit/5ce7c40f40867e2f1c5ead3f023cfc977b7ae548))
+
+
+
+
+
+## [0.5.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.15...@selfcommunity/react-i18n@0.5.9-alpha.16) (2024-04-19)
+
+
+### Performance Improvements
+
+* added group invite users widget. Changed user admin badge ([3e7dd83](https://github.com/selfcommunity/community-js/commit/3e7dd83279ffc75b90b03a55de8d56b97aad91da))
+
+
+
+
+
+## [0.5.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.14...@selfcommunity/react-i18n@0.5.9-alpha.15) (2024-04-18)
+
+
+### Bug Fixes
+
+* fixed create group invitation, hidden invite button in group edit mode, added group admin badges/info inside group info widget. Added searchbar for groups component. ([24b4adf](https://github.com/selfcommunity/community-js/commit/24b4adf109b59fcf84371df2ef41f203d0b9844a))
+
+
+
+
+
+## [0.5.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.13...@selfcommunity/react-i18n@0.5.9-alpha.14) (2024-04-17)
+
+
+### Bug Fixes
+
+* fixed it transl ([95f293a](https://github.com/selfcommunity/community-js/commit/95f293a96843e024e43cffe64fa86bbcfb73efb3))
+
+
+
+
+
+## [0.5.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.12...@selfcommunity/react-i18n@0.5.9-alpha.13) (2024-04-15)
+
+
+### Performance Improvements
+
+* removed unecessary code ([01f7f73](https://github.com/selfcommunity/community-js/commit/01f7f7377bb0fad9efffb87d92fa00ddd722af7e))
+
+
+
+
+
+## [0.5.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.11...@selfcommunity/react-i18n@0.5.9-alpha.12) (2024-04-12)
+
+
+### Bug Fixes
+
+* feedobj actions with group, private messages notifications for group messages ([36f44ca](https://github.com/selfcommunity/community-js/commit/36f44ca2b33fefc5848357b1430500f6839a81d0))
+
+
+
+
+
+## [0.5.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.10...@selfcommunity/react-i18n@0.5.9-alpha.11) (2024-04-11)
+
+
+### Bug Fixes
+
+* bugfix ([c862162](https://github.com/selfcommunity/community-js/commit/c862162e54fda63b9e87eabe2108b8dc4c8db9db))
+
+
+
+
+
+## [0.5.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.9...@selfcommunity/react-i18n@0.5.9-alpha.10) (2024-04-11)
+
+
+### Performance Improvements
+
+* added group notifications ([09fa3c5](https://github.com/selfcommunity/community-js/commit/09fa3c5871962a08375d9e1ea7fa5431cbc808c0))
+
+
+
+
+
+## [0.5.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.8...@selfcommunity/react-i18n@0.5.9-alpha.9) (2024-04-09)
+
+
+### Performance Improvements
+
+* group form/group info widget ([8a29d7d](https://github.com/selfcommunity/community-js/commit/8a29d7dc0fa6076928e3ce85079f1769d13ca754))
+
+
+
+
+
+## [0.5.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.7...@selfcommunity/react-i18n@0.5.9-alpha.8) (2024-04-09)
+
+
+### Bug Fixes
+
+* fixed group settings icon actions, group members/requests widgets. ([8e3c3d3](https://github.com/selfcommunity/community-js/commit/8e3c3d382ee374390ebd16375c87eca1a11f007c))
+
+
+
+
+
+## [0.5.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.6...@selfcommunity/react-i18n@0.5.9-alpha.7) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([1e728e0](https://github.com/selfcommunity/community-js/commit/1e728e041db7ec2399e4cc720ad2f3442338be35))
+
+
+
+
+
+## [0.5.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.5...@selfcommunity/react-i18n@0.5.9-alpha.6) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
+## [0.5.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.4...@selfcommunity/react-i18n@0.5.9-alpha.5) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
+## [0.5.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.3...@selfcommunity/react-i18n@0.5.9-alpha.4) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
+## [0.5.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.2...@selfcommunity/react-i18n@0.5.9-alpha.3) (2024-03-26)
+
+
+### Bug Fixes
+
+* group template export ([88dc3e7](https://github.com/selfcommunity/community-js/commit/88dc3e7ab23b333e1ce2da7c689b3dea0f238345))
+
+
+
+
+
+## [0.5.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.1...@selfcommunity/react-i18n@0.5.9-alpha.2) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixed composer audience section for groups ([ff2c76b](https://github.com/selfcommunity/community-js/commit/ff2c76bf7e96e4125cc141ea29279533d993d317))
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.5.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.9-alpha.0...@selfcommunity/react-i18n@0.5.9-alpha.1) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.5.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.8...@selfcommunity/react-i18n@0.5.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.5.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.8-alpha.1...@selfcommunity/react-i18n@0.5.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

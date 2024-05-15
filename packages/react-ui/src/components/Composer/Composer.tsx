@@ -7,6 +7,7 @@ import {
   SCFeedDiscussionType,
   SCFeedPostType,
   SCFeedStatusType,
+  SCGroupType,
   SCMediaType,
   SCPollType,
   SCTagType
@@ -119,6 +120,7 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
     title?: string;
     text?: string;
     categories?: SCCategoryType[];
+    group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];
     medias?: SCMediaType[];
@@ -155,7 +157,9 @@ const COMPOSER_INITIAL_STATE = {
   html: '',
   htmlError: null,
   categories: [],
+  group: null,
   categoriesError: null,
+  groupsError: null,
   addressing: null,
   addressingError: null,
   medias: [],
@@ -244,7 +248,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [layer, setLayer] = useState<ComposerLayerType | null>();
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, key: random()});
-  const {key, id, type, title, titleError, html, categories, addressing, audience, medias, poll, pollError, location, error} = state;
+  const {key, id, type, title, titleError, html, categories, group, addressing, audience, medias, poll, pollError, location, error} = state;
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === SCContributionType.POST) {
@@ -263,6 +267,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           title: _feedObject.title,
           html: _feedObject.html,
           categories: _feedObject.categories,
+          group: _feedObject.group,
           addressing: _feedObject.addressing,
           medias: _feedObject.medias,
           poll: _feedObject.poll,
@@ -445,10 +450,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     [handleAddLayer, handleRemoveLayer, handleChangeCategories, categories]
   );
 
-  const handleChangeAudience = useCallback((value: SCTagType[] | null) => {
-    dispatch({type: 'addressing', value});
-    setLayer(null);
-  }, []);
+  const handleChangeAudience = useCallback(
+    (value: SCTagType[] | SCGroupType | null) => {
+      if (group || (value && Object.prototype.hasOwnProperty.call(value, 'managed_by'))) {
+        dispatch({type: 'group', value});
+      } else {
+        dispatch({type: 'addressing', value});
+      }
+      setLayer(null);
+    },
+    [group]
+  );
 
   const handleAddAudienceLayer = useCallback(
     () =>
@@ -458,10 +470,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeAudience,
-          defaultValue: addressing
+          defaultValue: group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'managed_by')) ? group : addressing
         }
       }),
-    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing]
+    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, group]
   );
 
   const handleChangeLocation = useCallback((value: SCContributionLocation | null) => {
@@ -572,6 +584,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
         data.addressing = addressing.map((t) => t.id);
       }
+      if (features.includes(SCFeatureName.GROUPING) && group !== null) {
+        data.group = group.id;
+      }
       setIsSubmitting(true);
 
       // Finding right url
@@ -602,7 +617,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         })
         .then(() => setIsSubmitting(false));
     },
-    [scUserContext.user, feedObjectType, id, type, title, html, categories, addressing, audience, medias, poll, location, hasPoll]
+    [scUserContext.user, feedObjectType, id, type, title, html, categories, group, addressing, audience, medias, poll, location, hasPoll]
   );
   //edited here
   const handleClose = useCallback(
@@ -671,7 +686,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentPoll
             key={key}
             onChange={handleChangePoll}
-            value={{html, categories, addressing, medias, poll, location}}
+            value={{html, group, addressing, medias, poll, location}}
             error={pollError}
             disabled={isSubmitting}
           />
@@ -680,7 +695,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentDiscussion
             key={key}
-            value={{title, html, categories, addressing, medias, poll, location}}
+            value={{title, html, categories, group, addressing, medias, poll, location}}
             error={{titleError, error}}
             onChange={handleChangeDiscussion}
             disabled={isSubmitting}
@@ -695,7 +710,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentPost
             key={key}
-            value={{html, categories, addressing, medias, poll, location}}
+            value={{html, categories, group, addressing, medias, poll, location}}
             error={{error}}
             onChange={handleChangePost}
             disabled={isSubmitting}
@@ -707,7 +722,23 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           />
         );
     }
-  }, [key, type, title, html, categories, addressing, medias, poll, pollError, location, error, handleChangePoll, handleChangePost, isSubmitting]);
+  }, [
+    key,
+    type,
+    title,
+    html,
+    categories,
+    group,
+    addressing,
+    medias,
+    poll,
+    pollError,
+    location,
+    error,
+    handleChangePoll,
+    handleChangePost,
+    isSubmitting
+  ]);
 
   if (!scUserContext.user && !(scUserContext.loading && open)) {
     return null;
@@ -735,7 +766,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes
-            value={{categories, addressing, location}}
+            value={{categories, group, addressing, location}}
             className={classes.attributes}
             onChange={handleChangeAttributes}
             onClick={handleClickAttributes}
@@ -771,8 +802,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer}>
             <Icon>category</Icon>
           </IconButton>
-          <IconButton disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING)} onClick={handleAddAudienceLayer}>
-            {addressing === null || addressing.length === 0 ? <Icon>public</Icon> : <Icon>label</Icon>}
+          <IconButton
+            disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group)}
+            onClick={handleAddAudienceLayer}>
+            {(!group && addressing === null) || addressing?.length === 0 ? <Icon>public</Icon> : group ? <Icon>groups</Icon> : <Icon>label</Icon>}
           </IconButton>
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>

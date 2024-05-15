@@ -49,6 +49,7 @@ import TagService, {TagApiClient, TagApiClientInterface} from './services/tag';
 import UserService, {UserApiClient, UserApiClientInterface} from './services/user';
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
+import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
 
 /**
  * Types
@@ -107,7 +108,9 @@ import {
   InsightUserParams,
   InsightEmbedParams,
   InsightCommonParams,
-  ReactionParams
+  ReactionParams,
+  GroupCreateParams,
+  GroupFeedParams
 } from './types';
 
 /**
@@ -216,7 +219,7 @@ export {
   SCPaginatedResponse,
   WebhookParamType,
   WebhookEventsType,
-	AccountSearchParams,
+  AccountSearchParams,
   AccountCreateParams,
   AccountVerifyParams,
   AccountResetParams,
@@ -269,5 +272,10 @@ export {
   ReactionParams,
   ReactionService,
   ReactionApiClient,
-  ReactionApiClientInterface
+  ReactionApiClientInterface,
+  GroupCreateParams,
+  GroupFeedParams,
+  GroupService,
+  GroupApiClient,
+  GroupApiClientInterface
 };

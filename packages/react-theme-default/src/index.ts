@@ -117,7 +117,25 @@ import SCUserFeedTemplate from './components/SCUserFeedTemplate';
 import SCChangeCoverButton from './components/SCChangeCoverButton';
 import SCPrivateMessageSettingsIconButton from './components/SCPrivateMessageSettingsIconButton';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
-
+import SCGroupHeader from './components/SCGroupHeader';
+import SCChangeGroupCoverButton from './components/SCChangeGroupCoverButton';
+import SCChangeGroupPictureButton from './components/SCChangeGroupPictureButton';
+import SCGroupMembersButton from './components/SCGroupMembersButton';
+import SCCreateGroupButton from './components/SCCreateGroupButton';
+import SCGroupForm from './components/SCGroupForm';
+import SCGroupInviteButton from './components/SCGroupInviteButton';
+import SCGroupInfoWidget from './components/SCGroupInfoWidget';
+import SCGroup from './components/SCGroup';
+import SCGroupTemplate from './components/SCGroupTemplate';
+import SCGroupFeedTemplate from './components/SCGroupFeedTemplate';
+import SCGroupMembersWidget from './components/SCGroupMembersWidget';
+import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
+import SCGroups from './components/SCGroups';
+import SCEditGroupButton from './components/SCEditGroupButton';
+import SCGroupAutocomplete from './components/SCGroupAutocomplete';
+import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
+import SCGroupInvitedWidget from './components/SCGroupInvitedWidget';
+import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWidget';
 /**
  * Style fragments - Imports - End
  */
@@ -168,7 +186,8 @@ const theme = {
     }
   },
   shape: {
-    borderRadius: 20
+    borderRadius: 20,
+    borderRadiusSm: 10
   },
   spacing: 8,
   mixins: {
@@ -297,7 +316,26 @@ const theme = {
     SCNotificationFeedTemplate,
     SCUserFeedTemplate,
     SCChangeCoverButton,
-    SCPrivateMessageSettingsIconButton
+    SCPrivateMessageSettingsIconButton,
+    SCGroupHeader,
+    SCChangeGroupCoverButton,
+    SCChangeGroupPictureButton,
+    SCGroupMembersButton,
+    SCCreateGroupButton,
+    SCGroupForm,
+    SCGroupInviteButton,
+    SCGroupInfoWidget,
+    SCGroup,
+    SCGroupTemplate,
+    SCGroupFeedTemplate,
+    SCGroupMembersWidget,
+    SCGroupRequestsWidget,
+    SCGroups,
+    SCEditGroupButton,
+    SCGroupAutocomplete,
+    SCGroupSettingsIconButton,
+    SCGroupInvitedWidget,
+    SCUserSubscribedGroupsWidget
   },
   selfcommunity: {
     user: {
@@ -313,6 +351,14 @@ const theme = {
         sizeSmall: 24,
         sizeMedium: 40,
         sizeLarge: 50
+      }
+    },
+    group: {
+      avatar: {
+        sizeSmall: 40,
+        sizeMedium: 60,
+        sizeLarge: 90,
+        sizeXLarge: 205
       }
     }
   }

@@ -131,6 +131,24 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     onClear && onClear();
   };
 
+  const getOptionData = (option) => {
+    let data: any = {};
+    if (option.type === SuggestionType.USER) {
+      data.name = option[SuggestionType.USER]['username'];
+      data.image = option[SuggestionType.USER]['avatar'];
+      data.variant = 'circular';
+    } else if (option.type === SuggestionType.CATEGORY) {
+      data.name = option[SuggestionType.CATEGORY]['name'];
+      data.image = option[SuggestionType.CATEGORY]['image_medium'];
+      data.variant = 'square';
+    } else if (option.type === SuggestionType.GROUP) {
+      data.name = option[SuggestionType.GROUP]['name'];
+      data.image = option[SuggestionType.GROUP]['image_big'];
+      data.variant = 'circular';
+    }
+    return data;
+  };
+
   function fetchResults() {
     setIsLoading(true);
     SuggestionService.getSearchSuggestion(value)
@@ -172,17 +190,8 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
       }}
       renderOption={(props, option: SCSuggestionType) => (
         <Box component="li" {...props}>
-          {option.type === SuggestionType.USER ? (
-            <>
-              <Avatar alt={option[SuggestionType.USER]['username']} src={option[SuggestionType.USER]['avatar']} />
-              <Typography ml={1}>{option[SuggestionType.USER]['username']}</Typography>
-            </>
-          ) : (
-            <>
-              <Avatar alt={option[SuggestionType.CATEGORY]['name']} src={option[SuggestionType.CATEGORY]['image_medium']} variant="square" />
-              <Typography ml={1}>{option[SuggestionType.CATEGORY]['name']}</Typography>
-            </>
-          )}
+          <Avatar alt={getOptionData(option).name} src={getOptionData(option).image} variant={getOptionData(option).variant} />
+          <Typography ml={1}>{getOptionData(option).name}</Typography>
         </Box>
       )}
       renderInput={(params) => (

@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCategoryType} from '@selfcommunity/types';
-import {Endpoints, http} from '@selfcommunity/api-services';
+import {CategoryService, Endpoints} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getCategoriesObjectCacheKey, getCategoryObjectCacheKey} from '../constants/Cache';
+import {AxiosRequestConfig} from 'axios/index';
 
 const init = {categories: [], isLoading: true};
 
@@ -28,8 +29,6 @@ const hydrate = (ids: number[]) => {
 /**
  :::info
  This custom hook is used to fetch categories.
- @param object
- @param object.cacheStrategy
 
  :::tip Context can be consumed in this way:
 
@@ -37,6 +36,7 @@ const hydrate = (ids: number[]) => {
  const {categories, isLoading} = useSCFetchCategories();
  ```
  :::
+ * @param props
  */
 const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies}) => {
   // PROPS
@@ -53,15 +53,8 @@ const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies}) => {
    * Fetch categories
    */
   const fetchCategories = async (next: string = Endpoints.CategoryList.url()): Promise<[]> => {
-    const response = await http.request({
-      url: next,
-      method: Endpoints.CategoryList.method,
-    });
-    const data: any = response.data;
-    if (data.next) {
-      return data.results.concat(await fetchCategories(data.next));
-    }
-    return data.results;
+    const data: any = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
+    return data.next ? data.results.concat(await fetchCategories(data.next)) : data.results;
   };
 
   /**

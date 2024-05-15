@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
 import {AppBar, Badge, IconButton, Typography} from '@mui/material';
-import classNames from 'classnames';
-import {Link, SCRoutes} from '@selfcommunity/react-core/lib';
 import Icon from '@mui/material/Icon';
 import React from 'react';
 
@@ -62,7 +60,16 @@ export const Actions: StoryObj<NavigationToolbar> = {
       </IconButton>
     </>,
     endActions: <>
-      <IconButton>
+			<IconButton>
+				<Icon>my_community</Icon>
+			</IconButton>
+			<IconButton>
+				<Icon>magic_wand</Icon>
+			</IconButton>
+			<IconButton>
+				<Icon>private</Icon>
+			</IconButton>
+			<IconButton>
         <Icon>download</Icon>
       </IconButton>
     </>

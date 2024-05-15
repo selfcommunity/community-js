@@ -3,6 +3,769 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.84...@selfcommunity/react-templates@0.3.9-alpha.85) (2024-05-15)
+
+
+### Performance Improvements
+
+* group components comments for doc. ([9d0e787](https://github.com/selfcommunity/community-js/commit/9d0e7878ee9f14bcf3e8e985c86f1196196b93f6))
+
+
+
+
+
+## [0.3.9-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.83...@selfcommunity/react-templates@0.3.9-alpha.84) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.82...@selfcommunity/react-templates@0.3.9-alpha.83) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.81...@selfcommunity/react-templates@0.3.9-alpha.82) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.80...@selfcommunity/react-templates@0.3.9-alpha.81) (2024-05-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.79...@selfcommunity/react-templates@0.3.9-alpha.80) (2024-05-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.78...@selfcommunity/react-templates@0.3.9-alpha.79) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.77...@selfcommunity/react-templates@0.3.9-alpha.78) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.76...@selfcommunity/react-templates@0.3.9-alpha.77) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.75...@selfcommunity/react-templates@0.3.9-alpha.76) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.74...@selfcommunity/react-templates@0.3.9-alpha.75) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.73...@selfcommunity/react-templates@0.3.9-alpha.74) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.72...@selfcommunity/react-templates@0.3.9-alpha.73) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.71...@selfcommunity/react-templates@0.3.9-alpha.72) (2024-05-09)
+
+
+### Bug Fixes
+
+* poll. Linear issue: https://linear.app/quentral/issue/QUE-211/problema-voto-sui-poll-facilmente-replicabile ([a4f7627](https://github.com/selfcommunity/community-js/commit/a4f76272d8bd4776dd070ada873e4e06a96e0324))
+
+
+
+
+
+## [0.3.9-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.70...@selfcommunity/react-templates@0.3.9-alpha.71) (2024-05-07)
+
+
+### Bug Fixes
+
+* mobile paddings. https://linear.app/quentral/issue/QUE-263/fix-grafici-mobile ([b029568](https://github.com/selfcommunity/community-js/commit/b02956807e71085368ccb2de618f6bb475743224))
+
+
+
+
+
+## [0.3.9-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.69...@selfcommunity/react-templates@0.3.9-alpha.70) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.68...@selfcommunity/react-templates@0.3.9-alpha.69) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.67...@selfcommunity/react-templates@0.3.9-alpha.68) (2024-05-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.66...@selfcommunity/react-templates@0.3.9-alpha.67) (2024-05-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.65...@selfcommunity/react-templates@0.3.9-alpha.66) (2024-05-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.64...@selfcommunity/react-templates@0.3.9-alpha.65) (2024-05-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.63...@selfcommunity/react-templates@0.3.9-alpha.64) (2024-04-30)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-226/problema-cambio-tab-coi-gruppi-da-cui-ho-ricevuto-un-invito ([4063c14](https://github.com/selfcommunity/community-js/commit/4063c14fb5fcf7fdce1a97035ec09aa52ec88192))
+
+
+
+
+
+## [0.3.9-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.62...@selfcommunity/react-templates@0.3.9-alpha.63) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.61...@selfcommunity/react-templates@0.3.9-alpha.62) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.60...@selfcommunity/react-templates@0.3.9-alpha.61) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.59...@selfcommunity/react-templates@0.3.9-alpha.60) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.58...@selfcommunity/react-templates@0.3.9-alpha.59) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
+## [0.3.9-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.57...@selfcommunity/react-templates@0.3.9-alpha.58) (2024-04-29)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.56...@selfcommunity/react-templates@0.3.9-alpha.57) (2024-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.55...@selfcommunity/react-templates@0.3.9-alpha.56) (2024-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.54...@selfcommunity/react-templates@0.3.9-alpha.55) (2024-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.53...@selfcommunity/react-templates@0.3.9-alpha.54) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.52...@selfcommunity/react-templates@0.3.9-alpha.53) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.51...@selfcommunity/react-templates@0.3.9-alpha.52) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.50...@selfcommunity/react-templates@0.3.9-alpha.51) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.49...@selfcommunity/react-templates@0.3.9-alpha.50) (2024-04-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.48...@selfcommunity/react-templates@0.3.9-alpha.49) (2024-04-22)
+
+
+### Bug Fixes
+
+* Fixed composer tag. Issue: https://linear.app/quentral/issue/QUE-208/errore-con-assegnazione-tag ([bc6d689](https://github.com/selfcommunity/community-js/commit/bc6d689d54c75e4f479d158165e0bf177d0954b4))
+
+
+
+
+
+## [0.3.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.47...@selfcommunity/react-templates@0.3.9-alpha.48) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.46...@selfcommunity/react-templates@0.3.9-alpha.47) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.45...@selfcommunity/react-templates@0.3.9-alpha.46) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.44...@selfcommunity/react-templates@0.3.9-alpha.45) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.43...@selfcommunity/react-templates@0.3.9-alpha.44) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.42...@selfcommunity/react-templates@0.3.9-alpha.43) (2024-04-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.41...@selfcommunity/react-templates@0.3.9-alpha.42) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups sync events ([3848feb](https://github.com/selfcommunity/community-js/commit/3848febafe7ccd03e8faeafb7e5842dea806ea24))
+
+
+
+
+
+## [0.3.9-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.40...@selfcommunity/react-templates@0.3.9-alpha.41) (2024-04-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.39...@selfcommunity/react-templates@0.3.9-alpha.40) (2024-04-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.38...@selfcommunity/react-templates@0.3.9-alpha.39) (2024-04-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.37...@selfcommunity/react-templates@0.3.9-alpha.38) (2024-04-16)
+
+
+### Bug Fixes
+
+* group header skeleton, subscribed group manager ([b263ae7](https://github.com/selfcommunity/community-js/commit/b263ae728f1bc12d2d666bd5db45e839df9b534c))
+
+
+
+
+
+## [0.3.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.36...@selfcommunity/react-templates@0.3.9-alpha.37) (2024-04-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.35...@selfcommunity/react-templates@0.3.9-alpha.36) (2024-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.34...@selfcommunity/react-templates@0.3.9-alpha.35) (2024-04-15)
+
+
+### Bug Fixes
+
+* fixed reply action on 2 level comment if group, group requests callback added ([7ddfd43](https://github.com/selfcommunity/community-js/commit/7ddfd4320ac79388a85bd14c3b88414c505097cc))
+
+
+
+
+
+## [0.3.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.33...@selfcommunity/react-templates@0.3.9-alpha.34) (2024-04-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.32...@selfcommunity/react-templates@0.3.9-alpha.33) (2024-04-12)
+
+
+### Bug Fixes
+
+* feedobj actions with group, private messages notifications for group messages ([36f44ca](https://github.com/selfcommunity/community-js/commit/36f44ca2b33fefc5848357b1430500f6839a81d0))
+
+
+
+
+
+## [0.3.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.31...@selfcommunity/react-templates@0.3.9-alpha.32) (2024-04-11)
+
+
+### Bug Fixes
+
+* bugfix ([c862162](https://github.com/selfcommunity/community-js/commit/c862162e54fda63b9e87eabe2108b8dc4c8db9db))
+
+
+
+
+
+## [0.3.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.30...@selfcommunity/react-templates@0.3.9-alpha.31) (2024-04-11)
+
+
+### Bug Fixes
+
+* group feed composer/feed obj actions visibility ([e2ae9dd](https://github.com/selfcommunity/community-js/commit/e2ae9dd99e7a7331512ce3e360a4a691773f47a7))
+
+
+
+
+
+## [0.3.9-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.29...@selfcommunity/react-templates@0.3.9-alpha.30) (2024-04-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.28...@selfcommunity/react-templates@0.3.9-alpha.29) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.27...@selfcommunity/react-templates@0.3.9-alpha.28) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.26...@selfcommunity/react-templates@0.3.9-alpha.27) (2024-04-09)
+
+
+### Bug Fixes
+
+* group manager ([4b321c0](https://github.com/selfcommunity/community-js/commit/4b321c0dd14c7ba05f8ee6275869300df10ed2ec))
+
+
+
+
+
+## [0.3.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.25...@selfcommunity/react-templates@0.3.9-alpha.26) (2024-04-09)
+
+
+### Bug Fixes
+
+* fixed group accept ([b0ec81a](https://github.com/selfcommunity/community-js/commit/b0ec81a537178dc8296c610ebbe73ee319b01143))
+
+
+
+
+
+## [0.3.9-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.24...@selfcommunity/react-templates@0.3.9-alpha.25) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.23...@selfcommunity/react-templates@0.3.9-alpha.24) (2024-04-09)
+
+
+### Performance Improvements
+
+* group form/group info widget ([8a29d7d](https://github.com/selfcommunity/community-js/commit/8a29d7dc0fa6076928e3ce85079f1769d13ca754))
+
+
+
+
+
+## [0.3.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.22...@selfcommunity/react-templates@0.3.9-alpha.23) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.21...@selfcommunity/react-templates@0.3.9-alpha.22) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.20...@selfcommunity/react-templates@0.3.9-alpha.21) (2024-04-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.19...@selfcommunity/react-templates@0.3.9-alpha.20) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.18...@selfcommunity/react-templates@0.3.9-alpha.19) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.17...@selfcommunity/react-templates@0.3.9-alpha.18) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
+## [0.3.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.16...@selfcommunity/react-templates@0.3.9-alpha.17) (2024-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.15...@selfcommunity/react-templates@0.3.9-alpha.16) (2024-04-03)
+
+
+### Bug Fixes
+
+* fixed fetch group ([67bc1fa](https://github.com/selfcommunity/community-js/commit/67bc1fa8633c2b53a29f829f8d91160b2c4b7498))
+
+
+
+
+
+## [0.3.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.14...@selfcommunity/react-templates@0.3.9-alpha.15) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.13...@selfcommunity/react-templates@0.3.9-alpha.14) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.12...@selfcommunity/react-templates@0.3.9-alpha.13) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.11...@selfcommunity/react-templates@0.3.9-alpha.12) (2024-04-02)
+
+
+### Bug Fixes
+
+* fixed group template, ui groups component ([cc5a61a](https://github.com/selfcommunity/community-js/commit/cc5a61a06c96d7ff94da9f29a328066ae7c90313))
+
+
+
+
+
+## [0.3.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.10...@selfcommunity/react-templates@0.3.9-alpha.11) (2024-03-29)
+
+
+### Bug Fixes
+
+* groups/groups request update on subscribe/unsubscribe ([c1b8e17](https://github.com/selfcommunity/community-js/commit/c1b8e171b397166a8904cfe95e8db40de20e3476))
+
+
+
+
+
+## [0.3.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.9...@selfcommunity/react-templates@0.3.9-alpha.10) (2024-03-29)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.8...@selfcommunity/react-templates@0.3.9-alpha.9) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
+## [0.3.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.7...@selfcommunity/react-templates@0.3.9-alpha.8) (2024-03-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.6...@selfcommunity/react-templates@0.3.9-alpha.7) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
+## [0.3.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.5...@selfcommunity/react-templates@0.3.9-alpha.6) (2024-03-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.4...@selfcommunity/react-templates@0.3.9-alpha.5) (2024-03-26)
+
+
+### Bug Fixes
+
+* group template export ([88dc3e7](https://github.com/selfcommunity/community-js/commit/88dc3e7ab23b333e1ce2da7c689b3dea0f238345))
+
+
+
+
+
+## [0.3.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.3...@selfcommunity/react-templates@0.3.9-alpha.4) (2024-03-26)
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.3.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.2...@selfcommunity/react-templates@0.3.9-alpha.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.3.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.1...@selfcommunity/react-templates@0.3.9-alpha.2) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.3.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.9-alpha.0...@selfcommunity/react-templates@0.3.9-alpha.1) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.8...@selfcommunity/react-templates@0.3.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.3.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.8-alpha.1...@selfcommunity/react-templates@0.3.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -1,26 +1,30 @@
-import React, { useCallback, useState } from 'react';
-import { SCCategoryType, SCMediaType, SCPollType, SCTagType } from '@selfcommunity/types';
+import React, {useCallback, useMemo, useState} from 'react';
+import {SCCategoryType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
+  useSCPreferences,
   useSCRouting,
-  useSCUser,
+  useSCUser
 } from '@selfcommunity/react-core';
-import { Avatar, Box, Button, CardContent } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { SCMediaObjectType } from '../../types/media';
-import { FormattedMessage } from 'react-intl';
-import { useSnackbar } from 'notistack';
-import Widget, { WidgetProps } from '../Widget';
-import { useThemeProps } from '@mui/system';
+import {Avatar, Box, Button, CardContent} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {SCMediaObjectType} from '../../types/media';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
+import Widget, {WidgetProps} from '../Widget';
+import {useThemeProps} from '@mui/system';
 import Composer from '../Composer';
-import { File, Link as MediaLink } from '../../shared/Media';
-import { PREFIX } from './constants';
+import {File, Link as MediaLink} from '../../shared/Media';
+import {PREFIX} from './constants';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -48,6 +52,7 @@ export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultVal
     title?: string;
     text?: string;
     categories?: SCCategoryType[];
+    group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];
     medias?: SCMediaType[];
@@ -59,6 +64,10 @@ export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultVal
    * @default null
    */
   onSuccess?: (res: any) => void;
+  /**
+   * The label showed inside the composer
+   */
+  label?: any;
 }
 
 /**
@@ -93,7 +102,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     props: inProps,
     name: PREFIX
   });
-  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, ...rest} = props;
+  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, label, ...rest} = props;
 
   // Context
   const scContext: SCContextType = useSCContext();
@@ -101,24 +110,31 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
+  // PREFERENCES
+  const preferences: SCPreferencesContextType = useSCPreferences();
+  const onlyStaffEnabled = useMemo(
+    () => preferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value,
+    [preferences.preferences]
+  );
+
   // State variables
   const [open, setOpen] = useState<boolean>(false);
 
   // Handlers
   const handleOpen = useCallback(() => {
-      if (scUserContext.user) {
-        if (UserUtils.isBlocked(scUserContext.user)) {
-          enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
-            variant: 'warning',
-            autoHideDuration: 3000
-          });
-        } else {
-          setOpen(true);
-        }
+    if (scUserContext.user) {
+      if (UserUtils.isBlocked(scUserContext.user)) {
+        enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
+          variant: 'warning',
+          autoHideDuration: 3000
+        });
       } else {
-        scContext.settings.handleAnonymousAction();
+        setOpen(true);
       }
-    }, [scUserContext.user, scContext.settings]);
+    } else {
+      scContext.settings.handleAnonymousAction();
+    }
+  }, [scUserContext.user, scContext.settings]);
 
   const handleClose = useCallback(() => {
     setOpen(false);
@@ -136,13 +152,17 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     setOpen(false);
   };
 
+  if (!UserUtils.isStaff(scUserContext.user) && onlyStaffEnabled) {
+    return <HiddenPlaceholder />;
+  }
+
   return (
     <React.Fragment>
       <Root className={classes.root} {...rest}>
         <CardContent className={classes.content}>
           <Box className={classes.input}>
             <Button variant="text" disableFocusRipple disableRipple disableElevation onClick={handleOpen} fullWidth color="inherit">
-              <FormattedMessage id="ui.inlineComposerWidget.label" defaultMessage="ui.inlineComposerWidget.label" />
+              {label ?? <FormattedMessage id="ui.inlineComposerWidget.label" defaultMessage="ui.inlineComposerWidget.label" />}
             </Button>
           </Box>
           <Box className={classes.avatar}>

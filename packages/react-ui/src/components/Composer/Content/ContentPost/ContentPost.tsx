@@ -1,11 +1,11 @@
-import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
-import { Box, BoxProps, FormGroup, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {Box, BoxProps, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
-import Editor, { EditorProps } from '../../../Editor';
-import { ComposerContentType } from '../../../../types/composer';
-import { PREFIX } from '../../constants';
-import { FormattedMessage } from 'react-intl';
+import Editor, {EditorProps} from '../../../Editor';
+import {ComposerContentType} from '../../../../types/composer';
+import {PREFIX} from '../../constants';
+import {FormattedMessage} from 'react-intl';
 
 const classes = {
   root: `${PREFIX}-content-post-root`,
@@ -26,7 +26,8 @@ const DEFAULT_POST: ComposerContentType = {
   categories: [],
   medias: [],
   html: '',
-  addressing: []
+  addressing: [],
+  group: null
 };
 
 export interface ContentPostProps extends Omit<BoxProps, 'value' | 'onChange'> {
@@ -75,15 +76,22 @@ export default (props: ContentPostProps): JSX.Element => {
   }, [editorRef]);
 
   // HANDLERS
-  const handleChangeHtml = useCallback((html: string) => {
-    onChange({...value, html});
-  }, [value]);
+  const handleChangeHtml = useCallback(
+    (html: string) => {
+      onChange({...value, html});
+    },
+    [value]
+  );
 
   // RENDER
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && <Typography className={classes.generalError}><FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} /></Typography>}
+      {generalError && (
+        <Typography className={classes.generalError}>
+          <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
+        </Typography>
+      )}
       <Editor
         ref={editorRef}
         {...EditorProps}

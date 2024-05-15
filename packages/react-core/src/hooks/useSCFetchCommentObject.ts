@@ -13,7 +13,7 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
  * @param object
  * @param object.id
  * @param object.commentObject
- * @param cacheStrategy
+ * @param object.cacheStrategy
  */
 export default function useSCFetchCommentObject({
   id = null,

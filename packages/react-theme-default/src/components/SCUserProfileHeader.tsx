@@ -3,13 +3,13 @@ const Component = {
     root: ({theme}: any) => ({
       '& .SCUserProfileHeader-cover': {
         position: 'relative',
-        height: 150,
+        height: 230,
         minHeight: 150,
         borderRadius: 0,
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
         boxShadow: 'unset',
-        [theme.breakpoints.up('lg')]: {
-          margin: theme.spacing(0, -5, 0, -5)
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         }
       },
       '& .SCUserProfileHeader-infops-section': {
@@ -17,7 +17,7 @@ const Component = {
         justifyContent: 'space-between'
       },
       '& .SCUserProfileHeader-avatar': {
-        top: 150 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        top: 180,
         [theme.breakpoints.up('lg')]: {
           left: theme.selfcommunity.user.avatar.sizeXLarge / 2,
           marginLeft: 0
@@ -30,7 +30,7 @@ const Component = {
           width: theme.selfcommunity.user.avatar.sizeXLarge,
           borderRadius: '50%',
           border: `#FFF solid ${theme.spacing(0.5)}`,
-          objectFit: 'cover',
+          objectFit: 'cover'
         },
         '& .MuiBadge-badge .SCUserAvatar-badge-content': {
           width: 32,
@@ -38,7 +38,7 @@ const Component = {
         }
       },
       '& .SCUserProfileHeader-change-picture': {
-        top: 180 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge,
+        top: 215,
         [theme.breakpoints.up('lg')]: {
           left: 155 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge
         },
@@ -70,15 +70,15 @@ const Component = {
     skeletonRoot: ({theme}: any) => ({
       position: 'relative',
       '& .SCUserProfileHeader-cover': {
-        [theme.breakpoints.up('lg')]: {
-          margin: theme.spacing(0, -5, 0, -5)
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         },
-        height: 150
+        height: 230
       },
       '& .SCUserProfileHeader-avatar': {
         display: 'block',
         position: 'absolute',
-        top: 150 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge - 5,
+        top: 230 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge - 5,
         marginLeft: theme.spacing(4),
         [`& .MuiSkeleton-root`]: {
           border: '#FFF solid 5px'

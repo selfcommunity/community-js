@@ -3,6 +3,783 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.84...@selfcommunity/react-theme-default@0.1.9-alpha.85) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.83...@selfcommunity/react-theme-default@0.1.9-alpha.84) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.82...@selfcommunity/react-theme-default@0.1.9-alpha.83) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.81...@selfcommunity/react-theme-default@0.1.9-alpha.82) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.80...@selfcommunity/react-theme-default@0.1.9-alpha.81) (2024-05-14)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.79...@selfcommunity/react-theme-default@0.1.9-alpha.80) (2024-05-14)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.78...@selfcommunity/react-theme-default@0.1.9-alpha.79) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.77...@selfcommunity/react-theme-default@0.1.9-alpha.78) (2024-05-13)
+
+
+### Bug Fixes
+
+* private messages document button width, removed change group pictures image limits, hidden share actions for private group posts. Linear issues: https://linear.app/quentral/issue/QUE-311/se-il-gruppo-e-privato-i-post-nel-bottone-condividi-devono-avere-solo, https://linear.app/quentral/issue/QUE-307/upload-di-immagini-png ([f55a91c](https://github.com/selfcommunity/community-js/commit/f55a91ccadb1d3d6a63753349a06e90579716880))
+
+
+
+
+
+## [0.1.9-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.76...@selfcommunity/react-theme-default@0.1.9-alpha.77) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.75...@selfcommunity/react-theme-default@0.1.9-alpha.76) (2024-05-13)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.74...@selfcommunity/react-theme-default@0.1.9-alpha.75) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.73...@selfcommunity/react-theme-default@0.1.9-alpha.74) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.72...@selfcommunity/react-theme-default@0.1.9-alpha.73) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.71...@selfcommunity/react-theme-default@0.1.9-alpha.72) (2024-05-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.70...@selfcommunity/react-theme-default@0.1.9-alpha.71) (2024-05-07)
+
+
+### Bug Fixes
+
+* mobile paddings. https://linear.app/quentral/issue/QUE-263/fix-grafici-mobile ([b029568](https://github.com/selfcommunity/community-js/commit/b02956807e71085368ccb2de618f6bb475743224))
+
+
+
+
+
+## [0.1.9-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.69...@selfcommunity/react-theme-default@0.1.9-alpha.70) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.68...@selfcommunity/react-theme-default@0.1.9-alpha.69) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.67...@selfcommunity/react-theme-default@0.1.9-alpha.68) (2024-05-03)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.66...@selfcommunity/react-theme-default@0.1.9-alpha.67) (2024-05-03)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.65...@selfcommunity/react-theme-default@0.1.9-alpha.66) (2024-05-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.64...@selfcommunity/react-theme-default@0.1.9-alpha.65) (2024-05-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.63...@selfcommunity/react-theme-default@0.1.9-alpha.64) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.62...@selfcommunity/react-theme-default@0.1.9-alpha.63) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.61...@selfcommunity/react-theme-default@0.1.9-alpha.62) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.60...@selfcommunity/react-theme-default@0.1.9-alpha.61) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.59...@selfcommunity/react-theme-default@0.1.9-alpha.60) (2024-04-30)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.58...@selfcommunity/react-theme-default@0.1.9-alpha.59) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
+## [0.1.9-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.57...@selfcommunity/react-theme-default@0.1.9-alpha.58) (2024-04-29)
+
+
+### Bug Fixes
+
+* Moved notifications icon to topbar for mobile view when grouping is enabled, fixed GroupInviteButton. Linear issues: https://linear.app/quentral/issue/QUE-219/limitare-le-icone-nella-bottom-bar-a-un-massimo-di-5 and https://linear.app/quentral/issue/QUE-217/la-ricerca-utenti-da-invitare-in-un-gruppo-non-va ([2f7d2f0](https://github.com/selfcommunity/community-js/commit/2f7d2f0381ccf0386986c139e5c5bbf748d738ff))
+
+
+
+
+
+## [0.1.9-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.56...@selfcommunity/react-theme-default@0.1.9-alpha.57) (2024-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.55...@selfcommunity/react-theme-default@0.1.9-alpha.56) (2024-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.54...@selfcommunity/react-theme-default@0.1.9-alpha.55) (2024-04-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.53...@selfcommunity/react-theme-default@0.1.9-alpha.54) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.52...@selfcommunity/react-theme-default@0.1.9-alpha.53) (2024-04-23)
+
+
+### Bug Fixes
+
+* groups searching, group invite button, group header ([f211d62](https://github.com/selfcommunity/community-js/commit/f211d623ac874b18afb3cfe9e2607e5c75d3793d))
+
+
+
+
+
+## [0.1.9-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.51...@selfcommunity/react-theme-default@0.1.9-alpha.52) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.50...@selfcommunity/react-theme-default@0.1.9-alpha.51) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed groups component loading logic ([72e68e8](https://github.com/selfcommunity/community-js/commit/72e68e8a1dd6cdd3ee47f87f87547851648c936b))
+
+
+
+
+
+## [0.1.9-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.49...@selfcommunity/react-theme-default@0.1.9-alpha.50) (2024-04-22)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.48...@selfcommunity/react-theme-default@0.1.9-alpha.49) (2024-04-22)
+
+
+### Performance Improvements
+
+* added username in thread item for group messages ([60e5344](https://github.com/selfcommunity/community-js/commit/60e5344af5c5c531daadf4ae7ee48de9ccb79ced))
+
+
+
+
+
+## [0.1.9-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.47...@selfcommunity/react-theme-default@0.1.9-alpha.48) (2024-04-19)
+
+
+### Bug Fixes
+
+* styles cover ([8c44196](https://github.com/selfcommunity/community-js/commit/8c441965871738ccab3fae908d7bdba0eb940a48))
+
+
+
+
+
+## [0.1.9-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.46...@selfcommunity/react-theme-default@0.1.9-alpha.47) (2024-04-19)
+
+
+### Bug Fixes
+
+* styles cover ([19621fb](https://github.com/selfcommunity/community-js/commit/19621fb64f4a044496f7626f5e1689da00023689))
+
+
+
+
+
+## [0.1.9-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.45...@selfcommunity/react-theme-default@0.1.9-alpha.46) (2024-04-19)
+
+
+### Bug Fixes
+
+* bugfix-> groups alignment, private messages new message bug, translations. ([5ce7c40](https://github.com/selfcommunity/community-js/commit/5ce7c40f40867e2f1c5ead3f023cfc977b7ae548))
+
+
+
+
+
+## [0.1.9-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.44...@selfcommunity/react-theme-default@0.1.9-alpha.45) (2024-04-19)
+
+
+### Bug Fixes
+
+* private message styles ([a7ace1a](https://github.com/selfcommunity/community-js/commit/a7ace1a27c834fb77c0ea2ae7594eb0671d22e07))
+* styles cover ([4e73a05](https://github.com/selfcommunity/community-js/commit/4e73a052ec3b55d6902c4087f90dc397d2f230cf))
+
+
+
+
+
+## [0.1.9-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.43...@selfcommunity/react-theme-default@0.1.9-alpha.44) (2024-04-19)
+
+
+### Performance Improvements
+
+* added group invite users widget. Changed user admin badge ([3e7dd83](https://github.com/selfcommunity/community-js/commit/3e7dd83279ffc75b90b03a55de8d56b97aad91da))
+
+
+
+
+
+## [0.1.9-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.42...@selfcommunity/react-theme-default@0.1.9-alpha.43) (2024-04-18)
+
+
+### Bug Fixes
+
+* fixed create group invitation, hidden invite button in group edit mode, added group admin badges/info inside group info widget. Added searchbar for groups component. ([24b4adf](https://github.com/selfcommunity/community-js/commit/24b4adf109b59fcf84371df2ef41f203d0b9844a))
+
+
+
+
+
+## [0.1.9-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.41...@selfcommunity/react-theme-default@0.1.9-alpha.42) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups no results layout ([ecfc83a](https://github.com/selfcommunity/community-js/commit/ecfc83a781a8dfd2bd15c3b60a393bea3a8d75fc))
+
+
+
+
+
+## [0.1.9-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.40...@selfcommunity/react-theme-default@0.1.9-alpha.41) (2024-04-17)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.39...@selfcommunity/react-theme-default@0.1.9-alpha.40) (2024-04-17)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.38...@selfcommunity/react-theme-default@0.1.9-alpha.39) (2024-04-17)
+
+
+### Bug Fixes
+
+* fixed group badge in feed obj ([3c0e33e](https://github.com/selfcommunity/community-js/commit/3c0e33e7229087ad8c2477918ce65dc5a404871f))
+
+
+
+
+
+## [0.1.9-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.37...@selfcommunity/react-theme-default@0.1.9-alpha.38) (2024-04-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.36...@selfcommunity/react-theme-default@0.1.9-alpha.37) (2024-04-16)
+
+
+### Bug Fixes
+
+* group header skeleton, subscribed group manager ([b263ae7](https://github.com/selfcommunity/community-js/commit/b263ae728f1bc12d2d666bd5db45e839df9b534c))
+
+
+
+
+
+## [0.1.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.35...@selfcommunity/react-theme-default@0.1.9-alpha.36) (2024-04-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.34...@selfcommunity/react-theme-default@0.1.9-alpha.35) (2024-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.33...@selfcommunity/react-theme-default@0.1.9-alpha.34) (2024-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.32...@selfcommunity/react-theme-default@0.1.9-alpha.33) (2024-04-12)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.31...@selfcommunity/react-theme-default@0.1.9-alpha.32) (2024-04-12)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.30...@selfcommunity/react-theme-default@0.1.9-alpha.31) (2024-04-11)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.29...@selfcommunity/react-theme-default@0.1.9-alpha.30) (2024-04-11)
+
+
+### Bug Fixes
+
+* group feed composer/feed obj actions visibility ([e2ae9dd](https://github.com/selfcommunity/community-js/commit/e2ae9dd99e7a7331512ce3e360a4a691773f47a7))
+
+
+
+
+
+## [0.1.9-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.28...@selfcommunity/react-theme-default@0.1.9-alpha.29) (2024-04-11)
+
+
+### Bug Fixes
+
+* category/user-profile header ([e0c48f9](https://github.com/selfcommunity/community-js/commit/e0c48f98f46e01653811524be0afc01fb814c9a0))
+
+
+
+
+
+## [0.1.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.27...@selfcommunity/react-theme-default@0.1.9-alpha.28) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.26...@selfcommunity/react-theme-default@0.1.9-alpha.27) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.25...@selfcommunity/react-theme-default@0.1.9-alpha.26) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.24...@selfcommunity/react-theme-default@0.1.9-alpha.25) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.23...@selfcommunity/react-theme-default@0.1.9-alpha.24) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.22...@selfcommunity/react-theme-default@0.1.9-alpha.23) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.21...@selfcommunity/react-theme-default@0.1.9-alpha.22) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.20...@selfcommunity/react-theme-default@0.1.9-alpha.21) (2024-04-08)
+
+
+### Bug Fixes
+
+* fixed private messages style, group chip disable state on edit, snippets search. ([1e728e0](https://github.com/selfcommunity/community-js/commit/1e728e041db7ec2399e4cc720ad2f3442338be35))
+
+
+
+
+
+## [0.1.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.19...@selfcommunity/react-theme-default@0.1.9-alpha.20) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.18...@selfcommunity/react-theme-default@0.1.9-alpha.19) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.17...@selfcommunity/react-theme-default@0.1.9-alpha.18) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
+## [0.1.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.16...@selfcommunity/react-theme-default@0.1.9-alpha.17) (2024-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.15...@selfcommunity/react-theme-default@0.1.9-alpha.16) (2024-04-03)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.14...@selfcommunity/react-theme-default@0.1.9-alpha.15) (2024-04-03)
+
+
+### Bug Fixes
+
+* category header ([ff64d50](https://github.com/selfcommunity/community-js/commit/ff64d5070bdc0cdaed1d7215add68e31c66ab208))
+* navigationToolbar logo ([1a2da63](https://github.com/selfcommunity/community-js/commit/1a2da63f53cac684d9ea21bc3b3099950488aa21))
+* profile header ([d33bcaf](https://github.com/selfcommunity/community-js/commit/d33bcaf6eecfb4e553b22537a633404d6779d542))
+
+
+
+
+
+## [0.1.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.13...@selfcommunity/react-theme-default@0.1.9-alpha.14) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.12...@selfcommunity/react-theme-default@0.1.9-alpha.13) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.11...@selfcommunity/react-theme-default@0.1.9-alpha.12) (2024-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.10...@selfcommunity/react-theme-default@0.1.9-alpha.11) (2024-03-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.9...@selfcommunity/react-theme-default@0.1.9-alpha.10) (2024-03-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.8...@selfcommunity/react-theme-default@0.1.9-alpha.9) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
+## [0.1.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.7...@selfcommunity/react-theme-default@0.1.9-alpha.8) (2024-03-28)
+
+
+### Bug Fixes
+
+* icons, toolbar ([74aa183](https://github.com/selfcommunity/community-js/commit/74aa183f64131bb71c2840ed1f34c6a96e064e0b))
+
+
+
+
+
+## [0.1.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.6...@selfcommunity/react-theme-default@0.1.9-alpha.7) (2024-03-27)
+
+
+### Bug Fixes
+
+* fixed group images loading errors, group invite button visibility ([a204c5e](https://github.com/selfcommunity/community-js/commit/a204c5e267583127d0fe950dcd1159c693818bf0))
+
+
+
+
+
+## [0.1.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.5...@selfcommunity/react-theme-default@0.1.9-alpha.6) (2024-03-27)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.4...@selfcommunity/react-theme-default@0.1.9-alpha.5) (2024-03-26)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.3...@selfcommunity/react-theme-default@0.1.9-alpha.4) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixed composer audience section for groups ([ff2c76b](https://github.com/selfcommunity/community-js/commit/ff2c76bf7e96e4125cc141ea29279533d993d317))
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.1.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.2...@selfcommunity/react-theme-default@0.1.9-alpha.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.1.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.1...@selfcommunity/react-theme-default@0.1.9-alpha.2) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.1.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.0...@selfcommunity/react-theme-default@0.1.9-alpha.1) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.8...@selfcommunity/react-theme-default@0.1.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.1.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.8-alpha.1...@selfcommunity/react-theme-default@0.1.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,10 +3,12 @@
  */
 import {SCCategoryType} from './category';
 import {SCUserType} from './user';
+import {SCGroupType} from './group';
 
 export enum SuggestionType {
   USER = 'user',
-  CATEGORY = 'category'
+  CATEGORY = 'category',
+  GROUP = 'group'
 }
 
 /**
@@ -18,4 +20,5 @@ export interface SCSuggestionType {
   score?: number;
   category?: SCCategoryType;
   user?: SCUserType;
+  group?: SCGroupType;
 }

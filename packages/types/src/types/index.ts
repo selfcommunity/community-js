@@ -42,7 +42,8 @@ import {
   type SCPrivateMessageSnippetType,
   type SCPrivateMessageUploadMediaChunkType,
   type SCPrivateMessageUploadMediaType,
-  type SCPrivateMessageUploadThumbnailType
+  type SCPrivateMessageUploadThumbnailType,
+  SCPrivateMessageType
 } from './privateMessage';
 import {SCIncubatorStatusType, type SCIncubatorSubscriptionType, type SCIncubatorType} from './incubator';
 import {type SCCustomNotificationType} from './customNotification';
@@ -84,7 +85,8 @@ import {
   type SCNotificationUnDeletedForType,
   type SCNotificationUnseenCountType,
   type SCNotificationUserFollowType,
-  type SCNotificationVoteUpType
+  type SCNotificationVoteUpType,
+  type SCNotificationGroupActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -119,6 +121,7 @@ import {
   type SCDeviceGcmTypeEnum,
   SCDeviceTypeEnum
 } from './device';
+import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType} from './group';
 /**
  * Exports all types
  */
@@ -191,6 +194,7 @@ export {
   type SCPrivateMessageUploadMediaType,
   type SCPrivateMessageUploadThumbnailType,
   type SCPrivateMessageUploadMediaChunkType,
+  SCPrivateMessageType,
   type SCPromoType,
   SCNotificationTypologyType,
   type SCNotificationAggregatedType,
@@ -219,6 +223,7 @@ export {
   type SCInviteType,
   type SCNotificationIncubatorType,
   type SCNotificationContributionType,
+  type SCNotificationGroupActivityType,
   type SCPrizeType,
   type SCPrizeUserType,
   SCPrizeUserStatusType,
@@ -265,5 +270,8 @@ export {
   type SCGcmDeviceType,
   SCDeviceApnsTypeEnum,
   type SCDeviceGcmTypeEnum,
-  SCDeviceTypeEnum
+  SCDeviceTypeEnum,
+  type SCGroupType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType
 };

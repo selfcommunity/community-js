@@ -68,17 +68,7 @@ function LazyImage({altText, className, imageRef, src, width, height, maxWidth}:
   );
 }
 
-function ImageComponent({
-  src,
-  altText,
-  nodeKey,
-  maxWidth
-}: {
-  altText: string;
-  maxWidth: string | number;
-  nodeKey: NodeKey;
-  src: string;
-}): JSX.Element {
+function ImageComponent({src, altText, nodeKey, maxWidth}: {altText: string; maxWidth: string | number; nodeKey: NodeKey; src: string}): JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
@@ -176,13 +166,7 @@ function ImageComponent({
 
   return (
     <Suspense fallback={null}>
-      <LazyImage
-        className={isSelected ? `selected` : null}
-        src={src}
-        altText={altText}
-        imageRef={imageRef}
-        maxWidth={maxWidth}
-      />
+      <LazyImage className={isSelected ? `selected` : null} src={src} altText={altText} imageRef={imageRef} maxWidth={maxWidth} />
     </Suspense>
   );
 }
@@ -206,6 +190,8 @@ export type SerializedImageNode = Spread<
   SerializedLexicalNode
 >;
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
@@ -288,8 +274,12 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   exportJSON(): SerializedImageNode {
     return {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       altText: this.getAltText(),
       maxWidth: this.__maxWidth,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       src: this.getSrc(),
       type: 'image',
       version: 1

@@ -20,8 +20,8 @@ const templateContainerFixed = (args) => (
 
 export const Base: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
-    feedObjectId: 1400,
-    feedObjectType: SCContributionType.DISCUSSION
+    feedObjectId: 1662,
+    feedObjectType: SCContributionType.POST
 	},
   render: template
 };

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Collapse, Stack, Tooltip, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Chip, Collapse, Stack, Tooltip, Typography} from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
@@ -25,7 +25,7 @@ import CommentObjectReply, {CommentObjectReplyProps} from '../CommentObjectReply
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {CommentObjectProps} from '../CommentObject';
-import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
@@ -54,6 +54,10 @@ const messages = defineMessages({
   visibleToAll: {
     id: 'ui.feedObject.visibleToAll',
     defaultMessage: 'ui.feedObject.visibleToAll'
+  },
+  visibleToGroup: {
+    id: 'ui.feedObject.visibleToGroup',
+    defaultMessage: 'ui.feedObject.visibleToGroup'
   }
 });
 
@@ -62,6 +66,7 @@ const classes = {
   deleted: `${PREFIX}-deleted`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
+  group: `${PREFIX}-group`,
   avatar: `${PREFIX}-avatar`,
   username: `${PREFIX}-username`,
   activityAt: `${PREFIX}-activity-at`,
@@ -293,6 +298,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
+ |group|.SCFeedObject-group|Styles applied to the group element.|
  |avatar|.SCFeedObject-avatar|Styles applied to the avatar element.|
  |username|.SCFeedObject-username|Styles applied to the username element.|
  |activityAt|.SCFeedObject-activity-at|Styles applied to the activity at section.|
@@ -403,7 +409,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
 
   /**
    * Update state object
-   * @param obj
+   * @param newObj
    */
   const updateObject = (newObj): void => {
     setObj(newObj);
@@ -436,8 +442,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Handle change/update poll: votes
    */
   const handleChangePoll = useCallback(
-    (pollObject: SCPollType) => {
-      updateObject(Object.assign({}, obj, {poll: pollObject}));
+    (pollChoices: SCPollChoiceType[]) => {
+      if ('poll' in obj) {
+        updateObject(Object.assign({}, obj, {poll: {...obj.poll, choices: pollChoices}}));
+      }
     },
     [obj]
   );
@@ -770,11 +778,40 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
             {obj.categories.length > 0 && (
               <div className={classes.category}>
+                <>
+                  {obj.group && (
+                    <div className={classes.group}>
+                      <Chip
+                        color="secondary"
+                        size="small"
+                        key={obj.group.id}
+                        icon={<Icon>groups</Icon>}
+                        component={Link}
+                        to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
+                        clickable
+                      />
+                    </div>
+                  )}
+                </>
                 {obj.categories.map((c) => (
                   <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id}>
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
+              </div>
+            )}
+            {obj.group && !obj.categories.length && (
+              <div className={classes.group}>
+                <Chip
+                  color="secondary"
+                  size="small"
+                  key={obj.group.id}
+                  icon={<Icon>groups</Icon>}
+                  label={obj.group.name}
+                  component={Link}
+                  to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
+                  clickable
+                />
               </div>
             )}
             <CardHeader
@@ -816,6 +853,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
                       <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
+                    ) : obj.group ? (
+                      <Tooltip title={`${intl.formatMessage(messages.visibleToGroup, {group: obj.group.name})}`}>
+                        <Icon color="disabled" fontSize="small">
+                          groups
+                        </Icon>
+                      </Tooltip>
                     ) : (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
                         <Icon color="disabled" fontSize="small">
@@ -941,11 +984,40 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           <React.Fragment>
             {obj.categories.length > 0 && (
               <div className={classes.category}>
+                <>
+                  {obj.group && (
+                    <div className={classes.group}>
+                      <Chip
+                        color="secondary"
+                        size="small"
+                        key={obj.group.id}
+                        icon={<Icon>groups</Icon>}
+                        component={Link}
+                        to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
+                        clickable
+                      />
+                    </div>
+                  )}
+                </>
                 {obj.categories.map((c) => (
                   <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)} key={c.id}>
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
+              </div>
+            )}
+            {obj.group && !obj.categories.length && (
+              <div className={classes.group}>
+                <Chip
+                  color="secondary"
+                  size="small"
+                  key={obj.group.id}
+                  icon={<Icon>groups</Icon>}
+                  label={obj.group.name}
+                  component={Link}
+                  to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
+                  clickable
+                />
               </div>
             )}
             <CardHeader

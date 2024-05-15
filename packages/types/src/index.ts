@@ -78,6 +78,7 @@ import {
   type SCCustomNotificationType,
   type SCNotificationUnseenCountType,
   type SCNotificationContributionType,
+  type SCNotificationGroupActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -114,7 +115,8 @@ import {
   type SCApnsDeviceType,
   type SCGcmDeviceType,
   type SCSuggestionType,
-	type SCContributionStatus,
+  type SCContributionStatus,
+  type SCGroupType
 } from './types';
 
 /**
@@ -147,7 +149,10 @@ import {
   SCUserStatus,
   SuggestionType,
   SCPrivateMessageStatusType,
-  SCMetadataTypeFieldType
+  SCMetadataTypeFieldType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType,
+  SCPrivateMessageType
 } from './types';
 
 /**
@@ -180,7 +185,10 @@ export {
   SCUserStatus,
   SuggestionType,
   SCPrivateMessageStatusType,
-  SCMetadataTypeFieldType
+  SCMetadataTypeFieldType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType,
+  SCPrivateMessageType
 };
 export {
   type SCBannerType,
@@ -259,6 +267,7 @@ export {
   type SCNotificationVoteUpType,
   type SCCustomNotificationType,
   type SCNotificationContributionType,
+  type SCNotificationGroupActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -271,8 +280,8 @@ export {
   type SCWebhookEndpointAttemptType,
   type SCWebhookEndpointSecretType,
   type SCWebhookEventsType,
-	type SCContributionStatus,
-	type SCVoteType,
+  type SCContributionStatus,
+  type SCVoteType,
   type SCFlagType,
   type SCCustomPageType,
   type SCDataPortabilityType,
@@ -295,5 +304,6 @@ export {
   type SCDeviceType,
   type SCApnsDeviceType,
   type SCGcmDeviceType,
-  type SCSuggestionType
+  type SCSuggestionType,
+  type SCGroupType
 };

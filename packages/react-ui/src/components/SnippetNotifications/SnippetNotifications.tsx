@@ -41,6 +41,7 @@ import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
 import NotificationItem from '../../shared/NotificationItem';
 import {PREFIX} from './constants';
+import GroupNotification from '../Notification/Group';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -349,6 +350,13 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
       content = handleCustomNotification(n);
     } else if (type === SCNotificationTypologyType.CONTRIBUTION) {
       content = <ContributionNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_GROUP ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
+    ) {
+      return <GroupNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     }
     if (type && handleNotification) {
       /** Override content */

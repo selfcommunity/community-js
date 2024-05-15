@@ -14,6 +14,7 @@ import {
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
+  UserUtils,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -30,7 +31,7 @@ const classes = {
   root: `${PREFIX}-root`,
   ios: `${PREFIX}-ios`,
   action: `${PREFIX}-action`,
-  composer: `${PREFIX}-composer`,
+  composer: `${PREFIX}-composer`
 };
 
 const Root = styled(MuiBottomNavigation, {
@@ -40,7 +41,6 @@ const Root = styled(MuiBottomNavigation, {
 })(() => ({}));
 
 export type BottomNavigationProps = MuiBottomNavigationProps;
-
 
 /**
  * > API documentation for the Community-JS Bottom Navigation component. Learn about the available props and the CSS API.
@@ -86,6 +86,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
 
   // MEMO
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
   const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
@@ -113,13 +114,26 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 icon={<Icon>explore</Icon>}
               />
             ) : null,
-            <BottomNavigationAction
-              key="composer"
-              className={classNames(classes.composer, classes.action)}
-              component={ComposerIconButton}
-              disableRipple
-            />,
-            scUserContext.user ? (
+            !preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value ||
+            (UserUtils.isStaff(scUserContext.user) && preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value) ? (
+              <BottomNavigationAction
+                key="composer"
+                className={classNames(classes.composer, classes.action)}
+                component={ComposerIconButton}
+                disableRipple
+              />
+            ) : null,
+            groupsEnabled && scUserContext.user ? (
+              <BottomNavigationAction
+                key="groups"
+                className={classes.action}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
+                icon={<Icon>groups</Icon>}
+              />
+            ) : null,
+            scUserContext.user && !groupsEnabled ? (
               <BottomNavigationAction
                 key="notifications"
                 className={classes.action}

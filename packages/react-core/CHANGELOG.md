@@ -3,6 +3,443 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.44...@selfcommunity/react-core@0.4.9-alpha.45) (2024-05-15)
+
+
+### Performance Improvements
+
+* react-core comments for doc. ([02b205c](https://github.com/selfcommunity/community-js/commit/02b205cc091d69f5b917647f2f5fca74ad84f7cb))
+
+
+
+
+
+## [0.4.9-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.43...@selfcommunity/react-core@0.4.9-alpha.44) (2024-05-15)
+
+
+### Performance Improvements
+
+* updated lexical packages, cleaned comments for doc generation ([c97c1b0](https://github.com/selfcommunity/community-js/commit/c97c1b0d2c3a67c449b7e1e5039c90c18d68be39))
+
+
+
+
+
+## [0.4.9-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.42...@selfcommunity/react-core@0.4.9-alpha.43) (2024-05-13)
+
+
+### Bug Fixes
+
+* composer categories autocomplete ([ddd9cd5](https://github.com/selfcommunity/community-js/commit/ddd9cd58fbacc8bf34c916e8a473e36fae5a9484))
+
+
+
+
+
+## [0.4.9-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.41...@selfcommunity/react-core@0.4.9-alpha.42) (2024-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.40...@selfcommunity/react-core@0.4.9-alpha.41) (2024-05-03)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.39...@selfcommunity/react-core@0.4.9-alpha.40) (2024-05-03)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.38...@selfcommunity/react-core@0.4.9-alpha.39) (2024-05-02)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.37...@selfcommunity/react-core@0.4.9-alpha.38) (2024-05-02)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.36...@selfcommunity/react-core@0.4.9-alpha.37) (2024-04-30)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-226/problema-cambio-tab-coi-gruppi-da-cui-ho-ricevuto-un-invito ([4063c14](https://github.com/selfcommunity/community-js/commit/4063c14fb5fcf7fdce1a97035ec09aa52ec88192))
+
+
+
+
+
+## [0.4.9-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.35...@selfcommunity/react-core@0.4.9-alpha.36) (2024-04-30)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-228/default-miei-gruppi ([3d9c8fe](https://github.com/selfcommunity/community-js/commit/3d9c8fee9209adeaf7e99145ed4149911f269d8b))
+
+
+
+
+
+## [0.4.9-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.34...@selfcommunity/react-core@0.4.9-alpha.35) (2024-04-30)
+
+
+### Performance Improvements
+
+* added user subscribed groups widget/ fixed groups component action. Linear issues: https://linear.app/quentral/issue/QUE-222/manca-widget-i-miei-gruppi-nel-proprio-profilo and https://linear.app/quentral/issue/QUE-220/funzione-del-tasto ([2fe732b](https://github.com/selfcommunity/community-js/commit/2fe732b57588911151e1e753b19889276b834725))
+
+
+
+
+
+## [0.4.9-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.33...@selfcommunity/react-core@0.4.9-alpha.34) (2024-04-24)
+
+
+### Bug Fixes
+
+* fixed subscribed groups button. Issue: https://linear.app/quentral/issue/QUE-201/problema-sync-subscribe-button-gruppi. ([5506973](https://github.com/selfcommunity/community-js/commit/5506973fa5c3011caa4378a13058bb50673c1235))
+
+
+
+
+
+## [0.4.9-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.32...@selfcommunity/react-core@0.4.9-alpha.33) (2024-04-23)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.31...@selfcommunity/react-core@0.4.9-alpha.32) (2024-04-23)
+
+
+### Bug Fixes
+
+* fixed composer/toast notifications for groups ([8829b3b](https://github.com/selfcommunity/community-js/commit/8829b3b87e87a921b0dc05a25aced44a01501f80))
+
+
+
+
+
+## [0.4.9-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.30...@selfcommunity/react-core@0.4.9-alpha.31) (2024-04-23)
+
+
+### Bug Fixes
+
+* features ([75cbcdb](https://github.com/selfcommunity/community-js/commit/75cbcdb471023af2b89f9687331a6b12511264f3))
+
+
+
+
+
+## [0.4.9-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.29...@selfcommunity/react-core@0.4.9-alpha.30) (2024-04-22)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.28...@selfcommunity/react-core@0.4.9-alpha.29) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.27...@selfcommunity/react-core@0.4.9-alpha.28) (2024-04-19)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.26...@selfcommunity/react-core@0.4.9-alpha.27) (2024-04-18)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.25...@selfcommunity/react-core@0.4.9-alpha.26) (2024-04-18)
+
+
+### Bug Fixes
+
+* groups sync events ([759c412](https://github.com/selfcommunity/community-js/commit/759c412df95be881a38451b2de8400b2d71cacaa))
+* groups sync events ([3848feb](https://github.com/selfcommunity/community-js/commit/3848febafe7ccd03e8faeafb7e5842dea806ea24))
+
+
+
+
+
+## [0.4.9-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.24...@selfcommunity/react-core@0.4.9-alpha.25) (2024-04-17)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.23...@selfcommunity/react-core@0.4.9-alpha.24) (2024-04-16)
+
+
+### Bug Fixes
+
+* group notifications ([f4397e0](https://github.com/selfcommunity/community-js/commit/f4397e07e6cea00fd67e73dfd91316d10f16b6e0))
+
+
+
+
+
+## [0.4.9-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.22...@selfcommunity/react-core@0.4.9-alpha.23) (2024-04-16)
+
+
+### Bug Fixes
+
+* group header skeleton, subscribed group manager ([b263ae7](https://github.com/selfcommunity/community-js/commit/b263ae728f1bc12d2d666bd5db45e839df9b534c))
+
+
+
+
+
+## [0.4.9-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.21...@selfcommunity/react-core@0.4.9-alpha.22) (2024-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.20...@selfcommunity/react-core@0.4.9-alpha.21) (2024-04-12)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.19...@selfcommunity/react-core@0.4.9-alpha.20) (2024-04-11)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.18...@selfcommunity/react-core@0.4.9-alpha.19) (2024-04-11)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.17...@selfcommunity/react-core@0.4.9-alpha.18) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.16...@selfcommunity/react-core@0.4.9-alpha.17) (2024-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.15...@selfcommunity/react-core@0.4.9-alpha.16) (2024-04-09)
+
+
+### Bug Fixes
+
+* group manager ([4b321c0](https://github.com/selfcommunity/community-js/commit/4b321c0dd14c7ba05f8ee6275869300df10ed2ec))
+
+
+
+
+
+## [0.4.9-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.14...@selfcommunity/react-core@0.4.9-alpha.15) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.13...@selfcommunity/react-core@0.4.9-alpha.14) (2024-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.12...@selfcommunity/react-core@0.4.9-alpha.13) (2024-04-08)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.11...@selfcommunity/react-core@0.4.9-alpha.12) (2024-04-05)
+
+
+### Bug Fixes
+
+* fixed group members/requests widgets ([747ac69](https://github.com/selfcommunity/community-js/commit/747ac69a5477f6ea83c6691f582a6d5b2405c7aa))
+
+
+
+
+
+## [0.4.9-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.10...@selfcommunity/react-core@0.4.9-alpha.11) (2024-04-05)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.9...@selfcommunity/react-core@0.4.9-alpha.10) (2024-04-05)
+
+
+### Bug Fixes
+
+* group avatar loading, group composer audience ([1501f67](https://github.com/selfcommunity/community-js/commit/1501f67de2f00c1880645e912bd459e41a1582f6))
+
+
+
+
+
+## [0.4.9-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.8...@selfcommunity/react-core@0.4.9-alpha.9) (2024-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.7...@selfcommunity/react-core@0.4.9-alpha.8) (2024-04-03)
+
+
+### Bug Fixes
+
+* fixed fetch group ([67bc1fa](https://github.com/selfcommunity/community-js/commit/67bc1fa8633c2b53a29f829f8d91160b2c4b7498))
+
+
+
+
+
+## [0.4.9-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.6...@selfcommunity/react-core@0.4.9-alpha.7) (2024-04-02)
+
+
+### Performance Improvements
+
+* added routes ([528cb77](https://github.com/selfcommunity/community-js/commit/528cb77aa95705ea63de39d0c1cea75e82ced32d))
+
+
+
+
+
+## [0.4.9-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.5...@selfcommunity/react-core@0.4.9-alpha.6) (2024-03-29)
+
+
+### Bug Fixes
+
+* fixed group subscribe/unsubscribe manager, style etc ([73cbde6](https://github.com/selfcommunity/community-js/commit/73cbde6cee527e54e72a4d8c4b1b0e35c69de15d))
+
+
+
+
+
+## [0.4.9-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.4...@selfcommunity/react-core@0.4.9-alpha.5) (2024-03-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.3...@selfcommunity/react-core@0.4.9-alpha.4) (2024-03-26)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.9-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.2...@selfcommunity/react-core@0.4.9-alpha.3) (2024-03-26)
+
+
+### Bug Fixes
+
+* fixed composer audience section for groups ([ff2c76b](https://github.com/selfcommunity/community-js/commit/ff2c76bf7e96e4125cc141ea29279533d993d317))
+
+
+### Performance Improvements
+
+* fixed group header, group creation/editing ([de3076d](https://github.com/selfcommunity/community-js/commit/de3076dc450229ebe2fa5793c54e51e62018b1db))
+
+
+
+
+
+## [0.4.9-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.1...@selfcommunity/react-core@0.4.9-alpha.2) (2024-03-25)
+
+
+### Bug Fixes
+
+* group components fixes ([b96f1e2](https://github.com/selfcommunity/community-js/commit/b96f1e2d3148fa5ea4c1f3b6dd1f8975e62fd3ae))
+
+
+
+
+
+## [0.4.9-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.9-alpha.0...@selfcommunity/react-core@0.4.9-alpha.1) (2024-03-22)
+
+
+### Performance Improvements
+
+* updated font-icons, added group components(still testing). ([56f53c5](https://github.com/selfcommunity/community-js/commit/56f53c53e95a620099b0946e748b5a7ad82eeefc))
+
+
+
+
+
+## [0.4.9-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.8...@selfcommunity/react-core@0.4.9-alpha.0) (2024-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.4.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.8-alpha.1...@selfcommunity/react-core@0.4.8) (2024-02-02)
 
 **Note:** Version bump only for package @selfcommunity/react-core
