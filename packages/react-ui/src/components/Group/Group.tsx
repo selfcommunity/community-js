@@ -79,7 +79,7 @@ export interface GroupProps extends WidgetProps {
  *
  *
  * This component renders a group item.
- * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/User)
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/Group)
 
  #### Import
 

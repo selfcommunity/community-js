@@ -75,7 +75,6 @@ const Root = styled(Autocomplete, {
  *
  *
  * This component renders a bar that allows users to search (with autocomplete) for all the groups available in the application.
- * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/GroupAutocomplete)
  *
  * #### Import
  *  ```jsx

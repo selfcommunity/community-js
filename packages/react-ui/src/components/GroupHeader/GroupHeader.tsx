@@ -93,7 +93,6 @@ export interface GroupHeaderProps {
  *
  *
  * This component renders the groups top section.
- * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/UserProfileHeader)
 
  #### Import
 
