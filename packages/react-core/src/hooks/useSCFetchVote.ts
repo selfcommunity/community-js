@@ -51,6 +51,12 @@ interface FetchVoteProps {
  :::info
  This custom hook is used to fetch a contribution vote.
  :::
+ * @param object
+ * @param object.id
+ * @param object.contribution
+ * @param object.contributionType
+ * @param object.onVote
+ * @param object.cacheStrategy
  */
 export default function useSCFetchVote({
   id,

@@ -8,8 +8,7 @@ import {useSCUser} from '../components/provider/SCUserProvider';
  :::info
  This custom hook is used to fetch the addressing tag list for the session user
  :::
-*  @param object
- * @param object.fetch
+ * @param fetch
  */
 export default function useSCFetchAddressingTagList({fetch = false}: {fetch?: boolean}) {
   const [scAddressingTags, setSCAddressingTags] = useState<SCTagType[]>([]);

@@ -10,9 +10,10 @@ import {useSCUser} from '../components/provider/SCUserProvider';
  :::info
  This custom hook is used to fetch if a user is blocked by another user.
  :::
- * @param user
- * @param blockedByUser
- * @param sync
+ * @param object
+ * @param object.user
+ * @param object.blockedByUser
+ * @param object.sync
  */
 export default function useSCFetchUserBlockedBy({
   user = null,
