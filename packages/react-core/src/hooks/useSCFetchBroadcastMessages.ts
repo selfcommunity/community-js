@@ -23,8 +23,6 @@ const initialData: SCPaginatedResponse = {results: [], next: broadcastMessagesRe
 /**
  :::info
  This custom hook is used to fetch broadcast messages.
- @param object
- @param object.cacheStrategy
 
  :::tip Context can be consumed in this way:
 
@@ -32,6 +30,7 @@ const initialData: SCPaginatedResponse = {results: [], next: broadcastMessagesRe
  const {messages, isLoading} = useSCFetchBroadcastMessages();
  ```
  :::
+ * @param props
  */
 const useSCFetchBroadcastMessages = (props?: {cacheStrategy?: CacheStrategies}) => {
   // PROPS

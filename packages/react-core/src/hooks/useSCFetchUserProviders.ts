@@ -6,10 +6,11 @@ import {Logger} from '@selfcommunity/utils';
 
 /**
  :::info
- This custom hook is used to fetch the listo of user providers.
+ This custom hook is used to fetch the list of user providers.
  :::
- * @param id
- * @param providers
+ * @param object
+ * @param object.id
+ * @param object.providers
  */
 export default function useSCFetchUserProviders({id, providers = null}: {id: number | string; providers?: SCUserProviderAssociationType[]}) {
   const [scUserProviders, setSCUserProviders] = useState<SCUserProviderAssociationType[]>(providers || []);
