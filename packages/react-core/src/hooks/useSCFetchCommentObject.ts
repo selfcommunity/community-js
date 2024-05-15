@@ -10,9 +10,8 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
  :::info
  This custom hooks is used to fetch a comment.
  :::
- * @param object
- * @param object.id
- * @param object.commentObject
+ * @param id
+ * @param commentObject
  * @param cacheStrategy
  */
 export default function useSCFetchCommentObject({

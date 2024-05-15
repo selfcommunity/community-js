@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$createParagraphNode, $getRoot, $insertNodes} from 'lexical';
+import {$createParagraphNode, $getRoot} from 'lexical';
 import {$generateNodesFromDOM} from '@lexical/html';
 
 function DefaultHtmlValuePlugin({defaultValue}) {

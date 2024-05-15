@@ -41,7 +41,7 @@ export class LegalPageApiClient {
 
   /**
    * This endpoint retrieves all revisions of a legal page.
-   * @param id
+   * @param policy
    * @param config
    */
   static getAllRevisionsOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLegalPageType>> {
@@ -57,7 +57,7 @@ export class LegalPageApiClient {
 
   /**
    * This endpoint retrieves last revision of a legal page.
-   * @param id
+   * @param policy
    * @param config
    */
   static getLastRevisionOfLegalPage(policy: string, config?: AxiosRequestConfig): Promise<SCLegalPageType> {

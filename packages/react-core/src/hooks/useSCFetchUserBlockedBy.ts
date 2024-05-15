@@ -12,6 +12,7 @@ import {useSCUser} from '../components/provider/SCUserProvider';
  :::
  * @param user
  * @param blockedByUser
+ * @param sync
  */
 export default function useSCFetchUserBlockedBy({
   user = null,

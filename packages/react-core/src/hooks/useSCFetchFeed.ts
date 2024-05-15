@@ -167,11 +167,7 @@ function stateInitializer(data): SCPaginatedFeedType {
  :::info
  This custom hooks is used to fetch paginated Data.
  :::
- * @param endpoint
- * @param offset
- * @param pageSize
- * @param onChangePage
- * @param cacheStrategy
+ * @param props
  */
 export default function useSCFetchFeed(props: {
   id: string;

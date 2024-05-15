@@ -221,6 +221,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
 
   // RENDER
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   const initialConfig: InitialConfigType = useMemo(
     () => ({
       namespace: 'LexicalEditor',

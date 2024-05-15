@@ -1,5 +1,5 @@
 import React, {forwardRef, useEffect, useState} from 'react';
-import {COMMAND_PRIORITY_EDITOR, createCommand, INSERT_PARAGRAPH_COMMAND, LexicalCommand, LexicalEditor} from 'lexical';
+import {COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand, LexicalEditor} from 'lexical';
 import {$insertNodeToNearestRoot} from '@lexical/utils';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
@@ -119,6 +119,8 @@ export default function ImagePlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     if (!editor.hasNodes([ImageNode])) {
       return;
     }
@@ -140,7 +142,8 @@ export default function ImagePlugin(): JSX.Element {
       COMMAND_PRIORITY_EDITOR
     );
   }, [editor]);
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   if (!editor.hasNodes([ImageNode])) {
     return null;
   }
