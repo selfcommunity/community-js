@@ -74,7 +74,7 @@ export interface GroupProps {
  *
  *
  * This component renders a specific group's template.
- * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/Category)
+ * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/Group)
 
  #### Import
 

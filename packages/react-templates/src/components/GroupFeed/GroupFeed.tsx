@@ -110,7 +110,6 @@ const WIDGETS: SCFeedWidgetType[] = [
  *
  *
  * This component renders a specific group's feed.
- * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-templates/Components/GroupFeed)
 
  #### Import
 

@@ -105,8 +105,7 @@ export interface GroupRequestsWidgetProps extends VirtualScrollerItemProps, Widg
  * > API documentation for the Community-JS Group Requests Widget component. Learn about the available props and the CSS API.
  *
  *
- * This component renders the list of the follows of the given group.
- * Take a look at our <strong>demo</strong> component [here](/docs/sdk/community-js/react-ui/Components/GroupRequests)
+ * This component displays the list of users who have requested access to the specified group.
 
  #### Import
 
