@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.79...@selfcommunity/react-ui@0.7.9-alpha.80) (2024-05-15)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([ae824a2](https://github.com/selfcommunity/community-js/commit/ae824a27bd24c4950fa8209b3b7b769f84e787c2))
+
+
+
+
+
 ## [0.7.9-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.78...@selfcommunity/react-ui@0.7.9-alpha.79) (2024-05-15)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
