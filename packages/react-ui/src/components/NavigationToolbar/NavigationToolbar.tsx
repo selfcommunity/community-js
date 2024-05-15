@@ -186,6 +186,13 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const groupsEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.GROUPING), [scPreferences.features]);
+  const showComposer = useMemo(() => {
+    return (
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value &&
+      !disableComposer &&
+      (!scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user))
+    );
+  }, [scPreferences, disableComposer, scUserContext.user]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);
@@ -261,11 +268,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {startActions}
       {scUserContext.user ? (
         <>
-          {!disableComposer ||
-            !preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value ||
-            (UserUtils.isStaff(scUserContext.user) && preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value && (
-              <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>
-            ))}
+          {showComposer && <ComposerIconButton className={classes.composer} {...ComposerIconButtonProps}></ComposerIconButton>}
           <Tooltip title={scUserContext.user.username}>
             <IconButton
               component={Link}
