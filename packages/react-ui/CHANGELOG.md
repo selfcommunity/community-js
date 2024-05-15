@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.81...@selfcommunity/react-ui@0.7.9-alpha.82) (2024-05-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.7.9-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.80...@selfcommunity/react-ui@0.7.9-alpha.81) (2024-05-15)
 
 
