@@ -208,6 +208,7 @@ export class UserApiClient {
    * @param id
    * @param new_email
    * @param confirm
+   * @param send_email
    * @param config
    */
   static changeUserMail(
@@ -334,6 +335,7 @@ export class UserApiClient {
   /**
    * This endpoint retrieves the list of posts of the user identified  by ID.
    * @param id
+   * @param params
    * @param config
    */
   static getUserFeed(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedUnitType>> {
@@ -343,7 +345,7 @@ export class UserApiClient {
   /**
    * This endpoint retrieves the list of followers of a specific user identified  by ID.
    * @param id
-   * @param mutual
+   * @param params
    * @param config
    */
   static getUserFollowers(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
@@ -351,9 +353,9 @@ export class UserApiClient {
   }
 
   /**
-   * This endpoint retrieves the list of following of a specific user identified  by ID..
+   * This endpoint retrieves the list of following of a specific user identified  by ID.
    * @param id
-   * @param mutual
+   * @param params
    * @param config
    */
   static getUserFollowings(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
@@ -390,7 +392,7 @@ export class UserApiClient {
   /**
    * This endpoint retrieves the list of connections of a specific user identified by ID.
    * @param id
-   * @param mutual
+   * @param params
    * @param config
    */
   static getUserConnections(id: number | string, params?: UserGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
@@ -408,7 +410,7 @@ export class UserApiClient {
 
   /**
    * This endpoint retrieves the list of connection requests received by a specific user identified by ID.
-   * @param id
+   * @param params
    * @param config
    */
   static getUserConnectionRequests(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserConnectionRequestType>> {
@@ -417,7 +419,7 @@ export class UserApiClient {
 
   /**
    * This endpoint retrieves a specific user's list of connection requests sent by user.
-   * @param id
+   * @param params
    * @param config
    */
   static getUserRequestConnectionsSent(

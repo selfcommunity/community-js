@@ -1,11 +1,11 @@
-import { useEffect, useReducer } from 'react';
-import { SCOPE_SC_CORE } from '../constants/Errors';
-import { SCContributionType, SCFeedObjectType, SCUserType } from '@selfcommunity/types';
-import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
-import { CacheStrategies, Logger, LRUCache } from '@selfcommunity/utils';
+import {useEffect, useReducer} from 'react';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {SCContributionType, SCFeedObjectType, SCUserType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import useSCFetchFeedObject from './useSCFetchFeedObject';
-import { getContributorsCacheKey } from '../constants/Cache';
-import { useIsComponentMountedRef } from '../utils/hooks';
+import {getContributorsCacheKey} from '../constants/Cache';
+import {useIsComponentMountedRef} from '../utils/hooks';
 
 /**
  * Interface SCCommentsObjectType
@@ -118,11 +118,7 @@ function stateInitializer(data): SCPaginatedContributorsType {
  :::info
  This custom hooks is used to fetch paginated contributors.
  :::
- * @param id
- * @param feedObject
- * @param feedObjectType
- * @param offset
- * @param pageSize
+ * @param props
  */
 export default function useSCFetchContributors(props: {
   id?: number;

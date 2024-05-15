@@ -10,9 +10,9 @@ import {getAdvObjectCacheKey} from '../constants/Cache';
  :::info
  This custom hook is used to fetch a custom adv object.
  :::
- * @param object
- * @param object.position
- * @param object.categoryId
+ * @param id
+ * @param position
+ * @param categoriesId
  * @param cacheStrategy
  */
 export default function useSCFetchCustomAdv({

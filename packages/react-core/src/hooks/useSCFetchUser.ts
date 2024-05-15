@@ -10,9 +10,8 @@ import {SCUserContextType} from '../types/context';
  :::info
  This custom hook is used to fetch a user object.
  :::
- * @param object
- * @param object.id
- * @param object.user
+ * @param id
+ * @param user
  */
 export default function useSCFetchUser({id = null, user = null}: {id?: number | string; user?: SCUserType}) {
   // CONTEXT

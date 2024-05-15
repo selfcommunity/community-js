@@ -14,7 +14,6 @@ import {
   $isRootOrShadowRoot,
   $isTextNode,
   COMMAND_PRIORITY_CRITICAL,
-  DEPRECATED_$isGridSelection,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND
@@ -25,7 +24,7 @@ import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$isDecoratorBlockNode} from '@lexical/react/LexicalDecoratorBlockNode';
 import {$createHeadingNode, $createQuoteNode, $isHeadingNode, $isQuoteNode, HeadingTagType} from '@lexical/rich-text';
 import {$setBlocksType} from '@lexical/selection';
-import {$isTableNode} from '@lexical/table';
+import {$isTableNode, $isTableSelection} from '@lexical/table';
 import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow, $getNearestNodeOfType, mergeRegister} from '@lexical/utils';
 import * as React from 'react';
 import {useCallback, useEffect, useState} from 'react';
@@ -75,7 +74,7 @@ function BlockFormatIconButton({
   const formatParagraph = () => {
     editor.update(() => {
       const selection = $getSelection();
-      if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+      if ($isRangeSelection(selection) || $isTableSelection(selection)) {
         $setBlocksType(selection, () => $createParagraphNode());
       }
     });
@@ -85,7 +84,7 @@ function BlockFormatIconButton({
     if (blockType !== headingSize) {
       editor.update(() => {
         const selection = $getSelection();
-        if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+        if ($isRangeSelection(selection) || $isTableSelection(selection)) {
           $setBlocksType(selection, () => $createHeadingNode(headingSize));
         }
       });
@@ -112,7 +111,7 @@ function BlockFormatIconButton({
     if (blockType !== 'quote') {
       editor.update(() => {
         const selection = $getSelection();
-        if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+        if ($isRangeSelection(selection) || $isTableSelection(selection)) {
           $setBlocksType(selection, () => $createQuoteNode());
         }
       });
@@ -223,6 +222,8 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
 
       // Update text format
       setFormats(FORMATS.filter((f: TextFormatType) => selection.hasFormat(f)));
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       setAlignment(ALIGNMENTS.find((a: ElementFormatType) => element.getFormatType() === a) || ALIGNMENTS[0]);
 
       // Update links
@@ -248,6 +249,8 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
           const type = parentList ? parentList.getListType() : element.getListType();
           setBlockType(type as keyof typeof blockTypeToBlockIcon);
         } else {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
           const type = $isHeadingNode(element) ? element.getTag() : element.getType();
           if (type in blockTypeToBlockIcon) {
             setBlockType(type as keyof typeof blockTypeToBlockIcon);
@@ -302,13 +305,22 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
               node = node.splitText(anchor.offset)[1] || node;
             }
             if (idx === nodes.length - 1) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
               node = node.splitText(focus.offset)[0] || node;
             }
-
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             if (node.__style !== '') {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
               node.setStyle('');
             }
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             if (node.__format !== 0) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
               node.setFormat(0);
               $getNearestBlockElementAncestorOrThrow(node).setFormat('');
             }

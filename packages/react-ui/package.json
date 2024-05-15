@@ -77,8 +77,8 @@
     "react-intl": "^6.4.7"
   },
   "dependencies": {
-    "@lexical/html": "^0.12.5",
-    "@lexical/react": "^0.12.5",
+    "@lexical/html": "^0.15.0",
+    "@lexical/react": "^0.15.0",
     "@selfcommunity/api-services": "^0.4.9-alpha.17",
     "@selfcommunity/react-core": "^0.4.9-alpha.43",
     "@selfcommunity/react-i18n": "^0.5.9-alpha.24",
@@ -90,7 +90,7 @@
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "emoji-picker-react": "4.5.16",
-    "lexical": "0.12.5",
+    "lexical": "0.15.0",
     "libphonenumber-js": "^1.10.53",
     "prop-types": "^15.8.1",
     "prop-types-extra": "^1.1.1",
