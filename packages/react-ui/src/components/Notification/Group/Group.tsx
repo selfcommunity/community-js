@@ -10,7 +10,7 @@ import {
   SCUserContextType,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCGroupSubscriptionStatusType, SCGroupType, SCNotificationGroupActivityType} from '@selfcommunity/types';
+import {SCGroupSubscriptionStatusType, SCGroupType, SCNotificationGroupActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -122,7 +122,17 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
               defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
                 group: notificationObject.group.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)}>{chunks}</Link>
+                link: (...chunks) => (
+                  <Link
+                    to={
+                      notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
+                      notificationObject.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP
+                        ? scRoutingContext.url(SCRoutes.GROUP_MEMBERS_ROUTE_NAME, notificationObject.group)
+                        : scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)
+                    }>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
           </Box>
@@ -133,7 +143,13 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
               <DateTimeAgo date={notificationObject.active_at} />
               {status && status !== SCGroupSubscriptionStatusType.SUBSCRIBED && (
                 <Typography color="primary">
-                  <Link to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)}>
+                  <Link
+                    to={
+                      notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
+                      notificationObject.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP
+                        ? scRoutingContext.url(SCRoutes.GROUP_MEMBERS_ROUTE_NAME, notificationObject.group)
+                        : scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)
+                    }>
                     <FormattedMessage id="ui.notification.group.button.see" defaultMessage="ui.notification.group.button.see" />
                   </Link>
                 </Typography>
@@ -164,7 +180,12 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
                 classes={{root: classes.acceptButton}}
                 component={Link}
                 loading={scUserContext.user ? status === null || manager.isLoading(notificationObject.group as SCGroupType) : null}
-                to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)}>
+                to={
+                  notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
+                  notificationObject.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP
+                    ? scRoutingContext.url(SCRoutes.GROUP_MEMBERS_ROUTE_NAME, notificationObject.group)
+                    : scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)
+                }>
                 <FormattedMessage id="ui.notification.group.button.see" defaultMessage="ui.notification.group.button.see" />
               </LoadingButton>
             )}

@@ -57,7 +57,7 @@ export interface GroupsProps {
 
   /**
    * Show/Hide filters
-   * @default false
+   * @default true
    */
   showFilters?: boolean;
 
@@ -113,7 +113,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     endpointQueryParams = {limit: 20, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     GroupComponentProps = {variant: 'outlined', ButtonBaseProps: {disableRipple: true, component: Box}},
-    showFilters = false,
+    showFilters = true,
     filters,
     general = true,
     ...rest
@@ -223,7 +223,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const filteredGroups = sortByAttr(getFilteredGroups(), 'order');
   const content = (
     <>
-      {showFilters && (
+      {showFilters && groups.length !== 0 && (
         <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
           {filters ? (
             filters
