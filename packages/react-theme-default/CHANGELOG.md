@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9...@selfcommunity/react-theme-default@0.1.10-alpha.0) (2024-05-16)
+
+
+### Bug Fixes
+
+* groups notification redirect, groups searchbar visibility when no results, added user obj to group info widget, active status for group icon in navigation toolbar. ([62a8d5f](https://github.com/selfcommunity/community-js/commit/62a8d5f2674b291a9b348e13ad587660b2ecae23))
+
+
+
+
+
 ## [0.1.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.9-alpha.86...@selfcommunity/react-theme-default@0.1.9) (2024-05-15)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
