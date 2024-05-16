@@ -289,7 +289,6 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
         newIncubators[index].subscribers_count = incubator.subscribers_count + 1;
         newIncubators[index].subscribed = !incubator.subscribed;
       }
-      console.log(newIncubators);
       dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: newIncubators}});
     }
   };

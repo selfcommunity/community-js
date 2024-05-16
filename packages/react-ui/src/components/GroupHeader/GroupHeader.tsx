@@ -194,7 +194,6 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
         } else if (msg === `${SCTopicType.GROUP}.${SCEventType.REMOVE_MEMBER}`) {
           _group.subscribers_counter = Math.max(_group.subscribers_counter - 1, 0);
         }
-        console.log(_group);
         setSCGroup(_group);
       }
     },
