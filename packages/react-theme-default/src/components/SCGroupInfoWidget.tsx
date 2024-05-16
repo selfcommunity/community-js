@@ -24,6 +24,11 @@ const Component = {
         display: 'flex',
         alignItems: 'center',
         gap: theme.spacing(0.5)
+      },
+      '& .SCGroupInfoWidget-admin': {
+        '& .SCUser-root': {
+          marginTop: theme.spacing(1)
+        }
       }
     }),
     skeletonRoot: ({theme}: any) => ({})

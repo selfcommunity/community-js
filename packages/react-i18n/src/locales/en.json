@@ -393,7 +393,7 @@
   "ui.groupInfoWidget.privacy.public.info": "<b>Public: </b>Anyone can join, see who is part of the group and what they post on the group page.",
   "ui.groupInfoWidget.privacy.private": "Private",
   "ui.groupInfoWidget.privacy.private.info": "<b>Private: </b>Only members can see who is part of the group and what they post, you can only join by invitation or request.",
-  "ui.groupInfoWidget.admin": "<b>Admin:</b> {admin}",
+  "ui.groupInfoWidget.admin": "<b>Admin:</b>",
   "ui.groupInviteButton": "Invite",
   "ui.groupInviteButton.dialog.title": "Invite to the group",
   "ui.groupInviteButton.dialog.content.search.placeholder": "Search for people to invite",
