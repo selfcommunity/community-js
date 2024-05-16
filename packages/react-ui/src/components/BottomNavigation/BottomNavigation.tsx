@@ -86,7 +86,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
 
   // MEMO
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
-  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
   const isIOS = useMemo(() => iOS(), []);
 
   // RENDER

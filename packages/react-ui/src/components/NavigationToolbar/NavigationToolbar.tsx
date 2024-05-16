@@ -185,7 +185,10 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     return _preferences;
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
-  const groupsEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.GROUPING), [scPreferences.features]);
+  const groupsEnabled = useMemo(
+    () => scPreferences.features.includes(SCFeatureName.GROUPING) && scPreferences.features.includes(SCFeatureName.TAGGING),
+    [scPreferences.features]
+  );
   const showComposer = useMemo(() => {
     return (
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value &&
