@@ -127,7 +127,7 @@ export default function UserSubscribedGroupsWidget(inProps: UserSubscribedGroups
   const scUserContext: SCUserContextType = useSCUser();
   const isMe = useMemo(() => scUserContext.user && userId === scUserContext.user.id, [scUserContext.user, userId]);
   const {features}: SCPreferencesContextType = useSCPreferences();
-  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
 
   // STATE
   const [state, dispatch] = useReducer(

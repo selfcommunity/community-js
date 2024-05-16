@@ -133,7 +133,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
   // MEMO
-  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING), [features]);
+  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
 
   // HANDLERS
   const handleOpenSearch = useCallback(() => {
