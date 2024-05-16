@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.12-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.11...@selfcommunity/react-i18n@0.5.12-alpha.0) (2024-05-16)
+
+
+### Performance Improvements
+
+* linear issues: https://linear.app/quentral/issue/QUE-341/menu-utente-community-quentral and https://linear.app/quentral/issue/QUE-339/disabilitare-lo-share-condividi-ora ([e50e1ef](https://github.com/selfcommunity/community-js/commit/e50e1efb7fb2953bc89ae675b21db6b95fe04642))
+
+
+
+
+
 ## [0.5.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.11-alpha.1...@selfcommunity/react-i18n@0.5.11) (2024-05-16)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
