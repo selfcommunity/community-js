@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.11-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.10...@selfcommunity/react-ui@0.7.11-alpha.0) (2024-05-16)
+
+
+### Bug Fixes
+
+* added tagging condition for showing groups ([88c2148](https://github.com/selfcommunity/community-js/commit/88c2148815aa30f9312ca06e6fb807de2421da35))
+
+
+
+
+
 ## [0.7.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.10-alpha.1...@selfcommunity/react-ui@0.7.10) (2024-05-16)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
