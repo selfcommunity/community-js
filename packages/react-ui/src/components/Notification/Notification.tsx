@@ -347,7 +347,17 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                 defaultMessage={`ui.notification.${notificationObject.aggregated[0].type}`}
                 values={{
                   group: groupNotification.group.name,
-                  link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, groupNotification.group)}>{chunks}</Link>
+                  link: (...chunks) => (
+                    <Link
+                      to={
+                        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
+                        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP
+                          ? scRoutingContext.url(SCRoutes.GROUP_MEMBERS_ROUTE_NAME, groupNotification.group)
+                          : scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, groupNotification.group)
+                      }>
+                      {chunks}
+                    </Link>
+                  )
                 }}
               />
             </>

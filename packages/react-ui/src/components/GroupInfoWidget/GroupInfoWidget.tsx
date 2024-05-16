@@ -12,6 +12,7 @@ import PubSub from 'pubsub-js';
 import {useSCFetchGroup} from '@selfcommunity/react-core';
 import GroupInfoWidgetSkeleton from './Skeleton';
 import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import User from '../User';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -232,10 +233,10 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             values={{
               // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
               // @ts-ignore
-              b: (chunks) => <strong>{chunks}</strong>,
-              admin: scGroup?.managed_by.username
+              b: (chunks) => <strong>{chunks}</strong>
             }}
           />
+          <User userId={scGroup?.managed_by?.id} elevation={0} actions={<></>} />
         </Typography>
       </CardContent>
     </Root>

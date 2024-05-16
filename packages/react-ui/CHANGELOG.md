@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.10-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9...@selfcommunity/react-ui@0.7.10-alpha.0) (2024-05-16)
+
+
+### Bug Fixes
+
+* groups notification redirect, groups searchbar visibility when no results, added user obj to group info widget, active status for group icon in navigation toolbar. ([62a8d5f](https://github.com/selfcommunity/community-js/commit/62a8d5f2674b291a9b348e13ad587660b2ecae23))
+
+
+
+
+
 ## [0.7.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.9-alpha.82...@selfcommunity/react-ui@0.7.9) (2024-05-15)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
