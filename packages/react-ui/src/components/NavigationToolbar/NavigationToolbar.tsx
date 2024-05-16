@@ -191,7 +191,6 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   );
   const showComposer = useMemo(() => {
     return (
-      scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value &&
       !disableComposer &&
       (!scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user))
     );

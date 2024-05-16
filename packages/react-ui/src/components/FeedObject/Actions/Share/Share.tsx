@@ -149,6 +149,9 @@ export default function Share(props: ShareProps): JSX.Element {
   const domain = typeof location !== 'undefined' && location.origin ? location.origin : '';
   const url = domain + scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj));
   const isGroupPublic = useMemo(() => feedObject.group && feedObject.group.privacy === SCGroupPrivacyType.PUBLIC, [feedObject.group]);
+  const showShareAction = useMemo(() => {
+    return !scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user);
+  }, [scPreferencesContext, scUserContext.user]);
 
   // INTL
   const intl = useIntl();
@@ -296,12 +299,14 @@ export default function Share(props: ShareProps): JSX.Element {
       <Box>
         {(!feedObject.group || isGroupPublic) && (
           <>
-            <MenuItem onClick={() => share(false)}>
-              <ListItemIcon>
-                <Icon fontSize="small">redo</Icon>
-              </ListItemIcon>
-              <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
-            </MenuItem>
+            {showShareAction && (
+              <MenuItem onClick={() => share(false)}>
+                <ListItemIcon>
+                  <Icon fontSize="small">redo</Icon>
+                </ListItemIcon>
+                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
+              </MenuItem>
+            )}
             {facebookShareEnabled && (
               <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
                 <ListItemIcon>

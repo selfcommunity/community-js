@@ -12,7 +12,7 @@ const Root = styled(GenericSkeleton, {
   slot: 'SkeletonRoot'
 })(() => ({}));
 /**
- * > API documentation for the Community-JS Platform Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Group Info Widget Skeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
