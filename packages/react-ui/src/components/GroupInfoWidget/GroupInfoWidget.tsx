@@ -226,7 +226,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             values={{date: intl.formatDate(scGroup.created_at, {day: 'numeric', year: 'numeric', month: 'long'})}}
           />
         </Typography>
-        <Typography variant="body2" className={classes.admin}>
+        <Typography component="div" className={classes.admin}>
           <FormattedMessage
             id="ui.groupInfoWidget.admin"
             defaultMessage="ui.groupInfoWidget.admin"

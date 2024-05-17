@@ -25,10 +25,11 @@ const Component = {
         alignItems: 'center',
         gap: theme.spacing(0.5)
       },
+      '& .SCGroupInfoWidget-date': {
+        paddingTop: `${theme.spacing(1)} !important`
+      },
       '& .SCGroupInfoWidget-admin': {
-        '& .SCUser-root': {
-          marginTop: theme.spacing(1)
-        }
+        marginTop: theme.spacing(1)
       }
     }),
     skeletonRoot: ({theme}: any) => ({})
