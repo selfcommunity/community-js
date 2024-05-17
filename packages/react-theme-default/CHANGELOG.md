@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.1...@selfcommunity/react-theme-default@0.1.13-alpha.2) (2024-05-17)
+
+
+### Bug Fixes
+
+* zIndex MuiAppBar ([66e39ce](https://github.com/selfcommunity/community-js/commit/66e39ceb6cf048683aaa0b3f01ba6b5159948797))
+* zIndex MuiAppBar ([0078b91](https://github.com/selfcommunity/community-js/commit/0078b91ae269bb28205eb3daf530c42e18cd85bf))
+
+
+
+
+
 ## [0.1.13-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.0...@selfcommunity/react-theme-default@0.1.13-alpha.1) (2024-05-17)
 
 
