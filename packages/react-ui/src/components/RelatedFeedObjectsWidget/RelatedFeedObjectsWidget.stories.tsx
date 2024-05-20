@@ -35,8 +35,8 @@ const template = (args) => (
 
 export const Base: StoryObj<SearchAutocomplete> = {
   args: {
-    feedObjectId: 23,
-    feedObjectType: SCContributionType.DISCUSSION,
+    feedObjectId: 1673,
+    feedObjectType: SCContributionType.POST,
     template: SCFeedObjectTemplateType.SNIPPET,
     elevation: 1,
     variant: 'elevation'
