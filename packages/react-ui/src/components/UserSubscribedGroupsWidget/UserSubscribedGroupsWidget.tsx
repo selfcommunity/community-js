@@ -172,7 +172,7 @@ export default function UserSubscribedGroupsWidget(inProps: UserSubscribedGroups
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (groupsEnabled || (isInteger(userId) && scUserContext.user !== undefined)) {
+    if (groupsEnabled && isInteger(userId) && scUserContext.user !== undefined) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -188,7 +188,7 @@ export default function UserSubscribedGroupsWidget(inProps: UserSubscribedGroups
   }, [state.results.length]);
 
   useEffect(() => {
-    if ((!groupsEnabled && !scUserContext.user) || !isInteger(userId)) {
+    if (!groupsEnabled && !scUserContext.user && !isInteger(userId)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});

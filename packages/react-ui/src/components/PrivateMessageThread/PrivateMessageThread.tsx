@@ -187,7 +187,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   // HOOKS
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const {scUser} = useSCFetchUser({id: threadObj, threadObj});
+  const {scUser} = useSCFetchUser({id: isNumber && threadObj, threadObj});
 
   const messagesEndRef = useRef(null);
 

@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.13-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.13-alpha.2...@selfcommunity/react-ui@0.7.13-alpha.3) (2024-05-20)
+
+
+### Performance Improvements
+
+* added user bio and website to UserProfileHeader ([0580f63](https://github.com/selfcommunity/community-js/commit/0580f631824095abcbf5d67f3449363d669b16f3))
+
+
+
+
+
+## [0.7.13-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.13-alpha.1...@selfcommunity/react-ui@0.7.13-alpha.2) (2024-05-20)
+
+
+### Bug Fixes
+
+* build ([8228827](https://github.com/selfcommunity/community-js/commit/8228827fba543881631c1aeec14f9c3bb9533b61))
+* related feed obj dialog ([01b81d0](https://github.com/selfcommunity/community-js/commit/01b81d0cc4cb3915e2cdc624e112aa2be4b4c1c3))
+
+
+
+
+
+## [0.7.13-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.13-alpha.0...@selfcommunity/react-ui@0.7.13-alpha.1) (2024-05-17)
+
+
+### Bug Fixes
+
+* error/warning logs ([17f2393](https://github.com/selfcommunity/community-js/commit/17f2393c5e7e47a705f4ec1aa784025a2a97019d))
+
+
+
+
+
+## [0.7.13-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.12...@selfcommunity/react-ui@0.7.13-alpha.0) (2024-05-17)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.7.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.12-alpha.1...@selfcommunity/react-ui@0.7.12) (2024-05-16)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

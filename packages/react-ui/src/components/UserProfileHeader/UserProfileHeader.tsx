@@ -5,6 +5,7 @@ import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
 import {SCUserType} from '@selfcommunity/types';
 import {
+  Link,
   SCContextType,
   SCPreferences,
   SCPreferencesContextType,
@@ -28,6 +29,8 @@ const classes = {
   infOpsSection: `${PREFIX}-infops-section`,
   username: `${PREFIX}-username`,
   realname: `${PREFIX}-realname`,
+  bio: `${PREFIX}-bio`,
+  website: `${PREFIX}-website`,
   changePicture: `${PREFIX}-change-picture`,
   changeCover: `${PREFIX}-change-cover`
 };
@@ -196,9 +199,19 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
             @{isMe ? scUserContext.user.username : scUser.username}
           </Typography>
           {realName && (
-            <Typography variant="h5" className={classes.realname}>
+            <Typography variant="subtitle1" className={classes.realname}>
               {realName}
             </Typography>
+          )}
+          {scUser.bio && (
+            <Typography variant="subtitle2" className={classes.bio}>
+              {scUser.bio}
+            </Typography>
+          )}
+          {scUser.website && (
+            <Link className={classes.website} target="blank" to={scUser.website}>
+              <Typography variant="body2">{scUser.website}</Typography>
+            </Link>
           )}
         </Box>
         {actions && actions}

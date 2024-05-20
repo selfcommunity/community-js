@@ -305,7 +305,9 @@ const Component = {
           },
           '& .SCFeedObject-show-more': {
             padding: theme.spacing(0.5),
-            marginTop: theme.spacing(-0.5)
+            marginTop: theme.spacing(-0.5),
+            fontSize: theme.typography.fontSize,
+            fontWeight: theme.typography.fontWeightBold
           }
         },
         '& .SCFeedObject-actions-section': {

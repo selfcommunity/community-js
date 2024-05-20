@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.3...@selfcommunity/react-theme-default@0.1.13-alpha.4) (2024-05-20)
+
+
+### Performance Improvements
+
+* added user bio and website to UserProfileHeader ([0580f63](https://github.com/selfcommunity/community-js/commit/0580f631824095abcbf5d67f3449363d669b16f3))
+
+
+
+
+
+## [0.1.13-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.2...@selfcommunity/react-theme-default@0.1.13-alpha.3) (2024-05-20)
+
+
+### Bug Fixes
+
+* related feed obj dialog ([01b81d0](https://github.com/selfcommunity/community-js/commit/01b81d0cc4cb3915e2cdc624e112aa2be4b4c1c3))
+
+
+
+
+
+## [0.1.13-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.1...@selfcommunity/react-theme-default@0.1.13-alpha.2) (2024-05-17)
+
+
+### Bug Fixes
+
+* zIndex MuiAppBar ([66e39ce](https://github.com/selfcommunity/community-js/commit/66e39ceb6cf048683aaa0b3f01ba6b5159948797))
+* zIndex MuiAppBar ([0078b91](https://github.com/selfcommunity/community-js/commit/0078b91ae269bb28205eb3daf530c42e18cd85bf))
+
+
+
+
+
+## [0.1.13-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.0...@selfcommunity/react-theme-default@0.1.13-alpha.1) (2024-05-17)
+
+
+### Bug Fixes
+
+* error/warning logs ([17f2393](https://github.com/selfcommunity/community-js/commit/17f2393c5e7e47a705f4ec1aa784025a2a97019d))
+
+
+
+
+
+## [0.1.13-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.12...@selfcommunity/react-theme-default@0.1.13-alpha.0) (2024-05-17)
+
+
+### Bug Fixes
+
+* zIndex MuiAppBar ([5dcda2f](https://github.com/selfcommunity/community-js/commit/5dcda2f7a4728f2d38f9dc3ee0896255b387981c))
+
+
+
+
+
 ## [0.1.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.12-alpha.1...@selfcommunity/react-theme-default@0.1.12) (2024-05-16)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
