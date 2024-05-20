@@ -14,7 +14,8 @@ const Component = {
       },
       '& .SCUserProfileHeader-infops-section': {
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: theme.spacing(1)
       },
       '& .SCUserProfileHeader-avatar': {
         top: 180,
@@ -47,19 +48,24 @@ const Component = {
         display: 'flex',
         marginLeft: theme.spacing(2)
       },
-      '& .SCUserProfileHeader-username': {
-        marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeXLarge + 8,
+      '& .SCUserProfileHeader-info': {
         marginLeft: theme.spacing(2),
-        fontWeight: theme.typography.fontWeightBold,
-        fontSize: '1.429rem',
-        textAlign: 'start'
-      },
-      '& .SCUserProfileHeader-realname': {
-        fontSize: '1rem',
-        textAlign: 'start',
-        paddingBottom: theme.spacing(1),
-        marginTop: theme.spacing(1),
-        marginLeft: theme.spacing(2)
+        '& .SCUserProfileHeader-username': {
+          marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeXLarge + 8,
+          fontWeight: theme.typography.fontWeightBold,
+          fontSize: '1.429rem',
+          textAlign: 'start'
+        },
+        '& .SCUserProfileHeader-realname': {
+          fontSize: '1rem',
+          textAlign: 'start',
+          marginTop: theme.spacing(1)
+        },
+        '& .SCUserProfileHeader-website': {
+          textDecoration: 'none',
+          color: theme.palette.secondary.main,
+          marginTop: theme.spacing(1)
+        }
       },
       '& .SCUserProfileHeader-change-cover': {
         position: 'absolute',
