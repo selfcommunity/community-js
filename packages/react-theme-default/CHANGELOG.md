@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.2...@selfcommunity/react-theme-default@0.1.13-alpha.3) (2024-05-20)
+
+
+### Bug Fixes
+
+* related feed obj dialog ([01b81d0](https://github.com/selfcommunity/community-js/commit/01b81d0cc4cb3915e2cdc624e112aa2be4b4c1c3))
+
+
+
+
+
 ## [0.1.13-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.1...@selfcommunity/react-theme-default@0.1.13-alpha.2) (2024-05-17)
 
 
