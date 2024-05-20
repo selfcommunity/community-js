@@ -45,7 +45,7 @@ export interface CustomAdvProps extends VirtualScrollerItemProps {
   /**
    * Position of the ADV
    */
-  position: SCCustomAdvPosition;
+  position?: SCCustomAdvPosition;
 
   /**
    * Category ids if the adv must be related to specific categories
