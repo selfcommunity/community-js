@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.18-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.17...@selfcommunity/react-i18n@0.5.18-alpha.0) (2024-05-21)
+
+
+### Performance Improvements
+
+* copy composer success. Linear issue: https://linear.app/quentral/issue/QUE-368/copy-sbagliato-alla-pubblicazione-di-un-contenuto ([09b4059](https://github.com/selfcommunity/community-js/commit/09b405967832d573dccb3d0aa4e86fb9b64afecc))
+
+
+
+
+
 ## [0.5.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.17-alpha.1...@selfcommunity/react-i18n@0.5.17) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
