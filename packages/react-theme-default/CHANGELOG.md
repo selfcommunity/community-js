@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.5...@selfcommunity/react-theme-default@0.1.13) (2024-05-20)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.13-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.4...@selfcommunity/react-theme-default@0.1.13-alpha.5) (2024-05-20)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.13-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.3...@selfcommunity/react-theme-default@0.1.13-alpha.4) (2024-05-20)
+
+
+### Performance Improvements
+
+* added user bio and website to UserProfileHeader ([0580f63](https://github.com/selfcommunity/community-js/commit/0580f631824095abcbf5d67f3449363d669b16f3))
+
+
+
+
+
 ## [0.1.13-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.13-alpha.2...@selfcommunity/react-theme-default@0.1.13-alpha.3) (2024-05-20)
 
 
