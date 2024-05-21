@@ -6,7 +6,7 @@ const Component = {
         marginRight: theme.spacing(2),
         '& img': {
           verticalAlign: 'middle',
-          maxHeight: theme.mixins.toolbar.minHeight-10
+          maxHeight: theme.mixins.toolbar.minHeight - 20
         }
       },
       '& .SCNavigationToolbar-navigation': {

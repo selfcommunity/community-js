@@ -304,10 +304,11 @@ const Component = {
             }
           },
           '& .SCFeedObject-show-more': {
-            padding: theme.spacing(0.5),
-            marginTop: theme.spacing(-0.5),
             fontSize: theme.typography.fontSize,
-            fontWeight: theme.typography.fontWeightBold
+            fontWeight: theme.typography.fontWeightBold,
+            padding: theme.spacing(0.25),
+            justifyContent: 'start',
+            '&:hover': {backgroundColor: 'transparent'}
           }
         },
         '& .SCFeedObject-actions-section': {

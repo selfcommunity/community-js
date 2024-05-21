@@ -7,7 +7,7 @@ const Component = {
         flexGrow: 1,
         '& img': {
           verticalAlign: 'middle',
-          maxHeight: `calc(${theme.mixins.toolbar.minHeight}px - ${theme.spacing(1)})`
+          maxHeight: `calc(${theme.mixins.toolbar.minHeight}px - ${theme.spacing(2)})`
         }
       },
       '& h4': {
