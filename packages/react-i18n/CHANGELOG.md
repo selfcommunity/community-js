@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.19-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.18...@selfcommunity/react-i18n@0.5.19-alpha.0) (2024-05-21)
+
+
+### Performance Improvements
+
+* fixed copy. Linear issue: https://linear.app/quentral/issue/QUE-323/copy-corretto-it-en-per-messaggi-modale-per-cancellazione-di-un ([dd54b65](https://github.com/selfcommunity/community-js/commit/dd54b655cdcc71340844faa5d1ce14a07287a411))
+
+
+
+
+
 ## [0.5.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.18-alpha.1...@selfcommunity/react-i18n@0.5.18) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

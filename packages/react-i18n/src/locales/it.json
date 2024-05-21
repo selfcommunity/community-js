@@ -233,7 +233,7 @@
   "ui.contributionActionMenu.actionSuccess": "Operazione completata!",
   "ui.contributionActionMenu.aggressive": "Aggressivo",
   "ui.contributionActionMenu.deleteContribution": "Elimina",
-  "ui.contributionActionMenu.deleteContributionInfo": "Il contenuto è stato rimosso con successo. Rimane visibile unicamente a te, finché rimani su questa pagina, qualora volessi ripristinarlo oppure lo avessi cancellato per errore.",
+  "ui.contributionActionMenu.deleteContributionInfo": "Il contenuto rimosso rimarrà visibile unicamente a te finché resti su questa pagina, qualora volessi ripristinarlo oppure lo avessi cancellato per errore.",
   "ui.contributionActionMenu.deleteContributionWithMotivation": "Cancella con motivazione",
   "ui.contributionActionMenu.editContribution": "Modifica",
   "ui.contributionActionMenu.enableNotificationContribution": "Riattiva le notifiche",
