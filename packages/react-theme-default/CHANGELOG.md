@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.15-alpha.1...@selfcommunity/react-theme-default@0.1.15) (2024-05-21)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.15-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.15-alpha.0...@selfcommunity/react-theme-default@0.1.15-alpha.1) (2024-05-21)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.15-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.14...@selfcommunity/react-theme-default@0.1.15-alpha.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* navigationToolbar ([425bd5b](https://github.com/selfcommunity/community-js/commit/425bd5b426a848309e905711aafea3c5779b4a54))
+
+
+
+
+
 ## [0.1.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.14-alpha.1...@selfcommunity/react-theme-default@0.1.14) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
