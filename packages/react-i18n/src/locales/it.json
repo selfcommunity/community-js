@@ -175,6 +175,7 @@
   "ui.composer.edit.error.content": "Questo contributo non può essere modificato",
   "ui.composer.error.invalid": "Purtroppo si è verificato un errore",
   "ui.composer.edit.error.title": "Si è verificato un errore durante il caricamento del contenuto. Per favore rirpova.",
+  "ui.composer.error.permission_denied": "Non hai l'autorizzazione per eseguire questa azione.",
   "ui.composer.layer.audience.addressing.label": "Cerca Tag...",
   "ui.composer.layer.audience.all": "Tutti",
   "ui.composer.layer.audience.all.message": "Il tuo post sarà visibile da tutti.",
