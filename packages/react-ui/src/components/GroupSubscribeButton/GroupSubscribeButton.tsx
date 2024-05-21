@@ -121,7 +121,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (authUserId) {
       setStatus(scGroupsManager.subscriptionStatus(scGroup));
     }
-  }, [authUserId, scGroupsManager.subscriptionStatus]);
+  }, [authUserId, scGroupsManager.subscriptionStatus, scGroup]);
 
   /**
    * Notify UI when a member is added to a group
@@ -172,7 +172,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
   /**
    * Get current translated status
    */
-  const getStatus = (): JSX.Element => {
+  const getStatus = useMemo((): JSX.Element => {
     let _status;
     switch (status) {
       case SCGroupSubscriptionStatusType.REQUESTED:
@@ -191,7 +191,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
         break;
     }
     return _status;
-  };
+  }, [status, scGroup]);
 
   if (!scGroup || (isGroupAdmin && user?.id === scUserContext.user.id) || (isGroupAdmin && !user?.id)) {
     return null;
@@ -206,7 +206,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       disabled={status === SCGroupSubscriptionStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>
-      {isGroupAdmin ? <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" /> : getStatus()}
+      {isGroupAdmin ? <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" /> : getStatus}
     </Root>
   );
 }
