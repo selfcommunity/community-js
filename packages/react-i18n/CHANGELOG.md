@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.17-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.16...@selfcommunity/react-i18n@0.5.17-alpha.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* composer error transl ([b88f08c](https://github.com/selfcommunity/community-js/commit/b88f08c39d983d5ea726b0e2d4aaa938309255d9))
+
+
+
+
+
 ## [0.5.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.16-alpha.1...@selfcommunity/react-i18n@0.5.16) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
