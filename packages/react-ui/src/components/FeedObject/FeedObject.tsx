@@ -701,24 +701,22 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           : getContributionHtml(contributionHtml, scRoutingContext.url);
       if (template === SCFeedObjectTemplateType.SHARE) {
         return (
-          <>
-            <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
-              <Typography
-                component="div"
-                className={classes.text}
-                variant="body2"
-                gutterBottom
-                dangerouslySetInnerHTML={{
-                  __html: summaryHtml
-                }}
-              />
-            </Link>
+          <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.text}>
+            <Typography
+              component="span"
+              className={classes.text}
+              variant="body2"
+              gutterBottom
+              dangerouslySetInnerHTML={{
+                __html: summaryHtml
+              }}
+            />
             {!expanded && summaryHtmlTruncated && (
               <Button size="small" variant="text" color="inherit" className={classes.showMore} onClick={handleToggleSummary}>
                 <FormattedMessage id="ui.feedObject.content.showMore" defaultMessage="ui.feedObject.content.showMore" />
               </Button>
             )}
-          </>
+          </Link>
         );
       } else if (template === SCFeedObjectTemplateType.DETAIL) {
         return (

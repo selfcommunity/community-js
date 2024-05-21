@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.14-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.13...@selfcommunity/react-ui@0.7.14-alpha.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-224/correzione-text-format-peraltro-che-apre-il-post-dal-feed ([18eb212](https://github.com/selfcommunity/community-js/commit/18eb2122d38ab02b7fbd15a22597c1a93adaa5f1))
+
+
+
+
+
 ## [0.7.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.13-alpha.4...@selfcommunity/react-ui@0.7.13) (2024-05-20)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
