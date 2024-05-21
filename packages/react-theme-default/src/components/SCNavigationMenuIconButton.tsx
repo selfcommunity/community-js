@@ -13,8 +13,14 @@ const Component = {
         padding: '1px',
         display: 'flex',
         justifyContent: 'space-between',
+        '& > a:first-of-type': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignContent: 'center',
+          flexWrap: 'wrap'
+        },
         '& img': {
-          maxHeight: theme.mixins.toolbar.minHeight,
+          maxHeight: theme.mixins.toolbar.minHeight - 20,
           paddingLeft: theme.spacing(1.5)
         }
       },
