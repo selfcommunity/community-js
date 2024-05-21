@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.19-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.18...@selfcommunity/react-ui@0.7.19-alpha.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* Linear issue: https://linear.app/quentral/issue/QUE-373/stringa-stato-bottone-gruppi ([4c2a335](https://github.com/selfcommunity/community-js/commit/4c2a335a288c2f2985054ea99db1e9f144dcf9c2))
+
+
+
+
+
 ## [0.7.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.18-alpha.1...@selfcommunity/react-ui@0.7.18) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
