@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.20-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.20-alpha.1...@selfcommunity/react-ui@0.7.20-alpha.2) (2024-05-22)
+
+
+### Bug Fixes
+
+* group subscription manager. Linear issue: https://linear.app/quentral/issue/QUE-373/stringa-stato-bottone-gruppi. Removed debug logs. ([f0df2ec](https://github.com/selfcommunity/community-js/commit/f0df2ecb8f8cd8f043a38017ae4d5f616b18225f))
+
+
+
+
+
+## [0.7.20-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.20-alpha.0...@selfcommunity/react-ui@0.7.20-alpha.1) (2024-05-22)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.20-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.19...@selfcommunity/react-ui@0.7.20-alpha.0) (2024-05-22)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.7.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.19-alpha.1...@selfcommunity/react-ui@0.7.19) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

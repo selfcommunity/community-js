@@ -1,11 +1,21 @@
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCFeatureName, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
+import {
+  SCFeatureName,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType,
+  SCGroupType,
+  SCNotificationTopicType,
+  SCNotificationTypologyType,
+  SCUserType,
+} from '@selfcommunity/types';
 import useSCCachingManager from './useSCCachingManager';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
-import {SCPreferencesContextType} from '../types';
+import {SCNotificationMapping} from '../constants/Notification';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import PubSub from 'pubsub-js';
 
 /**
  :::info
@@ -23,10 +33,69 @@ import {SCPreferencesContextType} from '../types';
  */
 export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
-  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const {features} = useSCPreferences();
   const authUserId = user ? user.id : null;
-  const groupsDisabled = scPreferencesContext.features && !scPreferencesContext.features.includes(SCFeatureName.GROUPING);
+  const groupsDisabled = features && !features.includes(SCFeatureName.GROUPING) && !features.includes(SCFeatureName.TAGGING);
 
+  const notificationInvitedToJoinGroup = useRef(null);
+  const notificationRequestedToJoinGroup = useRef(null);
+  const notificationAcceptedToJoinGroup = useRef(null);
+  const notificationAddedToGroup = useRef(null);
+
+  /**
+   * Subscribe to notification types user_follow, user_unfollow
+   */
+  useDeepCompareEffectNoCheck(() => {
+    notificationInvitedToJoinGroup.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP}`,
+      notificationSubscriber
+    );
+    notificationRequestedToJoinGroup.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP}`,
+      notificationSubscriber
+    );
+    notificationAcceptedToJoinGroup.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP}`,
+      notificationSubscriber
+    );
+    notificationAddedToGroup.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_GROUP}`,
+      notificationSubscriber
+    );
+    return () => {
+      PubSub.unsubscribe(notificationInvitedToJoinGroup.current);
+      PubSub.unsubscribe(notificationRequestedToJoinGroup.current);
+      PubSub.unsubscribe(notificationAcceptedToJoinGroup.current);
+      PubSub.unsubscribe(notificationAddedToGroup.current);
+    };
+  }, [data]);
+
+  /**
+   * Notification subscriber handler
+   * @param msg
+   * @param dataMsg
+   */
+  const notificationSubscriber = (msg, dataMsg) => {
+    if (dataMsg.data.group !== undefined) {
+      let _status: string;
+      switch (SCNotificationMapping[dataMsg.data.activity_type]) {
+        case SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP:
+          _status = SCGroupSubscriptionStatusType.INVITED;
+          break;
+        case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP:
+          _status = SCGroupSubscriptionStatusType.REQUESTED;
+          break;
+        case SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP:
+          _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
+          break;
+        case SCNotificationTypologyType.USER_ADDED_TO_GROUP:
+          _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
+          break;
+      }
+      updateCache([dataMsg.data.group.id]);
+      setData((prev) => getDataUpdated(prev, dataMsg.data.group.id, _status));
+    }
+  };
   /**
    * Memoized refresh all groups
    * It makes a single request to the server and retrieves
@@ -199,7 +268,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
     () =>
       (group: SCGroupType): string => {
         const d = data.filter((k) => parseInt(Object.keys(k)[0]) === group.id);
-        return d.length ? d[0][group.id] : null;
+        return d.length ? d[0][group.id] : !data.length ? group.subscription_status : null;
       },
     [data]
   );
