@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.20-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.19...@selfcommunity/react-i18n@0.5.20-alpha.0) (2024-05-22)
+
+
+### Performance Improvements
+
+* Linear issue: https://linear.app/quentral/issue/QUE-322/copy-corretto-it-en-per-messaggi-modale-per-x-di-un-contenuto ([d0b1ff1](https://github.com/selfcommunity/community-js/commit/d0b1ff14af8bf59e5957b4b7ecdc4c1e19aa027b))
+
+
+
+
+
 ## [0.5.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.19-alpha.1...@selfcommunity/react-i18n@0.5.19) (2024-05-21)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
