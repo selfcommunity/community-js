@@ -145,6 +145,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
 
   // HOOKS
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
+  console.log(scGroup?.subscription_status, 'header');
 
   // REFS
   const updatesSubscription = useRef(null);

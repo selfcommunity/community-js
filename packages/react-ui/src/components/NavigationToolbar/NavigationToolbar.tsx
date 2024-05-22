@@ -186,7 +186,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const groupsEnabled = useMemo(
-    () => scPreferences.features.includes(SCFeatureName.GROUPING) && scPreferences.features.includes(SCFeatureName.TAGGING),
+    () => scPreferences.features && scPreferences.features.includes(SCFeatureName.GROUPING) && scPreferences.features.includes(SCFeatureName.TAGGING),
     [scPreferences.features]
   );
   const showComposer = useMemo(() => {
