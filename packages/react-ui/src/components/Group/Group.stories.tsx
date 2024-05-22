@@ -32,7 +32,7 @@ const template = (args) => (
 
 export const Base: StoryObj<Group> = {
   args: {
-    groupId: 1,
+    groupId: 3,
     elevation: 1,
     variant: 'elevation'
   },

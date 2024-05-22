@@ -121,7 +121,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (authUserId) {
       setStatus(scGroupsManager.subscriptionStatus(scGroup));
     }
-  }, [authUserId, scGroupsManager.subscriptionStatus, scGroup]);
+  }, [authUserId, scGroupsManager.subscriptionStatus]);
 
   /**
    * Notify UI when a member is added to a group
