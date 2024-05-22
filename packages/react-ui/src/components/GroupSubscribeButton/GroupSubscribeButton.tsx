@@ -107,7 +107,6 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     group,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
-  console.log(scGroup?.subscription_status, 'subscribe button');
 
   const isGroupAdmin = useMemo(
     () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
@@ -122,7 +121,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (authUserId) {
       setStatus(scGroupsManager.subscriptionStatus(scGroup));
     }
-  }, [authUserId, scGroupsManager.subscriptionStatus, scGroup?.subscription_status]);
+  }, [authUserId, scGroupsManager.subscriptionStatus, scGroup]);
 
   /**
    * Notify UI when a member is added to a group

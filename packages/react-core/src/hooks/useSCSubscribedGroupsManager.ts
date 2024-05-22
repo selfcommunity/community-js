@@ -76,7 +76,6 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
    * @param dataMsg
    */
   const notificationSubscriber = (msg, dataMsg) => {
-    console.log(msg, dataMsg, 'subscriber');
     if (dataMsg.data.group !== undefined) {
       let _status: string;
       switch (SCNotificationMapping[dataMsg.data.activity_type]) {
@@ -269,7 +268,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
     () =>
       (group: SCGroupType): string => {
         const d = data.filter((k) => parseInt(Object.keys(k)[0]) === group.id);
-        return d.length ? d[0][group.id] : null;
+        return d.length ? d[0][group.id] : !data.length ? group.subscription_status : null;
       },
     [data]
   );
