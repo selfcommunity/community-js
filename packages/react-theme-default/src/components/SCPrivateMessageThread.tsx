@@ -143,6 +143,7 @@ const Component = {
         display: 'flex',
         justifyContent: 'center',
         marginBottom: theme.spacing(1),
+        zIndex: 1000,
         '& .SCPrivateMessageThread-subheader': {
           width: 'fit-content',
           minWidth: 100,
