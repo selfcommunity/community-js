@@ -98,6 +98,12 @@ export interface FeedProps {
   endMessage?: ReactNode;
 
   /**
+   * Empty feed placeholder, rendered when no feed item can be displayed
+   * @default null
+   */
+  emptyFeedPlaceholder?: ReactNode;
+
+  /**
    * Refresh message, rendered when no more feed item can be displayed
    * @default `<FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />`
    */
@@ -318,7 +324,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     hidePaginationLinks = true,
     paginationLinksPageQueryParam = DEFAULT_PAGINATION_QUERY_PARAM_NAME,
     PaginationLinkProps = {},
-    hideAdvs = false
+    hideAdvs = false,
+    emptyFeedPlaceholder
   } = props;
 
   // CONTEXT
@@ -729,7 +736,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         const previousOffset = parseInt(getQueryStringParameter(feedDataObject.previous, 'offset') || offset) + 1;
         feedDataObject.updateState({
           previous: updateQueryStringParameter(feedDataObject.previous, 'offset', previousOffset),
-          next: updateQueryStringParameter(feedDataObject.next, 'offset', nextOffset)
+          next: updateQueryStringParameter(feedDataObject.next, 'offset', nextOffset),
+          count: feedDataObject.count + 1
         });
       }
     },
@@ -831,6 +839,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           style={{overflow: 'visible'}}
           {...(scrollableTargetId && {scrollableTarget: scrollableTargetId})}>
           {renderHeaderComponent()}
+          {feedDataObject.count === 0 && emptyFeedPlaceholder && emptyFeedPlaceholder}
           <VirtualizedScroller
             className={classes.leftItems}
             items={feedDataLeft}
