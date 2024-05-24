@@ -33,7 +33,7 @@ const Component = {
         textAlign: 'right',
         marginRight: theme.spacing(1.5),
         '& .MuiFormControl-root': {
-          width: 230,
+          width: 190,
           [theme.breakpoints.up('lg')]: {
             width: 300
           }
