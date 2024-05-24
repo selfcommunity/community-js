@@ -17,7 +17,7 @@ import {
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
-import {SCCustomAdvPosition, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {SCCustomAdvPosition, SCFeedTypologyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -219,6 +219,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
             onSuccess={handleComposerSuccess}
             defaultValue={{group: scGroup}}
             label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
+            feedType={SCFeedTypologyType.GROUP}
           />
         )
       }

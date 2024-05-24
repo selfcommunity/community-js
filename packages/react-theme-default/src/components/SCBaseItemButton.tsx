@@ -49,7 +49,10 @@ const Component = {
       },
       '&.SCBaseItemButton-with-actions': {
         '& .SCBaseItemButton-text > *': {
-          maxWidth: `calc(100% - ${theme.spacing(14)})`
+          maxWidth: `calc(100% - ${theme.spacing(14)})`,
+          [theme.breakpoints.only('md')]: {
+            maxWidth: `calc(100% - ${theme.spacing(15)})`
+          }
         },
         '& .SCBaseItemButton-actions': {
           position: 'absolute',

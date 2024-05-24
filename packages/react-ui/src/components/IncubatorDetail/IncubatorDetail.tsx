@@ -30,7 +30,7 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Icon from '@mui/material/Icon';
-import {FACEBOOK_SHARE, TWITTER_SHARE, LINKEDIN_SHARE} from '../../constants/SocialShare';
+import {FACEBOOK_SHARE, X_SHARE, LINKEDIN_SHARE} from '../../constants/SocialShare';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 
 const messages = defineMessages({
@@ -203,7 +203,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
   const facebookShareEnabled =
     SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED].value;
-  const twitterShareEnabled =
+  const xShareEnabled =
     SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED].value;
   const linkedinShareEnabled =
@@ -211,7 +211,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const portal = scContext.settings.portal + scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, scIncubator);
-  const isSocialShareEnabled = facebookShareEnabled || twitterShareEnabled || linkedinShareEnabled;
+  const isSocialShareEnabled = facebookShareEnabled || xShareEnabled || linkedinShareEnabled;
 
   // INTL
   const intl = useIntl();
@@ -433,12 +433,12 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
                     facebook
                   </Icon>
                 )}
-                {twitterShareEnabled && (
+                {xShareEnabled && (
                   <Icon
                     classes={{root: classes.shareMenuIcon}}
                     fontSize="small"
-                    onClick={() => window.open(TWITTER_SHARE + portal, 'twitter-share-dialog', 'width=626,height=436')}>
-                    twitter
+                    onClick={() => window.open(X_SHARE + portal, 'x-share-dialog', 'width=626,height=436')}>
+                    x
                   </Icon>
                 )}
                 {linkedinShareEnabled && (

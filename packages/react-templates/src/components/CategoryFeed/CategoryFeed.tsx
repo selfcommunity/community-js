@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import {
   CategoryTrendingFeedWidget,
   CategoryTrendingUsersWidget,
+  ContributionUtils,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -16,13 +17,12 @@ import {
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCustomAdvPosition} from '@selfcommunity/types';
+import {SCCategoryType, SCCustomAdvPosition, SCFeedTypologyType} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {SnackbarKey, useSnackbar} from 'notistack';
-import {ContributionUtils} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -223,7 +223,9 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} />}
+      HeaderComponent={
+        <InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} feedType={SCFeedTypologyType.CATEGORY} />
+      }
       CustomAdvProps={{categoriesId: [scCategory.id]}}
       enabledCustomAdvPositions={[
         SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
