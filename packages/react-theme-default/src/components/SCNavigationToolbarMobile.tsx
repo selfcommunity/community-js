@@ -1,7 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      padding: theme.spacing(0, 1, 0, 1),
+      padding: `${theme.spacing(0, 1, 0, 1)} !important`,
       '& .SCNavigationToolbarMobile-logo': {
         margin: theme.spacing(0.5, 2, 0.5, 0.5),
         flexGrow: 1,
