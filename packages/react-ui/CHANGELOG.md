@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.21-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.20...@selfcommunity/react-ui@0.7.21-alpha.0) (2024-05-24)
+
+
+### Bug Fixes
+
+* added prop to feed to render empty placeholder in group feed. Linear issue: https://linear.app/quentral/issue/QUE-398/placeholder-feed-vuoto-visibile-dopo-creazione-1-post ([91e3f72](https://github.com/selfcommunity/community-js/commit/91e3f72cbacbba3918f76628cc5193f3f7f34fe2))
+* bugfixes ([7ad044e](https://github.com/selfcommunity/community-js/commit/7ad044ec37908a4f1304c01fff80933225f7a063))
+* Category/Group tag reset in their feed. Linear issue: https://linear.app/quentral/issue/QUE-417/composer-nelle-pagine-categoriegruppi ([ef539ca](https://github.com/selfcommunity/community-js/commit/ef539caf295361d7d5fee2e799ed827211b47802))
+
+
+### Performance Improvements
+
+* twitter-> x. Linear issue https://linear.app/quentral/issue/QUE-395/cambiare-twitter-x-nella-pwa ([d22ca0b](https://github.com/selfcommunity/community-js/commit/d22ca0ba50e05ff0ca708fb995f0d946fd768422))
+
+
+
+
+
 ## [0.7.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.20-alpha.3...@selfcommunity/react-ui@0.7.20) (2024-05-22)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
