@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?nahfha');
-  src:  url('./community/icons.eot?nahfha#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?nahfha') format('woff2'),
-  url('./community/icons.ttf?nahfha') format('truetype'),
-  url('./community/icons.woff?nahfha') format('woff'),
-  url('./community/icons.svg?nahfha#community-icons') format('svg');
+  src:  url('./community/icons.eot?w9x8zp');
+  src:  url('./community/icons.eot?w9x8zp#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?w9x8zp') format('woff2'),
+  url('./community/icons.ttf?w9x8zp') format('truetype'),
+  url('./community/icons.woff?w9x8zp') format('woff'),
+  url('./community/icons.svg?w9x8zp#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,11 +36,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-my_community:before {
-	content: "\e967";
+.icon-twitter:before {
+  content: "\e959";
 }
 .icon-magic_wand:before {
-	content: "\e968";
+  content: "\e968";
 }
 .icon-private:before {
   content: "\e966";
@@ -323,9 +323,6 @@
 }
 .icon-thumb_up:before {
   content: "\e957";
-}
-.icon-twitter:before {
-  content: "\e959";
 }
 .icon-undo:before {
   content: "\e95a";
