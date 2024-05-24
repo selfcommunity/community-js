@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {SCCategoryType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
+import {SCCategoryType, SCFeedTypologyType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
@@ -68,6 +68,11 @@ export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultVal
    * The label showed inside the composer
    */
   label?: any;
+  /**
+   * The feed where the component is rendered
+   * @default SCFeedTypologyType.HOME
+   */
+  feedType?: SCFeedTypologyType;
 }
 
 /**
@@ -102,7 +107,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     props: inProps,
     name: PREFIX
   });
-  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, label, ...rest} = props;
+  const {mediaObjectTypes = [File, MediaLink], defaultValue, onSuccess = null, label, feedType = SCFeedTypologyType.HOME, ...rest} = props;
 
   // Context
   const scContext: SCContextType = useSCContext();
@@ -183,6 +188,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
         fullWidth
         onClose={handleClose}
         onSuccess={handleSuccess}
+        feedType={feedType}
       />
     </React.Fragment>
   );

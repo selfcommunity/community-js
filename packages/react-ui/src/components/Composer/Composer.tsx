@@ -7,6 +7,7 @@ import {
   SCFeedDiscussionType,
   SCFeedPostType,
   SCFeedStatusType,
+  SCFeedTypologyType,
   SCGroupType,
   SCMediaType,
   SCPollType,
@@ -147,6 +148,11 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
    * @default null
    */
   onClose?: (event: SyntheticEvent) => void;
+  /**
+   * The feed where the component is rendered
+   * @default SCFeedTypologyType.HOME
+   */
+  feedType?: SCFeedTypologyType;
 }
 
 const COMPOSER_INITIAL_STATE = {
@@ -172,6 +178,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'reset':
       return {...COMPOSER_INITIAL_STATE, key: random()};
+    case 'resetGroupFeed':
+      return {...COMPOSER_INITIAL_STATE, group: state.group, key: random()};
+    case 'resetCategoryFeed':
+      return {...COMPOSER_INITIAL_STATE, categories: state.categories, key: random()};
     case 'multiple':
       return {...state, ...action.value};
     default:
@@ -232,6 +242,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     onClose = null,
     onSuccess = null,
     maxWidth,
+    feedType,
     ...rest
   } = props;
 
@@ -610,7 +621,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           if (unloadRef.current) {
             window.onbeforeunload = null;
           }
-          dispatch({type: 'reset'});
+          feedType && feedType === SCFeedTypologyType.CATEGORY
+            ? dispatch({type: 'resetCategoryFeed'})
+            : feedType === SCFeedTypologyType.GROUP
+            ? dispatch({type: 'resetGroupFeed'})
+            : dispatch({type: 'reset'});
         })
         .catch((error) => {
           dispatch({type: 'multiple', value: formatHttpErrorCode(error)});
@@ -634,14 +649,22 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             onSave: () => {
               onClose && onClose(event);
               setLayer(null);
-              dispatch({type: 'reset'});
+              feedType && feedType === SCFeedTypologyType.CATEGORY
+                ? dispatch({type: 'resetCategoryFeed'})
+                : feedType === SCFeedTypologyType.GROUP
+                ? dispatch({type: 'resetGroupFeed'})
+                : dispatch({type: 'reset'});
             }
           }
         });
       } else {
         onClose && onClose(event);
         setLayer(null);
-        dispatch({type: 'reset'});
+        feedType && feedType === SCFeedTypologyType.CATEGORY
+          ? dispatch({type: 'resetCategoryFeed'})
+          : feedType === SCFeedTypologyType.GROUP
+          ? dispatch({type: 'resetGroupFeed'})
+          : dispatch({type: 'reset'});
       }
     },
     [onClose, canSubmit, handleRemoveLayer]
