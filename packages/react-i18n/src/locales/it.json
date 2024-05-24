@@ -328,7 +328,7 @@
   "ui.feedObject.share.share": "Condividi il contributo",
   "ui.feedObject.share.shareNow": "Condividi ora",
   "ui.feedObject.share.shares": "{total, plural, =0 {# Condivisioni} one {# Condivisione} other {# Condivisioni}}",
-  "ui.feedObject.share.twitter": "Twitter",
+  "ui.feedObject.share.x": "X",
   "ui.feedObject.share.permanentLink": "Link permanente",
   "ui.feedObject.sharesDialog.noOtherLikes": "Non ci sono altre condivisioni.",
   "ui.feedObject.sharesDialog.title": "Condivisioni",
