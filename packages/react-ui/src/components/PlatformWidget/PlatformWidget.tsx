@@ -33,7 +33,19 @@ export interface PlatformWidgetProps extends VirtualScrollerItemProps {
    * @default null
    */
   className?: string;
-
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  title?: React.ReactNode | null;
+  /**
+   * Actions to be inserted before
+   */
+  startActions?: React.ReactNode | null;
+  /**
+   * Actions to be inserted after
+   */
+  endActions?: React.ReactNode | null;
   /**
    * Other props
    */
@@ -74,7 +86,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {autoHide, className, onHeightChange, onStateChange, ...rest} = props;
+  const {autoHide, className, title = null, startActions = null, endActions = null, onHeightChange, onStateChange, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -112,11 +124,16 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   const c = (
     <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center">
       <Grid item xs={12}>
-        <Typography className={classes.title} component="h3" align="center">
-          <FormattedMessage id="ui.platformWidget.title" defaultMessage="ui.platformWidget.title" />
-          <Icon fontSize="small">lock</Icon>
-        </Typography>
+        {title ? (
+          title
+        ) : (
+          <Typography className={classes.title} component="h3" align="center">
+            <FormattedMessage id="ui.platformWidget.title" defaultMessage="ui.platformWidget.title" />
+            <Icon fontSize="small">lock</Icon>
+          </Typography>
+        )}
       </Grid>
+      {startActions}
       {isAdmin && (
         <Grid item xs="auto">
           <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
@@ -133,11 +150,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           )}
         </Button>
       </Grid>
-      <Grid item xs="auto">
-        <Button variant="outlined" size="small" href={`https://support.selfcommunity.com/hc/${language}`} target="_blank">
-          <FormattedMessage id="ui.platformWidget.hc" defaultMessage="ui.platformWidget.hc" />
-        </Button>
-      </Grid>
+      {endActions}
     </Grid>
   );
 
