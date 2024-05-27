@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.23-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.22...@selfcommunity/react-theme-default@0.1.23-alpha.0) (2024-05-27)
+
+
+### Performance Improvements
+
+* user profile icons position. Linear issue: https://linear.app/quentral/issue/QUE-433/change-photo-user-profile ([b69ac5d](https://github.com/selfcommunity/community-js/commit/b69ac5dfa2eb320de3da69b98b96d0a2ef904c41))
+
+
+
+
+
 ## [0.1.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.22-alpha.1...@selfcommunity/react-theme-default@0.1.22) (2024-05-27)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
