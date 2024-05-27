@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.21-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.21-alpha.0...@selfcommunity/react-i18n@0.5.21-alpha.1) (2024-05-27)
+
+
+### Bug Fixes
+
+* composer translation https://linear.app/quentral/issue/QUE-322/copy-corretto-it-en-per-messaggi-modale-per-x-di-un-contenuto ([04d16cf](https://github.com/selfcommunity/community-js/commit/04d16cfcc15c443ab04dfca4e37b561fd5b66370))
+
+
+
+
+
+## [0.5.21-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.20...@selfcommunity/react-i18n@0.5.21-alpha.0) (2024-05-24)
+
+
+### Bug Fixes
+
+* bugfixes ([7ad044e](https://github.com/selfcommunity/community-js/commit/7ad044ec37908a4f1304c01fff80933225f7a063))
+
+
+### Performance Improvements
+
+* twitter-> x. Linear issue https://linear.app/quentral/issue/QUE-395/cambiare-twitter-x-nella-pwa ([d22ca0b](https://github.com/selfcommunity/community-js/commit/d22ca0ba50e05ff0ca708fb995f0d946fd768422))
+
+
+
+
+
 ## [0.5.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.20-alpha.1...@selfcommunity/react-i18n@0.5.20) (2024-05-22)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

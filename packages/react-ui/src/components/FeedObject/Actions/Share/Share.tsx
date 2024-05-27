@@ -30,7 +30,7 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
-import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from '../../../../constants/SocialShare';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from '../../../../constants/SocialShare';
 import Composer from '../../../Composer';
 import {PREFIX} from '../../constants';
 
@@ -138,7 +138,7 @@ export default function Share(props: ShareProps): JSX.Element {
   const facebookShareEnabled =
     SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED].value;
-  const twitterShareEnabled =
+  const xShareEnabled =
     SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED].value;
   const linkedinShareEnabled =
@@ -315,12 +315,12 @@ export default function Share(props: ShareProps): JSX.Element {
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
               </MenuItem>
             )}
-            {twitterShareEnabled && (
-              <MenuItem onClick={() => window.open(TWITTER_SHARE + url, 'twitter-share-dialog', 'width=626,height=436')}>
+            {xShareEnabled && (
+              <MenuItem onClick={() => window.open(X_SHARE + url, 'x-share-dialog', 'width=626,height=436')}>
                 <ListItemIcon>
                   <Icon fontSize="small">twitter</Icon>
                 </ListItemIcon>
-                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.twitter" defaultMessage="ui.feedObject.share.twitter" />} />
+                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.x" defaultMessage="ui.feedObject.share.x" />} />
               </MenuItem>
             )}
             {linkedinShareEnabled && (

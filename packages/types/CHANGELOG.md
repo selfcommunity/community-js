@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.21-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.20...@selfcommunity/types@0.5.21-alpha.0) (2024-05-24)
+
+
+### Bug Fixes
+
+* Category/Group tag reset in their feed. Linear issue: https://linear.app/quentral/issue/QUE-417/composer-nelle-pagine-categoriegruppi ([ef539ca](https://github.com/selfcommunity/community-js/commit/ef539caf295361d7d5fee2e799ed827211b47802))
+
+
+
+
+
 ## [0.5.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.20-alpha.1...@selfcommunity/types@0.5.20) (2024-05-22)
 
 **Note:** Version bump only for package @selfcommunity/types

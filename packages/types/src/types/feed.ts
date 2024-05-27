@@ -13,7 +13,9 @@ import {SCGroupType} from './group';
  */
 export enum SCFeedTypologyType {
   HOME = 'home',
-  EXPLORE = 'explore'
+  EXPLORE = 'explore',
+  CATEGORY = 'category',
+  GROUP = 'group'
 }
 
 /**

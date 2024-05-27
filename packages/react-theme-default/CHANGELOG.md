@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.21-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.21-alpha.2...@selfcommunity/react-theme-default@0.1.21-alpha.3) (2024-05-27)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.21-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.21-alpha.1...@selfcommunity/react-theme-default@0.1.21-alpha.2) (2024-05-24)
+
+
+### Performance Improvements
+
+* updated icon font (added x icon) ([8e544f0](https://github.com/selfcommunity/community-js/commit/8e544f0ce058aa1eb692ff0e7cc32bdbdc979564))
+
+
+
+
+
+## [0.1.21-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.21-alpha.0...@selfcommunity/react-theme-default@0.1.21-alpha.1) (2024-05-24)
+
+
+### Bug Fixes
+
+* bugfixes ([f093b5d](https://github.com/selfcommunity/community-js/commit/f093b5d033f3689c0d4f698e551635199fa083c8))
+
+
+
+
+
+## [0.1.21-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.20...@selfcommunity/react-theme-default@0.1.21-alpha.0) (2024-05-24)
+
+
+### Bug Fixes
+
+* bugfixes ([7ad044e](https://github.com/selfcommunity/community-js/commit/7ad044ec37908a4f1304c01fff80933225f7a063))
+* pm thread date z-index. ([424b194](https://github.com/selfcommunity/community-js/commit/424b194fb2e278460332ac7ac99f8a15e4dd6b03))
+
+
+
+
+
 ## [0.1.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.20-alpha.3...@selfcommunity/react-theme-default@0.1.20) (2024-05-22)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -171,7 +171,7 @@ import UserSubscribedGroupsWidget, {
  */
 import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from './constants/Pagination';
-import {FACEBOOK_SHARE, LINKEDIN_SHARE, TWITTER_SHARE} from './constants/SocialShare';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from './constants/SocialShare';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 import {LEGAL_POLICIES} from './constants/LegalPolicies';
 import {DEFAULT_FIELDS} from './constants/UserProfile';
@@ -480,7 +480,7 @@ export {
   EditMediaProps,
   MEDIA_TYPE_EMBED,
   FACEBOOK_SHARE,
-  TWITTER_SHARE,
+  X_SHARE,
   LINKEDIN_SHARE,
   DEFAULT_PRELOAD_OFFSET_VIEWPORT,
   MIN_PRELOAD_OFFSET_VIEWPORT,

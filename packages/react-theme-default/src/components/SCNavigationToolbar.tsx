@@ -33,9 +33,9 @@ const Component = {
         textAlign: 'right',
         marginRight: theme.spacing(1.5),
         '& .MuiFormControl-root': {
-          width: 285,
+          width: 190,
           [theme.breakpoints.up('lg')]: {
-            width: 330
+            width: 300
           }
         }
       },
@@ -57,7 +57,7 @@ const Component = {
         }
       },
       '& .SCNavigationToolbar-settings': {
-        marginLeft: theme.spacing(2)
+        marginLeft: 0
       },
       '& .MuiIconButton-root': {
         color: theme.palette.primary.main
@@ -68,9 +68,6 @@ const Component = {
           '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore': {
             margin: theme.spacing(0, 2)
           }
-        },
-        '& .SCNavigationToolbar-settings': {
-          marginLeft: theme.spacing(4.5)
         }
       }
     }),

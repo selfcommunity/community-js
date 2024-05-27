@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.21-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.21-alpha.0...@selfcommunity/react-templates@0.3.21-alpha.1) (2024-05-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.21-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.20...@selfcommunity/react-templates@0.3.21-alpha.0) (2024-05-24)
+
+
+### Bug Fixes
+
+* Category/Group tag reset in their feed. Linear issue: https://linear.app/quentral/issue/QUE-417/composer-nelle-pagine-categoriegruppi ([ef539ca](https://github.com/selfcommunity/community-js/commit/ef539caf295361d7d5fee2e799ed827211b47802))
+
+
+
+
+
 ## [0.3.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.20-alpha.3...@selfcommunity/react-templates@0.3.20) (2024-05-22)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
