@@ -10,7 +10,6 @@ export const MEDIA_TYPE_EMBED = 'embed';
  * Embed types
  **/
 export const MEDIA_EMBED_SC_LINK_TYPE = 'sc_link';
-export const MEDIA_EMBED_SC_VIMEO_TYPE = 'sc_vimeo';
 
 /**
  * Grid Images

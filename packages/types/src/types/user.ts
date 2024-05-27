@@ -238,7 +238,7 @@ export interface SCUserType {
   /**
    * Custom user metadata fields
    */
-  [p:string]: any;
+  [p: string]: any;
 }
 
 /**
@@ -500,10 +500,6 @@ export interface SCUserAvatarType {
  */
 
 export interface SCUserPermissionType {
-  /**
-   * If user can upload video when creating a post.
-   */
-  upload_video: boolean;
   /**
    * If user can create a contribute
    */

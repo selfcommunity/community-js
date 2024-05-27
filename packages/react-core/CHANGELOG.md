@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.22-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.21...@selfcommunity/react-core@0.4.22-alpha.0) (2024-05-27)
+
+
+### Performance Improvements
+
+* removed vimeo ([1eda00a](https://github.com/selfcommunity/community-js/commit/1eda00aa9d1bc38c36637aac8763d9e46bf914ce))
+
+
+
+
+
 ## [0.4.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.21-alpha.2...@selfcommunity/react-core@0.4.21) (2024-05-27)
 
 **Note:** Version bump only for package @selfcommunity/react-core

@@ -123,15 +123,6 @@ export default function AutoPlayer(props: AutoPlayerProps) {
                 host: 'https://www.youtube-nocookie.com'
               },
               playerVars: {rel: 0}
-            },
-            vimeo: {
-              playerOptions: {
-                autoplay: enableAutoplay,
-                autopause: true,
-                dnt: true,
-                transparent: false
-              },
-              preload: true
             }
           }}
           {...rest}
