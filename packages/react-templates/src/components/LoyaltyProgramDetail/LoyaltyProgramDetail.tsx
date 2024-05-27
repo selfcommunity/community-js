@@ -249,27 +249,33 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         <FormattedMessage id="templates.loyaltyProgramDetail.listTitle" defaultMessage="templates.loyaltyProgramDetail.listTitle" />
       </Typography>
       <PointsList className={classes.pointsSection} />
-      <Typography className={classes.sectionTitle}>
-        <FormattedMessage id="templates.loyaltyProgramDetail.prizes" defaultMessage="templates.loyaltyProgramDetail.prizes" />
-      </Typography>
+      {prizes.length !== 0 && (
+        <Typography className={classes.sectionTitle}>
+          <FormattedMessage id="templates.loyaltyProgramDetail.prizes" defaultMessage="templates.loyaltyProgramDetail.prizes" />
+        </Typography>
+      )}
       <InfiniteScroll
         dataLength={prizes.length}
         next={handleNext}
         hasMoreNext={Boolean(next)}
         loaderNext={<PrizeItemSkeleton />}
         endMessage={
-          <Typography className={classes.endMessage}>
-            <FormattedMessage
-              id="templates.loyaltyProgramDetail.content.end.message"
-              defaultMessage="templates.loyaltyProgramDetail.content.end.message"
-            />
-            <Button color={'secondary'} onClick={handleScrollUp}>
-              <FormattedMessage
-                id="templates.loyaltyProgramDetail.content.end.button"
-                defaultMessage="templates.loyaltyProgramDetail.content.end.button"
-              />
-            </Button>
-          </Typography>
+          <>
+            {prizes.length !== 0 ? (
+              <Typography className={classes.endMessage}>
+                <FormattedMessage
+                  id="templates.loyaltyProgramDetail.content.end.message"
+                  defaultMessage="templates.loyaltyProgramDetail.content.end.message"
+                />
+                <Button color={'secondary'} onClick={handleScrollUp}>
+                  <FormattedMessage
+                    id="templates.loyaltyProgramDetail.content.end.button"
+                    defaultMessage="templates.loyaltyProgramDetail.content.end.button"
+                  />
+                </Button>
+              </Typography>
+            ) : null}
+          </>
         }>
         <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
           {prizes.map((prize: SCPrizeType) => (
