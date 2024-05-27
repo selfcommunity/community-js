@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.21-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.21-alpha.1...@selfcommunity/react-theme-default@0.1.21-alpha.2) (2024-05-24)
+
+
+### Performance Improvements
+
+* updated icon font (added x icon) ([8e544f0](https://github.com/selfcommunity/community-js/commit/8e544f0ce058aa1eb692ff0e7cc32bdbdc979564))
+
+
+
+
+
 ## [0.1.21-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.21-alpha.0...@selfcommunity/react-theme-default@0.1.21-alpha.1) (2024-05-24)
 
 
