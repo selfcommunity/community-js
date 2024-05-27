@@ -25,7 +25,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof UserProfileHeader> = {
   args: {
-    userId: 167
+    userId: 8
   },
   render: template
 };

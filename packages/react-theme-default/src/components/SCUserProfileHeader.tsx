@@ -19,13 +19,9 @@ const Component = {
       },
       '& .SCUserProfileHeader-avatar': {
         top: 180,
-        [theme.breakpoints.up('lg')]: {
-          left: theme.selfcommunity.user.avatar.sizeXLarge / 2,
-          marginLeft: 0
-        },
         display: 'block',
         position: 'absolute',
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(2),
         '& > .MuiBadge-root > img': {
           height: theme.selfcommunity.user.avatar.sizeXLarge,
           width: theme.selfcommunity.user.avatar.sizeXLarge,
@@ -33,16 +29,17 @@ const Component = {
           border: `#FFF solid ${theme.spacing(0.5)}`,
           objectFit: 'cover'
         },
-        '& .MuiBadge-badge .SCUserAvatar-badge-content': {
-          width: 32,
-          height: 32
+        '& .MuiBadge-badge': {
+          right: theme.spacing(1),
+          top: theme.spacing(3),
+          '& .SCUserAvatar-badge-content': {
+            width: 32,
+            height: 32
+          }
         }
       },
       '& .SCUserProfileHeader-change-picture': {
-        top: 215,
-        [theme.breakpoints.up('lg')]: {
-          left: 155 - 0.5 * theme.selfcommunity.user.avatar.sizeXLarge
-        },
+        top: 240,
         left: 70,
         position: 'relative',
         display: 'flex',
