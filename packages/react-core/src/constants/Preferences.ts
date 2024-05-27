@@ -87,10 +87,6 @@ export const ADDONS_INCUBATOR_SUBSCRIBERS = `${SCPreferenceSection.ADDONS}.${SCP
 export const ADDONS_LOYALTY_POINTS_COLLECTION = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.LOYALTY_POINTS_COLLECTION}`;
 export const ADDONS_POLLS_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.POLLS_ENABLED}`;
 export const ADDONS_REGISTRATION_WIZARD = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.REGISTRATION_WIZARD}`;
-export const ADDONS_VIDEO_UPLOAD_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIDEO_UPLOAD_ENABLED}`;
-export const ADDONS_VIMEO_TOKEN_UPLOAD = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIMEO_TOKEN_UPLOAD}`;
-export const ADDONS_VIMEO_TOKEN_DELETE = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIMEO_TOKEN_DELETE}`;
-export const ADDONS_VIDEO_UPLOAD_ONLY_FOR_STAFF = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.VIDEO_UPLOAD_ONLY_FOR_STAFF}`;
 export const ADDONS_POST_GEOLOCATION_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.POST_GEOLOCATION_ENABLED}`;
 export const ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.SHARE_POST_ON_FACEBOOK_ENABLED}`;
 export const ADDONS_SHARE_POST_ON_TWITTER_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.SHARE_POST_ON_TWITTER_ENABLED}`;
@@ -239,10 +235,6 @@ export const DATA_TYPES = {
   [ADDONS_LOYALTY_POINTS_COLLECTION]: booleanType,
   [ADDONS_POLLS_ENABLED]: booleanType,
   [ADDONS_REGISTRATION_WIZARD]: booleanType,
-  [ADDONS_VIDEO_UPLOAD_ENABLED]: booleanType,
-  [ADDONS_VIMEO_TOKEN_UPLOAD]: stringType,
-  [ADDONS_VIMEO_TOKEN_DELETE]: stringType,
-  [ADDONS_VIDEO_UPLOAD_ONLY_FOR_STAFF]: booleanType,
   [ADDONS_POST_GEOLOCATION_ENABLED]: booleanType,
   [ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED]: booleanType,
   [ADDONS_SHARE_POST_ON_TWITTER_ENABLED]: booleanType,
