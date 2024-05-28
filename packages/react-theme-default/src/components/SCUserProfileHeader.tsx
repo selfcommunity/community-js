@@ -46,7 +46,10 @@ const Component = {
         marginLeft: theme.spacing(2)
       },
       '& .SCUserProfileHeader-info': {
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(1),
+        [theme.breakpoints.up('md')]: {
+          marginLeft: theme.spacing(2)
+        },
         '& .SCUserProfileHeader-username': {
           marginTop: 0.5 * theme.selfcommunity.user.avatar.sizeXLarge + 8,
           fontWeight: theme.typography.fontWeightBold,
