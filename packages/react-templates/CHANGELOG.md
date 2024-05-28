@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.24-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.23...@selfcommunity/react-templates@0.3.24-alpha.0) (2024-05-28)
+
+
+### Bug Fixes
+
+* fixed loyalty preference ([bd912e1](https://github.com/selfcommunity/community-js/commit/bd912e1ffb853628c4b127b4bf4aa37a320acf80))
+
+
+
+
+
 ## [0.3.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.23-alpha.2...@selfcommunity/react-templates@0.3.23) (2024-05-28)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
