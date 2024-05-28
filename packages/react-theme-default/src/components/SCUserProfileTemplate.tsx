@@ -11,14 +11,20 @@ const Component = {
         justifyContent: 'start'
       },
       '& .SCUserProfileTemplate-counters': {
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(1),
+        [theme.breakpoints.up('md')]: {
+          marginLeft: theme.spacing(2)
+        },
         justifyContent: 'start',
         display: 'flex',
         alignItems: 'center',
         flexWrap: 'wrap'
       },
       '& .SCUserProfileTemplate-info': {
-        marginLeft: theme.spacing(2.5),
+        marginLeft: theme.spacing(1.75),
+        [theme.breakpoints.up('md')]: {
+          marginLeft: theme.spacing(2.5)
+        },
         textAlign: 'start'
       },
       '& .SCUserProfileTemplate-feed': {
