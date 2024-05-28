@@ -84,7 +84,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
   const handleChangeAudience = useCallback((event: SyntheticEvent, data: AudienceTypes) => setAudience(data), []);
   const handleAutocompleteOpen = useCallback(() => setAutocompleteOpen(true), []);
   const handleAutocompleteClose = useCallback(() => setAutocompleteOpen(false), []);
-  console.log(defaultValue);
+
   return (
     <Root ref={ref} className={classNames(className, classes.root)} {...rest}>
       <DialogTitle className={classes.title}>
