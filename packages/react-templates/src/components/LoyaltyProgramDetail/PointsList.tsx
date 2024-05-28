@@ -75,7 +75,7 @@ export default function PointsList(props: PointsListProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} container spacing={2} {...rest}>
-      {preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value && (
+      {preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED].value && (
         <PointElement
           message={<FormattedMessage id="templates.loyaltyProgramDetail.points.post" defaultMessage="templates.loyaltyProgramDetail.points.post" />}
           points={_preferences[SCPreferences.POINTS_MAKE_POST]}
