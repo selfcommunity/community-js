@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.23-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.23-alpha.0...@selfcommunity/react-templates@0.3.23-alpha.1) (2024-05-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.3.23-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.22...@selfcommunity/react-templates@0.3.23-alpha.0) (2024-05-27)
+
+
+### Performance Improvements
+
+* loyalty program. Linear issue: https://linear.app/quentral/issue/QUE-343/copy-e-dinamicita-della-pagina-statica-loyalty ([9f2a42b](https://github.com/selfcommunity/community-js/commit/9f2a42b506d05ba6d6e964e783f833a8c81b67d8))
+
+
+
+
+
 ## [0.3.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.22-alpha.1...@selfcommunity/react-templates@0.3.22) (2024-05-27)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

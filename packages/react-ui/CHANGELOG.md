@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.23-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.23-alpha.0...@selfcommunity/react-ui@0.7.23-alpha.1) (2024-05-28)
+
+
+### Bug Fixes
+
+* composer edit. Issue: https://linear.app/quentral/issue/QUE-431/problema-editing-articolo-postato ([484c1d9](https://github.com/selfcommunity/community-js/commit/484c1d95cbcdb17061e88063b3f6500957c51fac))
+
+
+
+
+
+## [0.7.23-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.22...@selfcommunity/react-ui@0.7.23-alpha.0) (2024-05-27)
+
+
+### Performance Improvements
+
+* user profile icons position. Linear issue: https://linear.app/quentral/issue/QUE-433/change-photo-user-profile ([b69ac5d](https://github.com/selfcommunity/community-js/commit/b69ac5dfa2eb320de3da69b98b96d0a2ef904c41))
+
+
+
+
+
 ## [0.7.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.22-alpha.1...@selfcommunity/react-ui@0.7.22) (2024-05-27)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

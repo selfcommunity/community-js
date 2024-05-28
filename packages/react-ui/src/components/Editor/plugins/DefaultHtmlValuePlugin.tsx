@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$createParagraphNode, $getRoot} from 'lexical';
+import {$createParagraphNode, $getRoot, $isDecoratorNode, $isElementNode} from 'lexical';
 import {$generateNodesFromDOM} from '@lexical/html';
 
 function DefaultHtmlValuePlugin({defaultValue}) {
@@ -32,7 +32,11 @@ function DefaultHtmlValuePlugin({defaultValue}) {
         root.getFirstChild().replace(paragraphNode).selectEnd();
       } else {
         root.getFirstChild().remove();
-        nodes.forEach((node) => root.append(node));
+        nodes.forEach((node) => {
+          if ($isElementNode(node) || $isDecoratorNode(node)) {
+            root.append(node);
+          }
+        });
         root.selectEnd();
       }
     });
