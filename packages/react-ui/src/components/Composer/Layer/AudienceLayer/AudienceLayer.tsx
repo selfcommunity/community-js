@@ -1,4 +1,4 @@
-import React, {ReactElement, SyntheticEvent, useCallback, useState} from 'react';
+import React, {ReactElement, SyntheticEvent, useCallback, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
 import parse from 'autosuggest-highlight/parse';
@@ -11,10 +11,10 @@ import {ComposerLayerProps} from '../../../../types/composer';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import DialogContent from '@mui/material/DialogContent';
-import {useSCFetchAddressingTagList} from '@selfcommunity/react-core';
+import {SCPreferencesContextType, useSCFetchAddressingTagList, useSCPreferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
 import GroupAutocomplete from '../../../GroupAutocomplete';
-import {SCGroupType} from '@selfcommunity/types';
+import {SCGroupType, SCFeatureName} from '@selfcommunity/types';
 
 export enum AudienceTypes {
   AUDIENCE_ALL = 'all',
@@ -72,6 +72,9 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: autocompleteOpen});
+  const {features}: SCPreferencesContextType = useSCPreferences();
+  // MEMO
+  const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
 
   // HANDLERS
   const handleSave = useCallback(() => {
@@ -105,16 +108,18 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             icon={<Icon>public</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
           />
-          <Tab
-            disabled={
-              (Boolean(value?.length) && !Object.prototype.hasOwnProperty.call(value, 'managed_by')) ||
-              (value !== undefined && Boolean(!value?.length) && audience !== AudienceTypes.AUDIENCE_ALL) ||
-              (Boolean(value?.length === 0) && audience === AudienceTypes.AUDIENCE_ALL && Boolean(defaultValue?.length !== 0))
-            }
-            value={AudienceTypes.AUDIENCE_GROUP}
-            icon={<Icon>groups</Icon>}
-            label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
-          />
+          {groupsEnabled && (
+            <Tab
+              disabled={
+                (Boolean(value?.length) && !Object.prototype.hasOwnProperty.call(value, 'managed_by')) ||
+                (value !== undefined && Boolean(!value?.length) && audience !== AudienceTypes.AUDIENCE_ALL) ||
+                (Boolean(value?.length === 0) && audience === AudienceTypes.AUDIENCE_ALL && Boolean(defaultValue?.length !== 0))
+              }
+              value={AudienceTypes.AUDIENCE_GROUP}
+              icon={<Icon>groups</Icon>}
+              label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
+            />
+          )}
           <Tab
             disabled={value && Object.prototype.hasOwnProperty.call(value, 'managed_by')}
             value={AudienceTypes.AUDIENCE_TAG}
