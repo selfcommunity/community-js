@@ -35,7 +35,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const {features} = useSCPreferences();
   const authUserId = user ? user.id : null;
-  const groupsDisabled = features && !features.includes(SCFeatureName.GROUPING) && !features.includes(SCFeatureName.TAGGING);
+  const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
 
   const notificationInvitedToJoinGroup = useRef(null);
   const notificationRequestedToJoinGroup = useRef(null);
@@ -319,7 +319,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
     }
   }, [authUserId]);
 
-  if (groupsDisabled || !user) {
+  if (!groupsEnabled || !user) {
     return {groups: data, loading, isLoading};
   }
   return {groups: data, loading, isLoading, subscribe, unsubscribe, subscriptionStatus, refresh, emptyCache};
