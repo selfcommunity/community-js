@@ -296,6 +296,10 @@ const Component = {
             },
             '& li': {
               margin: '0 32px'
+            },
+            '& span': {
+              display: 'inline-block',
+              width: '100%'
             }
           },
           '& .SCFeedObject-medias-section': {
