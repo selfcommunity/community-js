@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.26-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.25...@selfcommunity/react-theme-default@0.1.26-alpha.0) (2024-05-29)
+
+
+### Bug Fixes
+
+* feedobj spacing ([8ca05ad](https://github.com/selfcommunity/community-js/commit/8ca05adfa361e01409d117a87b1d6d04926fa51e))
+
+
+
+
+
 ## [0.1.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.25-alpha.1...@selfcommunity/react-theme-default@0.1.25) (2024-05-29)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
