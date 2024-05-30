@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.28-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.27...@selfcommunity/utils@0.2.28-alpha.0) (2024-05-30)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
 ## [0.2.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.27-alpha.1...@selfcommunity/utils@0.2.27) (2024-05-29)
 
 **Note:** Version bump only for package @selfcommunity/utils
