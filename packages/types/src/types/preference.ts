@@ -16,6 +16,7 @@ export enum SCPreferenceSection {
   PROVIDERS = 'providers',
   WEBMASTER = 'webmaster'
 }
+
 /**
  * Preferences name
  */
@@ -43,6 +44,8 @@ export enum SCPreferenceName {
   ERROR_404 = 'error_404',
   ERROR_503 = 'error_503',
   ERRORPAGES_IMAGE = 'errorpages_image',
+  ERRORPAGES_TITLE = 'errorpages_title',
+  ERRORPAGES_SUBTITLE = 'errorpages_subtitle',
   STAFF_BADGE_ICON = 'staff_badge_icon',
   STAFF_BADGE_LABEL = 'staff_badge_label',
   PRIZE_A_IMAGE = 'prize_a_image',
