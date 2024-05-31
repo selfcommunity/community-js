@@ -16,6 +16,8 @@ export const TEXT_APPLICATION_NAME = `${SCPreferenceSection.TEXT}.${SCPreference
 export const TEXT_APPLICATION_SLOGAN1 = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_SLOGAN1}`;
 export const TEXT_APPLICATION_SLOGAN2 = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_SLOGAN2}`;
 export const TEXT_APPLICATION_COPYRIGHT = `${SCPreferenceSection.TEXT}.${SCPreferenceName.APPLICATION_COPYRIGHT}`;
+export const TEXT_ERROR_PAGES_TITLE = `${SCPreferenceSection.TEXT}.${SCPreferenceName.ERRORPAGES_TITLE}`;
+export const TEXT_ERROR_PAGES_SUBTITLE = `${SCPreferenceSection.TEXT}.${SCPreferenceName.ERRORPAGES_SUBTITLE}`;
 
 /**
  * STYLES
@@ -224,6 +226,8 @@ export const DATA_TYPES = {
   [IMAGES_ERROR_404]: stringType,
   [IMAGES_ERROR_503]: stringType,
   [IMAGES_ERRORPAGES_IMAGE]: stringType,
+  [TEXT_ERROR_PAGES_TITLE]: stringType,
+  [TEXT_ERROR_PAGES_SUBTITLE]: stringType,
   [STAFF_STAFF_BADGE_ICON]: stringType,
   [STAFF_STAFF_BADGE_LABEL]: stringType,
   [LOYALTY_PRIZE_A_IMAGE]: stringType,
