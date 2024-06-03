@@ -231,7 +231,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           ? [
               <Divider key="moderation_divider" />,
               <ListItem className={classes.item} key="moderation">
-                <ListItemButton onClick={() => fetchPlatform('/moderation')}>
+                <ListItemButton onClick={() => fetchPlatform('/moderation/flags/')}>
                   <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
                 </ListItemButton>
               </ListItem>
