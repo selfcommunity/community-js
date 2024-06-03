@@ -37,7 +37,6 @@ export const COLORS_COLORBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceNam
 export const COLORS_COLORPRIMARY = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORPRIMARY}`;
 export const COLORS_COLORSECONDARY = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORSECONDARY}`;
 export const COLORS_NAVBARBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceName.NAVBARBACK}`;
-export const COLORS_SUBMENUBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceName.SUBMENUBACK}`;
 export const COLORS_COLORFONT = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORFONT}`;
 
 /**
@@ -214,7 +213,6 @@ export const DATA_TYPES = {
   [COLORS_COLORPRIMARY]: stringType,
   [COLORS_COLORSECONDARY]: stringType,
   [COLORS_NAVBARBACK]: stringType,
-  [COLORS_SUBMENUBACK]: stringType,
   [COLORS_COLORFONT]: stringType,
   [COVERS_COVER_1_HP_M1920]: stringType,
   [COVERS_COVER_2_HP_M1920]: stringType,

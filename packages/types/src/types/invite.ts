@@ -26,6 +26,11 @@ export interface SCInviteType {
   code: string;
 
   /**
+   * The user role
+   */
+  role: string;
+
+  /**
    * The date when the invitation code was generated
    */
   generated_at: Date;
@@ -41,7 +46,17 @@ export interface SCInviteType {
   used_at: Date | null;
 
   /**
+   * The ID of the user who sent the invite.
+   */
+  invited_by: number;
+
+  /**
    * The user object associated to this invite code (if used_at is not null)
    */
   user: SCUserType | null;
+
+  /**
+   * An object containing extra information
+   */
+  extra_data: Record<string, any>;
 }
