@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {useIsComponentMountedRef, useSCFetchCustomAdv} from '@selfcommunity/react-core';
@@ -130,6 +130,53 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
       }
     }
   });
+  const embedRef = useRef(null);
+
+  useEffect(() => {
+    const embedCode = scCustomAdv?.embed_code;
+    const container = embedRef.current;
+
+    if (container && embedCode) {
+      // Create a temporary container for parsing HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = embedCode;
+
+      // Extract scripts from HTML content
+      const scripts = tempDiv.getElementsByTagName('script');
+      const scriptContents = [];
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      for (let script of scripts) {
+        if (script.src) {
+          // If the script has a src attribute, create a new script element and set its src
+          const newScript = document.createElement('script');
+          newScript.src = script.src;
+          document.body.appendChild(newScript);
+        } else {
+          // If the script contains inline code, store its content for later execution
+          scriptContents.push(script.innerHTML);
+        }
+        // Remove the script tag from the tempDiv
+        script.parentNode.removeChild(script);
+      }
+
+      // Insert the HTML content into the container
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      container.innerHTML = tempDiv.innerHTML;
+
+      // Execute inline script contents
+      scriptContents.forEach((scriptContent) => {
+        try {
+          const newScript = document.createElement('script');
+          newScript.appendChild(document.createTextNode(scriptContent));
+          document.body.appendChild(newScript);
+        } catch (e) {
+          console.error('Error executing script', e);
+        }
+      });
+    }
+  }, [scCustomAdv]);
 
   if (!scCustomAdv) {
     return <HiddenPlaceholder />;
@@ -146,6 +193,7 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
       )}
       {scCustomAdv.embed_code && (
         <Box
+          ref={embedRef}
           className={classNames(classes.embedCode, {[classes.prefixedHeight]: Boolean(prefixedHeight)})}
           dangerouslySetInnerHTML={{__html: scCustomAdv.embed_code}}
         />
