@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.30-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.29...@selfcommunity/react-ui@0.7.30-alpha.0) (2024-06-03)
+
+
+### Bug Fixes
+
+* fixed moderation link in navigation settings menu ([0d39531](https://github.com/selfcommunity/community-js/commit/0d39531e2b9efb1ebbad659b26e10d58481fcbf0))
+
+
+
+
+
 ## [0.7.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.29-alpha.1...@selfcommunity/react-ui@0.7.29) (2024-05-31)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
