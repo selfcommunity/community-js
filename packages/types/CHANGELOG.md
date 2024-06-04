@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.30-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.29...@selfcommunity/types@0.5.30-alpha.0) (2024-06-03)
+
+
+### Performance Improvements
+
+* added fields to SCInviteType interface ([6ad9c9a](https://github.com/selfcommunity/community-js/commit/6ad9c9a06f1286c62820d622e0fd8cf00b58ac44))
+* removed unused color preference: submenuback Linear issue: https://linear.app/quentral/issue/QUE-452/rimuovere-submenuback-da-pwa ([fa7f395](https://github.com/selfcommunity/community-js/commit/fa7f395d6244689c3aa5926941bc9f6babb2fbf7))
+
+
+
+
+
 ## [0.5.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.29-alpha.1...@selfcommunity/types@0.5.29) (2024-05-31)
 
 **Note:** Version bump only for package @selfcommunity/types

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.30-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.29...@selfcommunity/react-core@0.4.30-alpha.0) (2024-06-03)
+
+
+### Performance Improvements
+
+* removed unused color preference: submenuback Linear issue: https://linear.app/quentral/issue/QUE-452/rimuovere-submenuback-da-pwa ([fa7f395](https://github.com/selfcommunity/community-js/commit/fa7f395d6244689c3aa5926941bc9f6babb2fbf7))
+
+
+
+
+
 ## [0.4.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.29-alpha.1...@selfcommunity/react-core@0.4.29) (2024-05-31)
 
 **Note:** Version bump only for package @selfcommunity/react-core

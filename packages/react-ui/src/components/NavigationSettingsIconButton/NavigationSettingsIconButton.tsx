@@ -231,7 +231,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           ? [
               <Divider key="moderation_divider" />,
               <ListItem className={classes.item} key="moderation">
-                <ListItemButton onClick={() => fetchPlatform('/moderation')}>
+                <ListItemButton onClick={() => fetchPlatform('/moderation/flags/')}>
                   <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
                 </ListItemButton>
               </ListItem>
@@ -334,7 +334,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
         ...(isModerator || isAdmin
           ? [
               <Divider key="moderation_divider" />,
-              <MenuItem className={classes.item} key="moderation" onClick={() => fetchPlatform('/moderation')}>
+              <MenuItem className={classes.item} key="moderation" onClick={() => fetchPlatform('/moderation/flags/')}>
                 <FormattedMessage id="ui.navigationSettingsIconButton.moderation" defaultMessage="ui.navigationSettingsIconButton.moderation" />
               </MenuItem>
             ]

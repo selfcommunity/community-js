@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.30-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.30-alpha.1...@selfcommunity/react-ui@0.7.30-alpha.2) (2024-06-03)
+
+
+### Bug Fixes
+
+* fixed custom adv script rendering. Linear issue: https://linear.app/quentral/issue/QUE-434/script-allinterno-di-un-advertising-come-embedded-code-non-funziona ([92f6d2b](https://github.com/selfcommunity/community-js/commit/92f6d2b6965b9679343c9ad5be08832480168d72))
+
+
+
+
+
+## [0.7.30-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.30-alpha.0...@selfcommunity/react-ui@0.7.30-alpha.1) (2024-06-03)
+
+
+### Bug Fixes
+
+* fixed moderation link in navigation settings menu ([b68b58d](https://github.com/selfcommunity/community-js/commit/b68b58d9da7473079f5559c494020615e703729f))
+
+
+
+
+
+## [0.7.30-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.29...@selfcommunity/react-ui@0.7.30-alpha.0) (2024-06-03)
+
+
+### Bug Fixes
+
+* fixed moderation link in navigation settings menu ([0d39531](https://github.com/selfcommunity/community-js/commit/0d39531e2b9efb1ebbad659b26e10d58481fcbf0))
+
+
+
+
+
 ## [0.7.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.29-alpha.1...@selfcommunity/react-ui@0.7.29) (2024-05-31)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
