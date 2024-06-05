@@ -296,9 +296,6 @@ const Component = {
             },
             '& li': {
               margin: '0 32px'
-            },
-            '& span': {
-              display: 'block'
             }
           },
           '& .SCFeedObject-medias-section': {
