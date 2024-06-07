@@ -634,7 +634,7 @@
   "ui.userInfo.realName": "Real name",
   "ui.userInfo.username": "Username",
   "ui.userInfo.website": "Website",
-  "ui.userInfo.website.error.invalid": "Please enter a valid URL.",
+  "ui.userInfo.website.error.invalid": "Please enter a valid URL (e.g. https://www.example.com).",
   "ui.userInfoDialog.title": "Informations",
   "ui.userInfo.button.save": "Save",
   "ui.userInfo.save.success": "Your data has been saved",

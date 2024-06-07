@@ -821,9 +821,6 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               <Widget className={classes.endMessage}>
                 <CardContent>{endMessage}</CardContent>
               </Widget>
-              {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR) ? (
-                <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FOOTER_BAR} {...CustomAdvProps} />
-              ) : null}
               {FooterComponent ? <FooterComponent {...FooterComponentProps} /> : null}
             </Box>
           }

@@ -1,3 +1,5 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     menuRoot: ({theme}: any) => ({

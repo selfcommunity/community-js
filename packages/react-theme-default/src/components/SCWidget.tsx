@@ -1,3 +1,5 @@
+import {darken} from '@mui/system';
+
 const Component = {
   variants: [
     {
@@ -31,7 +33,7 @@ const Component = {
         '& h5': {
           fontFamily: theme.typography.fontFamily,
           fontWeight: theme.typography.fontWeightBold,
-          color: theme.palette.common.black,
+          color: darken(theme.palette.text.primary, 0.5),
           fontSize: '1.143rem'
         },
         '& .MuiList-root': {
@@ -58,7 +60,7 @@ const Component = {
           paddingTop: theme.spacing(2)
         },
         '& > .MuiButton-sizeMedium': {
-					marginTop: theme.spacing(1),
+          marginTop: theme.spacing(1),
           padding: theme.spacing(0),
           color: theme.palette.secondary.main
         }

@@ -1,6 +1,6 @@
 import {Button, ListItem, Typography, Zoom} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategories, useSCRouting} from '@selfcommunity/react-core';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Category from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
@@ -45,11 +45,13 @@ export default function DefaultDrawerContent() {
   return (
     <>
       <Typography variant="subtitle1">
-        <FormattedMessage
-          id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
-          defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
-        />{' '}
-        <Button variant="text" component={Link} to={scRoutingContext.url(SCRoutes.CATEGORIES_LIST_ROUTE_NAME, {})}>
+        <span>
+          <FormattedMessage
+            id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
+            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
+          />
+        </span>{' '}
+        <Button variant="text" component={Link} color="secondary" to={scRoutingContext.url(SCRoutes.CATEGORIES_LIST_ROUTE_NAME, {})}>
           <FormattedMessage
             id="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll"
             defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll"
