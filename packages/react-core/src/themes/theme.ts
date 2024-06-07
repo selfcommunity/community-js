@@ -6,6 +6,7 @@ import {
   COLORS_COLORPRIMARY,
   COLORS_COLORSECONDARY,
   COLORS_COLORFONT,
+  COLORS_COLORFONTSECONDARY,
   COLORS_NAVBARBACK,
   STYLE_FONT_FAMILY,
 } from '../constants/Preferences';
@@ -15,7 +16,7 @@ import {SCThemeVariablesType, SCThemeType} from '../types';
 /**
  * check if colorProp is a valid color
  * @param preferences
- * @param colorProp
+ * @param prop
  * @param tFunc: type func validator
  * @return {boolean|(function(*=): boolean)}
  */
@@ -63,7 +64,12 @@ const getTheme = (options, preferences): SCThemeType => {
     ? {
         palette: {
           ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
-          ...(isValidPreference(preferences, COLORS_COLORFONT, validateColor) && {text: {primary: preferences[COLORS_COLORFONT].value}}),
+          text: {
+            ...(isValidPreference(preferences, COLORS_COLORFONT, validateColor) && {primary: preferences[COLORS_COLORFONT].value}),
+            ...(isValidPreference(preferences, COLORS_COLORFONTSECONDARY, validateColor) && {
+              secondary: preferences[COLORS_COLORFONTSECONDARY].value,
+            }),
+          },
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
             secondary: {main: preferences[COLORS_COLORSECONDARY].value},

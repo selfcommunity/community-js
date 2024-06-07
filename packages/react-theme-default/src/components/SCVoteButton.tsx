@@ -1,3 +1,5 @@
+import {hexToCSSFilter} from 'hex-to-css-filter';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -8,7 +10,10 @@ const Component = {
       padding: theme.spacing(1.5),
       minWidth: 0,
       '& .MuiIcon-root': {
-        fontSize: '1.57rem'
+        fontSize: '1.57rem',
+        '& img': {
+          filter: hexToCSSFilter(theme.palette.primary.main).filter
+        }
       },
       '&.MuiButton-sizeSmall': {
         padding: theme.spacing(0.5),

@@ -74,7 +74,7 @@ const PREFIX = 'SCContributionActionsMenu';
 const classes = {
   root: `${PREFIX}-root`,
   button: `${PREFIX}-button`,
-  popper: `${PREFIX}-popper`,
+  popperRoot: `${PREFIX}-popper-root`,
   paper: `${PREFIX}-paper`,
   item: `${PREFIX}-item`,
   itemText: `${PREFIX}-item-text`,
@@ -90,44 +90,8 @@ const classes = {
 const PopperRoot = styled(Popper, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  zIndex: 2,
-  [`&.${classes.popper}`]: {
-    overflow: 'visible',
-    filter: 'drop-shadow(0px -1px 5px rgba(0,0,0,0.10))',
-    mt: 1.5
-  },
-  [`& .${classes.paper}`]: {
-    width: 280
-  },
-  [`& .${classes.footerSubItems}`]: {
-    margin: '10px 10px 10px 17px',
-    border: '1px solid #dddddd',
-    padding: 5,
-    borderRadius: 3,
-    fontSize: 11
-  },
-  [`& .${classes.selectedIcon}`]: {
-    marginLeft: 2,
-    '&.MuiListItemIcon-root': {
-      width: '10px'
-    },
-    '& svg': {
-      fontSize: '1.4rem'
-    }
-  },
-  [`& .${classes.sectionBadge}`]: {
-    padding: 0,
-    minWidth: 15,
-    height: 15,
-    top: 3
-  },
-  [`& .${classes.sectionWithSelectionIcon}`]: {
-    fontSize: 12,
-    color: '#FFF'
-  }
-}));
+  overridesResolver: (props, styles) => styles.popperRoot
+})(() => ({}));
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -884,7 +848,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
             </MenuItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
               {renderReports(FLAG_CONTRIBUTION_SECTION)}
-              <Typography variant={'caption'} component={'div'} className={classes.footerSubItems}>
+              <Typography variant={'caption'} component="div" className={classes.footerSubItems}>
                 {intl.formatMessage(messages.footer)}
               </Typography>
             </Collapse>
@@ -1181,7 +1145,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           anchorEl={popperRef.current}
           role={undefined}
           transition
-          className={classes.popper}
+          className={classes.popperRoot}
           {...PopperProps}
           placement="bottom-end">
           {({TransitionProps, placement}) => (

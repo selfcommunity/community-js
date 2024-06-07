@@ -1,3 +1,5 @@
+import {darken} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({}),
@@ -29,6 +31,9 @@ const Component = {
         padding: theme.spacing(0, 2),
         '& MuiButton-root': {
           padding: theme.spacing(1, 1, 1, 2)
+        },
+        '& span:first-of-type': {
+          color: darken(theme.palette.text.primary, 0.5)
         }
       }
     })
