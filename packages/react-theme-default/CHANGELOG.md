@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.33-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.33-alpha.0...@selfcommunity/react-theme-default@0.1.33-alpha.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* fixed PrivateMessageSettingsIconButton delete for groups ([686d679](https://github.com/selfcommunity/community-js/commit/686d6790064b828bf54bb766272ecdfce9ebe038))
+
+
+
+
+
 ## [0.1.33-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.32...@selfcommunity/react-theme-default@0.1.33-alpha.0) (2024-06-07)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
