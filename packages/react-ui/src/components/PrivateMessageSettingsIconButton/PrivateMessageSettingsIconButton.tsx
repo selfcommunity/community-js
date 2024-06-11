@@ -9,7 +9,7 @@ import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {PrivateMessageService} from '@selfcommunity/api-services';
 import PubSub from 'pubsub-js';
-import {SCUserType} from '@selfcommunity/types';
+import {SCGroupType, SCUserType} from '@selfcommunity/types';
 
 const PREFIX = 'SCPrivateMessageSettingsIconButton';
 
@@ -53,11 +53,15 @@ export interface PrivateMessageSettingsIconButtonProps extends IconButtonProps {
   /**
    * The deleting thread id
    */
-  threadToDelete?: any;
+  threadToDelete?: number;
   /**
    * The user receiver context
    */
   user?: SCUserType;
+  /**
+   * The group
+   */
+  group?: SCGroupType;
   /**
    * Any other properties
    */
@@ -92,7 +96,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
     props: inProps,
     name: PREFIX
   });
-  const {className = null, onMenuItemDeleteClick, user, onItemDeleteConfirm, threadToDelete, ...rest} = props;
+  const {className = null, onMenuItemDeleteClick, user, group, onItemDeleteConfirm, threadToDelete, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -124,9 +128,14 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
    * Handles thread deletion
    */
   function handleDeleteThread() {
-    PrivateMessageService.deleteAThread({user: threadToDelete})
+    const params = group ? {group: threadToDelete} : {user: threadToDelete};
+    PrivateMessageService.deleteAThread(params)
       .then(() => {
-        PubSub.publish('snippetsChannelDelete', threadToDelete);
+        if (group) {
+          PubSub.publish('snippetsChannelDeleteGroup', threadToDelete);
+        } else {
+          PubSub.publish('snippetsChannelDelete', threadToDelete);
+        }
         handleCloseDialog();
       })
       .catch((error) => {
@@ -149,6 +158,14 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
               id="ui.privateMessageSettingsIconButton.item.profile"
               defaultMessage="ui.privateMessageSettingsIconButton.item.profile"
             />
+          </ListItem>
+        ),
+        group && (
+          <ListItem className={classes.item} key="profile" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, group)}>
+            <ListItemIcon>
+              <Icon fontSize="small">groups</Icon>
+            </ListItemIcon>
+            <FormattedMessage id="ui.privateMessageSettingsIconButton.item.group" defaultMessage="ui.privateMessageSettingsIconButton.item.group" />
           </ListItem>
         ),
         <ListItem className={classes.item} key="delete" onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick}>
@@ -174,6 +191,19 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
               id="ui.privateMessageSettingsIconButton.item.profile"
               defaultMessage="ui.privateMessageSettingsIconButton.item.profile"
             />
+          </MenuItem>
+        ),
+        group && (
+          <MenuItem
+            className={classes.item}
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, group)}
+            key="profile"
+            onClick={handleCloseDialog}>
+            <ListItemIcon>
+              <Icon fontSize="small">groups</Icon>
+            </ListItemIcon>
+            <FormattedMessage id="ui.privateMessageSettingsIconButton.item.group" defaultMessage="ui.privateMessageSettingsIconButton.item.group" />
           </MenuItem>
         ),
         <MenuItem className={classes.item} onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick} key="delete">
