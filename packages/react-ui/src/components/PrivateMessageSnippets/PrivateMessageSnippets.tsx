@@ -209,10 +209,13 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
     }
   }
 
-  function handleSnippetsUpdate(message: any, forDeletion?: boolean) {
+  function handleSnippetsUpdate(message: any, forDeletion?: boolean, type?: SCPrivateMessageType) {
     const newSnippets = [...data.snippets];
-    if (forDeletion) {
+    if (forDeletion && type === SCPrivateMessageType.USER) {
       const _snippets = newSnippets.filter((s) => messageReceiver(s, authUserId) !== message);
+      updateSnippets(_snippets);
+    } else if (forDeletion && SCPrivateMessageType.GROUP) {
+      const _snippets = newSnippets.filter((s) => s?.group?.id !== message);
       updateSnippets(_snippets);
     } else {
       let temp = [...data.snippets];
@@ -268,12 +271,16 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
       handleSnippetsUpdate(data);
     });
     const snippetsSubscriber = PubSub.subscribe('snippetsChannelDelete', (msg, data) => {
-      handleSnippetsUpdate(data, true);
+      handleSnippetsUpdate(data, true, SCPrivateMessageType.USER);
+    });
+    const snippetsGroupSubscriber = PubSub.subscribe('snippetsChannelDeleteGroup', (msg, data) => {
+      handleSnippetsUpdate(data, true, SCPrivateMessageType.GROUP);
     });
 
     return () => {
       PubSub.unsubscribe(threadSubscriber);
       PubSub.unsubscribe(snippetsSubscriber);
+      PubSub.unsubscribe(snippetsGroupSubscriber);
     };
   }, [data.snippets]);
 
@@ -332,9 +339,10 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                       )}
                       {!isMobile && (
                         <PrivateMessageSettingsIconButton
-                          threadToDelete={messageReceiver(message, authUserId)}
+                          threadToDelete={message?.group ? message.group.id : messageReceiver(message, authUserId)}
                           onItemDeleteConfirm={() => handleDeleteConversation(messageReceiver(message, authUserId))}
                           user={messageReceiver(message, authUserId, true)}
+                          group={message?.group}
                         />
                       )}
                     </>
