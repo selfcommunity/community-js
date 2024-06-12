@@ -62,12 +62,12 @@ export interface GroupSettingsIconButtonProps extends IconButtonProps {
 }
 
 /**
- * > API documentation for the Community-JS PrivateMessageSettingsIconButton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS GroupSettingsIconButton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {PrivateMessageSettingsIconButton} from '@selfcommunity/react-ui';
+ import {GroupSettingsIconButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name

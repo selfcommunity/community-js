@@ -38,6 +38,7 @@ export const COLORS_COLORPRIMARY = `${SCPreferenceSection.COLORS}.${SCPreference
 export const COLORS_COLORSECONDARY = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORSECONDARY}`;
 export const COLORS_NAVBARBACK = `${SCPreferenceSection.COLORS}.${SCPreferenceName.NAVBARBACK}`;
 export const COLORS_COLORFONT = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORFONT}`;
+export const COLORS_COLORFONTSECONDARY = `${SCPreferenceSection.COLORS}.${SCPreferenceName.COLORFONTSECONDARY}`;
 
 /**
  * COVERS
@@ -214,6 +215,7 @@ export const DATA_TYPES = {
   [COLORS_COLORSECONDARY]: stringType,
   [COLORS_NAVBARBACK]: stringType,
   [COLORS_COLORFONT]: stringType,
+  [COLORS_COLORFONTSECONDARY]: stringType,
   [COVERS_COVER_1_HP_M1920]: stringType,
   [COVERS_COVER_2_HP_M1920]: stringType,
   [COVERS_COVER_3_HP_M1920]: stringType,

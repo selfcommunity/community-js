@@ -45,6 +45,10 @@ export interface ThreadDeleteParams {
    * The id of the user(one between thread or user is required).
    */
   user?: number;
+  /**
+   * The id of the group.
+   */
+  group?: number;
 }
 
 /**

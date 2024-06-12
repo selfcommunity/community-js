@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.33-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.33-alpha.0...@selfcommunity/react-i18n@0.5.33-alpha.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* fixed PrivateMessageSettingsIconButton delete for groups ([686d679](https://github.com/selfcommunity/community-js/commit/686d6790064b828bf54bb766272ecdfce9ebe038))
+
+
+
+
+
+## [0.5.33-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.32...@selfcommunity/react-i18n@0.5.33-alpha.0) (2024-06-07)
+
+
+### Bug Fixes
+
+* fixed error hint for user edit website field. Linear issue:  https://linear.app/quentral/issue/QUE-350/missing-hint-for-website-format ([2eedb7d](https://github.com/selfcommunity/community-js/commit/2eedb7d549c35ae5cdf2a9e1f85a299e84ebe1e0))
+
+
+
+
+
 ## [0.5.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.32-alpha.1...@selfcommunity/react-i18n@0.5.32) (2024-06-05)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

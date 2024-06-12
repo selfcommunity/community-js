@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.33-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.33-alpha.0...@selfcommunity/api-services@0.4.33-alpha.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* fixed PrivateMessageSettingsIconButton delete for groups ([686d679](https://github.com/selfcommunity/community-js/commit/686d6790064b828bf54bb766272ecdfce9ebe038))
+
+
+
+
+
+## [0.4.33-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.32...@selfcommunity/api-services@0.4.33-alpha.0) (2024-06-07)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.4.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.32-alpha.1...@selfcommunity/api-services@0.4.32) (2024-06-05)
 
 **Note:** Version bump only for package @selfcommunity/api-services
