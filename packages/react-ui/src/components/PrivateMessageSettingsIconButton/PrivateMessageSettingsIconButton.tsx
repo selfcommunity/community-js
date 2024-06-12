@@ -149,7 +149,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
   const renderList = () => {
     if (isMobile) {
       return [
-        user && (
+        user && !group && (
           <ListItem className={classes.item} key="profile" component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)}>
             <ListItemIcon>
               <Icon fontSize="small">people_alt</Icon>
@@ -160,8 +160,8 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
             />
           </ListItem>
         ),
-        group && (
-          <ListItem className={classes.item} key="profile" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, group)}>
+        group && !user && (
+          <ListItem className={classes.item} key="group" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, group)}>
             <ListItemIcon>
               <Icon fontSize="small">groups</Icon>
             </ListItemIcon>
@@ -177,7 +177,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
       ];
     } else {
       return [
-        user && (
+        user && !group && (
           <MenuItem
             className={classes.item}
             component={Link}
@@ -193,12 +193,12 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
             />
           </MenuItem>
         ),
-        group && (
+        group && !user && (
           <MenuItem
             className={classes.item}
             component={Link}
             to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, group)}
-            key="profile"
+            key="group"
             onClick={handleCloseDialog}>
             <ListItemIcon>
               <Icon fontSize="small">groups</Icon>

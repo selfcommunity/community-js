@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.34-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.34-alpha.0...@selfcommunity/react-i18n@0.5.34-alpha.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* fixed user counters transl ([d9341bd](https://github.com/selfcommunity/community-js/commit/d9341bd5da1cca43f756d3b34ef181c5bd9bfbca))
+
+
+
+
+
+## [0.5.34-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.33...@selfcommunity/react-i18n@0.5.34-alpha.0) (2024-06-12)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.5.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.33-alpha.2...@selfcommunity/react-i18n@0.5.33) (2024-06-12)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
