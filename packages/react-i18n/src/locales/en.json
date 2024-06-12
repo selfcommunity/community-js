@@ -350,7 +350,7 @@
   "ui.footer.legalPages.tec": "Terms and Conditions",
   "ui.friendshipUserButton.acceptConnection": "Accept request",
   "ui.friendshipUserButton.cancelConnectionRequest": "Cancel request",
-  "ui.friendshipUserButton.removeConnection": "Remove connection",
+  "ui.friendshipUserButton.removeConnection": "Remove",
   "ui.friendshipUserButton.requestConnection": "Connect",
   "ui.groupAutocomplete.label": "Groups",
   "ui.groupAutocomplete.empty": "No groups available",
