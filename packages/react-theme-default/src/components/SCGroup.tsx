@@ -21,6 +21,7 @@ const Component = {
         display: 'flex',
         alignItems: 'center',
         fontWeight: theme.typography.fontWeightBold,
+        flexWrap: 'wrap',
         '& .SCGroup-icon': {
           marginLeft: theme.spacing(0.5)
         }
