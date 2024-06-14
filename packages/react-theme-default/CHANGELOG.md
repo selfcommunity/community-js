@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.35-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.34...@selfcommunity/react-theme-default@0.1.35-alpha.0) (2024-06-14)
+
+
+### Bug Fixes
+
+* group flex wrap ([addb98d](https://github.com/selfcommunity/community-js/commit/addb98dbbd576a244e357108d597150b90632c6a))
+
+
+
+
+
 ## [0.1.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.34-alpha.2...@selfcommunity/react-theme-default@0.1.34) (2024-06-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
