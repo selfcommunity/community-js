@@ -1,8 +1,17 @@
 import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Button, ButtonBaseProps, Icon, Stack} from '@mui/material';
+import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCRoutes,
+  SCRoutingContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCFetchGroup,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -137,8 +146,18 @@ export default function Group(inProps: GroupProps): JSX.Element {
 
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 
-  // INTL
+  // HOOKS
   const intl = useIntl();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // HELPERS
+  const formatGroupName = (name, maxLength) => {
+    if (name.length <= maxLength) {
+      return name;
+    }
+    return name.substring(0, maxLength) + '...';
+  };
 
   /**
    * Render authenticated actions
@@ -183,7 +202,8 @@ export default function Group(inProps: GroupProps): JSX.Element {
         image={<Avatar alt={scGroup.name} src={scGroup.image_medium} className={classes.avatar} />}
         primary={
           <>
-            {scGroup.name} <Icon className={classes.icon}>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
+            {isMobile ? formatGroupName(scGroup.name, 15) : formatGroupName(scGroup.name, 20)}{' '}
+            <Icon className={classes.icon}>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
           </>
         }
         secondary={`${intl.formatMessage(messages.groupMembers, {total: scGroup.subscribers_counter})}`}
