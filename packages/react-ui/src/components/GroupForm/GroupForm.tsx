@@ -274,7 +274,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
       actions={
         <LoadingButton
           loading={field.isSubmitting}
-          disabled={!field.name || Object.keys(error).length !== 0}
+          disabled={
+            !field.name ||
+            Object.keys(error).length !== 0 ||
+            field.name.length > GROUP_TITLE_MAX_LENGTH ||
+            field.name.description > GROUP_DESCRIPTION_MAX_LENGTH
+          }
           variant="contained"
           onClick={handleSubmit}
           color="secondary">
@@ -319,6 +324,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             InputProps={{
               endAdornment: <Typography variant="body2">{GROUP_TITLE_MAX_LENGTH - field.name.length}</Typography>
             }}
+            error={Boolean(field?.name?.length > GROUP_TITLE_MAX_LENGTH)}
+            helperText={
+              field?.name?.length > GROUP_TITLE_MAX_LENGTH ? (
+                <FormattedMessage id="ui.groupForm.name.error.maxLength" defaultMessage="ui.groupForm.name.error.maxLength" />
+              ) : null
+            }
           />
           <TextField
             multiline
@@ -335,6 +346,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                 </Typography>
               )
             }}
+            error={Boolean(field.description?.length > GROUP_DESCRIPTION_MAX_LENGTH)}
+            helperText={
+              field.description?.length > GROUP_DESCRIPTION_MAX_LENGTH ? (
+                <FormattedMessage id="ui.groupForm.description.error.maxLength" defaultMessage="ui.groupForm.description.error.maxLength" />
+              ) : null
+            }
           />
           <Box className={classes.privacySection}>
             <Typography variant="h4">
