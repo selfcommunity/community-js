@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
+import {Avatar, useMediaQuery, useTheme} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
@@ -11,6 +11,8 @@ import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
+import {formatCroppedName} from '../../utils/string';
+import {CATEGORY_NAME_MAX_LENGTH_DESKTOP, CATEGORY_NAME_MAX_LENGTH_MOBILE} from '../../constants/Category';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -119,8 +121,10 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     [ButtonBaseProps, scRoutingContext, scCategory]
   );
 
-  // INTL
+  // HOOKS
   const intl = useIntl();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   if (!scCategory) {
     return <CategorySkeleton elevation={elevation} />;
@@ -134,7 +138,11 @@ export default function Category(inProps: CategoryProps): JSX.Element {
         className={classNames(classes.root, className)}
         ButtonBaseProps={_ButtonBaseProps}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
-        primary={scCategory.name}
+        primary={
+          isMobile
+            ? formatCroppedName(scCategory.name, CATEGORY_NAME_MAX_LENGTH_MOBILE)
+            : formatCroppedName(scCategory.name, CATEGORY_NAME_MAX_LENGTH_DESKTOP)
+        }
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
         actions={<CategoryFollowButton category={scCategory} {...categoryFollowButtonProps} />}
         {...rest}
