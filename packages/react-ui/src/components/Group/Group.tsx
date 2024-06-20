@@ -21,6 +21,8 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import {PREFIX} from './constants';
 import GroupSkeleton from './Skeleton';
 import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
+import {formatCroppedName} from '../../utils/string';
+import {GROUP_NAME_MAX_LENGTH_DESKTOP, GROUP_NAME_MAX_LENGTH_MOBILE} from '../../constants/Group';
 
 const messages = defineMessages({
   groupMembers: {
@@ -151,14 +153,6 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // HELPERS
-  const formatGroupName = (name, maxLength) => {
-    if (name.length <= maxLength) {
-      return name;
-    }
-    return name.substring(0, maxLength) + '...';
-  };
-
   /**
    * Render authenticated actions
    * @return {JSX.Element}
@@ -202,7 +196,9 @@ export default function Group(inProps: GroupProps): JSX.Element {
         image={<Avatar alt={scGroup.name} src={scGroup.image_medium} className={classes.avatar} />}
         primary={
           <>
-            {isMobile ? formatGroupName(scGroup.name, 15) : formatGroupName(scGroup.name, 20)}{' '}
+            {isMobile
+              ? formatCroppedName(scGroup.name, GROUP_NAME_MAX_LENGTH_MOBILE)
+              : formatCroppedName(scGroup.name, GROUP_NAME_MAX_LENGTH_DESKTOP)}{' '}
             <Icon className={classes.icon}>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
           </>
         }
