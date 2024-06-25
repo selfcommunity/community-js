@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.36-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.35...@selfcommunity/react-i18n@0.5.36-alpha.0) (2024-06-19)
+
+
+### Bug Fixes
+
+* Linear issues: https://linear.app/quentral/issue/QUE-405/rivedere-oggetto-group and https://linear.app/quentral/issue/QUE-507/bug-pubblicazione-gruppo-su-gruppistagequentrix ([3b48222](https://github.com/selfcommunity/community-js/commit/3b482226455280e5d67dd34b0693f1738718fcce))
+
+
+
+
+
 ## [0.5.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.35-alpha.1...@selfcommunity/react-i18n@0.5.35) (2024-06-14)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

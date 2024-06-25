@@ -161,6 +161,18 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
         console.log(error);
       });
   }
+
+  const optionLabel = (option) => {
+    switch (option.type) {
+      case SuggestionType.CATEGORY:
+        return option[option.type]['name_synonyms'];
+      case SuggestionType.USER:
+        return option[option.type]['username'];
+      default:
+        return option[option.type]['name'];
+    }
+  };
+
   useEffect(() => {
     if (value) {
       fetchResults();
@@ -186,7 +198,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
         if (typeof option === 'string') {
           return option;
         }
-        return option[option.type]['username'] ?? option[option.type]['name'];
+        return optionLabel(option);
       }}
       renderOption={(props, option: SCSuggestionType) => (
         <Box component="li" {...props}>

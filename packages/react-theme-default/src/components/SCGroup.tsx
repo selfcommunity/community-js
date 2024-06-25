@@ -21,7 +21,6 @@ const Component = {
         display: 'flex',
         alignItems: 'center',
         fontWeight: theme.typography.fontWeightBold,
-        flexWrap: 'wrap',
         '& .SCGroup-icon': {
           marginLeft: theme.spacing(0.5)
         }
@@ -33,6 +32,9 @@ const Component = {
         '& .MuiIcon-root': {
           fontSize: '1.286rem',
           color: theme.palette.primary.main
+        },
+        '& .MuiButtonBase-root': {
+          marginLeft: theme.spacing(1)
         }
       }
     }),
