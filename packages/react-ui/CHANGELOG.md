@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.37-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.36...@selfcommunity/react-ui@0.7.37-alpha.0) (2024-06-25)
+
+
+### Performance Improvements
+
+* search autocomplete user real name ([e773430](https://github.com/selfcommunity/community-js/commit/e7734304794d1f8659e2d969edcce6766a8fa1d9))
+
+
+
+
+
 ## [0.7.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.36-alpha.3...@selfcommunity/react-ui@0.7.36) (2024-06-25)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
