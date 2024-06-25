@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.38-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.37...@selfcommunity/react-ui@0.7.38-alpha.0) (2024-06-25)
+
+
+### Bug Fixes
+
+* fixed username with hyphens mention ([0f7bc65](https://github.com/selfcommunity/community-js/commit/0f7bc65febb6a2d7f88e17781f5985ef65a3a974))
+
+
+
+
+
 ## [0.7.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.37-alpha.1...@selfcommunity/react-ui@0.7.37) (2024-06-25)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
