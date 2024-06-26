@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.40-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.39...@selfcommunity/react-ui@0.7.40-alpha.0) (2024-06-26)
+
+
+### Bug Fixes
+
+* hidden disabled reaction for unvoted contribution ([86c3c53](https://github.com/selfcommunity/community-js/commit/86c3c534423cb1e4edb2a617465f38d424a7a9e5))
+
+
+
+
+
 ## [0.7.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.39-alpha.1...@selfcommunity/react-ui@0.7.39) (2024-06-26)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
