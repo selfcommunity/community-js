@@ -519,6 +519,9 @@ const Component = {
       '& .SCFeedObject-action-vote-divider': {
         width: '100%',
         borderBottom: 0
+      },
+      '& .SCFeedObject-action-share-view-audience-button': {
+        whiteSpace: 'nowrap'
       }
     }),
     actionVoteRoot: ({theme}: any) => ({

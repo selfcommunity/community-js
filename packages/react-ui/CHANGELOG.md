@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.39-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.38...@selfcommunity/react-ui@0.7.39-alpha.0) (2024-06-26)
+
+
+### Bug Fixes
+
+* like action mode and share button alignment on mobile view. Linear issues: https://linear.app/quentral/issue/QUE-513/ux-voting-nella-pwa-mobile-desktop and https://linear.app/quentral/issue/QUE-517/sistemare-azioni-nella-versione-it-mobile ([964925f](https://github.com/selfcommunity/community-js/commit/964925f99db608f33fe6e14374e5a940c24049ab))
+
+
+
+
+
 ## [0.7.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.38-alpha.1...@selfcommunity/react-ui@0.7.38) (2024-06-25)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
