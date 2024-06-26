@@ -230,7 +230,9 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
           keepMounted>
           <Paper className={classes.reactionList} onMouseEnter={handleClearTimeout} onMouseLeave={handleMouseLeave}>
             {reactions.reactions
-              .filter((reaction: SCReactionType) => (!contributionVoted ? reaction.active : reaction))
+              .filter((reaction: SCReactionType) =>
+                !contributionVoted || (contributionVoted && contributionReaction.id !== reaction.id) ? reaction.active : reaction
+              )
               .map((reaction: SCReactionType) => (
                 <IconButton key={reaction.id} className={classes.reaction} onClick={() => handleVoteAction(reaction)}>
                   <Icon>
