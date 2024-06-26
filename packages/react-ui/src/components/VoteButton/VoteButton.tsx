@@ -229,13 +229,15 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
           placement="top"
           keepMounted>
           <Paper className={classes.reactionList} onMouseEnter={handleClearTimeout} onMouseLeave={handleMouseLeave}>
-            {reactions.reactions.map((reaction: SCReactionType) => (
-              <IconButton key={reaction.id} className={classes.reaction} onClick={() => handleVoteAction(reaction)}>
-                <Icon>
-                  <img alt={reaction.label} src={reaction.image} width="100%" height="100%" />
-                </Icon>
-              </IconButton>
-            ))}
+            {reactions.reactions
+              .filter((reaction: SCReactionType) => (!contributionVoted ? reaction.active : reaction))
+              .map((reaction: SCReactionType) => (
+                <IconButton key={reaction.id} className={classes.reaction} onClick={() => handleVoteAction(reaction)}>
+                  <Icon>
+                    <img alt={reaction.label} src={reaction.image} width="100%" height="100%" />
+                  </Icon>
+                </IconButton>
+              ))}
           </Paper>
         </PopperRoot>
       )}
