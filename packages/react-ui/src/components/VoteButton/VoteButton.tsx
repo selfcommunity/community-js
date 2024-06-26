@@ -179,7 +179,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   const button = (
     <Root
       onClick={
-        isMobile
+        isMobile && reactions.reactions
           ? handleMouseEnter
           : () => handleVoteAction(contributionReaction ? contributionReaction : reactions.default ? reactions.default : null)
       }
