@@ -12,7 +12,7 @@ import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import {formatCroppedName} from '../../utils/string';
-import {CATEGORY_NAME_MAX_LENGTH_DESKTOP, CATEGORY_NAME_MAX_LENGTH_MOBILE} from '../../constants/Category';
+import {CATEGORY_NAME_MAX_LENGTH_DESKTOP} from '../../constants/Category';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -138,11 +138,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
         className={classNames(classes.root, className)}
         ButtonBaseProps={_ButtonBaseProps}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
-        primary={
-          isMobile
-            ? formatCroppedName(scCategory.name, CATEGORY_NAME_MAX_LENGTH_MOBILE)
-            : formatCroppedName(scCategory.name, CATEGORY_NAME_MAX_LENGTH_DESKTOP)
-        }
+        primary={isMobile ? scCategory.name : formatCroppedName(scCategory.name, CATEGORY_NAME_MAX_LENGTH_DESKTOP)}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
         actions={<CategoryFollowButton category={scCategory} {...categoryFollowButtonProps} />}
         {...rest}

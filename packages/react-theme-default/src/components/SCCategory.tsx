@@ -14,7 +14,11 @@ const Component = {
         fontWeight: theme.typography.fontWeightBold
       },
       '& .SCBaseItemButton-secondary': {
-        fontSize: '0.857rem'
+        fontSize: '0.857rem',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: 'block'
       }
     }),
     skeletonRoot: ({theme}: any) => ({
