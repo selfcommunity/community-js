@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.42-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.42-alpha.1...@selfcommunity/react-theme-default@0.1.42-alpha.2) (2024-06-27)
+
+
+### Performance Improvements
+
+* SCNavigationMenuIconButton category max width ([637db0e](https://github.com/selfcommunity/community-js/commit/637db0e618ea59b3c2395618ab549ec280b65163))
+
+
+
+
+
 ## [0.1.42-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.42-alpha.0...@selfcommunity/react-theme-default@0.1.42-alpha.1) (2024-06-27)
 
 
