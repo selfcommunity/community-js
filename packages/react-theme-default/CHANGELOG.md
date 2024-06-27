@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.42-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.42-alpha.1...@selfcommunity/react-theme-default@0.1.42-alpha.2) (2024-06-27)
+
+
+### Performance Improvements
+
+* SCNavigationMenuIconButton category max width ([637db0e](https://github.com/selfcommunity/community-js/commit/637db0e618ea59b3c2395618ab549ec280b65163))
+
+
+
+
+
+## [0.1.42-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.42-alpha.0...@selfcommunity/react-theme-default@0.1.42-alpha.1) (2024-06-27)
+
+
+### Performance Improvements
+
+* reverted categories cropping, added classes for managing followed and auto-followed state ([28e6419](https://github.com/selfcommunity/community-js/commit/28e64196725149b3c27896ba8249d92c48fa63d5))
+
+
+
+
+
+## [0.1.42-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.41...@selfcommunity/react-theme-default@0.1.42-alpha.0) (2024-06-27)
+
+
+### Performance Improvements
+
+* categories style ([273a369](https://github.com/selfcommunity/community-js/commit/273a3692d39853ca0e229172fb0a516fd80ff030))
+
+
+
+
+
 ## [0.1.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.41-alpha.1...@selfcommunity/react-theme-default@0.1.41) (2024-06-26)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
