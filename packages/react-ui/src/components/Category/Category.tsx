@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, useMediaQuery, useTheme} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
+import {Avatar} from '@mui/material';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
+import {SCCategoryAutoFollowType, SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {defineMessages, useIntl} from 'react-intl';
@@ -11,8 +11,6 @@ import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
 import {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
-import {formatCroppedName} from '../../utils/string';
-import {CATEGORY_NAME_MAX_LENGTH_DESKTOP} from '../../constants/Category';
 
 const messages = defineMessages({
   categoryFollowers: {
@@ -25,6 +23,8 @@ const classes = {
   root: `${PREFIX}-root`,
   categoryImage: `${PREFIX}-category-image`,
   title: `${PREFIX}-title`,
+  followed: `${PREFIX}-followed`,
+  autoFollowed: `${PREFIX}-auto-followed`,
   actions: `${PREFIX}-actions`
 };
 
@@ -123,8 +123,6 @@ export default function Category(inProps: CategoryProps): JSX.Element {
 
   // HOOKS
   const intl = useIntl();
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   if (!scCategory) {
     return <CategorySkeleton elevation={elevation} />;
@@ -135,10 +133,15 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     return (
       <Root
         elevation={elevation}
-        className={classNames(classes.root, className)}
+        className={classNames(
+          classes.root,
+          className,
+          {[classes.followed]: scCategory.followed},
+          {[classes.autoFollowed]: scCategory.auto_follow === SCCategoryAutoFollowType.FORCED}
+        )}
         ButtonBaseProps={_ButtonBaseProps}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
-        primary={isMobile ? scCategory.name : formatCroppedName(scCategory.name, CATEGORY_NAME_MAX_LENGTH_DESKTOP)}
+        primary={scCategory.name}
         secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
         actions={<CategoryFollowButton category={scCategory} {...categoryFollowButtonProps} />}
         {...rest}
