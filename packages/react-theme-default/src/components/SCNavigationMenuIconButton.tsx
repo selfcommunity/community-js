@@ -35,6 +35,9 @@ const Component = {
         '& span:first-of-type': {
           color: darken(theme.palette.text.primary, 0.5)
         }
+      },
+      '& .SCBaseItemButton-text ': {
+        maxWidth: '75%'
       }
     })
   }
