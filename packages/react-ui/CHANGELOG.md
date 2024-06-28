@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.43-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.42...@selfcommunity/react-ui@0.7.43-alpha.0) (2024-06-28)
+
+
+### Performance Improvements
+
+* Categories cols, added prop to category item to show tooltip ([45c9589](https://github.com/selfcommunity/community-js/commit/45c9589703d10a7db4e27b4b6995bb5fcbef8479))
+
+
+
+
+
 ## [0.7.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.42-alpha.2...@selfcommunity/react-ui@0.7.42) (2024-06-27)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
