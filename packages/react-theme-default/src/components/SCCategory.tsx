@@ -10,11 +10,23 @@ const Component = {
           borderRadius: theme.spacing(1)
         }
       },
-      '& .SCBaseItemButton-primary': {
+      '& .SCCategory-primary': {
+        color: theme.palette.text.primary
+      },
+      '& .SCCategory-secondary': {
+        color: theme.palette.text.secondary
+      },
+      '& .SCBaseItemButton-primary, & .SCCategory-primary': {
         fontWeight: theme.typography.fontWeightBold
       },
       '& .SCBaseItemButton-secondary': {
         fontSize: '0.857rem',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: 'block'
+      },
+      '& .SCCategory-primary, & .SCCategory-secondary': {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',

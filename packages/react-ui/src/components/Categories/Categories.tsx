@@ -252,8 +252,8 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           ) : (
             <>
               {filteredCategories.map((category: SCCategoryType) => (
-                <Grid item xs={12} sm={6} md={4} key={category.id}>
-                  <CategoryComponent category={category} {...CategoryComponentProps} className={classes.category} />
+                <Grid item xs={12} sm={6} md={6} lg={4} key={category.id}>
+                  <CategoryComponent category={category} {...CategoryComponentProps} showTooltip={true} className={classes.category} />
                 </Grid>
               ))}
             </>

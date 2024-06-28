@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar} from '@mui/material';
+import {Avatar, Tooltip, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryAutoFollowType, SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
@@ -22,6 +22,8 @@ const messages = defineMessages({
 const classes = {
   root: `${PREFIX}-root`,
   categoryImage: `${PREFIX}-category-image`,
+  primary: `${PREFIX}-primary`,
+  secondary: `${PREFIX}-secondary`,
   title: `${PREFIX}-title`,
   followed: `${PREFIX}-followed`,
   autoFollowed: `${PREFIX}-auto-followed`,
@@ -60,6 +62,11 @@ export interface CategoryProps extends WidgetProps {
    */
   showFollowers?: boolean;
   /**
+   * Prop to show category name tooltip
+   * @default false
+   */
+  showTooltip?: boolean;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -87,6 +94,10 @@ export interface CategoryProps extends WidgetProps {
  |categoryImage|.SCCategory-category-image|Styles applied to category image element.|
  |title|.SCCategory-title|Styles applied to the title element.|
  |actions|.SCCategory-actions|Styles applied to action section.|
+ |primary|.SCCategory-primary|Styles applied to category primary section (when showTooltip prop is set to true)|
+ |secondary|.SCCategory-secondary|Styles applied to category secondary section (when showTooltip prop is set to true)|
+ |followed|.SCCategory-followed|Styles applied to a category item when it is followed|
+ |autoFollowed|.SCCategory-auto-followed|Styles applied to a category item when auto followed is set to true|
 
  * @param inProps
  */
@@ -105,6 +116,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     autoHide = false,
     categoryFollowButtonProps = {},
     showFollowers = true,
+    showTooltip = false,
     ButtonBaseProps = null,
     ...rest
   } = props;
@@ -132,6 +144,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   if (!autoHide) {
     return (
       <Root
+        disableTypography={showTooltip}
         elevation={elevation}
         className={classNames(
           classes.root,
@@ -141,8 +154,30 @@ export default function Category(inProps: CategoryProps): JSX.Element {
         )}
         ButtonBaseProps={_ButtonBaseProps}
         image={<Avatar alt={scCategory.name} src={scCategory.image_medium} variant="square" className={classes.categoryImage} />}
-        primary={scCategory.name}
-        secondary={showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
+        primary={
+          <>
+            {showTooltip ? (
+              <Tooltip title={scCategory.name}>
+                <Typography className={classes.primary} component="span" variant="body1">
+                  {scCategory.name}
+                </Typography>
+              </Tooltip>
+            ) : (
+              scCategory.name
+            )}
+          </>
+        }
+        secondary={
+          <>
+            {showTooltip ? (
+              <Typography className={classes.secondary} component="p" variant="body2">
+                {showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
+              </Typography>
+            ) : (
+              <>{showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}</>
+            )}
+          </>
+        }
         actions={<CategoryFollowButton category={scCategory} {...categoryFollowButtonProps} />}
         {...rest}
       />
