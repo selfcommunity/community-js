@@ -37,7 +37,7 @@ const Component = {
         }
       },
       '& .SCBaseItemButton-text ': {
-        maxWidth: '75%'
+        maxWidth: '80%'
       }
     })
   }
