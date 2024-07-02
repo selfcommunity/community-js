@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.44-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.43...@selfcommunity/react-theme-default@0.1.44-alpha.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* extended max width prop in SCNavigationMenuIconButton. Exported DefaultDrawerContent component ([b8771f4](https://github.com/selfcommunity/community-js/commit/b8771f459e5d810a7145914ce96eea651d5b5bfa))
+
+
+
+
+
 ## [0.1.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.43-alpha.1...@selfcommunity/react-theme-default@0.1.43) (2024-06-28)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
