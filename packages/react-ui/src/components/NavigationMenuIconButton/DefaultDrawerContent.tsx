@@ -1,12 +1,17 @@
 import {Button, ListItem, Typography, Zoom} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategories, useSCRouting} from '@selfcommunity/react-core';
 import React, {useEffect, useState} from 'react';
-import Category from '../Category';
+import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
 import {SCCategoryType} from '@selfcommunity/types';
 
-export default function DefaultDrawerContent() {
+export interface DefaultDrawerContentProps {
+  CategoryItemProps?: CategoryProps;
+}
+export default function DefaultDrawerContent(props: DefaultDrawerContentProps) {
+  const {CategoryItemProps = {}} = props;
+
   // HOOKS
   const {categories} = useSCFetchCategories();
   const [categoriesOrdered, setCategoriesOrdered] = useState<SCCategoryType[]>([]);
@@ -66,6 +71,7 @@ export default function DefaultDrawerContent() {
               elevation={0}
               category={c}
               actions={null}
+              {...CategoryItemProps}
               {...getMouseEvents(
                 () => handleMouseEnter(c.id),
                 () => handleMouseLeave(c.id)

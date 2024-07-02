@@ -165,7 +165,7 @@ import UserSubscribedGroupsWidget, {
   UserSubscribedGroupsWidgetProps,
   UserSubscribedGroupsWidgetSkeleton
 } from './components/UserSubscribedGroupsWidget';
-
+import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
 /**
  * Constants
  */
@@ -448,6 +448,8 @@ export {
   UserSubscribedGroupsWidget,
   UserSubscribedGroupsWidgetProps,
   UserSubscribedGroupsWidgetSkeleton,
+  DefaultDrawerContent,
+  DefaultDrawerContentProps,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,
