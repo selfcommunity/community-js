@@ -26,6 +26,8 @@ import {SCFeatureName} from '@selfcommunity/types';
 const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
+  logoFlex: `${PREFIX}-logo-flex`,
+  customItem: `${PREFIX}-custom-item`,
   search: `${PREFIX}-search`,
   searchDialog: `${PREFIX}-search-dialog`,
   notifications: `${PREFIX}-notifications`,
@@ -151,13 +153,22 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const _children = children || (
     <>
       <NavigationMenuIconButtonComponent />
-      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+      <Link
+        to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
+        className={classNames(className, classes.logo, {
+          [classes.logoFlex]: preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value
+        })}>
         {!preserveDesktopLogo ? (
           <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
         ) : (
           <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO].value} alt="logo" />
         )}
       </Link>
+      {preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value && (
+        <Link target="blank" to={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value} className={classes.customItem}>
+          <img src={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE].value} alt="custom_item"></img>
+        </Link>
+      )}
     </>
   );
 
