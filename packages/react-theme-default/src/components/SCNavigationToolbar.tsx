@@ -2,7 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       padding: theme.spacing(0, 1),
-      '& .SCNavigationToolbar-logo': {
+      '& .SCNavigationToolbar-logo, & .SCNavigationToolbar-custom-item': {
         marginRight: theme.spacing(2),
         '& img': {
           verticalAlign: 'middle',
