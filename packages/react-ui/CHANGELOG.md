@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.45-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.44...@selfcommunity/react-ui@0.7.45-alpha.0) (2024-07-03)
+
+
+### Performance Improvements
+
+* added custom navbar item. Linear issue: https://linear.app/quentral/issue/QUE-530/aggiunta-custom-navbar-item ([5a97fee](https://github.com/selfcommunity/community-js/commit/5a97fee19b8f67c4b80f0df395c847f99a184141))
+
+
+
+
+
 ## [0.7.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.44-alpha.1...@selfcommunity/react-ui@0.7.44) (2024-07-02)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

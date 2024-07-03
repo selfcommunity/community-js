@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.45-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.44...@selfcommunity/types@0.5.45-alpha.0) (2024-07-03)
+
+
+### Performance Improvements
+
+* added custom navbar item. Linear issue: https://linear.app/quentral/issue/QUE-530/aggiunta-custom-navbar-item ([5a97fee](https://github.com/selfcommunity/community-js/commit/5a97fee19b8f67c4b80f0df395c847f99a184141))
+* added preferences for custom navbar item ([c49d96d](https://github.com/selfcommunity/community-js/commit/c49d96dbfda2d5432256f72354ca9c2ad18b71d8))
+
+
+
+
+
 ## [0.5.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.44-alpha.1...@selfcommunity/types@0.5.44) (2024-07-02)
 
 **Note:** Version bump only for package @selfcommunity/types

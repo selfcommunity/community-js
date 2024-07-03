@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.45-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.44...@selfcommunity/react-core@0.4.45-alpha.0) (2024-07-03)
+
+
+### Performance Improvements
+
+* added preferences for custom navbar item ([c49d96d](https://github.com/selfcommunity/community-js/commit/c49d96dbfda2d5432256f72354ca9c2ad18b71d8))
+
+
+
+
+
 ## [0.4.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.44-alpha.1...@selfcommunity/react-core@0.4.44) (2024-07-02)
 
 **Note:** Version bump only for package @selfcommunity/react-core
