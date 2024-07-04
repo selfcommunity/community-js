@@ -107,6 +107,7 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY,
   SCPreferences.LOGO_NAVBAR_LOGO,
   SCPreferences.ADDONS_CLOSED_COMMUNITY,
+  SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_ENABLED,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT
@@ -267,12 +268,20 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <FormattedMessage id="ui.appBar.navigation.register" defaultMessage="ui.appBar.navigation.register" />
         </Button>
       )}
-      {preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL] && (
-        <Tooltip title={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT]}>
-          <Link target="blank" to={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL]} className={classes.customItem}>
-            <img src={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE]} alt="custom_item"></img>
-          </Link>
-        </Tooltip>
+      {preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_ENABLED] && (
+        <>
+          {preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT] ? (
+            <Tooltip title={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT]}>
+              <Link target="blank" to={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL]} className={classes.customItem}>
+                <img src={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE]} alt="custom_item"></img>
+              </Link>
+            </Tooltip>
+          ) : (
+            <Link target="blank" to={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL]} className={classes.customItem}>
+              <img src={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE]} alt="custom_item"></img>
+            </Link>
+          )}
+        </>
       )}
       {_children}
       {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch ? (
