@@ -164,7 +164,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
           <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO].value} alt="logo" />
         )}
       </Link>
-      {preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value && (
+      {preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_ENABLED].value && (
         <Link target="blank" to={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value} className={classes.customItem}>
           <img src={preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE].value} alt="custom_item"></img>
         </Link>

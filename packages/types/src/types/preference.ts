@@ -72,6 +72,7 @@ export enum SCPreferenceName {
   SHARE_POST_ON_LINKEDIN_ENABLED = 'share_post_on_linkedin_enabled',
   CUSTOM_ADV_ENABLED = 'custom_adv_enabled',
   CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED = 'custom_adv_only_for_anonymous_users_enabled',
+  CUSTOM_NAVBAR_ITEM_ENABLED = 'custom_navbar_item_enabled',
   CUSTOM_NAVBAR_ITEM_TEXT = 'custom_navbar_item_text',
   CUSTOM_NAVBAR_ITEM_URL = 'custom_navbar_item_url',
   CUSTOM_NAVBAR_ITEM_IMAGE = 'custom_navbar_item_image',
