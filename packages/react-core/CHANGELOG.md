@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.46-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.45...@selfcommunity/react-core@0.4.46-alpha.0) (2024-07-04)
+
+
+### Performance Improvements
+
+* changed custom item preference ([3e0b47b](https://github.com/selfcommunity/community-js/commit/3e0b47ba7864f88b12953b37636773a026151a55))
+
+
+
+
+
 ## [0.4.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.45-alpha.1...@selfcommunity/react-core@0.4.45) (2024-07-03)
 
 **Note:** Version bump only for package @selfcommunity/react-core
