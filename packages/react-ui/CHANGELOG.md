@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.47-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.46...@selfcommunity/react-ui@0.7.47-alpha.0) (2024-07-08)
+
+
+### Performance Improvements
+
+* removed group visibility section. Linear issue: https://linear.app/quentral/issue/QUE-542/step-1-community ([92a0703](https://github.com/selfcommunity/community-js/commit/92a0703b62a065201650ab8e0c16691d41a7e919))
+
+
+
+
+
 ## [0.7.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.46-alpha.1...@selfcommunity/react-ui@0.7.46) (2024-07-04)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
