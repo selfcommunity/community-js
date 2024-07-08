@@ -16,7 +16,7 @@ export default {
     }
   },
   args: {
-    groupId: 3
+    groupId: 5
   }
 } as Meta<typeof GroupHeader>;
 
@@ -28,7 +28,7 @@ const BaseTemplate = (args) => (
 
 export const Base: StoryObj<typeof GroupHeader> = {
   args: {
-    groupId: 3
+    groupId: 5
   },
   render: BaseTemplate
 };
@@ -53,7 +53,7 @@ const NotifyChangeGroupTemplate = (args) => (
 
 export const NotifyChangeGroup: StoryObj<typeof GroupHeader> = {
 	args: {
-		groupId: 3
+		groupId: 5
 	},
 	render: NotifyChangeGroupTemplate
 };
