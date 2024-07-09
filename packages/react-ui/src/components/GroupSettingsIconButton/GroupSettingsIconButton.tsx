@@ -147,7 +147,7 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
       });
   }
 
-  if (scUserContext?.user?.id === user?.id) {
+  if (scUserContext.user.id === user.id) {
     return null;
   }
   /**
