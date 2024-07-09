@@ -509,6 +509,10 @@ export interface SCUserPermissionType {
    */
   create_poll: boolean;
   /**
+   * If user can create a group
+   */
+  create_group: boolean;
+  /**
    * If user can locate a contribute
    */
   locate_post: boolean;
