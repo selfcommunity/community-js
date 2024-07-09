@@ -79,6 +79,8 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
     () => preferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value,
     [preferences.preferences]
   );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   const canCreateGroup = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
 
   /**
