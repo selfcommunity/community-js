@@ -26,8 +26,8 @@ const classes = {
   name: `${PREFIX}-name`,
   changePicture: `${PREFIX}-change-picture`,
   changeCover: `${PREFIX}-change-cover`,
-  // visibility: `${PREFIX}-visibility`,
-  // visibilityItem: `${PREFIX}-visibility-item`,
+  visibility: `${PREFIX}-visibility`,
+  visibilityItem: `${PREFIX}-visibility-item`,
   members: `${PREFIX}-members`,
   membersCounter: `${PREFIX}-members-counter`
 };
@@ -139,6 +139,14 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const visibilityEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_VISIBILITY_ENABLED].value,
+    [scPreferences.preferences]
+  );
+  const privateEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_PRIVATE_ENABLED].value,
+    [scPreferences.preferences]
+  );
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -244,31 +252,41 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
         <Typography variant="h5" className={classes.name}>
           {scGroup.name}
         </Typography>
-        {/*<Box className={classes.visibility}>*/}
-        {/*  {scGroup.privacy === SCGroupPrivacyType.PUBLIC ? (*/}
-        {/*    <Typography className={classes.visibilityItem}>*/}
-        {/*      <Icon>public</Icon>*/}
-        {/*      <FormattedMessage id="ui.groupHeader.visibility.public" defaultMessage="ui.groupHeader.visibility.public" />*/}
-        {/*    </Typography>*/}
-        {/*  ) : (*/}
-        {/*    <Typography className={classes.visibilityItem}>*/}
-        {/*      <Icon>private</Icon>*/}
-        {/*      <FormattedMessage id="ui.groupHeader.visibility.private" defaultMessage="ui.groupHeader.visibility.private" />*/}
-        {/*    </Typography>*/}
-        {/*  )}*/}
-        {/*  <Bullet />*/}
-        {/*  {scGroup.visible ? (*/}
-        {/*    <Typography className={classes.visibilityItem}>*/}
-        {/*      <Icon>visibility</Icon>*/}
-        {/*      <FormattedMessage id="ui.groupHeader.visibility.visible" defaultMessage="ui.groupHeader.visibility.visible" />*/}
-        {/*    </Typography>*/}
-        {/*  ) : (*/}
-        {/*    <Typography className={classes.visibilityItem}>*/}
-        {/*      <Icon>visibility_off</Icon>*/}
-        {/*      <FormattedMessage id="ui.groupHeader.visibility.hidden" defaultMessage="ui.groupHeader.visibility.hidden" />*/}
-        {/*    </Typography>*/}
-        {/*  )}*/}
-        {/*</Box>*/}
+        {(privateEnabled || visibilityEnabled) && (
+          <Box className={classes.visibility}>
+            {privateEnabled && (
+              <>
+                {scGroup.privacy === SCGroupPrivacyType.PUBLIC ? (
+                  <Typography className={classes.visibilityItem}>
+                    <Icon>public</Icon>
+                    <FormattedMessage id="ui.groupHeader.visibility.public" defaultMessage="ui.groupHeader.visibility.public" />
+                  </Typography>
+                ) : (
+                  <Typography className={classes.visibilityItem}>
+                    <Icon>private</Icon>
+                    <FormattedMessage id="ui.groupHeader.visibility.private" defaultMessage="ui.groupHeader.visibility.private" />
+                  </Typography>
+                )}
+              </>
+            )}
+            {visibilityEnabled && (
+              <>
+                {privateEnabled && <Bullet />}
+                {scGroup.visible ? (
+                  <Typography className={classes.visibilityItem}>
+                    <Icon>visibility</Icon>
+                    <FormattedMessage id="ui.groupHeader.visibility.visible" defaultMessage="ui.groupHeader.visibility.visible" />
+                  </Typography>
+                ) : (
+                  <Typography className={classes.visibilityItem}>
+                    <Icon>visibility_off</Icon>
+                    <FormattedMessage id="ui.groupHeader.visibility.hidden" defaultMessage="ui.groupHeader.visibility.hidden" />
+                  </Typography>
+                )}
+              </>
+            )}
+          </Box>
+        )}
         <>
           {((scGroup && scGroup.privacy === SCGroupPrivacyType.PUBLIC) ||
             scGroup.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED ||

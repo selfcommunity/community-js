@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {CardContent, Icon, Typography} from '@mui/material';
 import classNames from 'classnames';
@@ -9,7 +9,7 @@ import {PREFIX} from './constants';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCGroupType, SCGroupPrivacyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
-import {useSCFetchGroup} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, useSCFetchGroup, useSCPreferences} from '@selfcommunity/react-core';
 import GroupInfoWidgetSkeleton from './Skeleton';
 import {SCEventType, SCTopicType} from '../../constants/PubSub';
 import User from '../User';
@@ -20,8 +20,8 @@ const classes = {
   description: `${PREFIX}-description`,
   privacy: `${PREFIX}-privacy`,
   privacyTitle: `${PREFIX}-privacy-title`,
-  // visibility: `${PREFIX}-visibility`,
-  // visibilityTitle: `${PREFIX}-visibility-title`,
+  visibility: `${PREFIX}-visibility`,
+  visibilityTitle: `${PREFIX}-visibility-title`,
   admin: `${PREFIX}-admin`,
   date: `${PREFIX}-date`
 };
@@ -95,6 +95,16 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
   const intl = useIntl();
   // REFS
   const updatesSubscription = useRef(null);
+  // PREFERENCES
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const visibilityEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_VISIBILITY_ENABLED].value,
+    [scPreferences.preferences]
+  );
+  const privateEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_PRIVATE_ENABLED].value,
+    [scPreferences.preferences]
+  );
 
   /**
    * Subscriber for pubsub callback
@@ -139,86 +149,92 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
         <Typography variant="body1" className={classes.description}>
           {scGroup.description}
         </Typography>
-        <Typography component="div" className={classes.privacy}>
-          {scGroup.privacy === SCGroupPrivacyType.PUBLIC ? (
-            <>
-              <Typography className={classes.privacyTitle}>
-                <Icon>public</Icon>
-                <FormattedMessage id="ui.groupInfoWidget.privacy.public" defaultMessage="ui.groupInfoWidget.privacy.public" />
+        {privateEnabled && (
+          <Typography component="div" className={classes.privacy}>
+            {scGroup.privacy === SCGroupPrivacyType.PUBLIC ? (
+              <>
+                <Typography className={classes.privacyTitle}>
+                  <Icon>public</Icon>
+                  <FormattedMessage id="ui.groupInfoWidget.privacy.public" defaultMessage="ui.groupInfoWidget.privacy.public" />
+                </Typography>
+                <Typography variant="body2">
+                  <FormattedMessage
+                    id="ui.groupInfoWidget.privacy.public.info"
+                    defaultMessage="ui.groupInfoWidget.privacy.public.info"
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
+                  />
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography className={classes.privacyTitle}>
+                  <Icon>private</Icon>
+                  <FormattedMessage id="ui.groupInfoWidget.privacy.private" defaultMessage="ui.groupInfoWidget.privacy.private" />
+                </Typography>
+                <Typography variant="body2">
+                  <FormattedMessage
+                    id="ui.groupInfoWidget.privacy.private.info"
+                    defaultMessage="ui.groupInfoWidget.private.public.info"
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
+                  />
+                </Typography>
+              </>
+            )}
+          </Typography>
+        )}
+        {visibilityEnabled && (
+          <>
+            {scGroup.privacy === SCGroupPrivacyType.PRIVATE && (
+              <Typography component="div" className={classes.visibility}>
+                {scGroup.visible ? (
+                  <>
+                    <Typography className={classes.visibilityTitle}>
+                      <Icon>visibility</Icon>
+                      <FormattedMessage id="ui.groupForm.visibility.visible" defaultMessage="ui.groupForm.visibility.visible" />
+                    </Typography>
+                    <Typography variant="body2">
+                      <FormattedMessage
+                        id="ui.groupForm.visibility.visible.info"
+                        defaultMessage="ui.groupForm.visibility.visible.info"
+                        values={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                          // @ts-ignore
+                          b: (chunks) => <strong>{chunks}</strong>
+                        }}
+                      />
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography className={classes.visibilityTitle}>
+                      <Icon>visibility_off</Icon>
+                      <FormattedMessage id="ui.groupForm.visibility.hidden" defaultMessage="ui.groupForm.visibility.hidden" />
+                    </Typography>
+                    <Typography variant="body2">
+                      <FormattedMessage
+                        id="ui.groupForm.visibility.hidden.info"
+                        defaultMessage="ui.groupForm.visibility.hidden.info"
+                        values={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                          // @ts-ignore
+                          b: (chunks) => <strong>{chunks}</strong>
+                        }}
+                      />
+                    </Typography>
+                  </>
+                )}
               </Typography>
-              <Typography variant="body2">
-                <FormattedMessage
-                  id="ui.groupInfoWidget.privacy.public.info"
-                  defaultMessage="ui.groupInfoWidget.privacy.public.info"
-                  values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>
-                  }}
-                />
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography className={classes.privacyTitle}>
-                <Icon>private</Icon>
-                <FormattedMessage id="ui.groupInfoWidget.privacy.private" defaultMessage="ui.groupInfoWidget.privacy.private" />
-              </Typography>
-              <Typography variant="body2">
-                <FormattedMessage
-                  id="ui.groupInfoWidget.privacy.private.info"
-                  defaultMessage="ui.groupInfoWidget.private.public.info"
-                  values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>
-                  }}
-                />
-              </Typography>
-            </>
-          )}
-        </Typography>
-        {/*{scGroup.privacy === SCGroupPrivacyType.PRIVATE && (*/}
-        {/*  <Typography component="div" className={classes.visibility}>*/}
-        {/*    {scGroup.visible ? (*/}
-        {/*      <>*/}
-        {/*        <Typography className={classes.visibilityTitle}>*/}
-        {/*          <Icon>visibility</Icon>*/}
-        {/*          <FormattedMessage id="ui.groupForm.visibility.visible" defaultMessage="ui.groupForm.visibility.visible" />*/}
-        {/*        </Typography>*/}
-        {/*        <Typography variant="body2">*/}
-        {/*          <FormattedMessage*/}
-        {/*            id="ui.groupForm.visibility.visible.info"*/}
-        {/*            defaultMessage="ui.groupForm.visibility.visible.info"*/}
-        {/*            values={{*/}
-        {/*              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-        {/*              // @ts-ignore*/}
-        {/*              b: (chunks) => <strong>{chunks}</strong>*/}
-        {/*            }}*/}
-        {/*          />*/}
-        {/*        </Typography>*/}
-        {/*      </>*/}
-        {/*    ) : (*/}
-        {/*      <>*/}
-        {/*        <Typography className={classes.visibilityTitle}>*/}
-        {/*          <Icon>visibility_off</Icon>*/}
-        {/*          <FormattedMessage id="ui.groupForm.visibility.hidden" defaultMessage="ui.groupForm.visibility.hidden" />*/}
-        {/*        </Typography>*/}
-        {/*        <Typography variant="body2">*/}
-        {/*          <FormattedMessage*/}
-        {/*            id="ui.groupForm.visibility.hidden.info"*/}
-        {/*            defaultMessage="ui.groupForm.visibility.hidden.info"*/}
-        {/*            values={{*/}
-        {/*              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-        {/*              // @ts-ignore*/}
-        {/*              b: (chunks) => <strong>{chunks}</strong>*/}
-        {/*            }}*/}
-        {/*          />*/}
-        {/*        </Typography>*/}
-        {/*      </>*/}
-        {/*    )}*/}
-        {/*  </Typography>*/}
-        {/*)}*/}
+            )}
+          </>
+        )}
         <Typography variant="body2" className={classes.date}>
           <FormattedMessage
             id="ui.groupInfoWidget.date"
