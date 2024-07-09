@@ -128,7 +128,10 @@ export enum SCPreferenceName {
   WEB_PUSH_ENABLED = 'web_push_enabled',
   META_ROBOTS = 'meta_robots',
   META_TITLE_HOME_NOT_LOGGED = 'meta_title_home_not_logged',
-  META_DESCRIPTION = 'meta_description'
+  META_DESCRIPTION = 'meta_description',
+  GROUPS_VISIBILITY_ENABLED = 'groups_visibility_enabled',
+  GROUPS_PRIVATE_ENABLED = 'groups_private_enabled',
+  GROUPS_ONLY_STAFF_ENABLED = 'groups_only_staff_enabled'
 }
 
 /**

@@ -1,12 +1,13 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Button, Icon} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils, useSCPreferences} from '@selfcommunity/react-core';
 import {ButtonProps} from '@mui/material/Button/Button';
 import classNames from 'classnames';
 import GroupForm, {GroupFormProps} from '../GroupForm';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCCreateGroupButton';
 
@@ -73,6 +74,14 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const preferences: SCPreferencesContextType = useSCPreferences();
+  const onlyStaffEnabled = useMemo(
+    () => preferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value,
+    [preferences.preferences]
+  );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  const canCreateGroup = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
 
   /**
    * Handle click on button
@@ -84,8 +93,8 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
   /**
    * If there's no authUserId, component is hidden.
    */
-  if (!authUserId) {
-    return null;
+  if ((!canCreateGroup && onlyStaffEnabled) || !authUserId) {
+    return <HiddenPlaceholder />;
   }
 
   /**

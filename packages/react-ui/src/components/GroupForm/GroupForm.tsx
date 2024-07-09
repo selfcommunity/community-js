@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography} from '@mui/material';
@@ -45,8 +45,8 @@ const classes = {
   content: `${PREFIX}-content`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
-  // visibilitySection: `${PREFIX}-visibility-section`,
-  // visibilitySectionInfo: `${PREFIX}-visibility-section-info`,
+  visibilitySection: `${PREFIX}-visibility-section`,
+  visibilitySectionInfo: `${PREFIX}-visibility-section-info`,
   inviteSection: `${PREFIX}-invite-section`,
   error: `${PREFIX}-error`
 };
@@ -118,6 +118,8 @@ export interface GroupFormProps extends BaseDialogProps {
  |content|.SCGroupForm-content|Styles applied to the  element.|
  |privacySection|.SCGroupForm-privacy-section|Styles applied to the privacy section.|
  |privacySectionInfo|.SCGroupForm-privacy-section-info|Styles applied to the privacy info section.|
+ |visibilitySection|.SCGroupForm-visibility-section|Styles applied to the visibility section.|
+ |visibilitySectionInfo|.SCGroupForm-visibility-section-info|Styles applied to the visibility section info.|
  |inviteSection|.SCGroupForm-invite-section|Styles applied to the invite section.|
  |error|.SCGroupForm-error|Styles applied to the error elements.|
 
@@ -139,7 +141,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     name: group ? group.name : '',
     description: group ? group.description : '',
     isPublic: group && group.privacy === SCGroupPrivacyType.PUBLIC,
-    // isVisible: group ? group.visible : true,
+    isVisible: group ? group.visible : true,
     invitedUsers: null,
     isSubmitting: false
   };
@@ -153,6 +155,14 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const visibilityEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_VISIBILITY_ENABLED].value,
+    [scPreferences.preferences]
+  );
+  const privateEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_PRIVATE_ENABLED].value,
+    [scPreferences.preferences]
+  );
 
   const _backgroundCover = {
     ...(field.emotionalImageOriginal
@@ -207,8 +217,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     const formData: any = new FormData();
     formData.append('name', field.name);
     formData.append('description', field.description);
-    formData.append('privacy', field.isPublic ? SCGroupPrivacyType.PUBLIC : SCGroupPrivacyType.PRIVATE);
-    // formData.append('visible', field.isVisible);
+    if (privateEnabled) {
+      formData.append('privacy', field.isPublic ? SCGroupPrivacyType.PUBLIC : SCGroupPrivacyType.PRIVATE);
+    }
+    if (visibilityEnabled) {
+      formData.append('visible', field.isVisible);
+    }
     if (field.imageOriginalFile) {
       formData.append('image_original', field.imageOriginalFile);
     }
@@ -351,127 +365,131 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
               ) : null
             }
           />
-          <Box className={classes.privacySection}>
-            <Typography variant="h4">
-              <FormattedMessage
-                id="ui.groupForm.privacy.title"
-                defaultMessage="ui.groupForm.privacy.title"
-                values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </Typography>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
-                <Icon>private</Icon>
-                <FormattedMessage id="ui.groupForm.privacy.private" defaultMessage="ui.groupForm.privacy.private" />
-              </Typography>
-              <Switch
-                className={classes.switch}
-                checked={field.isPublic}
-                onChange={() => setField((prev: any) => ({...prev, ['isPublic']: !field.isPublic}))}
-                disabled={group && group.privacy === SCGroupPrivacyType.PRIVATE}
-              />
-              <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
-                <Icon>public</Icon>
-                <FormattedMessage id="ui.groupForm.privacy.public" defaultMessage="ui.groupForm.privacy.public" />
-              </Typography>
-            </Stack>
-            <Typography variant="body2" className={classes.privacySectionInfo}>
-              {field.isPublic ? (
+          {privateEnabled && (
+            <Box className={classes.privacySection}>
+              <Typography variant="h4">
                 <FormattedMessage
-                  id="ui.groupForm.privacy.public.info"
-                  defaultMessage="ui.groupForm.privacy.public.info"
+                  id="ui.groupForm.privacy.title"
+                  defaultMessage="ui.groupForm.privacy.title"
                   values={{
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
-              ) : (
+              </Typography>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
+                  <Icon>private</Icon>
+                  <FormattedMessage id="ui.groupForm.privacy.private" defaultMessage="ui.groupForm.privacy.private" />
+                </Typography>
+                <Switch
+                  className={classes.switch}
+                  checked={field.isPublic}
+                  onChange={() => setField((prev: any) => ({...prev, ['isPublic']: !field.isPublic}))}
+                  disabled={group && group.privacy === SCGroupPrivacyType.PRIVATE}
+                />
+                <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
+                  <Icon>public</Icon>
+                  <FormattedMessage id="ui.groupForm.privacy.public" defaultMessage="ui.groupForm.privacy.public" />
+                </Typography>
+              </Stack>
+              <Typography variant="body2" className={classes.privacySectionInfo}>
+                {field.isPublic ? (
+                  <FormattedMessage
+                    id="ui.groupForm.privacy.public.info"
+                    defaultMessage="ui.groupForm.privacy.public.info"
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
+                  />
+                ) : (
+                  <>
+                    {group && group.privacy === SCGroupPrivacyType.PRIVATE ? (
+                      <FormattedMessage
+                        id="ui.groupForm.privacy.private.info.edit"
+                        defaultMessage="ui.groupForm.private.public.info.edit"
+                        values={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                          // @ts-ignore
+                          b: (chunks) => <strong>{chunks}</strong>
+                        }}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="ui.groupForm.privacy.private.info"
+                        defaultMessage="ui.groupForm.private.public.info"
+                        values={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                          // @ts-ignore
+                          b: (chunks) => <strong>{chunks}</strong>
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+              </Typography>
+            </Box>
+          )}
+          {visibilityEnabled && (
+            <Box className={classes.visibilitySection}>
+              {((!field.isPublic && !group) || (group && !field.isPublic)) && (
                 <>
-                  {group && group.privacy === SCGroupPrivacyType.PRIVATE ? (
+                  <Typography variant="h4">
                     <FormattedMessage
-                      id="ui.groupForm.privacy.private.info.edit"
-                      defaultMessage="ui.groupForm.private.public.info.edit"
+                      id="ui.groupForm.visibility.title"
+                      defaultMessage="ui.groupForm.visibility.title"
                       values={{
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                         // @ts-ignore
                         b: (chunks) => <strong>{chunks}</strong>
                       }}
                     />
-                  ) : (
-                    <FormattedMessage
-                      id="ui.groupForm.privacy.private.info"
-                      defaultMessage="ui.groupForm.private.public.info"
-                      values={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        b: (chunks) => <strong>{chunks}</strong>
-                      }}
+                  </Typography>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isVisible})}>
+                      <Icon>visibility_off</Icon>
+                      <FormattedMessage id="ui.groupForm.visibility.hidden" defaultMessage="ui.groupForm.visibility.hidden" />
+                    </Typography>
+                    <Switch
+                      className={classes.switch}
+                      checked={field.isVisible}
+                      onChange={() => setField((prev: any) => ({...prev, ['isVisible']: !field.isVisible}))}
                     />
-                  )}
+                    <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isVisible})}>
+                      <Icon>visibility</Icon>
+                      <FormattedMessage id="ui.groupForm.visibility.visible" defaultMessage="ui.groupForm.visibility.visible" />
+                    </Typography>
+                  </Stack>
+                  <Typography variant="body2" className={classes.visibilitySectionInfo}>
+                    {!field.isVisible ? (
+                      <FormattedMessage
+                        id="ui.groupForm.visibility.hidden.info"
+                        defaultMessage="ui.groupForm.visibility.hidden.info"
+                        values={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                          // @ts-ignore
+                          b: (chunks) => <strong>{chunks}</strong>
+                        }}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="ui.groupForm.visibility.visible.info"
+                        defaultMessage="ui.groupForm.visibility.visible.info"
+                        values={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                          // @ts-ignore
+                          b: (chunks) => <strong>{chunks}</strong>
+                        }}
+                      />
+                    )}
+                  </Typography>
                 </>
               )}
-            </Typography>
-          </Box>
-          {/*<Box className={classes.visibilitySection}>*/}
-          {/*  {((!field.isPublic && !group) || (group && !field.isPublic)) && (*/}
-          {/*    <>*/}
-          {/*      <Typography variant="h4">*/}
-          {/*        <FormattedMessage*/}
-          {/*          id="ui.groupForm.visibility.title"*/}
-          {/*          defaultMessage="ui.groupForm.visibility.title"*/}
-          {/*          values={{*/}
-          {/*            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-          {/*            // @ts-ignore*/}
-          {/*            b: (chunks) => <strong>{chunks}</strong>*/}
-          {/*          }}*/}
-          {/*        />*/}
-          {/*      </Typography>*/}
-          {/*      <Stack direction="row" spacing={1} alignItems="center">*/}
-          {/*        <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isVisible})}>*/}
-          {/*          <Icon>visibility_off</Icon>*/}
-          {/*          <FormattedMessage id="ui.groupForm.visibility.hidden" defaultMessage="ui.groupForm.visibility.hidden" />*/}
-          {/*        </Typography>*/}
-          {/*        <Switch*/}
-          {/*          className={classes.switch}*/}
-          {/*          checked={field.isVisible}*/}
-          {/*          onChange={() => setField((prev: any) => ({...prev, ['isVisible']: !field.isVisible}))}*/}
-          {/*        />*/}
-          {/*        <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isVisible})}>*/}
-          {/*          <Icon>visibility</Icon>*/}
-          {/*          <FormattedMessage id="ui.groupForm.visibility.visible" defaultMessage="ui.groupForm.visibility.visible" />*/}
-          {/*        </Typography>*/}
-          {/*      </Stack>*/}
-          {/*      <Typography variant="body2" className={classes.visibilitySectionInfo}>*/}
-          {/*        {!field.isVisible ? (*/}
-          {/*          <FormattedMessage*/}
-          {/*            id="ui.groupForm.visibility.hidden.info"*/}
-          {/*            defaultMessage="ui.groupForm.visibility.hidden.info"*/}
-          {/*            values={{*/}
-          {/*              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-          {/*              // @ts-ignore*/}
-          {/*              b: (chunks) => <strong>{chunks}</strong>*/}
-          {/*            }}*/}
-          {/*          />*/}
-          {/*        ) : (*/}
-          {/*          <FormattedMessage*/}
-          {/*            id="ui.groupForm.visibility.visible.info"*/}
-          {/*            defaultMessage="ui.groupForm.visibility.visible.info"*/}
-          {/*            values={{*/}
-          {/*              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-          {/*              // @ts-ignore*/}
-          {/*              b: (chunks) => <strong>{chunks}</strong>*/}
-          {/*            }}*/}
-          {/*          />*/}
-          {/*        )}*/}
-          {/*      </Typography>*/}
-          {/*    </>*/}
-          {/*  )}*/}
-          {/*</Box>*/}
+            </Box>
+          )}
         </FormGroup>
         {!group && (
           <>
