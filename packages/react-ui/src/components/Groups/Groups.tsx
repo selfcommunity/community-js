@@ -258,9 +258,14 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                 </Typography>
               </>
             ) : (
-              <Typography variant="h4">
-                <FormattedMessage id="ui.groups.noGroups.title.onlyStaff" defaultMessage="ui.groups.noGroups.title.onlyStaff" />
-              </Typography>
+              <>
+                <Typography variant="h4">
+                  <FormattedMessage id="ui.groups.noGroups.title.onlyStaff" defaultMessage="ui.groups.noGroups.title.onlyStaff" />
+                </Typography>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.groups.noGroups.subtitle.onlyStaff" defaultMessage="ui.groups.noGroups.subtitle.onlyStaff" />
+                </Typography>
+              </>
             )}
           </Box>
         ) : (
