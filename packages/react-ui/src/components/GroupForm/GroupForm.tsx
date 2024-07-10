@@ -433,7 +433,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
               </Typography>
             </Box>
           )}
-          {visibilityEnabled && (
+          {privateEnabled && visibilityEnabled && (
             <Box className={classes.visibilitySection}>
               {((!field.isPublic && !group) || (group && !field.isPublic)) && (
                 <>

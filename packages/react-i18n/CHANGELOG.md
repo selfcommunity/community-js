@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.49-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.49-alpha.0...@selfcommunity/react-i18n@0.5.49-alpha.1) (2024-07-10)
+
+
+### Bug Fixes
+
+* empty groups section copy. Linear issue: https://linear.app/quentral/issue/QUE-565/impossibile-creare-gruppi-se-solo-lo-staff-puo-farlo ([9aa45e4](https://github.com/selfcommunity/community-js/commit/9aa45e40ef95b57706a472752f12b458b3c39fe3))
+
+
+
+
+
+## [0.5.49-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.48...@selfcommunity/react-i18n@0.5.49-alpha.0) (2024-07-10)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.5.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.48-alpha.1...@selfcommunity/react-i18n@0.5.48) (2024-07-09)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

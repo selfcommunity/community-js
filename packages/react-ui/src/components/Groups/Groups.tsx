@@ -130,6 +130,10 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const onlyStaffEnabled = useMemo(
+    () => scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
 
   // MEMO
   const contentAvailability = useMemo(
@@ -244,12 +248,20 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
       <>
         {!groups.length ? (
           <Box className={classes.noResults}>
-            <Typography variant="h4">
-              <FormattedMessage id="ui.groups.noGroups.title" defaultMessage="ui.groups.noGroups.title" />
-            </Typography>
-            <Typography variant="body1">
-              <FormattedMessage id="ui.groups.noGroups.subtitle" defaultMessage="ui.groups.noGroups.subtitle" />
-            </Typography>
+            {!onlyStaffEnabled ? (
+              <>
+                <Typography variant="h4">
+                  <FormattedMessage id="ui.groups.noGroups.title" defaultMessage="ui.groups.noGroups.title" />
+                </Typography>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.groups.noGroups.subtitle" defaultMessage="ui.groups.noGroups.subtitle" />
+                </Typography>
+              </>
+            ) : (
+              <Typography variant="h4">
+                <FormattedMessage id="ui.groups.noGroups.title.onlyStaff" defaultMessage="ui.groups.noGroups.title.onlyStaff" />
+              </Typography>
+            )}
           </Box>
         ) : (
           <InfiniteScroll

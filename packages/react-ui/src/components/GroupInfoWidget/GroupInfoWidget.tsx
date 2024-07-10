@@ -190,7 +190,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             )}
           </Typography>
         )}
-        {visibilityEnabled && (
+        {privateEnabled && visibilityEnabled && (
           <>
             {scGroup.privacy === SCGroupPrivacyType.PRIVATE && (
               <Typography component="div" className={classes.visibility}>

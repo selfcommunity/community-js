@@ -379,6 +379,7 @@
   "ui.groupRequestsWidget.dialogTitle": "{total} Richieste",
   "ui.groupRequestsWidget.noMoreResults":"Nessun altro risultato",
   "ui.groups.noGroups.title": "Crea tu stesso il primo Gruppo.",
+  "ui.groups.noGroups.title.onlyStaff": "Entra in un Gruppo.",
   "ui.groups.noGroups.subtitle": "Rendi ancora più interessante la tua attività nella Community con le persone che preferisci.",
   "ui.groups.noOtherGroups": "Non ci sono altri contenuti",
   "ui.groups.filterByName": "Cerca Gruppo...",

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.49-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.49-alpha.0...@selfcommunity/react-ui@0.7.49-alpha.1) (2024-07-10)
+
+
+### Bug Fixes
+
+* empty groups section copy. Linear issue: https://linear.app/quentral/issue/QUE-565/impossibile-creare-gruppi-se-solo-lo-staff-puo-farlo ([9aa45e4](https://github.com/selfcommunity/community-js/commit/9aa45e40ef95b57706a472752f12b458b3c39fe3))
+
+
+
+
+
+## [0.7.49-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.48...@selfcommunity/react-ui@0.7.49-alpha.0) (2024-07-10)
+
+
+### Bug Fixes
+
+* group visibility section ([32ac1fe](https://github.com/selfcommunity/community-js/commit/32ac1fe88bd6a0109caabdc5896bb329cf2a3818))
+
+
+
+
+
 ## [0.7.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.48-alpha.1...@selfcommunity/react-ui@0.7.48) (2024-07-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
