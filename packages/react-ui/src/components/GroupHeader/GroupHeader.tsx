@@ -252,7 +252,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
         <Typography variant="h5" className={classes.name}>
           {scGroup.name}
         </Typography>
-        {(privateEnabled || visibilityEnabled) && (
+        {privateEnabled && (
           <Box className={classes.visibility}>
             {privateEnabled && (
               <>
