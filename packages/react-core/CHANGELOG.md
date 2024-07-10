@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.48-alpha.1...@selfcommunity/react-core@0.4.48) (2024-07-09)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.48-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.48-alpha.0...@selfcommunity/react-core@0.4.48-alpha.1) (2024-07-09)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [0.4.48-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.47...@selfcommunity/react-core@0.4.48-alpha.0) (2024-07-09)
+
+
+### Performance Improvements
+
+* new group privacy/visibility logic. Linear issue: https://linear.app/quentral/issue/QUE-551/creazione-gruppi-privati-e-pubblici-senza-visibilita ([b504a3f](https://github.com/selfcommunity/community-js/commit/b504a3fb9913644a444df761b7f9638a315df594))
+
+
+
+
+
 ## [0.4.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.47-alpha.1...@selfcommunity/react-core@0.4.47) (2024-07-08)
 
 **Note:** Version bump only for package @selfcommunity/react-core
