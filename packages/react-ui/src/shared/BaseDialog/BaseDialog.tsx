@@ -10,6 +10,7 @@ import {SCThemeType} from '@selfcommunity/react-core';
 import MuiDialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
+import {isClientSideRendering} from '@selfcommunity/utils';
 
 const PREFIX = 'SCBaseDialog';
 
@@ -26,7 +27,7 @@ const DialogTitleRoot = styled(MuiDialogTitle, {
 
 const DialogTitle = ({children = null, onClose = null}): JSX.Element => {
   const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: isClientSideRendering()});
 
   return (
     <DialogTitleRoot className={classes.titleRoot}>
@@ -90,7 +91,7 @@ export interface BaseDialogProps {
 export default function BaseDialog(props: BaseDialogProps) {
   // OPTIONS
   const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), {noSsr: isClientSideRendering()});
   const fullScreen = isMobile;
 
   // PROPS

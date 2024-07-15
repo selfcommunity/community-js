@@ -45,7 +45,7 @@ import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
 import AudienceLayer from './Layer/AudienceLayer';
-import {iOS, random, stripHtml} from '@selfcommunity/utils';
+import {iOS, isClientSideRendering, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import {EditorProps} from '../Editor';
@@ -253,7 +253,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
   // HOOKS
   const theme: Theme = useTheme<SCThemeType>();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'), {noSsr: isClientSideRendering()});
 
   // State variables
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -658,13 +658,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }
         });
       } else {
+        console.log('qui');
         onClose && onClose(event);
-        setLayer(null);
+        console.log('qui2');
+        /*setLayer(null);
         feedType && feedType === SCFeedTypologyType.CATEGORY
           ? dispatch({type: 'resetCategoryFeed'})
           : feedType === SCFeedTypologyType.GROUP
           ? dispatch({type: 'resetGroupFeed'})
-          : dispatch({type: 'reset'});
+          : dispatch({type: 'reset'}); */
       }
     },
     [onClose, canSubmit, handleRemoveLayer]
