@@ -6,7 +6,7 @@ import { createTheme } from '@mui/material/styles';
 import {SCContextProvider, SCThemeType} from '../../packages/react-core/src';
 import defaultSCTheme from '../../packages/react-theme-default/src';
 import {mergeDeep} from '../../packages/utils/src';
-import {Image, Link} from '../../packages/react-ui/src';
+import {File as MediaFile, Link as MediaLink} from '../../packages/react-ui/src';
 import '../media/header.css';
 // import Logo from '../media/selfcommunity.png';
 
@@ -102,6 +102,11 @@ const withProvider = (Story, context) => {
         disable: false
       },
     },
+		integrations: {
+			...(context.globals.openAISecretKey && {openai: {
+				secretKey: context.globals.openAISecretKey
+			}})
+		},
     /* preferences: {
       preferences: {
         'addons.affinity_enabled': {
@@ -122,13 +127,14 @@ const withProvider = (Story, context) => {
         }, */
         SCInlineComposer: {
           defaultProps: {
-            mediaObjectTypes: [Image, Link]
+            mediaObjectTypes: [MediaFile, MediaLink]
           }
         }
       },
     }) as SCThemeType,
     handleAnonymousAction: () => {
-      alert('Anonymous action');
+      // @ts-ignore
+			window.alert('Anonymous action');
     },
     // router: {
     //   routes: {
