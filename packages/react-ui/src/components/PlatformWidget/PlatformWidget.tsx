@@ -1,16 +1,16 @@
 import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Button, Grid, Typography} from '@mui/material';
+import {Box, Button, Grid} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
-import {SCLocaleContextType, SCUserContext, SCUserContextType, UserUtils, useSCLocale} from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
+import {Link, SCContextType, SCUserContext, SCUserContextType, UserUtils, useSCContext} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {PREFIX} from './constants';
+import {CONTACT_PROD, CONTACT_STAGE, HUB_PROD, HUB_STAGE, PREFIX} from './constants';
+import {Logo as LogoPlaceholder} from '@selfcommunity/react-theme-default';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -20,7 +20,13 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root'
-})(() => ({}));
+})(({theme}) => ({
+  [`& .${classes.title}`]: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: theme.spacing(1)
+  }
+}));
 
 export interface PlatformWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -89,13 +95,13 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   const {autoHide, className, title = null, startActions = null, endActions = null, onHeightChange, onStateChange, ...rest} = props;
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const scLocaleContext: SCLocaleContextType = useSCLocale();
 
   // CONST
-  const language = scLocaleContext.locale;
   const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
   const isModerator = useMemo(() => UserUtils.isModerator(scUserContext.user), [scUserContext.user]);
+  const isStage = scContext.settings.portal.includes('stage');
 
   /**
    * Fetches platform url
@@ -127,19 +133,25 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
         {title ? (
           title
         ) : (
-          <Typography className={classes.title} component="h3" align="center">
-            <FormattedMessage id="ui.platformWidget.title" defaultMessage="ui.platformWidget.title" />
-            <Icon fontSize="small">lock</Icon>
-          </Typography>
+          <Box className={classes.title}>
+            <img src={LogoPlaceholder} alt="logo" />
+          </Box>
         )}
       </Grid>
       {startActions}
       {isAdmin && (
-        <Grid item xs="auto">
-          <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-            <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
-          </Button>
-        </Grid>
+        <>
+          <Grid item xs="auto">
+            <Button variant="outlined" size="small" component={Link} to={isStage ? HUB_STAGE : HUB_PROD} target="_blank">
+              <FormattedMessage id="ui.platformWidget.hub" defaultMessage="ui.platformWidget.hub" />
+            </Button>
+          </Grid>
+          <Grid item xs="auto">
+            <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+              <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
+            </Button>
+          </Grid>
+        </>
       )}
       <Grid item xs="auto">
         <Button variant="outlined" size="small" onClick={() => fetchPlatform('/moderation/flags/')}>
@@ -150,6 +162,13 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           )}
         </Button>
       </Grid>
+      {isAdmin && (
+        <Grid item xs="auto">
+          <Button variant="outlined" size="small" component={Link} to={isStage ? CONTACT_STAGE : CONTACT_PROD} target="_blank">
+            <FormattedMessage id="ui.platformWidget.contactUs" defaultMessage="ui.platformWidget.contactUs" />
+          </Button>
+        </Grid>
+      )}
       {endActions}
     </Grid>
   );

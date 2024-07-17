@@ -2,6 +2,11 @@ import './styles/reset.css';
 import './fonts/community-icons.css';
 
 /**
+ * Import Images
+ */
+import {Logo} from './images';
+
+/**
  * Style fragments - Imports - Start
  */
 import SCWidget from './components/SCWidget';
@@ -140,6 +145,9 @@ import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWid
  * Style fragments - Imports - End
  */
 
+/**
+ * Export default theme
+ */
 const theme = {
   // palette: {
   //   background: {
@@ -364,3 +372,8 @@ const theme = {
   }
 };
 export default theme;
+
+/**
+ * Others
+ */
+export {Logo};

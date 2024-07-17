@@ -11,7 +11,7 @@ export default {
 } as Meta<typeof PlatformWidget>;
 
 const template = (args) => (
-  <div style={{width: 400}}>
+  <div style={{width: 450}}>
     <PlatformWidget {...args} />
   </div>
 );

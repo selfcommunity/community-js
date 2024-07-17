@@ -541,6 +541,8 @@
   "ui.platformWidget.edt": "Editor",
   "ui.platformWidget.mod": "Moderation",
   "ui.platformWidget.title": "Console Access",
+  "ui.platformWidget.hub": "Hub",
+  "ui.platformWidget.contactUs": "Contact Us",
   "ui.pollSuggestionWidget.button.showAll": "Show All",
   "ui.pollSuggestionWidget.noMoreResults": "No more results",
   "ui.pollSuggestionWidget.pollSnippet.button.seeItem": "See",
