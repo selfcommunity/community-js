@@ -140,6 +140,9 @@ import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWid
  * Style fragments - Imports - End
  */
 
+/**
+ * Export default theme
+ */
 const theme = {
   // palette: {
   //   background: {
