@@ -112,7 +112,7 @@ import {
   SCUserProfileSettings,
   SCUserSocialAssociations,
   VirtualScrollerItemProps,
-	PlatformWidgetActionType
+  PlatformWidgetActionType
 } from './types';
 import Widget, {WidgetProps} from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
@@ -167,6 +167,7 @@ import UserSubscribedGroupsWidget, {
   UserSubscribedGroupsWidgetSkeleton
 } from './components/UserSubscribedGroupsWidget';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
+
 /**
  * Constants
  */
@@ -189,6 +190,10 @@ import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed'
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 import {getRelativeTime} from './utils/formatRelativeTime';
 import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from './components/FeedObjectMediaPreview';
+/**
+ * Import Assets
+ */
+import {Logo} from './assets';
 /**
  * List all exports
  */
@@ -363,7 +368,7 @@ export {
   UserSocialAssociationProps,
   SCUserSocialAssociations,
   VirtualScrollerItemProps,
-	PlatformWidgetActionType,
+  PlatformWidgetActionType,
   CustomAdv,
   CustomAdvProps,
   CustomAdvSkeleton,
@@ -528,5 +533,8 @@ export {
   BaseDialog,
   BaseDialogProps,
   GroupSettingsIconButton,
-  GroupSettingsIconButtonProps
+  GroupSettingsIconButtonProps,
+
+  /* Assets */
+  Logo
 };
