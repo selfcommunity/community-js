@@ -445,7 +445,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
         <Grid item xs={1} className={classes.action}></Grid>
         {actions.map((a: PlatformWidgetActionType, i: number) => {
           return (
-            <Grid item xs="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
+            <Grid key={i} item xs="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
               {a.render}
             </Grid>
           );
