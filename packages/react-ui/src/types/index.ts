@@ -6,6 +6,7 @@ import {SCNotificationObjectTemplateType} from './notification';
 import {SCBroadcastMessageTemplateType} from './broadcastMessage';
 import {VirtualScrollerItemProps} from './virtualScroller';
 import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} from './user';
+import {PlatformWidgetActionType} from './platformWidget';
 
 export {
   SCFeedWidgetType,
@@ -19,5 +20,6 @@ export {
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,
-  VirtualScrollerItemProps
+  VirtualScrollerItemProps,
+	PlatformWidgetActionType
 };

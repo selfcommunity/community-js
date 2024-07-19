@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {PlatformWidgetActionType} from '../../types/platformWidget';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CONTACT_PROD, CONTACT_STAGE, HUB_PROD, HUB_STAGE, PREFIX} from './constants';
 import {Logo as LogoPlaceholder} from '@selfcommunity/react-theme-default';
@@ -123,21 +124,6 @@ const Root = styled(Widget, {
   }
 }));
 
-export interface PlatformWidgetAction {
-  /**
-   * Render action to be inserted
-   */
-  render: React.ReactNode;
-  /**
-   * Title for tutorial
-   */
-  title: React.ReactNode | string;
-  /**
-   * Content for tutorial
-   */
-  content: React.ReactNode | string;
-}
-
 export interface PlatformWidgetProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
@@ -157,11 +143,11 @@ export interface PlatformWidgetProps extends VirtualScrollerItemProps {
   /**
    * Actions to be inserted before
    */
-  startActions?: PlatformWidgetAction[];
+  startActions?: PlatformWidgetActionType[];
   /**
    * Actions to be inserted after
    */
-  endActions?: PlatformWidgetAction[];
+  endActions?: PlatformWidgetActionType[];
   /**
    * Hide actions
    */
@@ -447,7 +433,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       </Grid>
       <Grid item xs={12} className={classes.actions}>
         <Grid item xs={1} className={classes.action}></Grid>
-        {actions.map((a: PlatformWidgetAction, i: number) => {
+        {actions.map((a: PlatformWidgetActionType, i: number) => {
           return (
             <Grid item xs="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
               {a.render}
