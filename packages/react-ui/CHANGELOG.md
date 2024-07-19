@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.50-alpha.1...@selfcommunity/react-ui@0.7.50) (2024-07-10)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.50-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.50-alpha.0...@selfcommunity/react-ui@0.7.50-alpha.1) (2024-07-10)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.50-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.49...@selfcommunity/react-ui@0.7.50-alpha.0) (2024-07-10)
+
+
+### Performance Improvements
+
+* groups empty copy ([54cfcfe](https://github.com/selfcommunity/community-js/commit/54cfcfe949972cfe03ace27a988b2d598b5084f0))
+
+
+
+
+
 ## [0.7.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.49-alpha.2...@selfcommunity/react-ui@0.7.49) (2024-07-10)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
