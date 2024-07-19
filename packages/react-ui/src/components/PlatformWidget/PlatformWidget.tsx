@@ -57,7 +57,15 @@ const Root = styled(Widget, {
   [`& .${classes.actions}`]: {
     display: 'flex',
     paddingBottom: 0,
-    boxShadow: 'inset -1px -3px 7px -4px #CECECE'
+    boxShadow: 'inset -1px -3px 7px -4px #CECECE',
+    '-webkit-overflow-scrolling': 'touch',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    scrollbarWidth: 'none' /* Firefox */,
+    '-ms-overflow-style': 'none' /* IE and Edge */,
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
   [`& .${classes.action}`]: {
     padding: `0px 2px ${theme.spacing(2)} 2px`,
@@ -225,6 +233,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
     hideModerationAction = false,
     hideHubAction = false,
     hideContactUsAction = false,
+    onHeightChange,
     ...rest
   } = props;
 
@@ -247,11 +256,9 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       ? [
           {
             render: (
-              <Grid item xs="auto">
-                <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
-                  <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
-                </Button>
-              </Grid>
+              <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+                <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
+              </Button>
             ),
             title: <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />,
             content: <FormattedMessage id="ui.platformWidget.adm.desc" defaultMessage="ui.platformWidget.adm.desc" />
@@ -306,7 +313,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   const handleOpenTutorial = useCallback(() => {
     setTutorialIndex(0);
     setIsTutorialOpen(true);
-  }, [setTutorialIndex, setIsTutorialOpen]);
+    onHeightChange && onHeightChange();
+  }, [setTutorialIndex, setIsTutorialOpen, onHeightChange]);
 
   /**
    * Handle close tutorial
@@ -314,7 +322,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   const handleCloseTutorial = useCallback(() => {
     setIsTutorialOpen(false);
     setTutorialIndex(0);
-  }, [setIsTutorialOpen, setTutorialIndex]);
+    onHeightChange && onHeightChange();
+  }, [setIsTutorialOpen, setTutorialIndex, onHeightChange]);
 
   /**
    * Handle next step tutorial
@@ -325,7 +334,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
     } else {
       handleCloseTutorial();
     }
-  }, [tutorialIndex, setTutorialIndex, handleCloseTutorial]);
+    onHeightChange && onHeightChange();
+  }, [tutorialIndex, setTutorialIndex, handleCloseTutorial, onHeightChange]);
 
   /**
    * Handle next step tutorial
@@ -336,7 +346,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
     } else {
       handleCloseTutorial();
     }
-  }, [actions, tutorialIndex, setTutorialIndex, handleCloseTutorial]);
+    onHeightChange && onHeightChange();
+  }, [actions, tutorialIndex, setTutorialIndex, handleCloseTutorial, onHeightChange]);
 
   /**
    * Fetches platform url
@@ -371,9 +382,9 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           </IconButton>
         </Grid>
       )}
-      <Collapse in={isTutorialOpen}>
+      <Collapse in={isTutorialOpen} className={classes.tutorialContent}>
         {isTutorialOpen && (
-          <Grid item xs="auto" className={classes.tutorialContent}>
+          <Grid item xs="auto">
             <Typography variant={'body2'} className={classes.tutorialTitle} component={'div'}>
               <Grow in timeout={1000}>
                 <span>{actions[tutorialIndex].title}</span>
@@ -434,7 +445,6 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           </Box>
         )}
       </Grid>
-
       <Grid item xs={12} className={classes.actions}>
         <Grid item xs={1} className={classes.action}></Grid>
         {actions.map((a: PlatformWidgetAction, i: number) => {
