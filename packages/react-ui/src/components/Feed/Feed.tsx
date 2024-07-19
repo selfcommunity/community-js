@@ -21,7 +21,7 @@ import {SCFeedWidgetType} from '../../types/feed';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
 import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
 import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, getQueryStringParameter, updateQueryStringParameter} from '@selfcommunity/utils';
+import {CacheStrategies, getQueryStringParameter, isClientSideRendering, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
@@ -360,7 +360,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // RENDER
   const theme: Theme = useTheme<SCThemeType>();
-  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'), {noSsr: typeof window !== 'undefined'});
+  const oneColLayout = useMediaQuery(theme.breakpoints.down('md'), {noSsr: isClientSideRendering()});
   const advEnabled = useMemo(
     () =>
       preferences &&

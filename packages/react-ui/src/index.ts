@@ -111,7 +111,8 @@ import {
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,
-  VirtualScrollerItemProps
+  VirtualScrollerItemProps,
+	PlatformWidgetActionType
 } from './types';
 import Widget, {WidgetProps} from './components/Widget';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
@@ -362,6 +363,7 @@ export {
   UserSocialAssociationProps,
   SCUserSocialAssociations,
   VirtualScrollerItemProps,
+	PlatformWidgetActionType,
   CustomAdv,
   CustomAdvProps,
   CustomAdvSkeleton,

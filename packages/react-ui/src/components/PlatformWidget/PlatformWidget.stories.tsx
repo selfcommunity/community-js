@@ -11,7 +11,7 @@ export default {
 } as Meta<typeof PlatformWidget>;
 
 const template = (args) => (
-  <div style={{width: 400}}>
+  <div style={{width: 450}}>
     <PlatformWidget {...args} />
   </div>
 );
@@ -29,11 +29,10 @@ export const Custom: StoryObj<PlatformWidget> = {
 		title: <Typography component="h3" align="center">
 			SelfCommunity
 		</Typography>,
-		startActions: <><Grid item xs="auto">
+		startActions: [{render:
 			<Button variant="outlined" size="small" onClick={() => console.log('action')}>
 				Custom Action
-			</Button>
-		</Grid></>
+			</Button>, title: 'Custom Action', content: 'Custom description'}]
 	},
 	render: template
 };

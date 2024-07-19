@@ -80,7 +80,7 @@ export default function SCVoteProvider({children = null}: {children: React.React
 
   // EFFECTS
   useEffect(() => {
-    let _t;
+    let _t: NodeJS.Timeout;
     if (scPreferencesContext.features && scPreferencesContext.features.includes(SCFeatureName.REACTION) && !reactions) {
       _t = setTimeout(_initComponent);
       return (): void => {
