@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.51-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.50...@selfcommunity/react-core@0.4.51-alpha.0) (2024-07-19)
+
+
+### Bug Fixes
+
+* add integrations option ([a05e5af](https://github.com/selfcommunity/community-js/commit/a05e5afbe31b71323fb0e8b08f0b945acfcfb5bd))
+* check window in components, data types in Categories component ([39fb019](https://github.com/selfcommunity/community-js/commit/39fb0199aa61a8a032cb521f200ccc72262c0324))
+
+
+
+
+
 ## [0.4.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.50-alpha.1...@selfcommunity/react-core@0.4.50) (2024-07-10)
 
 **Note:** Version bump only for package @selfcommunity/react-core

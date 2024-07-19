@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.51-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.50...@selfcommunity/react-theme-default@0.1.51-alpha.0) (2024-07-19)
+
+
+### Bug Fixes
+
+* init platform widget ([679bcb7](https://github.com/selfcommunity/community-js/commit/679bcb729998c11723db34b2bac1e0d15d4e7d4d))
+* platform widget with tutorial steps ([959dcdb](https://github.com/selfcommunity/community-js/commit/959dcdb444118c665038e916a6b448f9eb1bc0ee))
+
+
+
+
+
 ## [0.1.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.50-alpha.1...@selfcommunity/react-theme-default@0.1.50) (2024-07-10)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
