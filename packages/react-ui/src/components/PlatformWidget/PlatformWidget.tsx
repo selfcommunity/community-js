@@ -11,7 +11,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PlatformWidgetActionType} from '../../types/platformWidget';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CONTACT_PROD, CONTACT_STAGE, HUB_PROD, HUB_STAGE, PREFIX} from './constants';
-import {Logo as LogoPlaceholder} from '@selfcommunity/react-theme-default';
+import {Logo as LogoPlaceholder} from '../../assets';
 import Grow from '@mui/material/Grow';
 
 const classes = {
