@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.51-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.50...@selfcommunity/react-i18n@0.5.51-alpha.0) (2024-07-19)
+
+
+### Bug Fixes
+
+* init platform widget ([679bcb7](https://github.com/selfcommunity/community-js/commit/679bcb729998c11723db34b2bac1e0d15d4e7d4d))
+* platform widget with tutorial steps ([0526b8a](https://github.com/selfcommunity/community-js/commit/0526b8a599d3942aeb7350641f334473e2b1eb0c))
+* platform widget with tutorial steps ([57f8df6](https://github.com/selfcommunity/community-js/commit/57f8df6b41ffaeb3840e32b631ecff3991e225ae))
+* platform widget with tutorial steps ([c636981](https://github.com/selfcommunity/community-js/commit/c63698173751ab4a47a4788666c908580139b31f))
+
+
+
+
+
 ## [0.5.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.50-alpha.1...@selfcommunity/react-i18n@0.5.50) (2024-07-10)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

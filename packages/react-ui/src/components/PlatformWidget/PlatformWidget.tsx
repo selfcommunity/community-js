@@ -72,7 +72,15 @@ const Root = styled(Widget, {
     padding: `0px 2px ${theme.spacing(2)} 2px`,
     display: 'flex',
     flexGrow: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    '& .MuiButton-root': {
+      color: theme.palette.getContrastText(theme.palette.common.white),
+      backgroundColor: theme.palette.common.white,
+      '&:hover': {
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        backgroundColor: theme.palette.primary.main
+      }
+    }
   },
   [`& .${classes.tutorialContent}`]: {
     width: '100%'
@@ -425,7 +433,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           title
         ) : (
           <Box className={classes.title}>
-            <Tooltip title={<FormattedMessage id="ui.platformWidget.title.tooltip" defaultMessage="ui.platformWidget.title.tooltip" />}>
+            <Tooltip title={<FormattedMessage id="ui.platformWidget.title.tooltip" defaultMessage="ui.platformWidget.title.tooltip" />} placement="top">
               <img src={LogoPlaceholder} alt="logo" />
             </Tooltip>
           </Box>
