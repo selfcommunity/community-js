@@ -193,7 +193,7 @@ import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from './components/
 /**
  * Import Assets
  */
-import {Logo} from './assets';
+import LogoSelfCommunity from './assets/logo';
 /**
  * List all exports
  */
@@ -536,5 +536,5 @@ export {
   GroupSettingsIconButtonProps,
 
   /* Assets */
-  Logo
+  LogoSelfCommunity
 };
