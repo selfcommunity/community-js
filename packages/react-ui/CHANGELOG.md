@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.51-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.0...@selfcommunity/react-ui@0.7.51-alpha.1) (2024-07-19)
+
+
+### Bug Fixes
+
+* platform widget with tutorial steps ([e389fbf](https://github.com/selfcommunity/community-js/commit/e389fbf67fd3fae88575cbf7c2c0d1094ec98612))
+
+
+
+
+
 ## [0.7.51-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.50...@selfcommunity/react-ui@0.7.51-alpha.0) (2024-07-19)
 
 
