@@ -11,7 +11,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PlatformWidgetActionType} from '../../types/platformWidget';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CONTACT_PROD, CONTACT_STAGE, HUB_PROD, HUB_STAGE, PREFIX} from './constants';
-import {Logo as LogoPlaceholder} from '../../assets';
+import LogoPlaceholder from '../../assets/logo';
 import Grow from '@mui/material/Grow';
 
 const classes = {
@@ -101,7 +101,7 @@ const Root = styled(Widget, {
   },
   [`& .${classes.tutorialDesc}`]: {
     fontSize: 14,
-    fontWeight: 200,
+    fontWeight: 500,
     color: theme.palette.grey[700],
     padding: `0px ${theme.spacing(3)} ${theme.spacing()} ${theme.spacing(3)}`
   },
@@ -433,7 +433,9 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           title
         ) : (
           <Box className={classes.title}>
-            <Tooltip title={<FormattedMessage id="ui.platformWidget.title.tooltip" defaultMessage="ui.platformWidget.title.tooltip" />} placement="top">
+            <Tooltip
+              title={<FormattedMessage id="ui.platformWidget.title.tooltip" defaultMessage="ui.platformWidget.title.tooltip" />}
+              placement="top">
               <img src={LogoPlaceholder} alt="logo" />
             </Tooltip>
           </Box>
@@ -443,7 +445,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
         <Grid item xs={1} className={classes.action}></Grid>
         {actions.map((a: PlatformWidgetActionType, i: number) => {
           return (
-            <Grid item xs="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
+            <Grid key={i} item xs="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
               {a.render}
             </Grid>
           );
