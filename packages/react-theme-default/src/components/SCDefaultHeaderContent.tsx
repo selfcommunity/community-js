@@ -1,7 +1,8 @@
 const Component = {
   styleOverrides: {
     root: () => ({
-      marginTop: '5px'
+      display: 'flex',
+      alignItems: 'center'
     })
   }
 };

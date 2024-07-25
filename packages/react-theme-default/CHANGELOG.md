@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.52-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51...@selfcommunity/react-theme-default@0.1.52-alpha.0) (2024-07-25)
+
+
+### Bug Fixes
+
+* DefaultDrawerContent, DefaultHeaderContent ([0d158df](https://github.com/selfcommunity/community-js/commit/0d158df29e241487989486f0d4f8f4b95d5e2de6))
+
+
+
+
+
 ## [0.1.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.6...@selfcommunity/react-theme-default@0.1.51) (2024-07-25)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
