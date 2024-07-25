@@ -8,8 +8,33 @@ import {
   useSCRouting
 } from '@selfcommunity/react-core';
 import React, {useMemo} from 'react';
+import {styled} from '@mui/material/styles';
+import {Box, BoxProps} from '@mui/material';
+import classNames from 'classnames';
+import {useThemeProps} from '@mui/system';
 
-export default function DefaultHeaderContent() {
+const PREFIX = 'SCDefaultHeaderContent';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (_, styles) => styles.root
+})(() => ({}));
+
+export type DefaultHeaderContentProps = BoxProps;
+
+export default function DefaultHeaderContent(inProps: DefaultHeaderContentProps) {
+  const props: DefaultHeaderContentProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
+  const {className, ...rest} = props;
+
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // PREFERENCES
@@ -19,8 +44,10 @@ export default function DefaultHeaderContent() {
   }, [scPreferences.preferences]);
 
   return (
-    <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
-      <img src={_logo} alt="logo"></img>
-    </Link>
+    <Root className={classNames(className, classes.root)} {...rest}>
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
+        <img src={_logo} alt="logo"></img>
+      </Link>
+    </Root>
   );
 }
