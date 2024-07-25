@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.51-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.3...@selfcommunity/react-ui@0.7.51-alpha.4) (2024-07-25)
+
+
+### Bug Fixes
+
+* DefaultDrawerContent, DefaultHeaderContent ([0e7c6e1](https://github.com/selfcommunity/community-js/commit/0e7c6e15330240cf31444e246f90b51628a5808d))
+
+
+
+
+
 ## [0.7.51-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.2...@selfcommunity/react-ui@0.7.51-alpha.3) (2024-07-19)
 
 
