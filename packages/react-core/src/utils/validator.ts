@@ -2,6 +2,8 @@ import * as Locale from '../constants/Locale';
 import {isFunc, isObject, isString, isValidUrl, Logger} from '@selfcommunity/utils';
 import * as Session from '../constants/Session';
 import {
+  SCIntegrationsOpenAIType,
+  SCIntegrationsType,
   SCNotificationsMobileNativePushMessagingType,
   SCNotificationsType,
   SCNotificationsWebPushMessagingType,
@@ -21,11 +23,11 @@ import * as Actions from '../constants/Actions';
 import * as Preferences from '../constants/Preferences';
 import * as Features from '../constants/Features';
 import * as Vote from '../constants/Vote';
-import { NOTIFICATIONS_MOBILE_NATIVE_PUSH_MESSAGING_OPTION } from "../constants/Notifications";
+import * as Integrations from '../constants/Integrations';
 
 /**
  * Validate session option
- * @param session
+ * @param v
  * @return {}
  */
 export function validateSession(v: Record<string, any>) {
@@ -51,6 +53,7 @@ export function validateSession(v: Record<string, any>) {
 /**
  * Validate session type
  * @param value
+ * @param session
  * @return {}
  */
 export const validateSessionType = (value, session) => {
@@ -65,6 +68,7 @@ export const validateSessionType = (value, session) => {
 /**
  * Validate session client id
  * @param value
+ * @param session
  * @return {}
  */
 export const validateSessionClientId = (value, session) => {
@@ -87,6 +91,7 @@ export const validateSessionClientId = (value, session) => {
 /**
  * Validate session auth token
  * @param value
+ * @param session
  * @return {}
  */
 export const validateSessionAuthTokenOption = (value, session) => {
@@ -129,6 +134,7 @@ export const validateHandleRefreshToken = (value, session) => {
 /**
  * Validate handleLogout option
  * @param value
+ * @param session
  * @return {}
  */
 export const validateHandleLogout = (value, session) => {
@@ -142,7 +148,7 @@ export const validateHandleLogout = (value, session) => {
 
 /**
  * Validate notifications option
- * @param notifications
+ * @param v
  * @return {}
  */
 export function validateNotifications(v: SCNotificationsType) {
@@ -161,13 +167,12 @@ export function validateNotifications(v: SCNotificationsType) {
       obj[key] = res.value;
       return obj;
     }, {} as SCNotificationsType);
-  return {errors, warnings, value: {...Notifications.DEFAULT_NOTIFICATIONS, ...v}};
+  return {errors, warnings, value: {...Notifications.DEFAULT_NOTIFICATIONS, ...value}};
 }
 
 /**
  * Validate webSocket
- * @param value
- * @param {}
+ * @param v
  */
 export const validateWebSocket = (v) => {
   const errors = [];
@@ -192,9 +197,8 @@ export const validateWebSocket = (v) => {
 /**
  * Validate default disableToastMessage (webSocket)
  * @param value
- * @param {}
  */
-export const validateWebSocketDisableToastMessage = (value, notifications) => {
+export const validateWebSocketDisableToastMessage = (value) => {
   const errors = [];
   const warnings = [];
   if (value) {
@@ -215,9 +219,8 @@ export const validateWebSocketDisableToastMessage = (value, notifications) => {
 /**
  * Validate default secure (webSocket)
  * @param value
- * @param {}
  */
-export const validateWebSocketSecure = (value, notifications) => {
+export const validateWebSocketSecure = (value) => {
   const errors = [];
   const warnings = [];
   if (value) {
@@ -236,8 +239,7 @@ export const validateWebSocketSecure = (value, notifications) => {
 
 /**
  * Validate webPushMessaging
- * @param value
- * @param {}
+ * @param v
  */
 export const validateWebPushMessaging = (v) => {
   const errors = [];
@@ -262,9 +264,8 @@ export const validateWebPushMessaging = (v) => {
 /**
  * Validate default disableToastMessage (webPushMessaging)
  * @param value
- * @param {}
  */
-export const validateWebPushMessagingDisableToastMessage = (value, notifications) => {
+export const validateWebPushMessagingDisableToastMessage = (value) => {
   const errors = [];
   const warnings = [];
   if (value !== undefined) {
@@ -287,9 +288,8 @@ export const validateWebPushMessagingDisableToastMessage = (value, notifications
 /**
  * Validate default applicationServerKey (webPushMessaging)
  * @param value
- * @param {}
  */
-export const validateWebPushMessagingApplicationServerKey = (value, notifications) => {
+export const validateWebPushMessagingApplicationServerKey = (value) => {
   const errors = [];
   const warnings = [];
   if (value) {
@@ -302,8 +302,7 @@ export const validateWebPushMessagingApplicationServerKey = (value, notification
 
 /**
  * Validate mobile native
- * @param value
- * @param {}
+ * @param v
  */
 export const validateMobileNativePushMessaging = (v) => {
   const errors = [];
@@ -328,9 +327,8 @@ export const validateMobileNativePushMessaging = (v) => {
 /**
  * Validate default disable (mobileNativePushMessaging)
  * @param value
- * @param {}
  */
-export const validateMobileNativePushMessagingDisable = (value, notifications) => {
+export const validateMobileNativePushMessagingDisable = (value) => {
   const errors = [];
   const warnings = [];
   if (value !== undefined) {
@@ -352,7 +350,7 @@ export const validateMobileNativePushMessagingDisable = (value, notifications) =
 
 /**
  * Validate portal option
- * @param portal
+ * @param value
  * @return {}
  */
 export const validatePortal = (value) => {
@@ -367,7 +365,7 @@ export const validatePortal = (value) => {
 /**
  * Validate default locale
  * @param value
- * @param {}
+ * @param locale
  */
 export const validateLocaleDefault = (value, locale) => {
   const errors = [];
@@ -385,7 +383,6 @@ export const validateLocaleDefault = (value, locale) => {
 /**
  * Validate default locale
  * @param value
- * @param {}
  */
 export const validateLocaleMessages = (value) => {
   const errors = [];
@@ -398,7 +395,7 @@ export const validateLocaleMessages = (value) => {
 
 /**
  * Validate locale option
- * @param locale
+ * @param v
  * @return {}
  */
 export const validateLocale = (v) => {
@@ -423,7 +420,7 @@ export const validateLocale = (v) => {
 
 /**
  * Validate router option
- * @param router
+ * @param value
  * @return {}
  */
 export const validateRouter = (value) => {
@@ -445,7 +442,7 @@ export const validateRouter = (value) => {
 
 /**
  * Validate theme option
- * @param theme
+ * @param value
  * @return {}
  */
 export const validateTheme = (value) => {
@@ -459,7 +456,7 @@ export const validateTheme = (value) => {
 
 /**
  * Validate handleAnonymousAction option
- * @param handleAnonymousAction
+ * @param v
  * @return {}
  */
 export const validateHandleAnonymousAction = (v) => {
@@ -484,7 +481,7 @@ export const validateHandleAnonymousAction = (v) => {
 
 /**
  * Validate contextProviders option
- * @param contextProviders
+ * @param value
  * @return [...contextProviders]
  */
 export const validateContextProviders = (value) => {
@@ -628,6 +625,69 @@ export function validateVote(v: Record<string, any>) {
 }
 
 /**
+ * Validate integrations option
+ * @param v
+ * @return {}
+ */
+export function validateIntegrations(v: SCIntegrationsType) {
+  const errors = [];
+  const warnings = [];
+  if (!v || !isObject(v)) {
+    return {errors, warnings, value: Integrations.DEFAULT_INTEGRATIONS_OPTION};
+  }
+  const _options = Object.keys(integrationsOptions);
+  const value: SCIntegrationsType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj: SCIntegrationsType, key) => {
+      const res = integrationsOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCIntegrationsType);
+  return {errors, warnings, value: {...Integrations.DEFAULT_INTEGRATIONS_OPTION, ...value}};
+}
+
+/**
+ * Validate OpenAI Option
+ * @param v
+ */
+export const validateOpenAI = (v) => {
+	console.log(v);
+  const errors = [];
+  const warnings = [];
+  if (v && !isObject(v)) {
+    errors.push(ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI);
+    return {errors, warnings, v};
+  }
+  const _options = Object.keys(integrationsOpenAIOptions);
+  const value: SCIntegrationsOpenAIType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = integrationsOpenAIOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCIntegrationsOpenAIType);
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate OpenAI secret key option
+ * @param value
+ * @return {}
+ */
+export const validateOpenAISecretKey = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (!value || !isString(value)) {
+    errors.push(ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI_SECRETKEY);
+  }
+  return {errors, warnings, value};
+};
+
+/**
  * Components Widget
  */
 const PortalOption = {
@@ -669,6 +729,10 @@ const PreferencesOption = {
 const VoteOption = {
   name: Vote.VOTE_OPTION,
   validator: validateVote,
+};
+const IntegrationsOption = {
+  name: Integrations.INTEGRATIONS_OPTION,
+  validator: validateIntegrations,
 };
 
 /**
@@ -742,10 +806,17 @@ const NotificationsMobileNativePushMessagingDisableOption = {
   name: Notifications.NOTIFICATIONS_MOBILE_NATIVE_DISABLE_OPTION,
   validator: validateMobileNativePushMessagingDisable,
 };
-
 const ReactionsOption = {
   name: Vote.VOTE_REACTIONS_OPTION,
   validator: validateReactions,
+};
+const IntegrationOpenAIOption = {
+  name: Integrations.INTEGRATIONS_OPENAI_OPTION,
+  validator: validateOpenAI,
+};
+const IntegrationOpenAISecretKeyOption = {
+  name: Integrations.INTEGRATIONS_OPENAI_SECRETKEY_OPTION,
+  validator: validateOpenAISecretKey,
 };
 
 /**
@@ -763,6 +834,7 @@ export const settingsOptions: Record<string, any> = {
   [ContextProvidersOption.name]: ContextProvidersOption,
   [PreferencesOption.name]: PreferencesOption,
   [VoteOption.name]: VoteOption,
+  [IntegrationsOption.name]: IntegrationsOption,
 };
 export const sessionOptions: Record<string, any> = {
   [SessionTypeOption.name]: SessionTypeOption,
@@ -798,6 +870,12 @@ export const preferencesOptions: Record<string, any> = {
 export const voteOptions: Record<string, any> = {
   [ReactionsOption.name]: ReactionsOption,
 };
+export const integrationsOptions: Record<string, any> = {
+  [IntegrationOpenAIOption.name]: IntegrationOpenAIOption,
+};
+export const integrationsOpenAIOptions: Record<string, any> = {
+  [IntegrationOpenAISecretKeyOption.name]: IntegrationOpenAISecretKeyOption,
+};
 
 export const validOptions = {
   ...settingsOptions,
@@ -805,7 +883,8 @@ export const validOptions = {
 
 /**
  * Validate all options by type
- * @param options
+ * @param values
+ * @param schemaOptions
  * @return {options hydrated}
  */
 export const validateOptions = (values: SCSettingsType, schemaOptions: Record<string, any>) => {

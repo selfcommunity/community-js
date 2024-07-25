@@ -166,8 +166,8 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
   /**
    * Fetches categories list
    */
-  const fetchCategories = async (next: string = Endpoints.CategoryList.url({})): Promise<[]> => {
-    const data: any = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
+  const fetchCategories = async (next: string = Endpoints.CategoryList.url({})): Promise<SCCategoryType[]> => {
+    const data = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchCategories(data.next)) : data.results;
   };
 
@@ -182,7 +182,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
       setLoading(false);
     } else {
       fetchCategories()
-        .then((data: any) => {
+        .then((data) => {
           if (isMountedRef.current) {
             setCategories(data);
             setLoading(false);

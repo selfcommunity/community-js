@@ -86,6 +86,7 @@ import SCBullet from './components/SCBullet';
 import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
+import SCDefaultHeaderContent from './components/SCDefaultHeaderContent';
 import SCPreviewMediaLink from './components/SCPreviewMediaLink';
 import SCUserAvatar from './components/SCUserAvatar';
 import SCAccountReset from './components/SCAccountReset';
@@ -140,6 +141,9 @@ import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWid
  * Style fragments - Imports - End
  */
 
+/**
+ * Export default theme
+ */
 const theme = {
   // palette: {
   //   background: {
@@ -260,6 +264,7 @@ const theme = {
     SCMediaFile,
     SCMediaLink,
     SCNavigationSettingsIconButton,
+    SCDefaultHeaderContent,
     SCNavigationToolbar,
     SCNavigationToolbarMobile,
     SCNotification,

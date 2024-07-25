@@ -36,6 +36,9 @@ export class ValidationError {
   static ERROR_INVALID_VOTE = 6000;
   static ERROR_INVALID_VOTE_REACTIONS = 6001;
   static ERROR_INVALID_VOTE_REACTIONS_STRUCTURE = 6002;
+  static ERROR_INVALID_INTEGRATIONS = 6100;
+  static ERROR_INVALID_INTEGRATIONS_OPENAI = 6101;
+  static ERROR_INVALID_INTEGRATIONS_OPENAI_SECRETKEY = 6102;
   static defaultErrorMessageMap = {
     [ValidationError.ERROR_INVALID_CONF]:
       'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
@@ -73,6 +76,9 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_VOTE_REACTIONS]: "Invalid vote option. 'reactions' must be a valid array of reaction objects.",
     [ValidationError.ERROR_INVALID_VOTE_REACTIONS_STRUCTURE]:
       "Invalid vote option. 'reactions' must be a valid array of reaction with attributes (id, label, sentiment, image, active).",
+    [ValidationError.ERROR_INVALID_INTEGRATIONS]: 'Invalid integrations conf.',
+    [ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI]: 'Invalid integrations (openai) option.',
+    [ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI_SECRETKEY]: 'Invalid integrations openai conf: secretKey must be a string value.',
   };
 
   errorCode = null;

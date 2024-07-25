@@ -6,7 +6,8 @@
  */
 function postData(url = '', data = {}) {
   const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
-  return fetch(url, {
+  // @ts-ignore
+	return fetch(url, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
@@ -60,7 +61,7 @@ export function refreshToken(context) {
         });
     }
   };
-};
+}
 
 /**
  * Helper getOAuthSession
@@ -85,6 +86,7 @@ export function getOAuthSession(context) {
       };
     }).catch((error) => {
       console.log('Unable to get an access token.');
+			console.log(error);
     });
 }
 

@@ -46,7 +46,12 @@ export const globalTypes = {
     name: 'Account Password',
     description: 'Password of the logged user',
     defaultValue: process.env.STORYBOOK_PLATFORM_ACCOUNT_PASSWORD
-  }
+  },
+	openAISecretKey: {
+		name: 'OpenAI SecretKey',
+		description: 'Enable OpenAI integration by passing secret key ',
+		defaultValue: process.env.STORYBOOK_PLATFORM_OPENAI_SECRET_KEY
+	},
 };
 
 /** @type { import('@storybook/react').Preview } */

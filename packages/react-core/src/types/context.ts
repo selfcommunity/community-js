@@ -735,3 +735,24 @@ export interface SCAlertMessagesContextType {
    */
   setOptions: (options) => void;
 }
+
+/**
+ * Interface SCIntegrationsType
+ */
+export interface SCIntegrationsType {
+  /**
+   * OpenAI
+   */
+  openai?: SCIntegrationsOpenAIType;
+}
+
+/**
+ * Interface SCNotificationsWebSocketType
+ */
+export interface SCIntegrationsOpenAIType {
+  /**
+   * Set secretKey OpenAI
+   * Default: null
+   */
+  secretKey: string | null;
+}

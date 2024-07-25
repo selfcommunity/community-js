@@ -119,18 +119,18 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
    * and document is in foreground refresh the cache
    */
   useEffect(() => {
-    typeof window !== 'undefined' && window.document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
-      typeof window !== 'undefined' && window.document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  });
+  }, []);
 
   /**
    * handler handleVisibilityChange for this provider
    * Refresh followed categories, users, etc..
    */
   function handleVisibilityChange() {
-    if (isClientSideRendering() && !window.document.hidden && state.user) {
+    if (!window.document.hidden && state.user) {
       settingsManager.refresh && settingsManager.refresh();
       refreshCounters();
       categoriesManager.refresh && categoriesManager.refresh();

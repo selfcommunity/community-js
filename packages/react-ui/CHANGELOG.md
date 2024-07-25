@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.51-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.4...@selfcommunity/react-ui@0.7.51-alpha.5) (2024-07-25)
+
+
+### Bug Fixes
+
+* DefaultDrawerContent, DefaultHeaderContent ([94b0510](https://github.com/selfcommunity/community-js/commit/94b05108ea01748fa0ca76dcba678c6d82af4b83))
+
+
+
+
+
+## [0.7.51-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.3...@selfcommunity/react-ui@0.7.51-alpha.4) (2024-07-25)
+
+
+### Bug Fixes
+
+* DefaultDrawerContent, DefaultHeaderContent ([0e7c6e1](https://github.com/selfcommunity/community-js/commit/0e7c6e15330240cf31444e246f90b51628a5808d))
+
+
+
+
+
+## [0.7.51-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.2...@selfcommunity/react-ui@0.7.51-alpha.3) (2024-07-19)
+
+
+### Bug Fixes
+
+* platform widget with tutorial steps ([a3ff798](https://github.com/selfcommunity/community-js/commit/a3ff79813bb0bfa1a04e9324ff33fc04c0c27f43))
+
+
+
+
+
+## [0.7.51-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.1...@selfcommunity/react-ui@0.7.51-alpha.2) (2024-07-19)
+
+
+### Bug Fixes
+
+* platform widget with tutorial steps ([7f12e6e](https://github.com/selfcommunity/community-js/commit/7f12e6ed0838d0482b81f29e8a38091ff4187895))
+
+
+
+
+
+## [0.7.51-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.51-alpha.0...@selfcommunity/react-ui@0.7.51-alpha.1) (2024-07-19)
+
+
+### Bug Fixes
+
+* platform widget with tutorial steps ([e389fbf](https://github.com/selfcommunity/community-js/commit/e389fbf67fd3fae88575cbf7c2c0d1094ec98612))
+
+
+
+
+
+## [0.7.51-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.50...@selfcommunity/react-ui@0.7.51-alpha.0) (2024-07-19)
+
+
+### Bug Fixes
+
+* add integrations option ([a05e5af](https://github.com/selfcommunity/community-js/commit/a05e5afbe31b71323fb0e8b08f0b945acfcfb5bd))
+* check window in components, data types in Categories component ([39fb019](https://github.com/selfcommunity/community-js/commit/39fb0199aa61a8a032cb521f200ccc72262c0324))
+* init platform widget ([679bcb7](https://github.com/selfcommunity/community-js/commit/679bcb729998c11723db34b2bac1e0d15d4e7d4d))
+* platform widget with tutorial steps ([959dcdb](https://github.com/selfcommunity/community-js/commit/959dcdb444118c665038e916a6b448f9eb1bc0ee))
+* platform widget with tutorial steps ([cf56896](https://github.com/selfcommunity/community-js/commit/cf568969dcf9395dcb9682ff69f42d4a5d554c3e))
+* platform widget with tutorial steps ([0526b8a](https://github.com/selfcommunity/community-js/commit/0526b8a599d3942aeb7350641f334473e2b1eb0c))
+* platform widget with tutorial steps ([c636981](https://github.com/selfcommunity/community-js/commit/c63698173751ab4a47a4788666c908580139b31f))
+
+
+
+
+
 ## [0.7.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.50-alpha.1...@selfcommunity/react-ui@0.7.50) (2024-07-10)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

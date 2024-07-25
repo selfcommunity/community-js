@@ -15,7 +15,22 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd'
     },
     module: {
-      rules: [{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/}, {...rules.css()}]
+      rules: [
+				{...rules.js({rootMode: 'upward'}), test: /\.(j|t)sx?$/},
+				{...rules.css()},
+				{
+					test: /\.(svg)(\?v=\d+\.\d+\.\d+)?$/,
+					use: [
+						{
+							loader: 'file-loader',
+							options: {
+								name: '[name].[ext]',
+								outputPath: 'assets/'
+							}
+						}
+					]
+				}
+			]
     },
     resolve: {
       extensions: ['.js', '.ts', '.tsx', '.json']
