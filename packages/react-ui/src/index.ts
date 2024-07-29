@@ -187,7 +187,7 @@ import {DEFAULT_FIELDS} from './constants/UserProfile';
  * Utilities
  */
 import * as ContributionUtils from './utils/contribution';
-import MetadataField from './shared/MetadataField';
+import MetadataField, {MetadataFieldProps} from './shared/MetadataField';
 import InfiniteScroll from './shared/InfiniteScroll';
 import CentralProgress from './shared/CentralProgress';
 import {bytesToSize} from './utils/sizeCoverter';
@@ -473,6 +473,7 @@ export {
   PasswordTextField,
   PhoneTextField,
   MetadataField,
+  MetadataFieldProps,
   InfiniteScroll,
   StickyBox,
   useStickyBox,
