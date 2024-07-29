@@ -549,7 +549,7 @@
   "ui.platformWidget.adm.desc": "Da qui accedi al centro di gestione della Community. In un’interfaccia unificata trovi tutto ciò di cui hai bisogno per controllare ogni aspetto, funzione, dato, contenuto e utente della Community.",
   "ui.platformWidget.mod.desc": "Accedi direttamente alle funzioni di moderazione che ti consentono di monitorare e gestire utenti, contenuti e segnalazioni, favorendo interazioni positive e costruttive. È disponibile la segnalazione automatizzata di contenuti o comportamenti non conformi, supportata dall’intelligenza artificiale (AI).",
   "ui.platformWidget.hub.desc": "È l’ambiente a tua disposizione per consultare il nostro Tutorial e gestire le impostazioni del tuo Account, compresi i pagamenti, le informazioni di fatturazione, le fatture e i contatti dell’assistenza. Inoltre troverai gli aggiornamenti del servizio SelfCommunity e le ultime novità.",
-  "ui.platformWidget.contactUs.desc": "Accedi da qui alla form per richiedere supporto, informazioni e consigli sulla configurazione della Community, sulle varie funzionalità a disposizione, oppure avere maggiori dettagli sui prezzi.",
+  "ui.platformWidget.contactUs.desc": "Accedi alla form per richiedere supporto, informazioni e consigli sulla configurazione della Community e sulle varie funzionalità a disposizione.",
   "ui.pollSuggestionWidget.button.showAll": "Vedi tutti",
   "ui.pollSuggestionWidget.noMoreResults": "Nessun altro risultato",
   "ui.pollSuggestionWidget.pollSnippet.button.seeItem": "Vedi",
