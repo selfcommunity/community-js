@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.54-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.53...@selfcommunity/react-ui@0.7.54-alpha.0) (2024-07-29)
+
+
+### Bug Fixes
+
+* export MetadataFieldProps ([4f3c9d5](https://github.com/selfcommunity/community-js/commit/4f3c9d54cd3af4b7fecc53fbc65f5be31e51d733))
+
+
+
+
+
 ## [0.7.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.53-alpha.1...@selfcommunity/react-ui@0.7.53) (2024-07-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
