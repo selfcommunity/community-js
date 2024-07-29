@@ -8,7 +8,11 @@ import AccountDeleteButton, {AccountDeleteButtonProps} from './components/Accoun
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps, NavigationSettingsItem} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
-import NavigationMenuIconButton, {NavigationMenuContent, NavigationMenuIconButtonProps} from './components/NavigationMenuIconButton';
+import NavigationMenuIconButton, {
+  NavigationMenuContent,
+  NavigationMenuIconButtonProps,
+  NavigationMenuHeader
+} from './components/NavigationMenuIconButton';
 import BottomNavigation, {BottomNavigationProps} from './components/BottomNavigation';
 import BroadcastMessages, {BroadcastMessagesProps, BroadcastMessagesSkeleton} from './components/BroadcastMessages';
 import Category, {CategoryProps, CategorySkeleton} from './components/Category';
@@ -167,6 +171,7 @@ import UserSubscribedGroupsWidget, {
   UserSubscribedGroupsWidgetSkeleton
 } from './components/UserSubscribedGroupsWidget';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
+import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
 
 /**
  * Constants
@@ -225,6 +230,7 @@ export {
   NavigationToolbarSkeleton,
   NavigationMenuIconButton,
   NavigationMenuContent,
+  NavigationMenuHeader,
   NavigationMenuIconButtonProps,
   BottomNavigation,
   BottomNavigationProps,
@@ -457,6 +463,8 @@ export {
   UserSubscribedGroupsWidgetSkeleton,
   DefaultDrawerContent,
   DefaultDrawerContentProps,
+  DefaultHeaderContent,
+  DefaultHeaderContentProps,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,

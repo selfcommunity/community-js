@@ -1,16 +1,36 @@
-import {Button, ListItem, Typography, Zoom} from '@mui/material';
+import {Box, BoxProps, Button, ListItem, Typography, Zoom} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategories, useSCRouting} from '@selfcommunity/react-core';
 import React, {useEffect, useState} from 'react';
 import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
 import {SCCategoryType} from '@selfcommunity/types';
+import {styled} from '@mui/material/styles';
+import classNames from 'classnames';
+import {useThemeProps} from '@mui/system';
 
-export interface DefaultDrawerContentProps {
+const PREFIX = 'SCDefaultDrawerContent';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (_, styles) => styles.root
+})(() => ({}));
+
+export interface DefaultDrawerContentProps extends BoxProps {
   CategoryItemProps?: CategoryProps;
 }
-export default function DefaultDrawerContent(props: DefaultDrawerContentProps) {
-  const {CategoryItemProps = {}} = props;
+export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps) {
+  const props: DefaultDrawerContentProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
+  const {className, CategoryItemProps = {showTooltip: true}, ...rest} = props;
 
   // HOOKS
   const {categories} = useSCFetchCategories();
@@ -22,13 +42,13 @@ export default function DefaultDrawerContent(props: DefaultDrawerContentProps) {
   const [isHovered, setIsHovered] = useState({});
 
   // HANDLERS
-  const handleMouseEnter = (index) => {
+  const handleMouseEnter = (index: number) => {
     setIsHovered((prevState) => {
       return {...prevState, [index]: true};
     });
   };
 
-  const handleMouseLeave = (index) => {
+  const handleMouseLeave = (index: number) => {
     setIsHovered((prevState) => {
       return {...prevState, [index]: false};
     });
@@ -39,7 +59,7 @@ export default function DefaultDrawerContent(props: DefaultDrawerContentProps) {
     setCategoriesOrdered(sortByAttr(categories, 'order'));
   }, [categories]);
 
-  const getMouseEvents = (mouseEnter, mouseLeave) => ({
+  const getMouseEvents = (mouseEnter: () => void, mouseLeave: () => void) => ({
     onMouseEnter: mouseEnter,
     onMouseLeave: mouseLeave,
     onTouchStart: mouseEnter,
@@ -48,7 +68,7 @@ export default function DefaultDrawerContent(props: DefaultDrawerContentProps) {
 
   //order
   return (
-    <>
+    <Root className={classNames(className, classes.root)} {...rest}>
       <Typography variant="subtitle1">
         <span>
           <FormattedMessage
@@ -80,6 +100,6 @@ export default function DefaultDrawerContent(props: DefaultDrawerContentProps) {
           </ListItem>
         </Zoom>
       ))}
-    </>
+    </Root>
   );
 }

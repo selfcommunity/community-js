@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.52-alpha.1...@selfcommunity/react-theme-default@0.1.52) (2024-07-25)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.52-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.52-alpha.0...@selfcommunity/react-theme-default@0.1.52-alpha.1) (2024-07-25)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.52-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51...@selfcommunity/react-theme-default@0.1.52-alpha.0) (2024-07-25)
+
+
+### Bug Fixes
+
+* DefaultDrawerContent, DefaultHeaderContent ([0d158df](https://github.com/selfcommunity/community-js/commit/0d158df29e241487989486f0d4f8f4b95d5e2de6))
+
+
+
+
+
+## [0.1.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.6...@selfcommunity/react-theme-default@0.1.51) (2024-07-25)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.51-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.5...@selfcommunity/react-theme-default@0.1.51-alpha.6) (2024-07-25)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.51-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.4...@selfcommunity/react-theme-default@0.1.51-alpha.5) (2024-07-25)
+
+
+### Bug Fixes
+
+* DefaultDrawerContent, DefaultHeaderContent ([1032c1f](https://github.com/selfcommunity/community-js/commit/1032c1fb0c79b3b8cc696bfb835ba40fe262aab0))
+
+
+
+
+
+## [0.1.51-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.3...@selfcommunity/react-theme-default@0.1.51-alpha.4) (2024-07-25)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.1.51-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.2...@selfcommunity/react-theme-default@0.1.51-alpha.3) (2024-07-19)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.1.51-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.1.51-alpha.1...@selfcommunity/react-theme-default@0.1.51-alpha.2) (2024-07-19)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
