@@ -234,7 +234,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
+  
   // STATE
   const [tutorialIndex, setTutorialIndex] = useState<number>(0);
   const [isTutorialOpen, setIsTutorialOpen] = useState<boolean>(false);
@@ -243,6 +243,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
   const isEditor = useMemo(() => UserUtils.isEditor(scUserContext.user), [scUserContext.user]);
   const isModerator = useMemo(() => UserUtils.isModerator(scUserContext.user), [scUserContext.user]);
+  const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
   const isStage = scContext.settings.portal.includes('stage');
   const actions = [
     ...startActions,
@@ -272,7 +273,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           }
         ]
       : []),
-    ...(isAdmin && !hideHubAction
+    ...(isAdmin && isCommunityOwner && !hideHubAction
       ? [
           {
             render: (
@@ -285,7 +286,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           }
         ]
       : []),
-    ...(!hideContactUsAction
+    ...(isCommunityOwner && !hideContactUsAction
       ? [
           {
             render: (
