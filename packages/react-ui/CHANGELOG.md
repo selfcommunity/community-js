@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.53-alpha.1...@selfcommunity/react-ui@0.7.53) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.53-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.53-alpha.0...@selfcommunity/react-ui@0.7.53-alpha.1) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.7.53-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.52...@selfcommunity/react-ui@0.7.53-alpha.0) (2024-07-29)
+
+
+### Bug Fixes
+
+* platform widget for not community owner ([292ca4f](https://github.com/selfcommunity/community-js/commit/292ca4fd3cd883d697860b60155425cb1a9963dc))
+
+
+
+
+
 ## [0.7.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.52-alpha.1...@selfcommunity/react-ui@0.7.52) (2024-07-25)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
