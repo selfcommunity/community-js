@@ -105,7 +105,10 @@ const withProvider = (Story, context) => {
 		integrations: {
 			...(context.globals.openAISecretKey && {openai: {
 				secretKey: context.globals.openAISecretKey
-			}})
+			}}),
+      ...(context.globals.geocodingApiKey && {geocoding: {
+          apiKey: context.globals.geocodingApiKey
+        }})
 		},
     /* preferences: {
       preferences: {
