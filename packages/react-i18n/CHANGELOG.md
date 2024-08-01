@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.54-alpha.1...@selfcommunity/react-i18n@0.5.54) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.5.54-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.54-alpha.0...@selfcommunity/react-i18n@0.5.54-alpha.1) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.5.54-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.53...@selfcommunity/react-i18n@0.5.54-alpha.0) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.5.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.53-alpha.1...@selfcommunity/react-i18n@0.5.53) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.5.53-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.53-alpha.0...@selfcommunity/react-i18n@0.5.53-alpha.1) (2024-07-29)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.5.53-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.52...@selfcommunity/react-i18n@0.5.53-alpha.0) (2024-07-29)
 
 
