@@ -110,7 +110,9 @@ import {
   InsightCommonParams,
   ReactionParams,
   GroupCreateParams,
-  GroupFeedParams
+  GroupFeedParams,
+  EventCreateParams,
+  EventFeedParams
 } from './types';
 
 /**
@@ -277,5 +279,7 @@ export {
   GroupFeedParams,
   GroupService,
   GroupApiClient,
-  GroupApiClientInterface
+  GroupApiClientInterface,
+  EventCreateParams,
+  EventFeedParams
 };

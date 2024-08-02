@@ -11,7 +11,7 @@ import {SCGroupType, SCGroupPrivacyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
 import {SCPreferences, SCPreferencesContextType, useSCFetchGroup, useSCPreferences} from '@selfcommunity/react-core';
 import GroupInfoWidgetSkeleton from './Skeleton';
-import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import User from '../User';
 
 const classes = {
@@ -123,7 +123,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
    */
   useEffect(() => {
     if (scGroup) {
-      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCEventType.EDIT}`, onChangeGroupHandler);
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCGroupEventType.EDIT}`, onChangeGroupHandler);
     }
     return () => {
       updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);

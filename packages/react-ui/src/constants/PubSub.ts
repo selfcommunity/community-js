@@ -10,7 +10,7 @@ export enum SCTopicType {
 /**
  * Event types
  */
-export enum SCEventType {
+export enum SCGroupEventType {
   CREATE = 'create',
   EDIT = 'edit',
   MEMBERS = 'members',
