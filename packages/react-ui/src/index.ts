@@ -174,6 +174,7 @@ import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/Navi
 import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import EventLocationWidget, {EventLocationWidgetProps, EventLocationWidgetSkeleton} from './components/EventLocationWidget';
+import Event, {EventProps, EventSkeleton} from './components/Event';
 
 /**
  * Constants
@@ -472,6 +473,9 @@ export {
   EventLocationWidget,
   EventLocationWidgetProps,
   EventLocationWidgetSkeleton,
+  Event,
+  EventProps,
+  EventSkeleton,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,

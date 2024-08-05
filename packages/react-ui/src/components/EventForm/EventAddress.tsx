@@ -13,8 +13,8 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const messages = defineMessages({
   virtualPlaceholder: {
-    id: 'ui.eventForm.address.virtual.placeholder',
-    defaultMessage: 'ui.eventForm.address.virtual.placeholder'
+    id: 'ui.eventForm.address.online.placeholder',
+    defaultMessage: 'ui.eventForm.address.online.placeholder'
   }
 });
 
@@ -32,7 +32,7 @@ const Root = styled(Box, {
 
 export enum AddressType {
   PERSON = 'person',
-  VIRTUAL = 'virtual'
+  ONLINE = 'online'
 }
 
 export interface EventAddressProps {
@@ -138,11 +138,11 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
           label={<FormattedMessage id="ui.eventForm.address.live.label" defaultMessage="ui.eventForm.address.live.label" />}
         />
         <Tab
-          value={AddressType.VIRTUAL}
+          value={AddressType.ONLINE}
           classes={{root: classes.tab}}
           icon={<Icon>play_circle_outline</Icon>}
           iconPosition="start"
-          label={<FormattedMessage id="ui.eventForm.address.virtual.label" defaultMessage="ui.eventForm.address.virtual.label" />}
+          label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
         />
       </Tabs>
       <Box className={classes.tabContent}>
@@ -180,13 +180,13 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             )}
           />
         )}
-        {tab === AddressType.VIRTUAL && (
+        {tab === AddressType.ONLINE && (
           <UrlTextField
             size="small"
             fullWidth
             type="url"
             placeholder={`${intl.formatMessage(messages.virtualPlaceholder)}`}
-            helperText={<FormattedMessage id="ui.eventForm.address.virtual.help" defaultMessage="ui.eventForm.address.virtual.help" />}
+            helperText={<FormattedMessage id="ui.eventForm.address.online.help" defaultMessage="ui.eventForm.address.online.help" />}
             InputProps={{
               endAdornment: <Icon>play_circle_outline</Icon>
             }}
