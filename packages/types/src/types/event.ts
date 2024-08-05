@@ -136,12 +136,12 @@ export interface SCEventType {
   recurring: SCEventRecurrenceType;
 
   /**
-   * The event location
+   * The event location (in person, online)
    */
   location: SCEventLocationType;
 
   /**
-   * The event geolocation
+   * The event place
    */
   geolocation: string;
 

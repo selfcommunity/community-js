@@ -139,6 +139,7 @@ import SCGroupInvitedWidget from './components/SCGroupInvitedWidget';
 import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWidget';
 import SCEventForm from './components/SCEventForm';
 import SCCreateEventButton from './components/SCCreateEventButton';
+import SCEventLocationWidget from './components/SCEventLocationWidget';
 /**
  * Style fragments - Imports - End
  */
@@ -344,7 +345,8 @@ const theme = {
     SCGroupInvitedWidget,
     SCUserSubscribedGroupsWidget,
     SCEventForm,
-    SCCreateEventButton
+    SCCreateEventButton,
+    SCEventLocationWidget
   },
   selfcommunity: {
     user: {

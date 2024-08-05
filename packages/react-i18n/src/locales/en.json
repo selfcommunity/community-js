@@ -279,6 +279,7 @@
   "ui.eventForm.privacy.private": "Private",
   "ui.eventForm.privacy.private.info": "Only invited people can access. Invitations can be requested.",
   "ui.eventForm.button.create": "Create Event",
+  "ui.eventLocationWidget.title": "Location",
   "ui.groupForm.title": "Create Group",
   "ui.groupForm.title.edit": "Edit Group",
   "ui.groupForm.header": "Add an avatar and a cover image for your group",

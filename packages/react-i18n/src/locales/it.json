@@ -279,6 +279,7 @@
   "ui.eventForm.privacy.private": "Privato",
   "ui.eventForm.privacy.private.info": "Potranno accedere solo le persone invitate. È possibile richiedere l’invito.",
   "ui.eventForm.button.create": "Crea Evento",
+  "ui.eventLocationWidget.title": "Luogo",
   "ui.groupForm.title": "Crea il gruppo",
   "ui.groupForm.title.edit": "Modifica il gruppo",
   "ui.groupForm.header": "Assegna un avatar e una immagine di copertina al tuo Gruppo",

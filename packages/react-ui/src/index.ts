@@ -173,6 +173,7 @@ import UserSubscribedGroupsWidget, {
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
 import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
+import EventLocationWidget, {EventLocationWidgetProps, EventLocationWidgetSkeleton} from './components/EventLocationWidget';
 
 /**
  * Constants
@@ -468,6 +469,9 @@ export {
   DefaultHeaderContentProps,
   CreateEventButton,
   CreateEventButtonProps,
+  EventLocationWidget,
+  EventLocationWidgetProps,
+  EventLocationWidgetSkeleton,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,
