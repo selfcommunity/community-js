@@ -332,11 +332,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
                   onItemClick={() => handleOpenThread(message)}
                   secondaryAction={
                     <>
-                      {message.thread_status === SCPrivateMessageStatusType.NEW && (
-                        <Icon fontSize="small" color="secondary">
-                          fiber_manual_record
-                        </Icon>
-                      )}
+                      {message.thread_status === SCPrivateMessageStatusType.NEW && <Icon color="secondary">fiber_manual_record</Icon>}
                       {!isMobile && (
                         <PrivateMessageSettingsIconButton
                           threadToDelete={message?.group ? message.group.id : messageReceiver(message, authUserId)}

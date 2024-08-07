@@ -162,7 +162,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
     <Root className={classNames(classes.root, className)}>
       <CardHeader
         action={
-          <Icon fontSize={'small'} onClick={onClose} className={classes.closeButton}>
+          <Icon onClick={onClose} className={classes.closeButton}>
             close
           </Icon>
         }

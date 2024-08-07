@@ -223,14 +223,14 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
             <input type="file" onChange={handleUpload} ref={fileInput} hidden accept=".gif,.png,.jpg,.jpeg" />
             <MenuItem disabled={loading} onClick={() => fileInput.current.click()} className={classes.addMenuItem}>
               <ListItemIcon>
-                <Icon fontSize="small">add_circle_outline</Icon>
+                <Icon>add_circle_outline</Icon>
               </ListItemIcon>
               <FormattedMessage id="ui.changeCover.button.upload" defaultMessage="ui.changeCover.button.upload" />
             </MenuItem>
             {hasCover && (
               <MenuItem className={classes.delMenuItem} onClick={() => setOpenDeleteCoverDialog(true)}>
                 <ListItemIcon>
-                  <Icon fontSize="small">delete</Icon>
+                  <Icon>delete</Icon>
                 </ListItemIcon>
                 <FormattedMessage id="ui.changeCover.button.delete" defaultMessage="ui.changeCover.button.delete" />
               </MenuItem>
@@ -263,7 +263,7 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       {!isMobile && (
         <>
           <Button className={classes.helpPopover} variant="contained" onClick={handleClickHelpButton}>
-            <Icon fontSize="small">help_outline</Icon>
+            <Icon>help_outline</Icon>
           </Button>
           {isOpen && (
             <Popover

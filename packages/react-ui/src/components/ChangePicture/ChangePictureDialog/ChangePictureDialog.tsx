@@ -215,7 +215,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
               variant="outlined"
               onClick={() => fileInput.current.click()}
               color={error ? 'error' : 'primary'}
-              startIcon={loading ? null : <Icon fontSize="small">folder_open</Icon>}>
+              startIcon={loading ? null : <Icon>folder_open</Icon>}>
               {loading ? (
                 <CircularProgress size={15} />
               ) : (
