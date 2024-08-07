@@ -16,20 +16,18 @@ import {
   Stack,
   Switch,
   TextField,
-  Typography,
-  useMediaQuery,
-  useTheme
+  Typography
 } from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCContextType, SCPreferences, SCPreferencesContextType, SCThemeType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {LoadingButton} from '@mui/lab';
-import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH, EventFrequency} from '../../constants/Event';
-import {SCGroupPrivacyType} from '@selfcommunity/types';
+import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {formatHttpErrorCode} from '@selfcommunity/api-services';
+import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import UploadEventCover from './UploadEventCover';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
@@ -175,8 +173,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     startTime: null,
     endDate: null,
     endTime: null,
-    // frequency: `${intl.formatMessage(messages.frequencyPlaceholder)}`,
-    frequency: '',
+    location: '',
+    geolocation: '',
+    lat: null,
+    lng: null,
+    link: '',
+    recurring: SCEventRecurrenceType.NEVER,
     name: '',
     description: '',
     isPublic: true,
@@ -191,7 +193,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const privateEnabled = useMemo(
-    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_PRIVATE_ENABLED].value,
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_PRIVATE_ENABLED].value,
     [scPreferences.preferences]
   );
 
@@ -201,9 +203,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
-  // HOOKS
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const combineDateAndTime = (date, time) => {
+    if (date && time) {
+      const combined = new Date(date);
+      combined.setHours(time.getHours());
+      combined.setMinutes(time.getMinutes());
+      combined.setSeconds(time.getSeconds());
+      combined.setMilliseconds(time.getMilliseconds());
+      return combined.toISOString();
+    }
+    return null;
+  };
 
   function handleChangeCover(cover) {
     setField((prev: any) => ({...prev, ['emotionalImageOriginalFile']: cover}));
@@ -218,29 +228,50 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     }
   }
 
+  const handleGeoData = (data) => {
+    setField((prev) => ({
+      ...prev,
+      ...data
+    }));
+  };
+
   const handleSubmit = () => {
     setField((prev: any) => ({...prev, ['isSubmitting']: true}));
     const formData: any = new FormData();
-    formData.append('name', field.name);
-    formData.append('description', field.description);
-    if (privateEnabled) {
-      formData.append('privacy', field.isPublic ? SCGroupPrivacyType.PUBLIC : SCGroupPrivacyType.PRIVATE);
-    }
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
-    console.log(formData);
-    // EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}})
-    //   .then((data: any) => {
-    //     onSuccess && onSuccess(data);
-    //     onClose && onClose();
-    //     setField((prev: any) => ({...prev, ['isSubmitting']: false}));
-    //   })
-    //   .catch((e) => {
-    //     setError({...error, ...formatHttpErrorCode(e)});
-    //     setField((prev: any) => ({...prev, ['isSubmitting']: false}));
-    //     Logger.error(SCOPE_SC_UI, e);
-    //   });
+    formData.append('name', field.name);
+    formData.append('start_date', combineDateAndTime(field.startDate, field.startTime));
+    formData.append('recurring', field.recurring);
+    if (field.endDate) {
+      formData.append('end_date', combineDateAndTime(field.endDate, field.endTime));
+    }
+    formData.append('location', field.location);
+    if (field.location === SCEventLocationType.ONLINE) {
+      formData.append('link', field.link);
+    }
+    if (field.location === SCEventLocationType.PERSON) {
+      formData.append('geolocation', field.geolocation);
+      formData.append('geolocation_lat', field.lat);
+      formData.append('geolocation_lng', field.lng);
+    }
+    if (privateEnabled) {
+      formData.append('privacy', field.isPublic ? SCEventPrivacyType.PUBLIC : SCEventPrivacyType.PRIVATE);
+    }
+    formData.append('description', field.description);
+
+    EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      .then((data: any) => {
+        onSuccess && onSuccess(data);
+        onClose && onClose();
+        setField((prev: any) => ({...prev, ['isSubmitting']: false}));
+      })
+      .catch((e) => {
+        setError({...error, ...formatHttpErrorCode(e)});
+        setField((prev: any) => ({...prev, ['isSubmitting']: false}));
+        Logger.error(SCOPE_SC_UI, e);
+      });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -275,9 +306,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           loading={field.isSubmitting}
           disabled={
             !field.name ||
+            (!field.startDate && !field.startTime) ||
+            (SCEventLocationType.ONLINE && !field.link) ||
+            ((field.recurring !== SCEventRecurrenceType.NEVER) && (!field.endDate && !field.endTime)) ||
             Object.keys(error).length !== 0 ||
             field.name.length > EVENT_TITLE_MAX_LENGTH ||
-            field.name.description > EVENT_DESCRIPTION_MAX_LENGTH
+            field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
           }
           variant="contained"
           onClick={handleSubmit}
@@ -312,6 +346,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           <Box className={classes.dateTime}>
             <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
               <MobileDatePicker
+                disablePast
                 label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
                 value={field.startDate}
                 slots={{
@@ -374,12 +409,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             </LocalizationProvider>
           </Box>
           <FormControl className={classes.frequency}>
-            {field.frequency && <InputLabel id="frequency">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
+            {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="frequency">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
             <Select
-              name="frequency"
-              label={field.frequency && `${intl.formatMessage(messages.frequency)}`}
-              labelId="frequency"
-              value={field.frequency}
+              name="recurring"
+              label={field.recurring !== SCEventRecurrenceType.NEVER && `${intl.formatMessage(messages.frequency)}`}
+              labelId="recurring"
+              value={field.recurring}
               onChange={handleChange}
               displayEmpty
               renderValue={(selected) => {
@@ -401,14 +436,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   </IconButton>
                 </InputAdornment>
               }>
-              {Object.values(EventFrequency).map((f) => (
+              {Object.values(SCEventRecurrenceType).map((f) => (
                 <MenuItem value={f} key={f}>
                   <FormattedMessage id={`ui.eventForm.frequency.${f}.placeholder`} defaultMessage={`ui.eventForm.frequency.${f}.placeholder`} />
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          {field.showEndDateTime && (
+          {(field.showEndDateTime || field.recurring !== SCEventRecurrenceType.NEVER) && (
             <Box className={classes.dateTime}>
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
                 <MobileDatePicker
@@ -471,7 +506,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               values={{symbol: field.showEndDateTime ? '-' : '+'}}
             />
           </Button>
-          <EventAddress />
+          <EventAddress forwardGeolocationData={handleGeoData} />
           {privateEnabled && (
             <Box className={classes.privacySection}>
               <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">

@@ -17,13 +17,14 @@ export enum SCEventPrivacyType {
  */
 export enum SCEventLocationType {
   PERSON = 'in person',
-  ONLINE = 'online'
+  ONLINE = 'virtual'
 }
 
 /**
  * SCEventRecurrenceType enum
  */
 export enum SCEventRecurrenceType {
+  NEVER = 'never',
   DAILY = 'daily',
   WEEKLY = 'weekly',
   MONTHLY = 'monthly'

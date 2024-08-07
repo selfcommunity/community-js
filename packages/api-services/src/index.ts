@@ -50,6 +50,7 @@ import UserService, {UserApiClient, UserApiClientInterface} from './services/use
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
+import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
 
 /**
  * Types
@@ -281,5 +282,8 @@ export {
   GroupApiClient,
   GroupApiClientInterface,
   EventCreateParams,
-  EventFeedParams
+  EventFeedParams,
+  EventService,
+  EventApiClient,
+  EventApiClientInterface
 };
