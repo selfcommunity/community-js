@@ -302,7 +302,7 @@ export default function Share(props: ShareProps): JSX.Element {
             {showShareAction && (
               <MenuItem onClick={() => share(false)}>
                 <ListItemIcon>
-                  <Icon fontSize="small">redo</Icon>
+                  <Icon>redo</Icon>
                 </ListItemIcon>
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
               </MenuItem>
@@ -310,7 +310,7 @@ export default function Share(props: ShareProps): JSX.Element {
             {facebookShareEnabled && (
               <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
                 <ListItemIcon>
-                  <Icon fontSize="small">facebook</Icon>
+                  <Icon>facebook</Icon>
                 </ListItemIcon>
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
               </MenuItem>
@@ -318,7 +318,7 @@ export default function Share(props: ShareProps): JSX.Element {
             {xShareEnabled && (
               <MenuItem onClick={() => window.open(X_SHARE + url, 'x-share-dialog', 'width=626,height=436')}>
                 <ListItemIcon>
-                  <Icon fontSize="small">twitter</Icon>
+                  <Icon>twitter</Icon>
                 </ListItemIcon>
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.x" defaultMessage="ui.feedObject.share.x" />} />
               </MenuItem>
@@ -326,7 +326,7 @@ export default function Share(props: ShareProps): JSX.Element {
             {linkedinShareEnabled && (
               <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
                 <ListItemIcon>
-                  <Icon fontSize="small">linkedin</Icon>
+                  <Icon>linkedin</Icon>
                 </ListItemIcon>
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
               </MenuItem>
@@ -335,7 +335,7 @@ export default function Share(props: ShareProps): JSX.Element {
         )}
         <MenuItem>
           <ListItemIcon>
-            <Icon fontSize="small">link</Icon>
+            <Icon>link</Icon>
           </ListItemIcon>
           <ListItemText
             primary={<FormattedMessage id="ui.feedObject.share.permanentLink" defaultMessage="ui.feedObject.share.permanentLink" />}
