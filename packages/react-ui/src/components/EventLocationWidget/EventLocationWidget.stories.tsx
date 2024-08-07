@@ -12,12 +12,12 @@ const template = (args) => (
 
 export const Base: StoryObj<EventLocationWidget> = {
   args: {
-    event: {
-      geolocation_lng: 9.11638659245195,
-      geolocation_lat: 39.216251400000004,
-      name: 'Bastione di Saint Remy',
-      geolocation: 'Viale Regina Elena, 09125 Cagliari Casteddu/Cagliari, Italy'
-    }
+    eventId: 102
+    // event: {
+    //   geolocation_lng: 9.11638659245195,
+    //   geolocation_lat: 39.216251400000004,
+    //   geolocation: 'Bastione di Saint Remy', Viale Regina Elena, 09125 Cagliari Casteddu/Cagliari, Italy'
+    // }
   },
   render: template
 };

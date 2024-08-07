@@ -1,17 +1,18 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, CardContent, Typography} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Box, CardContent, Typography } from '@mui/material';
 import classNames from 'classnames';
 import Widget from '../Widget';
-import {useThemeProps} from '@mui/system';
-import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-import {PREFIX} from './constants';
-import {FormattedMessage} from 'react-intl';
+import { useThemeProps } from '@mui/system';
+import { VirtualScrollerItemProps } from '../../types/virtualScroller';
+import { PREFIX } from './constants';
+import { FormattedMessage } from 'react-intl';
 import EventLocationWidgetSkeleton from './Skeleton';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import {SCEventType} from '@selfcommunity/types';
-import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
+import { SCContextType, useSCContext, useSCFetchEvent } from '@selfcommunity/react-core';
+import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import { formatEventLocationGeolocation } from '../../utils/string';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -86,20 +87,22 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
     name: PREFIX
   });
   const {className, event, eventId, ...rest} = props;
+  // STATE
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
   const scContext: SCContextType = useSCContext();
   const {isLoaded} = useLoadScript({
-    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey
+    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
+    libraries: ['maps']
   });
-  const center = {lat: event.geolocation_lat, lng: event.geolocation_lng};
 
-  if (!scContext?.settings?.integrations?.geocoding?.apiKey) {
+  if (!scContext?.settings?.integrations?.geocoding?.apiKey || (scEvent && scEvent?.location === SCEventLocationType.ONLINE)) {
     return <HiddenPlaceholder />;
   }
 
   /**
    * Loading event
    */
-  if (!isLoaded) {
+  if (!isLoaded || !scEvent) {
     return <EventLocationWidgetSkeleton />;
   }
 
@@ -113,15 +116,26 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
           <FormattedMessage id="ui.eventLocationWidget.title" defaultMessage="ui.eventLocationWidget.title" />
         </Typography>
         <Box className={classes.map}>
-          <GoogleMap mapContainerClassName={classes.map} center={center} zoom={15}>
-            <MarkerF position={center} />
+          <GoogleMap
+            mapContainerClassName={classes.map}
+            center={{
+              lat: scEvent?.geolocation_lat,
+              lng: scEvent?.geolocation_lng
+            }}
+            zoom={15}>
+            <MarkerF
+              position={{
+                lat: scEvent?.geolocation_lat,
+                lng: scEvent?.geolocation_lng
+              }}
+            />
           </GoogleMap>
         </Box>
         <Typography variant="h4" className={classes.locationTitle}>
-          {event.name}
+          {formatEventLocationGeolocation(scEvent?.geolocation, true)}
         </Typography>
         <Typography variant="body1" className={classes.address}>
-          {event.geolocation}
+          {formatEventLocationGeolocation(scEvent?.geolocation)}
         </Typography>
       </CardContent>
     </Root>

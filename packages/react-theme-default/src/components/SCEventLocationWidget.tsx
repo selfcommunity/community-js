@@ -5,8 +5,8 @@ const Component = {
         width: 470
       },
       '& .SCEventLocationWidget-title, & .SCEventLocationWidget-location-title': {
-        fontWeight: theme.typography.fontWeightBold,
-        marginBottom: theme.spacing(0.5)
+        fontWeight: theme.typography.fontWeightBold
+        // marginBottom: theme.spacing(0.5)
       },
       '& .SCEventLocationWidget-map': {
         marginBottom: theme.spacing(1),
