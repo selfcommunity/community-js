@@ -10,6 +10,11 @@ export const globalTypes = {
     description: 'Application Portal',
     defaultValue: process.env.STORYBOOK_PLATFORM_URL
   },
+	webSocketPrefixPath: {
+		name: 'WebSocket Prefix Path',
+		description: 'WebSocket Prefix Path',
+		defaultValue: process.env.STORYBOOK_PLATFORM_WEBSOCKET_PREFIX_PATH
+	},
   locale: {
     name: 'Locale',
     description: 'Locale i18n',
