@@ -152,7 +152,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
         user && !group && (
           <ListItem className={classes.item} key="profile" component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, user)}>
             <ListItemIcon>
-              <Icon fontSize="small">people_alt</Icon>
+              <Icon>people_alt</Icon>
             </ListItemIcon>
             <FormattedMessage
               id="ui.privateMessageSettingsIconButton.item.profile"
@@ -163,14 +163,14 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
         group && !user && (
           <ListItem className={classes.item} key="group" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, group)}>
             <ListItemIcon>
-              <Icon fontSize="small">groups</Icon>
+              <Icon>groups</Icon>
             </ListItemIcon>
             <FormattedMessage id="ui.privateMessageSettingsIconButton.item.group" defaultMessage="ui.privateMessageSettingsIconButton.item.group" />
           </ListItem>
         ),
         <ListItem className={classes.item} key="delete" onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick}>
           <ListItemIcon>
-            <Icon fontSize="small">delete</Icon>
+            <Icon>delete</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
         </ListItem>
@@ -185,7 +185,7 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
             key="profile"
             onClick={handleCloseDialog}>
             <ListItemIcon>
-              <Icon fontSize="small">people_alt</Icon>
+              <Icon>people_alt</Icon>
             </ListItemIcon>
             <FormattedMessage
               id="ui.privateMessageSettingsIconButton.item.profile"
@@ -201,14 +201,14 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
             key="group"
             onClick={handleCloseDialog}>
             <ListItemIcon>
-              <Icon fontSize="small">groups</Icon>
+              <Icon>groups</Icon>
             </ListItemIcon>
             <FormattedMessage id="ui.privateMessageSettingsIconButton.item.group" defaultMessage="ui.privateMessageSettingsIconButton.item.group" />
           </MenuItem>
         ),
         <MenuItem className={classes.item} onClick={threadToDelete ? handleOpenDialog : onMenuItemDeleteClick} key="delete">
           <ListItemIcon>
-            <Icon fontSize="small">delete</Icon>
+            <Icon>delete</Icon>
           </ListItemIcon>
           <FormattedMessage id="ui.privateMessageSettingsIconButton.item.delete" defaultMessage="ui.privateMessageSettingsIconButton.item.delete" />
         </MenuItem>

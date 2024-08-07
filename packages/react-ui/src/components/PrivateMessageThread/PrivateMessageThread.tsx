@@ -683,7 +683,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                 />
               </Box>
               <IconButton size="small" onClick={handleNewMessageClose}>
-                <Icon fontSize="small">close</Icon>
+                <Icon>close</Icon>
               </IconButton>
             </Box>
             <List className={classes.newMessageContent}></List>

@@ -325,7 +325,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
           <FormattedMessage id="ui.incubatorListWidget.title" defaultMessage="ui.incubatorListWidget.title" />
         </Typography>
         <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
-          <Icon fontSize="small">help_outline</Icon>
+          <Icon>help_outline</Icon>
         </IconButton>
         {isOpen && (
           <Popover
