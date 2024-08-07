@@ -102,12 +102,7 @@ export default function CreateGroupButton(inProps: CreateGroupButtonProps): JSX.
    */
   return (
     <React.Fragment>
-      <Root
-        className={classNames(classes.root, className)}
-        onClick={handleClick}
-        variant="contained"
-        startIcon={<Icon fontSize="small">add</Icon>}
-        {...rest}>
+      <Root className={classNames(classes.root, className)} onClick={handleClick} variant="contained" startIcon={<Icon>add</Icon>} {...rest}>
         {children ?? <FormattedMessage id="ui.createGroupButton" defaultMessage="ui.createGroupButton" />}
       </Root>
       {open && <GroupForm {...GroupFormProps} open onClose={handleClick} />}

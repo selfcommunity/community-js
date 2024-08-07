@@ -317,7 +317,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
         onClick={handleClose}
         variant={scGroup ? 'contained' : 'outlined'}
         color={scGroup ? 'secondary' : 'inherit'}
-        startIcon={<Icon fontSize="small">add</Icon>}
+        startIcon={<Icon>add</Icon>}
         {...rest}>
         <FormattedMessage id="ui.groupInviteButton" defaultMessage="ui.groupInviteButton" />
       </Root>
@@ -329,7 +329,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
           title={
             <>
               <IconButton onClick={handleClose}>
-                <Icon fontSize="medium">arrow_back</Icon>
+                <Icon>arrow_back</Icon>
               </IconButton>
               <Typography className={classes.dialogTitle}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.title" defaultMessage="ui.groupInviteButton.dialog.title" />
