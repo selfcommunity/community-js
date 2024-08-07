@@ -231,8 +231,21 @@ export const validateWebSocketSecure = (value) => {
     return {
       errors,
       warnings,
-      value: Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION][Notifications.NOTIFICATIONS_SECURE_OPTION],
+      value: Notifications.DEFAULT_NOTIFICATIONS[Notifications.NOTIFICATIONS_WEB_SOCKET_OPTION][Notifications.NOTIFICATIONS_WEBSOCKET_SECURE_OPTION],
     };
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate prefixPath (webSocket)
+ * @param value
+ */
+export const validateWebSocketPrefixPath = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (!value || !isString(value)) {
+    errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_PREFIX_PATH);
   }
   return {errors, warnings, value};
 };
@@ -653,7 +666,6 @@ export function validateIntegrations(v: SCIntegrationsType) {
  * @param v
  */
 export const validateOpenAI = (v) => {
-	console.log(v);
   const errors = [];
   const warnings = [];
   if (v && !isObject(v)) {
@@ -791,8 +803,12 @@ const NotificationsWebSocketDisableToastMessageOption = {
   validator: validateWebSocketDisableToastMessage,
 };
 const NotificationsWebSocketSecureOption = {
-  name: Notifications.NOTIFICATIONS_SECURE_OPTION,
+  name: Notifications.NOTIFICATIONS_WEBSOCKET_SECURE_OPTION,
   validator: validateWebSocketSecure,
+};
+const NotificationsWebSocketPrefixPathOption = {
+  name: Notifications.NOTIFICATIONS_WEBSOCKET_PREFIX_PATH_OPTION,
+  validator: validateWebSocketPrefixPath,
 };
 const NotificationsWebPushMessagingDisableToastMessageOption = {
   name: Notifications.NOTIFICATIONS_DISABLE_TOAST_MESSAGE_OPTION,
@@ -855,6 +871,7 @@ export const notificationsOptions: Record<string, any> = {
 export const notificationsWebSocketOptions: Record<string, any> = {
   [NotificationsWebSocketDisableToastMessageOption.name]: NotificationsWebSocketDisableToastMessageOption,
   [NotificationsWebSocketSecureOption.name]: NotificationsWebSocketSecureOption,
+  [NotificationsWebSocketPrefixPathOption.name]: NotificationsWebSocketPrefixPathOption,
 };
 export const notificationsWebPushMessagingOptions: Record<string, any> = {
   [NotificationsWebPushMessagingDisableToastMessageOption.name]: NotificationsWebPushMessagingDisableToastMessageOption,
