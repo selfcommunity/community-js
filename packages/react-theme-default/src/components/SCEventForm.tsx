@@ -20,6 +20,9 @@ const Component = {
         color: theme.palette.text.secondary
       },
       '& .SCEventForm-form': {
+        '& .SCEventForm-picker': {
+          width: '50%'
+        },
         '& .MuiTextField-root, .SCEventForm-frequency': {
           marginBottom: theme.spacing(2)
         },

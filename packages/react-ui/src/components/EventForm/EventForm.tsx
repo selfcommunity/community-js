@@ -76,6 +76,7 @@ const classes = {
   active: `${PREFIX}-active`,
   title: `${PREFIX}-title`,
   cover: `${PREFIX}-cover`,
+  picker: `${PREFIX}-picker`,
   dateTime: `${PREFIX}-date-time`,
   frequency: `${PREFIX}-frequency`,
   form: `${PREFIX}-form`,
@@ -346,6 +347,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           <Box className={classes.dateTime}>
             <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
               <MobileDatePicker
+                className={classes.picker}
                 disablePast
                 label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
                 value={field.startDate}
@@ -377,6 +379,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 onChange={(value) => handleChangeDateTime(value, 'startDate')}
               />
               <MobileTimePicker
+                className={classes.picker}
                 label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
                 value={field.startTime}
                 slots={{
@@ -447,6 +450,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             <Box className={classes.dateTime}>
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
                 <MobileDatePicker
+                  className={classes.picker}
+                  disablePast
                   label={
                     field.endDate && <FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />
                   }
@@ -472,6 +477,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   onChange={(value) => handleChangeDateTime(value, 'endDate')}
                 />
                 <MobileTimePicker
+                  className={classes.picker}
                   label={
                     field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />
                   }
