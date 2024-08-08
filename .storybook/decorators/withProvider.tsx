@@ -93,6 +93,9 @@ const withProvider = (Story, context) => {
     notifications: {
       webSocket: {
         disableToastMessage: false,
+				...(context.globals.webSocketPrefixPath && {
+					prefixPath: context.globals.webSocketPrefixPath
+					})
       },
       webPushMessaging: {
         disableToastMessage: false,
