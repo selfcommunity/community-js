@@ -308,7 +308,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           disabled={
             !field.name ||
             (!field.startDate && !field.startTime) ||
-            (SCEventLocationType.ONLINE && !field.link) ||
+            (field.location === SCEventLocationType.ONLINE && !field.link) ||
             ((field.recurring !== SCEventRecurrenceType.NEVER) && (!field.endDate && !field.endTime)) ||
             Object.keys(error).length !== 0 ||
             field.name.length > EVENT_TITLE_MAX_LENGTH ||
@@ -361,7 +361,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                         startAdornment: (
                           <InputAdornment position="start">
                             <IconButton>
-                              <Icon>calendar_off</Icon>
+                              <Icon>CalendarIcon</Icon>
                             </IconButton>
                           </InputAdornment>
                         )
@@ -412,7 +412,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             </LocalizationProvider>
           </Box>
           <FormControl className={classes.frequency}>
-            {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="frequency">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
+            {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="recurring">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
             <Select
               name="recurring"
               label={field.recurring !== SCEventRecurrenceType.NEVER && `${intl.formatMessage(messages.frequency)}`}
