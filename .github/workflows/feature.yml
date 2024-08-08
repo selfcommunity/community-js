@@ -33,7 +33,7 @@ jobs:
     - name: Publish canary version
       run: |
         BRANCH_NAME=${{ steps.get_branch.outputs.branch }}
-        npx lerna publish from-package --preid $BRANCH_NAME --yes --dist-tag $BRANCH_NAME
+        npx lerna publish --canary --preid $BRANCH_NAME --yes
     - name: Open pull-request (feature -> dev)
       uses: mirk8xr/pull-request@v2.6.2
       with:
