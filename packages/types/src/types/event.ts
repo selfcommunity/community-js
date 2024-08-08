@@ -30,6 +30,18 @@ export enum SCEventRecurrenceType {
   MONTHLY = 'monthly'
 }
 
+/**
+ * SCEventRecurrenceType enum
+ */
+export enum SCEventDateFilterType {
+  ANY = 'any',
+  TODAY = 'today',
+  TOMORROW = 'tomorrow',
+  THIS_WEEK = 'this_week',
+  NEXT_WEEK = 'next_week',
+  THIS_MONTH = 'this_month'
+}
+
 export interface SCEventType {
   /**
    * The ID of the event.
@@ -100,16 +112,6 @@ export interface SCEventType {
    * The event image, small format.
    */
   image_small: string;
-
-  /**
-   * The event emotional image.
-   */
-  emotional_image: string;
-
-  /**
-   * The event emotional image position.
-   */
-  emotional_image_position: number;
 
   /**
    * The number of event members

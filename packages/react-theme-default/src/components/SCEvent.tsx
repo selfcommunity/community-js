@@ -1,14 +1,8 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      borderRadius: 0,
-      paddingBottom: 0,
       overflow: 'visible',
-      [theme.breakpoints.up('sm')]: {
-        borderRadius: theme.shape.borderRadiusSm
-      },
-      '& .SCBaseItemButton-image': {
-        marginRight: theme.spacing(1.25),
+      '& .SCBaseItem-image': {
         '& .MuiAvatar-root': {
           width: 100,
           height: 60,
@@ -17,7 +11,7 @@ const Component = {
           }
         }
       },
-      '& .SCBaseItemButton-text': {
+      '& .SCBaseItem-text': {
         fontSize: theme.typography.fontSize,
         '& .SCEvent-primary': {
           '& p': {
@@ -29,7 +23,18 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({theme}: any) => ({})
+    skeletonRoot: ({theme}: any) => ({
+      '& .SCEvent-skeleton-image': {
+        position: 'relative',
+        '& .MuiIcon-root': {
+          color: theme.palette.common.white,
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }
+      }
+    })
   }
 };
 

@@ -122,7 +122,7 @@ import {
   SCDeviceTypeEnum
 } from './device';
 import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType} from './group';
-import {type SCEventType, SCEventPrivacyType, SCEventRecurrenceType, SCEventLocationType} from './event';
+import {type SCEventType, SCEventPrivacyType, SCEventRecurrenceType, SCEventLocationType, SCEventDateFilterType} from './event';
 /**
  * Exports all types
  */
@@ -278,5 +278,6 @@ export {
   type SCEventType,
   SCEventPrivacyType,
   SCEventRecurrenceType,
-  SCEventLocationType
+  SCEventLocationType,
+  SCEventDateFilterType
 };

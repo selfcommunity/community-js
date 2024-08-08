@@ -141,6 +141,7 @@ import SCEventForm from './components/SCEventForm';
 import SCCreateEventButton from './components/SCCreateEventButton';
 import SCEventLocationWidget from './components/SCEventLocationWidget';
 import SCEvent from './components/SCEvent';
+import SCEvents from './components/SCEvents';
 /**
  * Style fragments - Imports - End
  */
@@ -348,7 +349,8 @@ const theme = {
     SCEventForm,
     SCCreateEventButton,
     SCEventLocationWidget,
-    SCEvent
+    SCEvent,
+    SCEvents
   },
   selfcommunity: {
     user: {

@@ -39,10 +39,6 @@ export interface EventCreateParams {
    */
   image_original?: File;
   /**
-   * The event cover image
-   */
-  emotional_image_original?: File;
-  /**
    * The event location
    */
   location: SCEventLocationType;

@@ -156,7 +156,8 @@ import {
   SCPrivateMessageType,
   SCEventPrivacyType,
   SCEventRecurrenceType,
-  SCEventLocationType
+  SCEventLocationType,
+  SCEventDateFilterType
 } from './types';
 
 /**
@@ -195,7 +196,8 @@ export {
   SCPrivateMessageType,
   SCEventPrivacyType,
   SCEventRecurrenceType,
-  SCEventLocationType
+  SCEventLocationType,
+  SCEventDateFilterType
 };
 export {
   type SCBannerType,
