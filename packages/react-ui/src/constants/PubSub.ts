@@ -4,11 +4,12 @@ import {SCUserType, SCGroupType} from '@selfcommunity/types';
  * Define topics for pubsub
  */
 export enum SCTopicType {
-  GROUP = 'group'
+  GROUP = 'group',
+  EVENT = 'event'
 }
 
 /**
- * Event types
+ * Group/Event event types
  */
 export enum SCGroupEventType {
   CREATE = 'create',
@@ -20,7 +21,7 @@ export enum SCGroupEventType {
 }
 
 /**
- * Event structure
+ * Group event structure
  */
 export interface SCGroupChangeEventType {
   group: SCGroupType;
