@@ -1,8 +1,8 @@
 /**
  * EventCreateParams interface
  */
-import {SCEventPrivacyType, SCEventRecurrenceType} from '@selfcommunity/types';
-import {BaseGetParams} from './baseParams';
+import {SCEventDateFilterType, SCEventPrivacyType, SCEventRecurrenceType} from '@selfcommunity/types';
+import {BaseGetParams, BaseSearchParams} from './baseParams';
 import {SCEventLocationType} from '@selfcommunity/types/src/types/event';
 
 export interface EventCreateParams {
@@ -39,10 +39,6 @@ export interface EventCreateParams {
    */
   image_original?: File;
   /**
-   * The event cover image
-   */
-  emotional_image_original?: File;
-  /**
    * The event location
    */
   location: SCEventLocationType;
@@ -72,4 +68,18 @@ export interface EventFeedParams extends BaseGetParams {
    * Which field to use when ordering the results.
    */
   ordering?: string;
+}
+
+/**
+ * EventFeedParams interface.
+ */
+export interface EventSearchParams extends BaseSearchParams {
+  /**
+   * The events filtered by a specific time frame
+   */
+  date_filter?: SCEventDateFilterType;
+  /**
+   * The events created or followed by the users followed
+   */
+  follows?: boolean | number;
 }

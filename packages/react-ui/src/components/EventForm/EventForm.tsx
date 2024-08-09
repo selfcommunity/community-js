@@ -168,8 +168,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const intl = useIntl();
 
   const initialFieldState = {
-    emotionalImageOriginal: '',
-    emotionalImageOriginalFile: '',
+    imageOriginal: '',
+    imageOriginalFile: '',
     startDate: null,
     startTime: null,
     endDate: null,
@@ -199,8 +199,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   );
 
   const _backgroundCover = {
-    ...(field.emotionalImageOriginal
-      ? {background: `url('${field.emotionalImageOriginal}') center / cover`}
+    ...(field.imageOriginal
+      ? {background: `url('${field.imageOriginal}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
@@ -217,14 +217,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   };
 
   function handleChangeCover(cover) {
-    setField((prev: any) => ({...prev, ['emotionalImageOriginalFile']: cover}));
+    setField((prev: any) => ({...prev, ['imageOriginalFile']: cover}));
     const reader = new FileReader();
     reader.onloadend = () => {
-      setField((prev: any) => ({...prev, ['emotionalImageOriginal']: reader.result}));
+      setField((prev: any) => ({...prev, ['imageOriginal']: reader.result}));
     };
     reader.readAsDataURL(cover);
-    if (error.emotionalImageOriginalError) {
-      delete error.emotionalImageOriginalError;
+    if (error.imageOriginalError) {
+      delete error.imageOriginalError;
       setError(error);
     }
   }
@@ -239,8 +239,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const handleSubmit = () => {
     setField((prev: any) => ({...prev, ['isSubmitting']: true}));
     const formData: any = new FormData();
-    if (field.emotionalImageOriginalFile) {
-      formData.append('emotional_image_original', field.emotionalImageOriginalFile);
+    if (field.imageOriginalFile) {
+      formData.append('image_original', field.imageOriginalFile);
     }
     formData.append('name', field.name);
     formData.append('start_date', combineDateAndTime(field.startDate, field.startTime));

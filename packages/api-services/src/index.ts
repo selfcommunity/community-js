@@ -113,7 +113,8 @@ import {
   GroupCreateParams,
   GroupFeedParams,
   EventCreateParams,
-  EventFeedParams
+  EventFeedParams,
+  EventSearchParams
 } from './types';
 
 /**
@@ -283,6 +284,7 @@ export {
   GroupApiClientInterface,
   EventCreateParams,
   EventFeedParams,
+  EventSearchParams,
   EventService,
   EventApiClient,
   EventApiClientInterface
