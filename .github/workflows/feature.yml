@@ -49,8 +49,7 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/types
-    - name: Get Canary Version from NPM of types
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/types dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/types - $CANARY_VERSION"
@@ -62,8 +61,7 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/utils
-    - name: Get Canary Version from NPM of utils
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/utils dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/utils - $CANARY_VERSION"
@@ -75,50 +73,43 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/api-services
-    - name: Get Canary Version from NPM of api-services
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/api-services dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/api-services - $CANARY_VERSION"
         else
           echo "@selfcommunity/api-services - ${{ steps.api-services.outputs.current-version }}"
         fi
-
     - name: Get @selfcommunity/react-i18n version
       id: react-i18n
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-i18n
-    - name: Get Canary Version from NPM of react-i18n
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-i18n dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/react-i18n - $CANARY_VERSION"
         else
           echo "@selfcommunity/react-i18n - ${{ steps.react-i18n.outputs.current-version }}"
         fi
-
     - name: Get @selfcommunity/react-core version
       id: react-core
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-core
-    - name: Get Canary Version from NPM of react-core
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-core dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/react-core - $CANARY_VERSION"
         else
           echo "@selfcommunity/react-core - ${{ steps.react-core.outputs.current-version }}"
         fi
-
     - name: Get @selfcommunity/react-ui version
       id: react-ui
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-ui
-    - name: Get Canary Version from NPM of react-ui
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-ui dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/react-ui - $CANARY_VERSION"
@@ -143,8 +134,7 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@master
       with:
         path: packages/react-theme-default
-    - name: Get Canary Version from NPM of react-theme-default
-      run: |
+    - run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-theme-default dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
           echo "@selfcommunity/react-theme-default - $CANARY_VERSION"
