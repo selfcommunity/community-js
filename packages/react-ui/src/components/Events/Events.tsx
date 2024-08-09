@@ -171,7 +171,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const fetchEvents = () => {
     let eventService;
     if (general) {
-      eventService = EventService.searchEvents({...endpointQueryParams, ...(search !== '' && {search: search})});
+      eventService = EventService.searchEvents({
+        ...endpointQueryParams,
+        ...(search !== '' && {search: search}),
+        ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+        ...(selected && {follows: selected})
+      });
     } else {
       eventService = EventService.getUserEvents({...endpointQueryParams, ...(search !== '' && {search: search})});
     }
@@ -195,7 +200,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     } else {
       fetchEvents();
     }
-  }, [contentAvailability, authUserId, search]);
+  }, [contentAvailability, authUserId, search, dateSearch, selected]);
 
   const handleNext = useMemo(
     () => () => {
@@ -236,12 +241,20 @@ export default function Events(inProps: EventsProps): JSX.Element {
   };
 
   /**
+   * Handle change time frame
+   * @param event
+   */
+  const handleOnChangeTimeFrame = (event) => {
+    setDateSearch(event.target.value);
+  };
+
+  /**
    * Renders events list
    */
   const filteredEvents = sortByAttr(getFilteredEvents(), 'order');
   const c = (
     <>
-      {showFilters && events.length !== 0 && (
+      {showFilters && (
         <Grid container className={classes.filters} gap={2}>
           {filters ? (
             filters
@@ -267,7 +280,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
-                    onChange={(e) => setDateSearch(e.target.value)}
+                    onChange={handleOnChangeTimeFrame}
                     renderValue={(selected) => options.find((option) => option.value === selected).label}>
                     {options.map((option) => (
                       <MenuItem key={option.value} value={option.value}>

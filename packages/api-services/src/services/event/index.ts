@@ -4,12 +4,12 @@ import Endpoints from '../../constants/Endpoints';
 import {SCEventType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
-import {EventCreateParams} from '../../types';
+import {EventCreateParams, EventSearchParams} from '../../types';
 
 export interface EventApiClientInterface {
   getUserEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
   getUserSubscribedEvents(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
-  searchEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
+  searchEvents(params?: EventSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
   getSpecificEventInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCEventType>;
   getEventFeed(id: number | string, params?: EventFeedParams, config?: AxiosRequestConfig): Promise<any>;
   createEvent(data: EventCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCEventType>;
@@ -70,7 +70,7 @@ export class EventApiClient {
    * @param params
    * @param config
    */
-  static searchEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+  static searchEvents(params?: EventSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchEvents.url({})}?${p.toString()}`, method: Endpoints.SearchEvents.method});
   }
@@ -336,7 +336,7 @@ export default class EventService {
   ): Promise<SCPaginatedResponse<SCEventType>> {
     return EventApiClient.getUserSubscribedEvents(id, params, config);
   }
-  static async searchEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+  static async searchEvents(params?: EventSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
     return EventApiClient.searchEvents(params, config);
   }
   static async getSpecificEventInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCEventType> {
