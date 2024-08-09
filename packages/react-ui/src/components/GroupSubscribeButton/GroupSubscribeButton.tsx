@@ -8,7 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCGroupSubscribeButton';
@@ -130,7 +130,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
    */
   function notifyChanges(group: SCGroupType, user: SCUserType) {
     if (group && user) {
-      PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.ADD_MEMBER}`, {group, user});
+      PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`, {group, user});
     }
   }
 

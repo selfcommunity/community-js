@@ -116,7 +116,8 @@ import {
   type SCGcmDeviceType,
   type SCSuggestionType,
   type SCContributionStatus,
-  type SCGroupType
+  type SCGroupType,
+  type SCEventType
 } from './types';
 
 /**
@@ -152,7 +153,11 @@ import {
   SCMetadataTypeFieldType,
   SCGroupPrivacyType,
   SCGroupSubscriptionStatusType,
-  SCPrivateMessageType
+  SCPrivateMessageType,
+  SCEventPrivacyType,
+  SCEventRecurrenceType,
+  SCEventLocationType,
+  SCEventDateFilterType
 } from './types';
 
 /**
@@ -188,7 +193,11 @@ export {
   SCMetadataTypeFieldType,
   SCGroupPrivacyType,
   SCGroupSubscriptionStatusType,
-  SCPrivateMessageType
+  SCPrivateMessageType,
+  SCEventPrivacyType,
+  SCEventRecurrenceType,
+  SCEventLocationType,
+  SCEventDateFilterType
 };
 export {
   type SCBannerType,
@@ -305,5 +314,6 @@ export {
   type SCApnsDeviceType,
   type SCGcmDeviceType,
   type SCSuggestionType,
-  type SCGroupType
+  type SCGroupType,
+  type SCEventType
 };

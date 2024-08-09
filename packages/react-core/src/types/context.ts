@@ -47,6 +47,11 @@ export interface SCSettingsType {
   notifications?: SCNotificationsType;
 
   /**
+   * Integrations conf
+   */
+  integrations?: SCIntegrationsType;
+
+  /**
    * Callback to handle anonymous action
    * Ex. an anonymous user attempt to post a comment
    */
@@ -744,10 +749,14 @@ export interface SCIntegrationsType {
    * OpenAI
    */
   openai?: SCIntegrationsOpenAIType;
+  /**
+   * Geocoding
+   */
+  geocoding?: SCGeocodingType;
 }
 
 /**
- * Interface SCNotificationsWebSocketType
+ * Interface SCIntegrationsOpenAIType
  */
 export interface SCIntegrationsOpenAIType {
   /**
@@ -755,4 +764,15 @@ export interface SCIntegrationsOpenAIType {
    * Default: null
    */
   secretKey: string | null;
+}
+
+/**
+ * Interface SCGeocodingType
+ */
+export interface SCGeocodingType {
+  /**
+   * Set secretKey geocoding service
+   * Default: null
+   */
+  apiKey: string | null;
 }

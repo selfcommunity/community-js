@@ -15,7 +15,7 @@ import GroupMembersButton, {GroupMembersButtonProps} from '../GroupMembersButton
 import EditGroupButton from '../EditGroupButton';
 import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
 import GroupInviteButton from '../GroupInviteButton';
-import {SCEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
+import {SCGroupEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
 
 const classes = {
@@ -197,9 +197,9 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
     (msg: string, data: SCGroupMembersEventType) => {
       if (data && data?.group?.id === scGroup?.id) {
         let _group = {...scGroup};
-        if (msg === `${SCTopicType.GROUP}.${SCEventType.ADD_MEMBER}`) {
+        if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`) {
           _group.subscribers_counter = _group.subscribers_counter + 1;
-        } else if (msg === `${SCTopicType.GROUP}.${SCEventType.REMOVE_MEMBER}`) {
+        } else if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.REMOVE_MEMBER}`) {
           _group.subscribers_counter = Math.max(_group.subscribers_counter - 1, 0);
         }
         setSCGroup(_group);
@@ -213,7 +213,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    */
   useEffect(() => {
     if (scGroup) {
-      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCEventType.MEMBERS}`, onChangeGroupMembersHandler);
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCGroupEventType.MEMBERS}`, onChangeGroupMembersHandler);
     }
     return () => {
       updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);

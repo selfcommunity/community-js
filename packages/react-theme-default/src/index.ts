@@ -137,6 +137,12 @@ import SCGroupAutocomplete from './components/SCGroupAutocomplete';
 import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
 import SCGroupInvitedWidget from './components/SCGroupInvitedWidget';
 import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWidget';
+import SCEventForm from './components/SCEventForm';
+import SCCreateEventButton from './components/SCCreateEventButton';
+import SCEventLocationWidget from './components/SCEventLocationWidget';
+import SCEvent from './components/SCEvent';
+import SCEvents from './components/SCEvents';
+import SCEventInviteButton from './components/SCEventInviteButton';
 /**
  * Style fragments - Imports - End
  */
@@ -340,7 +346,13 @@ const theme = {
     SCGroupAutocomplete,
     SCGroupSettingsIconButton,
     SCGroupInvitedWidget,
-    SCUserSubscribedGroupsWidget
+    SCUserSubscribedGroupsWidget,
+    SCEventForm,
+    SCCreateEventButton,
+    SCEventLocationWidget,
+    SCEvent,
+    SCEvents,
+    SCEventInviteButton
   },
   selfcommunity: {
     user: {

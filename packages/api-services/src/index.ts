@@ -50,6 +50,7 @@ import UserService, {UserApiClient, UserApiClientInterface} from './services/use
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
+import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
 
 /**
  * Types
@@ -110,7 +111,10 @@ import {
   InsightCommonParams,
   ReactionParams,
   GroupCreateParams,
-  GroupFeedParams
+  GroupFeedParams,
+  EventCreateParams,
+  EventFeedParams,
+  EventSearchParams
 } from './types';
 
 /**
@@ -277,5 +281,11 @@ export {
   GroupFeedParams,
   GroupService,
   GroupApiClient,
-  GroupApiClientInterface
+  GroupApiClientInterface,
+  EventCreateParams,
+  EventFeedParams,
+  EventSearchParams,
+  EventService,
+  EventApiClient,
+  EventApiClientInterface
 };

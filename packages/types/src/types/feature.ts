@@ -41,7 +41,8 @@ export enum SCFeatureName {
   SYSTEM_PAGES = 'system_pages',
   REACTION = 'reaction',
   PRIVATE_MESSAGING = 'private_messaging',
-  GROUPING = 'grouping'
+  GROUPING = 'grouping',
+  EVENT = 'event'
 }
 
 /**

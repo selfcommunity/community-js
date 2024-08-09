@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?w9x8zp');
-  src:  url('./community/icons.eot?w9x8zp#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?w9x8zp') format('woff2'),
-  url('./community/icons.ttf?w9x8zp') format('truetype'),
-  url('./community/icons.woff?w9x8zp') format('woff'),
-  url('./community/icons.svg?w9x8zp#community-icons') format('svg');
+  src:  url('./community/icons.eot?ajz0qm');
+  src:  url('./community/icons.eot?ajz0qm#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?ajz0qm') format('woff2'),
+  url('./community/icons.ttf?ajz0qm') format('truetype'),
+  url('./community/icons.woff?ajz0qm') format('woff'),
+  url('./community/icons.svg?ajz0qm#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-frequency:before {
+  content: "\e969";
+}
+.icon-calendar_off:before {
+  content: "\e967";
+}
 .icon-twitter:before {
   content: "\e959";
 }

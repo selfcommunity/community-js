@@ -37,6 +37,10 @@ export const GROUP_MEMBERS_ROUTE_NAME = 'group_members';
 export const GROUP_MESSAGES_ROUTE_NAME = 'group_messages';
 export const GROUPS_ROUTE_NAME = 'groups';
 export const GROUPS_SUBSCRIBED_ROUTE_NAME = 'groups_subscribed';
+export const EVENT_ROUTE_NAME = 'event';
+export const EVENTS_ROUTE_NAME = 'events';
+export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
+export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
 
 /**
  * Default Routes
@@ -76,4 +80,8 @@ export const defaultRoutes: {[k: string]: string} = {
   [GROUP_MESSAGES_ROUTE_NAME]: '/group/:id/:slug/messages/',
   [GROUPS_ROUTE_NAME]: '/groups/',
   [GROUPS_SUBSCRIBED_ROUTE_NAME]: '/groups/subscribed/',
+  [EVENTS_ROUTE_NAME]: '/events/',
+  [EVENT_ROUTE_NAME]: '/event/:id/:slug/',
+  [EVENTS_SUBSCRIBED_ROUTE_NAME]: '/events/subscribed/',
+  [EVENTS_HIGHLIGHT_ROUTE_NAME]: '/events/highlight/',
 };

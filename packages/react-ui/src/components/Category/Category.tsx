@@ -37,7 +37,7 @@ const Root = styled(BaseItemButton, {
 
 export interface CategoryProps extends WidgetProps {
   /**
-   * Category Id
+   * Category id
    * @default null
    */
   categoryId?: number;
@@ -125,7 +125,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
+  const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
   // MEMO
   const _ButtonBaseProps = useMemo(

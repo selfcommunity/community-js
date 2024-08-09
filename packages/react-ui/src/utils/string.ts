@@ -4,3 +4,11 @@ export const formatCroppedName = (name, maxLength) => {
   }
   return name.substring(0, maxLength) + '...';
 };
+
+export const formatEventLocationGeolocation = (geolocation: string, isTitle?: boolean) => {
+  const parts = geolocation.split(',');
+  if (isTitle) {
+    return parts[0].trim();
+  }
+  return parts.slice(1).join(',').trim();
+};
