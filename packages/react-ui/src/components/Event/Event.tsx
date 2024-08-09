@@ -1,12 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Button, ButtonBaseProps, Typography} from '@mui/material';
+import {Avatar, Button, Typography} from '@mui/material';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import BaseItemButton from '../../shared/BaseItemButton';
+import BaseItem from '../../shared/BaseItem';
 import {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import EventSkeleton from './Skeleton';
@@ -19,7 +19,7 @@ const classes = {
   actions: `${PREFIX}-actions`
 };
 
-const Root = styled(BaseItemButton, {
+const Root = styled(BaseItem, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -36,11 +36,6 @@ export interface EventProps extends WidgetProps {
    * @default null
    */
   eventId?: number;
-  /**
-   * Props to spread to the button
-   * @default {}
-   */
-  buttonProps?: ButtonBaseProps;
   /**
    * Any other properties
    */
@@ -85,7 +80,7 @@ export default function Event(inProps: EventProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {eventId = null, event = null, className = null, elevation, ...rest} = props;
+  const {eventId = null, event = null, className = null, elevation = 0, ...rest} = props;
 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
@@ -111,7 +106,6 @@ export default function Event(inProps: EventProps): JSX.Element {
       disableTypography
       {...rest}
       className={classNames(classes.root, className)}
-      ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}}
       image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.avatar} />}
       primary={
         <Typography component="div" className={classes.primary}>

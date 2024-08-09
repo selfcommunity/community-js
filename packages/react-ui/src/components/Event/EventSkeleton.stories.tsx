@@ -7,14 +7,11 @@ export default {
 } as Meta<typeof EventSkeleton>;
 
 const template = (args) => (
-  <div style={{width: 400}}>
+  <div style={{width: '50%'}}>
     <EventSkeleton {...args} />
   </div>
 );
 
 export const Base: StoryObj<EventSkeleton> = {
-  args: {
-    contained: true
-  },
   render: template
 };
