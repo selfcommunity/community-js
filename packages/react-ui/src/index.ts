@@ -176,6 +176,7 @@ import CreateEventButton, {CreateEventButtonProps} from './components/CreateEven
 import EventLocationWidget, {EventLocationWidgetProps, EventLocationWidgetSkeleton} from './components/EventLocationWidget';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from './components/Event';
 import Events, {EventsProps, EventsSkeleton, EventsSkeletonProps} from './components/Events';
+import EventInviteButton, {EventInviteButtonProps} from './components/EventInviteButton';
 
 /**
  * Constants
@@ -482,6 +483,8 @@ export {
   EventsSkeleton,
   EventSkeletonProps,
   EventsSkeletonProps,
+  EventInviteButton,
+  EventInviteButtonProps,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,
