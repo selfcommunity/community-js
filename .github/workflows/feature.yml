@@ -53,7 +53,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/types dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-          echo "TYPES_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+          echo "TYPES_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
           echo "TYPES_VERSION=${{ steps.types.outputs.current-version }}" >> $GITHUB_ENV
         fi
@@ -67,7 +67,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/utils dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-          echo "UTILS_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+          echo "UTILS_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
           echo "UTILS_VERSION=${{ steps.utils.outputs.current-version }}" >> $GITHUB_ENV
         fi
@@ -81,7 +81,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/api-services dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-          echo "API_SERVICES_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+          echo "API_SERVICES_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
           echo "API_SERVICES_VERSION=${{ steps.api-services.outputs.current-version }}" >> $GITHUB_ENV
         fi
@@ -95,7 +95,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-i18n dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-            echo "REACT_I18N_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+            echo "REACT_I18N_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
             echo "REACT_I18N_VERSION=${{ steps.react-i18n.outputs.current-version }}" >> $GITHUB_ENV
         fi
@@ -109,7 +109,7 @@ jobs:
       run: |
           CANARY_VERSION=$(npm view @selfcommunity/react-core dist-tags.$BRANCH_NAME)
           if [ -n "$CANARY_VERSION" ]; then
-              echo "REACT_CORE_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+              echo "REACT_CORE_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
           else
               echo "REACT_CORE_VERSION=${{ steps.react-core.outputs.current-version }}" >> $GITHUB_ENV
           fi
@@ -123,7 +123,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-ui dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-          echo "REACT_UI_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+          echo "REACT_UI_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
           echo "REACT_UI_VERSION=${{ steps.react-ui.outputs.current-version }}" >> $GITHUB_ENV
         fi
@@ -137,7 +137,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-templates dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-          echo "REACT_TEMPLATES_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+          echo "REACT_TEMPLATES_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
           echo "REACT_TEMPLATES_VERSION=${{ steps.react-templates.outputs.current-version }}" >> $GITHUB_ENV
         fi
@@ -151,7 +151,7 @@ jobs:
       run: |
         CANARY_VERSION=$(npm view @selfcommunity/react-theme-default dist-tags.$BRANCH_NAME)
         if [ -n "$CANARY_VERSION" ]; then
-          echo "REACT_THEME_DEFAULT_VERSION=${$CANARY_VERSION}" >> $GITHUB_ENV
+          echo "REACT_THEME_DEFAULT_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
         else
           echo "REACT_THEME_DEFAULT_VERSION=${{ steps.react-theme-default.outputs.current-version }}" >> $GITHUB_ENV
         fi
