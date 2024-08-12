@@ -174,7 +174,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     startTime: null,
     endDate: null,
     endTime: null,
-    location: '',
+    location: SCEventLocationType.PERSON,
     geolocation: '',
     lat: null,
     lng: null,
@@ -195,6 +195,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const scPreferences: SCPreferencesContextType = useSCPreferences();
   const privateEnabled = useMemo(
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_PRIVATE_ENABLED].value,
+    [scPreferences.preferences]
+  );
+  const visibilityEnabled = useMemo(
+    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_VISIBILITY_ENABLED].value,
     [scPreferences.preferences]
   );
 
@@ -260,6 +264,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     if (privateEnabled) {
       formData.append('privacy', field.isPublic ? SCEventPrivacyType.PUBLIC : SCEventPrivacyType.PRIVATE);
     }
+    if (visibilityEnabled) {
+      formData.append('visible', true);
+    }
     formData.append('description', field.description);
 
     EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -269,7 +276,15 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         setField((prev: any) => ({...prev, ['isSubmitting']: false}));
       })
       .catch((e) => {
-        setError({...error, ...formatHttpErrorCode(e)});
+        const _error = formatHttpErrorCode(e);
+        if (Object.values(_error)[0].error === 'unique') {
+          setError({
+            ...error,
+            ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
+          });
+        } else {
+          setError({...error, ..._error});
+        }
         setField((prev: any) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
       });
@@ -309,7 +324,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             !field.name ||
             (!field.startDate && !field.startTime) ||
             (field.location === SCEventLocationType.ONLINE && !field.link) ||
-            ((field.recurring !== SCEventRecurrenceType.NEVER) && (!field.endDate && !field.endTime)) ||
+            (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
+            (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
             Object.keys(error).length !== 0 ||
             field.name.length > EVENT_TITLE_MAX_LENGTH ||
             field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
@@ -337,10 +353,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             InputProps={{
               endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
             }}
-            error={Boolean(field?.name?.length > EVENT_TITLE_MAX_LENGTH)}
+            error={Boolean(field?.name?.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error[`nameError`])}
             helperText={
               field?.name?.length > EVENT_TITLE_MAX_LENGTH ? (
                 <FormattedMessage id="ui.eventForm.name.error.maxLength" defaultMessage="ui.eventForm.name.error.maxLength" />
+              ) : error[`nameError`] ? (
+                error[`nameError`]
               ) : null
             }
           />
@@ -380,6 +398,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               />
               <MobileTimePicker
                 className={classes.picker}
+                disablePast
                 label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
                 value={field.startTime}
                 slots={{
@@ -478,6 +497,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 />
                 <MobileTimePicker
                   className={classes.picker}
+                  disablePast
                   label={
                     field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />
                   }
