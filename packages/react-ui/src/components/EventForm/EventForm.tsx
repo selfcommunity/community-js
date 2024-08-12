@@ -277,6 +277,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+        // @ts-ignore
         if (Object.values(_error)[0].error === 'unique') {
           setError({
             ...error,
@@ -525,7 +527,11 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               </LocalizationProvider>
             </Box>
           )}
-          <Button variant="text" color="secondary" onClick={() => setField((prev: any) => ({...prev, ['showEndDateTime']: !field.showEndDateTime}))}>
+          <Button
+            variant="text"
+            color="secondary"
+            onClick={() => setField((prev: any) => ({...prev, ['showEndDateTime']: !field.showEndDateTime}))}
+            disabled={field.showEndDateTime && field.recurring !== SCEventRecurrenceType.NEVER}>
             <FormattedMessage
               id="ui.eventForm.dateTime.placeholder"
               defaultMessage="ui.eventForm.dateTime.placeholder"
