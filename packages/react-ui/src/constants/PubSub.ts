@@ -1,4 +1,4 @@
-import {SCUserType, SCGroupType} from '@selfcommunity/types';
+import {SCUserType, SCGroupType, SCEventType} from '@selfcommunity/types';
 
 /**
  * Define topics for pubsub
@@ -22,5 +22,10 @@ export enum SCGroupEventType {
 
 export interface SCGroupMembersEventType {
   group: SCGroupType;
+  user?: SCUserType;
+}
+
+export interface SCEventMembersEventType {
+  event: SCEventType;
   user?: SCUserType;
 }

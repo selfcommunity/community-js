@@ -7,6 +7,18 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import {LoadingButton} from '@mui/lab';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {EventService} from '@selfcommunity/api-services';
+import {SCEventType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
+import {defineMessages, useIntl} from 'react-intl';
+
+const messages = defineMessages({
+  errorLoadImage: {
+    id: 'ui.changeGroupCover.button.change.alertErrorImage',
+    defaultMessage: 'ui.changeGroupCover.button.change.alertErrorImage'
+  }
+});
 
 const classes = {
   root: `${PREFIX}-upload-event-cover-root`
@@ -19,6 +31,11 @@ const Root = styled(LoadingButton, {
 
 export interface UploadEventCoverProps {
   /**
+   * Id of the event. It is optional only for event creation modal.
+   * @default null
+   */
+  eventId?: number;
+  /**
    * On change function.
    * @default null
    */
@@ -28,6 +45,11 @@ export interface UploadEventCoverProps {
    * @default null
    */
   className?: string;
+  /**
+   * Prop to handle cover loading in the create event modal.
+   * @default false
+   */
+  isCreationMode?: boolean;
   /**
    * Any other properties
    */
@@ -63,7 +85,7 @@ export default function UploadEventCover(inProps: UploadEventCoverProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {onChange, className = false, ...rest} = props;
+  const {eventId, onChange, className = false, isCreationMode = false, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -72,6 +94,9 @@ export default function UploadEventCover(inProps: UploadEventCoverProps): JSX.El
   let fileInput = useRef(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<string | null>(null);
+
+  // INTL
+  const intl = useIntl();
 
   // Anonymous
   if (!scUserContext.user) {
@@ -89,12 +114,7 @@ export default function UploadEventCover(inProps: UploadEventCoverProps): JSX.El
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          onChange && onChange(fileInput);
-          // if (img.width < 1920) {
-          //   setAlert(intl.formatMessage(messages.errorImageSize));
-          // } else {
-          //   isCreationMode ? onChange && onChange(fileInput) : handleSave();
-          // }
+          isCreationMode ? onChange && onChange(fileInput) : handleSave();
         };
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -105,6 +125,27 @@ export default function UploadEventCover(inProps: UploadEventCoverProps): JSX.El
       reader.readAsDataURL(fileInput);
     }
   };
+
+  /**
+   * Handles cover saving after upload action
+   */
+  function handleSave() {
+    setLoading(true);
+    const formData = new FormData();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    formData.append('image_original', fileInput);
+    EventService.changeEventAvatarOrCover(eventId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      .then((data: SCEventType) => {
+        onChange && onChange(data.image_medium);
+        setLoading(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        setLoading(false);
+        setAlert(intl.formatMessage(messages.errorLoadImage));
+      });
+  }
 
   /**
    * If there is an error

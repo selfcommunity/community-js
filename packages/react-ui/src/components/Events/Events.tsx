@@ -123,7 +123,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   });
 
   const {
-    endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
+    endpointQueryParams = {limit: 2, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     EventComponentProps = {},
     showFilters = false,
@@ -348,7 +348,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 ))}
                 {filteredEvents.length <= 3 && (
                   <Grid item xs={12} sm={8} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
-                    <EventSkeleton action={<CreateEventButton />} />
+                    <EventSkeleton
+                      action={
+                        <CreateEventButton variant="outlined" color="primary" size="small">
+                          <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
+                        </CreateEventButton>
+                      }
+                    />
                   </Grid>
                 )}
               </>

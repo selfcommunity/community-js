@@ -10,7 +10,7 @@ import UrlTextField from '../../shared/UrlTextField';
 import axios from 'axios';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {SCEventLocationType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import {useLoadScript} from '@react-google-maps/api';
 
 const messages = defineMessages({
@@ -33,6 +33,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface EventAddressProps {
+  event?: SCEventType;
   forwardGeolocationData: (data: {location: SCEventLocationType; geolocation?: string; lat?: number; lng?: number; link?: string}) => void;
   className?: string;
 }
@@ -46,11 +47,11 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // INTL
   const intl = useIntl();
   // PROPS
-  const {className, forwardGeolocationData} = props;
+  const {className, forwardGeolocationData, event} = props;
 
   // STATE
-  const [location, setLocation] = useState<SCEventLocationType>(SCEventLocationType.PERSON);
-  const [geolocation, setGeoLocation] = useState<any>(null);
+  const [location, setLocation] = useState<SCEventLocationType>(event ? event.location : SCEventLocationType.PERSON);
+  const [geolocation, setGeoLocation] = useState<any>(event ? event.geolocation : null);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState([]);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
@@ -164,7 +165,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             inputValue={inputValue}
             onInputChange={handleLocationChange}
             options={suggestions}
-            getOptionLabel={(option) => option.description}
+            getOptionLabel={(option) => option.description || geolocation}
             noOptionsText={<FormattedMessage id="ui.eventForm.address.live.noResults" defaultMessage="ui.eventForm.address.live.noResults" />}
             renderInput={(params) => (
               <TextField
