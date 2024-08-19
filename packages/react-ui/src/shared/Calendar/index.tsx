@@ -1,4 +1,5 @@
-import { Box, Stack, styled, Typography } from '@mui/material';
+import React from 'react';
+import {Box, Stack, styled, Typography} from '@mui/material';
 
 const PREFIX = 'SCCalendar';
 
