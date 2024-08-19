@@ -13,6 +13,17 @@ export enum SCEventPrivacyType {
 }
 
 /**
+ * SCGroupSubscriptionStatusType enum
+ */
+export enum SCEventSubscriptionStatusType {
+  SUBSCRIBED = 'subscribed',
+  REQUESTED = 'requested',
+  INVITED = 'invited',
+  GOING = 'going',
+  NOT_GOING = 'not_going'
+}
+
+/**
  * SCEventLocationType enum
  */
 export enum SCEventLocationType {
@@ -91,7 +102,7 @@ export interface SCEventType {
   /**
    * The event subscription status.
    */
-  subscription_status: boolean;
+  subscription_status: SCEventSubscriptionStatusType;
 
   /**
    * The event image, bigger format.
@@ -132,6 +143,31 @@ export interface SCEventType {
    * The event end date.
    */
   end_date: string;
+
+  /**
+   * If the event is currently running
+   */
+  running: boolean;
+
+  /**
+   *  The start date and time when the event running period began.
+   */
+  running_start_date: string;
+
+  /**
+   * The expected or actual end date and time for the event running period.
+   */
+  running_end_date: string;
+
+  /**
+   *  The start date  when the next event running period is scheduled to begin (for recurrent events).
+   */
+  next_start_date: string;
+
+  /**
+   * The end date for the next event running period (for recurrent events).
+   */
+  next_end_date: string;
 
   /**
    * The event recurrence

@@ -155,6 +155,7 @@ import {
   SCGroupSubscriptionStatusType,
   SCPrivateMessageType,
   SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
   SCEventDateFilterType
@@ -195,6 +196,7 @@ export {
   SCGroupSubscriptionStatusType,
   SCPrivateMessageType,
   SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
   SCEventDateFilterType

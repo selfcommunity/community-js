@@ -1,4 +1,4 @@
-const prefetchedEvents = [
+export const prefetchedEvents = [
   {
     id: 105,
     name: 'Evento di prova',

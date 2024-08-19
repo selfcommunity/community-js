@@ -20,12 +20,6 @@ export enum SCGroupEventType {
   REMOVE_MEMBER = 'members.remove_member'
 }
 
-/**
- * Group event structure
- */
-export interface SCGroupChangeEventType {
-  group: SCGroupType;
-}
 export interface SCGroupMembersEventType {
   group: SCGroupType;
   user?: SCUserType;
