@@ -35,7 +35,7 @@ jobs:
         echo "BRANCH_NAME=${CLEANED_BRANCH_NAME}" >> $GITHUB_ENV
     - name: Publish canary version
       run: |
-        npx lerna publish --canary --preid $BRANCH_NAME --dist-tag $BRANCH_NAME --yes --exact
+        npx lerna publish --canary --preid $BRANCH_NAME --dist-tag $BRANCH_NAME --yes --exact --force-publish
     - name: Open pull-request (feature -> dev)
       uses: mirk8xr/pull-request@v2.6.2
       with:
