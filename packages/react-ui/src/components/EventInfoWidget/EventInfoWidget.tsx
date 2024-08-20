@@ -7,6 +7,7 @@ import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Widget, { WidgetProps } from '../Widget';
 import { PREFIX } from './constants';
+import Skeleton from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -63,9 +64,14 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);
   const [showButton, setShowButton] = useState(!summaryExpanded);
+  const [loading, setLoading] = useState(true);
 
   // HOOKS
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (!scEvent) {
@@ -86,6 +92,10 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     setExpanded(!expanded);
   }, [expanded]);
 
+  if (!scEvent && loading) {
+    return <Skeleton />;
+  }
+
   if (!scEvent) {
     return <HiddenPlaceholder />;
   }
@@ -93,7 +103,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   const description = expanded ? scEvent.description : getTruncatedText(scEvent.description, 220);
 
   return (
-    <Root className={classes.root} {...rest} expanded={expanded}>
+    <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
         <Stack className={classes.titleWrapper}>
           <Icon fontSize="small">info</Icon>
@@ -115,7 +125,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
           </Typography>
         </Box>
 
-        <EventInfoDetails event={scEvent} />
+        <EventInfoDetails event={scEvent} hasCreatedInfo={true} />
       </CardContent>
     </Root>
   );

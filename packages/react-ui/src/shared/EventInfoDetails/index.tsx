@@ -3,7 +3,6 @@ import { Link } from '@selfcommunity/react-core';
 import { SCEventType } from '@selfcommunity/types';
 import { format } from 'date-fns';
 import { enUS, it } from 'date-fns/locale';
-import { Fragment } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 const LOCALE_MAP = {
@@ -46,7 +45,6 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
 
   const privacy = event.privacy === 'public' ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private';
   const location = event.location === 'virtual' ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson';
-  const LocationComponent = event.location === 'virtual' ? Link : Fragment;
 
   const formatDateEventDate = (date: string) => {
     return format(new Date(date), "EEEE d MMMM' - Ore 'H:mm", {
@@ -87,11 +85,17 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
 
       <Stack className={classes.iconTextWrapper}>
         <Icon fontSize="small">{event.location === 'virtual' ? 'play_circle_outline' : 'add_location_alt'}</Icon>
-        <LocationComponent to={event.link} target="_blank" className={classes.link}>
+        {event.location === 'virtual' ? (
+          <Link to={event.link} target="_blank" className={classes.link}>
+            <Typography variant="body1" className={classes.url}>
+              {event.location === 'virtual' ? event.link : event.geolocation}
+            </Typography>
+          </Link>
+        ) : (
           <Typography variant="body1" className={classes.url}>
             {event.location === 'virtual' ? event.link : event.geolocation}
           </Typography>
-        </LocationComponent>
+        )}
       </Stack>
 
       {hasCreatedInfo && (

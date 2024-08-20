@@ -1,8 +1,7 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}) => ({
+    root: ({ theme }) => ({
       '& .SCEventInfoWidget-content': {
-        position: 'relative',
         padding: `${theme.spacing(2)} ${theme.spacing(2)} 13px !important`,
 
         '& .SCEventInfoWidget-title-wrapper': {
@@ -26,6 +25,11 @@ const Component = {
             }
           }
         }
+      }
+    }),
+    skeletonRoot: ({ theme }) => ({
+      '& .SCEventInfoWidget-skeleton-content': {
+        padding: `${theme.spacing(2)} ${theme.spacing(2)} 13px !important`
       }
     })
   }

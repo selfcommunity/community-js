@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-		root: ({theme}) => ({
+    root: ({ theme }) => ({
       gap: theme.spacing(2),
 
       '& .SCEventInfoDetails-icon-text-wrapper': {

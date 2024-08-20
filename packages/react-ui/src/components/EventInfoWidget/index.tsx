@@ -1,5 +1,5 @@
 import EventInfoWidget, { EventInfoWidgetProps } from './EventInfoWidget';
-// import EventInfoWidgetSkeleton from './Skeleton';
+import EventInfoWidgetSkeleton from './Skeleton';
 export default EventInfoWidget;
-export { type EventInfoWidgetProps };
+export { EventInfoWidgetSkeleton, type EventInfoWidgetProps };
 
