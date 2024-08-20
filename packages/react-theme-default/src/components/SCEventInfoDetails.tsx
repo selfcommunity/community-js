@@ -1,8 +1,6 @@
-import { Theme as MuiTheme } from '@mui/material/styles/createTheme';
-
 const Component = {
   styleOverrides: {
-    root: ({ theme }: MuiTheme) => ({
+		root: ({theme}) => ({
       gap: theme.spacing(2),
 
       '& .SCEventInfoDetails-icon-text-wrapper': {

@@ -1,8 +1,6 @@
-import { Theme as MuiTheme } from '@mui/material/styles/createTheme';
-
 const Component = {
   styleOverrides: {
-    root: ({ theme }: MuiTheme) => ({
+    root: ({theme}) => ({
       '& .SCEventInfoWidget-content': {
         position: 'relative',
         padding: `${theme.spacing(2)} ${theme.spacing(2)} 13px !important`,
