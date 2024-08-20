@@ -798,6 +798,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                         color="secondary"
                         size="small"
                         key={obj.event.id}
+                        label={obj.event.name}
                         icon={<Icon>CalendarIcon</Icon>}
                         component={Link}
                         to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
