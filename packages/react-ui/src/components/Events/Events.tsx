@@ -1,20 +1,20 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {Box, Button, Chip, FormControl, Grid, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCEventDateFilterType, SCEventType} from '@selfcommunity/types';
-import Event, {EventProps, EventSkeleton} from '../Event';
-import {FormattedMessage} from 'react-intl';
-import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {PREFIX} from './constants';
-import Skeleton from '../Events/Skeleton';
+import classNames from 'classnames';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import CreateEventButton from '../CreateEventButton';
+import Event, {EventProps, EventSkeleton} from '../Event';
+import Skeleton from '../Events/Skeleton';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -123,12 +123,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
   });
 
   const {
-    endpointQueryParams = {limit: 2, offset: DEFAULT_PAGINATION_OFFSET},
+    endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     EventComponentProps = {},
     showFilters = false,
     filters,
-    general = true,
+    general = false,
     ...rest
   } = props;
 

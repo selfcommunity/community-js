@@ -1,8 +1,6 @@
-import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import UserSkeleton from './Skeleton';
-import {Avatar, Badge, Button, ButtonBaseProps, Chip} from '@mui/material';
-import {SCUserType} from '@selfcommunity/types';
+import { Avatar, Badge, Button, ButtonBaseProps, Chip } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
 import {
   Link,
   SCPreferences,
@@ -13,17 +11,19 @@ import {
   useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
+import { SCUserType } from '@selfcommunity/types';
 import classNames from 'classnames';
-import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
-import ConnectionUserButton from '../ConnectionUserButton';
-import {useThemeProps} from '@mui/system';
+import React, { ReactNode, useMemo, useState } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import BaseItemButton from '../../shared/BaseItemButton';
-import {WidgetProps} from '../Widget';
-import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
-import {PREFIX} from './constants';
+import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import ConnectionUserButton from '../ConnectionUserButton';
+import { FollowUserButtonProps } from '../FollowUserButton/FollowUserButton';
+import { FriendshipButtonProps } from '../FriendshipUserButton/FriendshipUserButton';
+import { WidgetProps } from '../Widget';
+import { PREFIX } from './constants';
+import UserSkeleton from './Skeleton';
 
 const messages = defineMessages({
   userFollowers: {
@@ -43,7 +43,7 @@ const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({}));
+})(({ theme }: any) => ({}));
 
 export interface UserProps extends WidgetProps {
   /**
@@ -90,6 +90,7 @@ export interface UserProps extends WidgetProps {
    * @default {}
    */
   buttonProps?: ButtonBaseProps | null;
+  secondary?: ReactNode | null;
   /**
    * Any other properties
    */
@@ -144,11 +145,12 @@ export default function User(inProps: UserProps): JSX.Element {
     actions = null,
     isGroupAdmin = false,
     buttonProps = null,
+    secondary = null,
     ...rest
   } = props;
 
   // STATE
-  const {scUser, setSCUser} = useSCFetchUser({id: userId, user});
+  const { scUser, setSCUser } = useSCFetchUser({ id: userId, user });
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -202,12 +204,12 @@ export default function User(inProps: UserProps): JSX.Element {
         ButtonBaseProps={
           buttonProps ??
           (scUser.deleted
-            ? {onClick: () => setOpenAlert(true)}
-            : {component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)})
+            ? { onClick: () => setOpenAlert(true) }
+            : { component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser) })
         }
         image={
           badgeContent ? (
-            <Badge overlap="circular" anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} badgeContent={badgeContent}>
+            <Badge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} badgeContent={badgeContent}>
               <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
             </Badge>
           ) : (
@@ -237,7 +239,9 @@ export default function User(inProps: UserProps): JSX.Element {
             scUser.username
           )
         }
-        secondary={showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description}
+        secondary={
+          secondary || (showFollowers ? `${intl.formatMessage(messages.userFollowers, { total: scUser.followers_counter })}` : scUser.description)
+        }
         actions={actions ?? renderAuthenticatedActions()}
       />
       {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}

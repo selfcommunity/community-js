@@ -87,6 +87,10 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
   // MEMO
   const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
   const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
+  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
+  const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
+  const postOnlyStaffEnabled = preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value;
+  const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   const isIOS = useMemo(() => iOS(), []);
 
   // RENDER
@@ -103,8 +107,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               icon={<Icon>home</Icon>}
             />,
-            (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value) &&
-            preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value ? (
+            (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
               <BottomNavigationAction
                 key="explore"
                 className={classes.action}
@@ -114,8 +117,9 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 icon={<Icon>explore</Icon>}
               />
             ) : null,
-            !preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value ||
-            (UserUtils.isStaff(scUserContext.user) && preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value) ? (
+            (!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+            ((groupsEnabled && !eventsEnabled) || (!groupsEnabled && eventsEnabled)) &&
+            !exploreStreamEnabled ? (
               <BottomNavigationAction
                 key="composer"
                 className={classNames(classes.composer, classes.action)}
@@ -133,7 +137,28 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 icon={<Icon>groups</Icon>}
               />
             ) : null,
-            scUserContext.user && !groupsEnabled ? (
+            (!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+            groupsEnabled &&
+            eventsEnabled &&
+            !exploreStreamEnabled ? (
+              <BottomNavigationAction
+                key="composer"
+                className={classNames(classes.composer, classes.action)}
+                component={ComposerIconButton}
+                disableRipple
+              />
+            ) : null,
+            eventsEnabled && scUserContext.user ? (
+              <BottomNavigationAction
+                key="events"
+                className={classes.action}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}
+                icon={<Icon>CalendarIcon</Icon>}
+              />
+            ) : null,
+            scUserContext.user && !groupsEnabled && !eventsEnabled ? (
               <BottomNavigationAction
                 key="notifications"
                 className={classes.action}

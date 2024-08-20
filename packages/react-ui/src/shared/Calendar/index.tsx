@@ -1,5 +1,4 @@
-import React from 'react';
-import {Box, Stack, styled, Typography} from '@mui/material';
+import { Box, Stack, styled, Typography } from '@mui/material';
 
 const PREFIX = 'SCCalendar';
 
@@ -9,7 +8,7 @@ const Root = styled(Stack, {
   overridesResolver: (_props, styles) => styles.root
 })();
 
-interface CalendarProps {
+export interface CalendarProps {
   day: number;
 }
 

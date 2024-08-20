@@ -1,21 +1,21 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography} from '@mui/material';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserContext, SCUserContextType, useSCFetchEvent} from '@selfcommunity/react-core';
-import {ButtonProps} from '@mui/material/Button/Button';
-import classNames from 'classnames';
-import BaseDialog from '../../shared/BaseDialog';
-import {LoadingButton} from '@mui/lab';
-import {EventService} from '@selfcommunity/api-services';
+import { LoadingButton } from '@mui/lab';
+import { Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
-import User from '../User';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import { ButtonProps } from '@mui/material/Button/Button';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { EventService } from '@selfcommunity/api-services';
+import { SCUserContext, SCUserContextType, useSCFetchEvent } from '@selfcommunity/react-core';
+import { SCEventType, SCUserType } from '@selfcommunity/types';
+import { Logger } from '@selfcommunity/utils';
+import classNames from 'classnames';
 import PubSub from 'pubsub-js';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
+import BaseDialog from '../../shared/BaseDialog';
+import User from '../User';
 
 const messages = defineMessages({
   placeholder: {
@@ -43,13 +43,13 @@ const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(({ theme }) => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(({ theme }) => ({}));
 
 export interface EventInviteButtonProps extends ButtonProps {
   /**
@@ -114,7 +114,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className, event, eventId, handleInvitations = null, ...rest} = props;
+  const { className, event, eventId, handleInvitations = null, ...rest } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -123,7 +123,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
   const [open, setOpen] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
-  const [suggested, setSuggested] = useState<any[]>([]);
+  const [suggested, setSuggested] = useState<SCUserType[]>([]);
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [invited, setInvited] = useState<any>([]);
@@ -160,7 +160,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
   }, [invited]);
 
   // HOOKS
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
 
   const isEventAdmin = useMemo(
     () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
@@ -235,7 +235,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
       handleInvitations(convertToInvitedUsersObject(invited));
       setOpen(false);
     } else {
-      const data = {users: ids};
+      const data = { users: ids };
       setIsSending(true);
       EventService.inviteOrAcceptEventRequest(scEvent.id, data)
         .then(() => {
@@ -292,7 +292,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
     setList((prev) => [...prev, option]);
   };
 
-  const filterOptions = (options, {inputValue}) => {
+  const filterOptions = (options, { inputValue }) => {
     return options.filter((option) => {
       const usernameMatch = option.username.toLowerCase().includes(inputValue.toLowerCase());
       const nameMatch = option.real_name.toLowerCase().includes(inputValue.toLowerCase());
@@ -323,7 +323,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
       </Root>
       {open && (
         <DialogRoot
-          DialogContentProps={{dividers: false}}
+          DialogContentProps={{ dividers: false }}
           open
           className={classes.dialogRoot}
           title={
@@ -397,7 +397,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
                   onDelete={() => {
                     handleDelete(option);
                   }}
-                  style={{marginRight: 8}}
+                  style={{ marginRight: 8 }}
                 />
               ))}
             </Box>
@@ -408,7 +408,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
                 </Typography>
               )}
               {list.slice(0, 5).map((user: SCUserType, index) => (
-                <User elevation={0} actions={<></>} user={user} userId={user.id} key={index} buttonProps={{onClick: () => handleUserInvite(user)}} />
+                <User elevation={0} actions={<></>} user={user} userId={user.id} key={index} buttonProps={{ onClick: () => handleUserInvite(user) }} />
               ))}
             </Box>
           </Box>
