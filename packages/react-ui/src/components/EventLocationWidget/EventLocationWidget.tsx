@@ -90,7 +90,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
   const scContext: SCContextType = useSCContext();
-  const {isLoaded} = useLoadScript({
+	const {isLoaded} = useLoadScript({
     googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
     libraries: ['maps']
   });
@@ -102,6 +102,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   /**
    * Loading event
    */
+	console.log(isLoaded, scEvent);
   if (!isLoaded || !scEvent) {
     return <EventLocationWidgetSkeleton />;
   }
