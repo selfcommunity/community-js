@@ -28,11 +28,8 @@ const Root = styled(Stack, {
 })();
 
 export interface EventInfoDetailsProps {
-  /**
-   * Event Object
-   * @default null
-   */
-  event?: SCEventType;
+  event: SCEventType;
+  hasCreatedInfo?: boolean;
 }
 
 export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
@@ -42,7 +39,7 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
     name: PREFIX
   });
 
-  const event = props.event;
+  const { event, hasCreatedInfo } = props;
 
   // HOOKS
   const intl = useIntl();
@@ -97,10 +94,12 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
         </LocationComponent>
       </Stack>
 
-      <Stack className={classes.creationWrapper}>
-        <Icon fontSize="small">create</Icon>
-        <Typography variant="body1">{formatDateCreateDate(event.created_at)}</Typography>
-      </Stack>
+      {hasCreatedInfo && (
+        <Stack className={classes.creationWrapper}>
+          <Icon fontSize="small">create</Icon>
+          <Typography variant="body1">{formatDateCreateDate(event.created_at)}</Typography>
+        </Stack>
+      )}
     </Root>
   );
 }

@@ -360,9 +360,9 @@ const theme = {
     SCEvents,
     SCEventInviteButton,
     SCEventHeader,
-    SCEventSubscribeButton,
     SCEventInfoWidget,
-    SCEventInfoDetails
+    SCEventInfoDetails,
+    SCEventSubscribeButton
   },
   selfcommunity: {
     user: {
