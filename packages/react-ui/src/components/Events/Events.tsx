@@ -77,7 +77,7 @@ export interface EventsProps {
   filters?: JSX.Element;
 
   /** If true, it means that the endpoint fetches all events available
-   * @default true
+   * @default false
    */
 
   general?: boolean;
