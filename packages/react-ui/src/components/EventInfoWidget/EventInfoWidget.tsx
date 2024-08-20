@@ -1,12 +1,13 @@
-import {Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
-import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventType} from '@selfcommunity/types';
-import {useCallback, useEffect, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import { Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
+import { useSCFetchEvent } from '@selfcommunity/react-core';
+import { SCEventType } from '@selfcommunity/types';
+import { useCallback, useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import Widget, {WidgetProps} from '../Widget';
-import {PREFIX} from './constants';
+import Widget, { WidgetProps } from '../Widget';
+import { PREFIX } from './constants';
+import Skeleton from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -35,10 +36,10 @@ export interface EventInfoWidgetProps extends WidgetProps {
    */
   eventId?: number;
 
-	/**
-	 * True if summary must be already expanded
-	 * @default false
-	 */
+  /**
+   * True if summary must be already expanded
+   * @default false
+   */
   summaryExpanded?: boolean;
 
   /**
@@ -62,14 +63,19 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     name: PREFIX
   });
 
-  const {event, eventId, summaryExpanded = false, ...rest} = props;
+  const { event, eventId, summaryExpanded = false, ...rest } = props;
 
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);
   const [showButton, setShowButton] = useState(!summaryExpanded);
+  const [loading, setLoading] = useState(true);
 
   // HOOKS
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (!scEvent) {
@@ -90,6 +96,10 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     setExpanded(!expanded);
   }, [expanded]);
 
+  if (!scEvent && loading) {
+    return <Skeleton />;
+  }
+
   if (!scEvent) {
     return <HiddenPlaceholder />;
   }
@@ -97,7 +107,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   const description = expanded ? scEvent.description : getTruncatedText(scEvent.description, 220);
 
   return (
-    <Root className={classes.root} {...rest} expanded={expanded}>
+    <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
         <Stack className={classes.titleWrapper}>
           <Icon fontSize="small">info</Icon>
@@ -119,7 +129,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
           </Typography>
         </Box>
 
-        <EventInfoDetails event={scEvent} />
+        <EventInfoDetails event={scEvent} hasCreatedInfo={true} />
       </CardContent>
     </Root>
   );
