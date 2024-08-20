@@ -1,9 +1,9 @@
-import { Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
-import { Link } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
-import { format } from 'date-fns';
-import { enUS, it } from 'date-fns/locale';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {Link} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
+import {format} from 'date-fns';
+import {enUS, it} from 'date-fns/locale';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 const LOCALE_MAP = {
   en: enUS,
@@ -38,13 +38,13 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
     name: PREFIX
   });
 
-  const { event, hasCreatedInfo } = props;
+  const {event, hasCreatedInfo} = props;
 
   // HOOKS
   const intl = useIntl();
 
-  const privacy = event.privacy === 'public' ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private';
-  const location = event.location === 'virtual' ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson';
+  const privacy = event.privacy === SCEventPrivacyType.PUBLIC ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private';
+  const location = event.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson';
 
   const formatDateEventDate = (date: string) => {
     return format(new Date(date), "EEEE d MMMM' - Ore 'H:mm", {
@@ -73,7 +73,7 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       </Stack>
 
       <Stack className={classes.iconTextWrapper}>
-        <Icon fontSize="small">{event.privacy === 'public' ? 'public' : 'private'}</Icon>
+        <Icon fontSize="small">{event.privacy === SCEventPrivacyType.PUBLIC ? 'public' : 'private'}</Icon>
         <Typography variant="body1">
           <FormattedMessage id={privacy} defaultMessage={privacy} />
         </Typography>
@@ -84,16 +84,16 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       </Stack>
 
       <Stack className={classes.iconTextWrapper}>
-        <Icon fontSize="small">{event.location === 'virtual' ? 'play_circle_outline' : 'add_location_alt'}</Icon>
-        {event.location === 'virtual' ? (
+        <Icon fontSize="small">{event.location === SCEventLocationType.ONLINE ? 'play_circle_outline' : 'add_location_alt'}</Icon>
+        {event.location === SCEventLocationType.ONLINE ? (
           <Link to={event.link} target="_blank" className={classes.link}>
             <Typography variant="body1" className={classes.url}>
-              {event.location === 'virtual' ? event.link : event.geolocation}
+              {event.link}
             </Typography>
           </Link>
         ) : (
           <Typography variant="body1" className={classes.url}>
-            {event.location === 'virtual' ? event.link : event.geolocation}
+            {event.geolocation}
           </Typography>
         )}
       </Stack>
