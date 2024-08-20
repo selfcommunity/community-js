@@ -16,7 +16,8 @@ export enum SCFeedTypologyType {
   HOME = 'home',
   EXPLORE = 'explore',
   CATEGORY = 'category',
-  GROUP = 'group'
+  GROUP = 'group',
+	EVENT = 'event',
 }
 
 /**

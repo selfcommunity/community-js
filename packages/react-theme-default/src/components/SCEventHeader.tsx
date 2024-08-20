@@ -5,11 +5,13 @@ const Component = {
     root: ({theme}: any) => ({
       '& .SCEventHeader-cover': {
         position: 'relative',
-        height: 190,
-        minHeight: 190,
-        borderRadius: 0,
+        minHeight: 150,
         background: 'linear-gradient(180deg, rgba(177,177,177,1) 0%, rgba(255,255,255,1) 90%)',
-        boxShadow: 'unset'
+        height: 230,
+        borderRadius: 0,
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.spacing(0, 0, 2.5, 2.5)
+        }
       },
       '& .SCEventHeader-time': {
         textTransform: 'uppercase',
