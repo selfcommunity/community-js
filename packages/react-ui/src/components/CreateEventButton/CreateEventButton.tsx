@@ -1,13 +1,12 @@
-import React, {useContext, useMemo} from 'react';
-import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Button, Icon} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {ButtonProps} from '@mui/material/Button/Button';
+import { Button, Icon } from '@mui/material';
+import { ButtonProps } from '@mui/material/Button/Button';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences } from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import EventForm, {EventFormProps} from '../EventForm';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import React, { useContext, useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
+import EventForm, { EventFormProps } from '../EventForm';
 
 const PREFIX = 'SCCreateEventButton';
 
@@ -64,7 +63,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className, EventFormProps = {}, children, ...rest} = props;
+  const { className, EventFormProps = {}, children, ...rest } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -94,7 +93,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
    * If there's no authUserId, component is hidden.
    */
   if ((!canCreateEvent && onlyStaffEnabled) || !authUserId) {
-    return <HiddenPlaceholder />;
+    return null;
   }
 
   /**

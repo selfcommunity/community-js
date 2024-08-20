@@ -1,9 +1,9 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferencesContextType} from '../../../types/context';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_CORE} from '../../../constants/Errors';
-import {useSCContext} from '../SCContextProvider';
+import { FeatureService, PreferenceService } from '@selfcommunity/api-services';
+import { Logger } from '@selfcommunity/utils';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { SCOPE_SC_CORE } from '../../../constants/Errors';
+import { SCContextType, SCPreferencesContextType } from '../../../types/context';
+import { useSCContext } from '../SCContextProvider';
 
 /**
  * Creates Preferences/Features Context
@@ -33,7 +33,7 @@ export const SCPreferencesContext = createContext<SCPreferencesContextType>({} a
  *  <SCPreferencesContext.Provider value={{preferences, features}}>{!loading && children}</SCPreferencesContext.Provider>
  *  ```
  */
-export default function SCPreferencesProvider({children = null}: {children: React.ReactNode}): JSX.Element {
+export default function SCPreferencesProvider({ children = null }: { children: React.ReactNode }): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const [preferences, setPreferences] = useState<Record<string, any>>(scContext.settings.preferences.preferences);
   const [features, setFeatures] = useState<string[]>(scContext.settings.preferences.features);
@@ -49,13 +49,14 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
   useEffect(() => {
     Promise.all([PreferenceService.getAllPreferences(), FeatureService.getAllFeatures()])
       .then(function ([preferences, features]) {
-        setPreferences(preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {}));
+        setPreferences(preferences['results'].reduce((obj, p) => ({ ...obj, [`${p.section}.${p.name}`]: p }), {}));
         setFeatures(features['results'].filter((f) => f.enabled).map((f) => f.name));
         setLoading(false);
       })
       .catch((_error) => {
         Logger.error(SCOPE_SC_CORE, _error);
         setError(_error);
+        // setLoading(false);
       });
   }, []);
 
@@ -63,7 +64,7 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
    * Nesting all necessary providers
    * All child components will use help contexts to works
    */
-  return <SCPreferencesContext.Provider value={{preferences, features}}>{!loading && children}</SCPreferencesContext.Provider>;
+  return <SCPreferencesContext.Provider value={{ preferences, features }}>{!loading && children}</SCPreferencesContext.Provider>;
 }
 
 /**

@@ -1,6 +1,5 @@
-import React from 'react';
-import {styled} from '@mui/material/styles';
-import {useThemeProps} from '@mui/system';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
 import classNames from 'classnames';
 
 const PREFIX = 'SCBullet';
@@ -17,7 +16,7 @@ const Root = styled('span', {
 
 export default function Bullet(inProps): JSX.Element {
   // PROPS
-  const {className, ...props}: any = useThemeProps({
+  const { className, ...props }: any = useThemeProps({
     props: inProps,
     name: PREFIX
   });
