@@ -2,6 +2,8 @@ import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   ContributionUtils,
+  EventInfoWidget,
+  EventLocationWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -9,8 +11,6 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
-  // EventInfoWidget,
-  // EventMembersWidget,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType
@@ -89,13 +89,13 @@ export interface EventFeedProps {
 
 // Widgets for feed
 const WIDGETS: SCFeedWidgetType[] = [
-  /* {
+  {
     type: 'widget',
     component: EventLocationWidget,
     componentProps: {},
-    column: 'left',
+    column: 'right',
     position: 0
-  }, */
+  }
 ];
 
 /**
@@ -183,8 +183,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
     scEvent.subscription_status !== SCEventSubscriptionStatusType.GOING &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.NOT_GOING
   ) {
-    // return <EventInfoWidget className={classes.root} event={scEvent} />;
-    return null;
+    return <EventInfoWidget className={classes.root} event={scEvent} />;
   }
 
   return (
@@ -212,15 +211,17 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
       }}
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={
-        scEvent &&
-        scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED && (
-          <InlineComposerWidget
-            onSuccess={handleComposerSuccess}
-            // defaultValue={{event: scEvent}}
-            label={<FormattedMessage id="templates.groupFeed.composer.label" defaultMessage="templates.groupFeed.composer.label" />}
-            feedType={SCFeedTypologyType.EVENT}
-          />
-        )
+        <>
+          <EventInfoWidget className={classes.root} event={scEvent} />
+          {scEvent && scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED && (
+            <InlineComposerWidget
+              onSuccess={handleComposerSuccess}
+              defaultValue={{event: scEvent}}
+              label={<FormattedMessage id="templates.eventFeed.composer.label" defaultMessage="templates.eventFeed.composer.label" />}
+              feedType={SCFeedTypologyType.EVENT}
+            />
+          )}
+        </>
       }
       CustomAdvProps={{position: SCCustomAdvPosition.POSITION_FEED, groupsId: [scEvent.id]}}
       enabledCustomAdvPositions={[

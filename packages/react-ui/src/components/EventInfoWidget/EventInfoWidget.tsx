@@ -1,12 +1,12 @@
-import { Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
-import { useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
-import { useCallback, useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {useSCFetchEvent} from '@selfcommunity/react-core';
+import {SCEventType} from '@selfcommunity/types';
+import {useCallback, useEffect, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -35,7 +35,11 @@ export interface EventInfoWidgetProps extends WidgetProps {
    */
   eventId?: number;
 
-  summaryExpanded: boolean;
+	/**
+	 * True if summary must be already expanded
+	 * @default false
+	 */
+  summaryExpanded?: boolean;
 
   /**
    * Other props
@@ -58,14 +62,14 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     name: PREFIX
   });
 
-  const { event, eventId, summaryExpanded, ...rest } = props;
+  const {event, eventId, summaryExpanded = false, ...rest} = props;
 
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);
   const [showButton, setShowButton] = useState(!summaryExpanded);
 
   // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   useEffect(() => {
     if (!scEvent) {

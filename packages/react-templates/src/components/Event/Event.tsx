@@ -1,9 +1,9 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid} from '@mui/material';
-import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType, EventLocationWidget} from '@selfcommunity/react-ui';
+import {Box} from '@mui/material';
+import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
 import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
+import {SCEventType} from '@selfcommunity/types';
 import EventSkeletonTemplate from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -117,22 +117,6 @@ export default function Event(inProps: EventProps): JSX.Element {
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <EventHeader eventId={scEvent.id} GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
-      <Grid container spacing={2} mt={2}>
-        {scEvent.location === SCEventLocationType.PERSON ? (
-          <>
-            <Grid item xs={12} md={7}>
-              {/* <EventInfoWidget scEvent={scEvent} /> */}
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <EventLocationWidget event={scEvent} />
-            </Grid>
-          </>
-        ) : (
-          <Grid item xs={12}>
-            {/* <EventInfoWidget scEvent={scEvent} /> */}
-          </Grid>
-        )}
-      </Grid>
       <EventFeed
         className={classes.feed}
         event={scEvent}

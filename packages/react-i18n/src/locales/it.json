@@ -1,10 +1,11 @@
 {
   "templates.feedObjectDetail.contributionNotFound": "Il contenuto non è stato trovato oppure non hai i permessi per vederlo.",
   "templates.feedObjsList.noMoreResults": "Non ci sono altri risultati",
-  "templates.groupFeed.composer.label": "Crea un contenuto nel gruppo…",
+  "templates.groupFeed.composer.label": "Crea un contenuto nel gruppo...",
   "templates.groupFeed.tab.home.label": "Home",
   "templates.groupFeed.tab.members.label": "Members",
   "templates.groupFeed.tab.messages.label": "Messages",
+  "templates.eventFeed.composer.label": "Crea un contenuto per questo evento...",
   "templates.loyaltyProgramDetail.button.more": "Scopri di più",
   "templates.loyaltyProgramDetail.button.request": "Richiedi Ora",
   "templates.loyaltyProgramDetail.community": "Partecipare alla Community ti premia!",
