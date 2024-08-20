@@ -143,6 +143,8 @@ import SCEventLocationWidget from './components/SCEventLocationWidget';
 import SCEvent from './components/SCEvent';
 import SCEvents from './components/SCEvents';
 import SCEventInviteButton from './components/SCEventInviteButton';
+import SCEventSubscribeButton from './components/SCEventSubscribeButton';
+import SCEventHeader from './components/SCEventHeader';
 /**
  * Style fragments - Imports - End
  */
@@ -352,7 +354,9 @@ const theme = {
     SCEventLocationWidget,
     SCEvent,
     SCEvents,
-    SCEventInviteButton
+    SCEventInviteButton,
+    SCEventHeader,
+    SCEventSubscribeButton
   },
   selfcommunity: {
     user: {

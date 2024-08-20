@@ -7,7 +7,7 @@ const Component = {
           width: 100,
           height: 60,
           '& img': {
-            borderRadius: 0
+            borderRadius: '5px'
           }
         }
       },
@@ -24,8 +24,15 @@ const Component = {
       }
     }),
     skeletonRoot: ({theme}: any) => ({
+      gap: '10%',
+      '& .SCBaseItem-content': {
+        flex: 0
+      },
       '& .SCEvent-skeleton-image': {
         position: 'relative',
+        '& .MuiSkeleton-root': {
+          borderRadius: '5px'
+        },
         '& .MuiIcon-root': {
           color: theme.palette.common.white,
           position: 'absolute',
@@ -33,6 +40,9 @@ const Component = {
           left: '50%',
           transform: 'translate(-50%, -50%)'
         }
+      },
+      '& .SCBaseItem-actions': {
+        maxWidth: 'none !important'
       }
     })
   }

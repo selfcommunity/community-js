@@ -43,7 +43,7 @@ const Component = {
         '&::-webkit-scrollbar': {
           display: 'none'
         },
-        '& a': {
+        '& a:not(.MuiChip-clickable)': {
           color: 'inherit',
           textDecoration: 'none',
           '&::after': {

@@ -136,6 +136,7 @@ import TagChip, {TagChipProps} from './shared/TagChip';
 import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import UserAvatar, {UserAvatarProps} from './shared/UserAvatar';
 import Lightbox from './shared/Lightbox';
+import Calendar from './shared/Calendar';
 import {MEDIA_TYPE_EMBED} from './constants/Media';
 import PollSuggestionWidget, {PollSuggestionWidgetProps} from './components/PollSuggestionWidget';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
@@ -177,7 +178,8 @@ import EventLocationWidget, {EventLocationWidgetProps, EventLocationWidgetSkelet
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from './components/Event';
 import Events, {EventsProps, EventsSkeleton, EventsSkeletonProps} from './components/Events';
 import EventInviteButton, {EventInviteButtonProps} from './components/EventInviteButton';
-
+import EventHeader, {EventHeaderProps, EventHeaderSkeleton} from './components/EventHeader';
+import EditEventButton, {EditEventButtonProps} from './components/EditEventButton';
 /**
  * Constants
  */
@@ -485,6 +487,11 @@ export {
   EventsSkeletonProps,
   EventInviteButton,
   EventInviteButtonProps,
+  EventHeader,
+  EventHeaderProps,
+  EventHeaderSkeleton,
+  EditEventButton,
+  EditEventButtonProps,
   /* SC UI SHARED */
   HiddenPlaceholder,
   UrlTextField,
@@ -507,6 +514,7 @@ export {
   UserAvatar,
   UserAvatarProps,
   Lightbox,
+  Calendar,
   CentralProgress,
   ConfirmDialog,
   LanguageSwitcher,

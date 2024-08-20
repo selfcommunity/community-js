@@ -107,7 +107,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
         onClick={handleClick}
         variant="contained"
         color="secondary"
-        startIcon={<Icon fontSize="small">add</Icon>}
+        startIcon={!EventFormProps.event && <Icon fontSize="small">add</Icon>}
         {...rest}>
         {children ?? <FormattedMessage id="ui.createEventButton" defaultMessage="ui.createEventButton" />}
       </Root>

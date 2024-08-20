@@ -86,7 +86,8 @@ import {
   type SCNotificationUnseenCountType,
   type SCNotificationUserFollowType,
   type SCNotificationVoteUpType,
-  type SCNotificationGroupActivityType
+  type SCNotificationGroupActivityType,
+  SCNotificationEventActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -232,6 +233,7 @@ export {
   type SCNotificationIncubatorType,
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
+  type SCNotificationEventActivityType,
   type SCPrizeType,
   type SCPrizeUserType,
   SCPrizeUserStatusType,

@@ -7,30 +7,72 @@ import {urlParams} from '../../utils/url';
 import {EventCreateParams, EventSearchParams} from '../../types';
 
 export interface EventApiClientInterface {
+  // Events subscribed to by the user
   getUserEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
+
+  // Events subscribed by the user identified with :id in the path params (for the rest it is the same as getUserEvents)
   getUserSubscribedEvents(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
+
+  // Events search
   searchEvents(params?: EventSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
+
+  // Event detail
   getSpecificEventInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCEventType>;
+
+  // Event feed - if I am not subscribed to the event it does not return the data
   getEventFeed(id: number | string, params?: EventFeedParams, config?: AxiosRequestConfig): Promise<any>;
+
+  // Events CRUD
   createEvent(data: EventCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCEventType>;
   updateEvent(id: number | string, data: SCEventType, config?: AxiosRequestConfig): Promise<SCEventType>;
   patchEvent(id: number | string, data: SCEventType, config?: AxiosRequestConfig): Promise<SCEventType>;
   deleteEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  changeEventAvatarOrCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCEventType>;
+
+  // Event image change (bigger, big, medium, small)
+  changeEventCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCEventType>;
+
+  // Users subscribed to the event
   getEventMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+
+  // Given an already existing event, it suggests users to invite
   getEventSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+
+  // Given an event being created, it suggests users to invite
   getEventsSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+
+  // Users invited to the event
   getEventInvitedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+
+  // Users participating in the event - going to the event
   getUsersGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+
+  // Users who declare not to participate in the event
   getUsersNotGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+
+  // Subscribe/Unsubscribe
   subscribeToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   unsubscribeFromEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // To invite a user or to accept a request to participate in the event (in the end the user is ONLY subscribed to the event)
+  // To request participation in a private event use subscribeToEvent which automatically manages the subscription to a private/public event
   inviteOrAcceptEventRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+
+  // Event subscription status
   getEventSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // Action go to event
   goToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  // Action remove go to event
   removeGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // Action not going to the event
   notGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  // Action remove not going to the event
   removeNotGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // TODO
+  // Hide/Show apis Event -> to remove contents related to the event in the feed
+  // Others event of a user /api/v2/event/:id/related ? created_by -> filter by a user
 }
 /**
  * Contains all the endpoints needed to manage events.
@@ -138,7 +180,7 @@ export class EventApiClient {
    * @param data
    * @param config
    */
-  static changeEventAvatarOrCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCEventType> {
+  static changeEventCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCEventType> {
     return apiRequest({url: Endpoints.PatchEvent.url({id}), method: Endpoints.PatchEvent.method, data, ...config});
   }
   /**
@@ -357,8 +399,8 @@ export default class EventService {
   static async deleteEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return EventApiClient.deleteEvent(id, config);
   }
-  static async changeEventAvatarOrCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCEventType> {
-    return EventApiClient.changeEventAvatarOrCover(id, data, config);
+  static async changeEventCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCEventType> {
+    return EventApiClient.changeEventCover(id, data, config);
   }
   static async getEventMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return EventApiClient.getEventMembers(id, params, config);

@@ -26,6 +26,7 @@ import {
   SCThemeVariablesType,
   SCThemeType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
 } from './types';
 
 /**
@@ -145,6 +146,7 @@ export {
   SCThemeVariablesType,
   SCThemeType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -205,5 +207,5 @@ export {
   useSCUserIsBlocked,
   useSCFetchGroup,
   useSCFetchGroups,
-  useSCFetchEvent
+  useSCFetchEvent,
 };

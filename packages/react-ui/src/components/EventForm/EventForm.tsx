@@ -25,7 +25,7 @@ import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {LoadingButton} from '@mui/lab';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -35,6 +35,8 @@ import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import EventAddress from './EventAddress';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import PubSub from 'pubsub-js';
 
 const messages = defineMessages({
   name: {
@@ -113,6 +115,12 @@ export interface EventFormProps extends BaseDialogProps {
   onClose?: () => void;
 
   /**
+   * Event Object
+   * @default null
+   */
+  event?: SCEventType;
+
+  /**
    * On success callback function
    * @default null
    */
@@ -160,7 +168,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, onSuccess, ...rest} = props;
+  const {className, open = true, onClose, onSuccess, event = null, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -168,23 +176,23 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const intl = useIntl();
 
   const initialFieldState = {
-    imageOriginal: '',
+    imageOriginal: event ? event.image_bigger : '',
     imageOriginalFile: '',
-    startDate: null,
-    startTime: null,
-    endDate: null,
-    endTime: null,
-    location: SCEventLocationType.PERSON,
-    geolocation: '',
-    lat: null,
-    lng: null,
-    link: '',
-    recurring: SCEventRecurrenceType.NEVER,
-    name: '',
-    description: '',
-    isPublic: true,
+    startDate: event ? new Date(event.start_date) : null,
+    startTime: event ? new Date(event.start_date) : null,
+    endDate: event && event.end_date ? new Date(event.end_date): null,
+    endTime: event && event.end_date ? new Date(event.end_date) : null,
+    location: event ? event.location : SCEventLocationType.PERSON,
+    geolocation: event ? event.geolocation : '',
+    lat: event ? event.geolocation_lat : null,
+    lng: event ? event.geolocation_lng : null,
+    link: event ? event.link : '',
+    recurring: event ? event.recurring : SCEventRecurrenceType.NEVER,
+    name: event ? event.name : '',
+    description: event ? event.description : '',
+    isPublic: (event && event.privacy === SCEventPrivacyType.PUBLIC) ?? true,
     isSubmitting: false,
-    showEndDateTime: false
+    showEndDateTime: (event && event.end_date) ?? false
   };
 
   // STATE
@@ -233,6 +241,22 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     }
   }
 
+  /**
+   * Notify when a group info changed
+   * @param data
+   */
+  function notifyChanges(data: SCEventType) {
+    if (data) {
+      if (event) {
+        // Edit group
+        PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.EDIT}`, data);
+      } else {
+        // Create group
+        PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.CREATE}`, data);
+      }
+    }
+  }
+
   const handleGeoData = (data) => {
     setField((prev) => ({
       ...prev,
@@ -268,10 +292,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', true);
     }
     formData.append('description', field.description);
-
-    EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    let eventService;
+    if (event) {
+      eventService = EventService.updateEvent(event.id, formData, {headers: {'Content-Type': 'multipart/form-data'}});
+    } else {
+      eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+    }
+    eventService
       .then((data: any) => {
         onSuccess && onSuccess(data);
+        notifyChanges(data);
         onClose && onClose();
         setField((prev: any) => ({...prev, ['isSubmitting']: false}));
       })
@@ -315,7 +345,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   return (
     <Root
       DialogContentProps={{dividers: false}}
-      title={<FormattedMessage id="ui.eventForm.title" defaultMessage="ui.eventForm.title" />}
+      title={
+        event ? (
+          <FormattedMessage id="ui.eventForm.title.edit" defaultMessage="ui.eventForm.title.edit" />
+        ) : (
+          <FormattedMessage id="ui.eventForm.title" defaultMessage="ui.eventForm.title" />
+        )
+      }
       open={open}
       onClose={onClose}
       className={classNames(classes.root, className)}
@@ -335,13 +371,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           variant="contained"
           onClick={handleSubmit}
           color="secondary">
-          {<FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />}
+          {event ? (
+            <FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
+          ) : (
+            <FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
+          )}
         </LoadingButton>
       }
       {...rest}>
       <>
         <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-          <UploadEventCover onChange={handleChangeCover} />
+          <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
         </Paper>
         <FormGroup className={classes.form}>
           <TextField
@@ -538,7 +578,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               values={{symbol: field.showEndDateTime ? '-' : '+'}}
             />
           </Button>
-          <EventAddress forwardGeolocationData={handleGeoData} />
+          <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null}/>
           {privateEnabled && (
             <Box className={classes.privacySection}>
               <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
