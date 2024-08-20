@@ -135,7 +135,7 @@ export default function UploadEventCover(inProps: UploadEventCoverProps): JSX.El
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     formData.append('image_original', fileInput);
-    EventService.changeEventAvatarOrCover(eventId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    EventService.changeEventCover(eventId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
       .then((data: SCEventType) => {
         onChange && onChange(data.image_medium);
         setLoading(false);
