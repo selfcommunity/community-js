@@ -36,7 +36,11 @@ export interface EventInfoWidgetProps extends WidgetProps {
    */
   eventId?: number;
 
-  summaryExpanded: boolean;
+  /**
+   * True if summary must be already expanded
+   * @default false
+   */
+  summaryExpanded?: boolean;
 
   /**
    * Other props
@@ -59,7 +63,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     name: PREFIX
   });
 
-  const { event, eventId, summaryExpanded, ...rest } = props;
+  const { event, eventId, summaryExpanded = false, ...rest } = props;
 
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);

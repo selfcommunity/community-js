@@ -1,20 +1,20 @@
-import { Box, Button, Chip, FormControl, Grid, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { Endpoints, EventService, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils } from '@selfcommunity/react-core';
-import { SCEventDateFilterType, SCEventType } from '@selfcommunity/types';
-import { Logger, sortByAttr } from '@selfcommunity/utils';
+import {Box, Button, Chip, FormControl, Grid, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {SCEventDateFilterType, SCEventType} from '@selfcommunity/types';
+import {Logger, sortByAttr} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import CreateEventButton from '../CreateEventButton';
-import Event, { EventProps, EventSkeleton } from '../Event';
+import Event, {EventProps, EventSkeleton} from '../Event';
 import Skeleton from '../Events/Skeleton';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,12 +27,12 @@ const classes = {
 };
 
 const options = [
-  { value: SCEventDateFilterType.ANY, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" /> },
-  { value: SCEventDateFilterType.TODAY, label: <FormattedMessage id="ui.events.select.today" defaultMessage="ui.events.select.today" /> },
-  { value: SCEventDateFilterType.TOMORROW, label: <FormattedMessage id="ui.events.select.tomorrow" defaultMessage="ui.events.select.tomorrow" /> },
-  { value: SCEventDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.events.select.thisWeek" defaultMessage="ui.events.select.thisWeek" /> },
-  { value: SCEventDateFilterType.NEXT_WEEK, label: <FormattedMessage id="ui.events.select.nextWeek" defaultMessage="ui.events.select.nextWeek" /> },
-  { value: SCEventDateFilterType.THIS_MONTH, label: <FormattedMessage id="ui.events.select.thisMonth" defaultMessage="ui.events.select.thisMonth" /> }
+  {value: SCEventDateFilterType.ANY, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" />},
+  {value: SCEventDateFilterType.TODAY, label: <FormattedMessage id="ui.events.select.today" defaultMessage="ui.events.select.today" />},
+  {value: SCEventDateFilterType.TOMORROW, label: <FormattedMessage id="ui.events.select.tomorrow" defaultMessage="ui.events.select.tomorrow" />},
+  {value: SCEventDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.events.select.thisWeek" defaultMessage="ui.events.select.thisWeek" />},
+  {value: SCEventDateFilterType.NEXT_WEEK, label: <FormattedMessage id="ui.events.select.nextWeek" defaultMessage="ui.events.select.nextWeek" />},
+  {value: SCEventDateFilterType.THIS_MONTH, label: <FormattedMessage id="ui.events.select.thisMonth" defaultMessage="ui.events.select.thisMonth" />}
 ];
 
 const Root = styled(Box, {
@@ -77,7 +77,7 @@ export interface EventsProps {
   filters?: JSX.Element;
 
   /** If true, it means that the endpoint fetches all events available
-   * @default true
+   * @default false
    */
 
   general?: boolean;
@@ -123,7 +123,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   });
 
   const {
-    endpointQueryParams = { limit: 8, offset: DEFAULT_PAGINATION_OFFSET },
+    endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     EventComponentProps = {},
     showFilters = false,
@@ -173,12 +173,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
     if (general) {
       eventService = EventService.searchEvents({
         ...endpointQueryParams,
-        ...(search !== '' && { search: search }),
-        ...(dateSearch !== SCEventDateFilterType.ANY && { date_filter: dateSearch }),
-        ...(selected && { follows: selected })
+        ...(search !== '' && {search: search}),
+        ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+        ...(selected && {follows: selected})
       });
     } else {
-      eventService = EventService.getUserEvents({ ...endpointQueryParams, ...(search !== '' && { search: search }) });
+      eventService = EventService.getUserEvents({...endpointQueryParams, ...(search !== '' && {search: search})});
     }
     eventService
       .then((res: SCPaginatedResponse<SCEventType>) => {
@@ -288,7 +288,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                           checked={dateSearch === option.value}
                           value={option.value}
                           name="radio-button-select"
-                          inputProps={{ 'aria-label': option.label as any }}
+                          inputProps={{'aria-label': option.label as any}}
                         />
                         {option.label}
                       </MenuItem>
@@ -321,7 +321,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
         {!events.length ? (
           <Box className={classes.noResults}>
             {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
-              (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
+            (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
               <>
                 <EventSkeleton />
                 <Typography variant="body1">
@@ -339,7 +339,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
           </Box>
         ) : (
           <>
-            <Grid container spacing={{ xs: 2 }} className={classes.events}>
+            <Grid container spacing={{xs: 2}} className={classes.events}>
               <>
                 {filteredEvents.map((event: SCEventType) => (
                   <Grid item xs={12} sm={8} md={6} key={event.id} className={classes.item}>
