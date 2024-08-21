@@ -54,6 +54,7 @@ import EventHeader, { EventHeaderProps, EventHeaderSkeleton } from './components
 import EventInfoWidget, { EventInfoWidgetProps } from './components/EventInfoWidget';
 import EventInviteButton, { EventInviteButtonProps } from './components/EventInviteButton';
 import EventLocationWidget, { EventLocationWidgetProps, EventLocationWidgetSkeleton } from './components/EventLocationWidget';
+import EventPartecipantsButton, { EventPartecipantsButtonProps } from './components/EventPartecipantsButton';
 import Events, { EventsProps, EventsSkeleton, EventsSkeletonProps } from './components/Events';
 import Feed, { FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton } from './components/Feed';
 import FeedObject, { FeedObjectProps, FeedObjectSkeleton } from './components/FeedObject';
@@ -81,6 +82,7 @@ import IncubatorSuggestionWidget, { IncubatorSuggestionWidgetProps } from './com
 import InlineComposerWidget, { InlineComposerWidgetProps, InlineComposerWidgetSkeleton } from './components/InlineComposerWidget';
 import LocationAutocomplete, { LocationAutocompleteProps } from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, { LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton } from './components/LoyaltyProgramWidget';
+import MyEventsWidget, { MyEventsWidgetProps, MyEventsWidgetSkeleton } from './components/MyEventsWidget';
 import NavigationMenuIconButton, {
   NavigationMenuContent,
   NavigationMenuHeader,
@@ -340,6 +342,8 @@ export {
   EventLocationWidget,
   EventLocationWidgetProps,
   EventLocationWidgetSkeleton,
+  EventPartecipantsButton,
+  EventPartecipantsButtonProps,
   EventProps,
   Events,
   EventSkeleton,
@@ -440,6 +444,9 @@ export {
   MetadataField,
   MetadataFieldProps,
   MIN_PRELOAD_OFFSET_VIEWPORT,
+  MyEventsWidget,
+  MyEventsWidgetProps,
+  MyEventsWidgetSkeleton,
   NavigationMenuContent,
   NavigationMenuHeader,
   NavigationMenuIconButton,
