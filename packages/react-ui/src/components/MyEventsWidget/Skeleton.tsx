@@ -15,14 +15,15 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'SkeletonRoot'
+  slot: 'SkeletonRoot',
+  overridesResolver: (_props, styles) => styles.skeletonRoot
 })();
 
 export default function MyEventsWidgetSkeleton() {
   return (
     <Root className={classes.root}>
       <Box padding="12px 16px">
-        <Skeleton animation="wave" width="141px" height="23px" />
+        <Skeleton animation="wave" width="141px" height="33px" />
       </Box>
 
       <Box position="relative">
@@ -31,7 +32,7 @@ export default function MyEventsWidgetSkeleton() {
       </Box>
 
       <CardContent className={classes.content}>
-        <Skeleton animation="wave" width="26%" height="30px" />
+        <Skeleton animation="wave" width="26%" height="40px" />
 
         <Stack direction="row" alignItems="center" gap="8px" marginBottom="9px">
           <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
@@ -48,7 +49,7 @@ export default function MyEventsWidgetSkeleton() {
           <Skeleton animation="wave" width="27%" height="20px" />
         </Stack>
 
-        <Stack direction="row" gap="8px" alignItems="center" height="57px">
+        <Stack direction="row" gap="8px">
           <Skeleton animation="wave" variant="circular" width="36px" height="36px" />
           <Stack gap="1px">
             <Skeleton animation="wave" width="75px" height="15px" />
@@ -58,13 +59,13 @@ export default function MyEventsWidgetSkeleton() {
 
         <Divider className={classes.firstDivider} />
 
-        <Stack direction="row" gap="8px" alignItems="center" height="44px" marginTop="8px">
+        <Stack direction="row" gap="8px" alignItems="center" height="28px">
           <Skeleton animation="wave" width="68px" height="20px" />
           <AvatarGroup>
-            <Skeleton animation="wave" variant="circular" width="40px" height="40px" />
-            <Skeleton animation="wave" variant="circular" width="40px" height="40px" />
-            <Skeleton animation="wave" variant="circular" width="40px" height="40px" />
-            <Skeleton animation="wave" variant="circular" width="40px" height="40px" />
+            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
+            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
+            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
+            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
           </AvatarGroup>
         </Stack>
 

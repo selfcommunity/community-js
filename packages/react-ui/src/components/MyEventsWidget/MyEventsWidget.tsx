@@ -2,7 +2,7 @@ import { Button, CardActions, CardContent, CardMedia, Divider, Icon, IconButton,
 import { styled } from '@mui/material/styles';
 import { Box, useThemeProps } from '@mui/system';
 import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser } from '@selfcommunity/react-core';
+import { Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser } from '@selfcommunity/react-core';
 import { SCEventType } from '@selfcommunity/types';
 import { CacheStrategies, Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
@@ -23,7 +23,12 @@ import Skeleton from './Skeleton';
 const classes = {
   root: `${PREFIX}-root`,
   titleWrapper: `${PREFIX}-title-wrapper`,
+  imageWrapper: `${PREFIX}-image-wrapper`,
+  image: `${PREFIX}-image`,
   content: `${PREFIX}-content`,
+  nameWrapper: `${PREFIX}-name-wrapper`,
+  name: `${PREFIX}-name`,
+  user: `${PREFIX}-user`,
   firstDivider: `${PREFIX}-first-divider`,
   secondDivider: `${PREFIX}-second-divider`,
   actions: `${PREFIX}-actions`,
@@ -153,7 +158,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   if (state.count === 0) {
     return <HiddenPlaceholder />;
   }
-  console.log('*** eventIndex ***', eventIndex);
+
   return (
     <Root className={classes.root} {...rest}>
       <Box className={classes.titleWrapper}>
@@ -162,20 +167,22 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
         </Typography>
       </Box>
 
-      <Box position="relative">
+      <Box className={classes.imageWrapper}>
         <CardMedia
           component="img"
-          height="170px"
           image={state.results[eventIndex]?.emotional_image || state.results[eventIndex]?.image_medium}
           alt={state.results[eventIndex]?.name}
+          className={classes.image}
         />
         <Calendar day={new Date(state.results[eventIndex]?.start_date).getDate()} />
       </Box>
 
       <CardContent className={classes.content}>
-        <Typography variant="h3" marginBottom="10px">
-          {state.results[eventIndex]?.name}
-        </Typography>
+        <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, state.results[eventIndex])} className={classes.nameWrapper}>
+          <Typography variant="h3" className={classes.name}>
+            {state.results[eventIndex]?.name}
+          </Typography>
+        </Link>
 
         <EventInfoDetails event={state.results[eventIndex]} />
 
@@ -187,6 +194,8 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
               <FormattedMessage id="ui.myEventsWidget.planner" defaultMessage="ui.myEventsWidget.planner" />
             </Typography>
           }
+          actions={<></>}
+          className={classes.user}
         />
 
         <Divider className={classes.firstDivider} />

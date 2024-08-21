@@ -20,7 +20,8 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root'
+  slot: 'Root',
+  overridesResolver: (_props, styles) => styles.root
 })();
 
 export interface CreateEventWidgetProps extends WidgetProps {
