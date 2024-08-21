@@ -1,8 +1,16 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Icon, Paper, Typography} from '@mui/material';
+import {Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchEvent, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCFetchEvent,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import EventHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -16,6 +24,7 @@ import PubSub from 'pubsub-js';
 import EditEventButton from '../EditEventButton';
 import User from '../User';
 import Calendar from '../../shared/Calendar';
+import EventActionsMenu from '../../shared/EventActionsMenu';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -31,7 +40,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root'
+  slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'isEventAdmin'
 })(() => ({}));
 
 export interface EventHeaderProps {
@@ -130,6 +140,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
     () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scEvent?.managed_by?.id]
   );
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   /**
    * Subscriber for pubsub callback
@@ -172,7 +184,9 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   };
 
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    <Root id={id} className={classNames(classes.root, className)} isEventAdmin={isEventAdmin} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <Box className={classes.calendar}>
           <Calendar day={new Date(scEvent.start_date).getDate()} />
@@ -262,16 +276,28 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
         </Box>
         <User
           userId={scEvent?.managed_by?.id}
+          secondary={<FormattedMessage id="ui.eventHeader.user.manager" defaultMessage="ui.eventHeader.user.manager" />}
           elevation={0}
           actions={
             <>
               {isEventAdmin ? (
                 <Box className={classes.multiActions}>
-                  <EventInviteButton size="small" event={scEvent} eventId={scEvent.id} />
-                  <EditEventButton size="small" event={scEvent} eventId={scEvent.id} onEditSuccess={(data: SCEventType) => setSCEvent(data)} />
+                  <EventInviteButton size={isMobile ? 'small' : 'medium'} event={scEvent} eventId={scEvent.id} />
+                  <Box>
+                    <EditEventButton
+                      size={isMobile ? 'small' : 'medium'}
+                      event={scEvent}
+                      eventId={scEvent.id}
+                      onEditSuccess={(data: SCEventType) => setSCEvent(data)}
+                    />
+                    <EventActionsMenu eventId={scEvent?.id} />
+                  </Box>
                 </Box>
               ) : (
-                <EventSubscribeButton event={scEvent} {...EventSubscribeButtonProps} />
+                <>
+                  <EventSubscribeButton event={scEvent} {...EventSubscribeButtonProps} />
+                  <EventActionsMenu eventId={scEvent?.id} />
+                </>
               )}
             </>
           }

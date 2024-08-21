@@ -61,6 +61,7 @@ import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
 import SCEmojiPicker from './components/SCEmojiPicker';
 import SCEvent from './components/SCEvent';
+import SCEventActionsMenu from './components/SCEventActionsMenu';
 import SCEventForm from './components/SCEventForm';
 import SCEventHeader from './components/SCEventHeader';
 import SCEventInfoDetails from './components/SCEventInfoDetails';
@@ -357,6 +358,7 @@ const theme = {
     SCCreateEventButton,
     SCEventLocationWidget,
     SCEvent,
+    SCEventActionsMenu,
     SCEvents,
     SCEventInviteButton,
     SCEventHeader,

@@ -2,7 +2,7 @@ import {alpha} from '@mui/system';
 
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({
+    root: ({theme, isEventAdmin}: any) => ({
       '& .SCEventHeader-cover': {
         position: 'relative',
         minHeight: 150,
@@ -55,31 +55,22 @@ const Component = {
           marginTop: theme.spacing(1),
           '& .SCBaseItemButton-actions': {
             maxWidth: 'none',
-            width: '60%',
+            [theme.breakpoints.up('sm')]: {
+              width: isEventAdmin && '60%'
+            },
             '& .SCEventHeader-multi-actions': {
               display: 'flex',
-              justifyContent: 'space-between'
-            },
-            '& .SCEventSubscribeButton-select-root': {
-              float: 'right'
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              [theme.breakpoints.down('md')]: {
+                '& .SCEventInviteButton-root': {
+                  marginRight: theme.spacing(1)
+                }
+              }
             }
           }
         }
       },
-      // '& .SCEventHeader-avatar': {
-      //   top: 230,
-      //   display: 'block',
-      //   position: 'absolute',
-      //   transform: 'translate(-50%, -50%)',
-      //   left: '50%',
-      //   '& .MuiAvatar-root': {
-      //     height: theme.selfcommunity.group.avatar.sizeLarge,
-      //     width: theme.selfcommunity.group.avatar.sizeLarge,
-      //     borderRadius: '50%',
-      //     border: `#FFF solid ${theme.spacing(0.5)}`,
-      //     objectFit: 'cover'
-      //   }
-      // },
       '& .SCEventHeader-name': {
         fontWeight: theme.typography.fontWeightBold,
         fontSize: '1.429rem'

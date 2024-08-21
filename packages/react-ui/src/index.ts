@@ -166,6 +166,7 @@ import UrlTextField from './shared/UrlTextField';
 import UserAvatar, { UserAvatarProps } from './shared/UserAvatar';
 import UserDeletedSnackBar, { UserDeletedSnackBarProps } from './shared/UserDeletedSnackBar';
 import UsernameTextField from './shared/UsernameTextField';
+import EventActionsMenu, {EventActionsMenuProps} from './shared/EventActionsMenu';
 import {
   PlatformWidgetActionType,
   SCBroadcastMessageTemplateType,
@@ -549,6 +550,8 @@ export {
   UserInfoProps,
   UserInfoSkeleton,
   UsernameTextField,
+  EventActionsMenu,
+  EventActionsMenuProps,
   UserProfileBlocked,
   UserProfileBlockedProps,
   UserProfileEdit,

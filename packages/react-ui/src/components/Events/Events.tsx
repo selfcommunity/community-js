@@ -128,7 +128,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     EventComponentProps = {},
     showFilters = false,
     filters,
-    general = false,
+    general = true,
     ...rest
   } = props;
 
