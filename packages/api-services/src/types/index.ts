@@ -32,7 +32,7 @@ import {ScoreParams} from './score';
 import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContributionParams} from './insight';
 import {ReactionParams} from './reaction';
 import {GroupCreateParams, GroupFeedParams} from './group';
-import {EventCreateParams, EventFeedParams, EventSearchParams} from './event';
+import {EventCreateParams, EventFeedParams, EventRelatedParams, EventSearchParams} from './event';
 
 export {
   AccountCreateParams,
@@ -95,5 +95,6 @@ export {
   GroupFeedParams,
   EventCreateParams,
   EventFeedParams,
+  EventRelatedParams,
   EventSearchParams
 };
