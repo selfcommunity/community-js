@@ -14,6 +14,11 @@ const Component = {
       '& .SCBaseItem-text': {
         fontSize: theme.typography.fontSize,
         '& .SCEvent-primary': {
+          color: theme.palette.text.primary,
+          textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'none'
+          },
           '& p': {
             fontWeight: theme.typography.fontWeightBold
           }
