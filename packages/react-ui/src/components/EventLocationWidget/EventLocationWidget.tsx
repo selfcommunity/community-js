@@ -1,18 +1,18 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, CardContent, Typography } from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, CardContent, Typography} from '@mui/material';
 import classNames from 'classnames';
 import Widget from '../Widget';
-import { useThemeProps } from '@mui/system';
-import { VirtualScrollerItemProps } from '../../types/virtualScroller';
-import { PREFIX } from './constants';
-import { FormattedMessage } from 'react-intl';
+import {useThemeProps} from '@mui/system';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {PREFIX} from './constants';
+import {FormattedMessage} from 'react-intl';
 import EventLocationWidgetSkeleton from './Skeleton';
-import { SCContextType, useSCContext, useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
-import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
+import {SCContextType, useSCContext, useSCFetchEvent} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
+import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { formatEventLocationGeolocation } from '../../utils/string';
+import {formatEventLocationGeolocation} from '../../utils/string';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -90,10 +90,16 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
   const scContext: SCContextType = useSCContext();
-	const {isLoaded} = useLoadScript({
+  const {isLoaded} = useLoadScript({
     googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
     libraries: ['maps']
   });
+  const mapOptions = {
+    fullscreenControl: false, // Disables the fullscreen control
+    mapTypeControl: false, // Disables the map type selector (satellite/map)
+    streetViewControl: false, // Disables the Street View pegman control
+    zoomControl: false // Disables the zoom control (+/- buttons)
+  };
 
   if (!scContext?.settings?.integrations?.geocoding?.apiKey || (scEvent && scEvent?.location === SCEventLocationType.ONLINE)) {
     return <HiddenPlaceholder />;
@@ -102,7 +108,6 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   /**
    * Loading event
    */
-	console.log(isLoaded, scEvent);
   if (!isLoaded || !scEvent) {
     return <EventLocationWidgetSkeleton />;
   }
@@ -113,7 +118,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <CardContent>
-        <Typography variant="h4" className={classes.title}>
+        <Typography variant="h4" className={classes.title} gutterBottom>
           <FormattedMessage id="ui.eventLocationWidget.title" defaultMessage="ui.eventLocationWidget.title" />
         </Typography>
         <Box className={classes.map}>
@@ -123,6 +128,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
               lat: scEvent?.geolocation_lat,
               lng: scEvent?.geolocation_lng
             }}
+            options={mapOptions}
             zoom={15}>
             <MarkerF
               position={{

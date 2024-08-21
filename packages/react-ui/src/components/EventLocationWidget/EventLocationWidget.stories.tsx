@@ -12,7 +12,7 @@ const template = (args) => (
 
 export const Base: StoryObj<EventLocationWidget> = {
   args: {
-    eventId: 102
+    eventId: 113
     // event: {
     //   geolocation_lng: 9.11638659245195,
     //   geolocation_lat: 39.216251400000004,
