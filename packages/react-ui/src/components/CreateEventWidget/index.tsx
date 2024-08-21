@@ -1,5 +1,4 @@
-import CreateEventWidget from './CreateEventWidget';
+import CreateEventWidget, {CreateEventWidgetProps} from './CreateEventWidget';
 import CreateEventWidgetSkeleton from './Skeleton';
 export default CreateEventWidget;
-export { CreateEventWidgetSkeleton, type CreateEventWidget };
-
+export {CreateEventWidgetSkeleton, CreateEventWidgetProps, type CreateEventWidget};
