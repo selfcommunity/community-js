@@ -592,6 +592,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/suggestion/user/'),
     method: 'GET'
   },
+  EventSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/event/'),
+    method: 'GET'
+  },
   SearchSuggestion: {
     url: urlReplacer('/api/v2/suggestion/'),
     method: 'GET'
@@ -1314,12 +1318,16 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/events/'),
     method: 'GET'
   },
-  HideEvent: {
-    url: urlReplacer('/api/v2/event/$(id)/hide/'),
-    method: 'POST'
+  GetEventRelated: {
+    url: urlReplacer('/api/v2/event/$(id)/related/'),
+    method: 'GET'
   },
   ShowEvent: {
     url: urlReplacer('/api/v2/event/$(id)/show/'),
+    method: 'POST'
+  },
+  HideEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/hide/'),
     method: 'POST'
   }
 };

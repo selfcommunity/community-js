@@ -1,7 +1,7 @@
-import {BaseGetParams, BaseSearchParams, EventFeedParams, SCPaginatedResponse} from '../../types';
+import {BaseGetParams, BaseSearchParams, EventFeedParams, EventRelatedParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {SCContributionType, SCEventType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 import {EventCreateParams, EventSearchParams} from '../../types';
@@ -70,9 +70,12 @@ export interface EventApiClientInterface {
   // Action remove not going to the event
   removeNotGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
-  // TODO
+  // Related events - created_by -> filter by a user
+  getEventRelated(id: number | string, params?: EventRelatedParams, config?: AxiosRequestConfig): Promise<any>;
+
   // Hide/Show apis Event -> to remove contents related to the event in the feed
-  // Others event of a user /api/v2/event/:id/related ? created_by -> filter by a user
+  showEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  hideEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 }
 /**
  * Contains all the endpoints needed to manage events.
@@ -330,6 +333,32 @@ export class EventApiClient {
   static removeNotGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.RemoveNotGoingToEvent.url({id}), method: Endpoints.RemoveNotGoingToEvent.method});
   }
+  /**
+   * This endpoint returns all events related of a specific event.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getEventRelated(id: number | string, params?: EventRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetEventRelated.url({id})}?${p.toString()}`, method: Endpoints.GetEventRelated.method});
+  }
+  /**
+   * This endpoint show a specific event.
+   * @param id
+   * @param config
+   */
+  static showEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.ShowEvent.url({id}), method: Endpoints.ShowEvent.method});
+  }
+  /**
+   * This endpoint hide a specific event.
+   * @param id
+   * @param config
+   */
+  static hideEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.hideEvent.url({id}), method: Endpoints.hideEvent.method});
+  }
 }
 
 /**
@@ -455,5 +484,18 @@ export default class EventService {
   }
   static async removeNotGoingToEvent(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
     return EventApiClient.removeNotGoingToEvent(id, config);
+  }
+  static async getEventRelated(
+    id: number | string,
+    params?: EventRelatedParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCEventType>> {
+    return EventApiClient.getEventRelated(id, params, config);
+  }
+  static async showEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return EventApiClient.showEvent(id, config);
+  }
+  static async hideEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return EventApiClient.hideEvent(id, config);
   }
 }
