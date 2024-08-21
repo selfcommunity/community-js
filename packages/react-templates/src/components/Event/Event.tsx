@@ -116,7 +116,7 @@ export default function Event(inProps: EventProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <EventHeader eventId={scEvent.id} GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
+      <EventHeader eventId={scEvent.id} EventSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
       <EventFeed
         className={classes.feed}
         event={scEvent}
