@@ -127,7 +127,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     EventComponentProps = {},
     showFilters = false,
     filters,
-    general = false,
+    general = true,
     ...rest
   } = props;
 
@@ -345,7 +345,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <Event event={event} eventId={event.id} {...EventComponentProps} />
                   </Grid>
                 ))}
-                {filteredEvents.length <= 3 && (
+                {filteredEvents.length % 2 !== 0 && (
                   <Grid item xs={12} sm={8} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
                     <EventSkeleton
                       action={

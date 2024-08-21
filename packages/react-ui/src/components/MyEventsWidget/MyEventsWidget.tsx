@@ -68,6 +68,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
     name: PREFIX
   });
 
+  // CONST
   const { endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET }, cacheStrategy, ...rest } = props;
 
   // STATE
@@ -87,6 +88,8 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const { features }: SCPreferencesContextType = useSCPreferences();
+  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
 
   /**
    * Initialize component
@@ -151,6 +154,10 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   }, [eventIndex, state.results]);
 
   // RENDER
+  if (!eventsEnabled) {
+    return <HiddenPlaceholder />;
+  }
+
   if (!state.initialized || state.isLoadingNext) {
     return <Skeleton />;
   }

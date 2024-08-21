@@ -108,10 +108,10 @@ export default function Event(inProps: EventProps): JSX.Element {
       className={classNames(classes.root, className)}
       image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.avatar} />}
       primary={
-        <Typography component="div" className={classes.primary}>
+        <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.primary}>
           <Typography component="span">{`${intl.formatDate(scEvent.start_date, {weekday: 'long', month: 'long', day: 'numeric'})}`}</Typography>
           <Typography variant="body1">{scEvent.name}</Typography>
-        </Typography>
+        </Link>
       }
       secondary={
         <Typography component="p" variant="body2" className={classes.secondary}>

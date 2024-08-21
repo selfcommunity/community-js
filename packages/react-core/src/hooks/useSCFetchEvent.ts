@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import {Endpoints, EventService, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
 import {getEventObjectCacheKey} from '../constants/Cache';
@@ -75,8 +75,13 @@ export default function useSCFetchEvent({
     if (__eventId && scUserContext.user !== undefined && (!scEvent || (scEvent && __eventId !== scEvent.id))) {
       fetchEvent()
         .then((event: SCEventType) => {
-          if (autoSubscribe && authUserId !== null && event.privacy === SCEventPrivacyType.PUBLIC && !event.subscription_status) {
-            // Auto subscribe the event
+          if (
+            autoSubscribe &&
+            authUserId !== null &&
+            ((event.privacy === SCEventPrivacyType.PUBLIC && !event.subscription_status) ||
+              (event.privacy === SCEventPrivacyType.PRIVATE && event.subscription_status === SCEventSubscriptionStatusType.INVITED))
+          ) {
+            // Auto subscribe to the event
             EventService.subscribeToEvent(event.id).then(() => {
               setSCEvent(event);
             });
