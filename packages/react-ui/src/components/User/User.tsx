@@ -150,7 +150,7 @@ export default function User(inProps: UserProps): JSX.Element {
   } = props;
 
   // STATE
-  const { scUser, setSCUser } = useSCFetchUser({ id: userId, user });
+  const { scUser } = useSCFetchUser({ id: userId, user });
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();

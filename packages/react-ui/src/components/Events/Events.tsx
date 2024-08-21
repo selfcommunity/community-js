@@ -10,7 +10,6 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import CreateEventButton from '../CreateEventButton';
 import Event, {EventProps, EventSkeleton} from '../Event';
 import Skeleton from '../Events/Skeleton';
@@ -374,7 +373,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * Renders root object (if content availability community option is false and user is anonymous, component is hidden)
    */
   if (!contentAvailability && !scUserContext.user) {
-    return <HiddenPlaceholder />;
+    return null;
   }
   if (loading) {
     return <Skeleton />;

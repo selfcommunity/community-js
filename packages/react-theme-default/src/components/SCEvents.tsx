@@ -8,7 +8,9 @@ const Component = {
       },
       '& .SCEvents-events': {
         marginTop: theme.spacing(2),
-        '& .SCEvents-item': {},
+        '& .SCEvents-item': {
+          paddingTop: theme.spacing()
+        },
         '& .SCEvent-skeleton-root': {
           padding: theme.spacing(0.5, 0, 0.5, 0)
         }
