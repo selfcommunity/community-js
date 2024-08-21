@@ -1,12 +1,13 @@
-import { Button, Icon } from '@mui/material';
-import { ButtonProps } from '@mui/material/Button/Button';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences } from '@selfcommunity/react-core';
+import {Button, Icon} from '@mui/material';
+import {ButtonProps} from '@mui/material/Button/Button';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import React, { useContext, useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
-import EventForm, { EventFormProps } from '../EventForm';
+import React, {useContext, useMemo} from 'react';
+import {FormattedMessage} from 'react-intl';
+import EventForm, {EventFormProps} from '../EventForm';
+import {SCFeatureName} from '@selfcommunity/types';
 
 const PREFIX = 'SCCreateEventButton';
 
@@ -63,7 +64,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const { className, EventFormProps = {}, children, ...rest } = props;
+  const {className, EventFormProps = {}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -73,14 +74,12 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const preferences: SCPreferencesContextType = useSCPreferences();
-  const onlyStaffEnabled = useMemo(
-    () => preferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value,
-    [preferences.preferences]
-  );
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
+  const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_EVENTS_ONLY_STAFF_ENABLED].value, [preferences]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
+  const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
 
   /**
    * Handle click on button
@@ -92,7 +91,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
   /**
    * If there's no authUserId, component is hidden.
    */
-  if ((!canCreateEvent && onlyStaffEnabled) || !authUserId) {
+  if (!eventsEnabled || (!canCreateEvent && onlyStaffEnabled) || !authUserId) {
     return null;
   }
 

@@ -1,12 +1,13 @@
-import { Box, CardActions, CardContent, CardMedia, Divider, Icon, styled, Typography, useThemeProps } from '@mui/material';
-import { SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences } from '@selfcommunity/react-core';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {Box, CardActions, CardContent, CardMedia, Divider, Icon, styled, Typography, useThemeProps} from '@mui/material';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {useContext, useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import CreateEventButton from '../CreateEventButton';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
+import {SCFeatureName} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -37,7 +38,7 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
     name: PREFIX
   });
 
-  const { ...rest } = props;
+  const {...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState(true);
@@ -46,13 +47,11 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // HOOK
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
 
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const onlyStaffEnabled = useMemo(
-    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value,
-    [scPreferences.preferences]
-  );
+  const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value, [preferences]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
@@ -61,14 +60,14 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
     setLoading(false);
   }, []);
 
-  if (!canCreateEvent && loading) {
+  if (loading) {
     return <Skeleton />;
   }
 
   /**
    * If there's no authUserId, component is hidden.
    */
-  if ((!canCreateEvent && onlyStaffEnabled) || !authUserId) {
+  if (!eventsEnabled || (!canCreateEvent && onlyStaffEnabled) || !authUserId) {
     return <HiddenPlaceholder />;
   }
 
@@ -77,7 +76,7 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
       <Box position="relative">
         <CardMedia
           component="img"
-          image={`${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}`}
+          image={`${preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}`}
           alt="placeholder image"
           className={classes.image}
         />
