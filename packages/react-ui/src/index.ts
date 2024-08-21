@@ -44,6 +44,7 @@ import ConnectionUserButton from './components/ConnectionUserButton';
 import ConsentSolution, { ConsentSolutionProps, ConsentSolutionSkeleton } from './components/ConsentSolution';
 import ConsentSolutionButton, { ConsentSolutionButtonProps } from './components/ConsentSolutionButton';
 import CreateEventButton, { CreateEventButtonProps } from './components/CreateEventButton';
+import CreateEventWidget, { CreateEventWidgetProps, CreateEventWidgetSkeleton } from './components/CreateEventWidget';
 import CreateGroupButton, { CreateGroupButtonProps } from './components/CreateGroupButton';
 import CustomAdv, { CustomAdvProps, CustomAdvSkeleton } from './components/CustomAdv';
 import EditEventButton, { EditEventButtonProps } from './components/EditEventButton';
@@ -304,6 +305,9 @@ export {
   ContributionUtils,
   CreateEventButton,
   CreateEventButtonProps,
+  CreateEventWidget,
+  CreateEventWidgetProps,
+  CreateEventWidgetSkeleton,
   CreateGroupButton,
   CreateGroupButtonProps,
   CustomAdv,

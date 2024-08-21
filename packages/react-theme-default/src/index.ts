@@ -53,6 +53,7 @@ import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCCreateEventButton from './components/SCCreateEventButton';
+import SCCreateEventWidget from './components/SCCreateEventWidget';
 import SCCreateGroupButton from './components/SCCreateGroupButton';
 import SCCustomAdv from './components/SCCustomAdv';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
@@ -366,7 +367,8 @@ const theme = {
     SCEventSubscribeButton,
     SCEventPartecipantsButton,
     SCMyEventsWidget,
-    SCCalendar
+    SCCalendar,
+    SCCreateEventWidget
   },
   selfcommunity: {
     user: {

@@ -1,23 +1,32 @@
-import { Button, CardActions, CardContent, CardMedia, Divider, Icon, IconButton, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Box, useThemeProps } from '@mui/system';
-import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useReducer, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import {Button, CardActions, CardContent, CardMedia, Divider, Icon, IconButton, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, useThemeProps} from '@mui/system';
+import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {
+  SCCache,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import Calendar from '../../shared/Calendar';
 import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import EventPartecipantsButton from '../EventPartecipantsButton';
 import User from '../User';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 
 const classes = {
@@ -63,7 +72,8 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
     name: PREFIX
   });
 
-  const { endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET }, cacheStrategy, ...rest } = props;
+  // CONST
+  const {endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET}, cacheStrategy, ...rest} = props;
 
   // STATE
   const [state, dispatch] = useReducer(
@@ -82,6 +92,8 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {features}: SCPreferencesContextType = useSCPreferences();
+  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
 
   /**
    * Initialize component
@@ -89,21 +101,21 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
    */
   const _initComponent = useCallback(() => {
     if (!state.initialized && !state.isLoadingNext) {
-      dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-      EventService.getUserEvents({ ...endpointQueryParams })
+      EventService.getUserEvents({...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCEventType>) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
         })
         .catch((error) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
   }, [state.isLoadingNext, state.initialized, dispatch]);
 
   const _fetchNext = useCallback(() => {
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
     http
       .request({
@@ -111,11 +123,11 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
         method: Endpoints.GetUserEvents.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCEventType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         setEventIndex((index) => index + 1);
       })
       .catch((error) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [dispatch, state.next]);
@@ -146,6 +158,10 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   }, [eventIndex, state.results]);
 
   // RENDER
+  if (!eventsEnabled) {
+    return <HiddenPlaceholder />;
+  }
+
   if (!state.initialized || state.isLoadingNext) {
     return <Skeleton />;
   }
@@ -153,7 +169,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   if (state.count === 0) {
     return <HiddenPlaceholder />;
   }
-  console.log('*** eventIndex ***', eventIndex);
+
   return (
     <Root className={classes.root} {...rest}>
       <Box className={classes.titleWrapper}>
