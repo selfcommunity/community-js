@@ -28,6 +28,7 @@ import SCBaseItemButton from './components/SCBaseItemButton';
 import SCBottomNavigation from './components/SCBottomNavigation';
 import SCBroadcastMessages from './components/SCBroadcastMessages';
 import SCBullet from './components/SCBullet';
+import SCCalendar from './components/SCCalendar';
 import SCCategories from './components/SCCategories';
 import SCCategoriesPopularWidget from './components/SCCategoriesPopularWidget';
 import SCCategoriesSuggestionWidget from './components/SCCategoriesSuggestionWidget';
@@ -52,6 +53,7 @@ import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCCreateEventButton from './components/SCCreateEventButton';
+import SCCreateEventWidget from './components/SCCreateEventWidget';
 import SCCreateGroupButton from './components/SCCreateGroupButton';
 import SCCustomAdv from './components/SCCustomAdv';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
@@ -68,6 +70,7 @@ import SCEventInfoDetails from './components/SCEventInfoDetails';
 import SCEventInfoWidget from './components/SCEventInfoWidget';
 import SCEventInviteButton from './components/SCEventInviteButton';
 import SCEventLocationWidget from './components/SCEventLocationWidget';
+import SCEventPartecipantsButton from './components/SCEventPartecipantsButton';
 import SCEvents from './components/SCEvents';
 import SCEventSubscribeButton from './components/SCEventSubscribeButton';
 import SCExploreFeedTemplate from './components/SCExploreFeedTemplate';
@@ -103,7 +106,7 @@ import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
 import SCMainFeedTemplate from './components/SCMainFeedTemplate';
 import SCMediaFile from './components/SCMediaFile';
 import SCMediaLink from './components/SCMediaLink';
-// import SCMyEventsWidget from './components/SCMyEventsWidget';
+import SCMyEventsWidget from './components/SCMyEventsWidget';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
 import SCNavigationToolbar from './components/SCNavigationToolbar';
@@ -275,7 +278,6 @@ const theme = {
     SCLoyaltyProgramDetailTemplate,
     SCMediaFile,
     SCMediaLink,
-    // SCMyEventsWidget,
     SCNavigationSettingsIconButton,
     SCDefaultHeaderContent,
     SCNavigationToolbar,
@@ -364,7 +366,11 @@ const theme = {
     SCEventHeader,
     SCEventInfoWidget,
     SCEventInfoDetails,
-    SCEventSubscribeButton
+    SCEventSubscribeButton,
+    SCEventPartecipantsButton,
+    SCMyEventsWidget,
+    SCCalendar,
+    SCCreateEventWidget
   },
   selfcommunity: {
     user: {

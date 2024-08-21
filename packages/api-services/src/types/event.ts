@@ -71,6 +71,16 @@ export interface EventFeedParams extends BaseGetParams {
 }
 
 /**
+ * EventRelatedParams interface.
+ */
+export interface EventRelatedParams extends BaseGetParams {
+  /**
+   * Filter results by created_by user id.
+   */
+  created_by?: number;
+}
+
+/**
  * EventFeedParams interface.
  */
 export interface EventSearchParams extends BaseSearchParams {
