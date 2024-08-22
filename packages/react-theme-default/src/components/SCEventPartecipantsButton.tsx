@@ -8,7 +8,7 @@ const Component = {
         backgroundColor: 'unset'
       },
 
-      '& .SCEventPartecipantsButton-avatar': {
+      '& .MuiAvatarGroup-avatar': {
         width: '24px',
         height: '24px'
       },

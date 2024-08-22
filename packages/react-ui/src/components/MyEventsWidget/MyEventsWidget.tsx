@@ -1,34 +1,31 @@
-import { Button, CardActions, CardContent, CardMedia, Divider, Icon, IconButton, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Box, useThemeProps } from '@mui/system';
-import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
+import {Button, CardActions, Icon, IconButton, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, useThemeProps} from '@mui/system';
+import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
-  Link,
   SCCache,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
-  SCPreferencesContextType,
-  useSCRouting,
-  useSCUser,
   useSCPreferences,
+  useSCRouting,
+  useSCUser
 } from '@selfcommunity/react-core';
-import { SCEventType, SCFeatureName } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
-import Calendar from '../../shared/Calendar';
-import EventInfoDetails from '../../shared/EventInfoDetails';
+import {SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
-import EventPartecipantsButton from '../EventPartecipantsButton';
-import User from '../User';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
+import {SCEventTemplateType} from '../../types/event';
+import Event from '../Event';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -50,7 +47,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 export interface MyEventsWidgetProps extends WidgetProps {
   /**
@@ -79,7 +76,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   });
 
   // CONST
-  const { endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET }, cacheStrategy, ...rest } = props;
+  const {endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET}, cacheStrategy, ...rest} = props;
 
   // STATE
   const [state, dispatch] = useReducer(
@@ -98,7 +95,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const { features }: SCPreferencesContextType = useSCPreferences();
+  const {features}: SCPreferencesContextType = useSCPreferences();
   const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
 
   /**
@@ -107,33 +104,32 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
    */
   const _initComponent = useCallback(() => {
     if (!state.initialized && !state.isLoadingNext) {
-      dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-      EventService.getUserEvents({ ...endpointQueryParams })
+      EventService.getUserEvents({...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCEventType>) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
         })
         .catch((error) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
   }, [state.isLoadingNext, state.initialized, dispatch]);
 
   const _fetchNext = useCallback(() => {
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
-
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
     http
       .request({
         url: state.next,
         method: Endpoints.GetUserEvents.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCEventType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         setEventIndex((index) => index + 1);
       })
       .catch((error) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [dispatch, state.next]);
@@ -142,14 +138,14 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   useEffect(() => {
     let _t: NodeJS.Timeout;
 
-    if (scUserContext.user) {
+    if (eventsEnabled && scUserContext.user) {
       _t = setTimeout(_initComponent);
 
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user]);
+  }, [scUserContext.user, eventsEnabled]);
 
   const handlePrev = useCallback(() => {
     setEventIndex(eventIndex - 1);
@@ -162,6 +158,8 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
       _fetchNext();
     }
   }, [eventIndex, state.results]);
+
+	return <Skeleton />;
 
   // RENDER
   if (!eventsEnabled) {
@@ -183,56 +181,16 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
           <FormattedMessage id="ui.myEventsWidget.title" defaultMessage="ui.myEventsWidget.title" />
         </Typography>
       </Box>
-
-      <Box className={classes.imageWrapper}>
-        <CardMedia
-          component="img"
-          image={state.results[eventIndex]?.emotional_image || state.results[eventIndex]?.image_medium}
-          alt={state.results[eventIndex]?.name}
-          className={classes.image}
-        />
-        <Calendar day={new Date(state.results[eventIndex]?.start_date).getDate()} />
-      </Box>
-
-      <CardContent className={classes.content}>
-        <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, state.results[eventIndex])} className={classes.nameWrapper}>
-          <Typography variant="h3" className={classes.name}>
-            {state.results[eventIndex]?.name}
-          </Typography>
-        </Link>
-
-        <EventInfoDetails event={state.results[eventIndex]} />
-
-        <User
-          user={state.results[eventIndex]?.managed_by}
-          elevation={0}
-          secondary={
-            <Typography variant="caption">
-              <FormattedMessage id="ui.myEventsWidget.planner" defaultMessage="ui.myEventsWidget.planner" />
-            </Typography>
-          }
-          actions={<></>}
-          className={classes.user}
-        />
-
-        <Divider className={classes.firstDivider} />
-
-        <EventPartecipantsButton event={state.results[eventIndex]} eventId={state.results[eventIndex].id} />
-
-        <Divider className={classes.secondDivider} />
-      </CardContent>
-
+      <Event event={state.results[eventIndex]} template={SCEventTemplateType.DETAIL} actions={<></>} elevation={0} square={true} />
       <CardActions className={classes.actions}>
         <IconButton size="small" disabled={eventIndex === 0} className={classes.arrows} onClick={handlePrev}>
           <Icon>chevron_left</Icon>
         </IconButton>
-
         <Button href={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})} className={classes.actionButton}>
           <Typography variant="caption">
             <FormattedMessage id="ui.myEventsWidget.showAll" defaultMessage="ui.myEventsWidget.showAll" />
           </Typography>
         </Button>
-
         <IconButton size="small" disabled={eventIndex === state.count - 1} className={classes.arrows} onClick={handleNext}>
           <Icon>chevron_right</Icon>
         </IconButton>

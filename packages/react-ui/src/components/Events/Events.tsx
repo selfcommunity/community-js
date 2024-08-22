@@ -11,7 +11,7 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import CreateEventButton from '../CreateEventButton';
-import Event, {EventProps, EventSkeleton} from '../Event';
+import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
 import Skeleton from '../Events/Skeleton';
 import {PREFIX} from './constants';
 
@@ -62,6 +62,12 @@ export interface EventsProps {
    * @default {}
    */
   EventComponentProps?: EventProps;
+
+	/**
+	 * Props to spread to single event skeleton object
+	 * @default {}
+	 */
+	EventSkeletonComponentProps?: EventSkeletonProps;
 
   /**
    * Show/Hide filters
@@ -124,7 +130,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const {
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
-    EventComponentProps = {},
+    EventComponentProps = {elevation: 0, square: true},
+		EventSkeletonComponentProps = {elevation: 0, square: true},
     showFilters = false,
     filters,
     general = true,
@@ -322,14 +329,14 @@ export default function Events(inProps: EventsProps): JSX.Element {
             {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
             (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
               <>
-                <EventSkeleton />
+                <EventSkeleton {...EventSkeletonComponentProps} />
                 <Typography variant="body1">
                   <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                 </Typography>
               </>
             ) : (
               <>
-                <EventSkeleton action={<CreateEventButton />} />
+                <EventSkeleton {...EventSkeletonComponentProps} actions={<CreateEventButton />} />
                 <Typography variant="body1">
                   <FormattedMessage id="ui.events.noEvents.title.onlyStaff" defaultMessage="ui.events.noEvents.title.onlyStaff" />
                 </Typography>
@@ -348,7 +355,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 {filteredEvents.length % 2 !== 0 && (
                   <Grid item xs={12} sm={8} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
                     <EventSkeleton
-                      action={
+											{...EventSkeletonComponentProps}
+                      actions={
                         <CreateEventButton variant="outlined" color="primary" size="small">
                           <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
                         </CreateEventButton>
@@ -376,7 +384,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     return null;
   }
   if (loading) {
-    return <Skeleton />;
+    return <Skeleton EventSkeletonProps={EventSkeletonComponentProps} />;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>

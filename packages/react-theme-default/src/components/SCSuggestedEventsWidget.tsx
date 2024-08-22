@@ -1,8 +1,8 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       '& .SCSuggestedEventsWidget-content': {
-        padding: `15px 0 ${theme.spacing(2)} ${theme.spacing(2)} !important`,
+        padding: `15px 0 ${theme.spacing()} ${theme.spacing(2)} !important`,
 
         '& .SCSuggestedEventsWidget-title': {
           marginBottom: '11px'
@@ -13,9 +13,28 @@ const Component = {
           height: 'auto'
         }
       },
-
+      '& .SCSuggestedEventsWidget-event': {
+        '& .SCEventInfoDetails-root': {
+          '& h5': {
+            fontSize: '1rem',
+            maxWidth: 200,
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden'
+          },
+          '& .SCEventInfoDetails-icon-text-wrapper': {
+            '& .community-icons': {
+              fontSize: '0.9rem'
+            },
+            '& p': {
+              marginTop: 1,
+              fontSize: '0.8rem'
+            }
+          }
+        }
+      },
       '& .SCSuggestedEventsWidget-actions': {
-        padding: `0 ${theme.spacing(2)} ${theme.spacing(2)}`,
+        padding: `0 ${theme.spacing()} ${theme.spacing()}`,
         justifyContent: 'center',
 
         '& .SCSuggestedEventsWidget-actionButton': {
@@ -23,9 +42,9 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({ theme }) => ({
+    skeletonRoot: ({theme}) => ({
       '& .SCSuggestedEventsWidget-content': {
-        padding: `15px 0 ${theme.spacing(3)} ${theme.spacing(2)} !important`,
+        padding: `15px 0 ${theme.spacing()} ${theme.spacing(2)} !important`,
 
         '& .SCSuggestedEventsWidget-title': {
           marginBottom: '11px'
@@ -38,7 +57,7 @@ const Component = {
       },
 
       '& .SCSuggestedEventsWidget-actions': {
-        padding: `0 ${theme.spacing(2)} ${theme.spacing(3)}`,
+        padding: `0 ${theme.spacing()} ${theme.spacing()}`,
         justifyContent: 'center'
       }
     })

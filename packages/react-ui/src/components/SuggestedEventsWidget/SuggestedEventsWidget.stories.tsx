@@ -7,4 +7,14 @@ export default {
 } as Meta<typeof SuggestedEventsWidget>;
 
 
-export const Base: StoryObj<SuggestedEventsWidget> = {};
+
+const template = (args) => (
+	<div style={{maxWidth: 400}}>
+		<SuggestedEventsWidget {...args} />
+	</div>
+);
+
+export const Base: StoryObj<SuggestedEventsWidget> = {
+	render: template
+};
+

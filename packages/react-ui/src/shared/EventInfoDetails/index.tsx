@@ -4,6 +4,7 @@ import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommuni
 import {format} from 'date-fns';
 import {enUS, it} from 'date-fns/locale';
 import {FormattedMessage, useIntl} from 'react-intl';
+import React from 'react';
 
 const LOCALE_MAP = {
   en: enUS,
@@ -24,11 +25,22 @@ const Root = styled(Stack, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 export interface EventInfoDetailsProps {
   event: SCEventType;
+  hideDateIcon?: boolean;
+  hidePrivacyIcon?: boolean;
+  hideLocationIcon?: boolean;
+  hideCreatedIcon?: boolean;
+  hasDateInfo?: boolean;
+  hasPrivacyInfo?: boolean;
+  hasLocationInfo?: boolean;
   hasCreatedInfo?: boolean;
+  beforeDateInfo?: React.ReactNode | null;
+  beforePrivacyInfo?: React.ReactNode | null;
+  beforeLocationInfo?: React.ReactNode | null;
+  beforeCreatedInfo?: React.ReactNode | null;
 }
 
 export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
@@ -38,7 +50,21 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
     name: PREFIX
   });
 
-  const {event, hasCreatedInfo} = props;
+  const {
+    event,
+    hideDateIcon = false,
+    hidePrivacyIcon = false,
+    hideLocationIcon = false,
+    hideCreatedIcon = false,
+    hasDateInfo = true,
+    hasPrivacyInfo = true,
+    hasLocationInfo = true,
+    hasCreatedInfo = false,
+    beforeDateInfo,
+    beforePrivacyInfo,
+    beforeLocationInfo,
+    beforeCreatedInfo
+  } = props;
 
   // HOOKS
   const intl = useIntl();
@@ -67,40 +93,49 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
 
   return (
     <Root className={classes.root}>
-      <Stack className={classes.iconTextWrapper}>
-        <Icon fontSize="small">CalendarIcon</Icon>
-        <Typography variant="body1">{formatDateEventDate(event.start_date)}</Typography>
-      </Stack>
-
-      <Stack className={classes.iconTextWrapper}>
-        <Icon fontSize="small">{event.privacy === SCEventPrivacyType.PUBLIC ? 'public' : 'private'}</Icon>
-        <Typography variant="body1">
-          <FormattedMessage id={privacy} defaultMessage={privacy} />
-        </Typography>
-        -
-        <Typography variant="body1">
-          <FormattedMessage id={location} defaultMessage={location} />
-        </Typography>
-      </Stack>
-
-      <Stack className={classes.iconTextWrapper}>
-        <Icon fontSize="small">{event.location === SCEventLocationType.ONLINE ? 'play_circle_outline' : 'add_location_alt'}</Icon>
-        {event.location === SCEventLocationType.ONLINE ? (
-          <Link to={event.link} target="_blank" className={classes.link}>
-            <Typography variant="body1" className={classes.url}>
-              {event.link}
-            </Typography>
-          </Link>
-        ) : (
-          <Typography variant="body1" className={classes.url}>
-            {event.geolocation}
+      {beforeDateInfo}
+      {hasDateInfo && (
+        <Stack className={classes.iconTextWrapper}>
+          {!hideDateIcon && <Icon fontSize="small">CalendarIcon</Icon>}
+          <Typography variant="body1">{formatDateEventDate(event.start_date)}</Typography>
+        </Stack>
+      )}
+      {beforePrivacyInfo}
+      {hasPrivacyInfo && (
+        <Stack className={classes.iconTextWrapper}>
+          {!hidePrivacyIcon && <Icon fontSize="small">{event.privacy === SCEventPrivacyType.PUBLIC ? 'public' : 'private'}</Icon>}
+          <Typography variant="body1">
+            <FormattedMessage id={privacy} defaultMessage={privacy} />
           </Typography>
-        )}
-      </Stack>
-
+          -
+          <Typography variant="body1">
+            <FormattedMessage id={location} defaultMessage={location} />
+          </Typography>
+        </Stack>
+      )}
+      {beforeLocationInfo}
+      {hasLocationInfo && (
+        <Stack className={classes.iconTextWrapper}>
+          {!hideLocationIcon && (
+            <Icon fontSize="small">{event.location === SCEventLocationType.ONLINE ? 'play_circle_outline' : 'add_location_alt'}</Icon>
+          )}
+          {event.location === SCEventLocationType.ONLINE ? (
+            <Link to={event.link} target="_blank" className={classes.link}>
+              <Typography variant="body1" className={classes.url}>
+                {event.link}
+              </Typography>
+            </Link>
+          ) : (
+            <Typography variant="body1" className={classes.url}>
+              {event.geolocation}
+            </Typography>
+          )}
+        </Stack>
+      )}
+      {beforeCreatedInfo}
       {hasCreatedInfo && (
         <Stack className={classes.creationWrapper}>
-          <Icon fontSize="small">create</Icon>
+          {!hideCreatedIcon && <Icon fontSize="small">create</Icon>}
           <Typography variant="body1">{formatDateCreateDate(event.created_at)}</Typography>
         </Stack>
       )}

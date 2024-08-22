@@ -1,26 +1,29 @@
-import { Button, CardActions, CardContent, Typography, useThemeProps } from '@mui/material';
-import { styled } from '@mui/system';
-import { Endpoints, http, SCPaginatedResponse, SuggestionService } from '@selfcommunity/api-services';
-import { Link, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {Button, CardActions, CardContent, Typography, useThemeProps} from '@mui/material';
+import {styled} from '@mui/system';
+import {Endpoints, http, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {SCEventType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {useCallback, useEffect, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import 'swiper/css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
+import {SCEventTemplateType} from '../../types/event';
+import Event from '../Event';
 
 const classes = {
   root: `${PREFIX}-root`,
   content: `${PREFIX}-content`,
   title: `${PREFIX}-title`,
   swiper: `${PREFIX}-swiper`,
+	event: `${PREFIX}-event`,
   actions: `${PREFIX}-actions`,
   actionButton: `${PREFIX}-action-button`
 };
@@ -29,7 +32,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 export interface SuggestedEventsWidgetProps extends WidgetProps {
   /**
@@ -51,7 +54,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
     name: PREFIX
   });
 
-  const { endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET }, ...rest } = props;
+  const {endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET}, ...rest} = props;
 
   // STATE
   const [eventsData, setEventsData] = useState<SCPaginatedResponse<SCEventType> | null>(null);
@@ -61,7 +64,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   useEffect(() => {
-    SuggestionService.getEventSuggestion({ ...endpointQueryParams })
+    SuggestionService.getEventSuggestion({...endpointQueryParams})
       .then((payload: SCPaginatedResponse<SCEventType>) => {
         setEventsData(payload);
         setLoading(false);
@@ -104,7 +107,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
         <Swiper spaceBetween={8} slidesPerView="auto" onReachEnd={handleReachEnd}>
           {eventsData?.results.map((event, i) => (
             <SwiperSlide key={i} className={classes.swiper}>
-              <></>
+              <Event event={event} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
             </SwiperSlide>
           ))}
         </Swiper>

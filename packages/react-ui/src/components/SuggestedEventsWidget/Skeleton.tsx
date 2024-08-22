@@ -1,9 +1,11 @@
-import { CardActions, CardContent, Skeleton } from '@mui/material';
-import { styled } from '@mui/system';
+import {CardActions, CardContent, Skeleton} from '@mui/material';
+import {styled} from '@mui/system';
 import 'swiper/css';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import Widget from '../Widget';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
+import {EventSkeleton} from '@selfcommunity/react-ui';
+import {SCEventTemplateType} from '../../types/event';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -17,7 +19,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'SkeletonRoot',
   overridesResolver: (_props, styles) => styles.skeletonRoot
-})();
+})(() => ({}));
 
 export default function SuggestedEventsWidgetSkeleton() {
   return (
@@ -28,7 +30,7 @@ export default function SuggestedEventsWidgetSkeleton() {
         <Swiper spaceBetween={8} slidesPerView="auto">
           {[1, 2, 3, 4, 5, 6, 7].map((_element, i) => (
             <SwiperSlide key={i} className={classes.swiper}>
-              <></>
+              <EventSkeleton template={SCEventTemplateType.PREVIEW} variant="outlined" actions={<></>} />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -31,13 +31,13 @@ const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'DialogRoot',
   overridesResolver: (_props, styles) => styles.dialogRoot
-})();
+})(() => ({}));
 
 export interface EventPartecipantsButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled'>> {
   /**

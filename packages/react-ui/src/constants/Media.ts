@@ -5,11 +5,13 @@ export const MEDIA_TYPE_LINK = 'link';
 export const MEDIA_TYPE_URL = 'url';
 export const MEDIA_TYPE_SHARE = 'share';
 export const MEDIA_TYPE_EMBED = 'embed';
+export const MEDIA_TYPE_EVENT = 'event';
 
 /**
  * Embed types
  **/
 export const MEDIA_EMBED_SC_LINK_TYPE = 'sc_link';
+export const MEDIA_EMBED_SC_SHARED_EVENT = 'sc_shared_event';
 
 /**
  * Grid Images

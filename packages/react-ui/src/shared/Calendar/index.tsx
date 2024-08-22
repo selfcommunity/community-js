@@ -11,7 +11,7 @@ const Root = styled(Stack, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 export interface CalendarProps {
   day: number;
