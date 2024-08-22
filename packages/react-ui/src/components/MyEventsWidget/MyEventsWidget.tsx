@@ -159,8 +159,6 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
     }
   }, [eventIndex, state.results]);
 
-	return <Skeleton />;
-
   // RENDER
   if (!eventsEnabled) {
     return <HiddenPlaceholder />;
