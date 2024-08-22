@@ -2,11 +2,21 @@ import { Button, CardActions, CardContent, CardMedia, Divider, Icon, IconButton,
 import { styled } from '@mui/material/styles';
 import { Box, useThemeProps } from '@mui/system';
 import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
+import {
+  Link,
+  SCCache,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  SCPreferencesContextType,
+  useSCRouting,
+  useSCUser,
+  useSCPreferences,
+} from '@selfcommunity/react-core';
+import { SCEventType, SCFeatureName } from '@selfcommunity/types';
 import { CacheStrategies, Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
