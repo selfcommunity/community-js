@@ -88,6 +88,16 @@ export interface EventProps extends WidgetProps {
    */
   actions?: React.ReactNode;
   /**
+   * Hide participants
+   * @default false
+   */
+  hideEventParticipants?: boolean;
+  /**
+   * Hide event planner
+   * @default false
+   */
+  hideEventPlanner?: boolean;
+  /**
    * Props to spread to EventSkeleton component
    * @default {}
    */
@@ -142,6 +152,8 @@ export default function Event(inProps: EventProps): JSX.Element {
     event = null,
     className = null,
     template = SCEventTemplateType.SNIPPET,
+    hideEventParticipants = false,
+    hideEventPlanner = false,
     actions,
     EventSkeletonComponentProps = {},
     ...rest
@@ -180,19 +192,25 @@ export default function Event(inProps: EventProps): JSX.Element {
             </Typography>
           </Link>
           <EventInfoDetails event={scEvent} />
-          <User
-            user={scEvent.managed_by}
-            elevation={0}
-            secondary={
-              <Typography variant="caption">
-                <FormattedMessage id="ui.myEventsWidget.planner" defaultMessage="ui.myEventsWidget.planner" />
-              </Typography>
-            }
-            actions={<></>}
-            className={classes.detailUser}
-          />
-          <Divider className={classes.detailFirstDivider} />
-          <EventPartecipantsButton event={scEvent} eventId={scEvent.id} />
+          {!hideEventPlanner && (
+            <User
+              user={scEvent.managed_by}
+              elevation={0}
+              secondary={
+                <Typography variant="caption">
+                  <FormattedMessage id="ui.myEventsWidget.planner" defaultMessage="ui.myEventsWidget.planner" />
+                </Typography>
+              }
+              actions={<></>}
+              className={classes.detailUser}
+            />
+          )}
+          {!hideEventParticipants && (
+            <>
+              <Divider className={classes.detailFirstDivider} />
+              <EventPartecipantsButton event={scEvent} eventId={scEvent.id} />
+            </>
+          )}
           <Divider className={classes.detailSecondDivider} />
         </CardContent>
         {actions ?? (
@@ -217,7 +235,7 @@ export default function Event(inProps: EventProps): JSX.Element {
             hasLocationInfo={false}
             beforePrivacyInfo={<Typography variant="h5">{scEvent.name}</Typography>}
           />
-          <EventPartecipantsButton event={scEvent} />
+          {!hideEventParticipants && <EventPartecipantsButton event={scEvent} />}
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>

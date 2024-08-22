@@ -106,6 +106,7 @@ import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
 import SCMainFeedTemplate from './components/SCMainFeedTemplate';
 import SCMediaFile from './components/SCMediaFile';
 import SCMediaLink from './components/SCMediaLink';
+import SCMediaEvent from './components/SCMediaEvent';
 import SCMyEventsWidget from './components/SCMyEventsWidget';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
@@ -279,6 +280,7 @@ const theme = {
     SCLoyaltyProgramDetailTemplate,
     SCMediaFile,
     SCMediaLink,
+		SCMediaEvent,
     SCNavigationSettingsIconButton,
     SCDefaultHeaderContent,
     SCNavigationToolbar,

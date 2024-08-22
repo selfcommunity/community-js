@@ -1,17 +1,14 @@
 import React, {ReactElement, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import FeedObject from '../../../components/FeedObject';
-import {SCFeedObjectTemplateType} from '../../../types/feedObject';
-import {CacheStrategies} from '@selfcommunity/utils';
 import {SCMediaType} from '@selfcommunity/types/src/types';
 import classNames from 'classnames';
-import {BoxProps, CardMedia, Typography} from '@mui/material';
+import {BoxProps} from '@mui/material';
 import filter from './filter';
+import Event from '../../../components/Event';
+import {SCEventTemplateType} from '../../../types/event';
+import {SCEventType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
-import {FormattedMessage} from 'react-intl';
-import Calendar from '../../Calendar';
-import EventInfoDetails from '../../EventInfoDetails';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
@@ -41,14 +38,21 @@ export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayC
   if (_medias.length === 0) {
     return null;
   }
+  console.log(medias);
 
   return (
     <Root className={classNames(className, classes.displayRoot)} {...rest}>
       {_medias.map((media, i) => (
         <Box className={classes.eventPreview} key={i} onClick={onMediaClick}>
-          {/* Use Event card */}
-          {media.title}
-          {media.description}
+          <Event
+            event={media.embed.metadata as SCEventType}
+            template={SCEventTemplateType.DETAIL}
+            variant="outlined"
+            square={true}
+            hideEventParticipants
+            hideEventPlanner
+            actions={<></>}
+          />
         </Box>
       ))}
     </Root>
