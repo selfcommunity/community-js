@@ -24,6 +24,7 @@ import {FormattedMessage} from 'react-intl';
 import {SnackbarKey, useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 import EventFeedSkeleton from './Skeleton';
+import {Box} from '@mui/material';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -175,6 +176,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
     [widgets, scEvent]
   );
 
+  console.log(scEvent);
   if (!scEvent) {
     return <EventFeedSkeleton />;
   } else if (
@@ -183,7 +185,11 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
     scEvent.subscription_status !== SCEventSubscriptionStatusType.GOING &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.NOT_GOING
   ) {
-    return <EventInfoWidget className={classes.root} event={scEvent} />;
+    return (
+      <Box mt={2}>
+        <EventInfoWidget className={classes.root} event={scEvent} />
+      </Box>
+    );
   }
 
   return (
