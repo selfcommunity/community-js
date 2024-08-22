@@ -3,7 +3,7 @@ import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextTyp
 import {useContext, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import CreateEventButton from '../CreateEventButton';
+import CreateEventButton, {CreateEventButtonProps} from '../CreateEventButton';
 import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
@@ -21,10 +21,16 @@ const classes = {
 
 const Root = styled(Widget, {
   name: PREFIX,
-  slot: 'Root'
-})();
+  slot: 'Root',
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface CreateEventWidgetProps extends WidgetProps {
+  /**
+   * Props to spread to CreateEventButton component
+   * @default {}
+   */
+  CreateEventButtonComponentProps?: CreateEventButtonProps;
   /**
    * Other props
    */
@@ -38,7 +44,7 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
     name: PREFIX
   });
 
-  const {...rest} = props;
+  const {CreateEventButtonComponentProps = {}, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState(true);
@@ -98,7 +104,7 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
       </CardContent>
 
       <CardActions className={classes.actions}>
-        <CreateEventButton />
+        <CreateEventButton {...CreateEventButtonComponentProps} />
       </CardActions>
     </Root>
   );

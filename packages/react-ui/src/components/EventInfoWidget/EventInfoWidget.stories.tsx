@@ -7,10 +7,7 @@ export default {
   args: {
     eventId: 113,
     summaryExpanded: false
-  },
-  render: (args) => (
-    <EventInfoWidget {...args} />
-  )
+  }
 } as Meta<typeof EventInfoWidget>;
 
 export const Base: StoryObj<EventInfoWidget> = {};

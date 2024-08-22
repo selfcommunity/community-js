@@ -14,7 +14,7 @@ export default {
     }
   },
   args: {
-    showFilters: 1,
+    showFilters: true,
   }
 } as Meta<typeof Events>;
 
@@ -26,6 +26,14 @@ const template = (args) => (
 
 export const Base: StoryObj<EventsSkeleton> = {
   render: template
+};
+
+export const MyEvents: StoryObj<Events> = {
+	args: {
+		general: false,
+		showFilters: false
+	},
+	render: template
 };
 
 export const BasePrefetchedEvents: StoryObj<Events> = {

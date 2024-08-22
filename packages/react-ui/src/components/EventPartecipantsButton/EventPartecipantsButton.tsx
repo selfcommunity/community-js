@@ -1,10 +1,9 @@
-import { Avatar, AvatarGroup, Button, List, ListItem, Typography, useTheme } from '@mui/material';
+import { Avatar, AvatarGroup, Button, List, ListItem, Typography } from '@mui/material';
 import { ButtonProps } from '@mui/material/Button/Button';
 import { styled } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useThemeProps } from '@mui/system';
 import { Endpoints, EventService, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCThemeType, useSCFetchEvent } from '@selfcommunity/react-core';
+import { useSCFetchEvent } from '@selfcommunity/react-core';
 import { SCEventType, SCUserType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -21,7 +20,10 @@ const PREFIX = 'SCEventPartecipantsButton';
 
 const classes = {
   root: `${PREFIX}-root`,
+  avatar: `${PREFIX}-avatar`,
+  partecipants: `${PREFIX}-partecipants`,
   dialogRoot: `${PREFIX}-dialog-root`,
+  infiniteScroll: `${PREFIX}-infinite-scroll`,
   endMessage: `${PREFIX}-end-message`
 };
 
@@ -29,13 +31,13 @@ const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
+  slot: 'DialogRoot',
   overridesResolver: (_props, styles) => styles.dialogRoot
-})();
+})(() => ({}));
 
 export interface EventPartecipantsButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled'>> {
   /**
@@ -159,10 +161,6 @@ export default function EventPartecipantsButton(inProps: EventPartecipantsButton
     setOpen((prev) => !prev);
   }, [setOpen]);
 
-  // RENDER
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   return (
     <>
       <Root
@@ -170,7 +168,7 @@ export default function EventPartecipantsButton(inProps: EventPartecipantsButton
         onClick={handleToggleDialogOpen}
         disabled={loading || !scEvent || scEvent.goings_counter === 0}
         {...rest}>
-        <Typography color="primary" variant="caption">
+        <Typography className={classes.partecipants} variant="caption">
           <FormattedMessage defaultMessage="ui.eventPartecipantsButton.partecipants" id="ui.eventPartecipantsButton.partecipants" />
         </Typography>
 
@@ -179,7 +177,7 @@ export default function EventPartecipantsButton(inProps: EventPartecipantsButton
         ) : (
           <AvatarGroup total={scEvent.goings_counter}>
             {followers.map((c: SCUserType) => (
-              <Avatar key={c.id} alt={c.username} src={c.avatar} />
+              <Avatar key={c.id} alt={c.username} src={c.avatar} className={classes.avatar} />
             ))}
           </AvatarGroup>
         )}
@@ -203,7 +201,7 @@ export default function EventPartecipantsButton(inProps: EventPartecipantsButton
             next={fetchFollowers}
             hasMoreNext={next !== null || loading}
             loaderNext={<UserSkeleton elevation={0} />}
-            height={isMobile ? '100%' : 400}
+            className={classes.infiniteScroll}
             endMessage={
               <Typography className={classes.endMessage}>
                 <FormattedMessage

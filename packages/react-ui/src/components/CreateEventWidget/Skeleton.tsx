@@ -16,7 +16,7 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'SkeletonRoot'
-})();
+})(() => ({}));
 
 export default function CreateEventWidgetSkeleton() {
   return (

@@ -1,28 +1,69 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Button, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
-import {WidgetProps} from '../Widget';
+import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
-import EventSkeleton from './Skeleton';
+import EventSkeleton, {EventSkeletonProps} from './Skeleton';
+import Calendar from '../../shared/Calendar';
+import EventInfoDetails from '../../shared/EventInfoDetails';
+import User from '../User';
+import EventPartecipantsButton from '../EventPartecipantsButton';
+import {SCEventTemplateType} from '../../types/event';
 
 const classes = {
   root: `${PREFIX}-root`,
-  avatar: `${PREFIX}-avatar`,
-  primary: `${PREFIX}-primary`,
-  secondary: `${PREFIX}-secondary`,
-  actions: `${PREFIX}-actions`
+  detailRoot: `${PREFIX}-detail-root`,
+  previewRoot: `${PREFIX}-preview-root`,
+  snippetRoot: `${PREFIX}-snippet-root`,
+  detailImageWrapper: `${PREFIX}-detail-image-wrapper`,
+  detailImage: `${PREFIX}-detail-image`,
+  detailNameWrapper: `${PREFIX}-detail-name-wrapper`,
+  detailName: `${PREFIX}-detail-name`,
+  detailContent: `${PREFIX}-detail-content`,
+  detailUser: `${PREFIX}-detail-user`,
+  detailFirstDivider: `${PREFIX}-detail-first-divider`,
+  detailSecondDivider: `${PREFIX}-detail-second-divider`,
+  detailActions: `${PREFIX}-detail-actions`,
+  previewImageWrapper: `${PREFIX}-preview-image-wrapper`,
+  previewImage: `${PREFIX}-preview-image`,
+  previewNameWrapper: `${PREFIX}-preview-name-wrapper`,
+  previewName: `${PREFIX}-preview-name`,
+  previewContent: `${PREFIX}-preview-content`,
+  previewActions: `${PREFIX}-preview-actions`,
+  snippetAvatar: `${PREFIX}-snippet-avatar`,
+  snippetPrimary: `${PREFIX}-snippet-primary`,
+  snippetSecondary: `${PREFIX}-snippet-secondary`,
+  snippetActions: `${PREFIX}-snippet-actions`
 };
 
-const Root = styled(BaseItem, {
+const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
+})(() => ({}));
+
+const DetailRoot = styled(Box, {
+  name: PREFIX,
+  slot: 'DetailRoot',
+  overridesResolver: (props, styles) => styles.detailRoot
+})(() => ({}));
+
+const PreviewRoot = styled(Box, {
+  name: PREFIX,
+  slot: 'PreviewRoot',
+  overridesResolver: (props, styles) => styles.previewRoot
+})(() => ({}));
+
+const SnippetRoot = styled(BaseItem, {
+  name: PREFIX,
+  slot: 'SnippetRoot',
+  overridesResolver: (props, styles) => styles.snippetRoot
 })(() => ({}));
 
 export interface EventProps extends WidgetProps {
@@ -36,6 +77,31 @@ export interface EventProps extends WidgetProps {
    * @default null
    */
   eventId?: number;
+  /**
+   * Event template type
+   * @default 'preview'
+   */
+  template?: SCEventTemplateType;
+  /**
+   * Actions
+   * @default null
+   */
+  actions?: React.ReactNode;
+  /**
+   * Hide participants
+   * @default false
+   */
+  hideEventParticipants?: boolean;
+  /**
+   * Hide event planner
+   * @default false
+   */
+  hideEventPlanner?: boolean;
+  /**
+   * Props to spread to EventSkeleton component
+   * @default {}
+   */
+  EventSkeletonComponentProps?: EventSkeletonProps;
   /**
    * Any other properties
    */
@@ -80,7 +146,18 @@ export default function Event(inProps: EventProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {eventId = null, event = null, className = null, elevation = 0, ...rest} = props;
+  const {
+    id = `event_object_${props.eventId ? props.eventId : props.event ? props.event.id : ''}`,
+    eventId = null,
+    event = null,
+    className = null,
+    template = SCEventTemplateType.SNIPPET,
+    hideEventParticipants = false,
+    hideEventPlanner = false,
+    actions,
+    EventSkeletonComponentProps = {},
+    ...rest
+  } = props;
 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
@@ -94,40 +171,127 @@ export default function Event(inProps: EventProps): JSX.Element {
    * Renders event object
    */
   if (!scEvent) {
-    return <EventSkeleton elevation={elevation} />;
+    return <EventSkeleton template={template} {...EventSkeletonComponentProps} {...rest} actions={actions} />;
   }
 
+  /**
+   * Renders event object
+   */
+  let contentObj: React.ReactElement;
+  if (template === SCEventTemplateType.DETAIL) {
+    contentObj = (
+      <DetailRoot className={classes.detailRoot}>
+        <Box className={classes.detailImageWrapper}>
+          <CardMedia component="img" image={scEvent.image_medium} alt={scEvent.name} className={classes.detailImage} />
+          <Calendar day={new Date(scEvent.start_date).getDate()} />
+        </Box>
+        <CardContent className={classes.detailContent}>
+          <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.detailNameWrapper}>
+            <Typography variant="h3" className={classes.detailName}>
+              {scEvent.name}
+            </Typography>
+          </Link>
+          <EventInfoDetails event={scEvent} />
+          {!hideEventPlanner && (
+            <User
+              user={scEvent.managed_by}
+              elevation={0}
+              secondary={
+                <Typography variant="caption">
+                  <FormattedMessage id="ui.myEventsWidget.planner" defaultMessage="ui.myEventsWidget.planner" />
+                </Typography>
+              }
+              actions={<></>}
+              className={classes.detailUser}
+            />
+          )}
+          {!hideEventParticipants && (
+            <>
+              <Divider className={classes.detailFirstDivider} />
+              <EventPartecipantsButton event={scEvent} eventId={scEvent.id} />
+            </>
+          )}
+          <Divider className={classes.detailSecondDivider} />
+        </CardContent>
+        {actions ?? (
+          <CardActions className={classes.detailActions}>
+            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+              <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
+            </Button>
+          </CardActions>
+        )}
+      </DetailRoot>
+    );
+  } else if (template === SCEventTemplateType.PREVIEW) {
+    contentObj = (
+      <PreviewRoot className={classes.previewRoot}>
+        <Box position="relative" className={classes.previewImageWrapper}>
+          <CardMedia component="img" height="100px" image={scEvent.image_medium} alt={scEvent.name} className={classes.previewImage} />
+        </Box>
+        <CardContent className={classes.previewContent}>
+          <EventInfoDetails
+            event={scEvent}
+            hidePrivacyIcon
+            hasLocationInfo={false}
+            beforePrivacyInfo={<Typography variant="h5">{scEvent.name}</Typography>}
+          />
+          {!hideEventParticipants && <EventPartecipantsButton event={scEvent} />}
+        </CardContent>
+        {actions ?? (
+          <CardActions className={classes.previewActions}>
+            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+              <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
+            </Button>
+          </CardActions>
+        )}
+      </PreviewRoot>
+    );
+  } else {
+    contentObj = (
+      <SnippetRoot
+        elevation={0}
+        square={true}
+        disableTypography
+        className={classes.snippetRoot}
+        image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.snippetAvatar} />}
+        primary={
+          <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.snippetPrimary}>
+            <Typography component="span">{`${intl.formatDate(scEvent.start_date, {
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric'
+            })}`}</Typography>
+            <Typography variant="body1">{scEvent.name}</Typography>
+          </Link>
+        }
+        secondary={
+          <Typography component="p" variant="body2" className={classes.snippetSecondary}>
+            <FormattedMessage id={`ui.eventForm.privacy.${scEvent.privacy}`} defaultMessage={`ui.eventForm.privacy.${scEvent.privacy}`} /> -{' '}
+            {scEvent?.location === SCEventLocationType.PERSON ? (
+              <FormattedMessage id={`ui.eventForm.address.live.label`} defaultMessage={`ui.eventForm.address.live.label`} />
+            ) : (
+              <FormattedMessage id={`ui.eventForm.address.online.label`} defaultMessage={`ui.eventForm.address.online.label`} />
+            )}
+          </Typography>
+        }
+        actions={
+          actions ?? (
+            <Box className={classes.snippetActions}>
+              <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+                <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
+              </Button>
+            </Box>
+          )
+        }
+      />
+    );
+  }
   /**
    * Renders root object
    */
   return (
-    <Root
-      elevation={elevation}
-      disableTypography
-      {...rest}
-      className={classNames(classes.root, className)}
-      image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.avatar} />}
-      primary={
-        <Typography component="div" className={classes.primary}>
-          <Typography component="span">{`${intl.formatDate(scEvent.start_date, {weekday: 'long', month: 'long', day: 'numeric'})}`}</Typography>
-          <Typography variant="body1">{scEvent.name}</Typography>
-        </Typography>
-      }
-      secondary={
-        <Typography component="p" variant="body2" className={classes.secondary}>
-          <FormattedMessage id={`ui.eventForm.privacy.${scEvent.privacy}`} defaultMessage={`ui.eventForm.privacy.${scEvent.privacy}`} /> -{' '}
-          {scEvent?.location === SCEventLocationType.PERSON ? (
-            <FormattedMessage id={`ui.eventForm.address.live.label`} defaultMessage={`ui.eventForm.address.live.label`} />
-          ) : (
-            <FormattedMessage id={`ui.eventForm.address.online.label`} defaultMessage={`ui.eventForm.address.online.label`} />
-          )}
-        </Typography>
-      }
-      actions={
-        <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
-          <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
-        </Button>
-      }
-    />
+    <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
+      {contentObj}
+    </Root>
   );
 }

@@ -281,6 +281,21 @@ const Component = {
         maxWidth: '40%'
       }
     }),
+    eventRoot: ({theme}: any) => ({
+      '& .SCNotification-username, & a': {
+        fontWeight: theme.typography.fontWeightBold
+      },
+      '& .SCNotificationItem-primary .MuiIcon-root': {
+        float: 'right',
+        fontSize: '18px'
+      },
+      '& .SCNotificationItem-secondary': {
+        textTransform: 'capitalize'
+      },
+      '& .SCNotification-snippet-time': {
+        paddingLeft: theme.spacing(5)
+      }
+    }),
     groupRoot: ({theme}: any) => ({}),
     undeletedForRoot: ({theme}: any) => ({
       '& .SCNotification-undeleted-icon': {

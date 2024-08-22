@@ -1,7 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({ theme }) => ({
-      gap: theme.spacing(2),
+      gap: theme.spacing(0.5),
 
       '& .SCEventInfoDetails-icon-text-wrapper': {
         flexDirection: 'row',

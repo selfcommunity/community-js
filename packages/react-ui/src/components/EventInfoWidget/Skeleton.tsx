@@ -11,7 +11,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'SkeletonRoot',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 export default function EventInfoWigetSkeleton() {
   return (

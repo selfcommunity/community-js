@@ -63,6 +63,7 @@ import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
 import SCEmojiPicker from './components/SCEmojiPicker';
 import SCEvent from './components/SCEvent';
+import SCEventActionsMenu from './components/SCEventActionsMenu';
 import SCEventForm from './components/SCEventForm';
 import SCEventHeader from './components/SCEventHeader';
 import SCEventInfoDetails from './components/SCEventInfoDetails';
@@ -105,6 +106,7 @@ import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
 import SCMainFeedTemplate from './components/SCMainFeedTemplate';
 import SCMediaFile from './components/SCMediaFile';
 import SCMediaLink from './components/SCMediaLink';
+import SCMediaEvent from './components/SCMediaEvent';
 import SCMyEventsWidget from './components/SCMyEventsWidget';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
@@ -129,6 +131,7 @@ import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget'
 import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
+import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
@@ -277,6 +280,7 @@ const theme = {
     SCLoyaltyProgramDetailTemplate,
     SCMediaFile,
     SCMediaLink,
+		SCMediaEvent,
     SCNavigationSettingsIconButton,
     SCDefaultHeaderContent,
     SCNavigationToolbar,
@@ -359,6 +363,7 @@ const theme = {
     SCCreateEventButton,
     SCEventLocationWidget,
     SCEvent,
+    SCEventActionsMenu,
     SCEvents,
     SCEventInviteButton,
     SCEventHeader,
@@ -368,7 +373,8 @@ const theme = {
     SCEventPartecipantsButton,
     SCMyEventsWidget,
     SCCalendar,
-    SCCreateEventWidget
+    SCCreateEventWidget,
+    SCSuggestedEventsWidget
   },
   selfcommunity: {
     user: {
