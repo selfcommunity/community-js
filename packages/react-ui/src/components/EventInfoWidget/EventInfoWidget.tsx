@@ -96,6 +96,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     setExpanded(!expanded);
   }, [expanded]);
 
+  // RENDER
   if (!scEvent && loading) {
     return <Skeleton />;
   }
