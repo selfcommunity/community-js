@@ -71,7 +71,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
       });
   }, []);
 
-  const onReachEnd = useCallback(() => {
+  const handleReachEnd = useCallback(() => {
     if (eventsData.count > eventsData.results.length) {
       http
         .request({
@@ -101,7 +101,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
           <FormattedMessage id="ui.suggestedEventsWidget.title" defaultMessage="ui.suggestedEventsWidget.title" />
         </Typography>
 
-        <Swiper spaceBetween={8} slidesPerView="auto" onReachEnd={onReachEnd}>
+        <Swiper spaceBetween={8} slidesPerView="auto" onReachEnd={handleReachEnd}>
           {eventsData?.results.map((event, i) => (
             <SwiperSlide key={i} className={classes.swiper}>
               <></>
@@ -111,7 +111,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
       </CardContent>
 
       <CardActions className={classes.actions}>
-        <Button component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {})} className={classes.actionButton} disabled={false}>
+        <Button component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {})} className={classes.actionButton}>
           <Typography variant="caption">
             <FormattedMessage id="ui.suggestedEventsWidget.showAll" defaultMessage="ui.suggestedEventsWidget.showAll" />
           </Typography>
