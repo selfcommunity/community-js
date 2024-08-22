@@ -3,8 +3,8 @@ import Skeleton from '@mui/material/Skeleton';
 import {styled} from '@mui/material/styles';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
-import {EventSkeleton} from '@selfcommunity/react-ui';
 import {SCEventTemplateType} from '../../types/event';
+import {EventSkeleton} from '../Event';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,

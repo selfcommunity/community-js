@@ -4,7 +4,7 @@ import 'swiper/css';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
-import {EventSkeleton} from '@selfcommunity/react-ui';
+import {EventSkeleton} from '../Event';
 import {SCEventTemplateType} from '../../types/event';
 
 const classes = {
