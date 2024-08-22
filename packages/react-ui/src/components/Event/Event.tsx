@@ -233,7 +233,13 @@ export default function Event(inProps: EventProps): JSX.Element {
             event={scEvent}
             hidePrivacyIcon
             hasLocationInfo={false}
-            beforePrivacyInfo={<Typography variant="h5">{scEvent.name}</Typography>}
+            beforePrivacyInfo={
+              <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.previewNameWrapper}>
+                <Typography variant="h5" className={classes.previewName}>
+                  {scEvent.name}
+                </Typography>
+              </Link>
+            }
           />
           {!hideEventParticipants && <EventPartecipantsButton event={scEvent} />}
         </CardContent>
