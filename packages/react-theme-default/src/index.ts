@@ -130,6 +130,7 @@ import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget'
 import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
+import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
@@ -370,7 +371,8 @@ const theme = {
     SCEventPartecipantsButton,
     SCMyEventsWidget,
     SCCalendar,
-    SCCreateEventWidget
+    SCCreateEventWidget,
+    SCSuggestedEventsWidget
   },
   selfcommunity: {
     user: {
