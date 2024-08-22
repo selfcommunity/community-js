@@ -36,6 +36,13 @@ export interface EventProps extends WidgetProps {
    * @default null
    */
   eventId?: number;
+
+  /**
+   * Prop to display event actions
+   * @default true
+   */
+  showActions?: boolean;
+
   /**
    * Any other properties
    */
@@ -80,7 +87,7 @@ export default function Event(inProps: EventProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {eventId = null, event = null, className = null, elevation = 0, ...rest} = props;
+  const {eventId = null, event = null, className = null, elevation = 0, showActions = true, ...rest} = props;
 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
@@ -124,9 +131,11 @@ export default function Event(inProps: EventProps): JSX.Element {
         </Typography>
       }
       actions={
-        <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
-          <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
-        </Button>
+        showActions && (
+          <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+            <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
+          </Button>
+        )
       }
     />
   );

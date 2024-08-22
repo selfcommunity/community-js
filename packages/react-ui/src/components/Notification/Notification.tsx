@@ -33,6 +33,7 @@ import {
   SCCommentType,
   SCFeedObjectType,
   SCNotificationAggregatedType,
+  SCNotificationEventActivityType,
   SCNotificationGroupActivityType,
   SCNotificationPrivateMessageType,
   SCNotificationType,
@@ -42,6 +43,7 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
 import GroupNotification from './Group';
+import EventNotification from './Event/Event';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -307,6 +309,56 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       );
     }
     /**
+     * Event notifications header
+     */
+    if (
+      notificationObject.aggregated &&
+      (notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ADDED_TO_EVENT ||
+        notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT)
+    ) {
+      let eventNotification: SCNotificationEventActivityType = notificationObject.aggregated[0] as SCNotificationEventActivityType;
+      return (
+        <CardHeader
+          className={classes.header}
+          avatar={
+            <Link
+              {...(!eventNotification.user.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, eventNotification.user)
+              })}
+              onClick={eventNotification.user.deleted ? () => setOpenAlert(true) : null}>
+              <UserAvatar hide={!eventNotification.user.community_badge} smaller={true}>
+                <Avatar className={classes.avatar} alt={eventNotification.user.username} variant="circular" src={eventNotification.user.avatar} />
+              </UserAvatar>
+            </Link>
+          }
+          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          title={
+            <>
+              <Link
+                {...(!eventNotification.user.deleted && {
+                  to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, eventNotification.user)
+                })}
+                onClick={eventNotification.user.deleted ? () => setOpenAlert(true) : null}
+                className={classes.username}>
+                {eventNotification.user.username}
+              </Link>{' '}
+              <FormattedMessage
+                id={`ui.notification.${notificationObject.aggregated[0].type}`}
+                defaultMessage={`ui.notification.${notificationObject.aggregated[0].type}`}
+                values={{
+                  icon: (...chunks) => <Icon>{chunks}</Icon>,
+                  event: eventNotification.event.name,
+                  link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, eventNotification.event)}>{chunks}</Link>
+                }}
+              />
+            </>
+          }
+        />
+      );
+    }
+    /**
      * Group notifications header
      */
     if (
@@ -478,6 +530,13 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
     ) {
       return <GroupNotification notificationObject={n} key={i} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_EVENT ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
+    ) {
+      return <EventNotification notificationObject={n} key={i} />;
     }
     return null;
   }
