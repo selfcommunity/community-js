@@ -265,13 +265,14 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     return _status;
   }, [status, scEvent]);
 
-  if (!scEvent || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id)) {
+  if (!scEvent || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id) || scEventsManager.isLoading(scEvent)) {
     return null;
   }
 
   return (
     <>
-      {scEvent?.privacy !== SCEventPrivacyType.PRIVATE ? (
+      {scEvent?.privacy !== SCEventPrivacyType.PRIVATE ||
+      (scEvent?.privacy !== SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
         <>
           <SelectRoot
             className={classNames(
