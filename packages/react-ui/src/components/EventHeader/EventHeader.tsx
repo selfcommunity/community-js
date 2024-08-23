@@ -282,6 +282,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
           </Typography>
         </Box>
         <User
+          buttonProps={{disabled: true}}
           userId={scEvent?.managed_by?.id}
           secondary={<FormattedMessage id="ui.eventHeader.user.manager" defaultMessage="ui.eventHeader.user.manager" />}
           elevation={0}

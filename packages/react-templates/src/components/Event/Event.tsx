@@ -104,11 +104,7 @@ export default function Event(inProps: EventProps): JSX.Element {
   const {id = 'event', className, event, eventId, widgets, FeedObjectProps, FeedSidebarProps, EventFeedProps = {}} = props;
 
   // HOOKS
-  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
-
-  const handleSubscribe = (event, status) => {
-    setSCEvent(Object.assign({}, scEvent, {subscription_status: status}));
-  };
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   if (!scEvent) {
     return <EventSkeletonTemplate />;
@@ -116,7 +112,7 @@ export default function Event(inProps: EventProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <EventHeader eventId={scEvent.id} EventSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
+      <EventHeader eventId={scEvent.id} />
       <EventFeed
         className={classes.feed}
         event={scEvent}

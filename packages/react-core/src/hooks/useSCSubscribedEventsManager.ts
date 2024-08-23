@@ -169,7 +169,6 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
                 url: Endpoints.GoToEvent.url({id: event.id}),
                 method: Endpoints.GoToEvent.method,
               };
-          console.log(requestConfig.url);
           return http.request(requestConfig).then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
