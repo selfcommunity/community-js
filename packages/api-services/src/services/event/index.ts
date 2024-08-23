@@ -1,17 +1,21 @@
 import {BaseGetParams, BaseSearchParams, EventFeedParams, EventRelatedParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
-import {SCContributionType, SCEventType, SCUserType} from '@selfcommunity/types';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 import {EventCreateParams, EventSearchParams} from '../../types';
+import {EventUserParams} from '../../types/event';
 
 export interface EventApiClientInterface {
   // Events subscribed to by the user
-  getUserEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
+  getUserEvents(params?: EventUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
 
   // Events subscribed by the user identified with :id in the path params (for the rest it is the same as getUserEvents)
   getUserSubscribedEvents(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
+
+  // Events created by the user
+  getUserCreatedEvents(params?: EventRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
 
   // Events search
   searchEvents(params?: EventSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
@@ -57,6 +61,9 @@ export interface EventApiClientInterface {
   // To request participation in a private event use subscribeToEvent which automatically manages the subscription to a private/public event
   inviteOrAcceptEventRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
 
+  // Remove invites - only for event moderator or user authenticated
+  removeInviteEvent(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+
   // Event subscription status
   getEventSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
@@ -86,7 +93,7 @@ export class EventApiClient {
    * @param params
    * @param config
    */
-  static getUserEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+  static getUserEvents(params?: EventUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetUserEvents.url({})}?${p.toString()}`, method: Endpoints.GetUserEvents.method});
   }
@@ -108,6 +115,17 @@ export class EventApiClient {
       url: `${Endpoints.GetUserSubscribedEvents.url({id})}?${p.toString()}`,
       method: Endpoints.GetUserSubscribedEvents.method
     });
+  }
+
+  /**
+   * This endpoint returns all events cretaed by a specific event.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getUserCreatedEvents(params?: EventRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetUserCreatedEvents.url({})}?${p.toString()}`, method: Endpoints.GetUserCreatedEvents.method});
   }
 
   /**
@@ -294,6 +312,20 @@ export class EventApiClient {
     });
   }
   /**
+   * This endpoint allows to remove invites.
+   * @param id
+   * @param data
+   * @param config
+   */
+  static removeInviteEvent(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.RemoveInviteEvent.url({id}),
+      method: Endpoints.RemoveInviteEvent.method,
+      data: data
+    });
+  }
+  /**
    * This endpoint retrieves the event subscription status.
    * @param id
    * @param config
@@ -397,7 +429,7 @@ export class EventApiClient {
  :::
  */
 export default class EventService {
-  static async getUserEvents(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+  static async getUserEvents(params?: EventUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
     return EventApiClient.getUserEvents(params, config);
   }
   static async getUserSubscribedEvents(
@@ -406,6 +438,9 @@ export default class EventService {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCEventType>> {
     return EventApiClient.getUserSubscribedEvents(id, params, config);
+  }
+  static async getUserCretaedEvents(params?: EventRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+    return EventApiClient.getUserCreatedEvents(params, config);
   }
   static async searchEvents(params?: EventSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
     return EventApiClient.searchEvents(params, config);
@@ -469,6 +504,9 @@ export default class EventService {
   }
   static async inviteOrAcceptEventRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
     return EventApiClient.inviteOrAcceptEventRequest(id, data, config);
+  }
+  static async removeInviteEvent(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return EventApiClient.removeInviteEvent(id, data, config);
   }
   static async getEventSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
     return EventApiClient.getEventSubscriptionStatus(id, config);

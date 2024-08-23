@@ -14,12 +14,14 @@ import DialogContent from '@mui/material/DialogContent';
 import {SCPreferencesContextType, useSCFetchAddressingTagList, useSCPreferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
 import GroupAutocomplete from '../../../GroupAutocomplete';
-import {SCGroupType, SCFeatureName} from '@selfcommunity/types';
+import {SCGroupType, SCFeatureName, SCEventType} from '@selfcommunity/types';
+import EventAutocomplete from '../../../EventAutocomplete';
 
 export enum AudienceTypes {
   AUDIENCE_ALL = 'all',
   AUDIENCE_TAG = 'tag',
-  AUDIENCE_GROUP = 'group'
+  AUDIENCE_GROUP = 'group',
+  AUDIENCE_EVENT = 'event'
 }
 
 const classes = {
@@ -61,6 +63,8 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
     // @ts-ignore
     defaultValue === null || defaultValue.length === 0
       ? AudienceTypes.AUDIENCE_ALL
+      : defaultValue && Object.prototype.hasOwnProperty.call(defaultValue, 'recurring')
+      ? AudienceTypes.AUDIENCE_EVENT
       : defaultValue && Object.prototype.hasOwnProperty.call(defaultValue, 'managed_by')
       ? AudienceTypes.AUDIENCE_GROUP
       : AudienceTypes.AUDIENCE_TAG
@@ -74,14 +78,18 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: autocompleteOpen});
   const {features}: SCPreferencesContextType = useSCPreferences();
   // MEMO
+  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
   const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
 
   // HANDLERS
   const handleSave = useCallback(() => {
-    audience === AudienceTypes.AUDIENCE_GROUP ? onSave(value) : onSave(value?.length && value?.length > 0 ? value : null);
+    audience === AudienceTypes.AUDIENCE_GROUP || audience === AudienceTypes.AUDIENCE_EVENT
+      ? onSave(value)
+      : onSave(value?.length && value?.length > 0 ? value : null);
   }, [value, onSave, audience]);
 
   const handleChange = useCallback((event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
+  const handleEventChange = useCallback((event: SCEventType) => setValue(event), []);
   const handleGroupChange = useCallback((group: SCGroupType) => setValue(group), []);
 
   const handleChangeAudience = useCallback((event: SyntheticEvent, data: AudienceTypes) => setAudience(data), []);
@@ -108,6 +116,18 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             icon={<Icon>public</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
           />
+          {eventsEnabled && (
+            <Tab
+              disabled={
+                (Boolean(value?.length) && !Object.prototype.hasOwnProperty.call(value, 'recurring')) ||
+                (value !== undefined && Boolean(!value?.length) && audience !== AudienceTypes.AUDIENCE_ALL) ||
+                (Boolean(value?.length === 0) && audience === AudienceTypes.AUDIENCE_ALL && Boolean(defaultValue?.length !== 0))
+              }
+              value={AudienceTypes.AUDIENCE_EVENT}
+              icon={<Icon>CalendarIcon</Icon>}
+              label={<FormattedMessage id="ui.composer.layer.audience.event" defaultMessage="ui.composer.layer.audience.event" />}
+            />
+          )}
           {groupsEnabled && (
             <Tab
               disabled={
@@ -130,6 +150,9 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
         <Typography className={classes.message}>
           {audience === AudienceTypes.AUDIENCE_ALL && (
             <FormattedMessage id="ui.composer.layer.audience.all.message" defaultMessage="ui.composer.audience.layer.all.message" />
+          )}
+          {audience === AudienceTypes.AUDIENCE_EVENT && (
+            <FormattedMessage id="ui.composer.layer.audience.event.message" defaultMessage="ui.composer.audience.layer.event.message" />
           )}
           {audience === AudienceTypes.AUDIENCE_GROUP && (
             <FormattedMessage id="ui.composer.layer.audience.group.message" defaultMessage="ui.composer.audience.layer.group.message" />
@@ -195,6 +218,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           />
         )}
         {audience === AudienceTypes.AUDIENCE_GROUP && <GroupAutocomplete onChange={handleGroupChange} defaultValue={defaultValue} />}
+        {audience === AudienceTypes.AUDIENCE_EVENT && <EventAutocomplete onChange={handleEventChange} defaultValue={defaultValue} />}
       </DialogContent>
     </Root>
   );

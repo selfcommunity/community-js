@@ -160,18 +160,14 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   }, [eventIndex, state.results]);
 
   // RENDER
-  if (!eventsEnabled) {
+  if (!eventsEnabled || (state.initialized && state.count === 0)) {
     return <HiddenPlaceholder />;
   }
 
   if (!state.initialized || state.isLoadingNext) {
     return <Skeleton />;
   }
-
-  if (state.count === 0) {
-    return <HiddenPlaceholder />;
-  }
-
+	
   return (
     <Root className={classes.root} {...rest}>
       <Box className={classes.titleWrapper}>

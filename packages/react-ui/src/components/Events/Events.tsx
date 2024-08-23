@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
-import {SCEventDateFilterType, SCEventType} from '@selfcommunity/types';
+import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -63,11 +63,11 @@ export interface EventsProps {
    */
   EventComponentProps?: EventProps;
 
-	/**
-	 * Props to spread to single event skeleton object
-	 * @default {}
-	 */
-	EventSkeletonComponentProps?: EventSkeletonProps;
+  /**
+   * Props to spread to single event skeleton object
+   * @default {}
+   */
+  EventSkeletonComponentProps?: EventSkeletonProps;
 
   /**
    * Show/Hide filters
@@ -84,7 +84,6 @@ export interface EventsProps {
   /** If true, it means that the endpoint fetches all events available
    * @default false
    */
-
   general?: boolean;
 
   /**
@@ -131,7 +130,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     EventComponentProps = {elevation: 0, square: true},
-		EventSkeletonComponentProps = {elevation: 0, square: true},
+    EventSkeletonComponentProps = {elevation: 0, square: true},
     showFilters = false,
     filters,
     general = true,
@@ -184,7 +183,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
         ...(selected && {follows: selected})
       });
     } else {
-      eventService = EventService.getUserEvents({...endpointQueryParams, ...(search !== '' && {search: search})});
+      eventService = EventService.getUserEvents({
+        ...endpointQueryParams,
+        subscription_status: SCEventSubscriptionStatusType.GOING,
+        ...(search !== '' && {search: search})
+      });
     }
     eventService
       .then((res: SCPaginatedResponse<SCEventType>) => {
@@ -355,7 +358,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 {filteredEvents.length % 2 !== 0 && (
                   <Grid item xs={12} sm={8} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
                     <EventSkeleton
-											{...EventSkeletonComponentProps}
+                      {...EventSkeletonComponentProps}
                       actions={
                         <CreateEventButton variant="outlined" color="primary" size="small">
                           <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />

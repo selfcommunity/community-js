@@ -39,6 +39,7 @@ export const GROUPS_ROUTE_NAME = 'groups';
 export const GROUPS_SUBSCRIBED_ROUTE_NAME = 'groups_subscribed';
 export const EVENT_ROUTE_NAME = 'event';
 export const EVENTS_ROUTE_NAME = 'events';
+export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
 export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
 export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
 
@@ -81,6 +82,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [GROUPS_ROUTE_NAME]: '/groups/',
   [GROUPS_SUBSCRIBED_ROUTE_NAME]: '/groups/subscribed/',
   [EVENTS_ROUTE_NAME]: '/events/',
+  [EVENTS_SUGGESTED_ROUTE_NAME]: '/events/suggested',
   [EVENT_ROUTE_NAME]: '/event/:id/:slug/',
   [EVENTS_SUBSCRIBED_ROUTE_NAME]: '/events/subscribed/',
   [EVENTS_HIGHLIGHT_ROUTE_NAME]: '/events/highlight/',

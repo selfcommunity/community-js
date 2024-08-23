@@ -1,4 +1,4 @@
 import { SCMediaType } from '@selfcommunity/types/src/types';
-import { MEDIA_TYPE_SHARE } from '../../../constants/Media';
+import {MEDIA_TYPE_EVENT, MEDIA_TYPE_SHARE} from '../../../constants/Media';
 
-export default (media: SCMediaType): boolean => media.type === MEDIA_TYPE_SHARE;
+export default (media: SCMediaType): boolean => media.type === MEDIA_TYPE_SHARE || media.type === MEDIA_TYPE_EVENT;

@@ -98,6 +98,7 @@ import useSCUserIsBlocked from './hooks/useSCUserIsBlocked';
 import useSCFetchGroup from './hooks/useSCFetchGroup';
 import useSCFetchGroups from './hooks/useSCFetchGroups';
 import useSCFetchEvent from './hooks/useSCFetchEvent';
+import useSCFetchEvents from './hooks/useSCFetchEvents';
 
 /**
  * Routing component
@@ -208,4 +209,5 @@ export {
   useSCFetchGroup,
   useSCFetchGroups,
   useSCFetchEvent,
+  useSCFetchEvents
 };

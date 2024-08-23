@@ -27,6 +27,10 @@ export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX
 export const EVENT_OBJECT_CACHE_PREFIX_KEY = '_evt_';
 export const getEventObjectCacheKey = (id) => `${EVENT_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** EVENTS OBJECT **/
+export const EVENTS_OBJECT_CACHE_PREFIX_KEY = '_evts_';
+export const getEventsObjectCacheKey = () => `${EVENTS_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** GROUP OBJECT **/
 export const GROUP_OBJECT_CACHE_PREFIX_KEY = '_grp_';
 export const getGroupObjectCacheKey = (id) => `${GROUP_OBJECT_CACHE_PREFIX_KEY}${id}`;

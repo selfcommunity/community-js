@@ -3,6 +3,7 @@ import {
   SCCategoryType,
   SCContributionLocation,
   SCContributionType,
+  SCEventType,
   SCFeatureName,
   SCFeedDiscussionType,
   SCFeedPostType,
@@ -121,6 +122,7 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
     title?: string;
     text?: string;
     categories?: SCCategoryType[];
+    event?: SCEventType;
     group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];
@@ -147,7 +149,7 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
    * Callback triggered on close click
    * @default null
    */
-  onClose?: (event: SyntheticEvent) => void;
+  onClose?: (e: SyntheticEvent) => void;
   /**
    * The feed where the component is rendered
    * @default SCFeedTypologyType.HOME
@@ -164,6 +166,7 @@ const COMPOSER_INITIAL_STATE = {
   htmlError: null,
   categories: [],
   group: null,
+  event: null,
   categoriesError: null,
   groupsError: null,
   addressing: null,
@@ -178,6 +181,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'reset':
       return {...COMPOSER_INITIAL_STATE, key: random()};
+    case 'resetEventFeed':
+      return {...COMPOSER_INITIAL_STATE, event: state.event, key: random()};
     case 'resetGroupFeed':
       return {...COMPOSER_INITIAL_STATE, group: state.group, key: random()};
     case 'resetCategoryFeed':
@@ -259,7 +264,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [layer, setLayer] = useState<ComposerLayerType | null>();
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, key: random()});
-  const {key, id, type, title, titleError, html, categories, group, addressing, audience, medias, poll, pollError, location, error} = state;
+  const {key, id, type, title, titleError, html, categories, event, group, addressing, audience, medias, poll, pollError, location, error} = state;
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === SCContributionType.POST) {
@@ -278,6 +283,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           title: _feedObject.title,
           html: _feedObject.html,
           categories: _feedObject.categories,
+          event: _feedObject.event,
           group: _feedObject.group,
           addressing: _feedObject.addressing,
           medias: _feedObject.medias,
@@ -346,8 +352,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   useEffect(() => {
     if (!unloadRef.current && canSubmit) {
       unloadRef.current = true;
-      const onUnload = (event) => {
-        event.preventDefault();
+      const onUnload = (e) => {
+        e.preventDefault();
         return '';
       };
       window.onbeforeunload = onUnload;
@@ -369,18 +375,18 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
 
     /**
      * On touchStart event save the initial Y
-     * @param event
+     * @param e
      */
-    const handleTouchStart = (event) => {
-      pointerStartY.current = event.touches[0].clientY;
+    const handleTouchStart = (e) => {
+      pointerStartY.current = e.touches[0].clientY;
     };
 
     /**
      * Perform blur only if gesture is a pan (bottom direction)
-     * @param event
+     * @param e
      */
-    const handleTouchmove = (event) => {
-      const currentY = event.touches[0].clientY;
+    const handleTouchmove = (e) => {
+      const currentY = e.touches[0].clientY;
       const deltaY = currentY - pointerStartY.current;
       pointerStartY.current = currentY;
       if (deltaY > 0) {
@@ -462,9 +468,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   const handleChangeAudience = useCallback(
-    (value: SCTagType[] | SCGroupType | null) => {
-      if (group || (value && Object.prototype.hasOwnProperty.call(value, 'managed_by'))) {
+    (value: SCTagType[] | SCGroupType | SCEventType | null) => {
+      if (group || (value && Object.prototype.hasOwnProperty.call(value, 'emotional_image_position'))) {
         dispatch({type: 'group', value});
+      } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
+        dispatch({type: 'event', value});
       } else {
         dispatch({type: 'addressing', value});
       }
@@ -481,10 +489,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeAudience,
-          defaultValue: group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'managed_by')) ? group : addressing
+          defaultValue:
+            group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
+              ? group
+              : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
+              ? event
+              : addressing
         }
       }),
-    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, group]
+    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, event, group]
   );
 
   const handleChangeLocation = useCallback((value: SCContributionLocation | null) => {
@@ -526,7 +539,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   }, []);
 
   const handleMediaTriggerClick = useCallback(
-    (mediaObjectType: SCMediaObjectType) => (event: React.MouseEvent<HTMLButtonElement>) => {
+    (mediaObjectType: SCMediaObjectType) => (e: React.MouseEvent<HTMLButtonElement>) => {
       if (mediaObjectType.layerComponent) {
         handleAddLayer({
           name: mediaObjectType.name,
@@ -567,9 +580,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   const handleSubmit = useCallback(
-    (event: SyntheticEvent): void => {
-      event.preventDefault();
-      event.stopPropagation();
+    (e: SyntheticEvent): void => {
+      e.preventDefault();
+      e.stopPropagation();
       if (UserUtils.isBlocked(scUserContext.user)) {
         // deny submit action if authenticated user is blocked
         enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
@@ -598,6 +611,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       if (features.includes(SCFeatureName.GROUPING) && group !== null) {
         data.group = group.id;
       }
+      if (features.includes(SCFeatureName.EVENT) && event !== null) {
+        data.event = event.id;
+      }
       setIsSubmitting(true);
 
       // Finding right url
@@ -623,6 +639,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }
           feedType && feedType === SCFeedTypologyType.CATEGORY
             ? dispatch({type: 'resetCategoryFeed'})
+            : feedType === SCFeedTypologyType.EVENT
+            ? dispatch({type: 'resetEventFeed'})
             : feedType === SCFeedTypologyType.GROUP
             ? dispatch({type: 'resetGroupFeed'})
             : dispatch({type: 'reset'});
@@ -632,11 +650,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         })
         .then(() => setIsSubmitting(false));
     },
-    [scUserContext.user, feedObjectType, id, type, title, html, categories, group, addressing, audience, medias, poll, location, hasPoll]
+    [scUserContext.user, feedObjectType, id, type, title, html, categories, event, group, addressing, audience, medias, poll, location, hasPoll]
   );
   //edited here
   const handleClose = useCallback(
-    (event: SyntheticEvent, reason?: string): void => {
+    (e: SyntheticEvent, reason?: string): void => {
       if (unloadRef.current) {
         window.onbeforeunload = null;
       }
@@ -647,10 +665,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           ComponentProps: {
             onClose: handleRemoveLayer,
             onSave: () => {
-              onClose && onClose(event);
+              onClose && onClose(e);
               setLayer(null);
               feedType && feedType === SCFeedTypologyType.CATEGORY
                 ? dispatch({type: 'resetCategoryFeed'})
+                : feedType === SCFeedTypologyType.EVENT
+                ? dispatch({type: 'resetEventFeed'})
                 : feedType === SCFeedTypologyType.GROUP
                 ? dispatch({type: 'resetGroupFeed'})
                 : dispatch({type: 'reset'});
@@ -658,9 +678,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }
         });
       } else {
-        console.log('qui');
-        onClose && onClose(event);
-        console.log('qui2');
+        onClose && onClose(e);
         /*setLayer(null);
         feedType && feedType === SCFeedTypologyType.CATEGORY
           ? dispatch({type: 'resetCategoryFeed'})
@@ -673,7 +691,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   const handleClosePrompt = useCallback(
-    (event: SyntheticEvent): void => {
+    (e: SyntheticEvent): void => {
       if (canSubmit) {
         handleAddLayer({
           name: 'close',
@@ -684,7 +702,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }
         });
       } else {
-        handleClose(event);
+        handleClose(e);
       }
     },
     [canSubmit, handleAddLayer, handleRemoveLayer, handleClose]
@@ -711,7 +729,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentPoll
             key={key}
             onChange={handleChangePoll}
-            value={{html, group, addressing, medias, poll, location}}
+            value={{html, event, group, addressing, medias, poll, location}}
             error={pollError}
             disabled={isSubmitting}
           />
@@ -720,7 +738,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentDiscussion
             key={key}
-            value={{title, html, categories, group, addressing, medias, poll, location}}
+            value={{title, html, categories, event, group, addressing, medias, poll, location}}
             error={{titleError, error}}
             onChange={handleChangeDiscussion}
             disabled={isSubmitting}
@@ -735,7 +753,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentPost
             key={key}
-            value={{html, categories, group, addressing, medias, poll, location}}
+            value={{html, categories, event, group, addressing, medias, poll, location}}
             error={{error}}
             onChange={handleChangePost}
             disabled={isSubmitting}
@@ -753,6 +771,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     title,
     html,
     categories,
+    event,
     group,
     addressing,
     medias,
@@ -791,7 +810,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes
-            value={{categories, group, addressing, location}}
+            value={{categories, event, group, addressing, location}}
             className={classes.attributes}
             onChange={handleChangeAttributes}
             onClick={handleClickAttributes}
@@ -828,9 +847,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Icon>category</Icon>
           </IconButton>
           <IconButton
-            disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group)}
+            disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group) || Boolean(feedObject?.event)}
             onClick={handleAddAudienceLayer}>
-            {(!group && addressing === null) || addressing?.length === 0 ? <Icon>public</Icon> : group ? <Icon>groups</Icon> : <Icon>label</Icon>}
+            {(!group && addressing === null) || (!event && addressing === null) || addressing?.length === 0 ? (
+              <Icon>public</Icon>
+            ) : group ? (
+              <Icon>groups</Icon>
+            ) : event ? (
+              <Icon>CalendarIcon</Icon>
+            ) : (
+              <Icon>label</Icon>
+            )}
           </IconButton>
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>
