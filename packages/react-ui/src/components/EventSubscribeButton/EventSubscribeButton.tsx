@@ -131,7 +131,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   const {className, eventId, event, user, onSubscribe, ...rest} = props;
 
   // STATE
-  const [status, setStatus] = useState<string>(null);
+  const [status, setStatus] = useState<string | null | undefined>(undefined);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -262,14 +262,20 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     return _status;
   }, [status, scEvent]);
 
-  if (!scEvent || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id) || scEventsManager.isLoading(scEvent)) {
+  if (
+    !scEvent ||
+    status === undefined ||
+    (isEventAdmin && user?.id === scUserContext.user.id) ||
+    (isEventAdmin && !user?.id) ||
+    scEventsManager.isLoading(scEvent)
+  ) {
     return null;
   }
 
   return (
     <>
       {scEvent?.privacy !== SCEventPrivacyType.PRIVATE ||
-      (scEvent?.privacy !== SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
+      (scEvent?.privacy === SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
         <>
           <SelectRoot
             className={classNames(

@@ -219,7 +219,12 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
       HeaderComponent={
         <>
           <EventInfoWidget className={classes.root} event={scEvent} />
-          {scEvent && scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED && (
+          {Boolean(
+            scEvent &&
+              (scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED ||
+                scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
+                scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING)
+          ) && (
             <InlineComposerWidget
               onSuccess={handleComposerSuccess}
               defaultValue={{event: scEvent}}

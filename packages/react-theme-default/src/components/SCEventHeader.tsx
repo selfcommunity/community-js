@@ -62,10 +62,8 @@ const Component = {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              [theme.breakpoints.down('md')]: {
-                '& .SCEventInviteButton-root': {
-                  marginRight: theme.spacing(1)
-                }
+              '& .SCEventInviteButton-root': {
+                marginRight: theme.spacing(1)
               }
             }
           }
