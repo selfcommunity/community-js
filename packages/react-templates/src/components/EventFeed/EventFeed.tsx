@@ -222,7 +222,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
           {scEvent && scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED && (
             <InlineComposerWidget
               onSuccess={handleComposerSuccess}
-              // defaultValue={{event: scEvent}}
+              defaultValue={{event: scEvent}}
               label={<FormattedMessage id="templates.eventFeed.composer.label" defaultMessage="templates.eventFeed.composer.label" />}
               feedType={SCFeedTypologyType.EVENT}
             />
