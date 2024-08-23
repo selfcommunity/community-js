@@ -126,6 +126,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
     name: PREFIX
   });
 
+  // TODO:
+  /**
+   *  Add as prop API Endpoint
+   * endpoint: EndpointType;
+   */
+
   const {
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
