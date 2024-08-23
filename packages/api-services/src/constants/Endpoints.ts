@@ -1290,6 +1290,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/event/$(id)/invite/'),
     method: 'POST'
   },
+	RemoveInviteEvent: {
+		url: urlReplacer('/api/v2/event/$(id)/invite/'),
+		method: 'DELETE'
+	},
   GetEventInvitedUsers: {
     url: urlReplacer('/api/v2/event/$(id)/invite/'),
     method: 'GET'
@@ -1320,6 +1324,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   GetEventRelated: {
     url: urlReplacer('/api/v2/event/$(id)/related/'),
+    method: 'GET'
+  },
+  GetUserCreatedEvents: {
+    url: urlReplacer('/api/v2/event/created/'),
     method: 'GET'
   },
   ShowEvent: {

@@ -11,6 +11,7 @@ export const MEDIA_TYPE_EVENT = 'event';
  * Embed types
  **/
 export const MEDIA_EMBED_SC_LINK_TYPE = 'sc_link';
+export const MEDIA_EMBED_SC_SHARED_OBJECT = 'sc_shared_object';
 export const MEDIA_EMBED_SC_SHARED_EVENT = 'sc_shared_event';
 
 /**

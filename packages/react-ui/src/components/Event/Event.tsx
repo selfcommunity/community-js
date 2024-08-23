@@ -182,7 +182,7 @@ export default function Event(inProps: EventProps): JSX.Element {
     contentObj = (
       <DetailRoot className={classes.detailRoot}>
         <Box className={classes.detailImageWrapper}>
-          <CardMedia component="img" image={scEvent.image_medium} alt={scEvent.name} className={classes.detailImage} />
+          <CardMedia component="img" image={scEvent.image_big} alt={scEvent.name} className={classes.detailImage} />
           <Calendar day={new Date(scEvent.start_date).getDate()} />
         </Box>
         <CardContent className={classes.detailContent}>
@@ -259,7 +259,7 @@ export default function Event(inProps: EventProps): JSX.Element {
         square={true}
         disableTypography
         className={classes.snippetRoot}
-        image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.snippetAvatar} />}
+        image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_small} className={classes.snippetAvatar} />}
         primary={
           <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.snippetPrimary}>
             <Typography component="span">{`${intl.formatDate(scEvent.start_date, {

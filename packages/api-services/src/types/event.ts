@@ -1,7 +1,7 @@
 /**
  * EventCreateParams interface
  */
-import {SCEventDateFilterType, SCEventPrivacyType, SCEventRecurrenceType} from '@selfcommunity/types';
+import {SCEventDateFilterType, SCEventPrivacyType, SCEventRecurrenceType, SCEventSubscriptionStatusType} from '@selfcommunity/types';
 import {BaseGetParams, BaseSearchParams} from './baseParams';
 import {SCEventLocationType} from '@selfcommunity/types/src/types/event';
 
@@ -81,6 +81,20 @@ export interface EventRelatedParams extends BaseGetParams {
 }
 
 /**
+ * EventUserParams interface.
+ */
+export interface EventUserParams extends BaseGetParams {
+  /**
+   * Filter results by subscription_status
+   */
+  subscription_status?: SCEventSubscriptionStatusType;
+  /**
+   *  Filtered past events
+   */
+  past?: boolean | number;
+}
+
+/**
  * EventFeedParams interface.
  */
 export interface EventSearchParams extends BaseSearchParams {
@@ -92,4 +106,8 @@ export interface EventSearchParams extends BaseSearchParams {
    * The events created or followed by the users followed
    */
   follows?: boolean | number;
+  /**
+   * Filtered past events
+   */
+  past?: boolean | number;
 }

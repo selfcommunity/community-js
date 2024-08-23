@@ -6,7 +6,7 @@ import {useSCMediaClick} from '@selfcommunity/react-core';
 import {BoxProps} from '@mui/material';
 import {SCMediaType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-import {File, Link, Share, Event} from '../../shared/Media';
+import {File, Link, Share} from '../../shared/Media';
 import classNames from 'classnames';
 
 const PREFIX = 'SCFeedObjectMediaPreview';
@@ -60,7 +60,7 @@ export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
     props: inProps,
     name: PREFIX
   });
-  const {className, medias, mediaObjectTypes = [File, Link, Share, Event], ...rest} = props;
+  const {className, medias, mediaObjectTypes = [File, Link, Share], ...rest} = props;
   const {handleMediaClick} = useSCMediaClick();
 
   if (!medias.length) {
