@@ -172,7 +172,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     if (authUserId) {
       setStatus(scEventsManager?.subscriptionStatus(scEvent));
     }
-  }, [authUserId, scEventsManager?.subscriptionStatus, scEvent, status]);
+  }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
 
   const toggleEventAttendance = (eventStatus) => {
     const isGoing = eventStatus === SCEventSubscriptionStatusType.GOING || !scEvent.subscription_status;
