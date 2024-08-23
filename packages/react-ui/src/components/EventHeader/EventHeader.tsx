@@ -162,6 +162,13 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   );
 
   /**
+   * Handles callback subscribe/unsubscribe event
+   */
+  const handleSubscribe = (event, status) => {
+    setSCEvent(Object.assign({}, scEvent, {subscription_status: status}));
+  };
+
+  /**
    * On mount, subscribe to receive events updates (only edit)
    */
   useEffect(() => {
@@ -295,7 +302,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  <EventSubscribeButton event={scEvent} {...EventSubscribeButtonProps} />
+                  <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} />
                   <EventActionsMenu eventId={scEvent?.id} />
                 </>
               )}

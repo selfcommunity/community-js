@@ -11,10 +11,6 @@ export default {
       description: 'Event Id'
     }
   },
-  args: {
-    eventId: 113
-    // eventId: 123
-  }
 } as Meta<typeof EventHeader>;
 
 const BaseTemplate = (args) => (
@@ -25,8 +21,7 @@ const BaseTemplate = (args) => (
 
 export const Base: StoryObj<typeof EventHeader> = {
   args: {
-    eventId: 113
-    // eventId: 123
+    eventId: 123
   },
   render: BaseTemplate
 };

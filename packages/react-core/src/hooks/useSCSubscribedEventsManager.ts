@@ -155,16 +155,21 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
               return Promise.resolve(res.data);
             });
         } else {
-          const requestConfig =
-            event.subscription_status === SCEventSubscriptionStatusType.GOING
-              ? {
-                  url: Endpoints.RemoveGoingToEvent.url({id: event.id}),
-                  method: Endpoints.RemoveGoingToEvent.method,
-                }
-              : {
-                  url: Endpoints.GoToEvent.url({id: event.id}),
-                  method: Endpoints.GoToEvent.method,
-                };
+          const requestConfig = !event.subscription_status
+            ? {
+                url: Endpoints.SubscribeToEvent.url({id: event.id}),
+                method: Endpoints.SubscribeToEvent.method,
+              }
+            : event.subscription_status === SCEventSubscriptionStatusType.GOING
+            ? {
+                url: Endpoints.RemoveGoingToEvent.url({id: event.id}),
+                method: Endpoints.RemoveGoingToEvent.method,
+              }
+            : {
+                url: Endpoints.GoToEvent.url({id: event.id}),
+                method: Endpoints.GoToEvent.method,
+              };
+          console.log(requestConfig.url);
           return http.request(requestConfig).then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);

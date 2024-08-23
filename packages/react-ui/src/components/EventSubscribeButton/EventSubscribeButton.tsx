@@ -172,34 +172,32 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     if (authUserId) {
       setStatus(scEventsManager?.subscriptionStatus(scEvent));
     }
-  }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
+  }, [authUserId, scEventsManager?.subscriptionStatus, scEvent, status]);
 
-  const toggleGoingToEvent = (user?: SCUserType) => {
-    scEventsManager
-      .toggleEventAttendance(scEvent, user?.id)
-      .then(() => {
-        const _status =
-          scEvent.privacy === SCEventPrivacyType.PRIVATE && scEvent.subscription_status !== SCEventSubscriptionStatusType.INVITED
-            ? SCEventSubscriptionStatusType.REQUESTED
-            : scEvent.subscription_status === SCEventSubscriptionStatusType.GOING
-            ? SCEventSubscriptionStatusType.SUBSCRIBED
-            : SCEventSubscriptionStatusType.GOING;
-        onSubscribe && onSubscribe(scEvent, _status);
-      })
-      .catch((e) => {
-        Logger.error(SCOPE_SC_UI, e);
-      });
-  };
+  const toggleEventAttendance = (eventStatus) => {
+    const isGoing = eventStatus === SCEventSubscriptionStatusType.GOING || !scEvent.subscription_status;
+    const toggleAction = isGoing
+      ? scEventsManager.toggleEventAttendance(scEvent, user ? user?.id : null)
+      : scEventsManager.toggleEventNonattendance(scEvent);
 
-  const toggleNotGoingToEvent = () => {
-    scEventsManager
-      .toggleEventNonattendance(scEvent)
+    toggleAction
       .then(() => {
-        const _status =
-          scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING
-            ? SCEventSubscriptionStatusType.SUBSCRIBED
-            : SCEventSubscriptionStatusType.NOT_GOING;
-        onSubscribe && onSubscribe(scEvent, _status);
+        let s;
+        if (isGoing) {
+          s =
+            scEvent.privacy === SCEventPrivacyType.PRIVATE && scEvent.subscription_status !== SCEventSubscriptionStatusType.INVITED
+              ? SCEventSubscriptionStatusType.REQUESTED
+              : scEvent.subscription_status === SCEventSubscriptionStatusType.GOING
+              ? SCEventSubscriptionStatusType.SUBSCRIBED
+              : SCEventSubscriptionStatusType.GOING;
+        } else {
+          s =
+            scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING
+              ? SCEventSubscriptionStatusType.SUBSCRIBED
+              : SCEventSubscriptionStatusType.NOT_GOING;
+        }
+
+        onSubscribe && onSubscribe(scEvent, s);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -207,12 +205,11 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   };
 
   const handleToggleAction = (event) => {
-    const _status = event.target.value;
     setAnchorEl(null);
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      (_status === SCEventSubscriptionStatusType.NOT_GOING && !user?.id) || (!_status && user?.id) ? toggleNotGoingToEvent() : toggleGoingToEvent();
+      toggleEventAttendance(event.target.value);
     }
   };
 
@@ -316,6 +313,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           size="small"
           loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
           disabled={status === SCEventSubscriptionStatusType.REQUESTED}
+          onClick={handleToggleAction}
           {...rest}>
           {getStatus}
         </RequestRoot>
