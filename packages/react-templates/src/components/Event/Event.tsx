@@ -112,7 +112,7 @@ export default function Event(inProps: EventProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <EventHeader eventId={scEvent.id} />
+      <EventHeader event={scEvent} />
       <EventFeed
         className={classes.feed}
         event={scEvent}
