@@ -106,7 +106,7 @@ export default function Event(inProps: EventProps): JSX.Element {
   // HOOKS
   const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
 
-  const handleSubscribe = (group, status) => {
+  const handleSubscribe = (event, status) => {
     setSCEvent(Object.assign({}, scEvent, {subscription_status: status}));
   };
 
