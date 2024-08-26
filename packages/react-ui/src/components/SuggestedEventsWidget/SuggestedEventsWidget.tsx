@@ -115,7 +115,14 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
           <FormattedMessage id="ui.suggestedEventsWidget.title" defaultMessage="ui.suggestedEventsWidget.title" />
         </Typography>
 
-        <Swiper spaceBetween={8} slidesPerView="auto" grabCursor={true} modules={[Navigation]} onReachEnd={handleReachEnd} className={classes.swiper}>
+        <Swiper
+          spaceBetween={8}
+          slidesPerView="auto"
+          grabCursor={true}
+          modules={[Navigation]}
+          onReachEnd={handleReachEnd}
+          onSlideChange={(swiper) => setCurrentItem(swiper.snapIndex)}
+          className={classes.swiper}>
           {(showSkeleton ? [...eventsData.results, undefined] : eventsData.results).map((event, i) => (
             <SwiperSlide key={i} className={classes.swiperSlide}>
               <Event event={event} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
