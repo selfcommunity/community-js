@@ -229,6 +229,19 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
             setUnLoading(event.id);
             return Promise.resolve(res.data);
           });
+        } else {
+          setLoading(event.id);
+          return http
+            .request({url: Endpoints.UnsubscribeFromEvent.url({id: event.id}), method: Endpoints.UnsubscribeFromEvent.method})
+            .then((res: HttpResponse<any>) => {
+              if (res.status >= 300) {
+                return Promise.reject(res);
+              }
+              updateCache([event.id]);
+              setData((prev) => getDataUpdated(prev, event.id, null));
+              setUnLoading(event.id);
+              return Promise.resolve(res.data);
+            });
         }
       },
     [data, loading, cache]

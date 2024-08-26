@@ -192,7 +192,9 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
               : SCEventSubscriptionStatusType.GOING;
         } else {
           s =
-            scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING
+            scEvent.subscription_status === SCEventSubscriptionStatusType.REQUESTED
+              ? null
+              : scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING
               ? SCEventSubscriptionStatusType.SUBSCRIBED
               : SCEventSubscriptionStatusType.NOT_GOING;
         }
@@ -318,7 +320,6 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           variant="outlined"
           size="small"
           loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
-          disabled={status === SCEventSubscriptionStatusType.REQUESTED}
           onClick={handleToggleAction}
           {...rest}>
           {getStatus}
