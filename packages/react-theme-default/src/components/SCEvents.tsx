@@ -23,13 +23,16 @@ const Component = {
         }
       },
       '& .SCEvents-no-results': {
-        maxWidth: '50%',
         marginTop: theme.spacing(3),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         '& .SCEvent-skeleton-root': {
-          marginBottom: theme.spacing(2)
+          marginBottom: theme.spacing(2),
+          minWidth: '50%'
+        },
+        '& .SCEvent-skeleton-snippet .SCBaseItem-content': {
+          maxWidth: '70%'
         },
         '& .MuiTypography-body1': {
           fontWeight: theme.typography.fontWeightMedium,
@@ -50,10 +53,10 @@ const Component = {
         marginTop: theme.spacing(3)
       }
     }),
-    chipRoot: ({theme, selected}: any) => ({
+    eventsChipRoot: ({theme, showFollowed, showPastEvents}: any) => ({
       height: theme.spacing(4.75),
       borderRadius: theme.spacing(0.5),
-      color: selected ? theme.palette.common.white : theme.palette.text.primary,
+      color: showFollowed || showPastEvents ? theme.palette.common.white : theme.palette.text.primary,
       '& .MuiIcon-root': {
         fontSize: '1rem',
         color: theme.palette.common.white

@@ -274,6 +274,7 @@
   "ui.events.select.nextWeek": "Prossima settimana",
   "ui.events.select.thisMonth": "Questo  Mese",
   "ui.events.filterByFollowedInterest": "Persone che seguo",
+  "ui.events.filterByPastEvents": "Eventi passati",
   "ui.events.button.seeMore": "Vedi di più",
   "ui.events.noEvents.title.onlyStaff": "Gli Eventi che stai organizzando saranno visibili qui.\nInizia creando un nuovo Evento.",
   "ui.events.noEvents.title": "Gli eventi a cui parteciperai e quelli a cui sarai invitato saranno visibili qui.",
