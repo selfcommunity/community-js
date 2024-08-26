@@ -7,7 +7,7 @@ import {styled} from '@mui/material/styles';
 import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import {MEDIA_TYPE_SHARE} from '../../../../constants/Media';
+import {MEDIA_EMBED_SC_SHARED_EVENT, MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
@@ -201,13 +201,14 @@ export default function Share(props: ShareProps): JSX.Element {
       if (shareMedias.length) {
         sharedObjectId = shareMedias[0].embed.metadata.id;
       }
+      const isMediaEvent: boolean = obj.medias.some((media) => media.embed.embed_type === MEDIA_EMBED_SC_SHARED_EVENT);
       return http
         .request({
           url: Endpoints.ComposerMediaCreate.url(),
           method: Endpoints.ComposerMediaCreate.method,
           data: {
             type: MEDIA_TYPE_SHARE,
-            shared_object: sharedObjectId
+            [isMediaEvent ? 'event_object' : 'shared_object']: sharedObjectId
           }
         })
         .then((res: HttpResponse<SCMediaType>) => {
@@ -221,7 +222,7 @@ export default function Share(props: ShareProps): JSX.Element {
   );
 
   /**
-   * Performs the contribute sharing
+   * Performs the contribution sharing
    */
   function share(inCategories) {
     if (!scUserContext.user) {
