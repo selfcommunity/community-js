@@ -13,6 +13,13 @@ const Component = {
         },
         '& .SCEvent-skeleton-root': {
           padding: theme.spacing(0.5, 0, 0.5, 0)
+        },
+        '& .SCBaseItem-root': {
+          display: 'flex',
+          justifyContent: 'space-between'
+        },
+        '& .SCEvent-skeleton-snippet .SCBaseItem-content': {
+          maxWidth: '70%'
         }
       },
       '& .SCEvents-no-results': {

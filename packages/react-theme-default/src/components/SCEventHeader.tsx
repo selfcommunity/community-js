@@ -20,6 +20,8 @@ const Component = {
         color: theme.palette.text.secondary
       },
       '& .SCEventHeader-info': {
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
         marginTop: theme.spacing(6),
         '& .SCEventHeader-name': {
           fontSize: '1.857rem',

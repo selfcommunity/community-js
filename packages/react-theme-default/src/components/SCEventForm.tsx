@@ -87,13 +87,12 @@ const Component = {
         backgroundColor: theme.palette.grey['A200'],
         borderRadius: 5,
         '& .SCEventForm-event-address-tabs': {
-          padding: theme.spacing(2, 2, 0, 2),
+          padding: theme.spacing(0, 2, 0, 2),
           '& .MuiTabs-indicator': {
             bottom: theme.spacing(1.5)
           }
         },
         '& .SCEventForm-event-address-tab': {
-          minHeight: 0,
           textTransform: 'none'
         },
         '& .SCEventForm-event-address-tab-content': {
