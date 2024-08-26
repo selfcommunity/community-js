@@ -1,17 +1,17 @@
-import {CardActions, CardContent, Skeleton} from '@mui/material';
-import {styled} from '@mui/system';
+import { CardActions, CardContent, Skeleton } from '@mui/material';
+import { styled } from '@mui/system';
 import 'swiper/css';
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { SCEventTemplateType } from '../../types/event';
+import { EventSkeleton } from '../Event';
 import Widget from '../Widget';
-import {PREFIX} from './constants';
-import {EventSkeleton} from '../Event';
-import {SCEventTemplateType} from '../../types/event';
+import { PREFIX } from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
   content: `${PREFIX}-content`,
   title: `${PREFIX}-title`,
-  swiper: `${PREFIX}-swiper`,
+  swiperSlide: `${PREFIX}-swiper-slide`,
   actions: `${PREFIX}-actions`
 };
 
@@ -29,7 +29,7 @@ export default function SuggestedEventsWidgetSkeleton() {
 
         <Swiper spaceBetween={8} slidesPerView="auto">
           {[1, 2, 3, 4, 5, 6, 7].map((_element, i) => (
-            <SwiperSlide key={i} className={classes.swiper}>
+            <SwiperSlide key={i} className={classes.swiperSlide}>
               <EventSkeleton template={SCEventTemplateType.PREVIEW} variant="outlined" actions={<></>} />
             </SwiperSlide>
           ))}

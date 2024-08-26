@@ -1,20 +1,20 @@
-import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
-import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
-import {FormattedMessage, useIntl} from 'react-intl';
+import { Avatar, Box, Button, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting } from '@selfcommunity/react-core';
+import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import BaseItem from '../../shared/BaseItem';
-import Widget, {WidgetProps} from '../Widget';
-import {PREFIX} from './constants';
-import EventSkeleton, {EventSkeletonProps} from './Skeleton';
 import Calendar from '../../shared/Calendar';
 import EventInfoDetails from '../../shared/EventInfoDetails';
-import User from '../User';
+import { SCEventTemplateType } from '../../types/event';
 import EventPartecipantsButton from '../EventPartecipantsButton';
-import {SCEventTemplateType} from '../../types/event';
+import User from '../User';
+import Widget, { WidgetProps } from '../Widget';
+import { PREFIX } from './constants';
+import EventSkeleton, { EventSkeletonProps } from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -160,7 +160,7 @@ export default function Event(inProps: EventProps): JSX.Element {
   } = props;
 
   // STATE
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -182,7 +182,7 @@ export default function Event(inProps: EventProps): JSX.Element {
     contentObj = (
       <DetailRoot className={classes.detailRoot}>
         <Box className={classes.detailImageWrapper}>
-          <CardMedia component="img" image={scEvent.image_big} alt={scEvent.name} className={classes.detailImage} />
+          <CardMedia component="img" image={scEvent.image_medium} alt={scEvent.name} className={classes.detailImage} />
           <Calendar day={new Date(scEvent.start_date).getDate()} />
         </Box>
         <CardContent className={classes.detailContent}>
@@ -259,7 +259,7 @@ export default function Event(inProps: EventProps): JSX.Element {
         square={true}
         disableTypography
         className={classes.snippetRoot}
-        image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_small} className={classes.snippetAvatar} />}
+        image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.snippetAvatar} />}
         primary={
           <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.snippetPrimary}>
             <Typography component="span">{`${intl.formatDate(scEvent.start_date, {
