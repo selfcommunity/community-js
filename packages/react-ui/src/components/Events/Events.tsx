@@ -350,7 +350,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 />
               </Grid>
               <Grid item>
-                <PastEventsFilter showPastEvents={showPastEvents} handleClick={handleChipPastClick} handleDeleteClick={handleDeletePastClick} />
+                <PastEventsFilter
+                  showPastEvents={showPastEvents}
+                  handleClick={handleChipPastClick}
+                  handleDeleteClick={handleDeletePastClick}
+                  disabled={dateSearch !== SCEventDateFilterType.ANY}
+                />
               </Grid>
             </>
           )}
