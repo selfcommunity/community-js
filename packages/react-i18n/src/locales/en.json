@@ -277,7 +277,7 @@
   "ui.events.button.seeMore": "See More",
   "ui.events.noEvents.title.onlyStaff": "The Events you are organizing will be visible here.\nStart by creating a new Event.",
   "ui.events.noEvents.title": "The Events you will participate in and those you will be invited to will be visible here.",
-  "ui.events.skeleton.action.add": "Add new Event",
+  "ui.events.skeleton.action.add": "Add Event",
   "ui.eventForm.title": "Create Event",
   "ui.eventForm.title.edit": "Edit Event",
   "ui.eventForm.name.placeholder": "Event name",
