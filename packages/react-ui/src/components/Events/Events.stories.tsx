@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import {prefetchedEvents} from './prefetchedEvents';
 import Events from './index';
 import EventsSkeleton from './Skeleton';
+import { Endpoints } from '@selfcommunity/api-services';
 
 export default {
   title: 'Design System/React UI/Events',
@@ -30,8 +31,9 @@ export const Base: StoryObj<EventsSkeleton> = {
 
 export const MyEvents: StoryObj<Events> = {
 	args: {
+    endpoint: Endpoints.GetUserEvents,
 		general: false,
-		showFilters: false
+		showFilters: true
 	},
 	render: template
 };

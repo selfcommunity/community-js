@@ -1,7 +1,7 @@
 import {Box, Button, Chip, FormControl, Grid, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
@@ -14,6 +14,7 @@ import CreateEventButton from '../CreateEventButton';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
 import Skeleton from '../Events/Skeleton';
 import {PREFIX} from './constants';
+import PastEventsFilter from './PastEventsFilter';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -39,9 +40,10 @@ const Root = styled(Box, {
   slot: 'Root'
 })(() => ({}));
 
-const ChipRoot = styled(Chip, {
+export const EventsChipRoot = styled(Chip, {
   name: PREFIX,
-  slot: 'ChipRoot'
+  slot: 'EventsChipRoot',
+  shouldForwardProp: (prop) => prop !== 'showFollowed' && prop !== 'showPastEvents'
 })(() => ({}));
 
 export interface EventsProps {
@@ -50,6 +52,12 @@ export interface EventsProps {
    * @default null
    */
   className?: string;
+
+  /**
+   * Event API Endpoint
+   * @default Endpoints.SearchEvents
+   */
+  endpoint: EndpointType;
 
   /**
    * Feed API Query Params
@@ -82,7 +90,7 @@ export interface EventsProps {
   filters?: JSX.Element;
 
   /** If true, it means that the endpoint fetches all events available
-   * @default false
+   * @default true
    */
   general?: boolean;
 
@@ -126,13 +134,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
     name: PREFIX
   });
 
-  // TODO:
-  /**
-   *  Add as prop API Endpoint
-   * endpoint: EndpointType;
-   */
-
   const {
+    endpoint = Endpoints.SearchEvents,
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     EventComponentProps = {elevation: 0, square: true},
@@ -149,7 +152,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [next, setNext] = useState<string>(null);
   const [search, setSearch] = useState<string>('');
   const [dateSearch, setDateSearch] = useState(options[0].value);
-  const [selected, setSelected] = useState<boolean>(false);
+  const [showFollowed, setShowFollowed] = useState<boolean>(false);
+  const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -169,36 +173,48 @@ export default function Events(inProps: EventsProps): JSX.Element {
   // HANDLERS
 
   const handleChipClick = () => {
-    setSelected(!selected);
+    setShowFollowed(!showFollowed);
   };
 
   const handleDeleteClick = () => {
-    setSelected(false);
+    setShowFollowed(false);
+  };
+
+  const handleChipPastClick = () => {
+    setShowPastEvents(!showPastEvents);
+  };
+
+  const handleDeletePastClick = () => {
+    setShowPastEvents(false);
   };
 
   /**
    * Fetches events list
    */
   const fetchEvents = () => {
-    let eventService;
-    if (general) {
-      eventService = EventService.searchEvents({
-        ...endpointQueryParams,
-        ...(search !== '' && {search: search}),
-        ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
-        ...(selected && {follows: selected})
-      });
-    } else {
-      eventService = EventService.getUserEvents({
-        ...endpointQueryParams,
-        subscription_status: SCEventSubscriptionStatusType.GOING,
-        ...(search !== '' && {search: search})
-      });
-    }
-    eventService
-      .then((res: SCPaginatedResponse<SCEventType>) => {
-        setEvents(res.results);
-        setNext(res.next);
+    return http
+      .request({
+        url: endpoint.url({}),
+        method: endpoint.method,
+        params: {
+          ...endpointQueryParams,
+          ...(general
+            ? {
+                ...(search !== '' && {search: search}),
+                ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+                ...(showFollowed && {follows: showFollowed}),
+                ...(showPastEvents && {past: showPastEvents})
+              }
+            : {
+                subscription_status: SCEventSubscriptionStatusType.GOING,
+                ...(showPastEvents && {past: showPastEvents}),
+                ...(search !== '' && {search: search})
+              })
+        }
+      })
+      .then((res: HttpResponse<any>) => {
+        setEvents(res.data.results);
+        setNext(res.data.next);
         setLoading(false);
       })
       .catch((error) => {
@@ -215,7 +231,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     } else {
       fetchEvents();
     }
-  }, [contentAvailability, authUserId, search, dateSearch, selected]);
+  }, [contentAvailability, authUserId, search, dateSearch, showFollowed, showPastEvents]);
 
   const handleNext = useMemo(
     () => () => {
@@ -273,6 +289,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
         <Grid container className={classes.filters} gap={2}>
           {filters ? (
             filters
+          ) : !general ? (
+            <Grid item>
+              <PastEventsFilter showPastEvents={showPastEvents} handleClick={handleChipPastClick} handleDeleteClick={handleDeletePastClick} />
+            </Grid>
           ) : (
             <>
               <Grid item xs={12} md={4}>
@@ -292,6 +312,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
+                    disabled={showPastEvents}
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
@@ -311,22 +332,25 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} md={2}>
-                <ChipRoot
+              <Grid item>
+                <EventsChipRoot
                   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                   // @ts-ignore
-                  color={selected ? 'secondary' : 'default'}
+                  color={showFollowed ? 'secondary' : 'default'}
                   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                   // @ts-ignore
-                  variant={selected ? 'filled' : 'outlined'}
+                  variant={showFollowed ? 'filled' : 'outlined'}
                   label={<FormattedMessage id="ui.events.filterByFollowedInterest" defaultMessage="ui.events.filterByFollowedInterest" />}
                   onClick={handleChipClick}
                   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                   // @ts-ignore
-                  selected={selected}
-                  deleteIcon={selected ? <Icon>close</Icon> : null}
-                  onDelete={selected ? handleDeleteClick : null}
+                  showFollowed={showFollowed}
+                  deleteIcon={showFollowed ? <Icon>close</Icon> : null}
+                  onDelete={showFollowed ? handleDeleteClick : null}
                 />
+              </Grid>
+              <Grid item>
+                <PastEventsFilter showPastEvents={showPastEvents} handleClick={handleChipPastClick} handleDeleteClick={handleDeletePastClick} />
               </Grid>
             </>
           )}
