@@ -1,11 +1,11 @@
 import React from 'react';
-import {Icon} from '@mui/material';
+import {ChipProps, Icon} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import {EventsChipRoot} from './Events';
 
-export interface PastEventsFilterProps {
+export interface PastEventsFilterProps extends ChipProps {
   showPastEvents: boolean;
   handleClick: () => void;
   handleDeleteClick?: () => void;
@@ -18,7 +18,7 @@ export default function PastEventsFilter(inProps: PastEventsFilterProps): JSX.El
     name: PREFIX
   });
 
-  const {showPastEvents, handleClick, handleDeleteClick} = props;
+  const {showPastEvents, handleClick, handleDeleteClick, ...rest} = props;
 
   return (
     <EventsChipRoot
@@ -35,6 +35,7 @@ export default function PastEventsFilter(inProps: PastEventsFilterProps): JSX.El
       showPastEvents={showPastEvents}
       deleteIcon={showPastEvents ? <Icon>close</Icon> : null}
       onDelete={showPastEvents ? handleDeleteClick : undefined}
+      {...rest}
     />
   );
 }
