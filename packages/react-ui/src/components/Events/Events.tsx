@@ -289,9 +289,14 @@ export default function Events(inProps: EventsProps): JSX.Element {
         <Grid container className={classes.filters} gap={2}>
           {filters ? (
             filters
-          ) : !general && events.length ? (
+          ) : !general ? (
             <Grid item>
-              <PastEventsFilter showPastEvents={showPastEvents} handleClick={handleChipPastClick} handleDeleteClick={handleDeletePastClick} />
+              <PastEventsFilter
+                showPastEvents={showPastEvents}
+                handleClick={handleChipPastClick}
+                handleDeleteClick={handleDeletePastClick}
+                autoHide={!events.length}
+              />
             </Grid>
           ) : (
             <>
