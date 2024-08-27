@@ -264,13 +264,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     return _status;
   }, [status, scEvent]);
 
-  if (
-    !scEvent ||
-    status === undefined ||
-    (isEventAdmin && user?.id === scUserContext.user.id) ||
-    (isEventAdmin && !user?.id) ||
-    scEventsManager.isLoading(scEvent)
-  ) {
+  if (!scEvent || status === undefined || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id)) {
     return null;
   }
 

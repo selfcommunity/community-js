@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
-import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
+import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType, EventHeaderProps} from '@selfcommunity/react-ui';
 import {useSCFetchEvent} from '@selfcommunity/react-core';
 import {SCEventType} from '@selfcommunity/types';
 import EventSkeletonTemplate from './Skeleton';
@@ -68,6 +68,12 @@ export interface EventProps {
    * @default {}
    */
   EventFeedProps?: EventFeedProps;
+
+  /**
+   * Props to spread EventHeader component
+   * @default {}
+   */
+  EventHeaderProps?: EventHeaderProps;
 }
 /**
  * > API documentation for the Community-JS Category Template. Learn about the available props and the CSS API.
@@ -101,7 +107,7 @@ export default function Event(inProps: EventProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'event', className, event, eventId, widgets, FeedObjectProps, FeedSidebarProps, EventFeedProps = {}} = props;
+  const {id = 'event', className, event, eventId, widgets, FeedObjectProps, FeedSidebarProps, EventFeedProps = {}, EventHeaderProps = {}} = props;
 
   // HOOKS
   const {scEvent} = useSCFetchEvent({id: eventId, event});
@@ -112,7 +118,7 @@ export default function Event(inProps: EventProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <EventHeader event={scEvent} />
+      <EventHeader event={scEvent} {...EventHeaderProps} />
       <EventFeed
         className={classes.feed}
         event={scEvent}
