@@ -4,8 +4,10 @@ import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import {EventsChipRoot} from './Events';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 export interface PastEventsFilterProps extends ChipProps {
+  autoHide?: boolean;
   showPastEvents: boolean;
   handleClick: () => void;
   handleDeleteClick?: () => void;
@@ -18,7 +20,11 @@ export default function PastEventsFilter(inProps: PastEventsFilterProps): JSX.El
     name: PREFIX
   });
 
-  const {showPastEvents, handleClick, handleDeleteClick, ...rest} = props;
+  const {autoHide = false, showPastEvents, handleClick, handleDeleteClick, ...rest} = props;
+
+  if (autoHide) {
+    return <HiddenPlaceholder />;
+  }
 
   return (
     <EventsChipRoot

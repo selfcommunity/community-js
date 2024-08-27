@@ -76,7 +76,8 @@ export interface EventHeaderProps {
    * Props to spread event actions menu
    * @default {}
    */
-  EventActionsProps?: EventActionsMenuProps;
+  EventActionsProps?: Omit<EventActionsMenuProps, 'event'>;
+
   /**
    * Any other properties
    */
