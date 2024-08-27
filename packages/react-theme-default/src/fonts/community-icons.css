@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?w9x8zp');
-  src:  url('./community/icons.eot?w9x8zp#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?w9x8zp') format('woff2'),
-  url('./community/icons.ttf?w9x8zp') format('truetype'),
-  url('./community/icons.woff?w9x8zp') format('woff'),
-  url('./community/icons.svg?w9x8zp#community-icons') format('svg');
+  src:  url('./community/icons.eot?iefix');
+  src:  url('./community/icons.eot?iefix#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?iefix') format('woff2'),
+  url('./community/icons.ttf?iefix') format('truetype'),
+  url('./community/icons.woff?iefix') format('woff'),
+  url('./community/icons.svg?iefix#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-circle_closed:before {
+  content: "\e96a";
+}
+.icon-circle_checked:before {
+  content: "\e96b";
+}
+.icon-frequency:before {
+  content: "\e969";
+}
+.icon-calendar_off:before {
+  content: "\e967";
+}
 .icon-twitter:before {
   content: "\e959";
 }

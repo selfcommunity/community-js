@@ -4,89 +4,155 @@
 name: Feature
 
 on:
-  push:
-    branches:
-      - 'feature-*'
+    push:
+        branches:
+            - 'feature-*'
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: "0"
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '18.x'
-    - run: yarn bootstrap
-    - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    - run: git config --global user.email "team@quentral.com"
-    - run: git config --global user.name "quentralhub"
-    - run: yarn build
-      env:
-        NODE_OPTIONS: "--max_old_space_size=4096"
-    - name: Get current branch name
-      id: get_branch
-      run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')"
-    - name: Publish canary version
-      run: |
-        BRANCH_NAME=${{ steps.get_branch.outputs.branch }}
-        npx lerna publish --canary --preid $BRANCH_NAME --yes --dist-tag $BRANCH_NAME --force-publish *
-    - name: Open pull-request (feature -> dev)
-      uses: mirk8xr/pull-request@v2.6.2
-      with:
-        destination_branch: "dev"
-        pr_title: "Pulling ${{ github.ref }} from ${{ steps.get_branch.outputs.branch }} into dev"
-        pr_body: "👑 *An automated PR*"
-        pr_draft: false
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Get @selfcommunity/types version
-      id: types
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/types
-    - run: echo "@selfcommunity/types - ${{ steps.types.outputs.current-version }}"
-    - name: Get @selfcommunity/utils version
-      id: utils
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/utils
-    - run: echo "@selfcommunity/utils - ${{ steps.utils.outputs.current-version }}"
-    - name: Get @selfcommunity/api-services version
-      id: api-services
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/api-services
-    - run: echo "@selfcommunity/api-services - ${{ steps.api-services.outputs.current-version }}"
-    - name: Get @selfcommunity/react-i18n version
-      id: react-i18n
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/react-i18n
-    - run: echo "@selfcommunity/react-i18n - ${{ steps.react-i18n.outputs.current-version }}"
-    - name: Get @selfcommunity/react-core version
-      id: react-core
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/react-core
-    - run: echo "@selfcommunity/react-core - ${{ steps.react-core.outputs.current-version }}"
-    - name: Get @selfcommunity/react-ui version
-      id: react-ui
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/react-ui
-    - run: echo "@selfcommunity/react-ui - ${{ steps.react-ui.outputs.current-version }}"
-    - name: Get @selfcommunity/react-templates version
-      id: react-templates
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/react-templates
-    - run: echo "@selfcommunity/react-templates - ${{ steps.react-templates.outputs.current-version }}"
-    - name: Get @selfcommunity/react-theme-default version
-      id: react-theme-default
-      uses: martinbeentjes/npm-get-version-action@master
-      with:
-        path: packages/react-theme-default
-    - run: echo "@selfcommunity/react-theme-default - ${{ steps.react-theme-default.outputs.current-version }}"
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: "0"
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '18.x'
+            - run: yarn bootstrap
+            - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            - run: git config --global user.email "team@quentral.com"
+            - run: git config --global user.name "quentralhub"
+            - run: yarn build
+              env:
+                  NODE_OPTIONS: "--max_old_space_size=4096"
+            - name: Get branch name
+              id: get_branch
+              run: |
+                  BRANCH_NAME=${GITHUB_REF#refs/heads/}
+                  CLEANED_BRANCH_NAME=${BRANCH_NAME#"feature-"}
+                  echo "BRANCH_NAME=${CLEANED_BRANCH_NAME}" >> $GITHUB_ENV
+            - name: Publish canary version
+              run: |
+                  npx lerna publish --canary --preid $BRANCH_NAME --dist-tag $BRANCH_NAME --yes --exact --force-publish
+            - name: Open pull-request (feature -> dev)
+              uses: mirk8xr/pull-request@v2.6.2
+              with:
+                  destination_branch: "dev"
+                  pr_title: "Pulling ${{ github.ref }} from ${{ steps.get_branch.outputs.branch }} into dev"
+                  pr_body: "👑 *An automated PR*"
+                  pr_draft: false
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Get @selfcommunity/types version
+              id: types
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/types
+            - name: Get last @selfcommunity/types canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/types dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                    echo "TYPES_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                    echo "TYPES_VERSION=${{ steps.types.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/types - ${{ env.TYPES_VERSION }}"
+            - name: Get @selfcommunity/utils version
+              id: utils
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/utils
+            - name: Get last @selfcommunity/utils canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/utils dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                    echo "UTILS_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                    echo "UTILS_VERSION=${{ steps.utils.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/utils - ${{ env.UTILS_VERSION }}"
+            - name: Get @selfcommunity/api-services version
+              id: api-services
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/api-services
+            - name: Get last @selfcommunity/api-services canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/api-services dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                    echo "API_SERVICES_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                    echo "API_SERVICES_VERSION=${{ steps.api-services.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/api-services - ${{ env.API_SERVICES_VERSION }}"
+            - name: Get @selfcommunity/react-i18n version
+              id: react-i18n
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/react-i18n
+            - name: Get last @selfcommunity/react-i18n canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/react-i18n dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                      echo "REACT_I18N_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                      echo "REACT_I18N_VERSION=${{ steps.react-i18n.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/react-i18n - ${{ env.REACT_I18N_VERSION }}"
+            - name: Get @selfcommunity/react-core version
+              id: react-core
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/react-core
+            - name: Get last @selfcommunity/react-core canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/react-core dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                      echo "REACT_CORE_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                      echo "REACT_CORE_VERSION=${{ steps.react-core.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/react-core - ${{ env.REACT_CORE_VERSION }}"
+            - name: Get @selfcommunity/react-ui version
+              id: react-ui
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/react-ui
+            - name: Get last @selfcommunity/react-ui canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/react-ui dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                    echo "REACT_UI_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                    echo "REACT_UI_VERSION=${{ steps.react-ui.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/react-ui - ${{ env.REACT_UI_VERSION }}"
+            - name: Get @selfcommunity/react-templates version
+              id: react-templates
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/react-templates
+            - name: Get last @selfcommunity/react-templates canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/react-templates dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                    echo "REACT_TEMPLATES_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                    echo "REACT_TEMPLATES_VERSION=${{ steps.react-templates.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/react-templates - ${{ env.REACT_TEMPLATES_VERSION }}"
+            - name: Get @selfcommunity/react-theme-default version
+              id: react-theme-default
+              uses: martinbeentjes/npm-get-version-action@master
+              with:
+                  path: packages/react-theme-default
+            - name: Get last @selfcommunity/react-theme-default canary version
+              run: |
+                  CANARY_VERSION=$(npm view @selfcommunity/react-theme-default dist-tags.$BRANCH_NAME)
+                  if [ -n "$CANARY_VERSION" ]; then
+                    echo "REACT_THEME_DEFAULT_VERSION=${CANARY_VERSION}" >> $GITHUB_ENV
+                  else
+                    echo "REACT_THEME_DEFAULT_VERSION=${{ steps.react-theme-default.outputs.current-version }}" >> $GITHUB_ENV
+                  fi
+            - run: echo "@selfcommunity/react-theme-default - ${{ env.REACT_THEME_DEFAULT_VERSION }}"
