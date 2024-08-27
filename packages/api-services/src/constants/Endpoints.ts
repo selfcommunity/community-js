@@ -1247,7 +1247,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'PUT'
   },
   DeleteEvent: {
-    url: urlReplacer('/api/v2/event/'),
+    url: urlReplacer('/api/v2/event/$(id)/'),
     method: 'DELETE'
   },
   PatchEvent: {
@@ -1290,10 +1290,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/event/$(id)/invite/'),
     method: 'POST'
   },
-	RemoveInviteEvent: {
-		url: urlReplacer('/api/v2/event/$(id)/invite/'),
-		method: 'DELETE'
-	},
+  RemoveInviteEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/invite/'),
+    method: 'DELETE'
+  },
   GetEventInvitedUsers: {
     url: urlReplacer('/api/v2/event/$(id)/invite/'),
     method: 'GET'

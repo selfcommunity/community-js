@@ -24,7 +24,7 @@ import PubSub from 'pubsub-js';
 import EditEventButton from '../EditEventButton';
 import User from '../User';
 import Calendar from '../../shared/Calendar';
-import EventActionsMenu from '../../shared/EventActionsMenu';
+import EventActionsMenu, {EventActionsMenuProps} from '../../shared/EventActionsMenu';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -68,11 +68,15 @@ export interface EventHeaderProps {
    */
   eventId?: number;
   /**
-   * Props to spread event button followed
+   * Props to spread event button
    * @default {}
    */
   EventSubscribeButtonProps?: EventSubscribeButtonProps;
-
+  /**
+   * Props to spread event actions menu
+   * @default {}
+   */
+  EventActionsProps?: EventActionsMenuProps;
   /**
    * Any other properties
    */
@@ -118,7 +122,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, event, eventId = null, EventSubscribeButtonProps = {}, ...rest} = props;
+  const {id = null, className = null, event, eventId = null, EventSubscribeButtonProps = {}, EventActionsProps = {}, ...rest} = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -298,13 +302,13 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                       eventId={scEvent.id}
                       onEditSuccess={(data: SCEventType) => setSCEvent(data)}
                     />
-                    <EventActionsMenu eventId={scEvent?.id} />
+                    <EventActionsMenu event={scEvent} {...EventActionsProps} />
                   </Box>
                 </Box>
               ) : (
                 <>
                   <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} />
-                  <EventActionsMenu eventId={scEvent?.id} />
+                  <EventActionsMenu event={scEvent} {...EventActionsProps} />
                 </>
               )}
             </>

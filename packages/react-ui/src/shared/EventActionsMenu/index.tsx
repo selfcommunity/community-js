@@ -48,11 +48,15 @@ export interface EventActionsMenuProps extends IconButtonProps {
   /**
    * The event
    */
-  event?: SCEventType;
+  event: SCEventType;
   /**
    * The event id
    */
-  eventId: number;
+  eventId?: number;
+  /**
+   * Handles callback on delete confirm
+   */
+  onDeleteConfirm?: () => void;
   /**
    * Any other properties
    */
@@ -92,7 +96,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {className, event, eventId, ...rest} = props;
+  const {className, event, eventId, onDeleteConfirm, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -128,6 +132,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
   function handleDeleteThread() {
     EventService.deleteEvent(scEvent.id)
       .then(() => {
+        onDeleteConfirm();
         handleCloseDialog();
       })
       .catch((error) => {
@@ -195,7 +200,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
 
   if (
     !scUserContext.user ||
-    (scEvent?.privacy === SCEventPrivacyType.PRIVATE && scEvent?.subscription_status !== SCEventSubscriptionStatusType.SUBSCRIBED)
+    (scEvent?.privacy === SCEventPrivacyType.PRIVATE && !isEventAdmin && scEvent?.subscription_status !== SCEventSubscriptionStatusType.SUBSCRIBED)
   ) {
     return <HiddenPlaceholder />;
   }
