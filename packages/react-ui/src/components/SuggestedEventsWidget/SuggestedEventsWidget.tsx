@@ -7,7 +7,6 @@ import { Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
@@ -104,7 +103,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
     return <Skeleton />;
   }
 
-  if (!eventsData) {
+  if (!eventsData || eventsData.count === 0) {
     return <HiddenPlaceholder />;
   }
 
@@ -119,7 +118,6 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
           spaceBetween={8}
           slidesPerView="auto"
           grabCursor={true}
-          modules={[Navigation]}
           onReachEnd={handleReachEnd}
           onSlideChange={(swiper) => setCurrentItem(swiper.snapIndex)}
           className={classes.swiper}>
