@@ -135,7 +135,10 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const [tabValue, setTabValue] = useState('1');
 
   const state = useMemo(() => (tabValue === '1' ? partecipants : invited), [tabValue, partecipants, invited]);
-  const dispatch = useCallback(() => (tabValue === '1' ? dispatchPartecipants : dispatchInvited), [tabValue, dispatchPartecipants, dispatchInvited]);
+  const dispatch = useCallback(
+    (value) => (tabValue === '1' ? dispatchPartecipants(value) : dispatchInvited(value)),
+    [tabValue, dispatchPartecipants, dispatchInvited]
+  );
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
