@@ -70,6 +70,7 @@ import SCEventInfoDetails from './components/SCEventInfoDetails';
 import SCEventInfoWidget from './components/SCEventInfoWidget';
 import SCEventInviteButton from './components/SCEventInviteButton';
 import SCEventLocationWidget from './components/SCEventLocationWidget';
+import SCEventMembersWidget from './components/SCEventMembersWidget';
 import SCEventPartecipantsButton from './components/SCEventPartecipantsButton';
 import SCEvents from './components/SCEvents';
 import SCEventSubscribeButton from './components/SCEventSubscribeButton';
@@ -126,6 +127,7 @@ import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
 import SCPrivateMessageThread from './components/SCPrivateMessageThread';
 import SCPrivateMessageThreadItem from './components/SCPrivateMessageThreadItem';
 import SCReactionAction from './components/SCReactionAction';
+import SCRelatedEventsWidget from './components/SCRelatedEventsWidget';
 import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget';
 import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
@@ -372,7 +374,9 @@ const theme = {
     SCMyEventsWidget,
     SCCalendar,
     SCCreateEventWidget,
-    SCSuggestedEventsWidget
+    SCSuggestedEventsWidget,
+    SCEventMembersWidget,
+    SCRelatedEventsWidget
   },
   selfcommunity: {
     user: {
