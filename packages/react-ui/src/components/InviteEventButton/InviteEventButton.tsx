@@ -6,9 +6,9 @@ import { useSCFetchEvent, useSCFetchUser } from '@selfcommunity/react-core';
 import { SCEventType, SCUserType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { SCOPE_SC_CORE } from 'packages/react-core/src/constants/Errors';
 import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { SCOPE_SC_UI } from '../../constants/Errors';
 
 const PREFIX = 'SCInviteEventButton';
 
@@ -104,23 +104,21 @@ export default function InviteEventButton(inProps: InviteEventButtonProps): JSX.
 
     if (invited) {
       EventService.removeInviteEvent(scEvent.id, { users: [scUser.id] })
-        .then((res) => {
-          console.log('*** res **', res);
+        .then(() => {
           setInvited(!invited);
           setInvitedNumber((prev) => prev - 1);
         })
         .catch((_error) => {
-          Logger.error(SCOPE_SC_CORE, _error);
+          Logger.error(SCOPE_SC_UI, _error);
         });
     } else {
       EventService.inviteOrAcceptEventRequest(scEvent.id, { users: [scUser.id] })
-        .then((res) => {
-          console.log('*** res **', res);
+        .then(() => {
           setInvited(!invited);
           setInvitedNumber((prev) => prev + 1);
         })
         .catch((_error) => {
-          Logger.error(SCOPE_SC_CORE, _error);
+          Logger.error(SCOPE_SC_UI, _error);
         });
     }
   }, [scEvent, scUser]);
