@@ -176,7 +176,6 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
     [widgets, scEvent]
   );
 
-  console.log(scEvent);
   if (!scEvent) {
     return <EventFeedSkeleton />;
   } else if (
