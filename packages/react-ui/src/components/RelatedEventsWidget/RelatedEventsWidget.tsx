@@ -89,6 +89,8 @@ export interface RelatedEventsWidgetProps extends WidgetProps {
    */
   dialogProps?: BaseDialogProps;
 
+  limit?: number;
+
   /**
    * Other props
    */
@@ -109,6 +111,7 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
     endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET },
     cacheStrategy,
     dialogProps,
+    limit = 5,
     ...rest
   } = props;
 
@@ -118,9 +121,9 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_EVENTS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_OTHER_EVENTS_STATE_CACHE_PREFIX_KEY, eventId || event.id),
       cacheStrategy,
-      visibleItems: DEFAULT_PAGINATION_LIMIT
+      visibleItems: limit
     },
     stateWidgetInitializer
   );
@@ -170,7 +173,7 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
     http
       .request({
         url: state.next,
-        method: Endpoints.EventSuggestion.method
+        method: Endpoints.GetEventRelated.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCEventType>>) => {
         dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });

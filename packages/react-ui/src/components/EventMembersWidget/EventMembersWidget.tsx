@@ -84,6 +84,8 @@ export interface EventMembersWidgetProps extends WidgetProps {
    */
   dialogProps?: BaseDialogProps;
 
+  limit?: number;
+
   /**
    * Other props
    */
@@ -104,6 +106,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET },
     cacheStrategy,
     dialogProps,
+    limit,
     ...rest
   } = props;
 
@@ -113,9 +116,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_EVENTS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_EVENTS_STATE_CACHE_PREFIX_KEY, eventId || event.id),
       cacheStrategy,
-      visibleItems: DEFAULT_PAGINATION_LIMIT
+      visibleItems: limit
     },
     stateWidgetInitializer
   );
@@ -124,7 +127,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_EVENTS_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_INVITED_EVENTS_STATE_CACHE_PREFIX_KEY, eventId || event.id),
       cacheStrategy,
       visibleItems: DEFAULT_PAGINATION_LIMIT
     },
@@ -278,7 +281,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                       elevation={0}
                       user={user}
                       {...userProps}
-                      actions={<InviteEventButton event={scEvent} user={scUserContext.user} setInvitedNumber={setInvitedNumber} />}
+                      actions={<InviteEventButton event={scEvent} userId={user.id} setInvitedNumber={setInvitedNumber} />}
                     />
                   </ListItem>
                 ))}
