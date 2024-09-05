@@ -1,4 +1,4 @@
-import { Icon, IconButton } from '@mui/material';
+import { Button, Icon } from '@mui/material';
 import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useSwiper } from 'swiper/react';
 
@@ -38,18 +38,18 @@ export default function Arrow(props: ArrowProps) {
   if (type === 'prev') {
     return (
       currentItem > 0 && (
-        <IconButton className={className} size="medium" onClick={() => handleChange('prev')}>
+        <Button variant="contained" className={className} size="medium" onClick={() => handleChange('prev')}>
           <Icon>chevron_left</Icon>
-        </IconButton>
+        </Button>
       )
     );
   }
 
   return (
     currentItem < itemsLength - 1 && (
-      <IconButton className={className} size="medium" onClick={() => handleChange('next')}>
+      <Button variant="contained" className={className} size="medium" onClick={() => handleChange('next')}>
         <Icon>chevron_right</Icon>
-      </IconButton>
+      </Button>
     )
   );
 }
