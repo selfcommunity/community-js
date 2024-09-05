@@ -13,12 +13,12 @@ const Component = {
         height: '24px'
       },
 
-      '& .SCEventPartecipantsButton-partecipants': {
-        color: theme.palette.primary.main
+      '& .SCEventParticipantsButton-participants': {
+        color: theme.palette.grey[600]
       }
     }),
     dialogRoot: ({ theme }) => ({
-      '& .SCEventPartecipantsButton-infinite-scroll': {
+      '& .SCEventParticipantsButton-infinite-scroll': {
         height: '400px !important',
 
         [theme.breakpoints.down('md')]: {

@@ -71,7 +71,7 @@ import SCEventInfoWidget from './components/SCEventInfoWidget';
 import SCEventInviteButton from './components/SCEventInviteButton';
 import SCEventLocationWidget from './components/SCEventLocationWidget';
 import SCEventMembersWidget from './components/SCEventMembersWidget';
-import SCEventPartecipantsButton from './components/SCEventPartecipantsButton';
+import SCEventParticipantsButton from './components/SCEventParticipantsButton';
 import SCEvents from './components/SCEvents';
 import SCEventSubscribeButton from './components/SCEventSubscribeButton';
 import SCExploreFeedTemplate from './components/SCExploreFeedTemplate';
@@ -370,7 +370,7 @@ const theme = {
     SCEventInfoWidget,
     SCEventInfoDetails,
     SCEventSubscribeButton,
-    SCEventPartecipantsButton,
+    SCEventParticipantsButton,
     SCMyEventsWidget,
     SCCalendar,
     SCCreateEventWidget,

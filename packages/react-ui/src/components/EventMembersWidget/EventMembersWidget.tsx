@@ -1,24 +1,24 @@
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Button, CardActions, CardContent, List, ListItem, Stack, Tab, Typography, useThemeProps } from '@mui/material';
-import { styled } from '@mui/system';
-import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCCache, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
-import { SCEventType, SCUserType } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { SyntheticEvent, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {TabContext, TabList, TabPanel} from '@mui/lab';
+import {Box, Button, CardActions, CardContent, List, ListItem, Stack, Tab, Typography, useThemeProps} from '@mui/material';
+import {styled} from '@mui/system';
+import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCCache, SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {SyntheticEvent, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import 'swiper/css';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import InviteEventButton from '../InviteEventButton';
-import User, { UserProps, UserSkeleton } from '../User';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import User, {UserProps, UserSkeleton} from '../User';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 
 const classes = {
@@ -103,7 +103,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     event,
     eventId,
     userProps = {},
-    endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET },
+    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
     cacheStrategy,
     dialogProps,
     limit,
@@ -111,7 +111,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   } = props;
 
   // STATE
-  const [partecipants, dispatchPartecipants] = useReducer(
+  const [participants, dispatchParticipants] = useReducer(
     dataWidgetReducer,
     {
       isLoadingNext: false,
@@ -137,42 +137,42 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const [invitedNumber, setInvitedNumber] = useState(0);
   const [tabValue, setTabValue] = useState('1');
 
-  const state = useMemo(() => (tabValue === '1' ? partecipants : invited), [tabValue, partecipants, invited]);
+  const state = useMemo(() => (tabValue === '1' ? participants : invited), [tabValue, participants, invited]);
   const dispatch = useCallback(
-    (value) => (tabValue === '1' ? dispatchPartecipants(value) : dispatchInvited(value)),
-    [tabValue, dispatchPartecipants, dispatchInvited]
+    (value) => (tabValue === '1' ? dispatchParticipants(value) : dispatchInvited(value)),
+    [tabValue, dispatchParticipants, dispatchInvited]
   );
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
-  const _initPartecipants = useCallback(() => {
-    if (!partecipants.initialized && !partecipants.isLoadingNext) {
-      dispatchPartecipants({ type: actionWidgetTypes.LOADING_NEXT });
-      EventService.getUsersGoingToEvent(scEvent.id, { ...endpointQueryParams })
+  const _initParticipants = useCallback(() => {
+    if (!participants.initialized && !participants.isLoadingNext) {
+      dispatchParticipants({type: actionWidgetTypes.LOADING_NEXT});
+      EventService.getUsersGoingToEvent(scEvent.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatchPartecipants({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatchParticipants({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
         })
         .catch((error) => {
-          dispatchPartecipants({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatchParticipants({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [partecipants.isLoadingNext, partecipants.initialized, dispatchPartecipants, scEvent]);
+  }, [participants.isLoadingNext, participants.initialized, dispatchParticipants, scEvent]);
 
   const _initInvited = useCallback(() => {
     if (!invited.initialized && !invited.isLoadingNext && scUserContext.user?.id === scEvent.managed_by.id) {
-      dispatchInvited({ type: actionWidgetTypes.LOADING_NEXT });
-      EventService.getEventInvitedUsers(scEvent.id, { ...endpointQueryParams })
+      dispatchInvited({type: actionWidgetTypes.LOADING_NEXT});
+      EventService.getEventInvitedUsers(scEvent.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatchInvited({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           setInvitedNumber(payload.count);
         })
         .catch((error) => {
-          dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatchInvited({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -184,7 +184,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
     if (scUserContext.user && scEvent) {
       _t = setTimeout(() => {
-        _initPartecipants();
+        _initParticipants();
         _initInvited();
       });
 
@@ -199,14 +199,14 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
    * Handles pagination
    */
   const handleNext = useCallback(() => {
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
     http
       .request({
         url: state.next,
         method: Endpoints.UserSuggestion.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
       });
   }, [dispatch, state.next, state.isLoadingNext, state.initialized]);
 
@@ -240,9 +240,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
               <Tab
                 label={
                   <Stack className={classes.tabLabelWrapper}>
-                    <Typography variant="h3">{partecipants.count}</Typography>
+                    <Typography variant="h3">{participants.count}</Typography>
                     <Typography variant="subtitle2">
-                      <FormattedMessage id="ui.eventMembersWidget.partecipants" defaultMessage="ui.eventMembersWidget.partecipants" />
+                      <FormattedMessage id="ui.eventMembersWidget.participants" defaultMessage="ui.eventMembersWidget.participants" />
                     </Typography>
                   </Stack>
                 }
@@ -265,7 +265,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           </Box>
           <TabPanel value="1" className={classes.tabPanel}>
             <List>
-              {partecipants.results.map((user: SCUserType) => (
+              {participants.results.map((user: SCUserType) => (
                 <ListItem key={user.id}>
                   <User elevation={0} user={user} {...userProps} />
                 </ListItem>
