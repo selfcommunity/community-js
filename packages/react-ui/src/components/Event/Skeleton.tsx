@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {AvatarGroup, Box, Button, CardContent, Divider, Icon, Stack} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
@@ -56,6 +56,10 @@ export interface EventSkeletonProps extends WidgetProps {
    */
   template?: SCEventTemplateType;
   /**
+   * Disable skeleton animation
+   */
+	skeletonsAnimation?: false | 'wave' | 'pulse'
+  /**
    * Prop to pass an action to be rendered next to the skeleton
    */
   actions?: React.ReactNode;
@@ -89,7 +93,8 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {className, template = SCEventTemplateType.SNIPPET, actions, ...rest} = props;
+  const {className, template = SCEventTemplateType.SNIPPET, skeletonsAnimation = 'wave', actions, ...rest} = props;
+
   /**
    * Renders event object
    */
@@ -98,45 +103,45 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
     contentObj = (
       <SkeletonDetailRoot className={classes.skeletonDetailRoot}>
         <Box position="relative">
-          <Skeleton variant="rectangular" animation="wave" width="100%" height="170px" />
-          <Skeleton className={classes.skeletonDetailCalendar} variant="rounded" animation="wave" width="60px" height="60px" />
+          <Skeleton variant="rectangular" animation={skeletonsAnimation} width="100%" height="170px" />
+          <Skeleton className={classes.skeletonDetailCalendar} variant="rounded" animation={skeletonsAnimation} width="60px" height="60px" />
         </Box>
 
         <CardContent className={classes.skeletonDetailContent}>
-          <Skeleton animation="wave" width="36%" height="40px" />
+          <Skeleton animation={skeletonsAnimation} width="36%" height="40px" />
 
           <Stack direction="row" alignItems="center" gap="8px" marginBottom="9px">
-            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-            <Skeleton animation="wave" width="50%" height="20px" />
+            <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+            <Skeleton animation={skeletonsAnimation} width="50%" height="20px" />
           </Stack>
 
           <Stack direction="row" alignItems="center" gap="8px" marginBottom="9px">
-            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-            <Skeleton animation="wave" width="35%" height="20px" />
+            <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+            <Skeleton animation={skeletonsAnimation} width="35%" height="20px" />
           </Stack>
 
           <Stack direction="row" alignItems="center" gap="8px" marginBottom="14px">
-            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-            <Skeleton animation="wave" width="27%" height="20px" />
+            <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+            <Skeleton animation={skeletonsAnimation} width="27%" height="20px" />
           </Stack>
 
           <Stack direction="row" gap="8px" className={classes.skeletonDetailUser}>
-            <Skeleton animation="wave" variant="circular" width="36px" height="36px" />
+            <Skeleton animation={skeletonsAnimation} variant="circular" width="36px" height="36px" />
             <Stack gap="1px">
-              <Skeleton animation="wave" width="75px" height="15px" />
-              <Skeleton animation="wave" width="86px" height="16px" />
+              <Skeleton animation={skeletonsAnimation} width="75px" height="15px" />
+              <Skeleton animation={skeletonsAnimation} width="86px" height="16px" />
             </Stack>
           </Stack>
 
           <Divider className={classes.skeletonDetailFirstDivider} />
 
           <Stack direction="row" gap="8px" alignItems="center" height="28px">
-            <Skeleton animation="wave" width="68px" height="20px" />
+            <Skeleton animation={skeletonsAnimation} width="68px" height="20px" />
             <AvatarGroup>
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
             </AvatarGroup>
           </Stack>
 
@@ -148,29 +153,29 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
     contentObj = (
       <SkeletonPreviewRoot className={classes.skeletonPreviewRoot}>
         <Box position="relative">
-          <Skeleton variant="rectangular" animation="wave" width="100%" height="80px" />
+          <Skeleton variant="rectangular" animation={skeletonsAnimation} width="100%" height="80px" />
         </Box>
 
         <CardContent className={classes.skeletonPreviewContent}>
           <Stack direction="row" alignItems="center" gap="8px">
-            <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-            <Skeleton animation="wave" width="30%" height="16px" />
+            <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+            <Skeleton animation={skeletonsAnimation} width="30%" height="16px" />
           </Stack>
 
-          <Skeleton animation="wave" width="46%" height="20px" />
+          <Skeleton animation={skeletonsAnimation} width="46%" height="20px" />
 
           <Stack direction="row" alignItems="center" gap="8px" marginBottom="14px">
-            <Skeleton animation="wave" width="27%" height="16px" />
+            <Skeleton animation={skeletonsAnimation} width="27%" height="16px" />
           </Stack>
 
           <Stack direction="row" gap="8px" alignItems="center" height="28px">
             <AvatarGroup>
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
-              <Skeleton animation="wave" variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
             </AvatarGroup>
-            <Skeleton animation="wave" width="10%" height="20px" />
+            <Skeleton animation={skeletonsAnimation} width="10%" height="20px" />
           </Stack>
         </CardContent>
       </SkeletonPreviewRoot>
@@ -184,21 +189,21 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
         className={classes.skeletonSnippetRoot}
         image={
           <Box className={classes.skeletonSnippetImage}>
-            <Skeleton animation="wave" variant="rectangular" width={100} height={60} /> <Icon fontSize="large">CalendarIcon</Icon>
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" width={100} height={60} /> <Icon fontSize="large">CalendarIcon</Icon>
           </Box>
         }
-        primary={<Skeleton animation="wave" variant="rectangular" height={10} width="40%" style={{marginBottom: 12}} />}
+        primary={<Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="40%" style={{marginBottom: 12}} />}
         secondary={
           <>
-            <Skeleton animation="wave" variant="rectangular" height={10} width="60%" style={{marginBottom: 10, marginRight: 5}} />
-            <Skeleton animation="wave" variant="rectangular" height={10} width="35%" />
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="60%" style={{marginBottom: 10, marginRight: 5}} />
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="35%" />
           </>
         }
         actions={
           <>
             {actions ?? (
               <Button size="small" variant="outlined" disabled>
-                <Skeleton animation="wave" height={10} width={30} style={{marginTop: 5, marginBottom: 5}} />
+                <Skeleton animation={skeletonsAnimation} height={10} width={30} style={{marginTop: 5, marginBottom: 5}} />
               </Button>
             )}
           </>
