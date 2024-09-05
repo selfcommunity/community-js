@@ -2,7 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({ theme }) => ({
       '& .SCEventMembersWidget-content': {
-        padding: `${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(3)}`,
+        padding: `${theme.spacing(2)} ${theme.spacing(2)}}`,
 
         '& .SCEventMembersWidget-title': {
           marginBottom: '18px'
@@ -19,21 +19,18 @@ const Component = {
 
         '& .SCEventMembersWidget-tab-panel': {
           padding: `${theme.spacing(4)} 0 0`
-        }
-      },
+        },
 
-      '& .SCEventMembersWidget-actions': {
-        padding: `0 ${theme.spacing(2)} ${theme.spacing(3)}`,
-        justifyContent: 'center',
-
-        '& .SCSuggestedEventsWidget-actionButton': {
+        '& .SCEventMembersWidget-action-button': {
+          left: '50%',
+          transform: 'translate(-50%)',
           color: theme.palette.primary.main
         }
       }
     }),
     skeletonRoot: ({ theme }) => ({
       '& .SCEventMembersWidget-content': {
-        padding: `${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(3)}`,
+        padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
 
         '& .SCEventMembersWidget-title': {
           marginBottom: '18px'
@@ -50,12 +47,12 @@ const Component = {
 
         '& .SCEventMembersWidget-tab-panel': {
           padding: `${theme.spacing(4)} 0 0`
-        }
-      },
+        },
 
-      '& .SCEventMembersWidget-actions': {
-        padding: `0 ${theme.spacing(2)} ${theme.spacing(3)}`,
-        justifyContent: 'center'
+        '& .SCEventMembersWidget-action-button': {
+          left: '50%',
+          transform: 'translate(-50%)'
+        }
       }
     }),
     dialogRoot: ({ theme }) => ({

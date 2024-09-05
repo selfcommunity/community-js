@@ -4,7 +4,8 @@ import EventMembersWidget from './index';
 export default {
   title: 'Design System/React UI/Event Members Widget',
   args: {
-    eventId: 121
+    eventId: 121,
+    limit: 5
   },
   component: EventMembersWidget
 } as Meta<typeof EventMembersWidget>;
