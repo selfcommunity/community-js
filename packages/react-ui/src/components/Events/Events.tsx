@@ -399,6 +399,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   <Grid item xs={12} sm={8} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
+                      skeletonsAnimation={false}
                       actions={
                         <CreateEventButton variant="outlined" color="primary" size="small">
                           <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
