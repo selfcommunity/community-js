@@ -44,13 +44,13 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'DialogRoot',
   overridesResolver: (_props, styles) => styles.dialogRoot
-})();
+})(() => ({}));
 
 export interface RelatedEventsWidgetProps extends WidgetProps {
   /**

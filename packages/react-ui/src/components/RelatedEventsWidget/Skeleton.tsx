@@ -19,7 +19,7 @@ const Root = styled(Widget, {
   name: PREFIX,
   slot: 'SkeletonRoot',
   overridesResolver: (_props, styles) => styles.skeletonRoot
-})();
+})(() => ({}));
 
 export default function RelatedEventsWidgetSkeleton() {
   return (
