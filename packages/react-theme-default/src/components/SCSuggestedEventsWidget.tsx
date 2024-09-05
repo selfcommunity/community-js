@@ -15,7 +15,7 @@ const Component = {
             paddingBottom: '1px',
 
             '& .SCSuggestedEventsWidget-swiper-slide': {
-              width: '200px',
+              width: '210px',
               height: 'auto',
 
               '& .SCSuggestedEventsWidget-event': {
@@ -43,20 +43,23 @@ const Component = {
             }
           },
 
-          '& .SCSuggestedEventsWidget-swiper-prev-arrow': {
+          '& .SCSuggestedEventsWidget-swiper-arrow': {
             position: 'absolute',
             top: '50%',
             transform: 'translateY(-50%)',
-            left: '5px',
-            zIndex: 1
+            zIndex: 1,
+            paddingLeft: '10px!important',
+            paddingRight: '10px!important',
+            minWidth: 'auto',
+            backgroundColor: theme.palette.grey[400]
+          },
+
+          '& .SCSuggestedEventsWidget-swiper-prev-arrow': {
+            left: '5px'
           },
 
           '& .SCSuggestedEventsWidget-swiper-next-arrow': {
-            position: 'absolute',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            right: '5px',
-            zIndex: 1
+            right: '5px'
           }
         }
       },

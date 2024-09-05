@@ -56,7 +56,7 @@ import EventInfoWidget, { EventInfoWidgetProps } from './components/EventInfoWid
 import EventInviteButton, { EventInviteButtonProps } from './components/EventInviteButton';
 import EventLocationWidget, { EventLocationWidgetProps, EventLocationWidgetSkeleton } from './components/EventLocationWidget';
 import EventMembersWidget, { EventMembersWidgetProps, EventMembersWidgetSkeleton } from './components/EventMembersWidget';
-import EventPartecipantsButton, { EventPartecipantsButtonProps } from './components/EventPartecipantsButton';
+import EventParticipantsButton, { EventParticipantsButtonProps } from './components/EventParticipantsButton';
 import Events, { EventsProps, EventsSkeleton, EventsSkeletonProps } from './components/Events';
 import Feed, { FeedProps, FeedRef, FeedSidebarProps, FeedSkeleton } from './components/Feed';
 import FeedObject, { FeedObjectProps, FeedObjectSkeleton } from './components/FeedObject';
@@ -368,8 +368,8 @@ export {
   EventMembersWidget,
   EventMembersWidgetProps,
   EventMembersWidgetSkeleton,
-  EventPartecipantsButton,
-  EventPartecipantsButtonProps,
+  EventParticipantsButton,
+  EventParticipantsButtonProps,
   EventProps,
   Events,
   EventSkeleton,

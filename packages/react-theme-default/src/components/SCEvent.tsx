@@ -1,7 +1,7 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({}),
-    detailRoot: ({theme}: any) => ({
+    root: ({ theme }: any) => ({}),
+    detailRoot: ({ theme }: any) => ({
       '& .SCEvent-detail-image-wrapper': {
         position: 'relative',
         '& .SCEvent-detail-image': {
@@ -33,7 +33,7 @@ const Component = {
         }
       }
     }),
-    previewRoot: ({theme}: any) => ({
+    previewRoot: ({ theme }: any) => ({
       '& .SCEvent-preview-image-wrapper': {
         position: 'relative',
         '& .SCEvent-preview-image': {
@@ -50,14 +50,11 @@ const Component = {
         },
         '& .SCEvent-preview-name-wrapper': {
           textDecoration: 'none',
-          color: 'inherit',
-          '& .SCEvent-preview-name': {
-            marginBottom: '10px'
-          }
+          color: 'inherit'
         }
       }
     }),
-    snippetRoot: ({theme}: any) => ({
+    snippetRoot: ({ theme }: any) => ({
       overflow: 'visible',
       boxSizing: 'border-box',
       paddingLeft: `${theme.spacing()} !important`,
@@ -88,7 +85,7 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({theme}: any) => ({
+    skeletonRoot: ({ theme }: any) => ({
       '& .SCEvent-skeleton-detail-root': {
         '& .SCEvent-skeleton-detail-calendar': {
           position: 'absolute',

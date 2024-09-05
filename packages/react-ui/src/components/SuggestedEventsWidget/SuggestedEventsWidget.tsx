@@ -5,11 +5,12 @@ import { Link, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommuni
 import { SCEventType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
+import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import { SCEventTemplateType } from '../../types/event';
 import Event from '../Event';
@@ -24,6 +25,7 @@ const classes = {
   title: `${PREFIX}-title`,
   swiper: `${PREFIX}-swiper`,
   swiperSlide: `${PREFIX}-swiper-slide`,
+  swiperArrow: `${PREFIX}-swiper-arrow`,
   swiperPrevArrow: `${PREFIX}-swiper-prev-arrow`,
   swiperNextArrow: `${PREFIX}-swiper-next-arrow`,
   event: `${PREFIX}-event`,
@@ -57,10 +59,12 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
     name: PREFIX
   });
 
-  const { endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET }, ...rest } = props;
+  const { endpointQueryParams = { limit: 3, offset: DEFAULT_PAGINATION_OFFSET }, ...rest } = props;
 
   // STATE
-  const [eventsData, setEventsData] = useState<SCPaginatedResponse<SCEventType> | null>(null);
+  const [count, setCount] = useState<number | null>(null);
+  const [next, setNext] = useState<string | null>(null);
+  const [events, setEvents] = useState<SCEventType[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [currentItem, setCurrentItem] = useState(0);
@@ -71,7 +75,9 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   useEffect(() => {
     SuggestionService.getEventSuggestion({ ...endpointQueryParams })
       .then((payload: SCPaginatedResponse<SCEventType>) => {
-        setEventsData(payload);
+        setCount(payload.count);
+        setNext(payload.next);
+        setEvents(payload.results);
         setLoading(false);
       })
       .catch((error) => {
@@ -80,30 +86,32 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   }, []);
 
   const handleReachEnd = useCallback(() => {
-    if (eventsData.count > eventsData.results.length && eventsData.next) {
+    if (count > events.length && next) {
       setShowSkeleton(true);
 
       http
         .request({
-          url: eventsData.next,
+          url: next,
           method: Endpoints.GetEventSuggestedUsers.method
         })
         .then((res: AxiosResponse<SCPaginatedResponse<SCEventType>>) => {
-          setEventsData(res.data);
+          setCount(res.data.count);
+          setNext(res.data.next);
+          setEvents((prevEvents) => [...prevEvents, ...res.data.results]);
           setShowSkeleton(false);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [eventsData]);
+  }, [count, events, next]);
 
   // RENDER
-  if (!eventsData && loading) {
+  if (!events && loading) {
     return <Skeleton />;
   }
 
-  if (!eventsData || eventsData.count === 0) {
+  if (!events || count === 0) {
     return <HiddenPlaceholder />;
   }
 
@@ -121,14 +129,24 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
           onReachEnd={handleReachEnd}
           onSlideChange={(swiper) => setCurrentItem(swiper.snapIndex)}
           className={classes.swiper}>
-          {(showSkeleton ? [...eventsData.results, undefined] : eventsData.results).map((event, i) => (
+          {(showSkeleton ? [...events, undefined] : events).map((event, i) => (
             <SwiperSlide key={i} className={classes.swiperSlide}>
               <Event event={event} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
             </SwiperSlide>
           ))}
 
-          <Arrow className={classes.swiperPrevArrow} type="prev" currentItem={currentItem} setCurrentItem={setCurrentItem} />
-          <Arrow className={classes.swiperNextArrow} type="next" currentItem={currentItem} setCurrentItem={setCurrentItem} />
+          <Arrow
+            className={classNames(classes.swiperArrow, classes.swiperPrevArrow)}
+            type="prev"
+            currentItem={currentItem}
+            setCurrentItem={setCurrentItem}
+          />
+          <Arrow
+            className={classNames(classes.swiperArrow, classes.swiperNextArrow)}
+            type="next"
+            currentItem={currentItem}
+            setCurrentItem={setCurrentItem}
+          />
         </Swiper>
       </CardContent>
 

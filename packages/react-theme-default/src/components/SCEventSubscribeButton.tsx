@@ -4,7 +4,6 @@ const Component = {
       backgroundColor: theme.palette.grey['A200'],
       justifyContent: 'space-between',
       height: 33,
-      width: 195,
       borderRadius: '5px',
       '&:hover, &:active': {
         backgroundColor: theme.palette.common.black,

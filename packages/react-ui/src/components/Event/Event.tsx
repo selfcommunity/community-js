@@ -1,20 +1,20 @@
-import { Avatar, Box, Button, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
+import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import BaseItem from '../../shared/BaseItem';
 import Calendar from '../../shared/Calendar';
 import EventInfoDetails from '../../shared/EventInfoDetails';
-import { SCEventTemplateType } from '../../types/event';
-import EventPartecipantsButton from '../EventPartecipantsButton';
+import {SCEventTemplateType} from '../../types/event';
+import EventParticipantsButton, {EventParticipantsButtonProps} from '../EventParticipantsButton';
 import User from '../User';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
-import EventSkeleton, { EventSkeletonProps } from './Skeleton';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
+import EventSkeleton, {EventSkeletonProps} from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -93,6 +93,11 @@ export interface EventProps extends WidgetProps {
    */
   hideEventParticipants?: boolean;
   /**
+   * Props to spread to EventParticipantsButton component
+   * @default {}
+   */
+  EventParticipantsButtonComponentProps?: EventParticipantsButtonProps;
+  /**
    * Hide event planner
    * @default false
    */
@@ -155,12 +160,13 @@ export default function Event(inProps: EventProps): JSX.Element {
     hideEventParticipants = false,
     hideEventPlanner = false,
     actions,
+    EventParticipantsButtonComponentProps = {},
     EventSkeletonComponentProps = {},
     ...rest
   } = props;
 
   // STATE
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -208,7 +214,7 @@ export default function Event(inProps: EventProps): JSX.Element {
           {!hideEventParticipants && (
             <>
               <Divider className={classes.detailFirstDivider} />
-              <EventPartecipantsButton event={scEvent} eventId={scEvent.id} />
+              <EventParticipantsButton event={scEvent} eventId={scEvent.id} {...EventParticipantsButtonComponentProps} />
             </>
           )}
           <Divider className={classes.detailSecondDivider} />
@@ -241,7 +247,7 @@ export default function Event(inProps: EventProps): JSX.Element {
               </Link>
             }
           />
-          {!hideEventParticipants && <EventPartecipantsButton event={scEvent} />}
+          {!hideEventParticipants && <EventParticipantsButton event={scEvent} hideCaption {...EventParticipantsButtonComponentProps} />}
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
