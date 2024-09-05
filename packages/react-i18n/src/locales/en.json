@@ -562,7 +562,7 @@
   "ui.onBoardingWidget.step.appearance.titleSlogan.title": "Title and Slogan",
   "ui.onBoardingWidget.step.appearance.titleSlogan.field.title": "Title",
   "ui.onBoardingWidget.step.appearance.titleSlogan.field.slogan": "Slogan",
-  "ui.onBoardingWidget.step.appearance.titleSlogan.button": "Salva",
+  "ui.onBoardingWidget.step.appearance.titleSlogan.button": "Save",
   "ui.onBoardingWidget.step.appearance.button": "Set Appearance",
   "ui.onBoardingWidget.step.profile.summary": "Tell your users a bit about yourself by setting your real name, bio, and other information.",
   "ui.onBoardingWidget.step.profile.button": "Set Profile",
