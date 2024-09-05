@@ -17,21 +17,24 @@ const Component = {
         textTransform: 'uppercase',
         fontSize: '1.143rem',
         fontWeight: theme.typography.fontWeightLight,
-        color: theme.palette.text.secondary
+        color: theme.palette.text.secondary,
+				paddingLeft: theme.spacing(2)
       },
       '& .SCEventHeader-info': {
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(),
+        paddingLeft: theme.spacing(),
         marginTop: theme.spacing(6),
         '& .SCEventHeader-name': {
           fontSize: '1.857rem',
-          fontWeight: theme.typography.fontWeightBold
+          fontWeight: theme.typography.fontWeightBold,
+					paddingLeft: theme.spacing(2),
         },
         '& .SCEventHeader-visibility': {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
           gap: theme.spacing(0.5),
+					paddingLeft: theme.spacing(2),
           '& .SCEventHeader-visibility-item': {
             fontSize: theme.typography.fontSize,
             fontWeight: theme.typography.fontWeightLight,
@@ -53,7 +56,7 @@ const Component = {
         '& .SCUser-root': {
           borderTop: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
           borderBottom: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
-          padding: `${theme.spacing(0.5)} !important`,
+          padding: `${theme.spacing(0.5)} ${theme.spacing(2)} ${theme.spacing(0.5)} ${theme.spacing(2)}!important`,
           marginTop: theme.spacing(1),
           '& .SCBaseItemButton-actions': {
             maxWidth: 'none',
