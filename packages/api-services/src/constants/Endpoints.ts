@@ -66,6 +66,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/dynamic_preference/$(id)/'),
     method: 'GET'
   },
+  UpdatePreferences: {
+    url: urlReplacer('/api/v2/dynamic_preference/'),
+    method: 'PATCH'
+  },
   /**
    * SSO Endpoints
    */
@@ -1213,6 +1217,25 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetUserSubscribedGroups: {
     url: urlReplacer('/api/v2/user/$(id)/groups/'),
     method: 'GET'
+  },
+  /**
+   * OnBoarding
+   */
+  GetAllSteps: {
+    url: urlReplacer('/api/v2/onboarding/'),
+    method: 'GET'
+  },
+  GetAStep: {
+    url: urlReplacer('/api/v2/onboarding/$(step)/'),
+    method: 'GET'
+  },
+  StartAStep: {
+    url: urlReplacer('/api/v2/onboarding/$(step)/start/'),
+    method: 'POST'
+  },
+  CompleteAStep: {
+    url: urlReplacer('/api/v2/onboarding/$(step)/complete/'),
+    method: 'POST'
   }
 };
 

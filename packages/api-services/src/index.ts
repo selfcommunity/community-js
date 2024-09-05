@@ -50,6 +50,7 @@ import UserService, {UserApiClient, UserApiClientInterface} from './services/use
 import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './services/webhook';
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
+import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
 
 /**
  * Types
@@ -110,7 +111,9 @@ import {
   InsightCommonParams,
   ReactionParams,
   GroupCreateParams,
-  GroupFeedParams
+  GroupFeedParams,
+  StartStepParams,
+  OnBoardingStep
 } from './types';
 
 /**
@@ -277,5 +280,10 @@ export {
   GroupFeedParams,
   GroupService,
   GroupApiClient,
-  GroupApiClientInterface
+  GroupApiClientInterface,
+  OnBoardingService,
+  OnBoardingApiClientInterface,
+  OnBoardingApiClient,
+  StartStepParams,
+  OnBoardingStep
 };

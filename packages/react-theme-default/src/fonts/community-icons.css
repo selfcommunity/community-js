@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?iefix');
-  src:  url('./community/icons.eot?iefix#iefix') format('embedded-opentype'),
-  url('./community/icons.woff2?iefix') format('woff2'),
-  url('./community/icons.ttf?iefix') format('truetype'),
-  url('./community/icons.woff?iefix') format('woff'),
-  url('./community/icons.svg?iefix#community-icons') format('svg');
+  src:  url('./community/icons.eot?9935da');
+  src:  url('./community/icons.eot?9935da#9935da') format('embedded-opentype'),
+  url('./community/icons.woff2?9935da') format('woff2'),
+  url('./community/icons.ttf?9935da') format('truetype'),
+  url('./community/icons.woff?9935da') format('woff'),
+  url('./community/icons.svg?9935da#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-add_to_home:before {
+  content: "\e96f";
+}
+.icon-box_arrow_up:before {
+  content: "\e96e";
+}
+.icon-add_square:before {
+  content: "\e96d";
+}
+.icon-ai_stars:before {
+  content: "\e96c";
+}
 .icon-circle_closed:before {
   content: "\e96a";
 }

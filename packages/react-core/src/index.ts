@@ -112,9 +112,10 @@ import {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect, u
 
 /**
  * Constants:
- * Locale
+ * Locale, Preferences
  */
 import * as Locale from './constants/Locale';
+import * as Preferences from './constants/Preferences';
 
 /**
  * List all exports
@@ -178,6 +179,7 @@ export {
   SCCache,
   UserUtils,
   Locale,
+  Preferences,
   useSCFetchUser,
   useSCFetchUserProviders,
   useSCFetchVote,

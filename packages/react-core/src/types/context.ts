@@ -60,6 +60,11 @@ export interface SCSettingsType {
    * SCPreferencesProvider,
    */
   contextProviders?: ((children) => JSX.Element)[];
+
+  /**
+   *
+   */
+  integrations?: any;
 }
 
 /**
