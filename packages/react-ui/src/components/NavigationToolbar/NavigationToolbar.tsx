@@ -264,7 +264,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {eventsEnabled && scUserContext.user && (
         <IconButton
           className={classNames(classes.events, {
-            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {}))
+            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {}))
           })}
           aria-label="Groups"
           to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}
