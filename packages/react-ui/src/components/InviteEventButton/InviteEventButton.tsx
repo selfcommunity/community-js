@@ -20,7 +20,7 @@ const InviteButton = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})();
+})(() => ({}));
 
 export interface InviteEventButtonProps {
   /**
@@ -105,7 +105,7 @@ export default function InviteEventButton(inProps: InviteEventButtonProps): JSX.
     if (invited) {
       EventService.removeInviteEvent(scEvent.id, { users: [scUser.id] })
         .then(() => {
-          setInvited(!invited);
+          setInvited(false);
           setInvitedNumber((prev) => prev - 1);
         })
         .catch((_error) => {
@@ -114,14 +114,14 @@ export default function InviteEventButton(inProps: InviteEventButtonProps): JSX.
     } else {
       EventService.inviteOrAcceptEventRequest(scEvent.id, { users: [scUser.id] })
         .then(() => {
-          setInvited(!invited);
+          setInvited(true);
           setInvitedNumber((prev) => prev + 1);
         })
         .catch((_error) => {
           Logger.error(SCOPE_SC_UI, _error);
         });
     }
-  }, [scEvent, scUser]);
+  }, [scEvent, scUser, invited]);
 
   return (
     <InviteButton

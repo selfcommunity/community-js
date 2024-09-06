@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { CardActions, CardContent, List, ListItem, Skeleton, Stack, Tab } from '@mui/material';
+import { CardContent, List, ListItem, Skeleton, Stack, Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import 'swiper/css';
 import { UserSkeleton } from '../User';
@@ -13,14 +13,14 @@ const classes = {
   tabsWrapper: `${PREFIX}-tabs-wrapper`,
   tabLabelWrapper: `${PREFIX}-tab-label-wrapper`,
   tabPanel: `${PREFIX}-tab-panel`,
-  actions: `${PREFIX}-actions`
+  actionButton: `${PREFIX}-action-button`
 };
 
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'SkeletonRoot',
   overridesResolver: (_props, styles) => styles.skeletonRoot
-})();
+})(() => ({}));
 
 export default function EventMembersWidgetSkeleton() {
   return (
@@ -58,6 +58,8 @@ export default function EventMembersWidgetSkeleton() {
                   <UserSkeleton />
                 </ListItem>
               ))}
+
+              <Skeleton className={classes.actionButton} animation="wave" width="52px" height="20px" />
             </List>
           </TabPanel>
           <TabPanel value="2" className={classes.tabPanel}>
@@ -71,10 +73,6 @@ export default function EventMembersWidgetSkeleton() {
           </TabPanel>
         </TabContext>
       </CardContent>
-
-      <CardActions className={classes.actions}>
-        <Skeleton animation="wave" width="52px" height="20px" />
-      </CardActions>
     </Root>
   );
 }
