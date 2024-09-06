@@ -20,7 +20,7 @@ export default function Arrow(props: ArrowProps) {
 
   useEffect(() => {
     setItemsLength(swiper.slides.length);
-  }, []);
+  }, [currentItem]);
 
   const handleChange = useCallback(
     (type: 'prev' | 'next') => {
