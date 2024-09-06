@@ -4,6 +4,7 @@ import {
   ContributionUtils,
   EventInfoWidget,
   EventLocationWidget,
+  EventMembersWidget,
   Feed,
   FeedObject,
   FeedObjectProps,
@@ -12,6 +13,7 @@ import {
   FeedRef,
   FeedSidebarProps,
   InlineComposerWidget,
+  RelatedEventsWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
@@ -96,6 +98,20 @@ const WIDGETS: SCFeedWidgetType[] = [
     componentProps: {},
     column: 'right',
     position: 0
+  },
+  {
+    type: 'widget',
+    component: EventMembersWidget,
+    componentProps: {},
+    column: 'right',
+    position: 1
+  },
+  {
+    type: 'widget',
+    component: RelatedEventsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 2
   }
 ];
 

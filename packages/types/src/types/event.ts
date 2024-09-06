@@ -50,7 +50,8 @@ export enum SCEventDateFilterType {
   TOMORROW = 'tomorrow',
   THIS_WEEK = 'this_week',
   NEXT_WEEK = 'next_week',
-  THIS_MONTH = 'this_month'
+  THIS_MONTH = 'this_month',
+  PAST = 'past'
 }
 
 export interface SCEventType {

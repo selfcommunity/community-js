@@ -1,19 +1,28 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       '& .SCRelatedEventsWidget-content': {
         padding: `10px ${theme.spacing(2)} 12px`,
 
-        '& .SCRelatedEventsWidget-avatar-wrapper': {
+        '& .SCRelatedEventsWidget-header': {
           flexDirection: 'row',
-          alignItems: 'center',
-          gap: theme.spacing(1),
-          marginBottom: theme.spacing(2),
-          color: 'inherit',
-
-          '& .SCRelatedEventsWidget-avatar': {
-            width: '36px',
-            height: '36px'
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+					marginBottom: theme.padding(2),
+          '& .SCRelatedEventsWidget-avatar-wrapper': {
+            flexDirection: 'row',
+            alignItems: 'center',
+            color: 'inherit',
+            padding: 0,
+            minWidth: 'auto',
+            '& .SCRelatedEventsWidget-avatar': {
+              width: theme.selfcommunity.user.avatar.sizeMedium,
+              height: theme.selfcommunity.user.avatar.sizeMedium
+            }
+          },
+          '& h4': {
+            marginLeft: 7,
+            lineHeight: '28px'
           }
         },
 
@@ -43,7 +52,7 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({ theme }) => ({
+    skeletonRoot: ({theme}) => ({
       '& .SCRelatedEventsWidget-content': {
         padding: `10px ${theme.spacing(2)} 12px`,
 
@@ -83,7 +92,7 @@ const Component = {
         justifyContent: 'center'
       }
     }),
-    dialogRoot: ({ theme }) => ({
+    dialogRoot: ({theme}) => ({
       '& .SCRelatedEventsWidget-infinite-scroll': {
         height: '400px',
 

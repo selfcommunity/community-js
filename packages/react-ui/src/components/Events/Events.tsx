@@ -203,12 +203,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 ...(search !== '' && {search: search}),
                 ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
                 ...(showFollowed && {follows: showFollowed}),
-                ...(showPastEvents && {past: showPastEvents})
+                ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
               }
             : {
+                ...(search !== '' && {search: search}),
                 subscription_status: SCEventSubscriptionStatusType.GOING,
-                ...(showPastEvents && {past: showPastEvents}),
-                ...(search !== '' && {search: search})
+                ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
               })
         }
       })
@@ -391,12 +391,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
             <Grid container spacing={{xs: 2}} className={classes.events}>
               <>
                 {filteredEvents.map((event: SCEventType) => (
-                  <Grid item xs={12} sm={8} md={6} key={event.id} className={classes.item}>
+                  <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item}>
                     <Event event={event} eventId={event.id} {...EventComponentProps} />
                   </Grid>
                 ))}
                 {filteredEvents.length % 2 !== 0 && (
-                  <Grid item xs={12} sm={8} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
+                  <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
                       skeletonsAnimation={false}
