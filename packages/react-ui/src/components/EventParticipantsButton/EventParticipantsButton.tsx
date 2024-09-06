@@ -1,20 +1,20 @@
-import {Avatar, AvatarGroup, Button, List, ListItem, Typography} from '@mui/material';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {styled} from '@mui/material/styles';
-import {useThemeProps} from '@mui/system';
-import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
+import { Avatar, AvatarGroup, Button, List, ListItem, Typography } from '@mui/material';
+import { ButtonProps } from '@mui/material/Button/Button';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { Endpoints, EventService, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
+import { SCSubscribedEventsManagerType, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
+import { SCEventSubscriptionStatusType, SCEventType, SCUserType } from '@selfcommunity/types';
+import { Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
-import {useCallback, useEffect, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import { useCallback, useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
-import User, {UserSkeleton} from '../User';
+import User, { UserSkeleton } from '../User';
 
 const PREFIX = 'SCEventParticipantsButton';
 
@@ -98,7 +98,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
     name: PREFIX
   });
 
-  const {className, eventId, event, hideCaption = false, DialogProps = {}, ...rest} = props;
+  const { className, eventId, event, hideCaption = false, DialogProps = {}, ...rest } = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -108,7 +108,9 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const scUserContext: SCUserContextType = useSCUser();
+  const scEventsManager: SCSubscribedEventsManagerType | undefined = scUserContext.managers.events;
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
@@ -116,8 +118,15 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
       return;
     }
 
-    if (followers.length === 0) {
-      EventService.getUsersGoingToEvent(scEvent.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
+    const status = scEventsManager?.subscriptionStatus(scEvent);
+
+    if (
+      (status === SCEventSubscriptionStatusType.GOING ||
+        status === SCEventSubscriptionStatusType.NOT_GOING ||
+        status === SCEventSubscriptionStatusType.SUBSCRIBED) &&
+      followers.length === 0
+    ) {
+      EventService.getUsersGoingToEvent(scEvent.id, { limit: 3 }).then((res: SCPaginatedResponse<SCUserType>) => {
         setFollowers([...res.results]);
         setOffset(4);
         setLoading(false);
@@ -130,7 +139,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   useEffect(() => {
     if (open && offset !== null) {
       setLoading(true);
-      EventService.getUsersGoingToEvent(scEvent.id, {offset, limit: 20}).then((res: SCPaginatedResponse<SCUserType>) => {
+      EventService.getUsersGoingToEvent(scEvent.id, { offset, limit: 20 }).then((res: SCPaginatedResponse<SCUserType>) => {
         setFollowers([...(offset === 0 ? [] : followers), ...res.results]);
         setNext(res.next);
         setLoading(false);
@@ -198,7 +207,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
             <FormattedMessage
               defaultMessage="ui.eventParticipantsButton.dialogTitle"
               id="ui.eventParticipantsButton.dialogTitle"
-              values={{total: scEvent.goings_counter}}
+              values={{ total: scEvent.goings_counter }}
             />
           }
           onClose={handleToggleDialogOpen}
