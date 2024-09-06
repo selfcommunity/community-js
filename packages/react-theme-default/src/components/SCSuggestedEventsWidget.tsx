@@ -82,7 +82,7 @@ const Component = {
         },
 
         '& .SCSuggestedEventsWidget-swiper-slide': {
-          width: '200px',
+          width: '210px',
           height: 'auto'
         }
       },

@@ -1,13 +1,13 @@
-import React, {useMemo} from 'react';
-import {AvatarGroup, Box, Button, CardContent, Divider, Icon, Stack} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import { AvatarGroup, Box, Button, CardContent, Divider, Icon, Stack } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
-import {PREFIX} from './constants';
-import BaseItem from '../../shared/BaseItem';
-import {SCEventTemplateType} from '../../types/event';
-import Widget, {WidgetProps} from '../Widget';
-import {useThemeProps} from '@mui/system';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
 import classNames from 'classnames';
+import React from 'react';
+import BaseItem from '../../shared/BaseItem';
+import { SCEventTemplateType } from '../../types/event';
+import Widget, { WidgetProps } from '../Widget';
+import { PREFIX } from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -58,7 +58,7 @@ export interface EventSkeletonProps extends WidgetProps {
   /**
    * Disable skeleton animation
    */
-	skeletonsAnimation?: false | 'wave' | 'pulse'
+  skeletonsAnimation?: false | 'wave' | 'pulse';
   /**
    * Prop to pass an action to be rendered next to the skeleton
    */
@@ -93,7 +93,7 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {className, template = SCEventTemplateType.SNIPPET, skeletonsAnimation = 'wave', actions, ...rest} = props;
+  const { className, template = SCEventTemplateType.SNIPPET, skeletonsAnimation = 'wave', actions, ...rest } = props;
 
   /**
    * Renders event object
@@ -164,18 +164,16 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
 
           <Skeleton animation={skeletonsAnimation} width="46%" height="20px" />
 
-          <Stack direction="row" alignItems="center" gap="8px" marginBottom="14px">
+          <Stack direction="row" alignItems="center" gap="8px" marginBottom="2px">
             <Skeleton animation={skeletonsAnimation} width="27%" height="16px" />
           </Stack>
 
           <Stack direction="row" gap="8px" alignItems="center" height="28px">
             <AvatarGroup>
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="28px" height="28px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="28px" height="28px" />
+              <Skeleton animation={skeletonsAnimation} variant="circular" width="28px" height="28px" />
             </AvatarGroup>
-            <Skeleton animation={skeletonsAnimation} width="10%" height="20px" />
           </Stack>
         </CardContent>
       </SkeletonPreviewRoot>
@@ -192,10 +190,10 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
             <Skeleton animation={skeletonsAnimation} variant="rectangular" width={100} height={60} /> <Icon fontSize="large">CalendarIcon</Icon>
           </Box>
         }
-        primary={<Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="40%" style={{marginBottom: 12}} />}
+        primary={<Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="40%" style={{ marginBottom: 12 }} />}
         secondary={
           <>
-            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="60%" style={{marginBottom: 10, marginRight: 5}} />
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="60%" style={{ marginBottom: 10, marginRight: 5 }} />
             <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="35%" />
           </>
         }
@@ -203,7 +201,7 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
           <>
             {actions ?? (
               <Button size="small" variant="outlined" disabled>
-                <Skeleton animation={skeletonsAnimation} height={10} width={30} style={{marginTop: 5, marginBottom: 5}} />
+                <Skeleton animation={skeletonsAnimation} height={10} width={30} style={{ marginTop: 5, marginBottom: 5 }} />
               </Button>
             )}
           </>
