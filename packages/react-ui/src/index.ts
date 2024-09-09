@@ -82,7 +82,7 @@ import IncubatorListWidget, { IncubatorListWidgetProps } from './components/Incu
 import IncubatorSubscribeButton, { IncubatorSubscribeButtonProps } from './components/IncubatorSubscribeButton';
 import IncubatorSuggestionWidget, { IncubatorSuggestionWidgetProps } from './components/IncubatorSuggestionWidget';
 import InlineComposerWidget, { InlineComposerWidgetProps, InlineComposerWidgetSkeleton } from './components/InlineComposerWidget';
-import InviteEventButton, { InviteEventButtonProps } from './components/InviteEventButton';
+import InviteUserEventButton, { InviteUserEventButtonProps } from './components/InviteUserEventButton';
 import LocationAutocomplete, { LocationAutocompleteProps } from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, { LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton } from './components/LoyaltyProgramWidget';
 import MyEventsWidget, { MyEventsWidgetProps, MyEventsWidgetSkeleton } from './components/MyEventsWidget';
@@ -450,8 +450,8 @@ export {
   InlineComposerWidget,
   InlineComposerWidgetProps,
   InlineComposerWidgetSkeleton,
-  InviteEventButton,
-  InviteEventButtonProps,
+  InviteUserEventButton,
+  InviteUserEventButtonProps,
   LanguageSwitcher,
   LEGAL_POLICIES,
   Lightbox,
