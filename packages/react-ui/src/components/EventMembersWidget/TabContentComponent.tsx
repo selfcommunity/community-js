@@ -1,15 +1,15 @@
-import { Button, List, ListItem, styled, Typography } from '@mui/material';
-import { Endpoints, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCEventType, SCUserType } from '@selfcommunity/types';
-import { AxiosResponse } from 'axios';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import {Button, List, ListItem, styled, Typography} from '@mui/material';
+import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {AxiosResponse} from 'axios';
+import {Dispatch, SetStateAction, useCallback, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import { actionWidgetTypes } from '../../utils/widget';
-import InviteEventButton from '../InviteEventButton';
-import User, { UserProps, UserSkeleton } from '../User';
-import { PREFIX } from './constants';
+import {actionWidgetTypes} from '../../utils/widget';
+import InviteUserEventButton from '../InviteUserEventButton';
+import User, {UserProps, UserSkeleton} from '../User';
+import {PREFIX} from './constants';
 
 const classes = {
   actionButton: `${PREFIX}-action-button`,
@@ -48,7 +48,7 @@ interface TabComponentProps {
 
 export default function TabContentComponent(props: TabComponentProps) {
   // PROPS
-  const { state, dispatch, userProps, dialogProps, actionProps } = props;
+  const {state, dispatch, userProps, dialogProps, actionProps} = props;
 
   // STATE
   const [openDialog, setOpenDialog] = useState(false);
@@ -58,14 +58,14 @@ export default function TabContentComponent(props: TabComponentProps) {
    * Handles pagination
    */
   const handleNext = useCallback(() => {
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
     http
       .request({
         url: state.next,
         method: Endpoints.UserSuggestion.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
       });
   }, [dispatch, state.next, state.isLoadingNext, state.initialized]);
 
@@ -75,7 +75,7 @@ export default function TabContentComponent(props: TabComponentProps) {
 
   const getActionsComponent = useCallback(
     (userId: number) =>
-      actionProps ? <InviteEventButton event={actionProps.scEvent} userId={userId} setInvitedNumber={actionProps.setInvitedNumber} /> : undefined,
+      actionProps ? <InviteUserEventButton event={actionProps.scEvent} userId={userId} setInvitedNumber={actionProps.setInvitedNumber} /> : undefined,
     [actionProps]
   );
 
