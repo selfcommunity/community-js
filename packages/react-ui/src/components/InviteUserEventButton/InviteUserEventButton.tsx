@@ -10,7 +10,7 @@ import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useState } from 
 import { FormattedMessage } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 
-const PREFIX = 'SCInviteEventButton';
+const PREFIX = 'SCInviteUserEventButton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -22,7 +22,7 @@ const InviteButton = styled(LoadingButton, {
   overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
-export interface InviteEventButtonProps {
+export interface InviteUserEventButtonProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -70,25 +70,25 @@ export interface InviteEventButtonProps {
  #### Import
 
  ```jsx
- import {InviteEventButton} from '@selfcommunity/react-ui';
+ import {InviteUserEventButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCInviteEventButton` can be used when providing style overrides in the theme.
+ The name `SCInviteUserEventButton` can be used when providing style overrides in the theme.
 
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCInviteEventButton-root|Styles applied to the root element.|
+ |root|.SCInviteUserEventButton-root|Styles applied to the root element.|
 
  * @param inProps
  */
-export default function InviteEventButton(inProps: InviteEventButtonProps): JSX.Element {
+export default function InviteUserEventButton(inProps: InviteUserEventButtonProps): JSX.Element {
   // PROPS
-  const props: InviteEventButtonProps = useThemeProps({
+  const props: InviteUserEventButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
