@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}) => ({
+    root: ({ theme }) => ({
       '& .SCRelatedEventsWidget-content': {
         padding: `10px ${theme.spacing(2)} 12px`,
 
@@ -8,7 +8,8 @@ const Component = {
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'flex-start',
-					marginBottom: theme.padding(2),
+          marginBottom: theme.spacing(2),
+
           '& .SCRelatedEventsWidget-avatar-wrapper': {
             flexDirection: 'row',
             alignItems: 'center',
@@ -52,7 +53,7 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({theme}) => ({
+    skeletonRoot: ({ theme }) => ({
       '& .SCRelatedEventsWidget-content': {
         padding: `10px ${theme.spacing(2)} 12px`,
 
@@ -92,7 +93,7 @@ const Component = {
         justifyContent: 'center'
       }
     }),
-    dialogRoot: ({theme}) => ({
+    dialogRoot: ({ theme }) => ({
       '& .SCRelatedEventsWidget-infinite-scroll': {
         height: '400px',
 
