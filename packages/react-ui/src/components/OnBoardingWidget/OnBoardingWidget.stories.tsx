@@ -14,7 +14,14 @@ const template = (args) => (
 );
 
 export const Base: StoryObj<OnBoardingWidget> = {
-  args: {},
+  args: {
+    generateContentsParams: {
+      //force: 1,
+      //num_posts: 5,
+      num_images: 0
+
+    }
+  },
   render: template
 };
 

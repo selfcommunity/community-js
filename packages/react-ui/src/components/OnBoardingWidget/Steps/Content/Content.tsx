@@ -1,16 +1,14 @@
 import {styled} from '@mui/material/styles';
-import {Alert, Button, Icon, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Alert, Button, Icon, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
-import {SCContextType, SCLocaleContextType, SCThemeType, SCUserContextType, useSCContext, useSCLocale, useSCUser} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
 import {FormattedMessage} from 'react-intl';
-import {OnBoardingService, OnBoardingStep} from '@selfcommunity/api-services';
-import {SCOPE_SC_UI} from '../../../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
+import ProgressBar from '../../../../shared/ProgressBar';
+import {usePreviousValue} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-content-root`,
@@ -33,12 +31,12 @@ export interface ContentProps {
    * Callback triggered on success category content generation
    * @default null
    */
-  onSuccess?: (res: any) => void;
-
+  handleContentCreation?: () => void;
   /**
-   * Action component to display after success message
-   * */
-  successAction?: React.ReactNode;
+   * Callback triggered on content create complete
+   * @default null
+   */
+  onCreateComplete: (step: SCStepType) => void;
 }
 
 const Root = styled(Box, {
@@ -51,35 +49,31 @@ export default function Content(inProps: ContentProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, step, onSuccess, successAction = null} = props;
-
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
-  const scUserContext: SCUserContextType = useSCUser();
+  const {className, step, handleContentCreation, onCreateComplete = null} = props;
 
   // STATE
-  const [isSucceed, setIsSucceed] = useState<boolean>(false);
   const [hover, setHover] = useState(false);
+  const [progress, setProgress] = useState(step.completion_percentage);
+  const prevStatus = usePreviousValue(step.status);
 
-  // HOOKS
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  useEffect(() => {
+    if (step.status === SCOnBoardingStepStatusType.IN_PROGRESS) {
+      const intervalId = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(intervalId);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
 
-  // HANDLERS
-
-  const handleContentCreation = async () => {
-    await OnBoardingService.startAStep(OnBoardingStep.CONTENTS)
-      .then((res: any) => {
-        console.log(res);
-        setIsSucceed(true);
-        // onSuccess && onSuccess(res);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        // setError(true);
-        // onError && onError(error);
-      });
-  };
+      return () => clearInterval(intervalId);
+    }
+    if (prevStatus && prevStatus !== step.status && onCreateComplete) {
+      onCreateComplete(step);
+    }
+  }, [prevStatus, step.status, onCreateComplete]);
 
   return (
     <Root className={classNames(classes.root, className)}>
@@ -92,8 +86,17 @@ export default function Content(inProps: ContentProps) {
       <Box component="span" className={classes.action}>
         {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
-            <FormattedMessage id="ui.onBoardingWidget.step.content.success" defaultMessage="ui.onBoardingWidget.step.content.success" />{' '}
+            <FormattedMessage id="ui.onBoardingWidget.step.contents.success" defaultMessage="ui.onBoardingWidget.step.contents.success" />
           </Alert>
+        ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
+          <ProgressBar
+            value={progress}
+            loadingMessage={
+              <Typography variant="h4">
+                <FormattedMessage id="ui.onBoardingWidget.step.contents.loading" defaultMessage="ui.onBoardingWidget.step.contents.loading" />
+              </Typography>
+            }
+          />
         ) : (
           <Button
             size="small"
@@ -102,8 +105,7 @@ export default function Content(inProps: ContentProps) {
             onClick={handleContentCreation}
             endIcon={<Icon>{hover ? 'ai_stars' : 'magic_wand'}</Icon>}
             onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            disabled={step?.status === SCOnBoardingStepStatusType.COMPLETED || step?.status === SCOnBoardingStepStatusType.IN_PROGRESS}>
+            onMouseLeave={() => setHover(false)}>
             <FormattedMessage defaultMessage="ui.onBoardingWidget.step.content.button" id="ui.onBoardingWidget.step.content.button" />
           </Button>
         )}

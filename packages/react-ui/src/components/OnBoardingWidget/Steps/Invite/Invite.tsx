@@ -23,10 +23,6 @@ const classes = {
 
 export interface InviteProps {
   /**
-   * The category step
-   */
-  step: SCStepType;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -35,7 +31,7 @@ export interface InviteProps {
    * Callback triggered on complete action click
    * @default null
    */
-  onCompleteAction: (id: number) => void;
+  onCompleteAction: () => void;
 }
 
 const Root = styled(Box, {
@@ -49,7 +45,7 @@ export default function Invite(inProps: InviteProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, step, onCompleteAction} = props;
+  const {className, onCompleteAction = null} = props;
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
@@ -66,15 +62,10 @@ export default function Invite(inProps: InviteProps) {
   const isStage = scContext.settings.portal.includes('stage');
 
   // HANDLERS
-  const handleCompleteAction = () => {
-    if (step?.status !== SCOnBoardingStepStatusType.COMPLETED && step?.status !== SCOnBoardingStepStatusType.IN_PROGRESS) {
-      onCompleteAction(step.id);
-    }
-  };
 
   const handleShare = (shareUrl, shareType) => {
     window.open(shareUrl, `${shareType}-share-dialog`, 'width=626,height=436');
-    handleCompleteAction();
+    onCompleteAction();
   };
 
   return (
@@ -122,7 +113,7 @@ export default function Invite(inProps: InviteProps) {
           component={Link}
           to={isStage ? MAKE_MARKETING_STAGE : MAKE_MARKETING_PROD}
           target="_blank"
-          onClick={handleCompleteAction}>
+          onClick={onCompleteAction}>
           <FormattedMessage defaultMessage="ui.onBoardingWidget.step.invite.button" id="ui.onBoardingWidget.step.invite.button" />
         </Button>
       </Box>

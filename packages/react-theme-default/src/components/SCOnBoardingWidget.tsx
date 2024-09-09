@@ -11,7 +11,10 @@ const Component = {
       '& .MuiCardContent-root': {
         '& .MuiList-root': {
           paddingTop: 0,
-          borderRight: `1px solid ${theme.palette.grey[200]}`
+          borderRight: `1px solid ${theme.palette.grey[200]}`,
+          '& .MuiListItem-root': {
+            paddingBottom: 0
+          }
         },
         [theme.breakpoints.up('md')]: {
           display: 'flex'
@@ -28,7 +31,13 @@ const Component = {
           '-webkit-overflow-scrolling': 'touch',
           '& .MuiButtonBase-root, .MuiListItem-root': {
             marginRight: theme.spacing(0.5),
-            padding: 0
+            padding: 0,
+            '& .MuiChip-root': {
+              '&.MuiChip-filledDefault': {
+                color: theme.palette.common.white,
+                backgroundColor: theme.palette.common.black
+              }
+            }
           },
           padding: theme.spacing(2, 1, 2, 1)
         },
@@ -37,11 +46,11 @@ const Component = {
           '& .Mui-selected': {
             backgroundColor: theme.palette.grey['A200']
           },
-          '& .MuiButtonBase-root, .MuiListItem-root': {
-            '&:hover': {backgroundColor: theme.palette.grey['A200']}
-          },
           '& .MuiButtonBase-root': {
             height: theme.spacing(4),
+            '&:hover': {
+              backgroundColor: theme.palette.grey['A200']
+            },
             '& .MuiListItemIcon-root': {
               minWidth: 0
             }
@@ -95,7 +104,10 @@ const Component = {
           '& .MuiTypography-body1': {
             display: expanded ? 'inherit' : 'flex',
             alignItems: 'center',
+            fontSize: '16px',
+            flexWrap: 'wrap',
             strong: {
+              fontSize: '18px',
               marginRight: expanded ? 'inherit' : theme.spacing(1),
               marginLeft: expanded ? 'inherit' : theme.spacing(1)
             }
@@ -141,6 +153,9 @@ const Component = {
       '& .SCOnBoardingWidget-content-action': {
         display: 'flex',
         justifyContent: 'center'
+      },
+      '& .SCProgressBar-message': {
+        marginBottom: theme.spacing(0.5)
       }
     }),
     categoryRoot: ({theme}: any) => ({
@@ -154,6 +169,9 @@ const Component = {
         display: 'flex',
         justifyContent: 'center',
         marginTop: theme.spacing(5)
+      },
+      '& .SCProgressBar-message': {
+        marginBottom: theme.spacing(0.5)
       }
     }),
     appearanceRoot: ({theme}: any) => ({
@@ -351,7 +369,8 @@ const Component = {
           '& .MuiIcon-root': {
             margin: theme.spacing(0, 0.5, 0, 0.5)
           }
-        }
+        },
+        flexWrap: 'wrap'
       }
     })
   }

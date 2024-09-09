@@ -40,10 +40,6 @@ const classes = {
 
 export interface ProfileProps {
   /**
-   * The content step
-   */
-  step: SCStepType;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -62,7 +58,7 @@ export interface ProfileProps {
    * Callback triggered on complete action click
    * @default null
    */
-  onCompleteAction: (id: number) => void;
+  onCompleteAction: () => void;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -90,7 +86,7 @@ export default function Profile(inProps: ProfileProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, fields = [...DEFAULT_FIELDS], user = null, step, onCompleteAction, ...rest} = props;
+  const {className, fields = [...DEFAULT_FIELDS], user = null, onCompleteAction, ...rest} = props;
   // STATE
   const [open, setOpen] = useState(false);
 
@@ -105,11 +101,6 @@ export default function Profile(inProps: ProfileProps) {
   const hasBadge = scUser && scUser.community_badge;
 
   // HANDLERS
-  const handleCompleteAction = () => {
-    if (step?.status !== SCOnBoardingStepStatusType.COMPLETED && step?.status !== SCOnBoardingStepStatusType.IN_PROGRESS) {
-      onCompleteAction(step.id);
-    }
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -130,7 +121,7 @@ export default function Profile(inProps: ProfileProps) {
     } else {
       setSCUser(Object.assign({}, scUser, {avatar: `${scContext.settings.portal}/api/v2/avatar/${scUser.id}`}));
     }
-    handleCompleteAction();
+    onCompleteAction();
   }
 
   const _backgroundCover = {
@@ -146,7 +137,7 @@ export default function Profile(inProps: ProfileProps) {
    */
   function handleChangeCover(cover) {
     setSCUser(Object.assign({}, scUser, {cover: cover}));
-    handleCompleteAction();
+    onCompleteAction();
   }
 
   return (
@@ -180,7 +171,7 @@ export default function Profile(inProps: ProfileProps) {
           </>
         </Paper>
         <Box className={classes.publicInfo}>
-          <PublicInfo fields={fields} onEditSuccess={handleCompleteAction} />
+          <PublicInfo fields={fields} onEditSuccess={onCompleteAction} />
         </Box>
       </DialogRoot>
     </Root>

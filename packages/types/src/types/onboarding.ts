@@ -38,7 +38,7 @@ export interface SCStepType {
   /**
    * The step status
    */
-  status: string;
+  status: SCOnBoardingStepStatusType;
 
   /**
    * The step completion percentage

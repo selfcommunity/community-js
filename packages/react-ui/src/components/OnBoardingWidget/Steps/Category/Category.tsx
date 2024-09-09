@@ -1,29 +1,16 @@
 import {styled} from '@mui/material/styles';
-import {Alert, Button, CardMedia, Icon, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Alert, Button, CardMedia, Icon, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import React, {useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
-import {
-  Link,
-  SCContextType,
-  SCLocaleContextType,
-  SCRoutes,
-  SCThemeType,
-  SCUserContextType,
-  useSCContext,
-  useSCLocale,
-  useSCUser
-} from '@selfcommunity/react-core';
-import {OnBoardingService, OnBoardingStep} from '@selfcommunity/api-services';
+import React, {useEffect, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
 import CategoryA from '../../../../assets/onBoarding/CategoryA';
 import CategoryB from '../../../../assets/onBoarding/CategoryB';
 import ProgressBar from '../../../../shared/ProgressBar';
-import {SCOPE_SC_UI} from '../../../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
+import {usePreviousValue} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-category-root`,
@@ -49,12 +36,12 @@ export interface CategoryProps {
    * Callback triggered on success category content generation
    * @default null
    */
-  onSuccess?: (res: any) => void;
-
+  handleCategoriesCreation?: () => void;
   /**
-   * Action component to display after success message
-   * */
-  successAction?: React.ReactNode;
+   * Callback triggered on categories create complete
+   * @default null
+   */
+  onCreateComplete: (step: SCStepType) => void;
 }
 
 function CircledLetter({letter, statement}: {letter: string; statement: any}) {
@@ -96,52 +83,34 @@ export default function Category(inProps: CategoryProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, step, onSuccess, successAction = null} = props;
-
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
-  const scUserContext: SCUserContextType = useSCUser();
-
-  const intl = useIntl();
+  const {className, step, handleCategoriesCreation, onCreateComplete = null} = props;
 
   // STATE
-  const [isSucceed, setIsSucceed] = useState<boolean>(false);
   const [hover, setHover] = useState(false);
+  const [progress, setProgress] = useState(step.completion_percentage);
+  const prevStatus = usePreviousValue(step.status);
 
-  // HOOKS
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  useEffect(() => {
+    if (step.status === SCOnBoardingStepStatusType.IN_PROGRESS) {
+      const intervalId = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(intervalId);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
 
-  // useEffect(() => {
-  // }, [scUserContext?.user?.id]);
-
-  // HANDLERS
-
-  const handleCategoriesCreation = async () => {
-    await OnBoardingService.startAStep(OnBoardingStep.CATEGORIES)
-      .then((res: any) => {
-        console.log(res);
-        setIsSucceed(true);
-        // onSuccess && onSuccess(res);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        // setError(true);
-        // onError && onError(error);
-      });
-  };
+      return () => clearInterval(intervalId);
+    }
+    if (prevStatus && prevStatus !== step.status && onCreateComplete) {
+      onCreateComplete(step);
+    }
+  }, [prevStatus, step.status, onCreateComplete]);
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {isSucceed && (
-        <Alert severity="success" className={classes.success}>
-          {intl.formatMessage({
-            id: 'ui.onBoardingWidget.step.category.success',
-            defaultMessage: 'ui.onBoardingWidget.step.category.success'
-          })}
-          {successAction}
-        </Alert>
-      )}
       <Typography variant="h4" className={classes.title}>
         <FormattedMessage id="ui.onBoardingWidget.categories" defaultMessage="ui.onBoardingWidget.categories" />
       </Typography>
@@ -172,10 +141,19 @@ export default function Category(inProps: CategoryProps) {
         <CategoryB />
       </CardMedia>
       <Box component="span" className={classes.action}>
-        {step.status === SCOnBoardingStepStatusType.COMPLETED ? (
+        {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
-            <FormattedMessage id="ui.onBoardingWidget.step.category.success" defaultMessage="ui.onBoardingWidget.step.category.success" />{' '}
+            <FormattedMessage id="ui.onBoardingWidget.step.categories.success" defaultMessage="ui.onBoardingWidget.step.categories.success" />
           </Alert>
+        ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
+          <ProgressBar
+            value={progress}
+            loadingMessage={
+              <Typography variant="h4">
+                <FormattedMessage id="ui.onBoardingWidget.step.categories.loading" defaultMessage="ui.onBoardingWidget.step.categories.loading" />
+              </Typography>
+            }
+          />
         ) : (
           <Button
             size="small"
@@ -184,8 +162,7 @@ export default function Category(inProps: CategoryProps) {
             onClick={handleCategoriesCreation}
             endIcon={<Icon>{hover ? 'ai_stars' : 'magic_wand'}</Icon>}
             onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            disabled={step?.status === SCOnBoardingStepStatusType.COMPLETED || step?.status === SCOnBoardingStepStatusType.IN_PROGRESS}>
+            onMouseLeave={() => setHover(false)}>
             <FormattedMessage defaultMessage="ui.onBoardingWidget.step.category.button" id="ui.onBoardingWidget.step.category.button" />
           </Button>
         )}

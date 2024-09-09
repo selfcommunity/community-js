@@ -46,10 +46,6 @@ const classes = {
 
 export interface AppearanceProps {
   /**
-   * The content step
-   */
-  step: SCStepType;
-  /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
@@ -58,7 +54,7 @@ export interface AppearanceProps {
    * Callback triggered on complete action click
    * @default null
    */
-  onCompleteAction: (id: number) => void;
+  onCompleteAction: () => void;
 }
 
 const Root = styled(Box, {
@@ -78,7 +74,7 @@ export default function Appearance(inProps: AppearanceProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, step, onCompleteAction} = props;
+  const {className, onCompleteAction} = props;
 
   // STATE
   const [state, dispatch] = useReducer(reducer, getInitialState(null));
@@ -101,12 +97,6 @@ export default function Appearance(inProps: AppearanceProps) {
   const handleClose = useCallback(() => {
     setAnchorEl(null);
   }, []);
-
-  const handleCompleteAction = () => {
-    if (step?.status !== SCOnBoardingStepStatusType.COMPLETED && step?.status !== SCOnBoardingStepStatusType.IN_PROGRESS) {
-      onCompleteAction(step.id);
-    }
-  };
 
   const fetchColors = () => {
     dispatch({type: actionTypes.LOADING, payload: {loading: true}});
@@ -173,7 +163,7 @@ export default function Appearance(inProps: AppearanceProps) {
       Logger.error(SCOPE_SC_UI, e);
     } finally {
       setUpdating(false);
-      handleCompleteAction();
+      onCompleteAction();
     }
   };
 
@@ -205,7 +195,7 @@ export default function Appearance(inProps: AppearanceProps) {
           type: actionTypes.SET_LOGOS,
           payload: {logos: state.logos.map((l) => (l.name === name ? {...l, value: preference[name].value} : l))}
         });
-        handleCompleteAction();
+        onCompleteAction();
       })
       .catch((e) => {
         setLoadingLogo(false);
@@ -233,11 +223,16 @@ export default function Appearance(inProps: AppearanceProps) {
 
   // HANDLERS
   const handleColorChange = (color, name) => {
-    dispatch({
-      type: actionTypes.SET_COLORS,
-      payload: {colors: state.colors.map((col) => (col.name === name ? {...col, value: color} : col))}
-    });
-    updatePreference({[`${name}`]: color});
+    const currentColor = state.colors.find((col) => col.name === name);
+    if (currentColor && currentColor.value !== color) {
+      dispatch({
+        type: actionTypes.SET_COLORS,
+        payload: {colors: state.colors.map((col) => (col.name === name ? {...col, value: color} : col))}
+      });
+      setTimeout(() => {
+        updatePreference({[`${name}`]: color});
+      }, 2000);
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

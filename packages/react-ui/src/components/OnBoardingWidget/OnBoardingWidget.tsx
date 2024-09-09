@@ -1,23 +1,25 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
-  Box,
-  Fade,
-  useTheme,
-  useMediaQuery,
-  CardContent,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
-  Typography,
+  AccordionSummary,
+  Box,
+  Button,
+  CardContent,
+  CardMedia,
+  Checkbox,
+  Chip,
+  Fade,
   Icon,
+  IconButton,
   List,
   ListItem,
-  Checkbox,
-  ListItemText,
   ListItemButton,
   ListItemIcon,
-  Chip,
-  CardMedia
+  ListItemText,
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {styled} from '@mui/material/styles';
@@ -35,10 +37,12 @@ import Widget from '../Widget';
 import Content, {ContentProps} from './Steps/Content';
 import Header from '../../assets/onBoarding/Header';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {OnBoardingService} from '@selfcommunity/api-services';
+import {OnBoardingService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
 import OnBoardingWidgetSkeleton from './Skeleton';
+import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
+import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -70,6 +74,7 @@ export interface OnBoardingWidgetProps {
   ProfileProps?: ProfileProps;
   InviteProps?: InviteProps;
   AppProps: AppProps;
+  generateContentsParams?: StartStepParams;
 }
 
 const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
@@ -78,49 +83,98 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     props: inProps,
     name: PREFIX
   });
-  const {className, AppearanceProps = {}, ProfileProps = {}, CategoryProps = {}, InviteProps = {}, AppProps = {}, ContentProps = {}, ...rest} = props;
+  const {
+    className,
+    AppearanceProps = {},
+    ProfileProps = {},
+    CategoryProps = {},
+    InviteProps = {},
+    AppProps = {},
+    ContentProps = {},
+    generateContentsParams = {},
+    ...rest
+  } = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [steps, setSteps] = useState<SCStepType[]>([]);
-  const initialStep = useMemo(() => {
-    const step = steps?.find((step) => step.status === 'not_started' || step.status === 'in_progress');
+  const currentStep = useMemo(() => {
+    const step = steps?.find((step) => step.status === 'in_progress' || step.status === 'not_started');
     return step || steps?.[0];
   }, [steps]);
   const allStepsDone = useMemo(() => {
     return steps?.every((step) => step.status === SCOnBoardingStepStatusType.COMPLETED);
   }, [steps]);
-  const [_step, setStep] = useState<SCStepType>(initialStep ?? steps[0]);
   const [expanded, setExpanded] = useState(!allStepsDone);
+  const [_step, setStep] = useState<SCStepType>(currentStep);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scContext: SCContextType = useSCContext();
+  const {enqueueSnackbar} = useSnackbar();
+  const isStage = scContext.settings.portal.includes('stage');
+  const [isGenerating, setIsGenerating] = useState<boolean>(true);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  //console.log(steps);
 
   // HANDLERS
 
-  useEffect(() => {
-    setStep(initialStep);
-  }, [initialStep]);
+  const completeStep = async (s: SCStepType) => {
+    if (s.status !== SCOnBoardingStepStatusType.COMPLETED) {
+      await OnBoardingService.completeAStep(s.id)
+        .then(() => {
+          setSteps((prev) =>
+            prev.map((item) => {
+              if (item.id === s.id) {
+                return {...item, status: SCOnBoardingStepStatusType.COMPLETED, completion_percentage: 100};
+              }
+              return item;
+            })
+          );
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  };
 
-  const completeStep = async (stepId) => {
-    await OnBoardingService.completeAStep(stepId)
-      .then((res: any) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      });
+  const showSuccessAlert = (step: SCStepType) => {
+    setIsGenerating(false);
+    enqueueSnackbar(
+      <FormattedMessage id={`ui.onBoardingWidget.step.${step.step}.success`} defaultMessage={`ui.onBoardingWidget.step.${step.step}.success`} />,
+      {
+        action: (snackbarId: SnackbarKey) => (
+          <>
+            {step.step === SCOnBoardingStepType.CATEGORIES && (
+              <Button
+                sx={{textTransform: 'uppercase', color: 'white'}}
+                size="small"
+                variant="text"
+                href={isStage ? CONSOLE_STAGE : CONSOLE_PROD}
+                target="_blank">
+                <FormattedMessage
+                  id="ui.onBoardingWidget.step.categories.success.link"
+                  defaultMessage="ui.onBoardingWidget.step.categories.success.link"
+                />
+              </Button>
+            )}
+            <IconButton sx={{color: 'white'}} onClick={() => closeSnackbar(snackbarId)}>
+              <Icon>close</Icon>
+            </IconButton>
+          </>
+        ),
+        variant: 'success',
+        autoHideDuration: 7000
+      }
+    );
   };
 
   const getSteps = async () => {
     await OnBoardingService.getAllSteps()
       .then((res) => {
+        setIsGenerating(res.results.some((step) => step.status === 'in_progress'));
         setSteps(res.results);
         setIsLoading(false);
       })
@@ -130,14 +184,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
       });
   };
 
-  useEffect(() => {
-    getSteps();
-    //runs every 2 minutes
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    const intervalId = setInterval(getSteps, 2 * 60 * 1000);
-    return () => clearInterval(intervalId);
-  }, [scUserContext?.user]);
-
   const handleChange = (newStep: SCStepType) => {
     setStep(newStep);
   };
@@ -146,38 +192,71 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     setExpanded(!expanded);
   };
 
+  const generateContent = async (stepId: number) => {
+    await OnBoardingService.startAStep(stepId, generateContentsParams)
+      .then(() => {
+        setIsGenerating(true);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  };
+
+  // EFFECTS
+
+  useEffect(() => {
+    setStep(currentStep);
+  }, [currentStep]);
+
+  useEffect(() => {
+    setExpanded(!allStepsDone);
+  }, [allStepsDone]);
+
+  useEffect(() => {
+    getSteps();
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    const intervalId = setInterval(getSteps, isGenerating ? 3000 : 3 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, [scUserContext?.user, isGenerating]);
+
   /**
    * Render _step content section
    */
-  const getStepContent = (_step: SCStepType) => {
+  const getStepContent = () => {
+    const stepObj = _step;
     let content;
-    switch (_step?.step) {
+    switch (stepObj?.step) {
       case SCOnBoardingStepType.CONTENTS:
-        content = <Content step={_step} {...ContentProps} />;
+        content = (
+          <Content step={stepObj} handleContentCreation={() => generateContent(stepObj.id)} onCreateComplete={showSuccessAlert} {...ContentProps} />
+        );
         break;
       case SCOnBoardingStepType.CATEGORIES:
-        content = <Category step={_step} {...CategoryProps} />;
+        content = (
+          <Category
+            step={stepObj}
+            handleCategoriesCreation={() => generateContent(stepObj.id)}
+            onCreateComplete={showSuccessAlert}
+            {...CategoryProps}
+          />
+        );
         break;
       case SCOnBoardingStepType.APPEARANCE:
-        content = <Appearance step={_step} onCompleteAction={(id) => completeStep(id)} {...AppearanceProps} />;
+        content = <Appearance onCompleteAction={() => completeStep(stepObj)} {...AppearanceProps} />;
         break;
       case SCOnBoardingStepType.PROFILE:
-        content = <Profile step={_step} onCompleteAction={(id) => completeStep(id)} {...ProfileProps} />;
+        content = <Profile onCompleteAction={() => completeStep(stepObj)} {...ProfileProps} />;
         break;
       case SCOnBoardingStepType.INVITE:
-        content = <Invite step={_step} onCompleteAction={(id) => completeStep(id)} {...InviteProps} />;
+        content = <Invite onCompleteAction={() => completeStep(stepObj)} {...InviteProps} />;
         break;
       case SCOnBoardingStepType.APP:
-        content = <App step={_step} onCompleteAction={(id) => completeStep(id)} {...AppProps} />;
+        content = <App step={stepObj} onCompleteAction={() => completeStep(stepObj)} {...AppProps} />;
         break;
       default:
         break;
     }
-    return (
-      <Fade in timeout={2400}>
-        <Box>{content}</Box>
-      </Fade>
-    );
+    return content;
   };
 
   if (!scUserContext?.user) {
@@ -282,15 +361,19 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                         label={
                           <>
                             <FormattedMessage id={`ui.onBoardingWidget.${step.step}`} defaultMessage={`ui.onBoardingWidget.${step.step}`} />{' '}
-                            {step.status === SCOnBoardingStepStatusType.COMPLETED && <Icon>check</Icon>}
+                            {step.status === SCOnBoardingStepStatusType.COMPLETED && (
+                              <Icon color={step.status === SCOnBoardingStepStatusType.COMPLETED && step.step !== _step.step ? 'success' : 'inherit'}>
+                                check
+                              </Icon>
+                            )}
                           </>
                         }
                         onClick={() => handleChange(step)}
-                        variant="outlined"
-                        color={step.step === _step.step ? 'success' : 'default'}
+                        variant={step.step === _step.step ? 'filled' : 'outlined'}
+                        color={step.status === SCOnBoardingStepStatusType.COMPLETED ? 'success' : 'default'}
                       />
                     ) : (
-                      <ListItemButton role={undefined} onClick={() => handleChange(step)} selected={step?.step === _step?.step}>
+                      <ListItemButton onClick={() => handleChange(step)} selected={step?.step === _step?.step}>
                         <ListItemIcon>
                           <Checkbox
                             edge="start"
@@ -309,7 +392,11 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                   </ListItem>
                 ))}
               </List>
-              <Box className={classes.stepContent}>{getStepContent(_step)}</Box>
+              <Box className={classes.stepContent}>
+                <Fade in timeout={2400}>
+                  <Box>{getStepContent()}</Box>
+                </Fade>
+              </Box>
             </CardContent>
           )}
         </Root>

@@ -35,7 +35,7 @@ export interface AppProps {
    * Callback triggered on complete action click
    * @default null
    */
-  onCompleteAction: (id: number) => void;
+  onCompleteAction: () => void;
 }
 
 const Root = styled(Box, {
@@ -56,11 +56,6 @@ export default function App(inProps: AppProps) {
   const [tab, setTab] = useState<number>(0);
 
   // HANDLERS
-  const handleCompleteAction = () => {
-    if (step?.status !== SCOnBoardingStepStatusType.COMPLETED && step?.status !== SCOnBoardingStepStatusType.IN_PROGRESS) {
-      onCompleteAction(step.id);
-    }
-  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -160,7 +155,7 @@ export default function App(inProps: AppProps) {
           size="small"
           variant="outlined"
           color="secondary"
-          onClick={handleCompleteAction}
+          onClick={onCompleteAction}
           disabled={step?.status === SCOnBoardingStepStatusType.COMPLETED || step?.status === SCOnBoardingStepStatusType.IN_PROGRESS}>
           Ok!
         </Button>
