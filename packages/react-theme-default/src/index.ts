@@ -100,6 +100,7 @@ import SCIncubatorDetail from './components/SCIncubatorDetail';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCInlineComposerWidget from './components/SCInlineComposerWidget';
+import SCInviteUserEventButton from './components/SCInviteUserEventButton';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
 import SCLightbox from './components/SCLightbox';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
@@ -378,7 +379,8 @@ const theme = {
     SCCreateEventWidget,
     SCSuggestedEventsWidget,
     SCEventMembersWidget,
-    SCRelatedEventsWidget
+    SCRelatedEventsWidget,
+    SCInviteUserEventButton
   },
   selfcommunity: {
     user: {
