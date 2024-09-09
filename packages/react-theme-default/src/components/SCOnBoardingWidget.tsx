@@ -92,6 +92,9 @@ const Component = {
             '& h5': {
               marginBottom: theme.spacing(2)
             },
+            '& .MuiTypography-subtitle1': {
+              lineHeight: 1.2
+            },
             [theme.breakpoints.down('md')]: {
               '& .MuiTypography-body1': {
                 marginTop: theme.spacing(1)
@@ -320,7 +323,7 @@ const Component = {
         fontWeight: theme.typography.fontWeightBold
       },
       '& .SCOnBoardingWidget-invite-social': {
-        margin: theme.spacing(2, 0, 4, 0),
+        margin: theme.spacing(2, 0, 2, 0),
         '& .SCOnBoardingWidget-invite-social-icon-container': {
           display: 'flex',
           justifyContent: 'center',
@@ -329,6 +332,9 @@ const Component = {
         '& .SCOnBoardingWidget-invite-social-icon': {
           fontSize: '2rem',
           fontWeight: theme.typography.fontWeightBold
+        },
+        '& .SCOnBoardingWidget-invite-title': {
+          fontSize: '14px'
         }
       },
       '& .SCOnBoardingWidget-invite-button': {
@@ -338,6 +344,11 @@ const Component = {
         display: 'flex',
         justifyContent: 'center',
         marginTop: theme.spacing(5)
+      },
+      '& .SCOnBoardingWidget-invite-email': {
+        '& .SCOnBoardingWidget-invite-title': {
+          fontSize: '14px'
+        }
       }
     }),
     appRoot: ({theme}: any) => ({

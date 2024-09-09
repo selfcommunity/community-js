@@ -302,7 +302,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                     />
                   </Typography>
                 )}
-                <Typography variant={!isMobile ? 'h5' : 'inherit'}>
+                <Typography variant={!isMobile ? 'h5' : 'subtitle1'}>
                   <FormattedMessage
                     id="ui.onBoardingWidget.accordion.expanded.subtitle"
                     defaultMessage="ui.onBoardingWidget.accordion.expanded.subtitle"
