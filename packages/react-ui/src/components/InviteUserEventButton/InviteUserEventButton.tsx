@@ -132,9 +132,9 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
       className={classNames(classes.root, className)}
       {...rest}>
       {invited ? (
-        <FormattedMessage defaultMessage="ui.inviteEventButton.remove" id="ui.inviteEventButton.remove" />
+        <FormattedMessage defaultMessage="ui.inviteUserEventButton.remove" id="ui.inviteUserEventButton.remove" />
       ) : (
-        <FormattedMessage defaultMessage="ui.inviteEventButton.invite" id="ui.inviteEventButton.invite" />
+        <FormattedMessage defaultMessage="ui.inviteUserEventButton.invite" id="ui.inviteUserEventButton.invite" />
       )}
     </InviteButton>
   );
