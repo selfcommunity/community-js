@@ -97,7 +97,7 @@ export {
   EventCreateParams,
   EventFeedParams,
   EventRelatedParams,
-  EventSearchParams
+  EventSearchParams,
   StartStepParams,
   OnBoardingStep
 };

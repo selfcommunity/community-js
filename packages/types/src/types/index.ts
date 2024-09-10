@@ -290,7 +290,7 @@ export {
   SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
-  SCEventDateFilterType
+  SCEventDateFilterType,
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType
