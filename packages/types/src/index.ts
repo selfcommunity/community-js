@@ -118,7 +118,8 @@ import {
   type SCSuggestionType,
   type SCContributionStatus,
   type SCGroupType,
-  type SCEventType
+  type SCEventType,
+  type SCStepType
 } from './types';
 
 /**
@@ -159,7 +160,9 @@ import {
   SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
-  SCEventDateFilterType
+  SCEventDateFilterType,
+  SCOnBoardingStepType,
+  SCOnBoardingStepStatusType
 } from './types';
 
 /**
@@ -200,7 +203,9 @@ export {
   SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
-  SCEventDateFilterType
+  SCEventDateFilterType,
+  SCOnBoardingStepType,
+  SCOnBoardingStepStatusType
 };
 export {
   type SCBannerType,
@@ -319,5 +324,6 @@ export {
   type SCGcmDeviceType,
   type SCSuggestionType,
   type SCGroupType,
-  type SCEventType
+  type SCEventType,
+  type SCStepType
 };

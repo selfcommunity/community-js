@@ -33,6 +33,7 @@ import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContr
 import {ReactionParams} from './reaction';
 import {GroupCreateParams, GroupFeedParams} from './group';
 import {EventCreateParams, EventFeedParams, EventRelatedParams, EventSearchParams} from './event';
+import {StartStepParams, OnBoardingStep} from './onBoarding';
 
 export {
   AccountCreateParams,
@@ -96,5 +97,7 @@ export {
   EventCreateParams,
   EventFeedParams,
   EventRelatedParams,
-  EventSearchParams
+  EventSearchParams,
+  StartStepParams,
+  OnBoardingStep
 };
