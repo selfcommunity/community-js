@@ -1339,6 +1339,7 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   HideEvent: {
     url: urlReplacer('/api/v2/event/$(id)/hide/'),
+		method: 'POST'
   },
   /**
    * OnBoarding
