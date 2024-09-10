@@ -73,7 +73,7 @@ export interface EventInviteButtonProps extends ButtonProps {
    * Functions to handle invitations sending in event creation mode
    * @default null
    */
-  handleInvitations?: (data) => any;
+  handleInvitations?: ((invited: boolean) => void) | null;
   /**
    * Any other properties
    */
@@ -139,18 +139,10 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
     }
   }
 
-  function convertToInvitedUsersObject(data) {
-    const invite_users = {};
-    data.forEach((user, index) => {
-      invite_users[`invite_users[${index}]`] = user.id;
-    });
-    return invite_users;
-  }
-
   /**
    * Memoized users invited ids
    */
-  const ids = useMemo(() => {
+  const ids: number[] = useMemo(() => {
     if (invited) {
       return invited.map((u) => {
         return parseInt(u.id, 10);
@@ -231,25 +223,23 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
    * Handles invitation sending
    */
   const handleSendInvitations = () => {
-    if (handleInvitations) {
-      handleInvitations(convertToInvitedUsersObject(invited));
-      setOpen(false);
-    } else {
-      const data = { users: ids };
-      setIsSending(true);
-      EventService.inviteOrAcceptEventRequest(scEvent.id, data)
-        .then(() => {
-          setIsSending(false);
-          setOpen(false);
-          setInvited([]);
-          notifyChanges(scEvent, invited);
-        })
-        .catch((error) => {
-          setOpen(false);
-          setLoading(false);
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
+    const data = { users: ids };
+    setIsSending(true);
+
+    EventService.inviteOrAcceptEventRequest(scEvent.id, data)
+      .then(() => {
+        setIsSending(false);
+        setOpen(false);
+        setInvited([]);
+        notifyChanges(scEvent, invited);
+        handleInvitations?.(true);
+      })
+      .catch((error) => {
+        setOpen(false);
+        setLoading(false);
+        handleInvitations?.(false);
+        Logger.error(SCOPE_SC_UI, error);
+      });
   };
 
   // Autocomplete Handlers
@@ -301,8 +291,8 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
   };
 
   /**
-   * If in event edit mode and logged-in user is not also the event manager, the component is hidden.
-  //  */
+ * If in event edit mode and logged-in user is not also the event manager, the component is hidden.
+//  */
   if (event && !isEventAdmin) {
     return null;
   }

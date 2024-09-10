@@ -25,6 +25,11 @@ const Component = {
           left: '50%',
           transform: 'translate(-50%)',
           color: theme.palette.primary.main
+        },
+
+        '& .SCEventMembersWidget-event-button': {
+          left: '50%',
+          transform: 'translate(-50%)'
         }
       }
     }),
