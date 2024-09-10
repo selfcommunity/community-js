@@ -66,7 +66,7 @@ export default function App(inProps: AppProps) {
       <Typography variant="h4" className={classes.title}>
         <FormattedMessage id="ui.onBoardingWidget.step.app.title" defaultMessage="ui.onBoardingWidget.step.app.title" />
       </Typography>
-      <Typography variant="subtitle1" className={classes.summary}>
+      <Typography className={classes.summary}>
         <FormattedMessage id="ui.onBoardingWidget.step.app.summary" defaultMessage="ui.onBoardingWidget.step.app.summary" />
       </Typography>
       <Tabs className={classes.tabs} value={tab} onChange={handleChange} centered variant="fullWidth" indicatorColor="primary">
@@ -76,10 +76,10 @@ export default function App(inProps: AppProps) {
       <Box className={classes.tabContent}>
         {tab === 0 && (
           <>
-            <Typography variant="subtitle1" className={classes.summary}>
+            <Typography className={classes.summary}>
               <FormattedMessage id="ui.onBoardingWidget.step.app.ios" defaultMessage="ui.onBoardingWidget.step.app.ios" />
             </Typography>
-            <Typography variant="subtitle1" className={classes.summary}>
+            <Typography className={classes.summary}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.ios.a"
                 defaultMessage="ui.onBoardingWidget.step.app.ios.a"
@@ -93,7 +93,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <Typography variant="subtitle1" className={classes.summary}>
+            <Typography className={classes.summary}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.ios.b"
                 defaultMessage="ui.onBoardingWidget.step.app.ios.b"
@@ -114,10 +114,10 @@ export default function App(inProps: AppProps) {
         )}
         {tab === 1 && (
           <>
-            <Typography variant="subtitle1" className={classes.summary}>
+            <Typography className={classes.summary}>
               <FormattedMessage id="ui.onBoardingWidget.step.app.android" defaultMessage="ui.onBoardingWidget.step.app.android" />
             </Typography>
-            <Typography variant="subtitle1" className={classes.summary}>
+            <Typography className={classes.summary}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.android.a"
                 defaultMessage="ui.onBoardingWidget.step.app.android.a"
@@ -131,7 +131,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <Typography variant="subtitle1" className={classes.summary}>
+            <Typography className={classes.summary}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.android.b"
                 defaultMessage="ui.onBoardingWidget.step.app.android.b"

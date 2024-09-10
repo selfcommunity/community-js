@@ -1,6 +1,9 @@
 /**
  * SCOnBoardingStepType enum
  */
+import {SCFeedObjectType} from './feed';
+import {SCCategoryType} from './category';
+
 export enum SCOnBoardingStepType {
   CONTENTS = 'contents',
   CATEGORIES = 'categories',
@@ -48,5 +51,5 @@ export interface SCStepType {
   /**
    * The ids of the generated content
    */
-  ids?: number[];
+  results?: SCFeedObjectType[] | SCCategoryType[];
 }

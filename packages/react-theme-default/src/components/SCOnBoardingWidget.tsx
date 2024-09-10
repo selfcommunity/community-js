@@ -1,7 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      maxHeight: 'inherit',
+      borderRadius: theme.shape.borderRadius,
       '& .SCOnBoardingWidget-step-content': {
         [theme.breakpoints.up('md')]: {
           width: '70%'
@@ -47,7 +47,7 @@ const Component = {
             backgroundColor: theme.palette.grey['A200']
           },
           '& .MuiButtonBase-root': {
-            height: theme.spacing(4),
+            height: theme.spacing(5),
             '&:hover': {
               backgroundColor: theme.palette.grey['A200']
             },
@@ -60,13 +60,22 @@ const Component = {
     }),
     accordionRoot: ({theme, expanded}: any) => ({
       boxShadow: 'none',
-      [theme.breakpoints.up('sm')]: {
-        width: '600px'
-      },
       '& .MuiAccordionDetails-root ': {
         paddingLeft: 0,
-        [theme.breakpoints.up('md')]: {
-          marginTop: theme.spacing(2)
+        paddingRight: 0,
+        '& .SCOnBoardingWidget-content': {
+          '& .MuiCardContent-root': {
+            padding: 0,
+            '& .MuiList-root': {
+              paddingTop: 0,
+              paddingBottom: theme.spacing(1)
+            },
+            [theme.breakpoints.down('md')]: {
+              '& .MuiListItem-root:first-of-type': {
+                paddingTop: theme.spacing(1)
+              }
+            }
+          }
         }
       },
       '& .MuiAccordionSummary-root': {
