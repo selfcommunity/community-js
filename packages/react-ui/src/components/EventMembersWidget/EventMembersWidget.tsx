@@ -122,6 +122,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   );
   const [invitedNumber, setInvitedNumber] = useState(0);
   const [tabValue, setTabValue] = useState('1');
+  const [refresh, setRefresh] = useState(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -132,6 +133,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const _initParticipants = useCallback(() => {
     if (!participants.initialized && !participants.isLoadingNext) {
       dispatchParticipants({ type: actionWidgetTypes.LOADING_NEXT });
+
       EventService.getUsersGoingToEvent(scEvent.id, { ...endpointQueryParams })
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatchParticipants({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
@@ -146,6 +148,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const _initInvited = useCallback(() => {
     if (!invited.initialized && !invited.isLoadingNext && scUserContext.user?.id === scEvent.managed_by.id) {
       dispatchInvited({ type: actionWidgetTypes.LOADING_NEXT });
+
       EventService.getEventInvitedUsers(scEvent.id, { ...endpointQueryParams })
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
@@ -164,15 +167,20 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
     if (scUserContext.user && scEvent) {
       _t = setTimeout(() => {
-        _initParticipants();
-        _initInvited();
+        if (refresh) {
+          _initInvited();
+          setRefresh(false);
+        } else {
+          _initParticipants();
+          _initInvited();
+        }
       });
 
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, scEvent]);
+  }, [scUserContext.user, scEvent, refresh]);
 
   // HANDLERS
   const handleTabChange = useCallback((_evt: SyntheticEvent, newTabValue: string) => {
@@ -236,6 +244,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                   scEvent,
                   setInvitedNumber
                 }}
+                setRefresh={setRefresh}
               />
             </TabPanel>
           )}

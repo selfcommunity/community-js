@@ -1,18 +1,22 @@
-import {Button, List, ListItem, styled, Typography} from '@mui/material';
-import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
-import {AxiosResponse} from 'axios';
-import {Dispatch, SetStateAction, useCallback, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import { Button, List, ListItem, styled, Typography } from '@mui/material';
+import { Endpoints, http, SCPaginatedResponse } from '@selfcommunity/api-services';
+import { SCEventType, SCUserType } from '@selfcommunity/types';
+import { Logger } from '@selfcommunity/utils';
+import { AxiosResponse } from 'axios';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import {actionWidgetTypes} from '../../utils/widget';
+import { actionWidgetTypes } from '../../utils/widget';
+import EventInviteButton from '../EventInviteButton';
 import InviteUserEventButton from '../InviteUserEventButton';
-import User, {UserProps, UserSkeleton} from '../User';
-import {PREFIX} from './constants';
+import User, { UserProps, UserSkeleton } from '../User';
+import { PREFIX } from './constants';
 
 const classes = {
   actionButton: `${PREFIX}-action-button`,
+  eventButton: `${PREFIX}-event-button`,
   dialogRoot: `${PREFIX}-dialog-root`,
   infiniteScroll: `${PREFIX}-infinite-scroll`,
   endMessage: `${PREFIX}-end-message`
@@ -44,11 +48,13 @@ interface TabComponentProps {
     scEvent?: SCEventType;
     setInvitedNumber: Dispatch<SetStateAction<number>>;
   };
+
+  setRefresh?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function TabContentComponent(props: TabComponentProps) {
   // PROPS
-  const {state, dispatch, userProps, dialogProps, actionProps} = props;
+  const { state, dispatch, userProps, dialogProps, actionProps, setRefresh } = props;
 
   // STATE
   const [openDialog, setOpenDialog] = useState(false);
@@ -58,14 +64,18 @@ export default function TabContentComponent(props: TabComponentProps) {
    * Handles pagination
    */
   const handleNext = useCallback(() => {
-    dispatch({type: actionWidgetTypes.LOADING_NEXT});
+    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+
     http
       .request({
         url: state.next,
         method: Endpoints.UserSuggestion.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
+        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
       });
   }, [dispatch, state.next, state.isLoadingNext, state.initialized]);
 
@@ -79,6 +89,16 @@ export default function TabContentComponent(props: TabComponentProps) {
     [actionProps]
   );
 
+  const handleInvitations = useCallback(
+    (invited: boolean) => {
+      if (invited) {
+        dispatch({ type: actionWidgetTypes.RESET });
+        setRefresh(true);
+      }
+    },
+    [dispatch, setRefresh]
+  );
+
   return (
     <>
       <List>
@@ -88,6 +108,10 @@ export default function TabContentComponent(props: TabComponentProps) {
           </ListItem>
         ))}
       </List>
+
+      {state.count === 0 && actionProps && (
+        <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} />
+      )}
 
       {state.count > state.visibleItems && (
         <Button onClick={handleToggleDialogOpen} className={classes.actionButton}>
