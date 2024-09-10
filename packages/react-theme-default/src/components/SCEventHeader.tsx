@@ -18,7 +18,7 @@ const Component = {
         fontSize: '1.143rem',
         fontWeight: theme.typography.fontWeightLight,
         color: theme.palette.text.secondary,
-				paddingLeft: theme.spacing(2)
+        paddingLeft: theme.spacing(2)
       },
       '& .SCEventHeader-info': {
         paddingRight: theme.spacing(),
@@ -27,14 +27,14 @@ const Component = {
         '& .SCEventHeader-name': {
           fontSize: '1.857rem',
           fontWeight: theme.typography.fontWeightBold,
-					paddingLeft: theme.spacing(2),
+          paddingLeft: theme.spacing(2)
         },
         '& .SCEventHeader-visibility': {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
           gap: theme.spacing(0.5),
-					paddingLeft: theme.spacing(2),
+          paddingLeft: theme.spacing(2),
           '& .SCEventHeader-visibility-item': {
             fontSize: theme.typography.fontSize,
             fontWeight: theme.typography.fontWeightLight,
@@ -94,7 +94,8 @@ const Component = {
         }
       },
       '& .SCEventHeader-info': {
-        marginTop: 60
+        marginTop: 60,
+        marginLeft: theme.spacing(2)
       }
     })
   }
