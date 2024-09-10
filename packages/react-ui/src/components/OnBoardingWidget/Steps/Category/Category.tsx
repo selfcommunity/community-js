@@ -10,7 +10,6 @@ import CategoryA from '../../../../assets/onBoarding/CategoryA';
 import CategoryB from '../../../../assets/onBoarding/CategoryB';
 import ProgressBar from '../../../../shared/ProgressBar';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
-import {usePreviousValue} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-category-root`,
@@ -37,11 +36,6 @@ export interface CategoryProps {
    * @default null
    */
   handleCategoriesCreation?: () => void;
-  /**
-   * Callback triggered on categories create complete
-   * @default null
-   */
-  onCreateComplete: (step: SCStepType) => void;
 }
 
 function CircledLetter({letter, statement}: {letter: string; statement: any}) {
@@ -83,12 +77,11 @@ export default function Category(inProps: CategoryProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, step, handleCategoriesCreation, onCreateComplete = null} = props;
+  const {className, step, handleCategoriesCreation} = props;
 
   // STATE
   const [hover, setHover] = useState(false);
   const [progress, setProgress] = useState(step.completion_percentage);
-  const prevStatus = usePreviousValue(step.status);
 
   useEffect(() => {
     if (step.status === SCOnBoardingStepStatusType.IN_PROGRESS) {
@@ -104,10 +97,7 @@ export default function Category(inProps: CategoryProps) {
 
       return () => clearInterval(intervalId);
     }
-    if (prevStatus && prevStatus !== step.status && onCreateComplete) {
-      onCreateComplete(step);
-    }
-  }, [prevStatus, step.status, onCreateComplete]);
+  }, [step.status]);
 
   return (
     <Root className={classNames(classes.root, className)}>

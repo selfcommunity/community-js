@@ -8,7 +8,6 @@ import {PREFIX} from '../../constants';
 import {FormattedMessage} from 'react-intl';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 import ProgressBar from '../../../../shared/ProgressBar';
-import {usePreviousValue} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-content-root`,
@@ -32,11 +31,6 @@ export interface ContentProps {
    * @default null
    */
   handleContentCreation?: () => void;
-  /**
-   * Callback triggered on content create complete
-   * @default null
-   */
-  onCreateComplete: (step: SCStepType) => void;
 }
 
 const Root = styled(Box, {
@@ -49,12 +43,11 @@ export default function Content(inProps: ContentProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, step, handleContentCreation, onCreateComplete = null} = props;
+  const {className, step, handleContentCreation} = props;
 
   // STATE
   const [hover, setHover] = useState(false);
   const [progress, setProgress] = useState(step.completion_percentage);
-  const prevStatus = usePreviousValue(step.status);
 
   useEffect(() => {
     if (step.status === SCOnBoardingStepStatusType.IN_PROGRESS) {
@@ -70,10 +63,7 @@ export default function Content(inProps: ContentProps) {
 
       return () => clearInterval(intervalId);
     }
-    if (prevStatus && prevStatus !== step.status && onCreateComplete) {
-      onCreateComplete(step);
-    }
-  }, [prevStatus, step.status, onCreateComplete]);
+  }, [step.status]);
 
   return (
     <Root className={classNames(classes.root, className)}>

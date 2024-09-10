@@ -27,7 +27,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Category, {CategoryProps} from './Steps/Category';
 import {PREFIX} from './constants';
-import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {SCContextType, SCThemeType, SCUserContextType, usePreviousValue, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import Appearance, {AppearanceProps} from './Steps/Appearance';
 import Profile, {ProfileProps} from './Steps/Profile';
 import Invite, {InviteProps} from './Steps/Invite';
@@ -107,13 +107,14 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   }, [steps]);
   const [expanded, setExpanded] = useState(!allStepsDone);
   const [_step, setStep] = useState<SCStepType>(currentStep);
+  const prevStep = usePreviousValue(_step);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scContext: SCContextType = useSCContext();
   const {enqueueSnackbar} = useSnackbar();
   const isStage = scContext.settings.portal.includes('stage');
-  const [isGenerating, setIsGenerating] = useState<boolean>(true);
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -205,8 +206,16 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   // EFFECTS
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    if (prevStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && _step?.status === SCOnBoardingStepStatusType.NOT_STARTED) {
+      showSuccessAlert(prevStep);
+    }
+  }, [_step, prevStep]);
+
+  useEffect(() => {
     setStep(currentStep);
-  }, [currentStep]);
+  }, [currentStep, steps]);
 
   useEffect(() => {
     setExpanded(!allStepsDone);
@@ -227,19 +236,10 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     let content;
     switch (stepObj?.step) {
       case SCOnBoardingStepType.CONTENTS:
-        content = (
-          <Content step={stepObj} handleContentCreation={() => generateContent(stepObj.id)} onCreateComplete={showSuccessAlert} {...ContentProps} />
-        );
+        content = <Content step={stepObj} handleContentCreation={() => generateContent(stepObj.id)} {...ContentProps} />;
         break;
       case SCOnBoardingStepType.CATEGORIES:
-        content = (
-          <Category
-            step={stepObj}
-            handleCategoriesCreation={() => generateContent(stepObj.id)}
-            onCreateComplete={showSuccessAlert}
-            {...CategoryProps}
-          />
-        );
+        content = <Category step={stepObj} handleCategoriesCreation={() => generateContent(stepObj.id)} {...CategoryProps} />;
         break;
       case SCOnBoardingStepType.APPEARANCE:
         content = <Appearance onCompleteAction={() => completeStep(stepObj)} {...AppearanceProps} />;
@@ -358,6 +358,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                     {isMobile ? (
                       <Chip
                         size="small"
+                        disabled={isGenerating && (_step?.step === SCOnBoardingStepType.CATEGORIES || _step?.step === SCOnBoardingStepType.CONTENTS)}
                         label={
                           <>
                             <FormattedMessage id={`ui.onBoardingWidget.${step.step}`} defaultMessage={`ui.onBoardingWidget.${step.step}`} />{' '}
@@ -373,7 +374,10 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                         color={step.status === SCOnBoardingStepStatusType.COMPLETED ? 'success' : 'default'}
                       />
                     ) : (
-                      <ListItemButton onClick={() => handleChange(step)} selected={step?.step === _step?.step}>
+                      <ListItemButton
+                        onClick={() => handleChange(step)}
+                        selected={step?.step === _step?.step}
+                        disabled={isGenerating && (_step?.step === SCOnBoardingStepType.CATEGORIES || _step?.step === SCOnBoardingStepType.CONTENTS)}>
                         <ListItemIcon>
                           <Checkbox
                             edge="start"
