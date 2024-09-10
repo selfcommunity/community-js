@@ -115,7 +115,7 @@ import {
   GroupFeedParams,
   EventCreateParams,
   EventFeedParams,
-  EventSearchParams
+  EventSearchParams,
   StartStepParams,
   OnBoardingStep
 } from './types';
@@ -290,7 +290,7 @@ export {
   EventSearchParams,
   EventService,
   EventApiClient,
-  EventApiClientInterface
+  EventApiClientInterface,
   OnBoardingService,
   OnBoardingApiClientInterface,
   OnBoardingApiClient,
