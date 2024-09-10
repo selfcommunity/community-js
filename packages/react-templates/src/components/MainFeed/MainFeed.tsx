@@ -16,14 +16,23 @@ import {
   SCFeedWidgetType,
   FeedRef
 } from '@selfcommunity/react-ui';
-import {Endpoints} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {Endpoints, FeedObjectService, PreferenceService} from '@selfcommunity/api-services';
+import {
+	getTheme, SCContext, SCContextType,
+	SCPreferencesContext,
+	SCPreferencesContextType,
+	SCThemeContext,
+	SCThemeContextType,
+	SCUserContext,
+	SCUserContextType
+} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {SCCustomAdvPosition} from '@selfcommunity/types';
+import {SCContributionType, SCCustomAdvPosition} from '@selfcommunity/types';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
+import {Button} from '@mui/material';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -141,7 +150,10 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   const {id = 'main_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   //CONTEXT
+	const scContext: SCContextType = useContext(SCContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const scThemeContext: SCThemeContextType = useContext(SCThemeContext);
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
@@ -168,36 +180,64 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
+  const handleRefresh = () => {
+    FeedObjectService.getSpecificFeedObject(SCContributionType.DISCUSSION, 2042).then((feedObject) => {
+      const feedUnit = {
+        type: feedObject.type,
+        [feedObject.type]: feedObject,
+        seen_by_id: [],
+        has_boost: false
+      };
+      feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, false);
+    });
+  };
+
+  const handlePrefs = () => {
+    PreferenceService.getAllPreferences().then((preferences) => {
+      const prefs = preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {});
+      scPreferencesContext.setPreferences(prefs);
+      scThemeContext.setTheme(getTheme(scContext.settings.theme, prefs));
+    });
+  };
+
   return (
-    <Root
-      id={id}
-      className={classNames(classes.root, className)}
-      ref={feedRef}
-      endpoint={Endpoints.MainFeed}
-      widgets={widgets}
-      ItemComponent={FeedObject}
-      itemPropsGenerator={(scUser, item) => ({
-        feedObject: item[item.type],
-        feedObjectType: item.type,
-        feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
-      })}
-      itemIdGenerator={(item) => item[item.type].id}
-      ItemProps={FeedObjectProps}
-      ItemSkeleton={FeedObjectSkeleton}
-      ItemSkeletonProps={{
-        template: SCFeedObjectTemplateType.PREVIEW
-      }}
-      FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
-      requireAuthentication={true}
-      disablePaginationLinks={true}
-      enabledCustomAdvPositions={[
-        SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
-        SCCustomAdvPosition.POSITION_FEED,
-        SCCustomAdvPosition.POSITION_BELOW_TOPBAR
-      ]}
-      {...FeedProps}
-    />
+    <>
+      <Button variant="contained" color={'secondary'} onClick={handleRefresh} sx={{mb: 2, mr: 2}}>
+        ADD FEED_OBJECT
+      </Button>
+      <Button variant="contained" color={'secondary'} onClick={handlePrefs} sx={{mb: 2}}>
+        REFRESH_THEME
+      </Button>
+      <Root
+        id={id}
+        className={classNames(classes.root, className)}
+        ref={feedRef}
+        endpoint={Endpoints.MainFeed}
+        widgets={widgets}
+        ItemComponent={FeedObject}
+        itemPropsGenerator={(scUser, item) => ({
+          feedObject: item[item.type],
+          feedObjectType: item.type,
+          feedObjectActivities: item.activities ? item.activities : null,
+          markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        })}
+        itemIdGenerator={(item) => item[item.type].id}
+        ItemProps={FeedObjectProps}
+        ItemSkeleton={FeedObjectSkeleton}
+        ItemSkeletonProps={{
+          template: SCFeedObjectTemplateType.PREVIEW
+        }}
+        FeedSidebarProps={FeedSidebarProps}
+        HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
+        requireAuthentication={true}
+        disablePaginationLinks={true}
+        enabledCustomAdvPositions={[
+          SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
+          SCCustomAdvPosition.POSITION_FEED,
+          SCCustomAdvPosition.POSITION_BELOW_TOPBAR
+        ]}
+        {...FeedProps}
+      />
+    </>
   );
 }

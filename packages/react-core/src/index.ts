@@ -108,6 +108,7 @@ import * as SCRoutes from './constants/Routes';
  * User, hooks (useIsComponentMountedRef)
  */
 import * as UserUtils from './utils/user';
+import getTheme from './themes/theme';
 import {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect, useEffectOnce, useNoInitialEffect} from './utils/hooks';
 
 /**
@@ -159,6 +160,7 @@ export {
   SCThemeProvider,
   useSCTheme,
   withSCTheme,
+	getTheme,
   SCRoutingProvider,
   useSCRouting,
   SCLocaleProvider,
