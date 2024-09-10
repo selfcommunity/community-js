@@ -379,7 +379,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </>
             ) : (
               <>
-                <EventSkeleton {...EventSkeletonComponentProps} actions={<CreateEventButton />} />
+                <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} actions={<CreateEventButton />} />
                 <Typography variant="body1">
                   <FormattedMessage id="ui.events.noEvents.title.onlyStaff" defaultMessage="ui.events.noEvents.title.onlyStaff" />
                 </Typography>
