@@ -19,7 +19,13 @@ import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCContributionType, SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
+import {
+	SCContributionType,
+	SCCustomAdvPosition,
+	SCFeedObjectType,
+	SCFeedUnitType,
+	SCUserType
+} from '@selfcommunity/types';
 import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, getQueryStringParameter, isClientSideRendering, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -746,7 +752,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       refresh();
     },
     getCurrentFeedObjectIds: () => {
-      return feedDataObject.results.map((o: SCFeedUnitType) => o[o.type].id);
+      return [...headData.map((o: SCFeedUnitType) => o[o.type].id), ...feedDataObject.results.map((o: SCFeedUnitType) => o[o.type].id)];
     }
   }));
 
