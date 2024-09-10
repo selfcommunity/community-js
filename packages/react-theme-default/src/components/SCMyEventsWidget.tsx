@@ -13,7 +13,6 @@ const Component = {
         '& .SCMyEventsWidget-arrows': {
           width: '24px',
           height: '24px',
-          color: theme.palette.primary.main
         },
 
         '& .SCMyEventsWidget-action-button': {
