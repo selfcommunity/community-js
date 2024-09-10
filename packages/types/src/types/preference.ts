@@ -157,4 +157,12 @@ export interface SCPreferenceType {
    * 	The value of the dynamic preference (can be an integer or a string)
    */
   value: string;
+  /**
+   * 	The type of the dynamic preference
+   */
+  type?: string;
+  /**
+   * 	A description string for the dynamic preference
+   */
+  help?: string;
 }

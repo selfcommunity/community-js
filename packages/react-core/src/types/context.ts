@@ -597,6 +597,21 @@ export interface SCPreferencesContextType {
    * List of all community enabled features
    */
   features: string[];
+
+  /**
+   * Set prefrerences
+   */
+  setPreferences: (preferences: Record<string, any>) => void;
+
+  /**
+   * Set features
+   */
+  setFeatures: (features: string[]) => void;
+
+  /**
+   * Force refresh
+   */
+  refresh: () => void;
 }
 
 /**
