@@ -51,6 +51,7 @@ import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './ser
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
 import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
+import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
 
 /**
  * Types
@@ -115,6 +116,8 @@ import {
   EventCreateParams,
   EventFeedParams,
   EventSearchParams
+  StartStepParams,
+  OnBoardingStep
 } from './types';
 
 /**
@@ -288,4 +291,9 @@ export {
   EventService,
   EventApiClient,
   EventApiClientInterface
+  OnBoardingService,
+  OnBoardingApiClientInterface,
+  OnBoardingApiClient,
+  StartStepParams,
+  OnBoardingStep
 };

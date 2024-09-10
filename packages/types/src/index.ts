@@ -119,6 +119,7 @@ import {
   type SCContributionStatus,
   type SCGroupType,
   type SCEventType
+  type SCStepType
 } from './types';
 
 /**
@@ -160,6 +161,8 @@ import {
   SCEventRecurrenceType,
   SCEventLocationType,
   SCEventDateFilterType
+  SCOnBoardingStepType,
+  SCOnBoardingStepStatusType
 } from './types';
 
 /**
@@ -201,6 +204,8 @@ export {
   SCEventRecurrenceType,
   SCEventLocationType,
   SCEventDateFilterType
+  SCOnBoardingStepType,
+  SCOnBoardingStepStatusType
 };
 export {
   type SCBannerType,
@@ -320,4 +325,5 @@ export {
   type SCSuggestionType,
   type SCGroupType,
   type SCEventType
+  type SCStepType
 };
