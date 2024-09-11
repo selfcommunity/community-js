@@ -1,5 +1,4 @@
-import {useEffect, useMemo, useRef} from 'react';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
 import {
   SCEventPrivacyType,
   SCEventSubscriptionStatusType,
@@ -9,13 +8,14 @@ import {
   SCNotificationTypologyType,
   SCUserType,
 } from '@selfcommunity/types';
-import useSCCachingManager from './useSCCachingManager';
-import {SCOPE_SC_CORE} from '../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
-import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
-import {SCNotificationMapping} from '../constants/Notification';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import { Logger } from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
+import { useEffect, useMemo, useRef } from 'react';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useSCPreferences } from '../components/provider/SCPreferencesProvider';
+import { SCOPE_SC_CORE } from '../constants/Errors';
+import { SCNotificationMapping } from '../constants/Notification';
+import useSCCachingManager from './useSCCachingManager';
 
 /**
  :::info
@@ -329,19 +329,22 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
    */
   const subscriptionStatus = useMemo(
     () =>
-      (event: SCEventType): string => {
+      (event?: SCEventType): string => {
         // Cache is valid also for anonymous user
         if (cache.includes(event?.id)) {
           return getCurrentEventCacheStatus(event);
         }
-        if (authUserId) {
+
+        if (authUserId && event) {
           if ('subscription_status' in event) {
             return getSubscriptionStatus(event);
           }
+
           if (!isLoading(event)) {
             checkEventSubscriptionStatus(event);
           }
         }
+
         return null;
       },
     [loading, cache, authUserId]
