@@ -5,7 +5,7 @@ import { EventService, SCPaginatedResponse } from '@selfcommunity/api-services';
 import { SCCache, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
 import { SCEventType, SCUserType } from '@selfcommunity/types';
 import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { SyntheticEvent, useCallback, useEffect, useReducer, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import 'swiper/css';
 import { SCOPE_SC_UI } from '../../constants/Errors';
@@ -130,6 +130,11 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   // HOOKS
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
 
+  // CONSTS
+  const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
+  const title = useMemo(() => (tabValue === '1' ? 'ui.eventMembersWidget.participants' : 'ui.eventMembersWidget.invited'), [tabValue]);
+
+  // CALLBACKS
   const _initParticipants = useCallback(() => {
     if (!participants.initialized && !participants.isLoadingNext) {
       dispatchParticipants({ type: actionWidgetTypes.LOADING_NEXT });
@@ -146,7 +151,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   }, [participants.isLoadingNext, participants.initialized, dispatchParticipants, scEvent]);
 
   const _initInvited = useCallback(() => {
-    if (!invited.initialized && !invited.isLoadingNext && scUserContext.user?.id === scEvent.managed_by.id) {
+    if (!invited.initialized && !invited.isLoadingNext && hasAllow) {
       dispatchInvited({ type: actionWidgetTypes.LOADING_NEXT });
 
       EventService.getEventInvitedUsers(scEvent.id, { ...endpointQueryParams })
@@ -200,7 +205,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
         <Typography variant="h5" className={classes.title}>
-          <FormattedMessage id="ui.eventMembersWidget.invited" defaultMessage="ui.eventMembersWidget.invited" />
+          <FormattedMessage id={title} defaultMessage={title} />
         </Typography>
 
         <TabContext value={tabValue}>
@@ -216,7 +221,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
               }
               value="1"
             />
-            {invited && (
+            {hasAllow && (
               <Tab
                 label={
                   <Stack className={classes.tabLabelWrapper}>
@@ -233,7 +238,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           <TabPanel value="1" className={classes.tabPanel}>
             <TabContentComponent state={participants} dispatch={dispatchParticipants} userProps={userProps} dialogProps={dialogProps} />
           </TabPanel>
-          {invited && (
+          {hasAllow && (
             <TabPanel value="2" className={classes.tabPanel}>
               <TabContentComponent
                 state={invited}
