@@ -170,17 +170,20 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   };
 
   const handleAddGenerationContent = (feedObjects) => {
-    feedObjects.forEach((feedObject) => {
-      if (!feedRef && feedRef.current && feedRef.current.getCurrentFeedObjectIds().includes(feedObject.id)) {
-        const feedUnit = {
-          type: feedObject.type,
-          [feedObject.type]: feedObject,
-          seen_by_id: [],
-          has_boost: false
-        };
-        feedRef.current.addFeedData(feedUnit, true);
-      }
-    });
+    if (feedRef && feedRef.current) {
+      const currentFeedObjectIds = feedRef.current.getCurrentFeedObjectIds();
+      feedObjects.forEach((feedObject) => {
+        if (!currentFeedObjectIds.includes(feedObject.id)) {
+          const feedUnit = {
+            type: feedObject.type,
+            [feedObject.type]: feedObject,
+            seen_by_id: [],
+            has_boost: false
+          };
+          feedRef.current.addFeedData(feedUnit, true);
+        }
+      });
+    }
   };
 
   return (

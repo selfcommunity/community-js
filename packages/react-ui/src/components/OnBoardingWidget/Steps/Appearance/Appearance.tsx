@@ -10,7 +10,7 @@ import {MuiColorInput} from 'mui-color-input';
 import {actionTypes} from './reducer';
 import {getInitialState, reducer} from './reducer';
 import {PreferenceService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCOnBoardingStepStatusType, SCPreferenceType, SCStepType} from '@selfcommunity/types';
+import {SCPreferenceType} from '@selfcommunity/types';
 import {formatColorLabel, formatLogoLabel} from '../../../../utils/onBoarding';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Icon from '@mui/material/Icon';
