@@ -25,27 +25,41 @@ import {FormattedMessage} from 'react-intl';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import Category, {CategoryProps} from './Steps/Category';
+import Category from './Steps/Category';
 import {PREFIX} from './constants';
-import {SCContextType, SCThemeType, SCUserContextType, usePreviousValue, useSCContext, useSCUser} from '@selfcommunity/react-core';
-import Appearance, {AppearanceProps} from './Steps/Appearance';
-import Profile, {ProfileProps} from './Steps/Profile';
-import Invite, {InviteProps} from './Steps/Invite';
-import App, {AppProps} from './Steps/App';
+import {
+  getTheme,
+  SCContextType,
+  SCPreferencesContextType,
+  SCThemeContextType,
+  SCThemeType,
+  SCUserContextType,
+  usePreviousValue,
+  UserUtils,
+  useSCContext,
+  useSCPreferences,
+  useSCTheme,
+  useSCUser
+} from '@selfcommunity/react-core';
+import Appearance from './Steps/Appearance';
+import Profile from './Steps/Profile';
+import Invite from './Steps/Invite';
+import App from './Steps/App';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Widget from '../Widget';
-import Content, {ContentProps} from './Steps/Content';
+import Content from './Steps/Content';
 import Header from '../../assets/onBoarding/Header';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {OnBoardingService, StartStepParams} from '@selfcommunity/api-services';
+import {OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 
 const classes = {
   root: `${PREFIX}-root`,
+  content: `${PREFIX}-content`,
   accordionRoot: `${PREFIX}-accordion-root`,
   logo: `${PREFIX}-logo`,
   intro: `${PREFIX}-intro`,
@@ -67,14 +81,22 @@ const AccordionRoot = styled(Accordion, {
 })(() => ({}));
 
 export interface OnBoardingWidgetProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
   className?: string;
-  CategoryProps?: CategoryProps;
-  ContentProps?: ContentProps;
-  AppearanceProps?: AppearanceProps;
-  ProfileProps?: ProfileProps;
-  InviteProps?: InviteProps;
-  AppProps: AppProps;
-  generateContentsParams?: StartStepParams;
+  /**
+   * The params to add to content step generation
+   * @default {}
+   */
+  GenerateContentsParams?: StartStepParams;
+  /**
+   *The callback to pass to the feeds to publish the generated content
+   * @param feedObj
+   * @default null
+   */
+  onGeneratedContent?: (feedObjs: SCFeedObjectType[]) => void;
 }
 
 const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
@@ -83,22 +105,13 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     props: inProps,
     name: PREFIX
   });
-  const {
-    className,
-    AppearanceProps = {},
-    ProfileProps = {},
-    CategoryProps = {},
-    InviteProps = {},
-    AppProps = {},
-    ContentProps = {},
-    generateContentsParams = {},
-    ...rest
-  } = props;
+  const {className, GenerateContentsParams = {}, onGeneratedContent = null, ...rest} = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [initialized, setInitialized] = useState<boolean>(false);
   const [steps, setSteps] = useState<SCStepType[]>([]);
-  const currentStep = useMemo(() => {
+  const nextStep = useMemo(() => {
     const step = steps?.find((step) => step.status === 'in_progress' || step.status === 'not_started');
     return step || steps?.[0];
   }, [steps]);
@@ -106,12 +119,18 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return steps?.every((step) => step.status === SCOnBoardingStepStatusType.COMPLETED);
   }, [steps]);
   const [expanded, setExpanded] = useState(!allStepsDone);
-  const [_step, setStep] = useState<SCStepType>(currentStep);
-  const prevStep = usePreviousValue(_step);
+  const [_step, setStep] = useState<SCStepType>(nextStep);
+  const currentContentsStep = steps?.find((s) => s.step === SCOnBoardingStepType.CONTENTS);
+  const prevContentsStep = usePreviousValue(currentContentsStep);
+  const currentCategoriesStep = steps?.find((s) => s.step === SCOnBoardingStepType.CATEGORIES);
+  const prevCategoriesStep = usePreviousValue(currentCategoriesStep);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
   const scContext: SCContextType = useSCContext();
+  const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
+  const scThemeContext: SCThemeContextType = useSCTheme();
   const {enqueueSnackbar} = useSnackbar();
   const isStage = scContext.settings.portal.includes('stage');
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
@@ -134,11 +153,13 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
               return item;
             })
           );
+          setStep(nextStep);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
+    s.step === SCOnBoardingStepType.APPEARANCE && handlePreferencesUpdate();
   };
 
   const showSuccessAlert = (step: SCStepType) => {
@@ -170,14 +191,21 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
         autoHideDuration: 7000
       }
     );
+    if (_step.step === step.step) {
+      setStep(nextStep);
+    }
   };
 
   const getSteps = async () => {
     await OnBoardingService.getAllSteps()
       .then((res) => {
+        const contentStep = res.results.find((step) => step.step === SCOnBoardingStepType.CONTENTS);
         setIsGenerating(res.results.some((step) => step.status === 'in_progress'));
         setSteps(res.results);
         setIsLoading(false);
+        if (contentStep.status === SCOnBoardingStepStatusType.IN_PROGRESS && contentStep.results.length !== 0 && onGeneratedContent) {
+          onGeneratedContent(contentStep.results as SCFeedObjectType[]);
+        }
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -194,7 +222,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   };
 
   const generateContent = async (stepId: number) => {
-    await OnBoardingService.startAStep(stepId, generateContentsParams)
+    await OnBoardingService.startAStep(stepId, GenerateContentsParams)
       .then(() => {
         setIsGenerating(true);
       })
@@ -207,19 +235,38 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
       });
   };
 
+  const handlePreferencesUpdate = () => {
+    PreferenceService.getAllPreferences().then((preferences) => {
+      const prefs = preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {});
+      scPreferencesContext.setPreferences(prefs);
+      scThemeContext.setTheme(getTheme(scContext.settings.theme, prefs));
+    });
+  };
+
   // EFFECTS
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    if (prevStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && _step?.status === SCOnBoardingStepStatusType.NOT_STARTED) {
-      showSuccessAlert(prevStep);
+    if (prevContentsStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && currentContentsStep?.status === SCOnBoardingStepStatusType.COMPLETED) {
+      showSuccessAlert(currentContentsStep);
     }
-  }, [_step, prevStep]);
+  }, [currentContentsStep, prevContentsStep]);
 
   useEffect(() => {
-    setStep(currentStep);
-  }, [currentStep, steps]);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    if (prevCategoriesStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && currentCategoriesStep?.status === SCOnBoardingStepStatusType.COMPLETED) {
+      showSuccessAlert(currentCategoriesStep);
+    }
+  }, [currentCategoriesStep, prevCategoriesStep]);
+
+  useEffect(() => {
+    if (!initialized && nextStep) {
+      setStep(nextStep);
+      setInitialized(true);
+    }
+  }, [initialized, nextStep]);
 
   useEffect(() => {
     setExpanded(!allStepsDone);
@@ -228,7 +275,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   useEffect(() => {
     getSteps();
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    const intervalId = setInterval(getSteps, isGenerating ? 3000 : 3 * 60 * 1000);
+    const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, [scUserContext?.user, isGenerating]);
 
@@ -236,26 +283,26 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
    * Render _step content section
    */
   const getStepContent = () => {
-    const stepObj = _step;
+    const stepObj = steps?.find((obj) => obj.step === _step?.step);
     let content;
     switch (stepObj?.step) {
       case SCOnBoardingStepType.CONTENTS:
-        content = <Content step={stepObj} handleContentCreation={() => generateContent(stepObj.id)} {...ContentProps} />;
+        content = <Content step={stepObj} handleContentCreation={() => generateContent(stepObj.id)} />;
         break;
       case SCOnBoardingStepType.CATEGORIES:
-        content = <Category step={stepObj} handleCategoriesCreation={() => generateContent(stepObj.id)} {...CategoryProps} />;
+        content = <Category step={stepObj} handleCategoriesCreation={() => generateContent(stepObj.id)} />;
         break;
       case SCOnBoardingStepType.APPEARANCE:
-        content = <Appearance onCompleteAction={() => completeStep(stepObj)} {...AppearanceProps} />;
+        content = <Appearance onCompleteAction={() => completeStep(stepObj)} />;
         break;
       case SCOnBoardingStepType.PROFILE:
-        content = <Profile onCompleteAction={() => completeStep(stepObj)} {...ProfileProps} />;
+        content = <Profile onCompleteAction={() => completeStep(stepObj)} />;
         break;
       case SCOnBoardingStepType.INVITE:
-        content = <Invite onCompleteAction={() => completeStep(stepObj)} {...InviteProps} />;
+        content = <Invite onCompleteAction={() => completeStep(stepObj)} />;
         break;
       case SCOnBoardingStepType.APP:
-        content = <App step={stepObj} onCompleteAction={() => completeStep(stepObj)} {...AppProps} />;
+        content = <App step={stepObj} onCompleteAction={() => completeStep(stepObj)} />;
         break;
       default:
         break;
@@ -263,153 +310,152 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return content;
   };
 
-  if (!scUserContext?.user) {
+  if (!isAdmin) {
     return <HiddenPlaceholder />;
   }
 
   return (
-    <AccordionRoot defaultExpanded onChange={handleExpand} className={classes.accordionRoot} expanded={expanded}>
-      <AccordionSummary expandIcon={<Icon fontSize="medium">expand_more</Icon>} aria-controls="accordion" id="onBoarding-accordion">
-        <>
-          {expanded ? (
-            <>
-              {!isMobile ? (
-                <CardMedia className={classes.logo} component="div">
-                  <Header />
-                </CardMedia>
-              ) : (
-                <Typography variant="h4" textAlign="center">
-                  <FormattedMessage
-                    id="ui.onBoardingWidget.accordion.expanded.title.mobile"
-                    defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
-                    values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      b: (chunks) => <strong>{chunks}</strong>,
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      icon: (...chunks) => (
-                        <Icon color="secondary" fontSize="medium">
-                          {chunks}
-                        </Icon>
-                      )
-                    }}
-                  />
-                </Typography>
-              )}
-              <Box className={classes.intro}>
-                {!isMobile && (
-                  <Typography variant="h4">
+    <Root className={classNames(classes.root, className)} {...rest}>
+      <AccordionRoot defaultExpanded onChange={handleExpand} className={classes.accordionRoot} expanded={expanded}>
+        <AccordionSummary expandIcon={<Icon fontSize="medium">expand_more</Icon>} aria-controls="accordion" id="onBoarding-accordion">
+          <>
+            {expanded ? (
+              <>
+                {!isMobile ? (
+                  <CardMedia className={classes.logo} component="div">
+                    <Header />
+                  </CardMedia>
+                ) : (
+                  <Typography variant="h4" textAlign="center">
                     <FormattedMessage
-                      id="ui.onBoardingWidget.accordion.expanded.title"
-                      defaultMessage="ui.onBoardingWidget.accordion.expanded.title"
+                      id="ui.onBoardingWidget.accordion.expanded.title.mobile"
+                      defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
+                      values={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        b: (chunks) => <strong>{chunks}</strong>,
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        icon: (...chunks) => (
+                          <Icon color="secondary" fontSize="medium">
+                            {chunks}
+                          </Icon>
+                        )
+                      }}
                     />
                   </Typography>
                 )}
-                <Typography variant={!isMobile ? 'h5' : 'subtitle1'}>
-                  <FormattedMessage
-                    id="ui.onBoardingWidget.accordion.expanded.subtitle"
-                    defaultMessage="ui.onBoardingWidget.accordion.expanded.subtitle"
-                  />
-                </Typography>
-                <Typography>
-                  <FormattedMessage
-                    id="ui.onBoardingWidget.accordion.expanded.summary"
-                    defaultMessage="ui.onBoardingWidget.accordion.expanded.summary"
-                    values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      b: (chunks) => <strong>{chunks}</strong>,
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      icon: (...chunks) => <Icon>{chunks}</Icon>
-                    }}
-                  />
-                </Typography>
-              </Box>
-            </>
-          ) : (
-            <Typography variant="body1">
-              <FormattedMessage
-                id="ui.onBoardingWidget.accordion.collapsed"
-                defaultMessage="ui.onBoardingWidget.accordion.collapsed"
-                values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (chunks) => <strong>{chunks}</strong>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => (
-                    <Icon color="secondary" fontSize="medium">
-                      {chunks}
-                    </Icon>
-                  )
-                }}
-              />
-            </Typography>
-          )}
-        </>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Root className={classNames(classes.root, className)} {...rest} elevation={0}>
-          {isLoading ? (
-            <OnBoardingWidgetSkeleton />
-          ) : (
-            <CardContent>
-              <List className={isMobile ? classes.stepsMobile : classes.steps}>
-                {steps?.map((step: SCStepType) => (
-                  <ListItem key={step.id}>
-                    {isMobile ? (
-                      <Chip
-                        size="small"
-                        disabled={isGenerating && (_step?.step === SCOnBoardingStepType.CATEGORIES || _step?.step === SCOnBoardingStepType.CONTENTS)}
-                        label={
-                          <>
-                            <FormattedMessage id={`ui.onBoardingWidget.${step.step}`} defaultMessage={`ui.onBoardingWidget.${step.step}`} />{' '}
-                            {step.status === SCOnBoardingStepStatusType.COMPLETED && (
-                              <Icon color={step.status === SCOnBoardingStepStatusType.COMPLETED && step.step !== _step.step ? 'success' : 'inherit'}>
-                                check
-                              </Icon>
-                            )}
-                          </>
-                        }
-                        onClick={() => handleChange(step)}
-                        variant={step.step === _step.step ? 'filled' : 'outlined'}
-                        color={step.status === SCOnBoardingStepStatusType.COMPLETED ? 'success' : 'default'}
+                <Box className={classes.intro}>
+                  {!isMobile && (
+                    <Typography variant="h4">
+                      <FormattedMessage
+                        id="ui.onBoardingWidget.accordion.expanded.title"
+                        defaultMessage="ui.onBoardingWidget.accordion.expanded.title"
                       />
-                    ) : (
-                      <ListItemButton
-                        onClick={() => handleChange(step)}
-                        selected={step?.step === _step?.step}
-                        disabled={isGenerating && (_step?.step === SCOnBoardingStepType.CATEGORIES || _step?.step === SCOnBoardingStepType.CONTENTS)}>
-                        <ListItemIcon>
-                          <Checkbox
-                            edge="start"
-                            checked={step.status === SCOnBoardingStepStatusType.COMPLETED}
-                            tabIndex={-1}
-                            disableRipple
-                            inputProps={{'aria-labelledby': step.step}}
-                            size={'small'}
-                          />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={<FormattedMessage id={`ui.onBoardingWidget.${step.step}`} defaultMessage={`ui.onBoardingWidget.${step.step}`} />}
+                    </Typography>
+                  )}
+                  <Typography variant={!isMobile ? 'h5' : 'subtitle1'}>
+                    <FormattedMessage
+                      id="ui.onBoardingWidget.accordion.expanded.subtitle"
+                      defaultMessage="ui.onBoardingWidget.accordion.expanded.subtitle"
+                    />
+                  </Typography>
+                  <Typography>
+                    <FormattedMessage
+                      id="ui.onBoardingWidget.accordion.expanded.summary"
+                      defaultMessage="ui.onBoardingWidget.accordion.expanded.summary"
+                      values={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        b: (chunks) => <strong>{chunks}</strong>,
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
+                        icon: (...chunks) => <Icon>{chunks}</Icon>
+                      }}
+                    />
+                  </Typography>
+                </Box>
+              </>
+            ) : (
+              <Typography variant="body1">
+                <FormattedMessage
+                  id="ui.onBoardingWidget.accordion.collapsed"
+                  defaultMessage="ui.onBoardingWidget.accordion.collapsed"
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    icon: (...chunks) => (
+                      <Icon color="secondary" fontSize="medium">
+                        {chunks}
+                      </Icon>
+                    )
+                  }}
+                />
+              </Typography>
+            )}
+          </>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Widget className={classes.content} elevation={0}>
+            {isLoading ? (
+              <OnBoardingWidgetSkeleton />
+            ) : (
+              <CardContent>
+                <List className={isMobile ? classes.stepsMobile : classes.steps}>
+                  {steps?.map((step: SCStepType) => (
+                    <ListItem key={step.id}>
+                      {isMobile ? (
+                        <Chip
+                          size="small"
+                          label={
+                            <>
+                              <FormattedMessage id={`ui.onBoardingWidget.${step.step}`} defaultMessage={`ui.onBoardingWidget.${step.step}`} />{' '}
+                              {step.status === SCOnBoardingStepStatusType.COMPLETED && (
+                                <Icon
+                                  color={step?.status === SCOnBoardingStepStatusType.COMPLETED && step?.step !== _step?.step ? 'success' : 'inherit'}>
+                                  check
+                                </Icon>
+                              )}
+                            </>
+                          }
+                          onClick={() => handleChange(step)}
+                          variant={step.step === _step?.step ? 'filled' : 'outlined'}
+                          color={step.status === SCOnBoardingStepStatusType.COMPLETED ? 'success' : 'default'}
                         />
-                      </ListItemButton>
-                    )}
-                  </ListItem>
-                ))}
-              </List>
-              <Box className={classes.stepContent}>
-                <Fade in timeout={2400}>
-                  <Box>{getStepContent()}</Box>
-                </Fade>
-              </Box>
-            </CardContent>
-          )}
-        </Root>
-      </AccordionDetails>
-    </AccordionRoot>
+                      ) : (
+                        <ListItemButton onClick={() => handleChange(step)} selected={step?.step === _step?.step}>
+                          <ListItemIcon>
+                            <Checkbox
+                              edge="start"
+                              checked={step.status === SCOnBoardingStepStatusType.COMPLETED}
+                              tabIndex={-1}
+                              disableRipple
+                              inputProps={{'aria-labelledby': step.step}}
+                              size={'small'}
+                            />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={<FormattedMessage id={`ui.onBoardingWidget.${step.step}`} defaultMessage={`ui.onBoardingWidget.${step.step}`} />}
+                          />
+                        </ListItemButton>
+                      )}
+                    </ListItem>
+                  ))}
+                </List>
+                <Box className={classes.stepContent}>
+                  <Fade in timeout={2400}>
+                    <Box>{getStepContent()}</Box>
+                  </Fade>
+                </Box>
+              </CardContent>
+            )}
+          </Widget>
+        </AccordionDetails>
+      </AccordionRoot>
+    </Root>
   );
 };
 
