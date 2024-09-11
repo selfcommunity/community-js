@@ -104,7 +104,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string | null>(null);
   const [offset, setOffset] = useState<number | null>(null);
-  const [followers, setFollowers] = useState<SCUserType[]>([]);
+  const [participants, setParticipants] = useState<SCUserType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
@@ -117,13 +117,12 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
     }
 
     if (
-      (scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
-        scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING ||
-        scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED) &&
-      followers.length === 0
+      scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
+      scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING ||
+      scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED
     ) {
       EventService.getUsersGoingToEvent(scEvent.id, { limit: 3 }).then((res: SCPaginatedResponse<SCUserType>) => {
-        setFollowers([...res.results]);
+        setParticipants([...res.results]);
         setOffset(4);
         setLoading(false);
       });
@@ -136,18 +135,18 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
     if (open && offset !== null) {
       setLoading(true);
       EventService.getUsersGoingToEvent(scEvent.id, { offset, limit: 20 }).then((res: SCPaginatedResponse<SCUserType>) => {
-        setFollowers([...(offset === 0 ? [] : followers), ...res.results]);
+        setParticipants([...(offset === 0 ? [] : participants), ...res.results]);
         setNext(res.next);
         setLoading(false);
         setOffset(null);
       });
     }
-  }, [open, followers, offset]);
+  }, [open, participants, offset]);
 
   /**
    * Memoized fetchFollowers
    */
-  const fetchFollowers = useCallback(() => {
+  const fetchParticipants = useCallback(() => {
     if (!next) {
       return;
     }
@@ -158,12 +157,12 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
         method: Endpoints.GetUsersGoingToEvent.method
       })
       .then((res: HttpResponse<any>) => {
-        setFollowers([...followers, ...res.data.results]);
+        setParticipants([...participants, ...res.data.results]);
         setNext(res.data.next);
       })
       .catch((error) => Logger.error(SCOPE_SC_UI, error))
       .then(() => setLoading(false));
-  }, [followers, scEvent, next]);
+  }, [participants, scEvent, next]);
 
   /**
    * Opens dialog votes
@@ -189,8 +188,8 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
           <AvatarGroupSkeleton {...rest} />
         ) : (
           <AvatarGroup total={scEvent.goings_counter}>
-            {followers.map((c: SCUserType) => (
-              <Avatar key={c.id} alt={c.username} src={c.avatar} className={classes.avatar} />
+            {participants.map((participant: SCUserType) => (
+              <Avatar key={participant.id} alt={participant.username} src={participant.avatar} className={classes.avatar} />
             ))}
           </AvatarGroup>
         )}
@@ -210,8 +209,8 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
           open={open}
           {...DialogProps}>
           <InfiniteScroll
-            dataLength={followers.length}
-            next={fetchFollowers}
+            dataLength={participants.length}
+            next={fetchParticipants}
             hasMoreNext={next !== null || loading}
             loaderNext={<UserSkeleton elevation={0} />}
             className={classes.infiniteScroll}
@@ -224,9 +223,9 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
               </Typography>
             }>
             <List>
-              {followers.map((follower: SCUserType) => (
-                <ListItem key={follower.id}>
-                  <User elevation={0} user={follower} />
+              {participants.map((participant: SCUserType) => (
+                <ListItem key={participant.id}>
+                  <User elevation={0} user={participant} />
                 </ListItem>
               ))}
             </List>
