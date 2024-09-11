@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';
-import {Button, Dialog, DialogActions, DialogProps, IconButton, Paper, Slide, Typography} from '@mui/material';
+import {Button, Drawer, IconButton, Paper, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import PublicInfo from '../../../UserProfileEdit/Section/PublicInfo';
 import {
@@ -20,17 +20,15 @@ import {
 import UserAvatar from '../../../../shared/UserAvatar';
 import ChangePicture from '../../../ChangePicture';
 import ChangeCover from '../../../ChangeCover';
-import {SCOnBoardingStepStatusType, SCStepType, SCUserType} from '@selfcommunity/types';
+import {SCUserType} from '@selfcommunity/types';
 import {DEFAULT_FIELDS} from '../../../../constants/UserProfile';
 import {SCUserProfileFields} from '../../../../types/user';
-import {TransitionProps} from '@mui/material/transitions';
 import Icon from '@mui/material/Icon';
-import BaseDialog from '../../../../shared/BaseDialog';
 
 const classes = {
   root: `${PREFIX}-profile-root`,
   title: `${PREFIX}-profile-title`,
-  header: `${PREFIX}-profile-header`,
+  icon: `${PREFIX}-profile-icon`,
   cover: `${PREFIX}-profile-cover`,
   avatar: `${PREFIX}-profile-avatar`,
   changePicture: `${PREFIX}-profile-change-picture`,
@@ -61,23 +59,14 @@ export interface ProfileProps {
   onCompleteAction: () => void;
 }
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'ProfileRoot'
 })(() => ({}));
 
-const DialogRoot = styled(Dialog, {
+const DrawerRoot = styled(Drawer, {
   name: PREFIX,
-  slot: 'ProfileDialogRoot'
+  slot: 'ProfileDrawerRoot'
 })(() => ({}));
 
 export default function Profile(inProps: ProfileProps) {
@@ -88,7 +77,7 @@ export default function Profile(inProps: ProfileProps) {
   });
   const {className, fields = [...DEFAULT_FIELDS], user = null, onCompleteAction, ...rest} = props;
   // STATE
-  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -102,13 +91,12 @@ export default function Profile(inProps: ProfileProps) {
 
   // HANDLERS
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+  const handleClose = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
 
   /**
    * Handles Change Avatar
@@ -148,15 +136,13 @@ export default function Profile(inProps: ProfileProps) {
       <Typography alignSelf="self-start">
         <FormattedMessage id="ui.onBoardingWidget.step.profile.summary" defaultMessage="ui.onBoardingWidget.step.profile.summary" />
       </Typography>
-      <Button variant="outlined" size="small" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" size="small" color="primary" onClick={handleOpen}>
         <FormattedMessage id="ui.onBoardingWidget.step.profile.button" defaultMessage="ui.onBoardingWidget.step.profile.button" />
       </Button>
-      <DialogRoot fullScreen {...rest} open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <DialogActions>
-          <IconButton onClick={handleClose}>
-            <Icon>close</Icon>
-          </IconButton>
-        </DialogActions>
+      <DrawerRoot anchor="right" open={Boolean(anchorEl)} onClose={handleClose}>
+        <IconButton className={classes.icon} onClick={handleClose}>
+          <Icon>close</Icon>
+        </IconButton>
         <Paper style={_backgroundCover} classes={{root: classes.cover}}>
           <Box className={classes.avatar}>
             <UserAvatar hide={!hasBadge}>
@@ -173,7 +159,7 @@ export default function Profile(inProps: ProfileProps) {
         <Box className={classes.publicInfo}>
           <PublicInfo fields={fields} onEditSuccess={onCompleteAction} />
         </Box>
-      </DialogRoot>
+      </DrawerRoot>
     </Root>
   );
 }

@@ -213,8 +213,8 @@ const Component = {
       '& .MuiDrawer-paper': {
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          width: '40%',
-          padding: theme.spacing(2)
+          width: 'fit-content',
+          padding: theme.spacing(0, 2, 2, 2)
         }
       },
       '& .SCOnBoardingWidget-appearance-drawer-header': {
@@ -223,10 +223,12 @@ const Component = {
         alignItems: 'center',
         '& h4': {
           fontWeight: theme.typography.fontWeightBold
-        }
+        },
+        padding: theme.spacing(1)
       },
       '& .MuiTabs-root': {
-        marginBottom: theme.spacing(3),
+        padding: theme.spacing(1),
+        marginBottom: theme.spacing(2),
         '& .MuiTab-root ': {
           textTransform: 'none'
         }
@@ -234,7 +236,9 @@ const Component = {
       '& .SCOnBoardingWidget-appearance-drawer-content': {
         [theme.breakpoints.down('md')]: {
           padding: theme.spacing(1.5)
-        }
+        },
+        display: 'flex',
+        flexDirection: 'column'
       },
       '& .SCOnBoardingWidget-appearance-color': {
         margin: theme.spacing(1, 0, 2, 0)
@@ -250,6 +254,7 @@ const Component = {
           height: 120,
           width: 240,
           marginBottom: theme.spacing(2),
+          objectFit: 'contain',
           '& img': {
             width: '100%',
             height: 'auto'
@@ -274,9 +279,13 @@ const Component = {
         marginBottom: theme.spacing(1)
       }
     }),
-    profileDialogRoot: ({theme}: any) => ({
-      '& .MuiDialog-paperFullScreen': {
-        padding: theme.spacing(2)
+    profileDrawerRoot: ({theme}: any) => ({
+      '& .MuiDrawer-paper': {
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          width: '30%',
+          padding: theme.spacing(0, 2, 2, 2)
+        }
       },
       '& .SCOnBoardingWidget-profile-cover': {
         position: 'relative',
@@ -288,6 +297,9 @@ const Component = {
         [theme.breakpoints.up('md')]: {
           borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         }
+      },
+      '& .SCOnBoardingWidget-profile-icon': {
+        alignSelf: 'end'
       },
       '& .SCOnBoardingWidget-profile-avatar': {
         top: 100,
@@ -326,6 +338,7 @@ const Component = {
       },
       '& .SCOnBoardingWidget-profile-public-info': {
         marginTop: theme.spacing(6),
+        padding: theme.spacing(2),
         '& .SCUserProfileEdit-public-info-root': {
           display: 'flex',
           alignItems: 'center',
