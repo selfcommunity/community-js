@@ -691,7 +691,7 @@
   "ui.onBoardingWidget.step.app.tab.android": "Android",
   "ui.onBoardingWidget.step.app.title": "Scarica e fai scaricare ai tuoi utenti la app. Basta un tap!",
   "ui.onBoardingWidget.step.app.summary": "La tua Community è una Progressive Web App (PWA) completamente responsiva. \n Ciò garantisce un’esperienza utente nativa su tutti i dispositivi, incluse le notifiche push, utili per avere un coinvolgimento continuo e immediato degli utenti.",
-  "ui.onBoardingWidget.step.app.ios": "Accedi e fai accedere alla tua Community direttamente dal browser sul dispositivo mobile. Installa l’app Web per avere l’accesso rapido in un tap.",
+  "ui.onBoardingWidget.step.app.ios": "Accedi e fai accedere alla tua Community direttamente dal browser sul dispositivo mobile. \n Installa l’app Web per avere l’accesso rapido in un tap.",
   "ui.onBoardingWidget.step.app.ios.a": "1) Premi <b><icon>box_arrow_up</icon>Condividi</b> nella barra di navigazione." ,
   "ui.onBoardingWidget.step.app.ios.b": "2) Premi <b><icon>add_square</icon>Aggiungi alla schermata Home</b>" ,
   "ui.onBoardingWidget.step.app.android": "Accedi e fai accedere alla tua Community direttamente dal browser sul dispositivo mobile. \n Installa l’app Web per avere l’accesso rapido in un tap." ,

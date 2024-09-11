@@ -145,7 +145,7 @@ export default function Profile(inProps: ProfileProps) {
       <Typography variant="h4" className={classes.title} alignSelf="self-start">
         <FormattedMessage id="ui.onBoardingWidget.profile" defaultMessage="ui.onBoardingWidget.profile" />
       </Typography>
-      <Typography>
+      <Typography alignSelf="self-start">
         <FormattedMessage id="ui.onBoardingWidget.step.profile.summary" defaultMessage="ui.onBoardingWidget.step.profile.summary" />
       </Typography>
       <Button variant="outlined" size="small" color="primary" onClick={handleClickOpen}>
