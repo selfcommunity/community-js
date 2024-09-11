@@ -2,7 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({ theme }) => ({
       '& .SCSuggestedEventsWidget-content': {
-        padding: `15px 0 ${theme.spacing(2)} ${theme.spacing(2)}`,
+        padding: `15px ${theme.spacing(2, 2)}`,
 
         '& .SCSuggestedEventsWidget-title': {
           marginBottom: '11px'
