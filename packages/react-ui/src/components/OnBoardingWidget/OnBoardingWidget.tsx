@@ -35,6 +35,7 @@ import {
   SCThemeType,
   SCUserContextType,
   usePreviousValue,
+  UserUtils,
   useSCContext,
   useSCPreferences,
   useSCTheme,
@@ -126,6 +127,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
   const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scThemeContext: SCThemeContextType = useSCTheme();
@@ -273,7 +275,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   useEffect(() => {
     getSteps();
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    const intervalId = setInterval(getSteps, isGenerating ? 3000 : 3 * 60 * 1000);
+    const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, [scUserContext?.user, isGenerating]);
 
@@ -308,7 +310,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return content;
   };
 
-  if (!scUserContext?.user) {
+  if (!isAdmin) {
     return <HiddenPlaceholder />;
   }
 
