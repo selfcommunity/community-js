@@ -2,8 +2,6 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, AvatarGroup, AvatarGroupProps, Skeleton, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
-import {EventSkeletonProps, WidgetProps} from '@selfcommunity/react-ui';
-import {SCEventTemplateType} from '../../types/event';
 import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCAvatarGroupSkeleton';
