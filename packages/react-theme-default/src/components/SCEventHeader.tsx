@@ -21,8 +21,6 @@ const Component = {
         paddingLeft: theme.spacing(2)
       },
       '& .SCEventHeader-info': {
-        paddingRight: theme.spacing(),
-        paddingLeft: theme.spacing(),
         marginTop: theme.spacing(6),
         '& .SCEventHeader-name': {
           fontSize: '1.857rem',
@@ -56,8 +54,10 @@ const Component = {
         '& .SCUser-root': {
           borderTop: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
           borderBottom: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
-          padding: `${theme.spacing(0.5)} ${theme.spacing(2)} ${theme.spacing(0.5)} ${theme.spacing(2)}!important`,
           marginTop: theme.spacing(1),
+          '& .SCBaseItemButton-content': {
+            paddingLeft: theme.spacing(2)
+          },
           '& .SCBaseItemButton-actions': {
             maxWidth: 'none',
             [theme.breakpoints.up('sm')]: {

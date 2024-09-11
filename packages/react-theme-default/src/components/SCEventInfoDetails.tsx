@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       gap: theme.spacing(0.5),
 
       '& .SCEventInfoDetails-icon-text-wrapper': {
@@ -10,7 +10,10 @@ const Component = {
 
         '& .SCEventInfoDetails-link': {
           textDecoration: 'none',
-
+          color: theme.palette.text.primary,
+          '&:hover': {
+            textDecoration: 'underlined'
+          },
           '& .SCEventInfoDetails-url': {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
