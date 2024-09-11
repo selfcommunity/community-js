@@ -1,9 +1,9 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       gap: theme.spacing(1),
       marginTop: '0 !important',
-
+      minWidth: 'auto',
       '&:hover': {
         backgroundColor: 'unset'
       },
@@ -17,7 +17,7 @@ const Component = {
         color: theme.palette.grey[600]
       }
     }),
-    dialogRoot: ({ theme }) => ({
+    dialogRoot: ({theme}) => ({
       '& .SCEventParticipantsButton-infinite-scroll': {
         height: '400px !important',
 

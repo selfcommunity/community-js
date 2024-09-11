@@ -1,20 +1,20 @@
-import { Avatar, AvatarGroup, Button, List, ListItem, Typography } from '@mui/material';
-import { ButtonProps } from '@mui/material/Button/Button';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { Endpoints, EventService, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventSubscriptionStatusType, SCEventType, SCUserType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {Avatar, AvatarGroup, Button, List, ListItem, Typography} from '@mui/material';
+import {ButtonProps} from '@mui/material/Button/Button';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {useSCFetchEvent} from '@selfcommunity/react-core';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCFeatureName, SCUserType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
-import User, { UserSkeleton } from '../User';
+import User, {UserSkeleton} from '../User';
 
 const PREFIX = 'SCEventParticipantsButton';
 
@@ -98,71 +98,73 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
     name: PREFIX
   });
 
-  const { className, eventId, event, hideCaption = false, DialogProps = {}, ...rest } = props;
+  const {className, eventId, event, hideCaption = false, DialogProps = {}, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string | null>(null);
   const [offset, setOffset] = useState<number | null>(null);
-  const [participants, setParticipants] = useState<SCUserType[]>([]);
+  const [followers, setFollowers] = useState<SCUserType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const participantsAvailable = useMemo(
+    () =>
+      scEvent.privacy === SCEventPrivacyType.PUBLIC ||
+      [SCEventSubscriptionStatusType.SUBSCRIBED, SCEventSubscriptionStatusType.GOING, SCEventSubscriptionStatusType.NOT_GOING].indexOf(
+        scEvent.subscription_status
+      ) > -1,
+    [scEvent]
+  );
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
     if (!scEvent) {
       return;
     }
-
-    if (
-      scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
-      scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING ||
-      scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED
-    ) {
-      EventService.getUsersGoingToEvent(scEvent.id, { limit: 3 }).then((res: SCPaginatedResponse<SCUserType>) => {
-        setParticipants([...res.results]);
+    if (!followers.length && participantsAvailable) {
+      EventService.getUsersGoingToEvent(scEvent.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
+        setFollowers([...res.results]);
         setOffset(4);
         setLoading(false);
       });
     } else {
       setOffset(0);
     }
-  }, [scEvent]);
+  }, [scEvent, participantsAvailable]);
 
   useEffect(() => {
     if (open && offset !== null) {
       setLoading(true);
-      EventService.getUsersGoingToEvent(scEvent.id, { offset, limit: 20 }).then((res: SCPaginatedResponse<SCUserType>) => {
-        setParticipants([...(offset === 0 ? [] : participants), ...res.results]);
+      EventService.getUsersGoingToEvent(scEvent.id, {offset, limit: 20}).then((res: SCPaginatedResponse<SCUserType>) => {
+        setFollowers([...(offset === 0 ? [] : followers), ...res.results]);
         setNext(res.next);
         setLoading(false);
         setOffset(null);
       });
     }
-  }, [open, participants, offset]);
+  }, [open, followers, offset]);
 
   /**
    * Memoized fetchFollowers
    */
-  const fetchParticipants = useCallback(() => {
+  const fetchFollowers = useCallback(() => {
     if (!next) {
       return;
     }
-
     http
       .request({
         url: next,
         method: Endpoints.GetUsersGoingToEvent.method
       })
       .then((res: HttpResponse<any>) => {
-        setParticipants([...participants, ...res.data.results]);
+        setFollowers([...followers, ...res.data.results]);
         setNext(res.data.next);
       })
       .catch((error) => Logger.error(SCOPE_SC_UI, error))
       .then(() => setLoading(false));
-  }, [participants, scEvent, next]);
+  }, [followers, scEvent, next]);
 
   /**
    * Opens dialog votes
@@ -184,12 +186,12 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
           </Typography>
         )}
 
-        {loading || !scEvent ? (
-          <AvatarGroupSkeleton {...rest} />
+        {!followers.length && (loading || !scEvent) ? (
+          <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && {skeletonsAnimation: false})} />
         ) : (
           <AvatarGroup total={scEvent.goings_counter}>
-            {participants.map((participant: SCUserType) => (
-              <Avatar key={participant.id} alt={participant.username} src={participant.avatar} className={classes.avatar} />
+            {followers.map((c: SCUserType) => (
+              <Avatar key={c.id} alt={c.username} src={c.avatar} className={classes.avatar} />
             ))}
           </AvatarGroup>
         )}
@@ -202,15 +204,15 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
             <FormattedMessage
               defaultMessage="ui.eventParticipantsButton.dialogTitle"
               id="ui.eventParticipantsButton.dialogTitle"
-              values={{ total: scEvent.goings_counter }}
+              values={{total: scEvent.goings_counter}}
             />
           }
           onClose={handleToggleDialogOpen}
           open={open}
           {...DialogProps}>
           <InfiniteScroll
-            dataLength={participants.length}
-            next={fetchParticipants}
+            dataLength={followers.length}
+            next={fetchFollowers}
             hasMoreNext={next !== null || loading}
             loaderNext={<UserSkeleton elevation={0} />}
             className={classes.infiniteScroll}
@@ -223,9 +225,9 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
               </Typography>
             }>
             <List>
-              {participants.map((participant: SCUserType) => (
-                <ListItem key={participant.id}>
-                  <User elevation={0} user={participant} />
+              {followers.map((follower: SCUserType) => (
+                <ListItem key={follower.id}>
+                  <User elevation={0} user={follower} />
                 </ListItem>
               ))}
             </List>
