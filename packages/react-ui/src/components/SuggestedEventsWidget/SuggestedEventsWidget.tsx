@@ -1,7 +1,7 @@
-import { Button, CardActions, CardContent, Typography, useThemeProps } from '@mui/material';
+import { Button, CardActions, CardContent, Typography, useTheme, useThemeProps } from '@mui/material';
 import { styled } from '@mui/system';
 import { Endpoints, http, SCPaginatedResponse, SuggestionService } from '@selfcommunity/api-services';
-import { Link, SCRoutes, SCRoutingContextType, useSCRouting } from '@selfcommunity/react-core';
+import { Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting } from '@selfcommunity/react-core';
 import { SCEventType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperType } from 'swiper/types';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
@@ -68,9 +69,14 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   const [loading, setLoading] = useState(true);
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [currentItem, setCurrentItem] = useState(0);
+  const [hideMarginLeft, setHideMarginLeft] = useState(false);
+  const [hideMarginRight, setHideMarginRight] = useState(true);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  //HOOKS
+  const theme = useTheme<SCThemeType>();
 
   useEffect(() => {
     SuggestionService.getEventSuggestion({ ...endpointQueryParams })
@@ -83,6 +89,10 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
+  }, []);
+
+  const handleReachBeginning = useCallback(() => {
+    setHideMarginLeft(false);
   }, []);
 
   const handleReachEnd = useCallback(() => {
@@ -103,8 +113,27 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
+    } else {
+      setHideMarginRight(false);
     }
   }, [count, events, next]);
+
+  const handleChange = useCallback(
+    (swiper: SwiperType) => {
+      setCurrentItem(swiper.snapIndex);
+
+      if (swiper.snapIndex > 0 && swiper.snapIndex < count) {
+        if (!hideMarginLeft) {
+          setHideMarginLeft(true);
+        }
+
+        if (!hideMarginRight) {
+          setHideMarginRight(true);
+        }
+      }
+    },
+    [count, hideMarginLeft, hideMarginRight]
+  );
 
   // RENDER
   if (!events && loading) {
@@ -126,9 +155,14 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
           spaceBetween={8}
           slidesPerView="auto"
           grabCursor={true}
+          onReachBeginning={handleReachBeginning}
           onReachEnd={handleReachEnd}
-          onSlideChange={(swiper) => setCurrentItem(swiper.snapIndex)}
-          className={classes.swiper}>
+          onSlideChange={handleChange}
+          className={classes.swiper}
+          style={{
+            marginLeft: hideMarginLeft ? `-${theme.spacing(2)}` : 0,
+            marginRight: hideMarginRight ? `-${theme.spacing(2)}` : 0
+          }}>
           {(showSkeleton ? [...events, undefined] : events).map((event, i) => (
             <SwiperSlide key={i} className={classes.swiperSlide}>
               <Event event={event} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
