@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCFeatureName, SCUserType} from '@selfcommunity/types';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {useCallback, useEffect, useMemo, useState} from 'react';
@@ -47,7 +47,7 @@ export interface EventParticipantsButtonProps extends Pick<ButtonProps, Exclude<
   event?: SCEventType;
 
   /**
-   * Id of event object
+   * EventId of event object
    * @default null
    */
   eventId?: number;
