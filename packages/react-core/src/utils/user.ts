@@ -7,6 +7,7 @@ import {SCUserStatus, SCUserType} from '@selfcommunity/types';
 export const ADMIN_ROLE = 'admin';
 export const MODERATOR_ROLE = 'moderator';
 export const EDITOR_ROLE = 'editor';
+export const COMMUNITY_CREATOR = 1;
 
 /**
  * Get user role from roles(set)
@@ -34,6 +35,15 @@ export function getUserRole(user: SCUserType): string | null {
  */
 export function isAdmin(user: SCUserType) {
   return getUserRole(user) === ADMIN_ROLE;
+}
+
+/**
+ * Check if user is admin
+ * @param user
+ * @returns boolean
+ */
+export function isCommunityCreator(user: SCUserType) {
+  return user && user.id === COMMUNITY_CREATOR;
 }
 
 /**

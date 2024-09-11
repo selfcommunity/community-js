@@ -127,7 +127,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
+  const isAdmin = useMemo(() => UserUtils.isCommunityCreator(scUserContext.user), [scUserContext.user]);
   const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scThemeContext: SCThemeContextType = useSCTheme();
