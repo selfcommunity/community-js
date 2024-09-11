@@ -402,8 +402,8 @@ const Component = {
           '& .MuiIcon-root': {
             margin: theme.spacing(0, 0.5, 0, 0.5)
           }
-        }
-        // flexWrap: 'wrap'
+        },
+        flexWrap: 'wrap'
       }
     })
   }
