@@ -9,7 +9,7 @@ import { SyntheticEvent, useCallback, useEffect, useReducer, useState } from 're
 import { FormattedMessage } from 'react-intl';
 import 'swiper/css';
 import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
 import { BaseDialogProps } from '../../shared/BaseDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
@@ -90,10 +90,10 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     event,
     eventId,
     userProps = {},
-    endpointQueryParams = { limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET },
+    endpointQueryParams = { limit: 5, offset: DEFAULT_PAGINATION_OFFSET },
     cacheStrategy,
     dialogProps,
-    limit,
+    limit = 5,
     ...rest
   } = props;
 

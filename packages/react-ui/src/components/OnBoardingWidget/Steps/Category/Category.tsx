@@ -87,17 +87,18 @@ export default function Category(inProps: CategoryProps) {
     if (step.status === SCOnBoardingStepStatusType.IN_PROGRESS) {
       const intervalId = setInterval(() => {
         setProgress((prev) => {
-          if (prev >= 90) {
+          if (prev < step.completion_percentage) {
+            return prev + 1;
+          } else {
             clearInterval(intervalId);
             return prev;
           }
-          return prev + 1;
         });
       }, 1000);
 
       return () => clearInterval(intervalId);
     }
-  }, [step.status]);
+  }, [step.status, step.completion_percentage]);
 
   return (
     <Root className={classNames(classes.root, className)}>

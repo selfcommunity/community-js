@@ -3,7 +3,7 @@ import { ButtonProps } from '@mui/material/Button/Button';
 import { styled } from '@mui/material/styles';
 import { useThemeProps } from '@mui/system';
 import { Endpoints, EventService, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCSubscribedEventsManagerType, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
+import { useSCFetchEvent } from '@selfcommunity/react-core';
 import { SCEventSubscriptionStatusType, SCEventType, SCUserType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -109,8 +109,6 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
 
   // HOOKS
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const scUserContext: SCUserContextType = useSCUser();
-  const scEventsManager: SCSubscribedEventsManagerType | undefined = scUserContext.managers.events;
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
@@ -118,12 +116,10 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
       return;
     }
 
-    const status = scEventsManager?.subscriptionStatus(scEvent);
-
     if (
-      (status === SCEventSubscriptionStatusType.GOING ||
-        status === SCEventSubscriptionStatusType.NOT_GOING ||
-        status === SCEventSubscriptionStatusType.SUBSCRIBED) &&
+      (scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
+        scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING ||
+        scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED) &&
       followers.length === 0
     ) {
       EventService.getUsersGoingToEvent(scEvent.id, { limit: 3 }).then((res: SCPaginatedResponse<SCUserType>) => {

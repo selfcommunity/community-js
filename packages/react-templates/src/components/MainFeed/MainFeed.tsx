@@ -14,7 +14,8 @@ import {
   UserSuggestionWidget,
   PlatformWidget,
   SCFeedWidgetType,
-  FeedRef
+  FeedRef,
+  OnBoardingWidget
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -168,6 +169,20 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
+  const handleAddGenerationContent = (feedObjects) => {
+    feedObjects.forEach((feedObject) => {
+      if (!feedRef && feedRef.current && feedRef.current.getCurrentFeedObjectIds().includes(feedObject.id)) {
+        const feedUnit = {
+          type: feedObject.type,
+          [feedObject.type]: feedObject,
+          seen_by_id: [],
+          has_boost: false
+        };
+        feedRef.current.addFeedData(feedUnit, true);
+      }
+    });
+  };
+
   return (
     <Root
       id={id}
@@ -189,7 +204,11 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
+      HeaderComponent={
+        <>
+          <InlineComposerWidget onSuccess={handleComposerSuccess} /> <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />
+        </>
+      }
       requireAuthentication={true}
       disablePaginationLinks={true}
       enabledCustomAdvPositions={[

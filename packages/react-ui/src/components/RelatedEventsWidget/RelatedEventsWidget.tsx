@@ -1,22 +1,22 @@
-import {Avatar, Button, CardActions, CardContent, Divider, List, ListItem, Stack, Typography, useThemeProps} from '@mui/material';
-import {styled} from '@mui/system';
-import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';
-import {SCEventType} from '@selfcommunity/types';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {AxiosResponse} from 'axios';
-import {useCallback, useEffect, useReducer, useState} from 'react';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import { Avatar, Button, CardActions, CardContent, Divider, List, ListItem, Stack, Typography, useThemeProps } from '@mui/material';
+import { styled } from '@mui/system';
+import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
+import { Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser } from '@selfcommunity/react-core';
+import { SCEventType } from '@selfcommunity/types';
+import { CacheStrategies, Logger } from '@selfcommunity/utils';
+import { AxiosResponse } from 'axios';
+import { useCallback, useEffect, useReducer, useState } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import 'swiper/css';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
-import Event, {EventProps, EventSkeleton} from '../Event';
-import Widget, {WidgetProps} from '../Widget';
-import {PREFIX} from './constants';
+import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
+import Event, { EventProps, EventSkeleton } from '../Event';
+import Widget, { WidgetProps } from '../Widget';
+import { PREFIX } from './constants';
 import Skeleton from './Skeleton';
 
 const messages = defineMessages({
@@ -108,8 +108,8 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
   const {
     event,
     eventId,
-    eventComponentProps = {elevation: 0, square: true},
-    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
+    eventComponentProps = { elevation: 0, square: true },
+    endpointQueryParams = { limit: 5, offset: DEFAULT_PAGINATION_OFFSET },
     cacheStrategy,
     dialogProps,
     limit = 5,
@@ -136,17 +136,17 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
 
   // HOOKS
   const intl = useIntl();
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
 
   const _initComponent = useCallback(() => {
     if (!state.initialized && !state.isLoadingNext) {
-      dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      EventService.getEventRelated(scEvent.id, {created_by: scEvent.managed_by.id, ...endpointQueryParams})
+      dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+      EventService.getEventRelated(scEvent.id, { created_by: scEvent.managed_by.id, ...endpointQueryParams })
         .then((payload: SCPaginatedResponse<SCEventType>) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
         })
         .catch((error) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
           Logger.error(SCOPE_SC_UI, error);
         });
     }
@@ -170,14 +170,14 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
    * Handles pagination
    */
   const handleNext = useCallback(() => {
-    dispatch({type: actionWidgetTypes.LOADING_NEXT});
+    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
     http
       .request({
         url: state.next,
         method: Endpoints.GetEventRelated.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCEventType>>) => {
-        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
+        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
       });
   }, [dispatch, state.next, state.isLoadingNext, state.initialized]);
 
@@ -200,12 +200,12 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
         <Stack className={classes.header}>
           <Button
             component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: scUserContext.user?.id})}
+            to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, { id: scUserContext.user?.id })}
             className={classes.avatarWrapper}>
             <Avatar variant="rounded" src={scEvent.managed_by.avatar} alt={scEvent.managed_by.username} className={classes.avatar} />
           </Button>
           <Typography variant="h4">
-            <b>{intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}</b>
+            <b>{intl.formatMessage(messages.title, { user: scEvent.managed_by.username })}</b>
           </Typography>
         </Stack>
         <Stack className={classes.eventWrapper}>
@@ -231,7 +231,7 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
-          title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
+          title={intl.formatMessage(messages.title, { user: scEvent.managed_by.username })}
           onClose={handleToggleDialogOpen}
           open={openDialog}
           {...dialogProps}>

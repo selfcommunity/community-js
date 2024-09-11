@@ -2,7 +2,7 @@
  * Interface SCGroupEventType.
  * Event Schema.
  */
-import {SCUserType} from './user';
+import { SCUserType } from './user';
 
 /**
  * SCEventPrivacyType enum
@@ -183,17 +183,17 @@ export interface SCEventType {
   /**
    * The event place
    */
-  geolocation: string;
+  geolocation: string | null;
 
   /**
    * The event latitude
    */
-  geolocation_lat: number;
+  geolocation_lat: number | null;
 
   /**
    * The event longitude
    */
-  geolocation_lng: number;
+  geolocation_lng: number | null;
 
   /**
    * The event link(if virtual)
