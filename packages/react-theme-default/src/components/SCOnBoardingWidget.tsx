@@ -88,7 +88,14 @@ const Component = {
             fontWeight: theme.typography.fontWeightBold
           },
           '& h4': {
-            fontSize: '1.429rem'
+            fontSize: '1.429rem',
+            [theme.breakpoints.down('md')]: {
+              display: 'flex',
+              justifyContent: 'center',
+              '& .MuiIcon-root': {
+                marginRight: theme.spacing(1)
+              }
+            }
           },
           '& h5': {
             fontSize: '1.143rem'
@@ -122,6 +129,9 @@ const Component = {
               fontSize: '18px',
               marginRight: expanded ? 'inherit' : theme.spacing(1),
               marginLeft: expanded ? 'inherit' : theme.spacing(1)
+            },
+            [theme.breakpoints.down('md')]: {
+              justifyContent: 'center'
             }
           }
         },
@@ -160,6 +170,7 @@ const Component = {
       },
       '& .SCOnBoardingWidget-content-summary': {
         whiteSpace: 'pre-line',
+        marginTop: theme.spacing(1),
         marginBottom: theme.spacing(2)
       },
       '& .SCOnBoardingWidget-content-action': {
@@ -194,7 +205,7 @@ const Component = {
         marginTop: theme.spacing(4)
       },
       '& h4': {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(1),
         fontWeight: theme.typography.fontWeightBold
       }
     }),
@@ -259,7 +270,8 @@ const Component = {
         marginTop: theme.spacing(4)
       },
       '& .SCOnBoardingWidget-profile-title': {
-        fontWeight: theme.typography.fontWeightBold
+        fontWeight: theme.typography.fontWeightBold,
+        marginBottom: theme.spacing(1)
       }
     }),
     profileDialogRoot: ({theme}: any) => ({
@@ -379,7 +391,8 @@ const Component = {
         flexDirection: 'column',
         alignItems: 'center'
       },
-      '& h6': {
+      '& .SCOnBoardingWidget-app-step': {
+        marginBottom: theme.spacing(2),
         display: 'flex',
         alignItems: 'center',
         strong: {
@@ -389,8 +402,8 @@ const Component = {
           '& .MuiIcon-root': {
             margin: theme.spacing(0, 0.5, 0, 0.5)
           }
-        },
-        flexWrap: 'wrap'
+        }
+        // flexWrap: 'wrap'
       }
     })
   }

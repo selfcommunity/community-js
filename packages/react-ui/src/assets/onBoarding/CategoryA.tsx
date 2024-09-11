@@ -1,7 +1,7 @@
 import * as React from 'react';
 export default function CategoryA() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="380" height="196" viewBox="0 0 380 196">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 380 196">
       <defs>
         <filter id="Rectangle_3124" x="0" y="0" width="380" height="196" filterUnits="userSpaceOnUse">
           <feOffset dy="3" in="SourceAlpha" />

@@ -16,6 +16,7 @@ const classes = {
   tabs: `${PREFIX}-app-tabs`,
   tabContent: `${PREFIX}-app-tab-content`,
   summary: `${PREFIX}-app-summary`,
+  step: `${PREFIX}-app-step`,
   image: `${PREFIX}-app-image`,
   action: `${PREFIX}-app-action`,
   button: `${PREFIX}-app-button`
@@ -79,7 +80,7 @@ export default function App(inProps: AppProps) {
             <Typography className={classes.summary}>
               <FormattedMessage id="ui.onBoardingWidget.step.app.ios" defaultMessage="ui.onBoardingWidget.step.app.ios" />
             </Typography>
-            <Typography className={classes.summary}>
+            <Typography className={classes.step}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.ios.a"
                 defaultMessage="ui.onBoardingWidget.step.app.ios.a"
@@ -93,7 +94,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <Typography className={classes.summary}>
+            <Typography className={classes.step}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.ios.b"
                 defaultMessage="ui.onBoardingWidget.step.app.ios.b"
@@ -117,7 +118,7 @@ export default function App(inProps: AppProps) {
             <Typography className={classes.summary}>
               <FormattedMessage id="ui.onBoardingWidget.step.app.android" defaultMessage="ui.onBoardingWidget.step.app.android" />
             </Typography>
-            <Typography className={classes.summary}>
+            <Typography className={classes.step}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.android.a"
                 defaultMessage="ui.onBoardingWidget.step.app.android.a"
@@ -131,7 +132,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <Typography className={classes.summary}>
+            <Typography className={classes.step}>
               <FormattedMessage
                 id="ui.onBoardingWidget.step.app.android.b"
                 defaultMessage="ui.onBoardingWidget.step.app.android.b"
