@@ -44,7 +44,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'isEventAdmin'
+  shouldForwardProp: (prop) => prop !== 'isEventAdmin' && prop !== 'isEventFinished'
 })(() => ({}));
 
 export interface EventHeaderProps {
