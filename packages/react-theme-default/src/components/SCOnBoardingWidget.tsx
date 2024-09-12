@@ -227,7 +227,9 @@ const Component = {
         padding: theme.spacing(1)
       },
       '& .MuiTabs-root': {
-        padding: theme.spacing(1),
+        [theme.breakpoints.down('md')]: {
+          padding: theme.spacing(1)
+        },
         marginBottom: theme.spacing(2),
         '& .MuiTab-root ': {
           textTransform: 'none'
