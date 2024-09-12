@@ -1,15 +1,8 @@
 import {Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import {Link} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
-import {format} from 'date-fns';
-import {enUS, it} from 'date-fns/locale';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import React from 'react';
-
-const LOCALE_MAP = {
-  en: enUS,
-  it
-};
 
 const PREFIX = 'SCEventInfoDetails';
 
@@ -30,14 +23,17 @@ const Root = styled(Stack, {
 export interface EventInfoDetailsProps {
   event: SCEventType;
   hideDateIcon?: boolean;
+  hideRecurringIcon?: boolean;
   hidePrivacyIcon?: boolean;
   hideLocationIcon?: boolean;
   hideCreatedIcon?: boolean;
   hasDateInfo?: boolean;
+  hasRecurringInfo?: boolean;
   hasPrivacyInfo?: boolean;
   hasLocationInfo?: boolean;
   hasCreatedInfo?: boolean;
   beforeDateInfo?: React.ReactNode | null;
+  beforeRecurringInfo?: React.ReactNode | null;
   beforePrivacyInfo?: React.ReactNode | null;
   beforeLocationInfo?: React.ReactNode | null;
   beforeCreatedInfo?: React.ReactNode | null;
@@ -53,14 +49,17 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
   const {
     event,
     hideDateIcon = false,
+    hideRecurringIcon = false,
     hidePrivacyIcon = false,
     hideLocationIcon = false,
     hideCreatedIcon = false,
     hasDateInfo = true,
+    hasRecurringInfo = false,
     hasPrivacyInfo = true,
     hasLocationInfo = true,
     hasCreatedInfo = false,
     beforeDateInfo,
+    beforeRecurringInfo,
     beforePrivacyInfo,
     beforeLocationInfo,
     beforeCreatedInfo
@@ -72,32 +71,39 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
   const privacy = event.privacy === SCEventPrivacyType.PUBLIC ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private';
   const location = event.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson';
 
-  const formatDateEventDate = (date: string) => {
-    return format(new Date(date), "EEEE d MMMM' - Ore 'H:mm", {
-      locale: LOCALE_MAP[intl.locale]
-    }).replace(
-      /([a-z/ì]+) (\d{2}) ([a-z]+) - Ore (\d{2}):(\d{2})/,
-      (_, weekDay, day, month, hour, minute) =>
-        `${weekDay.charAt(0).toUpperCase() + weekDay.slice(1)} ${day} ${month.charAt(0).toUpperCase() + month.slice(1)} - Ore ${hour}:${minute}`
-    );
-  };
-
-  const formatDateCreateDate = (date: string) => {
-    return format(new Date(date), "'Creato il 'd MMMM y", {
-      locale: LOCALE_MAP[intl.locale]
-    }).replace(
-      /Creato il (\d{1})+ ([a-z]+) (\d{4})/,
-      (_, day, month, year) => `Creato il ${day} ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}`
-    );
-  };
-
   return (
     <Root className={classes.root}>
       {beforeDateInfo}
       {hasDateInfo && (
         <Stack className={classes.iconTextWrapper}>
           {!hideDateIcon && <Icon fontSize="small">CalendarIcon</Icon>}
-          <Typography variant="body1">{formatDateEventDate(event.start_date)}</Typography>
+          <Typography variant="body1">
+            <FormattedMessage
+              id="ui.eventInfoDetails.date.startEndTime"
+              defaultMessage="ui.eventInfoDetails.date.startEndTime"
+              values={{
+                date: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, {
+                  weekday: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long'
+                }),
+                start: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, {hour: 'numeric', minute: 'numeric'})
+              }}
+            />
+          </Typography>
+        </Stack>
+      )}
+      {beforeRecurringInfo}
+      {hasRecurringInfo && event.recurring !== SCEventRecurrenceType.NEVER && (
+        <Stack className={classes.iconTextWrapper}>
+          {!hideRecurringIcon && <Icon fontSize="small">frequency</Icon>}
+          <Typography variant="body1">
+            <FormattedMessage
+              id={`ui.eventInfoDetails.frequency.${event.recurring}.placeholder`}
+              defaultMessage={`ui.eventInfoDetails.frequency.${event.recurring}.placeholder`}
+            />
+          </Typography>
         </Stack>
       )}
       {beforePrivacyInfo}
@@ -136,7 +142,20 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       {hasCreatedInfo && (
         <Stack className={classes.creationWrapper}>
           {!hideCreatedIcon && <Icon fontSize="small">create</Icon>}
-          <Typography variant="body1">{formatDateCreateDate(event.created_at)}</Typography>
+          <Typography variant="body1">
+            <FormattedMessage
+              id="ui.eventInfoDetails.date.create"
+              defaultMessage="ui.eventInfoDetails.date.create"
+              values={{
+                date: intl.formatDate(event.created_at, {
+                  weekday: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long'
+                })
+              }}
+            />
+          </Typography>
         </Stack>
       )}
     </Root>
