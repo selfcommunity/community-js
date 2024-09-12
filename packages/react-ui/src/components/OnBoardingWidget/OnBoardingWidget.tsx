@@ -48,7 +48,6 @@ import App from './Steps/App';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Widget from '../Widget';
 import Content from './Steps/Content';
-import Header from '../../assets/onBoarding/Header';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -322,9 +321,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
             {expanded ? (
               <>
                 {!isMobile ? (
-                  <CardMedia className={classes.logo} component="div">
-                    <Header />
-                  </CardMedia>
+                  <CardMedia className={classes.logo} component="img" src="/onBoarding/header.svg" />
                 ) : (
                   <Typography variant="h4" textAlign="center">
                     <FormattedMessage
