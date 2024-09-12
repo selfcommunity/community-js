@@ -34,6 +34,12 @@ export interface ProgressBarProps extends LinearProgressProps {
    * @default null
    */
   loadingMessage?: React.ReactNode;
+
+  /**
+   * Hides the bar, rendering just the massage and percentage
+   * @default false
+   */
+  hideBar?: boolean;
   /**
    * Any other properties
    */
@@ -41,11 +47,11 @@ export interface ProgressBarProps extends LinearProgressProps {
 }
 
 export default function ProgressBar(props: ProgressBarProps) {
-  const {className, value, loadingMessage = null, ...rest} = props;
+  const {className, value, loadingMessage = null, hideBar = false, ...rest} = props;
   return (
     <Root className={classNames(classes.root, className)}>
       <Box className={classes.message}>{loadingMessage}</Box>
-      <LinearProgress variant="determinate" color="success" className={classes.bar} value={value} {...rest} />
+      {!hideBar && <LinearProgress variant="determinate" color="success" className={classes.bar} value={value} {...rest} />}
       <Box className={classes.progress}>
         <Typography variant="body2" color="text.secondary">{`${Math.round(value)}%`}</Typography>
       </Box>
