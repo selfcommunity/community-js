@@ -38,6 +38,13 @@ export interface EventApiClientInterface {
   // Users subscribed to the event
   getEventMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
+  // Users awaiting approval subscribers
+  getEventWaitingApprovalSubscribers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>>;
+
   // Given an already existing event, it suggests users to invite
   getEventSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
@@ -214,7 +221,24 @@ export class EventApiClient {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetEventSubscribers.url({id})}?${p.toString()}`, method: Endpoints.GetEventSubscribers.method});
   }
-
+  /**
+   * This endpoint returns all waiting approval subscribers
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getEventWaitingApprovalSubscribers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    const p = urlParams(params);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetEventWaitingApprovalSubscribers.url({id})}?${p.toString()}`,
+      method: Endpoints.GetEventSubscribers.method
+    });
+  }
   /**
    * This endpoint returns a list of suggested users to invite to the event.
    * @param id
@@ -468,6 +492,13 @@ export default class EventService {
   }
   static async getEventMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return EventApiClient.getEventMembers(id, params, config);
+  }
+  static async getEventWaitingApprovalSubscribers(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return EventApiClient.getEventWaitingApprovalSubscribers(id, params, config);
   }
   static async getEventSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return EventApiClient.getEventSuggestedUsers(id, search, config);

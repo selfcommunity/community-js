@@ -6,10 +6,9 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
-import CategoryA from '../../../../assets/onBoarding/CategoryA';
-import CategoryB from '../../../../assets/onBoarding/CategoryB';
 import ProgressBar from '../../../../shared/ProgressBar';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
+import {Player} from '@lottiefiles/react-lottie-player';
 
 const classes = {
   root: `${PREFIX}-category-root`,
@@ -18,7 +17,9 @@ const classes = {
   image: `${PREFIX}-category-image`,
   action: `${PREFIX}-category-action`,
   button: `${PREFIX}-category-button`,
-  success: `${PREFIX}-success`
+  success: `${PREFIX}-success`,
+  progress: `${PREFIX}-category-progress`,
+  animationProgress: `${PREFIX}-category-animation-progress`
 };
 
 export interface CategoryProps {
@@ -108,43 +109,47 @@ export default function Category(inProps: CategoryProps) {
       <Typography className={classes.summary}>
         <FormattedMessage id="ui.onBoardingWidget.step.category.summary" defaultMessage="ui.onBoardingWidget.step.category.summary" />
       </Typography>
-      <Typography>
-        <FormattedMessage
-          id="ui.onBoardingWidget.step.category.generation.steps"
-          defaultMessage="ui.onBoardingWidget.step.category.generation.steps"
-          values={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            iconA: (...chunks) => <CircledLetter letter="a" statement={chunks} />,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            iconB: (...chunks) => <CircledLetter letter="b" statement={chunks} />,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            iconC: (...chunks) => <CircledLetter letter="c" statement={chunks} />
-          }}
-        />
-      </Typography>
-      <CardMedia className={classes.image} component="div">
-        <CategoryA />
-      </CardMedia>
-      <CardMedia className={classes.image} component="div">
-        <CategoryB />
-      </CardMedia>
+      {step?.status !== SCOnBoardingStepStatusType.IN_PROGRESS && (
+        <>
+          <Typography>
+            <FormattedMessage
+              id="ui.onBoardingWidget.step.category.generation.steps"
+              defaultMessage="ui.onBoardingWidget.step.category.generation.steps"
+              values={{
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                iconA: (...chunks) => <CircledLetter letter="a" statement={chunks} />,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                iconB: (...chunks) => <CircledLetter letter="b" statement={chunks} />,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                iconC: (...chunks) => <CircledLetter letter="c" statement={chunks} />
+              }}
+            />
+          </Typography>
+          <CardMedia className={classes.image} component="img" src="/onBoarding/categoryA.svg" />
+          <CardMedia className={classes.image} component="img" src="/onBoarding/categoryB.svg" />
+        </>
+      )}
       <Box component="span" className={classes.action}>
         {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
             <FormattedMessage id="ui.onBoardingWidget.step.categories.success" defaultMessage="ui.onBoardingWidget.step.categories.success" />
           </Alert>
         ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
-          <ProgressBar
-            value={progress}
-            loadingMessage={
-              <Typography variant="h4">
-                <FormattedMessage id="ui.onBoardingWidget.step.categories.loading" defaultMessage="ui.onBoardingWidget.step.categories.loading" />
-              </Typography>
-            }
-          />
+          <Box className={classes.progress}>
+            <Player autoplay loop src="/onBoarding/progress/category_progress.json" className={classes.animationProgress} controls={false} />
+            <ProgressBar
+              value={progress}
+              hideBar={true}
+              loadingMessage={
+                <Typography variant="h4">
+                  <FormattedMessage id="ui.onBoardingWidget.step.categories.loading" defaultMessage="ui.onBoardingWidget.step.categories.loading" />
+                </Typography>
+              }
+            />
+          </Box>
         ) : (
           <Button
             size="small"

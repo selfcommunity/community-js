@@ -8,6 +8,9 @@ const Component = {
         },
         padding: theme.spacing(0, 2, 2, 2)
       },
+      '& .SCOnBoardingWidget-logo': {
+        width: 'auto'
+      },
       '& .MuiCardContent-root': {
         '& .MuiList-root': {
           paddingTop: 0,
@@ -106,14 +109,11 @@ const Component = {
           '& .SCOnBoardingWidget-intro': {
             marginLeft: theme.spacing(2),
             '& h5': {
-              marginBottom: theme.spacing(2)
+              marginBottom: theme.spacing(1)
             },
             '& .MuiTypography-subtitle1': {
-              lineHeight: 1.2
-            },
-            [theme.breakpoints.down('md')]: {
-              '& .MuiTypography-body1': {
-                marginTop: theme.spacing(1)
+              [theme.breakpoints.down('md')]: {
+                fontSize: '14px'
               }
             }
           },
@@ -123,10 +123,9 @@ const Component = {
           '& .MuiTypography-body1': {
             display: expanded ? 'inherit' : 'flex',
             alignItems: 'center',
-            fontSize: '16px',
+            fontSize: expanded ? '14px' : '16px',
             flexWrap: 'wrap',
             strong: {
-              fontSize: '18px',
               marginRight: expanded ? 'inherit' : theme.spacing(1),
               marginLeft: expanded ? 'inherit' : theme.spacing(1)
             },
@@ -404,7 +403,10 @@ const Component = {
       '& .SCOnBoardingWidget-app-tab-content': {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        '& .SCOnBoardingWidget-app-image': {
+          width: 'auto'
+        }
       },
       '& .SCOnBoardingWidget-app-step': {
         marginBottom: theme.spacing(2),

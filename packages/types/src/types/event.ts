@@ -143,7 +143,7 @@ export interface SCEventType {
   /**
    * The event end date.
    */
-  end_date: string;
+  end_date: string | null;
 
   /**
    * If the event is currently running

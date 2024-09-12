@@ -8,12 +8,15 @@ import {PREFIX} from '../../constants';
 import {FormattedMessage} from 'react-intl';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 import ProgressBar from '../../../../shared/ProgressBar';
+import {Player} from '@lottiefiles/react-lottie-player';
 
 const classes = {
   root: `${PREFIX}-content-root`,
   title: `${PREFIX}-content-title`,
   summary: `${PREFIX}-content-summary`,
-  action: `${PREFIX}-content-action`
+  action: `${PREFIX}-content-action`,
+  progress: `${PREFIX}-content-progress`,
+  animationProgress: `${PREFIX}-content-animation-progress`
 };
 
 export interface ContentProps {
@@ -80,14 +83,18 @@ export default function Content(inProps: ContentProps) {
             <FormattedMessage id="ui.onBoardingWidget.step.contents.success" defaultMessage="ui.onBoardingWidget.step.contents.success" />
           </Alert>
         ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
-          <ProgressBar
-            value={progress}
-            loadingMessage={
-              <Typography variant="h4">
-                <FormattedMessage id="ui.onBoardingWidget.step.contents.loading" defaultMessage="ui.onBoardingWidget.step.contents.loading" />
-              </Typography>
-            }
-          />
+          <Box className={classes.progress}>
+            <Player autoplay loop src="/onBoarding/progress/content_progress.json" className={classes.animationProgress} controls={false} />
+            <ProgressBar
+              value={progress}
+              hideBar={true}
+              loadingMessage={
+                <Typography variant="h4">
+                  <FormattedMessage id="ui.onBoardingWidget.step.contents.loading" defaultMessage="ui.onBoardingWidget.step.contents.loading" />
+                </Typography>
+              }
+            />
+          </Box>
         ) : (
           <Button
             size="small"

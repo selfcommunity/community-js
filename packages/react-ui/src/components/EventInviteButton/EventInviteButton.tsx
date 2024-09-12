@@ -319,7 +319,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
           title={
             <>
               <IconButton onClick={handleClose}>
-                <Icon>arrow_back</Icon>
+                <Icon>close</Icon>
               </IconButton>
               <Typography className={classes.dialogTitle}>
                 <FormattedMessage id="ui.eventInviteButton.dialog.title" defaultMessage="ui.eventInviteButton.dialog.title" />

@@ -6,8 +6,6 @@ import classNames from 'classnames';
 import {PREFIX} from '../../constants';
 import {Button, CardMedia, Icon, Tab, Tabs, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import Ios from '../../../../assets/onBoarding/Ios';
-import Android from '../../../../assets/onBoarding/Android';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 
 const classes = {
@@ -108,9 +106,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <CardMedia className={classes.image} component="div">
-              <Ios />
-            </CardMedia>
+            <CardMedia className={classes.image} component="img" src="/onBoarding/ios.png" />
           </>
         )}
         {tab === 1 && (
@@ -146,9 +142,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <CardMedia className={classes.image} component="div">
-              <Android />
-            </CardMedia>
+            <CardMedia className={classes.image} component="img" src="/onBoarding/android.png" />
           </>
         )}
         <Button

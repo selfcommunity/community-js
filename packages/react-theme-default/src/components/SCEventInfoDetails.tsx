@@ -2,12 +2,13 @@ const Component = {
   styleOverrides: {
     root: ({theme}) => ({
       gap: theme.spacing(0.5),
-
       '& .SCEventInfoDetails-icon-text-wrapper': {
         flexDirection: 'row',
         alignItems: 'center',
         gap: theme.spacing(1),
-
+        '& p': {
+          textTransform: 'capitalize'
+        },
         '& .SCEventInfoDetails-link': {
           textDecoration: 'none',
           color: theme.palette.text.primary,
@@ -23,7 +24,6 @@ const Component = {
           }
         }
       },
-
       '& .SCEventInfoDetails-creation-wrapper': {
         flexDirection: 'row',
         alignItems: 'center',

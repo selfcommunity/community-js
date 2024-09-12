@@ -112,16 +112,13 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
       <CardContent className={classes.content}>
         <Stack className={classes.titleWrapper}>
           <Icon fontSize="small">info</Icon>
-
           <Typography variant="h5">
             <FormattedMessage id="ui.infoEventWidget.title" defaultMessage="ui.infoEventWidget.title" />
           </Typography>
         </Stack>
-
         <Box className={classes.textWrapper}>
           <Typography component="span" variant="body1">
             {description}
-
             {showButton && !expanded && (
               <Button size="small" variant="text" className={classes.showMore} onClick={handleToggleSummary}>
                 <FormattedMessage id="ui.infoEventWidget.showMore" defaultMessage="ui.infoEventWidget.showMore" />
@@ -129,8 +126,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
             )}
           </Typography>
         </Box>
-
-        <EventInfoDetails event={scEvent} hasCreatedInfo={true} />
+        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo />
       </CardContent>
     </Root>
   );
