@@ -1,7 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
+import { Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
 import {
   SCPreferences,
   SCPreferencesContextType,
@@ -11,26 +10,29 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import EventHeaderSkeleton from './Skeleton';
+import { SCEventLocationType, SCEventPrivacyType, SCEventType } from '@selfcommunity/types';
 import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-import {PREFIX} from './constants';
-import {FormattedMessage, useIntl} from 'react-intl';
-import Bullet from '../../shared/Bullet';
-import EventSubscribeButton, {EventSubscribeButtonProps} from '../EventSubscribeButton';
-import EventInviteButton from '../EventInviteButton';
-import {SCEventMembersEventType, SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
-import EditEventButton from '../EditEventButton';
-import User from '../User';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { SCEventMembersEventType, SCGroupEventType, SCTopicType } from '../../constants/PubSub';
+import Bullet from '../../shared/Bullet';
 import Calendar from '../../shared/Calendar';
-import EventActionsMenu, {EventActionsMenuProps} from '../../shared/EventActionsMenu';
+import EventActionsMenu, { EventActionsMenuProps } from '../../shared/EventActionsMenu';
+import EditEventButton from '../EditEventButton';
+import EventInviteButton from '../EventInviteButton';
+import EventSubscribeButton, { EventSubscribeButtonProps } from '../EventSubscribeButton';
+import User from '../User';
+import { PREFIX } from './constants';
+import EventHeaderSkeleton from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
   cover: `${PREFIX}-cover`,
   time: `${PREFIX}-time`,
   calendar: `${PREFIX}-calendar`,
+  inProgress: `${PREFIX}-in-progress`,
+  chip: `${PREFIX}-chip`,
   info: `${PREFIX}-info`,
   name: `${PREFIX}-name`,
   visibility: `${PREFIX}-visibility`,
@@ -42,7 +44,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'isEventAdmin'
+  shouldForwardProp: (prop) => prop !== 'isEventAdmin' && prop !== 'isEventFinished'
 })(() => ({}));
 
 export interface EventHeaderProps {
@@ -124,7 +126,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = null, className = null, event, eventId = null, EventSubscribeButtonProps = {}, EventActionsProps = {}, ...rest} = props;
+  const { id = null, className = null, event, eventId = null, EventSubscribeButtonProps = {}, EventActionsProps = {}, ...rest } = props;
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -133,7 +135,9 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
-  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent, setSCEvent } = useSCFetchEvent({ id: eventId, event });
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // INTL
   const intl = useIntl();
@@ -146,8 +150,14 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
     () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scEvent?.managed_by?.id]
   );
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const isEventFinished = useMemo(() => {
+    if (scEvent && !scEvent.running) {
+      return new Date().getTime() > new Date(scEvent.end_date || scEvent.start_date).getTime();
+    }
+
+    return false;
+  }, [scEvent]);
 
   /**
    * Subscriber for pubsub callback
@@ -155,7 +165,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const onChangeEventMembersHandler = useCallback(
     (msg: string, data: SCEventMembersEventType) => {
       if (data && data?.event?.id === scEvent?.id) {
-        let _event = {...scEvent};
+        let _event = { ...scEvent };
         if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`) {
           _event.subscribers_counter = _event.subscribers_counter + 1;
         } else if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.REMOVE_MEMBER}`) {
@@ -171,7 +181,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
    * Handles callback subscribe/unsubscribe event
    */
   const handleSubscribe = (event, status) => {
-    setSCEvent(Object.assign({}, scEvent, {subscription_status: status}));
+    setSCEvent(Object.assign({}, scEvent, { subscription_status: status }));
   };
 
   /**
@@ -192,20 +202,38 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   }
   const _backgroundCover = {
     ...(scEvent.image_bigger
-      ? {background: `url('${scEvent.image_bigger}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+      ? { background: `url('${scEvent.image_bigger}') center / cover` }
+      : { background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover` })
   };
 
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    <Root id={id} className={classNames(classes.root, className)} isEventAdmin={isEventAdmin} {...rest}>
-      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+    <Root id={id} className={classNames(classes.root, className)} isEventAdmin={isEventAdmin} isEventFinished={isEventFinished} {...rest}>
+      <Paper style={_backgroundCover} classes={{ root: classes.cover }}>
         <Box className={classes.calendar}>
           <Calendar day={new Date(scEvent.start_date).getDate()} />
         </Box>
       </Paper>
       <Box className={classes.info}>
+        {scEvent.running && (
+          <Typography variant="body1" className={classes.inProgress}>
+            <FormattedMessage id="ui.eventHeader.inProgress" defaultMessage="ui.eventHeader.inProgress" />
+          </Typography>
+        )}
+        {isEventFinished && (
+          <Chip
+            icon={<Icon fontSize="small">calendar_off</Icon>}
+            label={
+              <Typography variant="body1">
+                <FormattedMessage id="ui.eventHeader.finished" defaultMessage="ui.eventHeader.finished" />
+              </Typography>
+            }
+            variant="outlined"
+            size="small"
+            className={classes.chip}
+          />
+        )}
         <Typography className={classes.time}>
           {scEvent.end_date && scEvent.end_date !== scEvent.start_date ? (
             new Date(scEvent.start_date).getDate() !== new Date(scEvent.end_date).getDate() ? (
@@ -225,8 +253,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                     year: 'numeric',
                     month: 'long'
                   }),
-                  startTime: intl.formatDate(scEvent.start_date, {hour: 'numeric', minute: 'numeric'}),
-                  endTime: intl.formatDate(scEvent.end_date, {hour: 'numeric', minute: 'numeric'})
+                  startTime: intl.formatDate(scEvent.start_date, { hour: 'numeric', minute: 'numeric' }),
+                  endTime: intl.formatDate(scEvent.end_date, { hour: 'numeric', minute: 'numeric' })
                 }}
               />
             ) : (
@@ -240,8 +268,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                     year: 'numeric',
                     month: 'long'
                   }),
-                  start: intl.formatDate(scEvent.start_date, {hour: 'numeric', minute: 'numeric'}),
-                  end: intl.formatDate(scEvent.end_date, {hour: 'numeric', minute: 'numeric'})
+                  start: intl.formatDate(scEvent.start_date, { hour: 'numeric', minute: 'numeric' }),
+                  end: intl.formatDate(scEvent.end_date, { hour: 'numeric', minute: 'numeric' })
                 }}
               />
             )
@@ -256,7 +284,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                   year: 'numeric',
                   month: 'long'
                 }),
-                hour: intl.formatDate(scEvent.start_date, {hour: 'numeric', minute: 'numeric'})
+                hour: intl.formatDate(scEvent.start_date, { hour: 'numeric', minute: 'numeric' })
               }}
             />
           )}

@@ -1,8 +1,8 @@
-import {alpha} from '@mui/system';
+import { alpha } from '@mui/system';
 
 const Component = {
   styleOverrides: {
-    root: ({theme, isEventAdmin}: any) => ({
+    root: ({ theme, isEventAdmin, isEventFinished }: any) => ({
       '& .SCEventHeader-cover': {
         position: 'relative',
         minHeight: 150,
@@ -13,11 +13,43 @@ const Component = {
           borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         }
       },
+      '& .SCEventHeader-in-progress': {
+        color: theme.palette.secondary.main,
+        paddingLeft: theme.spacing(2),
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '4px',
+
+        '&:before': {
+          content: '""',
+          width: '8px',
+          height: '8px',
+          borderRadius: '9999px',
+          backgroundColor: theme.palette.secondary.main,
+          animation: 'pulse-animation 2s linear infinite',
+
+          '@keyframes pulse-animation': {
+            '0%': {
+              opacity: 1
+            },
+            '50%': {
+              opacity: 0
+            },
+            '100%': {
+              opacity: 1
+            }
+          }
+        }
+      },
+      '& .SCEventHeader-chip': {
+        marginLeft: theme.spacing(2),
+        color: theme.palette.grey[500]
+      },
       '& .SCEventHeader-time': {
         textTransform: 'uppercase',
         fontSize: '1.143rem',
         fontWeight: theme.typography.fontWeightLight,
-        color: theme.palette.text.secondary,
+        color: isEventFinished ? theme.palette.grey[500] : theme.palette.text.secondary,
         paddingLeft: theme.spacing(2)
       },
       '& .SCEventHeader-info': {
@@ -25,7 +57,8 @@ const Component = {
         '& .SCEventHeader-name': {
           fontSize: '1.857rem',
           fontWeight: theme.typography.fontWeightBold,
-          paddingLeft: theme.spacing(2)
+          paddingLeft: theme.spacing(2),
+          color: isEventFinished ? theme.palette.grey[500] : 'inherit'
         },
         '& .SCEventHeader-visibility': {
           display: 'flex',
@@ -33,6 +66,7 @@ const Component = {
           alignItems: 'center',
           gap: theme.spacing(0.5),
           paddingLeft: theme.spacing(2),
+          color: isEventFinished ? theme.palette.grey[500] : 'inherit',
           '& .SCEventHeader-visibility-item': {
             fontSize: theme.typography.fontSize,
             fontWeight: theme.typography.fontWeightLight,
@@ -79,7 +113,7 @@ const Component = {
         fontSize: '1.429rem'
       }
     }),
-    skeletonRoot: ({theme}: any) => ({
+    skeletonRoot: ({ theme }: any) => ({
       position: 'relative',
       '& .SCEventHeader-cover': {
         height: 190
