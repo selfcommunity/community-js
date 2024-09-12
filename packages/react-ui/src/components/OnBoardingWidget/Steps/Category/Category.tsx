@@ -6,8 +6,6 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
-import CategoryA from '../../../../assets/onBoarding/CategoryA';
-import CategoryB from '../../../../assets/onBoarding/CategoryB';
 import ProgressBar from '../../../../shared/ProgressBar';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 
@@ -125,12 +123,8 @@ export default function Category(inProps: CategoryProps) {
           }}
         />
       </Typography>
-      <CardMedia className={classes.image} component="div">
-        <CategoryA />
-      </CardMedia>
-      <CardMedia className={classes.image} component="div">
-        <CategoryB />
-      </CardMedia>
+      <CardMedia className={classes.image} component="img" src="/onBoarding/categoryA.svg" />
+      <CardMedia className={classes.image} component="img" src="/onBoarding/categoryB.svg" />
       <Box component="span" className={classes.action}>
         {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
