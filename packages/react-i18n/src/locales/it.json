@@ -265,6 +265,8 @@
   "ui.eventHeader.startEndTime": "{date} dalle ore {start} alle ore {end}",
   "ui.eventHeader.startEndTimeDiff": "{startDate} dalle ore {startTime} - {endDate} alle ore {endTime}",
   "ui.eventHeader.user.manager": "Organizzatore",
+  "ui.eventHeader.inProgress": "In corso",
+  "ui.eventHeader.finished": "Terminato",
   "ui.events.filterByName": "Cerca Evento",
   "ui.events.filterByDate": "Data Evento",
   "ui.events.select.any": "Qualsiasi data",

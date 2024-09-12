@@ -265,6 +265,8 @@
   "ui.eventHeader.startEndTime": "{date} From {start} Until {end}",
   "ui.eventHeader.startEndTimeDiff": "{startDate} From {startTime} - {endDate} Until {endTime}",
   "ui.eventHeader.user.manager": "Manager",
+  "ui.eventHeader.inProgress": "In progress",
+  "ui.eventHeader.finished": "Finished",
   "ui.events.filterByName": "Search Event",
   "ui.events.filterByDate": "Event Date",
   "ui.events.select.any": "Any Date",
