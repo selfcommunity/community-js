@@ -55,6 +55,7 @@ import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCSt
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
+import HeaderPlaceholder from '../../assets/onBoarding/header';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -321,7 +322,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
             {expanded ? (
               <>
                 {!isMobile ? (
-                  <CardMedia className={classes.logo} component="img" src="/onBoarding/header.svg" />
+                  <CardMedia className={classes.logo} component="img" src={HeaderPlaceholder} />
                 ) : (
                   <Typography variant="h4" textAlign="center">
                     <FormattedMessage

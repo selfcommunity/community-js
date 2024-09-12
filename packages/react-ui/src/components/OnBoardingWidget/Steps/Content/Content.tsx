@@ -9,6 +9,7 @@ import {FormattedMessage} from 'react-intl';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 import ProgressBar from '../../../../shared/ProgressBar';
 import {Player} from '@lottiefiles/react-lottie-player';
+import animatedProgress from '../../../../assets/onBoarding/progress/content_progress.json';
 
 const classes = {
   root: `${PREFIX}-content-root`,
@@ -84,7 +85,7 @@ export default function Content(inProps: ContentProps) {
           </Alert>
         ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
           <Box className={classes.progress}>
-            <Player autoplay loop src="/onBoarding/progress/content_progress.json" className={classes.animationProgress} controls={false} />
+            <Player autoplay loop src={animatedProgress} className={classes.animationProgress} controls={false} />
             <ProgressBar
               value={progress}
               hideBar={true}
