@@ -9,6 +9,9 @@ import {PREFIX} from '../../constants';
 import ProgressBar from '../../../../shared/ProgressBar';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 import {Player} from '@lottiefiles/react-lottie-player';
+import CategoryAPlaceholder from '../../../../assets/onBoarding/categoryA';
+import CategoryBPlaceholder from '../../../../assets/onBoarding/categoryB';
+import animatedProgress from '../../../../assets/onBoarding/progress/category_progress.json';
 
 const classes = {
   root: `${PREFIX}-category-root`,
@@ -128,8 +131,8 @@ export default function Category(inProps: CategoryProps) {
               }}
             />
           </Typography>
-          <CardMedia className={classes.image} component="img" src="/onBoarding/categoryA.svg" />
-          <CardMedia className={classes.image} component="img" src="/onBoarding/categoryB.svg" />
+          <CardMedia className={classes.image} component="img" src={CategoryAPlaceholder} />
+          <CardMedia className={classes.image} component="img" src={CategoryBPlaceholder} />
         </>
       )}
       <Box component="span" className={classes.action}>
@@ -139,7 +142,7 @@ export default function Category(inProps: CategoryProps) {
           </Alert>
         ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
           <Box className={classes.progress}>
-            <Player autoplay loop src="/onBoarding/progress/category_progress.json" className={classes.animationProgress} controls={false} />
+            <Player autoplay loop src={animatedProgress} className={classes.animationProgress} controls={false} />
             <ProgressBar
               value={progress}
               hideBar={true}

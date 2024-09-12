@@ -7,6 +7,8 @@ import {PREFIX} from '../../constants';
 import {Button, CardMedia, Icon, Tab, Tabs, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
+import AndroidPlaceholder from '../../../../assets/onBoarding/android';
+import IosPlaceholder from '../../../../assets/onBoarding/ios';
 
 const classes = {
   root: `${PREFIX}-app-root`,
@@ -106,7 +108,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <CardMedia className={classes.image} component="img" src="/onBoarding/ios.png" />
+            <CardMedia className={classes.image} component="img" src={IosPlaceholder} />
           </>
         )}
         {tab === 1 && (
@@ -142,7 +144,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <CardMedia className={classes.image} component="img" src="/onBoarding/android.png" />
+            <CardMedia className={classes.image} component="img" src={AndroidPlaceholder} />
           </>
         )}
         <Button
