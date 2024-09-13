@@ -84,9 +84,12 @@ const Component = {
       },
       '& .MuiAccordionSummary-root': {
         borderBottom: `1px solid ${theme.palette.grey[200]}`,
-        borderRadius: theme.shape.borderRadius,
-        borderBottomLeftRadius: expanded ? 0 : theme.shape.borderRadius,
-        borderBottomRightRadius: expanded ? 0 : theme.shape.borderRadius,
+        borderRadius: 0,
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.shape.borderRadius,
+          borderBottomLeftRadius: expanded ? 0 : theme.shape.borderRadius,
+          borderBottomRightRadius: expanded ? 0 : theme.shape.borderRadius
+        },
         '& .MuiAccordionSummary-content': {
           '& h4, & h5': {
             fontWeight: theme.typography.fontWeightBold
@@ -94,10 +97,10 @@ const Component = {
           '& h4': {
             fontSize: '1.429rem',
             [theme.breakpoints.down('md')]: {
-              display: 'flex',
-              justifyContent: 'center',
+              marginLeft: theme.spacing(2),
               '& .MuiIcon-root': {
-                marginRight: theme.spacing(1)
+                position: 'absolute',
+                left: theme.spacing(2)
               }
             }
           },
@@ -110,16 +113,12 @@ const Component = {
           '& .SCOnBoardingWidget-intro': {
             marginLeft: theme.spacing(2),
             '& h5': {
-              marginBottom: theme.spacing(1)
-            },
-            '& .MuiTypography-subtitle1': {
-              [theme.breakpoints.down('md')]: {
-                fontSize: '14px'
-              }
+              marginBottom: theme.spacing(0.5)
             }
           },
           [theme.breakpoints.down('md')]: {
-            flexDirection: 'column'
+            flexDirection: 'column',
+            paddingLeft: expanded ? theme.spacing(2) : 0
           },
           '& .MuiTypography-body1': {
             display: expanded ? 'inherit' : 'flex',
@@ -137,7 +136,7 @@ const Component = {
         },
         alignItems: 'flex-start',
         '& .MuiAccordionSummary-expandIconWrapper': {
-          marginTop: theme.spacing(2),
+          marginTop: theme.spacing(1.5),
           alignSelf: 'flex-start'
         }
       }
