@@ -35,7 +35,7 @@ const Component = {
 
                     '& p': {
                       marginTop: 1,
-                      fontSize: '0.70rem'
+                      fontSize: '0.67rem'
                     }
                   }
                 }
