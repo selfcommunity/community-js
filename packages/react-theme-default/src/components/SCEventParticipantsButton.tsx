@@ -9,8 +9,9 @@ const Component = {
       },
 
       '& .MuiAvatarGroup-avatar': {
-        width: '24px',
-        height: '24px'
+        width: theme.selfcommunity.user.avatar.sizeSmall,
+        height: theme.selfcommunity.user.avatar.sizeSmall,
+        fontSize: '0.8rem'
       },
 
       '& .SCEventParticipantsButton-participants': {

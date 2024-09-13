@@ -189,7 +189,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
         {!followers.length && (loading || !scEvent) ? (
           <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && {skeletonsAnimation: false})} />
         ) : (
-          <AvatarGroup total={scEvent.goings_counter}>
+          <AvatarGroup total={followers.length}>
             {followers.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} className={classes.avatar} />
             ))}

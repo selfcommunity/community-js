@@ -49,9 +49,14 @@ const Component = {
           }
         },
         '& .SCEvent-preview-name-wrapper': {
+          marginTop: 3,
           textDecoration: 'none',
           color: 'inherit',
-          marginTop: 3
+          '& h5': {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+          }
         }
       }
     }),

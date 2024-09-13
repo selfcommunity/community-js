@@ -1,13 +1,15 @@
-import { AvatarGroup, Box, Button, CardContent, Divider, Icon, Stack } from '@mui/material';
+import {AvatarGroup, Box, Button, CardActions, CardContent, Divider, Icon, Stack, useTheme} from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import React from 'react';
 import BaseItem from '../../shared/BaseItem';
-import { SCEventTemplateType } from '../../types/event';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import {SCEventTemplateType} from '../../types/event';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
+import {Link, SCRoutes, SCThemeType} from '@selfcommunity/react-core';
+import {FormattedMessage} from 'react-intl';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -16,10 +18,13 @@ const classes = {
   skeletonSnippetRoot: `${PREFIX}-skeleton-snippet-root`,
   skeletonDetailCalendar: `${PREFIX}-skeleton-detail-calendar`,
   skeletonDetailContent: `${PREFIX}-skeleton-detail-content`,
+  skeletonDetailActions: `${PREFIX}-skeleton-detail-actions`,
   skeletonDetailUser: `${PREFIX}-skeleton-detail-user`,
   skeletonDetailFirstDivider: `${PREFIX}-skeleton-detail-first-divider`,
   skeletonDetailSecondDivider: `${PREFIX}-skeleton-detail-second-divider`,
   skeletonPreviewContent: `${PREFIX}-skeleton-preview-content`,
+  skeletonPreviewName: `${PREFIX}-skeleton-preview-name`,
+  skeletonPreviewActions: `${PREFIX}-skeleton-preview-actions`,
   skeletonSnippetImage: `${PREFIX}-skeleton-snippet-image`,
   skeletonSnippetAction: `${PREFIX}-skeleton-snippet-action`
 };
@@ -93,13 +98,15 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const { className, template = SCEventTemplateType.SNIPPET, skeletonsAnimation = 'wave', actions, ...rest } = props;
+  const {className, template = SCEventTemplateType.SNIPPET, skeletonsAnimation = 'wave', actions, ...rest} = props;
+  const theme = useTheme<SCThemeType>();
 
   /**
    * Renders event object
    */
   let contentObj: React.ReactElement;
   if (template === SCEventTemplateType.DETAIL) {
+    console.log(actions);
     contentObj = (
       <SkeletonDetailRoot className={classes.skeletonDetailRoot}>
         <Box position="relative">
@@ -147,6 +154,9 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
 
           <Divider className={classes.skeletonDetailSecondDivider} />
         </CardContent>
+        <CardActions className={classes.skeletonDetailActions}>
+          {actions !== undefined ? actions : <Skeleton variant="rounded" width={100} height={30} />}
+        </CardActions>
       </SkeletonDetailRoot>
     );
   } else if (template === SCEventTemplateType.PREVIEW) {
@@ -159,23 +169,41 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
         <CardContent className={classes.skeletonPreviewContent}>
           <Stack direction="row" alignItems="center" gap="8px">
             <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
-            <Skeleton animation={skeletonsAnimation} width="30%" height="16px" />
+            <Skeleton animation={skeletonsAnimation} width="50%" height="20px" />
           </Stack>
 
-          <Skeleton animation={skeletonsAnimation} width="46%" height="20px" />
+          <Skeleton animation={skeletonsAnimation} width="67%" height="25px" className={classes.skeletonPreviewName} />
 
           <Stack direction="row" alignItems="center" gap="8px" marginBottom="2px">
-            <Skeleton animation={skeletonsAnimation} width="27%" height="16px" />
+            <Skeleton animation={skeletonsAnimation} width="27%" height="18px" />
           </Stack>
 
-          <Stack direction="row" gap="8px" alignItems="center" height="28px">
+          <Stack direction="row" gap="8px" alignItems="center">
             <AvatarGroup>
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="28px" height="28px" />
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="28px" height="28px" />
-              <Skeleton animation={skeletonsAnimation} variant="circular" width="28px" height="28px" />
+              <Skeleton
+                animation={skeletonsAnimation}
+                variant="circular"
+                width={`${theme.selfcommunity.user.avatar.sizeSmall}px`}
+                height={`${theme.selfcommunity.user.avatar.sizeSmall}px`}
+              />
+              <Skeleton
+                animation={skeletonsAnimation}
+                variant="circular"
+                width={`${theme.selfcommunity.user.avatar.sizeSmall}px`}
+                height={`${theme.selfcommunity.user.avatar.sizeSmall}px`}
+              />
+              <Skeleton
+                animation={skeletonsAnimation}
+                variant="circular"
+                width={`${theme.selfcommunity.user.avatar.sizeSmall}px`}
+                height={`${theme.selfcommunity.user.avatar.sizeSmall}px`}
+              />
             </AvatarGroup>
           </Stack>
         </CardContent>
+        <CardActions className={classes.skeletonPreviewActions}>
+          {actions !== undefined ? actions : <Skeleton variant="rounded" width={100} height={30} />}
+        </CardActions>
       </SkeletonPreviewRoot>
     );
   } else {
@@ -190,18 +218,20 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
             <Skeleton animation={skeletonsAnimation} variant="rectangular" width={100} height={60} /> <Icon fontSize="large">CalendarIcon</Icon>
           </Box>
         }
-        primary={<Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="40%" style={{ marginBottom: 12 }} />}
+        primary={<Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="40%" style={{marginBottom: 12}} />}
         secondary={
           <>
-            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="60%" style={{ marginBottom: 10, marginRight: 5 }} />
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="60%" style={{marginBottom: 10, marginRight: 5}} />
             <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="35%" />
           </>
         }
         actions={
           <>
-            {actions ?? (
+            {actions !== undefined ? (
+              actions
+            ) : (
               <Button size="small" variant="outlined" disabled>
-                <Skeleton animation={skeletonsAnimation} height={10} width={30} style={{ marginTop: 5, marginBottom: 5 }} />
+                <Skeleton animation={skeletonsAnimation} height={10} width={30} style={{marginTop: 5, marginBottom: 5}} />
               </Button>
             )}
           </>

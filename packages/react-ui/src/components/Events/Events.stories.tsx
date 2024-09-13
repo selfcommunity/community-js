@@ -3,6 +3,7 @@ import {prefetchedEvents} from './prefetchedEvents';
 import Events from './index';
 import EventsSkeleton from './Skeleton';
 import { Endpoints } from '@selfcommunity/api-services';
+import {SCEventTemplateType} from '../../types/event';
 
 export default {
   title: 'Design System/React UI/Events',
@@ -33,7 +34,25 @@ export const MyEvents: StoryObj<Events> = {
 	args: {
     endpoint: Endpoints.GetUserEvents,
 		general: false,
-		showFilters: true
+		showFilters: true,
+	},
+	render: template
+};
+
+export const MyEventsCards: StoryObj<Events> = {
+	args: {
+		endpoint: Endpoints.GetUserEvents,
+		general: false,
+		showFilters: true,
+		GridContainerComponentProps: {spacing: {md: 3}},
+		GridItemComponentProps: {md: 3},
+		EventComponentProps: {template: SCEventTemplateType.PREVIEW},
+		EventSkeletonComponentProps: {template: SCEventTemplateType.PREVIEW},
+		EventsSkeletonComponentProps: {
+			eventsNumber: 4,
+			GridContainerComponentProps: {spacing: {md: 3}},
+			GridItemComponentProps: {md: 3}
+		},
 	},
 	render: template
 };
