@@ -173,7 +173,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
         template={template}
         isNew={notificationObject.is_new}
         disableTypography
-        primary={<EventItem event={notificationObject.event as any} showActions={false}/>}
+        primary={<EventItem event={notificationObject.event as any} actions={<></>} elevation={0} />}
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />

@@ -1,12 +1,14 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      borderRadius: theme.shape.borderRadius,
+      [theme.breakpoints.up('md')]: {
+        borderRadius: theme.shape.borderRadius
+      },
       '& .SCOnBoardingWidget-step-content': {
         [theme.breakpoints.up('md')]: {
           width: '70%'
         },
-        padding: theme.spacing(0, 2, 2, 2)
+        padding: theme.spacing(1, 2, 2, 2)
       },
       '& .SCOnBoardingWidget-logo': {
         width: 'auto'
@@ -64,8 +66,7 @@ const Component = {
     accordionRoot: ({theme, expanded}: any) => ({
       boxShadow: 'none',
       '& .MuiAccordionDetails-root ': {
-        paddingLeft: 0,
-        paddingRight: 0,
+        padding: 0,
         '& .SCOnBoardingWidget-content': {
           '& .MuiCardContent-root': {
             padding: 0,
@@ -82,7 +83,7 @@ const Component = {
         }
       },
       '& .MuiAccordionSummary-root': {
-        backgroundColor: theme.palette.grey[200],
+        borderBottom: `1px solid ${theme.palette.grey[200]}`,
         borderRadius: theme.shape.borderRadius,
         borderBottomLeftRadius: expanded ? 0 : theme.shape.borderRadius,
         borderBottomRightRadius: expanded ? 0 : theme.shape.borderRadius,

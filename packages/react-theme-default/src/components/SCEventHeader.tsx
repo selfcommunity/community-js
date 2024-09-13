@@ -43,7 +43,11 @@ const Component = {
       },
       '& .SCEventHeader-chip': {
         marginLeft: theme.spacing(2),
-        color: theme.palette.grey[500]
+        marginBottom: '5px',
+
+        '& .SCEventHeader-chip-icon': {
+          marginLeft: theme.spacing(1)
+        }
       },
       '& .SCEventHeader-time': {
         textTransform: 'uppercase',

@@ -71,47 +71,11 @@ export default function App(inProps: AppProps) {
         <FormattedMessage id="ui.onBoardingWidget.step.app.summary" defaultMessage="ui.onBoardingWidget.step.app.summary" />
       </Typography>
       <Tabs className={classes.tabs} value={tab} onChange={handleChange} centered variant="fullWidth" indicatorColor="primary">
-        <Tab label={<FormattedMessage id="ui.onBoardingWidget.step.app.tab.ios" defaultMessage="ui.onBoardingWidget.step.app.tab.ios" />} />
         <Tab label={<FormattedMessage id="ui.onBoardingWidget.step.app.tab.android" defaultMessage="ui.onBoardingWidget.step.app.tab.android" />} />
+        <Tab label={<FormattedMessage id="ui.onBoardingWidget.step.app.tab.ios" defaultMessage="ui.onBoardingWidget.step.app.tab.ios" />} />
       </Tabs>
       <Box className={classes.tabContent}>
         {tab === 0 && (
-          <>
-            <Typography className={classes.summary}>
-              <FormattedMessage id="ui.onBoardingWidget.step.app.ios" defaultMessage="ui.onBoardingWidget.step.app.ios" />
-            </Typography>
-            <Typography className={classes.step}>
-              <FormattedMessage
-                id="ui.onBoardingWidget.step.app.ios.a"
-                defaultMessage="ui.onBoardingWidget.step.app.ios.a"
-                values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (...chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </Typography>
-            <Typography className={classes.step}>
-              <FormattedMessage
-                id="ui.onBoardingWidget.step.app.ios.b"
-                defaultMessage="ui.onBoardingWidget.step.app.ios.b"
-                values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (...chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </Typography>
-            <CardMedia className={classes.image} component="img" src={IosPlaceholder} />
-          </>
-        )}
-        {tab === 1 && (
           <>
             <Typography className={classes.summary}>
               <FormattedMessage id="ui.onBoardingWidget.step.app.android" defaultMessage="ui.onBoardingWidget.step.app.android" />
@@ -145,6 +109,42 @@ export default function App(inProps: AppProps) {
               />
             </Typography>
             <CardMedia className={classes.image} component="img" src={AndroidPlaceholder} />
+          </>
+        )}
+        {tab === 1 && (
+          <>
+            <Typography className={classes.summary}>
+              <FormattedMessage id="ui.onBoardingWidget.step.app.ios" defaultMessage="ui.onBoardingWidget.step.app.ios" />
+            </Typography>
+            <Typography className={classes.step}>
+              <FormattedMessage
+                id="ui.onBoardingWidget.step.app.ios.a"
+                defaultMessage="ui.onBoardingWidget.step.app.ios.a"
+                values={{
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
+                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
+                  b: (...chunks) => <strong>{chunks}</strong>
+                }}
+              />
+            </Typography>
+            <Typography className={classes.step}>
+              <FormattedMessage
+                id="ui.onBoardingWidget.step.app.ios.b"
+                defaultMessage="ui.onBoardingWidget.step.app.ios.b"
+                values={{
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
+                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
+                  b: (...chunks) => <strong>{chunks}</strong>
+                }}
+              />
+            </Typography>
+            <CardMedia className={classes.image} component="img" src={IosPlaceholder} />
           </>
         )}
         <Button

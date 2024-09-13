@@ -33,6 +33,7 @@ const classes = {
   calendar: `${PREFIX}-calendar`,
   inProgress: `${PREFIX}-in-progress`,
   chip: `${PREFIX}-chip`,
+  chipIcon: `${PREFIX}-chip-icon`,
   info: `${PREFIX}-info`,
   name: `${PREFIX}-name`,
   visibility: `${PREFIX}-visibility`,
@@ -223,14 +224,19 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
         )}
         {isEventFinished && (
           <Chip
-            icon={<Icon fontSize="small">calendar_off</Icon>}
+            icon={
+              <Icon fontSize="small" className={classes.chipIcon}>
+                calendar_off
+              </Icon>
+            }
             label={
               <Typography variant="body1">
                 <FormattedMessage id="ui.eventHeader.finished" defaultMessage="ui.eventHeader.finished" />
               </Typography>
             }
             variant="outlined"
-            size="small"
+            size="medium"
+            color="secondary"
             className={classes.chip}
           />
         )}
