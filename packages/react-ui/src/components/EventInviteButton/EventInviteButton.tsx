@@ -74,6 +74,7 @@ export interface EventInviteButtonProps extends ButtonProps {
    * @default null
    */
   handleInvitations?: ((invited: boolean) => void) | null;
+
   /**
    * Any other properties
    */

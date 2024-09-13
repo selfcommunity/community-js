@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
-import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
+import { LoadingButton } from '@mui/lab';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
-import {Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
+import Card from '@mui/material/Card';
+import { styled } from '@mui/material/styles';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const PREFIX = 'SCConfirmDialog';
 
@@ -12,7 +12,7 @@ const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+})(({ theme }) => ({
   maxWidth: 800,
   marginBottom: theme.spacing(2)
 }));
@@ -89,8 +89,9 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
     if (disableBackdropClick && (reason === 'backdropClick' || reason === 'escapeKeyDown')) {
       return false;
     }
+
     if (!isUpdating) {
-      onClose && onClose();
+      onClose?.();
     }
   }
 
@@ -98,7 +99,7 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
    * Handles action confirm
    */
   function handleConfirm() {
-    onConfirm && onConfirm();
+    onConfirm?.();
   }
 
   /**
@@ -107,7 +108,7 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
   return (
     <Root>
       <Dialog open={open} onClose={handleClose} {...rest}>
-        <DialogTitle>{title ? title : <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}</DialogTitle>
+        <DialogTitle>{title || <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}</DialogTitle>
         {content && (
           <DialogContent>
             <DialogContentText component="div">{content}</DialogContentText>
@@ -115,10 +116,10 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
         )}
         <DialogActions>
           <Button onClick={handleClose}>
-            {btnCancel ? btnCancel : <FormattedMessage id="ui.confirmDialog.btnCancel" defaultMessage="ui.confirmDialog.btnCancel" />}
+            {btnCancel || <FormattedMessage id="ui.confirmDialog.btnCancel" defaultMessage="ui.confirmDialog.btnCancel" />}
           </Button>
           <LoadingButton onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating}>
-            {btnConfirm ? btnConfirm : <FormattedMessage id="ui.confirmDialog.btnConfirm" defaultMessage="ui.confirmDialog.btnConfirm" />}
+            {btnConfirm || <FormattedMessage id="ui.confirmDialog.btnConfirm" defaultMessage="ui.confirmDialog.btnConfirm" />}
           </LoadingButton>
         </DialogActions>
       </Dialog>

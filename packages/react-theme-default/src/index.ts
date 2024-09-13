@@ -92,15 +92,14 @@ import SCGroupInvitedWidget from './components/SCGroupInvitedWidget';
 import SCGroupMembersButton from './components/SCGroupMembersButton';
 import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
+import SCGroups from './components/SCGroups';
 import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
 import SCGroupTemplate from './components/SCGroupTemplate';
-import SCGroups from './components/SCGroups';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCInlineComposerWidget from './components/SCInlineComposerWidget';
-import SCInviteUserEventButton from './components/SCInviteUserEventButton';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
 import SCLightbox from './components/SCLightbox';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
@@ -129,9 +128,9 @@ import SCPrivateMessageSnippetItem from './components/SCPrivateMessageSnippetIte
 import SCPrivateMessageSnippets from './components/SCPrivateMessageSnippets';
 import SCPrivateMessageThread from './components/SCPrivateMessageThread';
 import SCPrivateMessageThreadItem from './components/SCPrivateMessageThreadItem';
+import SCProgressBar from './components/SCProgressBar';
 import SCReactionAction from './components/SCReactionAction';
 import SCRelatedEventsWidget from './components/SCRelatedEventsWidget';
-import SCProgressBar from './components/SCProgressBar';
 import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget';
 import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
@@ -381,7 +380,6 @@ const theme = {
     SCSuggestedEventsWidget,
     SCEventMembersWidget,
     SCRelatedEventsWidget,
-    SCInviteUserEventButton,
     SCVoteAudienceButton,
     SCVoteButton,
     SCWidget
