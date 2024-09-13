@@ -324,21 +324,17 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                 {!isMobile ? (
                   <CardMedia className={classes.logo} component="img" src={HeaderPlaceholder} />
                 ) : (
-                  <Typography variant="h4" textAlign="center">
+                  <Typography variant="h4">
+                    <Icon color="secondary" fontSize="medium">
+                      ai_stars
+                    </Icon>
                     <FormattedMessage
                       id="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       values={{
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                         // @ts-ignore
-                        b: (chunks) => <strong>{chunks}</strong>,
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        icon: (...chunks) => (
-                          <Icon color="secondary" fontSize="medium">
-                            {chunks}
-                          </Icon>
-                        )
+                        b: (chunks) => <strong>{chunks}</strong>
                       }}
                     />
                   </Typography>
@@ -352,7 +348,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       />
                     </Typography>
                   )}
-                  <Typography variant={!isMobile ? 'h5' : 'subtitle1'}>
+                  <Typography variant="h5">
                     <FormattedMessage
                       id="ui.onBoardingWidget.accordion.expanded.subtitle"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.subtitle"

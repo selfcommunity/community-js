@@ -660,7 +660,7 @@
   "ui.notification.voteUp.appreciated": "ti ha apprezzato su:",
   "ui.onBoardingWidget.accordion.collapsed": "<icon>ai_stars</icon> <b>Inizia da qui</b> Dai vita alla tua Community",
   "ui.onBoardingWidget.accordion.expanded.title": "Inizia da qui",
-  "ui.onBoardingWidget.accordion.expanded.title.mobile": "<icon>ai_stars</icon> <b>Inizia da qui</b>",
+  "ui.onBoardingWidget.accordion.expanded.title.mobile": "<b>Inizia da qui</b>",
   "ui.onBoardingWidget.accordion.expanded.subtitle": "Dai vita alla tua Community",
   "ui.onBoardingWidget.accordion.expanded.summary": "Lascia che <b> AI Self <icon>magic_wand</icon></b> ti aiuti a muovere i primi passi nel personalizzare, arricchire e popolare la tua Community.",
   "ui.onBoardingWidget.contents": "Contenuti",
