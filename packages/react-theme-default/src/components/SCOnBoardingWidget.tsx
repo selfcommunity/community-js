@@ -128,9 +128,6 @@ const Component = {
             strong: {
               marginRight: expanded ? 'inherit' : theme.spacing(1),
               marginLeft: expanded ? 'inherit' : theme.spacing(1)
-            },
-            [theme.breakpoints.down('md')]: {
-              justifyContent: 'center'
             }
           }
         },
