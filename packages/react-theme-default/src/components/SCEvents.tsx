@@ -9,11 +9,11 @@ const Component = {
       '& .SCEvents-events': {
         marginTop: theme.spacing(2),
         '& .SCEvents-item': {
-          paddingTop: theme.spacing()
+          paddingTop: theme.spacing(2)
         },
 
         '& .SCEvents-item-skeleton': {
-          paddingTop: theme.spacing()
+          paddingTop: theme.spacing(2)
         },
         '& .SCBaseItem-root': {
           display: 'flex',

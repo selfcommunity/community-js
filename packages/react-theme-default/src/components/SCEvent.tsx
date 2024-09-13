@@ -42,6 +42,11 @@ const Component = {
       },
       '& .SCEvent-preview-content': {
         padding: `${theme.spacing()} !important`,
+        '& .SCEventInfoDetails-icon-text-wrapper': {
+          '& .MuiTypography-root': {
+            fontSize: '0.8rem'
+          }
+        },
         '& .SCEvent-detail-user': {
           marginTop: '14px',
           '& .SCBaseItemButton-text': {
