@@ -197,12 +197,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
     ];
   };
 
-  if (
-    !scUserContext.user ||
-    (scEvent?.privacy === SCEventPrivacyType.PRIVATE &&
-      !isEventAdmin &&
-      (!scEvent?.subscription_status || scEvent?.subscription_status === SCEventSubscriptionStatusType.REQUESTED))
-  ) {
+  if (!scEvent) {
     return null;
   }
 

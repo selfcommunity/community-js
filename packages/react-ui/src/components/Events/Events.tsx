@@ -87,12 +87,12 @@ export interface EventsProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>;
+  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>;
+  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * Show/Hide filters
@@ -246,12 +246,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * On mount, fetches events list
    */
   useEffect(() => {
-    if (!contentAvailability && !authUserId) {
+    if (!contentAvailability) {
       return;
     } else {
       fetchEvents();
     }
-  }, [contentAvailability, authUserId, search, dateSearch, showFollowed, showPastEvents]);
+  }, [contentAvailability, search, dateSearch, showFollowed, showPastEvents]);
 
   const handleNext = useMemo(
     () => () => {
@@ -415,7 +415,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <Event event={event} eventId={event.id} {...EventComponentProps} />
                   </Grid>
                 ))}
-                {filteredEvents.length % 2 !== 0 && (
+                {authUserId && filteredEvents.length % 2 !== 0 && (
                   <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton} {...GridItemComponentProps}>
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
