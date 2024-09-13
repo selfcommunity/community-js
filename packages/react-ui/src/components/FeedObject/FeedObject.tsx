@@ -347,7 +347,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     activitiesExpanded = true,
     activitiesExpandedType,
     hideParticipantsPreview = false,
-    pollVisible = false,
+    pollVisible = true,
     FollowButtonProps = {},
     FeedObjectSkeletonProps = {elevation: 0},
     ActionsProps = {},
