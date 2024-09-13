@@ -1,4 +1,4 @@
-import {Box, Button, Chip, FormControl, Grid, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography} from '@mui/material';
+import {Box, Button, Chip, FormControl, Grid, GridProps, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
@@ -12,7 +12,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import CreateEventButton from '../CreateEventButton';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
-import Skeleton from '../Events/Skeleton';
+import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
 import PastEventsFilter from './PastEventsFilter';
 
@@ -72,10 +72,27 @@ export interface EventsProps {
   EventComponentProps?: EventProps;
 
   /**
+   * Props to spread to events skeleton object
+   * @default {}
+   */
+  EventsSkeletonComponentProps?: EventsSkeletonProps;
+
+  /**
    * Props to spread to single event skeleton object
    * @default {}
    */
   EventSkeletonComponentProps?: EventSkeletonProps;
+
+  /**
+   * Props spread to grid container
+   * @default {}
+   */
+  GridContainerComponentProps?: Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>;
+  /**
+   * Props spread to single grid item
+   * @default {}
+   */
+  GridItemComponentProps?: Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>;
 
   /**
    * Show/Hide filters
@@ -139,7 +156,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     EventComponentProps = {elevation: 0, square: true},
+    EventsSkeletonComponentProps = {},
     EventSkeletonComponentProps = {elevation: 0, square: true},
+    GridContainerComponentProps = {},
+    GridItemComponentProps = {},
     showFilters = false,
     filters,
     general = true,
@@ -388,15 +408,15 @@ export default function Events(inProps: EventsProps): JSX.Element {
           </Box>
         ) : (
           <>
-            <Grid container spacing={{xs: 2}} className={classes.events}>
+            <Grid container spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
               <>
                 {filteredEvents.map((event: SCEventType) => (
-                  <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item}>
+                  <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item} {...GridItemComponentProps}>
                     <Event event={event} eventId={event.id} {...EventComponentProps} />
                   </Grid>
                 ))}
                 {filteredEvents.length % 2 !== 0 && (
-                  <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton}>
+                  <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton} {...GridItemComponentProps}>
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
                       skeletonsAnimation={false}
@@ -428,7 +448,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     return null;
   }
   if (loading) {
-    return <Skeleton EventSkeletonProps={EventSkeletonComponentProps} />;
+    return <Skeleton {...EventsSkeletonComponentProps} EventSkeletonProps={EventSkeletonComponentProps} />;
   }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>

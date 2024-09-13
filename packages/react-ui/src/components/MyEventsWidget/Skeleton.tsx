@@ -26,7 +26,7 @@ export default function MyEventsWidgetSkeleton() {
       <Box padding="12px 16px">
         <Skeleton animation="wave" width="141px" height="33px" />
       </Box>
-      <EventSkeleton template={SCEventTemplateType.DETAIL} elevation={0} square={true} />
+      <EventSkeleton template={SCEventTemplateType.DETAIL} elevation={0} square={true} actions={<></>} />
       <CardActions className={classes.actions}>
         <Skeleton animation="wave" variant="rounded" width="14px" height="14px" />
         <Skeleton animation="wave" width="52px" height="20px" />

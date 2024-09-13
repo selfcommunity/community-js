@@ -4,7 +4,6 @@ const Component = {
       '& .SCMyEventsWidget-title-wrapper': {
         padding: `12px ${theme.spacing(2)}`
       },
-
       '& .SCMyEventsWidget-actions': {
         padding: `0 ${theme.spacing(3)} 18px`,
         justifyContent: 'center',
@@ -12,9 +11,8 @@ const Component = {
 
         '& .SCMyEventsWidget-arrows': {
           width: '24px',
-          height: '24px',
+          height: '24px'
         },
-
         '& .SCMyEventsWidget-action-button': {
           color: theme.palette.primary.main,
           textDecoration: 'none'

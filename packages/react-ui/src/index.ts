@@ -201,7 +201,8 @@ import {
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,
-  VirtualScrollerItemProps
+  VirtualScrollerItemProps,
+  SCEventTemplateType
 } from './types';
 /**
  * Constants
@@ -628,6 +629,7 @@ export {
   useStickyBox,
   UseStickyBoxProps,
   VirtualScrollerItemProps,
+  SCEventTemplateType,
   Widget,
   WidgetProps,
   OnBoardingWidget,

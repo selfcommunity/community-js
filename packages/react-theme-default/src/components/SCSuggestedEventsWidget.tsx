@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       '& .SCSuggestedEventsWidget-content': {
         padding: `15px ${theme.spacing(2, 2)}`,
 
@@ -35,7 +35,7 @@ const Component = {
 
                     '& p': {
                       marginTop: 1,
-                      fontSize: '0.74rem'
+                      fontSize: '0.70rem'
                     }
                   }
                 }
@@ -71,9 +71,16 @@ const Component = {
         '& .SCSuggestedEventsWidget-actionButton': {
           color: theme.palette.primary.main
         }
+      },
+      '& .SCEvent-skeleton-preview-name': {
+        marginTop: 0,
+        marginBottom: 0
+      },
+      '& .SCEvent-skeleton-preview-actions': {
+        padding: 0
       }
     }),
-    skeletonRoot: ({ theme }) => ({
+    skeletonRoot: ({theme}) => ({
       '& .SCSuggestedEventsWidget-content': {
         padding: `15px 0 ${theme.spacing(3)} ${theme.spacing(2)}`,
 
@@ -86,10 +93,12 @@ const Component = {
           height: 'auto'
         }
       },
-
       '& .SCSuggestedEventsWidget-actions': {
         padding: `0 ${theme.spacing()} ${theme.spacing()}`,
         justifyContent: 'center'
+      },
+      '& .SCEvent-skeleton-preview-actions': {
+        padding: 0
       }
     })
   }

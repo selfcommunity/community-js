@@ -167,7 +167,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   if (!state.initialized || state.isLoadingNext) {
     return <Skeleton />;
   }
-	
+
   return (
     <Root className={classes.root} {...rest}>
       <Box className={classes.titleWrapper}>
