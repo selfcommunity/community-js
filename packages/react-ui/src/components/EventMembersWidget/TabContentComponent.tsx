@@ -3,12 +3,14 @@ import { Endpoints, http, SCPaginatedResponse } from '@selfcommunity/api-service
 import { SCEventType, SCUserType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import { actionWidgetTypes } from '../../utils/widget';
+import AcceptRequestUserEventButton from '../AcceptRequestUserEventButton';
 import EventInviteButton from '../EventInviteButton';
 import InviteUserEventButton from '../InviteUserEventButton';
 import User, { UserProps, UserSkeleton } from '../User';
@@ -29,7 +31,10 @@ const DialogRoot = styled(BaseDialog, {
 })(() => ({}));
 
 interface TabComponentProps {
+  tabValue: '1' | '2' | '3';
+
   state: any;
+
   dispatch: Dispatch<any>;
 
   /**
@@ -46,7 +51,10 @@ interface TabComponentProps {
 
   actionProps?: {
     scEvent?: SCEventType;
-    setInvitedNumber: Dispatch<SetStateAction<number>>;
+    count?: number;
+    setCount?: Dispatch<SetStateAction<number>>;
+    users?: SCUserType[];
+    setUsers?: Dispatch<SetStateAction<SCUserType[]>>;
   };
 
   setRefresh?: Dispatch<SetStateAction<boolean>>;
@@ -54,10 +62,16 @@ interface TabComponentProps {
 
 export default function TabContentComponent(props: TabComponentProps) {
   // PROPS
-  const { state, dispatch, userProps, dialogProps, actionProps, setRefresh } = props;
+  const { state, dispatch, userProps, dialogProps, actionProps, setRefresh, tabValue } = props;
 
   // STATE
   const [openDialog, setOpenDialog] = useState(false);
+
+  // HOOKS
+  const { enqueueSnackbar } = useSnackbar();
+
+  // CONSTS
+  const users = useMemo(() => (tabValue === '3' ? actionProps?.users : state.results), [tabValue, actionProps, state]);
 
   // HANDLERS
   /**
@@ -84,34 +98,77 @@ export default function TabContentComponent(props: TabComponentProps) {
   }, []);
 
   const getActionsComponent = useCallback(
-    (userId: number) =>
-      actionProps ? <InviteUserEventButton event={actionProps.scEvent} userId={userId} setInvitedNumber={actionProps.setInvitedNumber} /> : undefined,
-    [actionProps]
+    (userId: number) => {
+      if (tabValue === '2' && actionProps) {
+        const handleInvitations = (invited: boolean) => {
+          if (invited) {
+            actionProps.setCount?.((prev) => prev - 1);
+          } else {
+            actionProps.setCount?.((prev) => prev + 1);
+          }
+        };
+
+        return <InviteUserEventButton event={actionProps.scEvent} userId={userId} handleInvitations={handleInvitations} />;
+      } else if (tabValue === '3' && actionProps) {
+        const handleConfirm = (id: number | null) => {
+          if (id) {
+            actionProps.setCount((prev) => prev - 1);
+            actionProps.setUsers((prev) => prev.filter((user) => user.id !== id));
+
+            enqueueSnackbar(
+              <FormattedMessage
+                id="ui.acceptRequestUserEventButton.snackbar.success"
+                defaultMessage="ui.acceptRequestUserEventButton.snackbar.success"
+              />,
+              {
+                variant: 'success',
+                autoHideDuration: 3000
+              }
+            );
+          } else {
+            enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+              variant: 'error',
+              autoHideDuration: 3000
+            });
+          }
+        };
+
+        return <AcceptRequestUserEventButton event={actionProps.scEvent} userId={userId} handleConfirm={handleConfirm} />;
+      }
+
+      return undefined;
+    },
+    [tabValue, actionProps, dispatch, setRefresh]
   );
 
-  const handleInvitations = useCallback(
-    (invited: boolean) => {
+  if (tabValue === '2' && state.count === 0 && actionProps) {
+    const handleInvitations = (invited: boolean) => {
       if (invited) {
         dispatch({ type: actionWidgetTypes.RESET });
         setRefresh(true);
       }
-    },
-    [dispatch, setRefresh]
-  );
+    };
+
+    return <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} />;
+  }
+
+  if (tabValue === '3' && actionProps?.count === 0) {
+    return (
+      <Typography variant="body1">
+        <FormattedMessage id="ui.eventMembersWidget.noOtherRequests" defaultMessage="ui.eventMembersWidget.noOtherRequests" />
+      </Typography>
+    );
+  }
 
   return (
     <>
       <List>
-        {state.results.map((user: SCUserType) => (
+        {users?.map((user: SCUserType) => (
           <ListItem key={user.id}>
             <User elevation={0} user={user} {...userProps} actions={getActionsComponent(user.id)} />
           </ListItem>
         ))}
       </List>
-
-      {state.count === 0 && actionProps && (
-        <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} />
-      )}
 
       {state.count > state.visibleItems && (
         <Button onClick={handleToggleDialogOpen} className={classes.actionButton}>

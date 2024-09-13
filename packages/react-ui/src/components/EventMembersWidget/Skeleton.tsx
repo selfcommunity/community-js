@@ -31,24 +31,18 @@ export default function EventMembersWidgetSkeleton() {
         <TabContext value="1">
           <Box className={classes.tabsWrapper}>
             <TabList variant="fullWidth">
-              <Tab
-                label={
-                  <Stack className={classes.tabLabelWrapper}>
-                    <Skeleton animation="wave" width="26px" height="24px" />
-                    <Skeleton animation="wave" width="106px" height="19px" />
-                  </Stack>
-                }
-                value="1"
-              />
-              <Tab
-                label={
-                  <Stack className={classes.tabLabelWrapper}>
-                    <Skeleton animation="wave" width="26px" height="24px" />
-                    <Skeleton animation="wave" width="106px" height="19px" />
-                  </Stack>
-                }
-                value="2"
-              />
+              {[1, 2, 3].map((_element, i) => (
+                <Tab
+                  key={i}
+                  label={
+                    <Stack className={classes.tabLabelWrapper}>
+                      <Skeleton animation="wave" width="26px" height="24px" />
+                      <Skeleton animation="wave" width="106px" height="19px" />
+                    </Stack>
+                  }
+                  value={`${i + 1}`}
+                />
+              ))}
             </TabList>
           </Box>
           <TabPanel value="1" className={classes.tabPanel}>
@@ -62,15 +56,8 @@ export default function EventMembersWidgetSkeleton() {
               <Skeleton className={classes.actionButton} animation="wave" width="52px" height="20px" />
             </List>
           </TabPanel>
-          <TabPanel value="2" className={classes.tabPanel}>
-            <List>
-              {[1, 2, 3, 4].map((_element, i) => (
-                <ListItem key={i}>
-                  <UserSkeleton />
-                </ListItem>
-              ))}
-            </List>
-          </TabPanel>
+          <TabPanel value="2" className={classes.tabPanel}></TabPanel>
+          <TabPanel value="3" className={classes.tabPanel}></TabPanel>
         </TabContext>
       </CardContent>
     </Root>

@@ -120,7 +120,20 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     },
     stateWidgetInitializer
   );
-  const [invitedNumber, setInvitedNumber] = useState(0);
+  const [requests, dispatchRequests] = useReducer(
+    dataWidgetReducer,
+    {
+      isLoadingNext: false,
+      next: null,
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_EVENTS_STATE_CACHE_PREFIX_KEY, eventId || event.id),
+      cacheStrategy,
+      visibleItems: limit
+    },
+    stateWidgetInitializer
+  );
+  const [invitedCount, setInvitedCount] = useState(0);
+  const [requestsCount, setRequestsCount] = useState(0);
+  const [requestsUsers, setRequestsUsers] = useState<SCUserType[]>([]);
   const [tabValue, setTabValue] = useState('1');
   const [refresh, setRefresh] = useState(false);
 
@@ -157,7 +170,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
       EventService.getEventInvitedUsers(scEvent.id, { ...endpointQueryParams })
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
-          setInvitedNumber(payload.count);
+          setInvitedCount(payload.count);
         })
         .catch((error) => {
           dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
@@ -165,6 +178,23 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
         });
     }
   }, [invited.isLoadingNext, invited.initialized, dispatchInvited, scUserContext.user, scEvent]);
+
+  const _initRequests = useCallback(() => {
+    if (!requests.initialized && !requests.isLoadingNext && hasAllow) {
+      dispatchRequests({ type: actionWidgetTypes.LOADING_NEXT });
+
+      EventService.getEventWaitingApprovalSubscribers(scEvent.id, { ...endpointQueryParams })
+        .then((payload: SCPaginatedResponse<SCUserType>) => {
+          dispatchRequests({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          setRequestsCount(payload.count);
+          setRequestsUsers(payload.results);
+        })
+        .catch((error) => {
+          dispatchRequests({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [requests.isLoadingNext, requests.initialized, dispatchRequests, scUserContext.user, scEvent]);
 
   // EFFECTS
   useEffect(() => {
@@ -178,6 +208,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
         } else {
           _initParticipants();
           _initInvited();
+          _initRequests();
         }
       });
 
@@ -225,7 +256,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
               <Tab
                 label={
                   <Stack className={classes.tabLabelWrapper}>
-                    <Typography variant="h3">{invitedNumber}</Typography>
+                    <Typography variant="h3">{invitedCount}</Typography>
                     <Typography variant="subtitle2">
                       <FormattedMessage id="ui.eventMembersWidget.invited" defaultMessage="ui.eventMembersWidget.invited" />
                     </Typography>
@@ -234,22 +265,54 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                 value="2"
               />
             )}
+            {hasAllow && (
+              <Tab
+                label={
+                  <Stack className={classes.tabLabelWrapper}>
+                    <Typography variant="h3">{requestsCount}</Typography>
+                    <Typography variant="subtitle2">
+                      <FormattedMessage id="ui.eventMembersWidget.requests" defaultMessage="ui.eventMembersWidget.requests" />
+                    </Typography>
+                  </Stack>
+                }
+                value="3"
+              />
+            )}
           </TabList>
           <TabPanel value="1" className={classes.tabPanel}>
-            <TabContentComponent state={participants} dispatch={dispatchParticipants} userProps={userProps} dialogProps={dialogProps} />
+            <TabContentComponent tabValue="1" state={participants} dispatch={dispatchParticipants} userProps={userProps} dialogProps={dialogProps} />
           </TabPanel>
           {hasAllow && (
             <TabPanel value="2" className={classes.tabPanel}>
               <TabContentComponent
+                tabValue="2"
                 state={invited}
                 dispatch={dispatchInvited}
                 userProps={userProps}
                 dialogProps={dialogProps}
                 actionProps={{
                   scEvent,
-                  setInvitedNumber
+                  setCount: setInvitedCount
                 }}
                 setRefresh={setRefresh}
+              />
+            </TabPanel>
+          )}
+          {hasAllow && (
+            <TabPanel value="3" className={classes.tabPanel}>
+              <TabContentComponent
+                tabValue="3"
+                state={requests}
+                dispatch={dispatchRequests}
+                userProps={userProps}
+                dialogProps={dialogProps}
+                actionProps={{
+                  scEvent,
+                  count: requestsCount,
+                  setCount: setRequestsCount,
+                  users: requestsUsers,
+                  setUsers: setRequestsUsers
+                }}
               />
             </TabPanel>
           )}
