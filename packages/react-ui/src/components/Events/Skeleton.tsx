@@ -32,12 +32,12 @@ export interface EventsSkeletonProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>;
+  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>;
+  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * @default 20
