@@ -6,7 +6,7 @@ import { useSCFetchEvent, useSCFetchUser } from '@selfcommunity/react-core';
 import { SCEventType, SCUserType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { Dispatch, HTMLAttributes, SetStateAction, useCallback, useState } from 'react';
+import { HTMLAttributes, useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 
@@ -53,10 +53,7 @@ export interface InviteUserEventButtonProps {
    */
   user?: SCUserType;
 
-  /**
-   * setInvitedNumber set state action
-   */
-  setInvitedNumber?: Dispatch<SetStateAction<number>>;
+  handleInvitations?: ((invited: boolean) => void) | null;
 
   /**
    * Others properties
@@ -92,12 +89,14 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
     props: inProps,
     name: PREFIX
   });
-  const { className, eventId, event, userId, user, setInvitedNumber, ...rest } = props;
+  const { className, eventId, event, userId, user, handleInvitations, ...rest } = props;
 
   // STATE
+  const [invited, setInvited] = useState<boolean | null>(true);
+
+  //HOOKS
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
   const { scUser } = useSCFetchUser({ id: userId, user });
-  const [invited, setInvited] = useState<boolean | null>(true);
 
   const handleInviteAction = useCallback(() => {
     setInvited(null);
@@ -106,7 +105,7 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
       EventService.removeInviteEvent(scEvent.id, { users: [scUser.id] })
         .then(() => {
           setInvited(false);
-          setInvitedNumber((prev) => prev - 1);
+          handleInvitations?.(true);
         })
         .catch((_error) => {
           Logger.error(SCOPE_SC_UI, _error);
@@ -115,7 +114,7 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
       EventService.inviteOrAcceptEventRequest(scEvent.id, { users: [scUser.id] })
         .then(() => {
           setInvited(true);
-          setInvitedNumber((prev) => prev + 1);
+          handleInvitations?.(false);
         })
         .catch((_error) => {
           Logger.error(SCOPE_SC_UI, _error);
