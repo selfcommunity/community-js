@@ -148,7 +148,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 disableRipple
               />
             ) : null,
-            eventsEnabled && scUserContext.user ? (
+            eventsEnabled ? (
               <BottomNavigationAction
                 key="events"
                 className={classes.action}
