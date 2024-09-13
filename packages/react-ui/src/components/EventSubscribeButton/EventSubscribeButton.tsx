@@ -1,7 +1,7 @@
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, Checkbox, FormControlLabel, Icon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
+import {LoadingButton} from '@mui/lab';
+import {Box, Button, Checkbox, FormControlLabel, Icon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
 import {
   SCContextType,
   SCSubscribedEventsManagerType,
@@ -11,12 +11,12 @@ import {
   useSCFetchEvent,
   useSCUser
 } from '@selfcommunity/react-core';
-import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import React, { useEffect, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
+import React, {useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCEventSubscribeButton';
 
@@ -128,7 +128,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     name: PREFIX
   });
 
-  const { className, eventId, event, user, onSubscribe, ...rest } = props;
+  const {className, eventId, event, user, onSubscribe, ...rest} = props;
 
   // STATE
   const [status, setStatus] = useState<string | null | undefined>(undefined);
@@ -145,7 +145,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const { scEvent } = useSCFetchEvent({
+  const {scEvent} = useSCFetchEvent({
     id: eventId,
     event,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
@@ -188,15 +188,15 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
             scEvent.privacy === SCEventPrivacyType.PRIVATE && scEvent.subscription_status !== SCEventSubscriptionStatusType.INVITED
               ? SCEventSubscriptionStatusType.REQUESTED
               : scEvent.subscription_status === SCEventSubscriptionStatusType.GOING
-                ? SCEventSubscriptionStatusType.SUBSCRIBED
-                : SCEventSubscriptionStatusType.GOING;
+              ? SCEventSubscriptionStatusType.SUBSCRIBED
+              : SCEventSubscriptionStatusType.GOING;
         } else {
           s =
             scEvent.subscription_status === SCEventSubscriptionStatusType.REQUESTED
               ? null
               : scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING
-                ? SCEventSubscriptionStatusType.SUBSCRIBED
-                : SCEventSubscriptionStatusType.NOT_GOING;
+              ? SCEventSubscriptionStatusType.SUBSCRIBED
+              : SCEventSubscriptionStatusType.NOT_GOING;
         }
 
         onSubscribe && onSubscribe(scEvent, s);
@@ -229,7 +229,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
                   value={option.value}
                   onChange={handleToggleAction}
                   name={`${option.value}-option`}
-                  inputProps={{ 'aria-label': `${option.label}` }}
+                  inputProps={{'aria-label': `${option.label}`}}
                 />
               }
               labelPlacement="start"
@@ -262,8 +262,8 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
         scEvent?.privacy === SCEventPrivacyType.PUBLIC
           ? (_status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.label" id="ui.eventSubscribeButton.label" />)
           : (_status = (
-            <FormattedMessage defaultMessage="ui.eventSubscribeButton.requestParticipation" id="ui.eventSubscribeButton.requestParticipation" />
-          ));
+              <FormattedMessage defaultMessage="ui.eventSubscribeButton.requestParticipation" id="ui.eventSubscribeButton.requestParticipation" />
+            ));
         break;
     }
     return _status;
@@ -276,14 +276,14 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   return (
     <>
       {scEvent?.privacy !== SCEventPrivacyType.PRIVATE ||
-        (scEvent?.privacy === SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
+      (scEvent?.privacy === SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
         <>
           <SelectRoot
             className={classNames(
               classes.selectRoot,
               className,
-              { [classes.going]: status && status === SCEventSubscriptionStatusType.GOING },
-              { [classes.notGoing]: status && status === SCEventSubscriptionStatusType.NOT_GOING }
+              {[classes.going]: status && status === SCEventSubscriptionStatusType.GOING},
+              {[classes.notGoing]: status && status === SCEventSubscriptionStatusType.NOT_GOING}
             )}
             onClick={handleOpen}
             endIcon={<Icon>{open ? 'expand_less' : 'expand_more'}</Icon>}
@@ -299,7 +299,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           {isMobile ? (
             <SwipeableDrawerRoot
               className={classes.drawerRoot}
-              PaperProps={{ className: classes.paper }}
+              PaperProps={{className: classes.paper}}
               open={open}
               onClose={handleClose}
               onOpen={handleOpen}

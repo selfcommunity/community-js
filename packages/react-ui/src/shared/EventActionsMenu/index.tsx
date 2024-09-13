@@ -12,7 +12,6 @@ import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@s
 import {ADD_EVENT_TO_CALENDAR, CANCEL_EVENT, GET_EVENT_LINK} from '../../constants/EventActionsMenu';
 import {copyTextToClipboard} from '@selfcommunity/utils';
 import {enqueueSnackbar} from 'notistack';
-import HiddenPlaceholder from '../HiddenPlaceholder';
 
 const PREFIX = 'SCEventActionsMenu';
 
@@ -200,9 +199,11 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
 
   if (
     !scUserContext.user ||
-    (scEvent?.privacy === SCEventPrivacyType.PRIVATE && !isEventAdmin && scEvent?.subscription_status !== SCEventSubscriptionStatusType.SUBSCRIBED)
+    (scEvent?.privacy === SCEventPrivacyType.PRIVATE &&
+      !isEventAdmin &&
+      (!scEvent?.subscription_status || scEvent?.subscription_status === SCEventSubscriptionStatusType.REQUESTED))
   ) {
-    return <HiddenPlaceholder />;
+    return null;
   }
 
   return (
