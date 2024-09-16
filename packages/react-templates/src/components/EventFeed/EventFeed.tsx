@@ -18,8 +18,8 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
-import {SCCustomAdvPosition, SCEventSubscriptionStatusType, SCEventType, SCFeedTypologyType} from '@selfcommunity/types';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {SCCustomAdvPosition, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCFeedTypologyType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -149,6 +149,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
@@ -195,8 +196,9 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
   if (!scEvent) {
     return <EventFeedSkeleton />;
   } else if (
-    scEvent &&
+    scEvent.privacy === SCEventPrivacyType.PRIVATE &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.SUBSCRIBED &&
+    scEvent.subscription_status !== SCEventSubscriptionStatusType.INVITED &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.GOING &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.NOT_GOING
   ) {
@@ -236,9 +238,12 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
           <EventInfoWidget className={classes.root} event={scEvent} />
           {Boolean(
             scEvent &&
-              (scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED ||
-                scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
-                scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING)
+              ((!scUserContext.user && scEvent.privacy === SCEventPrivacyType.PUBLIC) ||
+                (scUserContext.user &&
+                  (scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED ||
+                    scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED ||
+                    scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
+                    scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING)))
           ) && (
             <InlineComposerWidget
               onSuccess={handleComposerSuccess}

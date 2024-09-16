@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof PlatformWidgetSkeleton>;
 
 const template = (args) => (
-  <div style={{width: 450}}>
+  <div style={{width: 470}}>
     <PlatformWidgetSkeleton {...args} />
   </div>
 );
