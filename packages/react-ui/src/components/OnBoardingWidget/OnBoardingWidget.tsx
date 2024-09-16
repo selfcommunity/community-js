@@ -56,6 +56,7 @@ import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCSt
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
+import {VirtualScrollerItemProps} from '@selfcommunity/react-ui';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -80,7 +81,7 @@ const AccordionRoot = styled(Accordion, {
   overridesResolver: (props, styles) => styles.accordionRoot
 })(() => ({}));
 
-export interface OnBoardingWidgetProps {
+export interface OnBoardingWidgetProps extends VirtualScrollerItemProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -92,7 +93,7 @@ export interface OnBoardingWidgetProps {
    */
   GenerateContentsParams?: StartStepParams;
   /**
-   *The callback to pass to the feeds to publish the generated content
+   * The callback to pass to the feeds to publish the generated content
    * @param feedObj
    * @default null
    */
@@ -105,7 +106,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     props: inProps,
     name: PREFIX
   });
-  const {className, GenerateContentsParams = {}, onGeneratedContent = null, ...rest} = props;
+  const {className, GenerateContentsParams = {}, onGeneratedContent = null, onHeightChange, ...rest} = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -219,6 +220,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   const handleExpand = () => {
     setExpanded(!expanded);
+    onHeightChange && onHeightChange();
   };
 
   const generateContent = async (stepId: number) => {
@@ -256,7 +258,10 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    if (prevCategoriesStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && currentCategoriesStep?.status === SCOnBoardingStepStatusType.COMPLETED) {
+    if (
+      prevCategoriesStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS &&
+      currentCategoriesStep?.status === SCOnBoardingStepStatusType.COMPLETED
+    ) {
       showSuccessAlert(currentCategoriesStep);
     }
   }, [currentCategoriesStep, prevCategoriesStep]);
@@ -270,6 +275,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   useEffect(() => {
     setExpanded(!allStepsDone);
+    onHeightChange && onHeightChange();
   }, [allStepsDone]);
 
   useEffect(() => {
