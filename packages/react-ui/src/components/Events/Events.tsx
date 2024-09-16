@@ -212,6 +212,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * Fetches events list
    */
   const fetchEvents = () => {
+    setLoading(true);
     return http
       .request({
         url: endpoint.url({}),
@@ -228,7 +229,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
             : {
                 ...(search !== '' && {search: search}),
                 subscription_status: SCEventSubscriptionStatusType.GOING,
-                ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
+                ...(showPastEvents && {past: showPastEvents})
               })
         }
       })
@@ -315,7 +316,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 showPastEvents={showPastEvents}
                 handleClick={handleChipPastClick}
                 handleDeleteClick={handleDeletePastClick}
-                autoHide={!events.length}
+                autoHide={!events.length && !showPastEvents}
               />
             </Grid>
           ) : (
@@ -357,23 +358,25 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item>
-                <EventsChipRoot
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  color={showFollowed ? 'secondary' : 'default'}
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  variant={showFollowed ? 'filled' : 'outlined'}
-                  label={<FormattedMessage id="ui.events.filterByFollowedInterest" defaultMessage="ui.events.filterByFollowedInterest" />}
-                  onClick={handleChipClick}
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  showFollowed={showFollowed}
-                  deleteIcon={showFollowed ? <Icon>close</Icon> : null}
-                  onDelete={showFollowed ? handleDeleteClick : null}
-                />
-              </Grid>
+              {authUserId && (
+                <Grid item>
+                  <EventsChipRoot
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    color={showFollowed ? 'secondary' : 'default'}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    variant={showFollowed ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.events.filterByFollowedInterest" defaultMessage="ui.events.filterByFollowedInterest" />}
+                    onClick={handleChipClick}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    showFollowed={showFollowed}
+                    deleteIcon={showFollowed ? <Icon>close</Icon> : null}
+                    onDelete={showFollowed ? handleDeleteClick : null}
+                  />
+                </Grid>
+              )}
               <Grid item>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
