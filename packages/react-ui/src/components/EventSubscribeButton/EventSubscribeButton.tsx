@@ -210,7 +210,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     setAnchorEl(null);
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
-    } else {
+    } else if (status !== undefined){
       toggleEventAttendance(event.target.value);
     }
   };
@@ -269,7 +269,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     return _status;
   }, [status, scEvent]);
 
-  if (!scEvent || status === undefined || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id)) {
+  if (!scEvent || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id)) {
     return null;
   }
 
