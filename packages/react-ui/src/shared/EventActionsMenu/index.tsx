@@ -113,6 +113,14 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
     [scUserContext.user, scEvent?.managed_by?.id]
   );
 
+  const isEventFinished = useMemo(() => {
+    if (scEvent && !scEvent.running) {
+      return new Date().getTime() > new Date(scEvent.end_date || scEvent.start_date).getTime();
+    }
+
+    return false;
+  }, [scEvent]);
+
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -185,15 +193,16 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
         </ListItemIcon>
         <FormattedMessage id="ui.shared.eventActionsMenu.item.calendar" defaultMessage="ui.shared.eventActionsMenu.item.calendar" />
       </MenuItem>,
-      isEventAdmin && [
-        <Divider key="divider" />,
-        <MenuItem className={classes.item} onClick={() => handleAction(CANCEL_EVENT)} key="cancel">
-          <ListItemIcon>
-            <Icon>close</Icon>
-          </ListItemIcon>
-          <FormattedMessage id="ui.shared.eventActionsMenu.item.cancel" defaultMessage="ui.shared.eventActionsMenu.item.cancel" />
-        </MenuItem>
-      ]
+      isEventAdmin &&
+        !isEventFinished && [
+          <Divider key="divider" />,
+          <MenuItem className={classes.item} onClick={() => handleAction(CANCEL_EVENT)} key="cancel">
+            <ListItemIcon>
+              <Icon>close</Icon>
+            </ListItemIcon>
+            <FormattedMessage id="ui.shared.eventActionsMenu.item.cancel" defaultMessage="ui.shared.eventActionsMenu.item.cancel" />
+          </MenuItem>
+        ]
     ];
   };
 

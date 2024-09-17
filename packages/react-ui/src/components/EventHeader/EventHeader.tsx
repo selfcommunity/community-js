@@ -330,20 +330,21 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
             <>
               {isEventAdmin ? (
                 <Box className={classes.multiActions}>
-                  <EventInviteButton size={isMobile ? 'small' : 'medium'} event={scEvent} eventId={scEvent.id} />
+                  <EventInviteButton size={isMobile ? 'small' : 'medium'} event={scEvent} eventId={scEvent.id} disabled={isEventFinished} />
                   <Box>
                     <EditEventButton
                       size={isMobile ? 'small' : 'medium'}
                       event={scEvent}
                       eventId={scEvent.id}
                       onEditSuccess={(data: SCEventType) => setSCEvent(data)}
+                      disabled={isEventFinished}
                     />
                     <EventActionsMenu event={scEvent} {...EventActionsProps} />
                   </Box>
                 </Box>
               ) : (
                 <>
-                  <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} />
+                  <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
                   <EventActionsMenu event={scEvent} {...EventActionsProps} />
                 </>
               )}
