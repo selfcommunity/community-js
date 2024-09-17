@@ -273,11 +273,13 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   }, [allStepsDone]);
 
   useEffect(() => {
-    getSteps();
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
-    return () => clearInterval(intervalId);
-  }, [scUserContext?.user, isGenerating]);
+    if (isAdmin) {
+      getSteps();
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [scUserContext?.user, isGenerating, isAdmin]);
 
   /**
    * Render _step content section
