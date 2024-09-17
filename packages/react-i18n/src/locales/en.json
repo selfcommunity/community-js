@@ -321,6 +321,7 @@
   "ui.eventMembersWidget.invited": "Invited",
   "ui.eventMembersWidget.noMoreResults": "No more results",
   "ui.eventMembersWidget.noOtherRequests": "There are no other requests",
+  "ui.eventMembersWidget.noParticipants": "No participants",
   "ui.eventMembersWidget.participants": "Participants",
   "ui.eventMembersWidget.requests": "Requests",
   "ui.eventMembersWidget.showAll": "Show all",

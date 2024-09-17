@@ -1,6 +1,4 @@
-import React, {useMemo, useState} from 'react';
-import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
+import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -18,25 +16,27 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { LocalizationProvider, MobileDatePicker, MobileTimePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { EventService, formatHttpErrorCode } from '@selfcommunity/api-services';
+import { SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences } from '@selfcommunity/react-core';
+import { SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType } from '@selfcommunity/types';
+import { Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
-import {PREFIX} from './constants';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import {LoadingButton} from '@mui/lab';
-import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
-import UploadEventCover from './UploadEventCover';
-import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import EventAddress from './EventAddress';
-import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
+import React, { useMemo, useState } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH } from '../../constants/Event';
+import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
+import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import { PREFIX } from './constants';
+import EventAddress from './EventAddress';
+import UploadEventCover from './UploadEventCover';
 
 const messages = defineMessages({
   name: {
@@ -168,7 +168,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, onSuccess, event = null, ...rest} = props;
+  const { className, open = true, onClose, onSuccess, event = null, ...rest } = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -180,7 +180,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     imageOriginalFile: '',
     startDate: event ? new Date(event.start_date) : null,
     startTime: event ? new Date(event.start_date) : null,
-    endDate: event && event.end_date ? new Date(event.end_date): null,
+    endDate: event && event.end_date ? new Date(event.end_date) : null,
     endTime: event && event.end_date ? new Date(event.end_date) : null,
     location: event ? event.location : SCEventLocationType.PERSON,
     geolocation: event ? event.geolocation : '',
@@ -209,11 +209,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_VISIBILITY_ENABLED].value,
     [scPreferences.preferences]
   );
+  const disablePastStartTime = useMemo(() => (field.startDate ? new Date(field.startDate).getDate() === new Date().getDate() : false), [field]);
+  const disablePastEndTime = useMemo(() => (field.endDate ? new Date(field.endDate).getDate() === new Date().getDate() : false), [field]);
 
   const _backgroundCover = {
     ...(field.imageOriginal
-      ? {background: `url('${field.imageOriginal}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+      ? { background: `url('${field.imageOriginal}') center / cover` }
+      : { background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover` })
   };
 
   const combineDateAndTime = (date, time) => {
@@ -229,10 +231,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   };
 
   function handleChangeCover(cover) {
-    setField((prev: any) => ({...prev, ['imageOriginalFile']: cover}));
+    setField((prev: any) => ({ ...prev, ['imageOriginalFile']: cover }));
     const reader = new FileReader();
     reader.onloadend = () => {
-      setField((prev: any) => ({...prev, ['imageOriginal']: reader.result}));
+      setField((prev: any) => ({ ...prev, ['imageOriginal']: reader.result }));
     };
     reader.readAsDataURL(cover);
     if (error.imageOriginalError) {
@@ -265,7 +267,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   };
 
   const handleSubmit = () => {
-    setField((prev: any) => ({...prev, ['isSubmitting']: true}));
+    setField((prev: any) => ({ ...prev, ['isSubmitting']: true }));
     const formData: any = new FormData();
     if (field.imageOriginalFile) {
       formData.append('image_original', field.imageOriginalFile);
@@ -294,16 +296,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     formData.append('description', field.description);
     let eventService;
     if (event) {
-      eventService = EventService.updateEvent(event.id, formData, {headers: {'Content-Type': 'multipart/form-data'}});
+      eventService = EventService.updateEvent(event.id, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     } else {
-      eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+      eventService = EventService.createEvent(formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     }
     eventService
       .then((data: any) => {
         onSuccess && onSuccess(data);
         notifyChanges(data);
         onClose && onClose();
-        setField((prev: any) => ({...prev, ['isSubmitting']: false}));
+        setField((prev: any) => ({ ...prev, ['isSubmitting']: false }));
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
@@ -315,16 +317,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
           });
         } else {
-          setError({...error, ..._error});
+          setError({ ...error, ..._error });
         }
-        setField((prev: any) => ({...prev, ['isSubmitting']: false}));
+        setField((prev: any) => ({ ...prev, ['isSubmitting']: false }));
         Logger.error(SCOPE_SC_UI, e);
       });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-    setField((prev: any) => ({...prev, [name]: value}));
+    const { name, value } = event.target;
+    setField((prev: any) => ({ ...prev, [name]: value }));
     if (error[`${name}Error`]) {
       delete error[`${name}Error`];
       setError(error);
@@ -332,7 +334,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   };
 
   const handleChangeDateTime = (value, name) => {
-    setField((prev: any) => ({...prev, [name]: value}));
+    setField((prev: any) => ({ ...prev, [name]: value }));
     if (error[`${name}Error`]) {
       delete error[`${name}Error`];
       setError(error);
@@ -344,7 +346,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
    */
   return (
     <Root
-      DialogContentProps={{dividers: false}}
+      DialogContentProps={{ dividers: false }}
       title={
         event ? (
           <FormattedMessage id="ui.eventForm.title.edit" defaultMessage="ui.eventForm.title.edit" />
@@ -380,7 +382,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       }
       {...rest}>
       <>
-        <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+        <Paper style={_backgroundCover} classes={{ root: classes.cover }}>
           <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
         </Paper>
         <FormGroup className={classes.form}>
@@ -440,7 +442,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               />
               <MobileTimePicker
                 className={classes.picker}
-                disablePast
+                disablePast={disablePastStartTime}
                 label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
                 value={field.startTime}
                 slots={{
@@ -539,7 +541,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 />
                 <MobileTimePicker
                   className={classes.picker}
-                  disablePast
+                  disablePast={disablePastEndTime}
                   label={
                     field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />
                   }
@@ -570,28 +572,28 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           <Button
             variant="text"
             color="secondary"
-            onClick={() => setField((prev: any) => ({...prev, ['showEndDateTime']: !field.showEndDateTime}))}
+            onClick={() => setField((prev: any) => ({ ...prev, ['showEndDateTime']: !field.showEndDateTime }))}
             disabled={field.showEndDateTime && field.recurring !== SCEventRecurrenceType.NEVER}>
             <FormattedMessage
               id="ui.eventForm.dateTime.placeholder"
               defaultMessage="ui.eventForm.dateTime.placeholder"
-              values={{symbol: field.showEndDateTime ? '-' : '+'}}
+              values={{ symbol: field.showEndDateTime ? '-' : '+' }}
             />
           </Button>
-          <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null}/>
+          <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null} />
           {privateEnabled && (
             <Box className={classes.privacySection}>
               <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-                <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
+                <Typography className={classNames(classes.switchLabel, { [classes.active]: !field.isPublic })}>
                   <Icon>private</Icon>
                   <FormattedMessage id="ui.eventForm.privacy.private" defaultMessage="ui.eventForm.privacy.private" />
                 </Typography>
                 <Switch
                   className={classes.switch}
                   checked={field.isPublic}
-                  onChange={() => setField((prev: any) => ({...prev, ['isPublic']: !field.isPublic}))}
+                  onChange={() => setField((prev: any) => ({ ...prev, ['isPublic']: !field.isPublic }))}
                 />
-                <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
+                <Typography className={classNames(classes.switchLabel, { [classes.active]: field.isPublic })}>
                   <Icon>public</Icon>
                   <FormattedMessage id="ui.eventForm.privacy.public" defaultMessage="ui.eventForm.privacy.public" />
                 </Typography>

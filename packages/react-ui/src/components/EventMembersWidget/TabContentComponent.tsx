@@ -141,7 +141,18 @@ export default function TabContentComponent(props: TabComponentProps) {
     [tabValue, actionProps, dispatch, setRefresh]
   );
 
+  if (tabValue === '1' && actionProps?.count === 0) {
+    return (
+      <Typography variant="body1">
+        <FormattedMessage id="ui.eventMembersWidget.noParticipants" defaultMessage="ui.eventMembersWidget.noParticipants" />
+      </Typography>
+    );
+  }
+
   if (tabValue === '2' && state.count === 0 && actionProps) {
+    const date = actionProps.scEvent.end_date || actionProps.scEvent.start_date;
+    const disabled = new Date(date).getTime() < new Date().getTime();
+
     const handleInvitations = (invited: boolean) => {
       if (invited) {
         dispatch({ type: actionWidgetTypes.RESET });
@@ -149,7 +160,9 @@ export default function TabContentComponent(props: TabComponentProps) {
       }
     };
 
-    return <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} />;
+    return (
+      <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} disabled={disabled} />
+    );
   }
 
   if (tabValue === '3' && actionProps?.count === 0) {
