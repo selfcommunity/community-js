@@ -83,7 +83,8 @@ export default function useSCFetchEvent({
           ) {
             // Auto subscribe to the event
             EventService.subscribeToEvent(event.id).then(() => {
-              setSCEvent(event);
+              const updatedEvent = {...event, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
+              setSCEvent(updatedEvent);
             });
           } else {
             setSCEvent(event);
