@@ -362,7 +362,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           loading={field.isSubmitting}
           disabled={
             !field.name ||
-            (!field.startDate && !field.startTime) ||
+            !field.startDate ||
+            !field.startTime ||
             (field.location === SCEventLocationType.ONLINE && !field.link) ||
             (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
             (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
