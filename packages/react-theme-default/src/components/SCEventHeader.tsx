@@ -110,6 +110,15 @@ const Component = {
               }
             }
           }
+        },
+        '& .SCUser-skeleton-root': {
+          marginTop: theme.spacing(2),
+          '& .SCBaseItem-content': {
+            paddingLeft: theme.spacing(2)
+          },
+          '& .SCBaseItem-actions': {
+            paddingRight: theme.spacing(2)
+          }
         }
       },
       '& .SCEventHeader-name': {

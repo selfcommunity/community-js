@@ -3,6 +3,7 @@ import {Box, Button, Checkbox, FormControlLabel, Icon, Menu, MenuItem, Swipeable
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
+  getEventStatus,
   SCContextType,
   SCSubscribedEventsManagerType,
   SCThemeType,
@@ -175,31 +176,17 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
 
   const toggleEventAttendance = (eventStatus) => {
-    const isGoing = eventStatus === SCEventSubscriptionStatusType.GOING || !scEvent.subscription_status;
+    const isGoing =
+      eventStatus === SCEventSubscriptionStatusType.GOING ||
+      !scEvent.subscription_status ||
+      scEvent?.subscription_status === SCEventSubscriptionStatusType.INVITED;
     const toggleAction = isGoing
       ? scEventsManager.toggleEventAttendance(scEvent, user ? user?.id : null)
       : scEventsManager.toggleEventNonattendance(scEvent);
 
     toggleAction
       .then(() => {
-        let s;
-        if (isGoing) {
-          s =
-            scEvent.privacy === SCEventPrivacyType.PRIVATE && scEvent.subscription_status !== SCEventSubscriptionStatusType.INVITED
-              ? SCEventSubscriptionStatusType.REQUESTED
-              : scEvent.subscription_status === SCEventSubscriptionStatusType.GOING
-              ? SCEventSubscriptionStatusType.SUBSCRIBED
-              : SCEventSubscriptionStatusType.GOING;
-        } else {
-          s =
-            scEvent.subscription_status === SCEventSubscriptionStatusType.REQUESTED
-              ? null
-              : scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING
-              ? SCEventSubscriptionStatusType.SUBSCRIBED
-              : SCEventSubscriptionStatusType.NOT_GOING;
-        }
-
-        onSubscribe && onSubscribe(scEvent, s);
+        onSubscribe && onSubscribe(scEvent, getEventStatus(scEvent, isGoing));
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -210,7 +197,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     setAnchorEl(null);
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
-    } else if (status !== undefined){
+    } else if (status !== undefined) {
       toggleEventAttendance(event.target.value);
     }
   };
@@ -259,7 +246,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
         _status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.notGoing" id="ui.eventSubscribeButton.notGoing" />;
         break;
       default:
-        scEvent?.privacy === SCEventPrivacyType.PUBLIC
+        scEvent?.privacy === SCEventPrivacyType.PUBLIC || status === SCEventSubscriptionStatusType.SUBSCRIBED
           ? (_status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.label" id="ui.eventSubscribeButton.label" />)
           : (_status = (
               <FormattedMessage defaultMessage="ui.eventSubscribeButton.requestParticipation" id="ui.eventSubscribeButton.requestParticipation" />
@@ -275,8 +262,19 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
 
   return (
     <>
-      {scEvent?.privacy !== SCEventPrivacyType.PRIVATE ||
-      (scEvent?.privacy === SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
+      {(scEvent?.privacy === SCEventPrivacyType.PRIVATE &&
+        (!status || status === SCEventSubscriptionStatusType.INVITED || status === SCEventSubscriptionStatusType.REQUESTED)) ||
+      (scEvent?.privacy === SCEventPrivacyType.PUBLIC && status === SCEventSubscriptionStatusType.INVITED) ? (
+        <RequestRoot
+          className={classNames(classes.requestRoot, className)}
+          variant="outlined"
+          size="small"
+          loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
+          onClick={handleToggleAction}
+          {...rest}>
+          {getStatus}
+        </RequestRoot>
+      ) : (
         <>
           <SelectRoot
             className={classNames(
@@ -313,16 +311,6 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
             </MenuRoot>
           )}
         </>
-      ) : (
-        <RequestRoot
-          className={classNames(classes.requestRoot, className)}
-          variant="outlined"
-          size="small"
-          loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
-          onClick={handleToggleAction}
-          {...rest}>
-          {getStatus}
-        </RequestRoot>
       )}
     </>
   );
