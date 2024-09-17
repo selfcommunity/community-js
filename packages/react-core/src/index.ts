@@ -113,7 +113,7 @@ import * as SCRoutes from './constants/Routes';
 import * as UserUtils from './utils/user';
 import getTheme from './themes/theme';
 import {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect, useEffectOnce, useNoInitialEffect} from './utils/hooks';
-
+import {getEventStatus} from './utils/event';
 /**
  * Constants:
  * Locale, Preferences
@@ -164,7 +164,7 @@ export {
   SCThemeProvider,
   useSCTheme,
   withSCTheme,
-	getTheme,
+  getTheme,
   SCRoutingProvider,
   useSCRouting,
   SCLocaleProvider,
@@ -184,6 +184,7 @@ export {
   SCRoutes,
   SCCache,
   UserUtils,
+  getEventStatus,
   Locale,
   Preferences,
   useSCFetchUser,
@@ -213,5 +214,5 @@ export {
   useSCFetchGroup,
   useSCFetchGroups,
   useSCFetchEvent,
-  useSCFetchEvents
+  useSCFetchEvents,
 };
