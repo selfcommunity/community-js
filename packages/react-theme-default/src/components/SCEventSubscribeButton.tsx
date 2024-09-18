@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    selectRoot: ({ theme }) => ({
+    selectRoot: ({theme}) => ({
       backgroundColor: theme.palette.grey['A200'],
       justifyContent: 'space-between',
       height: 33,
@@ -51,8 +51,8 @@ const Component = {
         }
       }
     }),
-    requestRoot: ({ }) => ({}),
-    menuRoot: ({ theme }) => ({
+    requestRoot: ({theme}) => ({}),
+    menuRoot: ({theme}) => ({
       '& .MuiPaper-root': {
         width: 195,
         borderRadius: '5px',
@@ -60,6 +60,10 @@ const Component = {
         '& .MuiList-root .SCEventSubscribeButton-item': {
           paddingTop: 0,
           paddingBottom: 0,
+          '&.Mui-disabled': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1)
+          },
 
           '& .Mui-checked .MuiSvgIcon-root': {
             color: theme.palette.success.main
@@ -73,7 +77,7 @@ const Component = {
         }
       }
     }),
-    drawerRoot: ({ theme }) => ({
+    drawerRoot: ({theme}) => ({
       '& .MuiPaper-root': {
         '& .SCEventSubscribeButton-item': {
           paddingTop: 0,

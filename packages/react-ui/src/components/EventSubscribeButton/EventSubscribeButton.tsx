@@ -1,5 +1,17 @@
 import {LoadingButton} from '@mui/lab';
-import {Box, Button, Checkbox, FormControlLabel, Icon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  Icon,
+  Menu,
+  MenuItem,
+  SwipeableDrawer,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
@@ -133,6 +145,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
 
   // STATE
   const [status, setStatus] = useState<string | null | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -176,6 +189,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
 
   const toggleEventAttendance = (eventStatus) => {
+    setLoading(true);
     const isGoing =
       eventStatus === SCEventSubscriptionStatusType.GOING ||
       !scEvent.subscription_status ||
@@ -187,6 +201,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     toggleAction
       .then(() => {
         onSubscribe && onSubscribe(scEvent, getEventStatus(scEvent, isGoing));
+        setLoading(false);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -206,18 +221,22 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     return (
       <Box>
         {options.map((option) => (
-          <MenuItem key={option.value} className={classes.item}>
+          <MenuItem key={option.value} className={classes.item} disabled={loading}>
             <FormControlLabel
               label={option.label}
               control={
-                <Checkbox
-                  size="small"
-                  checked={status === option.value}
-                  value={option.value}
-                  onChange={handleToggleAction}
-                  name={`${option.value}-option`}
-                  inputProps={{'aria-label': `${option.label}`}}
-                />
+                loading ? (
+                  <CircularProgress color={'primary'} size={20} />
+                ) : (
+                  <Checkbox
+                    size="small"
+                    checked={status === option.value}
+                    value={option.value}
+                    onChange={handleToggleAction}
+                    name={`${option.value}-option`}
+                    inputProps={{'aria-label': `${option.label}`}}
+                  />
+                )
               }
               labelPlacement="start"
             />
