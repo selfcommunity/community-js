@@ -4,7 +4,7 @@ import {useThemeProps} from '@mui/system';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
-import {Logger, sortByAttr} from '@selfcommunity/utils';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -275,16 +275,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
   );
 
   /**
-   * Get events filtered
-   */
-  const getFilteredEvents = () => {
-    if (search) {
-      return events.filter((g) => g.name.toLowerCase().includes(search.toLowerCase()));
-    }
-    return events;
-  };
-
-  /**
    * Handle change filter name
    * @param event
    */
@@ -303,7 +293,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
   /**
    * Renders events list
    */
-  const filteredEvents = sortByAttr(getFilteredEvents(), 'order');
   const c = (
     <>
       {showFilters && (
@@ -413,12 +402,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
           <>
             <Grid container spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
               <>
-                {filteredEvents.map((event: SCEventType) => (
+                {events.map((event: SCEventType) => (
                   <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item} {...GridItemComponentProps}>
                     <Event event={event} eventId={event.id} {...EventComponentProps} />
                   </Grid>
                 ))}
-                {authUserId && filteredEvents.length % 2 !== 0 && (
+                {authUserId && events.length % 2 !== 0 && (
                   <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton} {...GridItemComponentProps}>
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
