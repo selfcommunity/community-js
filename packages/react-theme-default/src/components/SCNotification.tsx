@@ -294,6 +294,9 @@ const Component = {
       },
       '& .SCNotification-snippet-time': {
         paddingLeft: theme.spacing(5)
+      },
+      '& .SCEvent-snippet-root': {
+        backgroundColor: 'transparent'
       }
     }),
     groupRoot: ({theme}: any) => ({}),
