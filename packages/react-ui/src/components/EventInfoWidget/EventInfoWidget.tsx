@@ -1,12 +1,12 @@
-import {Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
-import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventType} from '@selfcommunity/types';
-import {useCallback, useEffect, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import { Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
+import { useSCFetchEvent } from '@selfcommunity/react-core';
+import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import Widget, {WidgetProps} from '../Widget';
-import {PREFIX} from './constants';
+import Widget, { WidgetProps } from '../Widget';
+import { PREFIX } from './constants';
 import Skeleton from './Skeleton';
 
 const classes = {
@@ -52,7 +52,11 @@ function isTextLongerThanLimit(text: string, limit = 125) {
   return text.length > limit;
 }
 
-function getTruncatedText(text: string, limit = 125) {
+function getTruncatedText(text?: string, limit = 125) {
+  if (!text) {
+    return '';
+  }
+
   return isTextLongerThanLimit(text, limit) ? text.substring(0, limit).concat('...') : text;
 }
 
@@ -63,7 +67,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     name: PREFIX
   });
 
-  const {event, eventId, summaryExpanded = false, ...rest} = props;
+  const { event, eventId, summaryExpanded = false, ...rest } = props;
 
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);
@@ -71,7 +75,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   const [loading, setLoading] = useState(true);
 
   // HOOKS
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
 
   useEffect(() => {
     setLoading(false);
@@ -96,6 +100,17 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     setExpanded(!expanded);
   }, [expanded]);
 
+  const showInfo = useMemo(
+    () =>
+      scEvent?.privacy === SCEventPrivacyType.PUBLIC ||
+      [SCEventSubscriptionStatusType.SUBSCRIBED, SCEventSubscriptionStatusType.GOING, SCEventSubscriptionStatusType.NOT_GOING].indexOf(
+        scEvent?.subscription_status
+      ) > -1,
+    [scEvent]
+  );
+
+  const description = useMemo(() => (expanded ? scEvent?.description : getTruncatedText(scEvent?.description, 220)), [expanded, scEvent]);
+
   // RENDER
   if (!scEvent && loading) {
     return <Skeleton />;
@@ -104,8 +119,6 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   if (!scEvent) {
     return <HiddenPlaceholder />;
   }
-
-  const description = expanded ? scEvent.description : getTruncatedText(scEvent.description, 220);
 
   return (
     <Root className={classes.root} {...rest}>
@@ -126,7 +139,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
             )}
           </Typography>
         </Box>
-        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo />
+        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo hasLocationInfo={showInfo} />
       </CardContent>
     </Root>
   );

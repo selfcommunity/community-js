@@ -5,7 +5,7 @@ import { Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSC
 import { SCEventType } from '@selfcommunity/types';
 import { CacheStrategies, Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { Fragment, useCallback, useEffect, useReducer, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import 'swiper/css';
 import { SCOPE_SC_UI } from '../../constants/Errors';
@@ -209,11 +209,11 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
           </Typography>
         </Stack>
         <Stack className={classes.eventWrapper}>
-          {state?.results.map((_event, i, array) => (
-            <>
-              <Event key={i} event={_event} eventId={_event.id} {...eventComponentProps} className={classes.event} />
+          {state?.results.map((_event, i: number, array) => (
+            <Fragment key={i}>
+              <Event event={_event} eventId={_event.id} {...eventComponentProps} className={classes.event} />
               {i < array.length - 1 && <Divider />}
-            </>
+            </Fragment>
           ))}
         </Stack>
       </CardContent>
