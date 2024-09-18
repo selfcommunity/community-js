@@ -1,8 +1,8 @@
 import { CardActions, CardContent, Divider, Skeleton, Stack } from '@mui/material';
 import { styled } from '@mui/system';
+import { Fragment } from 'react';
 import 'swiper/css';
 import { EventSkeleton } from '../Event';
-import { UserSkeleton } from '../User';
 import Widget from '../Widget';
 import { PREFIX } from './constants';
 
@@ -25,14 +25,14 @@ export default function RelatedEventsWidgetSkeleton() {
   return (
     <Root className={classes.root}>
       <CardContent className={classes.content}>
-        <UserSkeleton className={classes.user} elevation={0} />
+        {/* <UserSkeleton className={classes.user} elevation={0} /> */}
 
         <Stack className={classes.eventWrapper}>
           {[1, 2, 3, 4].map((_event, i, array) => (
-            <>
-              <EventSkeleton key={i} elevation={0} className={classes.event} />
+            <Fragment key={i}>
+              <EventSkeleton elevation={0} className={classes.event} />
               {i < array.length - 1 && <Divider />}
-            </>
+            </Fragment>
           ))}
         </Stack>
       </CardContent>
