@@ -1,8 +1,8 @@
-import {Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
-import {Link} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
-import {FormattedMessage, useIntl} from 'react-intl';
-import React from 'react';
+import { Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
+import { Link } from '@selfcommunity/react-core';
+import { SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType } from '@selfcommunity/types';
+import { ReactNode, useMemo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const PREFIX = 'SCEventInfoDetails';
 
@@ -32,11 +32,11 @@ export interface EventInfoDetailsProps {
   hasPrivacyInfo?: boolean;
   hasLocationInfo?: boolean;
   hasCreatedInfo?: boolean;
-  beforeDateInfo?: React.ReactNode | null;
-  beforeRecurringInfo?: React.ReactNode | null;
-  beforePrivacyInfo?: React.ReactNode | null;
-  beforeLocationInfo?: React.ReactNode | null;
-  beforeCreatedInfo?: React.ReactNode | null;
+  beforeDateInfo?: ReactNode | null;
+  beforeRecurringInfo?: ReactNode | null;
+  beforePrivacyInfo?: ReactNode | null;
+  beforeLocationInfo?: ReactNode | null;
+  beforeCreatedInfo?: ReactNode | null;
 }
 
 export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
@@ -68,8 +68,14 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
   // HOOKS
   const intl = useIntl();
 
-  const privacy = event.privacy === SCEventPrivacyType.PUBLIC ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private';
-  const location = event.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson';
+  const privacy = useMemo(
+    () => (event.privacy === SCEventPrivacyType.PUBLIC ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private'),
+    [event]
+  );
+  const location = useMemo(
+    () => (event.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson'),
+    [event]
+  );
 
   return (
     <Root className={classes.root}>
@@ -88,7 +94,7 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
                   year: 'numeric',
                   month: 'long'
                 }),
-                start: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, {hour: 'numeric', minute: 'numeric'})
+                start: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, { hour: 'numeric', minute: 'numeric' })
               }}
             />
           </Typography>
