@@ -175,6 +175,16 @@ const Component = {
       },
       '& .SCProgressBar-message': {
         marginBottom: theme.spacing(0.5)
+      },
+      [theme.breakpoints.up('sm')]: {
+        '& .SCOnBoardingWidget-content-progress': {
+          display: 'flex',
+          alignItems: 'center',
+          '& .SCOnBoardingWidget-content-animation-progress': {
+            height: '250px',
+            width: '250px'
+          }
+        }
       }
     }),
     categoryRoot: ({theme}: any) => ({
@@ -187,10 +197,22 @@ const Component = {
       '& .SCOnBoardingWidget-category-action': {
         display: 'flex',
         justifyContent: 'center',
-        marginTop: theme.spacing(5)
+        '& .MuiButton-root': {
+          marginTop: theme.spacing(3)
+        }
       },
       '& .SCProgressBar-message': {
         marginBottom: theme.spacing(0.5)
+      },
+      [theme.breakpoints.up('sm')]: {
+        '& .SCOnBoardingWidget-category-progress': {
+          display: 'flex',
+          alignItems: 'center',
+          '& .SCOnBoardingWidget-category-animation-progress': {
+            height: '250px',
+            width: '250px'
+          }
+        }
       }
     }),
     appearanceRoot: ({theme}: any) => ({
