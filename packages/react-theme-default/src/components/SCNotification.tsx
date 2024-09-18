@@ -285,9 +285,18 @@ const Component = {
       '& .SCNotification-username, & a': {
         fontWeight: theme.typography.fontWeightBold
       },
-      '& .SCNotificationItem-primary .MuiIcon-root': {
-        float: 'right',
-        fontSize: '18px'
+      '& .SCNotificationItem-primary': {
+        '& .MuiIcon-root': {
+          float: 'right',
+          fontSize: '20px',
+          marginLeft: theme.spacing(0.5)
+        },
+        '& .SCEvent-root': {
+          width: '100%',
+          '& .SCEvent-snippet-root': {
+            paddingLeft: '0 !important'
+          }
+        }
       },
       '& .SCNotificationItem-secondary': {
         textTransform: 'capitalize'

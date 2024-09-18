@@ -173,7 +173,39 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
         template={template}
         isNew={notificationObject.is_new}
         disableTypography
-        primary={<EventItem event={notificationObject.event as any} actions={<></>} elevation={0} />}
+        image={
+          <Link
+            {...(!notificationObject.user.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+            })}
+            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
+            <UserAvatar hide={!notificationObject.user.community_badge} smaller={true}>
+              <Avatar className={classes.avatar} alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
+            </UserAvatar>
+          </Link>
+        }
+        primary={
+          <>
+            <Link
+              {...(!notificationObject.user.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+              })}
+              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
+              className={classes.username}>
+              {notificationObject.user.username}
+            </Link>{' '}
+            <FormattedMessage
+              id={`ui.notification.event.${notificationObject.type}`}
+              defaultMessage={`ui.notification.event.${notificationObject.type}`}
+              values={{
+                icon: (...chunks) => <Icon>{chunks}</Icon>,
+                event: notificationObject.event.name,
+                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>
+              }}
+            />
+            <EventItem event={notificationObject.event as any} actions={<></>} elevation={0} />
+          </>
+        }
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
