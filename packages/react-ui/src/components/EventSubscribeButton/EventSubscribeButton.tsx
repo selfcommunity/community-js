@@ -262,9 +262,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
 
   return (
     <>
-      {(scEvent?.privacy === SCEventPrivacyType.PRIVATE &&
-        (!status || status === SCEventSubscriptionStatusType.INVITED || status === SCEventSubscriptionStatusType.REQUESTED)) ||
-      (scEvent?.privacy === SCEventPrivacyType.PUBLIC && status === SCEventSubscriptionStatusType.INVITED) ? (
+      {(scEvent?.privacy === SCEventPrivacyType.PRIVATE && (!status || status === SCEventSubscriptionStatusType.REQUESTED)) ? (
         <RequestRoot
           className={classNames(classes.requestRoot, className)}
           variant="outlined"
