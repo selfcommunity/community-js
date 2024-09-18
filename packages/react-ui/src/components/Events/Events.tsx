@@ -212,7 +212,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * Fetches events list
    */
   const fetchEvents = () => {
-    setLoading(true);
+    search === '' && setLoading(true);
     return http
       .request({
         url: endpoint.url({}),

@@ -195,8 +195,8 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               {notificationObject.user.username}
             </Link>{' '}
             <FormattedMessage
-              id={`ui.notification.event.${notificationObject.type}`}
-              defaultMessage={`ui.notification.event.${notificationObject.type}`}
+              id={`ui.notification.${notificationObject.type}`}
+              defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
                 icon: (...chunks) => <Icon>{chunks}</Icon>,
                 event: notificationObject.event.name,
