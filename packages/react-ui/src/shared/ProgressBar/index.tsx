@@ -53,7 +53,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       <Box className={classes.message}>{loadingMessage}</Box>
       {!hideBar && <LinearProgress variant="determinate" color="success" className={classes.bar} value={value} {...rest} />}
       <Box className={classes.progress}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(value)}%`}</Typography>
+        <Typography variant="h4" color="secondary">{`${Math.round(value)}%`}</Typography>
       </Box>
     </Root>
   );

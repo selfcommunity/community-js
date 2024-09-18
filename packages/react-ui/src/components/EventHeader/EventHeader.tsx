@@ -317,7 +317,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
             {scEvent.location === SCEventLocationType.PERSON ? (
               <FormattedMessage id="ui.eventHeader.location.live" defaultMessage="ui.eventHeader.location.live" />
             ) : (
-              <FormattedMessage id="ui.eventHeader.location.live" defaultMessage="ui.eventHeader.location.online" />
+              <FormattedMessage id="ui.eventHeader.location.online" defaultMessage="ui.eventHeader.location.online" />
             )}
           </Typography>
         </Box>
