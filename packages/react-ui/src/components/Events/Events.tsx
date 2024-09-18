@@ -1,4 +1,20 @@
-import {Box, Button, Chip, FormControl, Grid, GridProps, Icon, InputLabel, MenuItem, Radio, Select, TextField, Typography} from '@mui/material';
+import {
+  Box,
+  Button,
+  Chip,
+  FormControl,
+  Grid,
+  GridProps,
+  Icon,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Radio,
+  Select,
+  TextField,
+  Typography
+} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
@@ -170,7 +186,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [events, setEvents] = useState<SCEventType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
-  const [search, setSearch] = useState<string>('');
+  const [query, setQuery] = useState<string>('');
+  const [search, setSearch] = useState<boolean>(false);
   const [dateSearch, setDateSearch] = useState(options[0].value);
   const [showFollowed, setShowFollowed] = useState<boolean>(false);
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
@@ -212,7 +229,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * Fetches events list
    */
   const fetchEvents = () => {
-    search === '' && setLoading(true);
+    setLoading(true);
     return http
       .request({
         url: endpoint.url({}),
@@ -221,13 +238,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
           ...endpointQueryParams,
           ...(general
             ? {
-                ...(search !== '' && {search: search}),
+                ...(search && {search: query}),
                 ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
                 ...(showFollowed && {follows: showFollowed}),
                 ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
               }
             : {
-                ...(search !== '' && {search: search}),
                 subscription_status: SCEventSubscriptionStatusType.GOING,
                 ...(showPastEvents && {past: showPastEvents})
               })
@@ -279,7 +295,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * @param event
    */
   const handleOnChangeFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    setQuery(event.target.value);
+    setSearch(false);
   };
 
   /**
@@ -314,11 +331,18 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 <TextField
                   size={'small'}
                   fullWidth
-                  value={search}
+                  value={query}
                   label={<FormattedMessage id="ui.events.filterByName" defaultMessage="ui.events.filterByName" />}
                   variant="outlined"
                   onChange={handleOnChangeFilterName}
                   disabled={loading}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton onClick={() => setSearch(true)}>
+                        <Icon>search</Icon>
+                      </IconButton>
+                    )
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={2}>
