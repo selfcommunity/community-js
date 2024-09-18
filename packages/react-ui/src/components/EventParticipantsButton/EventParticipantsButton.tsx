@@ -106,7 +106,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const [offset, setOffset] = useState<number | null>(null);
   const [followers, setFollowers] = useState<SCUserType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  console.log('*** followers ***', followers);
+
   // HOOKS
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
   const participantsAvailable = useMemo(
