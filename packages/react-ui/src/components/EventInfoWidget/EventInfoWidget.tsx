@@ -41,7 +41,6 @@ export interface EventInfoWidgetProps extends WidgetProps {
    * @default false
    */
   summaryExpanded?: boolean;
-
   /**
    * Other props
    */
@@ -139,7 +138,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
             )}
           </Typography>
         </Box>
-        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo hasLocationInfo={showInfo} />
+        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo hasLocationInfo={showInfo} hasInProgress={false} />
       </CardContent>
     </Root>
   );

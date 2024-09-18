@@ -26,6 +26,13 @@ const Component = {
             '-webkit-line-clamp': '1',
             '-webkit-box-orient': 'vertical'
           }
+        },
+
+        '& .SCEventInfoDetails-live': {
+          width: '6px',
+          height: '6px',
+          borderRadius: '9999px',
+          backgroundColor: theme.palette.secondary.main
         }
       },
 

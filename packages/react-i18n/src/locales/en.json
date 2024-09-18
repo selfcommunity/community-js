@@ -347,6 +347,7 @@
   "ui.groupForm.visibility.visible.info": "<b>Visible: </b>Anyone can find this group.",
   "ui.groupForm.button.create": "Create",
   "ui.groupForm.button.edit": "Edit",
+  "ui.eventInfoDetails.inProgress": "Event in progress",
   "ui.eventInfoDetails.location.inPerson": "In Person",
   "ui.eventInfoDetails.location.virtual": "Virtual",
   "ui.eventInfoDetails.privacy.public": "Pubblic",
