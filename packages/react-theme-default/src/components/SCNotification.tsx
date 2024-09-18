@@ -296,7 +296,7 @@ const Component = {
         paddingLeft: theme.spacing(5)
       },
       '& .SCEvent-snippet-root': {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent !important'
       }
     }),
     groupRoot: ({theme}: any) => ({}),
