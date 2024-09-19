@@ -153,7 +153,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
               return item;
             })
           );
-          setStep(nextStep);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -191,9 +190,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
         autoHideDuration: 7000
       }
     );
-    if (_step.step === step.step) {
-      setStep(nextStep);
-    }
   };
 
   const getSteps = async () => {
