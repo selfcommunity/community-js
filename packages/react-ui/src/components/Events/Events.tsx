@@ -337,6 +337,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
                   autoHide={!events.length && !showPastEvents}
+                  disabled={loading}
                 />
               </Grid>
               {(events.length !== 0 || (events.length === 0 && showMyEvents)) && (
@@ -355,6 +356,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     showFollowed={showMyEvents}
                     deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
                     onDelete={showMyEvents ? handleDeleteClick : null}
+                    disabled={loading}
                   />
                 </Grid>
               )}
@@ -381,7 +383,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     endAdornment: (
                       <InputAdornment position="end">
                         {isMobile ? (
-                          <IconButton onClick={() => fetchEvents(true)}>
+                          <IconButton onClick={() => fetchEvents(true)} disabled={loading}>
                             <Icon>search</Icon>
                           </IconButton>
                         ) : (
@@ -391,6 +393,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                             color="secondary"
                             onClick={() => fetchEvents(true)}
                             endIcon={<Icon>search</Icon>}
+                            disabled={loading}
                           />
                         )}
                       </InputAdornment>
@@ -404,7 +407,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
-                    disabled={showPastEvents}
+                    disabled={showPastEvents || loading}
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
@@ -440,6 +443,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     showFollowed={showFollowed}
                     deleteIcon={showFollowed ? <Icon>close</Icon> : null}
                     onDelete={showFollowed ? handleDeleteClick : null}
+                    disabled={loading}
                   />
                 </Grid>
               )}
@@ -448,7 +452,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  disabled={dateSearch !== SCEventDateFilterType.ANY}
+                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading}
                 />
               </Grid>
             </>
@@ -456,53 +460,59 @@ export default function Events(inProps: EventsProps): JSX.Element {
         </Grid>
       )}
       <>
-        {!events.length ? (
-          <Box className={classes.noResults}>
-            {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
-            (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
-              <>
-                <EventSkeleton {...EventSkeletonComponentProps} />
-                <Typography variant="body1">
-                  <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
-                </Typography>
-              </>
-            ) : (
-              <>
-                <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} actions={<CreateEventButton />} />
-                <Typography variant="body1">
-                  <FormattedMessage id="ui.events.noEvents.title.onlyStaff" defaultMessage="ui.events.noEvents.title.onlyStaff" />
-                </Typography>
-              </>
-            )}
-          </Box>
+        {loading ? (
+          <Skeleton {...EventsSkeletonComponentProps} EventSkeletonProps={EventSkeletonComponentProps} />
         ) : (
           <>
-            <Grid container spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
+            {!events.length ? (
+              <Box className={classes.noResults}>
+                {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
+                (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
+                  <>
+                    <EventSkeleton {...EventSkeletonComponentProps} />
+                    <Typography variant="body1">
+                      <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} actions={<CreateEventButton />} />
+                    <Typography variant="body1">
+                      <FormattedMessage id="ui.events.noEvents.title.onlyStaff" defaultMessage="ui.events.noEvents.title.onlyStaff" />
+                    </Typography>
+                  </>
+                )}
+              </Box>
+            ) : (
               <>
-                {events.map((event: SCEventType) => (
-                  <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item} {...GridItemComponentProps}>
-                    <Event event={event} eventId={event.id} {...EventComponentProps} />
-                  </Grid>
-                ))}
-                {authUserId && events.length % 2 !== 0 && (
-                  <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton} {...GridItemComponentProps}>
-                    <EventSkeleton
-                      {...EventSkeletonComponentProps}
-                      skeletonsAnimation={false}
-                      actions={
-                        <CreateEventButton variant="outlined" color="primary" size="small">
-                          <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
-                        </CreateEventButton>
-                      }
-                    />
-                  </Grid>
+                <Grid container spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
+                  <>
+                    {events.map((event: SCEventType) => (
+                      <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item} {...GridItemComponentProps}>
+                        <Event event={event} eventId={event.id} {...EventComponentProps} />
+                      </Grid>
+                    ))}
+                    {authUserId && events.length % 2 !== 0 && (
+                      <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton} {...GridItemComponentProps}>
+                        <EventSkeleton
+                          {...EventSkeletonComponentProps}
+                          skeletonsAnimation={false}
+                          actions={
+                            <CreateEventButton variant="outlined" color="primary" size="small">
+                              <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
+                            </CreateEventButton>
+                          }
+                        />
+                      </Grid>
+                    )}
+                  </>
+                </Grid>
+                {Boolean(next) && (
+                  <Button color="secondary" variant="text" onClick={handleNext} className={classes.showMore}>
+                    <FormattedMessage id="ui.events.button.seeMore" defaultMessage="ui.events.button.seeMore" />
+                  </Button>
                 )}
               </>
-            </Grid>
-            {Boolean(next) && (
-              <Button color="secondary" variant="text" onClick={handleNext} className={classes.showMore}>
-                <FormattedMessage id="ui.events.button.seeMore" defaultMessage="ui.events.button.seeMore" />
-              </Button>
             )}
           </>
         )}
@@ -516,9 +526,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   if (!contentAvailability && !scUserContext.user) {
     return null;
   }
-  if (loading) {
-    return <Skeleton {...EventsSkeletonComponentProps} EventSkeletonProps={EventSkeletonComponentProps} />;
-  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {c}
