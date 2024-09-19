@@ -78,8 +78,7 @@ export default function useSCFetchEvent({
           if (
             autoSubscribe &&
             authUserId !== null &&
-            ((event.privacy === SCEventPrivacyType.PUBLIC && !event.subscription_status) ||
-              (event.privacy === SCEventPrivacyType.PRIVATE && event.subscription_status === SCEventSubscriptionStatusType.INVITED))
+            ((event.privacy === SCEventPrivacyType.PUBLIC && !event.subscription_status) || event.subscription_status === SCEventSubscriptionStatusType.INVITED)
           ) {
             // Auto subscribe to the event
             EventService.subscribeToEvent(event.id).then(() => {
