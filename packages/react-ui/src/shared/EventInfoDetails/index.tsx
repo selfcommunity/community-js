@@ -1,4 +1,4 @@
-import { Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
+import { Box, Icon, Stack, styled, Tooltip, Typography, useThemeProps } from '@mui/material';
 import { Link } from '@selfcommunity/react-core';
 import { SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType } from '@selfcommunity/types';
 import { ReactNode, useMemo } from 'react';
@@ -9,6 +9,7 @@ const PREFIX = 'SCEventInfoDetails';
 const classes = {
   root: `${PREFIX}-root`,
   iconTextWrapper: `${PREFIX}-icon-text-wrapper`,
+  live: `${PREFIX}-live`,
   link: `${PREFIX}-link`,
   url: `${PREFIX}-url`,
   creationWrapper: `${PREFIX}-creation-wrapper`
@@ -32,6 +33,7 @@ export interface EventInfoDetailsProps {
   hasPrivacyInfo?: boolean;
   hasLocationInfo?: boolean;
   hasCreatedInfo?: boolean;
+  hasInProgress?: boolean;
   beforeDateInfo?: ReactNode | null;
   beforeRecurringInfo?: ReactNode | null;
   beforePrivacyInfo?: ReactNode | null;
@@ -58,6 +60,7 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
     hasPrivacyInfo = true,
     hasLocationInfo = true,
     hasCreatedInfo = false,
+    hasInProgress = true,
     beforeDateInfo,
     beforeRecurringInfo,
     beforePrivacyInfo,
@@ -98,6 +101,11 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
               }}
             />
           </Typography>
+          {hasInProgress && (
+            <Tooltip title={<FormattedMessage id="ui.eventInfoDetails.inProgress" defaultMessage="ui.eventInfoDetails.inProgress" />}>
+              <Box className={classes.live} />
+            </Tooltip>
+          )}
         </Stack>
       )}
       {beforeRecurringInfo}
