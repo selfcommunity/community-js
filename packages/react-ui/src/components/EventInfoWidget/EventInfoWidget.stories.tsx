@@ -5,8 +5,9 @@ export default {
   title: 'Design System/React UI/Event Info Widget',
   component: EventInfoWidget,
   args: {
-    eventId: 113,
-    summaryExpanded: false
+    eventId: 114,
+    summaryExpanded: false,
+    hasInProgress: false,
   }
 } as Meta<typeof EventInfoWidget>;
 

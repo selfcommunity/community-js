@@ -41,7 +41,7 @@ import {
   REPORT_VULGAR,
   REPORTS
 } from '../../constants/Flagging';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCContext,
   SCContextType,
@@ -66,7 +66,8 @@ import {
   MODERATE_CONTRIBUTION_DELETED,
   MODERATE_CONTRIBUTION_HIDDEN,
   RESTORE_CONTRIBUTION,
-  SUSPEND_NOTIFICATION_CONTRIBUTION
+  SUSPEND_NOTIFICATION_CONTRIBUTION,
+  SUSPEND_NOTIFICATION_EVENT
 } from '../../constants/ContributionsActionsMenu';
 
 const PREFIX = 'SCContributionActionsMenu';
@@ -198,6 +199,11 @@ export interface ContributionActionsMenuProps {
   onSuspendNotificationContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
 
   /**
+   * Handle suspend notification event embedded in obj
+   */
+  onSuspendNotificationEvent?: (obj: SCCommentType | SCFeedObjectType) => void;
+
+  /**
    * Props to spread to popper
    * @default empty object
    */
@@ -224,6 +230,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     onDeleteContribution,
     onRestoreContribution,
     onSuspendNotificationContribution,
+    onSuspendNotificationEvent,
     PopperProps = {},
     ...rest
   } = props;
@@ -340,7 +347,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   }
 
   /**
-   * Performs  notification suspension
+   * Performs notification suspension
    */
   const performSuspendNotification = useMemo(
     () => () => {
@@ -360,16 +367,60 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   );
 
   /**
+   * Performs notification suspension of event embedded
+   */
+  const performSuspendNotificationEvent = useMemo(
+    () => () => {
+      const _endpoint: EndpointType = (contributionObj as SCFeedObjectType).event.show_on_feed ? Endpoints.HideEvent : Endpoints.ShowEvent;
+      return http
+        .request({
+          url: _endpoint.url({id: (contributionObj as SCFeedObjectType).event.id}),
+          method: _endpoint.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
    * Handles stop notification for contributionObj
-   * @param contribution
    */
   function handleSuspendContentNotification() {
     setCurrentActionLoading(SUSPEND_NOTIFICATION_CONTRIBUTION);
     performSuspendNotification()
-      .then((data) => {
+      .then(() => {
         const _feedObj = Object.assign({}, feedObj, {suspended: !feedObj.suspended});
         setFeedObj(_feedObj);
         onSuspendNotificationContribution && onSuspendNotificationContribution(_feedObj);
+        setCurrentActionLoading(null);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        setCurrentAction(null);
+        setCurrentActionLoading(null);
+        enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionError" defaultMessage="ui.contributionActionMenu.actionError" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
+  }
+
+  /**
+   * Handles stop notification for event embedded in contributionObj
+   */
+  function handleSuspendEventNotification() {
+    setCurrentActionLoading(SUSPEND_NOTIFICATION_EVENT);
+    performSuspendNotificationEvent()
+      .then(() => {
+        const _eventObj = Object.assign({}, feedObj.event, {show_on_feed: !feedObj.event.show_on_feed});
+        const _feedObj = Object.assign({}, feedObj, {event: _eventObj});
+        setFeedObj(_feedObj);
+        onSuspendNotificationEvent && onSuspendNotificationEvent(_feedObj);
         setCurrentActionLoading(null);
       })
       .catch((error) => {
@@ -549,7 +600,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     } else if (contributionObj && !isLoading && !isFlagging && type !== 'undefined') {
       setIsFlagging(true);
       performFlag(type)
-        .then((data) => {
+        .then(() => {
           setFlagType(flagType === type ? null : type);
           setIsFlagging(false);
           onFlagContribution && onFlagContribution(contributionObj, type, flagType !== type);
@@ -643,6 +694,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     } else if (action === SUSPEND_NOTIFICATION_CONTRIBUTION) {
       setCurrentAction(SUSPEND_NOTIFICATION_CONTRIBUTION);
       handleSuspendContentNotification();
+    } else if (action === SUSPEND_NOTIFICATION_EVENT) {
+      setCurrentAction(SUSPEND_NOTIFICATION_EVENT);
+      handleSuspendEventNotification();
     } else if (action === MODERATE_CONTRIBUTION_HIDDEN) {
       setCurrentAction(MODERATE_CONTRIBUTION_HIDDEN);
       setOpenConfirmDialog(true);
@@ -694,7 +748,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       if (currentAction === DELETE_CONTRIBUTION) {
         setCurrentActionLoading(DELETE_CONTRIBUTION);
         performDeleteContribution()
-          .then((data) => {
+          .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {deleted: true});
             onDeleteContribution && onDeleteContribution(_contributionObj);
             performPostConfirmAction(true);
@@ -706,7 +760,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       } else if (currentAction === RESTORE_CONTRIBUTION) {
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performRestoreContribution()
-          .then((data) => {
+          .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
             onRestoreContribution && onRestoreContribution(_contributionObj);
             performPostConfirmAction(true);
@@ -718,7 +772,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       } else if (currentAction === MODERATE_CONTRIBUTION_HIDDEN) {
         setCurrentActionLoading(MODERATE_CONTRIBUTION_HIDDEN);
         performModerationContribution(MODERATION_TYPE_ACTION_HIDE, hideFlagType)
-          .then((data) => {
+          .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {collapsed: !contributionObj.collapsed});
             setHideType(hideType === hideFlagType ? null : hideFlagType);
             setHideFlagType(null);
@@ -732,7 +786,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       } else if (currentAction === MODERATE_CONTRIBUTION_DELETED) {
         setCurrentActionLoading(MODERATE_CONTRIBUTION_DELETED);
         performModerationContribution(MODERATION_TYPE_ACTION_DELETE, deleteFlagType)
-          .then((data) => {
+          .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {deleted: !contributionObj.deleted});
             setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
             setDeleteFlagType(null);
@@ -777,9 +831,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   }
 
   /**
-   * action
-   * @param actionId
-   */
+	 * action
+	 * @param sectionId
+	 */
   function handleOpenSection(sectionId) {
     if (sectionId) {
       if (sectionId === openSection) {
@@ -998,6 +1052,19 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   }
 
   /**
+   * Can authenticated user suspend notification for the event related to the contribution
+   */
+  function canSuspendNotificationEvent(): boolean {
+    return (
+      scUserContext.user &&
+      scUserContext.user.id !== contributionObj.author.id &&
+      contributionObj &&
+      contributionObj.type !== SCContributionType.COMMENT &&
+      Boolean((contributionObj as SCFeedObjectType).event)
+    );
+  }
+
+  /**
    * Renders section general
    */
   function renderGeneralSection() {
@@ -1084,6 +1151,36 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 )
               }
               onClick={() => handleAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}
+              classes={{root: classes.itemText}}
+            />
+          </MenuItem>
+        )}
+        {canSuspendNotificationEvent() && (
+          <MenuItem className={classes.subItem} disabled={isFlagging}>
+            <ListItemIcon>
+              {currentActionLoading === SUSPEND_NOTIFICATION_EVENT ? (
+                <CircularProgress size={20} />
+              ) : (contributionObj as SCFeedObjectType).event['show_on_feed'] ? (
+                <Icon>notifications_active</Icon>
+              ) : (
+                <Icon>notifications_off</Icon>
+              )}
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                !(contributionObj as SCFeedObjectType).event['show_on_feed'] ? (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.enableNotificationContribution"
+                    defaultMessage="ui.contributionActionMenu.enableNotificationContribution"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.suspendNotificationContribution"
+                    defaultMessage="ui.contributionActionMenu.suspendNotificationContribution"
+                  />
+                )
+              }
+              onClick={() => handleAction(SUSPEND_NOTIFICATION_EVENT)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
