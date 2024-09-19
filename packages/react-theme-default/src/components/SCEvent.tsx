@@ -44,7 +44,7 @@ const Component = {
         padding: `${theme.spacing()} !important`,
         '& .SCEventInfoDetails-icon-text-wrapper': {
           '& .MuiTypography-root': {
-            fontSize: '0.8rem'
+            fontSize: '0.75rem'
           }
         },
         '& .SCEvent-detail-user': {
