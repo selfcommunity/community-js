@@ -3,7 +3,7 @@ import {Alert, Button, Icon, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {PREFIX} from '../../constants';
 import {FormattedMessage} from 'react-intl';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
@@ -70,6 +70,22 @@ export default function Content(inProps: ContentProps) {
     }
   }, [step.status, step.completion_percentage]);
 
+  const getLoadingMessage = useMemo((): JSX.Element => {
+    let message;
+    if (progress <= 10) {
+      message = <FormattedMessage id="ui.onBoardingWidget.step.contents.loading.a" defaultMessage="ui.onBoardingWidget.step.contents.loading.a" />;
+    } else if (progress <= 20) {
+      message = <FormattedMessage id="ui.onBoardingWidget.step.contents.loading.b" defaultMessage="ui.onBoardingWidget.step.contents.loading.b" />;
+    } else if (progress <= 40) {
+      message = <FormattedMessage id="ui.onBoardingWidget.step.contents.loading.c" defaultMessage="ui.onBoardingWidget.step.contents.loading.c" />;
+    } else if (progress <= 60) {
+      message = <FormattedMessage id="ui.onBoardingWidget.step.contents.loading.d" defaultMessage="ui.onBoardingWidget.step.contents.loading.d" />;
+    } else {
+      message = <FormattedMessage id="ui.onBoardingWidget.step.contents.loading.e" defaultMessage="ui.onBoardingWidget.step.contents.loading.e" />;
+    }
+    return message;
+  }, [progress]);
+
   return (
     <Root className={classNames(classes.root, className)}>
       <Typography variant="h4" className={classes.title}>
@@ -86,15 +102,7 @@ export default function Content(inProps: ContentProps) {
         ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
           <Box className={classes.progress}>
             <Player autoplay loop src={animatedProgress} className={classes.animationProgress} controls={false} />
-            <ProgressBar
-              value={progress}
-              hideBar={true}
-              loadingMessage={
-                <Typography variant="h4">
-                  <FormattedMessage id="ui.onBoardingWidget.step.contents.loading" defaultMessage="ui.onBoardingWidget.step.contents.loading" />
-                </Typography>
-              }
-            />
+            <ProgressBar value={progress} hideBar={true} loadingMessage={<Typography variant="h4">{getLoadingMessage}</Typography>} />
           </Box>
         ) : (
           <Button

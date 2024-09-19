@@ -4,7 +4,19 @@ const Component = {
       '& .SCEvents-filters': {
         alignItems: 'center',
         marginTop: theme.spacing(),
-        marginBottom: theme.spacing(2)
+        marginBottom: theme.spacing(2),
+        '& .SCEvents-search': {
+          '& .MuiInputBase-root': {
+            paddingRight: 0,
+            '& .MuiButtonBase-root': {
+              borderRadius: '0 5px 5px 0',
+              height: '37px',
+              '& .MuiButton-endIcon': {
+                margin: 0
+              }
+            }
+          }
+        }
       },
       '& .SCEvents-events': {
         marginTop: theme.spacing(2),

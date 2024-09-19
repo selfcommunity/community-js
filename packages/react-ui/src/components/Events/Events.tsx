@@ -13,12 +13,22 @@ import {
   Radio,
   Select,
   TextField,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContext,
+  SCUserContextType,
+  UserUtils
+} from '@selfcommunity/react-core';
 import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -39,7 +49,8 @@ const classes = {
   item: `${PREFIX}-item`,
   itemSkeleton: `${PREFIX}-item-skeleton`,
   noResults: `${PREFIX}-no-results`,
-  showMore: `${PREFIX}-show-more`
+  showMore: `${PREFIX}-show-more`,
+  search: `${PREFIX}-search`
 };
 
 const options = [
@@ -187,10 +198,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
   const [query, setQuery] = useState<string>('');
-  const [search, setSearch] = useState<boolean>(false);
   const [dateSearch, setDateSearch] = useState(options[0].value);
   const [showFollowed, setShowFollowed] = useState<boolean>(false);
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
+  const [showMyEvents, setShowMyEvents] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -206,6 +217,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // HANDLERS
 
@@ -228,7 +241,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   /**
    * Fetches events list
    */
-  const fetchEvents = () => {
+  const fetchEvents = (search?: boolean) => {
     setLoading(true);
     return http
       .request({
@@ -245,7 +258,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
               }
             : {
                 subscription_status: SCEventSubscriptionStatusType.GOING,
-                ...(showPastEvents && {past: showPastEvents})
+                ...(showPastEvents && {past: showPastEvents}),
+                ...(showMyEvents && {created_by: authUserId})
               })
         }
       })
@@ -266,9 +280,9 @@ export default function Events(inProps: EventsProps): JSX.Element {
     if (!contentAvailability) {
       return;
     } else {
-      fetchEvents();
+      query === '' && fetchEvents();
     }
-  }, [contentAvailability, search, dateSearch, showFollowed, showPastEvents]);
+  }, [contentAvailability, dateSearch, showFollowed, showPastEvents, showMyEvents, query]);
 
   const handleNext = useMemo(
     () => () => {
@@ -296,7 +310,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
    */
   const handleOnChangeFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
-    setSearch(false);
   };
 
   /**
@@ -317,18 +330,40 @@ export default function Events(inProps: EventsProps): JSX.Element {
           {filters ? (
             filters
           ) : !general ? (
-            <Grid item>
-              <PastEventsFilter
-                showPastEvents={showPastEvents}
-                handleClick={handleChipPastClick}
-                handleDeleteClick={handleDeletePastClick}
-                autoHide={!events.length && !showPastEvents}
-              />
-            </Grid>
+            <>
+              <Grid item>
+                <PastEventsFilter
+                  showPastEvents={showPastEvents}
+                  handleClick={handleChipPastClick}
+                  handleDeleteClick={handleDeletePastClick}
+                  autoHide={!events.length && !showPastEvents}
+                />
+              </Grid>
+              {(events.length !== 0 || (events.length === 0 && showMyEvents)) && (
+                <Grid item>
+                  <EventsChipRoot
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    color={showMyEvents ? 'secondary' : 'default'}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    variant={showMyEvents ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.events.filterByCreatedByMe" defaultMessage="ui.events.filterByCreatedByMe" />}
+                    onClick={() => setShowMyEvents(!showMyEvents)}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    showFollowed={showMyEvents}
+                    deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
+                    onDelete={showMyEvents ? handleDeleteClick : null}
+                  />
+                </Grid>
+              )}
+            </>
           ) : (
             <>
               <Grid item xs={12} md={4}>
                 <TextField
+                  className={classes.search}
                   size={'small'}
                   fullWidth
                   value={query}
@@ -336,11 +371,29 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   variant="outlined"
                   onChange={handleOnChangeFilterName}
                   disabled={loading}
+                  onKeyUp={(e) => {
+                    e.preventDefault();
+                    if (e.key === 'Enter') {
+                      fetchEvents(true);
+                    }
+                  }}
                   InputProps={{
                     endAdornment: (
-                      <IconButton onClick={() => setSearch(true)}>
-                        <Icon>search</Icon>
-                      </IconButton>
+                      <InputAdornment position="end">
+                        {isMobile ? (
+                          <IconButton onClick={() => fetchEvents(true)}>
+                            <Icon>search</Icon>
+                          </IconButton>
+                        ) : (
+                          <Button
+                            size="small"
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => fetchEvents(true)}
+                            endIcon={<Icon>search</Icon>}
+                          />
+                        )}
+                      </InputAdornment>
                     )
                   }}
                 />
