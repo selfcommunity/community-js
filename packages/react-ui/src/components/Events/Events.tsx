@@ -201,6 +201,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [dateSearch, setDateSearch] = useState(options[0].value);
   const [showFollowed, setShowFollowed] = useState<boolean>(false);
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
+  const [showMyEvents, setShowMyEvents] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -257,7 +258,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
               }
             : {
                 subscription_status: SCEventSubscriptionStatusType.GOING,
-                ...(showPastEvents && {past: showPastEvents})
+                ...(showPastEvents && {past: showPastEvents}),
+                ...(showMyEvents && {created_by: authUserId})
               })
         }
       })
@@ -280,7 +282,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     } else {
       query === '' && fetchEvents();
     }
-  }, [contentAvailability, dateSearch, showFollowed, showPastEvents, query]);
+  }, [contentAvailability, dateSearch, showFollowed, showPastEvents, showMyEvents, query]);
 
   const handleNext = useMemo(
     () => () => {
@@ -328,14 +330,35 @@ export default function Events(inProps: EventsProps): JSX.Element {
           {filters ? (
             filters
           ) : !general ? (
-            <Grid item>
-              <PastEventsFilter
-                showPastEvents={showPastEvents}
-                handleClick={handleChipPastClick}
-                handleDeleteClick={handleDeletePastClick}
-                autoHide={!events.length && !showPastEvents}
-              />
-            </Grid>
+            <>
+              <Grid item>
+                <PastEventsFilter
+                  showPastEvents={showPastEvents}
+                  handleClick={handleChipPastClick}
+                  handleDeleteClick={handleDeletePastClick}
+                  autoHide={!events.length && !showPastEvents}
+                />
+              </Grid>
+              {(events.length !== 0 || (events.length === 0 && showMyEvents)) && (
+                <Grid item>
+                  <EventsChipRoot
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    color={showMyEvents ? 'secondary' : 'default'}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    variant={showMyEvents ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.events.filterByCreatedByMe" defaultMessage="ui.events.filterByCreatedByMe" />}
+                    onClick={() => setShowMyEvents(!showMyEvents)}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    showFollowed={showMyEvents}
+                    deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
+                    onDelete={showMyEvents ? handleDeleteClick : null}
+                  />
+                </Grid>
+              )}
+            </>
           ) : (
             <>
               <Grid item xs={12} md={4}>
