@@ -29,13 +29,13 @@ const Component = {
                   },
 
                   '& .SCEventInfoDetails-icon-text-wrapper': {
+                    gap: theme.spacing(0.5),
                     '& .community-icons': {
                       fontSize: '0.9rem'
                     },
-
                     '& p': {
                       marginTop: 1,
-                      fontSize: '0.57rem'
+                      fontSize: '0.60rem'
                     }
                   }
                 }

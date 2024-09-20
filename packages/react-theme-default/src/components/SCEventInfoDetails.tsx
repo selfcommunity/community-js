@@ -28,7 +28,7 @@ const Component = {
           }
         },
 
-        '& .SCEventInfoDetails-live': {
+        '& .SCEventInfoDetails-in-progress': {
           width: '6px',
           height: '6px',
           borderRadius: '9999px',

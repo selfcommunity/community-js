@@ -6,6 +6,14 @@ const Component = {
         position: 'relative',
         '& .SCEvent-detail-image': {
           height: '170px'
+        },
+        '& .SCEvent-detail-in-progress': {
+          backgroundColor: theme.palette.secondary.main,
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          color: theme.palette.common.white,
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'
         }
       },
       '& .SCEvent-detail-content': {
@@ -38,6 +46,14 @@ const Component = {
         position: 'relative',
         '& .SCEvent-preview-image': {
           height: '80px'
+        },
+        '& .SCEvent-preview-in-progress': {
+          backgroundColor: theme.palette.secondary.main,
+          position: 'absolute',
+          top: 7,
+          right: 7,
+          color: theme.palette.common.white,
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'
         }
       },
       '& .SCEvent-preview-content': {
@@ -76,6 +92,22 @@ const Component = {
           height: 60,
           '& img': {
             borderRadius: '5px'
+          }
+        }
+      },
+      '& .SCEvent-snippet-image': {
+        position: 'relative',
+        '& .SCEvent-snippet-in-progress': {
+          height: 18,
+          backgroundColor: theme.palette.secondary.main,
+          position: 'absolute',
+          top: 5,
+          right: 3,
+          color: theme.palette.common.white,
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          '& span': {
+            fontSize: '0.8rem',
+            padding: theme.spacing()
           }
         }
       },
