@@ -18,6 +18,7 @@ import Widget, { WidgetProps } from '../Widget';
 import { PREFIX } from './constants';
 import Skeleton from './Skeleton';
 import TabContentComponent from './TabContentComponent';
+import { TabValueEnum, TabValueType } from './types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -131,11 +132,12 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     },
     stateWidgetInitializer
   );
+  const [participantsCount, setParticipantsCount] = useState(0);
   const [invitedCount, setInvitedCount] = useState(0);
   const [requestsCount, setRequestsCount] = useState(0);
   const [requestsUsers, setRequestsUsers] = useState<SCUserType[]>([]);
-  const [tabValue, setTabValue] = useState('1');
-  const [refresh, setRefresh] = useState(false);
+  const [tabValue, setTabValue] = useState<TabValueType>('1');
+  const [refresh, setRefresh] = useState<TabValueType | null>(null);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -145,7 +147,17 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
-  const title = useMemo(() => (tabValue === '1' ? 'ui.eventMembersWidget.participants' : 'ui.eventMembersWidget.invited'), [tabValue]);
+  const title = useMemo(() => {
+    switch (tabValue) {
+      case TabValueEnum.THREE:
+        return 'ui.eventMembersWidget.requests';
+      case TabValueEnum.TWO:
+        return 'ui.eventMembersWidget.invited';
+      case TabValueEnum.ONE:
+      default:
+        return 'ui.eventMembersWidget.participants';
+    }
+  }, [tabValue]);
 
   // CALLBACKS
   const _initParticipants = useCallback(() => {
@@ -155,13 +167,14 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
       EventService.getUsersGoingToEvent(scEvent.id, { ...endpointQueryParams })
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatchParticipants({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          setParticipantsCount(payload.count);
         })
         .catch((error) => {
           dispatchParticipants({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [participants.isLoadingNext, participants.initialized, dispatchParticipants, scEvent]);
+  }, [participants.isLoadingNext, participants.initialized, scEvent]);
 
   const _initInvited = useCallback(() => {
     if (!invited.initialized && !invited.isLoadingNext && hasAllow) {
@@ -177,7 +190,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [invited.isLoadingNext, invited.initialized, dispatchInvited, scUserContext.user, scEvent]);
+  }, [invited.isLoadingNext, invited.initialized, scUserContext.user, scEvent]);
 
   const _initRequests = useCallback(() => {
     if (!requests.initialized && !requests.isLoadingNext && hasAllow) {
@@ -194,7 +207,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [requests.isLoadingNext, requests.initialized, dispatchRequests, scUserContext.user, scEvent]);
+  }, [requests.isLoadingNext, requests.initialized, scUserContext.user, scEvent]);
 
   // EFFECTS
   useEffect(() => {
@@ -202,9 +215,12 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
     if (scUserContext.user && scEvent) {
       _t = setTimeout(() => {
-        if (refresh) {
+        if (refresh === TabValueEnum.ONE) {
+          _initParticipants();
+          setRefresh(null);
+        } else if (refresh === TabValueEnum.TWO) {
           _initInvited();
-          setRefresh(false);
+          setRefresh(null);
         } else {
           _initParticipants();
           _initInvited();
@@ -219,8 +235,17 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   }, [scUserContext.user, scEvent, refresh]);
 
   // HANDLERS
-  const handleTabChange = useCallback((_evt: SyntheticEvent, newTabValue: string) => {
+  const handleTabChange = useCallback((_evt: SyntheticEvent, newTabValue: TabValueType) => {
     setTabValue(newTabValue);
+  }, []);
+
+  const handleRefresh = useCallback((_tabValue: TabValueType) => {
+    if (_tabValue === TabValueEnum.ONE) {
+      dispatchParticipants({ type: actionWidgetTypes.RESET });
+    } else if (_tabValue === TabValueEnum.TWO) {
+      dispatchInvited({ type: actionWidgetTypes.RESET });
+    }
+    setRefresh(_tabValue);
   }, []);
 
   if (!scEvent && !participants.initialized) {
@@ -244,13 +269,13 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
             <Tab
               label={
                 <Stack className={classes.tabLabelWrapper}>
-                  <Typography variant="h3">{participants.count}</Typography>
+                  <Typography variant="h3">{participantsCount}</Typography>
                   <Typography variant="subtitle2">
                     <FormattedMessage id="ui.eventMembersWidget.participants" defaultMessage="ui.eventMembersWidget.participants" />
                   </Typography>
                 </Stack>
               }
-              value="1"
+              value={TabValueEnum.ONE}
             />
             {hasAllow && (
               <Tab
@@ -262,7 +287,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                     </Typography>
                   </Stack>
                 }
-                value="2"
+                value={TabValueEnum.TWO}
               />
             )}
             {hasAllow && (
@@ -275,17 +300,24 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                     </Typography>
                   </Stack>
                 }
-                value="3"
+                value={TabValueEnum.THREE}
               />
             )}
           </TabList>
-          <TabPanel value="1" className={classes.tabPanel}>
-            <TabContentComponent tabValue="1" state={participants} dispatch={dispatchParticipants} userProps={userProps} dialogProps={dialogProps} />
+          <TabPanel value={TabValueEnum.ONE} className={classes.tabPanel}>
+            <TabContentComponent
+              tabValue={TabValueEnum.ONE}
+              state={participants}
+              dispatch={dispatchParticipants}
+              userProps={userProps}
+              dialogProps={dialogProps}
+              handleRefresh={handleRefresh}
+            />
           </TabPanel>
           {hasAllow && (
-            <TabPanel value="2" className={classes.tabPanel}>
+            <TabPanel value={TabValueEnum.TWO} className={classes.tabPanel}>
               <TabContentComponent
-                tabValue="2"
+                tabValue={TabValueEnum.TWO}
                 state={invited}
                 dispatch={dispatchInvited}
                 userProps={userProps}
@@ -294,14 +326,14 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                   scEvent,
                   setCount: setInvitedCount
                 }}
-                setRefresh={setRefresh}
+                handleRefresh={handleRefresh}
               />
             </TabPanel>
           )}
           {hasAllow && (
-            <TabPanel value="3" className={classes.tabPanel}>
+            <TabPanel value={TabValueEnum.THREE} className={classes.tabPanel}>
               <TabContentComponent
-                tabValue="3"
+                tabValue={TabValueEnum.THREE}
                 state={requests}
                 dispatch={dispatchRequests}
                 userProps={userProps}
@@ -313,6 +345,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                   users: requestsUsers,
                   setUsers: setRequestsUsers
                 }}
+                handleRefresh={handleRefresh}
               />
             </TabPanel>
           )}

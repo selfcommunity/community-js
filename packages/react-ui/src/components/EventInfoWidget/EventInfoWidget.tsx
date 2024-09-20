@@ -138,7 +138,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
             )}
           </Typography>
         </Box>
-        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo hasLocationInfo={showInfo} hasInProgress={false} />
+        <EventInfoDetails event={scEvent} hasRecurringInfo hasCreatedInfo hasLocationInfo={showInfo} />
       </CardContent>
     </Root>
   );

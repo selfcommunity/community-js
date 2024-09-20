@@ -1,10 +1,10 @@
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Divider, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import BaseItem from '../../shared/BaseItem';
 import Calendar from '../../shared/Calendar';
@@ -23,6 +23,7 @@ const classes = {
   snippetRoot: `${PREFIX}-snippet-root`,
   detailImageWrapper: `${PREFIX}-detail-image-wrapper`,
   detailImage: `${PREFIX}-detail-image`,
+  detailInProgress: `${PREFIX}-detail-in-progress`,
   detailNameWrapper: `${PREFIX}-detail-name-wrapper`,
   detailName: `${PREFIX}-detail-name`,
   detailContent: `${PREFIX}-detail-content`,
@@ -32,11 +33,14 @@ const classes = {
   detailActions: `${PREFIX}-detail-actions`,
   previewImageWrapper: `${PREFIX}-preview-image-wrapper`,
   previewImage: `${PREFIX}-preview-image`,
+  previewInProgress: `${PREFIX}-preview-in-progress`,
   previewNameWrapper: `${PREFIX}-preview-name-wrapper`,
   previewName: `${PREFIX}-preview-name`,
   previewContent: `${PREFIX}-preview-content`,
   previewActions: `${PREFIX}-preview-actions`,
+  snippetImage: `${PREFIX}-snippet-image`,
   snippetAvatar: `${PREFIX}-snippet-avatar`,
+  snippetInProgress: `${PREFIX}-snippet-in-progress`,
   snippetPrimary: `${PREFIX}-snippet-primary`,
   snippetSecondary: `${PREFIX}-snippet-secondary`,
   snippetActions: `${PREFIX}-snippet-actions`
@@ -87,6 +91,11 @@ export interface EventProps extends WidgetProps {
    * @default null
    */
   actions?: React.ReactNode;
+  /**
+   * Hide in progress
+   * @default false
+   */
+  hideInProgress?: boolean;
   /**
    * Hide participants
    * @default false
@@ -157,6 +166,7 @@ export default function Event(inProps: EventProps): JSX.Element {
     event = null,
     className = null,
     template = SCEventTemplateType.SNIPPET,
+    hideInProgress = false,
     hideEventParticipants = false,
     hideEventPlanner = false,
     actions,
@@ -167,6 +177,7 @@ export default function Event(inProps: EventProps): JSX.Element {
 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -189,6 +200,14 @@ export default function Event(inProps: EventProps): JSX.Element {
       <DetailRoot className={classes.detailRoot}>
         <Box className={classes.detailImageWrapper}>
           <CardMedia component="img" image={scEvent.image_medium} alt={scEvent.name} className={classes.detailImage} />
+          {!hideInProgress && inProgress && (
+            <Chip
+              size="small"
+              component="div"
+              label={<FormattedMessage id="ui.event.inProgress" defaultMessage="ui.event.inProgress" />}
+              className={classes.detailInProgress}
+            />
+          )}
           <Calendar day={new Date(scEvent.start_date).getDate()} />
         </Box>
         <CardContent className={classes.detailContent}>
@@ -240,7 +259,15 @@ export default function Event(inProps: EventProps): JSX.Element {
     contentObj = (
       <PreviewRoot className={classes.previewRoot}>
         <Box position="relative" className={classes.previewImageWrapper}>
-          <CardMedia component="img" height="100px" image={scEvent.image_medium} alt={scEvent.name} className={classes.previewImage} />
+          <CardMedia component="img" image={scEvent.image_medium} alt={scEvent.name} className={classes.previewImage} />
+          {!hideInProgress && inProgress && (
+            <Chip
+              size="small"
+              component="div"
+              label={<FormattedMessage id="ui.event.inProgress" defaultMessage="ui.event.inProgress" />}
+              className={classes.previewInProgress}
+            />
+          )}
         </Box>
         <CardContent className={classes.previewContent}>
           <EventInfoDetails
@@ -273,7 +300,19 @@ export default function Event(inProps: EventProps): JSX.Element {
         square={true}
         disableTypography
         className={classes.snippetRoot}
-        image={<Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.snippetAvatar} />}
+        image={
+          <Box className={classes.snippetImage}>
+            <Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.snippetAvatar} />{' '}
+            {!hideInProgress && inProgress && (
+              <Chip
+                size="small"
+                component="div"
+                label={<FormattedMessage id="ui.event.inProgress" defaultMessage="ui.event.inProgress" />}
+                className={classes.snippetInProgress}
+              />
+            )}
+          </Box>
+        }
         primary={
           <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)} className={classes.snippetPrimary}>
             <Typography component="span">{`${intl.formatDate(scEvent.start_date, {

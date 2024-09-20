@@ -26,7 +26,7 @@ export default {
 } as Meta<typeof Event>;
 
 const template = (args) => (
-  <div style={{maxWidth: 500}}>
+  <div style={{maxWidth: 400}}>
     <Event {...args} />
   </div>
 );

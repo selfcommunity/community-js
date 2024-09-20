@@ -4,9 +4,11 @@ import { SCEventType, SCUserType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
 import { useSnackbar } from 'notistack';
-import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react';
+import PubSub from 'pubsub-js';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
+import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
 import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import { actionWidgetTypes } from '../../utils/widget';
@@ -15,6 +17,7 @@ import EventInviteButton from '../EventInviteButton';
 import InviteUserEventButton from '../InviteUserEventButton';
 import User, { UserProps, UserSkeleton } from '../User';
 import { PREFIX } from './constants';
+import { TabValueEnum, TabValueType } from './types';
 
 const classes = {
   actionButton: `${PREFIX}-action-button`,
@@ -31,7 +34,7 @@ const DialogRoot = styled(BaseDialog, {
 })(() => ({}));
 
 interface TabComponentProps {
-  tabValue: '1' | '2' | '3';
+  tabValue: TabValueType;
 
   state: any;
 
@@ -57,21 +60,36 @@ interface TabComponentProps {
     setUsers?: Dispatch<SetStateAction<SCUserType[]>>;
   };
 
-  setRefresh?: Dispatch<SetStateAction<boolean>>;
+  handleRefresh?: (tabValue: TabValueType) => void;
 }
 
 export default function TabContentComponent(props: TabComponentProps) {
   // PROPS
-  const { state, dispatch, userProps, dialogProps, actionProps, setRefresh, tabValue } = props;
+  const { tabValue, state, dispatch, userProps, dialogProps, actionProps, handleRefresh } = props;
 
   // STATE
   const [openDialog, setOpenDialog] = useState(false);
+
+  // REFS
+  const updatesInvited = useRef(null);
+  const updatesParticipants = useRef(null);
 
   // HOOKS
   const { enqueueSnackbar } = useSnackbar();
 
   // CONSTS
-  const users = useMemo(() => (tabValue === '3' ? actionProps?.users : state.results), [tabValue, actionProps, state]);
+  const users: SCUserType[] = useMemo(() => (tabValue === TabValueEnum.THREE ? actionProps?.users : state.results), [tabValue, actionProps, state]);
+
+  // EFFECTS
+  useEffect(() => {
+    updatesInvited.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.INVITE_MEMBER}`, handleInviteMember);
+    updatesParticipants.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.ADD_MEMBER}`, handleToggleMember);
+
+    return () => {
+      updatesInvited.current && PubSub.unsubscribe(updatesInvited.current);
+      updatesParticipants.current && PubSub.unsubscribe(updatesParticipants.current);
+    };
+  }, []);
 
   // HANDLERS
   /**
@@ -91,16 +109,24 @@ export default function TabContentComponent(props: TabComponentProps) {
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [dispatch, state.next, state.isLoadingNext, state.initialized]);
+  }, [state.next, state.isLoadingNext, state.initialized]);
 
   const handleToggleDialogOpen = useCallback(() => {
     setOpenDialog((prev) => !prev);
   }, []);
 
+  const handleToggleMember = useCallback(() => {
+    handleRefresh?.(TabValueEnum.ONE);
+  }, []);
+
+  const handleInviteMember = useCallback(() => {
+    handleRefresh?.(TabValueEnum.TWO);
+  }, []);
+
   const getActionsComponent = useCallback(
     (userId: number) => {
-      if (tabValue === '2' && actionProps) {
-        const handleInvitations = (invited: boolean) => {
+      if (tabValue === TabValueEnum.TWO && actionProps) {
+        const _handleInvitations = (invited: boolean) => {
           if (invited) {
             actionProps.setCount?.((prev) => prev - 1);
           } else {
@@ -108,8 +134,8 @@ export default function TabContentComponent(props: TabComponentProps) {
           }
         };
 
-        return <InviteUserEventButton event={actionProps.scEvent} userId={userId} handleInvitations={handleInvitations} />;
-      } else if (tabValue === '3' && actionProps) {
+        return <InviteUserEventButton event={actionProps.scEvent} userId={userId} handleInvitations={_handleInvitations} />;
+      } else if (tabValue === TabValueEnum.THREE && actionProps) {
         const handleConfirm = (id: number | null) => {
           if (id) {
             actionProps.setCount((prev) => prev - 1);
@@ -138,34 +164,29 @@ export default function TabContentComponent(props: TabComponentProps) {
 
       return undefined;
     },
-    [tabValue, actionProps, dispatch, setRefresh]
+    [tabValue, actionProps]
   );
 
-  if (tabValue === '1' && actionProps?.count === 0) {
+  if (tabValue === TabValueEnum.ONE && actionProps?.count === 0) {
     return (
       <Typography variant="body1">
         <FormattedMessage id="ui.eventMembersWidget.noParticipants" defaultMessage="ui.eventMembersWidget.noParticipants" />
       </Typography>
     );
-  }
-
-  if (tabValue === '2' && state.count === 0 && actionProps) {
+  } else if (tabValue === TabValueEnum.TWO && state.count === 0 && actionProps) {
     const date = actionProps.scEvent.end_date || actionProps.scEvent.start_date;
     const disabled = new Date(date).getTime() < new Date().getTime();
 
     const handleInvitations = (invited: boolean) => {
       if (invited) {
-        dispatch({ type: actionWidgetTypes.RESET });
-        setRefresh(true);
+        handleRefresh?.(tabValue);
       }
     };
 
     return (
       <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} disabled={disabled} />
     );
-  }
-
-  if (tabValue === '3' && actionProps?.count === 0) {
+  } else if (tabValue === TabValueEnum.THREE && actionProps?.count === 0) {
     return (
       <Typography variant="body1">
         <FormattedMessage id="ui.eventMembersWidget.noOtherRequests" defaultMessage="ui.eventMembersWidget.noOtherRequests" />

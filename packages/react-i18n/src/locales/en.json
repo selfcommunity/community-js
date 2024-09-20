@@ -264,6 +264,7 @@
   "ui.createEvent.title": "Create your Event now!",
   "ui.createEvent.description": "Engage your Community with an Event: whether it’s a link for a virtual Event or an address to meet in person. Decide if it will be open to everyone or accessible by invitation only. Discover how easy it is to engage your Community!",
   "ui.event.see": "See",
+  "ui.event.inProgress": "In progress",
   "ui.eventHeader.visibility.private": "Private Event",
   "ui.eventHeader.visibility.public": "Public Event",
   "ui.eventHeader.location.live": "Live",

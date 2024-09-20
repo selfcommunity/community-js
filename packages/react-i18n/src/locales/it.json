@@ -264,6 +264,7 @@
   "ui.createEvent.title": "Crea il tuo Evento adesso!",
   "ui.createEvent.description": "Coinvolgi la tua Community con un Evento: sia che si tratti di un link per un Evento virtuale o di un indirizzo per incontrarsi di persona. Decidi se renderlo aperto a tutti o accessibile solo su invito. Scopri quanto è semplice coinvolgere la tua Community!",
   "ui.event.see": "Vedi",
+  "ui.event.inProgress": "In corso",
   "ui.eventHeader.visibility.private": "Evento Privato",
   "ui.eventHeader.visibility.public": "Evento Pubblico",
   "ui.eventHeader.location.live": "Di persona",
