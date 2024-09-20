@@ -122,6 +122,7 @@ import {
   SCDeviceTypeEnum
 } from './device';
 import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType} from './group';
+import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType} from './onboarding';
 /**
  * Exports all types
  */
@@ -273,5 +274,8 @@ export {
   SCDeviceTypeEnum,
   type SCGroupType,
   SCGroupPrivacyType,
-  SCGroupSubscriptionStatusType
+  SCGroupSubscriptionStatusType,
+  type SCStepType,
+  SCOnBoardingStepType,
+  SCOnBoardingStepStatusType
 };

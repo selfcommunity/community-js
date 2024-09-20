@@ -1,8 +1,8 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
 import {FeatureService, PreferenceService} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {Logger} from '@selfcommunity/utils';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
+import {SCContextType, SCPreferencesContextType} from '../../../types/context';
 import {useSCContext} from '../SCContextProvider';
 
 /**
@@ -56,14 +56,34 @@ export default function SCPreferencesProvider({children = null}: {children: Reac
       .catch((_error) => {
         Logger.error(SCOPE_SC_CORE, _error);
         setError(_error);
+        // setLoading(false);
       });
   }, []);
+
+  /**
+   * Force refresh of preferences & features
+   */
+  const refresh = () => {
+    Promise.all([PreferenceService.getAllPreferences(), FeatureService.getAllFeatures()])
+      .then(function ([preferences, features]) {
+        setPreferences(preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {}));
+        setFeatures(features['results'].filter((f) => f.enabled).map((f) => f.name));
+      })
+      .catch((_error) => {
+        Logger.error(SCOPE_SC_CORE, _error);
+        setError(_error);
+      });
+  };
 
   /**
    * Nesting all necessary providers
    * All child components will use help contexts to works
    */
-  return <SCPreferencesContext.Provider value={{preferences, features}}>{!loading && children}</SCPreferencesContext.Provider>;
+  return (
+    <SCPreferencesContext.Provider value={{preferences, features, setPreferences, setFeatures, refresh}}>
+      {!loading && children}
+    </SCPreferencesContext.Provider>
+  );
 }
 
 /**

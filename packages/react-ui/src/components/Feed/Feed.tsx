@@ -19,7 +19,13 @@ import {FormattedMessage} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
+import {
+	SCContributionType,
+	SCCustomAdvPosition,
+	SCFeedObjectType,
+	SCFeedUnitType,
+	SCUserType
+} from '@selfcommunity/types';
 import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, getQueryStringParameter, isClientSideRendering, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -65,6 +71,7 @@ export type FeedSidebarProps = StickyBoxProps;
 export type FeedRef = {
   addFeedData: (obj: any, syncPagination?: boolean) => void;
   refresh: () => void;
+  getCurrentFeedObjectIds: () => number[];
 };
 
 export interface FeedProps {
@@ -743,6 +750,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     },
     refresh: () => {
       refresh();
+    },
+    getCurrentFeedObjectIds: () => {
+      return [...headData.map((o: SCFeedUnitType) => o[o.type].id), ...feedDataObject.results.map((o: SCFeedUnitType) => o[o.type].id)];
     }
   }));
 

@@ -171,8 +171,9 @@ import UserSubscribedGroupsWidget, {
   UserSubscribedGroupsWidgetSkeleton
 } from './components/UserSubscribedGroupsWidget';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
+import OnBoardingWidget, {OnBoardingWidgetProps, OnBoardingWidgetSkeleton} from './components/OnBoardingWidget';
 import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
-
+import ProgressBar, {ProgressBarProps} from './shared/ProgressBar';
 /**
  * Constants
  */
@@ -543,6 +544,11 @@ export {
   BaseDialogProps,
   GroupSettingsIconButton,
   GroupSettingsIconButtonProps,
+  OnBoardingWidget,
+  OnBoardingWidgetProps,
+  OnBoardingWidgetSkeleton,
+  ProgressBar,
+  ProgressBarProps,
 
   /* Assets */
   LogoSelfCommunity

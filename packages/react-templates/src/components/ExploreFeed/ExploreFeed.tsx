@@ -14,7 +14,8 @@ import {
   LoyaltyProgramWidget,
   UserSuggestionWidget,
   PlatformWidget,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  OnBoardingWidget
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -161,6 +162,23 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
+  const handleAddGenerationContent = (feedObjects) => {
+    if (feedRef && feedRef.current) {
+      const currentFeedObjectIds = feedRef.current.getCurrentFeedObjectIds();
+      feedObjects.forEach((feedObject) => {
+        if (!currentFeedObjectIds.includes(feedObject.id)) {
+          const feedUnit = {
+            type: feedObject.type,
+            [feedObject.type]: feedObject,
+            seen_by_id: [],
+            has_boost: false
+          };
+          feedRef.current.addFeedData(feedUnit, true);
+        }
+      });
+    }
+  };
+
   // WIDGETS
   const _widgets = useMemo(
     () =>
@@ -190,7 +208,11 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
+      HeaderComponent={
+        <>
+          <InlineComposerWidget onSuccess={handleComposerSuccess} /> <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />
+        </>
+      }
       FeedSidebarProps={FeedSidebarProps}
       enabledCustomAdvPositions={[
         SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
