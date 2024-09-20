@@ -43,7 +43,7 @@ const Component = {
         '&::-webkit-scrollbar': {
           display: 'none'
         },
-        '& a': {
+        '& a:not(.MuiChip-clickable)': {
           color: 'inherit',
           textDecoration: 'none',
           '&::after': {
@@ -61,11 +61,11 @@ const Component = {
             fontWeight: theme.typography.fontWeightBold
           }
         },
-        '& .SCFeedObject-group': {
+        '& .SCFeedObject-group, & .SCFeedObject-event': {
           marginRight: `${theme.spacing(1)} !important`
         }
       },
-      '& .SCFeedObject-group': {
+      '& .SCFeedObject-group, & .SCFeedObject-event': {
         justifyContent: 'flex-start',
         padding: theme.spacing(0.5),
         '& a': {
@@ -141,7 +141,7 @@ const Component = {
         '& .SCFeedObject-category': {
           borderBottom: '1px solid rgba(221, 221, 221, 1)',
           margin: theme.spacing(0, 2),
-          '& .SCFeedObject-group': {
+          '& .SCFeedObject-group, & .SCFeedObject-event': {
             borderBottom: 'none',
             margin: theme.spacing(0),
             '& .MuiChip-icon': {
@@ -151,7 +151,7 @@ const Component = {
             }
           }
         },
-        '& .SCFeedObject-group': {
+        '& .SCFeedObject-group, & .SCFeedObject-event': {
           borderBottom: '1px solid rgba(221, 221, 221, 1)',
           margin: theme.spacing(1, 2, 0, 2)
         },

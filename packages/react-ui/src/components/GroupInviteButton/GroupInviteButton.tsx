@@ -14,7 +14,7 @@ import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
 
 const messages = defineMessages({
@@ -135,7 +135,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
    */
   function notifyChanges(group: SCGroupType, usersInvited: SCUserType[]) {
     if (group && usersInvited) {
-      PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.INVITE_MEMBER}`, usersInvited);
+      PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.INVITE_MEMBER}`, usersInvited);
     }
   }
 

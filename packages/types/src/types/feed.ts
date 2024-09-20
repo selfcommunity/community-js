@@ -7,6 +7,7 @@ import {SCTagType} from './tag';
 import {SCReactionType} from './reaction';
 import {SCContributionType} from './contribution';
 import {SCGroupType} from './group';
+import {SCEventType} from './event';
 
 /**
  * Typology of feed
@@ -15,7 +16,8 @@ export enum SCFeedTypologyType {
   HOME = 'home',
   EXPLORE = 'explore',
   CATEGORY = 'category',
-  GROUP = 'group'
+  GROUP = 'group',
+	EVENT = 'event',
 }
 
 /**
@@ -116,6 +118,11 @@ export interface SCFeedObjectType {
    * The id of the group.
    */
   group?: SCGroupType;
+
+  /**
+   * The id of the event.
+   */
+  event?: SCEventType;
 
   /**
    * List of medias

@@ -11,7 +11,11 @@ const Component = {
         borderRadius: 5
       },
       '& .SCProgressBar-progress': {
-        marginTop: theme.spacing(0.5)
+        marginTop: theme.spacing(0.5),
+        h4: {
+          fontWeight: theme.typography.fontWeightBold,
+          fontSize: '18px'
+        }
       }
     })
   }

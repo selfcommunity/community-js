@@ -1,15 +1,15 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
-import { Box, BoxProps, IconButton } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { SCMediaType } from '@selfcommunity/types/src/index';
-import { useThemeProps } from '@mui/system';
+import React, {ReactElement, useCallback, useMemo, useState} from 'react';
+import {Box, BoxProps, IconButton} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {SCMediaType} from '@selfcommunity/types/src/index';
+import {useThemeProps} from '@mui/system';
 import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
-import { ReactSortable } from 'react-sortablejs';
+import {ReactSortable} from 'react-sortablejs';
 import DisplayComponent from './DisplayComponent';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 import filter from './filter';
-import { MEDIA_TYPE_VIDEO } from '../../../constants/Media';
+import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 
 const classes = {
   previewRoot: `${PREFIX}-preview-root`,
@@ -30,31 +30,41 @@ export interface PreviewComponentProps extends Omit<BoxProps, 'value' | 'onChang
 
 const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: React.Ref<unknown>): ReactElement => {
   // PROPS
-  const {className, onChange, value= [], ...rest} = props;
+  const {className, onChange, value = [], ...rest} = props;
 
   // MEMO
   const medias = useMemo(() => value.filter(filter), [value]);
 
   // HANDLERS
-  const handleSort = useCallback((medias: SCMediaType[]) => {
-    onChange && onChange([...value.filter((media: any) => medias.findIndex((m: any) => m.id === media.id) === -1), ...medias]);
-  }, [onChange, value]);
-  const handleDelete = useCallback((id: number) => () => onChange && onChange(value.filter((media: SCMediaType) => media.id !== id)), [onChange, value]);
+  const handleSort = useCallback(
+    (medias: SCMediaType[]) => {
+      onChange && onChange([...value.filter((media: any) => medias.findIndex((m: any) => m.id === media.id) === -1), ...medias]);
+    },
+    [onChange, value]
+  );
+  const handleDelete = useCallback(
+    (id: number) => () => onChange && onChange(value.filter((media: SCMediaType) => media.id !== id)),
+    [onChange, value]
+  );
 
-  return <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>
-    {medias.length > 0 && (
-      <ReactSortable list={medias} setList={handleSort}>
-        {medias.map((media) => (
-          <Box key={media.id} className={classNames(classes.media, { [classes.video]: media.embed.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO })}>
-            <DisplayComponent medias={[media]} />
-            <IconButton className={classes.delete} onClick={handleDelete(media.id)} size="small">
-              <Icon>delete</Icon>
-            </IconButton>
-          </Box>
-        ))}
-      </ReactSortable>
-    )}
-  </Root>
+  return (
+    <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>
+      {medias.length > 0 && (
+        <ReactSortable list={medias} setList={handleSort}>
+          {medias.map((media) => (
+            <Box
+              key={media.id}
+              className={classNames(classes.media, {[classes.video]: media.embed.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO})}>
+              <DisplayComponent medias={[media]} />
+              <IconButton className={classes.delete} onClick={handleDelete(media.id)} size="small">
+                <Icon>delete</Icon>
+              </IconButton>
+            </Box>
+          ))}
+        </ReactSortable>
+      )}
+    </Root>
+  );
 });
 
 export default PreviewComponent;

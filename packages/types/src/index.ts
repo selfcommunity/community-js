@@ -79,6 +79,7 @@ import {
   type SCNotificationUnseenCountType,
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
+  type SCNotificationEventActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -117,6 +118,7 @@ import {
   type SCSuggestionType,
   type SCContributionStatus,
   type SCGroupType,
+  type SCEventType,
   type SCStepType
 } from './types';
 
@@ -154,6 +156,11 @@ import {
   SCGroupPrivacyType,
   SCGroupSubscriptionStatusType,
   SCPrivateMessageType,
+  SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
+  SCEventRecurrenceType,
+  SCEventLocationType,
+  SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType
 } from './types';
@@ -192,6 +199,11 @@ export {
   SCGroupPrivacyType,
   SCGroupSubscriptionStatusType,
   SCPrivateMessageType,
+  SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
+  SCEventRecurrenceType,
+  SCEventLocationType,
+  SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType
 };
@@ -273,6 +285,7 @@ export {
   type SCCustomNotificationType,
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
+  type SCNotificationEventActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -311,5 +324,6 @@ export {
   type SCGcmDeviceType,
   type SCSuggestionType,
   type SCGroupType,
+  type SCEventType,
   type SCStepType
 };

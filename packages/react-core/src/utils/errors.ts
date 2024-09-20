@@ -40,6 +40,8 @@ export class ValidationError {
   static ERROR_INVALID_INTEGRATIONS = 6100;
   static ERROR_INVALID_INTEGRATIONS_OPENAI = 6101;
   static ERROR_INVALID_INTEGRATIONS_OPENAI_SECRETKEY = 6102;
+  static ERROR_INVALID_INTEGRATIONS_GEOCODING = 6103;
+  static ERROR_INVALID_INTEGRATIONS_GEOCODING_APIKEY = 6104;
   static defaultErrorMessageMap = {
     [ValidationError.ERROR_INVALID_CONF]:
       'Invalid or missing library configuration. Check the configuration that is passed to the SCContextProvider.',
@@ -81,6 +83,8 @@ export class ValidationError {
     [ValidationError.ERROR_INVALID_INTEGRATIONS]: 'Invalid integrations conf.',
     [ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI]: 'Invalid integrations (openai) option.',
     [ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI_SECRETKEY]: 'Invalid integrations openai conf: secretKey must be a string value.',
+    [ValidationError.ERROR_INVALID_INTEGRATIONS_GEOCODING]: 'Invalid integrations (geocoding) option.',
+    [ValidationError.ERROR_INVALID_INTEGRATIONS_GEOCODING_APIKEY]: 'Invalid integrations geocoding conf: apiKey must be a string value.',
   };
 
   errorCode = null;

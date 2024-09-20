@@ -1,5 +1,5 @@
-import './styles/reset.css';
 import './fonts/community-icons.css';
+import './styles/reset.css';
 
 /**
  * Style fragments - Imports - Start
@@ -28,6 +28,7 @@ import SCBaseItemButton from './components/SCBaseItemButton';
 import SCBottomNavigation from './components/SCBottomNavigation';
 import SCBroadcastMessages from './components/SCBroadcastMessages';
 import SCBullet from './components/SCBullet';
+import SCCalendar from './components/SCCalendar';
 import SCCategories from './components/SCCategories';
 import SCCategoriesPopularWidget from './components/SCCategoriesPopularWidget';
 import SCCategoriesSuggestionWidget from './components/SCCategoriesSuggestionWidget';
@@ -51,6 +52,8 @@ import SCCommentsObject from './components/SCCommentsObject';
 import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
+import SCCreateEventButton from './components/SCCreateEventButton';
+import SCCreateEventWidget from './components/SCCreateEventWidget';
 import SCCreateGroupButton from './components/SCCreateGroupButton';
 import SCCustomAdv from './components/SCCustomAdv';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
@@ -59,6 +62,18 @@ import SCDefaultHeaderContent from './components/SCDefaultHeaderContent';
 import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
 import SCEmojiPicker from './components/SCEmojiPicker';
+import SCEvent from './components/SCEvent';
+import SCEventActionsMenu from './components/SCEventActionsMenu';
+import SCEventForm from './components/SCEventForm';
+import SCEventHeader from './components/SCEventHeader';
+import SCEventInfoDetails from './components/SCEventInfoDetails';
+import SCEventInfoWidget from './components/SCEventInfoWidget';
+import SCEventInviteButton from './components/SCEventInviteButton';
+import SCEventLocationWidget from './components/SCEventLocationWidget';
+import SCEventMembersWidget from './components/SCEventMembersWidget';
+import SCEventParticipantsButton from './components/SCEventParticipantsButton';
+import SCEvents from './components/SCEvents';
+import SCEventSubscribeButton from './components/SCEventSubscribeButton';
 import SCExploreFeedTemplate from './components/SCExploreFeedTemplate';
 import SCFeed from './components/SCFeed';
 import SCFeedObject from './components/SCFeedObject';
@@ -77,9 +92,9 @@ import SCGroupInvitedWidget from './components/SCGroupInvitedWidget';
 import SCGroupMembersButton from './components/SCGroupMembersButton';
 import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
+import SCGroups from './components/SCGroups';
 import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
 import SCGroupTemplate from './components/SCGroupTemplate';
-import SCGroups from './components/SCGroups';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
 import SCIncubatorListWidget from './components/SCIncubatorListWidget';
@@ -92,6 +107,8 @@ import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
 import SCMainFeedTemplate from './components/SCMainFeedTemplate';
 import SCMediaFile from './components/SCMediaFile';
 import SCMediaLink from './components/SCMediaLink';
+import SCMediaShare from './components/SCMediaShare';
+import SCMyEventsWidget from './components/SCMyEventsWidget';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
 import SCNavigationToolbar from './components/SCNavigationToolbar';
@@ -113,10 +130,12 @@ import SCPrivateMessageThread from './components/SCPrivateMessageThread';
 import SCPrivateMessageThreadItem from './components/SCPrivateMessageThreadItem';
 import SCProgressBar from './components/SCProgressBar';
 import SCReactionAction from './components/SCReactionAction';
+import SCRelatedEventsWidget from './components/SCRelatedEventsWidget';
 import SCRelatedFeedObjectsWidget from './components/SCRelatedFeedObjectsWidget';
 import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
+import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
@@ -298,6 +317,7 @@ const theme = {
     SCMainFeedTemplate,
     SCMediaFile,
     SCMediaLink,
+    SCMediaShare,
     SCNavigationMenuIconButton,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
@@ -342,6 +362,24 @@ const theme = {
     SCUserProfileTemplate,
     SCUserSubscribedGroupsWidget,
     SCUserSuggestionWidget,
+    SCEventForm,
+    SCCreateEventButton,
+    SCEventLocationWidget,
+    SCEvent,
+    SCEventActionsMenu,
+    SCEvents,
+    SCEventInviteButton,
+    SCEventHeader,
+    SCEventInfoWidget,
+    SCEventInfoDetails,
+    SCEventSubscribeButton,
+    SCEventParticipantsButton,
+    SCMyEventsWidget,
+    SCCalendar,
+    SCCreateEventWidget,
+    SCSuggestedEventsWidget,
+    SCEventMembersWidget,
+    SCRelatedEventsWidget,
     SCVoteAudienceButton,
     SCVoteButton,
     SCWidget

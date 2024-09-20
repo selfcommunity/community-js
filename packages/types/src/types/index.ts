@@ -86,7 +86,8 @@ import {
   type SCNotificationUnseenCountType,
   type SCNotificationUserFollowType,
   type SCNotificationVoteUpType,
-  type SCNotificationGroupActivityType
+  type SCNotificationGroupActivityType,
+  SCNotificationEventActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -122,6 +123,14 @@ import {
   SCDeviceTypeEnum
 } from './device';
 import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType} from './group';
+import {
+  type SCEventType,
+  SCEventPrivacyType,
+  SCEventRecurrenceType,
+  SCEventLocationType,
+  SCEventDateFilterType,
+  SCEventSubscriptionStatusType
+} from './event';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType} from './onboarding';
 /**
  * Exports all types
@@ -225,6 +234,7 @@ export {
   type SCNotificationIncubatorType,
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
+  type SCNotificationEventActivityType,
   type SCPrizeType,
   type SCPrizeUserType,
   SCPrizeUserStatusType,
@@ -275,6 +285,12 @@ export {
   type SCGroupType,
   SCGroupPrivacyType,
   SCGroupSubscriptionStatusType,
+  type SCEventType,
+  SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
+  SCEventRecurrenceType,
+  SCEventLocationType,
+  SCEventDateFilterType,
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType
