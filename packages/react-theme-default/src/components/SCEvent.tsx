@@ -60,7 +60,7 @@ const Component = {
         padding: `${theme.spacing()} !important`,
         '& .SCEventInfoDetails-icon-text-wrapper': {
           '& .MuiTypography-root': {
-            fontSize: '0.75rem'
+            fontSize: '0.8rem'
           }
         },
         '& .SCEvent-detail-user': {

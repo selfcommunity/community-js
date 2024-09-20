@@ -5,7 +5,7 @@ const Component = {
       '& .SCEventInfoDetails-icon-text-wrapper': {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: theme.spacing(1),
+        gap: theme.spacing(0.75),
 
         '& > p': {
           textTransform: 'capitalize'
