@@ -234,7 +234,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  
+
   // STATE
   const [tutorialIndex, setTutorialIndex] = useState<number>(0);
   const [isTutorialOpen, setIsTutorialOpen] = useState<boolean>(false);

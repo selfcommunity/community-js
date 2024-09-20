@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import React, {useContext, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesPopularWidget,
@@ -24,6 +24,7 @@ import {SCCustomAdvPosition} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
+import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -142,6 +143,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
 
   // CONTEXT
   const {enqueueSnackbar} = useSnackbar();
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // REF
   const feedRef = useRef<FeedRef>();
@@ -210,7 +212,8 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       }}
       HeaderComponent={
         <>
-          <InlineComposerWidget onSuccess={handleComposerSuccess} /> <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />
+          <InlineComposerWidget onSuccess={handleComposerSuccess} />
+          {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
         </>
       }
       FeedSidebarProps={FeedSidebarProps}

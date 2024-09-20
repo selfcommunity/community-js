@@ -27,7 +27,7 @@ export interface FeedObjectMediaPreviewProps extends BoxProps {
   medias: SCMediaType[];
   /**
    * Media types
-   * @default 'image', 'document', 'link', 'share'
+   * @default 'image', 'document', 'link', 'share', 'Event'
    */
   mediaObjectTypes?: SCMediaObjectType[];
 }

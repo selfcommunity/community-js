@@ -27,8 +27,10 @@ import {
   SCSubscribedIncubatorsManagerType,
   SCBlockedUsersManagerType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
 } from '../../../types';
 import useSCSubscribedGroupsManager from '../../../hooks/useSCSubscribedGroupsManager';
+import useSCSubscribedEventsManager from '../../../hooks/useSCSubscribedEventsManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -86,6 +88,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const categoriesManager: SCFollowedCategoriesManagerType = useSCFollowedCategoriesManager(state.user, updateUser);
   const blockedUsersManager: SCBlockedUsersManagerType = useSCBlockedUsersManager(state.user);
   const subscribedGroupsManager: SCSubscribedGroupsManagerType = useSCSubscribedGroupsManager(state.user);
+  const subscribedEventsManager: SCSubscribedEventsManagerType = useSCSubscribedEventsManager(state.user);
   /**
    * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
    */
@@ -139,6 +142,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       subscribedIncubatorsManager.refresh && subscribedIncubatorsManager.refresh();
       blockedUsersManager.refresh && blockedUsersManager.refresh();
       subscribedGroupsManager.refresh && subscribedGroupsManager.refresh();
+      subscribedEventsManager.refresh && subscribedEventsManager.refresh();
     }
   }
 
@@ -265,6 +269,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         incubators: subscribedIncubatorsManager,
         blockedUsers: blockedUsersManager,
         groups: subscribedGroupsManager,
+        events: subscribedEventsManager,
       },
     }),
     [
@@ -284,6 +289,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       subscribedIncubatorsManager.incubators,
       subscribedGroupsManager.loading,
       subscribedGroupsManager.groups,
+      subscribedEventsManager.loading,
+      subscribedEventsManager.events,
     ]
   );
 

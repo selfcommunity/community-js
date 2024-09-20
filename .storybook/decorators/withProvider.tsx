@@ -24,6 +24,7 @@ const ANONYMOUS = false;
 const defaultTheme = createTheme();
 
 const withProvider = (Story, context) => {
+	const [initialized, setInitialized] = useState(ANONYMOUS);
   const [authToken, setAuthToken] = useState(undefined);
 
   /**
@@ -34,6 +35,7 @@ const withProvider = (Story, context) => {
       getOAuthSession(context)
         .then((res) => {
           setAuthToken(res);
+					setInitialized(true);
         })
         .catch(() => {
           console.log('Unable to get user session. Check username & password.');
@@ -42,12 +44,14 @@ const withProvider = (Story, context) => {
       getJWTSession(context)
         .then((res) => {
           setAuthToken(res);
+					setInitialized(true);
         })
         .catch(() => {
           console.log('Unable to get user session. Check username & password.');
         });
     } else {
       setAuthToken({});
+			setInitialized(true);
     }
   };
 
@@ -108,7 +112,10 @@ const withProvider = (Story, context) => {
 		integrations: {
 			...(context.globals.openAISecretKey && {openai: {
 				secretKey: context.globals.openAISecretKey
-			}})
+			}}),
+      ...(context.globals.geocodingApiKey && {geocoding: {
+          apiKey: context.globals.geocodingApiKey
+        }})
 		},
     /* preferences: {
       preferences: {
@@ -164,6 +171,10 @@ const withProvider = (Story, context) => {
       setAuthToken(null);
     }
   };
+
+	if (!initialized) {
+		return null;
+	}
 
   return (
     <EmotionThemeProvider theme={defaultTheme}>

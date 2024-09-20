@@ -7,6 +7,7 @@ import {SCBroadcastMessageTemplateType} from './broadcastMessage';
 import {VirtualScrollerItemProps} from './virtualScroller';
 import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} from './user';
 import {PlatformWidgetActionType} from './platformWidget';
+import {SCEventTemplateType} from './event';
 
 export {
   SCFeedWidgetType,
@@ -21,5 +22,6 @@ export {
   SCUserProfileSettings,
   SCUserSocialAssociations,
   VirtualScrollerItemProps,
-	PlatformWidgetActionType
+  PlatformWidgetActionType,
+  SCEventTemplateType
 };

@@ -1,4 +1,4 @@
-import {SCCommentType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCGroupType, SCUserType} from '../index';
+import {SCCommentType, SCEventType, SCFeedDiscussionType, SCFeedPostType, SCFeedStatusType, SCGroupType, SCUserType} from '../index';
 import {SCPrivateMessageThreadType} from './privateMessage';
 import {SCUserBlockedSettingsType} from './user';
 import {SCCustomNotificationType} from './customNotification';
@@ -49,7 +49,11 @@ export enum SCNotificationTypologyType {
   USER_INVITED_TO_JOIN_GROUP = 'user_invited_to_join_group',
   USER_REQUESTED_TO_JOIN_GROUP = 'user_requested_to_join_group',
   USER_ACCEPTED_TO_JOIN_GROUP = 'user_accepted_to_join_group',
-  USER_ADDED_TO_GROUP = 'user_added_to_group'
+  USER_ADDED_TO_GROUP = 'user_added_to_group',
+  USER_INVITED_TO_JOIN_EVENT = 'user_invited_to_join_event',
+  USER_REQUESTED_TO_JOIN_EVENT = 'user_requested_to_join_event',
+  USER_ACCEPTED_TO_JOIN_EVENT = 'user_accepted_to_join_event',
+  USER_ADDED_TO_EVENT = 'user_added_to_event'
 }
 
 /**
@@ -100,6 +104,12 @@ export interface SCNotificationAggregatedType {
    * if it is a group. For some types of notifications it will not be present.
    */
   group?: SCGroupType;
+
+  /**
+   * Primary object involved (object that is common to notifications group)
+   * if it is an event. For some types of notifications it will not be present.
+   */
+  event?: SCEventType;
 
   /**
    * List of aggregated notifications by type.
@@ -543,4 +553,18 @@ export interface SCNotificationGroupActivityType extends SCNotificationType {
    * The Group obj
    */
   group: Partial<SCGroupType>;
+}
+
+/**
+ * Interface SCNotificationGroupActivityType.
+ */
+export interface SCNotificationEventActivityType extends SCNotificationType {
+  /**
+   * The user who performed the action
+   */
+  user: SCUserType;
+  /**
+   * The Group obj
+   */
+  event: Partial<SCEventType>;
 }

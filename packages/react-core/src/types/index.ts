@@ -21,6 +21,7 @@ import {
   SCLocaleContextType,
   SCAlertMessagesContextType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
 } from './context';
 
 import {
@@ -61,4 +62,5 @@ export {
   SCThemeVariablesType,
   SCThemeType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
 };

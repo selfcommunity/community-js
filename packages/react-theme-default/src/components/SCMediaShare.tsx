@@ -1,6 +1,11 @@
 const Component = {
   styleOverrides: {
-    displayRoot: ({theme}: any) => ({})
+    displayRoot: ({theme}: any) => ({
+      '& .SCMediaShare-share-preview': {
+        paddingLeft: theme.spacing(),
+        paddingRight: theme.spacing()
+      }
+    })
   }
 };
 

@@ -1,7 +1,7 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {BaseGetParams, SCPaginatedResponse} from '../../types';
-import {SCCategoryType, SCFeedObjectType, SCIncubatorType, SCSuggestionType, SCUserType} from '@selfcommunity/types';
+import {SCCategoryType, SCEventType, SCFeedObjectType, SCIncubatorType, SCSuggestionType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
@@ -10,6 +10,7 @@ export interface SuggestionApiClientInterface {
   getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>>;
   getPollSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   getUserSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getEventSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>>;
   getSearchSuggestion(search: string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCSuggestionType>>;
 }
 /**
@@ -51,6 +52,14 @@ export class SuggestionApiClient {
    */
   static getUserSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return apiRequest({...config, url: Endpoints.UserSuggestion.url({}), method: Endpoints.UserSuggestion.method, params});
+  }
+  /**
+   * This endpoint retrieves a list of events suggested to the current user.
+   * @param params
+   * @param config
+   */
+  static getEventSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+    return apiRequest({...config, url: Endpoints.EventSuggestion.url({}), method: Endpoints.EventSuggestion.method, params});
   }
   /**
    * This endpoint retrieves a list of users suggested to the current user.
@@ -108,6 +117,11 @@ export default class SuggestionService {
   static async getUserSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return SuggestionApiClient.getUserSuggestion(params, config);
   }
+
+  static async getEventSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCEventType>> {
+    return SuggestionApiClient.getEventSuggestion(params, config);
+  }
+
   static async getSearchSuggestion(
     search: string,
     params?: BaseGetParams,
