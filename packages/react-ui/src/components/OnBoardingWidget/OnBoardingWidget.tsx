@@ -56,7 +56,7 @@ import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCSt
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
-import {VirtualScrollerItemProps} from '@selfcommunity/react-ui';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -248,18 +248,19 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   // EFFECTS
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    if (prevContentsStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && currentContentsStep?.status === SCOnBoardingStepStatusType.COMPLETED) {
+    if (
+      prevContentsStep &&
+      (prevCategoriesStep as SCStepType).status === SCOnBoardingStepStatusType.IN_PROGRESS &&
+      currentContentsStep?.status === SCOnBoardingStepStatusType.COMPLETED
+    ) {
       showSuccessAlert(currentContentsStep);
     }
   }, [currentContentsStep, prevContentsStep]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     if (
-      prevCategoriesStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS &&
+      prevCategoriesStep &&
+      (prevCategoriesStep as SCStepType).status === SCOnBoardingStepStatusType.IN_PROGRESS &&
       currentCategoriesStep?.status === SCOnBoardingStepStatusType.COMPLETED
     ) {
       showSuccessAlert(currentCategoriesStep);

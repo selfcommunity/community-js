@@ -18,7 +18,7 @@ import {
   OnBoardingWidget
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
@@ -206,7 +206,8 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={
         <>
-          <InlineComposerWidget onSuccess={handleComposerSuccess} /> <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />
+          <InlineComposerWidget onSuccess={handleComposerSuccess} />
+          {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
         </>
       }
       requireAuthentication={true}
