@@ -55,11 +55,8 @@ import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCSt
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
-<<<<<<< HEAD
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
-=======
 import HeaderPlaceholder from '../../assets/onBoarding/header';
->>>>>>> events
 
 const classes = {
   root: `${PREFIX}-root`,
