@@ -49,6 +49,7 @@ import {MAX_SUMMARY_LENGTH} from '../../constants/Feed';
 import Composer from '../Composer';
 import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from '../FeedObjectMediaPreview';
 import {PREFIX} from './constants';
+import {MEDIA_EMBED_SC_SHARED_EVENT} from '../../constants/Media';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -391,6 +392,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
   const [expanded, setExpanded] = useState(summaryExpanded);
+  const hasEvent = useMemo(() => obj?.medias.length && obj.medias[0].embed?.embed_type === MEDIA_EMBED_SC_SHARED_EVENT, [obj?.medias]);
+  const _hideFollowAction = useMemo(
+    () => hideFollowAction || (hasEvent && obj?.medias?.[0]?.embed?.metadata?.active === false),
+    [hideFollowAction, hasEvent, obj]
+  );
 
   // INTL
   const intl = useIntl();
@@ -947,7 +953,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                       cacheStrategy={cacheStrategy}
                     />
                   )}
-                  {!hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
+                  {!_hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>
               </Box>
             </CardContent>
@@ -956,22 +962,25 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 feedObjectId={feedObjectId}
                 feedObjectType={feedObjectType}
                 feedObject={obj}
-                hideCommentAction={template === SCFeedObjectTemplateType.DETAIL}
+                hideCommentAction={template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)}
                 handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
+                hideVoteAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
+                hideShareAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {(template === SCFeedObjectTemplateType.DETAIL || expandedActivities) && (
-                <Box className={classes.replyContent}>
-                  <CommentObjectReplyComponent
-                    id={`reply-feedObject-${obj.id}`}
-                    onReply={handleReply}
-                    editable={!isReplying || Boolean(obj)}
-                    key={Number(isReplying)}
-                    {...CommentObjectReplyComponentProps}
-                  />
-                </Box>
-              )}
+              {(template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active === true)) ||
+                (expandedActivities && (
+                  <Box className={classes.replyContent}>
+                    <CommentObjectReplyComponent
+                      id={`reply-feedObject-${obj.id}`}
+                      onReply={handleReply}
+                      editable={!isReplying || Boolean(obj)}
+                      key={Number(isReplying)}
+                      {...CommentObjectReplyComponentProps}
+                    />
+                  </Box>
+                ))}
             </CardActions>
             {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
               <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>

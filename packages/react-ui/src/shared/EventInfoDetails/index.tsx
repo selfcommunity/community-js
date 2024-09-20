@@ -1,8 +1,8 @@
-import { Box, Icon, Stack, styled, Tooltip, Typography, useThemeProps } from '@mui/material';
-import { Link } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType } from '@selfcommunity/types';
-import { ReactNode, useMemo } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {Box, Icon, Stack, styled, Tooltip, Typography, useThemeProps} from '@mui/material';
+import {Link} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
+import {ReactNode, useMemo} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 const PREFIX = 'SCEventInfoDetails';
 
@@ -85,23 +85,30 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       {beforeDateInfo}
       {hasDateInfo && (
         <Stack className={classes.iconTextWrapper}>
-          {!hideDateIcon && <Icon fontSize="small">CalendarIcon</Icon>}
-          <Typography variant="body1">
-            <FormattedMessage
-              id="ui.eventInfoDetails.date.startEndTime"
-              defaultMessage="ui.eventInfoDetails.date.startEndTime"
-              values={{
-                date: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, {
-                  weekday: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                  month: 'long'
-                }),
-                start: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, { hour: 'numeric', minute: 'numeric' })
-              }}
-            />
-          </Typography>
-          {hasInProgress && (
+          {!hideDateIcon && <Icon fontSize="small">{event.active ? 'CalendarIcon' : 'calendar_off'}</Icon>}
+          <Tooltip
+            title={
+              !event.active ? (
+                <FormattedMessage id="ui.eventInfoDetails.deleted.tooltip" defaultMessage="ui.eventInfoDetails.deleted.tooltip" />
+              ) : null
+            }>
+            <Typography variant="body1">
+              <FormattedMessage
+                id="ui.eventInfoDetails.date.startEndTime"
+                defaultMessage="ui.eventInfoDetails.date.startEndTime"
+                values={{
+                  date: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, {
+                    weekday: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    month: 'long'
+                  }),
+                  start: intl.formatDate(event.running ? event.running_start_date : event.next_start_date, {hour: 'numeric', minute: 'numeric'})
+                }}
+              />
+            </Typography>
+          </Tooltip>
+          {hasInProgress && event.active && (
             <Tooltip title={<FormattedMessage id="ui.eventInfoDetails.inProgress" defaultMessage="ui.eventInfoDetails.inProgress" />}>
               <Box className={classes.live} />
             </Tooltip>

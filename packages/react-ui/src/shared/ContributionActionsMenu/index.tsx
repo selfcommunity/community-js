@@ -1216,6 +1216,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   return (
     <Root className={classNames(classes.root, className)}>
       <IconButton
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        disabled={contributionObj && contributionObj?.medias?.length && !contributionObj.medias[0].embed?.metadata?.active}
         ref={(ref) => {
           popperRef.current = ref;
         }}

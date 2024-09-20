@@ -347,6 +347,7 @@
   "ui.eventInfoDetails.location.virtual": "Virtuale",
   "ui.eventInfoDetails.privacy.public": "Pubblico",
   "ui.eventInfoDetails.privacy.private": "Privato solo su invito",
+  "ui.eventInfoDetails.deleted.tooltip": "Evento eliminato",
   "ui.eventInfoDetails.date.startEndTime": "{date} - Ore {start}",
   "ui.eventInfoDetails.date.create": "{date}",
   "ui.eventInfoDetails.frequency.never.placeholder": "Nessuna Frequenza",
