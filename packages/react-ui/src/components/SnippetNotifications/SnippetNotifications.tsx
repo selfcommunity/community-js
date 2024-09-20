@@ -42,6 +42,7 @@ import ContributionNotification from '../Notification/Contribution';
 import NotificationItem from '../../shared/NotificationItem';
 import {PREFIX} from './constants';
 import GroupNotification from '../Notification/Group';
+import EventNotification from '../Notification/Event/Event';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -357,6 +358,13 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
     ) {
       return <GroupNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_EVENT ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
+    ) {
+      return <EventNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     }
     if (type && handleNotification) {
       /** Override content */

@@ -33,6 +33,7 @@ const classes = {
   navigation: `${PREFIX}-navigation`,
   home: `${PREFIX}-home`,
   explore: `${PREFIX}-explore`,
+  events: `${PREFIX}-events`,
   groups: `${PREFIX}-groups`,
   search: `${PREFIX}-search`,
   composer: `${PREFIX}-composer`,
@@ -141,6 +142,8 @@ const PREFERENCES = [
  |navigation|.SCNavigationToolbar-navigation|Styles applied to the navigation container element|
  |home|.SCNavigationToolbar-home|Styles applied to the home button|
  |explore|.SCNavigationToolbar-explore|Styles applied to the explore button|
+ |groups|.SCNavigationToolbar-groups|Styles applied to the group button|
+ |events|.SCNavigationToolbar-events|Styles applied to the event button|
  |search|.SCNavigationToolbar-search|Styles applied to the search component|
  |composer|.SCNavigationToolbar-composer|Styles applied to the composer component|
  |profile|.SCNavigationToolbar-profile|Styles applied to the profile button|
@@ -192,6 +195,10 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const groupsEnabled = useMemo(
     () => scPreferences.features && scPreferences.features.includes(SCFeatureName.GROUPING) && scPreferences.features.includes(SCFeatureName.TAGGING),
+    [scPreferences.features]
+  );
+  const eventsEnabled = useMemo(
+    () => scPreferences.features && scPreferences.features.includes(SCFeatureName.EVENT) && scPreferences.features.includes(SCFeatureName.TAGGING),
     [scPreferences.features]
   );
   const showComposer = useMemo(() => {
@@ -252,6 +259,17 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
           component={Link}>
           <Icon>groups</Icon>
+        </IconButton>
+      )}
+      {eventsEnabled && (
+        <IconButton
+          className={classNames(classes.events, {
+            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {}))
+          })}
+          aria-label="Groups"
+          to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}
+          component={Link}>
+          <Icon>CalendarIcon</Icon>
         </IconButton>
       )}
     </Box>

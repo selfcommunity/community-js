@@ -17,7 +17,7 @@ import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {formatHttpErrorCode, GroupService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const messages = defineMessages({
   name: {
@@ -204,10 +204,10 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (data) {
       if (group) {
         // Edit group
-        PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.EDIT}`, data);
+        PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.EDIT}`, data);
       } else {
         // Create group
-        PubSub.publish(`${SCTopicType.GROUP}.${SCEventType.CREATE}`, data);
+        PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.CREATE}`, data);
       }
     }
   }

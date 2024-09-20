@@ -7,8 +7,10 @@ import NotificationFeed, {NotificationFeedProps, NotificationFeedSkeleton} from 
 import UserFeed, {UserFeedProps, UserFeedSkeleton} from './components/UserFeed';
 import UserProfile, {UserProfileProps, UserProfileSkeleton} from './components/UserProfile';
 import LoyaltyProgramDetail, {LoyaltyProgramDetailProps, LoyaltyProgramDetailSkeleton} from './components/LoyaltyProgramDetail';
-import GroupFeed, {GroupFeedProps, GroupFeedSkeleton} from './components/GroupFeed';
 import Group, {GroupProps, GroupSkeleton} from './components/Group';
+import GroupFeed, {GroupFeedProps, GroupFeedSkeleton} from './components/GroupFeed';
+import Event, {EventProps, EventSkeleton} from './components/Event';
+import EventFeed, {EventFeedProps, EventFeedSkeleton} from './components/EventFeed';
 
 export {
   Category,
@@ -43,5 +45,11 @@ export {
   GroupFeedSkeleton,
   Group,
   GroupProps,
-  GroupSkeleton
+  GroupSkeleton,
+  Event,
+  EventProps,
+  EventSkeleton,
+  EventFeed,
+  EventFeedProps,
+  EventFeedSkeleton
 };

@@ -42,6 +42,7 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
 import GroupNotification from './Group';
+import EventNotification from './Event/Event';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -478,6 +479,13 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
     ) {
       return <GroupNotification notificationObject={n} key={i} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_EVENT ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
+    ) {
+      return <EventNotification notificationObject={n} key={i} />;
     }
     return null;
   }

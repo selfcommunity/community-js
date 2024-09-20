@@ -1,12 +1,17 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      borderRadius: theme.shape.borderRadius,
+      [theme.breakpoints.up('md')]: {
+        borderRadius: theme.shape.borderRadius
+      },
       '& .SCOnBoardingWidget-step-content': {
         [theme.breakpoints.up('md')]: {
           width: '70%'
         },
-        padding: theme.spacing(0, 2, 2, 2)
+        padding: theme.spacing(1, 2, 2, 2)
+      },
+      '& .SCOnBoardingWidget-logo': {
+        width: 'auto'
       },
       '& .MuiCardContent-root': {
         '& .MuiList-root': {
@@ -61,8 +66,7 @@ const Component = {
     accordionRoot: ({theme, expanded}: any) => ({
       boxShadow: 'none',
       '& .MuiAccordionDetails-root ': {
-        paddingLeft: 0,
-        paddingRight: 0,
+        padding: 0,
         '& .SCOnBoardingWidget-content': {
           '& .MuiCardContent-root': {
             padding: 0,
@@ -79,16 +83,26 @@ const Component = {
         }
       },
       '& .MuiAccordionSummary-root': {
-        backgroundColor: theme.palette.grey[200],
-        borderRadius: theme.shape.borderRadius,
-        borderBottomLeftRadius: expanded ? 0 : theme.shape.borderRadius,
-        borderBottomRightRadius: expanded ? 0 : theme.shape.borderRadius,
+        borderBottom: `1px solid ${theme.palette.grey[200]}`,
+        borderRadius: 0,
+        [theme.breakpoints.up('md')]: {
+          borderRadius: theme.shape.borderRadius,
+          borderBottomLeftRadius: expanded ? 0 : theme.shape.borderRadius,
+          borderBottomRightRadius: expanded ? 0 : theme.shape.borderRadius
+        },
         '& .MuiAccordionSummary-content': {
           '& h4, & h5': {
             fontWeight: theme.typography.fontWeightBold
           },
           '& h4': {
-            fontSize: '1.429rem'
+            fontSize: '1.429rem',
+            [theme.breakpoints.down('md')]: {
+              marginLeft: theme.spacing(2),
+              '& .MuiIcon-root': {
+                position: 'absolute',
+                left: theme.spacing(2)
+              }
+            }
           },
           '& h5': {
             fontSize: '1.143rem'
@@ -99,27 +113,19 @@ const Component = {
           '& .SCOnBoardingWidget-intro': {
             marginLeft: theme.spacing(2),
             '& h5': {
-              marginBottom: theme.spacing(2)
-            },
-            '& .MuiTypography-subtitle1': {
-              lineHeight: 1.2
-            },
-            [theme.breakpoints.down('md')]: {
-              '& .MuiTypography-body1': {
-                marginTop: theme.spacing(1)
-              }
+              marginBottom: theme.spacing(0.5)
             }
           },
           [theme.breakpoints.down('md')]: {
-            flexDirection: 'column'
+            flexDirection: 'column',
+            paddingLeft: expanded ? theme.spacing(2) : 0
           },
           '& .MuiTypography-body1': {
             display: expanded ? 'inherit' : 'flex',
             alignItems: 'center',
-            fontSize: '16px',
+            fontSize: expanded ? '14px' : '16px',
             flexWrap: 'wrap',
             strong: {
-              fontSize: '18px',
               marginRight: expanded ? 'inherit' : theme.spacing(1),
               marginLeft: expanded ? 'inherit' : theme.spacing(1)
             }
@@ -127,7 +133,7 @@ const Component = {
         },
         alignItems: 'flex-start',
         '& .MuiAccordionSummary-expandIconWrapper': {
-          marginTop: theme.spacing(2),
+          marginTop: theme.spacing(1.5),
           alignSelf: 'flex-start'
         }
       }
@@ -160,6 +166,7 @@ const Component = {
       },
       '& .SCOnBoardingWidget-content-summary': {
         whiteSpace: 'pre-line',
+        marginTop: theme.spacing(1),
         marginBottom: theme.spacing(2)
       },
       '& .SCOnBoardingWidget-content-action': {
@@ -168,6 +175,16 @@ const Component = {
       },
       '& .SCProgressBar-message': {
         marginBottom: theme.spacing(0.5)
+      },
+      [theme.breakpoints.up('sm')]: {
+        '& .SCOnBoardingWidget-content-progress': {
+          display: 'flex',
+          alignItems: 'center',
+          '& .SCOnBoardingWidget-content-animation-progress': {
+            height: '250px',
+            width: '250px'
+          }
+        }
       }
     }),
     categoryRoot: ({theme}: any) => ({
@@ -180,10 +197,22 @@ const Component = {
       '& .SCOnBoardingWidget-category-action': {
         display: 'flex',
         justifyContent: 'center',
-        marginTop: theme.spacing(5)
+        '& .MuiButton-root': {
+          marginTop: theme.spacing(3)
+        }
       },
       '& .SCProgressBar-message': {
         marginBottom: theme.spacing(0.5)
+      },
+      [theme.breakpoints.up('sm')]: {
+        '& .SCOnBoardingWidget-category-progress': {
+          display: 'flex',
+          alignItems: 'center',
+          '& .SCOnBoardingWidget-category-animation-progress': {
+            height: '250px',
+            width: '250px'
+          }
+        }
       }
     }),
     appearanceRoot: ({theme}: any) => ({
@@ -194,7 +223,7 @@ const Component = {
         marginTop: theme.spacing(4)
       },
       '& h4': {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(1),
         fontWeight: theme.typography.fontWeightBold
       }
     }),
@@ -202,8 +231,8 @@ const Component = {
       '& .MuiDrawer-paper': {
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          width: '40%',
-          padding: theme.spacing(2)
+          width: 'fit-content',
+          padding: theme.spacing(0, 2, 2, 2)
         }
       },
       '& .SCOnBoardingWidget-appearance-drawer-header': {
@@ -212,10 +241,14 @@ const Component = {
         alignItems: 'center',
         '& h4': {
           fontWeight: theme.typography.fontWeightBold
-        }
+        },
+        padding: theme.spacing(1)
       },
       '& .MuiTabs-root': {
-        marginBottom: theme.spacing(3),
+        [theme.breakpoints.down('md')]: {
+          padding: theme.spacing(1)
+        },
+        marginBottom: theme.spacing(2),
         '& .MuiTab-root ': {
           textTransform: 'none'
         }
@@ -223,7 +256,9 @@ const Component = {
       '& .SCOnBoardingWidget-appearance-drawer-content': {
         [theme.breakpoints.down('md')]: {
           padding: theme.spacing(1.5)
-        }
+        },
+        display: 'flex',
+        flexDirection: 'column'
       },
       '& .SCOnBoardingWidget-appearance-color': {
         margin: theme.spacing(1, 0, 2, 0)
@@ -239,6 +274,7 @@ const Component = {
           height: 120,
           width: 240,
           marginBottom: theme.spacing(2),
+          objectFit: 'contain',
           '& img': {
             width: '100%',
             height: 'auto'
@@ -259,12 +295,17 @@ const Component = {
         marginTop: theme.spacing(4)
       },
       '& .SCOnBoardingWidget-profile-title': {
-        fontWeight: theme.typography.fontWeightBold
+        fontWeight: theme.typography.fontWeightBold,
+        marginBottom: theme.spacing(1)
       }
     }),
-    profileDialogRoot: ({theme}: any) => ({
-      '& .MuiDialog-paperFullScreen': {
-        padding: theme.spacing(2)
+    profileDrawerRoot: ({theme}: any) => ({
+      '& .MuiDrawer-paper': {
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          width: '30%',
+          padding: theme.spacing(0, 2, 2, 2)
+        }
       },
       '& .SCOnBoardingWidget-profile-cover': {
         position: 'relative',
@@ -276,6 +317,9 @@ const Component = {
         [theme.breakpoints.up('md')]: {
           borderRadius: theme.spacing(0, 0, 2.5, 2.5)
         }
+      },
+      '& .SCOnBoardingWidget-profile-icon': {
+        alignSelf: 'end'
       },
       '& .SCOnBoardingWidget-profile-avatar': {
         top: 100,
@@ -314,6 +358,7 @@ const Component = {
       },
       '& .SCOnBoardingWidget-profile-public-info': {
         marginTop: theme.spacing(6),
+        padding: theme.spacing(2),
         '& .SCUserProfileEdit-public-info-root': {
           display: 'flex',
           alignItems: 'center',
@@ -377,9 +422,13 @@ const Component = {
       '& .SCOnBoardingWidget-app-tab-content': {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        '& .SCOnBoardingWidget-app-image': {
+          width: 'auto'
+        }
       },
-      '& h6': {
+      '& .SCOnBoardingWidget-app-step': {
+        marginBottom: theme.spacing(2),
         display: 'flex',
         alignItems: 'center',
         strong: {

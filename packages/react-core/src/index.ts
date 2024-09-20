@@ -26,6 +26,7 @@ import {
   SCThemeVariablesType,
   SCThemeType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
 } from './types';
 
 /**
@@ -96,6 +97,8 @@ import useSCFetchUserBlockedBy from './hooks/useSCFetchUserBlockedBy';
 import useSCUserIsBlocked from './hooks/useSCUserIsBlocked';
 import useSCFetchGroup from './hooks/useSCFetchGroup';
 import useSCFetchGroups from './hooks/useSCFetchGroups';
+import useSCFetchEvent from './hooks/useSCFetchEvent';
+import useSCFetchEvents from './hooks/useSCFetchEvents';
 
 /**
  * Routing component
@@ -110,7 +113,7 @@ import * as SCRoutes from './constants/Routes';
 import * as UserUtils from './utils/user';
 import getTheme from './themes/theme';
 import {useIsComponentMountedRef, usePreviousValue, useIsomorphicLayoutEffect, useEffectOnce, useNoInitialEffect} from './utils/hooks';
-
+import {getEventStatus} from './utils/event';
 /**
  * Constants:
  * Locale, Preferences
@@ -146,6 +149,7 @@ export {
   SCThemeVariablesType,
   SCThemeType,
   SCSubscribedGroupsManagerType,
+  SCSubscribedEventsManagerType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -160,7 +164,7 @@ export {
   SCThemeProvider,
   useSCTheme,
   withSCTheme,
-	getTheme,
+  getTheme,
   SCRoutingProvider,
   useSCRouting,
   SCLocaleProvider,
@@ -180,6 +184,7 @@ export {
   SCRoutes,
   SCCache,
   UserUtils,
+  getEventStatus,
   Locale,
   Preferences,
   useSCFetchUser,
@@ -208,4 +213,6 @@ export {
   useSCUserIsBlocked,
   useSCFetchGroup,
   useSCFetchGroups,
+  useSCFetchEvent,
+  useSCFetchEvents,
 };

@@ -48,7 +48,6 @@ import App from './Steps/App';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Widget from '../Widget';
 import Content from './Steps/Content';
-import Header from '../../assets/onBoarding/Header';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -57,6 +56,7 @@ import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import HeaderPlaceholder from '../../assets/onBoarding/header';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -128,7 +128,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
+  const isAdmin = useMemo(() => UserUtils.isCommunityCreator(scUserContext.user), [scUserContext.user]);
   const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scThemeContext: SCThemeContextType = useSCTheme();
@@ -154,7 +154,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
               return item;
             })
           );
-          setStep(nextStep);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -192,9 +191,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
         autoHideDuration: 7000
       }
     );
-    if (_step.step === step.step) {
-      setStep(nextStep);
-    }
   };
 
   const getSteps = async () => {
@@ -280,11 +276,13 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   }, [allStepsDone]);
 
   useEffect(() => {
-    getSteps();
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
-    return () => clearInterval(intervalId);
-  }, [scUserContext?.user, isGenerating]);
+    if (isAdmin) {
+      getSteps();
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [scUserContext?.user, isGenerating, isAdmin]);
 
   /**
    * Render _step content section
@@ -329,25 +327,19 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
             {expanded ? (
               <>
                 {!isMobile ? (
-                  <CardMedia className={classes.logo} component="div">
-                    <Header />
-                  </CardMedia>
+                  <CardMedia className={classes.logo} component="img" src={HeaderPlaceholder} />
                 ) : (
-                  <Typography variant="h4" textAlign="center">
+                  <Typography variant="h4">
+                    <Icon color="secondary" fontSize="medium">
+                      ai_stars
+                    </Icon>
                     <FormattedMessage
                       id="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       values={{
                         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                         // @ts-ignore
-                        b: (chunks) => <strong>{chunks}</strong>,
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        icon: (...chunks) => (
-                          <Icon color="secondary" fontSize="medium">
-                            {chunks}
-                          </Icon>
-                        )
+                        b: (chunks) => <strong>{chunks}</strong>
                       }}
                     />
                   </Typography>
@@ -361,7 +353,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       />
                     </Typography>
                   )}
-                  <Typography variant={!isMobile ? 'h5' : 'subtitle1'}>
+                  <Typography variant="h5">
                     <FormattedMessage
                       id="ui.onBoardingWidget.accordion.expanded.subtitle"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.subtitle"

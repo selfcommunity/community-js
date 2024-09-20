@@ -3,13 +3,15 @@ import {Alert, Button, CardMedia, Icon, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
-import CategoryA from '../../../../assets/onBoarding/CategoryA';
-import CategoryB from '../../../../assets/onBoarding/CategoryB';
 import ProgressBar from '../../../../shared/ProgressBar';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
+import {Player} from '@lottiefiles/react-lottie-player';
+import CategoryAPlaceholder from '../../../../assets/onBoarding/categoryA';
+import CategoryBPlaceholder from '../../../../assets/onBoarding/categoryB';
+import animatedProgress from '../../../../assets/onBoarding/progress/category_progress.json';
 
 const classes = {
   root: `${PREFIX}-category-root`,
@@ -18,7 +20,9 @@ const classes = {
   image: `${PREFIX}-category-image`,
   action: `${PREFIX}-category-action`,
   button: `${PREFIX}-category-button`,
-  success: `${PREFIX}-success`
+  success: `${PREFIX}-success`,
+  progress: `${PREFIX}-category-progress`,
+  animationProgress: `${PREFIX}-category-animation-progress`
 };
 
 export interface CategoryProps {
@@ -100,6 +104,22 @@ export default function Category(inProps: CategoryProps) {
     }
   }, [step.status, step.completion_percentage]);
 
+  const getLoadingMessage = useMemo((): JSX.Element => {
+    let message;
+    if (progress <= 10) {
+      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.a" defaultMessage="ui.onBoardingWidget.step.categories.loading.a" />);
+    } else if (progress <= 20) {
+      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.b" defaultMessage="ui.onBoardingWidget.step.categories.loading.b" />);
+    } else if (progress <= 40) {
+      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.c" defaultMessage="ui.onBoardingWidget.step.categories.loading.c" />);
+    } else if (progress <= 60) {
+      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.d" defaultMessage="ui.onBoardingWidget.step.categories.loading.d" />);
+    } else {
+      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.e" defaultMessage="ui.onBoardingWidget.step.categories.loading.e" />);
+    }
+    return message;
+  }, [progress]);
+
   return (
     <Root className={classNames(classes.root, className)}>
       <Typography variant="h4" className={classes.title}>
@@ -108,43 +128,39 @@ export default function Category(inProps: CategoryProps) {
       <Typography className={classes.summary}>
         <FormattedMessage id="ui.onBoardingWidget.step.category.summary" defaultMessage="ui.onBoardingWidget.step.category.summary" />
       </Typography>
-      <Typography>
-        <FormattedMessage
-          id="ui.onBoardingWidget.step.category.generation.steps"
-          defaultMessage="ui.onBoardingWidget.step.category.generation.steps"
-          values={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            iconA: (...chunks) => <CircledLetter letter="a" statement={chunks} />,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            iconB: (...chunks) => <CircledLetter letter="b" statement={chunks} />,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            iconC: (...chunks) => <CircledLetter letter="c" statement={chunks} />
-          }}
-        />
-      </Typography>
-      <CardMedia className={classes.image} component="div">
-        <CategoryA />
-      </CardMedia>
-      <CardMedia className={classes.image} component="div">
-        <CategoryB />
-      </CardMedia>
+      {step?.status !== SCOnBoardingStepStatusType.IN_PROGRESS && (
+        <>
+          <Typography>
+            <FormattedMessage
+              id="ui.onBoardingWidget.step.category.generation.steps"
+              defaultMessage="ui.onBoardingWidget.step.category.generation.steps"
+              values={{
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                iconA: (...chunks) => <CircledLetter letter="a" statement={chunks} />,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                iconB: (...chunks) => <CircledLetter letter="b" statement={chunks} />,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                iconC: (...chunks) => <CircledLetter letter="c" statement={chunks} />
+              }}
+            />
+          </Typography>
+          <CardMedia className={classes.image} component="img" src={CategoryAPlaceholder} />
+          <CardMedia className={classes.image} component="img" src={CategoryBPlaceholder} />
+        </>
+      )}
       <Box component="span" className={classes.action}>
         {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
             <FormattedMessage id="ui.onBoardingWidget.step.categories.success" defaultMessage="ui.onBoardingWidget.step.categories.success" />
           </Alert>
         ) : step?.status === SCOnBoardingStepStatusType.IN_PROGRESS ? (
-          <ProgressBar
-            value={progress}
-            loadingMessage={
-              <Typography variant="h4">
-                <FormattedMessage id="ui.onBoardingWidget.step.categories.loading" defaultMessage="ui.onBoardingWidget.step.categories.loading" />
-              </Typography>
-            }
-          />
+          <Box className={classes.progress}>
+            <Player autoplay loop src={animatedProgress} className={classes.animationProgress} controls={false} />
+            <ProgressBar value={progress} hideBar={true} loadingMessage={<Typography variant="h4">{getLoadingMessage}</Typography>} />
+          </Box>
         ) : (
           <Button
             size="small"

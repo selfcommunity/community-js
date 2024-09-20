@@ -35,7 +35,7 @@ export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange' | '
    * @param value
    * @default empty object
    */
-  onClick?: (attribute: 'categories' | 'group' | 'addressing' | 'location') => void;
+  onClick?: (attribute: 'categories' | 'event' | 'group' | 'addressing' | 'location') => void;
 }
 
 export default (props: AttributesProps): JSX.Element => {
@@ -53,9 +53,18 @@ export default (props: AttributesProps): JSX.Element => {
     onClick && onClick('categories');
   }, [onClick]);
 
+  const handleDeleteEvent = useCallback(() => {
+    onChange && onChange({...value, event: null});
+  }, [value, onChange]);
+
+  const handleClickEvent = useCallback(() => {
+    onClick && onClick('event');
+  }, [onClick]);
+
   const handleDeleteGroup = useCallback(() => {
     onChange && onChange({...value, group: null});
   }, [value, onChange]);
+
   const handleClickGroup = useCallback(() => {
     onClick && onClick('group');
   }, [onClick]);
@@ -90,6 +99,16 @@ export default (props: AttributesProps): JSX.Element => {
           icon={<Icon>groups</Icon>}
           onClick={handleClickGroup}
           disabled={!value?.group?.subscription_status}
+        />
+      )}
+      {value?.event && (
+        <Chip
+          key={value?.event.id}
+          label={value?.event.name}
+          onDelete={handleDeleteEvent}
+          icon={<Icon>CalendarIcon</Icon>}
+          onClick={handleClickEvent}
+          disabled={!value?.event?.subscription_status}
         />
       )}
       {value?.addressing?.length > 0 &&
