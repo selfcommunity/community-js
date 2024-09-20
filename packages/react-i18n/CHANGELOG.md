@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.56-alpha.0...@selfcommunity/react-i18n@0.6.0-alpha.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* bugfix Info details event ([b41b9d0](https://github.com/selfcommunity/community-js/commit/b41b9d0689753d0090317506c8ffc342d2b271ec))
+* Event component chip "in progress" ([6c665f2](https://github.com/selfcommunity/community-js/commit/6c665f23b43df1b19e96f83430e3109ac2c2918f))
+* event templates ([4d55712](https://github.com/selfcommunity/community-js/commit/4d5571228b4667eee33c0b11f712975f87d7cfda))
+* feed object rendering deleted event share obj ([8c363d3](https://github.com/selfcommunity/community-js/commit/8c363d38075f76d9f049156e8c81864d22658474))
+* fixed en transl ([e8a8404](https://github.com/selfcommunity/community-js/commit/e8a840452577ab7acb6c1ece20868fa6cc4dca62))
+* fixed event form unique error/disabled state for missing fields ([faa71a6](https://github.com/selfcommunity/community-js/commit/faa71a6fb22f311bc56745a26c4c2f4a99e8ac83))
+* fixed event notification translations ([1b32f20](https://github.com/selfcommunity/community-js/commit/1b32f20db39c3dfd826536c9a924694d0a8ddfb7))
+* fixed OnBoarding. Linear issue: https://linear.app/quentral/issue/QUE-769/ridurre-la-dimensione-delle-animazioni-durante-la-generazione-di ([f5a0675](https://github.com/selfcommunity/community-js/commit/f5a06753b3f8b502c3daca8bf87ac53aa868172b))
+* fixed OnBoardingWidget style ([0904531](https://github.com/selfcommunity/community-js/commit/0904531402e5065d4552def13854f620ea09cd11))
+* fixed some texts to EventInviteButton ([bc607d9](https://github.com/selfcommunity/community-js/commit/bc607d92eb8e2417c1f2786b843e9acb0abaa963))
+* onBoarding widget fixes ([f7af988](https://github.com/selfcommunity/community-js/commit/f7af9888f7e07910d72c75573919da1f1a815175))
+* rename partecipants ([2255030](https://github.com/selfcommunity/community-js/commit/2255030f553cd51845bb13b06b87a7b0dd07208d))
+* show/hide event posts ([0acd9ec](https://github.com/selfcommunity/community-js/commit/0acd9ecbe7196fff45524c3a6da3fa4f0ffbbcf3))
+* style fixes, event header info padding, event snippet skeleton button adn event form location tabs. Linear issues: https://linear.app/quentral/issue/QUE-712/problema-di-layout-nella-pwa and https://linear.app/quentral/issue/QUE-713/mettere-del-padding-a-sx-e-dx-sotto-la-cover-di-un-evento-nella ([9409978](https://github.com/selfcommunity/community-js/commit/94099788488d0c54cb3c490cd1e6e16fa425fe34))
+
+
+### Features
+
+* added action invite to event. Linear issue: https://linear.app/quentral/issue/QUE-666/action-invita-al-tuo-evento ([40e209b](https://github.com/selfcommunity/community-js/commit/40e209b8c28a0a4c0c28ab4cc173d28cfb07e92b))
+* added actions event menu. Linear issue: https://linear.app/quentral/issue/QUE-665/actions-event-menu. Completed event header component. ([19250e5](https://github.com/selfcommunity/community-js/commit/19250e594af474c4576aad77e321bda8b5e7ebb8))
+* added case to disable invite button; added case to show no participants string into TabContentComponent ([28ac09b](https://github.com/selfcommunity/community-js/commit/28ac09b1e86e8fd0e7a8a6631d96c4654b32e0ec))
+* added create event button and event form components. Updated icon font. ([8d08748](https://github.com/selfcommunity/community-js/commit/8d087489e6fa813c4c08f1cbf6a2b09456990205))
+* added event location widget ([4f875cf](https://github.com/selfcommunity/community-js/commit/4f875cf014dc80d92270716dd1c943a88e25cbb4))
+* added event notifications. Linear issue: https://linear.app/quentral/issue/QUE-687/notifica-invito-ad-un-evento ([fbefabb](https://github.com/selfcommunity/community-js/commit/fbefabb75ca2c75420025f1bd25e945ce9524351))
+* added event section to composer. Linear issue: https://linear.app/quentral/issue/QUE-709/aggiunta-eventi-nel-composer ([895b953](https://github.com/selfcommunity/community-js/commit/895b953bebe81d3fb324b90b86009ef8dbb5896d))
+* added events list & skeleton (filters to be added). Linear issues: https://linear.app/quentral/issue/QUE-668/lista-eventi and https://linear.app/quentral/issue/QUE-667/skeleton-event-per-pagina-events. Fixed event form and event obj ([0e5d809](https://github.com/selfcommunity/community-js/commit/0e5d8097b357500b638f7fc36baf8d260b60d5a3))
+* added live circle into EventInfoDetails ([dc08d72](https://github.com/selfcommunity/community-js/commit/dc08d7256740ae4a22987ae33a1ec635e605a69c))
+* added new keys into locale files ([b369619](https://github.com/selfcommunity/community-js/commit/b369619b393bd2d0ba4ce1c91c5a61d34b67fa52))
+* added OnBoardingWidget (wip). Updated icon font ([6073e60](https://github.com/selfcommunity/community-js/commit/6073e6086ab4db38ca666d0d68414e649445aa03))
+* added requests tab on EventsMemberWidget ([09f1420](https://github.com/selfcommunity/community-js/commit/09f1420126bac5f5c75ebdfba7f703fd3378ca2e))
+* added single event obj. ([d056256](https://github.com/selfcommunity/community-js/commit/d0562565de66293b6c7672319542abac49ccc3c8))
+* added some keys ([fd243cd](https://github.com/selfcommunity/community-js/commit/fd243cd8bcd03f50fd0c79bd077259a78bd791d2))
+* Added: event header(partial, missing actions menu)/ event subscribe button and subscribe events manager (logic still to test) ([4cd565e](https://github.com/selfcommunity/community-js/commit/4cd565eb3764eee9134e4cc6338fb61f8e4ff790))
+* created new RelatedEventsWidget and related components ([e74a8f1](https://github.com/selfcommunity/community-js/commit/e74a8f161a29fc9f9287fa6b825a2b92c0a8e4b0))
+
+
+### Performance Improvements
+
+* added created_by filter to events (my events) section. Linear issue: https://linear.app/quentral/issue/QUE-780/aggiungere-filtro-creati-da-me-nella-sezione-i-miei-eventi ([9b8018b](https://github.com/selfcommunity/community-js/commit/9b8018b92730de03f1cea62099edb83e398b8f24))
+* added edit button, fixed events event skeleton style ([b1a99e2](https://github.com/selfcommunity/community-js/commit/b1a99e2120c7c76a4b9593d6ffad833d33c65260))
+* added emdpoint param and past event filter to events component. Fixed style. ([d56a73e](https://github.com/selfcommunity/community-js/commit/d56a73e66621afc1ac7677a21b9f8e05ab88eaf5))
+* added google api to event create form. Fixed url common error translation, exported event services. ([40df569](https://github.com/selfcommunity/community-js/commit/40df569374039769c032b4b81ca4d8dd8329a325))
+* changed OnBoardingWidget, mobile alignments ([d7aaebb](https://github.com/selfcommunity/community-js/commit/d7aaebb9ee01c9befef24607d8614f2ff14fecc8))
+
+
+
+
+
 ## [0.5.56-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.5.55...@selfcommunity/react-i18n@0.5.56-alpha.0) (2024-08-27)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
