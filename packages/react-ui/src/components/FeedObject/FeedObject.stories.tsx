@@ -52,7 +52,7 @@ const template = (args) => {
 
 export const Base: StoryObj<FeedObject> = {
   args: {
-    feedObjectId: 2646,
+    feedObjectId: 2620,
     feedObjectType: SCContributionType.POST
   },
   render: template
