@@ -1,4 +1,4 @@
-import {LoadingButton} from '@mui/lab';
+import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -12,8 +12,8 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
-import {useThemeProps} from '@mui/system';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
 import {
   getEventStatus,
   SCContextType,
@@ -24,12 +24,14 @@ import {
   useSCFetchEvent,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType} from '@selfcommunity/types';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType } from '@selfcommunity/types';
+import { CacheStrategies, Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
-import React, {useEffect, useMemo, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import PubSub from 'pubsub-js';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
 
 const PREFIX = 'SCEventSubscribeButton';
 
@@ -104,7 +106,7 @@ export interface EventSubscribeButtonProps {
    * @param user
    * @param joined
    */
-  onSubscribe?: (event: SCEventType, status: string | null) => any;
+  onSubscribe?: (event: SCEventType, status: SCEventSubscriptionStatusType | null) => any;
 
   /**
    * Others properties
@@ -141,12 +143,12 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     name: PREFIX
   });
 
-  const {className, eventId, event, user, onSubscribe, ...rest} = props;
+  const { className, eventId, event, user, onSubscribe, ...rest } = props;
 
   // STATE
   const [status, setStatus] = useState<string | null | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
 
   // CONTEXT
@@ -159,7 +161,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const {scEvent} = useSCFetchEvent({
+  const { scEvent } = useSCFetchEvent({
     id: eventId,
     event,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
@@ -192,16 +194,17 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     setLoading(true);
     const isGoing =
       eventStatus === SCEventSubscriptionStatusType.GOING ||
-      !scEvent.subscription_status ||
+      !scEvent?.subscription_status ||
       scEvent?.subscription_status === SCEventSubscriptionStatusType.INVITED;
     const toggleAction = isGoing
-      ? scEventsManager.toggleEventAttendance(scEvent, user ? user?.id : null)
+      ? scEventsManager.toggleEventAttendance(scEvent, user?.id || null)
       : scEventsManager.toggleEventNonattendance(scEvent);
 
     toggleAction
       .then(() => {
-        onSubscribe && onSubscribe(scEvent, getEventStatus(scEvent, isGoing));
+        onSubscribe?.(scEvent, getEventStatus(scEvent, isGoing));
         setLoading(false);
+        PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.ADD_MEMBER}`, scUserContext.user);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -234,7 +237,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
                     value={option.value}
                     onChange={handleToggleAction}
                     name={`${option.value}-option`}
-                    inputProps={{'aria-label': `${option.label}`}}
+                    inputProps={{ 'aria-label': `${option.label}` }}
                   />
                 )
               }
@@ -268,8 +271,8 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
         scEvent?.privacy === SCEventPrivacyType.PUBLIC || status === SCEventSubscriptionStatusType.SUBSCRIBED
           ? (_status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.label" id="ui.eventSubscribeButton.label" />)
           : (_status = (
-              <FormattedMessage defaultMessage="ui.eventSubscribeButton.requestParticipation" id="ui.eventSubscribeButton.requestParticipation" />
-            ));
+            <FormattedMessage defaultMessage="ui.eventSubscribeButton.requestParticipation" id="ui.eventSubscribeButton.requestParticipation" />
+          ));
         break;
     }
     return _status;
@@ -297,8 +300,8 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
             className={classNames(
               classes.selectRoot,
               className,
-              {[classes.going]: status && status === SCEventSubscriptionStatusType.GOING},
-              {[classes.notGoing]: status && status === SCEventSubscriptionStatusType.NOT_GOING}
+              { [classes.going]: status && status === SCEventSubscriptionStatusType.GOING },
+              { [classes.notGoing]: status && status === SCEventSubscriptionStatusType.NOT_GOING }
             )}
             onClick={handleOpen}
             endIcon={<Icon>{open ? 'expand_less' : 'expand_more'}</Icon>}
@@ -314,7 +317,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           {isMobile ? (
             <SwipeableDrawerRoot
               className={classes.drawerRoot}
-              PaperProps={{className: classes.paper}}
+              PaperProps={{ className: classes.paper }}
               open={open}
               onClose={handleClose}
               onOpen={handleOpen}
