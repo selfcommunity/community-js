@@ -48,12 +48,18 @@ const Component = {
           height: '80px'
         },
         '& .SCEvent-preview-in-progress': {
+          height: 18,
           backgroundColor: theme.palette.secondary.main,
           position: 'absolute',
           top: 7,
           right: 7,
           color: theme.palette.common.white,
-          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          '& span': {
+            fontSize: '0.8rem',
+            paddingLeft: theme.spacing(0.5),
+            paddingRight: theme.spacing(0.5)
+          }
         }
       },
       '& .SCEvent-preview-content': {
@@ -107,7 +113,8 @@ const Component = {
           boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
           '& span': {
             fontSize: '0.8rem',
-            padding: theme.spacing()
+            paddingLeft: theme.spacing(0.5),
+            paddingRight: theme.spacing(0.5)
           }
         }
       },
