@@ -10,7 +10,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventPrivacyType, SCEventType } from '@selfcommunity/types';
+import { SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -181,7 +181,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   /**
    * Handles callback subscribe/unsubscribe event
    */
-  const handleSubscribe = (event, status) => {
+  const handleSubscribe = (_event: SCEventType, status: SCEventSubscriptionStatusType) => {
     setSCEvent(Object.assign({}, scEvent, { subscription_status: status }));
   };
 
