@@ -7,7 +7,8 @@ import {EventSkeleton} from '../Event';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
-  events: `${PREFIX}-events`
+  events: `${PREFIX}-skeleton-events`,
+	item: `${PREFIX}-skeleton-item`
 };
 
 const Root = styled(Box, {
@@ -72,7 +73,7 @@ export default function EventsSkeleton(inProps: EventsSkeletonProps): JSX.Elemen
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container spacing={{xs: 3}} className={classes.events} {...GridContainerComponentProps}>
         {[...Array(eventsNumber)].map((event, index) => (
-          <Grid item xs={12} sm={12} md={6} key={index} {...GridItemComponentProps}>
+          <Grid item xs={12} sm={12} md={6} key={index} {...GridItemComponentProps} className={classes.item}>
             <EventSkeleton {...EventSkeletonProps} />
           </Grid>
         ))}
