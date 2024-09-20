@@ -17,7 +17,7 @@ import EventInviteButton from '../EventInviteButton';
 import InviteUserEventButton from '../InviteUserEventButton';
 import User, { UserProps, UserSkeleton } from '../User';
 import { PREFIX } from './constants';
-import { TabValueEnum, TabValueType } from './types';
+import { TabContentEnum, TabContentType } from './types';
 
 const classes = {
   actionButton: `${PREFIX}-action-button`,
@@ -34,7 +34,7 @@ const DialogRoot = styled(BaseDialog, {
 })(() => ({}));
 
 interface TabComponentProps {
-  tabValue: TabValueType;
+  tabValue: TabContentType;
 
   state: any;
 
@@ -60,7 +60,7 @@ interface TabComponentProps {
     setUsers?: Dispatch<SetStateAction<SCUserType[]>>;
   };
 
-  handleRefresh?: (tabValue: TabValueType) => void;
+  handleRefresh?: (tabValue: TabContentType) => void;
 }
 
 export default function TabContentComponent(props: TabComponentProps) {
@@ -78,7 +78,10 @@ export default function TabContentComponent(props: TabComponentProps) {
   const { enqueueSnackbar } = useSnackbar();
 
   // CONSTS
-  const users: SCUserType[] = useMemo(() => (tabValue === TabValueEnum.THREE ? actionProps?.users : state.results), [tabValue, actionProps, state]);
+  const users: SCUserType[] = useMemo(
+    () => (tabValue === TabContentEnum.REQUESTS ? actionProps?.users : state.results),
+    [tabValue, actionProps, state]
+  );
 
   // EFFECTS
   useEffect(() => {
@@ -116,16 +119,16 @@ export default function TabContentComponent(props: TabComponentProps) {
   }, []);
 
   const handleToggleMember = useCallback(() => {
-    handleRefresh?.(TabValueEnum.ONE);
+    handleRefresh?.(TabContentEnum.PARTICIPANTS);
   }, []);
 
   const handleInviteMember = useCallback(() => {
-    handleRefresh?.(TabValueEnum.TWO);
+    handleRefresh?.(TabContentEnum.INVITED);
   }, []);
 
   const getActionsComponent = useCallback(
     (userId: number) => {
-      if (tabValue === TabValueEnum.TWO && actionProps) {
+      if (tabValue === TabContentEnum.INVITED && actionProps) {
         const _handleInvitations = (invited: boolean) => {
           if (invited) {
             actionProps.setCount?.((prev) => prev - 1);
@@ -135,7 +138,7 @@ export default function TabContentComponent(props: TabComponentProps) {
         };
 
         return <InviteUserEventButton event={actionProps.scEvent} userId={userId} handleInvitations={_handleInvitations} />;
-      } else if (tabValue === TabValueEnum.THREE && actionProps) {
+      } else if (tabValue === TabContentEnum.REQUESTS && actionProps) {
         const handleConfirm = (id: number | null) => {
           if (id) {
             actionProps.setCount((prev) => prev - 1);
@@ -167,13 +170,13 @@ export default function TabContentComponent(props: TabComponentProps) {
     [tabValue, actionProps]
   );
 
-  if (tabValue === TabValueEnum.ONE && actionProps?.count === 0) {
+  if (tabValue === TabContentEnum.PARTICIPANTS && actionProps?.count === 0) {
     return (
       <Typography variant="body1">
         <FormattedMessage id="ui.eventMembersWidget.noParticipants" defaultMessage="ui.eventMembersWidget.noParticipants" />
       </Typography>
     );
-  } else if (tabValue === TabValueEnum.TWO && state.count === 0 && actionProps) {
+  } else if (tabValue === TabContentEnum.INVITED && state.count === 0 && actionProps) {
     const date = actionProps.scEvent.end_date || actionProps.scEvent.start_date;
     const disabled = new Date(date).getTime() < new Date().getTime();
 
@@ -186,7 +189,7 @@ export default function TabContentComponent(props: TabComponentProps) {
     return (
       <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} disabled={disabled} />
     );
-  } else if (tabValue === TabValueEnum.THREE && actionProps?.count === 0) {
+  } else if (tabValue === TabContentEnum.REQUESTS && actionProps?.count === 0) {
     return (
       <Typography variant="body1">
         <FormattedMessage id="ui.eventMembersWidget.noOtherRequests" defaultMessage="ui.eventMembersWidget.noOtherRequests" />
