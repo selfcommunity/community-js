@@ -152,7 +152,11 @@ export default function Category(inProps: CategoryProps) {
         </>
       )}
       <Box component="span" className={classes.action}>
-        {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
+        {step?.status === SCOnBoardingStepStatusType.FAILED ? (
+          <Alert severity="error">
+            <FormattedMessage id="ui.onBoardingWidget.step.categories.error" defaultMessage="ui.onBoardingWidget.step.categories.error" />
+          </Alert>
+        ) : step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
             <FormattedMessage id="ui.onBoardingWidget.step.categories.success" defaultMessage="ui.onBoardingWidget.step.categories.success" />
           </Alert>
