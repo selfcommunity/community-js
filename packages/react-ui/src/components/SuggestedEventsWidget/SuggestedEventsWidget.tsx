@@ -6,7 +6,7 @@ import { SCEventType } from '@selfcommunity/types';
 import { Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper/types';
@@ -19,6 +19,8 @@ import Widget, { WidgetProps } from '../Widget';
 import Arrow from './Arrow';
 import { PREFIX } from './constants';
 import Skeleton from './Skeleton';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -78,6 +80,9 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   //HOOKS
   const theme = useTheme<SCThemeType>();
 
+  // REFS
+  const updatesSubscription = useRef(null);
+
   useEffect(() => {
     SuggestionService.getEventSuggestion({ ...endpointQueryParams })
       .then((payload: SCPaginatedResponse<SCEventType>) => {
@@ -134,6 +139,33 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
     },
     [count, hideMarginLeft, hideMarginRight]
   );
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onDeleteEventHandler = useCallback(
+    (_msg: string, deleted: number) => {
+      setEvents((prev) => {
+        if (prev.some((e) => e.id === deleted)) {
+          return prev.filter((e) => e.id !== deleted);
+        }
+        return prev;
+      });
+    },
+    [events]
+  );
+
+  /**
+   * On mount, subscribe to receive event updates (only delete)
+   */
+  useEffect(() => {
+    if (events) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.DELETE}`, onDeleteEventHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [events]);
 
   // RENDER
   if (!events && loading) {

@@ -294,7 +294,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
    */
   const onDeleteEventHandler = useCallback(
     (_msg: string, deleted: number) => {
-      setEvents((prev) => prev.filter((e) => e.id !== deleted));
+      setEvents((prev) => {
+        if (prev.some((e) => e.id === deleted)) {
+          return prev.filter((e) => e.id !== deleted);
+        }
+        return prev;
+      });
     },
     [events]
   );
