@@ -246,7 +246,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   useEffect(() => {
     if (
       prevContentsStep &&
-      (prevCategoriesStep as SCStepType).status === SCOnBoardingStepStatusType.IN_PROGRESS &&
+      (prevContentsStep as SCStepType).status === SCOnBoardingStepStatusType.IN_PROGRESS &&
       currentContentsStep?.status === SCOnBoardingStepStatusType.COMPLETED
     ) {
       showSuccessAlert(currentContentsStep);
