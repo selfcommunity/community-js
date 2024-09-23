@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.0...@selfcommunity/react-ui@0.8.0-alpha.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* fixed events component update on event delete action ([b7c67c8](https://github.com/selfcommunity/community-js/commit/b7c67c8a16b3552eaf89b62a9907251dfd2b19eb))
+
+
+
+
+
 # [0.8.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.7.56-alpha.0...@selfcommunity/react-ui@0.8.0-alpha.0) (2024-09-20)
 
 
