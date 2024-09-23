@@ -178,7 +178,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   const initialFieldState: InitialFieldState = {
     imageOriginal: event?.image_bigger || '',
-    imageOriginalFile: new Blob(),
+    imageOriginalFile: '',
     startDate: event ? new Date(event.start_date) : null,
     startTime: event ? new Date(event.start_date) : null,
     endDate: event?.end_date ? new Date(event.end_date) : null,
@@ -413,12 +413,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             InputProps={{
               endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
             }}
-            error={Boolean(field?.name?.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error[`nameError`])}
+            error={Boolean(field.name.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
             helperText={
-              field?.name?.length > EVENT_TITLE_MAX_LENGTH ? (
+              field.name.length > EVENT_TITLE_MAX_LENGTH ? (
                 <FormattedMessage id="ui.eventForm.name.error.maxLength" defaultMessage="ui.eventForm.name.error.maxLength" />
-              ) : error[`nameError`] ? (
-                error[`nameError`]
+              ) : error['nameError'] ? (
+                error['nameError']
               ) : null
             }
           />
