@@ -15,7 +15,7 @@ export type Geolocation = {
 
 export type InitialFieldState = Geolocation & {
   imageOriginal: string | ArrayBuffer;
-  imageOriginalFile: Blob;
+  imageOriginalFile: string | Blob;
   startDate: Date | null;
   startTime: Date | null;
   endDate: Date | null;

@@ -125,7 +125,7 @@ export interface EventFormProps extends BaseDialogProps {
    * On success callback function
    * @default null
    */
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: SCEventType) => void;
   /**
    * Any other properties
    */
@@ -178,7 +178,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   const initialFieldState: InitialFieldState = {
     imageOriginal: event?.image_bigger || '',
-    imageOriginalFile: new Blob(),
+    imageOriginalFile: '',
     startDate: event ? new Date(event.start_date) : null,
     startTime: event ? new Date(event.start_date) : null,
     endDate: event?.end_date ? new Date(event.end_date) : null,
@@ -413,12 +413,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             InputProps={{
               endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
             }}
-            error={Boolean(field?.name?.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error[`nameError`])}
+            error={Boolean(field.name.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
             helperText={
-              field?.name?.length > EVENT_TITLE_MAX_LENGTH ? (
+              field.name.length > EVENT_TITLE_MAX_LENGTH ? (
                 <FormattedMessage id="ui.eventForm.name.error.maxLength" defaultMessage="ui.eventForm.name.error.maxLength" />
-              ) : error[`nameError`] ? (
-                error[`nameError`]
+              ) : error['nameError'] ? (
+                error['nameError']
               ) : null
             }
           />
@@ -588,7 +588,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           <Button
             variant="text"
             color="secondary"
-            onClick={() => setField((prev: any) => ({ ...prev, ['showEndDateTime']: !field.showEndDateTime }))}
+            onClick={() => setField((prev) => ({ ...prev, ['showEndDateTime']: !field.showEndDateTime }))}
             disabled={field.showEndDateTime && field.recurring !== SCEventRecurrenceType.NEVER}>
             <FormattedMessage
               id="ui.eventForm.dateTime.placeholder"
@@ -607,7 +607,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 <Switch
                   className={classes.switch}
                   checked={field.isPublic}
-                  onChange={() => setField((prev: any) => ({ ...prev, ['isPublic']: !field.isPublic }))}
+                  onChange={() => setField((prev) => ({ ...prev, ['isPublic']: !field.isPublic }))}
                 />
                 <Typography className={classNames(classes.switchLabel, { [classes.active]: field.isPublic })}>
                   <Icon>public</Icon>
