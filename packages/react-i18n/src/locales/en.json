@@ -779,6 +779,7 @@
   "ui.searchAutocomplete.placeholder": "Search on {community}",
   "ui.shared.messageChunkUploader.error": "An error occurred while uploading {filename} file. Please try again later.",
   "ui.shared.URLTextField.error": "Please enter a valid URL",
+  "ui.shared.eventActionsMenu.item.edit": "Edit Event",
   "ui.shared.eventActionsMenu.item.link": "Copy Event link",
   "ui.shared.eventActionsMenu.item.calendar": "Add to Calendar",
   "ui.shared.eventActionsMenu.item.cancel": "Cancel Event",

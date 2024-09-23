@@ -779,6 +779,7 @@
   "ui.searchAutocomplete.placeholder": "Cerca su {community}",
   "ui.shared.messageChunkUploader.error": "Si è verificato un errore durante il caricamento del file {filename}. Riprova più tardi.",
   "ui.shared.URLTextField.error": "Inserisci un URL valido",
+  "ui.shared.eventActionsMenu.item.edit": "Modifica Evento",
   "ui.shared.eventActionsMenu.item.link": "Copia link Evento",
   "ui.shared.eventActionsMenu.item.calendar": "Aggiungi al tuo Calendario",
   "ui.shared.eventActionsMenu.item.cancel": "Annulla Evento",
