@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.2...@selfcommunity/react-ui@0.8.0-alpha.3) (2024-09-23)
+
+
+### Bug Fixes
+
+* event header mobile edit, and event form date-time padding ([92d7051](https://github.com/selfcommunity/community-js/commit/92d7051f3150e05d7beeda4467892a650670cc32))
+
+
+
+
+
 # [0.8.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.1...@selfcommunity/react-ui@0.8.0-alpha.2) (2024-09-23)
 
 
