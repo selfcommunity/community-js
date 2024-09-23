@@ -1,7 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
-  Button,
   FormControl,
   FormGroup,
   Icon,
@@ -18,7 +17,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useThemeProps } from '@mui/system';
-import { LocalizationProvider, MobileDatePicker, MobileTimePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider, MobileDatePicker, MobileTimePicker, TimeView } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { EventService, formatHttpErrorCode } from '@selfcommunity/api-services';
 import { SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences } from '@selfcommunity/react-core';
@@ -28,16 +27,17 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH } from '../../constants/Event';
 import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
 import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
-import { PREFIX } from './constants';
+import { DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_LATER_DAYS } from './constants';
 import EventAddress from './EventAddress';
 import { FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState } from './types';
 import UploadEventCover from './UploadEventCover';
+import { combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate } from './utils';
 
 const messages = defineMessages({
   name: {
@@ -176,13 +176,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
+  const startDateTime = useMemo(() => getNewDate(event?.start_date), [event]);
+  const endDateTime = useMemo(() => getNewDate(event?.end_date), [event]);
+
   const initialFieldState: InitialFieldState = {
     imageOriginal: event?.image_bigger || '',
     imageOriginalFile: '',
-    startDate: event ? new Date(event.start_date) : null,
-    startTime: event ? new Date(event.start_date) : null,
-    endDate: event?.end_date ? new Date(event.end_date) : null,
-    endTime: event?.end_date ? new Date(event.end_date) : null,
+    startDate: event ? startDateTime : getNewDate(),
+    startTime: event ? startDateTime : getLaterHoursDate(1),
+    endDate: event?.end_date ? endDateTime : getNewDate(),
+    endTime: event?.end_date ? endDateTime : getLaterHoursDate(3),
     location: event?.location || SCEventLocationType.PERSON,
     geolocation: event?.geolocation || '',
     lat: event?.geolocation_lat || null,
@@ -192,8 +195,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     name: event?.name || '',
     description: event ? event.description : '',
     isPublic: event?.privacy === SCEventPrivacyType.PUBLIC ?? true,
-    isSubmitting: false,
-    showEndDateTime: !!event?.end_date ?? false
+    isSubmitting: false
   };
 
   // STATE
@@ -210,8 +212,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_VISIBILITY_ENABLED].value,
     [scPreferences.preferences]
   );
-  const disablePastStartTime = useMemo(() => (field.startDate ? new Date(field.startDate).getDate() === new Date().getDate() : false), [field]);
-  const disablePastEndTime = useMemo(() => (field.endDate ? new Date(field.endDate).getDate() === new Date().getDate() : false), [field]);
+  const disablePastStartTime = useMemo(() => field.startDate.getDate() === getNewDate().getDate(), [field]);
+  const disablePastEndTime = useMemo(() => field.endDate.getDate() === getNewDate().getDate(), [field]);
 
   const _backgroundCover = {
     ...(field.imageOriginal
@@ -219,38 +221,31 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       : { background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover` })
   };
 
-  const combineDateAndTime = (date, time) => {
-    if (date && time) {
-      const combined = new Date(date);
-      combined.setHours(time.getHours());
-      combined.setMinutes(time.getMinutes());
-      combined.setSeconds(time.getSeconds());
-      combined.setMilliseconds(time.getMilliseconds());
-      return combined.toISOString();
-    }
-    return null;
-  };
+  const handleChangeCover = useCallback(
+    (cover: Blob) => {
+      setField((prev) => ({ ...prev, ['imageOriginalFile']: cover }));
+      const reader = new FileReader();
 
-  function handleChangeCover(cover: Blob) {
-    setField((prev) => ({ ...prev, ['imageOriginalFile']: cover }));
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setField((prev) => ({ ...prev, ['imageOriginal']: reader.result }));
-    };
-    reader.readAsDataURL(cover);
+      reader.onloadend = () => {
+        setField((prev) => ({ ...prev, ['imageOriginal']: reader.result }));
+      };
+      reader.readAsDataURL(cover);
 
-    if (error.imageOriginalError) {
-      delete error.imageOriginalError;
-      setError(error);
-    }
-  }
+      if (error.imageOriginalError) {
+        delete error.imageOriginalError;
+
+        setError(error);
+      }
+    },
+    [error]
+  );
 
   /**
    * Notify when a group info changed
    * @param data
    */
-  function notifyChanges(data: SCEventType) {
-    if (data) {
+  const notifyChanges = useCallback(
+    (data: SCEventType) => {
       if (event) {
         // Edit group
         PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.EDIT}`, data);
@@ -258,17 +253,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         // Create group
         PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.CREATE}`, data);
       }
-    }
-  }
+    },
+    [event]
+  );
 
-  const handleGeoData = (data: Geolocation) => {
+  const handleGeoData = useCallback((data: Geolocation) => {
     setField((prev) => ({
       ...prev,
       ...data
     }));
-  };
+  }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     setField((prev) => ({ ...prev, ['isSubmitting']: true }));
 
     const formData = new FormData();
@@ -280,18 +276,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     formData.append('name', field.name);
     formData.append('start_date', combineDateAndTime(field.startDate, field.startTime));
     formData.append('recurring', field.recurring);
-
-    if (field.endDate) {
-      formData.append('end_date', combineDateAndTime(field.endDate, field.endTime));
-    }
-
+    formData.append('end_date', combineDateAndTime(field.endDate, field.endTime));
     formData.append('location', field.location);
 
     if (field.location === SCEventLocationType.ONLINE) {
       formData.append('link', field.link);
-    }
-
-    if (field.location === SCEventLocationType.PERSON) {
+    } else if (field.location === SCEventLocationType.PERSON) {
       formData.append('geolocation', field.geolocation);
       formData.append('geolocation_lat', field.lat.toString());
       formData.append('geolocation_lng', field.lng.toString());
@@ -323,6 +313,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (Object.values(_error)[0].error === 'unique') {
@@ -333,28 +324,68 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         } else {
           setError({ ...error, ..._error });
         }
+
         setField((prev) => ({ ...prev, ['isSubmitting']: false }));
         Logger.error(SCOPE_SC_UI, e);
       });
-  };
+  }, [field, privateEnabled, visibilityEnabled]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setField((prev) => ({ ...prev, [name]: value }));
-    if (error[`${name}Error`]) {
-      delete error[`${name}Error`];
-      setError(error);
-    }
-  };
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      setField((prev) => ({ ...prev, [name]: value }));
 
-  const handleChangeDateTime = (value: FieldStateValues, name: FieldStateKeys) => {
-    setField((prev) => ({ ...prev, [name]: value }));
+      if (error[`${name}Error`]) {
+        delete error[`${name}Error`];
 
-    if (error[`${name}Error`]) {
-      delete error[`${name}Error`];
-      setError(error);
-    }
-  };
+        setError(error);
+      }
+    },
+    [error]
+  );
+
+  const handleChangeDateTime = useCallback(
+    (value: FieldStateValues, name: FieldStateKeys) => {
+      setField((prev) => ({ ...prev, [name]: value }));
+
+      if (error[`${name}Error`]) {
+        delete error[`${name}Error`];
+
+        setError(error);
+      }
+    },
+    [error]
+  );
+
+  const shouldDisabledDate = useCallback(
+    (date: Date) => {
+      let disabled = false;
+
+      switch (field.recurring) {
+        case SCEventRecurrenceType.DAILY:
+          disabled = date.getTime() > getLaterDaysDate(DAILY_LATER_DAYS).getTime();
+          break;
+        case SCEventRecurrenceType.WEEKLY:
+          disabled = date.getTime() > getLaterDaysDate(WEEKLY_LATER_DAYS).getTime();
+          break;
+        case SCEventRecurrenceType.MONTHLY:
+          disabled = date.getTime() > getLaterDaysDate(MONTHLY_LATER_DAYS).getTime();
+          break;
+        case SCEventRecurrenceType.NEVER:
+        default:
+          disabled = date.getTime() > getLaterDaysDate(NEVER_LATER_DAYS).getTime();
+      }
+
+      if (field.startDate.getDate() > date.getDate()) {
+        disabled = true;
+      }
+
+      return disabled;
+    },
+    [field]
+  );
+
+  const shouldDisabledTime = useCallback((date: Date, _view: TimeView) => field.startTime.getTime() > date.getTime(), [field]);
 
   /**
    * Renders root object
@@ -379,6 +410,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             !field.name ||
             !field.startDate ||
             !field.startTime ||
+            !field.endDate ||
+            !field.endTime ||
             (field.location === SCEventLocationType.ONLINE && !field.link) ||
             (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
             (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
@@ -525,77 +558,64 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               ))}
             </Select>
           </FormControl>
-          {(field.showEndDateTime || field.recurring !== SCEventRecurrenceType.NEVER) && (
-            <Box className={classes.dateTime}>
-              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
-                <MobileDatePicker
-                  className={classes.picker}
-                  disablePast
-                  label={
-                    field.endDate && <FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />
-                  }
-                  value={field.endDate}
-                  slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        InputProps={{
-                          ...params.InputProps,
-                          placeholder: `${intl.formatMessage(messages.endDate)}`,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <IconButton>
-                                <Icon>calendar_off</Icon>
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                    )
-                  }}
-                  onChange={(value) => handleChangeDateTime(value, 'endDate')}
-                />
-                <MobileTimePicker
-                  className={classes.picker}
-                  disablePast={disablePastEndTime}
-                  label={
-                    field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />
-                  }
-                  value={field.endTime}
-                  slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        InputProps={{
-                          ...params.InputProps,
-                          placeholder: `${intl.formatMessage(messages.endTime)}`,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <IconButton>
-                                <Icon>access_time</Icon>
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                    )
-                  }}
-                  onChange={(value) => handleChangeDateTime(value, 'endTime')}
-                />
-              </LocalizationProvider>
-            </Box>
-          )}
-          <Button
-            variant="text"
-            color="secondary"
-            onClick={() => setField((prev) => ({ ...prev, ['showEndDateTime']: !field.showEndDateTime }))}
-            disabled={field.showEndDateTime && field.recurring !== SCEventRecurrenceType.NEVER}>
-            <FormattedMessage
-              id="ui.eventForm.dateTime.placeholder"
-              defaultMessage="ui.eventForm.dateTime.placeholder"
-              values={{ symbol: field.showEndDateTime ? '-' : '+' }}
-            />
-          </Button>
+          <Box className={classes.dateTime}>
+            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+              <MobileDatePicker
+                className={classes.picker}
+                disablePast
+                label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
+                value={field.endDate}
+                slots={{
+                  textField: (params) => (
+                    <TextField
+                      {...params}
+                      InputProps={{
+                        ...params.InputProps,
+                        placeholder: `${intl.formatMessage(messages.endDate)}`,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton>
+                              <Icon>calendar_off</Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  )
+                }}
+                onChange={(value) => handleChangeDateTime(value, 'endDate')}
+                shouldDisableDate={shouldDisabledDate}
+              />
+              <MobileTimePicker
+                className={classes.picker}
+                disablePast={disablePastEndTime}
+                label={
+                  field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />
+                }
+                value={field.endTime}
+                slots={{
+                  textField: (params) => (
+                    <TextField
+                      {...params}
+                      InputProps={{
+                        ...params.InputProps,
+                        placeholder: `${intl.formatMessage(messages.endTime)}`,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton>
+                              <Icon>access_time</Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  )
+                }}
+                onChange={(value) => handleChangeDateTime(value, 'endTime')}
+                shouldDisableTime={shouldDisabledTime}
+              />
+            </LocalizationProvider>
+          </Box>
           <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null} />
           {privateEnabled && (
             <Box className={classes.privacySection}>
