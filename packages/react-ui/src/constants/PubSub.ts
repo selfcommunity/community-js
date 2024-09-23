@@ -14,6 +14,7 @@ export enum SCTopicType {
 export enum SCGroupEventType {
   CREATE = 'create',
   EDIT = 'edit',
+  DELETE = 'delete',
   MEMBERS = 'members',
   ADD_MEMBER = 'members.add_member',
   INVITE_MEMBER = 'members.invite_member',
