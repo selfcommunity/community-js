@@ -8,10 +8,12 @@ import {useThemeProps} from '@mui/system';
 import {SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {EventService} from '@selfcommunity/api-services';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {SCEventType} from '@selfcommunity/types';
 import {ADD_EVENT_TO_CALENDAR, CANCEL_EVENT, GET_EVENT_LINK} from '../../constants/EventActionsMenu';
 import {copyTextToClipboard} from '@selfcommunity/utils';
 import {enqueueSnackbar} from 'notistack';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const PREFIX = 'SCEventActionsMenu';
 
@@ -141,6 +143,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
       .then(() => {
         onDeleteConfirm();
         handleCloseDialog();
+        PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.DELETE}`, scEvent.id);
       })
       .catch((error) => {
         setOpenConfirmDialog(false);

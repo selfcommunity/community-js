@@ -29,10 +29,10 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType, SCGroupType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
@@ -41,6 +41,8 @@ import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
 import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
 import PastEventsFilter from './PastEventsFilter';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -220,6 +222,9 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // REFS
+  const updatesSubscription = useRef(null);
+
   // HANDLERS
 
   const handleChipClick = () => {
@@ -283,6 +288,28 @@ export default function Events(inProps: EventsProps): JSX.Element {
       query === '' && fetchEvents();
     }
   }, [contentAvailability, dateSearch, showFollowed, showPastEvents, showMyEvents, query]);
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onDeleteEventHandler = useCallback(
+    (_msg: string, deleted: number) => {
+      setEvents((prev) => prev.filter((e) => e.id !== deleted));
+    },
+    [events]
+  );
+
+  /**
+   * On mount, subscribe to receive event updates (only delete)
+   */
+  useEffect(() => {
+    if (events) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.DELETE}`, onDeleteEventHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [events]);
 
   const handleNext = useMemo(
     () => () => {
