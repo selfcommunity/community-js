@@ -14,6 +14,7 @@ import {copyTextToClipboard} from '@selfcommunity/utils';
 import {enqueueSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import EventForm from '../../components/EventForm';
 
 const PREFIX = 'SCEventActionsMenu';
 
@@ -58,6 +59,12 @@ export interface EventActionsMenuProps extends IconButtonProps {
    * Handles callback on delete confirm
    */
   onDeleteConfirm?: () => void;
+
+  /**
+   * Handles on edit success
+   */
+  onEditSuccess?: (data: SCEventType) => any;
+
   /**
    * Any other properties
    */
@@ -97,18 +104,19 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {className, event, eventId, onDeleteConfirm, ...rest} = props;
+  const {className, event, eventId, onDeleteConfirm, onEditSuccess, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
+  const [openEdit, setOpenEdit] = useState(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
 
   const isEventAdmin = useMemo(
     () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
@@ -130,11 +138,20 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleEditClick = () => {
+    setOpenEdit((o) => !o);
+  };
 
   const handleCloseDialog = () => {
     setOpenConfirmDialog(false);
     setAnchorEl(null);
   };
+
+  const handleEditSuccess = (data: SCEventType) => {
+    setSCEvent(data);
+    onEditSuccess && onEditSuccess(data);
+  };
+
   /**
    * Handles thread deletion
    */
@@ -199,6 +216,14 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
       isEventAdmin &&
         !isEventFinished && [
           <Divider key="divider" />,
+          isMobile && (
+            <MenuItem className={classes.item} key="edit" onClick={handleEditClick}>
+              <ListItemIcon>
+                <Icon>edit</Icon>
+              </ListItemIcon>
+              <FormattedMessage id="ui.shared.eventActionsMenu.item.edit" defaultMessage="ui.shared.eventActionsMenu.item.edit" />
+            </MenuItem>
+          ),
           <MenuItem className={classes.item} onClick={() => handleAction(CANCEL_EVENT)} key="cancel">
             <ListItemIcon>
               <Icon>close</Icon>
@@ -248,6 +273,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
           onClose={handleCloseDialog}
         />
       )}
+      {openEdit && <EventForm onClose={handleEditClick} event={scEvent} onSuccess={handleEditSuccess} />}
     </>
   );
 }

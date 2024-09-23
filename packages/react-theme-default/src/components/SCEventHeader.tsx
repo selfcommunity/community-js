@@ -94,7 +94,7 @@ const Component = {
           borderBottom: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
           marginTop: theme.spacing(1),
           '& .SCBaseItemButton-content': {
-            paddingLeft: theme.spacing(2)
+            paddingLeft: theme.spacing(1)
           },
           '& .SCBaseItemButton-actions': {
             maxWidth: 'none',

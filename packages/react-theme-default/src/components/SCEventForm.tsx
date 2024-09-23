@@ -38,7 +38,10 @@ const Component = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        gap: theme.spacing(1)
+        gap: theme.spacing(1),
+        '& .MuiInputBase-root': {
+          paddingLeft: theme.spacing(0.5)
+        }
       },
       '& .SCEventForm-error': {
         color: theme.palette.error.main
