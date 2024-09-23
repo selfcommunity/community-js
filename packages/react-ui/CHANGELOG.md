@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.3...@selfcommunity/react-ui@0.8.0-alpha.4) (2024-09-23)
+
+
+### Bug Fixes
+
+* fixed some bugs into EventForm component ([f82e14a](https://github.com/selfcommunity/community-js/commit/f82e14aab10bd7b9ba318846133f5fd0ef6eb79c))
+
+
+
+
+
 # [0.8.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.2...@selfcommunity/react-ui@0.8.0-alpha.3) (2024-09-23)
 
 
