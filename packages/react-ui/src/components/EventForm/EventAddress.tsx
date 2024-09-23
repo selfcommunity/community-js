@@ -1,17 +1,18 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
+import { Autocomplete, Box, InputAdornment, Tab, Tabs, TextField } from '@mui/material';
 import Icon from '@mui/material/Icon';
-import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
-import {PREFIX} from './constants';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import UrlTextField from '../../shared/UrlTextField';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { useLoadScript } from '@react-google-maps/api';
+import { SCContextType, useSCContext } from '@selfcommunity/react-core';
+import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
 import axios from 'axios';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import { ChangeEvent, SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
-import {useLoadScript} from '@react-google-maps/api';
+import UrlTextField from '../../shared/UrlTextField';
+import { PREFIX } from './constants';
+import { Geolocation, Place } from './types';
 
 const messages = defineMessages({
   virtualPlaceholder: {
@@ -34,7 +35,7 @@ const Root = styled(Box, {
 
 export interface EventAddressProps {
   event?: SCEventType;
-  forwardGeolocationData: (data: {location: SCEventLocationType; geolocation?: string; lat?: number; lng?: number; link?: string}) => void;
+  forwardGeolocationData: (data: Geolocation) => void;
   className?: string;
 }
 
@@ -47,14 +48,14 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // INTL
   const intl = useIntl();
   // PROPS
-  const {className, forwardGeolocationData, event} = props;
+  const { className, forwardGeolocationData, event } = props;
 
   // STATE
-  const [location, setLocation] = useState<SCEventLocationType>(event ? event.location : SCEventLocationType.PERSON);
-  const [geolocation, setGeoLocation] = useState<any>(event ? event.geolocation : null);
+  const [location, setLocation] = useState<SCEventLocationType>(event?.location || SCEventLocationType.PERSON);
+  const [geolocation, setGeoLocation] = useState<Place | null>(event ? { description: event.geolocation } : null);
   const [inputValue, setInputValue] = useState<string>('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [timeoutId, setTimeoutId] = useState<number | null>(null);
+  const [suggestions, setSuggestions] = useState<Place[]>([]);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -62,22 +63,22 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
     [scContext.settings.integrations]
   );
-  const {isLoaded} = useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
     libraries: ['places', 'geocoding']
   });
 
   // HANDLERS
-  const handleChange = (event: React.SyntheticEvent, newValue: SCEventLocationType) => {
+  const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
     setLocation(newValue);
   };
 
-  const handleSelection = async (event, newValue) => {
+  const handleSelection = async (_event: SyntheticEvent, newValue: Place) => {
     if (newValue) {
       try {
         const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
           params: {
-            place_id: newValue.place_id,
+            place_id: newValue.id,
             key: geocodingApiKey
           }
         });
@@ -85,7 +86,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         const place = response.data.results[0];
         setGeoLocation(newValue);
         forwardGeolocationData({
-          location: location,
+          location,
           geolocation: place.formatted_address,
           lat: place.geometry.location.lat,
           lng: place.geometry.location.lng
@@ -96,12 +97,12 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     }
   };
 
-  const handleLocationChange = (event, newInputValue) => {
+  const handleLocationChange = (_event: SyntheticEvent, newInputValue: string) => {
     setInputValue(newInputValue);
   };
 
-  const handleLinkChange = (event) => {
-    forwardGeolocationData({location: location, link: event.target.value});
+  const handleLinkChange = (event: ChangeEvent<HTMLInputElement>) => {
+    forwardGeolocationData({ location, link: event.target.value });
   };
 
   useEffect(() => {
@@ -115,14 +116,14 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     }
 
     if (inputValue.length >= 3) {
-      const newTimeoutId = window.setTimeout(() => {
+      const newTimeoutId = setTimeout(() => {
         const autocompleteService = new window.google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions({input: inputValue}, (predictions, status) => {
+        autocompleteService.getPlacePredictions({ input: inputValue }, (predictions, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
             setSuggestions(
               predictions.map((prediction) => ({
                 description: prediction.description,
-                place_id: prediction.place_id
+                id: prediction.place_id
               }))
             );
           }
@@ -142,14 +143,14 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       <Tabs className={classes.tabs} value={location} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
         <Tab
           value={SCEventLocationType.PERSON}
-          classes={{root: classes.tab}}
+          classes={{ root: classes.tab }}
           icon={<Icon>add_location_alt</Icon>}
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.live.label" defaultMessage="ui.eventForm.address.live.label" />}
         />
         <Tab
           value={SCEventLocationType.ONLINE}
-          classes={{root: classes.tab}}
+          classes={{ root: classes.tab }}
           icon={<Icon>play_circle_outline</Icon>}
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
@@ -158,15 +159,15 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       <Box className={classes.tabContent}>
         {location === SCEventLocationType.PERSON && (
           <Autocomplete
-            freeSolo
             size="small"
             value={geolocation}
             onChange={handleSelection}
             inputValue={inputValue}
             onInputChange={handleLocationChange}
             options={suggestions}
-            getOptionLabel={(option) => option.description || geolocation}
+            getOptionLabel={(option) => option.description || geolocation.description}
             noOptionsText={<FormattedMessage id="ui.eventForm.address.live.noResults" defaultMessage="ui.eventForm.address.live.noResults" />}
+            isOptionEqualToValue={(option: Place, value: Place) => option.description === value.description}
             renderInput={(params) => (
               <TextField
                 {...params}

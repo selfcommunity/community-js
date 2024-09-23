@@ -28,7 +28,7 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import React, { useMemo, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH } from '../../constants/Event';
@@ -36,6 +36,7 @@ import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
 import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import { PREFIX } from './constants';
 import EventAddress from './EventAddress';
+import { FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState } from './types';
 import UploadEventCover from './UploadEventCover';
 
 const messages = defineMessages({
@@ -175,28 +176,28 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
-  const initialFieldState = {
-    imageOriginal: event ? event.image_bigger : '',
-    imageOriginalFile: '',
+  const initialFieldState: InitialFieldState = {
+    imageOriginal: event?.image_bigger || '',
+    imageOriginalFile: new Blob(),
     startDate: event ? new Date(event.start_date) : null,
     startTime: event ? new Date(event.start_date) : null,
-    endDate: event && event.end_date ? new Date(event.end_date) : null,
-    endTime: event && event.end_date ? new Date(event.end_date) : null,
-    location: event ? event.location : SCEventLocationType.PERSON,
-    geolocation: event ? event.geolocation : '',
-    lat: event ? event.geolocation_lat : null,
-    lng: event ? event.geolocation_lng : null,
-    link: event ? event.link : '',
-    recurring: event ? event.recurring : SCEventRecurrenceType.NEVER,
-    name: event ? event.name : '',
+    endDate: event?.end_date ? new Date(event.end_date) : null,
+    endTime: event?.end_date ? new Date(event.end_date) : null,
+    location: event?.location || SCEventLocationType.PERSON,
+    geolocation: event?.geolocation || '',
+    lat: event?.geolocation_lat || null,
+    lng: event?.geolocation_lng || null,
+    link: event?.link || '',
+    recurring: event?.recurring || SCEventRecurrenceType.NEVER,
+    name: event?.name || '',
     description: event ? event.description : '',
-    isPublic: (event && event.privacy === SCEventPrivacyType.PUBLIC) ?? true,
+    isPublic: event?.privacy === SCEventPrivacyType.PUBLIC ?? true,
     isSubmitting: false,
-    showEndDateTime: (event && event.end_date) ?? false
+    showEndDateTime: !!event?.end_date ?? false
   };
 
   // STATE
-  const [field, setField] = useState<any>(initialFieldState);
+  const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
 
   // PREFERENCES
@@ -230,13 +231,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     return null;
   };
 
-  function handleChangeCover(cover) {
-    setField((prev: any) => ({ ...prev, ['imageOriginalFile']: cover }));
+  function handleChangeCover(cover: Blob) {
+    setField((prev) => ({ ...prev, ['imageOriginalFile']: cover }));
     const reader = new FileReader();
     reader.onloadend = () => {
-      setField((prev: any) => ({ ...prev, ['imageOriginal']: reader.result }));
+      setField((prev) => ({ ...prev, ['imageOriginal']: reader.result }));
     };
     reader.readAsDataURL(cover);
+
     if (error.imageOriginalError) {
       delete error.imageOriginalError;
       setError(error);
@@ -259,7 +261,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     }
   }
 
-  const handleGeoData = (data) => {
+  const handleGeoData = (data: Geolocation) => {
     setField((prev) => ({
       ...prev,
       ...data
@@ -267,45 +269,57 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   };
 
   const handleSubmit = () => {
-    setField((prev: any) => ({ ...prev, ['isSubmitting']: true }));
-    const formData: any = new FormData();
+    setField((prev) => ({ ...prev, ['isSubmitting']: true }));
+
+    const formData = new FormData();
+
     if (field.imageOriginalFile) {
       formData.append('image_original', field.imageOriginalFile);
     }
+
     formData.append('name', field.name);
     formData.append('start_date', combineDateAndTime(field.startDate, field.startTime));
     formData.append('recurring', field.recurring);
+
     if (field.endDate) {
       formData.append('end_date', combineDateAndTime(field.endDate, field.endTime));
     }
+
     formData.append('location', field.location);
+
     if (field.location === SCEventLocationType.ONLINE) {
       formData.append('link', field.link);
     }
+
     if (field.location === SCEventLocationType.PERSON) {
       formData.append('geolocation', field.geolocation);
-      formData.append('geolocation_lat', field.lat);
-      formData.append('geolocation_lng', field.lng);
+      formData.append('geolocation_lat', field.lat.toString());
+      formData.append('geolocation_lng', field.lng.toString());
     }
+
     if (privateEnabled) {
       formData.append('privacy', field.isPublic ? SCEventPrivacyType.PUBLIC : SCEventPrivacyType.PRIVATE);
     }
+
     if (visibilityEnabled) {
-      formData.append('visible', true);
+      formData.append('visible', 'true');
     }
+
     formData.append('description', field.description);
-    let eventService;
+
+    let eventService: Promise<SCEventType>;
     if (event) {
-      eventService = EventService.updateEvent(event.id, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      eventService = EventService.updateEvent(event.id, formData as unknown as SCEventType, { headers: { 'Content-Type': 'multipart/form-data' } });
     } else {
       eventService = EventService.createEvent(formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     }
+
     eventService
-      .then((data: any) => {
-        onSuccess && onSuccess(data);
+      .then((data) => {
+        onSuccess?.(data);
         notifyChanges(data);
-        onClose && onClose();
-        setField((prev: any) => ({ ...prev, ['isSubmitting']: false }));
+        onClose?.();
+        setField((prev) => ({ ...prev, ['isSubmitting']: false }));
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
@@ -319,22 +333,23 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         } else {
           setError({ ...error, ..._error });
         }
-        setField((prev: any) => ({ ...prev, ['isSubmitting']: false }));
+        setField((prev) => ({ ...prev, ['isSubmitting']: false }));
         Logger.error(SCOPE_SC_UI, e);
       });
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setField((prev: any) => ({ ...prev, [name]: value }));
+    setField((prev) => ({ ...prev, [name]: value }));
     if (error[`${name}Error`]) {
       delete error[`${name}Error`];
       setError(error);
     }
   };
 
-  const handleChangeDateTime = (value, name) => {
-    setField((prev: any) => ({ ...prev, [name]: value }));
+  const handleChangeDateTime = (value: FieldStateValues, name: FieldStateKeys) => {
+    setField((prev) => ({ ...prev, [name]: value }));
+
     if (error[`${name}Error`]) {
       delete error[`${name}Error`];
       setError(error);
@@ -611,29 +626,15 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                     }}
                   />
                 ) : (
-                  <>
-                    {field.privacy === true ? (
-                      <FormattedMessage
-                        id="ui.eventForm.privacy.private.info.edit"
-                        defaultMessage="ui.eventForm.private.public.info.edit"
-                        values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
-                          b: (chunks) => <strong>{chunks}</strong>
-                        }}
-                      />
-                    ) : (
-                      <FormattedMessage
-                        id="ui.eventForm.privacy.private.info"
-                        defaultMessage="ui.eventForm.private.public.info"
-                        values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
-                          b: (chunks) => <strong>{chunks}</strong>
-                        }}
-                      />
-                    )}
-                  </>
+                  <FormattedMessage
+                    id="ui.eventForm.privacy.private.info"
+                    defaultMessage="ui.eventForm.private.public.info"
+                    values={{
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                      // @ts-ignore
+                      b: (chunks) => <strong>{chunks}</strong>
+                    }}
+                  />
                 )}
               </Typography>
             </Box>
