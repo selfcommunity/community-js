@@ -1,7 +1,7 @@
-import { Button, CardActions, Icon, IconButton, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Box, useThemeProps } from '@mui/system';
-import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
+import {Button, CardActions, Icon, IconButton, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, useThemeProps} from '@mui/system';
+import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
   SCCache,
   SCPreferencesContextType,
@@ -12,20 +12,22 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import { SCEventSubscriptionStatusType, SCEventType, SCFeatureName } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import {SCEventSubscriptionStatusType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { SCEventTemplateType } from '../../types/event';
-import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
+import {SCEventTemplateType} from '../../types/event';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Event from '../Event';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -103,8 +105,11 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const { features }: SCPreferencesContextType = useSCPreferences();
+  const {features}: SCPreferencesContextType = useSCPreferences();
   const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
+
+  // REFS
+  const updatesSubscription = useRef(null);
 
   /**
    * Initialize component
@@ -112,32 +117,32 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
    */
   const _initComponent = useCallback(() => {
     if (!state.initialized && !state.isLoadingNext) {
-      dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-      EventService.getUserEvents({ ...endpointQueryParams })
+      EventService.getUserEvents({...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCEventType>) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
         })
         .catch((error) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
   }, [state.isLoadingNext, state.initialized, dispatch]);
 
   const _fetchNext = useCallback(() => {
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
     http
       .request({
         url: state.next,
         method: Endpoints.GetUserEvents.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCEventType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         setEventIndex((index) => index + 1);
       })
       .catch((error) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [dispatch, state.next]);
@@ -166,6 +171,35 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
       _fetchNext();
     }
   }, [eventIndex, state.results]);
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onDeleteEventHandler = useCallback(
+    (_msg: string, deleted: number) => {
+      const _events = [...state.results];
+      if (_events.some((e) => e.id === deleted)) {
+        const updatedEvents = _events.filter((e) => e.id !== deleted);
+        dispatch({
+          type: actionWidgetTypes.SET_RESULTS,
+          payload: {results: updatedEvents}
+        });
+      }
+    },
+    [state.results]
+  );
+
+  /**
+   * On mount, subscribe to receive event updates (only delete)
+   */
+  useEffect(() => {
+    if (state.results) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.DELETE}`, onDeleteEventHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [state.results]);
 
   // RENDER
   if (!eventsEnabled || (state.initialized && state.count === 0)) {
