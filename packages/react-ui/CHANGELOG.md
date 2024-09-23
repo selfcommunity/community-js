@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.4...@selfcommunity/react-ui@0.8.0-alpha.5) (2024-09-23)
+
+
+### Bug Fixes
+
+* fixed OnBoardingWidget ([2782505](https://github.com/selfcommunity/community-js/commit/27825055c2d6c9512102f241bc32ee174966ac45))
+
+
+
+
+
 # [0.8.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.3...@selfcommunity/react-ui@0.8.0-alpha.4) (2024-09-23)
 
 
