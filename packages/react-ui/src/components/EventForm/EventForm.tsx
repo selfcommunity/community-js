@@ -125,7 +125,7 @@ export interface EventFormProps extends BaseDialogProps {
    * On success callback function
    * @default null
    */
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: SCEventType) => void;
   /**
    * Any other properties
    */
@@ -588,7 +588,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           <Button
             variant="text"
             color="secondary"
-            onClick={() => setField((prev: any) => ({ ...prev, ['showEndDateTime']: !field.showEndDateTime }))}
+            onClick={() => setField((prev) => ({ ...prev, ['showEndDateTime']: !field.showEndDateTime }))}
             disabled={field.showEndDateTime && field.recurring !== SCEventRecurrenceType.NEVER}>
             <FormattedMessage
               id="ui.eventForm.dateTime.placeholder"
@@ -607,7 +607,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 <Switch
                   className={classes.switch}
                   checked={field.isPublic}
-                  onChange={() => setField((prev: any) => ({ ...prev, ['isPublic']: !field.isPublic }))}
+                  onChange={() => setField((prev) => ({ ...prev, ['isPublic']: !field.isPublic }))}
                 />
                 <Typography className={classNames(classes.switchLabel, { [classes.active]: field.isPublic })}>
                   <Icon>public</Icon>
