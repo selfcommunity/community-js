@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.1...@selfcommunity/react-ui@0.8.0-alpha.2) (2024-09-23)
+
+
+### Bug Fixes
+
+* fixed events component update on my events widget and on suggested events widget ([36cf72a](https://github.com/selfcommunity/community-js/commit/36cf72a953b52b937824fdde247cbda8c8165110))
+
+
+
+
+
 # [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.0...@selfcommunity/react-ui@0.8.0-alpha.1) (2024-09-23)
 
 
