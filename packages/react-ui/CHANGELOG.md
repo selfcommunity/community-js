@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.5...@selfcommunity/react-ui@0.8.0-alpha.6) (2024-09-24)
+
+
+### Bug Fixes
+
+* added categories creation modal to OnBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-805/al-click-su-genera-contenuti-presentare-una-modale-con-scritto-che-per ([96a5328](https://github.com/selfcommunity/community-js/commit/96a53281fcfd149beff082c6c54b3748f102bf55))
+* added failed status messages in OnBoardingWidget Categories/Content steps ([77e53dc](https://github.com/selfcommunity/community-js/commit/77e53dcc7f7ea8af1515abbbb3a6accdbd67f917))
+
+
+### Features
+
+* improved date and time selections ([61e1ad8](https://github.com/selfcommunity/community-js/commit/61e1ad82d117585f40890a04104530296ab3aaac))
+
+
+
+
+
 # [0.8.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.4...@selfcommunity/react-ui@0.8.0-alpha.5) (2024-09-23)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.1...@selfcommunity/react-i18n@0.6.0-alpha.2) (2024-09-24)
+
+
+### Bug Fixes
+
+* added categories creation modal to OnBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-805/al-click-su-genera-contenuti-presentare-una-modale-con-scritto-che-per ([96a5328](https://github.com/selfcommunity/community-js/commit/96a53281fcfd149beff082c6c54b3748f102bf55))
+* added failed status messages in OnBoardingWidget Categories/Content steps ([77e53dc](https://github.com/selfcommunity/community-js/commit/77e53dcc7f7ea8af1515abbbb3a6accdbd67f917))
+
+
+
+
+
 # [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.0...@selfcommunity/react-i18n@0.6.0-alpha.1) (2024-09-23)
 
 
