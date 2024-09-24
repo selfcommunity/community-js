@@ -37,6 +37,7 @@ import {
   usePreviousValue,
   UserUtils,
   useSCContext,
+  useSCFetchCategories,
   useSCPreferences,
   useSCTheme,
   useSCUser
@@ -57,6 +58,7 @@ import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import HeaderPlaceholder from '../../assets/onBoarding/header';
+import BaseDialog from '../../shared/BaseDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -109,7 +111,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const {className, GenerateContentsParams = {}, onGeneratedContent = null, onHeightChange, ...rest} = props;
 
   // STATE
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [steps, setSteps] = useState<SCStepType[]>([]);
   const nextStep = useMemo(() => {
@@ -125,6 +127,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const prevContentsStep = usePreviousValue(currentContentsStep);
   const currentCategoriesStep = steps?.find((s) => s.step === SCOnBoardingStepType.CATEGORIES);
   const prevCategoriesStep = usePreviousValue(currentCategoriesStep);
+  const [showCategoriesModal, setShowCategoriesModal] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -139,6 +142,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {categories, isLoading} = useSCFetchCategories();
 
   // HANDLERS
 
@@ -199,14 +203,14 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
         const contentStep = res.results.find((step) => step.step === SCOnBoardingStepType.CONTENTS);
         setIsGenerating(res.results.some((step) => step.status === 'in_progress'));
         setSteps(res.results);
-        setIsLoading(false);
+        setLoading(false);
         if (contentStep.status === SCOnBoardingStepStatusType.IN_PROGRESS && contentStep.results.length !== 0 && onGeneratedContent) {
           onGeneratedContent(contentStep.results as SCFeedObjectType[]);
         }
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
-        setIsLoading(false);
+        setLoading(false);
       });
   };
 
@@ -220,17 +224,21 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   };
 
   const generateContent = async (stepId: number) => {
-    await OnBoardingService.startAStep(stepId, GenerateContentsParams)
-      .then(() => {
-        setIsGenerating(true);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
+    if (!isLoading && !categories.length) {
+      setShowCategoriesModal(true);
+    } else {
+      await OnBoardingService.startAStep(stepId, GenerateContentsParams)
+        .then(() => {
+          setIsGenerating(true);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
         });
-      });
+    }
   };
 
   const handlePreferencesUpdate = () => {
@@ -399,7 +407,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
         </AccordionSummary>
         <AccordionDetails>
           <Widget className={classes.content} elevation={0}>
-            {isLoading ? (
+            {loading ? (
               <OnBoardingWidgetSkeleton />
             ) : (
               <CardContent>
@@ -448,6 +456,30 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                   <Fade in timeout={2400}>
                     <Box>{getStepContent()}</Box>
                   </Fade>
+                  {showCategoriesModal && (
+                    <BaseDialog
+                      title={<FormattedMessage id="ui.onBoardingWidget.ai.no.categories" defaultMessage="ui.onBoardingWidget.ai.no.categories" />}
+                      DialogContentProps={{dividers: false}}
+                      open={showCategoriesModal}
+                      onClose={() => setShowCategoriesModal(false)}
+                      actions={
+                        <Button color="secondary" onClick={() => setShowCategoriesModal(false)}>
+                          <FormattedMessage
+                            id="ui.onBoardingWidget.ai.no.categories.cancel"
+                            defaultMessage="ui.onBoardingWidget.ai.no.categories.cancel"
+                          />
+                        </Button>
+                      }>
+                      <Button
+                        color="primary"
+                        href={isStage ? CONSOLE_STAGE : CONSOLE_PROD}
+                        onClick={() => setShowCategoriesModal(false)}
+                        target="_blank"
+                        startIcon={<Icon fontSize="small">edit</Icon>}>
+                        <FormattedMessage id="ui.onBoardingWidget.ai.no.categories.link" defaultMessage="ui.onBoardingWidget.ai.no.categories.link" />
+                      </Button>
+                    </BaseDialog>
+                  )}
                 </Box>
               </CardContent>
             )}

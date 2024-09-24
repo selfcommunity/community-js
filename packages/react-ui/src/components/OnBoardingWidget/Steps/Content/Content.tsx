@@ -95,11 +95,7 @@ export default function Content(inProps: ContentProps) {
         <FormattedMessage id="ui.onBoardingWidget.step.content.summary" defaultMessage="ui.onBoardingWidget.step.content.summary" />
       </Typography>
       <Box component="span" className={classes.action}>
-        {step?.status === SCOnBoardingStepStatusType.FAILED ? (
-          <Alert severity="error">
-            <FormattedMessage id="ui.onBoardingWidget.step.contents.error" defaultMessage="ui.onBoardingWidget.step.contents.error" />
-          </Alert>
-        ) : step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
+        {step?.status === SCOnBoardingStepStatusType.COMPLETED ? (
           <Alert severity="success">
             <FormattedMessage id="ui.onBoardingWidget.step.contents.success" defaultMessage="ui.onBoardingWidget.step.contents.success" />
           </Alert>
