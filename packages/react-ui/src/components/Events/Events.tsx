@@ -29,7 +29,7 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType, SCGroupType} from '@selfcommunity/types';
+import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
@@ -404,7 +404,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   label={<FormattedMessage id="ui.events.filterByName" defaultMessage="ui.events.filterByName" />}
                   variant="outlined"
                   onChange={handleOnChangeFilterName}
-                  disabled={loading}
+                  disabled={loading || (!events.length && !query)}
                   onKeyUp={(e) => {
                     e.preventDefault();
                     if (e.key === 'Enter') {
@@ -415,7 +415,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     endAdornment: (
                       <InputAdornment position="end">
                         {isMobile ? (
-                          <IconButton onClick={() => fetchEvents(true)} disabled={loading}>
+                          <IconButton onClick={() => fetchEvents(true)} disabled={loading || (!events.length && !query)}>
                             <Icon>search</Icon>
                           </IconButton>
                         ) : (
@@ -425,7 +425,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                             color="secondary"
                             onClick={() => fetchEvents(true)}
                             endIcon={<Icon>search</Icon>}
-                            disabled={loading}
+                            disabled={loading || (!events.length && !query)}
                           />
                         )}
                       </InputAdornment>
@@ -439,7 +439,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
-                    disabled={showPastEvents || loading}
+                    disabled={showPastEvents || loading || (!events.length && dateSearch === SCEventDateFilterType.ANY)}
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
@@ -475,7 +475,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     showFollowed={showFollowed}
                     deleteIcon={showFollowed ? <Icon>close</Icon> : null}
                     onDelete={showFollowed ? handleDeleteClick : null}
-                    disabled={loading}
+                    disabled={loading || (!events.length && !showFollowed)}
                   />
                 </Grid>
               )}
@@ -484,7 +484,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading}
+                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading || (!events.length && !showPastEvents)}
                 />
               </Grid>
             </>
