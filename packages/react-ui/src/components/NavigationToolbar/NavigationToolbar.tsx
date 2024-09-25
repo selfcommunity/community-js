@@ -208,7 +208,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       scPreferences.preferences &&
       scPreferences.features &&
       scPreferences.features.includes(SCFeatureName.TAGGING) &&
-      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in scPreferences.preferences &&
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
   );
