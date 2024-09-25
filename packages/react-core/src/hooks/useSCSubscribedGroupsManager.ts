@@ -43,7 +43,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
       features &&
       features.includes(SCFeatureName.TAGGING) &&
       features.includes(SCFeatureName.GROUPING) &&
-			SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
       preferences[CONFIGURATIONS_GROUPS_ENABLED].value,
     [preferences, features]
   );

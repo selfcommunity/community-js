@@ -93,7 +93,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
       preferences &&
       features &&
       features.includes(SCFeatureName.TAGGING) &&
-      preferences.includes(SCPreferences.CONFIGURATIONS_EVENTS_ENABLED) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
   );

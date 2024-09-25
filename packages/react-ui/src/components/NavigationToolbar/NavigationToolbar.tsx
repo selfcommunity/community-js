@@ -193,14 +193,13 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     return _preferences;
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
-
   const groupsEnabled = useMemo(
     () =>
       scPreferences.preferences &&
       scPreferences.features &&
       scPreferences.features.includes(SCFeatureName.TAGGING) &&
       scPreferences.features.includes(SCFeatureName.GROUPING) &&
-			SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in scPreferences.preferences &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in scPreferences.preferences &&
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
   );
@@ -209,7 +208,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       scPreferences.preferences &&
       scPreferences.features &&
       scPreferences.features.includes(SCFeatureName.TAGGING) &&
-      scPreferences.preferences.includes(SCPreferences.CONFIGURATIONS_EVENTS_ENABLED) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
   );

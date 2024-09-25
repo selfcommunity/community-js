@@ -143,7 +143,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
       features &&
       features.includes(SCFeatureName.TAGGING) &&
       features.includes(SCFeatureName.GROUPING) &&
-			SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
     [preferences, features]
   );
@@ -152,7 +152,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
       preferences &&
       features &&
       features.includes(SCFeatureName.TAGGING) &&
-      preferences.includes(SCPreferences.CONFIGURATIONS_EVENTS_ENABLED) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
   );
