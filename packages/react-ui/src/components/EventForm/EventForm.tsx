@@ -566,6 +566,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               <MobileDatePicker
                 className={classes.picker}
                 disablePast
+                minDate={field.startDate}
                 label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
                 value={field.endDate}
                 slots={{
