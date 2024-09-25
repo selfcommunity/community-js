@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.8...@selfcommunity/react-theme-default@0.2.0-alpha.9) (2024-09-25)
+
+
+### Bug Fixes
+
+* fixed event form end date/privacy disable state. Added Pubsub for edit action to EventInfoWidget ([7be13d0](https://github.com/selfcommunity/community-js/commit/7be13d0736c2fbab1387ccfce71a418667b9348a))
+
+
+
+
+
 # [0.2.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.7...@selfcommunity/react-theme-default@0.2.0-alpha.8) (2024-09-25)
 
 

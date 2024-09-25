@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.2...@selfcommunity/react-i18n@0.6.0-alpha.3) (2024-09-25)
+
+
+### Bug Fixes
+
+* fixed event form end date/privacy disable state. Added Pubsub for edit action to EventInfoWidget ([7be13d0](https://github.com/selfcommunity/community-js/commit/7be13d0736c2fbab1387ccfce71a418667b9348a))
+
+
+
+
+
 # [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.1...@selfcommunity/react-i18n@0.6.0-alpha.2) (2024-09-24)
 
 
