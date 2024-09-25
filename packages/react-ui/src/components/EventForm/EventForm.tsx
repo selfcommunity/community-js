@@ -1,4 +1,4 @@
-import { LoadingButton } from '@mui/lab';
+import {LoadingButton} from '@mui/lab';
 import {
   Box,
   FormControl,
@@ -15,29 +15,29 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { LocalizationProvider, MobileDatePicker, MobileTimePicker, TimeView } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { EventService, formatHttpErrorCode } from '@selfcommunity/api-services';
-import { SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {LocalizationProvider, MobileDatePicker, MobileTimePicker, TimeView} from '@mui/x-date-pickers';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
+import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH } from '../../constants/Event';
-import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
-import { DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_LATER_DAYS } from './constants';
+import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import {DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_LATER_DAYS} from './constants';
 import EventAddress from './EventAddress';
-import { FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState } from './types';
+import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
 import UploadEventCover from './UploadEventCover';
-import { combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate } from './utils';
+import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 
 const messages = defineMessages({
   name: {
@@ -169,7 +169,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const { className, open = true, onClose, onSuccess, event = null, ...rest } = props;
+  const {className, open = true, onClose, onSuccess, event = null, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -217,17 +217,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   const _backgroundCover = {
     ...(field.imageOriginal
-      ? { background: `url('${field.imageOriginal}') center / cover` }
-      : { background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover` })
+      ? {background: `url('${field.imageOriginal}') center / cover`}
+      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
   const handleChangeCover = useCallback(
     (cover: Blob) => {
-      setField((prev) => ({ ...prev, ['imageOriginalFile']: cover }));
+      setField((prev) => ({...prev, ['imageOriginalFile']: cover}));
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setField((prev) => ({ ...prev, ['imageOriginal']: reader.result }));
+        setField((prev) => ({...prev, ['imageOriginal']: reader.result}));
       };
       reader.readAsDataURL(cover);
 
@@ -265,7 +265,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   }, []);
 
   const handleSubmit = useCallback(() => {
-    setField((prev) => ({ ...prev, ['isSubmitting']: true }));
+    setField((prev) => ({...prev, ['isSubmitting']: true}));
 
     const formData = new FormData();
 
@@ -299,9 +299,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
     let eventService: Promise<SCEventType>;
     if (event) {
-      eventService = EventService.updateEvent(event.id, formData as unknown as SCEventType, { headers: { 'Content-Type': 'multipart/form-data' } });
+      eventService = EventService.updateEvent(event.id, formData as unknown as SCEventType, {headers: {'Content-Type': 'multipart/form-data'}});
     } else {
-      eventService = EventService.createEvent(formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
     eventService
@@ -309,7 +309,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         onSuccess?.(data);
         notifyChanges(data);
         onClose?.();
-        setField((prev) => ({ ...prev, ['isSubmitting']: false }));
+        setField((prev) => ({...prev, ['isSubmitting']: false}));
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
@@ -322,18 +322,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
           });
         } else {
-          setError({ ...error, ..._error });
+          setError({...error, ..._error});
         }
 
-        setField((prev) => ({ ...prev, ['isSubmitting']: false }));
+        setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
       });
   }, [field, privateEnabled, visibilityEnabled]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = event.target;
-      setField((prev) => ({ ...prev, [name]: value }));
+      const {name, value} = event.target;
+      setField((prev) => ({...prev, [name]: value}));
 
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
@@ -346,10 +346,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   const handleChangeDateTime = useCallback(
     (value: FieldStateValues, name: FieldStateKeys) => {
-      setField((prev) => ({ ...prev, [name]: value }));
-
+      setField((prev) => ({...prev, [name]: value}));
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
+
+        setError(error);
+      } else if (error['endDateError']) {
+        delete error['endDateError'];
 
         setError(error);
       }
@@ -392,7 +395,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
    */
   return (
     <Root
-      DialogContentProps={{ dividers: false }}
+      DialogContentProps={{dividers: false}}
       title={
         event ? (
           <FormattedMessage id="ui.eventForm.title.edit" defaultMessage="ui.eventForm.title.edit" />
@@ -431,7 +434,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       }
       {...rest}>
       <>
-        <Paper style={_backgroundCover} classes={{ root: classes.cover }}>
+        <Paper style={_backgroundCover} classes={{root: classes.cover}}>
           <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
         </Paper>
         <FormGroup className={classes.form}>
@@ -608,6 +611,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                           </InputAdornment>
                         )
                       }}
+                      error={Boolean(error['endDateError'])}
+                      helperText={
+                        error['endDateError']?.error ? (
+                          <FormattedMessage id="ui.eventForm.time.end.error.invalid" defaultMessage="ui.eventForm.time.end.error.invalid" />
+                        ) : null
+                      }
                     />
                   )
                 }}
@@ -620,16 +629,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           {privateEnabled && (
             <Box className={classes.privacySection}>
               <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-                <Typography className={classNames(classes.switchLabel, { [classes.active]: !field.isPublic })}>
+                <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
                   <Icon>private</Icon>
                   <FormattedMessage id="ui.eventForm.privacy.private" defaultMessage="ui.eventForm.privacy.private" />
                 </Typography>
                 <Switch
                   className={classes.switch}
                   checked={field.isPublic}
-                  onChange={() => setField((prev) => ({ ...prev, ['isPublic']: !field.isPublic }))}
+                  onChange={() => setField((prev) => ({...prev, ['isPublic']: !field.isPublic}))}
+                  disabled={event && !field.isPublic}
                 />
-                <Typography className={classNames(classes.switchLabel, { [classes.active]: field.isPublic })}>
+                <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
                   <Icon>public</Icon>
                   <FormattedMessage id="ui.eventForm.privacy.public" defaultMessage="ui.eventForm.privacy.public" />
                 </Typography>
