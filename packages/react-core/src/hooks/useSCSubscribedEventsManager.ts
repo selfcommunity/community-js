@@ -16,7 +16,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCNotificationMapping} from '../constants/Notification';
 import useSCCachingManager from './useSCCachingManager';
 import {getEventStatus} from '../utils/event';
-import {SCPreferences} from '@selfcommunity/react-core';
+import {CONFIGURATIONS_EVENTS_ENABLED} from '../constants/Preferences';
 
 /**
  :::info
@@ -41,8 +41,8 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
       preferences &&
       features &&
       features.includes(SCFeatureName.TAGGING) &&
-      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+      CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
   );
 
