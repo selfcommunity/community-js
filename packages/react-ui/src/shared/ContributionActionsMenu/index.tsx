@@ -831,9 +831,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   }
 
   /**
-	 * action
-	 * @param sectionId
-	 */
+   * action
+   * @param sectionId
+   */
   function handleOpenSection(sectionId) {
     if (sectionId) {
       if (sectionId === openSection) {
@@ -1060,7 +1060,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       scUserContext.user.id !== contributionObj.author.id &&
       contributionObj &&
       contributionObj.type !== SCContributionType.COMMENT &&
-      Boolean((contributionObj as SCFeedObjectType).event)
+      Boolean((contributionObj as SCFeedObjectType).event) &&
+      Boolean((contributionObj as SCFeedObjectType).event.active)
     );
   }
 
@@ -1218,7 +1219,6 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       <IconButton
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        disabled={contributionObj && contributionObj?.medias?.length && !contributionObj.medias[0].embed?.metadata?.active}
         ref={(ref) => {
           popperRef.current = ref;
         }}
