@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.0...@selfcommunity/types@0.6.0-alpha.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* groupsEnalbed/eventsEnabled ([43db3ae](https://github.com/selfcommunity/community-js/commit/43db3ae802c926976b2bb163f6177438a07908f8))
+
+
+
+
+
 # [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.56-alpha.0...@selfcommunity/types@0.6.0-alpha.0) (2024-09-20)
 
 

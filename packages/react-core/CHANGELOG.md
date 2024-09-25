@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.3...@selfcommunity/react-core@0.5.0-alpha.4) (2024-09-25)
+
+
+### Bug Fixes
+
+* embedly ([fce7987](https://github.com/selfcommunity/community-js/commit/fce798775efcbc9b6e18d7804a893a7d310f7fca))
+* embedly ([ad84326](https://github.com/selfcommunity/community-js/commit/ad843265848f99ad6e2b655424cb41eb5d344d93))
+* groupsEnabled/eventsEnabled ([946ed46](https://github.com/selfcommunity/community-js/commit/946ed4611d5ef14643b27a0914f037f44f82918d))
+* groupsEnalbed/eventsEnabled ([43db3ae](https://github.com/selfcommunity/community-js/commit/43db3ae802c926976b2bb163f6177438a07908f8))
+
+
+
+
+
 # [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.2...@selfcommunity/react-core@0.5.0-alpha.3) (2024-09-25)
 
 **Note:** Version bump only for package @selfcommunity/react-core
