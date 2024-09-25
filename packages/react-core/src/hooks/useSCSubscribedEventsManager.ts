@@ -16,6 +16,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCNotificationMapping} from '../constants/Notification';
 import useSCCachingManager from './useSCCachingManager';
 import {getEventStatus} from '../utils/event';
+import {SCPreferences} from '@selfcommunity/react-core';
 
 /**
  :::info
@@ -33,9 +34,17 @@ import {getEventStatus} from '../utils/event';
  */
 export default function useSCSubscribedEventsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
-  const {features} = useSCPreferences();
+  const {preferences, features} = useSCPreferences();
   const authUserId = user ? user.id : null;
-  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
 
   const notificationInvitedToJoinEvent = useRef(null);
   const notificationRequestedToJoinEvent = useRef(null);

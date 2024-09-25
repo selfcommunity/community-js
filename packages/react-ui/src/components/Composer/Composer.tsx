@@ -608,10 +608,20 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
         data.addressing = addressing.map((t) => t.id);
       }
-      if (features.includes(SCFeatureName.GROUPING) && group !== null) {
+      if (
+        features.includes(SCFeatureName.TAGGING) &&
+        features.includes(SCFeatureName.GROUPING) &&
+        preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value &&
+        group !== null
+      ) {
         data.group = group.id;
       }
-      if (features.includes(SCFeatureName.EVENT) && event !== null) {
+      if (
+        features.includes(SCFeatureName.TAGGING) &&
+        features.includes(SCFeatureName.EVENT) &&
+        preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value &&
+        event !== null
+      ) {
         data.event = event.id;
       }
       setIsSubmitting(true);
