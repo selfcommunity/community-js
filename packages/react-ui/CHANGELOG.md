@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.10...@selfcommunity/react-ui@0.8.0-alpha.11) (2024-09-25)
+
+
+### Bug Fixes
+
+* contributionActionsMenu ([d84c51b](https://github.com/selfcommunity/community-js/commit/d84c51bc5bfec9d638b5f7316ccebcfdd03eff8c))
+
+
+
+
+
 # [0.8.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.9...@selfcommunity/react-ui@0.8.0-alpha.10) (2024-09-25)
 
 
