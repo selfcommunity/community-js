@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.11...@selfcommunity/react-ui@0.8.0-alpha.12) (2024-09-25)
+
+
+### Bug Fixes
+
+* groupsEnabled/eventsEnabled ([7c674e1](https://github.com/selfcommunity/community-js/commit/7c674e1d6322967e5ba627ecf55b8fd8aa62acd4))
+
+
+
+
+
 # [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.10...@selfcommunity/react-ui@0.8.0-alpha.11) (2024-09-25)
 
 
