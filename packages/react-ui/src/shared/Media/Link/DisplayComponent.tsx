@@ -1,20 +1,24 @@
-import React, { ReactElement, useMemo } from 'react';
-import { styled } from '@mui/material/styles';
+import React, {ReactElement, useMemo} from 'react';
+import {styled} from '@mui/material/styles';
 import LazyLoad from 'react-lazyload';
-import { MEDIA_TYPE_VIDEO } from '../../../constants/Media';
+import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 import AutoPlayer from '../../AutoPlayer';
 import Box from '@mui/material/Box';
-import { DEFAULT_PRELOAD_OFFSET_VIEWPORT } from '../../../constants/LazyLoad';
+import {DEFAULT_PRELOAD_OFFSET_VIEWPORT} from '../../../constants/LazyLoad';
 import Skeleton from '@mui/material/Skeleton';
 import classNames from 'classnames';
-import { PREFIX } from './constants';
-import { BoxProps } from '@mui/material';
-import { SCMediaType } from '@selfcommunity/types/src/types';
+import {PREFIX} from './constants';
+import {BoxProps, CircularProgress} from '@mui/material';
+import {SCMediaType} from '@selfcommunity/types/src/types';
 import filter from './filter';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
   displayLink: `${PREFIX}-link`,
+  displayHtmlWrap: `${PREFIX}-html-wrap`,
+  displayHtml: `${PREFIX}-html`,
+  displayHtmlPlaceholder: `${PREFIX}-html-placeholder`,
+  displayHtmlLoading: `${PREFIX}-html-loading`,
   displayVideo: `${PREFIX}-video`,
   thumbnail: `${PREFIX}-thumbnail`,
   thumbnailFullWidth: `${PREFIX}-thumbnail`,
@@ -60,34 +64,55 @@ export default (props: DisplayComponentProps): ReactElement => {
 
   /**
    * Renders link display
-   * @param (link)
-   * @param(key)
+   * @param media
+   * @param key
    */
-  const renderPreview = (link, key) => {
-    const domain = new URL(link.embed.metadata.url).hostname.replace('www.', '');
+  const renderPreview = (media: SCMediaType, key: number) => {
+    if (media.embed.metadata.html) {
+      return renderHtml(media, key);
+    }
+    const domain = new URL(media.embed.metadata.url).hostname.replace('www.', '');
     return (
       <Box className={classes.displayLink} key={key}>
-        {link.embed.metadata.images && link.embed.metadata.images.length > 0 && (
+        {media.embed.metadata.images && media.embed.metadata.images.length > 0 && (
           <>
             {fullWidth ? (
               <Box
                 className={classNames(classes.thumbnailFullWidth, classes.image)}
-                style={{background: `url(${link.image})`, paddingBottom: `${100 / link.image_width / link.image_height}%`}}
+                style={{background: `url(${media.image})`, paddingBottom: `${100 / media.image_width / media.image_height}%`}}
               />
             ) : (
-              <Box className={classNames(classes.thumbnail, classes.image)} style={{background: `url(${link.image})`}} />
+              <Box className={classNames(classes.thumbnail, classes.image)} style={{background: `url(${media.image})`}} />
             )}
           </>
         )}
         <Box className={classes.snippet}>
-          <b className={classes.snippetTitle}>{link.embed.metadata.title}</b>
+          <b className={classes.snippetTitle}>{media.embed.metadata.title}</b>
           <br />
-          <p className={classes.snippetDescription}>{link.embed.metadata.description}</p>
-          <a href={link.embed.metadata.url} target={'_blank'} onClick={() => handleLinkClick(link)}>
+          <p className={classes.snippetDescription}>{media.embed.metadata.description}</p>
+          <a href={media.embed.metadata.url} target={'_blank'} onClick={() => handleLinkClick(media)}>
             {domain}
           </a>
         </Box>
         <div style={{clear: 'both'}}></div>
+      </Box>
+    );
+  };
+
+  /**
+   * Render html embed
+   * @param media
+   * @param key
+   */
+  const renderHtml = (media: SCMediaType, key: number) => {
+    return (
+      <Box className={classes.displayHtmlWrap} key={key}>
+        <div dangerouslySetInnerHTML={{__html: media.embed.metadata.html}} className={classes.displayHtml} />
+        <div
+          className={classes.displayHtmlPlaceholder}
+          style={{paddingTop: `${(100 * media.embed.metadata.height) / media.embed.metadata.width}%`, maxHeight: media.embed.metadata.height}}>
+          <CircularProgress size={20} className={classes.displayHtmlLoading} />
+        </div>
       </Box>
     );
   };
@@ -99,22 +124,22 @@ export default (props: DisplayComponentProps): ReactElement => {
     return null;
   }
   return (
-      <Root className={classNames(className, classes.displayRoot)} {...rest}>
-        {_medias.map((l, i) => {
-          if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-            return (
-              <LazyLoad
-                className={classes.displayVideo}
-                placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
-                key={i}
-                once
-                offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
-                <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />
-              </LazyLoad>
-            );
-          }
-          return <React.Fragment key={i}>{renderPreview(l, i)}</React.Fragment>;
-        })}
-      </Root>
+    <Root className={classNames(className, classes.displayRoot)} {...rest}>
+      {_medias.map((l, i) => {
+        if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
+          return (
+            <LazyLoad
+              className={classes.displayVideo}
+              placeholder={<Skeleton variant="rectangular" height={360} width={'100%'} />}
+              key={i}
+              once
+              offset={DEFAULT_PRELOAD_OFFSET_VIEWPORT}>
+              <AutoPlayer url={l.url} width={'100%'} key={i} onVideoWatch={() => handleLinkClick(l)} />
+            </LazyLoad>
+          );
+        }
+        return <React.Fragment key={i}>{renderPreview(l, i)}</React.Fragment>;
+      })}
+    </Root>
   );
 };

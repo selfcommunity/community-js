@@ -13,6 +13,33 @@ const Component = {
         margin: '10px 0px',
         height: 360
       },
+      '& .SCMediaLink-html-wrap': {
+        position: 'relative',
+        marginLeft: theme.spacing(),
+        marginRight: theme.spacing(),
+        '& .SCMediaLink-html': {
+          width: '100%',
+          position: 'absolute',
+          top: 0,
+          zIndex: 2,
+          '& iframe': {
+            width: '100%',
+            margin: '0px auto'
+          }
+        },
+        '& .SCMediaLink-html-placeholder': {
+          width: '100%',
+          position: 'relative',
+          top: 0,
+          zIndex: 1,
+          '& .SCMediaLink-html-loading': {
+            position: 'absolute',
+            display: 'block',
+            top: '38%',
+            left: '50%'
+          }
+        }
+      },
       '& .SCMediaLink-thumbnail': {
         border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`,
         borderRadius: theme.shape.borderRadius * 0.75,
@@ -55,11 +82,35 @@ const Component = {
       '& .SCMediaLink-media': {
         position: 'relative',
         margin: theme.spacing(1),
+        '& .SCMediaLink-html-wrap': {
+          '& .SCMediaLink-html': {
+            width: '100%',
+            position: 'absolute',
+            zIndex: 2,
+            '& iframe': {
+              width: '100%',
+              margin: '0px auto'
+            }
+          },
+          '& .SCMediaLink-html-placeholder': {
+            width: '100%',
+            position: 'absolute',
+            top: 0,
+            zIndex: 1,
+            '& .SCMediaLink-html-loading': {
+              position: 'absolute',
+              display: 'block',
+              top: '40%',
+              left: '50%'
+            }
+          }
+        },
         '& .SCMediaLink-delete': {
           background: theme.palette.common.white,
           position: 'absolute',
           right: theme.spacing(0.5),
-          top: theme.spacing(0.5)
+          top: theme.spacing(0.5),
+          zIndex: 3
         },
         '&.SCMediaLink-media-video .SCMediaLink-delete': {
           background: theme.palette.common.white,
