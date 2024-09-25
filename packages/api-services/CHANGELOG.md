@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.0...@selfcommunity/api-services@0.5.0-alpha.1) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 # [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.56-alpha.0...@selfcommunity/api-services@0.5.0-alpha.0) (2024-09-20)
 
 

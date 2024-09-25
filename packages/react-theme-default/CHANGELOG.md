@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.9...@selfcommunity/react-theme-default@0.2.0-alpha.10) (2024-09-25)
+
+
+### Bug Fixes
+
+* embedly ([b29a74d](https://github.com/selfcommunity/community-js/commit/b29a74df76059f5354f169e4bb35bb7d85a3c91c))
+* embedly ([35839dc](https://github.com/selfcommunity/community-js/commit/35839dc49dc17654dda13c11f4d05bf444204f2c))
+
+
+
+
+
 # [0.2.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.8...@selfcommunity/react-theme-default@0.2.0-alpha.9) (2024-09-25)
 
 
