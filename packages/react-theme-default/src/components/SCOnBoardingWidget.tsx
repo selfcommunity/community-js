@@ -316,16 +316,17 @@ const Component = {
         boxShadow: 'unset',
         [theme.breakpoints.up('md')]: {
           borderRadius: theme.spacing(0, 0, 2.5, 2.5)
-        }
+        },
+        display: 'flex',
+        flexDirection: 'row'
       },
       '& .SCOnBoardingWidget-profile-icon': {
         alignSelf: 'end'
       },
       '& .SCOnBoardingWidget-profile-avatar': {
+        position: 'relative',
         top: 100,
-        [theme.breakpoints.up('sm')]: {top: 150},
         display: 'block',
-        position: 'absolute',
         marginLeft: theme.spacing(2),
         '& > .MuiBadge-root > img': {
           height: theme.selfcommunity.user.avatar.sizeXLarge,
@@ -344,9 +345,10 @@ const Component = {
         }
       },
       '& .SCOnBoardingWidget-profile-change-picture': {
-        top: 140,
-        [theme.breakpoints.up('sm')]: {top: 190},
-        left: 80,
+        [theme.breakpoints.down('sm')]: {top: 167, left: -45},
+        top: 165,
+        left: -40,
+        height: 28,
         position: 'relative',
         display: 'flex',
         marginLeft: theme.spacing(2)
