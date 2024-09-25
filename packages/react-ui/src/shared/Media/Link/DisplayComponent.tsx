@@ -68,9 +68,9 @@ export default (props: DisplayComponentProps): ReactElement => {
    * @param key
    */
   const renderPreview = (media: SCMediaType, key: number) => {
-    if (media.embed.metadata.html) {
-      return renderHtml(media, key);
-    }
+    // if (media.embed.metadata.html) {
+    //   return renderHtml(media, key);
+    // }
     const domain = new URL(media.embed.metadata.url).hostname.replace('www.', '');
     return (
       <Box className={classes.displayLink} key={key}>

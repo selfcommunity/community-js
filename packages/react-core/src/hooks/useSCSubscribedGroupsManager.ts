@@ -17,7 +17,6 @@ import {SCNotificationMapping} from '../constants/Notification';
 import {CONFIGURATIONS_GROUPS_ENABLED} from '../constants/Preferences';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import PubSub from 'pubsub-js';
-import {SCPreferences} from '@selfcommunity/react-core';
 
 /**
  :::info
@@ -43,7 +42,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
       features &&
       features.includes(SCFeatureName.TAGGING) &&
       features.includes(SCFeatureName.GROUPING) &&
-      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      CONFIGURATIONS_GROUPS_ENABLED in preferences &&
       preferences[CONFIGURATIONS_GROUPS_ENABLED].value,
     [preferences, features]
   );
