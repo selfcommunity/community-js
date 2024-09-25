@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.7...@selfcommunity/react-ui@0.8.0-alpha.8) (2024-09-25)
+
+
+### Bug Fixes
+
+* embedly ([9336e89](https://github.com/selfcommunity/community-js/commit/9336e89e93e4d4aae0409614eccbc8e4cb900aaa))
+
+
+
+
+
+# [0.8.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.6...@selfcommunity/react-ui@0.8.0-alpha.7) (2024-09-24)
+
+
+### Bug Fixes
+
+* fixed events filters disabled state when empty ([04e31ed](https://github.com/selfcommunity/community-js/commit/04e31edcfee50057880b90480187e86e86a6c44f))
+
+
+
+
+
 # [0.8.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.5...@selfcommunity/react-ui@0.8.0-alpha.6) (2024-09-24)
 
 

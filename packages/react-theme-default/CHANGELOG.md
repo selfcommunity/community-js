@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.7...@selfcommunity/react-theme-default@0.2.0-alpha.8) (2024-09-25)
+
+
+### Bug Fixes
+
+* embedly ([9336e89](https://github.com/selfcommunity/community-js/commit/9336e89e93e4d4aae0409614eccbc8e4cb900aaa))
+* onBoarding styles step profile ([69db642](https://github.com/selfcommunity/community-js/commit/69db6421fadb2f5a8cbb0999290787587acd9000))
+
+
+
+
+
+# [0.2.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.6...@selfcommunity/react-theme-default@0.2.0-alpha.7) (2024-09-24)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.2.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.5...@selfcommunity/react-theme-default@0.2.0-alpha.6) (2024-09-24)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
