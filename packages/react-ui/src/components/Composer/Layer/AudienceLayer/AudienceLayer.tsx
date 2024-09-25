@@ -11,7 +11,7 @@ import {ComposerLayerProps} from '../../../../types/composer';
 import classNames from 'classnames';
 import Icon from '@mui/material/Icon';
 import DialogContent from '@mui/material/DialogContent';
-import {SCPreferencesContextType, useSCFetchAddressingTagList, useSCPreferences} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, useSCFetchAddressingTagList, useSCPreferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
 import GroupAutocomplete from '../../../GroupAutocomplete';
 import {SCGroupType, SCFeatureName, SCEventType} from '@selfcommunity/types';
@@ -76,10 +76,27 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: autocompleteOpen});
-  const {features}: SCPreferencesContextType = useSCPreferences();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   // MEMO
-  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
-  const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
+  const groupsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [preferences, features]
+  );
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
 
   // HANDLERS
   const handleSave = useCallback(() => {

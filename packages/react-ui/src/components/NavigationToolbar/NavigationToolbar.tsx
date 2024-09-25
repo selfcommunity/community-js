@@ -194,19 +194,31 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const groupsEnabled = useMemo(
-    () => scPreferences.features && scPreferences.features.includes(SCFeatureName.GROUPING) && scPreferences.features.includes(SCFeatureName.TAGGING),
-    [scPreferences.features]
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      scPreferences.features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
   );
   const eventsEnabled = useMemo(
-    () => scPreferences.features && scPreferences.features.includes(SCFeatureName.EVENT) && scPreferences.features.includes(SCFeatureName.TAGGING),
-    [scPreferences.features]
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
   );
+
   const showComposer = useMemo(() => {
     return (
       !disableComposer &&
       (!scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user))
     );
-  }, [scPreferences, disableComposer, scUserContext.user]);
+  }, [preferences, disableComposer, scUserContext.user]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);

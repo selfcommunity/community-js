@@ -137,8 +137,25 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
   // MEMO
-  const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
-  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
+  const groupsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [preferences, features]
+  );
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
   const postOnlyStaffEnabled = preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value;
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;

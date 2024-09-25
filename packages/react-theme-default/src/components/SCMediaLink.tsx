@@ -81,7 +81,6 @@ const Component = {
     previewRoot: ({theme}: any) => ({
       '& .SCMediaLink-media': {
         position: 'relative',
-        margin: theme.spacing(1),
         '& .SCMediaLink-html-wrap': {
           '& .SCMediaLink-html': {
             width: '100%',

@@ -54,8 +54,15 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
 
   // HOOK
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
-  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
-
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_GROUPS_ONLY_STAFF_ENABLED].value, [preferences]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

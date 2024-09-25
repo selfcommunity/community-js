@@ -4,6 +4,7 @@ import {Box, useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
   SCCache,
+  SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
@@ -105,8 +106,16 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const {features}: SCPreferencesContextType = useSCPreferences();
-  const eventsEnabled = useMemo(() => features && features.includes(SCFeatureName.EVENT) && features.includes(SCFeatureName.TAGGING), [features]);
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
 
   // REFS
   const updatesSubscription = useRef(null);
