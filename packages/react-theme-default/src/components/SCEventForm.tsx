@@ -21,7 +21,11 @@ const Component = {
       },
       '& .SCEventForm-form': {
         '& .SCEventForm-picker': {
-          width: '50%'
+          width: '50%',
+          '& .MuiFormHelperText-root': {
+            height: 0,
+            marginTop: 0
+          }
         },
         '& .MuiTextField-root, .SCEventForm-frequency': {
           marginBottom: theme.spacing(2)
@@ -87,6 +91,7 @@ const Component = {
         }
       },
       '& .SCEventForm-event-address-root': {
+        marginTop: theme.spacing(2),
         backgroundColor: theme.palette.grey['A200'],
         borderRadius: 5,
         '& .SCEventForm-event-address-tabs': {

@@ -1,13 +1,15 @@
-import { Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
-import { useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {useSCFetchEvent} from '@selfcommunity/react-core';
+import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCGroupType } from '@selfcommunity/types';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -66,7 +68,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     name: PREFIX
   });
 
-  const { event, eventId, summaryExpanded = false, ...rest } = props;
+  const {event, eventId, summaryExpanded = false, ...rest} = props;
 
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);
@@ -74,7 +76,10 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   const [loading, setLoading] = useState(true);
 
   // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
+
+  // REFS
+  const updatesSubscription = useRef(null);
 
   useEffect(() => {
     setLoading(false);
@@ -109,6 +114,30 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   );
 
   const description = useMemo(() => (expanded ? scEvent?.description : getTruncatedText(scEvent?.description, 220)), [expanded, scEvent]);
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onChangeGroupHandler = useCallback(
+    (_msg: string, data: SCEventType) => {
+      if (data && scEvent.id === data.id) {
+        setSCEvent(data);
+      }
+    },
+    [scEvent, setSCEvent]
+  );
+
+  /**
+   * On mount, subscribe to receive groups updates (only edit)
+   */
+  useEffect(() => {
+    if (scEvent) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.EDIT}`, onChangeGroupHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [scEvent]);
 
   // RENDER
   if (!scEvent && loading) {
