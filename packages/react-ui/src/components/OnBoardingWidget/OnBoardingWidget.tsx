@@ -394,11 +394,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                     b: (chunks) => <strong>{chunks}</strong>,
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
-                    icon: (...chunks) => (
-                      <Icon color="secondary" fontSize="medium">
-                        {chunks}
-                      </Icon>
-                    )
+                    icon: (...chunks) => <Icon color="secondary" fontSize="medium">{chunks}</Icon>
                   }}
                 />
               </Typography>
