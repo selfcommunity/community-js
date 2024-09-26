@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.13...@selfcommunity/react-ui@0.8.0-alpha.14) (2024-09-26)
+
+
+### Performance Improvements
+
+* fixes for developers doc build ([d893b22](https://github.com/selfcommunity/community-js/commit/d893b225229c13b7b88f8ad4ec286f97186c6b7f))
+
+
+
+
+
 # [0.8.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.12...@selfcommunity/react-ui@0.8.0-alpha.13) (2024-09-26)
 
 
