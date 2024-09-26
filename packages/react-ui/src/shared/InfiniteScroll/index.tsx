@@ -328,7 +328,7 @@ class InfiniteScroll extends Component<InfiniteScrollProps, State> {
           style={style}>
           {this.props.header}
           {this.props.pullDownToRefresh && (
-            <div style={{position: 'relative'}} ref={(pullDown: HTMLDivElement) => (this._pullDown = pullDown)}>
+            <div style={{position: 'relative', marginBottom: 16}} ref={(pullDown: HTMLDivElement) => (this._pullDown = pullDown)}>
               <div
                 style={{
                   position: 'absolute',

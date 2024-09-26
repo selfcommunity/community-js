@@ -14,18 +14,12 @@ import {
   useSCFetchFeed
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
+import {Box, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
-import {
-	SCContributionType,
-	SCCustomAdvPosition,
-	SCFeedObjectType,
-	SCFeedUnitType,
-	SCUserType
-} from '@selfcommunity/types';
+import {SCCustomAdvPosition, SCFeedUnitType, SCUserType} from '@selfcommunity/types';
 import {EndpointType, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, getQueryStringParameter, isClientSideRendering, updateQueryStringParameter} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -42,6 +36,13 @@ import FeedSkeleton from './Skeleton';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
 import {PREFIX} from './constants';
+
+const messages = defineMessages({
+  refresh: {
+    id: 'ui.feed.refreshRelease',
+    defaultMessage: 'ui.feed.refreshRelease'
+  }
+});
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -300,13 +301,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     props: inProps,
     name: PREFIX
   });
+  // HOOKS
+  const intl = useIntl();
   const {
     id = 'feed',
     className,
     endpoint,
     endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
-    refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    refreshMessage = <Typography dangerouslySetInnerHTML={{__html: `${intl.formatMessage(messages.refresh)}`}} />,
     HeaderComponent,
     FooterComponent = Footer,
     FooterComponentProps = {},

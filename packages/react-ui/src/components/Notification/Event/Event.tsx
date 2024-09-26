@@ -109,6 +109,8 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               id={`ui.notification.event.${notificationObject.type}`}
               defaultMessage={`ui.notification.event.${notificationObject.type}`}
               values={{
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
                 icon: (...chunks) => <Icon>{chunks}</Icon>,
                 event: notificationObject.event.name,
                 link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>
@@ -198,6 +200,8 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               id={`ui.notification.${notificationObject.type}`}
               defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
                 icon: (...chunks) => <Icon>{chunks}</Icon>,
                 event: notificationObject.event.name,
                 link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>

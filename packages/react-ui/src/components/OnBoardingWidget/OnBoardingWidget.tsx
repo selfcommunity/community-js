@@ -100,6 +100,11 @@ export interface OnBoardingWidgetProps extends VirtualScrollerItemProps {
    * @default null
    */
   onGeneratedContent?: (feedObjs: SCFeedObjectType[]) => void;
+  /**
+   * Force widget expanded
+   * @default false
+   */
+  forceExpanded?: boolean;
 }
 
 const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
@@ -108,7 +113,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     props: inProps,
     name: PREFIX
   });
-  const {className, GenerateContentsParams = {}, onGeneratedContent = null, onHeightChange, ...rest} = props;
+  const {className, GenerateContentsParams = {}, onGeneratedContent = null, onHeightChange, onStateChange, forceExpanded = false, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -121,7 +126,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const allStepsDone = useMemo(() => {
     return steps?.every((step) => step.status === SCOnBoardingStepStatusType.COMPLETED);
   }, [steps]);
-  const [expanded, setExpanded] = useState(!allStepsDone);
+  const [expanded, setExpanded] = useState(!allStepsDone || forceExpanded);
   const [_step, setStep] = useState<SCStepType>(nextStep);
   const currentContentsStep = steps?.find((s) => s.step === SCOnBoardingStepType.CONTENTS);
   const prevContentsStep = usePreviousValue(currentContentsStep);
@@ -145,6 +150,19 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const {categories, isLoading} = useSCFetchCategories();
 
   // HANDLERS
+  /**
+   * Notify changes to Feed if the Widget is contained
+   */
+  const notifyLayoutChanges = useMemo(
+    () =>
+      (state?: Record<string, any>): void => {
+        if (onStateChange && state) {
+          onStateChange(state);
+        }
+        onHeightChange && onHeightChange();
+      },
+    [onStateChange, onHeightChange]
+  );
 
   const completeStep = async (s: SCStepType) => {
     if (s.status !== SCOnBoardingStepStatusType.COMPLETED) {
@@ -219,8 +237,9 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   };
 
   const handleExpand = () => {
-    setExpanded(!expanded);
-    onHeightChange && onHeightChange();
+    const _expanded = !expanded;
+    setExpanded(_expanded);
+    notifyLayoutChanges({forceExpanded: _expanded});
   };
 
   const generateContent = async (stepId: number) => {
@@ -275,12 +294,14 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     if (!initialized && nextStep) {
       setStep(nextStep);
       setInitialized(true);
+      notifyLayoutChanges({forceExpanded: expanded});
     }
   }, [initialized, nextStep]);
 
   useEffect(() => {
-    setExpanded(!allStepsDone);
-    onHeightChange && onHeightChange();
+    const _expanded = !allStepsDone;
+    setExpanded(_expanded);
+    notifyLayoutChanges({forceExpanded: _expanded});
   }, [allStepsDone]);
 
   useEffect(() => {

@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.12...@selfcommunity/react-ui@0.8.0-alpha.13) (2024-09-26)
+
+
+### Bug Fixes
+
+* fixed composer reset after cancel. Linear issue: https://linear.app/quentral/issue/QUE-812/se-si-annulla-la-creazione-di-un-post-cliccando-su-si-abbandona ([6b2d19c](https://github.com/selfcommunity/community-js/commit/6b2d19c01bd1e77cae8f23d8ea018ecd7c65199e))
+* fixed feed release section. Linear issue: https://linear.app/quentral/issue/QUE-811/check-nuovi-post-render-non-corretto ([34dcde0](https://github.com/selfcommunity/community-js/commit/34dcde09e8783766bd166b8a23304e77b6683dbe))
+* fixed relative time ([47c3589](https://github.com/selfcommunity/community-js/commit/47c3589389b3022a0268799bc67bdcdf7a76467a))
+
+
+
+
+
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.11...@selfcommunity/react-ui@0.8.0-alpha.12) (2024-09-25)
+
+
+### Bug Fixes
+
+* groupsEnabled/eventsEnabled ([7c674e1](https://github.com/selfcommunity/community-js/commit/7c674e1d6322967e5ba627ecf55b8fd8aa62acd4))
+
+
+
+
+
+# [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.10...@selfcommunity/react-ui@0.8.0-alpha.11) (2024-09-25)
+
+
+### Bug Fixes
+
+* contributionActionsMenu ([d84c51b](https://github.com/selfcommunity/community-js/commit/d84c51bc5bfec9d638b5f7316ccebcfdd03eff8c))
+
+
+
+
+
 # [0.8.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.9...@selfcommunity/react-ui@0.8.0-alpha.10) (2024-09-25)
 
 
