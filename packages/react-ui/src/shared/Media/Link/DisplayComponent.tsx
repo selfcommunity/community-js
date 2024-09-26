@@ -68,12 +68,12 @@ export default (props: DisplayComponentProps): ReactElement => {
    * @param key
    */
   const renderPreview = (media: SCMediaType, key: number) => {
-    // if (media.embed.metadata.html) {
-		// 	return renderHtml(media, key);
-    // }
+    if (media.embed.metadata.html) {
+			return renderHtml(media, key);
+    }
     const domain = new URL(media.embed.metadata.url).hostname.replace('www.', '');
     return (
-      <Box className={classes.displayLink} key={key}>
+      <Box className={classes.displayLink}>
         {media.embed.metadata.images && media.embed.metadata.images.length > 0 && (
           <>
             {fullWidth ? (
@@ -106,7 +106,7 @@ export default (props: DisplayComponentProps): ReactElement => {
    */
   const renderHtml = (media: SCMediaType, key: number) => {
     return (
-      <Box className={classes.displayHtmlWrap} key={key}>
+      <Box className={classes.displayHtmlWrap}>
         <div dangerouslySetInnerHTML={{__html: media.embed.metadata.html}} className={classes.displayHtml} />
         <div
           className={classes.displayHtmlPlaceholder}
