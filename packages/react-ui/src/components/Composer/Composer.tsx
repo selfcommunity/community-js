@@ -689,6 +689,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         });
       } else {
         onClose && onClose(e);
+        setLayer(null);
+        dispatch({type: 'reset'});
         /*setLayer(null);
         feedType && feedType === SCFeedTypologyType.CATEGORY
           ? dispatch({type: 'resetCategoryFeed'})
