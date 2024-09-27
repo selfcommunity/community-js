@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.14...@selfcommunity/react-ui@0.8.0-alpha.15) (2024-09-27)
+
+
+### Bug Fixes
+
+* onBoarding onStateChange in Feed ([aa241b0](https://github.com/selfcommunity/community-js/commit/aa241b0ce36d0ae8757cbc8c638566f588deff58))
+
+
+
+
+
 # [0.8.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.13...@selfcommunity/react-ui@0.8.0-alpha.14) (2024-09-26)
 
 
