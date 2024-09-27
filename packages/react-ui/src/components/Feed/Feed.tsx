@@ -14,7 +14,7 @@ import {
   useSCFetchFeed
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import {Box, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
+import {Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -842,9 +842,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           pullDownToRefreshThreshold={1000}
           pullDownToRefreshContent={null}
           releaseToRefreshContent={
-            <Widget variant="outlined" className={classes.refresh}>
-              <CardContent>{refreshMessage}</CardContent>
-            </Widget>
+            <Button color="secondary" variant="contained" className={classes.refresh}>
+              {refreshMessage}
+            </Button>
           }
           style={{overflow: 'visible'}}
           {...(scrollableTargetId && {scrollableTarget: scrollableTargetId})}>

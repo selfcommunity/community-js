@@ -59,7 +59,6 @@ import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import HeaderPlaceholder from '../../assets/onBoarding/header';
 import BaseDialog from '../../shared/BaseDialog';
-import {forceStepPosition} from '../../utils/onBoarding';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -134,7 +133,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [steps, setSteps] = useState<SCStepType[]>([]);
   const nextStep = useMemo(() => {
-    const step = steps?.find((step) => step.status === 'in_progress' || step.status === 'not_started');
+    const step = steps?.find((step) => (initialStep ? step.step === initialStep : step.status === 'in_progress' || step.status === 'not_started'));
     return step || steps?.[0];
   }, [steps]);
   const allStepsDone = useMemo(() => {
@@ -234,7 +233,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
       .then((res) => {
         const contentStep = res.results.find((step) => step.step === SCOnBoardingStepType.CONTENTS);
         setIsGenerating(res.results.some((step) => step.status === 'in_progress'));
-        setSteps(forceStepPosition(res.results, initialStep));
+        setSteps(res.results);
         setLoading(false);
         if (contentStep.status === SCOnBoardingStepStatusType.IN_PROGRESS && contentStep.results.length !== 0 && onGeneratedContent) {
           onGeneratedContent(contentStep.results as SCFeedObjectType[]);

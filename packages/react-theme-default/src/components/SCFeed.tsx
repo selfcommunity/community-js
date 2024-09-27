@@ -45,9 +45,7 @@ const Component = {
           padding: theme.spacing(2)
         }
       },
-      '& .SCFeed-refresh': {
-        textAlign: 'center'
-      },
+      '& .SCFeed-refresh': {},
       '& .SCFeed-pagination-link': {
         display: 'none'
       }
