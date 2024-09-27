@@ -6,4 +6,4 @@ export default {
   component: MyEventsWidget
 } as Meta<typeof MyEventsWidget>;
 
-export const Base: StoryObj<MyEventsWidget> = {};
+export const Base: StoryObj<typeof MyEventsWidget> = {};

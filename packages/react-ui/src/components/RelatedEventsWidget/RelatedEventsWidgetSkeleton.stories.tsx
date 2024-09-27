@@ -10,4 +10,4 @@ export default {
 } as Meta<typeof RelatedEventsWidgetSkeleton>;
 
 
-export const Base: StoryObj<RelatedEventsWidgetSkeleton> = {};
+export const Base: StoryObj<typeof RelatedEventsWidgetSkeleton> = {};

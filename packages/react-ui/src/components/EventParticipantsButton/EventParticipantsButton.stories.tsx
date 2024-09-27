@@ -6,4 +6,4 @@ export default {
   component: EventParticipantsButton
 } as Meta<typeof EventParticipantsButton>;
 
-export const Base: StoryObj<EventParticipantsButton> = {}
+export const Base: StoryObj<typeof EventParticipantsButton> = {}
