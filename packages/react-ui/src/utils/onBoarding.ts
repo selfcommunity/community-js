@@ -14,3 +14,13 @@ export function formatLogoLabel(obj) {
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
 }
+
+export function forceStepPosition(steps, initialStep) {
+  const index = steps.findIndex((el) => el.step === initialStep);
+  if (index !== -1) {
+    const [element] = steps.splice(index, 1);
+    steps.unshift(element);
+  }
+
+  return steps;
+}

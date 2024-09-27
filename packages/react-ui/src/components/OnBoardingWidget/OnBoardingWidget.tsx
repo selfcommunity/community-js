@@ -59,6 +59,7 @@ import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import HeaderPlaceholder from '../../assets/onBoarding/header';
 import BaseDialog from '../../shared/BaseDialog';
+import {forceStepPosition} from '../../utils/onBoarding';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -105,6 +106,10 @@ export interface OnBoardingWidgetProps extends VirtualScrollerItemProps {
    * @default false
    */
   forceExpanded?: boolean;
+  /**
+   * The initial step to display
+   */
+  initialStep?: SCOnBoardingStepType;
 }
 
 const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
@@ -113,7 +118,16 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     props: inProps,
     name: PREFIX
   });
-  const {className, GenerateContentsParams = {}, onGeneratedContent = null, onHeightChange, onStateChange, forceExpanded = false, ...rest} = props;
+  const {
+    className,
+    GenerateContentsParams = {},
+    onGeneratedContent = null,
+    onHeightChange,
+    onStateChange,
+    forceExpanded = false,
+    initialStep,
+    ...rest
+  } = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -220,7 +234,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
       .then((res) => {
         const contentStep = res.results.find((step) => step.step === SCOnBoardingStepType.CONTENTS);
         setIsGenerating(res.results.some((step) => step.status === 'in_progress'));
-        setSteps(res.results);
+        setSteps(forceStepPosition(res.results, initialStep));
         setLoading(false);
         if (contentStep.status === SCOnBoardingStepStatusType.IN_PROGRESS && contentStep.results.length !== 0 && onGeneratedContent) {
           onGeneratedContent(contentStep.results as SCFeedObjectType[]);
@@ -415,11 +429,8 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                     b: (chunks) => <strong>{chunks}</strong>,
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
-                    icon: (...chunks) => (
-                      <Icon color="secondary" fontSize="medium">
-                        {chunks}
-                      </Icon>
-                    )
+                    // eslint-disable-next-line prettier/prettier
+                    icon: (...chunks) => <Icon color="secondary" fontSize="medium">{chunks}</Icon>
                   }}
                 />
               </Typography>
