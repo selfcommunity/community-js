@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.4...@selfcommunity/react-core@0.5.0-alpha.5) (2024-09-27)
+
+
+### Bug Fixes
+
+* usePageVisibility hook ([2721217](https://github.com/selfcommunity/community-js/commit/27212170406a7abbd664eb97389549b9de9ed712))
+
+
+
+
+
 # [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.3...@selfcommunity/react-core@0.5.0-alpha.4) (2024-09-25)
 
 
