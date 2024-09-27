@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.16...@selfcommunity/react-ui@0.8.0-alpha.17) (2024-09-27)
+
+
+### Bug Fixes
+
+* fixed feed refresh content. ([a998d30](https://github.com/selfcommunity/community-js/commit/a998d30016cdd1fa68c1a992e44e905ed82b5ee4))
+
+
+
+
+
 # [0.8.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.15...@selfcommunity/react-ui@0.8.0-alpha.16) (2024-09-27)
 
 
