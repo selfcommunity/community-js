@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.3...@selfcommunity/react-i18n@0.6.0-alpha.4) (2024-09-30)
+
+
+### Bug Fixes
+
+* added group delete. Linear issue: https://linear.app/quentral/issue/QUE-817/il-creatore-di-un-gruppo-non-ha-la-possibilita-di-cancellarlo ([aaf6a16](https://github.com/selfcommunity/community-js/commit/aaf6a16b8ff8d002d68fdd2b4dc97e4371098177))
+
+
+
+
+
 # [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.2...@selfcommunity/react-i18n@0.6.0-alpha.3) (2024-09-25)
 
 
