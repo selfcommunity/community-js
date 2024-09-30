@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Button, Grid, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
@@ -15,6 +15,8 @@ import {PREFIX} from './constants';
 import Group, {GroupProps, GroupSkeleton} from '../Group';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import InfiniteScroll from '../../shared/InfiniteScroll';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -146,6 +148,9 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
+  // REFS
+  const updatesSubscription = useRef(null);
+
   // HANDLERS
   const handleScrollUp = () => {
     window.scrollTo({left: 0, top: 0, behavior: 'smooth'});
@@ -182,6 +187,33 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
       fetchGroups();
     }
   }, [contentAvailability, authUserId, search]);
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onDeleteGroupHandler = useCallback(
+    (_msg: string, deleted: number) => {
+      setGroups((prev) => {
+        if (prev.some((e) => e.id === deleted)) {
+          return prev.filter((e) => e.id !== deleted);
+        }
+        return prev;
+      });
+    },
+    [groups]
+  );
+
+  /**
+   * On mount, subscribe to receive event updates (only delete)
+   */
+  useEffect(() => {
+    if (groups) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCGroupEventType.DELETE}`, onDeleteGroupHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [groups]);
 
   const handleNext = useMemo(
     () => () => {
