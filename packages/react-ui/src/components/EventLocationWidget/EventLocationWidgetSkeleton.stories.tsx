@@ -7,10 +7,10 @@ export default {
 } as Meta<typeof EventLocationWidgetSkeleton>;
 
 const template = (args) => (
-    <EventLocationWidgetSkeleton {...args} />
+  <EventLocationWidgetSkeleton {...args} />
 );
 
-export const Base: StoryObj<EventLocationWidgetSkeleton> = {
+export const Base: StoryObj<typeof EventLocationWidgetSkeleton> = {
   args: {
     contained: true,
   },

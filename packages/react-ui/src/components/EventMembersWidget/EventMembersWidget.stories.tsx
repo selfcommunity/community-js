@@ -11,4 +11,4 @@ export default {
 } as Meta<typeof EventMembersWidget>;
 
 
-export const Base: StoryObj<EventMembersWidget> = {};
+export const Base: StoryObj<typeof EventMembersWidget> = {};

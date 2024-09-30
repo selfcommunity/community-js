@@ -40,10 +40,13 @@ const Component = {
             gap: theme.spacing(0.5)
           }
         },
-        '& .SCEditGroupButton-root': {
+        '& .SCGroupHeader-multi-actions': {
+          display: 'flex',
           marginLeft: 'auto',
           marginTop: theme.spacing(-4.25),
-          marginRight: theme.spacing(1)
+          '& .SCEditGroupButton-root': {
+            marginRight: theme.spacing(1)
+          }
         },
         '& .SCGroupSubscribeButton-root': {
           marginTop: theme.spacing(1)

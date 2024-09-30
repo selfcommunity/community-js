@@ -50,12 +50,11 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Widget from '../Widget';
 import Content from './Steps/Content';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse, OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
-import {CONSOLE_PROD, CONSOLE_STAGE} from '../PlatformWidget/constants';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import HeaderPlaceholder from '../../assets/onBoarding/header';
 import BaseDialog from '../../shared/BaseDialog';
@@ -154,7 +153,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scThemeContext: SCThemeContextType = useSCTheme();
   const {enqueueSnackbar} = useSnackbar();
-  const isStage = scContext.settings.portal.includes('stage');
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   // HOOKS
@@ -197,6 +195,27 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     s.step === SCOnBoardingStepType.APPEARANCE && handlePreferencesUpdate();
   };
 
+  /**
+   * Fetches platform url
+   */
+  function fetchPlatform(query: string) {
+    http
+      .request({
+        url: Endpoints.Platform.url(),
+        method: Endpoints.Platform.method,
+        params: {
+          next: query
+        }
+      })
+      .then((res: HttpResponse<any>) => {
+        const platformUrl = res.data.platform_url;
+        window.open(platformUrl, '_blank').focus();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const showSuccessAlert = (step: SCStepType) => {
     setIsGenerating(false);
     enqueueSnackbar(
@@ -209,8 +228,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                 sx={{textTransform: 'uppercase', color: 'white'}}
                 size="small"
                 variant="text"
-                href={isStage ? CONSOLE_STAGE : CONSOLE_PROD}
-                target="_blank">
+                onClick={() => fetchPlatform('/contents/interests/')}>
                 <FormattedMessage
                   id="ui.onBoardingWidget.step.categories.success.link"
                   defaultMessage="ui.onBoardingWidget.step.categories.success.link"
@@ -279,6 +297,11 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
       scPreferencesContext.setPreferences(prefs);
       scThemeContext.setTheme(getTheme(scContext.settings.theme, prefs));
     });
+  };
+
+  const handleCategoriesClick = () => {
+    fetchPlatform('/contents/interests/');
+    setShowCategoriesModal(false);
   };
 
   // EFFECTS
@@ -501,12 +524,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                           />
                         </Button>
                       }>
-                      <Button
-                        color="primary"
-                        href={isStage ? CONSOLE_STAGE : CONSOLE_PROD}
-                        onClick={() => setShowCategoriesModal(false)}
-                        target="_blank"
-                        startIcon={<Icon fontSize="small">edit</Icon>}>
+                      <Button color="primary" onClick={handleCategoriesClick} startIcon={<Icon fontSize="small">edit</Icon>}>
                         <FormattedMessage id="ui.onBoardingWidget.ai.no.categories.link" defaultMessage="ui.onBoardingWidget.ai.no.categories.link" />
                       </Button>
                     </BaseDialog>

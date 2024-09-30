@@ -82,6 +82,7 @@ import SCFeedObjectMediaPreview from './components/SCFeedObjectMediaPreview';
 import SCFeedUpdatesWidget from './components/SCFeedUpdatesWidget';
 import SCFooter from './components/SCFooter';
 import SCGroup from './components/SCGroup';
+import SCGroupActionsMenu from './components/SCGroupActionsMenu';
 import SCGroupAutocomplete from './components/SCGroupAutocomplete';
 import SCGroupFeedTemplate from './components/SCGroupFeedTemplate';
 import SCGroupForm from './components/SCGroupForm';
@@ -292,6 +293,7 @@ const theme = {
     SCFeedUpdatesWidget,
     SCFooter,
     SCGroup,
+    SCGroupActionsMenu,
     SCGroupAutocomplete,
     SCGroupFeedTemplate,
     SCGroupForm,

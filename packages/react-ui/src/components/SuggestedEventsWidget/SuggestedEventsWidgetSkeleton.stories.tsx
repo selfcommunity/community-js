@@ -6,4 +6,4 @@ export default {
   component: SuggestedEventsWidgetSkeleton
 } as Meta<typeof SuggestedEventsWidgetSkeleton>;
 
-export const Base: StoryObj<SuggestedEventsWidgetSkeleton> = {};
+export const Base: StoryObj<typeof SuggestedEventsWidgetSkeleton> = {};

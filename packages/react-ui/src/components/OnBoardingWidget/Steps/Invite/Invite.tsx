@@ -6,10 +6,9 @@ import classNames from 'classnames';
 import {PREFIX} from '../../constants';
 import {Button, Icon, IconButton, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {Link, SCContextType, SCPreferences, SCPreferencesContext, SCPreferencesContextType, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferences, SCPreferencesContext, SCPreferencesContextType, useSCContext} from '@selfcommunity/react-core';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from '../../../../constants/SocialShare';
-import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
-import {MAKE_MARKETING_PROD, MAKE_MARKETING_STAGE} from '../../../PlatformWidget/constants';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 
 const classes = {
   root: `${PREFIX}-invite-root`,
@@ -59,13 +58,38 @@ export default function Invite(inProps: InviteProps) {
     SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
   const url = scContext.settings.portal;
-  const isStage = scContext.settings.portal.includes('stage');
 
   // HANDLERS
 
   const handleShare = (shareUrl, shareType) => {
     window.open(shareUrl, `${shareType}-share-dialog`, 'width=626,height=436');
     onCompleteAction();
+  };
+
+  /**
+   * Fetches platform url
+   */
+  function fetchPlatform(query: string) {
+    http
+      .request({
+        url: Endpoints.Platform.url(),
+        method: Endpoints.Platform.method,
+        params: {
+          next: query
+        }
+      })
+      .then((res: HttpResponse<any>) => {
+        const platformUrl = res.data.platform_url;
+        window.open(platformUrl, '_blank').focus();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const handleCompleteAction = () => {
+    onCompleteAction();
+    fetchPlatform('/marketing/invitation');
   };
 
   return (
@@ -107,13 +131,7 @@ export default function Invite(inProps: InviteProps) {
         </Typography>
       </Box>
       <Box component="span" className={classes.action}>
-        <Button
-          variant="outlined"
-          size="small"
-          component={Link}
-          to={isStage ? MAKE_MARKETING_STAGE : MAKE_MARKETING_PROD}
-          target="_blank"
-          onClick={onCompleteAction}>
+        <Button variant="outlined" size="small" onClick={handleCompleteAction}>
           <FormattedMessage defaultMessage="ui.onBoardingWidget.step.invite.button" id="ui.onBoardingWidget.step.invite.button" />
         </Button>
       </Box>
