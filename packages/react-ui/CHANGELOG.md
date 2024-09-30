@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.19...@selfcommunity/react-ui@0.8.0-alpha.20) (2024-09-30)
+
+
+### Bug Fixes
+
+* groups delete pubsub ([93bd187](https://github.com/selfcommunity/community-js/commit/93bd187568ca591cd502e7868f65c368bd620ef8))
+
+
+
+
+
 # [0.8.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.18...@selfcommunity/react-ui@0.8.0-alpha.19) (2024-09-30)
 
 
