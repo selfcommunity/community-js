@@ -1178,6 +1178,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/group/$(id)/'),
     method: 'PATCH'
   },
+  DeleteGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/'),
+    method: 'DELETE'
+  },
   GetGroupSuggestedUsers: {
     url: urlReplacer('/api/v2/group/$(id)/user/?search=$(search)'),
     method: 'GET'

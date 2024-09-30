@@ -1,7 +1,7 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
-import {FeedObjectProps, FeedSidebarProps, GroupHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
+import {FeedObjectProps, FeedSidebarProps, GroupHeader, GroupHeaderProps, SCFeedWidgetType} from '@selfcommunity/react-ui';
 import {useSCFetchGroup} from '@selfcommunity/react-core';
 import {SCGroupType} from '@selfcommunity/types';
 import GroupSkeletonTemplate from './Skeleton';
@@ -68,6 +68,12 @@ export interface GroupProps {
    * @default {}
    */
   GroupFeedProps?: GroupFeedProps;
+
+  /**
+   * Props to spread Group Header component
+   * @default {}
+   */
+  GroupHeaderProps?: GroupHeaderProps;
 }
 /**
  * > API documentation for the Community-JS Category Template. Learn about the available props and the CSS API.
@@ -101,7 +107,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {id = 'group', className, group, groupId, widgets, FeedObjectProps, FeedSidebarProps, GroupFeedProps = {}} = props;
+  const {id = 'group', className, group, groupId, widgets, FeedObjectProps, FeedSidebarProps, GroupFeedProps = {}, GroupHeaderProps = {}} = props;
 
   // HOOKS
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
@@ -116,7 +122,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <GroupHeader groupId={scGroup.id} GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}} />
+      <GroupHeader groupId={scGroup.id} GroupSubscribeButtonProps={{onSubscribe: handleSubscribe}} {...GroupHeaderProps} />
       <GroupFeed
         className={classes.feed}
         group={scGroup}

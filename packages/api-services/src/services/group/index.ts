@@ -15,6 +15,7 @@ export interface GroupApiClientInterface {
   createGroup(data: GroupCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCGroupType>;
   updateGroup(id: number | string, data: SCGroupType, config?: AxiosRequestConfig): Promise<SCGroupType>;
   patchGroup(id: number | string, data: SCGroupType, config?: AxiosRequestConfig): Promise<SCGroupType>;
+  deleteGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   changeGroupAvatarOrCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCGroupType>;
   getGroupMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
   getGroupSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
@@ -123,6 +124,15 @@ export class GroupApiClient {
   static patchGroup(id: number | string, data: SCGroupType, config?: AxiosRequestConfig): Promise<SCGroupType> {
     return apiRequest({...config, url: Endpoints.PatchGroup.url({id}), method: Endpoints.PatchGroup.method, data: data});
   }
+  /**
+   * This endpoint deletes  a group.
+   * @param id
+   * @param config
+   */
+  static deleteGroup(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.DeleteGroup.url({id}), method: Endpoints.DeleteGroup.method});
+  }
+
   /**
    * This endpoint changes the group avatar
    * @param id
@@ -318,6 +328,9 @@ export default class GroupService {
   }
   static async patchGroup(id: number | string, data: SCGroupType, config?: AxiosRequestConfig): Promise<SCGroupType> {
     return GroupApiClient.patchGroup(id, data, config);
+  }
+  static async deleteGroup(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return GroupApiClient.deleteGroup(id, config);
   }
   static async changeGroupAvatarOrCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCGroupType> {
     return GroupApiClient.changeGroupAvatarOrCover(id, data, config);

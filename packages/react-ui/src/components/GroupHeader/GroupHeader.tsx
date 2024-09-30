@@ -1,8 +1,16 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
-import {Avatar, Box, Icon, Paper, Typography} from '@mui/material';
+import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
-import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCFetchGroup, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCFetchGroup,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import GroupHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -17,6 +25,7 @@ import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribe
 import GroupInviteButton from '../GroupInviteButton';
 import {SCGroupEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
+import GroupActionsMenu, {GroupActionsMenuProps} from '../GroupActionsMenu';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -29,7 +38,8 @@ const classes = {
   visibility: `${PREFIX}-visibility`,
   visibilityItem: `${PREFIX}-visibility-item`,
   members: `${PREFIX}-members`,
-  membersCounter: `${PREFIX}-members-counter`
+  membersCounter: `${PREFIX}-members-counter`,
+  multiActions: `${PREFIX}-multi-actions`
 };
 
 const Root = styled(Box, {
@@ -81,6 +91,11 @@ export interface GroupHeaderProps {
    * @default {}
    */
   GroupMembersButtonProps?: GroupMembersButtonProps;
+  /**
+   * Props to spread event actions menu
+   * @default {}
+   */
+  GroupActionsProps?: Omit<GroupActionsMenuProps, 'group'>;
 
   /**
    * Any other properties
@@ -134,6 +149,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
     ChangeCoverProps = {},
     GroupSubscribeButtonProps = {},
     GroupMembersButtonProps = {},
+    GroupActionsProps,
     ...rest
   } = props;
 
@@ -153,6 +169,8 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
 
   // HOOKS
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // REFS
   const updatesSubscription = useRef(null);
@@ -248,7 +266,12 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
         )}
       </Paper>
       <Box className={classes.info}>
-        {isGroupAdmin && <EditGroupButton group={scGroup} groupId={scGroup.id} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} />}
+        {isGroupAdmin && !isMobile && (
+          <Box className={classes.multiActions}>
+            <EditGroupButton group={scGroup} groupId={scGroup.id} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} />
+            <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />
+          </Box>
+        )}
         <Typography variant="h5" className={classes.name}>
           {scGroup.name}
         </Typography>
@@ -306,7 +329,10 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
           )}
         </>
         {isGroupAdmin ? (
-          <GroupInviteButton group={scGroup} groupId={scGroup.id} />
+          <Box>
+            <GroupInviteButton group={scGroup} groupId={scGroup.id} />
+            {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
+          </Box>
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
         )}
