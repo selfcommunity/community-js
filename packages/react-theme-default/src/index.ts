@@ -111,6 +111,7 @@ import SCMediaLink from './components/SCMediaLink';
 import SCMediaShare from './components/SCMediaShare';
 import SCMyEventsWidget from './components/SCMyEventsWidget';
 import SCNavigationMenuIconButton from './components/SCNavigationMenuIconButton';
+import SCNavigationMenuDrawer from './components/SCNavigationMenuDrawer';
 import SCNavigationSettingsIconButton from './components/SCNavigationSettingsIconButton';
 import SCNavigationToolbar from './components/SCNavigationToolbar';
 import SCNavigationToolbarMobile from './components/SCNavigationToolbarMobile';
@@ -321,6 +322,7 @@ const theme = {
     SCMediaLink,
     SCMediaShare,
     SCNavigationMenuIconButton,
+    SCNavigationMenuDrawer,
     SCNavigationSettingsIconButton,
     SCNavigationToolbar,
     SCNavigationToolbarMobile,

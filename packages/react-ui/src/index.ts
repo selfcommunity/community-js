@@ -91,7 +91,9 @@ import MyEventsWidget, {MyEventsWidgetProps, MyEventsWidgetSkeleton} from './com
 import NavigationMenuIconButton, {
   NavigationMenuContent,
   NavigationMenuHeader,
-  NavigationMenuIconButtonProps
+  NavigationMenuIconButtonProps,
+  NavigationMenuDrawer,
+  NavigationMenuDrawerProps
 } from './components/NavigationMenuIconButton';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
 import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
@@ -498,6 +500,8 @@ export {
   NavigationMenuHeader,
   NavigationMenuIconButton,
   NavigationMenuIconButtonProps,
+  NavigationMenuDrawer,
+  NavigationMenuDrawerProps,
   NavigationSettingsIconButton,
   NavigationSettingsIconButtonProps,
   NavigationSettingsItem,
