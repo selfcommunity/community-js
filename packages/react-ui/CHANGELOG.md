@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.23...@selfcommunity/react-ui@0.8.0-alpha.24) (2024-10-01)
+
+
+### Bug Fixes
+
+* events/invite onboarding ([9e2d521](https://github.com/selfcommunity/community-js/commit/9e2d521d13c1a81b9be96145b34cf00a23a4b4fa))
+
+
+
+
+
 # [0.8.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.22...@selfcommunity/react-ui@0.8.0-alpha.23) (2024-10-01)
 
 
