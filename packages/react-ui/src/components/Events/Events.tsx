@@ -29,7 +29,7 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType, SCEventLocationFilterType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
@@ -43,6 +43,7 @@ import {PREFIX} from './constants';
 import PastEventsFilter from './PastEventsFilter';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import LocationEventsFilter from './LocationEventsFilter';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -201,6 +202,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [next, setNext] = useState<string>(null);
   const [query, setQuery] = useState<string>('');
   const [dateSearch, setDateSearch] = useState(options[0].value);
+  const [location, setLocation] = useState<SCEventLocationFilterType>(SCEventLocationFilterType.ANY);
   const [showFollowed, setShowFollowed] = useState<boolean>(false);
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
   const [showMyEvents, setShowMyEvents] = useState<boolean>(false);
@@ -258,11 +260,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
             ? {
                 ...(search && {search: query}),
                 ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+                ...(location !== SCEventLocationFilterType.ANY && {location}),
                 ...(showFollowed && {follows: showFollowed}),
                 ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
               }
             : {
                 subscription_status: SCEventSubscriptionStatusType.GOING,
+                ...(location !== SCEventLocationFilterType.ANY && {location}),
                 ...(showPastEvents && {past: showPastEvents}),
                 ...(showMyEvents && {created_by: authUserId})
               })
@@ -287,7 +291,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     } else {
       query === '' && fetchEvents();
     }
-  }, [contentAvailability, dateSearch, showFollowed, showPastEvents, showMyEvents, query]);
+  }, [contentAvailability, dateSearch, location, showFollowed, showPastEvents, showMyEvents, query]);
 
   /**
    * Subscriber for pubsub callback
@@ -353,8 +357,17 @@ export default function Events(inProps: EventsProps): JSX.Element {
   };
 
   /**
+   * Handle change location
+   * @param event
+   */
+  const handleOnChangeLocation = (event) => {
+    setLocation(event.target.value);
+  };
+
+  /**
    * Renders events list
    */
+  console.log(location);
   const c = (
     <>
       {showFilters && (
@@ -363,15 +376,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
             filters
           ) : !general ? (
             <>
-              <Grid item>
-                <PastEventsFilter
-                  showPastEvents={showPastEvents}
-                  handleClick={handleChipPastClick}
-                  handleDeleteClick={handleDeletePastClick}
-                  autoHide={!events.length && !showPastEvents}
-                  disabled={loading}
-                />
-              </Grid>
               {(events.length !== 0 || (events.length === 0 && showMyEvents)) && (
                 <Grid item>
                   <EventsChipRoot
@@ -392,10 +396,22 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   />
                 </Grid>
               )}
+              <Grid item>
+                <LocationEventsFilter value={location} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
+              </Grid>
+							<Grid item>
+								<PastEventsFilter
+									showPastEvents={showPastEvents}
+									handleClick={handleChipPastClick}
+									handleDeleteClick={handleDeletePastClick}
+									autoHide={!events.length && !showPastEvents}
+									disabled={loading}
+								/>
+							</Grid>
             </>
           ) : (
             <>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={3}>
                 <TextField
                   className={classes.search}
                   size={'small'}
@@ -458,6 +474,9 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     ))}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item xs={12} md={2}>
+                <LocationEventsFilter value={location} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
               </Grid>
               {authUserId && (
                 <Grid item>

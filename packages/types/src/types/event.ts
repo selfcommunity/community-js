@@ -2,7 +2,7 @@
  * Interface SCGroupEventType.
  * Event Schema.
  */
-import { SCUserType } from './user';
+import {SCUserType} from './user';
 
 /**
  * SCEventPrivacyType enum
@@ -29,6 +29,15 @@ export enum SCEventSubscriptionStatusType {
 export enum SCEventLocationType {
   PERSON = 'in person',
   ONLINE = 'virtual'
+}
+
+/**
+ * SCEventLocationFilterType enum
+ */
+export enum SCEventLocationFilterType {
+  ANY = 'any',
+  PERSON = SCEventLocationType.PERSON,
+  ONLINE = SCEventLocationType.ONLINE
 }
 
 /**
