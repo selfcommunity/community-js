@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.22...@selfcommunity/react-theme-default@0.2.0-alpha.23) (2024-10-01)
+
+
+### Performance Improvements
+
+* added css transition for feed header items ([5f9170f](https://github.com/selfcommunity/community-js/commit/5f9170f94feb7a2a72fa16ba4f795e288c9e1a18))
+* added loader to onBoarding Appearance colors section. ([fd63fe8](https://github.com/selfcommunity/community-js/commit/fd63fe83176f38274ea1197e18f84802d7179394))
+* detached drawer from NavigationMenuIconButton component ([41b4a11](https://github.com/selfcommunity/community-js/commit/41b4a11cc51f808adbdfab66bee29eb98deb7d21))
+
+
+
+
+
 # [0.2.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.21...@selfcommunity/react-theme-default@0.2.0-alpha.22) (2024-09-30)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
