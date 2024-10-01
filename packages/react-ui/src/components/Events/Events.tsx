@@ -399,15 +399,15 @@ export default function Events(inProps: EventsProps): JSX.Element {
               <Grid item>
                 <LocationEventsFilter value={location} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
               </Grid>
-							<Grid item>
-								<PastEventsFilter
-									showPastEvents={showPastEvents}
-									handleClick={handleChipPastClick}
-									handleDeleteClick={handleDeletePastClick}
-									autoHide={!events.length && !showPastEvents}
-									disabled={loading}
-								/>
-							</Grid>
+              <Grid item>
+                <PastEventsFilter
+                  showPastEvents={showPastEvents}
+                  handleClick={handleChipPastClick}
+                  handleDeleteClick={handleDeletePastClick}
+                  autoHide={!events.length && !showPastEvents}
+                  disabled={loading}
+                />
+              </Grid>
             </>
           ) : (
             <>

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {PREFIX} from '../../constants';
 import {Button, Icon, IconButton, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCContextType, SCPreferences, SCPreferencesContext, SCPreferencesContextType, useSCContext} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/react-core';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from '../../../../constants/SocialShare';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 
@@ -46,21 +46,16 @@ export default function Invite(inProps: InviteProps) {
   });
   const {className, onCompleteAction = null} = props;
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const facebookShareEnabled =
-    SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_FACEBOOK_ENABLED].value;
-  const xShareEnabled =
-    SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_TWITTER_ENABLED].value;
-  const linkedinShareEnabled =
-    SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.ADDONS_SHARE_POST_ON_LINKEDIN_ENABLED].value;
-  const url = scContext.settings.portal;
+  const url = useMemo(
+    () =>
+      scPreferencesContext.preferences &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_APP_URL].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HANDLERS
-
   const handleShare = (shareUrl, shareType) => {
     window.open(shareUrl, `${shareType}-share-dialog`, 'width=626,height=436');
     onCompleteAction();
@@ -105,21 +100,15 @@ export default function Invite(inProps: InviteProps) {
           <FormattedMessage id="ui.onBoardingWidget.step.invite.social.subtitle" defaultMessage="ui.onBoardingWidget.step.invite.social.subtitle" />
         </Typography>
         <Box className={classes.iconContainer}>
-          {facebookShareEnabled && (
-            <IconButton onClick={() => handleShare(FACEBOOK_SHARE + url, 'facebook')}>
-              <Icon classes={{root: classes.icon}}>facebook</Icon>
-            </IconButton>
-          )}
-          {xShareEnabled && (
-            <IconButton onClick={() => handleShare(X_SHARE + url, 'x')}>
-              <Icon classes={{root: classes.icon}}>twitter</Icon>
-            </IconButton>
-          )}
-          {linkedinShareEnabled && (
-            <IconButton onClick={() => handleShare(LINKEDIN_SHARE + url, 'linkedin')}>
-              <Icon classes={{root: classes.icon}}>linkedin</Icon>
-            </IconButton>
-          )}
+          <IconButton onClick={() => handleShare(FACEBOOK_SHARE + url, 'facebook')} disabled={!url}>
+            <Icon classes={{root: classes.icon}}>facebook</Icon>
+          </IconButton>
+          <IconButton onClick={() => handleShare(X_SHARE + url, 'x')} disabled={!url}>
+            <Icon classes={{root: classes.icon}}>twitter</Icon>
+          </IconButton>
+          <IconButton onClick={() => handleShare(LINKEDIN_SHARE + url, 'linkedin')} disabled={!url}>
+            <Icon classes={{root: classes.icon}}>linkedin</Icon>
+          </IconButton>
         </Box>
       </Box>
       <Box className={classes.email}>
