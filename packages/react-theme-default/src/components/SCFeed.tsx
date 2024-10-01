@@ -31,6 +31,14 @@ const Component = {
         '& > .SCWidget-root': {
           padding: 0,
           marginBottom: theme.spacing(2)
+        },
+        '& .SCFeed-header-item': {
+          animation: 'pulse-animation 2s ease-in-out',
+          '@keyframes pulse-animation': {
+            '0%': {
+              opacity: 0
+            }
+          }
         }
       },
       '& .SCFeed-end': {
