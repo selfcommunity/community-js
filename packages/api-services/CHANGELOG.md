@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.2...@selfcommunity/api-services@0.5.0-alpha.3) (2024-10-01)
+
+
+### Bug Fixes
+
+* event service ([e6bff80](https://github.com/selfcommunity/community-js/commit/e6bff8076ce220cd2d03689c33c17c3f5ababb3a))
+* events location filter ([3016f56](https://github.com/selfcommunity/community-js/commit/3016f5610a3f55e586f4d53e84d6abf6be58ac8a))
+
+
+
+
+
 # [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.1...@selfcommunity/api-services@0.5.0-alpha.2) (2024-09-30)
 
 

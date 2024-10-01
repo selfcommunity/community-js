@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.1...@selfcommunity/types@0.6.0-alpha.2) (2024-10-01)
+
+
+### Bug Fixes
+
+* events location filter ([113ad70](https://github.com/selfcommunity/community-js/commit/113ad702f22fdced6c983ecba88e32568da9ac6d))
+* events location filter ([3016f56](https://github.com/selfcommunity/community-js/commit/3016f5610a3f55e586f4d53e84d6abf6be58ac8a))
+
+
+
+
+
 # [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.0...@selfcommunity/types@0.6.0-alpha.1) (2024-09-25)
 
 

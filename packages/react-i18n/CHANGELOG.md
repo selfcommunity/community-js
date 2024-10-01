@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.4...@selfcommunity/react-i18n@0.6.0-alpha.5) (2024-10-01)
+
+
+### Bug Fixes
+
+* events location filter ([3016f56](https://github.com/selfcommunity/community-js/commit/3016f5610a3f55e586f4d53e84d6abf6be58ac8a))
+
+
+
+
+
 # [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.3...@selfcommunity/react-i18n@0.6.0-alpha.4) (2024-09-30)
 
 
