@@ -160,6 +160,7 @@ import {
   SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
+  SCEventLocationFilterType,
   SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType
@@ -203,6 +204,7 @@ export {
   SCEventSubscriptionStatusType,
   SCEventRecurrenceType,
   SCEventLocationType,
+  SCEventLocationFilterType,
   SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType

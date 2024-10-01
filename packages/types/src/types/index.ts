@@ -129,6 +129,7 @@ import {
   SCEventRecurrenceType,
   SCEventLocationType,
   SCEventDateFilterType,
+  SCEventLocationFilterType,
   SCEventSubscriptionStatusType
 } from './event';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType} from './onboarding';
@@ -291,6 +292,7 @@ export {
   SCEventRecurrenceType,
   SCEventLocationType,
   SCEventDateFilterType,
+  SCEventLocationFilterType,
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType
