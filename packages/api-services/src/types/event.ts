@@ -92,10 +92,10 @@ export interface EventUserParams extends BaseGetParams {
    *  Filtered past events
    */
   past?: boolean | number;
-	/**
-	 * Filtered location
-	 */
-	location?: SCEventLocationType;
+  /**
+   * Filtered location
+   */
+  location?: SCEventLocationType;
 }
 
 /**
