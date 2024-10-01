@@ -5,7 +5,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Preferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
-import {Button, Drawer, IconButton, Tab, Tabs, TextField, Typography} from '@mui/material';
+import {Button, CircularProgress, Drawer, IconButton, Tab, Tabs, TextField, Typography} from '@mui/material';
 import {MuiColorInput} from 'mui-color-input';
 import {actionTypes} from './reducer';
 import {getInitialState, reducer} from './reducer';
@@ -34,7 +34,9 @@ const classes = {
   root: `${PREFIX}-appearance-root`,
   title: `${PREFIX}-appearance-title`,
   summary: `${PREFIX}-appearance-summary`,
+  colorContainer: `${PREFIX}-appearance-color-container`,
   color: `${PREFIX}-appearance-color`,
+  colorProgress: `${PREFIX}-appearance-color-progress`,
   logoContainer: `${PREFIX}-appearance-logo-container`,
   logo: `${PREFIX}-appearance-logo`,
   uploadButton: `${PREFIX}-appearance-upload-button`,
@@ -83,6 +85,7 @@ export default function Appearance(inProps: AppearanceProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [tab, setTab] = useState(0);
   const [updating, setUpdating] = useState<boolean>(false);
+  const [updatingColor, setUpdatingColor] = useState<string>('');
 
   // INTL
   const intl = useIntl();
@@ -163,6 +166,7 @@ export default function Appearance(inProps: AppearanceProps) {
       Logger.error(SCOPE_SC_UI, e);
     } finally {
       setUpdating(false);
+      setUpdatingColor('');
       onCompleteAction();
     }
   };
@@ -223,15 +227,15 @@ export default function Appearance(inProps: AppearanceProps) {
 
   // HANDLERS
   const handleColorChange = (color, name) => {
+    setUpdatingColor(name);
     const currentColor = state.colors.find((col) => col.name === name);
     if (currentColor && currentColor.value !== color) {
+      setUpdating(true);
       dispatch({
         type: actionTypes.SET_COLORS,
         payload: {colors: state.colors.map((col) => (col.name === name ? {...col, value: color} : col))}
       });
-      setTimeout(() => {
         updatePreference({[`${name}`]: color});
-      }, 2000);
     }
   };
 
@@ -298,12 +302,17 @@ export default function Appearance(inProps: AppearanceProps) {
                 {state.colors.map((color) => (
                   <React.Fragment key={color.id}>
                     <Typography variant="h6">{formatColorLabel(color)}</Typography>
-                    <MuiColorInput
-                      className={classes.color}
-                      format="hex"
-                      value={color.value}
-                      onChange={(newColor) => handleColorChange(newColor, color.name)}
-                    />
+                    <Box className={classes.colorContainer}>
+                      <MuiColorInput
+                        className={classes.color}
+                        format="hex"
+                        value={color.value}
+                        onChange={(newColor) => handleColorChange(newColor, color.name)}
+                      />
+                      {updatingColor && updatingColor === color.name && (
+                        <CircularProgress className={classes.colorProgress} color="secondary" size={24} />
+                      )}
+                    </Box>
                   </React.Fragment>
                 ))}
               </>

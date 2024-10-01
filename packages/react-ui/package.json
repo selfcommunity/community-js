@@ -105,7 +105,7 @@
 		"emoji-picker-react": "4.5.16",
 		"lexical": "0.15.0",
 		"libphonenumber-js": "^1.10.53",
-		"mui-color-input": "^3.0.0",
+		"mui-color-input": "4.0.1",
 		"notistack": "^3.0.1",
 		"pdfjs-dist": "3.11.174",
 		"prop-types": "^15.8.1",
