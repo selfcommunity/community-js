@@ -13929,10 +13929,10 @@ ms@2.1.3, ms@^2.0.0, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-mui-color-input@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/mui-color-input/-/mui-color-input-3.0.0.tgz#a8a2a50f1fd217fc4851bb29f6004147022edabd"
-  integrity sha512-Qcm72za0yhulZxq13NMnaWFLLoPdZ89JiAmhrRAzXqA26fV0wVDmWpJtNbIMZvancyT4HpKq2ai+7IV9NmZR5g==
+mui-color-input@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/mui-color-input/-/mui-color-input-4.0.1.tgz#a3ede08b0ca52a0db1e44ab69775935b27a0c802"
+  integrity sha512-Edc3sCa39zUoSL3XR9vjVnhMnLOBgd3mfszVfQc8stFqNMVaOujK2aThMtCOLiuLIyIxGcTa6dKV1qD5MmHPDw==
   dependencies:
     "@ctrl/tinycolor" "^4.1.0"
 

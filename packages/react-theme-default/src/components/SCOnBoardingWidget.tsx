@@ -260,8 +260,18 @@ const Component = {
         display: 'flex',
         flexDirection: 'column'
       },
-      '& .SCOnBoardingWidget-appearance-color': {
-        margin: theme.spacing(1, 0, 2, 0)
+      '& .SCOnBoardingWidget-appearance-color-container': {
+        position: 'relative',
+        display: 'inline-block',
+        '& .SCOnBoardingWidget-appearance-color': {
+          margin: theme.spacing(1, 0, 2, 0)
+        },
+        '& .SCOnBoardingWidget-appearance-color-progress': {
+          position: 'absolute',
+          top: '50%',
+          marginTop: theme.spacing(-2),
+          marginLeft: theme.spacing(-4.5)
+        }
       },
       '& .SCOnBoardingWidget-appearance-logo-container': {
         position: 'relative',

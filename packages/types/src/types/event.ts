@@ -36,8 +36,8 @@ export enum SCEventLocationType {
  */
 export enum SCEventLocationFilterType {
   ANY = 'any',
-  PERSON = SCEventLocationType.PERSON,
-  ONLINE = SCEventLocationType.ONLINE
+	PERSON = 'in person',
+	ONLINE = 'virtual'
 }
 
 /**

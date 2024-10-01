@@ -1,22 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, Divider, Drawer, DrawerProps, Icon, IconButton, IconButtonProps, List } from '@mui/material';
+import React, {useCallback, useState} from 'react';
+import {styled} from '@mui/material/styles';
+import {Icon, IconButton, IconButtonProps} from '@mui/material';
 import classNames from 'classnames';
-import { useThemeProps } from '@mui/system';
-import ScrollContainer from '../../shared/ScrollContainer';
-import DefaultDrawerContent from './DefaultDrawerContent';
-import DefaultHeaderContent from './DefaultHeaderContent';
-import { SCPreferences, useSCPreferences, useSCUser } from '@selfcommunity/react-core';
+import {useThemeProps} from '@mui/system';
+import {SCPreferences, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import NavigationMenuDrawer, {NavigationMenuDrawerProps} from './NavigationMenuDrawer';
 
 const PREFIX = 'SCNavigationMenuIconButton';
 
 const classes = {
-  root: `${PREFIX}-root`,
-  logo: `${PREFIX}-logo`,
-  drawerRoot: `${PREFIX}-drawer-root`,
-  drawerHeader: `${PREFIX}-drawer-header`,
-  drawerHeaderAction: `${PREFIX}-drawer-header-action`,
-  drawerContent: `${PREFIX}-drawer-content`
+  root: `${PREFIX}-root`
 };
 
 const Root = styled(IconButton, {
@@ -25,35 +18,12 @@ const Root = styled(IconButton, {
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
 
-const DrawerRoot = styled(Drawer, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.drawerRoot
-})(({theme}) => ({}));
-
 export interface NavigationMenuIconButtonProps extends IconButtonProps {
   /**
-   * Props to spread to drawer element
+   * Props to spread to default drawer root
    * @default {anchor: 'left'}
    */
-  DrawerProps?: DrawerProps;
-  /**
-   * Custom Drawer header content
-   * @default null
-   */
-  drawerHeaderContent?: React.ReactNode;
-  /**
-   * Custom Drawer content
-   * @default null
-   */
-  drawerContent?: React.ReactNode;
-  /**
-   * Props to spread to ScrollContainer component
-   * This lib use 'react-custom-scrollbars' component to perform scrollbars
-   * For more info: https://github.com/malte-wessel/react-custom-scrollbars/blob/master/docs/API.md
-   * @default {}
-   */
-  ScrollContainerProps?: Record<string, any>;
+  DrawerProps?: NavigationMenuDrawerProps;
 }
 
 /**
@@ -75,10 +45,6 @@ export interface NavigationMenuIconButtonProps extends IconButtonProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCNavigationMenuIconButton-root|Styles applied to the root element.|
- |drawerRoot|.SCNavigationMenuIconButton-drawer-root|Styles applied to the drawer root element.|
- |drawerHeader|.SCNavigationMenuIconButton-drawer-header|Styles applied to the drawer header.|
- |drawerHeaderAction|.SCNavigationMenuIconButton-drawer-header-action|Styles applied to the drawer header action element.|
- |drawerContent|.SCNavigationMenuIconButton-drawer-content|Styles applied to the drawer content.|
 
  * @param inProps
  */
@@ -88,14 +54,7 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
     props: inProps,
     name: PREFIX
   });
-  const {
-    className = null,
-    DrawerProps = {anchor: 'left'},
-		drawerHeaderContent = <DefaultHeaderContent />,
-		drawerContent = <DefaultDrawerContent />,
-    ScrollContainerProps = {},
-    ...rest
-  } = props;
+  const {className = null, DrawerProps = {anchor: 'left'}, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -108,6 +67,7 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
   const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   }, []);
+
   const handleClose = useCallback(() => {
     setAnchorEl(null);
   }, []);
@@ -121,20 +81,7 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
       <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
         <Icon>menu</Icon>
       </Root>
-      <DrawerRoot className={classes.drawerRoot} {...DrawerProps} open={Boolean(anchorEl)} onClose={handleClose}>
-        <Box className={classes.drawerHeader}>
-          {drawerHeaderContent}
-          <IconButton className={classes.drawerHeaderAction} onClick={handleClose}>
-            <Icon>close</Icon>
-          </IconButton>
-        </Box>
-        <Divider />
-        <ScrollContainer {...ScrollContainerProps}>
-          <List className={classes.drawerContent} onClick={handleClose}>
-            {drawerContent}
-          </List>
-        </ScrollContainer>
-      </DrawerRoot>
+      <NavigationMenuDrawer open={Boolean(anchorEl)} onClose={handleClose} {...DrawerProps} />
     </>
   );
 }

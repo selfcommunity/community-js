@@ -49,6 +49,7 @@ const classes = {
   left: `${PREFIX}-left`,
   leftItems: `${PREFIX}-left-items`,
   start: `${PREFIX}-start`,
+  headerItem: `${PREFIX}-header-item`,
   end: `${PREFIX}-end`,
   endMessage: `${PREFIX}-end-message`,
   right: `${PREFIX}-right`,
@@ -601,7 +602,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             {headData.map((item) => {
               const _itemId = `item_${itemIdGenerator(item)}`;
               return (
-                <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />
+                <ItemComponent
+                  className={classes.headerItem}
+                  id={_itemId}
+                  key={_itemId}
+                  {...itemPropsGenerator(scUserContext.user, item)}
+                  {...ItemProps}
+                  sx={{width: '100%'}}
+                />
               );
             })}
           </>
