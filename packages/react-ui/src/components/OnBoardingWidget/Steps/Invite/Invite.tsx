@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
@@ -8,7 +8,10 @@ import {Button, Icon, IconButton, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/react-core';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from '../../../../constants/SocialShare';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse, PreferenceService} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../../../constants/Errors';
+import {SCPreferenceName} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-invite-root`,
@@ -38,6 +41,8 @@ const Root = styled(Box, {
   slot: 'InviteRoot'
 })(() => ({}));
 
+const META_ROBOTS_ENABLE_DEFAULT = 'index,follow';
+
 export default function Invite(inProps: InviteProps) {
   // PROPS
   const props: InviteProps = useThemeProps({
@@ -45,8 +50,17 @@ export default function Invite(inProps: InviteProps) {
     name: PREFIX
   });
   const {className, onCompleteAction = null} = props;
+
+  // STATUS
+  const [isMetaRobotsUpdating, setMetaRobotsUpdating] = useState<boolean>(false);
+
   // CONTEXT
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const metaRobots = useMemo(() => {
+    return scPreferencesContext.preferences && SCPreferences.WEBMASTER_META_ROBOTS in scPreferencesContext.preferences
+      ? scPreferencesContext.preferences[SCPreferences.WEBMASTER_META_ROBOTS].value
+      : null;
+  }, [scPreferencesContext.preferences]);
   const url = useMemo(
     () =>
       scPreferencesContext.preferences &&
@@ -56,9 +70,23 @@ export default function Invite(inProps: InviteProps) {
   );
 
   // HANDLERS
-  const handleShare = (shareUrl, shareType) => {
+  const handleShare = async (shareUrl, shareType) => {
+    if (metaRobots.toLowerCase().replace(/\s+/g, '') !== META_ROBOTS_ENABLE_DEFAULT) {
+      await enableSeo();
+    }
     window.open(shareUrl, `${shareType}-share-dialog`, 'width=626,height=436');
     onCompleteAction();
+  };
+
+  const enableSeo = async () => {
+    try {
+      setMetaRobotsUpdating(true);
+      await PreferenceService.updatePreferences({[SCPreferenceName.META_ROBOTS]: 'index, follow'});
+    } catch (e) {
+      Logger.error(SCOPE_SC_UI, e);
+    } finally {
+      setMetaRobotsUpdating(false);
+    }
   };
 
   /**
@@ -100,13 +128,13 @@ export default function Invite(inProps: InviteProps) {
           <FormattedMessage id="ui.onBoardingWidget.step.invite.social.subtitle" defaultMessage="ui.onBoardingWidget.step.invite.social.subtitle" />
         </Typography>
         <Box className={classes.iconContainer}>
-          <IconButton onClick={() => handleShare(FACEBOOK_SHARE + url, 'facebook')} disabled={!url}>
+          <IconButton onClick={() => handleShare(FACEBOOK_SHARE + url, 'facebook')} disabled={!url || isMetaRobotsUpdating}>
             <Icon classes={{root: classes.icon}}>facebook</Icon>
           </IconButton>
-          <IconButton onClick={() => handleShare(X_SHARE + url, 'x')} disabled={!url}>
+          <IconButton onClick={() => handleShare(X_SHARE + url, 'x')} disabled={!url || isMetaRobotsUpdating}>
             <Icon classes={{root: classes.icon}}>twitter</Icon>
           </IconButton>
-          <IconButton onClick={() => handleShare(LINKEDIN_SHARE + url, 'linkedin')} disabled={!url}>
+          <IconButton onClick={() => handleShare(LINKEDIN_SHARE + url, 'linkedin')} disabled={!url || isMetaRobotsUpdating}>
             <Icon classes={{root: classes.icon}}>linkedin</Icon>
           </IconButton>
         </Box>
