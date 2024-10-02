@@ -67,6 +67,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   });
   const {
     className = null,
+    open,
     drawerHeaderContent = <DefaultHeaderContent />,
     drawerContent = <DefaultDrawerContent />,
     ScrollContainerProps = {},
@@ -78,14 +79,14 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   // REFS
   const refreshSubscription = useRef(null);
 
-  const [open, setOpen] = useState<boolean>(props.open);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(open);
 
   // HANDLERS
   const onClose = useCallback(() => {
     if (handleOnClose) {
       handleOnClose();
     } else {
-      setOpen(false);
+      setIsDrawerOpen(false);
     }
   }, [open]);
 
@@ -93,9 +94,9 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   const subscriber = useCallback(
     (msg, data: SCLayoutDrawerType | undefined) => {
       if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.TOGGLE_DRAWER}`) {
-        setOpen(!open);
+        setIsDrawerOpen(!open);
       } else if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.SET_DRAWER}`) {
-        setOpen(data.open);
+        setIsDrawerOpen(data.open);
       }
     },
     [open]
@@ -112,7 +113,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   }, [subscriber]);
 
   return (
-    <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
+    <Root anchor="left" className={classNames(classes.root, className)} open={isDrawerOpen} onClose={onClose} {...rest}>
       {showDrawerHeader && (
         <>
           <Box className={classes.drawerHeader}>
