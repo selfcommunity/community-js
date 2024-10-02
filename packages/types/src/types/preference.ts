@@ -59,7 +59,7 @@ export enum SCPreferenceName {
   POINTS_SOCIAL_SHARE = 'points_social_share',
   POINTS_APP_USED = 'points_app_used',
   POINTS_DAILY_VISIT = 'points_daily_visit',
-  AFFINIDY_ENABLED = 'affinity_enabled',
+  AFFINITY_ENABLED = 'affinity_enabled',
   CLOSED_COMMUNITY = 'closed_community',
   INCUBATOR_ENABLED = 'incubator_enabled',
   INCUBATOR_SUBSCRIBERS = 'incubator_subscribers',

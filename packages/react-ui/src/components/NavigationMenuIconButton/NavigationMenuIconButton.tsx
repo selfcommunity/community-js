@@ -20,8 +20,18 @@ const Root = styled(IconButton, {
 
 export interface NavigationMenuIconButtonProps extends IconButtonProps {
   /**
+   * Prop to show/hide the default drawer component
+   * @default true
+   */
+  showDrawer?: boolean;
+  /**
+   * Callback triggered on menu click
+   * @default null
+   */
+  onMenuIconClick?: () => void;
+  /**
    * Props to spread to default drawer root
-   * @default {anchor: 'left'}
+   * @default {}
    */
   DrawerProps?: NavigationMenuDrawerProps;
 }
@@ -54,7 +64,7 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
     props: inProps,
     name: PREFIX
   });
-  const {className = null, DrawerProps = {anchor: 'left'}, ...rest} = props;
+  const {className = null, DrawerProps = {}, onMenuIconClick = null, showDrawer = true, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -78,10 +88,10 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
+      <Root className={classNames(classes.root, className)} {...rest} onClick={onMenuIconClick ?? handleOpen}>
         <Icon>menu</Icon>
       </Root>
-      <NavigationMenuDrawer open={Boolean(anchorEl)} onClose={handleClose} {...DrawerProps} />
+      {showDrawer && <NavigationMenuDrawer open={Boolean(anchorEl)} onClose={handleClose} {...DrawerProps} />}
     </>
   );
 }

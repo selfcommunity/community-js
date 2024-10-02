@@ -82,7 +82,7 @@ export const POINTS_DAILY_VISIT = `${SCPreferenceSection.LOYALTY}.${SCPreference
 /**
  * ADDONS
  */
-export const ADDONS_AFFINIDY_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.AFFINIDY_ENABLED}`;
+export const ADDONS_AFFINITY_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.AFFINITY_ENABLED}`;
 export const ADDONS_CLOSED_COMMUNITY = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.CLOSED_COMMUNITY}`;
 export const ADDONS_INCUBATOR_ENABLED = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.INCUBATOR_ENABLED}`;
 export const ADDONS_INCUBATOR_SUBSCRIBERS = `${SCPreferenceSection.ADDONS}.${SCPreferenceName.INCUBATOR_SUBSCRIBERS}`;
@@ -245,7 +245,7 @@ export const DATA_TYPES = {
   [LOYALTY_PRIZE_A_IMAGE]: stringType,
   [LOYALTY_PRIZE_B_IMAGE]: stringType,
   [LOYALTY_PRIZE_C_IMAGE]: stringType,
-  [ADDONS_AFFINIDY_ENABLED]: booleanType,
+  [ADDONS_AFFINITY_ENABLED]: booleanType,
   [ADDONS_CLOSED_COMMUNITY]: booleanType,
   [ADDONS_INCUBATOR_ENABLED]: booleanType,
   [ADDONS_INCUBATOR_SUBSCRIBERS]: integerType,
