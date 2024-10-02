@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.25...@selfcommunity/react-ui@0.8.0-alpha.26) (2024-10-02)
+
+
+### Performance Improvements
+
+* added props to NavigationMenuIconButton ([fc81e43](https://github.com/selfcommunity/community-js/commit/fc81e43991a913b9b368c4ba3dfd4f6299d9e614))
+
+
+
+
+
 # [0.8.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.24...@selfcommunity/react-ui@0.8.0-alpha.25) (2024-10-01)
 
 
