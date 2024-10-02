@@ -33,6 +33,11 @@ export interface NavigationMenuDrawerProps extends DrawerProps {
    */
   drawerHeaderContent?: React.ReactNode;
   /**
+   * Hide drawer header
+   * @default true
+   */
+  showDrawerHeader?: boolean;
+  /**
    * Custom Drawer content
    * @default null
    */
@@ -66,6 +71,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     drawerContent = <DefaultDrawerContent />,
     ScrollContainerProps = {},
     handleOnClose,
+    showDrawerHeader = true,
     ...rest
   } = props;
 
@@ -100,15 +106,19 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
 
   return (
     <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
-      <Box className={classes.drawerHeader}>
-        {drawerHeaderContent}
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <IconButton className={classes.drawerHeaderAction} onClick={onClose}>
-          <Icon>close</Icon>
-        </IconButton>
-      </Box>
-      <Divider />
+      {showDrawerHeader && (
+        <>
+          <Box className={classes.drawerHeader}>
+            {drawerHeaderContent}
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
+            <IconButton className={classes.drawerHeaderAction} onClick={onClose}>
+              <Icon>close</Icon>
+            </IconButton>
+          </Box>
+          <Divider />
+        </>
+      )}
       <ScrollContainer {...ScrollContainerProps}>
         <List className={classes.drawerContent} onClick={onClose}>
           {drawerContent}
