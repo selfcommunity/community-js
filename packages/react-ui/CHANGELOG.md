@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.28...@selfcommunity/react-ui@0.8.0-alpha.29) (2024-10-02)
+
+
+### Bug Fixes
+
+* drawer ([13d2e26](https://github.com/selfcommunity/community-js/commit/13d2e26b3b7e55fca8ed53156540d7b7e8c8a91b))
+
+
+
+
+
 # [0.8.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.27...@selfcommunity/react-ui@0.8.0-alpha.28) (2024-10-02)
 
 
