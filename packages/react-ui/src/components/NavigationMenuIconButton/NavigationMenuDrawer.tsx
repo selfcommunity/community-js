@@ -7,7 +7,7 @@ import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
 import PubSub from 'pubsub-js';
-import {SCLayoutEventType, SCTopicType} from '../../constants/PubSub';
+import {SCLayoutDrawerType, SCLayoutEventType, SCTopicType} from '../../constants/PubSub';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -90,9 +90,16 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   }, [open]);
 
   // Subscriber for pubsub callback
-  const subscriber = useCallback((msg, data) => {
-    setOpen(data.open);
-  }, []);
+  const subscriber = useCallback(
+    (msg, data: SCLayoutDrawerType | undefined) => {
+      if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.TOGGLE_DRAWER}`) {
+        setOpen(!open);
+      } else if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.SET_DRAWER}`) {
+        setOpen(data.open);
+      }
+    },
+    [open]
+  );
 
   /**
    * When a ws notification arrives, update data
@@ -102,7 +109,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     return () => {
       PubSub.unsubscribe(refreshSubscription.current);
     };
-  }, []);
+  }, [subscriber]);
 
   return (
     <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>

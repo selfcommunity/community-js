@@ -74,7 +74,7 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
 
   // HANDLERS
   const handleOpen = useCallback(() => {
-    PubSub.publish(`${SCTopicType.LAYOUT}.${SCLayoutEventType.DRAWER}`, {open: true});
+    PubSub.publish(`${SCTopicType.LAYOUT}.${SCLayoutEventType.TOGGLE_DRAWER}`);
   }, []);
 
   if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value && !scUserContext.user?.id) {

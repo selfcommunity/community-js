@@ -36,7 +36,9 @@ export interface SCEventMembersEventType {
  * Layout event types
  */
 export enum SCLayoutEventType {
-  DRAWER = 'drawer'
+  DRAWER = 'drawer',
+  SET_DRAWER = 'drawer.set',
+  TOGGLE_DRAWER = 'drawer.toggle'
 }
 
 /**
