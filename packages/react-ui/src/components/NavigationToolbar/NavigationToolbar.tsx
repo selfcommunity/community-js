@@ -80,6 +80,11 @@ export interface NavigationToolbarProps extends ToolbarProps {
    */
   NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
   /**
+   * Props to spread to the NavigationMenuIconButtonComponent
+   * @default {}
+   */
+  NavigationMenuIconButtonComponentProps?: NavigationMenuIconButtonProps;
+  /**
    * Component for Navigation Settings
    */
   NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
@@ -172,6 +177,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
+    NavigationMenuIconButtonComponentProps = {},
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     children = null,
     NotificationMenuProps = {},
@@ -289,7 +295,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <NavigationMenuIconButtonComponent />
+      <NavigationMenuIconButtonComponent {...NavigationMenuIconButtonComponentProps} />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
