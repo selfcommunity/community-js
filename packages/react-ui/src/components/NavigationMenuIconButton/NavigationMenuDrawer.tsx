@@ -65,7 +65,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   } = props;
 
   return (
-    <Root className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
+    <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
       <Box className={classes.drawerHeader}>
         {drawerHeaderContent}
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
