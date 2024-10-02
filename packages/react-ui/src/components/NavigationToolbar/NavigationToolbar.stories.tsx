@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
-import {AppBar, Badge, IconButton, Typography} from '@mui/material';
+import {AppBar, Badge, Box, Grid, IconButton, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React from 'react';
+import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
+import Paper from '@mui/material/Paper';
 
 export default {
   title: 'Design System/React UI/Navigation Toolbar ',
@@ -21,6 +23,44 @@ const template = (args) => (
   <AppBar position="relative" elevation={0}>
     <NavigationToolbar {...args} />
   </AppBar>
+);
+
+const templateContent = (args) => (
+	<Box sx={{position: 'relative', display: 'flex', marginTop: '70px'}}>
+		<AppBar sx={{marginTop: '70px'}}>
+			<NavigationToolbar {...args}/>
+		</AppBar>
+		<NavigationMenuDrawer
+			variant={'persistent'}
+			open={true}
+			showDrawerHeader={false}
+			drawerHeaderContent={null}
+			sx={{
+				maxWidth: '270px',
+				flexShrink: 0,
+				zIndex: 1000,
+				[`& .MuiDrawer-paper`]: {
+					marginTop: '70px',
+					maxWidth: '280px',
+					paddingTop: '50px',
+					paddingLeft: '8px',
+					boxSizing: 'border-box',
+					overflowY: 'hidden'
+				}
+			}}
+		/>
+		<Box sx={{flexGrow: 1, marginTop: '70px'}}>
+			<Grid container sx={{width: '100%'}}>
+				<Grid item xs={2}></Grid>
+				<Grid item xs={8}>
+					<Paper sx={{height: 200, width: '100%'}}>
+						Content
+					</Paper>
+				</Grid>
+				<Grid item xs={2}></Grid>
+			</Grid>
+		</Box>
+	</Box>
 );
 
 export const Base: StoryObj<NavigationToolbar> = {
@@ -75,4 +115,14 @@ export const Actions: StoryObj<NavigationToolbar> = {
     </>
   },
   render: template
+};
+
+export const CustomContent: StoryObj<NavigationToolbar> = {
+	args: {
+		/* the args you need here will depend on your component */
+		NavigationMenuIconButtonComponentProps: {
+			showDrawer: false
+		}
+	},
+	render: templateContent
 };
