@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.2...@selfcommunity/types@0.6.0-alpha.3) (2024-10-02)
+
+
+### Bug Fixes
+
+* preference names ([4cd53e3](https://github.com/selfcommunity/community-js/commit/4cd53e3ecc876db37d0c5d531372c5b246f133b5))
+
+
+
+
+
 # [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.1...@selfcommunity/types@0.6.0-alpha.2) (2024-10-01)
 
 
