@@ -44,7 +44,6 @@ export const Custom: StoryObj<NavigationToolbar> = {
     /* the args you need here will depend on your component */
     SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
     value: '/',
-		NavigationMenuIconButtonComponent: {},
     children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
   },
   render: template
