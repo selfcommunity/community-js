@@ -94,12 +94,12 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   const subscriber = useCallback(
     (msg, data: SCLayoutDrawerType | undefined) => {
       if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.TOGGLE_DRAWER}`) {
-        setIsDrawerOpen(!open);
+        setIsDrawerOpen(!isDrawerOpen);
       } else if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.SET_DRAWER}`) {
         setIsDrawerOpen(data.open);
       }
     },
-    [open]
+    [isDrawerOpen]
   );
 
   /**
