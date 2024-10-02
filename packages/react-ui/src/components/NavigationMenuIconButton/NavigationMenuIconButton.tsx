@@ -1,10 +1,12 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {styled} from '@mui/material/styles';
 import {Icon, IconButton, IconButtonProps} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCPreferences, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import NavigationMenuDrawer, {NavigationMenuDrawerProps} from './NavigationMenuDrawer';
+import PubSub from 'pubsub-js';
+import {SCLayoutEventType, SCTopicType} from '../../constants/PubSub';
 
 const PREFIX = 'SCNavigationMenuIconButton';
 
@@ -66,20 +68,13 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
   });
   const {className = null, DrawerProps = {}, onMenuIconClick = null, showDrawer = true, ...rest} = props;
 
-  // STATE
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   // CONTEXT
   const {preferences} = useSCPreferences();
   const scUserContext = useSCUser();
 
   // HANDLERS
-  const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
+  const handleOpen = useCallback(() => {
+    PubSub.publish(`${SCTopicType.LAYOUT}.${SCLayoutEventType.DRAWER}`, {open: true});
   }, []);
 
   if (!preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value && !scUserContext.user?.id) {
@@ -91,7 +86,7 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
       <Root className={classNames(classes.root, className)} {...rest} onClick={onMenuIconClick ?? handleOpen}>
         <Icon>menu</Icon>
       </Root>
-      {showDrawer && <NavigationMenuDrawer open={Boolean(anchorEl)} onClose={handleClose} {...DrawerProps} />}
+      {showDrawer && <NavigationMenuDrawer {...DrawerProps} />}
     </>
   );
 }

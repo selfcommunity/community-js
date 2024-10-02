@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Divider, Drawer, DrawerProps, Icon, IconButton, List} from '@mui/material';
 import classNames from 'classnames';
@@ -6,6 +6,8 @@ import {useThemeProps} from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
+import PubSub from 'pubsub-js';
+import {SCLayoutEventType, SCTopicType} from '../../constants/PubSub';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -43,6 +45,10 @@ export interface NavigationMenuDrawerProps extends DrawerProps {
    */
   ScrollContainerProps?: Record<string, any>;
   /**
+   * Override onClose
+   */
+  handleOnClose?: () => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -59,10 +65,38 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     drawerHeaderContent = <DefaultHeaderContent />,
     drawerContent = <DefaultDrawerContent />,
     ScrollContainerProps = {},
-    open,
-    onClose,
+    handleOnClose,
     ...rest
   } = props;
+
+  // REFS
+  const refreshSubscription = useRef(null);
+
+  const [open, setOpen] = useState<boolean>(props.open);
+
+  // HANDLERS
+  const onClose = useCallback(() => {
+    if (handleOnClose) {
+      handleOnClose();
+    } else {
+      setOpen(false);
+    }
+  }, [open]);
+
+  // Subscriber for pubsub callback
+  const subscriber = useCallback((msg, data) => {
+    setOpen(data.open);
+  }, []);
+
+  /**
+   * When a ws notification arrives, update data
+   */
+  useEffect(() => {
+    refreshSubscription.current = PubSub.subscribe(`${SCTopicType.LAYOUT}.${SCLayoutEventType.DRAWER}`, subscriber);
+    return () => {
+      PubSub.unsubscribe(refreshSubscription.current);
+    };
+  }, []);
 
   return (
     <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
@@ -76,8 +110,6 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
       </Box>
       <Divider />
       <ScrollContainer {...ScrollContainerProps}>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
         <List className={classes.drawerContent} onClick={onClose}>
           {drawerContent}
         </List>

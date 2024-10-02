@@ -24,6 +24,7 @@ export interface LocationEventsFilterProps extends ChipProps {
   className?: string;
   value: SCEventLocationFilterType;
   disabled?: boolean;
+  autoHide?: boolean;
   handleOnChange: (event: any) => void;
 }
 
@@ -49,7 +50,11 @@ export default function LocationEventsFilter(inProps: LocationEventsFilterProps)
     name: PREFIX
   });
 
-  const {className, value, disabled = false, handleOnChange} = props;
+  const {className, value, disabled = false, autoHide = false, handleOnChange} = props;
+
+  if (autoHide) {
+    return null;
+  }
 
   return (
     <Root className={classNames(classes.root, className)} fullWidth>

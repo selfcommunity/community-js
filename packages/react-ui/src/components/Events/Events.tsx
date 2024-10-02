@@ -392,19 +392,20 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     showFollowed={showMyEvents}
                     deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
                     onDelete={showMyEvents ? handleDeleteClick : null}
+                    autoHide={!loading && !events.length}
                     disabled={loading}
                   />
                 </Grid>
               )}
-              <Grid item>
-                <LocationEventsFilter value={location} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
+              <Grid item xs={12} md={2}>
+                <LocationEventsFilter value={location} autoHide={!loading && !events.length} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
               </Grid>
               <Grid item>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  autoHide={!events.length && !showPastEvents}
+                  autoHide={!loading && !events.length && !showPastEvents}
                   disabled={loading}
                 />
               </Grid>
