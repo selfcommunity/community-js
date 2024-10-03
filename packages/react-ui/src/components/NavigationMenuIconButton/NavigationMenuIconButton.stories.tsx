@@ -15,10 +15,12 @@ const template = (args) => (
   </div>
 );
 
+// @ts-ignore
 export const Base: StoryObj<NavigationMenuIconButton> = {
   render: template
 };
 
+// @ts-ignore
 export const Custom: StoryObj<NavigationMenuIconButton> = {
 	args: {
 		/* the args you need here will depend on your component */
