@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.31...@selfcommunity/react-ui@0.8.0-alpha.32) (2024-10-03)
+
+
+### Bug Fixes
+
+* composer. Poll available only if post type is enabled ([fbb7d5c](https://github.com/selfcommunity/community-js/commit/fbb7d5c2ea1b9acf572cae808a9e31b5179891ef))
+
+
+
+
+
 # [0.8.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.30...@selfcommunity/react-ui@0.8.0-alpha.31) (2024-10-02)
 
 
