@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.31...@selfcommunity/react-theme-default@0.2.0-alpha.32) (2024-10-03)
+
+
+### Bug Fixes
+
+* FeedObjectDetail style (new line) ([5b43f9d](https://github.com/selfcommunity/community-js/commit/5b43f9dd9be10bcc2bddfaddd8a30a2f4ae01216))
+
+
+
+
+
 # [0.2.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.30...@selfcommunity/react-theme-default@0.2.0-alpha.31) (2024-10-02)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
