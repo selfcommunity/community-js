@@ -221,9 +221,7 @@ import {
   SCTopicType,
   SCGroupEventType,
   SCEventMembersEventType,
-  SCGroupMembersEventType,
-  SCLayoutEventType,
-  SCLayoutDrawerType
+  SCGroupMembersEventType
 } from './constants/PubSub';
 
 /**
@@ -362,8 +360,6 @@ export {
   SCGroupEventType,
   SCEventMembersEventType,
   SCGroupMembersEventType,
-  SCLayoutEventType,
-  SCLayoutDrawerType,
   EditEventButton,
   EditEventButtonProps,
   EditGroupButton,

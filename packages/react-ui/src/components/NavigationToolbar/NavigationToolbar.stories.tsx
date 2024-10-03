@@ -3,7 +3,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
 import {AppBar, Badge, Box, Grid, IconButton, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
 import Paper from '@mui/material/Paper';
 
@@ -25,23 +25,29 @@ const template = (args) => (
   </AppBar>
 );
 
-const templateContent = (args) => (
-	<Box sx={{position: 'relative', display: 'flex', marginTop: '70px'}}>
+const templateContent = (args) => {
+
+	const [open, setOpen] = useState<boolean>(true);
+	const handleIconClick = useCallback(() => {
+		setOpen(!open);
+	}, [open]);
+
+	return <Box sx={{position: 'relative', display: 'flex', marginTop: '70px'}}>
 		<AppBar sx={{marginTop: '70px'}}>
-			<NavigationToolbar {...args}/>
+			<NavigationToolbar {...args} NavigationMenuIconButtonComponentProps={{showDrawer: false, onMenuIconClick: handleIconClick}} />
 		</AppBar>
 		<NavigationMenuDrawer
 			variant={'persistent'}
-			open={true}
+			open={open}
 			showDrawerHeader={false}
 			drawerHeaderContent={null}
 			sx={{
-				maxWidth: '270px',
+			...(open && {width: '270px'}),
 				flexShrink: 0,
 				zIndex: 1000,
 				[`& .MuiDrawer-paper`]: {
 					marginTop: '70px',
-					maxWidth: '280px',
+					width: '280px',
 					paddingTop: '50px',
 					paddingLeft: '8px',
 					boxSizing: 'border-box',
@@ -61,8 +67,9 @@ const templateContent = (args) => (
 			</Grid>
 		</Box>
 	</Box>
-);
+};
 
+// @ts-ignore
 export const Base: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
@@ -79,6 +86,7 @@ export const Base: StoryObj<NavigationToolbar> = {
   render: template
 };
 
+// @ts-ignore
 export const Custom: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
@@ -89,6 +97,7 @@ export const Custom: StoryObj<NavigationToolbar> = {
   render: template
 };
 
+// @ts-ignore
 export const Actions: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
@@ -117,6 +126,7 @@ export const Actions: StoryObj<NavigationToolbar> = {
   render: template
 };
 
+// @ts-ignore
 export const CustomContent: StoryObj<NavigationToolbar> = {
 	args: {
 		/* the args you need here will depend on your component */

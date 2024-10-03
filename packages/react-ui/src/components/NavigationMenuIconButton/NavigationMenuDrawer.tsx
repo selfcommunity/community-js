@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Divider, Drawer, DrawerProps, Icon, IconButton, List} from '@mui/material';
 import classNames from 'classnames';
@@ -6,8 +6,6 @@ import {useThemeProps} from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
-import PubSub from 'pubsub-js';
-import {SCLayoutDrawerType, SCLayoutEventType, SCTopicType} from '../../constants/PubSub';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -28,15 +26,15 @@ const Root = styled(Drawer, {
 
 export interface NavigationMenuDrawerProps extends DrawerProps {
   /**
-   * Custom Drawer header content
-   * @default null
-   */
-  drawerHeaderContent?: React.ReactNode;
-  /**
    * Hide drawer header
    * @default true
    */
   showDrawerHeader?: boolean;
+  /**
+   * Custom Drawer header content
+   * @default null
+   */
+  drawerHeaderContent?: React.ReactNode;
   /**
    * Custom Drawer content
    * @default null
@@ -49,10 +47,6 @@ export interface NavigationMenuDrawerProps extends DrawerProps {
    * @default {}
    */
   ScrollContainerProps?: Record<string, any>;
-  /**
-   * Override onClose
-   */
-  handleOnClose?: () => void;
   /**
    * Any other properties
    */
@@ -67,53 +61,17 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   });
   const {
     className = null,
-    open,
+    showDrawerHeader = true,
     drawerHeaderContent = <DefaultHeaderContent />,
     drawerContent = <DefaultDrawerContent />,
     ScrollContainerProps = {},
-    handleOnClose,
-    showDrawerHeader = true,
+    open,
+    onClose,
     ...rest
   } = props;
 
-  // REFS
-  const refreshSubscription = useRef(null);
-
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(open);
-
-  // HANDLERS
-  const onClose = useCallback(() => {
-    if (handleOnClose) {
-      handleOnClose();
-    } else {
-      setIsDrawerOpen(false);
-    }
-  }, [open]);
-
-  // Subscriber for pubsub callback
-  const subscriber = useCallback(
-    (msg, data: SCLayoutDrawerType | undefined) => {
-      if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.TOGGLE_DRAWER}`) {
-        setIsDrawerOpen(!isDrawerOpen);
-      } else if (msg === `${SCTopicType.LAYOUT}.${SCLayoutEventType.SET_DRAWER}`) {
-        setIsDrawerOpen(data.open);
-      }
-    },
-    [isDrawerOpen]
-  );
-
-  /**
-   * When a ws notification arrives, update data
-   */
-  useEffect(() => {
-    refreshSubscription.current = PubSub.subscribe(`${SCTopicType.LAYOUT}.${SCLayoutEventType.DRAWER}`, subscriber);
-    return () => {
-      PubSub.unsubscribe(refreshSubscription.current);
-    };
-  }, [subscriber]);
-
   return (
-    <Root anchor="left" className={classNames(classes.root, className)} open={isDrawerOpen} onClose={onClose} {...rest}>
+    <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
       {showDrawerHeader && (
         <>
           <Box className={classes.drawerHeader}>
@@ -128,6 +86,8 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
         </>
       )}
       <ScrollContainer {...ScrollContainerProps}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <List className={classes.drawerContent} onClick={onClose}>
           {drawerContent}
         </List>
