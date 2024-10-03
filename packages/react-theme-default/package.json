@@ -67,7 +67,6 @@
     "@mui/material": "^5.15.3",
     "@selfcommunity/react-core": "^0.5.0-alpha.10",
     "@selfcommunity/react-ui": "^0.8.0-alpha.33",
-    "hex-to-css-filter": "^5.4.0",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18"
   },
