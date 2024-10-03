@@ -5,8 +5,7 @@ import {SCUserType, SCGroupType, SCEventType} from '@selfcommunity/types';
  */
 export enum SCTopicType {
   GROUP = 'group',
-  EVENT = 'event',
-  LAYOUT = 'layout'
+  EVENT = 'event'
 }
 
 /**
@@ -30,20 +29,4 @@ export interface SCGroupMembersEventType {
 export interface SCEventMembersEventType {
   event: SCEventType;
   user?: SCUserType;
-}
-
-/**
- * Layout event types
- */
-export enum SCLayoutEventType {
-  DRAWER = 'drawer',
-  SET_DRAWER = 'drawer.set',
-  TOGGLE_DRAWER = 'drawer.toggle'
-}
-
-/**
- * Layout event types
- */
-export interface SCLayoutDrawerType {
-  open: boolean;
 }
