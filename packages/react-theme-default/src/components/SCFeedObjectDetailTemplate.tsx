@@ -6,6 +6,16 @@ const Component = {
         '& .SCCommentsObject-root h6': {
           paddingLeft: theme.spacing(2)
         }
+      },
+      '& .SCFeedObject-detail': {
+        '& .SCFeedObject-content': {
+          '& .SCFeedObject-text-section .SCFeedObject-text': {
+            '& span': {
+              display: 'inline-block',
+              width: '100%'
+            }
+          }
+        }
       }
     }),
     skeletonRoot: ({theme}: any) => ({
