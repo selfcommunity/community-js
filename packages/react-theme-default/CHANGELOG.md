@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.34...@selfcommunity/react-theme-default@0.2.0-alpha.35) (2024-10-03)
+
+
+### Bug Fixes
+
+* reactions dimension, removed unnecessary package ([bc40306](https://github.com/selfcommunity/community-js/commit/bc40306b1c65a4d137b7f898cadd12d7e9071cc4))
+
+
+
+
+
 # [0.2.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.33...@selfcommunity/react-theme-default@0.2.0-alpha.34) (2024-10-03)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

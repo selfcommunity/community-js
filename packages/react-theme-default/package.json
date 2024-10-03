@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-theme-default",
-  "version": "0.2.0-alpha.34",
+  "version": "0.2.0-alpha.35",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
