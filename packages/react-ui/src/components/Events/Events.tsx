@@ -397,9 +397,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   />
                 </Grid>
               )}
-              <Grid item xs={12} md={2}>
-                <LocationEventsFilter value={location} autoHide={!loading && !events.length} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
-              </Grid>
               <Grid item>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
@@ -407,6 +404,14 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   handleDeleteClick={handleDeletePastClick}
                   autoHide={!loading && !events.length && !showPastEvents}
                   disabled={loading}
+                />
+              </Grid>
+              <Grid item xs={12} md={2}>
+                <LocationEventsFilter
+                  value={location}
+                  autoHide={!loading && !events.length}
+                  disabled={loading || (!events.length && !location)}
+                  handleOnChange={handleOnChangeLocation}
                 />
               </Grid>
             </>
