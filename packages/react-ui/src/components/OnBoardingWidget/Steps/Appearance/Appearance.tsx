@@ -235,7 +235,7 @@ export default function Appearance(inProps: AppearanceProps) {
         type: actionTypes.SET_COLORS,
         payload: {colors: state.colors.map((col) => (col.name === name ? {...col, value: color} : col))}
       });
-        updatePreference({[`${name}`]: color});
+      updatePreference({[`${name}`]: color});
     }
   };
 
@@ -308,6 +308,7 @@ export default function Appearance(inProps: AppearanceProps) {
                         format="hex"
                         value={color.value}
                         onChange={(newColor) => handleColorChange(newColor, color.name)}
+                        isAlphaHidden
                       />
                       {updatingColor && updatingColor === color.name && (
                         <CircularProgress className={classes.colorProgress} color="secondary" size={24} />
