@@ -6,19 +6,19 @@ import {
   useChunkStartListener,
   useItemErrorListener,
   useItemFinishListener,
-  useRequestPreSend,
+  useRequestPreSend
 } from '@rpldy/chunked-uploady';
+import { useItemProgressListener, useItemStartListener } from '@rpldy/uploady';
 import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
-import { SCMediaType } from '@selfcommunity/types';
 import { SCContextType, SCUserContextType, useSCContext, useSCUser } from '@selfcommunity/react-core';
-import { useItemProgressListener, useItemStartListener, useUploady } from '@rpldy/uploady';
-import { md5 } from '../../utils/hash';
-import React, { useEffect, useRef, useState } from 'react';
-import { SCMediaChunkType } from '../../types/media';
-import { useIntl } from 'react-intl';
-import messages from '../../messages/common';
+import { SCMediaType } from '@selfcommunity/types';
 import { Logger, resizeImage } from '@selfcommunity/utils';
+import React, { useEffect, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
+import messages from '../../messages/common';
+import { SCMediaChunkType } from '../../types/media';
+import { md5 } from '../../utils/hash';
 
 export interface MediaChunkUploaderProps {
   /**
@@ -85,7 +85,9 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
 
   // LISTENERS
   useItemStartListener((item) => {
+    console.log('*** useItemStartListener item ***', item);
     if (item.file.type.startsWith('image/')) {
+      console.log('*** useItemStartListener if item ***', item);
       const reader = new FileReader();
       reader.onload = (e) => {
         chunkStateRef.current.setChunk({id: item.id, image: e.target.result});
@@ -98,15 +100,18 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useItemProgressListener((item) => {
+    console.log('*** useItemProgressListener item ***', item);
     chunkStateRef.current.setChunk({id: item.id, completed: item.completed});
   });
 
   useItemFinishListener((item) => {
     md5(item.file, 2142880, (hash) => {
+      console.log('*** useItemFinishListener item ***', item);
       const formData = new FormData();
       formData.append('upload_id', chunkStateRef.current.chunks[item.id].upload_id);
       formData.append('type', chunkStateRef.current.chunks[item.id].type);
       formData.append('md5', hash);
+      formData.forEach((data, i) => console.log('*** useItemFinishListener formData ***', i, data));
       http
         .request({
           url: Endpoints.ComposerChunkUploadMediaComplete.url(),
@@ -115,6 +120,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           headers: {'Content-Type': 'multipart/form-data'}
         })
         .then((res: HttpResponse<any>) => {
+          console.log('*** useItemFinishListener then res ***', res);
           setTimeout(() => {
             const _chunks = {...chunkStateRef.current.chunks};
             delete _chunks[item.id];
@@ -123,6 +129,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           }, 0);
         })
         .catch((error) => {
+          console.log('*** useItemFinishListener error ***', error);
           console.log(error);
           onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.fileUploadErrorGeneric));
           const _chunks = {...chunkStateRef.current.chunks};
@@ -133,6 +140,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useItemErrorListener((item) => {
+    console.log('*** useItemErrorListener item ***', item);
     onError({...chunkStateRef.current.chunks[item.id]}, intl.formatMessage(messages.fileUploadErrorGeneric));
     const _chunks = {...chunkStateRef.current.chunks};
     delete _chunks[item.id];
@@ -140,6 +148,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
   });
 
   useChunkStartListener((data): StartEventResponse => {
+    console.log('*** useChunkStartListener data ***', data);
     const res: StartEventResponse = {
       url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
       sendOptions: {
@@ -154,24 +163,32 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       }
     };
     if (chunkStateRef.current.chunks[data.item.id].upload_id) {
+      console.log('*** useChunkStartListener if ***');
       res.sendOptions.params = {[`upload_id`]: chunkStateRef.current.chunks[data.item.id].upload_id};
     } else {
+      console.log('*** useChunkStartListener else ***');
       chunkStateRef.current.setChunk({id: data.item.id, type: type || data.sendOptions.paramName});
     }
     return res;
   });
 
   useChunkFinishListener(async (data) => {
+    console.log('*** useChunkFinishListener data ***', data);
     const _data = await data.uploadData.response.data;
     chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: _data.upload_id});
   });
 
   useRequestPreSend(async ({items, options}): Promise<PreSendResponse> => {
-    const destination = ['JWT', 'OAuth'].includes(scContext.settings.session.type) ? {
-      headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}
-    } : {};
+    console.log('*** useRequestPreSend items ***', items);
+    console.log('*** useRequestPreSend options ***', options);
+    const destination = ['JWT', 'OAuth'].includes(scContext.settings.session.type)
+      ? {
+          headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}
+        }
+      : {};
 
     if (items.length == 0) {
+      console.log('*** useRequestPreSend items.length === 0 ***');
       return Promise.resolve({options, destination});
     }
 
@@ -183,6 +200,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
         })
       )
         .then((items) => {
+          console.log('*** useRequestPreSend promise then ***', items);
           resolve({
             items: items as BatchItem[],
             options: {
@@ -192,6 +210,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
           });
         })
         .catch((error) => {
+          console.log('*** useRequestPreSend promise error ***', error);
           Logger.error(error, SCOPE_SC_UI);
           resolve({
             options: {

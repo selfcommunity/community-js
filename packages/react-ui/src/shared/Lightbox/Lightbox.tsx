@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {PhotoSlider} from 'react-photo-view';
-import {DataType} from '../../types/lightbox';
-import {CircularProgress} from '@mui/material';
-import {PhotoProviderBase} from 'react-photo-view/dist/types';
+import { CircularProgress } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import React, { useCallback, useState } from 'react';
+import { PhotoSlider } from 'react-photo-view';
+import { PhotoProviderBase } from 'react-photo-view/dist/types';
+import { DataType } from '../../types/lightbox';
 
 const PREFIX = 'SCLightbox';
 
@@ -33,11 +33,18 @@ const Root = styled(PhotoSlider, {
 })(() => ({}));
 
 const ReactImageLightbox = (props: ReactImageLightboxProps) => {
-  const {images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarRender, toolbarButtons = [], ...rest} = props;
+  const { images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarRender, toolbarButtons = [], ...rest } = props;
 
   // STATE
-  const [currentImages] = useState<DataType[]>(images || []);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(index || 0);
+
+  const handleIndexChange = useCallback(
+    (index: number) => {
+      onIndexChange?.(index);
+      setCurrentImageIndex(index);
+    },
+    [onIndexChange, setCurrentImageIndex]
+  );
 
   /**
    * Renders root object
@@ -46,16 +53,20 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
     <Root
       {...rest}
       className={classes.root}
-      images={currentImages}
+      images={images}
       visible={visible && index !== -1}
       index={currentImageIndex}
-      onIndexChange={setCurrentImageIndex}
+      onIndexChange={handleIndexChange}
       onClose={onClose}
       afterClose={afterClose}
       loadingElement={<CircularProgress color={'primary'} />}
-      toolbarRender={toolbarRender ? toolbarRender : () => {
-        return <>{toolbarButtons}</>;
-      }}
+      toolbarRender={
+        toolbarRender
+          ? toolbarRender
+          : () => {
+            return <>{toolbarButtons}</>;
+          }
+      }
     />
   );
 };
