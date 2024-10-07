@@ -21,7 +21,7 @@ const Component = {
           width: '100%',
           position: 'absolute',
           top: 0,
-          // zIndex: 2,
+          zIndex: 2,
           '& iframe': {
             width: '100%',
             margin: '0px auto'
@@ -31,7 +31,7 @@ const Component = {
           width: '100%',
           position: 'relative',
           top: 0,
-          // zIndex: 1,
+          zIndex: 1,
           '& .SCMediaLink-html-loading': {
             position: 'absolute',
             display: 'none',
@@ -85,7 +85,7 @@ const Component = {
           '& .SCMediaLink-html': {
             width: '100%',
             position: 'absolute',
-            // zIndex: 2,
+            zIndex: 2,
             '& iframe': {
               width: '100%',
               margin: '0px auto'
@@ -95,7 +95,7 @@ const Component = {
             width: '100%',
             position: 'absolute',
             top: 0,
-            // zIndex: 1,
+            zIndex: 1,
             '& .SCMediaLink-html-loading': {
               position: 'absolute',
               display: 'none',

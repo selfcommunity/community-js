@@ -1,3 +1,5 @@
+import {getContrastRatio} from '@mui/material/styles';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -12,6 +14,9 @@ const Component = {
       },
       '& .SCNavigationToolbarMobile-logo-flex': {
         flexGrow: 0
+      },
+      '& .MuiIconButton-root': {
+        color: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.primary.main
       },
       '& h4': {
         fontSize: '1.286rem',
