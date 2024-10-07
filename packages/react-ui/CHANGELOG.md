@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.33...@selfcommunity/react-ui@0.8.0-alpha.34) (2024-10-07)
+
+
+### Bug Fixes
+
+* onboarding & event filters ([af99ce5](https://github.com/selfcommunity/community-js/commit/af99ce51f0b2b533b33b5c4103becd9dd183c9fc))
+
+
+
+
+
 # [0.8.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.32...@selfcommunity/react-ui@0.8.0-alpha.33) (2024-10-03)
 
 
