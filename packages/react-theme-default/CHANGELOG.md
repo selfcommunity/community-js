@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.36...@selfcommunity/react-theme-default@0.2.0-alpha.37) (2024-10-07)
+
+
+### Bug Fixes
+
+* embedly ([9e32669](https://github.com/selfcommunity/community-js/commit/9e32669a28c33ce14fef34646b1bbb42e216fd91))
+* onboarding styles ([94ba1f0](https://github.com/selfcommunity/community-js/commit/94ba1f029815456813415dbf91c840a8af1c1cd8))
+
+
+
+
+
 # [0.2.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.35...@selfcommunity/react-theme-default@0.2.0-alpha.36) (2024-10-07)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
