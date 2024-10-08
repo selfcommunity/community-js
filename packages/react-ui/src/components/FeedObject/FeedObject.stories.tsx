@@ -93,7 +93,7 @@ export const BaseWithImage3: StoryObj<FeedObject> = {
 
 export const BaseWithImage3More: StoryObj<FeedObject> = {
   args: {
-    feedObjectId: 1377,
+    feedObjectId: 2815,
     feedObjectType: SCContributionType.POST
   },
   render: template
