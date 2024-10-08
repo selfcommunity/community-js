@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.34...@selfcommunity/react-ui@0.8.0-alpha.35) (2024-10-08)
+
+
+### Bug Fixes
+
+* lightbox ([cc71c72](https://github.com/selfcommunity/community-js/commit/cc71c72f3e1239f62d8c229955c65e0912f6bcee))
+* LightBox. Linear issue: https://linear.app/quentral/issue/QUE-839/problema-slider-anteprima-immagini-lightbox ([8ea42ab](https://github.com/selfcommunity/community-js/commit/8ea42ab6e8412b0ca801fe4a7a76f9eea75b9ad5))
+
+
+
+
+
 # [0.8.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.33...@selfcommunity/react-ui@0.8.0-alpha.34) (2024-10-07)
 
 
