@@ -46,7 +46,11 @@ const Component = {
         ['& .PhotoView__Photo']: {
           cursor: 'grab',
           maxWidth: 'none',
-          WebkitUserDrag: 'none'
+          WebkitUserDrag: 'none',
+          userDrag: 'none',
+          '@-moz-document url-prefix()': {
+            pointerEvents: 'none'
+          }
         },
         ['& .PhotoView__Photo:active']: {
           cursor: 'grabbing',
