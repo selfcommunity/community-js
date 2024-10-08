@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.37...@selfcommunity/react-ui@0.8.0) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.8.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.36...@selfcommunity/react-ui@0.8.0-alpha.37) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.8.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.35...@selfcommunity/react-ui@0.8.0-alpha.36) (2024-10-08)
+
+
+### Bug Fixes
+
+* event detail start date ([9f68d0e](https://github.com/selfcommunity/community-js/commit/9f68d0e8aa7aa365f0e029920fa4e6d835b6ab87))
+
+
+
+
+
 # [0.8.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.34...@selfcommunity/react-ui@0.8.0-alpha.35) (2024-10-08)
 
 
