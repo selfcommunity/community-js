@@ -14,10 +14,11 @@ import {
   UserSuggestionWidget,
   PlatformWidget,
   SCFeedWidgetType,
-  FeedRef
+  FeedRef,
+  OnBoardingWidget
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
@@ -168,6 +169,23 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
+  const handleAddGenerationContent = (feedObjects) => {
+    if (feedRef && feedRef.current) {
+      const currentFeedObjectIds = feedRef.current.getCurrentFeedObjectIds();
+      feedObjects.forEach((feedObject) => {
+        if (!currentFeedObjectIds.includes(feedObject.id)) {
+          const feedUnit = {
+            type: feedObject.type,
+            [feedObject.type]: feedObject,
+            seen_by_id: [],
+            has_boost: false
+          };
+          feedRef.current.addFeedData(feedUnit, true);
+        }
+      });
+    }
+  };
+
   return (
     <Root
       id={id}
@@ -189,7 +207,12 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         template: SCFeedObjectTemplateType.PREVIEW
       }}
       FeedSidebarProps={FeedSidebarProps}
-      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
+      HeaderComponent={
+        <>
+          <InlineComposerWidget onSuccess={handleComposerSuccess} />
+          {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
+        </>
+      }
       requireAuthentication={true}
       disablePaginationLinks={true}
       enabledCustomAdvPositions={[

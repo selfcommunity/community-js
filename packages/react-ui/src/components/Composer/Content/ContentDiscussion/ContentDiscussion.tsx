@@ -28,6 +28,7 @@ const DEFAULT_DISCUSSION: ComposerContentType = {
   title: '',
   categories: [],
   group: null,
+  event: null,
   medias: [],
   html: '',
   addressing: []

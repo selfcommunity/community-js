@@ -15,5 +15,6 @@ export const EDIT_CONTRIBUTION = '_edit_contribution';
 export const DELETE_CONTRIBUTION = '_delete_contribution';
 export const RESTORE_CONTRIBUTION = '_restore_contribution';
 export const SUSPEND_NOTIFICATION_CONTRIBUTION = '_suspend_notification_contribution';
+export const SUSPEND_NOTIFICATION_EVENT = '_suspend_notification_event';
 export const MODERATE_CONTRIBUTION_HIDDEN = '_moderate_contribution_hidden';
 export const MODERATE_CONTRIBUTION_DELETED = '_moderate_contribution_deleted';

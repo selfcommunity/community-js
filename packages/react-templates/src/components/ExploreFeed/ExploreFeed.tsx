@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import React, {useContext, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   CategoriesPopularWidget,
@@ -14,7 +14,8 @@ import {
   LoyaltyProgramWidget,
   UserSuggestionWidget,
   PlatformWidget,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  OnBoardingWidget
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -23,6 +24,7 @@ import {SCCustomAdvPosition} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
+import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -141,6 +143,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
 
   // CONTEXT
   const {enqueueSnackbar} = useSnackbar();
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // REF
   const feedRef = useRef<FeedRef>();
@@ -159,6 +162,23 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       has_boost: false
     };
     feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+  };
+
+  const handleAddGenerationContent = (feedObjects) => {
+    if (feedRef && feedRef.current) {
+      const currentFeedObjectIds = feedRef.current.getCurrentFeedObjectIds();
+      feedObjects.forEach((feedObject) => {
+        if (!currentFeedObjectIds.includes(feedObject.id)) {
+          const feedUnit = {
+            type: feedObject.type,
+            [feedObject.type]: feedObject,
+            seen_by_id: [],
+            has_boost: false
+          };
+          feedRef.current.addFeedData(feedUnit, true);
+        }
+      });
+    }
   };
 
   // WIDGETS
@@ -190,7 +210,12 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       ItemSkeletonProps={{
         template: SCFeedObjectTemplateType.PREVIEW
       }}
-      HeaderComponent={<InlineComposerWidget onSuccess={handleComposerSuccess} />}
+      HeaderComponent={
+        <>
+          <InlineComposerWidget onSuccess={handleComposerSuccess} />
+          {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
+        </>
+      }
       FeedSidebarProps={FeedSidebarProps}
       enabledCustomAdvPositions={[
         SCCustomAdvPosition.POSITION_FEED_SIDEBAR,

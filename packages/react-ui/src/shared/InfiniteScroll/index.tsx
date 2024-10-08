@@ -332,9 +332,9 @@ class InfiniteScroll extends Component<InfiniteScrollProps, State> {
               <div
                 style={{
                   position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: -1 * this.maxPullDownDistance
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex: 1
                 }}>
                 {this.state.pullToRefreshThresholdBreached ? this.props.releaseToRefreshContent : this.props.pullDownToRefreshContent}
               </div>

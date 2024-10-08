@@ -33,6 +33,7 @@ const classes = {
   navigation: `${PREFIX}-navigation`,
   home: `${PREFIX}-home`,
   explore: `${PREFIX}-explore`,
+  events: `${PREFIX}-events`,
   groups: `${PREFIX}-groups`,
   search: `${PREFIX}-search`,
   composer: `${PREFIX}-composer`,
@@ -78,6 +79,11 @@ export interface NavigationToolbarProps extends ToolbarProps {
    * Component for Navigation Menu Icon Button
    */
   NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
+  /**
+   * Props to spread to the NavigationMenuIconButtonComponent
+   * @default {}
+   */
+  NavigationMenuIconButtonComponentProps?: NavigationMenuIconButtonProps;
   /**
    * Component for Navigation Settings
    */
@@ -141,6 +147,8 @@ const PREFERENCES = [
  |navigation|.SCNavigationToolbar-navigation|Styles applied to the navigation container element|
  |home|.SCNavigationToolbar-home|Styles applied to the home button|
  |explore|.SCNavigationToolbar-explore|Styles applied to the explore button|
+ |groups|.SCNavigationToolbar-groups|Styles applied to the group button|
+ |events|.SCNavigationToolbar-events|Styles applied to the event button|
  |search|.SCNavigationToolbar-search|Styles applied to the search component|
  |composer|.SCNavigationToolbar-composer|Styles applied to the composer component|
  |profile|.SCNavigationToolbar-profile|Styles applied to the profile button|
@@ -169,6 +177,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
+    NavigationMenuIconButtonComponentProps = {},
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     children = null,
     NotificationMenuProps = {},
@@ -191,15 +200,31 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   }, [scPreferences.preferences]);
   const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
   const groupsEnabled = useMemo(
-    () => scPreferences.features && scPreferences.features.includes(SCFeatureName.GROUPING) && scPreferences.features.includes(SCFeatureName.TAGGING),
-    [scPreferences.features]
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      scPreferences.features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
   );
+  const eventsEnabled = useMemo(
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
+  );
+
   const showComposer = useMemo(() => {
     return (
       !disableComposer &&
       (!scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user))
     );
-  }, [scPreferences, disableComposer, scUserContext.user]);
+  }, [preferences, disableComposer, scUserContext.user]);
 
   // STATE
   const [anchorNotification, setAnchorNotification] = React.useState(null);
@@ -254,12 +279,23 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <Icon>groups</Icon>
         </IconButton>
       )}
+      {eventsEnabled && (
+        <IconButton
+          className={classNames(classes.events, {
+            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {}))
+          })}
+          aria-label="Groups"
+          to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}
+          component={Link}>
+          <Icon>CalendarIcon</Icon>
+        </IconButton>
+      )}
     </Box>
   );
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <NavigationMenuIconButtonComponent />
+      <NavigationMenuIconButtonComponent {...NavigationMenuIconButtonComponentProps} />
       <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>

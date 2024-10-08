@@ -1,5 +1,3 @@
-import {hexToCSSFilter} from 'hex-to-css-filter';
-
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -10,16 +8,18 @@ const Component = {
       padding: theme.spacing(1.5),
       minWidth: 0,
       '& .MuiIcon-root': {
-        fontSize: '1.57rem',
-        '& img': {
-          filter: hexToCSSFilter(theme.palette.primary.main).filter
-        }
+        fontSize: '1.57rem'
       },
       '&.MuiButton-sizeSmall': {
         padding: theme.spacing(0.5),
         '& .MuiIcon-root': {
           fontSize: '1rem'
         }
+      }
+    }),
+    popperRoot: ({theme}: any) => ({
+      '& .SCVoteButton-reaction .MuiIcon-root': {
+        fontSize: '22px'
       }
     })
   }

@@ -1,5 +1,13 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {SCCategoryType, SCFeedTypologyType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
+import {
+  SCCategoryType,
+  SCEventType,
+  SCFeedTypologyType,
+  SCGroupType,
+  SCMediaType,
+  SCPollType,
+  SCTagType,
+} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
@@ -52,6 +60,7 @@ export interface InlineComposerWidgetProps extends Omit<WidgetProps, 'defaultVal
     title?: string;
     text?: string;
     categories?: SCCategoryType[];
+    event?: SCEventType;
     group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];

@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.2...@selfcommunity/types@0.6.0-alpha.3) (2024-10-02)
+
+
+### Bug Fixes
+
+* preference names ([4cd53e3](https://github.com/selfcommunity/community-js/commit/4cd53e3ecc876db37d0c5d531372c5b246f133b5))
+
+
+
+
+
+# [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.1...@selfcommunity/types@0.6.0-alpha.2) (2024-10-01)
+
+
+### Bug Fixes
+
+* events location filter ([113ad70](https://github.com/selfcommunity/community-js/commit/113ad702f22fdced6c983ecba88e32568da9ac6d))
+* events location filter ([3016f56](https://github.com/selfcommunity/community-js/commit/3016f5610a3f55e586f4d53e84d6abf6be58ac8a))
+
+
+
+
+
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.6.0-alpha.0...@selfcommunity/types@0.6.0-alpha.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* groupsEnalbed/eventsEnabled ([43db3ae](https://github.com/selfcommunity/community-js/commit/43db3ae802c926976b2bb163f6177438a07908f8))
+
+
+
+
+
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.56-alpha.0...@selfcommunity/types@0.6.0-alpha.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* event templates ([0260c21](https://github.com/selfcommunity/community-js/commit/0260c213500f91ad9b0d83e73a998d143b16a3d5))
+* events bugfix ([7771d5b](https://github.com/selfcommunity/community-js/commit/7771d5b809e7f231eecf3753239aa3cb99dba2ca))
+* fixed onBoardingWidget. Added feed callback to publish generated contents ([3093a2d](https://github.com/selfcommunity/community-js/commit/3093a2df93de11a7c9a7644fe86d880e12c6db5c))
+* fixed some codes ([190feb8](https://github.com/selfcommunity/community-js/commit/190feb8c81f1c4f632266378b29b8ef4a7ae8497))
+* onBoarding widget fixes ([f7af988](https://github.com/selfcommunity/community-js/commit/f7af9888f7e07910d72c75573919da1f1a815175))
+
+
+### Features
+
+* added event feature/preferences. Linear issue: https://linear.app/quentral/issue/QUE-670/aggiunta-della-feature-event-e-delle-preferences ([65c6301](https://github.com/selfcommunity/community-js/commit/65c6301118d30e13bc68d6ac7423fd068730c65f))
+* added event location widget ([4f875cf](https://github.com/selfcommunity/community-js/commit/4f875cf014dc80d92270716dd1c943a88e25cbb4))
+* added event types, endpointes and services. Renamed PubSub SCEvent type to SCGroupEventType ([0d5386d](https://github.com/selfcommunity/community-js/commit/0d5386df04ca6b323bb6b135a8dae150ed507c0f))
+* added events list & skeleton (filters to be added). Linear issues: https://linear.app/quentral/issue/QUE-668/lista-eventi and https://linear.app/quentral/issue/QUE-667/skeleton-event-per-pagina-events. Fixed event form and event obj ([0e5d809](https://github.com/selfcommunity/community-js/commit/0e5d8097b357500b638f7fc36baf8d260b60d5a3))
+* added feedObj event chip. Linear issue: https://linear.app/quentral/issue/QUE-673/header-contenuto-pubblicato-in-un-evento. ([fcbe8ad](https://github.com/selfcommunity/community-js/commit/fcbe8ad41ce2d20ae77b48d3a8f6cc503342fc16))
+* added null type on end_date into SCEventType ([7381e34](https://github.com/selfcommunity/community-js/commit/7381e343d4837c22baa87b36b75c4f566169d8de))
+* added OnBoardingWidget (wip). Updated icon font ([6073e60](https://github.com/selfcommunity/community-js/commit/6073e6086ab4db38ca666d0d68414e649445aa03))
+* added single event obj. ([d056256](https://github.com/selfcommunity/community-js/commit/d0562565de66293b6c7672319542abac49ccc3c8))
+
+
+### Performance Improvements
+
+* added edit button, fixed events event skeleton style ([b1a99e2](https://github.com/selfcommunity/community-js/commit/b1a99e2120c7c76a4b9593d6ffad833d33c65260))
+* added fields to SCEventType ([36766db](https://github.com/selfcommunity/community-js/commit/36766db2913c24bf33d2682bbe057e4d67f9f7f1))
+* added google api to event create form. Fixed url common error translation, exported event services. ([40df569](https://github.com/selfcommunity/community-js/commit/40df569374039769c032b4b81ca4d8dd8329a325))
+
+
+
+
+
+## [0.5.56-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.55...@selfcommunity/types@0.5.56-alpha.0) (2024-08-27)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.5.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.5.55-alpha.1...@selfcommunity/types@0.5.55) (2024-08-07)
 
 **Note:** Version bump only for package @selfcommunity/types

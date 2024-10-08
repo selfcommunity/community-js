@@ -3,6 +3,151 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.9...@selfcommunity/react-core@0.5.0-alpha.10) (2024-10-02)
+
+
+### Bug Fixes
+
+* preference names ([4cd53e3](https://github.com/selfcommunity/community-js/commit/4cd53e3ecc876db37d0c5d531372c5b246f133b5))
+
+
+
+
+
+# [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.8...@selfcommunity/react-core@0.5.0-alpha.9) (2024-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.7...@selfcommunity/react-core@0.5.0-alpha.8) (2024-09-30)
+
+
+### Bug Fixes
+
+* usePageVisibility hook ([c21528c](https://github.com/selfcommunity/community-js/commit/c21528c5003f9d0e200abb4df578b1dca21050ca))
+
+
+
+
+
+# [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.6...@selfcommunity/react-core@0.5.0-alpha.7) (2024-09-30)
+
+
+### Bug Fixes
+
+* navbarback contrast ([e60103c](https://github.com/selfcommunity/community-js/commit/e60103c44487ce2b12c49f9c6a8dc1182acc9ef2))
+
+
+
+
+
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.5...@selfcommunity/react-core@0.5.0-alpha.6) (2024-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.4...@selfcommunity/react-core@0.5.0-alpha.5) (2024-09-27)
+
+
+### Bug Fixes
+
+* usePageVisibility hook ([2721217](https://github.com/selfcommunity/community-js/commit/27212170406a7abbd664eb97389549b9de9ed712))
+
+
+
+
+
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.3...@selfcommunity/react-core@0.5.0-alpha.4) (2024-09-25)
+
+
+### Bug Fixes
+
+* embedly ([fce7987](https://github.com/selfcommunity/community-js/commit/fce798775efcbc9b6e18d7804a893a7d310f7fca))
+* embedly ([ad84326](https://github.com/selfcommunity/community-js/commit/ad843265848f99ad6e2b655424cb41eb5d344d93))
+* groupsEnabled/eventsEnabled ([946ed46](https://github.com/selfcommunity/community-js/commit/946ed4611d5ef14643b27a0914f037f44f82918d))
+* groupsEnalbed/eventsEnabled ([43db3ae](https://github.com/selfcommunity/community-js/commit/43db3ae802c926976b2bb163f6177438a07908f8))
+
+
+
+
+
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.2...@selfcommunity/react-core@0.5.0-alpha.3) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.1...@selfcommunity/react-core@0.5.0-alpha.2) (2024-09-24)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0-alpha.0...@selfcommunity/react-core@0.5.0-alpha.1) (2024-09-23)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.56-alpha.0...@selfcommunity/react-core@0.5.0-alpha.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* bugfix ([2f5a46b](https://github.com/selfcommunity/community-js/commit/2f5a46b82c549431ad5f0233da31875efd2bccd8))
+* bugfix events ([576c641](https://github.com/selfcommunity/community-js/commit/576c641692f69cf279ac01d76a521ff2982cabb4))
+* build for umd modules ([8ca1799](https://github.com/selfcommunity/community-js/commit/8ca17997b20a0ba62dae1fb0e8db072498ed4525))
+* commit after merge ([7062578](https://github.com/selfcommunity/community-js/commit/70625780079337127d8746ea2bfee5901c33335b))
+* event templates ([0260c21](https://github.com/selfcommunity/community-js/commit/0260c213500f91ad9b0d83e73a998d143b16a3d5))
+* Events suggested routes ([f59b400](https://github.com/selfcommunity/community-js/commit/f59b4001af409b69dcb3c44ffa312c60d0196f14))
+* fixed a bug when event is undefined into subscriptionStatus ([6fd16f7](https://github.com/selfcommunity/community-js/commit/6fd16f77cc52e41ef749b218664352627c7222d5))
+* fixed event subscribe button ([79f900b](https://github.com/selfcommunity/community-js/commit/79f900bf3ef2b682191f3284e86eeb60886d35c4))
+* fixed event subscribe button ([99a09ef](https://github.com/selfcommunity/community-js/commit/99a09efa8bf4756e3ba2b271f3bfce69d1a32cdb))
+* fixed EventSubscribeButton ([5cdb1af](https://github.com/selfcommunity/community-js/commit/5cdb1af42c351eb9f5be991d0c2556c1b8dbb030))
+* fixed OnBoardingWidget render condition ([4e7e14c](https://github.com/selfcommunity/community-js/commit/4e7e14c0f68496a7fb5ac8c2e991b564c372dccb))
+* fixed some codes into EventMembersWidget and RelatedEventsWidget ([f317543](https://github.com/selfcommunity/community-js/commit/f317543ec49e4e8bbf35e0bfea44ad57d5ecc05f))
+* fixes ([54963ee](https://github.com/selfcommunity/community-js/commit/54963ee5fbda09b2ae5312d2ba7f9507202917b0))
+* github feature pipeline ([640fb04](https://github.com/selfcommunity/community-js/commit/640fb049397abd2a4cec4254d38f3921cbe507a5))
+* prefrerences provider ([83e8d58](https://github.com/selfcommunity/community-js/commit/83e8d586ff3513416cf442cda310fcf1765c45f0))
+* useSCFetchEvent ([bc1f1e6](https://github.com/selfcommunity/community-js/commit/bc1f1e6e6efd7b5879b5b0d5d9ddba8287ff2395))
+
+
+### Features
+
+* added cancel request for event subscribe button. Linear issue: https://linear.app/quentral/issue/QUE-711/dopo-aver-richiesto-di-partecipare-deve-esserci-anche-la-possibilita ([0a5615b](https://github.com/selfcommunity/community-js/commit/0a5615b711fdc8affd9e6f7867d5c635f2b1753d))
+* added create event button and event form components. Updated icon font. ([8d08748](https://github.com/selfcommunity/community-js/commit/8d087489e6fa813c4c08f1cbf6a2b09456990205))
+* added event feature/preferences. Linear issue: https://linear.app/quentral/issue/QUE-670/aggiunta-della-feature-event-e-delle-preferences ([65c6301](https://github.com/selfcommunity/community-js/commit/65c6301118d30e13bc68d6ac7423fd068730c65f))
+* added event section to composer. Linear issue: https://linear.app/quentral/issue/QUE-709/aggiunta-eventi-nel-composer ([895b953](https://github.com/selfcommunity/community-js/commit/895b953bebe81d3fb324b90b86009ef8dbb5896d))
+* added events routes ([2d9061f](https://github.com/selfcommunity/community-js/commit/2d9061f307392291fd0700d4b8bc81af2768f063))
+* added OnBoardingWidget (wip). Updated icon font ([6073e60](https://github.com/selfcommunity/community-js/commit/6073e6086ab4db38ca666d0d68414e649445aa03))
+* added requests tab on EventsMemberWidget ([09f1420](https://github.com/selfcommunity/community-js/commit/09f1420126bac5f5c75ebdfba7f703fd3378ca2e))
+* added single event obj. ([d056256](https://github.com/selfcommunity/community-js/commit/d0562565de66293b6c7672319542abac49ccc3c8))
+* Added: event header(partial, missing actions menu)/ event subscribe button and subscribe events manager (logic still to test) ([4cd565e](https://github.com/selfcommunity/community-js/commit/4cd565eb3764eee9134e4cc6338fb61f8e4ff790))
+
+
+
+
+
+## [0.4.56-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.55...@selfcommunity/react-core@0.4.56-alpha.0) (2024-08-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [0.4.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.4.55-alpha.1...@selfcommunity/react-core@0.4.55) (2024-08-07)
 
 **Note:** Version bump only for package @selfcommunity/react-core

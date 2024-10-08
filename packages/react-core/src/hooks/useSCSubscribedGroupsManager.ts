@@ -14,6 +14,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {SCNotificationMapping} from '../constants/Notification';
+import {CONFIGURATIONS_GROUPS_ENABLED} from '../constants/Preferences';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import PubSub from 'pubsub-js';
 
@@ -33,9 +34,18 @@ import PubSub from 'pubsub-js';
  */
 export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
-  const {features} = useSCPreferences();
+  const {preferences, features} = useSCPreferences();
   const authUserId = user ? user.id : null;
-  const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
+  const groupsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.GROUPING) &&
+      CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      preferences[CONFIGURATIONS_GROUPS_ENABLED].value,
+    [preferences, features]
+  );
 
   const notificationInvitedToJoinGroup = useRef(null);
   const notificationRequestedToJoinGroup = useRef(null);

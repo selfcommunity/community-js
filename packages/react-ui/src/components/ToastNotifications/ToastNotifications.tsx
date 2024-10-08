@@ -22,6 +22,7 @@ import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
 import {PREFIX} from './constants';
 import GroupNotification from '../Notification/Group';
+import EventNotification from '../Notification/Event/Event';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -128,6 +129,13 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP
       ) {
         content = <GroupNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (
+        type === SCNotificationTypologyType.USER_ADDED_TO_EVENT ||
+        type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT ||
+        type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT ||
+        type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
+      ) {
+        content = <EventNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }
     }
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {

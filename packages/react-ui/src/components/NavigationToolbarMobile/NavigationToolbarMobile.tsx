@@ -1,4 +1,4 @@
-import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import {Badge, BottomNavigationAction, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   Link,
@@ -7,6 +7,7 @@ import {
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
+  UserUtils,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -22,6 +23,7 @@ import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '.
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
 import {SCFeatureName} from '@selfcommunity/types';
+import ComposerIconButton from '../ComposerIconButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -135,7 +137,28 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
   // MEMO
-  const groupsEnabled = useMemo(() => features && features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
+  const groupsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [preferences, features]
+  );
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
+  const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
+  const postOnlyStaffEnabled = preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value;
+  const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // HANDLERS
   const handleOpenSearch = useCallback(() => {
@@ -176,7 +199,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     <Root className={classNames(className, classes.root)} {...rest}>
       {_children}
       {startActions}
-      {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value || scUserContext.user) && !disableSearch && (
+      {(contentAvailable || scUserContext.user) && !disableSearch && (
         <>
           <IconButton className={classes.search} onClick={handleOpenSearch}>
             <Icon>search</Icon>
@@ -189,7 +212,12 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         </>
       )}
       {endActions}
-      {scUserContext.user && groupsEnabled && (
+      {(!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+        groupsEnabled &&
+        eventsEnabled &&
+        (scUserContext.user || contentAvailable) &&
+        exploreStreamEnabled && <ComposerIconButton />}
+      {scUserContext.user && (groupsEnabled || eventsEnabled) && (
         <IconButton className={classes.notifications} component={Link} to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
           <Badge
             badgeContent={scUserContext.user.unseen_notification_banners_counter + scUserContext.user.unseen_interactions_counter}

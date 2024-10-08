@@ -1,3 +1,5 @@
+import {getContrastRatio} from '@mui/material/styles';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -13,13 +15,12 @@ const Component = {
         flexGrow: 1,
         textAlign: 'center',
         alignSelf: 'end',
-        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore, & .SCNavigationToolbar-groups': {
+        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore, & .SCNavigationToolbar-groups, & .SCNavigationToolbar-events': {
           paddingTop: 12,
           paddingLeft: theme.spacing(1),
           paddingRight: theme.spacing(1),
           paddingBottom: 11,
           margin: theme.spacing(0, 1),
-          color: theme.palette.primary.main,
           borderRadius: 0,
           borderBottom: `2px solid transparent`,
           '&.SCNavigationToolbar-active, &:hover': {
@@ -59,8 +60,11 @@ const Component = {
       '& .SCNavigationToolbar-settings': {
         marginLeft: 0
       },
+      '& .SCNavigationToolbar-composer:hover': {
+        color: theme.palette.secondary.main
+      },
       '& .MuiIconButton-root': {
-        color: theme.palette.primary.main
+        color: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.primary.main
       },
       [theme.breakpoints.up(950)]: {
         padding: theme.spacing(0, 2),

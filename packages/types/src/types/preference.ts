@@ -59,7 +59,7 @@ export enum SCPreferenceName {
   POINTS_SOCIAL_SHARE = 'points_social_share',
   POINTS_APP_USED = 'points_app_used',
   POINTS_DAILY_VISIT = 'points_daily_visit',
-  AFFINIDY_ENABLED = 'affinity_enabled',
+  AFFINITY_ENABLED = 'affinity_enabled',
   CLOSED_COMMUNITY = 'closed_community',
   INCUBATOR_ENABLED = 'incubator_enabled',
   INCUBATOR_SUBSCRIBERS = 'incubator_subscribers',
@@ -129,9 +129,14 @@ export enum SCPreferenceName {
   META_ROBOTS = 'meta_robots',
   META_TITLE_HOME_NOT_LOGGED = 'meta_title_home_not_logged',
   META_DESCRIPTION = 'meta_description',
+  GROUPS_ENABLED = 'groups_enabled',
   GROUPS_VISIBILITY_ENABLED = 'groups_visibility_enabled',
   GROUPS_PRIVATE_ENABLED = 'groups_private_enabled',
-  GROUPS_ONLY_STAFF_ENABLED = 'groups_only_staff_enabled'
+  GROUPS_ONLY_STAFF_ENABLED = 'groups_only_staff_enabled',
+  EVENTS_ENABLED = 'events_enabled',
+  EVENTS_VISIBILITY_ENABLED = 'events_visibility_enabled',
+  EVENTS_PRIVATE_ENABLED = 'events_private_enabled',
+  EVENTS_ONLY_STAFF_ENABLED = 'events_only_staff_enabled'
 }
 
 /**
@@ -154,4 +159,12 @@ export interface SCPreferenceType {
    * 	The value of the dynamic preference (can be an integer or a string)
    */
   value: string;
+  /**
+   * 	The type of the dynamic preference
+   */
+  type?: string;
+  /**
+   * 	A description string for the dynamic preference
+   */
+  help?: string;
 }

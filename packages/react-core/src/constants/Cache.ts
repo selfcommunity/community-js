@@ -23,6 +23,14 @@ export const getCategoriesObjectCacheKey = () => `${CATEGORIES_OBJECT_CACHE_PREF
 export const CATEGORY_OBJECT_CACHE_PREFIX_KEY = '_ca_';
 export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** EVENT OBJECT **/
+export const EVENT_OBJECT_CACHE_PREFIX_KEY = '_evt_';
+export const getEventObjectCacheKey = (id) => `${EVENT_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** EVENTS OBJECT **/
+export const EVENTS_OBJECT_CACHE_PREFIX_KEY = '_evts_';
+export const getEventsObjectCacheKey = () => `${EVENTS_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** GROUP OBJECT **/
 export const GROUP_OBJECT_CACHE_PREFIX_KEY = '_grp_';
 export const getGroupObjectCacheKey = (id) => `${GROUP_OBJECT_CACHE_PREFIX_KEY}${id}`;
@@ -81,6 +89,11 @@ export const CATEGORIES_SUGGESTION_TOOLS_STATE_CACHE_PREFIX_KEY = '_cSugWidget_'
 export const CATEGORIES_POPULAR_TOOLS_STATE_CACHE_PREFIX_KEY = '_cPopWidget_';
 export const USER_FOLLOWERS_TOOLS_STATE_CACHE_PREFIX_KEY = '_uFolWidget_';
 export const USER_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_uFoldWidget_';
+export const USER_EVENTS_STATE_CACHE_PREFIX_KEY = '_uEvents_';
+export const USER_OTHER_EVENTS_STATE_CACHE_PREFIX_KEY = '_uOtherEvents_';
+export const USER_PARTECIPANTS_EVENTS_STATE_CACHE_PREFIX_KEY = '_uPartecipantsEvents_';
+export const USER_INVITED_EVENTS_STATE_CACHE_PREFIX_KEY = '_uInvitedEvents_';
+export const USER_REQUESTS_EVENTS_STATE_CACHE_PREFIX_KEY = '_uRequestsEvents_';
 export const USER_CONNECTIONS_TOOLS_STATE_CACHE_PREFIX_KEY = '_uConWidget_';
 export const USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY = '_uConReqWidget_';
 export const USER_CONNECTIONS_REQUESTS_SENT_TOOLS_STATE_CACHE_PREFIX_KEY = '_uConReqSentWidget_';

@@ -2,6 +2,7 @@ import * as Locale from '../constants/Locale';
 import {isFunc, isObject, isString, isValidUrl, Logger} from '@selfcommunity/utils';
 import * as Session from '../constants/Session';
 import {
+  SCGeocodingType,
   SCIntegrationsOpenAIType,
   SCIntegrationsType,
   SCNotificationsMobileNativePushMessagingType,
@@ -24,6 +25,7 @@ import * as Preferences from '../constants/Preferences';
 import * as Features from '../constants/Features';
 import * as Vote from '../constants/Vote';
 import * as Integrations from '../constants/Integrations';
+import {INTEGRATIONS_GEOCODING_APIKEY_OPTION, INTEGRATIONS_GEOCODING_OPTION} from '../constants/Integrations';
 
 /**
  * Validate session option
@@ -686,6 +688,31 @@ export const validateOpenAI = (v) => {
 };
 
 /**
+ * Validate Geocoding Option
+ * @param v
+ */
+export const validateGeocoding = (v) => {
+  //console.log(v);
+  const errors = [];
+  const warnings = [];
+  if (v && !isObject(v)) {
+    errors.push(ValidationError.ERROR_INVALID_INTEGRATIONS_GEOCODING);
+    return {errors, warnings, v};
+  }
+  const _options = Object.keys(integrationsGeocodingOptions);
+  const value: SCGeocodingType = Object.keys(v)
+    .filter((key) => _options.includes(key))
+    .reduce((obj, key) => {
+      const res = integrationsGeocodingOptions[key].validator(v[key], v);
+      res.errors.map((error) => errors.push(error));
+      res.warnings.map((warning) => warnings.push(warning));
+      obj[key] = res.value;
+      return obj;
+    }, {} as SCGeocodingType);
+  return {errors, warnings, value};
+};
+
+/**
  * Validate OpenAI secret key option
  * @param value
  * @return {}
@@ -695,6 +722,20 @@ export const validateOpenAISecretKey = (value) => {
   const warnings = [];
   if (!value || !isString(value)) {
     errors.push(ValidationError.ERROR_INVALID_INTEGRATIONS_OPENAI_SECRETKEY);
+  }
+  return {errors, warnings, value};
+};
+
+/**
+ * Validate Geocoding api key option
+ * @param value
+ * @return {}
+ */
+export const validateGeocodingApiKey = (value) => {
+  const errors = [];
+  const warnings = [];
+  if (!value || !isString(value)) {
+    errors.push(ValidationError.ERROR_INVALID_INTEGRATIONS_GEOCODING_APIKEY);
   }
   return {errors, warnings, value};
 };
@@ -834,6 +875,14 @@ const IntegrationOpenAISecretKeyOption = {
   name: Integrations.INTEGRATIONS_OPENAI_SECRETKEY_OPTION,
   validator: validateOpenAISecretKey,
 };
+const IntegrationGeocodingOption = {
+  name: Integrations.INTEGRATIONS_GEOCODING_OPTION,
+  validator: validateGeocoding,
+};
+const IntegrationGeocodingApiKeyOption = {
+  name: Integrations.INTEGRATIONS_GEOCODING_APIKEY_OPTION,
+  validator: validateGeocodingApiKey,
+};
 
 /**
  * Valid options
@@ -889,9 +938,13 @@ export const voteOptions: Record<string, any> = {
 };
 export const integrationsOptions: Record<string, any> = {
   [IntegrationOpenAIOption.name]: IntegrationOpenAIOption,
+  [IntegrationGeocodingOption.name]: IntegrationGeocodingOption,
 };
 export const integrationsOpenAIOptions: Record<string, any> = {
   [IntegrationOpenAISecretKeyOption.name]: IntegrationOpenAISecretKeyOption,
+};
+export const integrationsGeocodingOptions: Record<string, any> = {
+  [IntegrationGeocodingApiKeyOption.name]: IntegrationGeocodingApiKeyOption,
 };
 
 export const validOptions = {

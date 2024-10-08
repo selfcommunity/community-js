@@ -1,5 +1,14 @@
 import React, {ReactNode} from 'react';
-import {SCAuthTokenType, SCIncubatorType, SCCategoryType, SCUserType, SCUserSettingsType, SCReactionType, SCGroupType} from '@selfcommunity/types';
+import {
+  SCAuthTokenType,
+  SCIncubatorType,
+  SCCategoryType,
+  SCUserType,
+  SCUserSettingsType,
+  SCReactionType,
+  SCGroupType,
+  SCEventType,
+} from '@selfcommunity/types';
 import {SCThemeType} from './theme';
 
 /**
@@ -45,6 +54,11 @@ export interface SCSettingsType {
    * Object conf of notification.
    */
   notifications?: SCNotificationsType;
+
+  /**
+   * Integrations conf
+   */
+  integrations?: SCIntegrationsType;
 
   /**
    * Callback to handle anonymous action
@@ -169,6 +183,7 @@ export interface SCUserContextType {
     incubators?: SCSubscribedIncubatorsManagerType;
     blockedUsers?: SCBlockedUsersManagerType;
     groups?: SCSubscribedGroupsManagerType;
+    events?: SCSubscribedEventsManagerType;
   };
 }
 
@@ -296,6 +311,53 @@ export interface SCFollowedCategoriesManagerType {
 
   /**
    * Empty cache to revalidate all categories
+   */
+  emptyCache?: () => void;
+}
+
+export interface SCSubscribedEventsManagerType {
+  /**
+   * List of all events ids followed by the authenticated user
+   */
+  events: number[];
+
+  /**
+   * List of all events in loading state
+   */
+  loading: number[];
+
+  /**
+   * List of current events in loading state
+   */
+  isLoading: (event: SCEventType) => boolean;
+
+  /**
+   * Handle user subscription to an event
+   */
+  subscribe?: (event: SCEventType, userId?: number) => Promise<any>;
+
+  /**
+   * Handle user going to an event
+   */
+  toggleEventAttendance?: (event: SCEventType, userId?: number) => Promise<any>;
+
+  /**
+   * Handle user not going to an event
+   */
+  toggleEventNonattendance?: (event: SCEventType, userId?: number) => Promise<any>;
+
+  /**
+   * Handles a user subscription status to an event, caching data
+   */
+  subscriptionStatus?: (event: SCEventType) => string;
+
+  /**
+   * Refresh groups
+   */
+  refresh?: () => void;
+
+  /**
+   * Empty cache to revalidate all groups
    */
   emptyCache?: () => void;
 }
@@ -535,6 +597,21 @@ export interface SCPreferencesContextType {
    * List of all community enabled features
    */
   features: string[];
+
+  /**
+   * Set prefrerences
+   */
+  setPreferences: (preferences: Record<string, any>) => void;
+
+  /**
+   * Set features
+   */
+  setFeatures: (features: string[]) => void;
+
+  /**
+   * Force refresh
+   */
+  refresh: () => void;
 }
 
 /**
@@ -744,10 +821,14 @@ export interface SCIntegrationsType {
    * OpenAI
    */
   openai?: SCIntegrationsOpenAIType;
+  /**
+   * Geocoding
+   */
+  geocoding?: SCGeocodingType;
 }
 
 /**
- * Interface SCNotificationsWebSocketType
+ * Interface SCIntegrationsOpenAIType
  */
 export interface SCIntegrationsOpenAIType {
   /**
@@ -755,4 +836,15 @@ export interface SCIntegrationsOpenAIType {
    * Default: null
    */
   secretKey: string | null;
+}
+
+/**
+ * Interface SCGeocodingType
+ */
+export interface SCGeocodingType {
+  /**
+   * Set secretKey geocoding service
+   * Default: null
+   */
+  apiKey: string | null;
 }

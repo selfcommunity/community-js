@@ -14,8 +14,8 @@ import {
   useSCFetchFeed
 } from '@selfcommunity/react-core';
 import {styled, useTheme} from '@mui/material/styles';
-import {Box, CardContent, Grid, Hidden, Theme, useMediaQuery} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
+import {Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
 import CustomAdv, {CustomAdvProps} from '../CustomAdv';
@@ -37,11 +37,19 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
 import {PREFIX} from './constants';
 
+const messages = defineMessages({
+  refresh: {
+    id: 'ui.feed.refreshRelease',
+    defaultMessage: 'ui.feed.refreshRelease'
+  }
+});
+
 const classes = {
   root: `${PREFIX}-root`,
   left: `${PREFIX}-left`,
   leftItems: `${PREFIX}-left-items`,
   start: `${PREFIX}-start`,
+  headerItem: `${PREFIX}-header-item`,
   end: `${PREFIX}-end`,
   endMessage: `${PREFIX}-end-message`,
   right: `${PREFIX}-right`,
@@ -65,6 +73,7 @@ export type FeedSidebarProps = StickyBoxProps;
 export type FeedRef = {
   addFeedData: (obj: any, syncPagination?: boolean) => void;
   refresh: () => void;
+  getCurrentFeedObjectIds: () => number[];
 };
 
 export interface FeedProps {
@@ -293,13 +302,15 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     props: inProps,
     name: PREFIX
   });
+  // HOOKS
+  const intl = useIntl();
   const {
     id = 'feed',
     className,
     endpoint,
     endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
     endMessage = <FormattedMessage id="ui.feed.noOtherFeedObject" defaultMessage="ui.feed.noOtherFeedObject" />,
-    refreshMessage = <FormattedMessage id="ui.feed.refreshRelease" defaultMessage="ui.feed.refreshRelease" />,
+    refreshMessage = <Typography dangerouslySetInnerHTML={{__html: `${intl.formatMessage(messages.refresh)}`}} />,
     HeaderComponent,
     FooterComponent = Footer,
     FooterComponentProps = {},
@@ -591,7 +602,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             {headData.map((item) => {
               const _itemId = `item_${itemIdGenerator(item)}`;
               return (
-                <ItemComponent id={_itemId} key={_itemId} {...itemPropsGenerator(scUserContext.user, item)} {...ItemProps} sx={{width: '100%'}} />
+                <ItemComponent
+                  className={classes.headerItem}
+                  id={_itemId}
+                  key={_itemId}
+                  {...itemPropsGenerator(scUserContext.user, item)}
+                  {...ItemProps}
+                  sx={{width: '100%'}}
+                />
               );
             })}
           </>
@@ -743,6 +761,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
     },
     refresh: () => {
       refresh();
+    },
+    getCurrentFeedObjectIds: () => {
+      return [...headData.map((o: SCFeedUnitType) => o[o.type].id), ...feedDataObject.results.map((o: SCFeedUnitType) => o[o.type].id)];
     }
   }));
 
@@ -829,9 +850,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           pullDownToRefreshThreshold={1000}
           pullDownToRefreshContent={null}
           releaseToRefreshContent={
-            <Widget variant="outlined" className={classes.refresh}>
-              <CardContent>{refreshMessage}</CardContent>
-            </Widget>
+            <Button color="secondary" variant="contained" className={classes.refresh}>
+              {refreshMessage}
+            </Button>
           }
           style={{overflow: 'visible'}}
           {...(scrollableTargetId && {scrollableTarget: scrollableTargetId})}>

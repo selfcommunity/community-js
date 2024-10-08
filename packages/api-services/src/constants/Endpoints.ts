@@ -66,6 +66,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/dynamic_preference/$(id)/'),
     method: 'GET'
   },
+  UpdatePreferences: {
+    url: urlReplacer('/api/v2/dynamic_preference/'),
+    method: 'PATCH'
+  },
   /**
    * SSO Endpoints
    */
@@ -590,6 +594,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   UserSuggestion: {
     url: urlReplacer('/api/v2/suggestion/user/'),
+    method: 'GET'
+  },
+  EventSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/event/'),
     method: 'GET'
   },
   SearchSuggestion: {
@@ -1170,6 +1178,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/group/$(id)/'),
     method: 'PATCH'
   },
+  DeleteGroup: {
+    url: urlReplacer('/api/v2/group/$(id)/'),
+    method: 'DELETE'
+  },
   GetGroupSuggestedUsers: {
     url: urlReplacer('/api/v2/group/$(id)/user/?search=$(search)'),
     method: 'GET'
@@ -1213,6 +1225,144 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetUserSubscribedGroups: {
     url: urlReplacer('/api/v2/user/$(id)/groups/'),
     method: 'GET'
+  },
+  /**
+   * Events
+   */
+  GetUserEvents: {
+    url: urlReplacer('/api/v2/event/'),
+    method: 'GET'
+  },
+  GetEventInfo: {
+    url: urlReplacer('/api/v2/event/$(id)/'),
+    method: 'GET'
+  },
+  GetEventFeed: {
+    url: urlReplacer('/api/v2/event/$(id)/feed/'),
+    method: 'GET'
+  },
+  SearchEvents: {
+    url: urlReplacer('/api/v2/event/search/'),
+    method: 'GET'
+  },
+  CreateEvent: {
+    url: urlReplacer('/api/v2/event/'),
+    method: 'POST'
+  },
+  UpdateEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/'),
+    method: 'PUT'
+  },
+  DeleteEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/'),
+    method: 'DELETE'
+  },
+  PatchEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/'),
+    method: 'PATCH'
+  },
+  GetEventSuggestedUsers: {
+    url: urlReplacer('/api/v2/event/$(id)/user/?search=$(search)'),
+    method: 'GET'
+  },
+  GetUsersGoingToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/going/'),
+    method: 'GET'
+  },
+  GetUsersNotGoingToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/not_going/'),
+    method: 'GET'
+  },
+  GoToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/going/'),
+    method: 'POST'
+  },
+  RemoveGoingToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/going/'),
+    method: 'DELETE'
+  },
+  NotGoingToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/not_going/'),
+    method: 'POST'
+  },
+  RemoveNotGoingToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/not_going/'),
+    method: 'DELETE'
+  },
+  GetEventsSuggestedUsers: {
+    url: urlReplacer('/api/v2/event/user/?search=$(search)'),
+    method: 'GET'
+  },
+  InviteOrAcceptEventRequest: {
+    url: urlReplacer('/api/v2/event/$(id)/invite/'),
+    method: 'POST'
+  },
+  RemoveInviteEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/invite/'),
+    method: 'DELETE'
+  },
+  GetEventInvitedUsers: {
+    url: urlReplacer('/api/v2/event/$(id)/invite/'),
+    method: 'GET'
+  },
+  GetEventSubscriptionStatus: {
+    url: urlReplacer('/api/v2/event/$(id)/status/'),
+    method: 'GET'
+  },
+  SubscribeToEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/subscribe/'),
+    method: 'POST'
+  },
+  GetEventSubscribers: {
+    url: urlReplacer('/api/v2/event/$(id)/subscribe/'),
+    method: 'GET'
+  },
+  GetEventWaitingApprovalSubscribers: {
+    url: urlReplacer('/api/v2/event/$(id)/request_subscribe/'),
+    method: 'GET'
+  },
+  UnsubscribeFromEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/subscribe/'),
+    method: 'DELETE'
+  },
+  GetUserSubscribedEvents: {
+    url: urlReplacer('/api/v2/user/$(id)/events/'),
+    method: 'GET'
+  },
+  GetEventRelated: {
+    url: urlReplacer('/api/v2/event/$(id)/related/'),
+    method: 'GET'
+  },
+  GetUserCreatedEvents: {
+    url: urlReplacer('/api/v2/event/created/'),
+    method: 'GET'
+  },
+  ShowEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/show/'),
+    method: 'POST'
+  },
+  HideEvent: {
+    url: urlReplacer('/api/v2/event/$(id)/hide/'),
+    method: 'POST'
+  },
+  /**
+   * OnBoarding
+   */
+  GetAllSteps: {
+    url: urlReplacer('/api/v2/onboarding/'),
+    method: 'GET'
+  },
+  GetAStep: {
+    url: urlReplacer('/api/v2/onboarding/$(step)/'),
+    method: 'GET'
+  },
+  StartAStep: {
+    url: urlReplacer('/api/v2/onboarding/$(step)/start/'),
+    method: 'POST'
+  },
+  CompleteAStep: {
+    url: urlReplacer('/api/v2/onboarding/$(step)/complete/'),
+    method: 'POST'
   }
 };
 

@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.3...@selfcommunity/api-services@0.5.0-alpha.4) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.2...@selfcommunity/api-services@0.5.0-alpha.3) (2024-10-01)
+
+
+### Bug Fixes
+
+* event service ([e6bff80](https://github.com/selfcommunity/community-js/commit/e6bff8076ce220cd2d03689c33c17c3f5ababb3a))
+* events location filter ([3016f56](https://github.com/selfcommunity/community-js/commit/3016f5610a3f55e586f4d53e84d6abf6be58ac8a))
+
+
+
+
+
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.1...@selfcommunity/api-services@0.5.0-alpha.2) (2024-09-30)
+
+
+### Bug Fixes
+
+* added group delete. Linear issue: https://linear.app/quentral/issue/QUE-817/il-creatore-di-un-gruppo-non-ha-la-possibilita-di-cancellarlo ([aaf6a16](https://github.com/selfcommunity/community-js/commit/aaf6a16b8ff8d002d68fdd2b4dc97e4371098177))
+
+
+
+
+
+# [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.5.0-alpha.0...@selfcommunity/api-services@0.5.0-alpha.1) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.56-alpha.0...@selfcommunity/api-services@0.5.0-alpha.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* bugfix Info details event ([b41b9d0](https://github.com/selfcommunity/community-js/commit/b41b9d0689753d0090317506c8ffc342d2b271ec))
+* endpoint ([1d86879](https://github.com/selfcommunity/community-js/commit/1d8687914999aba48310ca59f92bab1f52a54bd6))
+* event api services ([4f65bc5](https://github.com/selfcommunity/community-js/commit/4f65bc5afd03caa54eb97af4f1c099b971ef81e6))
+* event api services & events components styles ([2a8b0cb](https://github.com/selfcommunity/community-js/commit/2a8b0cb29f7ac5d3ba33e13d3709398489cc0d26))
+* fixed delete event api, event header action button, events filter visibility. ([e23e058](https://github.com/selfcommunity/community-js/commit/e23e058872dbbe5d8f77542f9ce000d62230b542))
+* github feature pipeline ([640fb04](https://github.com/selfcommunity/community-js/commit/640fb049397abd2a4cec4254d38f3921cbe507a5))
+* MediaEvent ([d1765e9](https://github.com/selfcommunity/community-js/commit/d1765e92b2d488ccb9991d197814e54365f2b07e))
+
+
+### Features
+
+* added event types, endpointes and services. Renamed PubSub SCEvent type to SCGroupEventType ([0d5386d](https://github.com/selfcommunity/community-js/commit/0d5386df04ca6b323bb6b135a8dae150ed507c0f))
+* added events list & skeleton (filters to be added). Linear issues: https://linear.app/quentral/issue/QUE-668/lista-eventi and https://linear.app/quentral/issue/QUE-667/skeleton-event-per-pagina-events. Fixed event form and event obj ([0e5d809](https://github.com/selfcommunity/community-js/commit/0e5d8097b357500b638f7fc36baf8d260b60d5a3))
+* added OnBoardingWidget (wip). Updated icon font ([6073e60](https://github.com/selfcommunity/community-js/commit/6073e6086ab4db38ca666d0d68414e649445aa03))
+
+
+### Performance Improvements
+
+* added google api to event create form. Fixed url common error translation, exported event services. ([40df569](https://github.com/selfcommunity/community-js/commit/40df569374039769c032b4b81ca4d8dd8329a325))
+* finished events component, added api filters. Linear issue: https://linear.app/quentral/issue/QUE-688/aggiungere-filtri-datapersone-che-segui-una-volta-pronte-le-api ([47367d0](https://github.com/selfcommunity/community-js/commit/47367d0ef10de33d5ae0e26e329d0d6d256289cd))
+
+
+
+
+
+## [0.4.56-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.55...@selfcommunity/api-services@0.4.56-alpha.0) (2024-08-27)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.4.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.4.55-alpha.1...@selfcommunity/api-services@0.4.55) (2024-08-07)
 
 **Note:** Version bump only for package @selfcommunity/api-services

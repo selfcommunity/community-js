@@ -1,4 +1,5 @@
 import {alpha} from '@mui/system';
+import {getContrastRatio} from '@mui/material/styles';
 
 const Component = {
   styleOverrides: {
@@ -7,21 +8,28 @@ const Component = {
         padding: theme.spacing(0, 2),
         borderRadius: theme.shape.borderRadius,
         '& .MuiAutocomplete-input': {
-          padding: theme.spacing(0.5, 1)
+          padding: theme.spacing(0.5, 1),
+          color: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.primary.main
         }
       },
       '& .MuiInputBase-root': {
+        '& .MuiIcon-root': {
+          color: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.primary.main
+        },
         '& fieldset': {
-          borderColor: alpha(theme.palette.primary.main, theme.palette.action.disabledOpacity)
+          borderColor: alpha(
+            getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.primary.main,
+            theme.palette.action.disabledOpacity
+          )
         },
         '&:hover fieldset': {
-          borderColor: theme.palette.primary.main
+          borderColor: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.primary.main
         },
         '&.Mui-focused fieldset': {
-          borderColor: theme.palette.secondary.main
+          borderColor: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.secondary.main
         },
         '&.Mui-focused .SCSearchAutocomplete-icon': {
-          color: theme.palette.secondary.main
+          color: getContrastRatio(theme.palette?.navbar?.main, '#fff') > 4.5 ? '#fff' : theme.palette.secondary.main
         }
       }
     })

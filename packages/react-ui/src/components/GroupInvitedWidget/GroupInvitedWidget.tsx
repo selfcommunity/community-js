@@ -30,7 +30,7 @@ import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
 import PubSub from 'pubsub-js';
-import {SCEventType, SCTopicType} from '../../constants/PubSub';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -264,7 +264,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
    */
   useEffect(() => {
     if (scGroup && state.results) {
-      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCEventType.INVITE_MEMBER}`, onChangeGroupHandler);
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCGroupEventType.INVITE_MEMBER}`, onChangeGroupHandler);
     }
     return () => {
       updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);

@@ -3,6 +3,342 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.35...@selfcommunity/react-templates@0.4.0-alpha.36) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.34...@selfcommunity/react-templates@0.4.0-alpha.35) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.33...@selfcommunity/react-templates@0.4.0-alpha.34) (2024-10-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.32...@selfcommunity/react-templates@0.4.0-alpha.33) (2024-10-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.31...@selfcommunity/react-templates@0.4.0-alpha.32) (2024-10-03)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.30...@selfcommunity/react-templates@0.4.0-alpha.31) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.29...@selfcommunity/react-templates@0.4.0-alpha.30) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.28...@selfcommunity/react-templates@0.4.0-alpha.29) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.27...@selfcommunity/react-templates@0.4.0-alpha.28) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.26...@selfcommunity/react-templates@0.4.0-alpha.27) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.25...@selfcommunity/react-templates@0.4.0-alpha.26) (2024-10-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.24...@selfcommunity/react-templates@0.4.0-alpha.25) (2024-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.23...@selfcommunity/react-templates@0.4.0-alpha.24) (2024-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.22...@selfcommunity/react-templates@0.4.0-alpha.23) (2024-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.21...@selfcommunity/react-templates@0.4.0-alpha.22) (2024-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.20...@selfcommunity/react-templates@0.4.0-alpha.21) (2024-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.19...@selfcommunity/react-templates@0.4.0-alpha.20) (2024-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.18...@selfcommunity/react-templates@0.4.0-alpha.19) (2024-09-30)
+
+
+### Bug Fixes
+
+* added group delete. Linear issue: https://linear.app/quentral/issue/QUE-817/il-creatore-di-un-gruppo-non-ha-la-possibilita-di-cancellarlo ([aaf6a16](https://github.com/selfcommunity/community-js/commit/aaf6a16b8ff8d002d68fdd2b4dc97e4371098177))
+
+
+
+
+
+# [0.4.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.17...@selfcommunity/react-templates@0.4.0-alpha.18) (2024-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.16...@selfcommunity/react-templates@0.4.0-alpha.17) (2024-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.15...@selfcommunity/react-templates@0.4.0-alpha.16) (2024-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.14...@selfcommunity/react-templates@0.4.0-alpha.15) (2024-09-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.13...@selfcommunity/react-templates@0.4.0-alpha.14) (2024-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.12...@selfcommunity/react-templates@0.4.0-alpha.13) (2024-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.11...@selfcommunity/react-templates@0.4.0-alpha.12) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.10...@selfcommunity/react-templates@0.4.0-alpha.11) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.9...@selfcommunity/react-templates@0.4.0-alpha.10) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.8...@selfcommunity/react-templates@0.4.0-alpha.9) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.7...@selfcommunity/react-templates@0.4.0-alpha.8) (2024-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.6...@selfcommunity/react-templates@0.4.0-alpha.7) (2024-09-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.5...@selfcommunity/react-templates@0.4.0-alpha.6) (2024-09-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.4...@selfcommunity/react-templates@0.4.0-alpha.5) (2024-09-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.3...@selfcommunity/react-templates@0.4.0-alpha.4) (2024-09-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.2...@selfcommunity/react-templates@0.4.0-alpha.3) (2024-09-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.1...@selfcommunity/react-templates@0.4.0-alpha.2) (2024-09-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.0-alpha.0...@selfcommunity/react-templates@0.4.0-alpha.1) (2024-09-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.56-alpha.0...@selfcommunity/react-templates@0.4.0-alpha.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* bugfix events ([581d7d5](https://github.com/selfcommunity/community-js/commit/581d7d5005c1f81b7b5d1737bc6fa0a885c5bf78))
+* build for umd modules ([8ca1799](https://github.com/selfcommunity/community-js/commit/8ca17997b20a0ba62dae1fb0e8db072498ed4525))
+* Event component ([c122dfe](https://github.com/selfcommunity/community-js/commit/c122dfee23eee76ce950b246cdd2de5fd0702c82))
+* Event component ([4f51bb7](https://github.com/selfcommunity/community-js/commit/4f51bb7b396a75260d65cb9cf20628f75be98446))
+* event templates ([2c0c227](https://github.com/selfcommunity/community-js/commit/2c0c227d555b3b545910324109d9793368a409a0))
+* event templates ([dc121c5](https://github.com/selfcommunity/community-js/commit/dc121c57d721c00244ab03e7085067371f82dd67))
+* event templates ([4d55712](https://github.com/selfcommunity/community-js/commit/4d5571228b4667eee33c0b11f712975f87d7cfda))
+* event templates ([0260c21](https://github.com/selfcommunity/community-js/commit/0260c213500f91ad9b0d83e73a998d143b16a3d5))
+* events bugfix ([7771d5b](https://github.com/selfcommunity/community-js/commit/7771d5b809e7f231eecf3753239aa3cb99dba2ca))
+* Events component ([ae6bd6a](https://github.com/selfcommunity/community-js/commit/ae6bd6adc077c3a6dc45bdb05b0f5783452e98ee))
+* fixed delete event api, event header action button, events filter visibility. ([e23e058](https://github.com/selfcommunity/community-js/commit/e23e058872dbbe5d8f77542f9ce000d62230b542))
+* fixed event subscribe button ([79f900b](https://github.com/selfcommunity/community-js/commit/79f900bf3ef2b682191f3284e86eeb60886d35c4))
+* fixed event subscribe button ([99a09ef](https://github.com/selfcommunity/community-js/commit/99a09efa8bf4756e3ba2b271f3bfce69d1a32cdb))
+* fixed onBoardingWidget. Added feed callback to publish generated contents ([3093a2d](https://github.com/selfcommunity/community-js/commit/3093a2df93de11a7c9a7644fe86d880e12c6db5c))
+* github feature pipeline ([640fb04](https://github.com/selfcommunity/community-js/commit/640fb049397abd2a4cec4254d38f3921cbe507a5))
+* MediaEvent ([0e97af8](https://github.com/selfcommunity/community-js/commit/0e97af81a9f6741f51068d96150649c88dce2baa))
+* onBoarding component ([c7fa9e5](https://github.com/selfcommunity/community-js/commit/c7fa9e561335f90290fa1a100ef4b9f6de805098))
+* OnBoardingWidget bugfix + perf style ([95032f6](https://github.com/selfcommunity/community-js/commit/95032f69c8b0c6a7f961646b9494c1395c89dc89))
+* prefrerences provider ([2dfc4f4](https://github.com/selfcommunity/community-js/commit/2dfc4f4ad09148cc7cd66f61426183a088fd483e))
+* prefrerences provider ([83e8d58](https://github.com/selfcommunity/community-js/commit/83e8d586ff3513416cf442cda310fcf1765c45f0))
+* remove console log EventFeed ([f453ca4](https://github.com/selfcommunity/community-js/commit/f453ca43afe886039c2731ecd3f48c3091e2b407))
+
+
+### Features
+
+* added cancel request for event subscribe button. Linear issue: https://linear.app/quentral/issue/QUE-711/dopo-aver-richiesto-di-partecipare-deve-esserci-anche-la-possibilita ([0a5615b](https://github.com/selfcommunity/community-js/commit/0a5615b711fdc8affd9e6f7867d5c635f2b1753d))
+* added event section to composer. Linear issue: https://linear.app/quentral/issue/QUE-709/aggiunta-eventi-nel-composer ([895b953](https://github.com/selfcommunity/community-js/commit/895b953bebe81d3fb324b90b86009ef8dbb5896d))
+
+
+
+
+
+## [0.3.56-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.55...@selfcommunity/react-templates@0.3.56-alpha.0) (2024-08-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.3.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.3.55-alpha.1...@selfcommunity/react-templates@0.3.55) (2024-08-07)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

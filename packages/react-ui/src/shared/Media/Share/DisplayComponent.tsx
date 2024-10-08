@@ -1,14 +1,17 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import FeedObject from '../../../components/FeedObject';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import {CacheStrategies} from '@selfcommunity/utils';
-import { SCMediaType } from '@selfcommunity/types/src/types';
+import {SCEventType, SCMediaType} from '@selfcommunity/types/src/types';
 import classNames from 'classnames';
-import { BoxProps } from '@mui/material';
+import {BoxProps} from '@mui/material';
 import filter from './filter';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
+import {MEDIA_EMBED_SC_SHARED_EVENT, MEDIA_TYPE_EVENT} from '../../../constants/Media';
+import {SCEventTemplateType} from '../../../types/event';
+import Event from '../../../components/Event';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
@@ -40,9 +43,20 @@ export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayC
   }
 
   return (
-      <Root className={classNames(className, classes.displayRoot)} {...rest}>
-        {_medias.map((media, i) => (
-          <Box className={classes.sharePreview} key={i} onClick={onMediaClick}>
+    <Root className={classNames(className, classes.displayRoot)} {...rest}>
+      {_medias.map((media, i) => (
+        <Box className={classes.sharePreview} key={i} onClick={onMediaClick}>
+          {media.type === MEDIA_TYPE_EVENT || (media.embed && media.embed.embed_type === MEDIA_EMBED_SC_SHARED_EVENT) ? (
+            <Event
+              event={media.embed.metadata as SCEventType}
+              template={SCEventTemplateType.DETAIL}
+              variant="outlined"
+              square={true}
+              hideEventParticipants
+              hideEventPlanner
+              actions={<></>}
+            />
+          ) : (
             <FeedObject
               feedObjectId={media.embed.metadata.id}
               feedObjectType={media.embed.metadata.type}
@@ -50,8 +64,9 @@ export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayC
               template={SCFeedObjectTemplateType.SHARE}
               cacheStrategy={CacheStrategies.CACHE_FIRST}
             />
-          </Box>
-        ))}
-      </Root>
-  )
+          )}
+        </Box>
+      ))}
+    </Root>
+  );
 };

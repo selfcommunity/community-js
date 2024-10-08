@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import {Button, CardContent, ListItem, Typography} from '@mui/material';
 import {GroupService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
-import {SCCache, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCCache, SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {SCFeatureName, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -126,9 +126,17 @@ export default function UserSubscribedGroupsWidget(inProps: UserSubscribedGroups
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const isMe = useMemo(() => scUserContext.user && userId === scUserContext.user.id, [scUserContext.user, userId]);
-  const {features}: SCPreferencesContextType = useSCPreferences();
-  const groupsEnabled = useMemo(() => features.includes(SCFeatureName.GROUPING) && features.includes(SCFeatureName.TAGGING), [features]);
-
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const groupsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [preferences, features]
+  );
   // STATE
   const [state, dispatch] = useReducer(
     dataWidgetReducer,
