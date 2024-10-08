@@ -79,7 +79,8 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
     [scEvent]
   );
   const location = useMemo(
-    () => (scEvent && scEvent.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson'),
+    () =>
+      scEvent && scEvent.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson',
     [scEvent]
   );
 
@@ -104,13 +105,19 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
                 id="ui.eventInfoDetails.date.startEndTime"
                 defaultMessage="ui.eventInfoDetails.date.startEndTime"
                 values={{
-                  date: intl.formatDate(scEvent.running ? scEvent.running_start_date : scEvent.next_start_date, {
-                    weekday: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    month: 'long'
-                  }),
-                  start: intl.formatDate(scEvent.running ? scEvent.running_start_date : scEvent.next_start_date, {hour: 'numeric', minute: 'numeric'})
+                  date: intl.formatDate(
+                    scEvent.running ? scEvent.running_start_date : scEvent.next_start_date ? scEvent.next_start_date : scEvent.start_date,
+                    {
+                      weekday: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                      month: 'long'
+                    }
+                  ),
+                  start: intl.formatDate(
+                    scEvent.running ? scEvent.running_start_date : scEvent.next_start_date ? scEvent.next_start_date : scEvent.start_date,
+                    {hour: 'numeric', minute: 'numeric'}
+                  )
                 }}
               />
             </Typography>
