@@ -45,7 +45,8 @@ const Component = {
         },
         ['& .PhotoView__Photo']: {
           cursor: 'grab',
-          maxWidth: 'none'
+          maxWidth: 'none',
+          WebkitUserDrag: 'none'
         },
         ['& .PhotoView__Photo:active']: {
           cursor: 'grabbing',
@@ -163,9 +164,9 @@ const Component = {
           position: 'absolute',
           top: 0,
           transition: 'opacity .2s linear',
-          'WebkitUserSelect': 'none',
-          'MozUserSelect': 'none',
-          'MsUserSelect': 'none',
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          MsUserSelect: 'none',
           userSelect: 'none',
           width: 70,
           zIndex: 20,
@@ -194,9 +195,9 @@ const Component = {
           position: 'absolute',
           top: 0,
           transition: 'opacity .2s linear',
-          'WebkitUserSelect': 'none',
-          'MozUserSelect': 'none',
-          'MsUserSelect': 'none',
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          MsUserSelect: 'none',
           userSelect: 'none',
           width: 70,
           zIndex: 20,
