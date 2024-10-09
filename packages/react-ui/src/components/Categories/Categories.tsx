@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Grid, TextField, Typography} from '@mui/material';
 import {CategoryService, Endpoints} from '@selfcommunity/api-services';
@@ -21,6 +21,8 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {PREFIX} from './constants';
+import PubSub from 'pubsub-js';
+import {SCCategoryEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -162,6 +164,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();
+  const updatesSubscription = useRef(null);
 
   /**
    * Fetches categories list
@@ -193,6 +196,30 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
         });
     }
   }, [contentAvailability, authUserId, prefetchedCategories.length]);
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onEditCategoryHandler = useCallback(
+    (_msg: string, edited: SCCategoryType) => {
+      setCategories((prev) => {
+        return prev.map((c) => (c.id === edited.id ? {...c, ...edited} : c));
+      });
+    },
+    [categories]
+  );
+
+  /**
+   * On mount, subscribe to receive event updates (only edit)
+   */
+  useEffect(() => {
+    if (categories) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.CATEGORY}.${SCCategoryEventType.EDIT}`, onEditCategoryHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [categories]);
 
   /**
    * Get categories filtered
