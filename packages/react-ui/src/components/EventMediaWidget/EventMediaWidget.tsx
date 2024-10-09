@@ -15,10 +15,10 @@ import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import Lightbox from '../../shared/Media/File/Lightbox';
 import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
 import Widget, { WidgetProps } from '../Widget';
 import { PREFIX } from './constants';
+import Lightbox from './Lightbox';
 import SkeletonComponent from './Skeleton';
 import TriggerButton from './TriggerButton';
 
