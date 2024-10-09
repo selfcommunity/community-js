@@ -1,5 +1,5 @@
 import { LoadingButton, LoadingButtonProps } from '@mui/lab';
-import { ListItemButton, ListItemButtonProps } from '@mui/material';
+import { Stack, StackProps, Typography } from '@mui/material';
 import Icon from '@mui/material/Icon';
 import { styled } from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -17,19 +17,17 @@ import { PREFIX } from './constants';
 
 const classes = {
   triggerRoot: `${PREFIX}-trigger-root`,
-  triggerDrawerRoot: `${PREFIX}-trigger-drawer-root`,
-  triggerMenuRoot: `${PREFIX}-trigger-menu-root`,
-  paper: `${PREFIX}-paper`,
-  item: `${PREFIX}-item`
+  stack: `${PREFIX}-stack`
 };
 
 const Root = styled(LoadingButton, {
   name: PREFIX,
-  slot: 'TriggerRoot'
+  slot: 'TriggerRoot',
+  overridesResolver: (_props, styles) => styles.triggerRoot
 })(() => ({}));
 
-const GalleryUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: ForwardedRef<HTMLDivElement>) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+const GalleryUploadStack = asUploadButton(
+  forwardRef((props: StackProps, ref: ForwardedRef<HTMLDivElement>) => <Stack {...props} aria-label="upload" ref={ref} />),
   { accept: 'image/*' }
 );
 
@@ -55,17 +53,14 @@ export default function TriggerButton(props: TriggerIconButtonProps) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleFilterByMime = useCallback((file: File) => {
-    console.log('*** file ***', file);
     return file.type.startsWith('image/');
   }, []);
 
   const handleSuccess = useCallback((media: SCMediaType) => {
-    console.log('*** media ***', media);
     onAdd?.(media);
   }, []);
 
   const handleProgress = useCallback((chunks: SCMediaChunkType) => {
-    console.log('*** chunks ***', chunks);
     setIsUploading(Object.keys(chunks).length > 0);
   }, []);
 
@@ -93,12 +88,14 @@ export default function TriggerButton(props: TriggerIconButtonProps) {
       }}
       fileFilter={handleFilterByMime}
       chunkSize={204800}>
-      <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
+      <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} type="image" />
       <Root className={classNames(className, classes.triggerRoot)} {...rest} aria-label="add media" loading={isUploading}>
-        <GalleryUploadListItemButton>
-          <FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />
+        <GalleryUploadStack className={classes.stack}>
+          <Typography variant="caption" component="p">
+            <FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />
+          </Typography>
           <Icon fontSize="inherit">add</Icon>
-        </GalleryUploadListItemButton>
+        </GalleryUploadStack>
       </Root>
     </ChunkedUploady>
   );

@@ -1,17 +1,18 @@
 import { LoadingButton } from '@mui/lab';
-import { Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Typography } from '@mui/material';
+import { Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box, useThemeProps } from '@mui/system';
 import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCCache, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
+import { SCCache, SCThemeType, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
 import { SCEventType, SCMediaType } from '@selfcommunity/types';
 import { CacheStrategies, Logger } from '@selfcommunity/utils';
 import { AxiosResponse } from 'axios';
-import { ChangeEvent, Fragment, useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
 import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import Lightbox from '../../shared/Media/File/Lightbox';
@@ -35,6 +36,10 @@ const classes = {
   header: `${PREFIX}-header`,
   input: `${PREFIX}-input`,
   grid: `${PREFIX}-grid`,
+  cover: `${PREFIX}-cover`,
+  background: `${PREFIX}-background`,
+  countWrapper: `${PREFIX}-count-wrapper`,
+  count: `${PREFIX}-count`,
   content: `${PREFIX}-content`,
   actions: `${PREFIX}-actions`,
   dialogRoot: `${PREFIX}-dialog-root`,
@@ -132,12 +137,12 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     stateWidgetInitializer
   );
   const [medias, setMedias] = useState<SCMediaType[]>([]);
+  const [mediasCount, setMediasCount] = useState<number>(0);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openDialogConfirm, setOpenDialogConfirm] = useState<boolean>(false);
   const [mediaId, setMediaId] = useState<number | null>(null);
   const [preview, setPreview] = useState<number>(-1);
-
-  // REFS
-  const input = useRef<HTMLInputElement | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -145,6 +150,8 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   // HOOKS
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
   const intl = useIntl();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
@@ -160,6 +167,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
         .then((payload: SCPaginatedResponse<SCMediaType>) => {
           dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
           setMedias(payload.results);
+          setMediasCount(payload.count);
         })
         .catch((error) => {
           dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
@@ -170,7 +178,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
   const _fetchNext = useCallback(
     (index: number) => {
-      if (state.count > medias.length && index >= 6 && !state.isLoadingNext && state.next) {
+      if (mediasCount > medias.length && index >= 6 && !state.isLoadingNext && state.next) {
         setPreview(index);
         dispatch({ type: actionWidgetTypes.LOADING_NEXT });
 
@@ -182,6 +190,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
           .then((res: AxiosResponse<SCPaginatedResponse<SCMediaType>>) => {
             dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
             setMedias((prev) => [...prev, ...res.data.results]);
+            setMediasCount(res.data.count);
           })
           .catch((error) => {
             dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
@@ -192,17 +201,20 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     [state.next, state.isLoadingNext, medias.length]
   );
 
-  const handleOpenLightbox = useCallback((index: number) => {
-    setPreview(index);
-  }, []);
+  const handleOpenLightbox = useCallback(
+    (index: number) => {
+      setPreview(index);
+    },
+    [setPreview]
+  );
 
   const handleCloseLightbox = useCallback(() => {
     setPreview(-1);
-  }, []);
+  }, [setPreview]);
 
   const handleToggleDialogOpen = useCallback(() => {
     setOpenDialog((prev) => !prev);
-  }, []);
+  }, [setOpenDialog]);
 
   const handleNext = useCallback(() => {
     dispatch({ type: actionWidgetTypes.LOADING_NEXT });
@@ -215,40 +227,66 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       .then((res: AxiosResponse<SCPaginatedResponse<SCMediaType>>) => {
         dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
         setMedias((prev) => [...prev, ...res.data.results]);
+        setMediasCount(res.data.count);
       })
       .catch((error) => {
         dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [state.next, state.isLoadingNext, state.initialized]);
+  }, [state.next, state.isLoadingNext, state.initialized, dispatch]);
 
-  const handleDelete = (id: number) => {
-    setMediaId(id);
+  const handleRemoveMedia = useCallback(
+    (id: number) => {
+      setMediaId(id);
+      setOpenDialogConfirm(true);
+    },
+    [setMediaId, setOpenDialogConfirm]
+  );
+
+  const handleConfirmAction = useCallback(() => {
+    setLoading(true);
 
     http
       .request({
         url: Endpoints.RemoveMediasFromEventPhotoGallery.url({ id: scEvent.id }),
         method: Endpoints.RemoveMediasFromEventPhotoGallery.method,
-        data: { medias: [id] }
+        data: { medias: [mediaId] }
       })
       .then(() => {
-        setMedias((prev) => prev.filter((media) => media.id !== id));
+        setMedias((prev) => prev.filter((media) => media.id !== mediaId));
+        setMediasCount((prev) => prev - 1);
         setMediaId(null);
+        setLoading(false);
+        setOpenDialogConfirm(false);
       })
       .catch((error) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
         Logger.error(SCOPE_SC_UI, error);
       });
-  };
+  }, [scEvent, mediaId, setMedias, setLoading, setOpenDialogConfirm, dispatch]);
 
-  const handleAddMedia = useCallback(() => {
-    input.current.click();
-  }, [input]);
+  const handleCloseAction = useCallback(() => {
+    setMediaId(null);
+    setOpenDialogConfirm(false);
+  }, [setMediaId, setOpenDialogConfirm]);
 
-  const handleInputChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
-    // MediaService.chunkUploadMedia();
-    console.log('*** evt ***', evt.target.files[0]);
-  }, []);
+  const handleAddMedia = useCallback(
+    (media: SCMediaType) => {
+      http
+        .request({
+          url: Endpoints.AddMediaToEventPhotoGallery.url({ id: scEvent.id }),
+          method: Endpoints.AddMediaToEventPhotoGallery.method,
+          data: { media: media.id }
+        })
+        .then((res: AxiosResponse<SCMediaType>) => {
+          setMedias((prev) => [res.data, ...prev]);
+          setMediasCount((prev) => prev + 1);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    },
+    [scEvent, setMedias]
+  );
 
   // EFFECTS
   useEffect(() => {
@@ -263,12 +301,18 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     }
   }, [scUserContext.user, scEvent]);
 
+  useEffect(() => {
+    if (isMobile && openDialog && state.next) {
+      handleNext();
+    }
+  }, [isMobile, openDialog, state.next]);
+
   // RENDER
-  if (!scEvent || (state.initialized && state.count === 0)) {
+  if (!scEvent || (state.initialized && mediasCount === 0)) {
     return <HiddenPlaceholder />;
   }
 
-  if (!state.initialized || (state.isLoadingNext && state.count === 0)) {
+  if (!state.initialized || (state.isLoadingNext && mediasCount === 0)) {
     return <SkeletonComponent />;
   }
 
@@ -281,17 +325,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
               <FormattedMessage id="ui.eventMediaWidget.title" defaultMessage="ui.eventMediaWidget.title" />
             </Typography>
 
-            {hasAllow && (
-              <>
-                <TriggerButton size="small" />
-                {/* <input ref={input} className={classes.input} type="file" accept="image/*" onChange={handleInputChange} />
-                <Button size="small" endIcon={<Icon fontSize="inherit">add</Icon>} onClick={handleAddMedia}>
-                  <Typography variant="caption">
-                    <FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />
-                  </Typography>
-                </Button> */}
-              </>
-            )}
+            {hasAllow && <TriggerButton size="small" onAdd={handleAddMedia} />}
           </Stack>
         }
         className={classes.header}
@@ -307,12 +341,13 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
               onClick={() => handleOpenLightbox(i)}
               sx={{
                 background: `url(${media.image}) no-repeat center`
-              }}>
+              }}
+              className={classes.cover}>
               {medias.length > array.length && i === array.length - 1 && (
                 <Fragment>
-                  <Box />
-                  <Box>
-                    <Typography>+{state.count - NUMBER_OF_MEDIAS}</Typography>
+                  <Box className={classes.background} />
+                  <Box className={classes.countWrapper}>
+                    <Typography className={classes.count}>+{mediasCount - NUMBER_OF_MEDIAS}</Typography>
                   </Box>
                 </Fragment>
               )}
@@ -340,7 +375,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
           {...dialogProps}>
           <InfiniteScroll
             dataLength={medias.length}
-            height="515px"
+            height={isMobile ? '100%' : '515px'}
             next={handleNext}
             hasMoreNext={Boolean(state.next)}
             loaderNext={<>Skeleton</>}
@@ -363,7 +398,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
                       className={classes.loadingButton}
                       loading={mediaId === media.id}
                       size="large"
-                      onClick={() => handleDelete(media.id)}
+                      onClick={() => handleRemoveMedia(media.id)}
                       sx={{
                         color: (theme) => (mediaId === media.id ? 'transparent' : theme.palette.common.white)
                       }}>
@@ -375,6 +410,18 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
             </Box>
           </InfiniteScroll>
         </DialogRoot>
+      )}
+
+      {openDialogConfirm && (
+        <ConfirmDialog
+          open={openDialogConfirm}
+          title={<FormattedMessage id="ui.eventMediaWidget.dialog.title" defaultMessage="ui.eventMediaWidget.dialog.title" />}
+          content={<FormattedMessage id="ui.eventMediaWidget.dialog.msg" defaultMessage="ui.eventMediaWidget.dialog.msg" />}
+          btnConfirm={<FormattedMessage id="ui.eventMediaWidget.dialog.confirm" defaultMessage="ui.eventMediaWidget.dialog.confirm" />}
+          isUpdating={loading}
+          onConfirm={handleConfirmAction}
+          onClose={handleCloseAction}
+        />
       )}
     </Root>
   );

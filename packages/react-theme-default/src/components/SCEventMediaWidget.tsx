@@ -18,28 +18,28 @@ const Component = {
           gap: '5px',
           gridTemplateColumns: 'repeat(3, 1fr)',
 
-          '& > div': {
+          '& > .SCEventMediaWidget-cover': {
             position: 'relative',
             width: '100%',
             paddingBottom: '100%',
             backgroundSize: 'cover',
             cursor: 'pointer',
 
-            '& > div:first-of-type': {
+            '& > .SCEventMediaWidget-background': {
               position: 'absolute',
               inset: 0,
               backgroundColor: 'rgba(102, 102, 102, 0.2)',
               opacity: 0.8
             },
 
-            '& > div:last-of-type': {
+            '& > .SCEventMediaWidget-count-wrapper': {
               position: 'absolute',
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
               color: theme.palette.common.white,
 
-              '& > p': {
+              '& > .SCEventMediaWidget-count': {
                 fontSize: '200%'
               }
             }
@@ -86,6 +86,14 @@ const Component = {
             }
           }
         }
+      }
+    }),
+    triggerRoot: ({ theme }) => ({
+      '& > .SCEventMediaWidget-stack': {
+        flexDirection: 'row',
+        gap: '5px',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
       }
     })
   }
