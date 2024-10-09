@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -52,12 +52,14 @@ import Content from './Steps/Content';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Endpoints, http, HttpResponse, OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
+import {SCCategoryType, SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import HeaderPlaceholder from '../../assets/onBoarding/header';
 import BaseDialog from '../../shared/BaseDialog';
+import PubSub from 'pubsub-js';
+import {SCCategoryEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -304,6 +306,14 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     setShowCategoriesModal(false);
   };
 
+  /**
+   * Notify when a category info changes
+   * @param data
+   */
+  const notifyCategoryChanges = useCallback((data: SCCategoryType) => {
+    PubSub.publish(`${SCTopicType.CATEGORY}.${SCCategoryEventType.EDIT}`, data);
+  }, []);
+
   // EFFECTS
 
   useEffect(() => {
@@ -348,6 +358,24 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
       return () => clearInterval(intervalId);
     }
   }, [scUserContext?.user, isGenerating, isAdmin]);
+
+  /**
+   * updates categories info when generating category content
+   */
+  useEffect(() => {
+    const categoryStep = steps.find((step) => step.step === SCOnBoardingStepType.CATEGORIES);
+
+    if (categoryStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && categoryStep.results.length !== 0) {
+      categoryStep.results.forEach((c: any) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const isAlreadyNotified = prevCategoriesStep?.results.some((result: any) => result.id === c.id);
+        if (!isAlreadyNotified) {
+          notifyCategoryChanges(c);
+        }
+      });
+    }
+  }, [steps, prevCategoriesStep]);
 
   /**
    * Render _step content section

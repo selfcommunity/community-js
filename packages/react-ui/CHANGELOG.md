@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0...@selfcommunity/react-ui@0.8.1-alpha.0) (2024-10-09)
+
+
+### Performance Improvements
+
+* added pubsub for categories edit onboarding. Linear issue: https://linear.app/quentral/issue/QUE-843/update-immagini-categorie ([09d9ec7](https://github.com/selfcommunity/community-js/commit/09d9ec705edc9a34950e805dbfcdae2ce27d45c1))
+
+
+
+
+
 # [0.8.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.37...@selfcommunity/react-ui@0.8.0) (2024-10-08)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

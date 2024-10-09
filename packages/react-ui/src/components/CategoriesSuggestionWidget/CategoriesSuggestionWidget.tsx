@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {Endpoints, http, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
@@ -19,6 +19,8 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosResponse} from 'axios';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import {PREFIX} from './constants';
+import PubSub from 'pubsub-js';
+import {SCCategoryEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -142,6 +144,9 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // REFS
+  const updatesSubscription = useRef(null);
+
   /**
    * Initialize component
    * Fetch data only if the component is not initialized and it is not loading data
@@ -162,6 +167,29 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
     },
     [state.isLoadingNext, state.initialized, limit, dispatch]
   );
+
+  /**
+   * Subscriber for pubsub callback
+   */
+  const onEditCategoryHandler = useCallback(
+    (_msg: string, edited: SCCategoryType) => {
+      const _categories = [...state.results];
+      const updatedCategories = _categories.map((c) => (c.id === edited.id ? {...c, ...edited} : c));
+      dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: updatedCategories}});
+    },
+    [dispatch]
+  );
+
+  /**
+   * On mount, subscribe to receive event updates (only edit)
+   */
+  useEffect(() => {
+    updatesSubscription.current = PubSub.subscribe(`${SCTopicType.CATEGORY}.${SCCategoryEventType.EDIT}`, onEditCategoryHandler);
+
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+    };
+  }, [onEditCategoryHandler]);
 
   // EFFECTS
   useEffect(() => {
