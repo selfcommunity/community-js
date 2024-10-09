@@ -202,6 +202,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
    */
   const onEditCategoryHandler = useCallback(
     (_msg: string, edited: SCCategoryType) => {
+      console.log(edited, 'edited category')
       setCategories((prev) => {
         return prev.map((c) => (c.id === edited.id ? {...c, ...edited} : c));
       });
