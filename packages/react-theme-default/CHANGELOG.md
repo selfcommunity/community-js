@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.0...@selfcommunity/react-theme-default@0.2.1-alpha.1) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.2.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0...@selfcommunity/react-theme-default@0.2.1-alpha.0) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.2.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.40...@selfcommunity/react-theme-default@0.2.0) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.2.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.39...@selfcommunity/react-theme-default@0.2.0-alpha.40) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.2.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.38...@selfcommunity/react-theme-default@0.2.0-alpha.39) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.2.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.37...@selfcommunity/react-theme-default@0.2.0-alpha.38) (2024-10-08)
+
+
+### Bug Fixes
+
+* lightbox ([cc71c72](https://github.com/selfcommunity/community-js/commit/cc71c72f3e1239f62d8c229955c65e0912f6bcee))
+* LightBox. Linear issue: https://linear.app/quentral/issue/QUE-839/problema-slider-anteprima-immagini-lightbox ([8ea42ab](https://github.com/selfcommunity/community-js/commit/8ea42ab6e8412b0ca801fe4a7a76f9eea75b9ad5))
+
+
+
+
+
+# [0.2.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.36...@selfcommunity/react-theme-default@0.2.0-alpha.37) (2024-10-07)
+
+
+### Bug Fixes
+
+* embedly ([9e32669](https://github.com/selfcommunity/community-js/commit/9e32669a28c33ce14fef34646b1bbb42e216fd91))
+* onboarding styles ([94ba1f0](https://github.com/selfcommunity/community-js/commit/94ba1f029815456813415dbf91c840a8af1c1cd8))
+
+
+
+
+
 # [0.2.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.35...@selfcommunity/react-theme-default@0.2.0-alpha.36) (2024-10-07)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

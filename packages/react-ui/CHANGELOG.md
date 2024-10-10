@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.0...@selfcommunity/react-ui@0.8.1-alpha.1) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.8.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0...@selfcommunity/react-ui@0.8.1-alpha.0) (2024-10-09)
+
+
+### Performance Improvements
+
+* added pubsub for categories edit onboarding. Linear issue: https://linear.app/quentral/issue/QUE-843/update-immagini-categorie ([09d9ec7](https://github.com/selfcommunity/community-js/commit/09d9ec705edc9a34950e805dbfcdae2ce27d45c1))
+
+
+
+
+
+# [0.8.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.37...@selfcommunity/react-ui@0.8.0) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.8.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.36...@selfcommunity/react-ui@0.8.0-alpha.37) (2024-10-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.8.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.35...@selfcommunity/react-ui@0.8.0-alpha.36) (2024-10-08)
+
+
+### Bug Fixes
+
+* event detail start date ([9f68d0e](https://github.com/selfcommunity/community-js/commit/9f68d0e8aa7aa365f0e029920fa4e6d835b6ab87))
+
+
+
+
+
+# [0.8.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.34...@selfcommunity/react-ui@0.8.0-alpha.35) (2024-10-08)
+
+
+### Bug Fixes
+
+* lightbox ([cc71c72](https://github.com/selfcommunity/community-js/commit/cc71c72f3e1239f62d8c229955c65e0912f6bcee))
+* LightBox. Linear issue: https://linear.app/quentral/issue/QUE-839/problema-slider-anteprima-immagini-lightbox ([8ea42ab](https://github.com/selfcommunity/community-js/commit/8ea42ab6e8412b0ca801fe4a7a76f9eea75b9ad5))
+
+
+
+
+
 # [0.8.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.33...@selfcommunity/react-ui@0.8.0-alpha.34) (2024-10-07)
 
 
