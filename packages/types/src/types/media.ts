@@ -1,4 +1,4 @@
-import {SCEmbedType} from './embed';
+import { SCEmbedType } from './embed';
 
 /**
  * Interface SCMediaType.
@@ -58,7 +58,7 @@ export interface SCMediaType {
     width: number;
     height: number;
     url: string;
-  }
+  };
 
   /**
    * Order in the list of medias

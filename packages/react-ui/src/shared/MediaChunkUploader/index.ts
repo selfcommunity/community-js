@@ -6,19 +6,19 @@ import {
   useChunkStartListener,
   useItemErrorListener,
   useItemFinishListener,
-  useRequestPreSend,
+  useRequestPreSend
 } from '@rpldy/chunked-uploady';
+import { useItemProgressListener, useItemStartListener } from '@rpldy/uploady';
 import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
-import { SCMediaType } from '@selfcommunity/types';
 import { SCContextType, SCUserContextType, useSCContext, useSCUser } from '@selfcommunity/react-core';
-import { useItemProgressListener, useItemStartListener, useUploady } from '@rpldy/uploady';
-import { md5 } from '../../utils/hash';
-import React, { useEffect, useRef, useState } from 'react';
-import { SCMediaChunkType } from '../../types/media';
-import { useIntl } from 'react-intl';
-import messages from '../../messages/common';
+import { SCMediaType } from '@selfcommunity/types';
 import { Logger, resizeImage } from '@selfcommunity/utils';
+import React, { useEffect, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
+import messages from '../../messages/common';
+import { SCMediaChunkType } from '../../types/media';
+import { md5 } from '../../utils/hash';
 
 export interface MediaChunkUploaderProps {
   /**
@@ -94,7 +94,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       // @ts-ignore
       reader.readAsDataURL(item.file);
     }
-    chunkStateRef.current.setChunk({id: item.id, [`upload_id`]: null, completed: 0, name: item.file.name});
+    chunkStateRef.current.setChunk({id: item.id, ['upload_id']: null, completed: 0, name: item.file.name});
   });
 
   useItemProgressListener((item) => {
@@ -107,6 +107,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       formData.append('upload_id', chunkStateRef.current.chunks[item.id].upload_id);
       formData.append('type', chunkStateRef.current.chunks[item.id].type);
       formData.append('md5', hash);
+
       http
         .request({
           url: Endpoints.ComposerChunkUploadMediaComplete.url(),
@@ -145,7 +146,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       sendOptions: {
         paramName: 'image',
         method: Endpoints.ComposerChunkUploadMedia.method,
-        formatServerResponse: async (response: string, status: number, headers: Record<string, string> | undefined) => {
+        formatServerResponse: async (response: string, status: number, _headers: Record<string, string> | undefined) => {
           if (status === 401) {
             await refreshSession();
           }
@@ -154,7 +155,7 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
       }
     };
     if (chunkStateRef.current.chunks[data.item.id].upload_id) {
-      res.sendOptions.params = {[`upload_id`]: chunkStateRef.current.chunks[data.item.id].upload_id};
+      res.sendOptions.params = {['upload_id']: chunkStateRef.current.chunks[data.item.id].upload_id};
     } else {
       chunkStateRef.current.setChunk({id: data.item.id, type: type || data.sendOptions.paramName});
     }
@@ -163,13 +164,15 @@ export default (props: MediaChunkUploaderProps): JSX.Element => {
 
   useChunkFinishListener(async (data) => {
     const _data = await data.uploadData.response.data;
-    chunkStateRef.current.setChunk({id: data.item.id, [`upload_id`]: _data.upload_id});
+    chunkStateRef.current.setChunk({id: data.item.id, ['upload_id']: _data.upload_id});
   });
 
   useRequestPreSend(async ({items, options}): Promise<PreSendResponse> => {
-    const destination = ['JWT', 'OAuth'].includes(scContext.settings.session.type) ? {
-      headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}
-    } : {};
+    const destination = ['JWT', 'OAuth'].includes(scContext.settings.session.type)
+      ? {
+          headers: {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`}
+        }
+      : {};
 
     if (items.length == 0) {
       return Promise.resolve({options, destination});
