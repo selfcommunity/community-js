@@ -4,6 +4,7 @@ import {
   ContributionUtils,
   EventInfoWidget,
   EventLocationWidget,
+  EventMediaWidget,
   EventMembersWidget,
   Feed,
   FeedObject,
@@ -108,10 +109,17 @@ const WIDGETS: SCFeedWidgetType[] = [
   },
   {
     type: 'widget',
-    component: RelatedEventsWidget,
+    component: EventMediaWidget,
     componentProps: {},
     column: 'right',
     position: 2
+  },
+  {
+    type: 'widget',
+    component: RelatedEventsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 3
   }
 ];
 
