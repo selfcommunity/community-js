@@ -310,9 +310,9 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
    * Notify when a category info changes
    * @param data
    */
-  const notifyCategoryChanges = useCallback((data: SCCategoryType) => {
-    PubSub.publish(`${SCTopicType.CATEGORY}.${SCCategoryEventType.EDIT}`, data);
-  }, []);
+  function notifyCategoryChanges(data: SCCategoryType) {
+    data && PubSub.publish(`${SCTopicType.CATEGORY}.${SCCategoryEventType.EDIT}`, data);
+  }
 
   // EFFECTS
 
