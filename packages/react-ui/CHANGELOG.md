@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.1...@selfcommunity/react-ui@0.8.1-alpha.2) (2024-10-11)
+
+
+### Bug Fixes
+
+* fixed focus on OnBoardingWidget Appearance color. Linear issue: https://linear.app/quentral/issue/QUE-837/focus-onchange-color-onboarding ([cd6c251](https://github.com/selfcommunity/community-js/commit/cd6c251583125aad15308fe7d539fb16fdbce42e))
+
+
+
+
+
 ## [0.8.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.0...@selfcommunity/react-ui@0.8.1-alpha.1) (2024-10-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
