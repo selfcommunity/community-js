@@ -41,6 +41,7 @@ import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {TransitionProps} from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
+import Dialog from '@mui/material/Dialog';
 
 const messages = defineMessages({
   name: {
@@ -96,9 +97,11 @@ const classes = {
   error: `${PREFIX}-error`
 };
 
-const Root = styled(BaseDialog, {
+const Root = styled(Dialog, {
   name: PREFIX,
   slot: 'Root',
+  overridesResolver: (_props, styles) => styles.root,
+  shouldForwardProp: (prop) => prop !== 'disableModal'
 })(() => ({}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
@@ -450,6 +453,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         </LoadingButton>
       }
       {...(disableModal ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
+      disableModal={disableModal}
       {...rest}>
       <>
         <Paper style={_backgroundCover} classes={{root: classes.cover}}>

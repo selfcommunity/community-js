@@ -133,7 +133,7 @@ export default function CreateLivestreamDialog(inProps: CreateLivestreamDialogPr
       PaperProps={{elevation: 0}}
       actions={
         <LoadingButton variant="contained" onClick={handleSubmit} color="secondary">
-          {event ? (
+          {livestream ? (
             <FormattedMessage id="ui.createLivestreamDialog.button.edit" defaultMessage="ui.eventForm.button.edit" />
           ) : (
             <FormattedMessage id="ui.createLivestreamDialog.button.create" defaultMessage="ui.createLivestreamDialog.button.create" />

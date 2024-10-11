@@ -115,7 +115,7 @@ export default function CreateLivestreamButton(inProps: CreateLivestreamButtonPr
         onClick={handleClick}
         variant="contained"
         color="secondary"
-        startIcon={<Icon fontSize="small">camera</Icon>}
+        startIcon={<Icon fontSize="small">info</Icon>}
         {...rest}>
         {children ?? <FormattedMessage id="ui.createEventButton.goLive" defaultMessage="ui.createEventButton.goLive" />}
       </Root>
