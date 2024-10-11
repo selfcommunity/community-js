@@ -86,7 +86,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const openPreviewImage = useCallback(
-    (index) => {
+    (index: number) => {
       if (gallery === false) {
         // Prevent gallery
         return;
