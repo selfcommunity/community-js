@@ -24,10 +24,14 @@ export default function EventMediaWidgetSkeleton() {
       <CardContent>
         <Box className={classes.grid}>
           {Array.from(Array(9)).map((_, i) => (
-            <Skeleton key={i} variant="rectangular" animation="wave" width="100%" className={classes.media} />
+            <EventMediaSkeleton key={i} />
           ))}
         </Box>
       </CardContent>
     </Root>
   );
+}
+
+export function EventMediaSkeleton() {
+  return <Skeleton variant="rectangular" animation="wave" width="100%" className={classes.media} />;
 }

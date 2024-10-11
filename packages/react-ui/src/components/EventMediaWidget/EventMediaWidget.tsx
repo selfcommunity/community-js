@@ -19,7 +19,7 @@ import { Lightbox } from '../../shared/Lightbox';
 import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
 import Widget, { WidgetProps } from '../Widget';
 import { PREFIX } from './constants';
-import SkeletonComponent from './Skeleton';
+import SkeletonComponent, { EventMediaSkeleton } from './Skeleton';
 import TriggerButton from './TriggerButton';
 
 const messages = defineMessages({
@@ -142,6 +142,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   const [mediaId, setMediaId] = useState<number | null>(null);
   const [preview, setPreview] = useState<number>(-1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showSkeleton, setShowSkeleton] = useState<'widget' | 'dialog' | null>(null);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -154,6 +155,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
+  const countHiddenMedia = useMemo(() => mediasCount - MEDIAS_TO_SHOW, [mediasCount]);
 
   /**
    * Initialize component
@@ -216,6 +218,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   }, [setOpenDialog]);
 
   const handleNext = useCallback(() => {
+    setShowSkeleton('dialog');
     dispatch({ type: actionWidgetTypes.LOADING_NEXT });
 
     http
@@ -227,12 +230,13 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
         dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
         setMedias((prev) => [...prev, ...res.data.results]);
         setMediasCount(res.data.count);
+        setShowSkeleton(null);
       })
       .catch((error) => {
         dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [state.next, state.isLoadingNext, state.initialized, dispatch]);
+  }, [state.next, state.isLoadingNext, state.initialized, dispatch, setMedias, setMediasCount, setShowSkeleton]);
 
   const handleRemoveMedia = useCallback(
     (id: number) => {
@@ -272,6 +276,8 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
   const handleAddMedia = useCallback(
     (media: SCMediaType) => {
+      setShowSkeleton('widget');
+
       http
         .request({
           url: Endpoints.AddMediaToEventPhotoGallery.url({ id: scEvent.id }),
@@ -281,12 +287,13 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
         .then((res: AxiosResponse<SCMediaType>) => {
           setMedias((prev) => [res.data, ...prev]);
           setMediasCount((prev) => prev + 1);
+          setShowSkeleton(null);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
     },
-    [scEvent, setMedias]
+    [scEvent, setMedias, setMediasCount, setShowSkeleton]
   );
 
   // EFFECTS
@@ -336,6 +343,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
       <CardContent className={classes.content}>
         <Box className={classes.grid}>
+          {showSkeleton === 'widget' && <EventMediaSkeleton />}
           {medias.slice(0, MEDIAS_TO_SHOW).map((media: SCMediaType, i: number, array: SCMediaType[]) => (
             <Box
               key={media.id}
@@ -348,7 +356,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
                 <Fragment>
                   <Box className={classes.mediaLayer} />
                   <Box className={classes.countHiddenMediaWrapper}>
-                    <Typography className={classes.countHiddenMedia}>+{mediasCount - MEDIAS_TO_SHOW}</Typography>
+                    <Typography className={classes.countHiddenMedia}>+{countHiddenMedia}</Typography>
                   </Box>
                 </Fragment>
               )}
@@ -415,6 +423,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
                   </Stack>
                 </Box>
               ))}
+              {showSkeleton === 'dialog' && Array.from(Array(countHiddenMedia)).map((_, i) => <EventMediaSkeleton key={i} />)}
             </Box>
           </InfiniteScroll>
         </DialogRoot>

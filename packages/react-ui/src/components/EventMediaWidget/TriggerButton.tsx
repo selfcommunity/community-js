@@ -16,7 +16,8 @@ import { PREFIX } from './constants';
 
 const classes = {
   triggerRoot: `${PREFIX}-trigger-root`,
-  triggerContent: `${PREFIX}-trigger-content`
+  triggerContent: `${PREFIX}-trigger-content`,
+  triggerIcon: `${PREFIX}-trigger-icon`
 };
 
 const Root = styled(LoadingButton, {
@@ -101,7 +102,7 @@ export default function TriggerButton(props: TriggerIconButtonProps) {
               <FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />
             </Typography>
           )}
-          <Icon fontSize="inherit">add</Icon>
+          <Icon className={classes.triggerIcon}>add</Icon>
         </GalleryUploadStack>
       </Root>
     </ChunkedUploady>

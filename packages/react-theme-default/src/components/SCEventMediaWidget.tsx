@@ -6,8 +6,7 @@ const Component = {
       },
 
       '& .SCEventMediaWidget-content': {
-        padding: theme.spacing(2, 2),
-        paddingBottom: 'unset',
+        padding: theme.spacing(2),
 
         '& .SCEventMediaWidget-grid': {
           display: 'grid',
@@ -44,7 +43,7 @@ const Component = {
       },
 
       '& .SCEventMediaWidget-actions': {
-        padding: theme.spacing('10px', 2),
+        padding: theme.spacing(0, 2, '10px'),
         justifyContent: 'center'
       }
     }),
@@ -64,6 +63,10 @@ const Component = {
         display: 'grid',
         gap: '5px',
         gridTemplateColumns: 'repeat(3, 1fr)',
+
+        '& > .SCEventMediaWidget-media': {
+          paddingBottom: '100%'
+        },
 
         '& > .SCEventMediaWidget-dialog-media-wrapper': {
           position: 'relative',
@@ -97,7 +100,6 @@ const Component = {
     triggerRoot: ({ isSquare }) => ({
       padding: isSquare && 0,
       borderRadius: isSquare && 0,
-      marginBottom: isSquare && '10px',
       backgroundColor: isSquare && 'rgba(112, 112, 112, 0.04)',
 
       '&:hover': {
@@ -105,12 +107,21 @@ const Component = {
       },
 
       '& > .SCEventMediaWidget-trigger-content': {
+        position: isSquare && 'relative',
         width: isSquare && '100%',
         padding: isSquare && '10px 60px',
+        paddingBottom: isSquare && '100%',
         flexDirection: 'row',
         gap: '5px',
         alignItems: 'center',
-        justifyContent: isSquare ? 'center' : 'flex-end'
+        justifyContent: isSquare ? 'center' : 'flex-end',
+
+        '& > .SCEventMediaWidget-trigger-icon': {
+          position: isSquare && 'absolute',
+          top: isSquare && '50%',
+          transform: isSquare && 'translateY(-50%)',
+          fontSize: 'inherit'
+        }
       }
     })
   }
