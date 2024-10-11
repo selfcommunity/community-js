@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.3...@selfcommunity/react-ui@0.8.1-alpha.4) (2024-10-11)
+
+
+### Bug Fixes
+
+* added case to hidden location row into EventInfoWidget ([99988b2](https://github.com/selfcommunity/community-js/commit/99988b20867b203765d36ee21a751f467e4ce911))
+* fixed and finished linear issue: https://linear.app/quentral/issue/QUE-843/update-immagini-categorie ([37b9bb0](https://github.com/selfcommunity/community-js/commit/37b9bb069e9eab80e66109064e925d5db4806949))
+
+
+
+
+
 ## [0.8.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.2...@selfcommunity/react-ui@0.8.1-alpha.3) (2024-10-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
