@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.4...@selfcommunity/react-ui@0.9.0-alpha.0) (2024-10-11)
+
+
+### Bug Fixes
+
+* EventFeed template ([c58df4d](https://github.com/selfcommunity/community-js/commit/c58df4dbeb92d0d32489b2c3609b0d4ed05770a7))
+* fixed all pr reports on EventMediaWidget ([6e04148](https://github.com/selfcommunity/community-js/commit/6e04148d99fd85529a237eda997dd86cdf9f5316))
+* fixed all pr reports on Lightbox and EventMediaWidget ([27b19ea](https://github.com/selfcommunity/community-js/commit/27b19ead3e8d3aebe4d3157c03a3df56aa1bd6b0))
+
+
+### Features
+
+* added new Lightbox component into EventMediaWidget ([c1e0534](https://github.com/selfcommunity/community-js/commit/c1e0534dd69d08f8a85b0df64cab315987c78a67))
+* completed EventMediaWidget ([7e7073b](https://github.com/selfcommunity/community-js/commit/7e7073b02deb4657bb1acb8f1cf37d6ce3802d04))
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
 ## [0.8.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.3...@selfcommunity/react-ui@0.8.1-alpha.4) (2024-10-11)
 
 

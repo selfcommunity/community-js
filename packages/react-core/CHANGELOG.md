@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.1-alpha.0...@selfcommunity/react-core@0.6.0-alpha.0) (2024-10-11)
+
+
+### Features
+
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
 ## [0.5.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0...@selfcommunity/react-core@0.5.1-alpha.0) (2024-10-09)
 
 **Note:** Version bump only for package @selfcommunity/react-core
