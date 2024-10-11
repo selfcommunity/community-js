@@ -193,7 +193,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
       const updatedCategories = _categories.map((c) => (c.id === edited.id ? {...c, ...edited} : c));
       dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: updatedCategories}});
     },
-    [dispatch]
+    [dispatch, state.results]
   );
 
   /**
