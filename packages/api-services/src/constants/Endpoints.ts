@@ -1,5 +1,5 @@
-import {urlReplacer} from '@selfcommunity/utils';
-import {HttpMethod} from '../client';
+import { urlReplacer } from '@selfcommunity/utils';
+import { HttpMethod } from '../client';
 
 export interface EndpointType {
   url: (params?: any) => string;
@@ -1344,6 +1344,18 @@ const Endpoints: {[key: string]: EndpointType} = {
   HideEvent: {
     url: urlReplacer('/api/v2/event/$(id)/hide/'),
     method: 'POST'
+  },
+  GetEventPhotoGallery: {
+    url: urlReplacer('/api/v2/event/$(id)/gallery/'),
+    method: 'GET'
+  },
+  AddMediaToEventPhotoGallery: {
+    url: urlReplacer('/api/v2/event/$(id)/gallery/'),
+    method: 'POST'
+  },
+  RemoveMediasFromEventPhotoGallery: {
+    url: urlReplacer('/api/v2/event/$(id)/gallery/'),
+    method: 'DELETE'
   },
   /**
    * OnBoarding
