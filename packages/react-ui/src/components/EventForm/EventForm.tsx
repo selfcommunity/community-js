@@ -1,3 +1,4 @@
+import React from 'react';
 import {LoadingButton} from '@mui/lab';
 import {
   Box,
@@ -27,7 +28,7 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
@@ -38,6 +39,8 @@ import EventAddress from './EventAddress';
 import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
 import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
+import {TransitionProps} from '@mui/material/transitions';
+import Slide from '@mui/material/Slide';
 
 const messages = defineMessages({
   name: {
@@ -95,8 +98,16 @@ const classes = {
 
 const Root = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root'
+  slot: 'Root',
 })(() => ({}));
+
+const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}, ref) {
+  return <Fragment> {props.children} </Fragment>;
+});
 
 export interface EventFormProps extends BaseDialogProps {
   /**
@@ -126,6 +137,12 @@ export interface EventFormProps extends BaseDialogProps {
    * @default null
    */
   onSuccess?: (data: SCEventType) => void;
+
+  /**
+   * Disable modal
+   */
+  disableModal?: boolean;
+
   /**
    * Any other properties
    */
@@ -169,7 +186,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, onSuccess, event = null, ...rest} = props;
+  const {className, open = true, onClose, onSuccess, disableModal = false, event = null, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -432,6 +449,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           )}
         </LoadingButton>
       }
+      {...(disableModal ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       {...rest}>
       <>
         <Paper style={_backgroundCover} classes={{root: classes.cover}}>
