@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box, useThemeProps } from '@mui/system';
 import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
@@ -15,10 +15,10 @@ import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import InfiniteScroll from '../../shared/InfiniteScroll';
+import { Lightbox } from '../../shared/Lightbox';
 import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
 import Widget, { WidgetProps } from '../Widget';
 import { PREFIX } from './constants';
-import Lightbox from './Lightbox';
 import SkeletonComponent from './Skeleton';
 import TriggerButton from './TriggerButton';
 
@@ -29,24 +29,23 @@ const messages = defineMessages({
   }
 });
 
-const NUMBER_OF_MEDIAS = 9;
+const MEDIAS_TO_SHOW = 9;
 
 const classes = {
   root: `${PREFIX}-root`,
   header: `${PREFIX}-header`,
-  input: `${PREFIX}-input`,
   grid: `${PREFIX}-grid`,
-  cover: `${PREFIX}-cover`,
-  background: `${PREFIX}-background`,
-  countWrapper: `${PREFIX}-count-wrapper`,
-  count: `${PREFIX}-count`,
+  media: `${PREFIX}-media`,
+  mediaLayer: `${PREFIX}-media-layer`,
+  countHiddenMediaWrapper: `${PREFIX}-count-hidden-media-wrapper`,
+  countHiddenMedia: `${PREFIX}-count-hidden-media`,
   content: `${PREFIX}-content`,
   actions: `${PREFIX}-actions`,
   dialogRoot: `${PREFIX}-dialog-root`,
-  infiniteScroll: `${PREFIX}-infinite-scroll`,
-  mediaWrapper: `${PREFIX}-media-wrapper`,
-  buttonWrapper: `${PREFIX}-button-wrapper`,
-  loadingButton: `${PREFIX}-loading-button`,
+  dialogInfiniteScroll: `${PREFIX}-dialog-infinite-scroll`,
+  dialogMediaWrapper: `${PREFIX}-dialog-media-wrapper`,
+  dialogButtonWrapper: `${PREFIX}-dialog-button-wrapper`,
+  dialogLoadingButton: `${PREFIX}-dialog-loading-button`,
   endMessage: `${PREFIX}-end-message`
 };
 
@@ -237,8 +236,10 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
   const handleRemoveMedia = useCallback(
     (id: number) => {
-      setMediaId(id);
-      setOpenDialogConfirm(true);
+      if (hasAllow) {
+        setMediaId(id);
+        setOpenDialogConfirm(true);
+      }
     },
     [setMediaId, setOpenDialogConfirm]
   );
@@ -308,7 +309,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   }, [isMobile, openDialog, state.next]);
 
   // RENDER
-  if (!scEvent || (state.initialized && mediasCount === 0)) {
+  if (!scEvent || (state.initialized && mediasCount === 0 && !hasAllow)) {
     return <HiddenPlaceholder />;
   }
 
@@ -325,7 +326,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
               <FormattedMessage id="ui.eventMediaWidget.title" defaultMessage="ui.eventMediaWidget.title" />
             </Typography>
 
-            {hasAllow && <TriggerButton size="small" onAdd={handleAddMedia} />}
+            {hasAllow && mediasCount > 0 && <TriggerButton size="small" onAdd={handleAddMedia} />}
           </Stack>
         }
         className={classes.header}
@@ -335,36 +336,44 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
       <CardContent className={classes.content}>
         <Box className={classes.grid}>
-          {medias.slice(0, NUMBER_OF_MEDIAS).map((media: SCMediaType, i: number, array: SCMediaType[]) => (
+          {medias.slice(0, MEDIAS_TO_SHOW).map((media: SCMediaType, i: number, array: SCMediaType[]) => (
             <Box
               key={media.id}
               onClick={() => handleOpenLightbox(i)}
               sx={{
                 background: `url(${media.image}) no-repeat center`
               }}
-              className={classes.cover}>
+              className={classes.media}>
               {medias.length > array.length && i === array.length - 1 && (
                 <Fragment>
-                  <Box className={classes.background} />
-                  <Box className={classes.countWrapper}>
-                    <Typography className={classes.count}>+{mediasCount - NUMBER_OF_MEDIAS}</Typography>
+                  <Box className={classes.mediaLayer} />
+                  <Box className={classes.countHiddenMediaWrapper}>
+                    <Typography className={classes.countHiddenMedia}>+{mediasCount - MEDIAS_TO_SHOW}</Typography>
                   </Box>
                 </Fragment>
               )}
             </Box>
           ))}
+
+          {hasAllow && mediasCount === 0 && (
+            <Tooltip title={<FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />}>
+              <TriggerButton size="large" onAdd={handleAddMedia} isSquare />
+            </Tooltip>
+          )}
         </Box>
 
         {preview !== -1 && <Lightbox onClose={handleCloseLightbox} index={preview} medias={medias} onIndexChange={_fetchNext} />}
       </CardContent>
 
-      <CardActions className={classes.actions}>
-        <Button onClick={handleToggleDialogOpen}>
-          <Typography variant="caption">
-            <FormattedMessage id="ui.eventMediaWidget.showAll" defaultMessage="ui.eventMediaWidget.showAll" />
-          </Typography>
-        </Button>
-      </CardActions>
+      {hasAllow && mediasCount > 0 && (
+        <CardActions className={classes.actions}>
+          <Button onClick={handleToggleDialogOpen}>
+            <Typography variant="caption">
+              <FormattedMessage id="ui.eventMediaWidget.showAll" defaultMessage="ui.eventMediaWidget.showAll" />
+            </Typography>
+          </Button>
+        </CardActions>
+      )}
 
       {openDialog && (
         <DialogRoot
@@ -378,8 +387,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
             height={isMobile ? '100%' : '515px'}
             next={handleNext}
             hasMoreNext={Boolean(state.next)}
-            loaderNext={<>Skeleton</>}
-            className={classes.infiniteScroll}
+            className={classes.dialogInfiniteScroll}
             endMessage={
               <Typography className={classes.endMessage}>
                 <FormattedMessage id="ui.eventMediaWidget.noMoreResults" defaultMessage="ui.eventMediaWidget.noMoreResults" />
@@ -392,10 +400,10 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
                   sx={{
                     background: `url(${media.image}) no-repeat center`
                   }}
-                  className={classes.mediaWrapper}>
-                  <Stack className={classes.buttonWrapper}>
+                  className={classes.dialogMediaWrapper}>
+                  <Stack className={classes.dialogButtonWrapper}>
                     <LoadingButton
-                      className={classes.loadingButton}
+                      className={classes.dialogLoadingButton}
                       loading={mediaId === media.id}
                       size="large"
                       onClick={() => handleRemoveMedia(media.id)}

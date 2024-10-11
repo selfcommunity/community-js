@@ -4,7 +4,6 @@ import Icon from '@mui/material/Icon';
 import { styled } from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import { Endpoints } from '@selfcommunity/api-services';
-import { SCContextType, useSCContext } from '@selfcommunity/react-core';
 import { SCMediaType } from '@selfcommunity/types';
 import classNames from 'classnames';
 import { useSnackbar } from 'notistack';
@@ -17,13 +16,14 @@ import { PREFIX } from './constants';
 
 const classes = {
   triggerRoot: `${PREFIX}-trigger-root`,
-  stack: `${PREFIX}-stack`
+  triggerContent: `${PREFIX}-trigger-content`
 };
 
 const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'TriggerRoot',
-  overridesResolver: (_props, styles) => styles.triggerRoot
+  overridesResolver: (_props, styles) => styles.triggerRoot,
+  shouldForwardProp: (prop) => prop !== 'isSquare'
 })(() => ({}));
 
 const GalleryUploadStack = asUploadButton(
@@ -37,17 +37,20 @@ export interface TriggerIconButtonProps extends LoadingButtonProps {
    * @param media
    */
   onAdd?: (media: SCMediaType) => void | null;
+
+  /**
+   * Prop to change shape
+   * @default false
+   */
+  isSquare?: boolean;
 }
 
 export default function TriggerButton(props: TriggerIconButtonProps) {
   // PROPS
-  const { className, onAdd = null, ...rest } = props;
+  const { className, onAdd = null, isSquare = false, ...rest } = props;
 
   // STATE
   const [isUploading, setIsUploading] = useState<boolean>(false);
-
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
 
   // HOOKS
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -89,11 +92,15 @@ export default function TriggerButton(props: TriggerIconButtonProps) {
       fileFilter={handleFilterByMime}
       chunkSize={204800}>
       <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} type="image" />
-      <Root className={classNames(className, classes.triggerRoot)} {...rest} aria-label="add media" loading={isUploading}>
-        <GalleryUploadStack className={classes.stack}>
-          <Typography variant="caption" component="p">
-            <FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />
-          </Typography>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
+      /*  @ts-ignore */}
+      <Root className={classNames(className, classes.triggerRoot)} {...rest} aria-label="add media" loading={isUploading} isSquare={isSquare}>
+        <GalleryUploadStack className={classes.triggerContent}>
+          {!isSquare && (
+            <Typography variant="caption" component="p">
+              <FormattedMessage id="ui.eventMediaWidget.add" defaultMessage="ui.eventMediaWidget.add" />
+            </Typography>
+          )}
           <Icon fontSize="inherit">add</Icon>
         </GalleryUploadStack>
       </Root>

@@ -5,7 +5,9 @@ import Widget from '../Widget';
 import { PREFIX } from './constants';
 
 const classes = {
-  root: `${PREFIX}-skeleton-root`
+  root: `${PREFIX}-skeleton-root`,
+  grid: `${PREFIX}-grid`,
+  media: `${PREFIX}-media`
 };
 
 const Root = styled(Widget, {
@@ -20,9 +22,9 @@ export default function EventMediaWidgetSkeleton() {
       <CardHeader title={<Skeleton animation="wave" width="50px" height="23px" />} />
       <Divider />
       <CardContent>
-        <Box display="grid" gap="5px" gridTemplateColumns="repeat(3, 1fr)">
+        <Box className={classes.grid}>
           {Array.from(Array(9)).map((_, i) => (
-            <Skeleton key={i} variant="rectangular" animation="wave" width="100%" sx={{ paddingBottom: '100%' }} />
+            <Skeleton key={i} variant="rectangular" animation="wave" width="100%" className={classes.media} />
           ))}
         </Box>
       </CardContent>

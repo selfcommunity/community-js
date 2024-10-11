@@ -1,50 +1,63 @@
-import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useCallback, useState } from 'react';
-import { PhotoSlider } from 'react-photo-view';
-import { PhotoProviderBase } from 'react-photo-view/dist/types';
+import { SCMediaType } from '@selfcommunity/types/src/types';
+import { useCallback } from 'react';
 import { DataType } from '../../types/lightbox';
-
-const PREFIX = 'SCLightbox';
+import BaseLightbox from './BaseLightbox';
+import { PREFIX } from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-lightbox-root`
 };
 
-/**
- * Overrides/extends the styles applied to the component.
- * @default null
- */
-export interface ReactImageLightboxProps extends PhotoProviderBase {
-  className?: string;
-  images: DataType[];
-  index?: number;
-  onIndexChange?: (index: number) => void;
-  visible?: boolean;
-  onClose?: (evt?: React.MouseEvent | React.TouchEvent) => void;
-  afterClose?: () => void;
-  toolbarButtons?: React.ReactNode[];
-}
-
-const Root = styled(PhotoSlider, {
+const Root = styled(BaseLightbox, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  slot: 'LightboxRoot'
 })(() => ({}));
 
-const ReactImageLightbox = (props: ReactImageLightboxProps) => {
-  const { images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarRender, toolbarButtons = [], ...rest } = props;
+export interface LightboxProps {
+  /**
+   * Images objs
+   * @default []
+   */
+  medias: SCMediaType[];
 
-  // STATE
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(index || 0);
+  /**
+   * Obj index
+   * @default 0
+   */
+  index: number;
 
-  const handleIndexChange = useCallback(
-    (index: number) => {
-      onIndexChange?.(index);
-      setCurrentImageIndex(index);
-    },
-    [onIndexChange, setCurrentImageIndex]
-  );
+  /**
+   * Toolbar
+   * @default undefined
+   */
+  toolbarButtons?: JSX.Element;
+
+  /**
+   * Handles on close
+   * @default () => void
+   */
+  onClose: () => void;
+
+  /**
+   * Handles on index change
+   * @default undefined
+   */
+  onIndexChange?: (index: number) => void;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
+}
+
+export default function Lightbox(props: LightboxProps) {
+  // PROPS
+  const { medias = [], index = 0, toolbarButtons, onClose, onIndexChange, ...rest } = props;
+
+  const mediaToDataTypeMap = useCallback((media: SCMediaType, index: number): DataType => {
+    return { src: media.image, width: media.image_width, height: media.image_height, key: index };
+  }, []);
 
   /**
    * Renders root object
@@ -53,22 +66,12 @@ const ReactImageLightbox = (props: ReactImageLightboxProps) => {
     <Root
       {...rest}
       className={classes.root}
-      images={images}
-      visible={visible && index !== -1}
-      index={currentImageIndex}
-      onIndexChange={handleIndexChange}
+      images={medias.map(mediaToDataTypeMap)}
+      visible={index !== -1}
       onClose={onClose}
-      afterClose={afterClose}
-      loadingElement={<CircularProgress color={'primary'} />}
-      toolbarRender={
-        toolbarRender
-          ? toolbarRender
-          : () => {
-            return <>{toolbarButtons}</>;
-          }
-      }
+      index={index}
+      onIndexChange={onIndexChange}
+      toolbarButtons={toolbarButtons}
     />
   );
-};
-
-export default ReactImageLightbox;
+}

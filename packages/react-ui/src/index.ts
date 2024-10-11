@@ -181,7 +181,7 @@ import EventActionsMenu, { EventActionsMenuProps } from './shared/EventActionsMe
 import EventInfoDetails, { EventInfoDetailsProps } from './shared/EventInfoDetails';
 import HiddenPlaceholder from './shared/HiddenPlaceholder';
 import LanguageSwitcher from './shared/LanguageSwitcher';
-import Lightbox from './shared/Lightbox';
+import BaseLightbox, { BaseLightboxProps, Lightbox, LightboxProps } from './shared/Lightbox';
 import { EditMediaProps, File, Link, Share } from './shared/Media';
 import MediaChunkUploader, { MediaChunkUploaderProps } from './shared/MediaChunkUploader';
 import PasswordTextField from './shared/PasswordTextField';
@@ -263,6 +263,8 @@ export {
   BaseDialogProps,
   BaseItem,
   BaseItemProps,
+  BaseLightbox,
+  BaseLightboxProps,
   BottomNavigation,
   BottomNavigationProps,
   BroadcastMessages,
@@ -471,6 +473,7 @@ export {
   LanguageSwitcher,
   LEGAL_POLICIES,
   Lightbox,
+  LightboxProps,
   Link,
   LINKEDIN_SHARE,
   LocationAutocomplete,

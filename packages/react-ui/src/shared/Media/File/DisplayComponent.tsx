@@ -1,10 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Lightbox from './Lightbox';
-import { Box, Grid, Typography } from '@mui/material';
-import classNames from 'classnames';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
 import Icon from '@mui/material/Icon';
+import { styled } from '@mui/material/styles';
+import { Link } from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import { MEDIA_TYPE_DOCUMENT } from 'packages/react-ui/src/constants/Media';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Lightbox } from '../../Lightbox';
 import { PREFIX } from './constants';
 import filter from './filter';
 
@@ -28,9 +30,8 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'DisplayRoot'
-})(({theme}) => ({
+})(({ }) => ({}));
 
-}));
 export interface ImagePreviewComponentProps {
   /**
    * Class name to apply to the root object
@@ -59,11 +60,12 @@ export interface ImagePreviewComponentProps {
 }
 export default (props: ImagePreviewComponentProps): JSX.Element => {
   // PROPS
-  const {className = '', medias = [], maxVisible = 5, gallery = true, onMediaClick = null} = props;
+  const { className = '', medias = [], maxVisible = 5, gallery = true, onMediaClick = null } = props;
 
   // STATE
   const [preview, setPreview] = useState(-1);
-  const {ref, inView} = useInView({triggerOnce: false});
+  const [toolbarButtons, setToolbarButtons] = useState(undefined);
+  const { ref, inView } = useInView({ triggerOnce: false });
 
   // MEMO
   const _medias = useMemo(() => medias.filter(filter), [medias]);
@@ -71,6 +73,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   // HANDLERS
   const handleClose = () => {
     setPreview(-1);
+    setToolbarButtons(undefined);
   };
 
   // UTILS
@@ -82,16 +85,19 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     return image;
   };
 
-  const openPreviewImage = useCallback((index) => {
-    if (gallery === false) {
-      // Prevent gallery
-      return;
-    }
+  const openPreviewImage = useCallback(
+    (index) => {
+      if (gallery === false) {
+        // Prevent gallery
+        return;
+      }
 
-    setPreview(index);
+      setPreview(index);
 
-    onMediaClick(_medias[index]);
-  }, [_medias]);
+      onMediaClick(_medias[index]);
+    },
+    [_medias]
+  );
 
   // RENDERING
 
@@ -131,7 +137,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       <Grid
         container
         style={{
-          ...(_medias[0].image_thumbnail && _medias[0].image_thumbnail.color ? {backgroundColor: _medias[0].image_thumbnail.color} : {})
+          ...(_medias[0].image_thumbnail && _medias[0].image_thumbnail.color ? { backgroundColor: _medias[0].image_thumbnail.color } : {})
         }}>
         <Grid
           item
@@ -139,7 +145,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           xs={12}
           classes={{
             root: classNames(classes.border, classes.heightOne, {
-              ...(isGif || isLandscape ? {[classes.background]: true} : {[classes.backgroundPortrait]: true}),
+              ...(isGif || isLandscape ? { [classes.background]: true } : { [classes.backgroundPortrait]: true }),
               [classes.gallery]: gallery,
               [classes.heightHalfOne]: _medias.length > 1
             })
@@ -147,7 +153,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           onClick={() => openPreviewImage(0)}
           style={{
             background: `url(${getImageUrl(_medias[0], inView && isGif)})`,
-            ...(isLandscape ? {paddingTop: `${(100 * _medias[0].image_height) / _medias[0].image_width}%`} : {})
+            ...(isLandscape ? { paddingTop: `${(100 * _medias[0].image_height) / _medias[0].image_width}%` } : {})
           }}>
           {overlay}
           {renderTitle(_medias[0])}
@@ -164,18 +170,18 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
         <Grid
           item
           xs={6}
-          classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
+          classes={{ root: classNames(classes.border, classes.heightTwo, classes.background, { [classes.gallery]: gallery }) }}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[1] : _medias[0])})`}}>
+          style={{ background: `url(${getImageUrl(conditionalRender ? _medias[1] : _medias[0])})` }}>
           {renderOverlay(conditionalRender ? 1 : 0)}
           {renderTitle(_medias[0])}
         </Grid>
         <Grid
           item
           xs={6}
-          classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
+          classes={{ root: classNames(classes.border, classes.heightTwo, classes.background, { [classes.gallery]: gallery }) }}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 1)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[2] : _medias[1])})`}}>
+          style={{ background: `url(${getImageUrl(conditionalRender ? _medias[2] : _medias[1])})` }}>
           {overlay}
           {renderTitle(_medias[1])}
         </Grid>
@@ -195,9 +201,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           item
           xs={4}
           md={4}
-          classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
+          classes={{ root: classNames(classes.border, classes.heightThree, classes.background, { [classes.gallery]: gallery }) }}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[1] : _medias[2])})`}}>
+          style={{ background: `url(${getImageUrl(conditionalRender ? _medias[1] : _medias[2])})` }}>
           {renderOverlay(conditionalRender ? 1 : 2)}
           {renderTitle(_medias[1])}
         </Grid>
@@ -205,9 +211,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           item
           xs={4}
           md={4}
-          classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
+          classes={{ root: classNames(classes.border, classes.heightThree, classes.background, { [classes.gallery]: gallery }) }}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[2] : _medias[3])})`}}>
+          style={{ background: `url(${getImageUrl(conditionalRender ? _medias[2] : _medias[3])})` }}>
           {renderOverlay(conditionalRender ? 2 : 3)}
           {renderTitle(_medias[2])}
         </Grid>
@@ -215,9 +221,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           item
           xs={4}
           md={4}
-          classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
+          classes={{ root: classNames(classes.border, classes.heightThree, classes.background, { [classes.gallery]: gallery }) }}
           onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[3] : _medias[4])})`}}>
+          style={{ background: `url(${getImageUrl(conditionalRender ? _medias[3] : _medias[4])})` }}>
           {overlay}
           {renderTitle(_medias[3])}
         </Grid>
@@ -225,30 +231,51 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     );
   };
 
-  const renderOverlay = (id) => {
+  const renderOverlay = (id: number) => {
     if (!gallery) {
       return null;
     }
     return [
       <div key={`cover-${id}`} className={classNames(classes.cover, classes.slide)}></div>,
-      <div key={`cover-text-${id}`} className={classNames(classes.coverText, classes.slide, 'animate-text')} style={{fontSize: '100%'}}>
+      <div key={`cover-text-${id}`} className={classNames(classes.coverText, classes.slide, 'animate-text')} style={{ fontSize: '100%' }}>
         <Icon>zoom_out_map</Icon>
       </div>
     ];
   };
 
-  const renderCountOverlay = (more) => {
+  const renderCountOverlay = (more: boolean) => {
     const extra = _medias.length - (maxVisible && maxVisible > 5 ? 5 : maxVisible);
 
     return [
       more && <div key="count" className={classes.cover}></div>,
       more && (
-        <div key="count-sub" className={classes.coverText} style={{fontSize: '200%'}}>
+        <div key="count-sub" className={classes.coverText} style={{ fontSize: '200%' }}>
           <p>+{extra}</p>
         </div>
       )
     ];
   };
+
+  const handleIndexChange = useCallback(
+    (index: number) => {
+      if (_medias[index].type === MEDIA_TYPE_DOCUMENT) {
+        setToolbarButtons(
+          <IconButton component={Link} to={medias[index].url} target="_blank" color="inherit">
+            <Icon>download</Icon>
+          </IconButton>
+        );
+      } else {
+        setToolbarButtons(undefined);
+      }
+    },
+    [_medias, setToolbarButtons]
+  );
+
+  useEffect(() => {
+    if (preview !== -1) {
+      handleIndexChange(preview);
+    }
+  }, [preview]);
 
   const imagesToShow = [..._medias];
   if (maxVisible && _medias.length > maxVisible) {
@@ -265,8 +292,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
       {imagesToShow.length >= 4 && renderThree()}
 
-      {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
-      {preview !== -1 && <Lightbox onClose={handleClose} index={preview} medias={_medias} />}
+      {preview !== -1 && (
+        <Lightbox onClose={handleClose} index={preview} medias={_medias} toolbarButtons={toolbarButtons} onIndexChange={handleIndexChange} />
+      )}
     </Root>
   );
 };
