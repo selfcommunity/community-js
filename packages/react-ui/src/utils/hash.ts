@@ -1,6 +1,7 @@
+import { BatchFile } from '@rpldy/shared';
 import SparkMD5 from 'spark-md5';
 
-export const md5 = (file, chunkSize, callback) => {
+export const md5 = (file: BatchFile['file'], chunkSize: number, callback: (arg: any) => void) => {
   chunkSize = chunkSize || 2097152; // Read in chunks of 2MB
   // eslint-disable-next-line @typescript-eslint/unbound-method
   let blobSlice = File.prototype.slice || File.prototype['mozSlice'] || File.prototype['webkitSlice'],
