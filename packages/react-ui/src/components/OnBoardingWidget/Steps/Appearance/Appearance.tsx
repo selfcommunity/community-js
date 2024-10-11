@@ -86,6 +86,7 @@ export default function Appearance(inProps: AppearanceProps) {
   const [tab, setTab] = useState(0);
   const [updating, setUpdating] = useState<boolean>(false);
   const [updatingColor, setUpdatingColor] = useState<string>('');
+  const colorRef = useRef(null);
 
   // INTL
   const intl = useIntl();
@@ -247,6 +248,12 @@ export default function Appearance(inProps: AppearanceProps) {
     });
   };
 
+  const handleClosePopover = () => {
+    if (colorRef.current) {
+      colorRef.current.blur();
+    }
+  };
+
   return (
     <Root className={classNames(classes.root, className)}>
       <Typography variant="h4" className={classes.title} alignSelf="self-start">
@@ -304,11 +311,13 @@ export default function Appearance(inProps: AppearanceProps) {
                     <Typography variant="h6">{formatColorLabel(color)}</Typography>
                     <Box className={classes.colorContainer}>
                       <MuiColorInput
+                        inputRef={colorRef}
                         className={classes.color}
                         format="hex"
                         value={color.value}
                         onChange={(newColor) => handleColorChange(newColor, color.name)}
                         isAlphaHidden
+                        PopoverProps={{onClose: handleClosePopover}}
                       />
                       {updatingColor && updatingColor === color.name && (
                         <CircularProgress className={classes.colorProgress} color="secondary" size={24} />
