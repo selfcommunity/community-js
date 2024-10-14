@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.5...@selfcommunity/react-templates@0.4.1-alpha.6) (2024-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.4...@selfcommunity/react-templates@0.4.1-alpha.5) (2024-10-11)
+
+
+### Bug Fixes
+
+* EventFeed template ([1001da6](https://github.com/selfcommunity/community-js/commit/1001da60d46d1528e9a4a04c9230801792e068ea))
+
+
+
+
+
 ## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.3...@selfcommunity/react-templates@0.4.1-alpha.4) (2024-10-11)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.1-alpha.0...@selfcommunity/react-i18n@0.7.0-alpha.0) (2024-10-11)
+
+
+### Features
+
+* completed EventMediaWidget ([7e7073b](https://github.com/selfcommunity/community-js/commit/7e7073b02deb4657bb1acb8f1cf37d6ce3802d04))
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
 ## [0.6.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0...@selfcommunity/react-i18n@0.6.1-alpha.0) (2024-10-09)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
