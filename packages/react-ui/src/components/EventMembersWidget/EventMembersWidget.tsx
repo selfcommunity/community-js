@@ -174,7 +174,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [participants.isLoadingNext, participants.initialized, scEvent]);
+  }, [participants.isLoadingNext, participants.initialized, scEvent, dispatchParticipants, setParticipantsCount]);
 
   const _initInvited = useCallback(() => {
     if (!invited.initialized && !invited.isLoadingNext && hasAllow) {
@@ -190,7 +190,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [invited.isLoadingNext, invited.initialized, scUserContext.user, scEvent]);
+  }, [invited.isLoadingNext, invited.initialized, scEvent, dispatchInvited, setInvitedCount]);
 
   const _initRequests = useCallback(() => {
     if (!requests.initialized && !requests.isLoadingNext && hasAllow) {
@@ -207,7 +207,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [requests.isLoadingNext, requests.initialized, scUserContext.user, scEvent]);
+  }, [requests.isLoadingNext, requests.initialized, scEvent, dispatchRequests, setRequestsCount, setRequestsUsers]);
 
   // EFFECTS
   useEffect(() => {

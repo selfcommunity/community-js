@@ -1,12 +1,12 @@
-import {useEffect, useMemo, useState} from 'react';
-import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
-import {Endpoints, EventService, http, HttpResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
-import {getEventObjectCacheKey} from '../constants/Cache';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {useSCUser} from '../components/provider/SCUserProvider';
-import {SCUserContextType} from '../types/context';
+import { Endpoints, EventService, http, HttpResponse } from '@selfcommunity/api-services';
+import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
+import { CacheStrategies, Logger, LRUCache, objectWithoutProperties } from '@selfcommunity/utils';
+import { useEffect, useMemo, useState } from 'react';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useSCUser } from '../components/provider/SCUserProvider';
+import { getEventObjectCacheKey } from '../constants/Cache';
+import { SCOPE_SC_CORE } from '../constants/Errors';
+import { SCUserContextType } from '../types/context';
 
 /**
  :::info
@@ -42,8 +42,8 @@ export default function useSCFetchEvent({
   const [scEvent, setScEvent] = useState<SCEventType>(cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__eventCacheKey, __event) : null);
   const [error, setError] = useState<string>(null);
 
-  const setSCEvent = (event: SCEventType) => {
-    const _e: SCEventType = authUserId ? event : objectWithoutProperties<SCEventType>(event, ['subscription_status']);
+  const setSCEvent = (e: SCEventType) => {
+    const _e: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
     setScEvent(_e);
     LRUCache.set(__eventCacheKey, _e);
   };
@@ -74,19 +74,19 @@ export default function useSCFetchEvent({
   useEffect(() => {
     if (__eventId && scUserContext.user !== undefined && (!scEvent || (scEvent && __eventId !== scEvent.id))) {
       fetchEvent()
-        .then((event: SCEventType) => {
+        .then((e: SCEventType) => {
           if (
             autoSubscribe &&
             authUserId !== null &&
-            ((event.privacy === SCEventPrivacyType.PUBLIC && !event.subscription_status) || event.subscription_status === SCEventSubscriptionStatusType.INVITED)
+            ((e.privacy === SCEventPrivacyType.PUBLIC && !e.subscription_status) || e.subscription_status === SCEventSubscriptionStatusType.INVITED)
           ) {
             // Auto subscribe to the event
-            EventService.subscribeToEvent(event.id).then(() => {
-              const updatedEvent = {...event, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
+            EventService.subscribeToEvent(e.id).then(() => {
+              const updatedEvent = {...e, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
               setSCEvent(updatedEvent);
             });
           } else {
-            setSCEvent(event);
+            setSCEvent(e);
           }
         })
         .catch((err) => {

@@ -118,10 +118,16 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       limit,
       offset: DEFAULT_PAGINATION_OFFSET
     },
-    cacheStrategy,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     dialogProps,
     ...rest
   } = props;
+
+  // HOOKS
+  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const intl = useIntl();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // STATE
   const [state, dispatch] = useReducer(
@@ -129,7 +135,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.EVENT_MEDIA_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.EVENT_MEDIA_STATE_CACHE_PREFIX_KEY, scEvent.id),
       cacheStrategy,
       visibleItems: limit
     },
@@ -146,12 +152,6 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-
-  // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const intl = useIntl();
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
