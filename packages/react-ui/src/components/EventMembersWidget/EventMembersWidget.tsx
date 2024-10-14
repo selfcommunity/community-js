@@ -1,24 +1,24 @@
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { CardContent, Stack, Tab, Typography, useThemeProps } from '@mui/material';
-import { styled } from '@mui/system';
-import { EventService, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCCache, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
-import { SCEventType, SCUserType } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { SyntheticEvent, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {TabContext, TabList, TabPanel} from '@mui/lab';
+import {CardContent, Stack, Tab, Typography, useThemeProps} from '@mui/material';
+import {styled} from '@mui/system';
+import {EventService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCCache, SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {SyntheticEvent, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import 'swiper/css';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
-import { BaseDialogProps } from '../../shared/BaseDialog';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import {BaseDialogProps} from '../../shared/BaseDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
-import { UserProps } from '../User';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
+import {UserProps} from '../User';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 import TabContentComponent from './TabContentComponent';
-import { TabContentEnum, TabContentType } from './types';
+import {TabContentEnum, TabContentType} from './types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -91,7 +91,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     event,
     eventId,
     userProps = {},
-    endpointQueryParams = { limit: 5, offset: DEFAULT_PAGINATION_OFFSET },
+    endpointQueryParams = {limit: 5, offset: DEFAULT_PAGINATION_OFFSET},
     cacheStrategy,
     dialogProps,
     limit = 5,
@@ -143,7 +143,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
@@ -162,52 +162,52 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   // CALLBACKS
   const _initParticipants = useCallback(() => {
     if (!participants.initialized && !participants.isLoadingNext) {
-      dispatchParticipants({ type: actionWidgetTypes.LOADING_NEXT });
+      dispatchParticipants({type: actionWidgetTypes.LOADING_NEXT});
 
-      EventService.getUsersGoingToEvent(scEvent.id, { ...endpointQueryParams })
+      EventService.getUsersGoingToEvent(scEvent.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatchParticipants({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatchParticipants({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           setParticipantsCount(payload.count);
         })
         .catch((error) => {
-          dispatchParticipants({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatchParticipants({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [participants.isLoadingNext, participants.initialized, scEvent]);
+  }, [participants.isLoadingNext, participants.initialized, scEvent, dispatchParticipants, setParticipantsCount]);
 
   const _initInvited = useCallback(() => {
     if (!invited.initialized && !invited.isLoadingNext && hasAllow) {
-      dispatchInvited({ type: actionWidgetTypes.LOADING_NEXT });
+      dispatchInvited({type: actionWidgetTypes.LOADING_NEXT});
 
-      EventService.getEventInvitedUsers(scEvent.id, { ...endpointQueryParams })
+      EventService.getEventInvitedUsers(scEvent.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatchInvited({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           setInvitedCount(payload.count);
         })
         .catch((error) => {
-          dispatchInvited({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatchInvited({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [invited.isLoadingNext, invited.initialized, scUserContext.user, scEvent]);
+  }, [invited.isLoadingNext, invited.initialized, scEvent, dispatchInvited, setInvitedCount]);
 
   const _initRequests = useCallback(() => {
     if (!requests.initialized && !requests.isLoadingNext && hasAllow) {
-      dispatchRequests({ type: actionWidgetTypes.LOADING_NEXT });
+      dispatchRequests({type: actionWidgetTypes.LOADING_NEXT});
 
-      EventService.getEventWaitingApprovalSubscribers(scEvent.id, { ...endpointQueryParams })
+      EventService.getEventWaitingApprovalSubscribers(scEvent.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
-          dispatchRequests({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
+          dispatchRequests({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           setRequestsCount(payload.count);
           setRequestsUsers(payload.results);
         })
         .catch((error) => {
-          dispatchRequests({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+          dispatchRequests({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [requests.isLoadingNext, requests.initialized, scUserContext.user, scEvent]);
+  }, [requests.isLoadingNext, requests.initialized, scEvent, dispatchRequests, setRequestsCount, setRequestsUsers]);
 
   // EFFECTS
   useEffect(() => {
@@ -230,6 +230,30 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
       return () => {
         clearTimeout(_t);
+        if (participants.initialized) {
+          dispatchParticipants({
+            type: actionWidgetTypes.INITIALIZE,
+            payload: {
+              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_EVENTS_STATE_CACHE_PREFIX_KEY, scEvent.id)
+            }
+          });
+        }
+        if (invited.initialized) {
+          dispatchParticipants({
+            type: actionWidgetTypes.INITIALIZE,
+            payload: {
+              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_INVITED_EVENTS_STATE_CACHE_PREFIX_KEY, scEvent.id)
+            }
+          });
+        }
+        if (requests.initialized) {
+          dispatchParticipants({
+            type: actionWidgetTypes.INITIALIZE,
+            payload: {
+              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_EVENTS_STATE_CACHE_PREFIX_KEY, scEvent.id)
+            }
+          });
+        }
       };
     }
   }, [scUserContext.user, scEvent, refresh]);
@@ -241,9 +265,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
   const handleRefresh = useCallback((_tabValue: TabContentType) => {
     if (_tabValue === TabContentEnum.PARTICIPANTS) {
-      dispatchParticipants({ type: actionWidgetTypes.RESET });
+      dispatchParticipants({type: actionWidgetTypes.RESET});
     } else if (_tabValue === TabContentEnum.INVITED) {
-      dispatchInvited({ type: actionWidgetTypes.RESET });
+      dispatchInvited({type: actionWidgetTypes.RESET});
     }
     setRefresh(_tabValue);
   }, []);
