@@ -268,11 +268,11 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
             <LightBox
               images={[{src: message?.file.url, key: message.file.uuid}]}
               onClose={() => setOpenDialog(false)}
-              toolbarButtons={[
+              toolbarButtons={
                 <IconButton key={'download'} onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
                   <Icon>download</Icon>
                 </IconButton>
-              ]}
+              }
             />
           )}
         </>

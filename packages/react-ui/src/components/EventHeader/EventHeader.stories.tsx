@@ -21,7 +21,7 @@ const BaseTemplate = (args) => (
 
 export const Base: StoryObj<typeof EventHeader> = {
   args: {
-    eventId: 123
+    eventId: 129
   },
   render: BaseTemplate
 };

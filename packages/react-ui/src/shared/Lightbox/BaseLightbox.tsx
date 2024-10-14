@@ -1,10 +1,10 @@
-import { CircularProgress } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { MouseEvent, TouchEvent, useCallback, useState } from 'react';
-import { PhotoSlider } from 'react-photo-view';
-import { PhotoProviderBase } from 'react-photo-view/dist/types';
-import { DataType } from '../../types/lightbox';
-import { PREFIX } from './constants';
+import {CircularProgress} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {MouseEvent, TouchEvent, useCallback, useState} from 'react';
+import {PhotoSlider} from 'react-photo-view';
+import {PhotoProviderBase} from 'react-photo-view/dist/types';
+import {DataType} from '../../types/lightbox';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -32,7 +32,7 @@ const Root = styled(PhotoSlider, {
 })(() => ({}));
 
 const BaseLightbox = (props: BaseLightboxProps) => {
-  const { images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarRender, toolbarButtons, ...rest } = props;
+  const {images = [], index, onClose, visible = true, afterClose, onIndexChange, toolbarRender, toolbarButtons, ...rest} = props;
 
   // STATE
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(index || 0);
@@ -63,8 +63,8 @@ const BaseLightbox = (props: BaseLightboxProps) => {
         toolbarRender
           ? toolbarRender
           : () => {
-            return toolbarButtons;
-          }
+              return toolbarButtons;
+            }
       }
     />
   );

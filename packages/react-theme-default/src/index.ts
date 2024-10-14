@@ -65,6 +65,7 @@ import SCEmojiPicker from './components/SCEmojiPicker';
 import SCEvent from './components/SCEvent';
 import SCEventActionsMenu from './components/SCEventActionsMenu';
 import SCEventForm from './components/SCEventForm';
+import SCEventFormDialog from './components/SCEventFormDialog';
 import SCEventHeader from './components/SCEventHeader';
 import SCEventInfoDetails from './components/SCEventInfoDetails';
 import SCEventInfoWidget from './components/SCEventInfoWidget';
@@ -368,6 +369,7 @@ const theme = {
     SCUserSubscribedGroupsWidget,
     SCUserSuggestionWidget,
     SCEventForm,
+    SCEventFormDialog,
     SCCreateEventButton,
     SCEventLocationWidget,
     SCEvent,

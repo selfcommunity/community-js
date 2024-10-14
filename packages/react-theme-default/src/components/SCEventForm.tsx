@@ -71,6 +71,14 @@ const Component = {
       '& .SCEventForm-active': {
         color: theme.palette.secondary.main
       },
+      '& .SCEventForm-actions': {
+        marginTop: theme.spacing(2),
+        display: 'flex',
+        justifyContent: 'flex-end',
+        '& button': {
+          width: 'fit-content'
+        }
+      },
       '& .SCEventForm-privacy-section': {
         marginTop: theme.spacing(2),
         justifyContent: 'center',
