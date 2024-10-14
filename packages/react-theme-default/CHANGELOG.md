@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.0...@selfcommunity/react-theme-default@0.3.0-alpha.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* Eventform & EventFormDialog ([8ff0a96](https://github.com/selfcommunity/community-js/commit/8ff0a96ff59f24ad0dfdcaacf9b9c851a7b975ab))
+
+
+
+
+
 # [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.4...@selfcommunity/react-theme-default@0.3.0-alpha.0) (2024-10-11)
 
 

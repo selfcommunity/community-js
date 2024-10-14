@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.0...@selfcommunity/react-ui@0.9.0-alpha.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* Eventform & EventFormDialog ([2aa33c2](https://github.com/selfcommunity/community-js/commit/2aa33c279cbc0fb1c651fdafae87fd5da856398c))
+* Eventform & EventFormDialog ([8ff0a96](https://github.com/selfcommunity/community-js/commit/8ff0a96ff59f24ad0dfdcaacf9b9c851a7b975ab))
+* updated some array dependencies; exported trigger button as a forwardRef ([d0567f3](https://github.com/selfcommunity/community-js/commit/d0567f3b990cc3da7b4cec7c4e9e82b6310551b0))
+
+
+
+
+
 # [0.9.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.4...@selfcommunity/react-ui@0.9.0-alpha.0) (2024-10-11)
 
 
