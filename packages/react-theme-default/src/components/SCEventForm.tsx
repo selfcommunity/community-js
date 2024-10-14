@@ -2,8 +2,7 @@ import {alpha} from '@mui/system';
 
 const Component = {
   styleOverrides: {
-    root: ({theme, disableModal}: any) => ({
-      ...(disableModal && {position: 'relative'}),
+    root: ({theme}: any) => ({
       '& .SCEventForm-cover': {
         position: 'relative',
         height: 120,

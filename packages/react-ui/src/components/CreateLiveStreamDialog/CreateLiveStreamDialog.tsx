@@ -34,7 +34,7 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
   return <Fragment> {props.children} </Fragment>;
 });
 
-export interface CreateLivestreamDialogProps extends BaseDialogProps {
+export interface CreateLiveStreamDialogProps extends BaseDialogProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -72,7 +72,7 @@ export interface CreateLivestreamDialogProps extends BaseDialogProps {
 }
 
 /**
- *> API documentation for the Community-JS CreateLivestreamDialog component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS CreateLiveStreamDialog component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
@@ -94,9 +94,9 @@ export interface CreateLivestreamDialogProps extends BaseDialogProps {
 
  * @param inProps
  */
-export default function CreateLivestreamDialog(inProps: CreateLivestreamDialogProps): JSX.Element {
+export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogProps): JSX.Element {
   //PROPS
-  const props: CreateLivestreamDialogProps = useThemeProps({
+  const props: CreateLiveStreamDialogProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -131,20 +131,11 @@ export default function CreateLivestreamDialog(inProps: CreateLivestreamDialogPr
       className={classNames(classes.root, className)}
       disablePortal
       PaperProps={{elevation: 0}}
-      actions={
-        <LoadingButton variant="contained" onClick={handleSubmit} color="secondary">
-          {livestream ? (
-            <FormattedMessage id="ui.createLivestreamDialog.button.edit" defaultMessage="ui.eventForm.button.edit" />
-          ) : (
-            <FormattedMessage id="ui.createLivestreamDialog.button.create" defaultMessage="ui.createLivestreamDialog.button.create" />
-          )}
-        </LoadingButton>
-      }
       {...(disableModal ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       {...rest}>
-      <DialogContent dividers>
-        <EventForm hideBackdrop disablePortal PaperProps={{elevation: 0}} disableModal />
-        {/* <EventForm open fullWidth /> */}
+      <DialogContent>
+				<LiveStreamSelector />
+				{/* <EventForm /> */}
       </DialogContent>
     </Root>
   );

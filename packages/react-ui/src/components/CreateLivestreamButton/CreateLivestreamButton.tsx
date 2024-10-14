@@ -8,7 +8,7 @@ import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import EventForm, {EventFormProps} from '../EventForm';
 import {SCFeatureName} from '@selfcommunity/types';
-import CreateLivestreamDialog from '../CreateLivstreamDialog';
+import CreateLivestreamDialog from '../CreateLiveStreamDialog';
 
 const PREFIX = 'SCCreateLivestreamButton';
 

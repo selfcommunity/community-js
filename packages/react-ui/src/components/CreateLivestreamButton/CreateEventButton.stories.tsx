@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import CreateLivestreamButton from './index';
 
 export default {
-  title: 'Design System/React UI/CreateLivestreamButton',
+  title: 'Design System/React UI/Livestream/CreateLivestreamButton',
   component: CreateLivestreamButton,
 } as Meta<typeof CreateLivestreamButton>;
 
