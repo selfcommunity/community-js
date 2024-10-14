@@ -1,6 +1,7 @@
 import {LoadingButton} from '@mui/lab';
 import {
   Box,
+  BoxProps,
   FormControl,
   FormGroup,
   Icon,
@@ -32,7 +33,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_LATER_DAYS} from './constants';
 import EventAddress from './EventAddress';
 import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
@@ -88,32 +88,23 @@ const classes = {
   name: `${PREFIX}-name`,
   description: `${PREFIX}-description`,
   content: `${PREFIX}-content`,
+	actions: `${PREFIX}-actions`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   error: `${PREFIX}-error`
 };
 
-const Root = styled(BaseDialog, {
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
 
-export interface EventFormProps extends BaseDialogProps {
+export interface EventFormProps extends BoxProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
-  /**
-   * Open dialog
-   * @default true
-   */
-  open?: boolean;
-  /**
-   * On dialog close callback function
-   * @default null
-   */
-  onClose?: () => void;
 
   /**
    * Event Object
@@ -126,6 +117,13 @@ export interface EventFormProps extends BaseDialogProps {
    * @default null
    */
   onSuccess?: (data: SCEventType) => void;
+
+  /**
+   * On error callback function
+   * @default null
+   */
+  onError?: (error: any) => void;
+
   /**
    * Any other properties
    */
@@ -169,7 +167,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, onSuccess, event = null, ...rest} = props;
+  const {className, onSuccess, onError, event = null, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -306,10 +304,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
     eventService
       .then((data) => {
-        onSuccess?.(data);
         notifyChanges(data);
-        onClose?.();
         setField((prev) => ({...prev, ['isSubmitting']: false}));
+        onSuccess?.(data);
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
@@ -327,8 +324,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
+        onError?.(e);
       });
-  }, [field, privateEnabled, visibilityEnabled]);
+  }, [field, privateEnabled, visibilityEnabled, onSuccess, onError]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -394,306 +392,290 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
    * Renders root object
    */
   return (
-    <Root
-      DialogContentProps={{dividers: false}}
-      title={
-        event ? (
-          <FormattedMessage id="ui.eventForm.title.edit" defaultMessage="ui.eventForm.title.edit" />
-        ) : (
-          <FormattedMessage id="ui.eventForm.title" defaultMessage="ui.eventForm.title" />
-        )
-      }
-      open={open}
-      onClose={onClose}
-      className={classNames(classes.root, className)}
-      actions={
-        <LoadingButton
-          loading={field.isSubmitting}
-          disabled={
-            !field.name ||
-            !field.startDate ||
-            !field.startTime ||
-            !field.endDate ||
-            !field.endTime ||
-            (field.location === SCEventLocationType.ONLINE && !field.link) ||
-            (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
-            (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
-            Object.keys(error).length !== 0 ||
-            field.name.length > EVENT_TITLE_MAX_LENGTH ||
-            field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
+    <Root className={classNames(classes.root, className)} {...rest}>
+      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+        <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
+      </Paper>
+      <FormGroup className={classes.form}>
+        <TextField
+          required
+          className={classes.name}
+          placeholder={`${intl.formatMessage(messages.name)}`}
+          margin="normal"
+          value={field.name}
+          name="name"
+          onChange={handleChange}
+          InputProps={{
+            endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
+          }}
+          error={Boolean(field.name.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
+          helperText={
+            field.name.length > EVENT_TITLE_MAX_LENGTH ? (
+              <FormattedMessage id="ui.eventForm.name.error.maxLength" defaultMessage="ui.eventForm.name.error.maxLength" />
+            ) : error['nameError'] ? (
+              error['nameError']
+            ) : null
           }
-          variant="contained"
-          onClick={handleSubmit}
-          color="secondary">
-          {event ? (
-            <FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
-          ) : (
-            <FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
-          )}
-        </LoadingButton>
-      }
-      {...rest}>
-      <>
-        <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-          <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
-        </Paper>
-        <FormGroup className={classes.form}>
-          <TextField
-            required
-            className={classes.name}
-            placeholder={`${intl.formatMessage(messages.name)}`}
-            margin="normal"
-            value={field.name}
-            name="name"
-            onChange={handleChange}
-            InputProps={{
-              endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
-            }}
-            error={Boolean(field.name.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
-            helperText={
-              field.name.length > EVENT_TITLE_MAX_LENGTH ? (
-                <FormattedMessage id="ui.eventForm.name.error.maxLength" defaultMessage="ui.eventForm.name.error.maxLength" />
-              ) : error['nameError'] ? (
-                error['nameError']
-              ) : null
-            }
-          />
-          <Box className={classes.dateTime}>
-            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
-              <MobileDatePicker
-                className={classes.picker}
-                disablePast
-                label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
-                value={field.startDate}
-                slots={{
-                  textField: (params) => (
-                    <TextField
-                      {...params}
-                      InputProps={{
-                        ...params.InputProps,
-                        placeholder: `${intl.formatMessage(messages.startDate)}`,
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IconButton>
-                              <Icon>CalendarIcon</Icon>
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  )
-                }}
-                slotProps={{
-                  toolbar: {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
-                  }
-                }}
-                onChange={(value) => handleChangeDateTime(value, 'startDate')}
-              />
-              <MobileTimePicker
-                className={classes.picker}
-                disablePast={disablePastStartTime}
-                label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
-                value={field.startTime}
-                slots={{
-                  textField: (params) => (
-                    <TextField
-                      {...params}
-                      InputProps={{
-                        ...params.InputProps,
-                        placeholder: `${intl.formatMessage(messages.startTime)}`,
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IconButton>
-                              <Icon>access_time</Icon>
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  )
-                }}
-                slotProps={{
-                  toolbar: {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
-                  }
-                }}
-                onChange={(value) => handleChangeDateTime(value, 'startTime')}
-              />
-            </LocalizationProvider>
-          </Box>
-          <FormControl className={classes.frequency}>
-            {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="recurring">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
-            <Select
-              name="recurring"
-              label={field.recurring !== SCEventRecurrenceType.NEVER && `${intl.formatMessage(messages.frequency)}`}
-              labelId="recurring"
-              value={field.recurring}
-              onChange={handleChange}
-              displayEmpty
-              renderValue={(selected) => {
-                if (!selected) {
-                  return <em>{`${intl.formatMessage(messages.frequencyPlaceholder)}`}</em>;
-                }
-
-                return (
-                  <FormattedMessage
-                    id={`ui.eventForm.frequency.${selected}.placeholder`}
-                    defaultMessage={`ui.eventForm.frequency.${selected}.placeholder`}
+        />
+        <Box className={classes.dateTime}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+            <MobileDatePicker
+              className={classes.picker}
+              disablePast
+              label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
+              value={field.startDate}
+              slots={{
+                textField: (params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{
+                      ...params.InputProps,
+                      placeholder: `${intl.formatMessage(messages.startDate)}`,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <IconButton>
+                            <Icon>CalendarIcon</Icon>
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
                   />
-                );
+                )
               }}
-              startAdornment={
-                <InputAdornment position="start">
-                  <IconButton>
-                    <Icon>frequency</Icon>
-                  </IconButton>
-                </InputAdornment>
-              }>
-              {Object.values(SCEventRecurrenceType).map((f) => (
-                <MenuItem value={f} key={f}>
-                  <FormattedMessage id={`ui.eventForm.frequency.${f}.placeholder`} defaultMessage={`ui.eventForm.frequency.${f}.placeholder`} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Box className={classes.dateTime}>
-            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
-              <MobileDatePicker
-                className={classes.picker}
-                disablePast
-                minDate={field.startDate}
-                label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
-                value={field.endDate}
-                slots={{
-                  textField: (params) => (
-                    <TextField
-                      {...params}
-                      InputProps={{
-                        ...params.InputProps,
-                        placeholder: `${intl.formatMessage(messages.endDate)}`,
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IconButton>
-                              <Icon>calendar_off</Icon>
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  )
-                }}
-                onChange={(value) => handleChangeDateTime(value, 'endDate')}
-                shouldDisableDate={shouldDisabledDate}
-              />
-              <MobileTimePicker
-                className={classes.picker}
-                disablePast={disablePastEndTime}
-                label={
-                  field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />
+              slotProps={{
+                toolbar: {
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
-                value={field.endTime}
-                slots={{
-                  textField: (params) => (
-                    <TextField
-                      {...params}
-                      InputProps={{
-                        ...params.InputProps,
-                        placeholder: `${intl.formatMessage(messages.endTime)}`,
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <IconButton>
-                              <Icon>access_time</Icon>
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                      error={Boolean(error['endDateError'])}
-                      helperText={
-                        error['endDateError']?.error ? (
-                          <FormattedMessage id="ui.eventForm.time.end.error.invalid" defaultMessage="ui.eventForm.time.end.error.invalid" />
-                        ) : null
-                      }
-                    />
-                  )
-                }}
-                onChange={(value) => handleChangeDateTime(value, 'endTime')}
-                shouldDisableTime={shouldDisabledTime}
-              />
-            </LocalizationProvider>
-          </Box>
-          <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null} />
-          {privateEnabled && (
-            <Box className={classes.privacySection}>
-              <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-                <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
-                  <Icon>private</Icon>
-                  <FormattedMessage id="ui.eventForm.privacy.private" defaultMessage="ui.eventForm.privacy.private" />
-                </Typography>
-                <Switch
-                  className={classes.switch}
-                  checked={field.isPublic}
-                  onChange={() => setField((prev) => ({...prev, ['isPublic']: !field.isPublic}))}
-                  disabled={event && !field.isPublic}
-                />
-                <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
-                  <Icon>public</Icon>
-                  <FormattedMessage id="ui.eventForm.privacy.public" defaultMessage="ui.eventForm.privacy.public" />
-                </Typography>
-              </Stack>
-              <Typography variant="body2" textAlign="center" className={classes.privacySectionInfo}>
-                {field.isPublic ? (
-                  <FormattedMessage
-                    id="ui.eventForm.privacy.public.info"
-                    defaultMessage="ui.eventForm.privacy.public.info"
-                    values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      b: (chunks) => <strong>{chunks}</strong>
+              }}
+              onChange={(value) => handleChangeDateTime(value, 'startDate')}
+            />
+            <MobileTimePicker
+              className={classes.picker}
+              disablePast={disablePastStartTime}
+              label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
+              value={field.startTime}
+              slots={{
+                textField: (params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{
+                      ...params.InputProps,
+                      placeholder: `${intl.formatMessage(messages.startTime)}`,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <IconButton>
+                            <Icon>access_time</Icon>
+                          </IconButton>
+                        </InputAdornment>
+                      )
                     }}
                   />
-                ) : (
-                  <FormattedMessage
-                    id="ui.eventForm.privacy.private.info"
-                    defaultMessage="ui.eventForm.private.public.info"
-                    values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      b: (chunks) => <strong>{chunks}</strong>
-                    }}
-                  />
-                )}
-              </Typography>
-            </Box>
-          )}
-          <TextField
-            multiline
-            className={classes.description}
-            placeholder={`${intl.formatMessage(messages.description)}`}
-            margin="normal"
-            value={field.description}
-            name="description"
+                )
+              }}
+              slotProps={{
+                toolbar: {
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
+                }
+              }}
+              onChange={(value) => handleChangeDateTime(value, 'startTime')}
+            />
+          </LocalizationProvider>
+        </Box>
+        <FormControl className={classes.frequency}>
+          {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="recurring">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
+          <Select
+            name="recurring"
+            label={field.recurring !== SCEventRecurrenceType.NEVER && `${intl.formatMessage(messages.frequency)}`}
+            labelId="recurring"
+            value={field.recurring}
             onChange={handleChange}
-            InputProps={{
-              endAdornment: (
-                <Typography variant="body2">
-                  {field.description?.length ? EVENT_DESCRIPTION_MAX_LENGTH - field.description.length : EVENT_DESCRIPTION_MAX_LENGTH}
-                </Typography>
-              )
+            displayEmpty
+            renderValue={(selected) => {
+              if (!selected) {
+                return <em>{`${intl.formatMessage(messages.frequencyPlaceholder)}`}</em>;
+              }
+
+              return (
+                <FormattedMessage
+                  id={`ui.eventForm.frequency.${selected}.placeholder`}
+                  defaultMessage={`ui.eventForm.frequency.${selected}.placeholder`}
+                />
+              );
             }}
-            error={Boolean(field.description?.length > EVENT_DESCRIPTION_MAX_LENGTH)}
-            helperText={
-              field.description?.length > EVENT_DESCRIPTION_MAX_LENGTH ? (
-                <FormattedMessage id="ui.eventForm.description.error.maxLength" defaultMessage="ui.eventForm.description.error.maxLength" />
-              ) : null
-            }
-          />
-        </FormGroup>
-      </>
+            startAdornment={
+              <InputAdornment position="start">
+                <IconButton>
+                  <Icon>frequency</Icon>
+                </IconButton>
+              </InputAdornment>
+            }>
+            {Object.values(SCEventRecurrenceType).map((f) => (
+              <MenuItem value={f} key={f}>
+                <FormattedMessage id={`ui.eventForm.frequency.${f}.placeholder`} defaultMessage={`ui.eventForm.frequency.${f}.placeholder`} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Box className={classes.dateTime}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+            <MobileDatePicker
+              className={classes.picker}
+              disablePast
+              minDate={field.startDate}
+              label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
+              value={field.endDate}
+              slots={{
+                textField: (params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{
+                      ...params.InputProps,
+                      placeholder: `${intl.formatMessage(messages.endDate)}`,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <IconButton>
+                            <Icon>calendar_off</Icon>
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                )
+              }}
+              onChange={(value) => handleChangeDateTime(value, 'endDate')}
+              shouldDisableDate={shouldDisabledDate}
+            />
+            <MobileTimePicker
+              className={classes.picker}
+              disablePast={disablePastEndTime}
+              label={field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />}
+              value={field.endTime}
+              slots={{
+                textField: (params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{
+                      ...params.InputProps,
+                      placeholder: `${intl.formatMessage(messages.endTime)}`,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <IconButton>
+                            <Icon>access_time</Icon>
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                    error={Boolean(error['endDateError'])}
+                    helperText={
+                      error['endDateError']?.error ? (
+                        <FormattedMessage id="ui.eventForm.time.end.error.invalid" defaultMessage="ui.eventForm.time.end.error.invalid" />
+                      ) : null
+                    }
+                  />
+                )
+              }}
+              onChange={(value) => handleChangeDateTime(value, 'endTime')}
+              shouldDisableTime={shouldDisabledTime}
+            />
+          </LocalizationProvider>
+        </Box>
+        <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null} />
+        {privateEnabled && (
+          <Box className={classes.privacySection}>
+            <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+              <Typography className={classNames(classes.switchLabel, {[classes.active]: !field.isPublic})}>
+                <Icon>private</Icon>
+                <FormattedMessage id="ui.eventForm.privacy.private" defaultMessage="ui.eventForm.privacy.private" />
+              </Typography>
+              <Switch
+                className={classes.switch}
+                checked={field.isPublic}
+                onChange={() => setField((prev) => ({...prev, ['isPublic']: !field.isPublic}))}
+                disabled={event && !field.isPublic}
+              />
+              <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
+                <Icon>public</Icon>
+                <FormattedMessage id="ui.eventForm.privacy.public" defaultMessage="ui.eventForm.privacy.public" />
+              </Typography>
+            </Stack>
+            <Typography variant="body2" textAlign="center" className={classes.privacySectionInfo}>
+              {field.isPublic ? (
+                <FormattedMessage
+                  id="ui.eventForm.privacy.public.info"
+                  defaultMessage="ui.eventForm.privacy.public.info"
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
+                />
+              ) : (
+                <FormattedMessage
+                  id="ui.eventForm.privacy.private.info"
+                  defaultMessage="ui.eventForm.private.public.info"
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
+                />
+              )}
+            </Typography>
+          </Box>
+        )}
+        <TextField
+          multiline
+          className={classes.description}
+          placeholder={`${intl.formatMessage(messages.description)}`}
+          margin="normal"
+          value={field.description}
+          name="description"
+          onChange={handleChange}
+          InputProps={{
+            endAdornment: (
+              <Typography variant="body2">
+                {field.description?.length ? EVENT_DESCRIPTION_MAX_LENGTH - field.description.length : EVENT_DESCRIPTION_MAX_LENGTH}
+              </Typography>
+            )
+          }}
+          error={Boolean(field.description?.length > EVENT_DESCRIPTION_MAX_LENGTH)}
+          helperText={
+            field.description?.length > EVENT_DESCRIPTION_MAX_LENGTH ? (
+              <FormattedMessage id="ui.eventForm.description.error.maxLength" defaultMessage="ui.eventForm.description.error.maxLength" />
+            ) : null
+          }
+        />
+				<Box className={classes.actions}>
+					<LoadingButton
+						loading={field.isSubmitting}
+						disabled={
+							!field.name ||
+							!field.startDate ||
+							!field.startTime ||
+							!field.endDate ||
+							!field.endTime ||
+							(field.location === SCEventLocationType.ONLINE && !field.link) ||
+							(field.location === SCEventLocationType.PERSON && !field.geolocation) ||
+							(field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
+							Object.keys(error).length !== 0 ||
+							field.name.length > EVENT_TITLE_MAX_LENGTH ||
+							field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
+						}
+						variant="contained"
+						onClick={handleSubmit}
+						color="secondary">
+						{event ? (
+							<FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
+						) : (
+							<FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
+						)}
+					</LoadingButton>
+				</Box>
+      </FormGroup>
     </Root>
   );
 }
