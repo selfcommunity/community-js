@@ -164,6 +164,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   const _initComponent = useCallback(() => {
     if (!state.initialized && !state.isLoadingNext) {
       dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+
       EventService.getEventPhotoGallery(scEvent.id, { ...endpointQueryParams })
         .then((payload: SCPaginatedResponse<SCMediaType>) => {
           dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
@@ -175,7 +176,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [state.isLoadingNext, state.initialized, scEvent]);
+  }, [state.isLoadingNext, state.initialized, scEvent, dispatch, setMedias, setMediasCount]);
 
   const _fetchNext = useCallback(
     (index: number) => {
@@ -199,7 +200,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
           });
       }
     },
-    [state.next, state.isLoadingNext, medias.length]
+    [state.next, state.isLoadingNext, medias, mediasCount, dispatch, setPreview]
   );
 
   const handleOpenLightbox = useCallback(
@@ -267,7 +268,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [scEvent, mediaId, setMedias, setLoading, setOpenDialogConfirm, dispatch]);
+  }, [scEvent, mediaId, setMedias, setLoading, setOpenDialogConfirm, dispatch, setMediasCount]);
 
   const handleCloseAction = useCallback(() => {
     setMediaId(null);
