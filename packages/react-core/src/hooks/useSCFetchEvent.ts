@@ -1,12 +1,12 @@
-import {useEffect, useMemo, useState} from 'react';
-import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
-import {Endpoints, EventService, http, HttpResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
-import {getEventObjectCacheKey} from '../constants/Cache';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {useSCUser} from '../components/provider/SCUserProvider';
-import {SCUserContextType} from '../types/context';
+import { Endpoints, EventService, http, HttpResponse } from '@selfcommunity/api-services';
+import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
+import { CacheStrategies, Logger, LRUCache, objectWithoutProperties } from '@selfcommunity/utils';
+import { useEffect, useMemo, useState } from 'react';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useSCUser } from '../components/provider/SCUserProvider';
+import { getEventObjectCacheKey } from '../constants/Cache';
+import { SCOPE_SC_CORE } from '../constants/Errors';
+import { SCUserContextType } from '../types/context';
 
 /**
  :::info
@@ -77,10 +77,10 @@ export default function useSCFetchEvent({
    * Memoized fetchTag
    */
   const fetchEvent = useMemo(
-    () => () => {
+    () => (id: string | number) => {
       return http
         .request({
-          url: Endpoints.GetEventInfo.url({id: __eventId}),
+          url: Endpoints.GetEventInfo.url({id}),
           method: Endpoints.GetEventInfo.method,
         })
         .then((res: HttpResponse<SCEventType>) => {
@@ -90,15 +90,15 @@ export default function useSCFetchEvent({
           return Promise.resolve(res.data);
         });
     },
-    [__eventId]
+    []
   );
 
   /**
    * If id attempt to get the event by id
    */
   useEffect(() => {
-    if (__eventId?.toString() !== undefined && !event) {
-      fetchEvent()
+    if (id !== null && id !== undefined && !event) {
+      fetchEvent(id)
         .then((e: SCEventType) => {
           setSCEvent(e);
         })
@@ -109,7 +109,7 @@ export default function useSCFetchEvent({
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [__eventId, event]);
+  }, [id, event, authUserId]);
 
   useDeepCompareEffectNoCheck(() => {
     if (event) {

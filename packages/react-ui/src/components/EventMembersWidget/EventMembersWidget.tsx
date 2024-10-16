@@ -11,7 +11,6 @@ import 'swiper/css';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {BaseDialogProps} from '../../shared/BaseDialog';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {UserProps} from '../User';
 import Widget, {WidgetProps} from '../Widget';
@@ -72,6 +71,9 @@ export interface EventMembersWidgetProps extends WidgetProps {
    */
   dialogProps?: BaseDialogProps;
 
+	/**
+	 * Limit items
+	 */
   limit?: number;
 
   /**
@@ -132,10 +134,10 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     },
     stateWidgetInitializer
   );
-  const [participantsCount, setParticipantsCount] = useState(0);
-  const [invitedCount, setInvitedCount] = useState(0);
-  const [requestsCount, setRequestsCount] = useState(0);
-  const [requestsUsers, setRequestsUsers] = useState<SCUserType[]>([]);
+  const [participantsCount, setParticipantsCount] = useState(participants.count);
+  const [invitedCount, setInvitedCount] = useState(invited.count);
+  const [requestsCount, setRequestsCount] = useState(requests.count);
+  const [requestsUsers, setRequestsUsers] = useState<SCUserType[]>(requests.results);
   const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum.PARTICIPANTS);
   const [refresh, setRefresh] = useState<TabContentType | null>(null);
 
@@ -212,7 +214,6 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
-
     if (scUserContext.user && scEvent) {
       _t = setTimeout(() => {
         if (refresh === TabContentEnum.PARTICIPANTS) {
@@ -227,36 +228,19 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           _initRequests();
         }
       });
-
       return () => {
         clearTimeout(_t);
-        if (participants.initialized) {
-          dispatchParticipants({
-            type: actionWidgetTypes.INITIALIZE,
-            payload: {
-              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_EVENTS_STATE_CACHE_PREFIX_KEY, scEvent.id)
-            }
-          });
-        }
-        if (invited.initialized) {
-          dispatchParticipants({
-            type: actionWidgetTypes.INITIALIZE,
-            payload: {
-              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_INVITED_EVENTS_STATE_CACHE_PREFIX_KEY, scEvent.id)
-            }
-          });
-        }
-        if (requests.initialized) {
-          dispatchParticipants({
-            type: actionWidgetTypes.INITIALIZE,
-            payload: {
-              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_EVENTS_STATE_CACHE_PREFIX_KEY, scEvent.id)
-            }
-          });
-        }
       };
     }
   }, [scUserContext.user, scEvent, refresh]);
+
+  useEffect(() => {
+    if (participants.initialized && scEvent && Boolean((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) {
+      dispatchParticipants({type: actionWidgetTypes.RESET, payload: {}});
+      dispatchRequests({type: actionWidgetTypes.RESET, payload: {}});
+      dispatchInvited({type: actionWidgetTypes.RESET, payload: {}});
+    }
+  }, [participants.initialized, scEvent, eventId, event]);
 
   // HANDLERS
   const handleTabChange = useCallback((_evt: SyntheticEvent, newTabValue: TabContentType) => {
@@ -272,13 +256,13 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     setRefresh(_tabValue);
   }, []);
 
-  if (!scEvent && !participants.initialized) {
+  if (
+    !scEvent ||
+    !participants.initialized ||
+    (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) ||
+    (tabValue === TabContentEnum.PARTICIPANTS && participants.isLoadingNext && !participants.initialized)
+  ) {
     return <Skeleton />;
-  }
-
-  // RENDER
-  if (!scEvent) {
-    return <HiddenPlaceholder />;
   }
 
   return (
