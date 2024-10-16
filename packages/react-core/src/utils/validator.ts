@@ -188,7 +188,6 @@ export const validateWebSocket = (v) => {
     .filter((key) => _options.includes(key))
     .reduce((obj, key) => {
       const res = notificationsWebSocketOptions[key].validator(v[key], v);
-			console.log(key, v, res);
       res.errors.map((error) => errors.push(error));
       res.warnings.map((warning) => warnings.push(warning));
       obj[key] = res.value;
@@ -693,7 +692,6 @@ export const validateOpenAI = (v) => {
  * @param v
  */
 export const validateGeocoding = (v) => {
-  //console.log(v);
   const errors = [];
   const warnings = [];
   if (v && !isObject(v)) {
