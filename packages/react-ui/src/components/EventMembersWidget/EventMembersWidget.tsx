@@ -11,7 +11,6 @@ import 'swiper/css';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {BaseDialogProps} from '../../shared/BaseDialog';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {UserProps} from '../User';
 import Widget, {WidgetProps} from '../Widget';
@@ -72,6 +71,9 @@ export interface EventMembersWidgetProps extends WidgetProps {
    */
   dialogProps?: BaseDialogProps;
 
+	/**
+	 * Limit items
+	 */
   limit?: number;
 
   /**
@@ -231,6 +233,14 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
       };
     }
   }, [scUserContext.user, scEvent, refresh]);
+
+  useEffect(() => {
+    if (participants.initialized && scEvent && Boolean((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) {
+      dispatchParticipants({type: actionWidgetTypes.RESET, payload: {}});
+      dispatchRequests({type: actionWidgetTypes.RESET, payload: {}});
+      dispatchInvited({type: actionWidgetTypes.RESET, payload: {}});
+    }
+  }, [participants.initialized, scEvent, eventId, event]);
 
   // HANDLERS
   const handleTabChange = useCallback((_evt: SyntheticEvent, newTabValue: TabContentType) => {
