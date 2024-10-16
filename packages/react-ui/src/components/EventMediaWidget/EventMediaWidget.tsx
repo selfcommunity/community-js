@@ -283,7 +283,12 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
-    if (scUserContext.user && scEvent && !state.initialized) {
+    if (
+      scUserContext.user &&
+      scEvent &&
+      !state.initialized &&
+      Boolean((eventId !== undefined && scEvent.id === eventId) || (event && scEvent.id === event.id))
+    ) {
       _t = setTimeout(_initComponent);
       return () => {
         clearTimeout(_t);
@@ -311,12 +316,11 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
           setMediasCount(payload.count);
         })
         .catch((error) => {
-          console.log('Error');
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [state.isLoadingNext, state.initialized, scEvent, dispatch, setMedias, setMediasCount]);
+  }, [state.isLoadingNext, scEvent, eventId, dispatch, setMedias, setMediasCount]);
 
   useEffect(() => {
     if (isMobile && openDialog && state.next) {

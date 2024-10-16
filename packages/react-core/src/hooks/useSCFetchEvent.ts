@@ -109,7 +109,7 @@ export default function useSCFetchEvent({
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [id, event]);
+  }, [id, event, authUserId]);
 
   useDeepCompareEffectNoCheck(() => {
     if (event) {

@@ -50,7 +50,7 @@ export interface EventActionsMenuProps extends IconButtonProps {
   /**
    * The event
    */
-  event: SCEventType;
+  event?: SCEventType;
   /**
    * The event id
    */
