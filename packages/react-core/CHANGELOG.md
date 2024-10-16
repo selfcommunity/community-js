@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.5...@selfcommunity/react-core@0.6.0-alpha.6) (2024-10-16)
+
+
+### Bug Fixes
+
+* Events ([43c7bea](https://github.com/selfcommunity/community-js/commit/43c7beae8fd6dfe05f81a46cf41783b18b434498))
+
+
+
+
+
+# [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.4...@selfcommunity/react-core@0.6.0-alpha.5) (2024-10-16)
+
+
+### Bug Fixes
+
+* websocket secure validation ([3ce994f](https://github.com/selfcommunity/community-js/commit/3ce994f02500882a3d92f33781fb382a8d8632e7))
+
+
+
+
+
 # [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.3...@selfcommunity/react-core@0.6.0-alpha.4) (2024-10-16)
 
 
