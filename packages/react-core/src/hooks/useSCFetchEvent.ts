@@ -29,7 +29,6 @@ export default function useSCFetchEvent({
   autoSubscribe?: boolean;
   cacheStrategy?: CacheStrategies;
 }) {
-  console.log('Params: ', event, id);
   const __eventId = event ? event.id : id;
 
   // CONTEXT
@@ -54,12 +53,17 @@ export default function useSCFetchEvent({
         ((e.privacy === SCEventPrivacyType.PUBLIC && !e.subscription_status) || e.subscription_status === SCEventSubscriptionStatusType.INVITED)
       ) {
         // Auto subscribe to the event
-        EventService.subscribeToEvent(e.id).then(() => {
-          const updatedEvent = {...e, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
-          console.log('Update event', updatedEvent.id);
-          setScEvent(updatedEvent);
-          LRUCache.set(__eventCacheKey, updatedEvent);
-        });
+        EventService.subscribeToEvent(e.id)
+          .then(() => {
+            const updatedEvent = {...e, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
+            setScEvent(updatedEvent);
+            LRUCache.set(__eventCacheKey, updatedEvent);
+          })
+          .catch(() => {
+            const updatedEvent: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
+            setScEvent(updatedEvent);
+            LRUCache.set(__eventCacheKey, updatedEvent);
+          });
       } else {
         const updatedEvent: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
         setScEvent(updatedEvent);
