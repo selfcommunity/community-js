@@ -145,8 +145,8 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     },
     stateWidgetInitializer
   );
-  const [medias, setMedias] = useState<SCMediaType[]>([]);
-  const [mediasCount, setMediasCount] = useState<number>(0);
+  const [medias, setMedias] = useState<SCMediaType[]>(state.results);
+  const [mediasCount, setMediasCount] = useState<number>(state.count);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDialogConfirm, setOpenDialogConfirm] = useState<boolean>(false);
   const [mediaId, setMediaId] = useState<number | null>(null);
@@ -160,26 +160,6 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
   const countHiddenMedia = useMemo(() => mediasCount - MEDIAS_TO_SHOW, [mediasCount]);
-
-  /**
-   * Initialize component
-   * Fetch data only if the component is not initialized and it is not loading data
-   */
-  const _initComponent = useCallback(() => {
-    if (!state.initialized && !state.isLoadingNext) {
-      dispatch({type: actionWidgetTypes.LOADING_NEXT});
-      EventService.getEventPhotoGallery(scEvent.id, {...endpointQueryParams})
-        .then((payload: SCPaginatedResponse<SCMediaType>) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
-          setMedias(payload.results);
-          setMediasCount(payload.count);
-        })
-        .catch((error) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }, [state.isLoadingNext, scEvent, dispatch, setMedias, setMediasCount]);
 
   const _fetchNext = useCallback(
     (index: number) => {
@@ -303,21 +283,40 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
-    if (scUserContext.user && scEvent) {
+    if (scUserContext.user && scEvent && !state.initialized) {
       _t = setTimeout(_initComponent);
       return () => {
         clearTimeout(_t);
-        if (state.initialized) {
-          dispatch({
-            type: actionWidgetTypes.INITIALIZE,
-            payload: {
-              cacheKey: SCCache.getWidgetStateCacheKey(SCCache.EVENT_MEDIA_STATE_CACHE_PREFIX_KEY, scEvent.id)
-            }
-          });
-        }
       };
     }
   }, [scUserContext.user, scEvent, state.initialized]);
+
+  useEffect(() => {
+    if (state.initialized && scEvent && Boolean((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) {
+      dispatch({type: actionWidgetTypes.RESET, payload: {}});
+    }
+  }, [state.initialized, scEvent, eventId, event]);
+
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useCallback(() => {
+    if (!state.isLoadingNext) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      EventService.getEventPhotoGallery(scEvent.id, {...endpointQueryParams})
+        .then((payload: SCPaginatedResponse<SCMediaType>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          setMedias(payload.results);
+          setMediasCount(payload.count);
+        })
+        .catch((error) => {
+          console.log('Error');
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [state.isLoadingNext, state.initialized, scEvent, dispatch, setMedias, setMediasCount]);
 
   useEffect(() => {
     if (isMobile && openDialog && state.next) {
@@ -326,12 +325,17 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   }, [isMobile, openDialog, state.next]);
 
   // RENDER
-  if (!scEvent || (state.initialized && mediasCount === 0 && !hasAllow)) {
-    return <HiddenPlaceholder />;
+  if (
+    !scEvent ||
+    !state.initialized ||
+    (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) ||
+    (state.isLoadingNext && !state.initialized)
+  ) {
+    return <SkeletonComponent />;
   }
 
-  if (!state.initialized || (state.isLoadingNext && mediasCount === 0)) {
-    return <SkeletonComponent />;
+  if (state.initialized && state.count === 0 && !hasAllow) {
+    return <HiddenPlaceholder />;
   }
 
   return (

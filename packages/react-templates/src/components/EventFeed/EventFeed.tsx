@@ -201,7 +201,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
     [widgets, scEvent]
   );
 
-  if (!scEvent) {
+  if (!scEvent || (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id)))) {
     return <EventFeedSkeleton />;
   } else if (
     scEvent.privacy === SCEventPrivacyType.PRIVATE &&

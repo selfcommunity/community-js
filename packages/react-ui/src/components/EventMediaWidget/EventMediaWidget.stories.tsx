@@ -5,7 +5,7 @@ export default {
   title: 'Design System/React UI/Event Media Widget',
   component: EventMediaWidget,
   args: {
-    eventId: 121
+    eventId: 129
   }
 } as Meta<typeof EventMediaWidget>;
 

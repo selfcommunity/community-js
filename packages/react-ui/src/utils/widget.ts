@@ -75,7 +75,17 @@ export function dataWidgetReducer(state, action) {
       _state = {isLoadingNext: false, next: null, results: [], count: 0, errorLoadNext: null, initialized: false};
       break;
     case actionWidgetTypes.INITIALIZE:
-      _state = {isLoadingNext: false, next: null, results: [], count: 0, errorLoadNext: null, initialized: false, ...action.payload};
+      _state = {
+        cacheKey: action.payload.cacheKey ? action.payload.cacheKey : null,
+        count: action.payload.count ? action.payload.count : 0,
+        results: action.payload.results ? action.payload.results : [],
+        next: action.payload.next ? action.payload.next : null,
+        previous: action.payload.previous ? action.payload.previous : null,
+        isLoadingNext: action.payload.isLoadingNext ? action.payload.isLoadingNext : false,
+        isLoadingPrevious: action.payload.isLoadingPrevious ? action.payload.isLoadingPrevious : false,
+        visibleItems: action.payload.visibleItems ? action.payload.visibleItems : null,
+        initialized: false
+      };
       break;
   }
   LRUCache.set(_state.cacheKey, _state);
