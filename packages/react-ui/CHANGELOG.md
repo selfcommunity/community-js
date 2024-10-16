@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.2...@selfcommunity/react-ui@0.9.0-alpha.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* fixed onBoarding appearance logo change. Linear issue: https://linear.app/quentral/issue/QUE-858/impossibile-cambiare-il-logo-della-navbar-nella-onboarding ([4c6b52f](https://github.com/selfcommunity/community-js/commit/4c6b52fada191733b080ff6f824adb884b681f18))
+
+
+
+
+
 # [0.9.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.1...@selfcommunity/react-ui@0.9.0-alpha.2) (2024-10-14)
 
 
