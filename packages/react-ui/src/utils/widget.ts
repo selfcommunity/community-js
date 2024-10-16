@@ -16,6 +16,7 @@ export const actionWidgetTypes = {
   LOAD_PREVIOUS_FAILURE: '_load_previous_failure',
   SET_RESULTS: '_set_results',
   SET_VISIBLE_ITEMS: '_set_visible_items',
+  INITIALIZE: '_initialize',
   RESET: '_reset'
 };
 
@@ -72,6 +73,19 @@ export function dataWidgetReducer(state, action) {
       break;
     case actionWidgetTypes.RESET:
       _state = {isLoadingNext: false, next: null, results: [], count: 0, errorLoadNext: null, initialized: false};
+      break;
+    case actionWidgetTypes.INITIALIZE:
+      _state = {
+        cacheKey: action.payload.cacheKey ? action.payload.cacheKey : null,
+        count: action.payload.count ? action.payload.count : 0,
+        results: action.payload.results ? action.payload.results : [],
+        next: action.payload.next ? action.payload.next : null,
+        previous: action.payload.previous ? action.payload.previous : null,
+        isLoadingNext: action.payload.isLoadingNext ? action.payload.isLoadingNext : false,
+        isLoadingPrevious: action.payload.isLoadingPrevious ? action.payload.isLoadingPrevious : false,
+        visibleItems: action.payload.visibleItems ? action.payload.visibleItems : null,
+        initialized: false
+      };
       break;
   }
   LRUCache.set(_state.cacheKey, _state);

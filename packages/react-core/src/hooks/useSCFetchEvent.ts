@@ -1,12 +1,12 @@
-import {useEffect, useMemo, useState} from 'react';
-import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
-import {Endpoints, EventService, http, HttpResponse} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
-import {getEventObjectCacheKey} from '../constants/Cache';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {useSCUser} from '../components/provider/SCUserProvider';
-import {SCUserContextType} from '../types/context';
+import { Endpoints, EventService, http, HttpResponse } from '@selfcommunity/api-services';
+import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
+import { CacheStrategies, Logger, LRUCache, objectWithoutProperties } from '@selfcommunity/utils';
+import { useEffect, useMemo, useState } from 'react';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useSCUser } from '../components/provider/SCUserProvider';
+import { getEventObjectCacheKey } from '../constants/Cache';
+import { SCOPE_SC_CORE } from '../constants/Errors';
+import { SCUserContextType } from '../types/context';
 
 /**
  :::info
@@ -42,20 +42,45 @@ export default function useSCFetchEvent({
   const [scEvent, setScEvent] = useState<SCEventType>(cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__eventCacheKey, __event) : null);
   const [error, setError] = useState<string>(null);
 
-  const setSCEvent = (event: SCEventType) => {
-    const _e: SCEventType = authUserId ? event : objectWithoutProperties<SCEventType>(event, ['subscription_status']);
-    setScEvent(_e);
-    LRUCache.set(__eventCacheKey, _e);
-  };
+  /**
+   * Memoized setSCEvent (auto-subscription if need it)
+   */
+  const setSCEvent = useMemo(
+    () => (e: SCEventType) => {
+      if (
+        autoSubscribe &&
+        authUserId !== null &&
+        ((e.privacy === SCEventPrivacyType.PUBLIC && !e.subscription_status) || e.subscription_status === SCEventSubscriptionStatusType.INVITED)
+      ) {
+        // Auto subscribe to the event
+        EventService.subscribeToEvent(e.id)
+          .then(() => {
+            const updatedEvent = {...e, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
+            setScEvent(updatedEvent);
+            LRUCache.set(__eventCacheKey, updatedEvent);
+          })
+          .catch(() => {
+            const updatedEvent: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
+            setScEvent(updatedEvent);
+            LRUCache.set(__eventCacheKey, updatedEvent);
+          });
+      } else {
+        const updatedEvent: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
+        setScEvent(updatedEvent);
+        LRUCache.set(__eventCacheKey, updatedEvent);
+      }
+    },
+    [autoSubscribe, authUserId, setScEvent]
+  );
 
   /**
    * Memoized fetchTag
    */
   const fetchEvent = useMemo(
-    () => () => {
+    () => (id: string | number) => {
       return http
         .request({
-          url: Endpoints.GetEventInfo.url({id: __eventId}),
+          url: Endpoints.GetEventInfo.url({id}),
           method: Endpoints.GetEventInfo.method,
         })
         .then((res: HttpResponse<SCEventType>) => {
@@ -65,29 +90,17 @@ export default function useSCFetchEvent({
           return Promise.resolve(res.data);
         });
     },
-    [__eventId]
+    []
   );
 
   /**
    * If id attempt to get the event by id
    */
   useEffect(() => {
-    if (__eventId && scUserContext.user !== undefined && (!scEvent || (scEvent && __eventId !== scEvent.id))) {
-      fetchEvent()
-        .then((event: SCEventType) => {
-          if (
-            autoSubscribe &&
-            authUserId !== null &&
-            ((event.privacy === SCEventPrivacyType.PUBLIC && !event.subscription_status) || event.subscription_status === SCEventSubscriptionStatusType.INVITED)
-          ) {
-            // Auto subscribe to the event
-            EventService.subscribeToEvent(event.id).then(() => {
-              const updatedEvent = {...event, subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED};
-              setSCEvent(updatedEvent);
-            });
-          } else {
-            setSCEvent(event);
-          }
+    if (id !== null && id !== undefined && !event) {
+      fetchEvent(id)
+        .then((e: SCEventType) => {
+          setSCEvent(e);
         })
         .catch((err) => {
           LRUCache.delete(__eventCacheKey);
@@ -96,7 +109,7 @@ export default function useSCFetchEvent({
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [__eventId, authUserId, scUserContext.user]);
+  }, [id, event, authUserId]);
 
   useDeepCompareEffectNoCheck(() => {
     if (event) {
