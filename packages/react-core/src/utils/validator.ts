@@ -188,6 +188,7 @@ export const validateWebSocket = (v) => {
     .filter((key) => _options.includes(key))
     .reduce((obj, key) => {
       const res = notificationsWebSocketOptions[key].validator(v[key], v);
+			console.log(key, v, res);
       res.errors.map((error) => errors.push(error));
       res.warnings.map((warning) => warnings.push(warning));
       obj[key] = res.value;
@@ -225,8 +226,11 @@ export const validateWebSocketDisableToastMessage = (value) => {
 export const validateWebSocketSecure = (value) => {
   const errors = [];
   const warnings = [];
-  if (!(typeof value === 'boolean')) {
-    errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_SECURE);
+  if (value?.toString() !== undefined) {
+    if (!(typeof value === 'boolean')) {
+      errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_SECURE);
+    }
+  } else {
     return {
       errors,
       warnings,

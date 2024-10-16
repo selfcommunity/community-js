@@ -27,7 +27,10 @@ export default function useSCWebSocket() {
   const [wsInstance, setWsInstance] = useState<WSClientType>(null);
 
   // Websocket uri, prefixPath, protocols and sub-protocols
-  const _wsProtocol = scContext.settings.notifications.webSocket.secure ? WS_PROTOCOL_SECURE : WS_PROTOCOL_INSECURE;
+  const _wsProtocol =
+    scContext.settings.notifications.webSocket.secure || !('secure' in scContext.settings.notifications.webSocket)
+      ? WS_PROTOCOL_SECURE
+      : WS_PROTOCOL_INSECURE;
   const _wsPrefixPath = scContext.settings.notifications.webSocket.prefixPath || WS_PREFIX_PATH;
   const _wsUri = `${_wsProtocol}://${new URL(scContext.settings.portal).hostname}/${_wsPrefixPath}/${WS_FACILITY_NOTIFY}?subscribe-user`;
   const _wsSubProtocol =
