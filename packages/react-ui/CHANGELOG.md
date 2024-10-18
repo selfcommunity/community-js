@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.10...@selfcommunity/react-ui@0.9.0-alpha.11) (2024-10-18)
+
+
+### Bug Fixes
+
+* event visibility in NavigationToolbar whe content is not available. Linear issue: https://linear.app/quentral/issue/QUE-867/si-vede-licona-eventi-da-sloggati-sempre-quando-content-availability-e ([03701af](https://github.com/selfcommunity/community-js/commit/03701af8fcf029a2743010857013224b71694617))
+
+
+### Features
+
+* added events utils file; hidden voice menu when event has ended ([a7750f2](https://github.com/selfcommunity/community-js/commit/a7750f22825e51aaec6a924f14c688b4c5f0dd50))
+
+
+
+
+
 # [0.9.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.9...@selfcommunity/react-ui@0.9.0-alpha.10) (2024-10-16)
 
 
