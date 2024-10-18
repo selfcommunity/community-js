@@ -279,7 +279,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <Icon>groups</Icon>
         </IconButton>
       )}
-      {eventsEnabled && (
+      {eventsEnabled && (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) && (
         <IconButton
           className={classNames(classes.events, {
             [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {}))
