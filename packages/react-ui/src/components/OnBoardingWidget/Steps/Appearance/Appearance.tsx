@@ -80,12 +80,12 @@ export default function Appearance(inProps: AppearanceProps) {
 
   // STATE
   const [state, dispatch] = useReducer(reducer, getInitialState(null));
-  let fileInput = useRef(null);
-  const [loadingLogo, setLoadingLogo] = useState<boolean>(false);
+  const [loadingLogo, setLoadingLogo] = useState<string>('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [tab, setTab] = useState(0);
   const [updating, setUpdating] = useState<boolean>(false);
   const [updatingColor, setUpdatingColor] = useState<string>('');
+  const colorRef = useRef(null);
 
   // INTL
   const intl = useIntl();
@@ -186,15 +186,13 @@ export default function Appearance(inProps: AppearanceProps) {
     }
   };
 
-  const updateLogoPreference = async (name: any) => {
-    setLoadingLogo(true);
+  const updateLogoPreference = async (name: any, file: File) => {
+    setLoadingLogo(name);
     const formData = new FormData();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    formData.append(name, fileInput);
+    formData.append(name, file);
     await PreferenceService.updatePreferences(formData)
       .then((preference: SCPreferenceType) => {
-        setLoadingLogo(false);
+        setLoadingLogo('');
         dispatch({
           type: actionTypes.SET_LOGOS,
           payload: {logos: state.logos.map((l) => (l.name === name ? {...l, value: preference[name].value} : l))}
@@ -202,7 +200,7 @@ export default function Appearance(inProps: AppearanceProps) {
         onCompleteAction();
       })
       .catch((e) => {
-        setLoadingLogo(false);
+        setLoadingLogo('');
         Logger.error(SCOPE_SC_UI, e);
       });
   };
@@ -213,9 +211,9 @@ export default function Appearance(inProps: AppearanceProps) {
    * @param name
    */
   const handleUpload = (event, name) => {
-    fileInput = event.target.files[0];
-    if (fileInput) {
-      updateLogoPreference(name);
+    const file = event.target.files[0];
+    if (file) {
+      updateLogoPreference(name, file);
     }
   };
 
@@ -245,6 +243,12 @@ export default function Appearance(inProps: AppearanceProps) {
       type: actionTypes.SET_SLOGANS,
       payload: {slogans: state.slogans.map((s) => (s.name === name ? {...s, value: value} : s))}
     });
+  };
+
+  const handleClosePopover = () => {
+    if (colorRef.current) {
+      colorRef.current.blur();
+    }
   };
 
   return (
@@ -304,11 +308,13 @@ export default function Appearance(inProps: AppearanceProps) {
                     <Typography variant="h6">{formatColorLabel(color)}</Typography>
                     <Box className={classes.colorContainer}>
                       <MuiColorInput
+                        inputRef={colorRef}
                         className={classes.color}
                         format="hex"
                         value={color.value}
                         onChange={(newColor) => handleColorChange(newColor, color.name)}
                         isAlphaHidden
+                        PopoverProps={{onClose: handleClosePopover}}
                       />
                       {updatingColor && updatingColor === color.name && (
                         <CircularProgress className={classes.colorProgress} color="secondary" size={24} />
@@ -326,12 +332,12 @@ export default function Appearance(inProps: AppearanceProps) {
                     <Typography variant="h6">{formatLogoLabel(logo.name)}</Typography>
                     <Box className={classes.logoContainer}>
                       <img src={logo.value} className={classes.logo} />
-                      <input type="file" onChange={(event) => handleUpload(event, logo.name)} ref={fileInput} hidden accept=".gif,.png,.jpg,.jpeg" />
+                      <input type="file" onChange={(event) => handleUpload(event, logo.name)} hidden accept=".gif,.png,.jpg,.jpeg" id={logo.name} />
                       <LoadingButton
                         className={classes.uploadButton}
-                        onClick={() => fileInput.current.click()}
-                        loading={loadingLogo}
-                        disabled={loadingLogo}>
+                        onClick={() => document.getElementById(`${logo.name}`).click()}
+                        loading={Boolean(loadingLogo) && Boolean(logo.name === loadingLogo)}
+                        disabled={Boolean(loadingLogo) && Boolean(logo.name !== loadingLogo)}>
                         <Icon>upload</Icon>
                       </LoadingButton>
                     </Box>

@@ -3,6 +3,147 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.9...@selfcommunity/react-theme-default@0.3.0-alpha.10) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.8...@selfcommunity/react-theme-default@0.3.0-alpha.9) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.7...@selfcommunity/react-theme-default@0.3.0-alpha.8) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.6...@selfcommunity/react-theme-default@0.3.0-alpha.7) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.5...@selfcommunity/react-theme-default@0.3.0-alpha.6) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.4...@selfcommunity/react-theme-default@0.3.0-alpha.5) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.3...@selfcommunity/react-theme-default@0.3.0-alpha.4) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.2...@selfcommunity/react-theme-default@0.3.0-alpha.3) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.1...@selfcommunity/react-theme-default@0.3.0-alpha.2) (2024-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.0...@selfcommunity/react-theme-default@0.3.0-alpha.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* Eventform & EventFormDialog ([8ff0a96](https://github.com/selfcommunity/community-js/commit/8ff0a96ff59f24ad0dfdcaacf9b9c851a7b975ab))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.4...@selfcommunity/react-theme-default@0.3.0-alpha.0) (2024-10-11)
+
+
+### Bug Fixes
+
+* fixed all pr reports on EventMediaWidget ([6e04148](https://github.com/selfcommunity/community-js/commit/6e04148d99fd85529a237eda997dd86cdf9f5316))
+* fixed all pr reports on Lightbox and EventMediaWidget ([27b19ea](https://github.com/selfcommunity/community-js/commit/27b19ead3e8d3aebe4d3157c03a3df56aa1bd6b0))
+
+
+### Features
+
+* completed EventMediaWidget ([7e7073b](https://github.com/selfcommunity/community-js/commit/7e7073b02deb4657bb1acb8f1cf37d6ce3802d04))
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
+## [0.2.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.3...@selfcommunity/react-theme-default@0.2.1-alpha.4) (2024-10-11)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.2.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.2...@selfcommunity/react-theme-default@0.2.1-alpha.3) (2024-10-11)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.2.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.1...@selfcommunity/react-theme-default@0.2.1-alpha.2) (2024-10-11)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.2.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.1-alpha.0...@selfcommunity/react-theme-default@0.2.1-alpha.1) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.2.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0...@selfcommunity/react-theme-default@0.2.1-alpha.0) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 # [0.2.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.2.0-alpha.40...@selfcommunity/react-theme-default@0.2.0) (2024-10-08)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
