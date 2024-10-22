@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.13...@selfcommunity/react-ui@0.9.0-alpha.14) (2024-10-22)
+
+
+### Bug Fixes
+
+* fixed NavigationSettingsIconButton start guide visibility condition ([cd0c5eb](https://github.com/selfcommunity/community-js/commit/cd0c5ebceaec95a3bde8306bbbcbccc0483bd227))
+
+
+
+
+
 # [0.9.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.12...@selfcommunity/react-ui@0.9.0-alpha.13) (2024-10-22)
 
 
