@@ -12,10 +12,8 @@ import {
 } from '@selfcommunity/react-core';
 import { SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
 import classNames from 'classnames';
-import PubSub from 'pubsub-js';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { SCEventMembersEventType, SCGroupEventType, SCTopicType } from '../../constants/PubSub';
 import Bullet from '../../shared/Bullet';
 import Calendar from '../../shared/Calendar';
 import EventActionsMenu, { EventActionsMenuProps } from '../../shared/EventActionsMenu';
@@ -144,9 +142,6 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
-  // REFS
-  const updatesSubscription = useRef(null);
-
   // CONST
   const isEventAdmin = useMemo(
     () => scUserContext.user && scEvent?.managed_by.id === scUserContext.user.id,
@@ -156,41 +151,11 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
 
   /**
-   * Subscriber for pubsub callback
-   */
-  const onChangeEventMembersHandler = useCallback(
-    (msg: string, data: SCEventMembersEventType) => {
-      if (data && data?.event?.id === scEvent?.id) {
-        let _event = { ...scEvent };
-        if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`) {
-          _event.subscribers_counter = _event.subscribers_counter + 1;
-        } else if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.REMOVE_MEMBER}`) {
-          _event.subscribers_counter = Math.max(_event.subscribers_counter - 1, 0);
-        }
-        setSCEvent(_event);
-      }
-    },
-    [scEvent, setSCEvent]
-  );
-
-  /**
    * Handles callback subscribe/unsubscribe event
    */
   const handleSubscribe = (_event: SCEventType, status: SCEventSubscriptionStatusType) => {
     setSCEvent(Object.assign({}, scEvent, { subscription_status: status }));
   };
-
-  /**
-   * On mount, subscribe to receive events updates (only edit)
-   */
-  useEffect(() => {
-    if (scEvent) {
-      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.MEMBERS}`, onChangeEventMembersHandler);
-    }
-    return () => {
-      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
-    };
-  }, [scEvent]);
 
   // RENDER
   if (!scEvent) {
@@ -326,13 +291,12 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
             <>
               {isEventAdmin ? (
                 <Box className={classes.multiActions}>
-                  <EventInviteButton size={isMobile ? 'small' : 'medium'} event={scEvent} eventId={scEvent.id} disabled={isEventFinished} />
+                  <EventInviteButton size={isMobile ? 'small' : 'medium'} event={scEvent} disabled={isEventFinished} />
                   <Box>
                     {!isMobile && (
                       <EditEventButton
                         size={isMobile ? 'small' : 'medium'}
                         event={scEvent}
-                        eventId={scEvent.id}
                         onEditSuccess={(data: SCEventType) => setSCEvent(data)}
                         disabled={isEventFinished}
                       />
@@ -342,13 +306,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  <EventSubscribeButton
-                    eventId={scEvent.id}
-                    onSubscribe={handleSubscribe}
-                    {...EventSubscribeButtonProps}
-                    disabled={isEventFinished}
-                  />
-                  <EventActionsMenu eventId={scEvent.id} onEditSuccess={(data: SCEventType) => setSCEvent(data)} {...EventActionsProps} />
+                  <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
+                  <EventActionsMenu event={scEvent} onEditSuccess={(data: SCEventType) => setSCEvent(data)} {...EventActionsProps} />
                 </>
               )}
             </>
