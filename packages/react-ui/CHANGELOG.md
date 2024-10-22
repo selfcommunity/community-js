@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.12...@selfcommunity/react-ui@0.9.0-alpha.13) (2024-10-22)
+
+
+### Bug Fixes
+
+* fixed NavigationSettingsIconButton preferences refresh ([e85345b](https://github.com/selfcommunity/community-js/commit/e85345b4f16341799e5e4996205056452e84a0f6))
+
+
+
+
+
 # [0.9.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.11...@selfcommunity/react-ui@0.9.0-alpha.12) (2024-10-22)
 
 
