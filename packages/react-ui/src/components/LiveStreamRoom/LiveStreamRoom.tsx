@@ -11,6 +11,7 @@ import {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference from './LiveStreamVideoConference';
 import '@livekit/components-styles';
+import {generateRoomId} from '@selfcommunity/react-ui';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -121,7 +122,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     if ((liveStream || true) && connectionDetailsEndpoint) {
       setPreJoinChoices(values);
       const url = new URL(connectionDetailsEndpoint, window.location.origin);
-      url.searchParams.append('roomName', liveStream.roomName);
+      url.searchParams.append('roomName', generateRoomId());
       url.searchParams.append('participantName', scUserContext.user?.username);
       // if (liveStream.region) {
       //	url.searchParams.append('region', liveStream.region);
