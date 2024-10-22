@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.6...@selfcommunity/react-core@0.6.0-alpha.7) (2024-10-22)
+
+
+### Performance Improvements
+
+* added actions to control onBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-870/cta-gestione-visualizzazione-widget-inizia-da-qui ([3df3a15](https://github.com/selfcommunity/community-js/commit/3df3a155f3c02199a022679a65e971a0f3f231ae))
+
+
+
+
+
 # [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.5...@selfcommunity/react-core@0.6.0-alpha.6) (2024-10-16)
 
 

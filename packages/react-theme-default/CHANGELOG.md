@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.11...@selfcommunity/react-theme-default@0.3.0-alpha.12) (2024-10-22)
+
+
+### Performance Improvements
+
+* added actions to control onBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-870/cta-gestione-visualizzazione-widget-inizia-da-qui ([3df3a15](https://github.com/selfcommunity/community-js/commit/3df3a155f3c02199a022679a65e971a0f3f231ae))
+* added categories confirm dialog to OnBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-871/modale-di-conferma-generazione-categorie ([def5b0b](https://github.com/selfcommunity/community-js/commit/def5b0b6c6904e24f2d8589cd86a0b7622ea547a))
+
+
+
+
+
 # [0.3.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.0-alpha.10...@selfcommunity/react-theme-default@0.3.0-alpha.11) (2024-10-18)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
