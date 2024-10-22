@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -30,6 +30,7 @@ import {PREFIX} from './constants';
 import {
   getTheme,
   SCContextType,
+  SCPreferences,
   SCPreferencesContextType,
   SCThemeContextType,
   SCThemeType,
@@ -52,7 +53,14 @@ import Content from './Steps/Content';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Endpoints, http, HttpResponse, OnBoardingService, PreferenceService, StartStepParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
-import {SCCategoryType, SCFeedObjectType, SCOnBoardingStepStatusType, SCOnBoardingStepType, SCStepType} from '@selfcommunity/types';
+import {
+  SCCategoryType,
+  SCFeedObjectType,
+  SCOnBoardingStepStatusType,
+  SCOnBoardingStepType,
+  SCStepType,
+  SCOnBoardingStepIdType
+} from '@selfcommunity/types';
 import OnBoardingWidgetSkeleton from './Skeleton';
 import {closeSnackbar, SnackbarKey, useSnackbar} from 'notistack';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
@@ -60,6 +68,7 @@ import HeaderPlaceholder from '../../assets/onBoarding/header';
 import BaseDialog from '../../shared/BaseDialog';
 import PubSub from 'pubsub-js';
 import {SCCategoryEventType, SCTopicType} from '../../constants/PubSub';
+import OnBoardingActionsButton from './ActionsButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -69,7 +78,9 @@ const classes = {
   intro: `${PREFIX}-intro`,
   steps: `${PREFIX}-steps`,
   stepsMobile: `${PREFIX}-steps-mobile`,
-  stepContent: `${PREFIX}-step-content`
+  stepContent: `${PREFIX}-step-content`,
+  dialogRoot: `${PREFIX}-dialog-root`,
+  dialogContent: `${PREFIX}-dialog-content`
 };
 
 const Root = styled(Widget, {
@@ -83,6 +94,12 @@ const AccordionRoot = styled(Accordion, {
   slot: 'AccordionRoot',
   overridesResolver: (props, styles) => styles.accordionRoot
 })(() => ({}));
+
+const DialogRoot = styled(BaseDialog, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.dialogRoot
+})(({theme}) => ({}));
 
 export interface OnBoardingWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -146,7 +163,9 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const prevContentsStep = usePreviousValue(currentContentsStep);
   const currentCategoriesStep = steps?.find((s) => s.step === SCOnBoardingStepType.CATEGORIES);
   const prevCategoriesStep = usePreviousValue(currentCategoriesStep);
-  const [showCategoriesModal, setShowCategoriesModal] = useState<boolean>(false);
+  const [showNoCategoriesModal, setShowNoCategoriesModal] = useState<boolean>(false);
+  const [showCategoriesWarningModal, setShowWarningCategoriesModal] = useState<boolean>(false);
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -155,7 +174,15 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scThemeContext: SCThemeContextType = useSCTheme();
   const {enqueueSnackbar} = useSnackbar();
-  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const showOnBoarding = useMemo(
+    () =>
+      scPreferencesContext.preferences &&
+      SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED in scPreferencesContext.preferences &&
+      SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED].value &&
+      !scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -277,20 +304,27 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   const generateContent = async (stepId: number) => {
     if (!isLoading && !categories.length) {
-      setShowCategoriesModal(true);
+      setShowNoCategoriesModal(true);
+    } else if (stepId === SCOnBoardingStepIdType.CATEGORIES) {
+      setShowWarningCategoriesModal(true);
     } else {
-      await OnBoardingService.startAStep(stepId, GenerateContentsParams)
-        .then(() => {
-          setIsGenerating(true);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
-        });
+      await startStep(stepId);
     }
+  };
+
+  const startStep = async (stepId: number) => {
+    showCategoriesWarningModal && setShowWarningCategoriesModal(false);
+    await OnBoardingService.startAStep(stepId, GenerateContentsParams)
+      .then(() => {
+        setIsGenerating(true);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
   };
 
   const handlePreferencesUpdate = () => {
@@ -303,7 +337,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   const handleCategoriesClick = () => {
     fetchPlatform('/contents/interests/');
-    setShowCategoriesModal(false);
+    setShowNoCategoriesModal(false);
   };
 
   /**
@@ -408,14 +442,17 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return content;
   };
 
-  if (!isAdmin) {
+  if (!isAdmin || !showOnBoarding) {
     return <HiddenPlaceholder />;
   }
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <AccordionRoot defaultExpanded onChange={handleExpand} className={classes.accordionRoot} expanded={expanded}>
-        <AccordionSummary expandIcon={<Icon fontSize="medium">expand_more</Icon>} aria-controls="accordion" id="onBoarding-accordion">
+      <AccordionRoot defaultExpanded className={classes.accordionRoot} expanded={expanded}>
+        <AccordionSummary
+          expandIcon={<OnBoardingActionsButton isExpanded={expanded} onExpandChange={handleExpand} onHideOnBoarding={handlePreferencesUpdate} />}
+          aria-controls="accordion"
+          id="onBoarding-accordion">
           <>
             {expanded ? (
               <>
@@ -538,14 +575,14 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                   <Fade in timeout={2400}>
                     <Box>{getStepContent()}</Box>
                   </Fade>
-                  {showCategoriesModal && (
+                  {showNoCategoriesModal && (
                     <BaseDialog
                       title={<FormattedMessage id="ui.onBoardingWidget.ai.no.categories" defaultMessage="ui.onBoardingWidget.ai.no.categories" />}
                       DialogContentProps={{dividers: false}}
-                      open={showCategoriesModal}
-                      onClose={() => setShowCategoriesModal(false)}
+                      open={showNoCategoriesModal}
+                      onClose={() => setShowNoCategoriesModal(false)}
                       actions={
-                        <Button color="secondary" onClick={() => setShowCategoriesModal(false)}>
+                        <Button color="secondary" onClick={() => setShowNoCategoriesModal(false)}>
                           <FormattedMessage
                             id="ui.onBoardingWidget.ai.no.categories.cancel"
                             defaultMessage="ui.onBoardingWidget.ai.no.categories.cancel"
@@ -556,6 +593,56 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                         <FormattedMessage id="ui.onBoardingWidget.ai.no.categories.link" defaultMessage="ui.onBoardingWidget.ai.no.categories.link" />
                       </Button>
                     </BaseDialog>
+                  )}
+                  {showCategoriesWarningModal && (
+                    <DialogRoot
+                      className={classes.dialogRoot}
+                      title={
+                        <FormattedMessage
+                          id="ui.onBoardingWidget.ai.categories.warning.title"
+                          defaultMessage="ui.onBoardingWidget.ai.categories.warning.title"
+                        />
+                      }
+                      DialogContentProps={{dividers: false}}
+                      open={showCategoriesWarningModal}
+                      onClose={() => setShowWarningCategoriesModal(false)}
+                      actions={
+                        <>
+                          <Button size="small" variant="outlined" color="primary" onClick={() => setShowWarningCategoriesModal(false)}>
+                            <FormattedMessage
+                              id="ui.onBoardingWidget.ai.categories.warning.button.close"
+                              defaultMessage="ui.onBoardingWidget.ai.categories.warning.button.close"
+                            />
+                          </Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => startStep(SCOnBoardingStepIdType.CATEGORIES)}
+                            endIcon={<Icon fontSize="small">magic_wand</Icon>}>
+                            <FormattedMessage
+                              id="ui.onBoardingWidget.ai.categories.warning.button.generate"
+                              defaultMessage="ui.onBoardingWidget.ai.categories.warning.button.generate"
+                            />
+                          </Button>
+                        </>
+                      }>
+                      <Typography className={classes.dialogContent}>
+                        <FormattedMessage
+                          id="ui.onBoardingWidget.ai.categories.warning.info"
+                          defaultMessage="ui.onBoardingWidget.ai.categories.warning.info"
+                        />
+                        <FormattedMessage
+                          id="ui.onBoardingWidget.ai.categories.warning.confirm"
+                          defaultMessage="ui.onBoardingWidget.ai.categories.warning.confirm"
+                          values={{
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                            // @ts-ignore
+                            b: (chunks) => <b>{chunks}</b>
+                          }}
+                        />
+                      </Typography>
+                    </DialogRoot>
                   )}
                 </Box>
               </CardContent>
