@@ -155,12 +155,26 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
   };
 
   /**
+   * Handles preferences update
+   */
+  const handlePreferencesUpdate = () => {
+    PreferenceService.getAllPreferences().then((preferences) => {
+      const prefs = preferences['results'].reduce((obj, p) => ({...obj, [`${p.section}.${p.name}`]: p}), {});
+      scPreferences.setPreferences(prefs);
+    });
+  };
+
+  /**
    * Updates onBoarding dynamic preference
    */
   const showOnBoarding = () => {
-    PreferenceService.updatePreferences({[`${SCPreferenceName.ONBOARDING_HIDDEN}`]: false}).catch((e) => {
-      Logger.error(SCOPE_SC_UI, e);
-    });
+    PreferenceService.updatePreferences({[`${SCPreferenceName.ONBOARDING_HIDDEN}`]: false})
+      .then(() => {
+        handlePreferencesUpdate();
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+      });
   };
 
   const handleLogout = () => {
