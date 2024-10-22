@@ -120,6 +120,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
 
   // MEMO
   const isAdmin = useMemo(() => UserUtils.isAdmin(scUserContext.user), [scUserContext.user]);
+  const isCommunityCreator = useMemo(() => UserUtils.isCommunityCreator(scUserContext.user), [scUserContext.user]);
   const isModerator = useMemo(() => UserUtils.isModerator(scUserContext.user), [scUserContext.user]);
 
   // HOOKS
@@ -249,16 +250,18 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
         ...(isAdmin
           ? [
               <Divider key="admin_divider" />,
-              preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN] && (
-                <ListItem className={classes.item} key="onboarding">
-                  <ListItemButton onClick={showOnBoarding}>
-                    <FormattedMessage id="ui.navigationSettingsIconButton.onboarding" defaultMessage="ui.navigationSettingsIconButton.onboarding" />
-                    <ListItemIcon>
-                      <Icon>magic_wand</Icon>
-                    </ListItemIcon>
-                  </ListItemButton>
-                </ListItem>
-              ),
+              isCommunityCreator &&
+                preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED] &&
+                preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN] && (
+                  <ListItem className={classes.item} key="onboarding">
+                    <ListItemButton onClick={showOnBoarding}>
+                      <FormattedMessage id="ui.navigationSettingsIconButton.onboarding" defaultMessage="ui.navigationSettingsIconButton.onboarding" />
+                      <ListItemIcon>
+                        <Icon>magic_wand</Icon>
+                      </ListItemIcon>
+                    </ListItemButton>
+                  </ListItem>
+                ),
               <ListItem className={classes.item} key="platform">
                 <ListItemButton onClick={() => fetchPlatform('')}>
                   <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
@@ -365,14 +368,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
         ...(isAdmin
           ? [
               <Divider key="platform_divider" />,
-              preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN] && (
-                <MenuItem className={classes.item} key="onboarding" onClick={showOnBoarding}>
-                  <FormattedMessage id="ui.navigationSettingsIconButton.onboarding" defaultMessage="ui.navigationSettingsIconButton.onboarding" />
-                  <ListItemIcon>
-                    <Icon>magic_wand</Icon>
-                  </ListItemIcon>
-                </MenuItem>
-              ),
+              isCommunityCreator &&
+                preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED] &&
+                preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN] && (
+                  <MenuItem className={classes.item} key="onboarding" onClick={showOnBoarding}>
+                    <FormattedMessage id="ui.navigationSettingsIconButton.onboarding" defaultMessage="ui.navigationSettingsIconButton.onboarding" />
+                    <ListItemIcon>
+                      <Icon>magic_wand</Icon>
+                    </ListItemIcon>
+                  </MenuItem>
+                ),
               <MenuItem className={classes.item} key="platform" onClick={() => fetchPlatform('')}>
                 <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
               </MenuItem>
