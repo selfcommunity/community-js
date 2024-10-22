@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   Menu,
   MenuItem,
   SwipeableDrawer,
@@ -30,7 +31,10 @@ import {
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
-import {UserService} from '@selfcommunity/api-services';
+import {PreferenceService, UserService} from '@selfcommunity/api-services';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
+import {SCPreferenceName} from '@selfcommunity/types';
 
 const PREFIX = 'SCNavigationSettingsIconButton';
 
@@ -73,7 +77,9 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED,
   SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED,
   SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED,
-  SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION
+  SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION,
+  SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED,
+  SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN
 ];
 
 /**
@@ -138,13 +144,22 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
   };
 
   /**
-   * Fetches paltform url
+   * Fetches platform url
    * @param query
    */
   const fetchPlatform = (query) => {
     UserService.getCurrentUserPlatform(query).then((res) => {
       const platformUrl = res.platform_url;
       window.open(platformUrl, '_blank').focus();
+    });
+  };
+
+  /**
+   * Updates onBoarding dynamic preference
+   */
+  const showOnBoarding = () => {
+    PreferenceService.updatePreferences({[`${SCPreferenceName.ONBOARDING_HIDDEN}`]: false}).catch((e) => {
+      Logger.error(SCOPE_SC_UI, e);
     });
   };
 
@@ -220,6 +235,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
         ...(isAdmin
           ? [
               <Divider key="admin_divider" />,
+              preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN] && (
+                <ListItem className={classes.item} key="onboarding">
+                  <ListItemButton onClick={showOnBoarding}>
+                    <FormattedMessage id="ui.navigationSettingsIconButton.onboarding" defaultMessage="ui.navigationSettingsIconButton.onboarding" />
+                    <ListItemIcon>
+                      <Icon>magic_wand</Icon>
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+              ),
               <ListItem className={classes.item} key="platform">
                 <ListItemButton onClick={() => fetchPlatform('')}>
                   <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
@@ -326,6 +351,14 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
         ...(isAdmin
           ? [
               <Divider key="platform_divider" />,
+              preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN] && (
+                <MenuItem className={classes.item} key="onboarding" onClick={showOnBoarding}>
+                  <FormattedMessage id="ui.navigationSettingsIconButton.onboarding" defaultMessage="ui.navigationSettingsIconButton.onboarding" />
+                  <ListItemIcon>
+                    <Icon>magic_wand</Icon>
+                  </ListItemIcon>
+                </MenuItem>
+              ),
               <MenuItem className={classes.item} key="platform" onClick={() => fetchPlatform('')}>
                 <FormattedMessage id="ui.navigationSettingsIconButton.platform" defaultMessage="ui.navigationSettingsIconButton.platform" />
               </MenuItem>

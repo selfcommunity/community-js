@@ -69,6 +69,16 @@ const Component = {
         fontSize: '1.143rem'
       }
     }),
+    actionsMenuRoot: ({theme}: any) => ({
+      '& .SCOnBoardingWidget-actions-paper': {
+        maxWidth: 400,
+        padding: theme.spacing(2),
+        '& .MuiList-root': {
+          padding: 0
+        }
+      }
+    }),
+    actionsDrawerRoot: ({theme}: any) => ({}),
     accordionRoot: ({theme, expanded}: any) => ({
       boxShadow: 'none',
       '& .MuiAccordionDetails-root ': {
@@ -139,7 +149,7 @@ const Component = {
         },
         alignItems: 'flex-start',
         '& .MuiAccordionSummary-expandIconWrapper': {
-          marginTop: theme.spacing(1.5),
+          marginTop: expanded ? theme.spacing(1.5) : '6px',
           alignSelf: 'flex-start'
         }
       }

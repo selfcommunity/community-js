@@ -30,6 +30,7 @@ import {PREFIX} from './constants';
 import {
   getTheme,
   SCContextType,
+  SCPreferences,
   SCPreferencesContextType,
   SCThemeContextType,
   SCThemeType,
@@ -67,6 +68,7 @@ import HeaderPlaceholder from '../../assets/onBoarding/header';
 import BaseDialog from '../../shared/BaseDialog';
 import PubSub from 'pubsub-js';
 import {SCCategoryEventType, SCTopicType} from '../../constants/PubSub';
+import OnBoardingActionsButton from './ActionsButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -163,6 +165,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const prevCategoriesStep = usePreviousValue(currentCategoriesStep);
   const [showNoCategoriesModal, setShowNoCategoriesModal] = useState<boolean>(false);
   const [showCategoriesWarningModal, setShowWarningCategoriesModal] = useState<boolean>(false);
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -171,7 +174,15 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
   const scThemeContext: SCThemeContextType = useSCTheme();
   const {enqueueSnackbar} = useSnackbar();
-  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const showOnBoarding = useMemo(
+    () =>
+      scPreferencesContext.preferences &&
+      SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED in scPreferencesContext.preferences &&
+      SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED].value &&
+      !scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -431,14 +442,17 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return content;
   };
 
-  if (!isAdmin) {
+  if (!isAdmin || !showOnBoarding) {
     return <HiddenPlaceholder />;
   }
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <AccordionRoot defaultExpanded onChange={handleExpand} className={classes.accordionRoot} expanded={expanded}>
-        <AccordionSummary expandIcon={<Icon fontSize="medium">expand_more</Icon>} aria-controls="accordion" id="onBoarding-accordion">
+      <AccordionRoot defaultExpanded className={classes.accordionRoot} expanded={expanded}>
+        <AccordionSummary
+          expandIcon={<OnBoardingActionsButton isExpanded={expanded} onExpandChange={handleExpand} onHideOnBoarding={handlePreferencesUpdate} />}
+          aria-controls="accordion"
+          id="onBoarding-accordion">
           <>
             {expanded ? (
               <>
