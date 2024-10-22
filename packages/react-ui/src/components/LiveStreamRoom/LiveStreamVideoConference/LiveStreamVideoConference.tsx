@@ -1,17 +1,19 @@
-import {Box, BoxProps} from '@mui/material';
+import {Box, BoxProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
 import {useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {formatChatMessageLinks, LiveKitRoom, LocalUserChoices, VideoConference} from '@livekit/components-react';
 import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
 import {decodePassphrase} from '../../../utils/liveStream';
 import RecordingIndicator from './RecordingIndicator';
+import {defaultUserChoices} from '@livekit/components-core';
+import {defaultVideoOptions} from '../constants';
 // import {SettingsMenu} from './SettingsMenu';
 // import {SHOW_SETTINGS_MENU} from '../constants';
 
@@ -36,18 +38,36 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
   className?: string;
 
   /**
-   * Event Object
+   * Livestream Object
    * @default null
    */
   liveStream?: SCLiveStreamType;
 
+  /**
+   * User choices
+   */
   userChoices: LocalUserChoices;
+
+  /**
+   * Connection details, include
+   *       serverUrl: serverUrl,
+   *       roomName: roomName,
+   *       participantToken: participantToken,
+   *       participantName: participantName
+   */
   connectionDetails: ConnectionDetails;
+
+  /**
+   * Override video options
+   */
   options: {
     hq: boolean;
     codec: VideoCodec;
   };
 
+  /**
+   * onLeave room callback
+   */
   handleOnLeaveRoom?: () => void;
 
   /**
@@ -81,13 +101,20 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     props: inProps,
     name: PREFIX
   });
-  const {className, liveStream = null, handleOnLeaveRoom, userChoices, connectionDetails = {}, options = {}, ...rest} = props;
+  const {
+    className,
+    liveStream = null,
+    handleOnLeaveRoom,
+    userChoices = defaultUserChoices,
+    connectionDetails = {},
+    options = defaultVideoOptions,
+    ...rest
+  } = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
-  // INTL
-  const intl = useIntl();
+  const scUserContext: SCUserContextType = useSCUser();
 
+  // Passphrase
   const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -95,26 +122,27 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const worker = typeof window !== 'undefined' && e2eePassphrase && new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
-  const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
+  const [e2eeSetupComplete, setE2eeSetupComplete] = useState(false);
 
-  const roomOptions = React.useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = props.options.codec ? props.options.codec : 'vp9';
+  // Room options
+  const roomOptions = useMemo((): RoomOptions => {
+    let videoCodec: VideoCodec | undefined = options.codec ? options.codec : defaultVideoOptions.codec;
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
     return {
       videoCaptureDefaults: {
-        deviceId: props.userChoices.videoDeviceId ?? undefined,
-        resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720
+        deviceId: userChoices.videoDeviceId ?? undefined,
+        resolution: options.hq ? VideoPresets.h2160 : VideoPresets.h720
       },
       publishDefaults: {
         dtx: false,
-        videoSimulcastLayers: props.options.hq ? [VideoPresets.h1080, VideoPresets.h720] : [VideoPresets.h540, VideoPresets.h216],
+        videoSimulcastLayers: options.hq ? [VideoPresets.h1080, VideoPresets.h720] : [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
         videoCodec
       },
       audioCaptureDefaults: {
-        deviceId: props.userChoices.audioDeviceId ?? undefined
+        deviceId: userChoices.audioDeviceId ?? undefined
       },
       adaptiveStream: {pixelDensity: 'screen'},
       dynacast: true,
@@ -125,9 +153,16 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           }
         : undefined
     };
-  }, [props.userChoices, props.options.hq, props.options.codec]);
+  }, [userChoices, options.hq, options.codec]);
 
+  // Room name
   const room = useMemo(() => new Room(roomOptions), []);
+
+  const connectOptions = useMemo((): RoomConnectOptions => {
+    return {
+      autoSubscribe: true
+    };
+  }, []);
 
   useEffect(() => {
     if (e2eeEnabled) {
@@ -151,21 +186,34 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     }
   }, [e2eeEnabled, room, e2eePassphrase]);
 
-  const connectOptions = useMemo((): RoomConnectOptions => {
-    return {
-      autoSubscribe: true
-    };
-  }, []);
-
+  // HANDLERS
+  /**
+   * Handle on leave
+   */
   const handleOnLeave = useCallback(() => handleOnLeaveRoom?.(), [handleOnLeaveRoom]);
+
+  /**
+   * Handle on error
+   */
   const handleError = useCallback((error: Error) => {
     console.error(error);
     alert(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
   }, []);
+
+  /**
+   * Handle encryption error
+   */
   const handleEncryptionError = useCallback((error: Error) => {
     console.error(error);
     alert(`Encountered an unexpected encryption error, check the console logs for details: ${error.message}`);
   }, []);
+
+  /**
+   * User must be authenticated
+   */
+  if (!scUserContext.user || !connectionDetails) {
+    return <CircularProgress />;
+  }
 
   /**
    * Renders root object
@@ -175,11 +223,11 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
       <LiveKitRoom
         connect={e2eeSetupComplete}
         room={room}
-        token={props.connectionDetails.participantToken}
-        serverUrl={props.connectionDetails.serverUrl}
+        token={connectionDetails.participantToken}
+        serverUrl={connectionDetails.serverUrl}
         connectOptions={connectOptions}
-        video={props.userChoices.videoEnabled}
-        audio={props.userChoices.audioEnabled}
+        video={userChoices.videoEnabled}
+        audio={userChoices.audioEnabled}
         onDisconnected={handleOnLeave}
         onEncryptionError={handleEncryptionError}
         onError={handleError}>

@@ -7,9 +7,7 @@ export default {
 } as Meta<typeof LiveStreamRoom>;
 
 const template = (args) => (
-  <div style={{width: 800}}>
-    <LiveStreamRoom {...args} />
-  </div>
+ 	<LiveStreamRoom {...args} />
 );
 
 

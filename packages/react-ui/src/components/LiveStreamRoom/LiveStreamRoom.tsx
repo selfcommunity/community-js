@@ -1,29 +1,47 @@
-import {Box, BoxProps} from '@mui/material';
+import {Box, BoxProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useIntl} from 'react-intl';
 import {CONN_DETAILS_ENDPOINT, PREFIX} from './constants';
-import {formatChatMessageLinks, LiveKitRoom, LocalUserChoices, PreJoin, VideoConference} from '@livekit/components-react';
-// import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
-import {useCallback, useState} from 'react';
+import {LocalUserChoices, PreJoin} from '@livekit/components-react';
+import {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference from './LiveStreamVideoConference';
+import '@livekit/components-styles';
 
 const classes = {
   root: `${PREFIX}-root`,
-  title: `${PREFIX}-title`,
   content: `${PREFIX}-content`,
-  actions: `${PREFIX}-actions`,
+  title: `${PREFIX}-title`,
+  description: `${PREFIX}-description`,
+  preJoin: `${PREFIX}-prejoin`,
   error: `${PREFIX}-error`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(({theme}) => ({
+  backgroundColor: '#000',
+  [`& .${classes.preJoin}`]: {
+    display: 'grid',
+    placeItems: 'center',
+    height: '100%'
+  },
+  '& .lk-form-control': {
+    display: 'none'
+  },
+  '& .lk-join-button': {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark
+    }
+  }
+}));
 
 export interface LiveStreamRoomProps extends BoxProps {
   /**
@@ -61,8 +79,9 @@ export interface LiveStreamRoomProps extends BoxProps {
  |---|---|---|
  |root|.SCLiveStreamForm-root|Styles applied to the root element.|
  |title|.SCLiveStreamForm-title|Styles applied to the title element.|
- |content|.SCLiveStreamForm-content|Styles applied to the element.|
- |actions|.SCLiveStreamForm-actions|Styles applied to the actions.|
+ |description|.SCLiveStreamForm-description|Styles applied to the description element.|
+ |content|.SCLiveStreamForm-content|Styles applied to the content.|
+ |prejoin|.SCLiveStreamForm-prejoin|Styles applied to the prejoin.|
  |error|.SCLiveStreamForm-error|Styles applied to the error elements.|
 
  * @param inProps
@@ -76,46 +95,73 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   const {className, liveStream = null, ...rest} = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
+
   // INTL
   const intl = useIntl();
 
-  const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(undefined);
-  const preJoinDefaults = React.useMemo(() => {
+  // STATE
+  const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+  const preJoinDefaults = useMemo(() => {
     return {
-      username: '',
+      username: scUserContext.user?.username || '',
       videoEnabled: true,
       audioEnabled: true
     };
-  }, []);
+  }, [scUserContext.user]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(undefined);
 
+  // HANDLERS
+  /**
+   * Handle PreJoin Submit
+   */
   const handlePreJoinSubmit = useCallback(async (values: LocalUserChoices) => {
-    setPreJoinChoices(values);
-    const url = new URL(CONN_DETAILS_ENDPOINT, window.location.origin);
-    url.searchParams.append('roomName', props.roomName);
-    url.searchParams.append('participantName', values.username);
-    if (props.region) {
-      url.searchParams.append('region', props.region);
+    if (liveStream) {
+      setPreJoinChoices(values);
+      const url = new URL(CONN_DETAILS_ENDPOINT, window.location.origin);
+      url.searchParams.append('roomName', liveStream.roomName);
+      url.searchParams.append('participantName', scUserContext.user?.username);
+      /* if (liveStream.region) {
+				url.searchParams.append('region', liveStream.region);
+			} */
+      const connectionDetailsResp = await fetch(url.toString());
+      const connectionDetailsData = await connectionDetailsResp.json();
+      setConnectionDetails(connectionDetailsData);
     }
-    const connectionDetailsResp = await fetch(url.toString());
-    const connectionDetailsData = await connectionDetailsResp.json();
-    setConnectionDetails(connectionDetailsData);
   }, []);
+
+  /**
+   * Handle PreJoin Error
+   */
   const handlePreJoinError = useCallback((e: any) => console.error(e), []);
+
+  /**
+   * User must be authenticated
+   */
+  if (!scUserContext.user) {
+    return <CircularProgress />;
+  }
 
   /**
    * Renders root object
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {connectionDetails === undefined || preJoinChoices === undefined ? (
-        <div style={{display: 'grid', placeItems: 'center', height: '100%'}}>
-          <PreJoin defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
-        </div>
-      ) : (
-        <LiveStreamVideoConference connectionDetails={connectionDetails} userChoices={preJoinChoices} options={{codec: props.codec, hq: props.hq}} />
-      )}
+      <Box className={classes.content} data-lk-theme="default">
+        <Box className={classes.title}>{liveStream?.title}</Box>
+        <Box className={classes.description}>{liveStream?.description}</Box>
+        {connectionDetails === undefined || preJoinChoices === undefined ? (
+          <Box className={classes.preJoin}>
+            <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+          </Box>
+        ) : (
+          <LiveStreamVideoConference
+            connectionDetails={connectionDetails}
+            userChoices={preJoinChoices}
+            options={{codec: props.codec, hq: props.hq}}
+          />
+        )}
+      </Box>
     </Root>
   );
 }
