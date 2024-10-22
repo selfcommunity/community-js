@@ -201,7 +201,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       title={
         <Box className={classes.title} component={'span'}>
           {step === CreateLiveStreamStep.CREATE_LIVE && (
-						<Button variant="text" onClick={handleBack} startIcon={<Icon>arrow_back</Icon>}>
+            <Button variant="text" onClick={handleBack} startIcon={<Icon>arrow_back</Icon>}>
               Back
             </Button>
           )}

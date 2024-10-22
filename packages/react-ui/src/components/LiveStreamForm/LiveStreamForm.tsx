@@ -28,13 +28,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({
-	[`& .${classes.actions}`]: {
-		display: 'flex',
-		justifyContent: 'flex-end',
-		marginTop: theme.spacing(2)
-	},
-}));
+})(({theme}) => ({}));
 
 export interface LiveStreamFormProps extends BoxProps {
   /**
@@ -121,7 +115,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   // INTL
   const intl = useIntl();
 
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const initialFieldState: InitialFieldState = {
     title: liveStream?.title || '',

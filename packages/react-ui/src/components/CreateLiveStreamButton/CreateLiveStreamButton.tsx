@@ -6,7 +6,6 @@ import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextTyp
 import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
-import EventForm, {EventFormProps} from '../EventForm';
 import {SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
 import CreateLivestreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 
@@ -33,6 +32,12 @@ export interface CreateLivestreamButtonProps extends ButtonProps {
    * @default empty object
    */
   CreateLiveStreamDialogComponentProps?: CreateLiveStreamDialogProps;
+
+  /**
+   * On click callback function
+   * @default null
+   */
+  onButtonClick?: (event: any, reason: any) => void;
 
   /**
    * On success callback function
@@ -94,7 +99,6 @@ export default function CreateLiveStreamButton(inProps: CreateLivestreamButtonPr
 			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
 		[preferences, features]
 	); */
-  const onlyStaffLiveStreamEnabled = useMemo(() => true /* preferences[SCPreferences.CONFIGURATIONS_LIVESTREAM_ONLY_STAFF_ENABLED].value */, [preferences]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
@@ -117,7 +121,7 @@ export default function CreateLiveStreamButton(inProps: CreateLivestreamButtonPr
   /**
    * If there's no authUserId, component is hidden.
    */
-  if (!liveStreamEnabled || (!canCreateLiveStream && onlyStaffLiveStreamEnabled) || !authUserId) {
+  if (!liveStreamEnabled || !canCreateLiveStream || !authUserId) {
     return null;
   }
 

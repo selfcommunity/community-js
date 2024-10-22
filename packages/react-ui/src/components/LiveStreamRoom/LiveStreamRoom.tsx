@@ -1,11 +1,11 @@
 import {Box, BoxProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useIntl} from 'react-intl';
-import {CONN_DETAILS_ENDPOINT, PREFIX} from './constants';
+import {PREFIX} from './constants';
 import {LocalUserChoices, PreJoin} from '@livekit/components-react';
 import {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
@@ -24,24 +24,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({
-  backgroundColor: '#000',
-  [`& .${classes.preJoin}`]: {
-    display: 'grid',
-    placeItems: 'center',
-    height: '100%'
-  },
-  '& .lk-form-control': {
-    display: 'none'
-  },
-  '& .lk-join-button': {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    '&:hover': {
-      backgroundColor: theme.palette.primary.dark
-    }
-  }
-}));
+})(({theme}) => ({}));
 
 export interface LiveStreamRoomProps extends BoxProps {
   /**
@@ -55,6 +38,11 @@ export interface LiveStreamRoomProps extends BoxProps {
    * @default null
    */
   liveStream?: SCLiveStreamType;
+
+  /**
+   * Endpoint livestream access
+   */
+  connectionDetailsEndpoint?: string;
 
   /**
    * Any other properties
@@ -92,10 +80,11 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className, liveStream = null, ...rest} = props;
+  const {className, liveStream = null, connectionDetailsEndpoint, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // INTL
   const intl = useIntl();
@@ -111,30 +100,35 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   }, [scUserContext.user]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(undefined);
 
+  const liveStreamEnabled = true;
+  /* const liveStreamEnabled = useMemo(
+		() =>
+			preferences &&
+			features &&
+			features.includes(SCFeatureName.LIVE_STREAM) &&
+			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+		[preferences, features]
+	); */
+  const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
+
   // HANDLERS
   /**
    * Handle PreJoin Submit
    */
   const handlePreJoinSubmit = useCallback(async (values: LocalUserChoices) => {
-		// eslint-disable-next-line no-constant-condition
-    if (liveStream || true) {
+    // eslint-disable-next-line no-constant-condition
+    if ((liveStream || true) && connectionDetailsEndpoint) {
       setPreJoinChoices(values);
-      /* const url = new URL(CONN_DETAILS_ENDPOINT, window.location.origin);
+      const url = new URL(connectionDetailsEndpoint, window.location.origin);
       url.searchParams.append('roomName', liveStream.roomName);
       url.searchParams.append('participantName', scUserContext.user?.username);
       // if (liveStream.region) {
-			//	url.searchParams.append('region', liveStream.region);
-			// }
+      //	url.searchParams.append('region', liveStream.region);
+      // }
       const connectionDetailsResp = await fetch(url.toString());
       const connectionDetailsData = await connectionDetailsResp.json();
-      setConnectionDetails(connectionDetailsData); */
-      setConnectionDetails({
-        serverUrl: 'wss://gomos-rw98bdqa.livekit.cloud',
-        roomName: 'lgoh-lrk6',
-        participantName: 'admin',
-        participantToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk1OTU3NjYsImlzcyI6IkFQSU11VDl0WWRLaDdHSyIsIm5iZiI6MTcyOTU5NDg2Niwic3ViIjoiYWRtaW4iLCJ2aWRlbyI6eyJyb29tIjoibGdvaC1scms2Iiwicm9vbUpvaW4iOnRydWUsInJvb21MaXN0Ijp0cnVlfX0.rL5dZ8WG4tRt7rUYCEpiEVAp3mTZr_BTU_z39Cb1sOg'
-      });
+      setConnectionDetails(connectionDetailsData);
     }
   }, []);
 
@@ -146,7 +140,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   /**
    * User must be authenticated
    */
-  if (!scUserContext.user) {
+  if (!scUserContext.user || !liveStreamEnabled || !canCreateLiveStream) {
     return <CircularProgress />;
   }
 

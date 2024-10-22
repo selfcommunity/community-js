@@ -6,6 +6,7 @@ import {useThemeProps} from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
+import CreateLiveStreamButton from '../CreateLiveStreamButton';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -15,7 +16,10 @@ const classes = {
   drawerRoot: `${PREFIX}-drawer-root`,
   drawerHeader: `${PREFIX}-drawer-header`,
   drawerHeaderAction: `${PREFIX}-drawer-header-action`,
-  drawerContent: `${PREFIX}-drawer-content`
+  drawerContent: `${PREFIX}-drawer-content`,
+  drawerFooter: `${PREFIX}-drawer-footer`,
+  drawerFooterLiveStream: `${PREFIX}-drawer-footer-live`,
+  drawerFooterLiveStreamButton: `${PREFIX}-drawer-footer-live-button`
 };
 
 const Root = styled(Drawer, {
@@ -64,6 +68,8 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     showDrawerHeader = true,
     drawerHeaderContent = <DefaultHeaderContent />,
     drawerContent = <DefaultDrawerContent />,
+    showDrawerFooterContent = true,
+    drawerFooterContent = null,
     ScrollContainerProps = {},
     open,
     onClose,
@@ -92,6 +98,20 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
           {drawerContent}
         </List>
       </ScrollContainer>
+      {showDrawerFooterContent && (
+        <>
+          <Divider />
+          <Box className={classes.drawerFooter}>
+            {drawerFooterContent ? (
+              drawerFooterContent
+            ) : (
+              <Box className={classes.drawerFooterLiveStream}>
+                <CreateLiveStreamButton color="primary" className={classes.drawerFooterLiveStreamButton} fullWidth />
+              </Box>
+            )}
+          </Box>
+        </>
+      )}
     </Root>
   );
 }

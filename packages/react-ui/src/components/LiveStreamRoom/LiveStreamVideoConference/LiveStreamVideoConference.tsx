@@ -1,12 +1,11 @@
 import {Box, BoxProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
-import {useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {formatChatMessageLinks, LiveKitRoom, LiveKitRoomProps, LocalUserChoices, VideoConference} from '@livekit/components-react';
+import {ConnectionState, formatChatMessageLinks, LiveKitRoom, LiveKitRoomProps, LocalUserChoices, VideoConference} from '@livekit/components-react';
 import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
@@ -14,8 +13,6 @@ import {decodePassphrase} from '../../../utils/liveStream';
 import RecordingIndicator from './RecordingIndicator';
 import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
-// import {SettingsMenu} from './SettingsMenu';
-// import {SHOW_SETTINGS_MENU} from '../constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -122,6 +119,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // Passphrase
   const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
@@ -135,6 +133,15 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const [liveActive, setLiveActive] = useState(false);
   const [error, setError] = useState(null);
 
+  const liveStreamRoomMaxParticipants = 25;
+  /* const liveStreamRoomMaxParticipants = useMemo(
+		() =>
+			preferences &&
+			SCPreferences.CONFIGURATIONS_LIVE_STREAM_MAX_PARTICIPANTS in preferences &&
+			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_MAX_PARTICIPANTS].value,
+		[preferences]
+	); */
+
   // Room options
   const roomOptions = useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = options.codec ? options.codec : defaultVideoOptions.codec;
@@ -142,6 +149,8 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
       videoCodec = undefined;
     }
     return {
+      // emptyTimeout: 3 * 60, // 3 minutes
+      // maxParticipants: liveStreamRoomMaxParticipants,
       videoCaptureDefaults: {
         deviceId: userChoices.videoDeviceId ?? undefined,
         resolution: options.hq ? VideoPresets.h2160 : VideoPresets.h720
@@ -164,10 +173,14 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           }
         : undefined
     };
-  }, [userChoices, options.hq, options.codec]);
+  }, [liveStreamRoomMaxParticipants, userChoices, options.hq, options.codec]);
 
-  // Room name
-  const room = useMemo(() => new Room(roomOptions), []);
+  // Create room - only initial
+  const room = useMemo(() => {
+    if (liveStreamRoomMaxParticipants) {
+      return new Room(roomOptions);
+    }
+  }, [liveStreamRoomMaxParticipants]);
 
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
@@ -176,28 +189,30 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   }, []);
 
   useEffect(() => {
-    if (e2eeEnabled) {
-      keyProvider
-        .setKey(decodePassphrase(e2eePassphrase))
-        .then(() => {
-          room.setE2EEEnabled(true).catch((e) => {
-            if (e instanceof DeviceUnsupportedError) {
-              alert(
-                `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`
-              );
-              console.error(e);
-            } else {
-              throw e;
-            }
+    if (room) {
+      if (e2eeEnabled) {
+        keyProvider
+          .setKey(decodePassphrase(e2eePassphrase))
+          .then(() => {
+            room.setE2EEEnabled(true).catch((e) => {
+              if (e instanceof DeviceUnsupportedError) {
+                alert(
+                  `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`
+                );
+                console.error(e);
+              } else {
+                throw e;
+              }
+            });
+          })
+          .then(() => {
+            setE2eeSetupComplete(true);
+            setLiveActive(true);
           });
-        })
-        .then(() => {
-          setE2eeSetupComplete(true);
-          setLiveActive(true);
-        });
-    } else {
-      setE2eeSetupComplete(true);
-      setLiveActive(true);
+      } else {
+        setE2eeSetupComplete(true);
+        setLiveActive(true);
+      }
     }
   }, [e2eeEnabled, room, e2eePassphrase]);
 
@@ -216,6 +231,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const handleError = useCallback((error: Error) => {
     console.error(error);
     setError(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    setLiveActive(false);
   }, []);
 
   /**
@@ -224,6 +240,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const handleEncryptionError = useCallback((error: Error) => {
     console.error(error);
     setError(`Encountered an unexpected encryption error, check the console logs for details: ${error.message}`);
+    setLiveActive(false);
   }, []);
 
   /**
@@ -238,12 +255,12 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {liveActive ? (
+      {room && liveActive && !error ? (
         <LiveKitRoom
-          connect={e2eeSetupComplete}
+          connect={Boolean(e2eeSetupComplete && liveActive && room)}
           room={room}
-          token={connectionDetails.participantToken}
-          serverUrl={connectionDetails.serverUrl}
+          token={connectionDetails['participantToken']}
+          serverUrl={connectionDetails['serverUrl']}
           connectOptions={connectOptions}
           video={userChoices.videoEnabled}
           audio={userChoices.audioEnabled}
@@ -251,8 +268,9 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           onEncryptionError={handleEncryptionError}
           onError={handleError}
           {...LiveKitRoomComponentsProps}>
-          <VideoConference chatMessageFormatter={formatChatMessageLinks} /*SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined} */ />
+          <VideoConference chatMessageFormatter={formatChatMessageLinks} />
           <RecordingIndicator />
+          <ConnectionState />
         </LiveKitRoom>
       ) : (
         <>{error ? error : liveActive === false ? <>Grazie!</> : <CircularProgress />}</>
