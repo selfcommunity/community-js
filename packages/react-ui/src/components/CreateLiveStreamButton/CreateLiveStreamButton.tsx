@@ -21,7 +21,7 @@ const Root = styled(Button, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-export interface CreateLivestreamButtonProps extends ButtonProps {
+export interface CreateLiveStreamButtonProps extends ButtonProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -70,9 +70,9 @@ export interface CreateLivestreamButtonProps extends ButtonProps {
 
  * @param inProps
  */
-export default function CreateLiveStreamButton(inProps: CreateLivestreamButtonProps): JSX.Element {
+export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonProps): JSX.Element {
   //PROPS
-  const props: CreateLivestreamButtonProps = useThemeProps({
+  const props: CreateLiveStreamButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
