@@ -238,6 +238,7 @@ import * as ContributionUtils from './utils/contribution';
 import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
 import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
+import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 /**
  * Import Assets
@@ -278,6 +279,10 @@ export {
   BroadcastMessagesProps,
   BroadcastMessagesSkeleton,
   bytesToSize,
+  generateRoomId,
+  randomString,
+  decodePassphrase,
+  encodePassphrase,
   Calendar,
   CalendarProps,
   Categories,
