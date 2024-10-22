@@ -175,7 +175,7 @@ import {
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
 import CreateLiveStreamDialog, {CreateLiveStreamDialogProps} from './components/CreateLiveStreamDialog';
-import CreateLiveStreamButton, {CreateLivestreamButtonProps} from './components/CreateLiveStreamButton';
+import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from './components/CreateLiveStreamButton';
 import LiveStreamForm, {LiveStreamFormProps} from './components/LiveStreamForm';
 import LiveStreamRoom, {LiveStreamRoomProps} from './components/LiveStreamRoom';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './components/LiveStreamRoom/LiveStreamVideoConference';
@@ -674,7 +674,7 @@ export {
   CreateLiveStreamDialog,
   CreateLiveStreamDialogProps,
   CreateLiveStreamButton,
-  CreateLivestreamButtonProps,
+  CreateLiveStreamButtonProps,
   LiveStreamForm,
   LiveStreamFormProps,
   LiveStreamRoom,

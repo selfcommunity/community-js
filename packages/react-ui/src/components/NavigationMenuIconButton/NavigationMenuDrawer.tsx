@@ -6,7 +6,7 @@ import {useThemeProps} from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
-import CreateLiveStreamButton from '../CreateLiveStreamButton';
+import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from '../CreateLiveStreamButton';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -45,12 +45,27 @@ export interface NavigationMenuDrawerProps extends DrawerProps {
    */
   drawerContent?: React.ReactNode;
   /**
+   * Hide drawer footer
+   * @default true
+   */
+  showDrawerFooter?: boolean;
+  /**
+   * Custom Drawer footer content
+   * @default null
+   */
+  drawerFooterContent?: React.ReactNode;
+  /**
    * Props to spread to ScrollContainer component
    * This lib use 'react-custom-scrollbars' component to perform scrollbars
    * For more info: https://github.com/malte-wessel/react-custom-scrollbars/blob/master/docs/API.md
    * @default {}
    */
   ScrollContainerProps?: Record<string, any>;
+  /**
+   * Props to spread to CreateLiveStreamButton component
+   * @default {}
+   */
+  CreateLiveStreamButtonComponentProps?: CreateLiveStreamButtonProps;
   /**
    * Any other properties
    */
@@ -71,6 +86,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     showDrawerFooterContent = true,
     drawerFooterContent = null,
     ScrollContainerProps = {},
+    CreateLiveStreamButtonComponentProps = {},
     open,
     onClose,
     ...rest
@@ -106,7 +122,12 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
               drawerFooterContent
             ) : (
               <Box className={classes.drawerFooterLiveStream}>
-                <CreateLiveStreamButton color="primary" className={classes.drawerFooterLiveStreamButton} fullWidth />
+                <CreateLiveStreamButton
+                  color="primary"
+                  className={classes.drawerFooterLiveStreamButton}
+                  fullWidth
+                  {...CreateLiveStreamButtonComponentProps}
+                />
               </Box>
             )}
           </Box>

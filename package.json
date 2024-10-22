@@ -24,9 +24,6 @@
 	},
 	"author": "SelfCommunity (https://www.selfcommunity.com)",
 	"peerDependencies": {
-		"@livekit/components-react": "2.6.5",
-		"@livekit/components-styles": "1.1.4",
-		"@livekit/krisp-noise-filter": "0.2.12",
 		"livekit-client": "2.5.9"
 	},
 	"devDependencies": {
@@ -111,7 +108,10 @@
 		"react-lazyload": "^3.2.0",
 		"seamless-scroll-polyfill": "^2.1.8",
 		"use-deep-compare-effect": "^1.8.1",
-		"validate-color": "^2.2.4"
+		"validate-color": "^2.2.4",
+		"@livekit/components-react": "2.6.5",
+		"@livekit/components-styles": "1.1.4",
+		"@livekit/krisp-noise-filter": "0.2.12"
 	},
 	"prettier": {
 		"trailingComma": "all",

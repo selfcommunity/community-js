@@ -61,9 +61,6 @@
 	"peerDependencies": {
 		"@emotion/react": "^11.11.3",
 		"@emotion/styled": "^11.11.0",
-		"@livekit/components-react": "2.6.5",
-		"@livekit/components-styles": "1.1.4",
-		"@livekit/krisp-noise-filter": "0.2.12",
 		"@mui/lab": "~5.0.0-alpha.159",
 		"@mui/material": "^5.15.3",
 		"@mui/x-date-pickers": "^6.18.7",
@@ -135,7 +132,10 @@
 		"use-deep-compare-effect": "^1.8.1",
 		"use-resize-observer": "^9.1.0",
 		"virtual-scroller": "^1.12.3",
-		"yjs": "^13.6.7"
+		"yjs": "^13.6.7",
+		"@livekit/components-react": "2.6.5",
+		"@livekit/components-styles": "1.1.4",
+		"@livekit/krisp-noise-filter": "0.2.12"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.4",

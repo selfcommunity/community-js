@@ -1,3 +1,3 @@
-import CreateLiveStreamButton, {CreateLivestreamButtonProps} from './CreateLiveStreamButton';
+import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from './CreateLiveStreamButton';
 export default CreateLiveStreamButton;
-export {CreateLivestreamButtonProps};
+export {CreateLiveStreamButtonProps};
