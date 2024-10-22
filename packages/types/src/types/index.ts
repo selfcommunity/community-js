@@ -297,6 +297,6 @@ export {
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-	SCLiveStreamType,
+  SCLiveStreamType,
   SCOnBoardingStepIdType
 };
