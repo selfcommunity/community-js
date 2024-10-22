@@ -63,6 +63,12 @@ const Component = {
         }
       }
     }),
+    dialogRoot: ({theme}: any) => ({
+      '& .SCOnBoardingWidget-dialog-content': {
+        whiteSpace: 'pre-line',
+        fontSize: '1.143rem'
+      }
+    }),
     accordionRoot: ({theme, expanded}: any) => ({
       boxShadow: 'none',
       '& .MuiAccordionDetails-root ': {
