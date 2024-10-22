@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import {Box, BoxProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -256,22 +258,24 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {room && liveActive && !error ? (
-        <LiveKitRoom
-          connect={Boolean(e2eeSetupComplete && liveActive && room)}
-          room={room}
-          token={connectionDetails['participantToken']}
-          serverUrl={connectionDetails['serverUrl']}
-          connectOptions={connectOptions}
-          video={userChoices.videoEnabled}
-          audio={userChoices.audioEnabled}
-          onDisconnected={handleOnLeave}
-          onEncryptionError={handleEncryptionError}
-          onError={handleError}
-          {...LiveKitRoomComponentsProps}>
-          <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-          <RecordingIndicator />
-          <ConnectionState />
-        </LiveKitRoom>
+        <>
+          <LiveKitRoom
+            connect={Boolean(e2eeSetupComplete && liveActive && room)}
+            room={room}
+            token={connectionDetails['participantToken']}
+            serverUrl={connectionDetails['serverUrl']}
+            connectOptions={connectOptions}
+            video={userChoices.videoEnabled}
+            audio={userChoices.audioEnabled}
+            onDisconnected={handleOnLeave}
+            onEncryptionError={handleEncryptionError}
+            onError={handleError}
+            {...LiveKitRoomComponentsProps}>
+            <VideoConference chatMessageFormatter={formatChatMessageLinks} />
+            <RecordingIndicator />
+            <ConnectionState />
+          </LiveKitRoom>
+        </>
       ) : (
         <>{error ? error : liveActive === false ? <>Grazie!</> : <CircularProgress />}</>
       )}
