@@ -23,9 +23,7 @@
 		"build-storybook": "storybook build"
 	},
 	"author": "SelfCommunity (https://www.selfcommunity.com)",
-	"peerDependencies": {
-		"livekit-client": "2.5.9"
-	},
+	"peerDependencies": {},
 	"devDependencies": {
 		"@babel/cli": "^7.7.4",
 		"@babel/core": "^7.7.4",
@@ -89,6 +87,7 @@
 		"@livekit/components-react": "2.6.5",
 		"@livekit/components-styles": "1.1.4",
 		"@livekit/krisp-noise-filter": "0.2.12",
+		"livekit-client": "2.5.9",
 		"@mui/lab": "~5.0.0-alpha.159",
 		"@mui/material": "^5.15.3",
 		"@mui/system": "^5.15.3",
