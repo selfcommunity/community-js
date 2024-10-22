@@ -1,4 +1,4 @@
-import {Box, BoxProps, Button, ListItem, Typography, Zoom} from '@mui/material';
+import {Box, BoxProps, Button, List, ListItem, Typography, Zoom} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategories, useSCRouting} from '@selfcommunity/react-core';
 import React, {useEffect, useState} from 'react';
 import Category, {CategoryProps} from '../Category';
@@ -83,23 +83,25 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
           />
         </Button>
       </Typography>
-      {categoriesOrdered.map((c: SCCategoryType, index: number) => (
-        <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
-          <ListItem key={c.id}>
-            <Category
-              ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)}}
-              elevation={0}
-              category={c}
-              actions={null}
-              {...CategoryItemProps}
-              {...getMouseEvents(
-                () => handleMouseEnter(c.id),
-                () => handleMouseLeave(c.id)
-              )}
-            />
-          </ListItem>
-        </Zoom>
-      ))}
+      <List>
+        {categoriesOrdered.map((c: SCCategoryType, index: number) => (
+          <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
+            <ListItem key={c.id}>
+              <Category
+                ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)}}
+                elevation={0}
+                category={c}
+                actions={null}
+                {...CategoryItemProps}
+                {...getMouseEvents(
+                  () => handleMouseEnter(c.id),
+                  () => handleMouseLeave(c.id)
+                )}
+              />
+            </ListItem>
+          </Zoom>
+        ))}
+      </List>
     </Root>
   );
 }

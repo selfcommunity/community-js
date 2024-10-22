@@ -132,6 +132,7 @@ import {
   SCEventLocationFilterType,
   SCEventSubscriptionStatusType
 } from './event';
+import {type SCLiveStreamType} from './liveStream';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
 /**
  * Exports all types
@@ -296,5 +297,6 @@ export {
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
+  SCLiveStreamType,
   SCOnBoardingStepIdType
 };
