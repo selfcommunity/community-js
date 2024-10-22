@@ -116,17 +116,25 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
    * Handle PreJoin Submit
    */
   const handlePreJoinSubmit = useCallback(async (values: LocalUserChoices) => {
-    if (liveStream) {
+		// eslint-disable-next-line no-constant-condition
+    if (liveStream || true) {
       setPreJoinChoices(values);
-      const url = new URL(CONN_DETAILS_ENDPOINT, window.location.origin);
+      /* const url = new URL(CONN_DETAILS_ENDPOINT, window.location.origin);
       url.searchParams.append('roomName', liveStream.roomName);
       url.searchParams.append('participantName', scUserContext.user?.username);
-      /* if (liveStream.region) {
-				url.searchParams.append('region', liveStream.region);
-			} */
+      // if (liveStream.region) {
+			//	url.searchParams.append('region', liveStream.region);
+			// }
       const connectionDetailsResp = await fetch(url.toString());
       const connectionDetailsData = await connectionDetailsResp.json();
-      setConnectionDetails(connectionDetailsData);
+      setConnectionDetails(connectionDetailsData); */
+      setConnectionDetails({
+        serverUrl: 'wss://gomos-rw98bdqa.livekit.cloud',
+        roomName: 'lgoh-lrk6',
+        participantName: 'admin',
+        participantToken:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk1OTU3NjYsImlzcyI6IkFQSU11VDl0WWRLaDdHSyIsIm5iZiI6MTcyOTU5NDg2Niwic3ViIjoiYWRtaW4iLCJ2aWRlbyI6eyJyb29tIjoibGdvaC1scms2Iiwicm9vbUpvaW4iOnRydWUsInJvb21MaXN0Ijp0cnVlfX0.rL5dZ8WG4tRt7rUYCEpiEVAp3mTZr_BTU_z39Cb1sOg'
+      });
     }
   }, []);
 

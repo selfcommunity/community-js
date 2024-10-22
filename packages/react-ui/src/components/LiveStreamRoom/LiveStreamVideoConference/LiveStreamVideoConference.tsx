@@ -6,7 +6,7 @@ import {SCLiveStreamType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
 import {useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {formatChatMessageLinks, LiveKitRoom, LocalUserChoices, VideoConference} from '@livekit/components-react';
+import {formatChatMessageLinks, LiveKitRoom, LiveKitRoomProps, LocalUserChoices, VideoConference} from '@livekit/components-react';
 import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
@@ -71,6 +71,12 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
   handleOnLeaveRoom?: () => void;
 
   /**
+   * Props to spread to LiveKitRoomComponent
+   * @default {}
+   */
+  LiveKitRoomComponentsProps?: LiveKitRoomProps;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -107,6 +113,9 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     handleOnLeaveRoom,
     userChoices = defaultUserChoices,
     connectionDetails = {},
+    LiveKitRoomComponentsProps = {
+      /* simulateParticipants: true */
+    },
     options = defaultVideoOptions,
     ...rest
   } = props;
@@ -123,6 +132,8 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
   const [e2eeSetupComplete, setE2eeSetupComplete] = useState(false);
+  const [liveActive, setLiveActive] = useState(false);
+  const [error, setError] = useState(null);
 
   // Room options
   const roomOptions = useMemo((): RoomOptions => {
@@ -180,9 +191,13 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             }
           });
         })
-        .then(() => setE2eeSetupComplete(true));
+        .then(() => {
+          setE2eeSetupComplete(true);
+          setLiveActive(true);
+        });
     } else {
       setE2eeSetupComplete(true);
+      setLiveActive(true);
     }
   }, [e2eeEnabled, room, e2eePassphrase]);
 
@@ -190,14 +205,17 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   /**
    * Handle on leave
    */
-  const handleOnLeave = useCallback(() => handleOnLeaveRoom?.(), [handleOnLeaveRoom]);
+  const handleOnLeave = useCallback(() => {
+    setLiveActive(false);
+    handleOnLeaveRoom?.();
+  }, [handleOnLeaveRoom]);
 
   /**
    * Handle on error
    */
   const handleError = useCallback((error: Error) => {
     console.error(error);
-    alert(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    setError(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
   }, []);
 
   /**
@@ -205,7 +223,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
    */
   const handleEncryptionError = useCallback((error: Error) => {
     console.error(error);
-    alert(`Encountered an unexpected encryption error, check the console logs for details: ${error.message}`);
+    setError(`Encountered an unexpected encryption error, check the console logs for details: ${error.message}`);
   }, []);
 
   /**
@@ -220,20 +238,25 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <LiveKitRoom
-        connect={e2eeSetupComplete}
-        room={room}
-        token={connectionDetails.participantToken}
-        serverUrl={connectionDetails.serverUrl}
-        connectOptions={connectOptions}
-        video={userChoices.videoEnabled}
-        audio={userChoices.audioEnabled}
-        onDisconnected={handleOnLeave}
-        onEncryptionError={handleEncryptionError}
-        onError={handleError}>
-        <VideoConference chatMessageFormatter={formatChatMessageLinks} /*SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined} */ />
-        <RecordingIndicator />
-      </LiveKitRoom>
+      {liveActive ? (
+        <LiveKitRoom
+          connect={e2eeSetupComplete}
+          room={room}
+          token={connectionDetails.participantToken}
+          serverUrl={connectionDetails.serverUrl}
+          connectOptions={connectOptions}
+          video={userChoices.videoEnabled}
+          audio={userChoices.audioEnabled}
+          onDisconnected={handleOnLeave}
+          onEncryptionError={handleEncryptionError}
+          onError={handleError}
+          {...LiveKitRoomComponentsProps}>
+          <VideoConference chatMessageFormatter={formatChatMessageLinks} /*SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined} */ />
+          <RecordingIndicator />
+        </LiveKitRoom>
+      ) : (
+        <>{error ? error : liveActive === false ? <>Grazie!</> : <CircularProgress />}</>
+      )}
     </Root>
   );
 }
