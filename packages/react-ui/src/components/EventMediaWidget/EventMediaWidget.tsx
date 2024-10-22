@@ -1,25 +1,25 @@
-import { LoadingButton } from '@mui/lab';
-import { Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Box, useThemeProps } from '@mui/system';
-import { Endpoints, EventService, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCCache, SCThemeType, SCUserContextType, useSCFetchEvent, useSCUser } from '@selfcommunity/react-core';
-import { SCEventType, SCMediaType } from '@selfcommunity/types';
-import { CacheStrategies, Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { Fragment, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import {LoadingButton} from '@mui/lab';
+import {Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, useThemeProps} from '@mui/system';
+import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCCache, SCThemeType, SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
+import {SCEventType, SCMediaType} from '@selfcommunity/types';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {Fragment, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import { Lightbox } from '../../shared/Lightbox';
-import { actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer } from '../../utils/widget';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
-import SkeletonComponent, { EventMediaSkeleton } from './Skeleton';
+import {Lightbox} from '../../shared/Lightbox';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
+import SkeletonComponent, {EventMediaSkeleton} from './Skeleton';
 import TriggerButton from './TriggerButton';
 
 const messages = defineMessages({
@@ -94,6 +94,10 @@ export interface EventMediaWidgetProps extends WidgetProps {
    */
   dialogProps?: BaseDialogProps;
 
+  /**
+   * Limit results
+   * @default 10
+   */
   limit?: number;
 
   /**
@@ -118,10 +122,16 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       limit,
       offset: DEFAULT_PAGINATION_OFFSET
     },
-    cacheStrategy,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
     dialogProps,
     ...rest
   } = props;
+
+  // HOOKS
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const intl = useIntl();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // STATE
   const [state, dispatch] = useReducer(
@@ -129,14 +139,14 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.EVENT_MEDIA_STATE_CACHE_PREFIX_KEY),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.EVENT_MEDIA_STATE_CACHE_PREFIX_KEY, event ? event.id : eventId),
       cacheStrategy,
       visibleItems: limit
     },
     stateWidgetInitializer
   );
-  const [medias, setMedias] = useState<SCMediaType[]>([]);
-  const [mediasCount, setMediasCount] = useState<number>(0);
+  const [medias, setMedias] = useState<SCMediaType[]>(state.results);
+  const [mediasCount, setMediasCount] = useState<number>(state.count);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDialogConfirm, setOpenDialogConfirm] = useState<boolean>(false);
   const [mediaId, setMediaId] = useState<number | null>(null);
@@ -147,41 +157,15 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
-  // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const intl = useIntl();
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   // CONSTS
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
   const countHiddenMedia = useMemo(() => mediasCount - MEDIAS_TO_SHOW, [mediasCount]);
-
-  /**
-   * Initialize component
-   * Fetch data only if the component is not initialized and it is not loading data
-   */
-  const _initComponent = useCallback(() => {
-    if (!state.initialized && !state.isLoadingNext) {
-      dispatch({ type: actionWidgetTypes.LOADING_NEXT });
-      EventService.getEventPhotoGallery(scEvent.id, { ...endpointQueryParams })
-        .then((payload: SCPaginatedResponse<SCMediaType>) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: { ...payload, initialized: true } });
-          setMedias(payload.results);
-          setMediasCount(payload.count);
-        })
-        .catch((error) => {
-          dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
-          Logger.error(SCOPE_SC_UI, error);
-        });
-    }
-  }, [state.isLoadingNext, state.initialized, scEvent]);
 
   const _fetchNext = useCallback(
     (index: number) => {
       if (mediasCount > medias.length && index >= 6 && !state.isLoadingNext && state.next) {
         setPreview(index);
-        dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+        dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
         http
           .request({
@@ -189,17 +173,17 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
             method: Endpoints.GetEventPhotoGallery.method
           })
           .then((res: AxiosResponse<SCPaginatedResponse<SCMediaType>>) => {
-            dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
             setMedias((prev) => [...prev, ...res.data.results]);
             setMediasCount(res.data.count);
           })
           .catch((error) => {
-            dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+            dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
             Logger.error(SCOPE_SC_UI, error);
           });
       }
     },
-    [state.next, state.isLoadingNext, medias.length]
+    [state.next, state.isLoadingNext, medias, mediasCount, dispatch, setPreview]
   );
 
   const handleOpenLightbox = useCallback(
@@ -219,7 +203,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
   const handleNext = useCallback(() => {
     setShowSkeleton('dialog');
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
     http
       .request({
@@ -227,13 +211,13 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
         method: Endpoints.GetEventPhotoGallery.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCMediaType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
         setMedias((prev) => [...prev, ...res.data.results]);
         setMediasCount(res.data.count);
         setShowSkeleton(null);
       })
       .catch((error) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: { errorLoadNext: error } });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [state.next, state.isLoadingNext, state.initialized, dispatch, setMedias, setMediasCount, setShowSkeleton]);
@@ -253,9 +237,9 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
     http
       .request({
-        url: Endpoints.RemoveMediasFromEventPhotoGallery.url({ id: scEvent.id }),
+        url: Endpoints.RemoveMediasFromEventPhotoGallery.url({id: scEvent.id}),
         method: Endpoints.RemoveMediasFromEventPhotoGallery.method,
-        data: { medias: [mediaId] }
+        data: {medias: [mediaId]}
       })
       .then(() => {
         setMedias((prev) => prev.filter((media) => media.id !== mediaId));
@@ -267,7 +251,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [scEvent, mediaId, setMedias, setLoading, setOpenDialogConfirm, dispatch]);
+  }, [scEvent, mediaId, setMedias, setLoading, setOpenDialogConfirm, dispatch, setMediasCount]);
 
   const handleCloseAction = useCallback(() => {
     setMediaId(null);
@@ -280,9 +264,9 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
       http
         .request({
-          url: Endpoints.AddMediaToEventPhotoGallery.url({ id: scEvent.id }),
+          url: Endpoints.AddMediaToEventPhotoGallery.url({id: scEvent.id}),
           method: Endpoints.AddMediaToEventPhotoGallery.method,
-          data: { media: media.id }
+          data: {media: media.id}
         })
         .then((res: AxiosResponse<SCMediaType>) => {
           setMedias((prev) => [res.data, ...prev]);
@@ -299,15 +283,44 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
-
-    if (scUserContext.user && scEvent) {
+    if (
+      scUserContext.user &&
+      scEvent &&
+      !state.initialized &&
+      Boolean((eventId !== undefined && scEvent.id === eventId) || (event && scEvent.id === event.id))
+    ) {
       _t = setTimeout(_initComponent);
-
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, scEvent]);
+  }, [scUserContext.user, scEvent, state.initialized]);
+
+  useEffect(() => {
+    if (state.initialized && scEvent && Boolean((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) {
+      dispatch({type: actionWidgetTypes.RESET, payload: {}});
+    }
+  }, [state.initialized, scEvent, eventId, event]);
+
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized and it is not loading data
+   */
+  const _initComponent = useCallback(() => {
+    if (!state.isLoadingNext) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+      EventService.getEventPhotoGallery(scEvent.id, {...endpointQueryParams})
+        .then((payload: SCPaginatedResponse<SCMediaType>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+          setMedias(payload.results);
+          setMediasCount(payload.count);
+        })
+        .catch((error) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [state.isLoadingNext, scEvent, eventId, dispatch, setMedias, setMediasCount]);
 
   useEffect(() => {
     if (isMobile && openDialog && state.next) {
@@ -316,12 +329,17 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
   }, [isMobile, openDialog, state.next]);
 
   // RENDER
-  if (!scEvent || (state.initialized && mediasCount === 0 && !hasAllow)) {
-    return <HiddenPlaceholder />;
+  if (
+    !scEvent ||
+    !state.initialized ||
+    (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) ||
+    (state.isLoadingNext && !state.initialized)
+  ) {
+    return <SkeletonComponent />;
   }
 
-  if (!state.initialized || (state.isLoadingNext && mediasCount === 0)) {
-    return <SkeletonComponent />;
+  if (state.initialized && state.count === 0 && !hasAllow) {
+    return <HiddenPlaceholder />;
   }
 
   return (
@@ -386,7 +404,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
-          title={intl.formatMessage(messages.title, { user: scEvent.managed_by.username })}
+          title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
           onClose={handleToggleDialogOpen}
           open={openDialog}
           {...dialogProps}>

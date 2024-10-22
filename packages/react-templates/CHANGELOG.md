@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.17...@selfcommunity/react-templates@0.4.1-alpha.18) (2024-10-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.16...@selfcommunity/react-templates@0.4.1-alpha.17) (2024-10-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.15...@selfcommunity/react-templates@0.4.1-alpha.16) (2024-10-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.14...@selfcommunity/react-templates@0.4.1-alpha.15) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.13...@selfcommunity/react-templates@0.4.1-alpha.14) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.12...@selfcommunity/react-templates@0.4.1-alpha.13) (2024-10-16)
+
+
+### Bug Fixes
+
+* EventMedia ([7a180c1](https://github.com/selfcommunity/community-js/commit/7a180c1819edaccdf9ad5dd55e6d5c3e0f181f19))
+* Events ([43c7bea](https://github.com/selfcommunity/community-js/commit/43c7beae8fd6dfe05f81a46cf41783b18b434498))
+
+
+
+
+
+## [0.4.1-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.11...@selfcommunity/react-templates@0.4.1-alpha.12) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.10...@selfcommunity/react-templates@0.4.1-alpha.11) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.9...@selfcommunity/react-templates@0.4.1-alpha.10) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.8...@selfcommunity/react-templates@0.4.1-alpha.9) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.7...@selfcommunity/react-templates@0.4.1-alpha.8) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.6...@selfcommunity/react-templates@0.4.1-alpha.7) (2024-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.5...@selfcommunity/react-templates@0.4.1-alpha.6) (2024-10-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.4...@selfcommunity/react-templates@0.4.1-alpha.5) (2024-10-11)
+
+
+### Bug Fixes
+
+* EventFeed template ([1001da6](https://github.com/selfcommunity/community-js/commit/1001da60d46d1528e9a4a04c9230801792e068ea))
+
+
+
+
+
 ## [0.4.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.1-alpha.3...@selfcommunity/react-templates@0.4.1-alpha.4) (2024-10-11)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

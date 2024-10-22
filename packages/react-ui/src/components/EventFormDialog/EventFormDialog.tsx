@@ -63,7 +63,7 @@ export interface EventFormDialogProps extends BaseDialogProps {
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCEventForm-root|Styles applied to the root element.|
+ |root|.SCEventFormDialog-root|Styles applied to the root element.|
 
  * @param inProps
  */

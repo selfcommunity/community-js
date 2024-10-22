@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.6...@selfcommunity/react-core@0.6.0-alpha.7) (2024-10-22)
+
+
+### Performance Improvements
+
+* added actions to control onBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-870/cta-gestione-visualizzazione-widget-inizia-da-qui ([3df3a15](https://github.com/selfcommunity/community-js/commit/3df3a155f3c02199a022679a65e971a0f3f231ae))
+
+
+
+
+
+# [0.6.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.5...@selfcommunity/react-core@0.6.0-alpha.6) (2024-10-16)
+
+
+### Bug Fixes
+
+* Events ([43c7bea](https://github.com/selfcommunity/community-js/commit/43c7beae8fd6dfe05f81a46cf41783b18b434498))
+
+
+
+
+
+# [0.6.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.4...@selfcommunity/react-core@0.6.0-alpha.5) (2024-10-16)
+
+
+### Bug Fixes
+
+* websocket secure validation ([3ce994f](https://github.com/selfcommunity/community-js/commit/3ce994f02500882a3d92f33781fb382a8d8632e7))
+
+
+
+
+
+# [0.6.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.3...@selfcommunity/react-core@0.6.0-alpha.4) (2024-10-16)
+
+
+### Bug Fixes
+
+* websocket secure validation ([f8fbe65](https://github.com/selfcommunity/community-js/commit/f8fbe65bf747d593cc536480228f3991c4741e72))
+
+
+
+
+
+# [0.6.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.2...@selfcommunity/react-core@0.6.0-alpha.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* useSCFetchEvent ([a68cdfe](https://github.com/selfcommunity/community-js/commit/a68cdfe5cf10072067ec24afa0a325ae7338d283))
+
+
+
+
+
+# [0.6.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.1...@selfcommunity/react-core@0.6.0-alpha.2) (2024-10-16)
+
+
+### Bug Fixes
+
+* websocket secure validation ([456619f](https://github.com/selfcommunity/community-js/commit/456619f9cbcd45b3b7e6b5779eb1444638e2082e))
+
+
+
+
+
+# [0.6.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.0...@selfcommunity/react-core@0.6.0-alpha.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* EventMediaWidget & EventMembersWidget ([2f52d69](https://github.com/selfcommunity/community-js/commit/2f52d69947921e3b2001901fae76a416300f9cb5))
+
+
+
+
+
+# [0.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.1-alpha.0...@selfcommunity/react-core@0.6.0-alpha.0) (2024-10-11)
+
+
+### Features
+
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
 ## [0.5.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.5.0...@selfcommunity/react-core@0.5.1-alpha.0) (2024-10-09)
 
 **Note:** Version bump only for package @selfcommunity/react-core
