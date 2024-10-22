@@ -11,7 +11,7 @@ import {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference from './LiveStreamVideoConference';
 import '@livekit/components-styles';
-import {generateRoomId} from '@selfcommunity/react-ui';
+import {generateRoomId} from '../../utils/liveStream';
 
 const classes = {
   root: `${PREFIX}-root`,
