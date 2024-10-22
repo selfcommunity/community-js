@@ -946,6 +946,11 @@
   "ui.userToastNotifications.userBlocked.accountReactivated": "Il tuo accont è stato <b>sbloccato</b>",
   "ui.userToastNotifications.viewContribution": "Vedi contributo",
   "ui.userToastNotifications.viewMessage": "Vedi",
+  "ui.createEventButton.goLive": "Vai in diretta",
+  "ui.createLivestreamDialog.title": "Crea una diretta live",
+  "ui.createLivestreamDialog.title.edit": "Modifica diretta live",
+  "ui.createLivestreamDialog.button.create": "Crea",
+  "ui.createLivestreamDialog.button.edit": "Modifica",
   "ui.voteAudienceButton.dialog.end": "Non ci sono altri votanti",
   "ui.voteAudienceButton.dialog.tab.all": "Tutti",
   "ui.voteAudienceButton.dialog.title": "Voti",
@@ -959,5 +964,10 @@
   "ui.webPushNotification.requestPermission": "Questo sito desidera inviarti notifiche push",
   "ui.languageSwitcher.selectLanguage": "Seleziona la lingua dell'interfaccia",
   "ui.languageSwitcher.language.it": "Italiano",
-  "ui.languageSwitcher.language.en": "Inglese"
+  "ui.languageSwitcher.language.en": "Inglese",
+  "ui.liveStreamForm.button.create": "Crea live",
+  "ui.liveStreamForm.button.edit": "Modifica",
+	"ui.liveStreamForm.title.placeholder": "Titolo",
+	"ui.liveStreamForm.slug.placeholder": "Slug personalizzato",
+	"ui.liveStreamForm.description.placeholder": "Descrizione"
 }

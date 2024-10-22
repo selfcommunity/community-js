@@ -37,6 +37,9 @@ const Component = {
       },
       '& .SCBaseItemButton-text ': {
         maxWidth: '80%'
+      },
+      '& .SCNavigationMenuDrawer-drawer-footer': {
+        padding: theme.spacing(3)
       }
     })
   }
