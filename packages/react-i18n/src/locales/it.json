@@ -955,5 +955,10 @@
   "ui.webPushNotification.requestPermission": "Questo sito desidera inviarti notifiche push",
   "ui.languageSwitcher.selectLanguage": "Seleziona la lingua dell'interfaccia",
   "ui.languageSwitcher.language.it": "Italiano",
-  "ui.languageSwitcher.language.en": "Inglese"
+  "ui.languageSwitcher.language.en": "Inglese",
+  "ui.liveStreamForm.button.create": "Crea live",
+  "ui.liveStreamForm.button.edit": "Modifica",
+	"ui.liveStreamForm.title.placeholder": "Titolo",
+	"ui.liveStreamForm.slug.placeholder": "Slug personalizzato",
+	"ui.liveStreamForm.description.placeholder": "Descrizione"
 }

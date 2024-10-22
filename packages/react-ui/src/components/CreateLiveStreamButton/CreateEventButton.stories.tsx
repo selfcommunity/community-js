@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CreateLivestreamButton from './index';
+import CreateLiveStreamButton from './index';
 
 export default {
   title: 'Design System/React UI/Livestream/CreateLivestreamButton',
-  component: CreateLivestreamButton,
-} as Meta<typeof CreateLivestreamButton>;
+  component: CreateLiveStreamButton,
+} as Meta<typeof CreateLiveStreamButton>;
 
 const template = (args) => (
   <div style={{width: 800}}>
-    <CreateLivestreamButton {...args} />
+    <CreateLiveStreamButton {...args} />
   </div>
 );
 
-export const Base: StoryObj<typeof CreateLivestreamButton> = {
+export const Base: StoryObj<typeof CreateLiveStreamButton> = {
   args: {},
   render: template
 };

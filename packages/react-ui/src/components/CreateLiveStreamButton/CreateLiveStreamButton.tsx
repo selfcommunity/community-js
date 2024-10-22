@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import EventForm, {EventFormProps} from '../EventForm';
-import {SCFeatureName} from '@selfcommunity/types';
-import CreateLivestreamDialog from '../CreateLiveStreamDialog';
+import {SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
+import CreateLivestreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 
 const PREFIX = 'SCCreateLivestreamButton';
 
@@ -32,7 +32,13 @@ export interface CreateLivestreamButtonProps extends ButtonProps {
    * Props to spread to CreateGroup component
    * @default empty object
    */
-  EventFormProps?: EventFormProps;
+  CreateLiveStreamDialogComponentProps?: CreateLiveStreamDialogProps;
+
+  /**
+   * On success callback function
+   * @default null
+   */
+  onSuccess?: (data: SCEventType | SCLiveStreamType) => void;
 
   /**
    * Any other properties
@@ -41,15 +47,15 @@ export interface CreateLivestreamButtonProps extends ButtonProps {
 }
 
 /**
- *> API documentation for the Community-JS Create Livestream Button component. Learn about the available props and the CSS API.
+ *> API documentation for the Community-JS CreateLiveStreamButton component. Learn about the available props and the CSS API.
  *
  #### Import
  ```jsx
- import {CreateLivestreamButton} from '@selfcommunity/react-ui';
+ import {CreateLiveStreamButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
- The name `SCCreateLivestreamButton` can be used when providing style overrides in the theme.
+ The name `SCCreateLiveStreamButton` can be used when providing style overrides in the theme.
 
  #### CSS
 
@@ -59,13 +65,13 @@ export interface CreateLivestreamButtonProps extends ButtonProps {
 
  * @param inProps
  */
-export default function CreateLivestreamButton(inProps: CreateLivestreamButtonProps): JSX.Element {
+export default function CreateLiveStreamButton(inProps: CreateLivestreamButtonProps): JSX.Element {
   //PROPS
   const props: CreateLivestreamButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, EventFormProps = {}, children, ...rest} = props;
+  const {className, CreateLiveStreamDialogComponentProps = {}, onSuccess, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -78,30 +84,40 @@ export default function CreateLivestreamButton(inProps: CreateLivestreamButtonPr
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // TODO
-  const livestreamEnabled = useMemo(
-    () => true,
-    /* preferences &&
-      features &&
-      features.includes(SCFeatureName.LIVESTREAM) &&
-      SCPreferences.CONFIGURATIONS_LIVESTREAM_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_LIVESTREAM_ENABLED].value */ [preferences, features]
-  );
-  const onlyStaffEnabled = useMemo(() => true /* preferences[SCPreferences.CONFIGURATIONS_LIVESTREAM_ONLY_STAFF_ENABLED].value */, [preferences]);
+  const liveStreamEnabled = true;
+  /* const liveStreamEnabled = useMemo(
+		() =>
+			preferences &&
+			features &&
+			features.includes(SCFeatureName.LIVE_STREAM) &&
+			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+		[preferences, features]
+	); */
+  const onlyStaffLiveStreamEnabled = useMemo(() => true /* preferences[SCPreferences.CONFIGURATIONS_LIVESTREAM_ONLY_STAFF_ENABLED].value */, [preferences]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const canCreateEvent = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
+  const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
 
   /**
-   * Handle click on button
+   * Handle close
    */
-  const handleClick = () => {
+  const handleClose = () => {
+    setOpen((o) => !o);
+  };
+
+  /**
+   * Handle close
+   */
+  const handleSuccess = (data: SCEventType | SCLiveStreamType) => {
+    onSuccess && onSuccess(data);
     setOpen((o) => !o);
   };
 
   /**
    * If there's no authUserId, component is hidden.
    */
-  if (!livestreamEnabled || (!canCreateEvent && onlyStaffEnabled) || !authUserId) {
+  if (!liveStreamEnabled || (!canCreateLiveStream && onlyStaffLiveStreamEnabled) || !authUserId) {
     return null;
   }
 
@@ -112,14 +128,14 @@ export default function CreateLivestreamButton(inProps: CreateLivestreamButtonPr
     <React.Fragment>
       <Root
         className={classNames(classes.root, className)}
-        onClick={handleClick}
+        onClick={handleClose}
         variant="contained"
         color="secondary"
-        startIcon={<Icon fontSize="small">info</Icon>}
+        startIcon={<Icon>photo_camera</Icon>}
         {...rest}>
         {children ?? <FormattedMessage id="ui.createEventButton.goLive" defaultMessage="ui.createEventButton.goLive" />}
       </Root>
-      {open && <CreateLivestreamDialog open onClose={handleClick} />}
+      {open && <CreateLivestreamDialog open onClose={handleClose} onSuccess={handleSuccess} {...CreateLiveStreamDialogComponentProps} />}
     </React.Fragment>
   );
 }

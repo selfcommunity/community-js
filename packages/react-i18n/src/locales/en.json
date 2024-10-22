@@ -955,5 +955,13 @@
   "ui.webPushNotification.requestPermission": "This website would like to send push notification",
   "ui.languageSwitcher.selectLanguage": "Select interface language",
   "ui.languageSwitcher.language.it": "Italian",
-  "ui.languageSwitcher.language.en": "English"
+  "ui.languageSwitcher.language.en": "English",
+  "ui.liveStreamForm.button.create": "Create live",
+  "ui.liveStreamForm.button.edit": "Edit",
+  "ui.liveStreamForm.title.placeholder": "Title",
+  "ui.liveStreamForm.slug.placeholder": "Custom url",
+  "ui.liveStreamForm.description.placeholder": "Description",
+  "ui.liveStreamForm.title.error.maxLength": "Please shorten this text to 50 characters or fewer. Currently, it’s too long",
+  "ui.liveStreamForm.slug.error.maxLength": "Please shorten this text to 50 characters or fewer. Currently, it’s too long",
+  "ui.liveStreamForm.description.error.maxLength": "Please shorten this text to 500 characters or fewer. Currently, it’s too long"
 }

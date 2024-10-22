@@ -119,7 +119,8 @@ import {
   type SCContributionStatus,
   type SCGroupType,
   type SCEventType,
-  type SCStepType
+  type SCStepType,
+  type SCLiveStreamType
 } from './types';
 
 /**
@@ -327,5 +328,6 @@ export {
   type SCSuggestionType,
   type SCGroupType,
   type SCEventType,
-  type SCStepType
+  type SCStepType,
+  type SCLiveStreamType
 };

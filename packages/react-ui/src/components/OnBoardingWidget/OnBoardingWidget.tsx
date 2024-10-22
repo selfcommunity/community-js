@@ -279,17 +279,16 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     if (!isLoading && !categories.length) {
       setShowCategoriesModal(true);
     } else {
-      await OnBoardingService.startAStep(stepId, GenerateContentsParams)
-        .then(() => {
-          setIsGenerating(true);
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
+      try {
+        await OnBoardingService.startAStep(stepId, GenerateContentsParams);
+        setIsGenerating(true);
+      } catch (error) {
+        Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
         });
+      }
     }
   };
 
