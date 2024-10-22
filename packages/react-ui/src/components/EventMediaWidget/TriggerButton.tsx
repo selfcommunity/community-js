@@ -46,7 +46,7 @@ export interface TriggerIconButtonProps extends LoadingButtonProps {
   isSquare?: boolean;
 }
 
-export default function TriggerButton(props: TriggerIconButtonProps) {
+function TriggerButton(props: TriggerIconButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   // PROPS
   const { className, onAdd = null, isSquare = false, ...rest } = props;
 
@@ -93,9 +93,15 @@ export default function TriggerButton(props: TriggerIconButtonProps) {
       fileFilter={handleFilterByMime}
       chunkSize={204800}>
       <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} type="image" />
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-      /*  @ts-ignore */}
-      <Root className={classNames(className, classes.triggerRoot)} {...rest} aria-label="add media" loading={isUploading} isSquare={isSquare}>
+      <Root
+        className={classNames(className, classes.triggerRoot)}
+        ref={ref}
+        {...rest}
+        aria-label="add media"
+        loading={isUploading}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        isSquare={isSquare}>
         <GalleryUploadStack className={classes.triggerContent}>
           {!isSquare && (
             <Typography variant="caption" component="p">
@@ -108,3 +114,5 @@ export default function TriggerButton(props: TriggerIconButtonProps) {
     </ChunkedUploady>
   );
 }
+
+export default forwardRef(TriggerButton);
