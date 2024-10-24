@@ -86,7 +86,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
    */
   const notificationSubscriber = (msg, dataMsg) => {
     if (dataMsg.data.event !== undefined) {
-      let _status: string;
+      let _status: SCEventSubscriptionStatusType;
       switch (SCNotificationMapping[dataMsg.data.activity_type]) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT:
           _status = SCEventSubscriptionStatusType.INVITED;
