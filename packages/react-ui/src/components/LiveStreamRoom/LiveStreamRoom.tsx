@@ -198,7 +198,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
             <Box className={classes.preJoin}>
               <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
             </Box>
-            <Box className={classes.endPrejoinContent}>{startPrejoinContent}</Box>
+            <Box className={classes.endPrejoinContent}>{endPrejoinContent}</Box>
           </>
         ) : (
           <Box className={classes.conference}>
