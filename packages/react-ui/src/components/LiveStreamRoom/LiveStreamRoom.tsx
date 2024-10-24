@@ -18,8 +18,10 @@ const classes = {
   content: `${PREFIX}-content`,
   title: `${PREFIX}-title`,
   description: `${PREFIX}-description`,
+  startPrejoinContent: `${PREFIX}-start-prejoin-content`,
   preJoin: `${PREFIX}-prejoin`,
-  conference: `${PREFIX}-prejoin`,
+  endPrejoinContent: `${PREFIX}-end-prejoin-content`,
+  conference: `${PREFIX}-conference`,
   error: `${PREFIX}-error`
 };
 
@@ -45,6 +47,26 @@ export interface LiveStreamRoomProps extends BoxProps {
    * Endpoint livestream access
    */
   connectionDetailsEndpoint?: string;
+
+  /**
+   * Element to be inserted before title
+   */
+  startPrejoinContent?: React.ReactNode | null;
+
+  /**
+   * Element to be inserted after title
+   */
+  endPrejoinContent?: React.ReactNode | null;
+
+  /**
+   * Show title of livestream in prejoin
+   */
+  showPrejoinTitle?: boolean;
+
+  /**
+   * Show description of livestream in prejoin
+   */
+  showPrejoinDescription?: boolean;
 
   /**
    * Any other properties
@@ -83,7 +105,16 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className, liveStream = null, connectionDetailsEndpoint, ...rest} = props;
+  const {
+    className,
+    liveStream = null,
+    showPrejoinTitle = true,
+    showPrejoinDescription = false,
+    startPrejoinContent,
+    endPrejoinContent,
+    connectionDetailsEndpoint,
+    ...rest
+  } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -159,12 +190,16 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Box className={classes.content} data-lk-theme="default">
-        <Box className={classes.title}>{liveStream?.title}</Box>
-        <Box className={classes.description}>{liveStream?.description}</Box>
         {connectionDetails === undefined || preJoinChoices === undefined ? (
-          <Box className={classes.preJoin}>
-            <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
-          </Box>
+          <>
+            {startPrejoinContent && <Box className={classes.startPrejoinContent}>{startPrejoinContent}</Box>}
+            {liveStream?.title && <Box className={classes.title}>{liveStream?.title}</Box>}
+            {liveStream?.description && <Box className={classes.description}>{liveStream?.description}</Box>}
+            <Box className={classes.preJoin}>
+              <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+            </Box>
+            <Box className={classes.endPrejoinContent}>{startPrejoinContent}</Box>
+          </>
         ) : (
           <Box className={classes.conference}>
             <LiveStreamVideoConference

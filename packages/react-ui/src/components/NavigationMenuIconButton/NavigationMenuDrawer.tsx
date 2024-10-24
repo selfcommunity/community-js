@@ -7,7 +7,7 @@ import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
 import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from '../CreateLiveStreamButton';
-import {SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -94,6 +94,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   } = props;
 
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const scUserContext = useSCUser();
 
   // TODO
   const liveStreamEnabled = true;
