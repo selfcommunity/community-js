@@ -158,7 +158,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   };
 
   // RENDER
-  if (!(scEvent && scUserContext.user)) {
+  if (!scEvent) {
     return <EventHeaderSkeleton />;
   }
 
