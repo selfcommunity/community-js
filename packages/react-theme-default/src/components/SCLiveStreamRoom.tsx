@@ -5,6 +5,9 @@ const Component = {
       display: 'flex',
       justifyContent: 'center',
       alignContent: 'center',
+      [`& .SCLiveStreamRoom-content`]: {
+        width: '100%'
+      },
       [`& .SCLiveStreamRoom-preJoin`]: {
         padding: theme.spacing(2),
         display: 'grid',
@@ -12,7 +15,11 @@ const Component = {
         height: '100%'
       },
       [`& .SCLiveStreamRoom-conference`]: {
-        width: '100%'
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#111111'
       },
       '& .lk-prejoin': {
         width: '620px',
