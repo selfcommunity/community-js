@@ -1,13 +1,13 @@
-import {Box, BoxProps, CircularProgress} from '@mui/material';
+import {Box, BoxProps, Button, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {LocalUserChoices, PreJoin} from '@livekit/components-react';
-import {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference from './LiveStreamVideoConference';
 import '@livekit/components-styles';
@@ -94,6 +94,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // STATE
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
@@ -123,6 +124,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     async (values: LocalUserChoices) => {
       // eslint-disable-next-line no-constant-condition
       if ((liveStream || true) && connectionDetailsEndpoint) {
+        setLoading(true);
         setPreJoinChoices(values);
         const url = new URL(connectionDetailsEndpoint, window.location.origin);
         url.searchParams.append('roomName', generateRoomId());
@@ -133,6 +135,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
         const connectionDetailsResp = await fetch(url.toString());
         const connectionDetailsData = await connectionDetailsResp.json();
         setConnectionDetails(connectionDetailsData);
+        setLoading(false);
       }
     },
     [scUserContext.user, connectionDetailsEndpoint, setPreJoinChoices, setConnectionDetails]

@@ -15,7 +15,7 @@ const Component = {
         width: '100%'
       },
       '& .lk-prejoin': {
-        width: 'min(100%, 620px)',
+        width: '620px',
         backgroundColor: '#111111',
         borderRadius: theme.shape.borderRadiusSm
       },
