@@ -28,7 +28,7 @@ import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserT
 import { CacheStrategies, Logger } from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import React, { useEffect, useMemo, useState } from 'react';
+import { MouseEvent, ReactNode, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
@@ -161,7 +161,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const { scEvent } = useSCFetchEvent({
+  const { scEvent, setSCEvent } = useSCFetchEvent({
     id: eventId,
     event,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
@@ -173,7 +173,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   );
 
   // HANDLERS
-  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -190,21 +190,22 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     }
   }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
 
-  const toggleEventAttendance = (eventStatus) => {
+  const toggleEventAttendance = (eventStatus: string) => {
     setLoading(true);
     const isGoing =
       eventStatus === SCEventSubscriptionStatusType.GOING ||
       !scEvent?.subscription_status ||
       scEvent?.subscription_status === SCEventSubscriptionStatusType.INVITED;
-    const toggleAction = isGoing
-      ? scEventsManager.toggleEventAttendance(scEvent, user?.id || null)
-      : scEventsManager.toggleEventNonattendance(scEvent);
+    const toggleAction = isGoing ? scEventsManager.toggleEventAttendance(scEvent) : scEventsManager.toggleEventNonattendance(scEvent);
 
     toggleAction
       .then(() => {
-        onSubscribe?.(scEvent, getEventStatus(scEvent, isGoing));
+        onSubscribe
+          ? onSubscribe(scEvent, getEventStatus(scEvent, isGoing))
+          : setSCEvent(Object.assign({}, scEvent, { subscription_status: getEventStatus(scEvent, isGoing) }));
+
         setLoading(false);
-        PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.ADD_MEMBER}`, scUserContext.user);
+        PubSub.publish(`${SCTopicType.EVENT}.${SCGroupEventType.MEMBERS}`);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
@@ -213,6 +214,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
 
   const handleToggleAction = (event) => {
     setAnchorEl(null);
+
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else if (status !== undefined) {
@@ -229,7 +231,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
               label={option.label}
               control={
                 loading ? (
-                  <CircularProgress color={'primary'} size={20} />
+                  <CircularProgress color="primary" size={20} />
                 ) : (
                   <Checkbox
                     size="small"
@@ -253,7 +255,8 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
    * Get current translated status
    */
   const getStatus = useMemo((): JSX.Element => {
-    let _status;
+    let _status: ReactNode;
+
     switch (status) {
       case SCEventSubscriptionStatusType.REQUESTED:
         _status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.waitingApproval" id="ui.eventSubscribeButton.waitingApproval" />;
@@ -275,6 +278,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           ));
         break;
     }
+
     return _status;
   }, [status, scEvent]);
 

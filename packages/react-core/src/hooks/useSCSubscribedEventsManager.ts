@@ -1,4 +1,4 @@
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
 import {
   SCEventSubscriptionStatusType,
   SCEventType,
@@ -7,16 +7,16 @@ import {
   SCNotificationTypologyType,
   SCUserType,
 } from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
+import { Logger } from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
-import {useEffect, useMemo, useRef} from 'react';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
-import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
-import {SCOPE_SC_CORE} from '../constants/Errors';
-import {SCNotificationMapping} from '../constants/Notification';
+import { useEffect, useMemo, useRef } from 'react';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useSCPreferences } from '../components/provider/SCPreferencesProvider';
+import { SCOPE_SC_CORE } from '../constants/Errors';
+import { SCNotificationMapping } from '../constants/Notification';
+import { CONFIGURATIONS_EVENTS_ENABLED } from '../constants/Preferences';
+import { getEventStatus } from '../utils/event';
 import useSCCachingManager from './useSCCachingManager';
-import {getEventStatus} from '../utils/event';
-import {CONFIGURATIONS_EVENTS_ENABLED} from '../constants/Preferences';
 
 /**
  :::info
@@ -145,50 +145,45 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
    */
   const toggleEventAttendance = useMemo(
     () =>
-      (event: SCEventType, userId?: number): Promise<any> => {
+      (event: SCEventType): Promise<any> => {
         setLoading(event.id);
-        if (userId) {
-          return http
-            .request({
-              url: Endpoints.InviteOrAcceptEventRequest.url({id: event.id}),
-              method: Endpoints.InviteOrAcceptEventRequest.method,
-              data: {users: [userId]},
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
+        const requestConfig =
+          !event.subscription_status || event.subscription_status === SCEventSubscriptionStatusType.INVITED
+            ? {
+                url: Endpoints.SubscribeToEvent.url({id: event.id}),
+                method: Endpoints.SubscribeToEvent.method,
               }
-              updateCache([event.id]);
-              setData((prev) => getDataUpdated(prev, event.id, SCEventSubscriptionStatusType.SUBSCRIBED));
-              setUnLoading(event.id);
-              return Promise.resolve(res.data);
-            });
-        } else {
-          const requestConfig =
-            !event.subscription_status || event.subscription_status === SCEventSubscriptionStatusType.INVITED
-              ? {
-                  url: Endpoints.SubscribeToEvent.url({id: event.id}),
-                  method: Endpoints.SubscribeToEvent.method,
-                }
-              : event.subscription_status === SCEventSubscriptionStatusType.GOING
-              ? {
-                  url: Endpoints.RemoveGoingToEvent.url({id: event.id}),
-                  method: Endpoints.RemoveGoingToEvent.method,
-                }
-              : {
-                  url: Endpoints.GoToEvent.url({id: event.id}),
-                  method: Endpoints.GoToEvent.method,
-                };
-          return http.request(requestConfig).then((res: HttpResponse<any>) => {
-            if (res.status >= 300) {
-              return Promise.reject(res);
-            }
-            updateCache([event.id]);
-            setData((prev) => getDataUpdated(prev, event.id, getEventStatus(event, true)));
-            setUnLoading(event.id);
+            : event.subscription_status === SCEventSubscriptionStatusType.GOING
+            ? {
+                url: Endpoints.RemoveGoingToEvent.url({id: event.id}),
+                method: Endpoints.RemoveGoingToEvent.method,
+              }
+            : {
+                url: Endpoints.GoToEvent.url({id: event.id}),
+                method: Endpoints.GoToEvent.method,
+              };
+
+        return http.request(requestConfig).then((res: HttpResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+
+          if (event.subscription_status === SCEventSubscriptionStatusType.NOT_GOING) {
+            const newEvent = Object.assign({}, event, {subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED});
+
+            setData((prev) => getDataUpdated(prev, newEvent.id, getEventStatus(newEvent, true)));
+            updateCache([newEvent.id]);
+            setUnLoading(newEvent.id);
+
             return Promise.resolve(res.data);
-          });
-        }
+          }
+
+          updateCache([event.id]);
+          setData((prev) => getDataUpdated(prev, event.id, getEventStatus(event, true)));
+          setUnLoading(event.id);
+
+          return Promise.resolve(res.data);
+        });
       },
     [data, loading, cache]
   );
@@ -212,26 +207,42 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
                   url: Endpoints.NotGoingToEvent.url({id: event.id}),
                   method: Endpoints.NotGoingToEvent.method,
                 };
+
           return http.request(requestConfig).then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
               return Promise.reject(res);
             }
+
+            if (event.subscription_status === SCEventSubscriptionStatusType.GOING) {
+              const newEvent = Object.assign({}, event, {subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED});
+
+              setData((prev) => getDataUpdated(prev, newEvent.id, getEventStatus(newEvent, false)));
+              updateCache([newEvent.id]);
+              setUnLoading(newEvent.id);
+
+              return Promise.resolve(res.data);
+            }
+
             updateCache([event.id]);
             setData((prev) => getDataUpdated(prev, event.id, getEventStatus(event, false)));
             setUnLoading(event.id);
+
             return Promise.resolve(res.data);
           });
         } else {
           setLoading(event.id);
+
           return http
             .request({url: Endpoints.UnsubscribeFromEvent.url({id: event.id}), method: Endpoints.UnsubscribeFromEvent.method})
             .then((res: HttpResponse<any>) => {
               if (res.status >= 300) {
                 return Promise.reject(res);
               }
+
               updateCache([event.id]);
               setData((prev) => getDataUpdated(prev, event.id, null));
               setUnLoading(event.id);
+
               return Promise.resolve(res.data);
             });
         }
@@ -273,7 +284,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
    * @param eventId
    * @param subscriptionStatus
    */
-  const getDataUpdated = (data, eventId, subscriptionStatus) => {
+  const getDataUpdated = (data, eventId: number, subscriptionStatus: SCEventSubscriptionStatusType) => {
     const _index = data.findIndex((k) => parseInt(Object.keys(k)[0]) === eventId);
     let _data;
     if (_index < 0) {
@@ -297,6 +308,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
     () =>
       (event: SCEventType): string => {
         const d = data.filter((k) => parseInt(Object.keys(k)[0]) === event.id);
+
         return d.length ? d[0][event.id] : !data.length ? event.subscription_status : null;
       },
     [data]
@@ -309,6 +321,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
     () => (event: SCEventType) => {
       updateCache([event.id]);
       setData((prev) => getDataUpdated(prev, event.id, event.subscription_status));
+
       return event.subscription_status;
     },
     [data, cache]
