@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import {Box, BoxProps, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -124,18 +122,16 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // Passphrase
-  const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
-
+  // const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const worker = typeof window !== 'undefined' && e2eePassphrase && new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
-  const e2eeEnabled = !!(e2eePassphrase && worker);
-  const keyProvider = new ExternalE2EEKeyProvider();
-  const [e2eeSetupComplete, setE2eeSetupComplete] = useState(false);
-  const [liveActive, setLiveActive] = useState(false);
+  // const worker = typeof window !== 'undefined' && e2eePassphrase && new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
+  // const e2eeEnabled = !!(e2eePassphrase && worker);
+  // const keyProvider = new ExternalE2EEKeyProvider();
+  const [e2eeSetupComplete, setE2eeSetupComplete] = useState(true);
+  const [liveActive, setLiveActive] = useState(true);
   const [error, setError] = useState(null);
 
-  const liveStreamRoomMaxParticipants = 25;
   /* const liveStreamRoomMaxParticipants = useMemo(
 		() =>
 			preferences &&
@@ -145,7 +141,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
 	); */
 
   // Room options
-  const roomOptions = useMemo((): RoomOptions => {
+  /* const roomOptions = useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = options.codec ? options.codec : defaultVideoOptions.codec;
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
@@ -175,14 +171,13 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           }
         : undefined
     };
-  }, [liveStreamRoomMaxParticipants, userChoices, options.hq, options.codec]);
+  }, [liveStreamRoomMaxParticipants, userChoices, options.hq, options.codec]); */
 
   // Create room - only initial
-  const room = useMemo(() => {
-    if (liveStreamRoomMaxParticipants) {
-      return new Room(roomOptions);
-    }
-  }, [liveStreamRoomMaxParticipants]);
+  /* const room = useMemo(() => {
+    const room = new Room();
+    return new Room(roomOptions);
+  }, [liveStreamRoomMaxParticipants]); */
 
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
@@ -190,7 +185,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     };
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (room) {
       if (e2eeEnabled) {
         keyProvider
@@ -216,7 +211,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
         setLiveActive(true);
       }
     }
-  }, [e2eeEnabled, room, e2eePassphrase]);
+  }, [e2eeEnabled, room, e2eePassphrase]); */
 
   // HANDLERS
   /**
@@ -255,13 +250,15 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   /**
    * Renders root object
    */
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {room && liveActive && !error ? (
+      {liveActive && !error ? (
         <>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
           <LiveKitRoom
-            connect={Boolean(e2eeSetupComplete && liveActive && room)}
-            room={room}
+            connect={Boolean(e2eeSetupComplete && liveActive)}
             token={connectionDetails['participantToken']}
             serverUrl={connectionDetails['serverUrl']}
             connectOptions={connectOptions}
@@ -273,6 +270,8 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             {...LiveKitRoomComponentsProps}>
             <VideoConference chatMessageFormatter={formatChatMessageLinks} />
             <RecordingIndicator />
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
             <ConnectionState />
           </LiveKitRoom>
         </>
