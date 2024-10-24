@@ -176,7 +176,7 @@ export default function Event(inProps: EventProps): JSX.Element {
   } = props;
 
   // STATE
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
   const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
 
   // CONTEXT

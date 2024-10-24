@@ -13,6 +13,15 @@ export enum SCOnBoardingStepType {
   APP = 'app'
 }
 
+export enum SCOnBoardingStepIdType {
+  CONTENTS = 1,
+  CATEGORIES = 2,
+  APPEARANCE = 3,
+  PROFILE = 4,
+  INVITE = 5,
+  APP = 6
+}
+
 /**
  * SCOnBoardingStepStatusType enum
  */

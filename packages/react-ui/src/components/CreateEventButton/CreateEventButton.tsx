@@ -6,7 +6,7 @@ import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextTyp
 import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
-import EventForm, {EventFormProps} from '../EventForm';
+import EventFormDialog, {EventFormDialogProps} from '../EventFormDialog';
 import {SCFeatureName} from '@selfcommunity/types';
 
 const PREFIX = 'SCCreateEventButton';
@@ -31,7 +31,7 @@ export interface CreateEventButtonProps extends ButtonProps {
    * Props to spread to CreateGroup component
    * @default empty object
    */
-  EventFormProps?: EventFormProps;
+  EventFormDialogComponentProps?: EventFormDialogProps;
 
   /**
    * Any other properties
@@ -64,7 +64,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className, EventFormProps = {}, children, ...rest} = props;
+  const {className, EventFormDialogComponentProps = {}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -113,11 +113,11 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
         onClick={handleClick}
         variant="contained"
         color="secondary"
-        startIcon={!EventFormProps.event && <Icon fontSize="small">add</Icon>}
+        startIcon={!EventFormDialogComponentProps.EventFormComponentProps?.event && <Icon fontSize="small">add</Icon>}
         {...rest}>
         {children ?? <FormattedMessage id="ui.createEventButton" defaultMessage="ui.createEventButton" />}
       </Root>
-      {open && <EventForm {...EventFormProps} open onClose={handleClick} />}
+      {open && <EventFormDialog {...EventFormDialogComponentProps} open onClose={handleClick} />}
     </React.Fragment>
   );
 }
