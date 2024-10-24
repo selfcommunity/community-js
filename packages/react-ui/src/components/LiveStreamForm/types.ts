@@ -1,9 +1,10 @@
-export type InitialFieldState = Geolocation & {
+export type InitialFieldState = {
   title: string;
   description: string;
   slug?: string;
   settings?: Record<string, any>;
-  cover?: string;
+  cover?: string | ArrayBuffer;
+  coverFile?: string | Blob;
   isSubmitting: boolean;
 };
 

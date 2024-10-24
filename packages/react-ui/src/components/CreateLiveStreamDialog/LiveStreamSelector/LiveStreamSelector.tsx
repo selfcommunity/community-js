@@ -24,7 +24,10 @@ const Root = styled(Container, {
   [`& .${classes.options}`]: {
     display: 'flex',
 		justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+		'& > div': {
+			width: '310px'
+		}
   },
   [`& .${classes.actions}`]: {
     display: 'flex',
@@ -66,16 +69,16 @@ const OptionCard = styled(Paper, {
 }));
 
 const RadioIndicator = styled(Radio, {
-  shouldForwardProp: (prop) => prop !== 'selected'
+  // shouldForwardProp: (prop) => prop !== 'selected'
 })<{theme: Theme; selected: boolean}>(({theme, selected}) => ({
-  width: 16,
+  /* width: 16,
   height: 16,
   borderRadius: '50%',
   border: `2px solid ${selected ? theme.palette.secondary.main : theme.palette.grey[300]}`,
   backgroundColor: selected ? theme.palette.secondary.main : 'transparent',
   transition: theme.transitions.create(['border-color', 'background-color'], {
     duration: theme.transitions.duration.shortest
-  })
+  }) */
 }));
 
 const FeatureItem = styled(Box)(({theme}) => ({
@@ -213,7 +216,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
               <Typography variant="h6" component="h2" sx={{fontWeight: 500}}>
                 {option.title}
               </Typography>
-              <RadioIndicator selected={selectedOption === option.type} theme={undefined} />
+              <Radio checked={selectedOption === option.type} />
             </Box>
             <Box component="ul">
               {option.features.map((feature, featureIndex) => {

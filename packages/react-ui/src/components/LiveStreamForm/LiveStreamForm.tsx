@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Box, BoxProps, FormGroup, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
@@ -13,11 +13,13 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LIVE_STREAM_DESCRIPTION_MAX_LENGTH, LIVE_STREAM_TITLE_MAX_LENGTH, LIVE_STREAM_SLUG_MAX_LENGTH} from '../../constants/LiveStream';
 import {PREFIX} from './constants';
 import {InitialFieldState} from './types';
+import UploadEventCover from '../EventForm/UploadEventCover';
 
 const classes = {
   root: `${PREFIX}-root`,
   form: `${PREFIX}-form`,
   title: `${PREFIX}-title`,
+  cover: `${PREFIX}-cover`,
   slug: `${PREFIX}-slug`,
   description: `${PREFIX}-description`,
   content: `${PREFIX}-content`,
@@ -121,7 +123,9 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     title: liveStream?.title || '',
     description: liveStream?.description || '',
     slug: liveStream?.slug || '',
+    settings: liveStream?.settings || {},
     cover: liveStream?.cover || '',
+    coverFile: liveStream?.cover || '',
     isSubmitting: false
   };
 
@@ -140,10 +144,39 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     [scPreferences.preferences]
   );
 
+  const _backgroundCover = {
+    ...(field.cover
+      ? {background: `url('${field.cover}') center / cover`}
+      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+  };
+
+  const handleChangeCover = useCallback(
+    (cover: Blob) => {
+      setField((prev) => ({...prev, ['coverFile']: cover}));
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setField((prev) => ({...prev, ['cover']: reader.result}));
+      };
+      reader.readAsDataURL(cover);
+
+      if (error.coverError) {
+        delete error.coverError;
+
+        setError(error);
+      }
+    },
+    [error]
+  );
+
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, ['isSubmitting']: true}));
 
     const formData = new FormData();
+
+    if (field.coverFile) {
+      formData.append('cover', field.coverFile);
+    }
 
     if (visibilityEnabled) {
       formData.append('visible', 'true');
@@ -202,6 +235,9 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
+      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+        <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
+      </Paper>
       <FormGroup className={classes.form}>
         <TextField
           required

@@ -1,13 +1,13 @@
-import {Box, BoxProps, CircularProgress} from '@mui/material';
+import {Box, BoxProps, Button, CircularProgress} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {LocalUserChoices, PreJoin} from '@livekit/components-react';
-import {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference from './LiveStreamVideoConference';
 import '@livekit/components-styles';
@@ -19,6 +19,7 @@ const classes = {
   title: `${PREFIX}-title`,
   description: `${PREFIX}-description`,
   preJoin: `${PREFIX}-prejoin`,
+  conference: `${PREFIX}-prejoin`,
   error: `${PREFIX}-error`
 };
 
@@ -66,12 +67,13 @@ export interface LiveStreamRoomProps extends BoxProps {
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCLiveStreamForm-root|Styles applied to the root element.|
- |title|.SCLiveStreamForm-title|Styles applied to the title element.|
- |description|.SCLiveStreamForm-description|Styles applied to the description element.|
- |content|.SCLiveStreamForm-content|Styles applied to the content.|
- |prejoin|.SCLiveStreamForm-prejoin|Styles applied to the prejoin.|
- |error|.SCLiveStreamForm-error|Styles applied to the error elements.|
+ |root|.SCLiveStreamRoom-root|Styles applied to the root element.|
+ |title|.SCLiveStreamRoom-title|Styles applied to the title element.|
+ |description|.SCLiveStreamRoom-description|Styles applied to the description element.|
+ |content|.SCLiveStreamRoom-content|Styles applied to the content.|
+ |prejoin|.SCLiveStreamRoom-prejoin|Styles applied to the prejoin.|
+ |conference|.SCLiveStreamRoom-conference|Styles applied to the conference.|
+ |error|.SCLiveStreamRoom-error|Styles applied to the error elements.|
 
  * @param inProps
  */
@@ -92,6 +94,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // STATE
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
@@ -117,21 +120,26 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   /**
    * Handle PreJoin Submit
    */
-  const handlePreJoinSubmit = useCallback(async (values: LocalUserChoices) => {
-    // eslint-disable-next-line no-constant-condition
-    if ((liveStream || true) && connectionDetailsEndpoint) {
-      setPreJoinChoices(values);
-      const url = new URL(connectionDetailsEndpoint, window.location.origin);
-      url.searchParams.append('roomName', generateRoomId());
-      url.searchParams.append('participantName', scUserContext.user?.username);
-      // if (liveStream.region) {
-      //	url.searchParams.append('region', liveStream.region);
-      // }
-      const connectionDetailsResp = await fetch(url.toString());
-      const connectionDetailsData = await connectionDetailsResp.json();
-      setConnectionDetails(connectionDetailsData);
-    }
-  }, []);
+  const handlePreJoinSubmit = useCallback(
+    async (values: LocalUserChoices) => {
+      // eslint-disable-next-line no-constant-condition
+      if ((liveStream || true) && connectionDetailsEndpoint) {
+        setLoading(true);
+        setPreJoinChoices(values);
+        const url = new URL(connectionDetailsEndpoint, window.location.origin);
+        url.searchParams.append('roomName', generateRoomId());
+        url.searchParams.append('participantName', scUserContext.user?.username);
+        // if (liveStream.region) {
+        //	url.searchParams.append('region', liveStream.region);
+        // }
+        const connectionDetailsResp = await fetch(url.toString());
+        const connectionDetailsData = await connectionDetailsResp.json();
+        setConnectionDetails(connectionDetailsData);
+        setLoading(false);
+      }
+    },
+    [scUserContext.user, connectionDetailsEndpoint, setPreJoinChoices, setConnectionDetails]
+  );
 
   /**
    * Handle PreJoin Error
@@ -158,11 +166,13 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
             <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
           </Box>
         ) : (
-          <LiveStreamVideoConference
-            connectionDetails={connectionDetails}
-            userChoices={preJoinChoices}
-            options={{codec: props.codec, hq: props.hq}}
-          />
+          <Box className={classes.conference}>
+            <LiveStreamVideoConference
+              connectionDetails={connectionDetails}
+              userChoices={preJoinChoices}
+              options={{codec: props.codec, hq: props.hq}}
+            />
+          </Box>
         )}
       </Box>
     </Root>
