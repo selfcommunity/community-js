@@ -60,14 +60,12 @@ export default function useSCFetchEvent({
             LRUCache.set(__eventCacheKey, updatedEvent);
           })
           .catch(() => {
-            const updatedEvent: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
-            setScEvent(updatedEvent);
-            LRUCache.set(__eventCacheKey, updatedEvent);
+            setScEvent(e);
+            LRUCache.set(__eventCacheKey, e);
           });
       } else {
-        const updatedEvent: SCEventType = authUserId ? e : objectWithoutProperties<SCEventType>(e, ['subscription_status']);
-        setScEvent(updatedEvent);
-        LRUCache.set(__eventCacheKey, updatedEvent);
+        setScEvent(e);
+        LRUCache.set(__eventCacheKey, e);
       }
     },
     [autoSubscribe, authUserId, setScEvent]
