@@ -133,7 +133,6 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       true /* liveStreamEnabled && (scUserContext?.user?.permission?.create_livestream || (onlyStaffLiveStreamEnabled && UserUtils.isStaff(scUserContext.user)))*/,
     [scUserContext?.user, onlyStaffLiveStreamEnabled]
   );
-  console.log(canCreateLiveStream);
 
   const eventsEnabled = useMemo(
     () =>
@@ -151,10 +150,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
     [scUserContext?.user, eventsEnabled, onlyStaffEventEnabled]
   );
 
-  console.log(canCreateEvent);
-
   const canCreateLiveStreamEvent = useMemo(() => Boolean(canCreateLiveStream && canCreateEvent), [canCreateEvent, canCreateLiveStream]);
-  console.log(canCreateLiveStreamEvent);
 
   // STATE
   const [step, setStep] = useState<CreateLiveStreamStep>(
@@ -200,7 +196,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       maxWidth={'md'}
       title={
         <Box className={classes.title} component={'span'}>
-          {step === CreateLiveStreamStep.CREATE_LIVE && (
+          {Boolean(step === CreateLiveStreamStep.CREATE_LIVE && canCreateLiveStreamEvent) && (
             <Button variant="text" onClick={handleBack} startIcon={<Icon>arrow_back</Icon>}>
               Back
             </Button>
