@@ -191,7 +191,11 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
-    eventService
+    setTimeout(() => {
+      onSuccess?.({} as SCLiveStreamType);
+      setField((prev) => ({...prev, ['isSubmitting']: false}));
+    }, 1000);
+    /* eventService
       .then((data) => {
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         // onSuccess?.(data);
@@ -213,7 +217,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
-      });
+      }); */
   }, [field, privateEnabled, visibilityEnabled, onSuccess, onError]);
 
   const handleChange = useCallback(
@@ -270,12 +274,12 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           InputProps={{
             endAdornment: <Typography variant="body2">{LIVE_STREAM_SLUG_MAX_LENGTH - field.title.length}</Typography>
           }}
-          error={Boolean(field.slug.length > LIVE_STREAM_SLUG_MAX_LENGTH) || Boolean(error['nameError'])}
+          error={Boolean(field.slug.length > LIVE_STREAM_SLUG_MAX_LENGTH) || Boolean(error['slugError'])}
           helperText={
             field.title.length > LIVE_STREAM_SLUG_MAX_LENGTH ? (
               <FormattedMessage id="ui.liveStreamForm.slug.error.maxLength" defaultMessage="ui.liveStreamForm.slug.error.maxLength" />
-            ) : error['nameError'] ? (
-              error['nameError']
+            ) : error['slugError'] ? (
+              error['slugError']
             ) : null
           }
         />
