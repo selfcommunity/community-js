@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.14...@selfcommunity/react-ui@0.9.0-alpha.15) (2024-10-24)
+
+
+### Bug Fixes
+
+* EventSubscribedButton ([6a33966](https://github.com/selfcommunity/community-js/commit/6a33966859667b353bfdbedb5bbf703c85111f66))
+* fixed EventHeader, EventSubscribeButton; refactored TabContentComponent ([8124919](https://github.com/selfcommunity/community-js/commit/81249196aff21cc7aaeab1d6dac9da34ccb8bbbf))
+
+
+
+
+
 # [0.9.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.13...@selfcommunity/react-ui@0.9.0-alpha.14) (2024-10-22)
 
 
