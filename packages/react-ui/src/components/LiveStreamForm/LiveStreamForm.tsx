@@ -182,8 +182,14 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       formData.append('visible', 'true');
     }
 
+		formData.append('title', field.title);
     formData.append('description', field.description);
 
+    setTimeout(() => {
+      onSuccess?.({} as SCLiveStreamType);
+      setField((prev) => ({...prev, ['isSubmitting']: false}));
+    }, 1000);
+    /*
     let eventService: Promise<SCEventType>;
     if (liveStream) {
       eventService = EventService.updateEvent(liveStream.id, formData as unknown as SCEventType, {headers: {'Content-Type': 'multipart/form-data'}});
@@ -191,11 +197,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
-    setTimeout(() => {
-      onSuccess?.({} as SCLiveStreamType);
-      setField((prev) => ({...prev, ['isSubmitting']: false}));
-    }, 1000);
-    /* eventService
+    eventService
       .then((data) => {
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         // onSuccess?.(data);
