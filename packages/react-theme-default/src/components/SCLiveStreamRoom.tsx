@@ -31,7 +31,10 @@ const Component = {
         maxWidth: 620,
         width: '100%',
         position: 'absolute',
-        textAlign: 'center'
+        textAlign: 'center',
+        '& .MuiTypography-root': {
+          color: '#111111'
+        }
       },
       '& .lk-prejoin': {
         maxWidth: 620,

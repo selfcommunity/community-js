@@ -971,5 +971,6 @@
   "ui.liveStreamForm.slug.placeholder": "Slug personalizzato",
   "ui.liveStreamForm.description.placeholder": "Descrizione",
   "ui.liveStreamRoom.conference.end": "La diretta live è finita!",
-  "ui.liveStreamRoom.button.backHome": "Vai alla home"
+  "ui.liveStreamRoom.button.backHome": "Vai alla home",
+  "ui.liveStreamRoom.connecting": "Connessione in corso..."
 }
