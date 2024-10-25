@@ -19,6 +19,7 @@ import {
   Chat,
   ConnectionState,
   formatChatMessageLinks,
+  LayoutContextProvider,
   LiveKitRoom,
   LiveKitRoomProps,
   LocalUserChoices,
@@ -32,6 +33,7 @@ import RecordingIndicator from './RecordingIndicator';
 import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
 import {FormattedMessage} from 'react-intl';
+import EventInviteButton from '../../EventInviteButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -302,12 +304,15 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             onEncryptionError={handleEncryptionError}
             onError={handleError}
             {...LiveKitRoomComponentsProps}>
-            <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-            <Chat />
-            <RecordingIndicator />
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore */}
-            <ConnectionState />
+            <LayoutContextProvider>
+              <VideoConference chatMessageFormatter={formatChatMessageLinks} />
+              <Chat />
+              <RecordingIndicator />
+              {/*<EventInviteButton eventId={129} />*/}
+              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+              {/* @ts-ignore */}
+              <ConnectionState />
+            </LayoutContextProvider>
           </LiveKitRoom>
         </>
       ) : (
