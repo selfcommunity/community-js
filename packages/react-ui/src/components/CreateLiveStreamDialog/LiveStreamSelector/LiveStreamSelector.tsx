@@ -23,11 +23,11 @@ const Root = styled(Container, {
 })(({theme}) => ({
   [`& .${classes.options}`]: {
     display: 'flex',
-		justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
-		'& > div': {
-			width: '310px'
-		}
+    '& > div': {
+      width: '310px'
+    }
   },
   [`& .${classes.actions}`]: {
     display: 'flex',
@@ -41,7 +41,8 @@ const Root = styled(Container, {
 const OptionCard = styled(Paper, {
   shouldForwardProp: (prop) => prop !== 'selected'
 })<{theme: Theme; selected: boolean}>(({theme, selected}) => ({
-  maxWidth: '300px',
+  maxWidth: 300,
+  height: 350,
   padding: theme.spacing(3),
   margin: theme.spacing(0, 3),
   cursor: 'pointer',

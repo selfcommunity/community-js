@@ -13,7 +13,10 @@ const Component = {
         display: 'grid',
         placeItems: 'center',
         height: '100%',
-        position: 'relative'
+        position: 'relative',
+        '& .lk-form-control': {
+          display: 'none'
+        }
       },
       [`& .SCLiveStreamRoom-prejoin-loading`]: {
         '& .lk-prejoin': {
@@ -41,9 +44,6 @@ const Component = {
         width: '100%',
         backgroundColor: '#111111',
         borderRadius: theme.shape.borderRadiusSm
-      },
-      '& .lk-form-control': {
-        display: 'none'
       },
       '& .lk-join-button': {
         backgroundColor: theme.palette.primary.main,
