@@ -38,56 +38,46 @@ export interface LiveStreamRoomProps extends BoxProps {
    * @default null
    */
   className?: string;
-
   /**
    * Event Object
    * @default null
    */
   liveStream?: SCLiveStreamType;
-
   /**
    * Endpoint livestream access
    */
   connectionDetailsEndpoint?: string;
-
   /**
    * Element to be inserted before title
    */
   startPrejoinContent?: React.ReactNode | null;
-
   /**
    * Element to be inserted after title
    */
   endPrejoinContent?: React.ReactNode | null;
-
   /**
    * Show title of livestream in prejoin
    */
   showPrejoinTitle?: boolean;
-
   /**
    * Show description of livestream in prejoin
    */
   showPrejoinDescription?: boolean;
-
   /**
    * ConnectionDetails Object
    * @default null
    */
   presetConnectionDetails?: ConnectionDetails;
-
   /**
    * LocalUserChoices Object
    * @default null
    */
   presetPreJoinChoices?: LocalUserChoices;
-
   /**
    * Props to spread to LiveStreamVideoConference Component
    * @default {}
    */
   LiveStreamVideoConferenceComponentProps?: LiveStreamVideoConferenceProps;
-
   /**
    * Any other properties
    */
