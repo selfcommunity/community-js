@@ -15,7 +15,15 @@ import {
 import {SCLiveStreamType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
-import {ConnectionState, formatChatMessageLinks, LiveKitRoom, LiveKitRoomProps, LocalUserChoices, VideoConference} from '@livekit/components-react';
+import {
+  Chat,
+  ConnectionState,
+  formatChatMessageLinks,
+  LiveKitRoom,
+  LiveKitRoomProps,
+  LocalUserChoices,
+  VideoConference
+} from '@livekit/components-react';
 import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
@@ -295,6 +303,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             onError={handleError}
             {...LiveKitRoomComponentsProps}>
             <VideoConference chatMessageFormatter={formatChatMessageLinks} />
+            <Chat />
             <RecordingIndicator />
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
@@ -304,7 +313,11 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
       ) : (
         <>
           {error ? (
-            error
+            <Box className={classes.endConferenceWrap}>
+              {startConferenceEndContent}
+              {error}
+              {endConferenceEndContent}
+            </Box>
           ) : liveActive === false ? (
             <Box className={classes.endConferenceWrap}>
               {startConferenceEndContent}
