@@ -23,7 +23,7 @@ import {decodePassphrase} from '../../../utils/liveStream';
 import RecordingIndicator from './RecordingIndicator';
 import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
-import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
+import {FormattedMessage} from 'react-intl';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -308,9 +308,11 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           ) : liveActive === false ? (
             <Box className={classes.endConferenceWrap}>
               {startConferenceEndContent}
-              <Typography variant="h5">The livestream has ended!</Typography>
+              <Typography variant="h5">
+                <FormattedMessage id="ui.liveStreamRoom.conference.end" defaultMessage="ui.liveStreamRoom.conference.end" />
+              </Typography>
               <Button color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
-                Back to Home
+                <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
               </Button>
               {endConferenceEndContent}
             </Box>
