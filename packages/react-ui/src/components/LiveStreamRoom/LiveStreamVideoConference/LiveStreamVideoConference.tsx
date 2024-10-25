@@ -56,7 +56,7 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
   /**
    * User choices
    */
-  userChoices: LocalUserChoices;
+  userChoices?: LocalUserChoices;
 
   /**
    * Connection details, include
@@ -65,12 +65,12 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
    *       participantToken: participantToken,
    *       participantName: participantName
    */
-  connectionDetails: ConnectionDetails;
+  connectionDetails?: ConnectionDetails;
 
   /**
    * Override video options
    */
-  options: {
+  options?: {
     hq: boolean;
     codec: VideoCodec;
   };
@@ -129,7 +129,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   });
   const {
     className,
-    liveStream = null,
+    liveStream,
     handleOnLeaveRoom,
     userChoices = defaultUserChoices,
     connectionDetails = {},
@@ -155,7 +155,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   // const e2eeEnabled = !!(e2eePassphrase && worker);
   // const keyProvider = new ExternalE2EEKeyProvider();
   const [e2eeSetupComplete, setE2eeSetupComplete] = useState(true);
-  const [liveActive, setLiveActive] = useState(true);
+  const [liveActive, setLiveActive] = useState(false);
   const [error, setError] = useState(null);
 
   /* const liveStreamRoomMaxParticipants = useMemo(
@@ -311,7 +311,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
               <Typography variant="h5">
                 <FormattedMessage id="ui.liveStreamRoom.conference.end" defaultMessage="ui.liveStreamRoom.conference.end" />
               </Typography>
-              <Button color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+              <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
                 <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
               </Button>
               {endConferenceEndContent}
