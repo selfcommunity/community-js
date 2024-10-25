@@ -138,7 +138,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // STATE
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(presetPreJoinChoices);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
