@@ -8,11 +8,17 @@ const Component = {
       [`& .SCLiveStreamRoom-content`]: {
         width: '100%'
       },
-      [`& .SCLiveStreamRoom-preJoin`]: {
+      [`& .SCLiveStreamRoom-prejoin`]: {
         padding: theme.spacing(2),
         display: 'grid',
         placeItems: 'center',
-        height: '100%'
+        height: '100%',
+        position: 'relative'
+      },
+      [`& .SCLiveStreamRoom-prejoin-loading`]: {
+        '& .lk-prejoin': {
+          opacity: 0.5
+        }
       },
       [`& .SCLiveStreamRoom-conference`]: {
         width: '100%',
@@ -21,8 +27,15 @@ const Component = {
         alignItems: 'center',
         backgroundColor: '#111111'
       },
+      [`& .SCLiveStreamRoom-prejoin-loader`]: {
+        maxWidth: 620,
+        width: '100%',
+        position: 'absolute',
+        textAlign: 'center'
+      },
       '& .lk-prejoin': {
-        width: '620px',
+        maxWidth: 620,
+        width: '100%',
         backgroundColor: '#111111',
         borderRadius: theme.shape.borderRadiusSm
       },

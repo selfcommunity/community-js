@@ -1,23 +1,36 @@
-import {Box, BoxProps, CircularProgress} from '@mui/material';
+import {Box, BoxProps, Button, CircularProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCContextType,
+  SCPreferencesContextType,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCContext,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import {ConnectionState, formatChatMessageLinks, LiveKitRoom, LiveKitRoomProps, LocalUserChoices, VideoConference} from '@livekit/components-react';
 import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
 import {decodePassphrase} from '../../../utils/liveStream';
 import RecordingIndicator from './RecordingIndicator';
 import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
+import {getContributionRouteName, getRouteData} from '../../../utils/contribution';
 
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
   content: `${PREFIX}-content`,
+  endConferenceWrap: `${PREFIX}-end-conference-wrap`,
+  btnBackHome: `${PREFIX}-btn-back-home`,
   actions: `${PREFIX}-actions`,
   error: `${PREFIX}-error`
 };
@@ -74,6 +87,16 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
   LiveKitRoomComponentsProps?: LiveKitRoomProps;
 
   /**
+   * Element to be inserted before end conference content
+   */
+  startConferenceEndContent?: React.ReactNode | null;
+
+  /**
+   * Element to be inserted after end conference content
+   */
+  endConferenceEndContent?: React.ReactNode | null;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -113,12 +136,15 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     LiveKitRoomComponentsProps = {
       /* simulateParticipants: true */
     },
+    startConferenceEndContent,
+    endConferenceEndContent,
     options = defaultVideoOptions,
     ...rest
   } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // Passphrase
@@ -276,7 +302,22 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           </LiveKitRoom>
         </>
       ) : (
-        <>{error ? error : liveActive === false ? <>Grazie!</> : <CircularProgress />}</>
+        <>
+          {error ? (
+            error
+          ) : liveActive === false ? (
+            <Box className={classes.endConferenceWrap}>
+              {startConferenceEndContent}
+              <Typography variant="h5">The livestream has ended!</Typography>
+              <Button color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+                Back to Home
+              </Button>
+              {endConferenceEndContent}
+            </Box>
+          ) : (
+            <CircularProgress />
+          )}
+        </>
       )}
     </Root>
   );
