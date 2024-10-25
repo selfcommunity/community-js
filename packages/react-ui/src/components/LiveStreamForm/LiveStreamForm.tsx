@@ -2,19 +2,16 @@ import {LoadingButton} from '@mui/lab';
 import {Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
-import {SCEventType, SCLiveStreamType} from '@selfcommunity/types/src/index';
-import {Logger} from '@selfcommunity/utils';
+import {SCLiveStreamType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LIVE_STREAM_DESCRIPTION_MAX_LENGTH, LIVE_STREAM_TITLE_MAX_LENGTH, LIVE_STREAM_SLUG_MAX_LENGTH} from '../../constants/LiveStream';
 import {PREFIX} from './constants';
 import {InitialFieldState} from './types';
 import UploadEventCover from '../EventForm/UploadEventCover';
-import {generateRoomId} from '@selfcommunity/react-ui';
+import {generateRoomId} from '../../utils/liveStream';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -183,10 +180,10 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       formData.append('visible', 'true');
     }
 
-		formData.append('title', field.title);
+    formData.append('title', field.title);
     formData.append('description', field.description);
 
-		// TODO: for testing
+    // TODO: for testing
     setTimeout(() => {
       onSuccess?.({roomName: generateRoomId()} as SCLiveStreamType);
       setField((prev) => ({...prev, ['isSubmitting']: false}));

@@ -186,9 +186,9 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
         const url = new URL(connectionDetailsEndpoint, window.location.origin);
         url.searchParams.append('roomName', liveStream.roomName || generateRoomId());
         url.searchParams.append('participantName', scUserContext.user?.username);
-        // if (liveStream.region) {
-        //	url.searchParams.append('region', liveStream.region);
-        // }
+        /* if (liveStream && liveStream.region) {
+          url.searchParams.append('region', liveStream.region);
+        } */
         const connectionDetailsResp = await fetch(url.toString());
         const connectionDetailsData = await connectionDetailsResp.json();
         setConnectionDetails(connectionDetailsData);
