@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.16...@selfcommunity/react-ui@0.9.0-alpha.17) (2024-10-24)
+
+
+### Bug Fixes
+
+* restored changes on EventHeader ([b51429f](https://github.com/selfcommunity/community-js/commit/b51429f754f0692decf5457518a825947bc3bdca))
+
+
+
+
+
+# [0.9.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.15...@selfcommunity/react-ui@0.9.0-alpha.16) (2024-10-24)
+
+
+### Bug Fixes
+
+* fixed some bugs into useSCFetchEvent and EventHeader ([22f80f1](https://github.com/selfcommunity/community-js/commit/22f80f10cde073cfbe90c3df52c3c9845f3f4407))
+
+
+
+
+
 # [0.9.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.14...@selfcommunity/react-ui@0.9.0-alpha.15) (2024-10-24)
 
 

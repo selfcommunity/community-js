@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.8...@selfcommunity/react-core@0.6.0-alpha.9) (2024-10-24)
+
+
+### Bug Fixes
+
+* fixed some bugs into useSCFetchEvent and EventHeader ([22f80f1](https://github.com/selfcommunity/community-js/commit/22f80f10cde073cfbe90c3df52c3c9845f3f4407))
+
+
+
+
+
 # [0.6.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.7...@selfcommunity/react-core@0.6.0-alpha.8) (2024-10-24)
 
 
