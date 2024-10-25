@@ -14,6 +14,8 @@ const template = (args) => (
 
 
 export const Base: StoryObj<typeof LiveStreamVideoConference> = {
-  args: {},
+  args: {
+		startConferenceEndContent: <>Test</>
+	},
   render: template
 };
