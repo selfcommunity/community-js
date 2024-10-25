@@ -13,6 +13,10 @@ const template = (args) => (
 );
 
 export const Base: StoryObj<typeof CreateLiveStreamButton> = {
-  args: {},
+  args: {
+		onSuccess: () => {
+			console.log('test');
+		}
+	},
   render: template
 };

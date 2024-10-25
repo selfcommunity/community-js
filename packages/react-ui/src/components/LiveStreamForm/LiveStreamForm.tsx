@@ -14,6 +14,7 @@ import {LIVE_STREAM_DESCRIPTION_MAX_LENGTH, LIVE_STREAM_TITLE_MAX_LENGTH, LIVE_S
 import {PREFIX} from './constants';
 import {InitialFieldState} from './types';
 import UploadEventCover from '../EventForm/UploadEventCover';
+import {generateRoomId} from '@selfcommunity/react-ui';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -185,8 +186,9 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
 		formData.append('title', field.title);
     formData.append('description', field.description);
 
+		// TODO: for testing
     setTimeout(() => {
-      onSuccess?.({} as SCLiveStreamType);
+      onSuccess?.({roomName: generateRoomId()} as SCLiveStreamType);
       setField((prev) => ({...prev, ['isSubmitting']: false}));
     }, 1000);
     /*

@@ -9,7 +9,7 @@ import {PREFIX} from './constants';
 import {LocalUserChoices, PreJoin} from '@livekit/components-react';
 import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
-import LiveStreamVideoConference from './LiveStreamVideoConference';
+import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
 import '@livekit/components-styles';
 import {generateRoomId} from '../../utils/liveStream';
 
@@ -20,6 +20,8 @@ const classes = {
   description: `${PREFIX}-description`,
   startPrejoinContent: `${PREFIX}-start-prejoin-content`,
   preJoin: `${PREFIX}-prejoin`,
+  preJoinLoading: `${PREFIX}-prejoin-loading`,
+  prejoinLoader: `${PREFIX}-prejoin-loader`,
   endPrejoinContent: `${PREFIX}-end-prejoin-content`,
   conference: `${PREFIX}-conference`,
   error: `${PREFIX}-error`
@@ -69,6 +71,24 @@ export interface LiveStreamRoomProps extends BoxProps {
   showPrejoinDescription?: boolean;
 
   /**
+   * ConnectionDetails Object
+   * @default null
+   */
+  presetConnectionDetails?: ConnectionDetails;
+
+  /**
+   * LocalUserChoices Object
+   * @default null
+   */
+  presetPreJoinChoices?: LocalUserChoices;
+
+  /**
+   * Props to spread to LiveStreamVideoConference Component
+   * @default {}
+   */
+  LiveStreamVideoConferenceComponentProps?: LiveStreamVideoConferenceProps;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -113,6 +133,9 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     startPrejoinContent,
     endPrejoinContent,
     connectionDetailsEndpoint,
+    presetConnectionDetails,
+    presetPreJoinChoices,
+    LiveStreamVideoConferenceComponentProps = {},
     ...rest
   } = props;
 
@@ -124,7 +147,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   const intl = useIntl();
 
   // STATE
-  const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+  const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(presetPreJoinChoices);
   const [loading, setLoading] = useState<boolean>(false);
   const preJoinDefaults = useMemo(() => {
     return {
@@ -133,7 +156,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
       audioEnabled: true
     };
   }, [scUserContext.user]);
-  const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(undefined);
+  const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(presetConnectionDetails);
 
   const liveStreamEnabled = true;
   /* const liveStreamEnabled = useMemo(
@@ -147,6 +170,18 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 	); */
   const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
 
+  const toggleAttrDisabledPrejoinActions = useCallback((disabled: boolean) => {
+    const container = document.querySelector('.lk-prejoin');
+    if (container) {
+      const buttons = container.querySelectorAll('button.lk-button');
+      buttons.forEach((button) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        button.disabled = disabled;
+      });
+    }
+  }, []);
+
   // HANDLERS
   /**
    * Handle PreJoin Submit
@@ -156,9 +191,10 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
       // eslint-disable-next-line no-constant-condition
       if ((liveStream || true) && connectionDetailsEndpoint) {
         setLoading(true);
+        toggleAttrDisabledPrejoinActions(true);
         setPreJoinChoices(values);
         const url = new URL(connectionDetailsEndpoint, window.location.origin);
-        url.searchParams.append('roomName', generateRoomId());
+        url.searchParams.append('roomName', liveStream.roomName || generateRoomId());
         url.searchParams.append('participantName', scUserContext.user?.username);
         // if (liveStream.region) {
         //	url.searchParams.append('region', liveStream.region);
@@ -166,6 +202,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
         const connectionDetailsResp = await fetch(url.toString());
         const connectionDetailsData = await connectionDetailsResp.json();
         setConnectionDetails(connectionDetailsData);
+        toggleAttrDisabledPrejoinActions(false);
         setLoading(false);
       }
     },
@@ -195,8 +232,13 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
             {startPrejoinContent && <Box className={classes.startPrejoinContent}>{startPrejoinContent}</Box>}
             {liveStream?.title && <Box className={classes.title}>{liveStream?.title}</Box>}
             {liveStream?.description && <Box className={classes.description}>{liveStream?.description}</Box>}
-            <Box className={classes.preJoin}>
+            <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading})}>
               <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+              {loading && (
+                <Box className={classes.prejoinLoader}>
+                  <CircularProgress />
+                </Box>
+              )}
             </Box>
             <Box className={classes.endPrejoinContent}>{endPrejoinContent}</Box>
           </>
@@ -206,6 +248,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               connectionDetails={connectionDetails}
               userChoices={preJoinChoices}
               options={{codec: props.codec, hq: props.hq}}
+              {...LiveStreamVideoConferenceComponentProps}
             />
           </Box>
         )}
