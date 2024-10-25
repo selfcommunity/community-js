@@ -1,4 +1,4 @@
-import {Box, BoxProps, Button, CircularProgress} from '@mui/material';
+import {Box, BoxProps, Button, CircularProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
@@ -138,7 +138,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // STATE
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(presetPreJoinChoices);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
@@ -220,13 +220,24 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
         {connectionDetails === undefined || preJoinChoices === undefined ? (
           <>
             {startPrejoinContent && <Box className={classes.startPrejoinContent}>{startPrejoinContent}</Box>}
-            {liveStream?.title && <Box className={classes.title}>{liveStream?.title}</Box>}
-            {liveStream?.description && <Box className={classes.description}>{liveStream?.description}</Box>}
+            {liveStream?.title && (
+              <Typography component={'div'} variant="h5" className={classes.title}>
+                {liveStream?.title}
+              </Typography>
+            )}
+            {liveStream?.description && (
+              <Typography component={'div'} variant="body1" className={classes.description}>
+                {liveStream?.description}
+              </Typography>
+            )}
             <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading})}>
               <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
               {loading && (
                 <Box className={classes.prejoinLoader}>
                   <CircularProgress />
+                  <Typography component={'div'} variant="body2">
+                    <FormattedMessage id="ui.liveStreamRoom.connecting" defaultMessage="ui.liveStreamRoom.connecting" />
+                  </Typography>
                 </Box>
               )}
             </Box>
