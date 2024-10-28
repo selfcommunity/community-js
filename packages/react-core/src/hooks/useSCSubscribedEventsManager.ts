@@ -147,6 +147,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
     () =>
       (event: SCEventType): Promise<any> => {
         setLoading(event.id);
+
         const requestConfig =
           !event.subscription_status || event.subscription_status === SCEventSubscriptionStatusType.INVITED
             ? {
@@ -168,21 +169,17 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
             return Promise.reject(res);
           }
 
+          let newStatus = getEventStatus(event, true);
+
           if (event.subscription_status === SCEventSubscriptionStatusType.NOT_GOING) {
-            const newEvent = Object.assign({}, event, {subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED});
-
-            setData((prev) => getDataUpdated(prev, newEvent.id, getEventStatus(newEvent, true)));
-            updateCache([newEvent.id]);
-            setUnLoading(newEvent.id);
-
-            return Promise.resolve(res.data);
+            newStatus = getEventStatus(Object.assign({}, event, {subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED}), true);
           }
 
+          setData((prev) => getDataUpdated(prev, event.id, newStatus));
           updateCache([event.id]);
-          setData((prev) => getDataUpdated(prev, event.id, getEventStatus(event, true)));
           setUnLoading(event.id);
 
-          return Promise.resolve(res.data);
+          return Promise.resolve(Object.assign({}, event, {subscription_status: newStatus}));
         });
       },
     [data, loading, cache]
@@ -213,21 +210,17 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
               return Promise.reject(res);
             }
 
+            let newStatus = getEventStatus(event, false);
+
             if (event.subscription_status === SCEventSubscriptionStatusType.GOING) {
-              const newEvent = Object.assign({}, event, {subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED});
-
-              setData((prev) => getDataUpdated(prev, newEvent.id, getEventStatus(newEvent, false)));
-              updateCache([newEvent.id]);
-              setUnLoading(newEvent.id);
-
-              return Promise.resolve(res.data);
+              newStatus = getEventStatus(Object.assign({}, event, {subscription_status: SCEventSubscriptionStatusType.SUBSCRIBED}), false);
             }
 
+            setData((prev) => getDataUpdated(prev, event.id, newStatus));
             updateCache([event.id]);
-            setData((prev) => getDataUpdated(prev, event.id, getEventStatus(event, false)));
             setUnLoading(event.id);
 
-            return Promise.resolve(res.data);
+            return Promise.resolve(Object.assign({}, event, {subscription_status: newStatus}));
           });
         } else {
           setLoading(event.id);
@@ -243,7 +236,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
               setData((prev) => getDataUpdated(prev, event.id, null));
               setUnLoading(event.id);
 
-              return Promise.resolve(res.data);
+              return Promise.resolve(Object.assign({}, event, {subscription_status: null}));
             });
         }
       },
@@ -352,7 +345,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
 
         return null;
       },
-    [loading, cache, authUserId]
+    [loading, cache, authUserId, getSubscriptionStatus, getCurrentEventCacheStatus]
   );
 
   /**

@@ -10,7 +10,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
+import { SCEventLocationType, SCEventPrivacyType, SCEventType } from '@selfcommunity/types';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -153,8 +153,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   /**
    * Handles callback subscribe/unsubscribe event
    */
-  const handleSubscribe = (_event: SCEventType, status: SCEventSubscriptionStatusType) => {
-    setSCEvent(Object.assign({}, scEvent, { subscription_status: status }));
+  const handleSubscribe = (event: SCEventType) => {
+    setSCEvent(event);
   };
 
   // RENDER
@@ -294,12 +294,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                   <EventInviteButton size={isMobile ? 'small' : 'medium'} event={scEvent} disabled={isEventFinished} />
                   <Box>
                     {!isMobile && (
-                      <EditEventButton
-                        size={isMobile ? 'small' : 'medium'}
-                        event={scEvent}
-                        onEditSuccess={(data: SCEventType) => setSCEvent(data)}
-                        disabled={isEventFinished}
-                      />
+                      <EditEventButton size={isMobile ? 'small' : 'medium'} event={scEvent} onEditSuccess={setSCEvent} disabled={isEventFinished} />
                     )}
                     <EventActionsMenu event={scEvent} onEditSuccess={(data: SCEventType) => setSCEvent(data)} {...EventActionsProps} />
                   </Box>
@@ -307,7 +302,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
               ) : (
                 <>
                   <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
-                  <EventActionsMenu event={scEvent} onEditSuccess={(data: SCEventType) => setSCEvent(data)} {...EventActionsProps} />
+                  <EventActionsMenu event={scEvent} onEditSuccess={setSCEvent} {...EventActionsProps} />
                 </>
               )}
             </>
