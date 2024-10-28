@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.9...@selfcommunity/react-core@0.6.0-alpha.10) (2024-10-28)
+
+
+### Bug Fixes
+
+* fixed some files to improve events manager ([b6f2acd](https://github.com/selfcommunity/community-js/commit/b6f2acdcb704a7ab2d4fe9960e1185d09cd4476f))
+
+
+
+
+
 # [0.6.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.0-alpha.8...@selfcommunity/react-core@0.6.0-alpha.9) (2024-10-24)
 
 
