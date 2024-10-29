@@ -23,6 +23,10 @@ export interface SCMetadataType {
    */
   mandatory?: boolean;
   /**
+   * If the metadata is editable for the user (only for the enum type)
+   */
+  editable?: boolean;
+  /**
    * Is the metadata visible in signup form
    */
   in_signup?: boolean;
@@ -38,4 +42,8 @@ export interface SCMetadataType {
    * Options for the enum type
    */
   type_options?: string[];
+  /**
+   * The type tagging
+   */
+  type_tagging?: Record<string, number[]>;
 }

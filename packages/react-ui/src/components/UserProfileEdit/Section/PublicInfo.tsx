@@ -226,7 +226,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
       }
     };
     let content = null;
-
+    console.log(metadataDefinitions);
     switch (field) {
       case SCUserProfileFields.USERNAME:
         component.element = UsernameTextField;
@@ -335,7 +335,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
               label={label}
               value={user[field] || ''}
               onChange={handleChange(field)}
-              disabled={isSaving}
+              disabled={isSaving || (user[field] && 'editable' in metadataDefinitions[field] && !metadataDefinitions[field].editable)}
               error={Boolean(_error)}
               helperText={
                 _error && <FormattedMessage id={`ui.userInfo.metadata.error.${_error}`} defaultMessage={`ui.userInfo.metadata.error.${_error}`} />
