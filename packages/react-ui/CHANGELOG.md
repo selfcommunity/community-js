@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.18...@selfcommunity/react-ui@0.9.0-alpha.19) (2024-10-28)
+
+
+### Bug Fixes
+
+* fixed some files to improve events manager ([b6f2acd](https://github.com/selfcommunity/community-js/commit/b6f2acdcb704a7ab2d4fe9960e1185d09cd4476f))
+
+
+
+
+
 # [0.9.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.17...@selfcommunity/react-ui@0.9.0-alpha.18) (2024-10-25)
 
 
