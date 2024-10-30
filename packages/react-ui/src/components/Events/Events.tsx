@@ -525,7 +525,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
                 (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
                   <>
-                    <EventSkeleton {...EventSkeletonComponentProps} />
+                    <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                     </Typography>
