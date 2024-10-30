@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.20...@selfcommunity/react-ui@0.9.0-alpha.21) (2024-10-30)
+
+
+### Bug Fixes
+
+* Events component ([89ae2af](https://github.com/selfcommunity/community-js/commit/89ae2afb576b5b34fc325e9a0d567d20a4e46748))
+
+
+
+
+
 # [0.9.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.19...@selfcommunity/react-ui@0.9.0-alpha.20) (2024-10-29)
 
 
