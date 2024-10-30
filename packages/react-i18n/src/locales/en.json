@@ -814,6 +814,8 @@
   "ui.shared.eventActionsMenu.item.cancel": "Cancel Event",
   "ui.shared.eventActionsMenu.dialog.confirm": "Yes",
   "ui.shared.eventActionsMenu.dialog.msg": "Are you sure you want to cancel the event?",
+  "ui.shared.copyTextField.textToCopy": "Copy text",
+  "ui.shared.copyTextField.textCopied": "Text copied",
   "ui.snippetNotifications.broadcastMessages": "<b>MESSAGES:</b> you have {count, plural, =0 {# messages unread. <link>See them now →</link>} one {# message unread. <link>See it now →</link>} other {# messages unread. <link>See them now →</link>}}",
   "ui.snippetNotifications.noNotifications": "At the moment, there aren't notifications",
   "ui.suggestedEventsWidget.title": "Suggested Events",
