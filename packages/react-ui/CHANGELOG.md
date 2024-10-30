@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.19...@selfcommunity/react-ui@0.9.0-alpha.20) (2024-10-29)
+
+
+### Performance Improvements
+
+* custom field disable state if not editable. Linear issue: https://linear.app/quentral/issue/QUE-886/se-un-custom-fields-viene-ritornato-editable-false-allora-nella-pagina ([1766ba1](https://github.com/selfcommunity/community-js/commit/1766ba180b2f2fd48df698798f4ee0dddd5431c7))
+
+
+
+
+
 # [0.9.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.18...@selfcommunity/react-ui@0.9.0-alpha.19) (2024-10-28)
 
 
