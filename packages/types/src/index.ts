@@ -163,7 +163,8 @@ import {
   SCEventLocationFilterType,
   SCEventDateFilterType,
   SCOnBoardingStepType,
-  SCOnBoardingStepStatusType
+  SCOnBoardingStepStatusType,
+  SCOnBoardingStepIdType
 } from './types';
 
 /**
@@ -207,7 +208,8 @@ export {
   SCEventLocationFilterType,
   SCEventDateFilterType,
   SCOnBoardingStepType,
-  SCOnBoardingStepStatusType
+  SCOnBoardingStepStatusType,
+  SCOnBoardingStepIdType
 };
 export {
   type SCBannerType,

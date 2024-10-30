@@ -1,11 +1,13 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Lightbox from './Lightbox';
-import { Box, Grid, Typography } from '@mui/material';
-import classNames from 'classnames';
+import {Box, Grid, IconButton, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import { useInView } from 'react-intersection-observer';
-import { PREFIX } from './constants';
+import {styled} from '@mui/material/styles';
+import {Link} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useInView} from 'react-intersection-observer';
+import {Lightbox} from '../../Lightbox';
+import {PREFIX} from './constants';
 import filter from './filter';
 
 const classes = {
@@ -28,9 +30,8 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'DisplayRoot'
-})(({theme}) => ({
+})(({}) => ({}));
 
-}));
 export interface ImagePreviewComponentProps {
   /**
    * Class name to apply to the root object
@@ -63,6 +64,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   // STATE
   const [preview, setPreview] = useState(-1);
+  const [toolbarButtons, setToolbarButtons] = useState(undefined);
   const {ref, inView} = useInView({triggerOnce: false});
 
   // MEMO
@@ -71,6 +73,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   // HANDLERS
   const handleClose = () => {
     setPreview(-1);
+    setToolbarButtons(undefined);
   };
 
   // UTILS
@@ -82,16 +85,19 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     return image;
   };
 
-  const openPreviewImage = useCallback((index) => {
-    if (gallery === false) {
-      // Prevent gallery
-      return;
-    }
+  const openPreviewImage = useCallback(
+    (index: number) => {
+      if (gallery === false) {
+        // Prevent gallery
+        return;
+      }
 
-    setPreview(index);
+      setPreview(index);
 
-    onMediaClick(_medias[index]);
-  }, [_medias]);
+      onMediaClick(_medias[index]);
+    },
+    [_medias]
+  );
 
   // RENDERING
 
@@ -225,7 +231,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     );
   };
 
-  const renderOverlay = (id) => {
+  const renderOverlay = (id: number) => {
     if (!gallery) {
       return null;
     }
@@ -237,7 +243,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     ];
   };
 
-  const renderCountOverlay = (more) => {
+  const renderCountOverlay = (more: boolean) => {
     const extra = _medias.length - (maxVisible && maxVisible > 5 ? 5 : maxVisible);
 
     return [
@@ -249,6 +255,27 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       )
     ];
   };
+
+  const handleIndexChange = useCallback(
+    (index: number) => {
+      if (_medias[index].type === MEDIA_TYPE_DOCUMENT) {
+        setToolbarButtons(
+          <IconButton component={Link} to={medias[index].url} target="_blank" color="inherit">
+            <Icon>download</Icon>
+          </IconButton>
+        );
+      } else {
+        setToolbarButtons(undefined);
+      }
+    },
+    [_medias, setToolbarButtons]
+  );
+
+  useEffect(() => {
+    if (preview !== -1) {
+      handleIndexChange(preview);
+    }
+  }, [preview]);
 
   const imagesToShow = [..._medias];
   if (maxVisible && _medias.length > maxVisible) {
@@ -265,8 +292,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
       {imagesToShow.length >= 4 && renderThree()}
 
-      {/* eslint-disable-next-line @typescript-eslint/unbound-method */}
-      {preview !== -1 && <Lightbox onClose={handleClose} index={preview} medias={_medias} />}
+      {preview !== -1 && (
+        <Lightbox onClose={handleClose} index={preview} medias={_medias} toolbarButtons={toolbarButtons} onIndexChange={handleIndexChange} />
+      )}
     </Root>
   );
 };

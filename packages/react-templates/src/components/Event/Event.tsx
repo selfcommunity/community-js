@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType, EventHeaderProps} from '@selfcommunity/react-ui';
-import {useSCFetchEvent} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
 import {SCEventType} from '@selfcommunity/types';
 import EventSkeletonTemplate from './Skeleton';
 import {useThemeProps} from '@mui/system';

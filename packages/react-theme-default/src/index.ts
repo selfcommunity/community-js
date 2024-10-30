@@ -65,11 +65,13 @@ import SCEmojiPicker from './components/SCEmojiPicker';
 import SCEvent from './components/SCEvent';
 import SCEventActionsMenu from './components/SCEventActionsMenu';
 import SCEventForm from './components/SCEventForm';
+import SCEventFormDialog from './components/SCEventFormDialog';
 import SCEventHeader from './components/SCEventHeader';
 import SCEventInfoDetails from './components/SCEventInfoDetails';
 import SCEventInfoWidget from './components/SCEventInfoWidget';
 import SCEventInviteButton from './components/SCEventInviteButton';
 import SCEventLocationWidget from './components/SCEventLocationWidget';
+import SCEventMediaWidget from './components/SCEventMediaWidget';
 import SCEventMembersWidget from './components/SCEventMembersWidget';
 import SCEventParticipantsButton from './components/SCEventParticipantsButton';
 import SCEvents from './components/SCEvents';
@@ -367,6 +369,7 @@ const theme = {
     SCUserSubscribedGroupsWidget,
     SCUserSuggestionWidget,
     SCEventForm,
+    SCEventFormDialog,
     SCCreateEventButton,
     SCEventLocationWidget,
     SCEvent,
@@ -386,7 +389,8 @@ const theme = {
     SCRelatedEventsWidget,
     SCVoteAudienceButton,
     SCVoteButton,
-    SCWidget
+    SCWidget,
+    SCEventMediaWidget
   },
   selfcommunity: {
     user: {

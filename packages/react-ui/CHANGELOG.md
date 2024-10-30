@@ -3,6 +3,307 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.20...@selfcommunity/react-ui@0.9.0-alpha.21) (2024-10-30)
+
+
+### Bug Fixes
+
+* Events component ([89ae2af](https://github.com/selfcommunity/community-js/commit/89ae2afb576b5b34fc325e9a0d567d20a4e46748))
+
+
+
+
+
+# [0.9.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.19...@selfcommunity/react-ui@0.9.0-alpha.20) (2024-10-29)
+
+
+### Performance Improvements
+
+* custom field disable state if not editable. Linear issue: https://linear.app/quentral/issue/QUE-886/se-un-custom-fields-viene-ritornato-editable-false-allora-nella-pagina ([1766ba1](https://github.com/selfcommunity/community-js/commit/1766ba180b2f2fd48df698798f4ee0dddd5431c7))
+
+
+
+
+
+# [0.9.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.18...@selfcommunity/react-ui@0.9.0-alpha.19) (2024-10-28)
+
+
+### Bug Fixes
+
+* fixed some files to improve events manager ([b6f2acd](https://github.com/selfcommunity/community-js/commit/b6f2acdcb704a7ab2d4fe9960e1185d09cd4476f))
+
+
+
+
+
+# [0.9.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.17...@selfcommunity/react-ui@0.9.0-alpha.18) (2024-10-25)
+
+
+### Bug Fixes
+
+* fixed onBoarding app section, reduced android image size. ([b29052f](https://github.com/selfcommunity/community-js/commit/b29052f571832a61a433d51fe1b82168a4e07082))
+
+
+
+
+
+# [0.9.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.16...@selfcommunity/react-ui@0.9.0-alpha.17) (2024-10-24)
+
+
+### Bug Fixes
+
+* restored changes on EventHeader ([b51429f](https://github.com/selfcommunity/community-js/commit/b51429f754f0692decf5457518a825947bc3bdca))
+
+
+
+
+
+# [0.9.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.15...@selfcommunity/react-ui@0.9.0-alpha.16) (2024-10-24)
+
+
+### Bug Fixes
+
+* fixed some bugs into useSCFetchEvent and EventHeader ([22f80f1](https://github.com/selfcommunity/community-js/commit/22f80f10cde073cfbe90c3df52c3c9845f3f4407))
+
+
+
+
+
+# [0.9.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.14...@selfcommunity/react-ui@0.9.0-alpha.15) (2024-10-24)
+
+
+### Bug Fixes
+
+* EventSubscribedButton ([6a33966](https://github.com/selfcommunity/community-js/commit/6a33966859667b353bfdbedb5bbf703c85111f66))
+* fixed EventHeader, EventSubscribeButton; refactored TabContentComponent ([8124919](https://github.com/selfcommunity/community-js/commit/81249196aff21cc7aaeab1d6dac9da34ccb8bbbf))
+
+
+
+
+
+# [0.9.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.13...@selfcommunity/react-ui@0.9.0-alpha.14) (2024-10-22)
+
+
+### Bug Fixes
+
+* fixed NavigationSettingsIconButton start guide visibility condition ([cd0c5eb](https://github.com/selfcommunity/community-js/commit/cd0c5ebceaec95a3bde8306bbbcbccc0483bd227))
+
+
+
+
+
+# [0.9.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.12...@selfcommunity/react-ui@0.9.0-alpha.13) (2024-10-22)
+
+
+### Bug Fixes
+
+* fixed NavigationSettingsIconButton preferences refresh ([e85345b](https://github.com/selfcommunity/community-js/commit/e85345b4f16341799e5e4996205056452e84a0f6))
+
+
+
+
+
+# [0.9.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.11...@selfcommunity/react-ui@0.9.0-alpha.12) (2024-10-22)
+
+
+### Performance Improvements
+
+* added actions to control onBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-870/cta-gestione-visualizzazione-widget-inizia-da-qui ([3df3a15](https://github.com/selfcommunity/community-js/commit/3df3a155f3c02199a022679a65e971a0f3f231ae))
+* added categories confirm dialog to OnBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-871/modale-di-conferma-generazione-categorie ([def5b0b](https://github.com/selfcommunity/community-js/commit/def5b0b6c6904e24f2d8589cd86a0b7622ea547a))
+
+
+
+
+
+# [0.9.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.10...@selfcommunity/react-ui@0.9.0-alpha.11) (2024-10-18)
+
+
+### Bug Fixes
+
+* event visibility in NavigationToolbar whe content is not available. Linear issue: https://linear.app/quentral/issue/QUE-867/si-vede-licona-eventi-da-sloggati-sempre-quando-content-availability-e ([03701af](https://github.com/selfcommunity/community-js/commit/03701af8fcf029a2743010857013224b71694617))
+
+
+### Features
+
+* added events utils file; hidden voice menu when event has ended ([a7750f2](https://github.com/selfcommunity/community-js/commit/a7750f22825e51aaec6a924f14c688b4c5f0dd50))
+
+
+
+
+
+# [0.9.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.9...@selfcommunity/react-ui@0.9.0-alpha.10) (2024-10-16)
+
+
+### Bug Fixes
+
+* Events ([237b299](https://github.com/selfcommunity/community-js/commit/237b2995a20ee4a246f9db6d088b67574bd8ebca))
+
+
+
+
+
+# [0.9.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.8...@selfcommunity/react-ui@0.9.0-alpha.9) (2024-10-16)
+
+
+### Bug Fixes
+
+* Events ([269c9ce](https://github.com/selfcommunity/community-js/commit/269c9ceb2ca1c58156c1982d72504e02c379b2e5))
+
+
+
+
+
+# [0.9.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.7...@selfcommunity/react-ui@0.9.0-alpha.8) (2024-10-16)
+
+
+### Bug Fixes
+
+* EventMedia ([7a180c1](https://github.com/selfcommunity/community-js/commit/7a180c1819edaccdf9ad5dd55e6d5c3e0f181f19))
+* EventMembersWidget ([5bd5def](https://github.com/selfcommunity/community-js/commit/5bd5def534d6f4701cced99aa7f1fa49393306d7))
+* EventMembersWidget ([b576a7e](https://github.com/selfcommunity/community-js/commit/b576a7e77bc7726cbc648e7a2ed35281cd382390))
+* Events ([43c7bea](https://github.com/selfcommunity/community-js/commit/43c7beae8fd6dfe05f81a46cf41783b18b434498))
+
+
+
+
+
+# [0.9.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.6...@selfcommunity/react-ui@0.9.0-alpha.7) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.9.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.5...@selfcommunity/react-ui@0.9.0-alpha.6) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.9.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.4...@selfcommunity/react-ui@0.9.0-alpha.5) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.9.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.3...@selfcommunity/react-ui@0.9.0-alpha.4) (2024-10-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.9.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.2...@selfcommunity/react-ui@0.9.0-alpha.3) (2024-10-16)
+
+
+### Bug Fixes
+
+* fixed onBoarding appearance logo change. Linear issue: https://linear.app/quentral/issue/QUE-858/impossibile-cambiare-il-logo-della-navbar-nella-onboarding ([4c6b52f](https://github.com/selfcommunity/community-js/commit/4c6b52fada191733b080ff6f824adb884b681f18))
+
+
+
+
+
+# [0.9.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.1...@selfcommunity/react-ui@0.9.0-alpha.2) (2024-10-14)
+
+
+### Bug Fixes
+
+* EventMediaWidget & EventMembersWidget ([2f52d69](https://github.com/selfcommunity/community-js/commit/2f52d69947921e3b2001901fae76a416300f9cb5))
+
+
+
+
+
+# [0.9.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.0...@selfcommunity/react-ui@0.9.0-alpha.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* Eventform & EventFormDialog ([2aa33c2](https://github.com/selfcommunity/community-js/commit/2aa33c279cbc0fb1c651fdafae87fd5da856398c))
+* Eventform & EventFormDialog ([8ff0a96](https://github.com/selfcommunity/community-js/commit/8ff0a96ff59f24ad0dfdcaacf9b9c851a7b975ab))
+* updated some array dependencies; exported trigger button as a forwardRef ([d0567f3](https://github.com/selfcommunity/community-js/commit/d0567f3b990cc3da7b4cec7c4e9e82b6310551b0))
+
+
+
+
+
+# [0.9.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.4...@selfcommunity/react-ui@0.9.0-alpha.0) (2024-10-11)
+
+
+### Bug Fixes
+
+* EventFeed template ([c58df4d](https://github.com/selfcommunity/community-js/commit/c58df4dbeb92d0d32489b2c3609b0d4ed05770a7))
+* fixed all pr reports on EventMediaWidget ([6e04148](https://github.com/selfcommunity/community-js/commit/6e04148d99fd85529a237eda997dd86cdf9f5316))
+* fixed all pr reports on Lightbox and EventMediaWidget ([27b19ea](https://github.com/selfcommunity/community-js/commit/27b19ead3e8d3aebe4d3157c03a3df56aa1bd6b0))
+
+
+### Features
+
+* added new Lightbox component into EventMediaWidget ([c1e0534](https://github.com/selfcommunity/community-js/commit/c1e0534dd69d08f8a85b0df64cab315987c78a67))
+* completed EventMediaWidget ([7e7073b](https://github.com/selfcommunity/community-js/commit/7e7073b02deb4657bb1acb8f1cf37d6ce3802d04))
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
+## [0.8.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.3...@selfcommunity/react-ui@0.8.1-alpha.4) (2024-10-11)
+
+
+### Bug Fixes
+
+* added case to hidden location row into EventInfoWidget ([99988b2](https://github.com/selfcommunity/community-js/commit/99988b20867b203765d36ee21a751f467e4ce911))
+* fixed and finished linear issue: https://linear.app/quentral/issue/QUE-843/update-immagini-categorie ([37b9bb0](https://github.com/selfcommunity/community-js/commit/37b9bb069e9eab80e66109064e925d5db4806949))
+
+
+
+
+
+## [0.8.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.2...@selfcommunity/react-ui@0.8.1-alpha.3) (2024-10-11)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.8.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.1...@selfcommunity/react-ui@0.8.1-alpha.2) (2024-10-11)
+
+
+### Bug Fixes
+
+* fixed focus on OnBoardingWidget Appearance color. Linear issue: https://linear.app/quentral/issue/QUE-837/focus-onchange-color-onboarding ([cd6c251](https://github.com/selfcommunity/community-js/commit/cd6c251583125aad15308fe7d539fb16fdbce42e))
+
+
+
+
+
+## [0.8.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.1-alpha.0...@selfcommunity/react-ui@0.8.1-alpha.1) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.8.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0...@selfcommunity/react-ui@0.8.1-alpha.0) (2024-10-09)
+
+
+### Performance Improvements
+
+* added pubsub for categories edit onboarding. Linear issue: https://linear.app/quentral/issue/QUE-843/update-immagini-categorie ([09d9ec7](https://github.com/selfcommunity/community-js/commit/09d9ec705edc9a34950e805dbfcdae2ce27d45c1))
+
+
+
+
+
 # [0.8.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.8.0-alpha.37...@selfcommunity/react-ui@0.8.0) (2024-10-08)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

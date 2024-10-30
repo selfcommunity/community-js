@@ -1,11 +1,18 @@
-import {BaseGetParams, BaseSearchParams, EventFeedParams, EventRelatedParams, SCPaginatedResponse} from '../../types';
-import {apiRequest} from '../../utils/apiRequest';
+import { SCEventType, SCMediaType, SCUserType } from '@selfcommunity/types';
+import { AxiosRequestConfig } from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
-import {AxiosRequestConfig} from 'axios';
-import {urlParams} from '../../utils/url';
-import {EventCreateParams, EventSearchParams} from '../../types';
-import {EventUserParams} from '../../types/event';
+import {
+  BaseGetParams,
+  BaseSearchParams,
+  EventCreateParams,
+  EventFeedParams,
+  EventRelatedParams,
+  EventSearchParams,
+  SCPaginatedResponse
+} from '../../types';
+import { EventUserParams } from '../../types/event';
+import { apiRequest } from '../../utils/apiRequest';
+import { urlParams } from '../../utils/url';
 
 export interface EventApiClientInterface {
   // Events subscribed to by the user
@@ -90,6 +97,11 @@ export interface EventApiClientInterface {
   // Hide/Show apis Event -> to remove contents related to the event in the feed
   showEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   hideEvent(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // Get/Add/Remove Event Photo gallery
+  getEventPhotoGallery(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCMediaType>>;
+  addMediaToEventPhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType>;
+  removeMediasFromEventPhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<void>;
 }
 /**
  * Contains all the endpoints needed to manage events.
@@ -415,6 +427,45 @@ export class EventApiClient {
   static hideEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.hideEvent.url({id}), method: Endpoints.hideEvent.method});
   }
+  /**
+   * This endpoint returns the gallery of a specific event.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getEventPhotoGallery(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCMediaType>> {
+    const p = urlParams(params);
+
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetEventPhotoGallery.url({id})}?${p.toString()}`,
+      method: Endpoints.GetEventPhotoGallery.method
+    });
+  }
+  /**
+   * This endpoint adds the media in a gallery of a specific event.
+   * @param id
+   * @param config
+   */
+  static addMediaToEventPhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.AddMediaToEventPhotoGallery.url({id}),
+      method: Endpoints.AddMediaToEventPhotoGallery.method
+    });
+  }
+  /**
+   * This endpoint removes the medias in a gallery of a specific event.
+   * @param id
+   * @param config
+   */
+  static removeMediasFromEventPhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<void> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.RemoveMediasFromEventPhotoGallery.url({id}),
+      method: Endpoints.RemoveMediasFromEventPhotoGallery.method
+    });
+  }
 }
 
 /**
@@ -566,5 +617,18 @@ export default class EventService {
   }
   static async hideEvent(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return EventApiClient.hideEvent(id, config);
+  }
+  static async getEventPhotoGallery(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCMediaType>> {
+    return EventApiClient.getEventPhotoGallery(id, params, config);
+  }
+  static async addMediaToEventPhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType> {
+    return EventApiClient.addMediaToEventPhotoGallery(id, config);
+  }
+  static async removeMediasFromEventPhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<void> {
+    return EventApiClient.removeMediasFromEventPhotoGallery(id, config);
   }
 }

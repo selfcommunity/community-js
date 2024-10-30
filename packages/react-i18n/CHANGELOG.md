@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.1...@selfcommunity/react-i18n@0.7.0-alpha.2) (2024-10-30)
+
+
+### Bug Fixes
+
+* Events component ([00da33a](https://github.com/selfcommunity/community-js/commit/00da33abd67ef150082c25cfcced636a72848c59))
+* Events component ([89ae2af](https://github.com/selfcommunity/community-js/commit/89ae2afb576b5b34fc325e9a0d567d20a4e46748))
+
+
+
+
+
+# [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.0...@selfcommunity/react-i18n@0.7.0-alpha.1) (2024-10-22)
+
+
+### Performance Improvements
+
+* added actions to control onBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-870/cta-gestione-visualizzazione-widget-inizia-da-qui ([3df3a15](https://github.com/selfcommunity/community-js/commit/3df3a155f3c02199a022679a65e971a0f3f231ae))
+* added categories confirm dialog to OnBoardingWidget. Linear issue: https://linear.app/quentral/issue/QUE-871/modale-di-conferma-generazione-categorie ([def5b0b](https://github.com/selfcommunity/community-js/commit/def5b0b6c6904e24f2d8589cd86a0b7622ea547a))
+
+
+
+
+
+# [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.1-alpha.0...@selfcommunity/react-i18n@0.7.0-alpha.0) (2024-10-11)
+
+
+### Features
+
+* completed EventMediaWidget ([7e7073b](https://github.com/selfcommunity/community-js/commit/7e7073b02deb4657bb1acb8f1cf37d6ce3802d04))
+* first part of EventMediaWidget ([b77b9ab](https://github.com/selfcommunity/community-js/commit/b77b9ab79bf45dcf20c90a922e955fd374b50118))
+
+
+
+
+
+## [0.6.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0...@selfcommunity/react-i18n@0.6.1-alpha.0) (2024-10-09)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 # [0.6.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.6.0-alpha.6...@selfcommunity/react-i18n@0.6.0) (2024-10-08)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

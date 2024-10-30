@@ -18,6 +18,7 @@ const classes = {
   summary: `${PREFIX}-app-summary`,
   step: `${PREFIX}-app-step`,
   image: `${PREFIX}-app-image`,
+  imageAndroid: `${PREFIX}-app-image-android`,
   action: `${PREFIX}-app-action`,
   button: `${PREFIX}-app-button`
 };
@@ -108,7 +109,7 @@ export default function App(inProps: AppProps) {
                 }}
               />
             </Typography>
-            <CardMedia className={classes.image} component="img" src={AndroidPlaceholder} />
+            <CardMedia className={classes.imageAndroid} component="img" src={AndroidPlaceholder} />
           </>
         )}
         {tab === 1 && (

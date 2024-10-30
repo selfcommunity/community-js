@@ -46,6 +46,8 @@ import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import CreateEventWidget, {CreateEventWidgetProps, CreateEventWidgetSkeleton} from './components/CreateEventWidget';
+import EventForm, {EventFormProps} from './components/EventForm';
+import EventFormDialog, {EventFormDialogProps} from './components/EventFormDialog';
 import CreateGroupButton, {CreateGroupButtonProps} from './components/CreateGroupButton';
 import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomAdv';
 import EditEventButton, {EditEventButtonProps} from './components/EditEventButton';
@@ -56,6 +58,7 @@ import EventHeader, {EventHeaderProps, EventHeaderSkeleton} from './components/E
 import EventInfoWidget, {EventInfoWidgetProps} from './components/EventInfoWidget';
 import EventInviteButton, {EventInviteButtonProps} from './components/EventInviteButton';
 import EventLocationWidget, {EventLocationWidgetProps, EventLocationWidgetSkeleton} from './components/EventLocationWidget';
+import EventMediaWidget, {EventMediaWidgetProps, EventMediaWidgetSkeleton} from './components/EventMediaWidget';
 import EventMembersWidget, {EventMembersWidgetProps, EventMembersWidgetSkeleton} from './components/EventMembersWidget';
 import EventParticipantsButton, {EventParticipantsButtonProps} from './components/EventParticipantsButton';
 import Events, {EventsProps, EventsSkeleton, EventsSkeletonProps} from './components/Events';
@@ -90,10 +93,10 @@ import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSke
 import MyEventsWidget, {MyEventsWidgetProps, MyEventsWidgetSkeleton} from './components/MyEventsWidget';
 import NavigationMenuIconButton, {
   NavigationMenuContent,
-  NavigationMenuHeader,
-  NavigationMenuIconButtonProps,
   NavigationMenuDrawer,
-  NavigationMenuDrawerProps
+  NavigationMenuDrawerProps,
+  NavigationMenuHeader,
+  NavigationMenuIconButtonProps
 } from './components/NavigationMenuIconButton';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
 import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
@@ -180,7 +183,7 @@ import EventActionsMenu, {EventActionsMenuProps} from './shared/EventActionsMenu
 import EventInfoDetails, {EventInfoDetailsProps} from './shared/EventInfoDetails';
 import HiddenPlaceholder from './shared/HiddenPlaceholder';
 import LanguageSwitcher from './shared/LanguageSwitcher';
-import Lightbox from './shared/Lightbox';
+import BaseLightbox, {BaseLightboxProps, Lightbox, LightboxProps} from './shared/Lightbox';
 import {EditMediaProps, File, Link, Share} from './shared/Media';
 import MediaChunkUploader, {MediaChunkUploaderProps} from './shared/MediaChunkUploader';
 import PasswordTextField from './shared/PasswordTextField';
@@ -196,6 +199,7 @@ import {
   PlatformWidgetActionType,
   SCBroadcastMessageTemplateType,
   SCCommentsOrderBy,
+  SCEventTemplateType,
   SCFeedObjectActivitiesType,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
@@ -205,8 +209,7 @@ import {
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,
-  VirtualScrollerItemProps,
-  SCEventTemplateType
+  VirtualScrollerItemProps
 } from './types';
 /**
  * Constants
@@ -215,14 +218,9 @@ import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 import {LEGAL_POLICIES} from './constants/LegalPolicies';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from './constants/Pagination';
+import {SCEventMembersEventType, SCGroupMembersEventType} from './constants/PubSub';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from './constants/SocialShare';
 import {DEFAULT_FIELDS} from './constants/UserProfile';
-import {
-  SCTopicType,
-  SCGroupEventType,
-  SCEventMembersEventType,
-  SCGroupMembersEventType
-} from './constants/PubSub';
 
 /**
  * Utilities
@@ -267,6 +265,8 @@ export {
   BaseDialogProps,
   BaseItem,
   BaseItemProps,
+  BaseLightbox,
+  BaseLightboxProps,
   BottomNavigation,
   BottomNavigationProps,
   BroadcastMessages,
@@ -341,6 +341,10 @@ export {
   CreateEventWidgetProps,
   CreateEventWidgetSkeleton,
   CreateGroupButton,
+  EventForm,
+  EventFormProps,
+  EventFormDialog,
+  EventFormDialogProps,
   CreateGroupButtonProps,
   CustomAdv,
   CustomAdvProps,
@@ -356,10 +360,6 @@ export {
   DefaultDrawerContentProps,
   DefaultHeaderContent,
   DefaultHeaderContentProps,
-  SCTopicType,
-  SCGroupEventType,
-  SCEventMembersEventType,
-  SCGroupMembersEventType,
   EditEventButton,
   EditEventButtonProps,
   EditGroupButton,
@@ -384,6 +384,9 @@ export {
   EventLocationWidget,
   EventLocationWidgetProps,
   EventLocationWidgetSkeleton,
+  EventMediaWidget,
+  EventMediaWidgetProps,
+  EventMediaWidgetSkeleton,
   EventMembersWidget,
   EventMembersWidgetProps,
   EventMembersWidgetSkeleton,
@@ -476,6 +479,7 @@ export {
   LanguageSwitcher,
   LEGAL_POLICIES,
   Lightbox,
+  LightboxProps,
   Link,
   LINKEDIN_SHARE,
   LocationAutocomplete,
@@ -507,11 +511,11 @@ export {
   MyEventsWidgetProps,
   MyEventsWidgetSkeleton,
   NavigationMenuContent,
+  NavigationMenuDrawer,
+  NavigationMenuDrawerProps,
   NavigationMenuHeader,
   NavigationMenuIconButton,
   NavigationMenuIconButtonProps,
-  NavigationMenuDrawer,
-  NavigationMenuDrawerProps,
   NavigationSettingsIconButton,
   NavigationSettingsIconButtonProps,
   NavigationSettingsItem,
@@ -566,9 +570,12 @@ export {
   ReplyComment,
   SCBroadcastMessageTemplateType,
   SCCommentsOrderBy,
+  SCEventMembersEventType,
+  SCEventTemplateType,
   SCFeedObjectActivitiesType,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
+  SCGroupMembersEventType,
   SCMediaChunkType,
   SCMediaObjectType,
   SCNotificationObjectTemplateType,
@@ -655,7 +662,6 @@ export {
   useStickyBox,
   UseStickyBoxProps,
   VirtualScrollerItemProps,
-  SCEventTemplateType,
   Widget,
   WidgetProps,
   X_SHARE

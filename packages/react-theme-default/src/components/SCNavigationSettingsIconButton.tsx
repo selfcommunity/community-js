@@ -1,5 +1,3 @@
-import {alpha} from '@mui/system';
-
 const Component = {
   styleOverrides: {
     menuRoot: ({theme}: any) => ({
@@ -9,6 +7,18 @@ const Component = {
         '& .MuiList-root': {
           padding: 0
         }
+      },
+      '& .SCNavigationSettingsIconButton-item .MuiListItemIcon-root': {
+        marginLeft: theme.spacing(0.5),
+        marginBottom: theme.spacing(0.5),
+        color: theme.palette.secondary.main
+      }
+    }),
+    drawerRoot: ({theme}: any) => ({
+      '& .SCNavigationSettingsIconButton-item .MuiListItemIcon-root': {
+        marginLeft: theme.spacing(0.5),
+        marginBottom: theme.spacing(0.5),
+        color: theme.palette.secondary.main
       }
     })
   }

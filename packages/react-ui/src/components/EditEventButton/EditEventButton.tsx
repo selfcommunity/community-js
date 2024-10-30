@@ -83,7 +83,11 @@ export default function EditEventButton(inProps: EditEventButtonProps): JSX.Elem
    * Renders root object
    */
   return (
-    <Root variant="outlined" className={classNames(classes.root, className)} EventFormProps={{event: scEvent, onSuccess: handleSuccess}} {...rest}>
+    <Root
+      variant="outlined"
+      className={classNames(classes.root, className)}
+      EventFormDialogComponentProps={{EventFormComponentProps: {event: scEvent, onSuccess: handleSuccess}}}
+      {...rest}>
       <FormattedMessage id="ui.editEventButton" defaultMessage="ui.editEventButton" />
     </Root>
   );

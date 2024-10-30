@@ -286,12 +286,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
    * On mount, fetches events list
    */
   useEffect(() => {
-    if (!contentAvailability) {
+    if (!contentAvailability && !authUserId) {
       return;
     } else {
       query === '' && fetchEvents();
     }
-  }, [contentAvailability, dateSearch, location, showFollowed, showPastEvents, showMyEvents, query]);
+  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents, query]);
 
   /**
    * Subscriber for pubsub callback
@@ -367,7 +367,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
   /**
    * Renders events list
    */
-  console.log(location);
   const c = (
     <>
       {showFilters && (
@@ -526,7 +525,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
                 (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
                   <>
-                    <EventSkeleton {...EventSkeletonComponentProps} />
+                    <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                     </Typography>

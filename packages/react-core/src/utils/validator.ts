@@ -225,7 +225,7 @@ export const validateWebSocketDisableToastMessage = (value) => {
 export const validateWebSocketSecure = (value) => {
   const errors = [];
   const warnings = [];
-  if (value) {
+  if (value?.toString() !== undefined) {
     if (!(typeof value === 'boolean')) {
       errors.push(ValidationError.ERROR_INVALID_NOTIFICATIONS_WEBSOCKET_SECURE);
     }
@@ -692,7 +692,6 @@ export const validateOpenAI = (v) => {
  * @param v
  */
 export const validateGeocoding = (v) => {
-  //console.log(v);
   const errors = [];
   const warnings = [];
   if (v && !isObject(v)) {
