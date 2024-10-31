@@ -522,19 +522,26 @@ export default function Events(inProps: EventsProps): JSX.Element {
           <>
             {!events.length ? (
               <Box className={classes.noResults}>
-                {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
-                (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
+                {general ? (
                   <>
-                    <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} />
+                    <EventSkeleton
+                      {...EventSkeletonComponentProps}
+                      skeletonsAnimation={false}
+                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                    />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                     </Typography>
                   </>
                 ) : (
                   <>
-                    <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} actions={<CreateEventButton />} />
+                    <EventSkeleton
+                      {...EventSkeletonComponentProps}
+                      skeletonsAnimation={false}
+                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                    />
                     <Typography variant="body1">
-                      <FormattedMessage id="ui.events.noEvents.title.onlyStaff" defaultMessage="ui.events.noEvents.title.onlyStaff" />
+                      <FormattedMessage id="ui.events.noEvents.title.personal" defaultMessage="ui.events.noEvents.title.personal" />
                     </Typography>
                   </>
                 )}
