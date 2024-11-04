@@ -245,8 +245,8 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
         return parseInt(u.id, 10);
       });
     }
-    return [recipients];
-  }, [recipients]);
+    return [parseInt(recipients?.id, 10) || recipients];
+  }, [recipients, openNewMessage]);
 
   function fetchResults() {
     setLoading(true);
