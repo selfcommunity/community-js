@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.0...@selfcommunity/react-ui@0.9.1-alpha.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* metadata editable state in user edit public info. Linear issue: https://linear.app/quentral/issue/QUE-900/da-modifica-profilo-se-valorizzo-un-campo-non-editable-si-disabilita ([9dff9d2](https://github.com/selfcommunity/community-js/commit/9dff9d2a90a68e4fef3f9ee1e5471f785e1ff1f0))
+* private message recipient bug. Linear issue: https://linear.app/quentral/issue/QUE-914/nei-messaggi-privati-non-viene-passata-una-lista-di-id-a-volte ([d940b5e](https://github.com/selfcommunity/community-js/commit/d940b5ef0fe4363e1f78ba25d9852a7185859214))
+
+
+
+
+
 ## [0.9.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0...@selfcommunity/react-ui@0.9.1-alpha.0) (2024-10-31)
 
 
