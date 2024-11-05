@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1...@selfcommunity/react-ui@0.9.2-alpha.0) (2024-11-05)
+
+
+### Bug Fixes
+
+* added control to manage when to show right arrow ([a0b69a8](https://github.com/selfcommunity/community-js/commit/a0b69a80a813d9360a06b68f52186e0d52ad7043))
+* fixed console error ([f397346](https://github.com/selfcommunity/community-js/commit/f39734636180433716c81c5ce516956fcca00186))
+
+
+
+
+
 ## [0.9.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.4...@selfcommunity/react-ui@0.9.1) (2024-11-05)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
