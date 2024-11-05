@@ -46,6 +46,7 @@ export default function Arrow(props: ArrowProps) {
   }
 
   return (
+    itemsLength > 2 &&
     currentItem < itemsLength - 1 && (
       <Button variant="contained" className={className} size="medium" onClick={() => handleChange('next')}>
         <Icon>chevron_right</Icon>
