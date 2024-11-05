@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.1...@selfcommunity/react-ui@0.9.1-alpha.2) (2024-11-05)
+
+
+### Bug Fixes
+
+* feedObj detail comment action ([1d06cbf](https://github.com/selfcommunity/community-js/commit/1d06cbfd4cc7d475a646347c62fc19727847119b))
+* onBoarding useEffect ([315ce1d](https://github.com/selfcommunity/community-js/commit/315ce1d7aa61ff7f63935f769d7b6ec93a4d4276))
+
+
+
+
+
 ## [0.9.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.0...@selfcommunity/react-ui@0.9.1-alpha.1) (2024-11-04)
 
 
