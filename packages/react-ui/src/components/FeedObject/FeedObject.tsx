@@ -392,7 +392,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
   const [expanded, setExpanded] = useState(summaryExpanded);
-  const hasEvent = useMemo(() => obj?.medias.length !== 0 && obj.medias[0].embed?.embed_type === MEDIA_EMBED_SC_SHARED_EVENT, [obj?.medias]);
+  const hasEvent = useMemo(() => obj?.medias.length > 0 && obj.medias[0].embed?.embed_type === MEDIA_EMBED_SC_SHARED_EVENT, [obj?.medias]);
   const _hideFollowAction = useMemo(
     () => hideFollowAction || (hasEvent && obj?.medias?.[0]?.embed?.metadata?.active === false),
     [hideFollowAction, hasEvent, obj]
@@ -962,15 +962,12 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 feedObjectId={feedObjectId}
                 feedObjectType={feedObjectType}
                 feedObject={obj}
-                hideCommentAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
+                hideCommentAction={template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)}
                 handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
-                hideVoteAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
-                hideShareAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active === true)) ||
-                expandedActivities) && (
+              {((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active)) || expandedActivities) && (
                 <Box className={classes.replyContent}>
                   <CommentObjectReplyComponent
                     id={`reply-feedObject-${obj.id}`}
