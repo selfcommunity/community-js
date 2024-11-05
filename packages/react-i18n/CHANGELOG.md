@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0...@selfcommunity/react-i18n@0.7.1-alpha.0) (2024-10-31)
+
+
+### Bug Fixes
+
+* CopyTextField component ([33a4763](https://github.com/selfcommunity/community-js/commit/33a4763aeb59c99f644126c97cb4f724bb6bbecc))
+* Events i18n ([e71e209](https://github.com/selfcommunity/community-js/commit/e71e2090aa95663d71fda4944fda9dbacf9a4ffa))
+
+
+
+
+
 # [0.7.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.3...@selfcommunity/react-i18n@0.7.0) (2024-10-30)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

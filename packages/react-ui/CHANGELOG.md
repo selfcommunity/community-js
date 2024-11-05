@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.2...@selfcommunity/react-ui@0.9.1-alpha.3) (2024-11-05)
+
+
+### Bug Fixes
+
+* feedObject ([c818188](https://github.com/selfcommunity/community-js/commit/c818188fbe3cbe0c52eda6f1a58112c34ff44baf))
+
+
+
+
+
+## [0.9.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.1...@selfcommunity/react-ui@0.9.1-alpha.2) (2024-11-05)
+
+
+### Bug Fixes
+
+* feedObj detail comment action ([1d06cbf](https://github.com/selfcommunity/community-js/commit/1d06cbfd4cc7d475a646347c62fc19727847119b))
+* onBoarding useEffect ([315ce1d](https://github.com/selfcommunity/community-js/commit/315ce1d7aa61ff7f63935f769d7b6ec93a4d4276))
+
+
+
+
+
+## [0.9.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.0...@selfcommunity/react-ui@0.9.1-alpha.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* metadata editable state in user edit public info. Linear issue: https://linear.app/quentral/issue/QUE-900/da-modifica-profilo-se-valorizzo-un-campo-non-editable-si-disabilita ([9dff9d2](https://github.com/selfcommunity/community-js/commit/9dff9d2a90a68e4fef3f9ee1e5471f785e1ff1f0))
+* private message recipient bug. Linear issue: https://linear.app/quentral/issue/QUE-914/nei-messaggi-privati-non-viene-passata-una-lista-di-id-a-volte ([d940b5e](https://github.com/selfcommunity/community-js/commit/d940b5ef0fe4363e1f78ba25d9852a7185859214))
+
+
+
+
+
+## [0.9.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0...@selfcommunity/react-ui@0.9.1-alpha.0) (2024-10-31)
+
+
+### Bug Fixes
+
+* CopyTextField component ([33a4763](https://github.com/selfcommunity/community-js/commit/33a4763aeb59c99f644126c97cb4f724bb6bbecc))
+* Events i18n ([e71e209](https://github.com/selfcommunity/community-js/commit/e71e2090aa95663d71fda4944fda9dbacf9a4ffa))
+
+
+
+
+
 # [0.9.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.22...@selfcommunity/react-ui@0.9.0) (2024-10-30)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
