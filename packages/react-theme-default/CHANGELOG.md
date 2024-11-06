@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.2-alpha.0...@selfcommunity/react-theme-default@0.4.0-alpha.0) (2024-11-06)
+
+
+### Features
+
+* added new utility to format number to thousands and more; modified all related components ([dcb4121](https://github.com/selfcommunity/community-js/commit/dcb412188d5b6cf61d365fe467087b3b73dd1e73))
+
+
+
+
+
 ## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.1...@selfcommunity/react-theme-default@0.3.2-alpha.0) (2024-11-05)
 
 

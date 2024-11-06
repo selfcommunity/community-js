@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.2-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.0) (2024-11-06)
+
+
+### Bug Fixes
+
+* added eventId into EventParticipantsButton.stories ([ed1976f](https://github.com/selfcommunity/community-js/commit/ed1976fdf431abd37db9ade67875bc47fc106baa))
+
+
+### Features
+
+* added new utility to format number to thousands and more; modified all related components ([dcb4121](https://github.com/selfcommunity/community-js/commit/dcb412188d5b6cf61d365fe467087b3b73dd1e73))
+
+
+
+
+
 ## [0.9.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1...@selfcommunity/react-ui@0.9.2-alpha.0) (2024-11-05)
 
 
