@@ -1,21 +1,22 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, AvatarGroup, Button, List, ListItem, Typography, useTheme} from '@mui/material';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import {FormattedMessage} from 'react-intl';
-import InfiniteScroll from '../../shared/InfiniteScroll';
-import User, {UserSkeleton} from '../User';
-import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCThemeType, useSCFetchGroup} from '@selfcommunity/react-core';
-import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
-import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
-import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
+import { Avatar, AvatarGroup, Button, List, ListItem, Typography, useTheme } from '@mui/material';
+import { ButtonProps } from '@mui/material/Button/Button';
+import { styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import { useThemeProps } from '@mui/system';
+import { Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
+import { SCThemeType, useSCFetchGroup } from '@selfcommunity/react-core';
+import { SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType } from '@selfcommunity/types';
+import { Logger } from '@selfcommunity/utils';
+import classNames from 'classnames';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { SCOPE_SC_UI } from '../../constants/Errors';
+import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import InfiniteScroll from '../../shared/InfiniteScroll';
+import { numberFormatter } from '../../utils/buttonCounters';
+import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
+import User, { UserSkeleton } from '../User';
 
 const PREFIX = 'SCGroupMembersButton';
 
@@ -28,13 +29,13 @@ const classes = {
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
+  overridesResolver: (_props, styles) => styles.dialogRoot
 })(() => ({}));
 
 export interface GroupMembersButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled'>> {
@@ -94,7 +95,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
     name: PREFIX
   });
 
-  const {className, groupId, group, DialogProps = {}, autoHide = false, ...rest} = props;
+  const { className, groupId, group, DialogProps = {}, autoHide = false, ...rest } = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -104,7 +105,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const { scGroup } = useSCFetchGroup({ id: groupId, group });
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
@@ -118,7 +119,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
       return;
     }
     if (members.length === 0) {
-      GroupService.getGroupMembers(scGroup.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
+      GroupService.getGroupMembers(scGroup.id, { limit: 3 }).then((res: SCPaginatedResponse<SCUserType>) => {
         setMembers([...res.results]);
         setOffset(3);
         setLoading(false);
@@ -131,7 +132,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
   useEffect(() => {
     if (open && offset !== null) {
       setLoading(true);
-      GroupService.getGroupMembers(scGroup.id, {offset, limit: 20}).then((res: SCPaginatedResponse<SCUserType>) => {
+      GroupService.getGroupMembers(scGroup.id, { offset, limit: 20 }).then((res: SCPaginatedResponse<SCUserType>) => {
         setMembers([...(offset === 0 ? [] : members), ...res.results]);
         setNext(res.next);
         setLoading(false);
@@ -173,6 +174,8 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
     [setOpen]
   );
 
+  const renderSurplus = useCallback(() => numberFormatter(scGroup.subscribers_counter), [scGroup]);
+
   // RENDER
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -187,7 +190,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
         {loading || !scGroup ? (
           <AvatarGroupSkeleton {...rest} />
         ) : (
-          <AvatarGroup total={scGroup.subscribers_counter}>
+          <AvatarGroup total={scGroup.subscribers_counter} renderSurplus={renderSurplus}>
             {members.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} />
             ))}
@@ -201,7 +204,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
             <FormattedMessage
               defaultMessage="ui.groupMembersButton.dialogTitle"
               id="ui.groupMembersButton.dialogTitle"
-              values={{total: scGroup.subscribers_counter}}
+              values={{ total: scGroup.subscribers_counter }}
             />
           }
           onClose={handleToggleDialogOpen}
