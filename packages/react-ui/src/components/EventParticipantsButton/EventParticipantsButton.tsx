@@ -13,6 +13,7 @@ import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
 import { SCOPE_SC_UI } from '../../constants/Errors';
 import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
+import { numberFormatter } from '../../utils/buttonCounters';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import User, { UserSkeleton } from '../User';
 
@@ -111,9 +112,9 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const { scEvent } = useSCFetchEvent({ id: eventId, event });
   const participantsAvailable = useMemo(
     () =>
-      scEvent.privacy === SCEventPrivacyType.PUBLIC ||
+      scEvent?.privacy === SCEventPrivacyType.PUBLIC ||
       [SCEventSubscriptionStatusType.SUBSCRIBED, SCEventSubscriptionStatusType.GOING, SCEventSubscriptionStatusType.NOT_GOING].indexOf(
-        scEvent.subscription_status
+        scEvent?.subscription_status
       ) > -1,
     [scEvent]
   );
@@ -172,6 +173,8 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
       .then(() => setLoading(false));
   }, [followers, scEvent, next]);
 
+  const renderSurplus = useCallback(() => numberFormatter(followers.length), [followers]);
+
   /**
    * Opens dialog votes
    */
@@ -195,7 +198,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
         {!followers.length && (loading || !scEvent) ? (
           <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && { skeletonsAnimation: false })} />
         ) : (
-          <AvatarGroup total={followers.length}>
+          <AvatarGroup total={followers.length} renderSurplus={renderSurplus}>
             {followers.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} className={classes.avatar} />
             ))}
