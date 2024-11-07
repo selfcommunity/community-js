@@ -7,7 +7,7 @@ import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
 import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from '../CreateLiveStreamButton';
-import {SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {useSCUser} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -93,23 +93,8 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     ...rest
   } = props;
 
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   const scUserContext = useSCUser();
-
-  // TODO
-  const liveStreamEnabled = true;
-  /* const liveStreamEnabled = useMemo(
-		() =>
-			preferences &&
-			features &&
-			features.includes(SCFeatureName.LIVE_STREAM) &&
-			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
-			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
-		[preferences, features]
-	); */
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
+  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_livestream, [scUserContext?.user?.permission]);
 
   return (
     <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
@@ -135,7 +120,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
       </ScrollContainer>
       {showDrawerFooterContent && (
         <>
-          {Boolean(drawerContent || (liveStreamEnabled && canCreateLiveStream)) && <Divider />}
+          {Boolean(drawerContent || canCreateLiveStream) && <Divider />}
           <Box className={classes.drawerFooter}>
             {drawerFooterContent ? (
               drawerFooterContent

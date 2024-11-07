@@ -3,15 +3,18 @@ import {Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/mater
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
-import {SCLiveStreamType} from '@selfcommunity/types/src/index';
+import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {LIVE_STREAM_DESCRIPTION_MAX_LENGTH, LIVE_STREAM_TITLE_MAX_LENGTH, LIVE_STREAM_SLUG_MAX_LENGTH} from '../../constants/LiveStream';
-import {PREFIX} from './constants';
+import {LIVESTREAM_DEFAULT_SETTINGS, PREFIX} from './constants';
 import {InitialFieldState} from './types';
 import UploadEventCover from '../EventForm/UploadEventCover';
-import {generateRoomId} from '../../utils/liveStream';
+import LiveStreamSettingsForm from './LiveStreamFormSettings';
+import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-services';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -110,8 +113,6 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   });
   const {className, onSuccess, onError, liveStream = null, ...rest} = props;
 
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
   // INTL
   const intl = useIntl();
 
@@ -121,7 +122,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     title: liveStream?.title || '',
     description: liveStream?.description || '',
     slug: liveStream?.slug || '',
-    settings: liveStream?.settings || {},
+    settings: liveStream?.settings || LIVESTREAM_DEFAULT_SETTINGS,
     cover: liveStream?.cover || '',
     coverFile: liveStream?.cover || '',
     isSubmitting: false
@@ -171,35 +172,26 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     setField((prev) => ({...prev, ['isSubmitting']: true}));
 
     const formData = new FormData();
-
     if (field.coverFile) {
       formData.append('cover', field.coverFile);
     }
-
-    if (visibilityEnabled) {
-      formData.append('visible', 'true');
-    }
-
     formData.append('title', field.title);
     formData.append('description', field.description);
+    formData.append('slug', field.slug);
+    formData.append('settings', JSON.stringify({...field.settings, ...LIVESTREAM_DEFAULT_SETTINGS}));
 
-    // TODO: for testing
-    setTimeout(() => {
-      onSuccess?.({roomName: generateRoomId()} as SCLiveStreamType);
-      setField((prev) => ({...prev, ['isSubmitting']: false}));
-    }, 1000);
-    /*
-    let eventService: Promise<SCEventType>;
+    let liveStreamService: Promise<SCLiveStreamType>;
     if (liveStream) {
-      eventService = EventService.updateEvent(liveStream.id, formData as unknown as SCEventType, {headers: {'Content-Type': 'multipart/form-data'}});
+      liveStreamService = LiveStreamService.update(liveStream.id, formData as unknown as SCLiveStreamType, {
+        headers: {'Content-Type': 'multipart/form-data'}
+      });
     } else {
-      eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+      liveStreamService = LiveStreamService.create(formData, {headers: {'Content-Type': 'multipart/form-data'}});
     }
-
-    eventService
-      .then((data) => {
+    liveStreamService
+      .then((data: SCLiveStreamType) => {
         setField((prev) => ({...prev, ['isSubmitting']: false}));
-        // onSuccess?.(data);
+        onSuccess?.(data);
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
@@ -209,7 +201,8 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
         if (Object.values(_error)[0].error === 'unique') {
           setError({
             ...error,
-            ['titleError']: <FormattedMessage id="ui.liveStreamForm.title.error.unique" defaultMessage="ui.liveStreamForm.title.error.unique" />
+            ['titleError']: <FormattedMessage id="ui.liveStreamForm.title.error.unique" defaultMessage="ui.liveStreamForm.title.error.unique" />,
+            ['slugError']: <FormattedMessage id="ui.liveStreamForm.slug.error.unique" defaultMessage="ui.liveStreamForm.slug.error.unique" />
           });
         } else {
           setError({...error, ..._error});
@@ -218,21 +211,26 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
-      }); */
+      });
   }, [field, privateEnabled, visibilityEnabled, onSuccess, onError]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const {name, value} = event.target;
       setField((prev) => ({...prev, [name]: value}));
-
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
-
         setError(error);
       }
     },
     [error]
+  );
+
+  const handleChangeSettings = useCallback(
+    (data) => {
+      setField((prev) => ({...prev, ...{settings: data}}));
+    },
+    [setField]
   );
 
   /**
@@ -307,6 +305,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
             ) : null
           }
         />
+        <LiveStreamSettingsForm settings={field.settings} onChange={handleChangeSettings} />
         <Box className={classes.actions}>
           <LoadingButton
             loading={field.isSubmitting}

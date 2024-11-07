@@ -1,23 +1,13 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {
-  SCContextType,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  UserUtils,
-  useSCContext,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
-import {SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {PREFIX} from './constants';
 import EventForm from '../EventForm';
-import DialogContent from '@mui/material/DialogContent';
 import LiveStreamSelector from './LiveStreamSelector/LiveStreamSelector';
 import {CreateLiveStreamStep, LiveStreamType} from './types';
 import LiveStreamForm from '../LiveStreamForm';
@@ -98,11 +88,8 @@ const Transition = React.forwardRef(function Transition(
  |root|.SCCreateLivestreamDialog-root|Styles applied to the root element.|
  |content|.SCCreateLivestreamDialog-content|Styles applied to the content element.|
 
-
-
  * @param inProps
  */
-
 export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogProps): JSX.Element {
   //PROPS
   const props: CreateLiveStreamDialogProps = useThemeProps({
@@ -112,51 +99,14 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
   const {className, open = true, onClose, onSuccess, ...rest} = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
-  const liveStreamEnabled = useMemo(
-    () => true,
-    /* preferences &&
-			features &&
-			features.includes(SCFeatureName.LIVE_STREAM) &&
-			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
-			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value*/ [preferences, features]
-  );
-  const onlyStaffLiveStreamEnabled = useMemo(
-    () => true /* preferences[SCPreferences.CONFIGURATIONS_LIVESTREAM_ONLY_STAFF_ENABLED].value */,
-    [preferences]
-  );
-  const canCreateLiveStream = useMemo(
-    () =>
-      true /* liveStreamEnabled && (scUserContext?.user?.permission?.create_livestream || (onlyStaffLiveStreamEnabled && UserUtils.isStaff(scUserContext.user)))*/,
-    [scUserContext?.user, onlyStaffLiveStreamEnabled]
-  );
-
-  const eventsEnabled = useMemo(
-    () =>
-      preferences &&
-      features &&
-      features.includes(SCFeatureName.TAGGING) &&
-      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
-    [preferences, features]
-  );
-  const onlyStaffEventEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_EVENTS_ONLY_STAFF_ENABLED].value, [preferences]);
-  const canCreateEvent = useMemo(
-    () =>
-      eventsEnabled && (scUserContext?.user?.permission?.create_event || true || (onlyStaffEventEnabled && UserUtils.isStaff(scUserContext.user))),
-    [scUserContext?.user, eventsEnabled, onlyStaffEventEnabled]
-  );
-
-  const canCreateLiveStreamEvent = useMemo(() => Boolean(canCreateLiveStream && canCreateEvent), [canCreateEvent, canCreateLiveStream]);
+  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
 
   // STATE
-  const [step, setStep] = useState<CreateLiveStreamStep>(
-    canCreateLiveStreamEvent ? CreateLiveStreamStep.SELECT_TYPE : CreateLiveStreamStep.CREATE_LIVE
-  );
-  const [liveType, setLiveType] = useState<LiveStreamType>(canCreateLiveStreamEvent ? null : LiveStreamType.DIRECT_LIVE);
+  const [step, setStep] = useState<CreateLiveStreamStep>(canCreateEvent ? CreateLiveStreamStep.SELECT_TYPE : CreateLiveStreamStep.CREATE_LIVE);
+  const [liveType, setLiveType] = useState<LiveStreamType>(canCreateEvent ? null : LiveStreamType.DIRECT_LIVE);
 
   // HANDLER
   const handleLiveTypeSelected = useCallback((l) => {
@@ -177,13 +127,13 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
   }, []);
 
   useEffect(() => {
-    if (!canCreateLiveStreamEvent) {
+    if (!canCreateEvent) {
       setLiveType(LiveStreamType.DIRECT_LIVE);
     }
-  }, [canCreateLiveStreamEvent]);
+  }, [canCreateEvent]);
 
   // user must be logged
-  if (!scUserContext.user) {
+  if (!scUserContext.user || !canCreateLiveStream) {
     return null;
   }
 
@@ -196,7 +146,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       maxWidth={'md'}
       title={
         <Box className={classes.title} component={'span'}>
-          {Boolean(step === CreateLiveStreamStep.CREATE_LIVE && canCreateLiveStreamEvent) && (
+          {Boolean(step === CreateLiveStreamStep.CREATE_LIVE && canCreateEvent) && (
             <Button variant="text" onClick={handleBack} startIcon={<Icon>arrow_back</Icon>}>
               Back
             </Button>
@@ -208,6 +158,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       }
       fullWidth
       open={open}
+      scroll={'paper'}
       onClose={onClose}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}

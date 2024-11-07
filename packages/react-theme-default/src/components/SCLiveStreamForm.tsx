@@ -13,6 +13,9 @@ const Component = {
           minWidth: 'auto'
         }
       },
+			[`& .SCLiveStreamForm-access-view`]: {
+				margin: theme.spacing(2, 0),
+			},
       [`& .SCLiveStreamForm-actions`]: {
         display: 'flex',
         justifyContent: 'flex-end',

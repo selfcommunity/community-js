@@ -120,7 +120,9 @@ import {
   type SCGroupType,
   type SCEventType,
   type SCStepType,
-  type SCLiveStreamType
+  type SCLiveStreamType,
+	type SCLiveStreamConnectionDetailsType,
+  SCLiveStreamViewType
 } from './types';
 
 /**
@@ -331,5 +333,7 @@ export {
   type SCGroupType,
   type SCEventType,
   type SCStepType,
-  type SCLiveStreamType
+  type SCLiveStreamType,
+	type SCLiveStreamConnectionDetailsType,
+  SCLiveStreamViewType
 };

@@ -25,8 +25,15 @@ const Root = styled(Container, {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block'
+    },
     '& > div': {
-      width: '310px'
+      width: '290px',
+      [theme.breakpoints.down('sm')]: {
+        margin: '0px auto',
+        marginBottom: theme.spacing(2)
+      }
     }
   },
   [`& .${classes.actions}`]: {

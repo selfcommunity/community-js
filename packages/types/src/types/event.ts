@@ -28,7 +28,8 @@ export enum SCEventSubscriptionStatusType {
  */
 export enum SCEventLocationType {
   PERSON = 'in person',
-  ONLINE = 'virtual'
+  ONLINE = 'virtual',
+	LIVESTREAM = 'live_stream'
 }
 
 /**

@@ -1,17 +1,19 @@
-import {Box, BoxProps, Button, CircularProgress, Typography} from '@mui/material';
+import {Box, BoxProps, CircularProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, SCPreferencesContextType, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SCLiveStreamType} from '@selfcommunity/types';
+import {SCUserContextType, useSCFetchLiveStream, useSCUser} from '@selfcommunity/react-core';
+import {SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
 import {LocalUserChoices, PreJoin} from '@livekit/components-react';
 import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
 import '@livekit/components-styles';
-import {generateRoomId} from '../../utils/liveStream';
+import {LiveStreamService} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -44,9 +46,10 @@ export interface LiveStreamRoomProps extends BoxProps {
    */
   liveStream?: SCLiveStreamType;
   /**
-   * Endpoint livestream access
+   * Id of the liveStream for filter the feed
+   * @default null
    */
-  connectionDetailsEndpoint?: string;
+  liveStreamId?: number;
   /**
    * Element to be inserted before title
    */
@@ -116,13 +119,14 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     name: PREFIX
   });
   const {
-    className,
+    id = `live_stream_room_object_${props.liveStreamId ? props.liveStreamId : props.liveStream ? props.liveStream.id : ''}`,
+    liveStreamId = null,
     liveStream = null,
+    className,
     showPrejoinTitle = true,
     showPrejoinDescription = false,
     startPrejoinContent,
     endPrejoinContent,
-    connectionDetailsEndpoint,
     presetConnectionDetails,
     presetPreJoinChoices,
     LiveStreamVideoConferenceComponentProps = {},
@@ -131,34 +135,20 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
-
-  // INTL
-  const intl = useIntl();
 
   // STATE
+  const {scLiveStream} = useSCFetchLiveStream({id: liveStreamId, liveStream});
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(presetPreJoinChoices);
   const [loading, setLoading] = useState<boolean>(false);
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
-      videoEnabled: true,
-      audioEnabled: true
+      videoEnabled: scLiveStream?.settings?.disableVideo ?? true,
+      audioEnabled: scLiveStream?.settings?.muteParticipant ?? true
     };
-  }, [scUserContext.user]);
+  }, [scUserContext.user, scLiveStream]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(presetConnectionDetails);
-
-  const liveStreamEnabled = true;
-  /* const liveStreamEnabled = useMemo(
-		() =>
-			preferences &&
-			features &&
-			features.includes(SCFeatureName.LIVE_STREAM) &&
-			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
-			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
-		[preferences, features]
-	); */
-  const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
+  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
 
   const toggleAttrDisabledPrejoinActions = useCallback((disabled: boolean) => {
     const container = document.querySelector('.lk-prejoin');
@@ -178,25 +168,22 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
    */
   const handlePreJoinSubmit = useCallback(
     async (values: LocalUserChoices) => {
-      // eslint-disable-next-line no-constant-condition
-      if ((liveStream || true) && connectionDetailsEndpoint) {
+      if (scLiveStream) {
         setLoading(true);
+        LiveStreamService.join(scLiveStream.id)
+          .then((data: SCLiveStreamConnectionDetailsType) => {
+            setPreJoinChoices(values);
+            setConnectionDetails({...data, participantName: scUserContext.user.username});
+            toggleAttrDisabledPrejoinActions(false);
+            setLoading(false);
+          })
+          .catch((e) => {
+            Logger.error(SCOPE_SC_UI, e);
+          });
         toggleAttrDisabledPrejoinActions(true);
-        setPreJoinChoices(values);
-        const url = new URL(connectionDetailsEndpoint, window.location.origin);
-        url.searchParams.append('roomName', liveStream.roomName || generateRoomId());
-        url.searchParams.append('participantName', scUserContext.user?.username);
-        /* if (liveStream && liveStream.region) {
-          url.searchParams.append('region', liveStream.region);
-        } */
-        const connectionDetailsResp = await fetch(url.toString());
-        const connectionDetailsData = await connectionDetailsResp.json();
-        setConnectionDetails(connectionDetailsData);
-        toggleAttrDisabledPrejoinActions(false);
-        setLoading(false);
       }
     },
-    [scUserContext.user, connectionDetailsEndpoint, setPreJoinChoices, setConnectionDetails]
+    [scUserContext.user, setPreJoinChoices, setConnectionDetails, scLiveStream]
   );
 
   /**
@@ -207,7 +194,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   /**
    * User must be authenticated
    */
-  if (!scUserContext.user || !liveStreamEnabled || !canCreateLiveStream) {
+  if ((!scLiveStream && !scUserContext.user) || !canCreateLiveStream) {
     return <CircularProgress />;
   }
 
@@ -215,23 +202,23 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
    * Renders root object
    */
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <Box className={classes.content} data-lk-theme="default">
         {connectionDetails === undefined || preJoinChoices === undefined ? (
           <>
             {startPrejoinContent && <Box className={classes.startPrejoinContent}>{startPrejoinContent}</Box>}
-            {liveStream?.title && (
+            {scLiveStream?.title && (
               <Typography component={'div'} variant="h5" className={classes.title}>
-                {liveStream?.title}
+                {scLiveStream?.title}
               </Typography>
             )}
-            {liveStream?.description && (
+            {scLiveStream?.description && (
               <Typography component={'div'} variant="body1" className={classes.description}>
-                {liveStream?.description}
+                {scLiveStream?.description}
               </Typography>
             )}
             <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading})}>
-              <PreJoin persistUserChoices defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+              <PreJoin defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
               {loading && (
                 <Box className={classes.prejoinLoader}>
                   <CircularProgress />

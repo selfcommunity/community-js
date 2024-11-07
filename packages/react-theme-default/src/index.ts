@@ -140,8 +140,10 @@ import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
+import SCLiveStream from './components/SCLiveStream';
 import SCCreateLiveStreamDialog from './components/SCLiveStreamDialog';
 import SCLiveStreamForm from './components/SCLiveStreamForm';
+import SCLiveStreamFormSettings from './components/SCLiveStreamFormSettings';
 import SCLiveStreamRoom from './components/SCLiveStreamRoom';
 import SCLiveStreamVideoConference from './components/SCLiveStreamVideoConference';
 import SCToastNotifications from './components/SCToastNotifications';
@@ -395,10 +397,12 @@ const theme = {
     SCVoteAudienceButton,
     SCVoteButton,
     SCWidget,
+    SCLiveStream,
     SCCreateLiveStreamDialog,
     SCLiveStreamForm,
+    SCLiveStreamFormSettings,
     SCLiveStreamRoom,
-		SCLiveStreamVideoConference,
+    SCLiveStreamVideoConference
   },
   selfcommunity: {
     user: {

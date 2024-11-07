@@ -1,23 +1,32 @@
-import { Autocomplete, Box, InputAdornment, Tab, Tabs, TextField } from '@mui/material';
+import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { useLoadScript } from '@react-google-maps/api';
-import { SCContextType, useSCContext } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {useLoadScript} from '@react-google-maps/api';
+import {SCContextType, useSCContext} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
-import { ChangeEvent, SyntheticEvent, useEffect, useMemo, useState } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from 'react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import UrlTextField from '../../shared/UrlTextField';
-import { PREFIX } from './constants';
-import { Geolocation, Place } from './types';
+import {PREFIX} from './constants';
+import {Geolocation, Place} from './types';
+import LiveStream from '../LiveStream';
+import LiveStreamFormSettings from '../LiveStreamForm/LiveStreamFormSettings';
+import {SCLiveStreamTemplateType} from '../../types/liveStream';
+import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
+import {getNewDate} from './utils';
 
 const messages = defineMessages({
   virtualPlaceholder: {
     id: 'ui.eventForm.address.online.placeholder',
     defaultMessage: 'ui.eventForm.address.online.placeholder'
+  },
+  name: {
+    id: 'ui.eventForm.name.placeholder',
+    defaultMessage: 'ui.eventForm.name.placeholder'
   }
 });
 
@@ -34,8 +43,9 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface EventAddressProps {
-  event?: SCEventType;
+  event?: SCEventType | Partial<SCEventType>;
   forwardGeolocationData: (data: Geolocation) => void;
+  forwardLivestreamSettingsData: (settings) => void;
   className?: string;
 }
 
@@ -48,14 +58,22 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // INTL
   const intl = useIntl();
   // PROPS
-  const { className, forwardGeolocationData, event } = props;
+  const {className, forwardGeolocationData, forwardLivestreamSettingsData, event} = props;
 
   // STATE
   const [location, setLocation] = useState<SCEventLocationType>(event?.location || SCEventLocationType.PERSON);
-  const [geolocation, setGeoLocation] = useState<Place | null>(event ? { description: event.geolocation } : null);
+  const [geolocation, setGeoLocation] = useState<Place | null>(event ? {description: event.geolocation} : null);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Place[]>([]);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const liveStream: SCLiveStreamType = useMemo(() => {
+    console.log(event);
+    return {
+      title: event?.name || `${intl.formatMessage(messages.name)}`,
+      created_at: event?.start_date || getNewDate(),
+      settings: /* event?.livestream?.settings || */ LIVESTREAM_DEFAULT_SETTINGS
+    } /* || event.livestream? */ as SCLiveStreamType;
+  }, [event]);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -63,7 +81,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
     [scContext.settings.integrations]
   );
-  const { isLoaded } = useLoadScript({
+  const {isLoaded} = useLoadScript({
     googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
     libraries: ['places', 'geocoding']
   });
@@ -102,7 +120,11 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   };
 
   const handleLinkChange = (event: ChangeEvent<HTMLInputElement>) => {
-    forwardGeolocationData({ location, link: event.target.value });
+    forwardGeolocationData({location, link: event.target.value});
+  };
+
+  const handleLiveStreamSettingsChange = (settings) => {
+    forwardLivestreamSettingsData(settings);
   };
 
   useEffect(() => {
@@ -118,7 +140,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     if (inputValue.length >= 3) {
       const newTimeoutId = setTimeout(() => {
         const autocompleteService = new window.google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions({ input: inputValue }, (predictions, status) => {
+        autocompleteService.getPlacePredictions({input: inputValue}, (predictions, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
             setSuggestions(
               predictions.map((prediction) => ({
@@ -143,17 +165,24 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       <Tabs className={classes.tabs} value={location} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
         <Tab
           value={SCEventLocationType.PERSON}
-          classes={{ root: classes.tab }}
+          classes={{root: classes.tab}}
           icon={<Icon>add_location_alt</Icon>}
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.live.label" defaultMessage="ui.eventForm.address.live.label" />}
         />
         <Tab
           value={SCEventLocationType.ONLINE}
-          classes={{ root: classes.tab }}
+          classes={{root: classes.tab}}
           icon={<Icon>play_circle_outline</Icon>}
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
+        />
+        <Tab
+          value={SCEventLocationType.LIVESTREAM}
+          classes={{root: classes.tab}}
+          icon={<Icon>photo_camera</Icon>}
+          iconPosition="start"
+          label={<FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />}
         />
       </Tabs>
       <Box className={classes.tabContent}>
@@ -201,6 +230,12 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             }}
             onChange={handleLinkChange}
           />
+        )}
+        {location === SCEventLocationType.LIVESTREAM && (
+          <>
+            <LiveStream template={SCLiveStreamTemplateType.SNIPPET} liveStream={liveStream} actions={<></>} />
+            <LiveStreamFormSettings settings={liveStream.settings} onChange={handleLiveStreamSettingsChange} />
+          </>
         )}
       </Box>
     </Root>
