@@ -108,7 +108,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
-  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: open});
+  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: true});
 
   useEffect(() => {
     if (value === null) {
@@ -121,7 +121,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
     if (scAddressingTags && typeof defaultValue === 'string') {
       setValue(scAddressingTags.find((t) => t.id === Number(defaultValue)));
     }
-  }, [defaultValue, scAddressingTags]);
+  }, [scAddressingTags, defaultValue]);
 
   // Handlers
 
