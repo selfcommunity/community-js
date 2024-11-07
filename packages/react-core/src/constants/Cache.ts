@@ -31,6 +31,10 @@ export const getEventObjectCacheKey = (id) => `${EVENT_OBJECT_CACHE_PREFIX_KEY}$
 export const EVENTS_OBJECT_CACHE_PREFIX_KEY = '_evts_';
 export const getEventsObjectCacheKey = () => `${EVENTS_OBJECT_CACHE_PREFIX_KEY}`;
 
+/** EVENT OBJECT **/
+export const LIVESTREAM_OBJECT_CACHE_PREFIX_KEY = '_liveStream_';
+export const getLiveStreamObjectCacheKey = (id) => `${LIVESTREAM_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
 /** GROUP OBJECT **/
 export const GROUP_OBJECT_CACHE_PREFIX_KEY = '_grp_';
 export const getGroupObjectCacheKey = (id) => `${GROUP_OBJECT_CACHE_PREFIX_KEY}${id}`;

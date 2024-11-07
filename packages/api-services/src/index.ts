@@ -51,6 +51,7 @@ import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './ser
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
 import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
+import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} from './services/livestream';
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
 
 /**
@@ -116,6 +117,7 @@ import {
   EventCreateParams,
   EventFeedParams,
   EventSearchParams,
+  LiveStreamCreateParams,
   StartStepParams,
   OnBoardingStep
 } from './types';
@@ -291,6 +293,10 @@ export {
   EventService,
   EventApiClient,
   EventApiClientInterface,
+  LiveStreamService,
+  LiveStreamApiClient,
+  LiveStreamApiClientInterface,
+  LiveStreamCreateParams,
   OnBoardingService,
   OnBoardingApiClientInterface,
   OnBoardingApiClient,

@@ -19,11 +19,14 @@ import {
   Chat,
   ConnectionState,
   formatChatMessageLinks,
+  GridLayout,
   LayoutContextProvider,
   LiveKitRoom,
   LiveKitRoomProps,
   LocalUserChoices,
-  VideoConference
+  ParticipantTile,
+  VideoConferenceProps
+  // VideoConference
 } from '@livekit/components-react';
 import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -34,6 +37,7 @@ import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
 import {FormattedMessage} from 'react-intl';
 import EventInviteButton from '../../EventInviteButton';
+import {VideoConference} from './VideoConference';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -94,7 +98,13 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
    * Props to spread to LiveKitRoomComponent
    * @default {}
    */
-  LiveKitRoomComponentsProps?: LiveKitRoomProps;
+  LiveKitRoomComponentProps?: LiveKitRoomProps;
+
+  /**
+   * Props to spread to VideoConferenceComponent
+   * @default {}
+   */
+  VideoConferenceComponentProps?: VideoConferenceProps;
 
   /**
    * Element to be inserted before end conference content
@@ -143,9 +153,10 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     handleOnLeaveRoom,
     userChoices = defaultUserChoices,
     connectionDetails = {},
-    LiveKitRoomComponentsProps = {
+    LiveKitRoomComponentProps = {
       /* simulateParticipants: true */
     },
+    VideoConferenceComponentProps = {},
     startConferenceEndContent,
     endConferenceEndContent,
     options = defaultVideoOptions,
@@ -303,11 +314,11 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             onDisconnected={handleOnLeave}
             onEncryptionError={handleEncryptionError}
             onError={handleError}
-            {...LiveKitRoomComponentsProps}>
+            {...LiveKitRoomComponentProps}>
             <LayoutContextProvider>
-              <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-              <Chat />
-              <RecordingIndicator />
+              <VideoConference chatMessageFormatter={formatChatMessageLinks} /* speakerFocused={liveStream.host} */ {...VideoConferenceComponentProps} />
+              {/* <Chat /> */}
+              {/* <RecordingIndicator /> */}
               {/*<EventInviteButton eventId={129} />*/}
               {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
               {/* @ts-ignore */}

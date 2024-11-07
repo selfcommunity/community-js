@@ -88,7 +88,7 @@ const classes = {
   name: `${PREFIX}-name`,
   description: `${PREFIX}-description`,
   content: `${PREFIX}-content`,
-	actions: `${PREFIX}-actions`,
+  actions: `${PREFIX}-actions`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   error: `${PREFIX}-error`
@@ -256,6 +256,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   );
 
   const handleGeoData = useCallback((data: Geolocation) => {
+    setField((prev) => ({
+      ...prev,
+      ...data
+    }));
+  }, []);
+
+  const handleLiveStreamSettingsData = useCallback((data: Geolocation) => {
     setField((prev) => ({
       ...prev,
       ...data
@@ -583,7 +590,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             />
           </LocalizationProvider>
         </Box>
-        <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null} />
+        <EventAddress
+          forwardGeolocationData={handleGeoData}
+          forwardLivestreamSettingsData={handleLiveStreamSettingsData}
+          event={
+            event ??
+            ({
+              name: field.name,
+              start_date: field.startDate,
+              geolocation: field.geolocation
+            } as unknown as Partial<SCEventType>)
+          }
+        />
         {privateEnabled && (
           <Box className={classes.privacySection}>
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
@@ -649,32 +667,32 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
-				<Box className={classes.actions}>
-					<LoadingButton
-						loading={field.isSubmitting}
-						disabled={
-							!field.name ||
-							!field.startDate ||
-							!field.startTime ||
-							!field.endDate ||
-							!field.endTime ||
-							(field.location === SCEventLocationType.ONLINE && !field.link) ||
-							(field.location === SCEventLocationType.PERSON && !field.geolocation) ||
-							(field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
-							Object.keys(error).length !== 0 ||
-							field.name.length > EVENT_TITLE_MAX_LENGTH ||
-							field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
-						}
-						variant="contained"
-						onClick={handleSubmit}
-						color="secondary">
-						{event ? (
-							<FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
-						) : (
-							<FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
-						)}
-					</LoadingButton>
-				</Box>
+        <Box className={classes.actions}>
+          <LoadingButton
+            loading={field.isSubmitting}
+            disabled={
+              !field.name ||
+              !field.startDate ||
+              !field.startTime ||
+              !field.endDate ||
+              !field.endTime ||
+              (field.location === SCEventLocationType.ONLINE && !field.link) ||
+              (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
+              (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
+              Object.keys(error).length !== 0 ||
+              field.name.length > EVENT_TITLE_MAX_LENGTH ||
+              field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
+            }
+            variant="contained"
+            onClick={handleSubmit}
+            color="secondary">
+            {event ? (
+              <FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
+            ) : (
+              <FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
+            )}
+          </LoadingButton>
+        </Box>
       </FormGroup>
     </Root>
   );

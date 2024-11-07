@@ -2,11 +2,11 @@ import {Button, Icon} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
+import {SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import CreateLivestreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 
 const PREFIX = 'SCCreateLivestreamButton';
@@ -32,12 +32,6 @@ export interface CreateLiveStreamButtonProps extends ButtonProps {
    * @default empty object
    */
   CreateLiveStreamDialogComponentProps?: CreateLiveStreamDialogProps;
-
-  /**
-   * On click callback function
-   * @default null
-   */
-  onButtonClick?: (event: any, reason: any) => void;
 
   /**
    * On success callback function
@@ -86,22 +80,7 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
-
-  // TODO
-  const liveStreamEnabled = true;
-  /* const liveStreamEnabled = useMemo(
-		() =>
-			preferences &&
-			features &&
-			features.includes(SCFeatureName.LIVE_STREAM) &&
-			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
-			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
-		[preferences, features]
-	); */
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const canCreateLiveStream = useMemo(() => true /* scUserContext?.user?.permission?.create_livestream */, [scUserContext?.user?.permission]);
+  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
 
   /**
    * Handle close
@@ -121,7 +100,7 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
   /**
    * If there's no authUserId, component is hidden.
    */
-  if (!liveStreamEnabled || !canCreateLiveStream || !authUserId) {
+  if (!canCreateLiveStream || !authUserId) {
     return null;
   }
 
