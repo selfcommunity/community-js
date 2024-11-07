@@ -1,3 +1,5 @@
+import {BaseSearchParams} from './baseParams';
+
 /**
  * LiveStreamCreateParams interface
  */
@@ -26,4 +28,19 @@ export interface LiveStreamCreateParams {
    * The livestream settings
    */
   settings?: Record<string, any>;
+}
+
+export interface LiveStreamSearchParams extends BaseSearchParams {
+  /**
+   * Id
+   */
+  id?: string | number;
+  /**
+   * 	Room name
+   */
+  room_name?: string;
+  /**
+   * Slug
+   */
+  slug?: string;
 }
