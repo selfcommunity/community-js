@@ -245,9 +245,8 @@ export default function LiveStream(inProps: LiveStreamProps): JSX.Element {
         <CardContent className={classes.previewContent}>
           <LiveStreamInfoDetails
             liveStream={scLiveStream}
-            hasLocationInfo={false}
             beforeDateInfo={
-              <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scLiveStream)} className={classes.previewNameWrapper}>
+              <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scLiveStream)} className={classes.previewNameWrapper}>
                 <Typography variant="h5" className={classes.previewName}>
                   {scLiveStream.title}
                 </Typography>
@@ -257,7 +256,7 @@ export default function LiveStream(inProps: LiveStreamProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scLiveStream)}>
+            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scLiveStream)}>
               <FormattedMessage defaultMessage="ui.liveStream.see" id="ui.liveStream.see" />
             </Button>
           </CardActions>

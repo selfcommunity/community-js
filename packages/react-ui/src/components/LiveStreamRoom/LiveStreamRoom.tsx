@@ -1,8 +1,15 @@
 import {Box, BoxProps, CircularProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCUserContextType, useSCFetchLiveStream, useSCUser} from '@selfcommunity/react-core';
-import {SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCFetchLiveStream,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCFeatureName, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
@@ -135,6 +142,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const {scLiveStream} = useSCFetchLiveStream({id: liveStreamId, liveStream});
@@ -148,7 +156,15 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     };
   }, [scUserContext.user, scLiveStream]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(presetConnectionDetails);
-  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const liveStreamEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.LIVE_STREAM) &&
+      SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+    [preferences, features]
+  );
 
   const toggleAttrDisabledPrejoinActions = useCallback((disabled: boolean) => {
     const container = document.querySelector('.lk-prejoin');
@@ -167,7 +183,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
    * Handle PreJoin Submit
    */
   const handlePreJoinSubmit = useCallback(
-    async (values: LocalUserChoices) => {
+    (values: LocalUserChoices) => {
       if (scLiveStream) {
         setLoading(true);
         LiveStreamService.join(scLiveStream.id)
@@ -194,7 +210,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   /**
    * User must be authenticated
    */
-  if ((!scLiveStream && !scUserContext.user) || !canCreateLiveStream) {
+  if ((!scLiveStream && !scUserContext.user) || !liveStreamEnabled) {
     return <CircularProgress />;
   }
 

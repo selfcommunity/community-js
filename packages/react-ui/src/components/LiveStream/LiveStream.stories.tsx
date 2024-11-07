@@ -64,7 +64,6 @@ export const DetailCard: StoryObj<typeof LiveStream> = {
 	args: {
 		liveStreamId: 2,
 		template: SCLiveStreamTemplateType.DETAIL,
-		actions: <></>
 	},
 	render: template
 };
@@ -76,7 +75,6 @@ export const Preview: StoryObj<typeof LiveStream> = {
 		variant: 'elevation',
 		square: false,
 		template: SCLiveStreamTemplateType.PREVIEW,
-		actions: <></>
 	},
 	render: template
 };
@@ -85,7 +83,6 @@ export const PreviewCard: StoryObj<typeof LiveStream> = {
 	args: {
 		liveStreamId: 2,
 		template: SCLiveStreamTemplateType.PREVIEW,
-		actions: <></>
 	},
 	render: template
 };
