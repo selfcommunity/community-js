@@ -75,6 +75,21 @@ export default function LiveStreamInfoDetails(inProps: LiveStreamInfoDetailsProp
       {hasDateInfo && (
         <Stack className={classes.iconTextWrapper}>
           {!hideDateIcon && <Icon fontSize="small">{scLiveStream.closed_at ? 'calendar_off' : 'CalendarIcon'}</Icon>}
+          <Typography variant="body1">
+            <FormattedMessage
+              id="ui.eventInfoDetails.date.startEndTime"
+              defaultMessage="ui.eventInfoDetails.date.startEndTime"
+              values={{
+                date: intl.formatDate(scLiveStream.created_at, {
+                  weekday: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long'
+                }),
+                start: intl.formatDate(scLiveStream.created_at, {hour: 'numeric', minute: 'numeric'})
+              }}
+            />
+          </Typography>
           {hasInProgress && scLiveStream.running && (
             <Tooltip title={<FormattedMessage id="ui.eventInfoDetails.inProgress" defaultMessage="ui.eventInfoDetails.inProgress" />}>
               <Box className={classes.inProgress} />

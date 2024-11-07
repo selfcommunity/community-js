@@ -146,6 +146,7 @@ import SCLiveStreamForm from './components/SCLiveStreamForm';
 import SCLiveStreamFormSettings from './components/SCLiveStreamFormSettings';
 import SCLiveStreamRoom from './components/SCLiveStreamRoom';
 import SCLiveStreamVideoConference from './components/SCLiveStreamVideoConference';
+import SCLiveStreamInfoDetails from './components/SCLiveStreamInfoDetails';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
@@ -398,6 +399,7 @@ const theme = {
     SCVoteButton,
     SCWidget,
     SCLiveStream,
+    SCLiveStreamInfoDetails,
     SCCreateLiveStreamDialog,
     SCLiveStreamForm,
     SCLiveStreamFormSettings,

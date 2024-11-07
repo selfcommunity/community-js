@@ -68,7 +68,7 @@ export function VideoConference({
   disableChat = false,
   disableMicrophone = false,
   disableCamera = false,
-  disableScreenShare = true,
+  disableScreenShare = false,
   hideParticipantList = false,
   showSettings,
   ...props
@@ -127,7 +127,6 @@ export function VideoConference({
       lastAutoFocusedScreenShareTrack.current = null;
     }
     if (focusTrack && !isTrackReference(focusTrack)) {
-      console.log('asdadsa');
       const updatedFocusTrack = tracks.find((tr) => tr.participant.identity === focusTrack.participant.identity && tr.source === focusTrack.source);
       if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
         layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
