@@ -1,14 +1,14 @@
 import {SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {BaseSearchParams, EventCreateParams, SCPaginatedResponse} from '../../types';
-import {LiveStreamCreateParams} from '../../types/liveStream';
+import {EventCreateParams, SCPaginatedResponse} from '../../types';
+import {LiveStreamCreateParams, LiveStreamSearchParams} from '../../types/liveStream';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 
 export interface LiveStreamApiClientInterface {
   // LiveStreams search
-  search(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>>;
+  search(params?: LiveStreamSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>>;
 
   // LiveStream detail
   getSpecificInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType>;
@@ -34,7 +34,7 @@ export class LiveStreamApiClient {
    * @param params
    * @param config
    */
-  static search(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
+  static search(params?: LiveStreamSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.SearchLiveStream.url({})}?${p.toString()}`, method: Endpoints.SearchEvents.method});
   }
@@ -141,7 +141,7 @@ export class LiveStreamApiClient {
  :::
  */
 export default class LiveStreamService {
-  static async search(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
+  static async search(params?: LiveStreamSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     return LiveStreamApiClient.search(params, config);
   }
   static async getSpecificInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {

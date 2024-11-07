@@ -118,6 +118,7 @@ import {
   EventFeedParams,
   EventSearchParams,
   LiveStreamCreateParams,
+  LiveStreamSearchParams,
   StartStepParams,
   OnBoardingStep
 } from './types';
@@ -297,6 +298,7 @@ export {
   LiveStreamApiClient,
   LiveStreamApiClientInterface,
   LiveStreamCreateParams,
+  LiveStreamSearchParams,
   OnBoardingService,
   OnBoardingApiClientInterface,
   OnBoardingApiClient,
