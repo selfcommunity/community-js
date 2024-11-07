@@ -159,6 +159,7 @@ import SCUserProfileHeader from './components/SCUserProfileHeader';
 import SCUserProfileTemplate from './components/SCUserProfileTemplate';
 import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWidget';
 import SCUserSuggestionWidget from './components/SCUserSuggestionWidget';
+import SCTagAutocomplete from './components/SCTagAutocomplete';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
@@ -368,6 +369,7 @@ const theme = {
     SCUserProfileTemplate,
     SCUserSubscribedGroupsWidget,
     SCUserSuggestionWidget,
+    SCTagAutocomplete,
     SCEventForm,
     SCEventFormDialog,
     SCCreateEventButton,

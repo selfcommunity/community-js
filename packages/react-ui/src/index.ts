@@ -121,6 +121,7 @@ import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
 import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
 import SnippetNotifications, {SnippetNotificationsProps, SnippetNotificationsSkeleton} from './components/SnippetNotifications';
 import SuggestedEventsWidget, {SuggestedEventsWidgetProps, SuggestedEventsWidgetSkeleton} from './components/SuggestedEventsWidget';
+import TagAutocomplete, {TagAutocompleteProps} from './components/TagAutocomplete';
 import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
 import User, {UserProps, UserSkeleton} from './components/User';
 import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
@@ -594,6 +595,8 @@ export {
   StickyBoxComponent,
   StickyBoxProps,
   SuggestedEventsWidget,
+  TagAutocomplete,
+  TagAutocompleteProps,
   SuggestedEventsWidgetProps,
   SuggestedEventsWidgetSkeleton,
   TagChip,
