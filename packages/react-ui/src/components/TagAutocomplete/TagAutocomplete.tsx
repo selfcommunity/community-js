@@ -94,7 +94,8 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   // Props
   const {
     onChange,
-    defaultValue = null,
+    multiple = true,
+    defaultValue = multiple ? [] : null,
     TextFieldProps = {
       variant: 'outlined',
       label: <FormattedMessage id="ui.composer.layer.audience.tags.label" defaultMessage="ui.composer.layer.audience.tags.label" />
@@ -105,7 +106,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
 
   // State
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<SCTagType[] | any>(defaultValue || []);
+  const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
   const {scAddressingTags} = useSCFetchAddressingTagList({fetch: open});
@@ -116,6 +117,14 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
     }
     onChange && onChange(value);
   }, [value]);
+
+  useEffect(() => {
+    if (typeof defaultValue === 'string') {
+      setValue(
+        multiple ? scAddressingTags.filter((t) => t.id === Number(defaultValue)) : scAddressingTags.find((t) => t.id === Number(defaultValue))
+      );
+    }
+  }, [defaultValue]);
 
   // Handlers
 
@@ -135,10 +144,10 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   return (
     <Root
       className={classes.root}
+      multiple={multiple}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}
-      multiple
       options={scAddressingTags || []}
       getOptionLabel={(option: SCTagType) => option.name || ''}
       value={value}
