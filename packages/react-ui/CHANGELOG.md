@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.1) (2024-11-07)
+
+
+### Performance Improvements
+
+* added TagAutocomplete component ([e65f552](https://github.com/selfcommunity/community-js/commit/e65f55222a64749bb41666ebd8e02c23fbf41772))
+
+
+
+
+
 # [0.10.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.2-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.0) (2024-11-06)
 
 
