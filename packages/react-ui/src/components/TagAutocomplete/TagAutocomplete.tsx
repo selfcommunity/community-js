@@ -94,8 +94,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   // Props
   const {
     onChange,
-    multiple = true,
-    defaultValue = multiple ? [] : null,
+    defaultValue = null,
     TextFieldProps = {
       variant: 'outlined',
       label: <FormattedMessage id="ui.composer.layer.audience.tags.label" defaultMessage="ui.composer.layer.audience.tags.label" />
@@ -119,12 +118,10 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   }, [value]);
 
   useEffect(() => {
-    if (typeof defaultValue === 'string') {
-      setValue(
-        multiple ? scAddressingTags.filter((t) => t.id === Number(defaultValue)) : scAddressingTags.find((t) => t.id === Number(defaultValue))
-      );
+    if (scAddressingTags && typeof defaultValue === 'string') {
+      setValue(scAddressingTags.find((t) => t.id === Number(defaultValue)));
     }
-  }, [defaultValue]);
+  }, [defaultValue, scAddressingTags]);
 
   // Handlers
 
@@ -144,7 +141,6 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   return (
     <Root
       className={classes.root}
-      multiple={multiple}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}
