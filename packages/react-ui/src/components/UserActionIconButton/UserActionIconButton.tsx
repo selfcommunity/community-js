@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {Link, SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
@@ -168,6 +169,28 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
   const roles = useMemo(() => scUserContext.user && scUserContext?.user.role, [scUserContext.user]);
   const canModerate = useMemo(() => roles && (roles.includes('admin') || roles.includes('moderator')) && !isMe, [roles, isMe]);
 
+  /**
+   * Fetches platform url
+   */
+  function fetchPlatform(query: string) {
+    http
+      .request({
+        url: Endpoints.Platform.url(),
+        method: Endpoints.Platform.method,
+        params: {
+          next: query
+        }
+      })
+      .then((res: HttpResponse<any>) => {
+        handleClose();
+        const platformUrl = res.data.platform_url;
+        window.open(platformUrl, '_blank').focus();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   // EFFECTS
   useEffect(() => {
     if (anchorEl && hidden === null && scUser) {
@@ -222,7 +245,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
                     <ListItem key="moderate">
                       <ListItemButton
                         component={Link}
-                        to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}>
+                        onClick={() => fetchPlatform(`/platform/access?next=/moderation/user/?username=${scUser.username}`)}>
                         <ListItemText
                           primary={<FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />}
                         />
@@ -259,8 +282,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
                     <MenuItem
                       key="moderate"
                       component={Link}
-                      to={`${scContext.settings.portal}/platform/access?next=/moderation/user/?username=${scUser.username}`}
-                      onClick={handleClose}>
+                      onClick={() => fetchPlatform(`/platform/access?next=/moderation/user/?username=${scUser.username}`)}>
                       <FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />
                     </MenuItem>
                   ]
