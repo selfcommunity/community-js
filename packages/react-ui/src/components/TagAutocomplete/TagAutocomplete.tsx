@@ -108,7 +108,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
-  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: true});
+  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: open || defaultValue});
 
   useEffect(() => {
     if (value === null) {
@@ -118,7 +118,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   }, [value]);
 
   useEffect(() => {
-    if (scAddressingTags && typeof defaultValue === 'string') {
+    if (scAddressingTags?.length !== 0 && typeof defaultValue === 'string') {
       setValue(scAddressingTags.find((t) => t.id === Number(defaultValue)));
     }
   }, [scAddressingTags, defaultValue]);
@@ -153,7 +153,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       clearIcon={null}
       noOptionsText={<FormattedMessage id="ui.composer.layer.audience.tags.empty" defaultMessage="ui.composer.layer.audience.tags.empty" />}
       onChange={handleChange}
-      isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value.id === option.id}
+      isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value?.id === option?.id}
       renderTags={(value, getTagProps) => {
         return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />);
       }}
