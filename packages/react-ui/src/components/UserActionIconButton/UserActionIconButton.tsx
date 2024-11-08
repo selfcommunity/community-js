@@ -245,7 +245,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
                     <ListItem key="moderate">
                       <ListItemButton
                         component={Link}
-                        onClick={() => fetchPlatform(`/platform/access?next=/moderation/user/?username=${scUser.username}`)}>
+                        onClick={() => fetchPlatform(`/moderation/user/?username=${scUser.username}`)}>
                         <ListItemText
                           primary={<FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />}
                         />
@@ -282,7 +282,7 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
                     <MenuItem
                       key="moderate"
                       component={Link}
-                      onClick={() => fetchPlatform(`/platform/access?next=/moderation/user/?username=${scUser.username}`)}>
+                      onClick={() => fetchPlatform(`/moderation/user/?username=${scUser.username}`)}>
                       <FormattedMessage defaultMessage="ui.userActionIconButton.moderate" id="ui.userActionIconButton.moderate" />
                     </MenuItem>
                   ]
