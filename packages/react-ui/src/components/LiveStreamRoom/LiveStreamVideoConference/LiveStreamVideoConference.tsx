@@ -297,7 +297,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   /**
    * Renders root object
    */
-
+  console.log(liveStream);
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {liveActive && !error ? (
@@ -316,7 +316,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             onError={handleError}
             {...LiveKitRoomComponentProps}>
             <LayoutContextProvider>
-              <VideoConference chatMessageFormatter={formatChatMessageLinks} /* speakerFocused={liveStream.host} */ {...VideoConferenceComponentProps} />
+              <VideoConference chatMessageFormatter={formatChatMessageLinks} speakerFocused={liveStream.host} {...VideoConferenceComponentProps} />
               {/* <Chat /> */}
               {/* <RecordingIndicator /> */}
               {/*<EventInviteButton eventId={129} />*/}

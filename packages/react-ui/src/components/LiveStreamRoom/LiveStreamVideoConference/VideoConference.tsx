@@ -13,15 +13,15 @@ import {
   GridLayout,
   LayoutContextProvider,
   MessageFormatter,
-  ParticipantTile,
   RoomAudioRenderer,
   useCreateLayoutContext,
   useLocalParticipant,
-  useParticipantInfo,
   useParticipants,
   usePinnedTracks,
   useTracks
 } from '@livekit/components-react';
+import {SCUserType} from '@selfcommunity/types';
+import {ParticipantTile} from './ParticipantTile';
 
 /**
  * @public
@@ -32,7 +32,7 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
   chatMessageDecoder?: MessageDecoder;
   /** @alpha */
   SettingsComponent?: React.ComponentType;
-  speakerFocused?: string;
+  speakerFocused?: SCUserType;
   disableChat?: boolean;
   disableMicrophone?: boolean;
   disableCamera?: boolean;
@@ -133,7 +133,7 @@ export function VideoConference({
       }
     } else if (speakerFocused) {
       const speaker = participants.find((pt) => {
-        return pt.name === speakerFocused;
+        return pt.name === speakerFocused.username;
       });
       if (speaker) {
         const updatedFocusTrack = tracks.find((tr) => {
@@ -182,7 +182,7 @@ export function VideoConference({
             )}
             <ControlBar
               controls={{
-                ...(localParticipant.name !== speakerFocused
+                ...(localParticipant.name !== speakerFocused.username
                   ? {
                       chat: !disableChat,
                       microphone: !disableMicrophone,

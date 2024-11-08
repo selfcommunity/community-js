@@ -13,7 +13,7 @@ import {SCFeatureName, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {LocalUserChoices, PreJoin} from '@livekit/components-react';
+import {LocalUserChoices} from '@livekit/components-react';
 import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
@@ -21,6 +21,7 @@ import '@livekit/components-styles';
 import {LiveStreamService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {PreJoin} from './LiveStreamVideoConference/PreJoin';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -136,7 +137,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     endPrejoinContent,
     presetConnectionDetails,
     presetPreJoinChoices,
-    LiveStreamVideoConferenceComponentProps = {},
+    LiveStreamVideoConferenceComponentProps = {options: {codec: 'vp8', hq: false}},
     ...rest
   } = props;
 
@@ -151,8 +152,8 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
-      videoEnabled: scLiveStream?.settings?.disableVideo ?? true,
-      audioEnabled: scLiveStream?.settings?.muteParticipant ?? true
+      videoEnabled: scLiveStream?.settings?.disableVideo === false,
+      audioEnabled: scLiveStream?.settings?.muteParticipant === false
     };
   }, [scUserContext.user, scLiveStream]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(presetConnectionDetails);
@@ -249,9 +250,9 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
         ) : (
           <Box className={classes.conference}>
             <LiveStreamVideoConference
+              liveStream={scLiveStream}
               connectionDetails={connectionDetails}
               userChoices={preJoinChoices}
-              options={{codec: props.codec, hq: props.hq}}
               {...LiveStreamVideoConferenceComponentProps}
             />
           </Box>
