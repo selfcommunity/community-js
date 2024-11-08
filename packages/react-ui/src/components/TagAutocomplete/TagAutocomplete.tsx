@@ -35,7 +35,6 @@ export interface TagAutocompleteProps
       | 'clearOnBlur'
       | 'blurOnSelect'
       | 'handleHomeEndKeys'
-      | 'clearIcon'
       | 'noOptionsText'
       | 'isOptionEqualToValue'
       | 'renderTags'
