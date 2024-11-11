@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.8...@selfcommunity/react-ui@0.10.0-alpha.9) (2024-11-08)
+
+
+### Bug Fixes
+
+* user action moderation ([827c48a](https://github.com/selfcommunity/community-js/commit/827c48abb0fddf1cfd391164f36cbb495002a2b7))
+
+
+
+
+
 # [0.10.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.7...@selfcommunity/react-ui@0.10.0-alpha.8) (2024-11-08)
 
 
