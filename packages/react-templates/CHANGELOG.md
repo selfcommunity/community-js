@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.9...@selfcommunity/react-templates@0.4.3-alpha.10) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.8...@selfcommunity/react-templates@0.4.3-alpha.9) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.7...@selfcommunity/react-templates@0.4.3-alpha.8) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.6...@selfcommunity/react-templates@0.4.3-alpha.7) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.5...@selfcommunity/react-templates@0.4.3-alpha.6) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.4...@selfcommunity/react-templates@0.4.3-alpha.5) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.3...@selfcommunity/react-templates@0.4.3-alpha.4) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.2...@selfcommunity/react-templates@0.4.3-alpha.3) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.1...@selfcommunity/react-templates@0.4.3-alpha.2) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.3-alpha.0...@selfcommunity/react-templates@0.4.3-alpha.1) (2024-11-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.2...@selfcommunity/react-templates@0.4.3-alpha.0) (2024-11-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.4.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.2-alpha.4...@selfcommunity/react-templates@0.4.2) (2024-11-05)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -1,12 +1,14 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({
+    root: ({ theme }: any) => ({
       padding: theme.spacing(),
+
       '& .MuiAvatarGroup-root .MuiAvatar-root': {
-        width: theme.selfcommunity.user.avatar.sizeSmall,
+        width: 'auto',
         height: theme.selfcommunity.user.avatar.sizeSmall,
-        border: '1px solid #fff',
-        fontSize: '0.76rem',
+        border: `1px solid ${theme.palette.common.white}`,
+        fontSize: '0.7rem',
+
         '&.MuiAvatar-colorDefault': {
           marginLeft: 0,
           backgroundColor: 'transparent',

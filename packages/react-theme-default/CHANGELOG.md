@@ -3,6 +3,103 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.8...@selfcommunity/react-theme-default@0.4.0-alpha.9) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.7...@selfcommunity/react-theme-default@0.4.0-alpha.8) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.6...@selfcommunity/react-theme-default@0.4.0-alpha.7) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.5...@selfcommunity/react-theme-default@0.4.0-alpha.6) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.4...@selfcommunity/react-theme-default@0.4.0-alpha.5) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.3...@selfcommunity/react-theme-default@0.4.0-alpha.4) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.2...@selfcommunity/react-theme-default@0.4.0-alpha.3) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.1...@selfcommunity/react-theme-default@0.4.0-alpha.2) (2024-11-07)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+# [0.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.0-alpha.0...@selfcommunity/react-theme-default@0.4.0-alpha.1) (2024-11-07)
+
+
+### Performance Improvements
+
+* added TagAutocomplete component ([e65f552](https://github.com/selfcommunity/community-js/commit/e65f55222a64749bb41666ebd8e02c23fbf41772))
+
+
+
+
+
+# [0.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.2-alpha.0...@selfcommunity/react-theme-default@0.4.0-alpha.0) (2024-11-06)
+
+
+### Features
+
+* added new utility to format number to thousands and more; modified all related components ([dcb4121](https://github.com/selfcommunity/community-js/commit/dcb412188d5b6cf61d365fe467087b3b73dd1e73))
+
+
+
+
+
+## [0.3.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.1...@selfcommunity/react-theme-default@0.3.2-alpha.0) (2024-11-05)
+
+
+### Bug Fixes
+
+* added breakpoint to manage mobile padding ([ca4b38e](https://github.com/selfcommunity/community-js/commit/ca4b38ee7a3399c8d31edaa3a5c78c01cf068bcf))
+
+
+
+
+
 ## [0.3.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.3.1-alpha.4...@selfcommunity/react-theme-default@0.3.1) (2024-11-05)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.8...@selfcommunity/react-ui@0.10.0-alpha.9) (2024-11-08)
+
+
+### Bug Fixes
+
+* user action moderation ([827c48a](https://github.com/selfcommunity/community-js/commit/827c48abb0fddf1cfd391164f36cbb495002a2b7))
+
+
+
+
+
+# [0.10.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.7...@selfcommunity/react-ui@0.10.0-alpha.8) (2024-11-08)
+
+
+### Bug Fixes
+
+* user action moderation ([4ea137b](https://github.com/selfcommunity/community-js/commit/4ea137b453e67bf8b8cc349517db3af2fe4c9836))
+
+
+
+
+
+# [0.10.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.6...@selfcommunity/react-ui@0.10.0-alpha.7) (2024-11-08)
+
+
+### Bug Fixes
+
+* EventHeader ([29cd640](https://github.com/selfcommunity/community-js/commit/29cd6400fc976ad49832388dfecbf3bd2ea9bcc5))
+
+
+
+
+
+# [0.10.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.5...@selfcommunity/react-ui@0.10.0-alpha.6) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.10.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.4...@selfcommunity/react-ui@0.10.0-alpha.5) (2024-11-08)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([0bee0cc](https://github.com/selfcommunity/community-js/commit/0bee0cc3ea1884ce6f5367190931798f330e56b9))
+
+
+
+
+
+# [0.10.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.3...@selfcommunity/react-ui@0.10.0-alpha.4) (2024-11-07)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([a97189b](https://github.com/selfcommunity/community-js/commit/a97189bb1982801c851af649a031b9246fea5893))
+
+
+
+
+
+# [0.10.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.2...@selfcommunity/react-ui@0.10.0-alpha.3) (2024-11-07)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([c655d56](https://github.com/selfcommunity/community-js/commit/c655d5643755f3c1148f2b03cebe5aa02d26e428))
+
+
+
+
+
+# [0.10.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.1...@selfcommunity/react-ui@0.10.0-alpha.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([970b575](https://github.com/selfcommunity/community-js/commit/970b575c85779867d66ccd2c5a5a649d6e06fdc4))
+
+
+
+
+
+# [0.10.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.1) (2024-11-07)
+
+
+### Performance Improvements
+
+* added TagAutocomplete component ([e65f552](https://github.com/selfcommunity/community-js/commit/e65f55222a64749bb41666ebd8e02c23fbf41772))
+
+
+
+
+
+# [0.10.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.2-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.0) (2024-11-06)
+
+
+### Bug Fixes
+
+* added eventId into EventParticipantsButton.stories ([ed1976f](https://github.com/selfcommunity/community-js/commit/ed1976fdf431abd37db9ade67875bc47fc106baa))
+
+
+### Features
+
+* added new utility to format number to thousands and more; modified all related components ([dcb4121](https://github.com/selfcommunity/community-js/commit/dcb412188d5b6cf61d365fe467087b3b73dd1e73))
+
+
+
+
+
+## [0.9.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1...@selfcommunity/react-ui@0.9.2-alpha.0) (2024-11-05)
+
+
+### Bug Fixes
+
+* added control to manage when to show right arrow ([a0b69a8](https://github.com/selfcommunity/community-js/commit/a0b69a80a813d9360a06b68f52186e0d52ad7043))
+* fixed console error ([f397346](https://github.com/selfcommunity/community-js/commit/f39734636180433716c81c5ce516956fcca00186))
+
+
+
+
+
 ## [0.9.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.4...@selfcommunity/react-ui@0.9.1) (2024-11-05)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
