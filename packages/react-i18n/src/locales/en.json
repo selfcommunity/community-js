@@ -988,5 +988,6 @@
   "ui.liveStreamForm.description.error.maxLength": "Please shorten this text to 500 characters or fewer. Currently, it’s too long",
   "ui.liveStreamRoom.conference.end": "The livestream has ended!",
   "ui.liveStreamRoom.button.backHome": "Back to Home",
-  "ui.liveStreamRoom.connecting": "Connecting..."
+  "ui.liveStreamRoom.connecting": "Connecting...",
+  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Remove user"
 }

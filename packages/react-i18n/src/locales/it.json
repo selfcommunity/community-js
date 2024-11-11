@@ -988,5 +988,6 @@
   "ui.liveStreamForm.description.error.maxLength": "Riduci questo testo a 500 caratteri o meno. Attualmente è troppo lungo",
   "ui.liveStreamRoom.conference.end": "La diretta live è finita!",
   "ui.liveStreamRoom.button.backHome": "Vai alla home",
-  "ui.liveStreamRoom.connecting": "Connessione in corso..."
+  "ui.liveStreamRoom.connecting": "Connessione in corso...",
+  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi l'utente dal live"
 }

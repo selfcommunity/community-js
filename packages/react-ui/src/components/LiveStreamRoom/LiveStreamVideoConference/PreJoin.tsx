@@ -4,10 +4,12 @@ import * as React from 'react';
 import type {LocalUserChoices} from '@livekit/components-core';
 import {log} from '@livekit/components-core';
 import {defaultUserChoices} from '@livekit/components-core';
-import {MediaDeviceMenu, TrackToggle, useMediaDevices, usePersistentUserChoices} from '@livekit/components-react';
-import {useWarnAboutMissingStyles} from '@livekit/components-react/dist/hooks/useWarnAboutMissingStyles';
-import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
-import ParticipantPlaceholder from './ParticipantPlaceholder';
+import {MediaDeviceMenu, useMediaDevices, usePersistentUserChoices} from '@livekit/components-react';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import ParticipantTileAvatar from './ParticipantTileAvatar';
+import {SCLiveStreamType} from '@selfcommunity/types';
+import {useMemo} from 'react';
+import {TrackToggle} from './TrackToggle';
 
 /**
  * Props for the PreJoin component.
@@ -21,6 +23,11 @@ export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
    */
   onValidate?: (values: LocalUserChoices) => boolean;
   onError?: (error: Error) => void;
+  /**
+   * Livestream Object
+   * @default null
+   */
+  liveStream?: SCLiveStreamType;
   /** Prefill the input form with initial values. */
   defaults?: Partial<LocalUserChoices>;
   /** Display a debug window for your convenience. */
@@ -188,6 +195,7 @@ export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(en
  * @public
  */
 export function PreJoin({
+  liveStream,
   defaults = {},
   onValidate,
   onSubmit,
@@ -320,14 +328,23 @@ export function PreJoin({
     }
   }
 
+  const canUseAudio = useMemo(
+    () =>
+      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+    [scUserContext, liveStream]
+  );
+  const canUseVideo = useMemo(
+    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+    [scUserContext, liveStream]
+  );
+
   return (
     <div className="lk-prejoin" {...htmlProps}>
       <div className="lk-video-container">
         {videoTrack && <video ref={videoEl} width="1280" height="720" data-lk-facing-mode={facingMode} />}
         {(!videoTrack || !videoEnabled) && (
-          <div
-            className="lk-camera-off-note">
-            {scUserContext.user ? <img src={`${scUserContext.user.avatar}`} style={{borderRadius: 20}} /> : <ParticipantPlaceholder />}
+          <div className="lk-camera-off-note">
+            <ParticipantTileAvatar user={scUserContext.user} />
           </div>
         )}
       </div>
@@ -335,14 +352,18 @@ export function PreJoin({
         <div className="lk-button-group audio">
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore */}
-          <TrackToggle initialState={audioEnabled} source={Track.Source.Microphone} onChange={(enabled) => setAudioEnabled(enabled)}>
+          <TrackToggle
+            disabled={!canUseAudio}
+            initialState={audioEnabled}
+            source={Track.Source.Microphone}
+            onChange={(enabled) => setAudioEnabled(enabled)}>
             {micLabel}
           </TrackToggle>
           <div className="lk-button-group-menu">
             <MediaDeviceMenu
               initialSelection={audioDeviceId}
               kind="audioinput"
-              disabled={!audioTrack}
+              disabled={!audioTrack || !canUseAudio}
               tracks={{audioinput: audioTrack}}
               onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
             />
@@ -351,21 +372,24 @@ export function PreJoin({
         <div className="lk-button-group video">
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore */}
-          <TrackToggle initialState={videoEnabled} source={Track.Source.Camera} onChange={(enabled) => setVideoEnabled(enabled)}>
+          <TrackToggle
+            disabled={!canUseVideo}
+            initialState={videoEnabled}
+            source={Track.Source.Camera}
+            onChange={(enabled) => setVideoEnabled(enabled)}>
             {camLabel}
           </TrackToggle>
           <div className="lk-button-group-menu">
             <MediaDeviceMenu
               initialSelection={videoDeviceId}
               kind="videoinput"
-              disabled={!videoTrack}
+              disabled={!videoTrack || !canUseVideo}
               tracks={{videoinput: videoTrack}}
               onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
             />
           </div>
         </div>
       </div>
-
       <form className="lk-username-container">
         <input
           className="lk-form-control"

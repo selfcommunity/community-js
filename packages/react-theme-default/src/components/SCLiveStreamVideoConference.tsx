@@ -2,6 +2,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       height: '100vh',
+      width: '100%',
       overflowY: 'hidden',
       [`& .SCLiveStreamVideoConference-end-conference-wrap`]: {
         display: 'flex',

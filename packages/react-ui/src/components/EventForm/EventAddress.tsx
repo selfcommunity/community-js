@@ -61,18 +61,27 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   const {className, forwardGeolocationData, forwardLivestreamSettingsData, event} = props;
 
   // STATE
-  const [location, setLocation] = useState<SCEventLocationType>(event?.location || SCEventLocationType.PERSON);
+  const [location, setLocation] = useState<SCEventLocationType>(
+    event?.location
+      ? event.location === SCEventLocationType.ONLINE && event.live_stream
+        ? SCEventLocationType.LIVESTREAM
+        : SCEventLocationType.ONLINE
+      : SCEventLocationType.PERSON
+  );
   const [geolocation, setGeoLocation] = useState<Place | null>(event ? {description: event.geolocation} : null);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Place[]>([]);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const liveStream: SCLiveStreamType = useMemo(() => {
     console.log(event);
-    return {
-      title: event?.name || `${intl.formatMessage(messages.name)}`,
-      created_at: event?.start_date || getNewDate(),
-      settings: /* event?.livestream?.settings || */ LIVESTREAM_DEFAULT_SETTINGS
-    } /* || event.livestream? */ as SCLiveStreamType;
+    return (
+      event.live_stream ||
+      ({
+        title: event?.name || `${intl.formatMessage(messages.name)}`,
+        created_at: event?.start_date || getNewDate(),
+        settings: LIVESTREAM_DEFAULT_SETTINGS
+      } as SCLiveStreamType)
+    );
   }, [event]);
 
   // CONTEXT

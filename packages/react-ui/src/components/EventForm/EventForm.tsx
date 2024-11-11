@@ -189,6 +189,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     lat: event?.geolocation_lat || null,
     lng: event?.geolocation_lng || null,
     link: event?.link || '',
+    liveStream: null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
     name: event?.name || '',
     description: event ? event.description : '',
@@ -265,7 +266,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const handleLiveStreamSettingsData = useCallback((data: Geolocation) => {
     setField((prev) => ({
       ...prev,
-      ...data
+      settings: {...data}
     }));
   }, []);
 
@@ -286,10 +287,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
     if (field.location === SCEventLocationType.ONLINE) {
       formData.append('link', field.link);
+      formData.append('live_stream_settings', null);
+    } else if (field.location === SCEventLocationType.LIVESTREAM) {
+      formData.append('link', '');
+      formData.append('live_stream_settings', JSON.stringify(field.liveStream));
     } else if (field.location === SCEventLocationType.PERSON) {
       formData.append('geolocation', field.geolocation);
       formData.append('geolocation_lat', field.lat.toString());
       formData.append('geolocation_lng', field.lng.toString());
+      formData.append('link', '');
+      formData.append('live_stream', null);
     }
 
     if (privateEnabled) {

@@ -121,7 +121,8 @@ import {
   type SCEventType,
   type SCStepType,
   type SCLiveStreamType,
-	type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamSettingsType,
   SCLiveStreamViewType
 } from './types';
 
@@ -334,6 +335,7 @@ export {
   type SCEventType,
   type SCStepType,
   type SCLiveStreamType,
-	type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamSettingsType,
   SCLiveStreamViewType
 };

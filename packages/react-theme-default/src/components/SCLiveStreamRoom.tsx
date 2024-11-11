@@ -39,6 +39,13 @@ const Component = {
           color: '#111111'
         }
       },
+      [`& .SCLiveStreamRoom-end-prejoin-content`]: {
+        color: theme.palette.common.black,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: -30
+      },
       '& .lk-prejoin': {
         maxWidth: 620,
         width: '100%',

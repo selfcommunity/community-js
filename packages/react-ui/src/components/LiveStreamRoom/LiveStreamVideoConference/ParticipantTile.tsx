@@ -22,9 +22,9 @@ import {
   useParticipantTile,
   VideoTrack
 } from '@livekit/components-react';
-import ParticipantPlaceholder from './ParticipantPlaceholder';
+import ParticipantTileAvatar from './ParticipantTileAvatar';
+import ParticipantTileActions from './ParticipantTileActions';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Button} from '@mui/material';
 
 /**
  * The `ParticipantContextIfNeeded` component only creates a `ParticipantContext`
@@ -130,7 +130,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                   )
                 )}
                 <div className="lk-participant-placeholder">
-                  {scUserContext.user ? <img src={`${scUserContext.user.avatar}`} style={{borderRadius: 20}} /> : <ParticipantPlaceholder />}
+                  <ParticipantTileAvatar participant={trackReference.participant} />
                 </div>
                 <div className="lk-participant-metadata">
                   <div className="lk-participant-metadata-item">
@@ -147,7 +147,9 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                           show={'muted'}></TrackMutedIndicator>
                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                         {/* @ts-ignore */}
-                        <ParticipantName />
+                        <ParticipantName>
+                          <ParticipantTileActions />
+                        </ParticipantName>
                       </>
                     ) : (
                       <>

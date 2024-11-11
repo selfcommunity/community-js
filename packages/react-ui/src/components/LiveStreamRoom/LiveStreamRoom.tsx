@@ -1,4 +1,4 @@
-import {Box, BoxProps, CircularProgress, Typography} from '@mui/material';
+import {Alert, Box, BoxProps, CircularProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
@@ -179,6 +179,16 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     }
   }, []);
 
+	const canUseAudio = useMemo(
+		() =>
+			(scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+		[scUserContext, liveStream]
+	);
+	const canUseVideo = useMemo(
+		() => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+		[scUserContext, liveStream]
+	);
+
   // HANDLERS
   /**
    * Handle PreJoin Submit
@@ -235,7 +245,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               </Typography>
             )}
             <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading})}>
-              <PreJoin defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+              <PreJoin liveStream={scLiveStream} defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
               {loading && (
                 <Box className={classes.prejoinLoader}>
                   <CircularProgress />
@@ -245,7 +255,20 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 </Box>
               )}
             </Box>
-            <Box className={classes.endPrejoinContent}>{endPrejoinContent}</Box>
+            <Box className={classes.endPrejoinContent}>
+              {Boolean(scLiveStream && (scLiveStream.settings?.muteParticipant || (scLiveStream && scLiveStream.settings?.disableVideo))) && (
+                <Alert variant="filled" severity="error">
+                  {scLiveStream && scLiveStream.settings?.muteParticipant && (
+                    <>
+                      The host of the live set your microphone as off
+                      <br />
+                    </>
+                  )}
+                  {scLiveStream && scLiveStream.settings?.disableVideo && <>The host of the live set your camera as off</>}
+                </Alert>
+              )}
+              {endPrejoinContent}
+            </Box>
           </>
         ) : (
           <Box className={classes.conference}>
