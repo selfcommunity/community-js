@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.4...@selfcommunity/react-ui@0.10.1-alpha.5) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices revert to previous version ([65f11ce](https://github.com/selfcommunity/community-js/commit/65f11ced9163a9a809a3059b59876d260caf9da3))
+
+
+
+
+
+## [0.10.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.3...@selfcommunity/react-ui@0.10.1-alpha.4) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices test ([7c4906c](https://github.com/selfcommunity/community-js/commit/7c4906ca00bac02310fdd5277037b1b9dca60b94))
+
+
+
+
+
+## [0.10.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.2...@selfcommunity/react-ui@0.10.1-alpha.3) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices. Linear issue: https://linear.app/quentral/issue/QUE-936/impossibile-sulla-pwa-da-mobile-rieditare-un-testo-in-fase-di ([dad0a63](https://github.com/selfcommunity/community-js/commit/dad0a63b1174a051528be2ca884113567ee27d8e))
+
+
+
+
+
+## [0.10.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.1...@selfcommunity/react-ui@0.10.1-alpha.2) (2024-11-12)
+
+
+### Bug Fixes
+
+* share image media. Linear issue: https://linear.app/quentral/issue/QUE-939/condividi-ora-non-funziona-su-post-con-immagini ([f9cc16a](https://github.com/selfcommunity/community-js/commit/f9cc16a745d2223438ec8906537938b2d54c0914))
+
+
+
+
+
+## [0.10.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.0...@selfcommunity/react-ui@0.10.1-alpha.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* replaced google api key env with dynamic preference ([c925b15](https://github.com/selfcommunity/community-js/commit/c925b1575c0b509d15af3e1388473b351630c5cd))
+
+
+
+
+
+## [0.10.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0...@selfcommunity/react-ui@0.10.1-alpha.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* past events filter when there are no ongoing events ([65aed1d](https://github.com/selfcommunity/community-js/commit/65aed1d4c91846b035e667bcee6eba5ceca10428))
+
+
+
+
+
 # [0.10.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.10...@selfcommunity/react-ui@0.10.0) (2024-11-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

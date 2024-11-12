@@ -1,18 +1,18 @@
-import { Autocomplete, Box, InputAdornment, Tab, Tabs, TextField } from '@mui/material';
+import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { useLoadScript } from '@react-google-maps/api';
-import { SCContextType, useSCContext } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {useLoadScript} from '@react-google-maps/api';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
-import { ChangeEvent, SyntheticEvent, useEffect, useMemo, useState } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from 'react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import UrlTextField from '../../shared/UrlTextField';
-import { PREFIX } from './constants';
-import { Geolocation, Place } from './types';
+import {PREFIX} from './constants';
+import {Geolocation, Place} from './types';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   virtualPlaceholder: {
@@ -48,23 +48,27 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // INTL
   const intl = useIntl();
   // PROPS
-  const { className, forwardGeolocationData, event } = props;
+  const {className, forwardGeolocationData, event} = props;
 
   // STATE
   const [location, setLocation] = useState<SCEventLocationType>(event?.location || SCEventLocationType.PERSON);
-  const [geolocation, setGeoLocation] = useState<Place | null>(event ? { description: event.geolocation } : null);
+  const [geolocation, setGeoLocation] = useState<Place | null>(event ? {description: event.geolocation} : null);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Place[]>([]);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
-  const geocodingApiKey = useMemo(
-    () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
-    [scContext.settings.integrations]
-  );
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
+  // PREFERENCES
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  // MEMO
+  const geocodingApiKey = useMemo(() => {
+    return preferences && SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY in preferences
+      ? preferences[SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY].value
+      : null;
+  }, [preferences]);
+
+  const {isLoaded} = useLoadScript({
+    googleMapsApiKey: geocodingApiKey,
     libraries: ['places', 'geocoding']
   });
 
@@ -102,7 +106,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   };
 
   const handleLinkChange = (event: ChangeEvent<HTMLInputElement>) => {
-    forwardGeolocationData({ location, link: event.target.value });
+    forwardGeolocationData({location, link: event.target.value});
   };
 
   useEffect(() => {
@@ -118,7 +122,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     if (inputValue.length >= 3) {
       const newTimeoutId = setTimeout(() => {
         const autocompleteService = new window.google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions({ input: inputValue }, (predictions, status) => {
+        autocompleteService.getPlacePredictions({input: inputValue}, (predictions, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
             setSuggestions(
               predictions.map((prediction) => ({
@@ -143,14 +147,14 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       <Tabs className={classes.tabs} value={location} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
         <Tab
           value={SCEventLocationType.PERSON}
-          classes={{ root: classes.tab }}
+          classes={{root: classes.tab}}
           icon={<Icon>add_location_alt</Icon>}
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.live.label" defaultMessage="ui.eventForm.address.live.label" />}
         />
         <Tab
           value={SCEventLocationType.ONLINE}
-          classes={{ root: classes.tab }}
+          classes={{root: classes.tab}}
           icon={<Icon>play_circle_outline</Icon>}
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
@@ -159,6 +163,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       <Box className={classes.tabContent}>
         {location === SCEventLocationType.PERSON && (
           <Autocomplete
+            disabled={!geocodingApiKey}
             size="small"
             value={geolocation}
             onChange={handleSelection}
