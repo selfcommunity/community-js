@@ -114,7 +114,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
-          checked={Boolean(settings?.disableChat)}
+          checked={Boolean(settings?.disableShareScreen)}
           onChange={() => onChange({...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
         />
         <Typography className={classes.switchLabel}>

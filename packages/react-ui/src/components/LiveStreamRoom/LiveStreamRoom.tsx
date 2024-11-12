@@ -179,15 +179,15 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     }
   }, []);
 
-	const canUseAudio = useMemo(
-		() =>
-			(scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
-		[scUserContext, liveStream]
-	);
-	const canUseVideo = useMemo(
-		() => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
-		[scUserContext, liveStream]
-	);
+  const canUseAudio = useMemo(
+    () =>
+      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+    [scUserContext, liveStream]
+  );
+  const canUseVideo = useMemo(
+    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+    [scUserContext, liveStream]
+  );
 
   // HANDLERS
   /**
@@ -256,7 +256,12 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               )}
             </Box>
             <Box className={classes.endPrejoinContent}>
-              {Boolean(scLiveStream && (scLiveStream.settings?.muteParticipant || (scLiveStream && scLiveStream.settings?.disableVideo))) && (
+              {Boolean(
+                scUserContext.user &&
+                  scUserContext.user.id !== scLiveStream.host.id &&
+                  scLiveStream &&
+                  (scLiveStream.settings?.muteParticipant || (scLiveStream && scLiveStream.settings?.disableVideo))
+              ) && (
                 <Alert variant="filled" severity="error">
                   {scLiveStream && scLiveStream.settings?.muteParticipant && (
                     <>

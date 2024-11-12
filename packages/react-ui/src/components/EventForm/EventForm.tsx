@@ -1,33 +1,27 @@
 import {LoadingButton} from '@mui/lab';
 import {
-	Box,
-	BoxProps,
-	FormControl,
-	FormGroup,
-	Icon,
-	IconButton,
-	InputAdornment,
-	InputLabel,
-	MenuItem,
-	Paper,
-	Select,
-	Stack,
-	Switch,
-	TextField,
-	Typography
+  Box,
+  BoxProps,
+  FormControl,
+  FormGroup,
+  Icon,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  Switch,
+  TextField,
+  Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker, TimeView} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {
-	SCContextType,
-	SCPreferences,
-	SCPreferencesContextType,
-	useSCContext,
-	useSCPreferences
-} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -120,6 +114,12 @@ export interface EventFormProps extends BoxProps {
   event?: SCEventType;
 
   /**
+   * Initial location
+   * @default SCEventLocationType.PERSON
+   */
+  presetLocation?: SCEventLocationType;
+
+  /**
    * On success callback function
    * @default null
    */
@@ -174,7 +174,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, event = null, ...rest} = props;
+  const {className, onSuccess, onError, event, presetLocation = SCEventLocationType.PERSON, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -197,7 +197,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       ? event.location === SCEventLocationType.ONLINE && event.live_stream
         ? SCEventLocationType.LIVESTREAM
         : SCEventLocationType.ONLINE
-      : SCEventLocationType.PERSON,
+      : presetLocation,
     geolocation: event?.geolocation || '',
     lat: event?.geolocation_lat || null,
     lng: event?.geolocation_lng || null,
@@ -277,7 +277,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const handleLiveStreamSettingsData = useCallback((data: Geolocation) => {
     setField((prev) => ({
       ...prev,
-      live_stream: {settings: data}
+      liveStreamSettings: {...prev.liveStreamSettings, ...data}
     }));
   }, []);
 
@@ -298,7 +298,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
     if (field.location === SCEventLocationType.ONLINE) {
       formData.append('link', field.link);
-      formData.append('live_stream_settings', null);
+      formData.append('live_stream_settings', '');
     } else if (field.location === SCEventLocationType.LIVESTREAM) {
       formData.append('link', '');
       formData.append('live_stream_settings', JSON.stringify(field.liveStreamSettings));
@@ -307,7 +307,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('geolocation_lat', field.lat.toString());
       formData.append('geolocation_lng', field.lng.toString());
       formData.append('link', '');
-      formData.append('live_stream_settings', null);
+      formData.append('live_stream_settings', '');
     }
 
     if (privateEnabled) {
@@ -622,7 +622,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 live_stream: {
                   title: field.name || `${intl.formatMessage(messages.name)}`,
                   created_at: field.startDate,
-                  settings: LIVESTREAM_DEFAULT_SETTINGS
+                  settings: field.liveStreamSettings
                 }
               }
             } as unknown as SCEventType
