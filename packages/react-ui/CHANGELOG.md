@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.1...@selfcommunity/react-ui@0.10.1-alpha.2) (2024-11-12)
+
+
+### Bug Fixes
+
+* share image media. Linear issue: https://linear.app/quentral/issue/QUE-939/condividi-ora-non-funziona-su-post-con-immagini ([f9cc16a](https://github.com/selfcommunity/community-js/commit/f9cc16a745d2223438ec8906537938b2d54c0914))
+
+
+
+
+
 ## [0.10.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.0...@selfcommunity/react-ui@0.10.1-alpha.1) (2024-11-12)
 
 
