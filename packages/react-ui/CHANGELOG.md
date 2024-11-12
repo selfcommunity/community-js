@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.3...@selfcommunity/react-ui@0.10.1-alpha.4) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices test ([7c4906c](https://github.com/selfcommunity/community-js/commit/7c4906ca00bac02310fdd5277037b1b9dca60b94))
+
+
+
+
+
 ## [0.10.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.2...@selfcommunity/react-ui@0.10.1-alpha.3) (2024-11-12)
 
 
