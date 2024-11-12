@@ -975,7 +975,7 @@
   "ui.liveStreamForm.description.placeholder": "Description",
   "ui.liveStreamForm.hideParticipantList": "Hide participants list",
   "ui.liveStreamForm.automaticallyNotifyFollowers": "Notify people you're in contact with once you go live",
-  "ui.liveStreamForm.muteParticipant": "Mute participant",
+  "ui.liveStreamForm.muteParticipants": "Mute participants",
   "ui.liveStreamForm.disableShareScreen": "Disable share screen",
   "ui.liveStreamForm.disableChat": "Disable participants chat",
   "ui.liveStreamForm.disableVideo": "Disable participants video",

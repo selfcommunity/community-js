@@ -10,6 +10,7 @@ import ParticipantTileAvatar from './ParticipantTileAvatar';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import {useMemo} from 'react';
 import {TrackToggle} from './TrackToggle';
+import {useLiveStream} from './LiveStreamProvider';
 
 /**
  * Props for the PreJoin component.
@@ -23,11 +24,6 @@ export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
    */
   onValidate?: (values: LocalUserChoices) => boolean;
   onError?: (error: Error) => void;
-  /**
-   * Livestream Object
-   * @default null
-   */
-  liveStream?: SCLiveStreamType;
   /** Prefill the input form with initial values. */
   defaults?: Partial<LocalUserChoices>;
   /** Display a debug window for your convenience. */
@@ -195,7 +191,6 @@ export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(en
  * @public
  */
 export function PreJoin({
-  liveStream,
   defaults = {},
   onValidate,
   onSubmit,
@@ -208,6 +203,7 @@ export function PreJoin({
   persistUserChoices = true,
   ...htmlProps
 }: PreJoinProps) {
+  const {liveStream} = useLiveStream();
   const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
 
   // TODO: Remove and pipe `defaults` object directly into `usePersistentUserChoices` once we fully switch from type `LocalUserChoices` to `UserChoices`.
@@ -330,11 +326,11 @@ export function PreJoin({
 
   const canUseAudio = useMemo(
     () =>
-      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+      scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.muteParticipants)),
     [scUserContext, liveStream]
   );
   const canUseVideo = useMemo(
-    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+    () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableVideo)),
     [scUserContext, liveStream]
   );
 

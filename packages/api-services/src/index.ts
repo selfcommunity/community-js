@@ -51,7 +51,7 @@ import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './ser
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
 import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
-import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} from './services/livestream';
+import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} from './services/live_stream';
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
 
 /**

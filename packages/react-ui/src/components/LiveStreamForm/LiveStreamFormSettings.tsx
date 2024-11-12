@@ -84,11 +84,11 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
-          checked={Boolean(settings?.muteParticipant)}
-          onChange={() => onChange({...settings, ...{['muteParticipant']: !settings?.muteParticipant}})}
+          checked={Boolean(settings?.muteParticipants)}
+          onChange={() => onChange({...settings, ...{['muteParticipants']: !settings?.muteParticipants}})}
         />
         <Typography className={classes.switchLabel}>
-          <FormattedMessage id="ui.liveStreamForm.muteParticipant" defaultMessage="ui.liveStreamForm.muteParticipant" />
+          <FormattedMessage id="ui.liveStreamForm.muteParticipants" defaultMessage="ui.liveStreamForm.muteParticipants" />
         </Typography>
       </Stack>
       <Stack direction="row" spacing={1} alignItems="center">

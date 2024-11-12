@@ -134,14 +134,6 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const privateEnabled = useMemo(
-    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_PRIVATE_ENABLED].value,
-    [scPreferences.preferences]
-  );
-  const visibilityEnabled = useMemo(
-    () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_VISIBILITY_ENABLED].value,
-    [scPreferences.preferences]
-  );
 
   const _backgroundCover = {
     ...(field.cover
@@ -212,7 +204,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
       });
-  }, [field, privateEnabled, visibilityEnabled, onSuccess, onError]);
+  }, [field, onSuccess, onError]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {

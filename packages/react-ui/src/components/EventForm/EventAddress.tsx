@@ -3,7 +3,7 @@ import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {useLoadScript} from '@react-google-maps/api';
-import {SCContextType, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
@@ -79,6 +79,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
   const geocodingApiKey = useMemo(
     () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
     [scContext.settings.integrations]
@@ -87,11 +88,12 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
     libraries: ['places', 'geocoding']
   });
+  const canViewLiveTab = useMemo(() => scUserContext?.user?.permission?.create_live_stream || event.live_stream, [scUserContext?.user?.permission]);
 
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
     setLocation(newValue);
-		forwardGeolocationData({location: newValue});
+    forwardGeolocationData({location: newValue});
   };
 
   const handleSelection = async (_event: SyntheticEvent, newValue: Place) => {
@@ -180,13 +182,15 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
           iconPosition="start"
           label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
         />
-        <Tab
-          value={SCEventLocationType.LIVESTREAM}
-          classes={{root: classes.tab}}
-          icon={<Icon>photo_camera</Icon>}
-          iconPosition="start"
-          label={<FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />}
-        />
+        {canViewLiveTab && (
+          <Tab
+            value={SCEventLocationType.LIVESTREAM}
+            classes={{root: classes.tab}}
+            icon={<Icon>photo_camera</Icon>}
+            iconPosition="start"
+            label={<FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />}
+          />
+        )}
       </Tabs>
       <Box className={classes.tabContent}>
         {location === SCEventLocationType.PERSON && (
@@ -234,7 +238,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             onChange={handleLinkChange}
           />
         )}
-        {location === SCEventLocationType.LIVESTREAM && (
+        {canViewLiveTab && location === SCEventLocationType.LIVESTREAM && (
           <>
             <LiveStream template={SCLiveStreamTemplateType.SNIPPET} liveStream={liveStream} actions={<></>} />
             <LiveStreamFormSettings settings={liveStream.settings} onChange={handleLiveStreamSettingsChange} />
