@@ -2,8 +2,8 @@ import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Stack, useMediaQuery, useTheme} from '@mui/material';
-import {SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {Avatar, Stack} from '@mui/material';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
@@ -133,10 +133,6 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
   // RETRIEVE OBJECTS
   const [html, setHtml] = useState(text);
 
-  // HOOKS
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   // REFS
   let editor: RefObject<EditorRef> = useRef<EditorRef>();
 
@@ -152,10 +148,17 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
    * Focus on editor
    */
   const handleEditorFocus = (): void => {
-    if (!isMobile && editor.current) {
+    if (editor.current) {
       editor.current.focus();
     }
   };
+
+  useEffect(() => {
+    const focusOnUserInteraction = () => handleEditorFocus();
+    document.addEventListener('touchstart', focusOnUserInteraction);
+
+    return () => document.removeEventListener('touchstart', focusOnUserInteraction);
+  }, []);
 
   /**
    * Handle Replay
