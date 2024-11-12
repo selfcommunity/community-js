@@ -1,4 +1,4 @@
-import {Box, BoxProps, CircularProgress, Typography} from '@mui/material';
+import {Alert, Box, BoxProps, CircularProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
@@ -13,7 +13,7 @@ import {SCFeatureName, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {LocalUserChoices, PreJoin} from '@livekit/components-react';
+import {LocalUserChoices} from '@livekit/components-react';
 import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
@@ -21,6 +21,7 @@ import '@livekit/components-styles';
 import {LiveStreamService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {PreJoin} from './LiveStreamVideoConference/PreJoin';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -136,7 +137,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     endPrejoinContent,
     presetConnectionDetails,
     presetPreJoinChoices,
-    LiveStreamVideoConferenceComponentProps = {},
+    LiveStreamVideoConferenceComponentProps = {options: {codec: 'vp8', hq: false}},
     ...rest
   } = props;
 
@@ -151,8 +152,8 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
-      videoEnabled: scLiveStream?.settings?.disableVideo ?? true,
-      audioEnabled: scLiveStream?.settings?.muteParticipant ?? true
+      videoEnabled: scLiveStream?.settings?.disableVideo === false,
+      audioEnabled: scLiveStream?.settings?.muteParticipant === false
     };
   }, [scUserContext.user, scLiveStream]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(presetConnectionDetails);
@@ -177,6 +178,16 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
       });
     }
   }, []);
+
+  const canUseAudio = useMemo(
+    () =>
+      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+    [scUserContext, liveStream]
+  );
+  const canUseVideo = useMemo(
+    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+    [scUserContext, liveStream]
+  );
 
   // HANDLERS
   /**
@@ -234,7 +245,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               </Typography>
             )}
             <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading})}>
-              <PreJoin defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+              <PreJoin liveStream={scLiveStream} defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
               {loading && (
                 <Box className={classes.prejoinLoader}>
                   <CircularProgress />
@@ -244,14 +255,32 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 </Box>
               )}
             </Box>
-            <Box className={classes.endPrejoinContent}>{endPrejoinContent}</Box>
+            <Box className={classes.endPrejoinContent}>
+              {Boolean(
+                scUserContext.user &&
+                  scUserContext.user.id !== scLiveStream.host.id &&
+                  scLiveStream &&
+                  (scLiveStream.settings?.muteParticipant || (scLiveStream && scLiveStream.settings?.disableVideo))
+              ) && (
+                <Alert variant="filled" severity="error">
+                  {scLiveStream && scLiveStream.settings?.muteParticipant && (
+                    <>
+                      The host of the live set your microphone as off
+                      <br />
+                    </>
+                  )}
+                  {scLiveStream && scLiveStream.settings?.disableVideo && <>The host of the live set your camera as off</>}
+                </Alert>
+              )}
+              {endPrejoinContent}
+            </Box>
           </>
         ) : (
           <Box className={classes.conference}>
             <LiveStreamVideoConference
+              liveStream={scLiveStream}
               connectionDetails={connectionDetails}
               userChoices={preJoinChoices}
-              options={{codec: props.codec, hq: props.hq}}
               {...LiveStreamVideoConferenceComponentProps}
             />
           </Box>

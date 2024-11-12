@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {SCEventType, SCLiveStreamType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
@@ -169,7 +169,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
           <LiveStreamSelector liveSelected={liveType} onLiveSelected={handleLiveTypeSelected} onNext={handleLiveTypeSelectedNext} />
         )}
         {step === CreateLiveStreamStep.CREATE_LIVE && (
-          <>{liveType === LiveStreamType.EVENT_LIVE ? <EventForm onSuccess={handleSubmit} /> : <LiveStreamForm onSuccess={handleSubmit} />}</>
+          <>{liveType === LiveStreamType.EVENT_LIVE ? <EventForm presetLocation={SCEventLocationType.LIVESTREAM} onSuccess={handleSubmit} /> : <LiveStreamForm onSuccess={handleSubmit} />}</>
         )}
       </Box>
     </Root>

@@ -976,6 +976,7 @@
   "ui.liveStreamForm.hideParticipantList": "Hide participants list",
   "ui.liveStreamForm.automaticallyNotifyFollowers": "Notify people you're in contact with once you go live",
   "ui.liveStreamForm.muteParticipant": "Mute participant",
+  "ui.liveStreamForm.disableShareScreen": "Disable share screen",
   "ui.liveStreamForm.disableChat": "Disable participants chat",
   "ui.liveStreamForm.disableVideo": "Disable participants video",
   "ui.liveStreamForm.view.label": "View",
@@ -988,5 +989,6 @@
   "ui.liveStreamForm.description.error.maxLength": "Please shorten this text to 500 characters or fewer. Currently, it’s too long",
   "ui.liveStreamRoom.conference.end": "The livestream has ended!",
   "ui.liveStreamRoom.button.backHome": "Back to Home",
-  "ui.liveStreamRoom.connecting": "Connecting..."
+  "ui.liveStreamRoom.connecting": "Connecting...",
+  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Remove user"
 }

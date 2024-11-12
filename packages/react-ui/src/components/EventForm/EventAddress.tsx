@@ -67,12 +67,14 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   const [suggestions, setSuggestions] = useState<Place[]>([]);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const liveStream: SCLiveStreamType = useMemo(() => {
-    console.log(event);
-    return {
-      title: event?.name || `${intl.formatMessage(messages.name)}`,
-      created_at: event?.start_date || getNewDate(),
-      settings: /* event?.livestream?.settings || */ LIVESTREAM_DEFAULT_SETTINGS
-    } /* || event.livestream? */ as SCLiveStreamType;
+    return (
+      event.live_stream ||
+      ({
+        title: event?.name || `${intl.formatMessage(messages.name)}`,
+        created_at: event?.start_date || getNewDate(),
+        settings: LIVESTREAM_DEFAULT_SETTINGS
+      } as SCLiveStreamType)
+    );
   }, [event]);
 
   // CONTEXT
@@ -89,6 +91,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
     setLocation(newValue);
+		forwardGeolocationData({location: newValue});
   };
 
   const handleSelection = async (_event: SyntheticEvent, newValue: Place) => {

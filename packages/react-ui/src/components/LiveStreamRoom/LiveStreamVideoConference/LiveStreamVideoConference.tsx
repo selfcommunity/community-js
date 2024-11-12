@@ -179,6 +179,24 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const [liveActive, setLiveActive] = useState(true);
   const [error, setError] = useState(null);
 
+  const canUseAudio = useMemo(
+    () =>
+      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+    [scUserContext, liveStream]
+  );
+  const canUseVideo = useMemo(
+    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+    [scUserContext, liveStream]
+  );
+  const canUseChat = useMemo(
+    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableChat),
+    [scUserContext, liveStream]
+  );
+  const canUseShareScreen = useMemo(
+    () =>
+      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableShareScreen),
+    [scUserContext, liveStream]
+  );
   /* const liveStreamRoomMaxParticipants = useMemo(
 		() =>
 			preferences &&
@@ -297,7 +315,6 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   /**
    * Renders root object
    */
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {liveActive && !error ? (
@@ -316,8 +333,15 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             onError={handleError}
             {...LiveKitRoomComponentProps}>
             <LayoutContextProvider>
-              <VideoConference chatMessageFormatter={formatChatMessageLinks} /* speakerFocused={liveStream.host} */ {...VideoConferenceComponentProps} />
-              {/* <Chat /> */}
+              <VideoConference
+                chatMessageFormatter={formatChatMessageLinks}
+                speakerFocused={liveStream.host}
+                {...VideoConferenceComponentProps}
+                disableMicrophone={!canUseAudio}
+                disableCamera={!canUseVideo}
+                disableChat={!canUseChat}
+                disableShareScreen={!canUseShareScreen}
+              />
               {/* <RecordingIndicator /> */}
               {/*<EventInviteButton eventId={129} />*/}
               {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}

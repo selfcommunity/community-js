@@ -21,7 +21,17 @@ export enum SCLiveStreamViewType {
 }
 
 export interface SCLiveStreamConnectionDetailsType {
-	serverUrl: string;
-	roomName: string;
-	participantToken: string;
+  serverUrl: string;
+  roomName: string;
+  participantToken: string;
+}
+
+export interface SCLiveStreamSettingsType {
+  muteParticipant?: boolean;
+  disableVideo?: boolean;
+  disableChat?: boolean;
+  disableShareScreen?: boolean;
+  hideParticipantList?: boolean;
+  automaticallyNotifyFollowers?: boolean;
+  view?: SCLiveStreamViewType;
 }
