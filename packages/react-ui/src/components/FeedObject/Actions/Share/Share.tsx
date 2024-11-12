@@ -201,7 +201,7 @@ export default function Share(props: ShareProps): JSX.Element {
       if (shareMedias.length) {
         sharedObjectId = shareMedias[0].embed.metadata.id;
       }
-      const isMediaEvent: boolean = obj.medias.some((media) => media.embed.embed_type === MEDIA_EMBED_SC_SHARED_EVENT);
+      const isMediaEvent: boolean = obj.medias.some((media) => media.embed?.embed_type === MEDIA_EMBED_SC_SHARED_EVENT);
       return http
         .request({
           url: Endpoints.ComposerMediaCreate.url(),
