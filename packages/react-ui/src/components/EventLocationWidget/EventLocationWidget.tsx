@@ -1,17 +1,18 @@
-import { Box, CardContent, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
-import { SCContextType, useSCContext, useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
+import {Box, CardContent, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
+import {SCPreferences, SCPreferencesContextType, useSCFetchEvent, useSCPreferences} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { VirtualScrollerItemProps } from '../../types/virtualScroller';
-import { formatEventLocationGeolocation } from '../../utils/string';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {formatEventLocationGeolocation} from '../../utils/string';
 import Widget from '../Widget';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 import EventLocationWidgetSkeleton from './Skeleton';
+import {useMemo} from 'react';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -85,12 +86,21 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
     props: inProps,
     name: PREFIX
   });
-  const { className, event, eventId, ...rest } = props;
+  const {className, event, eventId, ...rest} = props;
   // STATE
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const scContext: SCContextType = useSCContext();
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
+
+  // PREFERENCES
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  // MEMO
+  const geocodingApiKey = useMemo(() => {
+    return preferences && SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY in preferences
+      ? preferences[SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY].value
+      : null;
+  }, [preferences]);
+
+  const {isLoaded} = useLoadScript({
+    googleMapsApiKey: geocodingApiKey,
     libraries: ['maps']
   });
   const mapOptions = {
@@ -100,7 +110,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
     zoomControl: false // Disables the zoom control (+/- buttons)
   };
 
-  if (!scContext?.settings?.integrations?.geocoding?.apiKey || scEvent?.location === SCEventLocationType.ONLINE) {
+  if (!geocodingApiKey || scEvent?.location === SCEventLocationType.ONLINE) {
     return <HiddenPlaceholder />;
   }
 
