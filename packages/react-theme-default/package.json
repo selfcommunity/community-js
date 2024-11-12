@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-theme-default",
-  "version": "0.4.1-alpha.4",
+  "version": "0.4.1-alpha.5",
   "license": "MIT",
   "private": false,
   "main": "./lib/cjs/index.js",
@@ -66,7 +66,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.3",
     "@selfcommunity/react-core": "^0.6.3-alpha.0",
-    "@selfcommunity/react-ui": "^0.10.1-alpha.4",
+    "@selfcommunity/react-ui": "^0.10.1-alpha.5",
     "react": "^17.0.2 || 18",
     "react-dom": "17 || 18"
   },

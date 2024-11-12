@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.4...@selfcommunity/react-ui@0.10.1-alpha.5) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices revert to previous version ([65f11ce](https://github.com/selfcommunity/community-js/commit/65f11ced9163a9a809a3059b59876d260caf9da3))
+
+
+
+
+
 ## [0.10.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.3...@selfcommunity/react-ui@0.10.1-alpha.4) (2024-11-12)
 
 
