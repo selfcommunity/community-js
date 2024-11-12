@@ -396,7 +396,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  autoHide={!loading && !events.length && !showPastEvents}
                   disabled={loading}
                 />
               </Grid>
@@ -499,7 +498,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading || (!events.length && !showPastEvents)}
+                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading}
                 />
               </Grid>
             </>
