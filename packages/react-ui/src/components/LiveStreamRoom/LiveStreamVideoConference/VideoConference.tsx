@@ -36,7 +36,7 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
   disableChat?: boolean;
   disableMicrophone?: boolean;
   disableCamera?: boolean;
-  disableScreenShare?: boolean;
+  disableShareScreen?: boolean;
   hideParticipantList?: boolean;
   showSettings?: boolean;
 }
@@ -65,10 +65,10 @@ export function VideoConference({
   chatMessageEncoder,
   SettingsComponent,
   speakerFocused,
-  disableChat = true,
-  disableMicrophone = true,
-  disableCamera = true,
-  disableScreenShare = true,
+  disableChat = false,
+  disableMicrophone = false,
+  disableCamera = false,
+  disableShareScreen = false,
   hideParticipantList = false,
   showSettings,
   ...props
@@ -107,7 +107,6 @@ export function VideoConference({
   };
 
   const layoutContext = useCreateLayoutContext();
-
   const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
@@ -187,7 +186,7 @@ export function VideoConference({
                       chat: !disableChat,
                       microphone: !disableMicrophone,
                       camera: !disableCamera,
-                      screenShare: !disableScreenShare
+                      screenShare: !disableShareScreen
                     }
                   : {}),
                 settings: !!SettingsComponent

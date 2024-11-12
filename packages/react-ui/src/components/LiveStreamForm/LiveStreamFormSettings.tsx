@@ -1,7 +1,7 @@
 import {Box, BoxProps, FormControl, Icon, InputLabel, MenuItem, Select, Stack, Switch, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCLiveStreamViewType} from '@selfcommunity/types';
+import {SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -32,7 +32,7 @@ export interface LiveStreamFormSettingsProps extends BoxProps {
    * Event Object
    * @default null
    */
-  settings?: Record<string, any>;
+  settings?: SCLiveStreamSettingsType;
 
   /**
    * onChange callback
@@ -94,26 +94,6 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
-          checked={Boolean(settings?.hideParticipantList)}
-          onChange={() => onChange({...settings, ...{['hideParticipantList']: !settings?.hideParticipantList}})}
-        />
-        <Typography className={classes.switchLabel}>
-          <FormattedMessage id="ui.liveStreamForm.hideParticipantList" defaultMessage="ui.liveStreamForm.hideParticipantList" />
-        </Typography>
-      </Stack>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Switch
-          className={classes.switch}
-          checked={Boolean(settings?.automaticallyNotifyFollowers)}
-          onChange={() => onChange({...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})}
-        />
-        <Typography className={classes.switchLabel}>
-          <FormattedMessage id="ui.liveStreamForm.automaticallyNotifyFollowers" defaultMessage="ui.liveStreamForm.automaticallyNotifyFollowers" />
-        </Typography>
-      </Stack>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Switch
-          className={classes.switch}
           checked={Boolean(settings?.disableVideo)}
           onChange={() => onChange({...settings, ...{['disableVideo']: !settings?.disableVideo}})}
         />
@@ -129,6 +109,36 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.disableChat" defaultMessage="ui.liveStreamForm.disableChat" />
+        </Typography>
+      </Stack>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Switch
+          className={classes.switch}
+          checked={Boolean(settings?.disableChat)}
+          onChange={() => onChange({...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
+        />
+        <Typography className={classes.switchLabel}>
+          <FormattedMessage id="ui.liveStreamForm.disableShareScreen" defaultMessage="ui.liveStreamForm.disableShareScreen" />
+        </Typography>
+      </Stack>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Switch
+          className={classes.switch}
+          checked={Boolean(settings?.hideParticipantList)}
+          onChange={() => onChange({...settings, ...{['hideParticipantList']: !settings?.hideParticipantList}})}
+        />
+        <Typography className={classes.switchLabel}>
+          <FormattedMessage id="ui.liveStreamForm.hideParticipantList" defaultMessage="ui.liveStreamForm.hideParticipantList" />
+        </Typography>
+      </Stack>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Switch
+          className={classes.switch}
+          checked={Boolean(settings?.automaticallyNotifyFollowers)}
+          onChange={() => onChange({...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})}
+        />
+        <Typography className={classes.switchLabel}>
+          <FormattedMessage id="ui.liveStreamForm.automaticallyNotifyFollowers" defaultMessage="ui.liveStreamForm.automaticallyNotifyFollowers" />
         </Typography>
       </Stack>
       <FormControl className={classes.accessView}>

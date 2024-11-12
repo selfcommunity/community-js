@@ -1,27 +1,33 @@
 import {LoadingButton} from '@mui/lab';
 import {
-  Box,
-  BoxProps,
-  FormControl,
-  FormGroup,
-  Icon,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Stack,
-  Switch,
-  TextField,
-  Typography
+	Box,
+	BoxProps,
+	FormControl,
+	FormGroup,
+	Icon,
+	IconButton,
+	InputAdornment,
+	InputLabel,
+	MenuItem,
+	Paper,
+	Select,
+	Stack,
+	Switch,
+	TextField,
+	Typography
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker, TimeView} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
+import {
+	SCContextType,
+	SCPreferences,
+	SCPreferencesContextType,
+	useSCContext,
+	useSCPreferences
+} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -38,6 +44,7 @@ import EventAddress from './EventAddress';
 import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
 import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
+import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 
 const messages = defineMessages({
   name: {
@@ -178,21 +185,25 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const endDateTime = useMemo(() => getNewDate(event?.end_date), [event]);
 
   const initialFieldState: InitialFieldState = {
+    name: event?.name || '',
+    description: event ? event.description : '',
     imageOriginal: event?.image_bigger || '',
     imageOriginalFile: '',
     startDate: event ? startDateTime : getNewDate(),
     startTime: event ? startDateTime : getLaterHoursDate(1),
     endDate: event?.end_date ? endDateTime : getNewDate(),
     endTime: event?.end_date ? endDateTime : getLaterHoursDate(3),
-    location: event?.location || SCEventLocationType.PERSON,
+    location: event?.location
+      ? event.location === SCEventLocationType.ONLINE && event.live_stream
+        ? SCEventLocationType.LIVESTREAM
+        : SCEventLocationType.ONLINE
+      : SCEventLocationType.PERSON,
     geolocation: event?.geolocation || '',
     lat: event?.geolocation_lat || null,
     lng: event?.geolocation_lng || null,
     link: event?.link || '',
-    liveStream: null,
+    liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
-    name: event?.name || '',
-    description: event ? event.description : '',
     isPublic: event?.privacy === SCEventPrivacyType.PUBLIC ?? true,
     isSubmitting: false
   };
@@ -266,7 +277,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const handleLiveStreamSettingsData = useCallback((data: Geolocation) => {
     setField((prev) => ({
       ...prev,
-      settings: {...data}
+      live_stream: {settings: data}
     }));
   }, []);
 
@@ -283,20 +294,20 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     formData.append('start_date', combineDateAndTime(field.startDate, field.startTime));
     formData.append('recurring', field.recurring);
     formData.append('end_date', combineDateAndTime(field.endDate, field.endTime));
-    formData.append('location', field.location);
+    formData.append('location', field.location === SCEventLocationType.PERSON ? SCEventLocationType.PERSON : SCEventLocationType.ONLINE);
 
     if (field.location === SCEventLocationType.ONLINE) {
       formData.append('link', field.link);
       formData.append('live_stream_settings', null);
     } else if (field.location === SCEventLocationType.LIVESTREAM) {
       formData.append('link', '');
-      formData.append('live_stream_settings', JSON.stringify(field.liveStream));
+      formData.append('live_stream_settings', JSON.stringify(field.liveStreamSettings));
     } else if (field.location === SCEventLocationType.PERSON) {
       formData.append('geolocation', field.geolocation);
       formData.append('geolocation_lat', field.lat.toString());
       formData.append('geolocation_lng', field.lng.toString());
       formData.append('link', '');
-      formData.append('live_stream', null);
+      formData.append('live_stream_settings', null);
     }
 
     if (privateEnabled) {
@@ -601,12 +612,20 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           forwardGeolocationData={handleGeoData}
           forwardLivestreamSettingsData={handleLiveStreamSettingsData}
           event={
-            event ??
-            ({
-              name: field.name,
-              start_date: field.startDate,
-              geolocation: field.geolocation
-            } as unknown as Partial<SCEventType>)
+            {
+              ...event,
+              ...{
+                name: field.name,
+                start_date: field.startDate,
+                location: field.location,
+                geolocation: field.geolocation,
+                live_stream: {
+                  title: field.name || `${intl.formatMessage(messages.name)}`,
+                  created_at: field.startDate,
+                  settings: LIVESTREAM_DEFAULT_SETTINGS
+                }
+              }
+            } as unknown as SCEventType
           }
         />
         {privateEnabled && (

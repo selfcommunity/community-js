@@ -98,6 +98,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
     setLocation(newValue);
+		forwardGeolocationData({location: newValue});
   };
 
   const handleSelection = async (_event: SyntheticEvent, newValue: Place) => {

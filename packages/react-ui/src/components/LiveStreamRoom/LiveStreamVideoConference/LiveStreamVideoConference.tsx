@@ -192,7 +192,11 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableChat),
     [scUserContext, liveStream]
   );
-
+  const canUseShareScreen = useMemo(
+    () =>
+      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableShareScreen),
+    [scUserContext, liveStream]
+  );
   /* const liveStreamRoomMaxParticipants = useMemo(
 		() =>
 			preferences &&
@@ -311,7 +315,6 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   /**
    * Renders root object
    */
-  console.log(liveStream);
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {liveActive && !error ? (
@@ -337,8 +340,8 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
                 disableMicrophone={!canUseAudio}
                 disableCamera={!canUseVideo}
                 disableChat={!canUseChat}
+                disableShareScreen={!canUseShareScreen}
               />
-              {/* <Chat /> */}
               {/* <RecordingIndicator /> */}
               {/*<EventInviteButton eventId={129} />*/}
               {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}

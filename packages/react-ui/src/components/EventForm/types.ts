@@ -11,7 +11,7 @@ export type Geolocation = {
   lat?: number;
   lng?: number;
   link?: string;
-  liveStream?: SCLiveStreamType | SCLiveStreamSettingsType;
+  liveStreamSettings?: SCLiveStreamSettingsType;
 };
 
 export type InitialFieldState = Geolocation & {
