@@ -1388,6 +1388,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/live_stream/$(id)/join/'),
     method: 'POST'
   },
+  RemoveUserFromRoom: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/remove_user/?user=$(user)'),
+    method: 'POST'
+  },
   /**
    * OnBoarding
    */

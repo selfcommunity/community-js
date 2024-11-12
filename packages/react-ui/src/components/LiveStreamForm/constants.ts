@@ -3,7 +3,7 @@ import {SCLiveStreamViewType} from '@selfcommunity/types';
 export const PREFIX = 'SCLiveStreamForm';
 
 export const LIVESTREAM_DEFAULT_SETTINGS = {
-  muteParticipant: true,
+  muteParticipants: true,
   hideParticipantList: false,
   automaticallyNotifyFollowers: false,
   disableVideo: true,

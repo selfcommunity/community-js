@@ -19,7 +19,7 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse, LiveStreamApiClient} from '@selfcommunity/api-services';
 import {
   SCContext,
   SCContextType,
@@ -33,6 +33,9 @@ import {
 import {BAN_ROOM_USER} from './constants';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import {useEnsureParticipant} from '@livekit/components-react';
+import {useLiveStream} from './LiveStreamProvider';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 
 const PREFIX = 'SCParticipantTileActionsMenu';
 
@@ -119,6 +122,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
   const p = useEnsureParticipant(participant);
+  const {liveStream} = useLiveStream();
 
   // GENERAL POPPER STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -161,23 +165,18 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
    */
   const performBanParticipant = useMemo(
     () => () => {
-      return http
-        .request({
-          url: Endpoints.DeleteComment.url({id: p.identity}),
-          method: Endpoints.DeleteComment.method
-        })
-        .then((res: HttpResponse<any>) => {
-          if (res.status >= 300) {
-            return Promise.reject(res);
-          }
-          return Promise.resolve(res.data);
-        });
+      return LiveStreamApiClient.removeUserFromRoom(liveStream.id, p.identity).then((res: HttpResponse<any>) => {
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return Promise.resolve(res.data);
+      });
     },
     [p]
   );
 
   /**
-   * handle action
+   * Handle action
    */
   function handleAction(action) {
     if (action === BAN_ROOM_USER) {
@@ -215,7 +214,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
     if (p && !isLoading && !currentActionLoading) {
       if (currentAction === BAN_ROOM_USER) {
         setCurrentActionLoading(BAN_ROOM_USER);
-        /* performBanParticipant()
+        performBanParticipant()
           .then(() => {
             onBanParticipant && onBanParticipant(p);
             performPostConfirmAction(true);
@@ -223,7 +222,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
           .catch((error) => {
             Logger.error(SCOPE_SC_UI, error);
             performPostConfirmAction(false);
-          }); */
+          });
       }
     }
   }
@@ -231,9 +230,19 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   /**
    * Can authenticated ban a user in a room
    */
-  function canBanUser(): boolean {
-    return scUserContext.user && UserUtils.isStaff(scUserContext.user) && scUserContext.user.id.toString() !== p.identity;
-  }
+  const canBanUser = useMemo(
+    () => () => {
+      return (
+        scUserContext.user &&
+        liveStream &&
+        p &&
+        p.identity &&
+        liveStream.host.id === scUserContext.user.id &&
+        scUserContext.user.id.toString() !== p.identity
+      );
+    },
+    [scUserContext, liveStream, p]
+  );
 
   /**
    * Renders section general
@@ -271,6 +280,13 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
         <MenuList>{renderGeneralSection()}</MenuList>
       </Box>
     );
+  }
+
+  /**
+   * Renders component only if the logged user has actions available
+   */
+  if (!canBanUser()) {
+    return null;
   }
 
   /**

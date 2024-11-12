@@ -5,6 +5,7 @@ import {EventCreateParams, SCPaginatedResponse} from '../../types';
 import {LiveStreamCreateParams, LiveStreamSearchParams} from '../../types/liveStream';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
+import {GroupApiClient} from '../group';
 
 export interface LiveStreamApiClientInterface {
   // LiveStreams search
@@ -24,6 +25,9 @@ export interface LiveStreamApiClientInterface {
 
   // Action go to LiveStream
   join(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamConnectionDetailsType>;
+
+  // Ban a user in an active room
+  removeUserFromRoom(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any>;
 }
 /**
  * Contains all the endpoints needed to manage LiveStreams.
@@ -68,7 +72,7 @@ export class LiveStreamApiClient {
   }
 
   /**
-   * This endpoint patches an  LiveStream.
+   * This endpoint patches an LiveStream.
    * @param id
    * @param data
    * @param config
@@ -102,6 +106,20 @@ export class LiveStreamApiClient {
    */
   static join(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamConnectionDetailsType> {
     return apiRequest({...config, url: Endpoints.JoinLiveStream.url({id}), method: Endpoints.JoinLiveStream.method});
+  }
+
+  /**
+   * This endpoint ban user from the specified room.
+   * @param id
+   * @param user
+   * @param config
+   */
+  static removeUserFromRoom(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.RemoveUserFromRoom.url({id, user}),
+      method: Endpoints.RemoveUserFromRoom.method
+    });
   }
 }
 
@@ -165,5 +183,8 @@ export default class LiveStreamService {
   }
   static async join(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamConnectionDetailsType> {
     return LiveStreamApiClient.join(id, config);
+  }
+  static async removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return LiveStreamApiClient.removeUserFromRoom(id, user, config);
   }
 }

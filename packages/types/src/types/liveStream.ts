@@ -27,7 +27,7 @@ export interface SCLiveStreamConnectionDetailsType {
 }
 
 export interface SCLiveStreamSettingsType {
-  muteParticipant?: boolean;
+  muteParticipants?: boolean;
   disableVideo?: boolean;
   disableChat?: boolean;
   disableShareScreen?: boolean;

@@ -63,6 +63,7 @@ export interface ParticipantTileProps extends React.HTMLAttributes<HTMLDivElemen
   /** The track reference to display. */
   trackRef?: TrackReferenceOrPlaceholder;
   disableSpeakingIndicator?: boolean;
+  disableTileActions?: boolean;
   onParticipantClick?: (event: ParticipantClickEvent) => void;
 }
 
@@ -72,7 +73,7 @@ export interface ParticipantTileProps extends React.HTMLAttributes<HTMLDivElemen
  */
 export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes<HTMLDivElement>) => React.ReactNode =
   /* @__PURE__ */ React.forwardRef<HTMLDivElement, ParticipantTileProps>(function ParticipantTile(
-    {trackRef, children, onParticipantClick, disableSpeakingIndicator, ...htmlProps}: ParticipantTileProps,
+    {trackRef, children, onParticipantClick, disableSpeakingIndicator, disableTileActions = false, ...htmlProps}: ParticipantTileProps,
     ref
   ) {
     const scUserContext: SCUserContextType = useSCUser();
@@ -147,9 +148,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                           show={'muted'}></TrackMutedIndicator>
                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                         {/* @ts-ignore */}
-                        <ParticipantName>
-                          <ParticipantTileActions />
-                        </ParticipantName>
+                        <ParticipantName>{!disableTileActions && <ParticipantTileActions />}</ParticipantName>
                       </>
                     ) : (
                       <>

@@ -120,19 +120,21 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
       </ScrollContainer>
       {showDrawerFooterContent && (
         <>
-          {Boolean(drawerContent || canCreateLiveStream) && <Divider />}
           <Box className={classes.drawerFooter}>
             {drawerFooterContent ? (
               drawerFooterContent
             ) : (
-              <Box className={classes.drawerFooterLiveStream}>
-                <CreateLiveStreamButton
-                  color="primary"
-                  className={classes.drawerFooterLiveStreamButton}
-                  fullWidth
-                  {...CreateLiveStreamButtonComponentProps}
-                />
-              </Box>
+              <>
+                {canCreateLiveStream && <Divider />}
+                <Box className={classes.drawerFooterLiveStream}>
+                  <CreateLiveStreamButton
+                    color="primary"
+                    className={classes.drawerFooterLiveStreamButton}
+                    fullWidth
+                    {...CreateLiveStreamButtonComponentProps}
+                  />
+                </Box>
+              </>
             )}
           </Box>
         </>

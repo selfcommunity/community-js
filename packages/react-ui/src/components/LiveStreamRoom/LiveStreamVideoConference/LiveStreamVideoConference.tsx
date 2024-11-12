@@ -3,16 +3,14 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
   Link,
-  SCContextType,
   SCPreferencesContextType,
   SCRoutingContextType,
   SCUserContextType,
-  useSCContext,
   useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCLiveStreamType} from '@selfcommunity/types/src/index';
+import {SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import {
@@ -38,6 +36,7 @@ import {defaultVideoOptions} from '../constants';
 import {FormattedMessage} from 'react-intl';
 import EventInviteButton from '../../EventInviteButton';
 import {VideoConference} from './VideoConference';
+import {useLiveStream} from './LiveStreamProvider';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -60,12 +59,6 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
    * @default null
    */
   className?: string;
-
-  /**
-   * Livestream Object
-   * @default null
-   */
-  liveStream?: SCLiveStreamType;
 
   /**
    * User choices
@@ -149,7 +142,6 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   });
   const {
     className,
-    liveStream,
     handleOnLeaveRoom,
     userChoices = defaultUserChoices,
     connectionDetails = {},
@@ -167,6 +159,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const {liveStream} = useLiveStream();
 
   // Passphrase
   // const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
@@ -181,22 +174,27 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
 
   const canUseAudio = useMemo(
     () =>
-      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
+      scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.muteParticipants)),
     [scUserContext, liveStream]
   );
   const canUseVideo = useMemo(
-    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
+    () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableVideo)),
     [scUserContext, liveStream]
   );
   const canUseChat = useMemo(
-    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableChat),
+    () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableChat)),
     [scUserContext, liveStream]
   );
   const canUseShareScreen = useMemo(
     () =>
-      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableShareScreen),
+      scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableShareScreen)),
     [scUserContext, liveStream]
   );
+  const speakerFocused = useMemo(
+    () => (scUserContext.user && liveStream && liveStream.settings.view === SCLiveStreamViewType.SPEAKER ? liveStream.host : null),
+    [scUserContext, liveStream]
+  );
+
   /* const liveStreamRoomMaxParticipants = useMemo(
 		() =>
 			preferences &&
@@ -335,7 +333,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
             <LayoutContextProvider>
               <VideoConference
                 chatMessageFormatter={formatChatMessageLinks}
-                speakerFocused={liveStream.host}
+                {...(speakerFocused && {speakerFocused: liveStream.host})}
                 {...VideoConferenceComponentProps}
                 disableMicrophone={!canUseAudio}
                 disableCamera={!canUseVideo}

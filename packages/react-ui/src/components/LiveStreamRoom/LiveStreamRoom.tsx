@@ -22,6 +22,7 @@ import {LiveStreamService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {PreJoin} from './LiveStreamVideoConference/PreJoin';
+import {LiveStreamContext} from './LiveStreamVideoConference/LiveStreamProvider';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -153,7 +154,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
     return {
       username: scUserContext.user?.username || '',
       videoEnabled: scLiveStream?.settings?.disableVideo === false,
-      audioEnabled: scLiveStream?.settings?.muteParticipant === false
+      audioEnabled: scLiveStream?.settings?.muteParticipants === false
     };
   }, [scUserContext.user, scLiveStream]);
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(presetConnectionDetails);
@@ -178,16 +179,6 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
       });
     }
   }, []);
-
-  const canUseAudio = useMemo(
-    () =>
-      (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.muteParticipant),
-    [scUserContext, liveStream]
-  );
-  const canUseVideo = useMemo(
-    () => (scUserContext.user && liveStream && liveStream.host.id === scUserContext.user.id) || (liveStream && !liveStream?.settings?.disableVideo),
-    [scUserContext, liveStream]
-  );
 
   // HANDLERS
   /**
@@ -221,7 +212,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   /**
    * User must be authenticated
    */
-  if ((!scLiveStream && !scUserContext.user) || !liveStreamEnabled) {
+  if (!scLiveStream || !scUserContext.user || !liveStreamEnabled) {
     return <CircularProgress />;
   }
 
@@ -245,7 +236,9 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               </Typography>
             )}
             <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading})}>
-              <PreJoin liveStream={scLiveStream} defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+              <LiveStreamContext.Provider value={{liveStream: scLiveStream}}>
+                <PreJoin defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+              </LiveStreamContext.Provider>
               {loading && (
                 <Box className={classes.prejoinLoader}>
                   <CircularProgress />
@@ -260,10 +253,10 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 scUserContext.user &&
                   scUserContext.user.id !== scLiveStream.host.id &&
                   scLiveStream &&
-                  (scLiveStream.settings?.muteParticipant || (scLiveStream && scLiveStream.settings?.disableVideo))
+                  (scLiveStream.settings?.muteParticipants || (scLiveStream && scLiveStream.settings?.disableVideo))
               ) && (
                 <Alert variant="filled" severity="error">
-                  {scLiveStream && scLiveStream.settings?.muteParticipant && (
+                  {scLiveStream && scLiveStream.settings?.muteParticipants && (
                     <>
                       The host of the live set your microphone as off
                       <br />
@@ -277,12 +270,13 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
           </>
         ) : (
           <Box className={classes.conference}>
-            <LiveStreamVideoConference
-              liveStream={scLiveStream}
-              connectionDetails={connectionDetails}
-              userChoices={preJoinChoices}
-              {...LiveStreamVideoConferenceComponentProps}
-            />
+            <LiveStreamContext.Provider value={{liveStream: scLiveStream}}>
+              <LiveStreamVideoConference
+                connectionDetails={connectionDetails}
+                userChoices={preJoinChoices}
+                {...LiveStreamVideoConferenceComponentProps}
+              />
+            </LiveStreamContext.Provider>
           </Box>
         )}
       </Box>
