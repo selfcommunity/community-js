@@ -91,7 +91,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         setGeoLocation(newValue);
         forwardGeolocationData({
           location,
-          geolocation: place.formatted_address,
+          geolocation: newValue.description.split(',')[0] + '. ' + place.formatted_address,
           lat: place.geometry.location.lat,
           lng: place.geometry.location.lng
         });
