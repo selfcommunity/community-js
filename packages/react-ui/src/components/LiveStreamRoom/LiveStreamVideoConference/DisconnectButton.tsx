@@ -13,7 +13,9 @@ export interface DisconnectButtonProps extends React.ButtonHTMLAttributes<HTMLBu
 export const DisconnectButton: (props: DisconnectButtonProps & React.RefAttributes<HTMLButtonElement>) => React.ReactNode =
   /* @__PURE__ */ React.forwardRef<HTMLButtonElement, DisconnectButtonProps>(function DisconnectButton(props: DisconnectButtonProps, ref) {
     const {buttonProps} = useDisconnectButton(props);
-    return (
+		console.log(buttonProps);
+
+		return (
       <button ref={ref} {...buttonProps}>
         {props.children}
       </button>

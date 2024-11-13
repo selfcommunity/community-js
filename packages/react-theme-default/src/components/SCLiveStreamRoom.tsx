@@ -8,6 +8,16 @@ const Component = {
       [`& .SCLiveStreamRoom-content`]: {
         width: '100%'
       },
+      [`& .SCLiveStreamRoom-end-conference-wrap`]: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'column',
+        [`& .SCLiveStreamRoom-btn-back-home`]: {
+          marginTop: theme.spacing(2)
+        }
+      },
       [`& .SCLiveStreamRoom-prejoin`]: {
         padding: theme.spacing(2),
         display: 'grid',

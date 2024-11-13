@@ -1,11 +1,10 @@
 import {SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {EventCreateParams, SCPaginatedResponse} from '../../types';
-import {LiveStreamCreateParams, LiveStreamSearchParams} from '../../types/liveStream';
+import {SCPaginatedResponse} from '../../types';
+import {LiveStreamCreateParams, LiveStreamRemoveParticipantParams, LiveStreamSearchParams} from '../../types/liveStream';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
-import {GroupApiClient} from '../group';
 
 export interface LiveStreamApiClientInterface {
   // LiveStreams search
@@ -20,14 +19,17 @@ export interface LiveStreamApiClientInterface {
   patch(id: number | string, data: SCLiveStreamType, config?: AxiosRequestConfig): Promise<SCLiveStreamType>;
   delete(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
+  // Close live room permanently
+  close(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType>;
+
   // LiveStream image change (bigger, big, medium, small)
   changeCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCLiveStreamType>;
 
-  // Action go to LiveStream
+  // Join LiveStream
   join(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamConnectionDetailsType>;
 
-  // Ban a user in an active room
-  removeUserFromRoom(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any>;
+  // Remove participant
+  removeParticipant(id: number | string, data: LiveStreamRemoveParticipantParams | FormData, config?: AxiosRequestConfig): Promise<any>;
 }
 /**
  * Contains all the endpoints needed to manage LiveStreams.
@@ -40,7 +42,7 @@ export class LiveStreamApiClient {
    */
   static search(params?: LiveStreamSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.SearchLiveStream.url({})}?${p.toString()}`, method: Endpoints.SearchEvents.method});
+    return apiRequest({...config, url: `${Endpoints.SearchLiveStream.url({})}?${p.toString()}`, method: Endpoints.SearchLiveStream.method});
   }
 
   /**
@@ -90,6 +92,15 @@ export class LiveStreamApiClient {
   }
 
   /**
+   * This endpoint allows to close permanently a room
+   * @param id
+   * @param config
+   */
+  static close(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
+    return apiRequest({...config, url: Endpoints.CloseLiveStream.url({id}), method: Endpoints.CloseLiveStream.method});
+  }
+
+  /**
    * This endpoint changes the LiveStream avatar
    * @param id
    * @param data
@@ -109,16 +120,17 @@ export class LiveStreamApiClient {
   }
 
   /**
-   * This endpoint ban user from the specified room.
+   * This endpoint remove participant from the specified live stream.
    * @param id
-   * @param user
+   * @param data
    * @param config
    */
-  static removeUserFromRoom(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static removeParticipant(id: number | string, data: LiveStreamRemoveParticipantParams | FormData, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
-      ...config,
-      url: Endpoints.RemoveUserFromRoom.url({id, user}),
-      method: Endpoints.RemoveUserFromRoom.method
+      url: Endpoints.RemoveParticipant.url({id}),
+      method: Endpoints.RemoveParticipant.method,
+      data,
+      ...config
     });
   }
 }
@@ -166,7 +178,7 @@ export default class LiveStreamService {
     return LiveStreamApiClient.getSpecificInfo(id, config);
   }
 
-  static async create(data: EventCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
+  static async create(data: LiveStreamCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
     return LiveStreamApiClient.create(data, config);
   }
   static async update(id: number | string, data: SCLiveStreamType, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
@@ -178,13 +190,16 @@ export default class LiveStreamService {
   static async delete(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return LiveStreamApiClient.delete(id, config);
   }
+  static async close(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
+    return LiveStreamApiClient.close(id, config);
+  }
   static async changeCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
     return LiveStreamApiClient.changeCover(id, data, config);
   }
   static async join(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamConnectionDetailsType> {
     return LiveStreamApiClient.join(id, config);
   }
-  static async removeUserFromGroup(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return LiveStreamApiClient.removeUserFromRoom(id, user, config);
+  static async removeParticipant(id: number | string, data: LiveStreamRemoveParticipantParams | FormData, config?: AxiosRequestConfig): Promise<any> {
+    return LiveStreamApiClient.removeParticipant(id, data, config);
   }
 }

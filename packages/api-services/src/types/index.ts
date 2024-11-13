@@ -33,7 +33,7 @@ import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContr
 import {ReactionParams} from './reaction';
 import {GroupCreateParams, GroupFeedParams} from './group';
 import {EventCreateParams, EventFeedParams, EventRelatedParams, EventSearchParams} from './event';
-import {LiveStreamCreateParams, LiveStreamSearchParams} from './liveStream';
+import {LiveStreamCreateParams, LiveStreamSearchParams, LiveStreamRemoveParticipantParams} from './liveStream';
 import {StartStepParams, OnBoardingStep} from './onBoarding';
 
 export {
@@ -101,6 +101,7 @@ export {
   EventSearchParams,
 	LiveStreamCreateParams,
 	LiveStreamSearchParams,
+	LiveStreamRemoveParticipantParams,
   StartStepParams,
   OnBoardingStep
 };

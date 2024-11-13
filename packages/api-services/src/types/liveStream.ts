@@ -44,3 +44,10 @@ export interface LiveStreamSearchParams extends BaseSearchParams {
    */
   slug?: string;
 }
+
+export interface LiveStreamRemoveParticipantParams {
+  /**
+   * Participant Id
+   */
+  participant_id?: string | number;
+}

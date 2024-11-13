@@ -990,6 +990,12 @@
   "ui.liveStreamForm.slug.error.maxLength": "Please shorten this text to 50 characters or fewer. Currently, it’s too long",
   "ui.liveStreamForm.description.error.maxLength": "Please shorten this text to 500 characters or fewer. Currently, it’s too long",
   "ui.liveStreamRoom.conference.end": "The livestream has ended!",
+  "ui.liveStreamRoom.conference.closed": "Unable to access live stream. The live has been closed and no longer available!",
+  "ui.liveStreamRoom.connect.error.liveStreamIsClosed": "Unable to access live stream. Live stream has been closed and no longer available!",
+  "ui.liveStreamRoom.connect.error.monthlyMinuteLimitReached": "Unable to access live broadcast. The limit of minutes available for live broadcasts has been exceeded.",
+  "ui.liveStreamRoom.connect.error.waitingHostToStartLiveStream": "The live has not yet been started by the organizer.",
+  "ui.liveStreamRoom.connect.error.participantLimitReached": "The live has reached the maximum number of participants.",
+  "ui.liveStreamRoom.connect.error.generic": "An error occurred while accessing the live stream. Please try again later!",
   "ui.liveStreamRoom.button.backHome": "Back to Home",
   "ui.liveStreamRoom.connecting": "Connecting...",
   "ui.liveStreamRoom.participantTileActions.banRoomUser": "Remove user"
