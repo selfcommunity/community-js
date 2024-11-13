@@ -241,7 +241,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         {canViewLiveTab && location === SCEventLocationType.LIVESTREAM && (
           <>
             <LiveStream template={SCLiveStreamTemplateType.SNIPPET} liveStream={liveStream} actions={<></>} />
-            <LiveStreamFormSettings settings={liveStream.settings} onChange={handleLiveStreamSettingsChange} />
+            <LiveStreamFormSettings settings={liveStream.settings || LIVESTREAM_DEFAULT_SETTINGS} onChange={handleLiveStreamSettingsChange} />
           </>
         )}
       </Box>
