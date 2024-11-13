@@ -170,7 +170,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     formData.append('title', field.title);
     formData.append('description', field.description);
     formData.append('slug', field.slug);
-    formData.append('settings', JSON.stringify({...field.settings, ...LIVESTREAM_DEFAULT_SETTINGS}));
+    formData.append('settings', JSON.stringify(field.settings));
 
     let liveStreamService: Promise<SCLiveStreamType>;
     if (liveStream) {
