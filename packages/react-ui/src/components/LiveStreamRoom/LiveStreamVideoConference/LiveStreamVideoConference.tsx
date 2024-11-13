@@ -14,27 +14,20 @@ import {SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import {
-  Chat,
   ConnectionState,
   formatChatMessageLinks,
-  GridLayout,
   LayoutContextProvider,
   LiveKitRoom,
   LiveKitRoomProps,
   LocalUserChoices,
-  ParticipantTile,
   VideoConferenceProps
-  // VideoConference
 } from '@livekit/components-react';
-import {ExternalE2EEKeyProvider, RoomOptions, VideoCodec, VideoPresets, Room, DeviceUnsupportedError, RoomConnectOptions} from 'livekit-client';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {VideoCodec, RoomConnectOptions} from 'livekit-client';
+import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
-import {decodePassphrase} from '../../../utils/liveStream';
-import RecordingIndicator from './RecordingIndicator';
 import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
 import {FormattedMessage} from 'react-intl';
-import EventInviteButton from '../../EventInviteButton';
 import {VideoConference} from './VideoConference';
 import {useLiveStream} from './LiveStreamProvider';
 
@@ -157,21 +150,13 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   const {liveStream} = useLiveStream();
 
-  // Passphrase
-  // const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  // const worker = typeof window !== 'undefined' && e2eePassphrase && new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
-  // const e2eeEnabled = !!(e2eePassphrase && worker);
-  // const keyProvider = new ExternalE2EEKeyProvider();
-  const [e2eeSetupComplete, setE2eeSetupComplete] = useState(true);
+  // STATE
   const [liveActive, setLiveActive] = useState(true);
   const [error, setError] = useState(null);
 
+  // PERMISSIONS
   const canUseAudio = useMemo(
     () =>
       scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.muteParticipants)),
@@ -181,10 +166,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableVideo)),
     [scUserContext, liveStream]
   );
-  const canUseChat = useMemo(
-    () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableChat)),
-    [scUserContext, liveStream]
-  );
+  const canUseChat = useMemo(() => scUserContext.user && liveStream && liveStream && !liveStream?.settings?.disableChat, [scUserContext, liveStream]);
   const canUseShareScreen = useMemo(
     () =>
       scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableShareScreen)),
@@ -195,86 +177,15 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     [scUserContext, liveStream]
   );
 
-  /* const liveStreamRoomMaxParticipants = useMemo(
-		() =>
-			preferences &&
-			SCPreferences.CONFIGURATIONS_LIVE_STREAM_MAX_PARTICIPANTS in preferences &&
-			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_MAX_PARTICIPANTS].value,
-		[preferences]
-	); */
+  console.log(canUseChat);
+	console.log(speakerFocused);
 
-  // Room options
-  /* const roomOptions = useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = options.codec ? options.codec : defaultVideoOptions.codec;
-    if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
-      videoCodec = undefined;
-    }
-    return {
-      // emptyTimeout: 3 * 60, // 3 minutes
-      // maxParticipants: liveStreamRoomMaxParticipants,
-      videoCaptureDefaults: {
-        deviceId: userChoices.videoDeviceId ?? undefined,
-        resolution: options.hq ? VideoPresets.h2160 : VideoPresets.h720
-      },
-      publishDefaults: {
-        dtx: false,
-        videoSimulcastLayers: options.hq ? [VideoPresets.h1080, VideoPresets.h720] : [VideoPresets.h540, VideoPresets.h216],
-        red: !e2eeEnabled,
-        videoCodec
-      },
-      audioCaptureDefaults: {
-        deviceId: userChoices.audioDeviceId ?? undefined
-      },
-      adaptiveStream: {pixelDensity: 'screen'},
-      dynacast: true,
-      e2ee: e2eeEnabled
-        ? {
-            keyProvider,
-            worker
-          }
-        : undefined
-    };
-  }, [liveStreamRoomMaxParticipants, userChoices, options.hq, options.codec]); */
-
-  // Create room - only initial
-  /* const room = useMemo(() => {
-    const room = new Room();
-    return new Room(roomOptions);
-  }, [liveStreamRoomMaxParticipants]); */
-
+  // CONNECT OPTIONS
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true
     };
   }, []);
-
-  /* useEffect(() => {
-    if (room) {
-      if (e2eeEnabled) {
-        keyProvider
-          .setKey(decodePassphrase(e2eePassphrase))
-          .then(() => {
-            room.setE2EEEnabled(true).catch((e) => {
-              if (e instanceof DeviceUnsupportedError) {
-                alert(
-                  `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`
-                );
-                console.error(e);
-              } else {
-                throw e;
-              }
-            });
-          })
-          .then(() => {
-            setE2eeSetupComplete(true);
-            setLiveActive(true);
-          });
-      } else {
-        setE2eeSetupComplete(true);
-        setLiveActive(true);
-      }
-    }
-  }, [e2eeEnabled, room, e2eePassphrase]); */
 
   // HANDLERS
   /**
@@ -320,7 +231,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore */}
           <LiveKitRoom
-            connect={Boolean(e2eeSetupComplete && liveActive)}
+            connect={Boolean(liveActive)}
             token={connectionDetails['participantToken']}
             serverUrl={connectionDetails['serverUrl']}
             connectOptions={connectOptions}
@@ -341,7 +252,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
                 disableShareScreen={!canUseShareScreen}
               />
               {/* <RecordingIndicator /> */}
-              {/*<EventInviteButton eventId={129} />*/}
+              {/* <EventInviteButton eventId={129} /> */}
               {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
               {/* @ts-ignore */}
               <ConnectionState />

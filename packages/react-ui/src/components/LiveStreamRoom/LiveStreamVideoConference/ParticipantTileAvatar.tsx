@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box} from '@mui/material';
@@ -26,7 +26,7 @@ const Root = styled(Box, {
   }
 }));
 
-export interface ParticipantTileProps {
+export interface ParticipantTileAvatarProps {
   className?: string;
   /**
    * User Object
@@ -41,9 +41,9 @@ export interface ParticipantTileProps {
   participant?: any;
 }
 
-export default function UserAvatar(inProps: ParticipantTileProps): JSX.Element {
+export default function ParticipantTileAvatar(inProps: ParticipantTileAvatarProps): JSX.Element {
   // PROPS
-  const props: ParticipantTileProps = useThemeProps({
+  const props: ParticipantTileAvatarProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -52,15 +52,20 @@ export default function UserAvatar(inProps: ParticipantTileProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
 
-	return (
+	// AVATAR
+  const avatar = useMemo(() => {
+    if (user) {
+      return <img src={`${user.avatar}`} />;
+    }
+    if (participant) {
+      return <img src={`${scContext.settings.portal}/api/v2/avatar/${participant.identity}`} />;
+    }
+    return <ParticipantPlaceholder />;
+  }, [user, participant]);
+
+  return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {user ? (
-        <img src={`${user.avatar}`} />
-      ) : participant ? (
-        <img src={`${scContext.settings.portal}/api/v2/avatar/${participant.identity}`} />
-      ) : (
-        <ParticipantPlaceholder />
-      )}
+      {avatar}
     </Root>
   );
 }

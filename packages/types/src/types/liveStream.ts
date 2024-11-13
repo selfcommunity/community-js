@@ -31,7 +31,7 @@ export interface SCLiveStreamSettingsType {
   disableVideo?: boolean;
   disableChat?: boolean;
   disableShareScreen?: boolean;
-  hideParticipantList?: boolean;
+  hideParticipantsList?: boolean;
   automaticallyNotifyFollowers?: boolean;
   view?: SCLiveStreamViewType;
 }
