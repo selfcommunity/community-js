@@ -21,6 +21,7 @@ import {
 import {SCUserType} from '@selfcommunity/types';
 import {ParticipantTile} from './ParticipantTile';
 import {ControlBar} from './ControlBar';
+import {useEffect} from 'react';
 
 
 export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
