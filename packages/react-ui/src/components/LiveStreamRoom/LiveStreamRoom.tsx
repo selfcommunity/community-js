@@ -258,11 +258,15 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 <Alert variant="filled" severity="error">
                   {scLiveStream && scLiveStream.settings?.muteParticipants && (
                     <>
-                      The host of the live set your microphone as off
+                      <FormattedMessage id="ui.liveStreamRoom.hostDisableMicrophone" defaultMessage="ui.liveStreamRoom.hostDisableMicrophone" />
                       <br />
                     </>
                   )}
-                  {scLiveStream && scLiveStream.settings?.disableVideo && <>The host of the live set your camera as off</>}
+                  {scLiveStream && scLiveStream.settings?.disableVideo && (
+                    <>
+                      <FormattedMessage id="ui.liveStreamRoom.hostDisableVideo" defaultMessage="ui.liveStreamRoom.hostDisableVideo" />
+                    </>
+                  )}
                 </Alert>
               )}
               {endPrejoinContent}

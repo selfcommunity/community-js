@@ -124,11 +124,11 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
-          checked={Boolean(settings?.hideParticipantList)}
-          onChange={() => onChange({...settings, ...{['hideParticipantList']: !settings?.hideParticipantList}})}
+          checked={Boolean(settings?.hideParticipantsList)}
+          onChange={() => onChange({...settings, ...{['hideParticipantsList']: !settings?.hideParticipantsList}})}
         />
         <Typography className={classes.switchLabel}>
-          <FormattedMessage id="ui.liveStreamForm.hideParticipantList" defaultMessage="ui.liveStreamForm.hideParticipantList" />
+          <FormattedMessage id="ui.liveStreamForm.hideParticipantsList" defaultMessage="ui.liveStreamForm.hideParticipantsList" />
         </Typography>
       </Stack>
       <Stack direction="row" spacing={1} alignItems="center">

@@ -20,16 +20,7 @@ import {
   useTheme
 } from '@mui/material';
 import {Endpoints, http, HttpResponse, LiveStreamApiClient} from '@selfcommunity/api-services';
-import {
-  SCContext,
-  SCContextType,
-  SCRoutingContextType,
-  SCThemeType,
-  SCUserContext,
-  SCUserContextType,
-  UserUtils,
-  useSCRouting
-} from '@selfcommunity/react-core';
+import {SCContext, SCContextType, SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {BAN_ROOM_USER} from './constants';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import {useEnsureParticipant} from '@livekit/components-react';
@@ -118,8 +109,6 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scContext: SCContextType = useContext(SCContext);
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const scUserId = scUserContext.user ? scUserContext.user.id : null;
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
   const p = useEnsureParticipant(participant);
   const {liveStream} = useLiveStream();
@@ -161,16 +150,15 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   }
 
   /**
-   * Perform delete contribution
+   * Perform ban participant
    */
   const performBanParticipant = useMemo(
-    () => () => {
-      return LiveStreamApiClient.removeUserFromRoom(liveStream.id, p.identity).then((res: HttpResponse<any>) => {
-        if (res.status >= 300) {
-          return Promise.reject(res);
-        }
-        return Promise.resolve(res.data);
-      });
+    () => async () => {
+      const res = await LiveStreamApiClient.removeUserFromRoom(liveStream.id, p.identity);
+      if (res.status >= 300) {
+        return Promise.reject(res);
+      }
+      return await Promise.resolve(res.data);
     },
     [p]
   );

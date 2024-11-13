@@ -4,7 +4,7 @@ export const PREFIX = 'SCLiveStreamForm';
 
 export const LIVESTREAM_DEFAULT_SETTINGS = {
   muteParticipants: true,
-  hideParticipantList: false,
+  hideParticipantsList: false,
   automaticallyNotifyFollowers: false,
   disableVideo: true,
   disableChat: false,

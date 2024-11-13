@@ -7,7 +7,6 @@ import {
   CarouselLayout,
   Chat,
   ConnectionStateToast,
-  ControlBar,
   FocusLayout,
   FocusLayoutContainer,
   GridLayout,
@@ -15,17 +14,15 @@ import {
   MessageFormatter,
   RoomAudioRenderer,
   useCreateLayoutContext,
-  useLocalParticipant,
   useParticipants,
   usePinnedTracks,
   useTracks
 } from '@livekit/components-react';
 import {SCUserType} from '@selfcommunity/types';
 import {ParticipantTile} from './ParticipantTile';
+import {ControlBar} from './ControlBar';
 
-/**
- * @public
- */
+
 export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
   chatMessageFormatter?: MessageFormatter;
   chatMessageEncoder?: MessageEncoder;
@@ -37,7 +34,7 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
   disableMicrophone?: boolean;
   disableCamera?: boolean;
   disableShareScreen?: boolean;
-  hideParticipantList?: boolean;
+  hideParticipantsList?: boolean;
   showSettings?: boolean;
 }
 
@@ -46,18 +43,6 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
  * It provides functionality such as focusing on one participant, grid view with pagination to handle large numbers
  * of participants, basic non-persistent chat, screen sharing, and more.
  *
- * @remarks
- * The component is implemented with other LiveKit components like `FocusContextProvider`,
- * `GridLayout`, `ControlBar`, `FocusLayoutContainer` and `FocusLayout`.
- * You can use these components as a starting point for your own custom video conferencing application.
- *
- * @example
- * ```tsx
- * <LiveKitRoom>
- *   <VideoConference />
- * <LiveKitRoom>
- * ```
- * @public
  */
 export function VideoConference({
   chatMessageFormatter,
@@ -69,7 +54,7 @@ export function VideoConference({
   disableMicrophone = false,
   disableCamera = false,
   disableShareScreen = false,
-  hideParticipantList = false,
+  hideParticipantsList = false,
   showSettings,
   ...props
 }: VideoConferenceProps) {
@@ -88,7 +73,6 @@ export function VideoConference({
     {updateOnlyOn: [RoomEvent.ActiveSpeakersChanged], onlySubscribed: false}
   );
 
-  const {localParticipant} = useLocalParticipant();
   const participants = useParticipants();
 
   const widgetUpdate = (state: WidgetState) => {
@@ -168,7 +152,7 @@ export function VideoConference({
             ) : (
               <div className="lk-focus-layout-wrapper">
                 <FocusLayoutContainer>
-                  {!hideParticipantList && (
+                  {!hideParticipantsList && (
                     <CarouselLayout tracks={carouselTracks}>
                       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                       {/* @ts-ignore */}
@@ -181,14 +165,12 @@ export function VideoConference({
             )}
             <ControlBar
               controls={{
-                ...(localParticipant.name !== speakerFocused.username
-                  ? {
-                      chat: !disableChat,
-                      microphone: !disableMicrophone,
-                      camera: !disableCamera,
-                      screenShare: !disableShareScreen
-                    }
-                  : {}),
+                ...{
+                  chat: !disableChat,
+                  microphone: !disableMicrophone,
+                  camera: !disableCamera,
+                  screenShare: !disableShareScreen
+                },
                 settings: !!SettingsComponent
               }}
             />

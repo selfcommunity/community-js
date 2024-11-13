@@ -7,7 +7,6 @@ import {defaultUserChoices} from '@livekit/components-core';
 import {MediaDeviceMenu, useMediaDevices, usePersistentUserChoices} from '@livekit/components-react';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import ParticipantTileAvatar from './ParticipantTileAvatar';
-import {SCLiveStreamType} from '@selfcommunity/types';
 import {useMemo} from 'react';
 import {TrackToggle} from './TrackToggle';
 import {useLiveStream} from './LiveStreamProvider';
