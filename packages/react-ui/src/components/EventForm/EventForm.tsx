@@ -301,7 +301,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('live_stream_settings', '');
     } else if (field.location === SCEventLocationType.LIVESTREAM) {
       formData.append('link', '');
-      formData.append('live_stream_settings', JSON.stringify(field.liveStreamSettings));
+      formData.append('live_stream_settings', JSON.stringify({...LIVESTREAM_DEFAULT_SETTINGS, ...field.liveStreamSettings}));
     } else if (field.location === SCEventLocationType.PERSON) {
       formData.append('geolocation', field.geolocation);
       formData.append('geolocation_lat', field.lat.toString());

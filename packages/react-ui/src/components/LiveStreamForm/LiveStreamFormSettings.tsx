@@ -5,6 +5,7 @@ import {SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/typ
 import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import {LIVESTREAM_DEFAULT_SETTINGS} from './constants';
 
 export const PREFIX = 'SCLiveStreamFormSettings';
 
@@ -74,7 +75,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
     props: inProps,
     name: PREFIX
   });
-  const {className, settings = {}, onChange, ...rest} = props;
+  const {className, settings = LIVESTREAM_DEFAULT_SETTINGS, onChange, ...rest} = props;
 
   /**
    * Renders root object
@@ -85,7 +86,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.muteParticipants)}
-          onChange={() => onChange({...settings, ...{['muteParticipants']: !settings?.muteParticipants}})}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['muteParticipants']: !settings?.muteParticipants}})}
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.muteParticipants" defaultMessage="ui.liveStreamForm.muteParticipants" />
@@ -95,7 +96,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.disableVideo)}
-          onChange={() => onChange({...settings, ...{['disableVideo']: !settings?.disableVideo}})}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableVideo']: !settings?.disableVideo}})}
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.disableVideo" defaultMessage="ui.liveStreamForm.disableVideo" />
@@ -105,7 +106,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.disableChat)}
-          onChange={() => onChange({...settings, ...{['disableChat']: !settings?.disableChat}})}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableChat']: !settings?.disableChat}})}
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.disableChat" defaultMessage="ui.liveStreamForm.disableChat" />
@@ -115,7 +116,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.disableShareScreen)}
-          onChange={() => onChange({...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.disableShareScreen" defaultMessage="ui.liveStreamForm.disableShareScreen" />
@@ -125,7 +126,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.hideParticipantsList)}
-          onChange={() => onChange({...settings, ...{['hideParticipantsList']: !settings?.hideParticipantsList}})}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['hideParticipantsList']: !settings?.hideParticipantsList}})}
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.hideParticipantsList" defaultMessage="ui.liveStreamForm.hideParticipantsList" />
@@ -135,7 +136,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.automaticallyNotifyFollowers)}
-          onChange={() => onChange({...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})}
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.automaticallyNotifyFollowers" defaultMessage="ui.liveStreamForm.automaticallyNotifyFollowers" />
@@ -151,7 +152,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           labelId="viewLabel"
           fullWidth
           value={settings?.view ?? SCLiveStreamViewType.SPEAKER}
-          onChange={(e) => onChange({...settings, ...{['view']: e.target.value}})}
+          onChange={(e) => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['view']: e.target.value}})}
           displayEmpty
           renderValue={(selected) => {
             return (
