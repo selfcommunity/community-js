@@ -169,7 +169,13 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
           <LiveStreamSelector liveSelected={liveType} onLiveSelected={handleLiveTypeSelected} onNext={handleLiveTypeSelectedNext} />
         )}
         {step === CreateLiveStreamStep.CREATE_LIVE && (
-          <>{liveType === LiveStreamType.EVENT_LIVE ? <EventForm presetLocation={SCEventLocationType.LIVESTREAM} onSuccess={handleSubmit} /> : <LiveStreamForm onSuccess={handleSubmit} />}</>
+          <>
+            {liveType === LiveStreamType.EVENT_LIVE ? (
+              <EventForm presetLocation={SCEventLocationType.LIVESTREAM} onSuccess={handleSubmit} />
+            ) : (
+              <LiveStreamForm onSuccess={handleSubmit} />
+            )}
+          </>
         )}
       </Box>
     </Root>
