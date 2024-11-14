@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.5-alpha.0...@selfcommunity/react-templates@0.4.5-alpha.1) (2024-11-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.4...@selfcommunity/react-templates@0.4.5-alpha.0) (2024-11-13)
+
+
+### Bug Fixes
+
+* fixed FeedObjectDetail related feed objs. Linear issue: https://linear.app/quentral/issue/QUE-944/i-post-correlati-non-si-aggiornano ([a8c9e2d](https://github.com/selfcommunity/community-js/commit/a8c9e2d8f447b69ca572eca1dcc180795e10e743))
+
+
+
+
+
 ## [0.4.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.4-alpha.6...@selfcommunity/react-templates@0.4.4) (2024-11-12)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

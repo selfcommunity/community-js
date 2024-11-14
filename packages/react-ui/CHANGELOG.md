@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.0...@selfcommunity/react-ui@0.10.2-alpha.1) (2024-11-14)
+
+
+### Bug Fixes
+
+* fixed avatar's width to safari ([106f254](https://github.com/selfcommunity/community-js/commit/106f254b1e5e86f076ee50b95b07b08a806982a5))
+
+
+
+
+
+## [0.10.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1...@selfcommunity/react-ui@0.10.2-alpha.0) (2024-11-13)
+
+
+### Bug Fixes
+
+* fixed search autocomplete results. Linear issue: https://linear.app/quentral/issue/QUE-938/suggest-ricerca-utenti-senza-real-name ([3bfea64](https://github.com/selfcommunity/community-js/commit/3bfea64411ebf59c1bda05acdcb09a556c299c55))
+
+
+### Performance Improvements
+
+* added location name when saving event details. Linear issue: https://linear.app/quentral/issue/QUE-941/la-location-non-salva-il-posto-selezionato ([a417be5](https://github.com/selfcommunity/community-js/commit/a417be5d64cd495bfffa193fdedb6cd284a6d528))
+
+
+
+
+
 ## [0.10.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.6...@selfcommunity/react-ui@0.10.1) (2024-11-12)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.0...@selfcommunity/react-theme-default@0.4.2-alpha.1) (2024-11-14)
+
+
+### Bug Fixes
+
+* fixed avatar's width to safari ([106f254](https://github.com/selfcommunity/community-js/commit/106f254b1e5e86f076ee50b95b07b08a806982a5))
+
+
+
+
+
+## [0.4.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.1...@selfcommunity/react-theme-default@0.4.2-alpha.0) (2024-11-13)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.4.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.1-alpha.6...@selfcommunity/react-theme-default@0.4.1) (2024-11-12)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
