@@ -21,7 +21,6 @@ const PREFIX = 'SCEventParticipantsButton';
 
 const classes = {
   root: `${PREFIX}-root`,
-  avatar: `${PREFIX}-avatar`,
   participants: `${PREFIX}-participants`,
   dialogRoot: `${PREFIX}-dialog-root`,
   infiniteScroll: `${PREFIX}-infinite-scroll`,
@@ -203,7 +202,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
         ) : (
           <AvatarGroup total={followers.length} renderSurplus={renderSurplus}>
             {followers.map((c: SCUserType) => (
-              <Avatar key={c.id} alt={c.username} src={c.avatar} className={classes.avatar} />
+              <Avatar key={c.id} alt={c.username} src={c.avatar} />
             ))}
           </AvatarGroup>
         )}

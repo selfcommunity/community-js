@@ -4,19 +4,7 @@ const Component = {
       padding: theme.spacing(),
 
       '& .MuiAvatarGroup-root': {
-        '& .MuiAvatar-root': {
-          '&:first-of-type': {
-            width: subscribers > 3 ? 'auto' : theme.selfcommunity.user.avatar.sizeSmall
-          },
-
-          '&:not(:first-of-type)': {
-            width: theme.selfcommunity.user.avatar.sizeSmall
-          },
-
-          height: theme.selfcommunity.user.avatar.sizeSmall,
-          border: `1px solid ${theme.palette.common.white}`,
-          fontSize: '0.7rem',
-
+        '&:not(.SCAvatarGroupSkeleton-root) .MuiAvatar-root': {
           '&.MuiAvatar-colorDefault': {
             marginLeft: 0,
             backgroundColor: 'transparent',
@@ -24,6 +12,20 @@ const Component = {
             border: '0 none',
             borderRadius: 0,
             padding: 1
+          }
+        },
+
+        '& .MuiAvatar-root': {
+          height: theme.selfcommunity.user.avatar.sizeSmall,
+          border: `1px solid ${theme.palette.common.white}`,
+          fontSize: '0.7rem',
+
+          '&:first-of-type': {
+            width: subscribers > 3 ? 'auto' : theme.selfcommunity.user.avatar.sizeSmall
+          },
+
+          '&:not(:first-of-type)': {
+            width: theme.selfcommunity.user.avatar.sizeSmall
           }
         }
       }
