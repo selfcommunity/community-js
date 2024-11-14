@@ -12,7 +12,6 @@ import {
 } from '@selfcommunity/react-core';
 import {
   SCFeatureName,
-  SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamConnectionDetailsResponseErrorType,
   SCLiveStreamConnectionDetailsType,
   SCLiveStreamType
@@ -196,21 +195,27 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
         setError(null);
         toggleAttrDisabledPrejoinActions(true);
         LiveStreamService.join(scLiveStream.id)
-          .then((data: SCLiveStreamConnectionDetailsType | SCLiveStreamConnectionDetailsResponseErrorType) => {
+          .then((data: SCLiveStreamConnectionDetailsType) => {
             setPreJoinChoices(values);
-            setConnectionDetails({...(data as SCLiveStreamConnectionDetailsType), participantName: scUserContext.user.username});
+            setConnectionDetails({...data, participantName: scUserContext.user.username});
             toggleAttrDisabledPrejoinActions(false);
             setLoading(false);
           })
           .catch((error) => {
             Logger.error(SCOPE_SC_UI, error);
-            if (error.response && error.response.data && typeof error.response.data === 'object' && error.response.data.error) {
+            if (
+              error.response &&
+              error.response.data &&
+              typeof error.response.data === 'object' &&
+              error.response.data.errors &&
+              error.response.data.errors.length
+            ) {
               let _msg = intl.formatMessage({
                 id: 'ui.liveStreamRoom.connect.error.generic',
                 defaultMessage: 'ui.liveStreamRoom.connect.error.generic'
               });
-              if (error.response.data.error.code) {
-                const _error = `ui.liveStreamRoom.connect.error.${camelCase(error.response.data.error.code)}`;
+              if (error.response.data.errors[0].code) {
+                const _error = `ui.liveStreamRoom.connect.error.${camelCase(error.response.data.errors[0].code)}`;
                 _msg = intl.formatMessage({id: _error, defaultMessage: _error});
               }
               setError(_msg);

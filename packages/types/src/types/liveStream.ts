@@ -33,7 +33,7 @@ export enum SCLiveStreamConnectionDetailsErrorType {
 }
 
 export interface SCLiveStreamConnectionDetailsResponseErrorType {
-  error: {code: SCLiveStreamConnectionDetailsErrorType};
+  errors: [{code: SCLiveStreamConnectionDetailsErrorType}];
 }
 
 export interface SCLiveStreamSettingsType {
