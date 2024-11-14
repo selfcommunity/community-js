@@ -1,22 +1,22 @@
-import { Avatar, AvatarGroup, Button, List, ListItem, Typography, useTheme } from '@mui/material';
-import { ButtonProps } from '@mui/material/Button/Button';
-import { styled } from '@mui/material/styles';
+import {Avatar, AvatarGroup, Button, List, ListItem, Typography, useTheme} from '@mui/material';
+import {ButtonProps} from '@mui/material/Button/Button';
+import {styled} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useThemeProps } from '@mui/system';
-import { CategoryService, Endpoints, http, HttpResponse, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCThemeType, useSCFetchCategory } from '@selfcommunity/react-core';
-import { SCCategoryType, SCUserType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {useThemeProps} from '@mui/system';
+import {CategoryService, Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCThemeType, useSCFetchCategory} from '@selfcommunity/react-core';
+import {SCCategoryType, SCUserType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import { numberFormatter } from '../../utils/buttonCounters';
+import {numberFormatter} from '../../utils/buttonCounters';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
-import User, { UserSkeleton } from '../User';
+import User, {UserSkeleton} from '../User';
 
 const PREFIX = 'SCCategoryFollowersButton';
 
@@ -29,13 +29,14 @@ const classes = {
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root,
+  shouldForwardProp: (prop) => prop !== 'followers'
 })(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
+  slot: 'DialogRoot',
+  overridesResolver: (_props, styles) => styles.dialogRoot
 })(() => ({}));
 
 export interface CategoryFollowersButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled'>> {
@@ -90,7 +91,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
     name: PREFIX
   });
 
-  const { className, categoryId, category, DialogProps = {}, ...rest } = props;
+  const {className, categoryId, category, DialogProps = {}, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -100,7 +101,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-  const { scCategory } = useSCFetchCategory({ id: categoryId, category });
+  const {scCategory} = useSCFetchCategory({id: categoryId, category});
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
@@ -108,7 +109,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
       return;
     }
     if (followers.length === 0) {
-      CategoryService.getCategoryFollowers(scCategory.id, { limit: 3 }).then((res: SCPaginatedResponse<SCUserType>) => {
+      CategoryService.getCategoryFollowers(scCategory.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
         setFollowers([...res.results]);
         setOffset(3);
         setLoading(false);
@@ -121,7 +122,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
   useEffect(() => {
     if (open && offset !== null) {
       setLoading(true);
-      CategoryService.getCategoryFollowers(scCategory.id, { offset, limit: 20 }).then((res: SCPaginatedResponse<SCUserType>) => {
+      CategoryService.getCategoryFollowers(scCategory.id, {offset, limit: 20}).then((res: SCPaginatedResponse<SCUserType>) => {
         setFollowers([...(offset === 0 ? [] : followers), ...res.results]);
         setNext(res.next);
         setLoading(false);
@@ -175,6 +176,8 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
         className={classNames(classes.root, className)}
         onClick={handleToggleDialogOpen}
         disabled={loading || !scCategory || scCategory.followers_counter === 0}
+        // @ts-expect-error this is needed to use followers into SCCategoryFollowersButton
+        followers={scCategory?.followers_counter}
         {...rest}>
         {loading || !scCategory ? (
           <AvatarGroupSkeleton {...rest} />
@@ -193,7 +196,7 @@ export default function CategoryFollowersButton(inProps: CategoryFollowersButton
             <FormattedMessage
               defaultMessage="ui.categoryFollowersButton.dialogTitle"
               id="ui.categoryFollowersButton.dialogTitle"
-              values={{ total: scCategory.followers_counter }}
+              values={{total: scCategory.followers_counter}}
             />
           }
           onClose={handleToggleDialogOpen}

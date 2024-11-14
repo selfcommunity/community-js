@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme, followers}) => ({
       gap: theme.spacing(1),
       marginTop: '0 !important',
       minWidth: 'auto',
@@ -10,7 +10,14 @@ const Component = {
       },
 
       '& .MuiAvatarGroup-avatar': {
-        width: 'auto',
+        '&:first-of-type': {
+          width: followers > 3 ? 'auto' : theme.selfcommunity.user.avatar.sizeSmall
+        },
+
+        '&:not(:first-of-type)': {
+          width: theme.selfcommunity.user.avatar.sizeSmall
+        },
+
         height: theme.selfcommunity.user.avatar.sizeSmall,
         border: `1px solid ${theme.palette.common.white}`,
         fontSize: '0.7rem',
@@ -29,7 +36,7 @@ const Component = {
         color: theme.palette.grey[600]
       }
     }),
-    dialogRoot: ({ theme }) => ({
+    dialogRoot: ({theme}) => ({
       '& .SCEventParticipantsButton-infinite-scroll': {
         height: '400px !important',
 
