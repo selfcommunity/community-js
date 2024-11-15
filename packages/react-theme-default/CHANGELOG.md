@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.2...@selfcommunity/react-theme-default@0.4.2-alpha.3) (2024-11-15)
+
+
+### Bug Fixes
+
+* fixed some ui bugs on events ([7e3d4a9](https://github.com/selfcommunity/community-js/commit/7e3d4a96169b50e57ef6d9cb03de188a38387515))
+
+
+
+
+
 ## [0.4.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.1...@selfcommunity/react-theme-default@0.4.2-alpha.2) (2024-11-15)
 
 
