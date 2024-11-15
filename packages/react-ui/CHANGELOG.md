@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.1...@selfcommunity/react-ui@0.10.2-alpha.2) (2024-11-15)
+
+
+### Bug Fixes
+
+* fixed appearance color change. Linear issue: https://linear.app/quentral/issue/QUE-947/modifica-colori-del-tema-dovrebbe-lanciare-un-solo-update ([5be4687](https://github.com/selfcommunity/community-js/commit/5be468752705beb7c6a22d800dc18747d4867a92))
+* fixed skeleton's css; fixed bug on subscribers_counter ([9302d22](https://github.com/selfcommunity/community-js/commit/9302d22de355a99ad9fc0426cc7ef7a0432dea00))
+* update react-ui deps -> react-lazyload ([5e37f63](https://github.com/selfcommunity/community-js/commit/5e37f63d092ed6f14e1f7c6808ef86ee4e490c83))
+
+
+
+
+
 ## [0.10.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.0...@selfcommunity/react-ui@0.10.2-alpha.1) (2024-11-14)
 
 

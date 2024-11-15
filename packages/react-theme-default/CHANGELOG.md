@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.1...@selfcommunity/react-theme-default@0.4.2-alpha.2) (2024-11-15)
+
+
+### Bug Fixes
+
+* fixed skeleton's css; fixed bug on subscribers_counter ([9302d22](https://github.com/selfcommunity/community-js/commit/9302d22de355a99ad9fc0426cc7ef7a0432dea00))
+
+
+
+
+
 ## [0.4.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.0...@selfcommunity/react-theme-default@0.4.2-alpha.1) (2024-11-14)
 
 
