@@ -998,5 +998,7 @@
   "ui.liveStreamRoom.connect.error.generic": "Si è verificato un error durante l'accesso al live. Riprova più tardi!",
   "ui.liveStreamRoom.button.backHome": "Vai alla home",
   "ui.liveStreamRoom.connecting": "Connessione in corso...",
-  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi l'utente dal live"
+  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi l'utente dal live",
+  "ui.liveStreamRoom.live.terminate": "Sei sicuro di voler uscire dal live?",
+  "ui.liveStreamRoom.live.terminatePermanently": "Imposta questo live come chiuso definitivamente"
 }

@@ -260,7 +260,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
    */
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
-      {!scLiveStream.closed_at_by_host ? (
+      {scLiveStream.closed_at_by_host ? (
         <Box className={classes.endConferenceWrap}>
           <Typography variant="h5">
             <FormattedMessage id="ui.liveStreamRoom.conference.closed" defaultMessage="ui.liveStreamRoom.conference.closed" />

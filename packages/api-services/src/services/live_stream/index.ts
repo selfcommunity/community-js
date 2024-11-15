@@ -96,7 +96,7 @@ export class LiveStreamApiClient {
    * @param id
    * @param config
    */
-  static close(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
+  static close(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.CloseLiveStream.url({id}), method: Endpoints.CloseLiveStream.method});
   }
 
