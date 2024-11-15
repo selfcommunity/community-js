@@ -176,6 +176,11 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     () => (scUserContext.user && liveStream && liveStream.settings.view === SCLiveStreamViewType.SPEAKER ? liveStream.host : null),
     [scUserContext, liveStream]
   );
+  const hideParticipantsList = useMemo(
+    () =>
+      scUserContext.user && liveStream && liveStream.host.id !== scUserContext.user.id && liveStream && !liveStream?.settings?.hideParticipantList,
+    [scUserContext, liveStream]
+  );
 
   // CONNECT OPTIONS
   const connectOptions = useMemo((): RoomConnectOptions => {
@@ -247,6 +252,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
                 disableCamera={!canUseVideo}
                 disableChat={!canUseChat}
                 disableShareScreen={!canUseShareScreen}
+                hideParticipantsList={hideParticipantsList}
               />
               {/* <RecordingIndicator /> */}
               {/* <EventInviteButton eventId={129} /> */}
