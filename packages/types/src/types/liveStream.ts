@@ -4,6 +4,7 @@ export interface SCLiveStreamType {
   id?: number;
   title: string;
   description?: string;
+  created_at?: Date | string;
   last_started_at?: Date | string;
   last_finished_at?: Date | string;
   closed_at_by_host?: Date | string;

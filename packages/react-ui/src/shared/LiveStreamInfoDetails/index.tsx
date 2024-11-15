@@ -74,7 +74,7 @@ export default function LiveStreamInfoDetails(inProps: LiveStreamInfoDetailsProp
       {beforeDateInfo}
       {hasDateInfo && (
         <Stack className={classes.iconTextWrapper}>
-          {!hideDateIcon && <Icon fontSize="small">{scLiveStream.closed_at ? 'calendar_off' : 'CalendarIcon'}</Icon>}
+          {!hideDateIcon && <Icon fontSize="small">{scLiveStream.closed_at_by_host ? 'calendar_off' : 'CalendarIcon'}</Icon>}
           <Typography variant="body1">
             <FormattedMessage
               id="ui.eventInfoDetails.date.startEndTime"
@@ -90,7 +90,7 @@ export default function LiveStreamInfoDetails(inProps: LiveStreamInfoDetailsProp
               }}
             />
           </Typography>
-          {hasInProgress && scLiveStream.running && (
+          {hasInProgress && scLiveStream.last_started_at && (
             <Tooltip title={<FormattedMessage id="ui.eventInfoDetails.inProgress" defaultMessage="ui.eventInfoDetails.inProgress" />}>
               <Box className={classes.inProgress} />
             </Tooltip>
