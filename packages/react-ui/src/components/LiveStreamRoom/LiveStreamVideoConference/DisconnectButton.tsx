@@ -3,10 +3,10 @@ import {useDisconnectButton} from '@livekit/components-react';
 import {useCallback, useMemo, useState} from 'react';
 import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {useLiveStream} from './LiveStreamProvider';
-import {ConfirmDialog} from '@selfcommunity/react-ui';
 import {FormattedMessage} from 'react-intl';
 import {Checkbox, FormControlLabel, FormGroup} from '@mui/material';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 /** @public */
 export interface DisconnectButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
