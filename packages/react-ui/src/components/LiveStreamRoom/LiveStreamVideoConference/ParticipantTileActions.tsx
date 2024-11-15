@@ -154,7 +154,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
    */
   const performBanParticipant = useMemo(
     () => async () => {
-      const res = await LiveStreamApiClient.removeUserFromRoom(liveStream.id, p.identity);
+      const res = await LiveStreamApiClient.removeParticipant(liveStream.id, {participant_id: p.identity});
       if (res.status >= 300) {
         return Promise.reject(res);
       }

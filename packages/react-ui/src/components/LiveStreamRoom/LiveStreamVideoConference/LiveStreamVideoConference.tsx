@@ -177,9 +177,6 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     [scUserContext, liveStream]
   );
 
-  console.log(canUseChat);
-	console.log(speakerFocused);
-
   // CONNECT OPTIONS
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {

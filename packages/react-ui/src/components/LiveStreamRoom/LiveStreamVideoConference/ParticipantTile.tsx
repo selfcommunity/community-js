@@ -25,6 +25,8 @@ import {
 import ParticipantTileAvatar from './ParticipantTileAvatar';
 import ParticipantTileActions from './ParticipantTileActions';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import liveStream from '../../LiveStream';
+import {useLiveStream} from './LiveStreamProvider';
 
 /**
  * The `ParticipantContextIfNeeded` component only creates a `ParticipantContext`
@@ -88,7 +90,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
     });
     const isEncrypted = useIsEncrypted(trackReference.participant);
     const layoutContext = useMaybeLayoutContext();
-
+    const {liveStream} = useLiveStream();
     const autoManageSubscription = useFeatureContext()?.autoSubscription;
 
     const handleSubscribe = React.useCallback(
@@ -131,7 +133,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                   )
                 )}
                 <div className="lk-participant-placeholder">
-                  <ParticipantTileAvatar participant={trackReference.participant} />
+                  <ParticipantTileAvatar {...(liveStream?.host.id !== scUserContext.user.id ? {participant: trackReference.participant} : {})} />
                 </div>
                 <div className="lk-participant-metadata">
                   <div className="lk-participant-metadata-item">

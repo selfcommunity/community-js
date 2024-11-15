@@ -132,7 +132,14 @@ import {
   SCEventLocationFilterType,
   SCEventSubscriptionStatusType
 } from './event';
-import {type SCLiveStreamType, SCLiveStreamViewType, SCLiveStreamConnectionDetailsType, SCLiveStreamSettingsType} from './liveStream';
+import {
+  type SCLiveStreamType,
+  SCLiveStreamViewType,
+  SCLiveStreamConnectionDetailsType,
+  SCLiveStreamSettingsType,
+  SCLiveStreamConnectionDetailsResponseErrorType,
+  SCLiveStreamConnectionDetailsErrorType
+} from './liveStream';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
 /**
  * Exports all types
@@ -300,6 +307,8 @@ export {
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,
+  type SCLiveStreamConnectionDetailsResponseErrorType,
+  SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCOnBoardingStepIdType
 };

@@ -123,7 +123,7 @@ import {
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,
-  SCLiveStreamViewType
+  type SCLiveStreamConnectionDetailsResponseErrorType
 } from './types';
 
 /**
@@ -168,7 +168,9 @@ import {
   SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  SCLiveStreamConnectionDetailsErrorType,
+  SCLiveStreamViewType
 } from './types';
 
 /**
@@ -213,7 +215,9 @@ export {
   SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  SCLiveStreamConnectionDetailsErrorType,
+  SCLiveStreamViewType
 };
 export {
   type SCBannerType,
@@ -337,5 +341,5 @@ export {
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,
-  SCLiveStreamViewType
+  type SCLiveStreamConnectionDetailsResponseErrorType,
 };

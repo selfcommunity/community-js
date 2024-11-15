@@ -51,21 +51,17 @@ export default function ParticipantTileAvatar(inProps: ParticipantTileAvatarProp
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
-
-	// AVATAR
-  const avatar = useMemo(() => {
-    if (user) {
-      return <img src={`${user.avatar}`} />;
-    }
-    if (participant) {
-      return <img src={`${scContext.settings.portal}/api/v2/avatar/${participant.identity}`} />;
-    }
-    return <ParticipantPlaceholder />;
-  }, [user, participant]);
+  console.log(participant);
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {avatar}
+      {participant ? (
+        <img src={`${scContext.settings.portal}/api/v2/avatar/${participant.identity}`} />
+      ) : user ? (
+        <img src={`${user.avatar}`} />
+      ) : (
+        <ParticipantPlaceholder />
+      )}
     </Root>
   );
 }

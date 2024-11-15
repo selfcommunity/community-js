@@ -1384,12 +1384,16 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/live_stream/$(id)/'),
     method: 'PATCH'
   },
+  CloseLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/close/'),
+    method: 'POST'
+  },
   JoinLiveStream: {
     url: urlReplacer('/api/v2/live_stream/$(id)/join/'),
     method: 'POST'
   },
-  RemoveUserFromRoom: {
-    url: urlReplacer('/api/v2/live_stream/$(id)/remove_user/?user=$(user)'),
+  RemoveParticipant: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/remove_participant/'),
     method: 'POST'
   },
   /**
