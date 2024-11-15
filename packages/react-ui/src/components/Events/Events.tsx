@@ -19,7 +19,7 @@ import {
   useTheme,
   useThemeProps
 } from '@mui/material';
-import { Endpoints, EndpointType, http, HttpResponse } from '@selfcommunity/api-services';
+import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
   SCPreferencesContext,
@@ -29,19 +29,19 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import { SCEventDateFilterType, SCEventLocationFilterType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {SCEventDateFilterType, SCEventLocationFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
-import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
+import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import CreateEventButton from '../CreateEventButton';
-import Event, { EventProps, EventSkeleton, EventSkeletonProps } from '../Event';
-import Skeleton, { EventsSkeletonProps } from '../Events/Skeleton';
-import { PREFIX } from './constants';
+import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
+import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
+import {PREFIX} from './constants';
 import LocationEventsFilter from './LocationEventsFilter';
 import PastEventsFilter from './PastEventsFilter';
 
@@ -57,12 +57,12 @@ const classes = {
 };
 
 const options = [
-  { value: SCEventDateFilterType.ANY, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" /> },
-  { value: SCEventDateFilterType.TODAY, label: <FormattedMessage id="ui.events.select.today" defaultMessage="ui.events.select.today" /> },
-  { value: SCEventDateFilterType.TOMORROW, label: <FormattedMessage id="ui.events.select.tomorrow" defaultMessage="ui.events.select.tomorrow" /> },
-  { value: SCEventDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.events.select.thisWeek" defaultMessage="ui.events.select.thisWeek" /> },
-  { value: SCEventDateFilterType.NEXT_WEEK, label: <FormattedMessage id="ui.events.select.nextWeek" defaultMessage="ui.events.select.nextWeek" /> },
-  { value: SCEventDateFilterType.THIS_MONTH, label: <FormattedMessage id="ui.events.select.thisMonth" defaultMessage="ui.events.select.thisMonth" /> }
+  {value: SCEventDateFilterType.ANY, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" />},
+  {value: SCEventDateFilterType.TODAY, label: <FormattedMessage id="ui.events.select.today" defaultMessage="ui.events.select.today" />},
+  {value: SCEventDateFilterType.TOMORROW, label: <FormattedMessage id="ui.events.select.tomorrow" defaultMessage="ui.events.select.tomorrow" />},
+  {value: SCEventDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.events.select.thisWeek" defaultMessage="ui.events.select.thisWeek" />},
+  {value: SCEventDateFilterType.NEXT_WEEK, label: <FormattedMessage id="ui.events.select.nextWeek" defaultMessage="ui.events.select.nextWeek" />},
+  {value: SCEventDateFilterType.THIS_MONTH, label: <FormattedMessage id="ui.events.select.thisMonth" defaultMessage="ui.events.select.thisMonth" />}
 ];
 
 const Root = styled(Box, {
@@ -183,11 +183,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
 
   const {
     endpoint = Endpoints.SearchEvents,
-    endpointQueryParams = { limit: 8, offset: DEFAULT_PAGINATION_OFFSET },
+    endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
-    EventComponentProps = { elevation: 0, square: true },
+    EventComponentProps = {elevation: 0, square: true},
     EventsSkeletonComponentProps = {},
-    EventSkeletonComponentProps = { elevation: 0, square: true },
+    EventSkeletonComponentProps = {elevation: 0, square: true},
     GridContainerComponentProps = {},
     GridItemComponentProps = {},
     showFilters = false,
@@ -258,18 +258,18 @@ export default function Events(inProps: EventsProps): JSX.Element {
           ...endpointQueryParams,
           ...(general
             ? {
-              ...(search && { search: query }),
-              ...(dateSearch !== SCEventDateFilterType.ANY && { date_filter: dateSearch }),
-              ...(location !== SCEventLocationFilterType.ANY && { location }),
-              ...(showFollowed && { follows: showFollowed }),
-              ...(showPastEvents && { date_filter: SCEventDateFilterType.PAST })
-            }
+                ...(search && {search: query}),
+                ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+                ...(location !== SCEventLocationFilterType.ANY && {location}),
+                ...(showFollowed && {follows: showFollowed}),
+                ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
+              }
             : {
-              subscription_status: SCEventSubscriptionStatusType.GOING,
-              ...(location !== SCEventLocationFilterType.ANY && { location }),
-              ...(showPastEvents && { past: showPastEvents }),
-              ...(showMyEvents && { created_by: authUserId })
-            })
+                subscription_status: SCEventSubscriptionStatusType.GOING,
+                ...(location !== SCEventLocationFilterType.ANY && {location}),
+                ...(showPastEvents && {past: showPastEvents}),
+                ...(showMyEvents && {created_by: authUserId})
+              })
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -382,8 +382,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     variant={showMyEvents ? 'filled' : 'outlined'}
                     label={<FormattedMessage id="ui.events.filterByCreatedByMe" defaultMessage="ui.events.filterByCreatedByMe" />}
                     onClick={() => setShowMyEvents(!showMyEvents)}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
+                    // @ts-expect-error this is needed to use showFollowed into SCEvents
                     showFollowed={showMyEvents}
                     deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
                     onDelete={showMyEvents ? handleDeleteClick : null}
@@ -466,7 +465,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                           checked={dateSearch === option.value}
                           value={option.value}
                           name="radio-button-select"
-                          inputProps={{ 'aria-label': option.label as any }}
+                          inputProps={{'aria-label': option.label as any}}
                         />
                         {option.label}
                       </MenuItem>
@@ -484,8 +483,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     variant={showFollowed ? 'filled' : 'outlined'}
                     label={<FormattedMessage id="ui.events.filterByFollowedInterest" defaultMessage="ui.events.filterByFollowedInterest" />}
                     onClick={handleChipClick}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
+                    // @ts-expect-error this is needed to use showFollowed into SCEvents
                     showFollowed={showFollowed}
                     deleteIcon={showFollowed ? <Icon>close</Icon> : null}
                     onDelete={showFollowed ? handleDeleteClick : null}
@@ -538,7 +536,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Box>
             ) : (
               <>
-                <Grid container spacing={{ xs: 2 }} className={classes.events} {...GridContainerComponentProps}>
+                <Grid container spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
                   <>
                     {events.map((event: SCEventType) => (
                       <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item} {...GridItemComponentProps}>

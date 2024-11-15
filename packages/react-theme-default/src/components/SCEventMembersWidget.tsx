@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       '& .SCEventMembersWidget-content': {
         padding: `${theme.spacing(2)} ${theme.spacing(2)}}`,
 
@@ -33,7 +33,7 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({ theme }) => ({
+    skeletonRoot: ({theme}) => ({
       '& .SCEventMembersWidget-content': {
         padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
 
@@ -60,15 +60,7 @@ const Component = {
         }
       }
     }),
-    dialogRoot: ({ theme }) => ({
-      '& .SCEventMembersWidget-infinite-scroll': {
-        height: '400px',
-
-        [theme.breakpoints.down('md')]: {
-          height: '100%'
-        }
-      }
-    })
+    dialogRoot: () => ({})
   }
 };
 
