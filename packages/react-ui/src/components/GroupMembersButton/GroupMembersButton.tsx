@@ -188,7 +188,7 @@ export default function GroupMembersButton(inProps: GroupMembersButtonProps): JS
         onClick={handleToggleDialogOpen}
         disabled={loading || !scGroup || scGroup.subscribers_counter === 0}
         // @ts-expect-error this is needed to use subscribers into SCGroupMembersButton
-        subscribers={scGroup.subscribers_counter}
+        subscribers={scGroup?.subscribers_counter}
         {...rest}>
         {loading || !scGroup ? (
           <AvatarGroupSkeleton {...rest} />
