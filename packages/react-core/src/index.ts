@@ -99,6 +99,7 @@ import useSCFetchGroup from './hooks/useSCFetchGroup';
 import useSCFetchGroups from './hooks/useSCFetchGroups';
 import useSCFetchEvent from './hooks/useSCFetchEvent';
 import useSCFetchEvents from './hooks/useSCFetchEvents';
+import useSCGoogleApiLoader from './hooks/useSCGoogleApiLoader';
 
 /**
  * Routing component
@@ -223,4 +224,5 @@ export {
   useSCFetchGroups,
   useSCFetchEvent,
   useSCFetchEvents,
+  useSCGoogleApiLoader,
 };

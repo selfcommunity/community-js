@@ -1,8 +1,8 @@
 import {Box, CardContent, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {GoogleMap, MarkerF, useLoadScript} from '@react-google-maps/api';
-import {SCPreferences, SCPreferencesContextType, useSCFetchEvent, useSCPreferences} from '@selfcommunity/react-core';
+import {GoogleMap, MarkerF} from '@react-google-maps/api';
+import {useSCGoogleApiLoader, useSCFetchEvent} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
@@ -12,7 +12,6 @@ import {formatEventLocationGeolocation} from '../../utils/string';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
 import EventLocationWidgetSkeleton from './Skeleton';
-import {useMemo} from 'react';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -90,19 +89,9 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event});
 
-  // PREFERENCES
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
-  // MEMO
-  const geocodingApiKey = useMemo(() => {
-    return preferences && SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY in preferences
-      ? preferences[SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY].value
-      : null;
-  }, [preferences]);
+  // HOOKS
+  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
 
-  const {isLoaded} = useLoadScript({
-    googleMapsApiKey: geocodingApiKey,
-    libraries: ['maps']
-  });
   const mapOptions = {
     fullscreenControl: false, // Disables the fullscreen control
     mapTypeControl: false, // Disables the map type selector (satellite/map)
