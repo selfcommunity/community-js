@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.3...@selfcommunity/react-ui@0.10.2-alpha.4) (2024-11-18)
+
+
+### Bug Fixes
+
+* Added hook to load api google maps script and fix error. Linear issue: https://linear.app/quentral/issue/QUE-960/errori-in-console-google-maps ([b6e7e9b](https://github.com/selfcommunity/community-js/commit/b6e7e9ba7d075afc3117e3a37f63e2b7464f9e09))
+
+
+
+
+
 ## [0.10.2-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.2...@selfcommunity/react-ui@0.10.2-alpha.3) (2024-11-15)
 
 
