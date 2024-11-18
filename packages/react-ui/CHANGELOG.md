@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.4...@selfcommunity/react-ui@0.10.2-alpha.5) (2024-11-18)
+
+
+### Bug Fixes
+
+* socialAssociation ([50d7480](https://github.com/selfcommunity/community-js/commit/50d7480f585b74cd3fcd37086b0752edaa32f483))
+
+
+
+
+
 ## [0.10.2-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.3...@selfcommunity/react-ui@0.10.2-alpha.4) (2024-11-18)
 
 
