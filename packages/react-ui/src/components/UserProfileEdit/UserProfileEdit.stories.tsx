@@ -23,16 +23,21 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<UserProfileEdit> = {
+export const Base: StoryObj<typeof UserProfileEdit> = {
   args: {
     id: 796,
     fields: [...DEFAULT_FIELDS],
-    settings: [...DEFAULT_SETTINGS]
+    settings: [...DEFAULT_SETTINGS],
+		UserProfileEditSectionAccountProps: {
+			handleAssociationCreate: () => console.log(),
+			showCredentialsSection: true,
+			showLanguageSwitcher: true,
+		}
   },
   render: template
 };
 
-export const BaseWithLanguage: StoryObj<UserProfileEdit> = {
+export const BaseWithLanguage: StoryObj<typeof UserProfileEdit> = {
 	args: {
 		id: 796,
 		fields: [...DEFAULT_FIELDS],
@@ -43,7 +48,7 @@ export const BaseWithLanguage: StoryObj<UserProfileEdit> = {
 };
 
 
-export const BaseWithCustomLanguageSwitcher: StoryObj<UserProfileEdit> = {
+export const BaseWithCustomLanguageSwitcher: StoryObj<typeof UserProfileEdit> = {
 	args: {
 		id: 796,
 		fields: [...DEFAULT_FIELDS],

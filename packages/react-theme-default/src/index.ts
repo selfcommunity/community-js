@@ -168,6 +168,21 @@ import SCWidget from './components/SCWidget';
  */
 
 /**
+ * Style assets - Imports - Start
+ */
+import GoogleIconContained from './assets/social/contained/google';
+import FacebookIconContained from './assets/social/contained/facebook';
+import TwitterIconContained from './assets/social/contained/twitter';
+import LinkedinIconContained from './assets/social/contained/linkedin';
+import GoogleIconOutlined from './assets/social/outlined/google';
+import FacebookIconOutlined from './assets/social/outlined/facebook';
+import TwitterIconOutlined from './assets/social/outlined/twitter';
+import LinkedinIconOutlined from './assets/social/outlined/linkedin';
+/**
+ * Style assets - Imports - End
+ */
+
+/**
  * Export default theme
  */
 const theme = {
@@ -419,3 +434,20 @@ const theme = {
   }
 };
 export default theme;
+
+/**
+ * Style assets - Exports - Start
+ */
+export {
+  GoogleIconContained,
+  FacebookIconContained,
+  LinkedinIconContained,
+  TwitterIconContained,
+  GoogleIconOutlined,
+  FacebookIconOutlined,
+  LinkedinIconOutlined,
+  TwitterIconOutlined
+};
+/**
+ * Style assets - Exports - End
+ */

@@ -35,6 +35,21 @@ const Component = {
           marginBottom: theme.spacing(2)
         }
       },
+      '& .SCUserSocialAssociation-provider-table': {
+				'& th,td': {
+					padding: 12,
+					fontWeight: 'bold',
+				},
+        '& td': {
+          padding: 12,
+          '& .SCUserSocialAssociation-provider-name': {
+            textTransform: 'capitalize',
+            position: 'relative',
+            top: theme.spacing(-1),
+            left: theme.spacing()
+          }
+        }
+      },
       '& .SCUserProfileEdit-language-switcher': {
         margin: theme.spacing(1, 0, 1, 0)
       },
