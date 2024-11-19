@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.1...@selfcommunity/react-i18n@0.7.4-alpha.2) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([2dd5db6](https://github.com/selfcommunity/community-js/commit/2dd5db63f35f59881c4f3f713db43d9355a963b1))
+
+
+
+
+
 ## [0.7.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.0...@selfcommunity/react-i18n@0.7.4-alpha.1) (2024-11-18)
 
 
