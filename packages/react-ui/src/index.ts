@@ -220,7 +220,7 @@ import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOA
 import {LEGAL_POLICIES} from './constants/LegalPolicies';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from './constants/Pagination';
 import {SCEventMembersEventType, SCGroupMembersEventType} from './constants/PubSub';
-import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from './constants/SocialShare';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE, PROVIDER_ICONS_CONTAINED, PROVIDER_ICONS_OUTLINED} from './constants/SocialShare';
 import {DEFAULT_FIELDS} from './constants/UserProfile';
 
 /**
@@ -667,5 +667,7 @@ export {
   VirtualScrollerItemProps,
   Widget,
   WidgetProps,
-  X_SHARE
+  X_SHARE,
+  PROVIDER_ICONS_CONTAINED,
+  PROVIDER_ICONS_OUTLINED
 };
