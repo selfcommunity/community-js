@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {LocalizationProvider, MobileDatePicker, MobileTimePicker, TimeView} from '@mui/x-date-pickers';
+import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
@@ -88,7 +88,7 @@ const classes = {
   name: `${PREFIX}-name`,
   description: `${PREFIX}-description`,
   content: `${PREFIX}-content`,
-	actions: `${PREFIX}-actions`,
+  actions: `${PREFIX}-actions`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   error: `${PREFIX}-error`
@@ -192,7 +192,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
     name: event?.name || '',
     description: event ? event.description : '',
-    isPublic: event?.privacy === SCEventPrivacyType.PUBLIC ?? true,
+    isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
     isSubmitting: false
   };
 
@@ -311,9 +311,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        if (Object.values(_error)[0].error === 'unique') {
+        if (Object.values(_error)[0]['error'] === 'unique') {
           setError({
             ...error,
             ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
@@ -326,7 +324,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
       });
-  }, [field, privateEnabled, visibilityEnabled, onSuccess, onError]);
+  }, [field, privateEnabled, visibilityEnabled, onSuccess, onError, notifyChanges]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -339,12 +337,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         setError(error);
       }
     },
-    [error]
+    [setField, error]
   );
 
   const handleChangeDateTime = useCallback(
     (value: FieldStateValues, name: FieldStateKeys) => {
       setField((prev) => ({...prev, [name]: value}));
+
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
 
@@ -355,30 +354,26 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         setError(error);
       }
     },
-    [error]
+    [setField, error]
   );
 
-  const shouldDisabledDate = useCallback(
+  const shouldDisableDate = useCallback(
     (date: Date) => {
       let disabled = false;
 
       switch (field.recurring) {
         case SCEventRecurrenceType.DAILY:
-          disabled = date.getTime() > getLaterDaysDate(DAILY_LATER_DAYS).getTime();
+          disabled = date.getTime() > getLaterDaysDate(DAILY_LATER_DAYS, field.startDate).getTime();
           break;
         case SCEventRecurrenceType.WEEKLY:
-          disabled = date.getTime() > getLaterDaysDate(WEEKLY_LATER_DAYS).getTime();
+          disabled = date.getTime() > getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate).getTime();
           break;
         case SCEventRecurrenceType.MONTHLY:
-          disabled = date.getTime() > getLaterDaysDate(MONTHLY_LATER_DAYS).getTime();
+          disabled = date.getTime() > getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate).getTime();
           break;
         case SCEventRecurrenceType.NEVER:
         default:
-          disabled = date.getTime() > getLaterDaysDate(NEVER_LATER_DAYS).getTime();
-      }
-
-      if (field.startDate.getDate() > date.getDate()) {
-        disabled = true;
+          disabled = date.getTime() > getLaterDaysDate(NEVER_LATER_DAYS, field.startDate).getTime();
       }
 
       return disabled;
@@ -386,7 +381,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [field]
   );
 
-  const shouldDisabledTime = useCallback((date: Date, _view: TimeView) => field.startTime.getTime() > date.getTime(), [field]);
+  const shouldDisableTime = useCallback((date: Date) => field.startTime.getTime() > date.getTime(), [field]);
 
   /**
    * Renders root object
@@ -444,8 +439,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }}
               slotProps={{
                 toolbar: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
+                  // @ts-expect-error this is needed to customize toolbar title
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
@@ -476,8 +470,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }}
               slotProps={{
                 toolbar: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
+                  // @ts-expect-error this is needed to customize toolbar title
                   toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
                 }
               }}
@@ -524,7 +517,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
             <MobileDatePicker
               className={classes.picker}
-              disablePast
               minDate={field.startDate}
               label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
               value={field.endDate}
@@ -546,8 +538,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   />
                 )
               }}
+              slotProps={{
+                toolbar: {
+                  // @ts-expect-error this is needed to customize toolbar title
+                  toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
+                }
+              }}
               onChange={(value) => handleChangeDateTime(value, 'endDate')}
-              shouldDisableDate={shouldDisabledDate}
+              shouldDisableDate={shouldDisableDate}
             />
             <MobileTimePicker
               className={classes.picker}
@@ -578,8 +576,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   />
                 )
               }}
+              slotProps={{
+                toolbar: {
+                  // @ts-expect-error this is needed to customize toolbar title
+                  toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
+                }
+              }}
               onChange={(value) => handleChangeDateTime(value, 'endTime')}
-              shouldDisableTime={shouldDisabledTime}
+              shouldDisableTime={shouldDisableTime}
             />
           </LocalizationProvider>
         </Box>
@@ -608,8 +612,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.public.info"
                   defaultMessage="ui.eventForm.privacy.public.info"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
+                    // @ts-expect-error this is needed to use chunks
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
@@ -618,8 +621,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.private.info"
                   defaultMessage="ui.eventForm.private.public.info"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
+                    // @ts-expect-error this is needed to use chunks
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
@@ -649,32 +651,32 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
-				<Box className={classes.actions}>
-					<LoadingButton
-						loading={field.isSubmitting}
-						disabled={
-							!field.name ||
-							!field.startDate ||
-							!field.startTime ||
-							!field.endDate ||
-							!field.endTime ||
-							(field.location === SCEventLocationType.ONLINE && !field.link) ||
-							(field.location === SCEventLocationType.PERSON && !field.geolocation) ||
-							(field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
-							Object.keys(error).length !== 0 ||
-							field.name.length > EVENT_TITLE_MAX_LENGTH ||
-							field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
-						}
-						variant="contained"
-						onClick={handleSubmit}
-						color="secondary">
-						{event ? (
-							<FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
-						) : (
-							<FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
-						)}
-					</LoadingButton>
-				</Box>
+        <Box className={classes.actions}>
+          <LoadingButton
+            loading={field.isSubmitting}
+            disabled={
+              !field.name ||
+              !field.startDate ||
+              !field.startTime ||
+              !field.endDate ||
+              !field.endTime ||
+              (field.location === SCEventLocationType.ONLINE && !field.link) ||
+              (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
+              (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
+              Object.keys(error).length !== 0 ||
+              field.name.length > EVENT_TITLE_MAX_LENGTH ||
+              field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
+            }
+            variant="contained"
+            onClick={handleSubmit}
+            color="secondary">
+            {event ? (
+              <FormattedMessage id="ui.eventForm.button.edit" defaultMessage="ui.eventForm.button.edit" />
+            ) : (
+              <FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
+            )}
+          </LoadingButton>
+        </Box>
       </FormGroup>
     </Root>
   );
