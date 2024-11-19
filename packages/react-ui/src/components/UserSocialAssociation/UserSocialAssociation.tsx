@@ -193,7 +193,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
                 {providersToLink.map((p: string, index) => (
                   <TableRow key={index}>
                     <TableCell scope="row">
-                      <img src={PROVIDER_ICONS_CONTAINED[`${p}`]} width="30" height="30" className={classes.providerTable} alt={p} />
+                      <img src={PROVIDER_ICONS_CONTAINED[`${p}`]} width="30" height="30" className={classes.providerIcon} alt={p} />
                       <span className={classes.providerName}>{p}</span>
                     </TableCell>
                     <TableCell align="left">
@@ -219,7 +219,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
                         src={PROVIDER_ICONS_CONTAINED[`${p.provider}`]}
                         width="30"
                         height="30"
-                        className={classes.providerTable}
+                        className={classes.providerIcon}
                         alt={p.provider}
                       />
                       <span className={classes.providerName}>{p.provider}</span>

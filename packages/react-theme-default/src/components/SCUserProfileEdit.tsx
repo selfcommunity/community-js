@@ -36,12 +36,12 @@ const Component = {
         }
       },
       '& .SCUserSocialAssociation-provider-table': {
-				backgroundColor: 'transparent',
-				border: '1px solid #3b3b3b',
-				'& th,td': {
-					padding: 12,
-					fontWeight: 'bold',
-				},
+        backgroundColor: 'transparent',
+        border: '1px solid #3b3b3b',
+        '& th,td': {
+          padding: 12,
+          fontWeight: 'bold'
+        },
         '& td': {
           padding: 12,
           '& .SCUserSocialAssociation-provider-name': {
