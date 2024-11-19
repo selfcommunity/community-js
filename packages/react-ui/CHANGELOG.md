@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.6...@selfcommunity/react-ui@0.10.2-alpha.7) (2024-11-19)
+
+
+### Bug Fixes
+
+* fixed date control on CreateEvent ([a8bd98b](https://github.com/selfcommunity/community-js/commit/a8bd98bd6f8a18f57fcecefea8ff4da8c1f7c9db))
+* restore [@ts-ignore](https://github.com/ts-ignore) instead of [@ts-expect-error](https://github.com/ts-expect-error) ([cc9b763](https://github.com/selfcommunity/community-js/commit/cc9b76381cba1ab06b1c1ea7e9f93bd1a5cc037a))
+* restore [@ts-ignore](https://github.com/ts-ignore) instead of [@ts-expect-error](https://github.com/ts-expect-error) ([c93d37f](https://github.com/selfcommunity/community-js/commit/c93d37facf4ff8e2cc61a1f8dc258b2a35823b2f))
+
+
+
+
+
+## [0.10.2-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.5...@selfcommunity/react-ui@0.10.2-alpha.6) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([2dd5db6](https://github.com/selfcommunity/community-js/commit/2dd5db63f35f59881c4f3f713db43d9355a963b1))
+* socialAssociation ([80bf5dd](https://github.com/selfcommunity/community-js/commit/80bf5ddbe2179589c13aad1014f551d17101abb4))
+
+
+
+
+
 ## [0.10.2-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.4...@selfcommunity/react-ui@0.10.2-alpha.5) (2024-11-18)
 
 
