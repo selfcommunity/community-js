@@ -10,6 +10,14 @@ import {SCUserSocialAssociations} from '../../types';
 import {PROVIDER_ICONS_CONTAINED} from '../../constants/SocialShare';
 
 const messages = defineMessages({
+  provider: {
+    id: 'ui.userSocialAssociation.provider',
+    defaultMessage: 'ui.userSocialAssociation.provider'
+  },
+  actions: {
+    id: 'ui.userSocialAssociation.actions',
+    defaultMessage: 'ui.userSocialAssociation.actions'
+  },
   socialAdd: {
     id: 'ui.userSocialAssociation.add',
     defaultMessage: 'ui.userSocialAssociation.add'
@@ -175,8 +183,8 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{width: '60%'}}>Provider</TableCell>
-              <TableCell align="left">Actions</TableCell>
+              <TableCell sx={{width: '60%'}}>{intl.formatMessage(messages.provider)}</TableCell>
+              <TableCell align="left">{intl.formatMessage(messages.actions)}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

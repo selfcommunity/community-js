@@ -927,6 +927,8 @@
   "ui.userProfileEditSettings.privateMessage.label": "I want to be advised:",
   "ui.userProfileEditSettings.privateMessage.title": "When I receive a private message",
   "ui.userProfileEditSettings.saved": "Settings saved",
+  "ui.userSocialAssociation.provider": "Provider",
+  "ui.userSocialAssociation.actions": "Actions",
   "ui.userSocialAssociation.add": "Connect",
   "ui.userSocialAssociation.remove": "Disconnect",
   "ui.userSuggestionWidget.button.showAll": "Show All",

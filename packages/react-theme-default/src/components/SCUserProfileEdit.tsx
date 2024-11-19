@@ -36,6 +36,7 @@ const Component = {
         }
       },
       '& .SCUserSocialAssociation-provider-table': {
+				backgroundColor: 'transparent',
 				'& th,td': {
 					padding: 12,
 					fontWeight: 'bold',
