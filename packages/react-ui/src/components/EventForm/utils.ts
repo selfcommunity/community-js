@@ -1,19 +1,23 @@
-import { addDays, addHours } from 'date-fns';
+import {addDays, addHours} from 'date-fns';
 
-export function getNewDate(date?: string) {
+export function getNewDate(date?: string | Date) {
   if (date) {
-    return new Date(date);
+    if (typeof date === 'string') {
+      return new Date(date);
+    }
+
+    return date;
   }
 
   return new Date();
 }
 
-export function getLaterHoursDate(h: number) {
-  return addHours(getNewDate(), h);
+export function getLaterHoursDate(hours: number, date?: Date) {
+  return addHours(getNewDate(date), hours);
 }
 
-export function getLaterDaysDate(d: number) {
-  return addDays(getNewDate(), d);
+export function getLaterDaysDate(days: number, date?: Date) {
+  return addDays(getNewDate(date), days);
 }
 
 export const combineDateAndTime = (date: Date, time: Date) => {
