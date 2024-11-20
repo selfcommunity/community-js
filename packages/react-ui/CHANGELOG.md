@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.9...@selfcommunity/react-ui@0.10.2-alpha.10) (2024-11-20)
+
+
+### Bug Fixes
+
+* url issue in editor. Linear issue: https://linear.app/quentral/issue/QUE-975/link-su-feedobjcommenti ([1bde26a](https://github.com/selfcommunity/community-js/commit/1bde26a180a31b02a60c36c15a7f4aa37d2b3241))
+
+
+
+
+
 ## [0.10.2-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.8...@selfcommunity/react-ui@0.10.2-alpha.9) (2024-11-20)
 
 
