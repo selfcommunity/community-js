@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.9...@selfcommunity/react-theme-default@0.4.2-alpha.10) (2024-11-20)
+
+
+### Bug Fixes
+
+* fix hidden comment rendering. Linear issue: https://linear.app/quentral/issue/QUE-932/contributi-nascosti-comunque-visibili ([87bd32e](https://github.com/selfcommunity/community-js/commit/87bd32e7ae16d376bab6c4289f85070f84295a97))
+
+
+
+
+
 ## [0.4.2-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.8...@selfcommunity/react-theme-default@0.4.2-alpha.9) (2024-11-19)
 
 
