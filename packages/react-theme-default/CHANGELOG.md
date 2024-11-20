@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.8...@selfcommunity/react-theme-default@0.4.2-alpha.9) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([208b8d9](https://github.com/selfcommunity/community-js/commit/208b8d94efb19fcf91edcc25647caa5aefc02068))
+
+
+
+
+
+## [0.4.2-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.7...@selfcommunity/react-theme-default@0.4.2-alpha.8) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([ace6683](https://github.com/selfcommunity/community-js/commit/ace668359a3b86963df15d856a430e63f1f8d1b3))
+
+
+
+
+
+## [0.4.2-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.6...@selfcommunity/react-theme-default@0.4.2-alpha.7) (2024-11-19)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.4.2-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.5...@selfcommunity/react-theme-default@0.4.2-alpha.6) (2024-11-19)
 
 
