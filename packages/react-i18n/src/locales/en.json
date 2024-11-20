@@ -129,6 +129,8 @@
   "ui.changePicture.dialog.msg": "Are you sure you want to delete this image?",
   "ui.changePicture.info": "<ul><li>Allowed formats: gif, png, jpg, jpeg</li><li>Maximum size: 3 MB: 3 MB</li></ul>",
   "ui.changePicture.title": "Change Profile Image",
+  "ui.commentObject.collapsed": "Hidden Comment",
+  "ui.commentObject.flag": "Reported by the community",
   "ui.commentObject.reply": "Reply",
   "ui.commentObject.replyComment.cancel": "Cancel",
   "ui.commentObject.replyComment.reply": "Reply",

@@ -129,6 +129,8 @@
   "ui.changePicture.dialog.msg": "Sei sicuro di voler rimuovere questa immagine?",
   "ui.changePicture.info": "<ul><li>Formati ammessi: gif, png, jpg, jpeg</li><li>Dimensione massima: 3 MB</li></ul>",
   "ui.changePicture.title": "Cambia l'immagine del profilo",
+  "ui.commentObject.collapsed": "Commento Nascosto",
+  "ui.commentObject.flag": "Segnalato dalla community",
   "ui.commentObject.reply": "Replica",
   "ui.commentObject.replyComment.cancel": "Cancella",
   "ui.commentObject.replyComment.reply": "Replica",
