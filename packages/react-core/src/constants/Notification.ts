@@ -23,7 +23,7 @@ export const SCNotificationMapping = {
   16: SCNotificationTypologyType.FOLLOW,
   37: SCNotificationTypologyType.PRIVATE_MESSAGE,
   105: SCNotificationTypologyType.DELETE_PRIVATE_MESSAGE,
-  106: SCNotificationTypologyType.LIVE_STREAM_STARTED,
+  26: SCNotificationTypologyType.LIVE_STREAM_STARTED,
   50: SCNotificationTypologyType.DELETED_FOR_ADVERTISING,
   51: SCNotificationTypologyType.DELETED_FOR_AGGRESSIVE,
   52: SCNotificationTypologyType.DELETED_FOR_VULGAR,
