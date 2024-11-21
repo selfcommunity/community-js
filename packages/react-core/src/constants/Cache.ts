@@ -98,6 +98,7 @@ export const USER_OTHER_EVENTS_STATE_CACHE_PREFIX_KEY = '_uOtherEvents_';
 export const USER_PARTECIPANTS_EVENTS_STATE_CACHE_PREFIX_KEY = '_uPartecipantsEvents_';
 export const USER_INVITED_EVENTS_STATE_CACHE_PREFIX_KEY = '_uInvitedEvents_';
 export const USER_REQUESTS_EVENTS_STATE_CACHE_PREFIX_KEY = '_uRequestsEvents_';
+export const USER_LIVE_STREAM_CACHE_PREFIX_KEY = '_uUserLives_';
 export const EVENT_MEDIA_STATE_CACHE_PREFIX_KEY = '_eMedia_';
 export const USER_CONNECTIONS_TOOLS_STATE_CACHE_PREFIX_KEY = '_uConWidget_';
 export const USER_CONNECTIONS_REQUESTS_TOOLS_STATE_CACHE_PREFIX_KEY = '_uConReqWidget_';

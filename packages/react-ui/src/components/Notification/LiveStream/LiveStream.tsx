@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Box, Icon, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationLiveStreamActivityType} from '@selfcommunity/types';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
@@ -12,10 +12,10 @@ import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
-import {default as EventItem} from '../../Event';
+import LiveStream from '../../LiveStream';
 
 const classes = {
-  root: `${PREFIX}-event-root`,
+  root: `${PREFIX}-live-root`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   seeButton: `${PREFIX}see-button`,
@@ -26,7 +26,7 @@ const classes = {
 
 const Root = styled(NotificationItem, {
   name: PREFIX,
-  slot: 'EventRoot'
+  slot: 'LiveStreamRoot'
 })(() => ({}));
 
 export interface NotificationLiveStreamProps
@@ -45,7 +45,7 @@ export interface NotificationLiveStreamProps
 }
 
 /**
- * This component render the content of the notification of type event
+ * This component render the content of the notification of type live stream
  * @constructor
  * @param props
  */
@@ -68,10 +68,9 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
-  const intl = useIntl();
 
   // RENDER
-  if (isSnippetTemplate || isToastTemplate) {
+  if (isSnippetTemplate) {
     return (
       <Root
         id={id}
@@ -106,36 +105,17 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               {notificationObject.user.username}
             </Link>{' '}
             <FormattedMessage
-              id={`ui.notification.event.${notificationObject.type}`}
-              defaultMessage={`ui.notification.event.${notificationObject.type}`}
+              id={`ui.notification.${notificationObject.type}.title`}
+              defaultMessage={`ui.notification.${notificationObject.type}.title`}
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
                 icon: (...chunks) => <Icon>{chunks}</Icon>,
-                event: notificationObject.live_stream.title,
+                live: notificationObject.live_stream.title,
                 link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>{chunks}</Link>
               }}
             />
           </Box>
-        }
-        secondary={
-          <>
-            <Typography component="span">
-              <FormattedMessage
-                id="ui.notification.event.dateTime"
-                defaultMessage="ui.notification.event.dateTime"
-                values={{
-                  date: intl.formatDate(notificationObject.live_stream.created_at, {
-                    weekday: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    month: 'long'
-                  }),
-                  hour: intl.formatDate(notificationObject.live_stream.created_at, {hour: 'numeric', minute: 'numeric'})
-                }}
-              />
-            </Typography>
-          </>
         }
         footer={
           isToastTemplate ? (
@@ -143,7 +123,7 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               <DateTimeAgo date={notificationObject.active_at} />
               <Typography color="primary">
                 <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>
-                  <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />
+                  <FormattedMessage id="ui.notification.live_stream_started.join" defaultMessage="ui.notification.live_stream_started.join" />
                 </Link>
               </Typography>
             </Stack>
@@ -190,12 +170,11 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
-                event: notificationObject.live_stream.title,
+                live: notificationObject.live_stream.title,
                 link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>{chunks}</Link>
               }}
             />
-            <EventItem event={notificationObject.live_stream as any} actions={<></>} elevation={0} />
+            <LiveStream liveStream={notificationObject.live_stream as any} actions={<></>} elevation={0} />
           </>
         }
         actions={
@@ -207,8 +186,9 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               size="small"
               classes={{root: classes.seeButton}}
               component={Link}
+              disabled={Boolean(notificationObject.live_stream.closed_at_by_host)}
               to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>
-              <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />
+              <FormattedMessage id="ui.notification.live_stream_started.join" defaultMessage="ui.notification.live_stream_started.join" />
             </LoadingButton>
           </Stack>
         }
