@@ -160,6 +160,7 @@ import UserSubscribedGroupsWidget, {
   UserSubscribedGroupsWidgetSkeleton
 } from './components/UserSubscribedGroupsWidget';
 import UserSuggestionWidget, {UserSuggestionWidgetProps, UserSuggestionWidgetSkeleton} from './components/UserSuggestionWidget';
+import UserLiveStreamWidget, {UserLiveStreamWidgetProps, UserLiveStreamWidgetSkeleton} from './components/UserLiveStreamWidget';
 import Widget, {WidgetProps} from './components/Widget';
 import {
   MEDIA_EMBED_SC_LINK_TYPE,
@@ -671,6 +672,9 @@ export {
   UserSuggestionWidget,
   UserSuggestionWidgetProps,
   UserSuggestionWidgetSkeleton,
+  UserLiveStreamWidget,
+  UserLiveStreamWidgetProps,
+  UserLiveStreamWidgetSkeleton,
   useStickyBox,
   UseStickyBoxProps,
   LiveStream,
