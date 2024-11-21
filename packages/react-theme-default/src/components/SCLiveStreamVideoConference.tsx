@@ -3,7 +3,9 @@ const Component = {
     root: ({theme}: any) => ({
       height: '100vh',
       width: '100%',
-      overflowY: 'hidden',
+      overflowY: 'hidden'
+    }),
+    dialogRoot: ({theme}: any) => ({
       [`& .SCLiveStreamVideoConference-end-conference-wrap`]: {
         display: 'flex',
         justifyContent: 'center',

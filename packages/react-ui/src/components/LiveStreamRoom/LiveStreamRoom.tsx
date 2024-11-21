@@ -10,12 +10,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {
-  SCFeatureName,
-  SCLiveStreamConnectionDetailsResponseErrorType,
-  SCLiveStreamConnectionDetailsType,
-  SCLiveStreamType
-} from '@selfcommunity/types';
+import {SCFeatureName, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
@@ -30,6 +25,8 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {PreJoin} from './LiveStreamVideoConference/PreJoin';
 import {LiveStreamContext} from './LiveStreamVideoConference/LiveStreamProvider';
 import {useSnackbar} from 'notistack';
+import DialogContent from '@mui/material/DialogContent';
+import BaseDialog from '../../shared/BaseDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -50,6 +47,12 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
+})(({theme}) => ({}));
+
+const DialogRoot = styled(BaseDialog, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
 
 export interface LiveStreamRoomProps extends BoxProps {
@@ -219,7 +222,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 _msg = intl.formatMessage({id: _error, defaultMessage: _error});
               }
               setError(_msg);
-              enqueueSnackbar(_msg, {variant: 'error', autoHideDuration: 5000});
+              enqueueSnackbar(_msg, {variant: 'error'});
             }
             setLoading(false);
           });
@@ -261,14 +264,16 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {scLiveStream.closed_at_by_host ? (
-        <Box className={classes.endConferenceWrap}>
-          <Typography variant="h5">
-            <FormattedMessage id="ui.liveStreamRoom.conference.closed" defaultMessage="ui.liveStreamRoom.conference.closed" />
-          </Typography>
-          <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
-            <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
-          </Button>
-        </Box>
+        <DialogRoot open maxWidth={'md'} fullWidth>
+          <DialogContent className={classes.endConferenceWrap}>
+            <Typography variant="h5">
+              <FormattedMessage id="ui.liveStreamRoom.conference.closed" defaultMessage="ui.liveStreamRoom.conference.closed" />
+            </Typography>
+            <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+              <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
+            </Button>
+          </DialogContent>
+        </DialogRoot>
       ) : (
         <Box className={classes.content} data-lk-theme="default">
           {connectionDetails === undefined || preJoinChoices === undefined ? (
@@ -296,13 +301,13 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     </Typography>
                   </Box>
                 )}
-                {error && (
+                {/* error && (
                   <Box className={classes.prejoinLoader}>
-                    <Typography component={'div'} variant="body2">
+                    <Alert variant="filled" severity="error">
                       {error}
-                    </Typography>
+                    </Alert>
                   </Box>
-                )}
+                ) */}
               </Box>
               <Box className={classes.endPrejoinContent}>
                 {Boolean(
@@ -313,12 +318,12 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 ) && (
                   <Stack sx={{width: '60%'}} spacing={1}>
                     {scLiveStream && scLiveStream.settings?.muteParticipants && (
-                      <Alert variant="outlined" severity="info" component={'div'}>
+                      <Alert variant="filled" severity="info" component={'div'}>
                         <FormattedMessage id="ui.liveStreamRoom.hostDisableMicrophone" defaultMessage="ui.liveStreamRoom.hostDisableMicrophone" />
                       </Alert>
                     )}
                     {scLiveStream && scLiveStream.settings?.disableVideo && (
-                      <Alert variant="outlined" severity="info">
+                      <Alert variant="filled" severity="info">
                         <FormattedMessage id="ui.liveStreamRoom.hostDisableVideo" defaultMessage="ui.liveStreamRoom.hostDisableVideo" />
                       </Alert>
                     )}

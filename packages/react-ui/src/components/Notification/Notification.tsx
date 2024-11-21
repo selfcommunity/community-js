@@ -486,6 +486,8 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
     ) {
       return <EventNotification notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.LIVE_STREAM_STARTED) {
+      return <EventNotification notificationObject={n} key={i} />;
     }
     return null;
   }

@@ -104,6 +104,7 @@ export enum SCPreferenceName {
   URL_TEMPLATE_NOTIFICATIONS = 'url_template_notifications',
   URL_TEMPLATE_USER_PRIVATE_MESSAGES = 'url_template_private_message',
   URL_TEMPLATE_INCUBATOR = 'url_template_incubator',
+	URL_TEMPLATE_LIVE_STREAM = 'url_template_live_stream',
   APP_URL = 'app_url',
   USER_METADATA_DEFINITIONS = 'user_metadata_definition',
   TAG_MANAGER_CONTAINER_ID = 'tag_manager_container_id',
