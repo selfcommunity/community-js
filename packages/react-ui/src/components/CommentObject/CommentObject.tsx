@@ -12,7 +12,7 @@ import CommentsObject, {CommentsObjectProps} from '../CommentsObject';
 import CommentObjectReply from '../CommentObjectReply';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
+import {getCommentContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
@@ -500,7 +500,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     }
     const summaryHtmlTruncated = 'summary_truncated' in comment ? comment.summary_truncated : false;
     const commentHtml = 'summary_html' in comment && truncateContent && summaryHtmlTruncated ? comment.summary_html : comment.html;
-    const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
+    const summaryHtml = getCommentContributionHtml(commentHtml, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
         {collapsed ? (
