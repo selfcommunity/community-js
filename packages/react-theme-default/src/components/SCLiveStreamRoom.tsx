@@ -8,16 +8,6 @@ const Component = {
       [`& .SCLiveStreamRoom-content`]: {
         width: '100%'
       },
-      [`& .SCLiveStreamRoom-end-conference-wrap`]: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-        flexDirection: 'column',
-        [`& .SCLiveStreamRoom-btn-back-home`]: {
-          marginTop: theme.spacing(2)
-        }
-      },
       [`& .SCLiveStreamRoom-prejoin`]: {
         padding: theme.spacing(2),
         display: 'grid',
@@ -67,6 +57,18 @@ const Component = {
         color: theme.palette.common.white,
         '&:hover': {
           backgroundColor: theme.palette.primary.dark
+        }
+      }
+    }),
+    dialogRoot: ({theme}: any) => ({
+      [`& .SCLiveStreamRoom-end-conference-wrap`]: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'column',
+        [`& .SCLiveStreamVideoConference-btn-back-home`]: {
+          marginTop: theme.spacing(2)
         }
       }
     })

@@ -522,6 +522,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/provider/'),
     method: 'DELETE'
   },
+  GetLiveStream: {
+    url: urlReplacer('/api/v2/user/$(id)/live_stream/'),
+    method: 'GET'
+  },
   /**
    * Broadcast Messages
    */
@@ -1395,6 +1399,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   RemoveParticipant: {
     url: urlReplacer('/api/v2/live_stream/$(id)/remove_participant/'),
     method: 'POST'
+  },
+  GetLiveStreamMonthlyDuration: {
+    url: urlReplacer('/api/v2/live_stream/monthly_duration/'),
+    method: 'GET'
   },
   /**
    * OnBoarding

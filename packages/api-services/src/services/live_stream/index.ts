@@ -1,4 +1,4 @@
-import {SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
+import {SCLiveStreamConnectionDetailsType, SCLiveStreamMonthlyDurationType, SCLiveStreamType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
 import {SCPaginatedResponse} from '../../types';
@@ -30,6 +30,9 @@ export interface LiveStreamApiClientInterface {
 
   // Remove participant
   removeParticipant(id: number | string, data: LiveStreamRemoveParticipantParams | FormData, config?: AxiosRequestConfig): Promise<any>;
+
+  // LiveStream monthly duration
+  getMonthlyDuration(config?: AxiosRequestConfig): Promise<SCLiveStreamMonthlyDurationType>;
 }
 /**
  * Contains all the endpoints needed to manage LiveStreams.
@@ -133,6 +136,14 @@ export class LiveStreamApiClient {
       ...config
     });
   }
+
+  /**
+   * This endpoint retrieves LiveStream montlhy duration.
+   * @param config
+   */
+  static getMonthlyDuration(config?: AxiosRequestConfig): Promise<SCLiveStreamMonthlyDurationType> {
+    return apiRequest({...config, url: Endpoints.GetLiveStreamMonthlyDuration.url({}), method: Endpoints.GetLiveStreamMonthlyDuration.method});
+  }
 }
 
 /**
@@ -177,7 +188,6 @@ export default class LiveStreamService {
   static async getSpecificInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
     return LiveStreamApiClient.getSpecificInfo(id, config);
   }
-
   static async create(data: LiveStreamCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCLiveStreamType> {
     return LiveStreamApiClient.create(data, config);
   }
@@ -201,5 +211,8 @@ export default class LiveStreamService {
   }
   static async removeParticipant(id: number | string, data: LiveStreamRemoveParticipantParams | FormData, config?: AxiosRequestConfig): Promise<any> {
     return LiveStreamApiClient.removeParticipant(id, data, config);
+  }
+  static async getMonthlyDuration(config?: AxiosRequestConfig): Promise<SCLiveStreamMonthlyDurationType> {
+    return LiveStreamApiClient.getMonthlyDuration(config);
   }
 }

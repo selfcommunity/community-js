@@ -44,5 +44,13 @@ export interface SCLiveStreamSettingsType {
   disableShareScreen?: boolean;
   hideParticipantsList?: boolean;
   automaticallyNotifyFollowers?: boolean;
+  showInProfile?: boolean;
   view?: SCLiveStreamViewType;
+}
+
+export interface SCLiveStreamMonthlyDurationType {
+  duration_total_minutes: number;
+  max_minutes: number;
+  remaining_minutes: number;
+  minutes_exausted: boolean;
 }

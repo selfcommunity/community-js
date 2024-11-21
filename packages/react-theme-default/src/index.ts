@@ -142,6 +142,7 @@ import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
 import SCLiveStream from './components/SCLiveStream';
 import SCCreateLiveStreamDialog from './components/SCLiveStreamDialog';
+import SCLiveStreamSelector from './components/SCLiveStreamSelector';
 import SCLiveStreamForm from './components/SCLiveStreamForm';
 import SCLiveStreamFormSettings from './components/SCLiveStreamFormSettings';
 import SCLiveStreamRoom from './components/SCLiveStreamRoom';
@@ -401,6 +402,7 @@ const theme = {
     SCLiveStream,
     SCLiveStreamInfoDetails,
     SCCreateLiveStreamDialog,
+    SCLiveStreamSelector,
     SCLiveStreamForm,
     SCLiveStreamFormSettings,
     SCLiveStreamRoom,

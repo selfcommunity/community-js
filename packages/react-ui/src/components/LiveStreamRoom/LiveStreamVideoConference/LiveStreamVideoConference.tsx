@@ -3,7 +3,9 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
   Link,
+  SCPreferences,
   SCPreferencesContextType,
+  SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   useSCPreferences,
@@ -30,9 +32,13 @@ import {defaultVideoOptions} from '../constants';
 import {FormattedMessage} from 'react-intl';
 import {VideoConference} from './VideoConference';
 import {useLiveStream} from './LiveStreamProvider';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import BaseDialog from '../../../shared/BaseDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
+  logo: `${PREFIX}-logo`,
   title: `${PREFIX}-title`,
   content: `${PREFIX}-content`,
   endConferenceWrap: `${PREFIX}-end-conference-wrap`,
@@ -44,6 +50,12 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
+})(({theme}) => ({}));
+
+const DialogRoot = styled(BaseDialog, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.dialogRoot
 })(({theme}) => ({}));
 
 export interface LiveStreamVideoConferenceProps extends BoxProps {
@@ -108,6 +120,8 @@ export interface LiveStreamVideoConferenceProps extends BoxProps {
   [p: string]: any;
 }
 
+const PREFERENCES = [SCPreferences.LOGO_NAVBAR_LOGO];
+
 /**
  *> API documentation for the Community-JS LiveStreamVideoConference component. Learn about the available props and the CSS API.
  *
@@ -150,11 +164,20 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
   const {liveStream} = useLiveStream();
 
   // STATE
   const [liveActive, setLiveActive] = useState(true);
   const [error, setError] = useState(null);
+
+  // PREFERENCES
+  const preferences = useMemo(() => {
+    const _preferences = {};
+    PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
+    return _preferences;
+  }, [scPreferences.preferences]);
 
   // PERMISSIONS
   const canUseAudio = useMemo(
@@ -203,7 +226,9 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
    */
   const handleError = useCallback((error: Error) => {
     console.error(error);
-    setError(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    if (error.message !== 'Client initiated disconnect') {
+      setError(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    }
     setLiveActive(false);
   }, []);
 
@@ -265,22 +290,39 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
       ) : (
         <>
           {error ? (
-            <Box className={classes.endConferenceWrap}>
-              {startConferenceEndContent}
-              {error}
-              {endConferenceEndContent}
-            </Box>
+            <DialogRoot open maxWidth={'md'} fullWidth>
+              <DialogContent>
+                <Box className={classes.endConferenceWrap}>
+                  <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+                    <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
+                  </Link>
+                  {startConferenceEndContent}
+                  {error}
+                  <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+                    <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
+                  </Button>
+                  {endConferenceEndContent}
+                </Box>
+              </DialogContent>
+            </DialogRoot>
           ) : liveActive === false ? (
-            <Box className={classes.endConferenceWrap}>
-              {startConferenceEndContent}
-              <Typography variant="h5">
-                <FormattedMessage id="ui.liveStreamRoom.conference.end" defaultMessage="ui.liveStreamRoom.conference.end" />
-              </Typography>
-              <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
-                <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
-              </Button>
-              {endConferenceEndContent}
-            </Box>
+            <DialogRoot open maxWidth={'md'} fullWidth>
+              <DialogContent>
+                <Box className={classes.endConferenceWrap}>
+                  <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+                    <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
+                  </Link>
+                  {startConferenceEndContent}
+                  <Typography variant="h5">
+                    <FormattedMessage id="ui.liveStreamRoom.conference.end" defaultMessage="ui.liveStreamRoom.conference.end" />
+                  </Typography>
+                  <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+                    <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
+                  </Button>
+                  {endConferenceEndContent}
+                </Box>
+              </DialogContent>
+            </DialogRoot>
           ) : (
             <CircularProgress />
           )}

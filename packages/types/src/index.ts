@@ -80,6 +80,7 @@ import {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -122,6 +123,7 @@ import {
   type SCStepType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType
 } from './types';
@@ -298,6 +300,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -340,6 +343,7 @@ export {
   type SCStepType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
-  type SCLiveStreamConnectionDetailsResponseErrorType,
+  type SCLiveStreamConnectionDetailsResponseErrorType
 };

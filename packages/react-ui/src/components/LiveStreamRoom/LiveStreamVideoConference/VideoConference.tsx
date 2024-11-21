@@ -7,8 +7,6 @@ import {
   CarouselLayout,
   Chat,
   ConnectionStateToast,
-  FocusLayout,
-  FocusLayoutContainer,
   GridLayout,
   LayoutContextProvider,
   MessageFormatter,
@@ -22,7 +20,8 @@ import {SCUserType} from '@selfcommunity/types';
 import {ParticipantTile} from './ParticipantTile';
 import {ControlBar} from './ControlBar';
 import {useEffect} from 'react';
-
+import {useLivestreamCheck} from './useLiveStreamCheck';
+import {FocusLayout, FocusLayoutContainer} from './FocusLayout';
 
 export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
   chatMessageFormatter?: MessageFormatter;
@@ -96,7 +95,10 @@ export function VideoConference({
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
 
-  React.useEffect(() => {
+  // HOOKS
+  useLivestreamCheck();
+
+  useEffect(() => {
     // If screen share tracks are published, and no pin is set explicitly, auto set the screen share.
     if (screenShareTracks.some((track) => track.publication.isSubscribed) && lastAutoFocusedScreenShareTrack.current === null) {
       log.debug('Auto set screen share focus:', {newScreenShareTrack: screenShareTracks[0]});

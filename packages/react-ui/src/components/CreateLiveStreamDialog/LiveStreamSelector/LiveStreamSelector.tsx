@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Typography, Button, Paper, Container, Radio, Theme} from '@mui/material';
+import {Box, Typography, Button, Paper, Container, Radio, Theme, Alert} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import {PREFIX} from '../constants';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {LiveStreamType} from '../types';
-import {SCEventLocationType, SCEventRecurrenceType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
-import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../../constants/Event';
+import EventImage from '../../../assets/liveStream/event';
+import LiveImage from '../../../assets/liveStream/live';
+import {LiveStreamApiClient} from '@selfcommunity/api-services';
+import {WARNING_THRESHOLD_EXPIRING_SOON} from '../../LiveStreamRoom/constants';
+
+export const PREFIX = 'SCLiveStreamSelector';
 
 const classes = {
   root: `${PREFIX}-root`,
+  warning: `${PREFIX}-warning`,
   options: `${PREFIX}-options`,
   actions: `${PREFIX}-actions`
 };
@@ -20,84 +24,19 @@ const classes = {
 const Root = styled(Container, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({
-  [`& .${classes.options}`]: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block'
-    },
-    '& > div': {
-      width: '290px',
-      [theme.breakpoints.down('sm')]: {
-        margin: '0px auto',
-        marginBottom: theme.spacing(2)
-      }
-    }
-  },
-  [`& .${classes.actions}`]: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    marginTop: theme.spacing(4)
-  }
-}));
+})(({theme}) => ({}));
 
 // Styled components
 const OptionCard = styled(Paper, {
+  name: PREFIX,
+  slot: 'optionCardRoot',
   shouldForwardProp: (prop) => prop !== 'selected'
-})<{theme: Theme; selected: boolean}>(({theme, selected}) => ({
-  maxWidth: 300,
-  height: 350,
-  padding: theme.spacing(3),
-  margin: theme.spacing(0, 3),
-  cursor: 'pointer',
-  transition: theme.transitions.create(['background-color', 'box-shadow'], {
-    duration: theme.transitions.duration.short
-  }),
-  backgroundColor: selected ? theme.palette.grey[100] : theme.palette.background.paper,
-  '&:hover': {
-    backgroundColor: theme.palette.grey[50],
-    boxShadow: theme.shadows[2]
-  },
-  border: `1px solid ${theme.palette.divider}`,
-  [`& > div`]: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 2,
-    maxWidth: '300px'
-  },
-  [`& ul`]: {
-    marginTop: theme.spacing(2),
-    padding: 0,
-    listStyle: 'none'
-  }
-}));
+})<{theme: Theme; selected: boolean}>(({theme, selected}) => ({}));
 
-const RadioIndicator = styled(Radio, {
-  // shouldForwardProp: (prop) => prop !== 'selected'
-})<{theme: Theme; selected: boolean}>(({theme, selected}) => ({
-  /* width: 16,
-  height: 16,
-  borderRadius: '50%',
-  border: `2px solid ${selected ? theme.palette.secondary.main : theme.palette.grey[300]}`,
-  backgroundColor: selected ? theme.palette.secondary.main : 'transparent',
-  transition: theme.transitions.create(['border-color', 'background-color'], {
-    duration: theme.transitions.duration.shortest
-  }) */
-}));
-
-const FeatureItem = styled(Box)(({theme}) => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: theme.spacing(1.5),
-  marginBottom: theme.spacing(2),
-  '&:last-child': {
-    marginBottom: 0
-  }
-}));
+const FeatureItem = styled(Box, {
+  name: PREFIX,
+  slot: 'featureItemRoot'
+})(({theme}) => ({}));
 
 export interface LiveStreamSelectorProps {
   /**
@@ -157,10 +96,12 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
 
   // STATE
   const [selectedOption, setSelectedOption] = useState<LiveStreamType | null>(liveSelected);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
   const options = [
     {
       title: 'Schedule a live event',
+      image: EventImage,
       type: LiveStreamType.EVENT_LIVE,
       features: [
         'Schedule a live room or stream in your event space',
@@ -172,6 +113,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
     },
     {
       title: 'Start a live stream',
+      image: LiveImage,
       type: LiveStreamType.DIRECT_LIVE,
       features: [
         'Best for webinars, Q&As, AMAs, and for presentations',
@@ -199,11 +141,41 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
     }
   };
 
+  const fetchLivestreamStatus = () => {
+    LiveStreamApiClient.getMonthlyDuration()
+      .then((r) => {
+        setTimeRemaining(r.remaining_minutes);
+      })
+      .catch((error) => {
+        console.error('Error fetching live status:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchLivestreamStatus();
+  }, []);
+
   return (
     <Root className={classNames(classes.root, className)} maxWidth="lg" sx={{py: 4}}>
       <Typography variant="h4" component="h1" align="center" gutterBottom sx={{mb: 4, fontWeight: 500}}>
         How do you want to go live?
       </Typography>
+      <Box className={classes.warning}>
+        <Alert variant="filled" severity="warning">
+          {timeRemaining <= 1 ? (
+            <FormattedMessage
+              id="ui.liveStreamRoom.selector.warningMinutesExausted"
+              defaultMessage="ui.liveStreamRoom.selector.warningMinutesExausted"
+            />
+          ) : timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON ? (
+            <FormattedMessage
+              id="ui.liveStreamRoom.selector.warningRemainingMinutes"
+              defaultMessage="ui.liveStreamRoom.selector.warningRemainingMinutes"
+              values={{minutes: timeRemaining}}
+            />
+          ) : null}
+        </Alert>
+      </Box>
       <Box className={classes.options}>
         {options.map((option, index) => (
           <OptionCard
@@ -226,6 +198,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
               </Typography>
               <Radio checked={selectedOption === option.type} />
             </Box>
+            <img src={option.image} alt="logo" />
             <Box component="ul">
               {option.features.map((feature, featureIndex) => {
                 const _Icon = option.icons[featureIndex];
@@ -243,7 +216,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
         ))}
       </Box>
       <Box className={classes.actions}>
-        <Button disabled={!selectedOption} variant="contained" onClick={handleNext} color="secondary">
+        <Button disabled={!selectedOption || !timeRemaining} variant="contained" onClick={handleNext} color="secondary">
           Next
         </Button>
       </Box>

@@ -136,10 +136,22 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           checked={Boolean(settings?.automaticallyNotifyFollowers)}
-          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})}
+          onChange={() =>
+            onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})
+          }
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.automaticallyNotifyFollowers" defaultMessage="ui.liveStreamForm.automaticallyNotifyFollowers" />
+        </Typography>
+      </Stack>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Switch
+          className={classes.switch}
+          checked={Boolean(settings?.showInProfile)}
+          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['showInProfile']: !settings?.showInProfile}})}
+        />
+        <Typography className={classes.switchLabel}>
+          <FormattedMessage id="ui.liveStreamForm.showInProfile" defaultMessage="ui.liveStreamForm.showInProfile" />
         </Typography>
       </Stack>
       <FormControl className={classes.accessView}>
