@@ -18,6 +18,7 @@ const Component = {
       }
     }),
     popperRoot: ({theme}: any) => ({
+      zIndex: 1400,
       '& .SCVoteButton-reaction .MuiIcon-root': {
         fontSize: '22px'
       }
