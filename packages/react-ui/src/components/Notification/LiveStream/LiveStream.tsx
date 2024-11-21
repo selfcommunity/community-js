@@ -170,7 +170,6 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
                 live: notificationObject.live_stream.title,
                 link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>{chunks}</Link>
               }}
@@ -187,6 +186,7 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               size="small"
               classes={{root: classes.seeButton}}
               component={Link}
+              disabled={Boolean(notificationObject.live_stream.closed_at_by_host)}
               to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>
               <FormattedMessage id="ui.notification.live_stream_started.join" defaultMessage="ui.notification.live_stream_started.join" />
             </LoadingButton>
