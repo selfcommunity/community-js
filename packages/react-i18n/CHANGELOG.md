@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.4...@selfcommunity/react-i18n@0.7.4-alpha.5) (2024-11-22)
+
+
+### Performance Improvements
+
+* changed login username helper message. Linear issue: https://linear.app/quentral/issue/QUE-966/correzioni-copy-messaggi-errore-in-fase-di-login ([3e49113](https://github.com/selfcommunity/community-js/commit/3e49113f9e34c20d54acdff63777bcebd0d1d939))
+
+
+
+
+
 ## [0.7.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.3...@selfcommunity/react-i18n@0.7.4-alpha.4) (2024-11-21)
 
 
