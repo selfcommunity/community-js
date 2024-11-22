@@ -68,6 +68,7 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
+	const inProgress = Boolean(!notificationObject.live_stream.closed_at_by_host && (notificationObject.live_stream.last_started_at && !notificationObject.live_stream.last_finished_at));
 
   // RENDER
   if (isSnippetTemplate) {
@@ -80,15 +81,15 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
         disableTypography
         image={
           <Link
-            {...(!notificationObject.user.deleted && {
-              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+            {...(!notificationObject.live_stream.host.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.live_stream.host)
             })}
-            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
-            <UserAvatar hide={!notificationObject.user.community_badge} smaller={true}>
+            onClick={notificationObject.live_stream.host.deleted ? () => setOpenAlert(true) : null}>
+            <UserAvatar hide={!notificationObject.live_stream.host.community_badge} smaller={true}>
               <Avatar
-                alt={notificationObject.user.username}
+                alt={notificationObject.live_stream.host.username}
                 variant="circular"
-                src={notificationObject.user.avatar}
+                src={notificationObject.live_stream.host.avatar}
                 classes={{root: classes.avatar}}
               />
             </UserAvatar>
@@ -97,12 +98,12 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
         primary={
           <Box>
             <Link
-              {...(!notificationObject.user.deleted && {
-                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+              {...(!notificationObject.live_stream.host.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.live_stream.host)
               })}
-              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
+              onClick={notificationObject.live_stream.host.deleted ? () => setOpenAlert(true) : null}
               className={classes.username}>
-              {notificationObject.user.username}
+              {notificationObject.live_stream.host.username}
             </Link>{' '}
             <FormattedMessage
               id={`ui.notification.${notificationObject.type}.title`}
@@ -145,24 +146,29 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
         disableTypography
         image={
           <Link
-            {...(!notificationObject.user.deleted && {
-              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+            {...(!notificationObject.live_stream.host.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.live_stream.host)
             })}
-            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
-            <UserAvatar hide={!notificationObject.user.community_badge} smaller={true}>
-              <Avatar className={classes.avatar} alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
+            onClick={notificationObject.live_stream.host.deleted ? () => setOpenAlert(true) : null}>
+            <UserAvatar hide={!notificationObject.live_stream.host.community_badge} smaller={true}>
+              <Avatar
+                className={classes.avatar}
+                alt={notificationObject.live_stream.host.username}
+                variant="circular"
+                src={notificationObject.live_stream.host.avatar}
+              />
             </UserAvatar>
           </Link>
         }
         primary={
           <>
             <Link
-              {...(!notificationObject.user.deleted && {
-                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
+              {...(!notificationObject.live_stream.host.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.live_stream.host)
               })}
-              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
+              onClick={notificationObject.live_stream.host.deleted ? () => setOpenAlert(true) : null}
               className={classes.username}>
-              {notificationObject.user.username}
+              {notificationObject.live_stream.host.username}
             </Link>{' '}
             <FormattedMessage
               id={`ui.notification.${notificationObject.type}`}
@@ -174,7 +180,7 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
                 link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>{chunks}</Link>
               }}
             />
-            <LiveStream liveStream={notificationObject.live_stream as any} actions={<></>} elevation={0} />
+            <LiveStream liveStream={notificationObject.live_stream as any} hideInProgress={!inProgress} actions={<></>} elevation={0} />
           </>
         }
         actions={
