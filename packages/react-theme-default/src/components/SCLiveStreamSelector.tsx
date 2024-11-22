@@ -28,7 +28,7 @@ const Component = {
     }),
     optionCardRoot: ({theme, selected}: any) => ({
       maxWidth: 300,
-      height: 350,
+      height: 'auto',
       padding: theme.spacing(3),
       margin: theme.spacing(0, 3),
       cursor: 'pointer',
