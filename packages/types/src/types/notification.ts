@@ -584,10 +584,6 @@ export interface SCNotificationEventActivityType extends SCNotificationType {
  */
 export interface SCNotificationLiveStreamActivityType extends SCNotificationType {
   /**
-   * The user who performed the action
-   */
-  user: SCUserType;
-  /**
    * The LiveStream obj
    */
   live_stream: Partial<SCLiveStreamType>;
