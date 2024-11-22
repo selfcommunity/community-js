@@ -155,7 +155,7 @@
   "ui.common.error.phone": "Il numero di telefono inserito non è valido",
   "ui.common.error.url": "L'URL inserito non è valido",
   "ui.common.error.username": "Il campo username può essere composto solo da caratteri alfanumerici, inclusi il trattino e il trattino basso (- e _).",
-  "ui.common.error.usernameOrEmail": "Inserisci uno username valido. Sono permessi caratteri alfanumerici, inclusi il trattino e il trattino basso (- e _). Oppure inserisci una email valida",
+  "ui.common.error.usernameOrEmail": "Inserisci uno username valido oppure l'email utilizzata per la registrazione.",
   "ui.common.fileUpload.error": "Purtroppo si è verificato un errore durante il caricamento del file.",
   "ui.common.nextPage": "Pagina successiva",
   "ui.common.no": "No",
