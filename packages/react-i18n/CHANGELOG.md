@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.3...@selfcommunity/react-i18n@0.7.4-alpha.4) (2024-11-21)
+
+
+### Bug Fixes
+
+* fixed a label action in it.json ([08221ef](https://github.com/selfcommunity/community-js/commit/08221ef440d4fd5c9bcd67de6dc56b41708a1a26))
+
+
+
+
+
 ## [0.7.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.2...@selfcommunity/react-i18n@0.7.4-alpha.3) (2024-11-20)
 
 

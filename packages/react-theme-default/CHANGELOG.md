@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.12...@selfcommunity/react-theme-default@0.4.2-alpha.13) (2024-11-21)
+
+
+### Bug Fixes
+
+* added zIndex to reaction popper ([045cadf](https://github.com/selfcommunity/community-js/commit/045cadfc7c5454d503cb4a652231fae3f772e155))
+
+
+
+
+
 ## [0.4.2-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.11...@selfcommunity/react-theme-default@0.4.2-alpha.12) (2024-11-21)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
