@@ -160,22 +160,24 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
       <Typography variant="h4" component="h1" align="center" gutterBottom sx={{mb: 4, fontWeight: 500}}>
         How do you want to go live?
       </Typography>
-      <Box className={classes.warning}>
-        <Alert variant="filled" severity="warning">
-          {timeRemaining <= 1 ? (
-            <FormattedMessage
-              id="ui.liveStreamRoom.selector.warningMinutesExausted"
-              defaultMessage="ui.liveStreamRoom.selector.warningMinutesExausted"
-            />
-          ) : timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON ? (
-            <FormattedMessage
-              id="ui.liveStreamRoom.selector.warningRemainingMinutes"
-              defaultMessage="ui.liveStreamRoom.selector.warningRemainingMinutes"
-              values={{minutes: timeRemaining}}
-            />
-          ) : null}
-        </Alert>
-      </Box>
+      {timeRemaining !== null && timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON && (
+        <Box className={classes.warning}>
+          <Alert variant="filled" severity="warning">
+            {timeRemaining <= 1 ? (
+              <FormattedMessage
+                id="ui.liveStreamRoom.selector.warningMinutesExausted"
+                defaultMessage="ui.liveStreamRoom.selector.warningMinutesExausted"
+              />
+            ) : timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON ? (
+              <FormattedMessage
+                id="ui.liveStreamRoom.selector.warningRemainingMinutes"
+                defaultMessage="ui.liveStreamRoom.selector.warningRemainingMinutes"
+                values={{minutes: timeRemaining}}
+              />
+            ) : null}
+          </Alert>
+        </Box>
+      )}
       <Box className={classes.options}>
         {options.map((option, index) => (
           <OptionCard
