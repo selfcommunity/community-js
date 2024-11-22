@@ -155,7 +155,7 @@
   "ui.common.error.phone": "The phone number you entered is invalid",
   "ui.common.error.url": "The URL you entered is invalid",
   "ui.common.error.username": "The username field can only consist of alphanumeric characters, including the hyphen and underscore (- and _ ).",
-  "ui.common.error.usernameOrEmail": "Please, enter a valid username (alphanumeric characters _ and - are allowed) or insert a valid email",
+  "ui.common.error.usernameOrEmail": "Enter a valid username or the email used for registration.",
   "ui.common.fileUpload.error": "Unfortunately an error occurred while uploading the file.",
   "ui.common.nextPage": "Next page",
   "ui.common.no": "No",
