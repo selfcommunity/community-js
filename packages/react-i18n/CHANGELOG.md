@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.5...@selfcommunity/react-i18n@0.7.4-alpha.6) (2024-11-25)
+
+
+### Bug Fixes
+
+* account email error. Linear issue: https://linear.app/quentral/issue/QUE-984/cambio-mail ([d9a0d94](https://github.com/selfcommunity/community-js/commit/d9a0d94a38087b583ebb46653c6f0a45b1e19858))
+
+
+
+
+
 ## [0.7.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.4...@selfcommunity/react-i18n@0.7.4-alpha.5) (2024-11-22)
 
 
