@@ -903,7 +903,7 @@
   "ui.userProfileEditAccountCredentials.confirmPassword.error": "Attenzione che Password e Conferma Password non corrispondono.",
   "ui.userProfileEditAccountCredentials.email": "Email",
   "ui.userProfileEditAccountCredentials.email.error.invalid": "La nuova email deve essere diversa da quella attuale.",
-  "ui.userProfileEditAccountCredentials.email.error.newEmailError.invalid": "Inserisci un indirizzo email valido.",
+  "ui.userProfileEditAccountCredentials.email.error.newEmailError.invalid": "Questo indirizzo email è già in uso oppure non è valido. Controlla e riprova.",
   "ui.userProfileEditAccountCredentials.email.success": "La tua email è stata cambiata correttamente",
   "ui.userProfileEditAccountCredentials.email.successConfirm": "La tua email verrà modificata dopo aver confermato l'indirizzo email! Controlla la tua email.",
   "ui.userProfileEditAccountCredentials.newPassword": "nuova password",

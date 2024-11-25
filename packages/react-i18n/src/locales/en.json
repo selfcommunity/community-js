@@ -903,7 +903,7 @@
   "ui.userProfileEditAccountCredentials.confirmPassword.error": "Please note that Password and Confirm Password do not match.",
   "ui.userProfileEditAccountCredentials.email": "Email",
   "ui.userProfileEditAccountCredentials.email.error.invalid": "The new email must be different from the current email.",
-  "ui.userProfileEditAccountCredentials.email.error.newEmailError.invalid": "Enter a valid email address.",
+  "ui.userProfileEditAccountCredentials.email.error.newEmailError.invalid": "This email address is already in use or is invalid. Please check and try again.",
   "ui.userProfileEditAccountCredentials.email.success": "Your email has been successfully changed",
   "ui.userProfileEditAccountCredentials.email.successConfirm": "Your email will be changed once you have confirmed the email address! Check your email.",
   "ui.userProfileEditAccountCredentials.newPassword": "new password",
