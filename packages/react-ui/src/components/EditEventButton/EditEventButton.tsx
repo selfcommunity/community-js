@@ -1,4 +1,3 @@
-import React from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
@@ -16,8 +15,8 @@ const classes = {
 const Root = styled(CreateEventButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface EditEventButtonProps extends CreateEventButtonProps {
   /**

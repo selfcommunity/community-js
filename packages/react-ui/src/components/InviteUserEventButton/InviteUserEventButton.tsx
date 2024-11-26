@@ -1,14 +1,14 @@
-import { LoadingButton } from '@mui/lab';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { EventService } from '@selfcommunity/api-services';
-import { useSCFetchEvent, useSCFetchUser } from '@selfcommunity/react-core';
-import { SCEventType, SCUserType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {LoadingButton} from '@mui/lab';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {EventService} from '@selfcommunity/api-services';
+import {useSCFetchEvent, useSCFetchUser} from '@selfcommunity/react-core';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { HTMLAttributes, useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
+import {HTMLAttributes, useCallback, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCInviteUserEventButton';
 
@@ -89,20 +89,20 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
     props: inProps,
     name: PREFIX
   });
-  const { className, eventId, event, userId, user, handleInvitations, ...rest } = props;
+  const {className, eventId, event, userId, user, handleInvitations, ...rest} = props;
 
   // STATE
   const [invited, setInvited] = useState<boolean | null>(true);
 
   //HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const { scUser } = useSCFetchUser({ id: userId, user });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scUser} = useSCFetchUser({id: userId, user});
 
   const handleInviteAction = useCallback(() => {
     setInvited(null);
 
     if (invited) {
-      EventService.removeInviteEvent(scEvent.id, { users: [scUser.id] })
+      EventService.removeInviteEvent(scEvent.id, {users: [scUser.id]})
         .then(() => {
           setInvited(false);
           handleInvitations?.(true);
@@ -111,7 +111,7 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
           Logger.error(SCOPE_SC_UI, _error);
         });
     } else {
-      EventService.inviteOrAcceptEventRequest(scEvent.id, { users: [scUser.id] })
+      EventService.inviteOrAcceptEventRequest(scEvent.id, {users: [scUser.id]})
         .then(() => {
           setInvited(true);
           handleInvitations?.(false);

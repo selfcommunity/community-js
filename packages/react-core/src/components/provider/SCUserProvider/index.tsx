@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useMemo, useRef} from 'reac
 import {UserService} from '@selfcommunity/api-services';
 import {SCContext} from '../SCContextProvider';
 import useSCAuth, {userActionTypes} from '../../../hooks/useSCAuth';
-import {isClientSideRendering, Logger} from '@selfcommunity/utils';
+import {Logger} from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
 import {SCOPE_SC_CORE} from '../../../constants/Errors';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';

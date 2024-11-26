@@ -1,12 +1,12 @@
-import { Endpoints, EventService, http, HttpResponse } from '@selfcommunity/api-services';
-import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
-import { CacheStrategies, Logger, LRUCache, objectWithoutProperties } from '@selfcommunity/utils';
-import { useEffect, useMemo, useState } from 'react';
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
-import { useSCUser } from '../components/provider/SCUserProvider';
-import { getEventObjectCacheKey } from '../constants/Cache';
-import { SCOPE_SC_CORE } from '../constants/Errors';
-import { SCUserContextType } from '../types/context';
+import {Endpoints, EventService, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
+import {useEffect, useMemo, useState} from 'react';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import {useSCUser} from '../components/provider/SCUserProvider';
+import {getEventObjectCacheKey} from '../constants/Cache';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {SCUserContextType} from '../types/context';
 
 /**
  :::info
@@ -29,15 +29,15 @@ export default function useSCFetchEvent({
   autoSubscribe?: boolean;
   cacheStrategy?: CacheStrategies;
 }) {
-  const __eventId = event ? event.id : id;
+  const __eventId = useMemo(() => event?.id || id, [event, id]);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const authUserId = useMemo(() => scUserContext.user?.id || null, [scUserContext.user]);
 
   // CACHE
-  const __eventCacheKey = getEventObjectCacheKey(__eventId);
-  const __event = authUserId ? event : objectWithoutProperties<SCEventType>(event, ['subscription_status']);
+  const __eventCacheKey = useMemo(() => getEventObjectCacheKey(__eventId), [__eventId]);
+  const __event = useMemo(() => (authUserId ? event : objectWithoutProperties<SCEventType>(event, ['subscription_status'])), [authUserId, event]);
 
   const [scEvent, setScEvent] = useState<SCEventType>(cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__eventCacheKey, __event) : null);
   const [error, setError] = useState<string>(null);

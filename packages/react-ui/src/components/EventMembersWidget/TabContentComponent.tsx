@@ -1,23 +1,23 @@
-import { Button, List, ListItem, styled, Typography } from '@mui/material';
-import { Endpoints, http, SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCEventType, SCUserType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
-import { useSnackbar } from 'notistack';
+import {Button, List, ListItem, styled, Typography} from '@mui/material';
+import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
+import {useSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
-import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
-import BaseDialog, { BaseDialogProps } from '../../shared/BaseDialog';
+import {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
-import { actionWidgetTypes } from '../../utils/widget';
+import {actionWidgetTypes} from '../../utils/widget';
 import AcceptRequestUserEventButton from '../AcceptRequestUserEventButton';
 import EventInviteButton from '../EventInviteButton';
 import InviteUserEventButton from '../InviteUserEventButton';
-import User, { UserProps, UserSkeleton } from '../User';
-import { PREFIX } from './constants';
-import { TabContentEnum, TabContentType } from './types';
+import User, {UserProps, UserSkeleton} from '../User';
+import {PREFIX} from './constants';
+import {TabContentEnum, TabContentType} from './types';
 
 const classes = {
   actionButton: `${PREFIX}-action-button`,
@@ -65,7 +65,7 @@ interface TabComponentProps {
 
 export default function TabContentComponent(props: TabComponentProps) {
   // PROPS
-  const { tabValue, state, dispatch, userProps, dialogProps, actionProps, handleRefresh } = props;
+  const {tabValue, state, dispatch, userProps, dialogProps, actionProps, handleRefresh} = props;
 
   // STATE
   const [openDialog, setOpenDialog] = useState(false);
@@ -75,7 +75,7 @@ export default function TabContentComponent(props: TabComponentProps) {
   const updatesParticipants = useRef(null);
 
   // HOOKS
-  const { enqueueSnackbar } = useSnackbar();
+  const {enqueueSnackbar} = useSnackbar();
 
   // CONSTS
   const users: SCUserType[] = useMemo(
@@ -99,7 +99,7 @@ export default function TabContentComponent(props: TabComponentProps) {
    * Handles pagination
    */
   const handleNext = useCallback(() => {
-    dispatch({ type: actionWidgetTypes.LOADING_NEXT });
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
     http
       .request({
@@ -107,7 +107,7 @@ export default function TabContentComponent(props: TabComponentProps) {
         method: Endpoints.UserSuggestion.method
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
-        dispatch({ type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data });
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
