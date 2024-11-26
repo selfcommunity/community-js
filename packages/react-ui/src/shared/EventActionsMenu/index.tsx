@@ -1,21 +1,21 @@
-import { Divider, IconButton, IconButtonProps, List, ListItemIcon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme } from '@mui/material';
+import {Divider, IconButton, IconButtonProps, List, ListItemIcon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
 import Icon from '@mui/material/Icon';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { EventService } from '@selfcommunity/api-services';
-import { SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
-import { copyTextToClipboard } from '@selfcommunity/utils';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {EventService} from '@selfcommunity/api-services';
+import {SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {SCEventType} from '@selfcommunity/types';
+import {copyTextToClipboard} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { enqueueSnackbar } from 'notistack';
+import {enqueueSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
-import React, { useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, {useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import EventForm from '../../components/EventForm';
-import { ADD_EVENT_TO_CALENDAR, CANCEL_EVENT, GET_EVENT_LINK } from '../../constants/EventActionsMenu';
-import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
+import {ADD_EVENT_TO_CALENDAR, CANCEL_EVENT, GET_EVENT_LINK} from '../../constants/EventActionsMenu';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
-import { checkEventFinished } from '../../utils/events';
+import {checkEventFinished} from '../../utils/events';
 
 const PREFIX = 'SCEventActionsMenu';
 
@@ -105,7 +105,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const { className, event, eventId, onDeleteConfirm, onEditSuccess, ...rest } = props;
+  const {className, event, eventId, onDeleteConfirm, onEditSuccess, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -117,7 +117,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
-  const { scEvent, setSCEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
 
   const isEventAdmin = useMemo(
     () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
@@ -211,23 +211,23 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
         </MenuItem>
       ),
       isEventAdmin &&
-      !isEventFinished && [
-        <Divider key="divider" />,
-        isMobile && (
-          <MenuItem className={classes.item} key="edit" onClick={handleEditClick}>
+        !isEventFinished && [
+          <Divider key="divider" />,
+          isMobile && (
+            <MenuItem className={classes.item} key="edit" onClick={handleEditClick}>
+              <ListItemIcon>
+                <Icon>edit</Icon>
+              </ListItemIcon>
+              <FormattedMessage id="ui.shared.eventActionsMenu.item.edit" defaultMessage="ui.shared.eventActionsMenu.item.edit" />
+            </MenuItem>
+          ),
+          <MenuItem className={classes.item} onClick={() => handleAction(CANCEL_EVENT)} key="cancel">
             <ListItemIcon>
-              <Icon>edit</Icon>
+              <Icon>close</Icon>
             </ListItemIcon>
-            <FormattedMessage id="ui.shared.eventActionsMenu.item.edit" defaultMessage="ui.shared.eventActionsMenu.item.edit" />
+            <FormattedMessage id="ui.shared.eventActionsMenu.item.cancel" defaultMessage="ui.shared.eventActionsMenu.item.cancel" />
           </MenuItem>
-        ),
-        <MenuItem className={classes.item} onClick={() => handleAction(CANCEL_EVENT)} key="cancel">
-          <ListItemIcon>
-            <Icon>close</Icon>
-          </ListItemIcon>
-          <FormattedMessage id="ui.shared.eventActionsMenu.item.cancel" defaultMessage="ui.shared.eventActionsMenu.item.cancel" />
-        </MenuItem>
-      ]
+        ]
     ];
   };
 
@@ -247,7 +247,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
           open={Boolean(anchorEl)}
           onClose={handleClose}
           onOpen={handleOpen}
-          PaperProps={{ className: classes.paper }}
+          PaperProps={{className: classes.paper}}
           disableSwipeToOpen>
           <List>{renderList()}</List>
         </SwipeableDrawerRoot>
@@ -257,7 +257,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
-          PaperProps={{ className: classes.paper }}>
+          PaperProps={{className: classes.paper}}>
           {renderList()}
         </MenuRoot>
       )}
