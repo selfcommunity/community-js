@@ -1,9 +1,8 @@
-import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType, EventHeaderProps} from '@selfcommunity/react-ui';
 import {SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
-import {SCEventType} from '@selfcommunity/types';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import EventSkeletonTemplate from './Skeleton';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -111,8 +110,14 @@ export default function Event(inProps: EventProps): JSX.Element {
 
   // HOOKS
   const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const scUserContext: SCUserContextType = useSCUser();
 
-  if (!scEvent) {
+  if (
+    scUserContext.user === undefined ||
+    !scEvent ||
+    (scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
+    scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED
+  ) {
     return <EventSkeletonTemplate />;
   }
 
