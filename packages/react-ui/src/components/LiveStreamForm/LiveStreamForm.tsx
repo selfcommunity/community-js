@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
+import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
@@ -15,6 +15,7 @@ import LiveStreamSettingsForm from './LiveStreamFormSettings';
 import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
+import {WARNING_THRESHOLD_EXPIRING_SOON} from '../LiveStreamRoom/constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -25,7 +26,8 @@ const classes = {
   description: `${PREFIX}-description`,
   content: `${PREFIX}-content`,
   actions: `${PREFIX}-actions`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  genericError: `${PREFIX}-generic-error`
 };
 
 const Root = styled(Box, {
@@ -131,6 +133,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   // STATE
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
+  const [genericError, setGenericError] = useState<string | null>(null);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -162,7 +165,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
 
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, ['isSubmitting']: true}));
-
+    setGenericError(null);
     const formData = new FormData();
     if (field.coverFile) {
       formData.append('cover', field.coverFile);
@@ -187,17 +190,30 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
-
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
         // @ts-ignore
-        if (Object.values(_error)[0].error === 'unique') {
+        console.log(_error);
+        if ('errorsError' in _error) {
+          setGenericError(
+            intl.formatMessage({
+              id: 'ui.liveStreamForm.error.monthlyMinuteLimitReached',
+              defaultMessage: 'ui.liveStreamForm.error.monthlyMinuteLimitReached'
+            })
+          );
+        } else {
+          setGenericError(null);
+        }
+        if ('titleError' in Object.values(_error)) {
           setError({
             ...error,
-            ['titleError']: <FormattedMessage id="ui.liveStreamForm.title.error.unique" defaultMessage="ui.liveStreamForm.title.error.unique" />,
-            ['slugError']: <FormattedMessage id="ui.liveStreamForm.slug.error.unique" defaultMessage="ui.liveStreamForm.slug.error.unique" />
+            ['titleError']: <FormattedMessage id="ui.liveStreamForm.title.error.invalid" defaultMessage="ui.liveStreamForm.title.error.invalid" />
           });
-        } else {
-          setError({...error, ..._error});
+        }
+        if ('slugError' in Object.values(_error)) {
+          setError({
+            ...error,
+            ['slugError']: <FormattedMessage id="ui.liveStreamForm.slug.error.invalid" defaultMessage="ui.liveStreamForm.slug.error.invalid" />
+          });
         }
 
         setField((prev) => ({...prev, ['isSubmitting']: false}));
@@ -214,8 +230,9 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
         delete error[`${name}Error`];
         setError(error);
       }
+      setGenericError(null);
     },
-    [error]
+    [error, setGenericError]
   );
 
   const handleChangeSettings = useCallback(
@@ -298,12 +315,20 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           }
         />
         <LiveStreamSettingsForm settings={field.settings} onChange={handleChangeSettings} />
+        {genericError && (
+          <Box className={classes.genericError}>
+            <Alert variant="filled" severity="error">
+              {genericError}
+            </Alert>
+          </Box>
+        )}
         <Box className={classes.actions}>
           <LoadingButton
             loading={field.isSubmitting}
             disabled={
               !field.title ||
               Object.keys(error).length !== 0 ||
+              Boolean(genericError) ||
               field.title.length > LIVE_STREAM_TITLE_MAX_LENGTH ||
               field.description.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH
             }

@@ -172,7 +172,8 @@ import {
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
   SCLiveStreamConnectionDetailsErrorType,
-  SCLiveStreamViewType
+  SCLiveStreamViewType,
+  SCCommunitySubscriptionTier
 } from './types';
 
 /**
@@ -219,7 +220,8 @@ export {
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
   SCLiveStreamConnectionDetailsErrorType,
-  SCLiveStreamViewType
+  SCLiveStreamViewType,
+  SCCommunitySubscriptionTier
 };
 export {
   type SCBannerType,

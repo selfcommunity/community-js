@@ -28,7 +28,7 @@ export default function UserLiveStreamWidgetSkeleton() {
         {/* <UserSkeleton className={classes.user} elevation={0} /> */}
 
         <Stack className={classes.liveWrapper}>
-          {[1, 2, 3, 4].map((_event, i, array) => (
+          {[1, 2].map((_event, i, array) => (
             <Fragment key={i}>
               <EventSkeleton elevation={0} className={classes.event} />
               {i < array.length - 1 && <Divider />}
