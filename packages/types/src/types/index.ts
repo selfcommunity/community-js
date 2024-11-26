@@ -143,6 +143,8 @@ import {
   SCLiveStreamConnectionDetailsErrorType
 } from './liveStream';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
+import {SCCommunitySubscriptionTier} from './tier';
+
 /**
  * Exports all types
  */
@@ -314,5 +316,6 @@ export {
   type SCLiveStreamMonthlyDurationType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  SCCommunitySubscriptionTier
 };

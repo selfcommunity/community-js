@@ -1,5 +1,6 @@
 import {LoadingButton} from '@mui/lab';
 import {
+  Alert,
   Box,
   BoxProps,
   FormControl,
@@ -28,7 +29,7 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
@@ -92,7 +93,8 @@ const classes = {
   actions: `${PREFIX}-actions`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  genericError: `${PREFIX}-generic-error`
 };
 
 const Root = styled(Box, {
@@ -211,6 +213,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // STATE
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
+  const [genericError, setGenericError] = useState<string | null>(null);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -283,6 +286,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, ['isSubmitting']: true}));
+    setGenericError(null);
 
     const formData = new FormData();
 
@@ -347,6 +351,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           setError({...error, ..._error});
         }
 
+        if ('errorsError' in _error) {
+          setGenericError(
+            intl.formatMessage({
+              id: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached',
+              defaultMessage: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached'
+            })
+          );
+        } else {
+          setGenericError(null);
+        }
+
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
@@ -363,8 +378,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setError(error);
       }
+      setGenericError(null);
     },
-    [error]
+    [error, setGenericError]
   );
 
   const handleChangeDateTime = useCallback(
@@ -379,8 +395,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setError(error);
       }
+      setGenericError(null);
     },
-    [error]
+    [error, setGenericError]
   );
 
   const shouldDisabledDate = useCallback(
@@ -693,6 +710,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
+        {genericError && (
+          <Box className={classes.genericError}>
+            <Alert variant="filled" severity="error">
+              {genericError}
+            </Alert>
+          </Box>
+        )}
         <Box className={classes.actions}>
           <LoadingButton
             loading={field.isSubmitting}
@@ -702,6 +726,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               !field.startTime ||
               !field.endDate ||
               !field.endTime ||
+              Boolean(genericError) ||
               (field.location === SCEventLocationType.ONLINE && !field.link) ||
               (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
               (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||

@@ -1,10 +1,18 @@
-import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
+import {Autocomplete, Box, Chip, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {useLoadScript} from '@react-google-maps/api';
-import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCContext,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCCommunitySubscriptionTier, SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
 import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from 'react';
@@ -80,6 +88,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
   const geocodingApiKey = useMemo(
     () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
     [scContext.settings.integrations]
@@ -88,7 +97,18 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
     libraries: ['places', 'geocoding']
   });
-  const canViewLiveTab = useMemo(() => scUserContext?.user?.permission?.create_live_stream || event.live_stream, [scUserContext?.user?.permission]);
+  const isFreeTrialTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
+    [preferences]
+  );
+  const canViewLiveTab = useMemo(
+    () => !isFreeTrialTier && (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
+    [scUserContext?.user?.permission, isFreeTrialTier]
+  );
 
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
@@ -188,7 +208,11 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             classes={{root: classes.tab}}
             icon={<Icon>photo_camera</Icon>}
             iconPosition="start"
-            label={<FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />}
+            label={
+              <>
+                <FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />
+              </>
+            }
           />
         )}
       </Tabs>

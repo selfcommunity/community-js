@@ -2,11 +2,11 @@ import {Button, Icon} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {SCEventType, SCLiveStreamType} from '@selfcommunity/types';
+import {SCCommunitySubscriptionTier, SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
 import CreateLivestreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 
 const PREFIX = 'SCCreateLivestreamButton';
@@ -74,13 +74,32 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [open, setOpen] = React.useState(false);
 
   // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
+  const isCommunityOwner = useMemo(() => authUserId === 1, [authUserId]);
+  const isFreeTrialTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
+    [preferences]
+  );
+  const liveStreamEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+    [preferences, features]
+  );
+  const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ONLY_STAFF_ENABLED].value, [preferences]);
 
   /**
    * Handle close
@@ -100,7 +119,7 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
   /**
    * If there's no authUserId, component is hidden.
    */
-  if (!canCreateLiveStream || !authUserId) {
+  if (!liveStreamEnabled || !authUserId || (onlyStaffEnabled && !isStaff) || (isFreeTrialTier && !isCommunityOwner)) {
     return null;
   }
 

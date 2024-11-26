@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Typography, Button, Paper, Container, Radio, Theme, Alert} from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -6,11 +6,23 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {LiveStreamType} from '../types';
 import {useSnackbar} from 'notistack';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import EventImage from '../../../assets/liveStream/event';
 import LiveImage from '../../../assets/liveStream/live';
 import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../../LiveStreamRoom/constants';
+import {
+  Link,
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  useSCContext,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
+import {SELFCOMMUNITY_PRICING} from '../../PlatformWidget/constants';
 
 export const PREFIX = 'SCLiveStreamSelector';
 
@@ -89,37 +101,71 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className, liveSelected, onLiveSelected, onNext, ...rest} = props;
+  const {className, liveSelected, onLiveSelected, onNext} = props;
 
   // CONTEXT
+  const scContext: SCContextType = useSCContext();
+  const scUserContext = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
   // STATE
   const [selectedOption, setSelectedOption] = useState<LiveStreamType | null>(liveSelected);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
+  // HOOKS
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
+  const isFreeTrialTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value !== SCCommunitySubscriptionTier.FREE_TRIAL,
+    [preferences]
+  );
+  const intl = useIntl();
+
   const options = [
     {
-      title: 'Schedule a live event',
+      title: intl.formatMessage({id: 'ui.liveStreamForm.selector.scheduleLiveEvent', defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveEvent'}),
       image: EventImage,
       type: LiveStreamType.EVENT_LIVE,
       features: [
-        'Schedule a live room or stream in your event space',
-        'Allow your members to RSVP, add to calendar, and receive event reminders',
-        'Automatically post the event recording to your space',
-        'Allow your members to host the event'
+        intl.formatMessage({
+          id: 'ui.liveStreamForm.selector.scheduleLiveEventItem1',
+          defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveEventItem1'
+        }),
+        intl.formatMessage({
+          id: 'ui.liveStreamForm.selector.scheduleLiveEventItem2',
+          defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveEventItem2'
+        }),
+        intl.formatMessage({
+          id: 'ui.liveStreamForm.selector.scheduleLiveEventItem3',
+          defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveEventItem3'
+        })
       ],
       icons: [<Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>]
     },
     {
-      title: 'Start a live stream',
+      title: intl.formatMessage({
+        id: 'ui.liveStreamForm.selector.scheduleLiveStream',
+        defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveStream'
+      }),
       image: LiveImage,
       type: LiveStreamType.DIRECT_LIVE,
       features: [
-        'Best for webinars, Q&As, AMAs, and for presentations',
-        'Up to 100 people',
-        'Only co-hosts can talk to each other with audio/video',
-        'View-only participants can only chat or be promoted to the stage'
+        intl.formatMessage({
+          id: 'ui.liveStreamForm.selector.scheduleLiveStreamItem1',
+          defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveStreamItem1'
+        }),
+        intl.formatMessage({
+          id: 'ui.liveStreamForm.selector.scheduleLiveStreamItem2',
+          defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveStreamItem2'
+        }),
+        intl.formatMessage({
+          id: 'ui.liveStreamForm.selector.scheduleLiveStreamItem3',
+          defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveStreamItem3'
+        })
       ],
       icons: [<Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>]
     }
@@ -155,29 +201,67 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
     fetchLivestreamStatus();
   }, []);
 
-  return (
-    <Root className={classNames(classes.root, className)} maxWidth="lg" sx={{py: 4}}>
-      <Typography variant="h4" component="h1" align="center" gutterBottom sx={{mb: 4, fontWeight: 500}}>
-        How do you want to go live?
-      </Typography>
-      {timeRemaining !== null && timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON && (
+  const warning = useMemo(() => {
+    let _message;
+    if (isFreeTrialTier && isCommunityOwner) {
+      _message = (
+        <FormattedMessage
+          id="ui.liveStreamForm.selector.warningSubscriptionRequired"
+          defaultMessage="ui.liveStreamForm.selector.warningSubscriptionRequired"
+          values={{
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            link: (...chunks) => <Link to={SELFCOMMUNITY_PRICING[scContext.settings.locale.default]}>{chunks}</Link>
+          }}
+        />
+      );
+    } else if (timeRemaining !== null && timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON) {
+      if (timeRemaining <= 1) {
+        _message = (
+          <FormattedMessage
+            id="ui.liveStreamForm.selector.warningMinutesExausted"
+            defaultMessage="ui.liveStreamForm.selector.warningMinutesExausted"
+          />
+        );
+      } else if (timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON) {
+        _message = (
+          <FormattedMessage
+            id="ui.liveStreamForm.selector.warningRemainingMinutes"
+            defaultMessage="ui.liveStreamForm.selector.warningRemainingMinutes"
+            values={{minutes: timeRemaining}}
+          />
+        );
+      }
+    }
+    if (_message) {
+      return (
         <Box className={classes.warning}>
           <Alert variant="filled" severity="warning">
             {timeRemaining <= 1 ? (
               <FormattedMessage
-                id="ui.liveStreamRoom.selector.warningMinutesExausted"
-                defaultMessage="ui.liveStreamRoom.selector.warningMinutesExausted"
+                id="ui.liveStreamForm.selector.warningMinutesExausted"
+                defaultMessage="ui.liveStreamForm.selector.warningMinutesExausted"
               />
             ) : timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON ? (
               <FormattedMessage
-                id="ui.liveStreamRoom.selector.warningRemainingMinutes"
-                defaultMessage="ui.liveStreamRoom.selector.warningRemainingMinutes"
+                id="ui.liveStreamForm.selector.warningRemainingMinutes"
+                defaultMessage="ui.liveStreamForm.selector.warningRemainingMinutes"
                 values={{minutes: timeRemaining}}
               />
             ) : null}
           </Alert>
         </Box>
-      )}
+      );
+    }
+    return null;
+  }, [timeRemaining, isFreeTrialTier]);
+
+  return (
+    <Root className={classNames(classes.root, className)} maxWidth="lg" sx={{py: 4}}>
+      <Typography variant="h4" component="h1" align="center" gutterBottom sx={{mb: 4, fontWeight: 500}}>
+        How do you want to go live?
+      </Typography>
+      {warning}
       <Box className={classes.options}>
         {options.map((option, index) => (
           <OptionCard

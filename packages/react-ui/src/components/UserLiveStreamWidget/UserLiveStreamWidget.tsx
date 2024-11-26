@@ -10,7 +10,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCEventType, SCLiveStreamType, SCUserType} from '@selfcommunity/types';
+import {SCCommunitySubscriptionTier, SCEventType, SCLiveStreamType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
 import {AxiosResponse} from 'axios';
 import {Fragment, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
@@ -154,7 +154,14 @@ export default function UserLiveStreamWidget(inProps: UserLiveStreamWidgetProps)
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
     [scPreferencesContext.preferences]
   );
-	console.log(liveStreamEnabled);
+  const isFreeTrialTier = useMemo(
+    () =>
+      scPreferencesContext.preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
+    [scPreferencesContext.preferences]
+  );
 
   const _initComponent = useCallback(() => {
     if (!state.initialized && !state.isLoadingNext) {
@@ -208,7 +215,7 @@ export default function UserLiveStreamWidget(inProps: UserLiveStreamWidgetProps)
   }
 
   // RENDER
-  if (!scUser.user || state?.count === 0 || !liveStreamEnabled) {
+  if (!scUser.user || state?.count === 0 || !liveStreamEnabled || isFreeTrialTier) {
     return <HiddenPlaceholder />;
   }
 
