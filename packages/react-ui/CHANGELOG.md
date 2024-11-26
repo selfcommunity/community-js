@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.14...@selfcommunity/react-ui@0.10.2-alpha.15) (2024-11-26)
+
+
+### Bug Fixes
+
+* notifications icon missing. Linear issue: https://linear.app/quentral/issue/QUE-986/elemento-fantasma-view-notifiche ([e55013a](https://github.com/selfcommunity/community-js/commit/e55013a88f500020fa222d085de686decd74c0d5))
+
+
+
+
+
 ## [0.10.2-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.13...@selfcommunity/react-ui@0.10.2-alpha.14) (2024-11-25)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
