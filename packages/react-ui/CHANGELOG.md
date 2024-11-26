@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.16...@selfcommunity/react-ui@0.10.2-alpha.17) (2024-11-26)
+
+
+### Bug Fixes
+
+* fixed subscribed call into event pages ([873d31e](https://github.com/selfcommunity/community-js/commit/873d31e423c3e30b7bf351034c3739e5d525f2f3))
+
+
+
+
+
 ## [0.10.2-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.15...@selfcommunity/react-ui@0.10.2-alpha.16) (2024-11-26)
 
 
