@@ -49,7 +49,8 @@ const Component = {
           display: 'inline-flex',
           '&::after': {
             content: '"\\2022"',
-            padding: theme.spacing()
+            padding: theme.spacing(),
+            alignSelf: 'center'
           },
           '&:last-child::after': {
             display: 'none'
