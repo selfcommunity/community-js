@@ -44,7 +44,9 @@ const Component = {
       '& .SCEventHeader-chip': {
         marginLeft: theme.spacing(2),
         marginBottom: theme.spacing(),
-        backgroundColor: theme.palette.grey[500],
+        backgroundColor: theme.palette.common.white,
+        color: theme.palette.error.light,
+        border: `1px solid ${theme.palette.grey[400]}`,
         '& .SCEventHeader-chip-icon': {
           marginLeft: theme.spacing(1)
         }
