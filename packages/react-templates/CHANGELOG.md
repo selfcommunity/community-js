@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.5-alpha.17...@selfcommunity/react-templates@0.4.5-alpha.18) (2024-11-27)
+
+
+### Bug Fixes
+
+* feedObj header tags. Linear issue: https://linear.app/quentral/issue/QUE-989/header-categorie-con-molti-tag ([bd09135](https://github.com/selfcommunity/community-js/commit/bd091352df1e6a3f00680354387f3ef99871dc28))
+
+
+
+
+
 ## [0.4.5-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.5-alpha.16...@selfcommunity/react-templates@0.4.5-alpha.17) (2024-11-26)
 
 
