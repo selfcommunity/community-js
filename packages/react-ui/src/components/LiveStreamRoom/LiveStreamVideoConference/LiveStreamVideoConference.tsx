@@ -32,9 +32,9 @@ import {defaultVideoOptions} from '../constants';
 import {FormattedMessage} from 'react-intl';
 import {VideoConference} from './VideoConference';
 import {useLiveStream} from './LiveStreamProvider';
-import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import BaseDialog from '../../../shared/BaseDialog';
+import {closeSnackbar} from 'notistack';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -241,6 +241,10 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     setLiveActive(false);
   }, []);
 
+  const handleBackHome = useCallback(() => {
+    closeSnackbar();
+  }, [closeSnackbar]);
+
   /**
    * User must be authenticated
    */
@@ -316,7 +320,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
                   <Typography variant="h5">
                     <FormattedMessage id="ui.liveStreamRoom.conference.end" defaultMessage="ui.liveStreamRoom.conference.end" />
                   </Typography>
-                  <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+                  <Button variant="contained" color="secondary" component={Link} to={'/'} onClick={handleBackHome} className={classes.btnBackHome}>
                     <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
                   </Button>
                   {endConferenceEndContent}
