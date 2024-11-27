@@ -7,9 +7,10 @@ import {defaultUserChoices} from '@livekit/components-core';
 import {MediaDeviceMenu, useMediaDevices, usePersistentUserChoices} from '@livekit/components-react';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import ParticipantTileAvatar from './ParticipantTileAvatar';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {TrackToggle} from './TrackToggle';
 import {useLiveStream} from './LiveStreamProvider';
+import {Button} from '@mui/material';
 
 /**
  * Props for the PreJoin component.
@@ -203,6 +204,7 @@ export function PreJoin({
   ...htmlProps
 }: PreJoinProps) {
   const {liveStream} = useLiveStream();
+  const scUserContext = useSCUser();
   const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
 
   // TODO: Remove and pipe `defaults` object directly into `usePersistentUserChoices` once we fully switch from type `LocalUserChoices` to `UserChoices`.
@@ -248,8 +250,10 @@ export function PreJoin({
     saveVideoInputDeviceId(videoDeviceId);
   }, [videoDeviceId, saveVideoInputDeviceId]);
   React.useEffect(() => {
-    saveUsername(username);
-  }, [username, saveUsername]);
+    if (scUserContext.user) {
+      saveUsername(scUserContext.user.username);
+    }
+  }, [username, saveUsername, scUserContext.user]);
 
   const tracks = usePreviewTracks(
     {
@@ -259,12 +263,8 @@ export function PreJoin({
     onError
   );
 
-  const scUserContext: SCUserContextType = useSCUser();
-
   const videoEl = React.useRef(null);
-
   const videoTrack = React.useMemo(() => tracks?.filter((track) => track.kind === Track.Kind.Video)[0] as LocalVideoTrack, [tracks]);
-
   const facingMode = React.useMemo(() => {
     if (videoTrack) {
       const {facingMode} = facingModeFromLocalTrack(videoTrack);
@@ -300,7 +300,7 @@ export function PreJoin({
     [onValidate]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newUserChoices = {
       username,
       videoEnabled,
@@ -310,7 +310,7 @@ export function PreJoin({
     };
     setUserChoices(newUserChoices);
     setIsValid(handleValidation(newUserChoices));
-  }, [username, videoEnabled, handleValidation, audioEnabled, audioDeviceId, videoDeviceId]);
+  }, [username, scUserContext.user, videoEnabled, handleValidation, audioEnabled, audioDeviceId, videoDeviceId]);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -386,7 +386,7 @@ export function PreJoin({
         </div>
       </div>
       <form className="lk-username-container">
-        <input
+        {/* <input
           className="lk-form-control"
           id="username"
           name="username"
@@ -395,12 +395,13 @@ export function PreJoin({
           placeholder={userLabel}
           onChange={(inputEl) => setUsername(inputEl.target.value)}
           autoComplete="off"
-        />
+        /> */}
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <button className="lk-button lk-join-button" type="submit" onClick={handleSubmit} disabled={!isValid}>
           {joinLabel}
         </button>
       </form>
-
       {debug && (
         <>
           <strong>User Choices:</strong>
