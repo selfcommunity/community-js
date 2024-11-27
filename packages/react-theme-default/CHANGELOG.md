@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.20...@selfcommunity/react-theme-default@0.4.2-alpha.21) (2024-11-27)
+
+
+### Bug Fixes
+
+* finished event chip style ([00198e1](https://github.com/selfcommunity/community-js/commit/00198e144df43293d7453b67c1828f5fa8bfb4b3))
+
+
+
+
+
 ## [0.4.2-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.19...@selfcommunity/react-theme-default@0.4.2-alpha.20) (2024-11-27)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
