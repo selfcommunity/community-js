@@ -200,8 +200,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
     [scUserContext, liveStream]
   );
   const hideParticipantsList = useMemo(
-    () =>
-      scUserContext.user && liveStream && liveStream.host.id !== scUserContext.user.id && liveStream && !liveStream?.settings?.hideParticipantList,
+    () => scUserContext.user && liveStream && liveStream?.settings?.hideParticipantsList && liveStream.host.id !== scUserContext.user.id,
     [scUserContext, liveStream]
   );
 

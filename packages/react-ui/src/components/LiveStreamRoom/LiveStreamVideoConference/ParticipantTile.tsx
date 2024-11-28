@@ -133,9 +133,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                   )
                 )}
                 <div className="lk-participant-placeholder">
-                  <ParticipantTileAvatar
-                    {...(liveStream?.host.id !== scUserContext.user.id ? {participant: trackReference.participant} : {user: scUserContext.user})}
-                  />
+                  <ParticipantTileAvatar participant={trackReference.participant} />
                 </div>
                 <div className="lk-participant-metadata">
                   <div className="lk-participant-metadata-item">

@@ -17,6 +17,15 @@ export function FocusLayoutContainer(props: FocusLayoutContainerProps) {
   return <div {...elementProps}>{props.children}</div>;
 }
 
+export function FocusLayoutContainerNoParticipants(props: FocusLayoutContainerProps) {
+  const elementProps = mergeProps(props, {className: 'lk-focus-layout'});
+  return (
+    <div {...elementProps} style={{gridTemplateColumns: 'none'}}>
+      {props.children}
+    </div>
+  );
+}
+
 export interface FocusLayoutProps extends React.HTMLAttributes<HTMLElement> {
   /** The track to display in the focus layout. */
   trackRef?: TrackReferenceOrPlaceholder;

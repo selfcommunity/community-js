@@ -35,8 +35,12 @@ export const DisconnectButton: (props: DisconnectButtonProps & React.RefAttribut
      * Intercept fist leave action
      */
     const handleOnLeave = useCallback(() => {
-      setOpenConfirmDialog(true);
-    }, [setOpenConfirmDialog]);
+      if (liveStream && scUserContext.user.id === liveStream.host.id) {
+        setOpenConfirmDialog(true);
+      } else {
+        onClick?.();
+      }
+    }, [setOpenConfirmDialog, liveStream, scUserContext.user]);
 
     /**
      * Control close live

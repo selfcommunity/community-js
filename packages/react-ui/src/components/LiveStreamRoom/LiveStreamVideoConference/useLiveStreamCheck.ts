@@ -64,14 +64,15 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
       console.log(participants.length);
       console.log('isExpiringSoon: ', isExpiringSoon);
       console.log('isExpired: ', isExpired);
-      console.log('Checking participants...');
+      console.log('Checking participants...', participants.length);
+      console.log(participants);
     }
     if (participants.length <= 1) {
       isExpiringSoon ? setIsExpired(true) : setIsExpiringSoon(true);
       if (!isExpiringSoon && !isExpired && showWarnings) {
         enqueueSnackbar(
           intl.formatMessage({id: 'ui.liveStreamRoom.check.youAreAloneInTheRoom', defaultMessage: 'ui.liveStreamRoom.check.youAreAloneInTheRoom'}),
-          {variant: 'warning', autoHideDuration: 20000}
+          {variant: 'warning', autoHideDuration: 7000}
         );
       } else if (isExpired && performDisconnect) {
         // Leave the room
@@ -89,7 +90,7 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
       if (!isExpiringSoon && !isExpired && liveStream.host.id !== scUserContext.user.id && showWarnings) {
         enqueueSnackbar(intl.formatMessage({id: 'ui.liveStreamRoom.check.hostMissing', defaultMessage: 'ui.liveStreamRoom.check.hostMissing'}), {
           variant: 'warning',
-          autoHideDuration: 20000
+          autoHideDuration: 7000
         });
       } else if (isExpired && performDisconnect) {
         // Leave the room
@@ -99,7 +100,7 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
     }
     __DEBUG && console.log('Checking live status resources...');
     fetchLivestreamStatus();
-  }, [isExpired, isExpiringSoon, buttonProps]);
+  }, [isExpired, isExpiringSoon, buttonProps, participants]);
 
   useEffect(() => {
     intervalRef.current = setInterval(check, LIVE_CHECKING_INTERVAL * 1000);

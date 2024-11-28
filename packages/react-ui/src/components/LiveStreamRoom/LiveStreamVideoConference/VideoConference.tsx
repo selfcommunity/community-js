@@ -21,7 +21,7 @@ import {ParticipantTile} from './ParticipantTile';
 import {ControlBar} from './ControlBar';
 import {useEffect} from 'react';
 import {useLivestreamCheck} from './useLiveStreamCheck';
-import {FocusLayout, FocusLayoutContainer} from './FocusLayout';
+import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} from './FocusLayout';
 
 export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
   chatMessageFormatter?: MessageFormatter;
@@ -154,16 +154,18 @@ export function VideoConference({
               </div>
             ) : (
               <div className="lk-focus-layout-wrapper">
-                <FocusLayoutContainer>
-                  {!hideParticipantsList && (
+                {hideParticipantsList ? (
+                  <FocusLayoutContainerNoParticipants>{focusTrack && <FocusLayout trackRef={focusTrack} />}</FocusLayoutContainerNoParticipants>
+                ) : (
+                  <FocusLayoutContainer>
                     <CarouselLayout tracks={carouselTracks}>
                       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                       {/* @ts-ignore */}
                       <ParticipantTile />
                     </CarouselLayout>
-                  )}
-                  {focusTrack && <FocusLayout trackRef={focusTrack} />}
-                </FocusLayoutContainer>
+                    {focusTrack && <FocusLayout trackRef={focusTrack} />}
+                  </FocusLayoutContainer>
+                )}
               </div>
             )}
             <ControlBar

@@ -11,16 +11,7 @@ import EventImage from '../../../assets/liveStream/event';
 import LiveImage from '../../../assets/liveStream/live';
 import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../../LiveStreamRoom/constants';
-import {
-  Link,
-  SCContextType,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCRoutes,
-  useSCContext,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {Link, SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
 import {SELFCOMMUNITY_PRICING} from '../../PlatformWidget/constants';
 
@@ -303,7 +294,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
       </Box>
       <Box className={classes.actions}>
         <Button disabled={!selectedOption || !timeRemaining} variant="contained" onClick={handleNext} color="secondary">
-          Next
+          <FormattedMessage id="ui.liveStreamForm.selector.next" defaultMessage="ui.liveStreamForm.selector.next" />
         </Button>
       </Box>
     </Root>

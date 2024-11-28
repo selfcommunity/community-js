@@ -10,7 +10,7 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCFeatureName, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
+import {SCFeatureName, SCLiveStreamConnectionDetailsErrorType, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
@@ -220,9 +220,14 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               if (error.response.data.errors[0].code) {
                 const _error = `ui.liveStreamRoom.connect.error.${camelCase(error.response.data.errors[0].code)}`;
                 _msg = intl.formatMessage({id: _error, defaultMessage: _error});
+                if (error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM) {
+                  setError(_msg);
+                }
+                enqueueSnackbar(_msg, {variant: 'error', autoHideDuration: 5000});
+              } else {
+                enqueueSnackbar(_msg, {variant: 'error'});
+                setError(_msg);
               }
-              setError(_msg);
-              enqueueSnackbar(_msg, {variant: 'error'});
             }
             setLoading(false);
           });
@@ -291,7 +296,15 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               )}
               <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading || error})}>
                 <LiveStreamContext.Provider value={{liveStream: scLiveStream}}>
-                  <PreJoin defaults={preJoinDefaults} onSubmit={handlePreJoinSubmit} onError={handlePreJoinError} />
+                  <PreJoin
+                    defaults={preJoinDefaults}
+                    onSubmit={handlePreJoinSubmit}
+                    onError={handlePreJoinError}
+                    joinLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.joinRoom', defaultMessage: 'ui.liveStreamRoom.preJoin.joinRoom'})}
+                    micLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.microphone', defaultMessage: 'ui.liveStreamRoom.preJoin.microphone'})}
+                    camLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.camera', defaultMessage: 'ui.liveStreamRoom.preJoin.camera'})}
+                    userLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.username', defaultMessage: 'ui.liveStreamRoom.preJoin.username'})}
+                  />
                 </LiveStreamContext.Provider>
                 {loading && (
                   <Box className={classes.prejoinLoader}>
