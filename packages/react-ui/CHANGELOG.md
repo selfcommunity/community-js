@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.19...@selfcommunity/react-ui@0.10.2-alpha.20) (2024-11-28)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-914/nei-messaggi-privati-non-viene-passata-una-lista-di-id-a-volte + event/group tag header in feed objs ([d731c2b](https://github.com/selfcommunity/community-js/commit/d731c2be752b191b173611aca4afcfdf7b1db260))
+
+
+
+
+
 ## [0.10.2-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.18...@selfcommunity/react-ui@0.10.2-alpha.19) (2024-11-28)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
