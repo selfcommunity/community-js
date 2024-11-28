@@ -83,7 +83,9 @@ const Component = {
             color: theme.palette.common.white,
             textTransform: 'initial'
           }
-        }
+        },
+        borderBottom: '1px solid rgba(221, 221, 221, 1)',
+        margin: theme.spacing(1, 2, 0, 2)
       },
       '& .SCFeedObject-content': {
         padding: theme.spacing(1, 0, 0, 0),
