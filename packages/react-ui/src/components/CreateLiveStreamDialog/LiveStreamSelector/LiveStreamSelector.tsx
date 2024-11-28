@@ -111,7 +111,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
       preferences &&
       SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
-      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value !== SCCommunitySubscriptionTier.FREE_TRIAL,
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
     [preferences]
   );
   const intl = useIntl();
@@ -228,18 +228,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
       return (
         <Box className={classes.warning}>
           <Alert variant="filled" severity="warning">
-            {timeRemaining <= 1 ? (
-              <FormattedMessage
-                id="ui.liveStreamForm.selector.warningMinutesExausted"
-                defaultMessage="ui.liveStreamForm.selector.warningMinutesExausted"
-              />
-            ) : timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON ? (
-              <FormattedMessage
-                id="ui.liveStreamForm.selector.warningRemainingMinutes"
-                defaultMessage="ui.liveStreamForm.selector.warningRemainingMinutes"
-                values={{minutes: timeRemaining}}
-              />
-            ) : null}
+            {_message}
           </Alert>
         </Box>
       );
@@ -293,7 +282,11 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
         ))}
       </Box>
       <Box className={classes.actions}>
-        <Button disabled={!selectedOption || !timeRemaining} variant="contained" onClick={handleNext} color="secondary">
+        <Button
+          disabled={!selectedOption || !timeRemaining || isFreeTrialTier}
+          variant="contained"
+          onClick={handleNext}
+          color="secondary">
           <FormattedMessage id="ui.liveStreamForm.selector.next" defaultMessage="ui.liveStreamForm.selector.next" />
         </Button>
       </Box>

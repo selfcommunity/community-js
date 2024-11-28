@@ -214,8 +214,7 @@ export default function UserLiveStreamWidget(inProps: UserLiveStreamWidgetProps)
     return <Skeleton />;
   }
 
-  // RENDER
-  if (!scUser.user || state?.count === 0 || !liveStreamEnabled || isFreeTrialTier) {
+  if (!scUser || state?.count === 0 || !liveStreamEnabled || isFreeTrialTier) {
     return <HiddenPlaceholder />;
   }
 
