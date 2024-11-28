@@ -620,7 +620,7 @@
   "ui.notification.collapsedFor.collapsedForVulgar": "A contribution of yours has been hidden because several users have flagged it as \"vulgar\". View the website rules for more info.",
   "ui.notification.collapsedFor.collapsedForVulgarSnippet": "Contribution hidden because flagged it as \"vulgar\"",
   "ui.notification.collapsedFor.youWrote": "Your contribution: ",
-  "ui.notification.comment.comment": "commented on your content:< ",
+  "ui.notification.comment.comment": "commented a content: ",
   "ui.notification.comment.nestedComment": "replied to your comment: ",
   "ui.notification.contribution.discussion": "created a new article",
   "ui.notification.contribution.newPostOrStatus": "created a new {contribution}",
