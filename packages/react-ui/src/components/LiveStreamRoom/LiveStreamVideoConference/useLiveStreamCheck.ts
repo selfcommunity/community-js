@@ -51,6 +51,8 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
           __DEBUG && console.log('Livestream  ');
           setIsExpired(true);
           clearInterval(intervalRef.current);
+        } else if (isExpiringSoon) {
+          setIsExpiringSoon(false);
         }
       })
       .catch((error) => {
@@ -80,6 +82,8 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
         buttonProps.onClick();
       }
       return;
+    } else if (isExpiringSoon) {
+      setIsExpiringSoon(false);
     }
     __DEBUG && console.log('Checking live speaker...');
     const speaker = participants.find((pt) => {
@@ -97,6 +101,8 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
         __DEBUG && console.log('Leave the room: no host');
         buttonProps.onClick();
       }
+    } else if (isExpiringSoon) {
+      setIsExpiringSoon(false);
     }
     __DEBUG && console.log('Checking live status resources...');
     fetchLivestreamStatus();
