@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.6...@selfcommunity/react-i18n@0.7.4-alpha.7) (2024-11-28)
+
+
+### Performance Improvements
+
+* made comment notification generic. Linaer issue: https://linear.app/quentral/issue/QUE-994/messaggio-notifiche-in-app-incoerente ([7122732](https://github.com/selfcommunity/community-js/commit/7122732e2251f67666686555a798050bbe77f075))
+
+
+
+
+
 ## [0.7.4-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.5...@selfcommunity/react-i18n@0.7.4-alpha.6) (2024-11-25)
 
 
