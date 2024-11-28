@@ -96,7 +96,10 @@ const Component = {
         '& .MuiAvatar-root': {
           width: 100,
           height: 60,
-          borderRadius: '5px'
+          borderRadius: '5px',
+          '& img': {
+            borderRadius: '5px'
+          }
         }
       },
       '& .SCLiveStream-snippet-image': {

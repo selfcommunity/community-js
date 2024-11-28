@@ -4,7 +4,7 @@ import UserLiveStreamWidget from './index';
 export default {
   title: 'Design System/React UI/LiveStream/User LiveStream Widget',
   args: {
-    userId: 121
+    userId: 1
   },
   component: UserLiveStreamWidget
 } as Meta<typeof UserLiveStreamWidget>;

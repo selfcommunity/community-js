@@ -222,6 +222,8 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 _msg = intl.formatMessage({id: _error, defaultMessage: _error});
                 if (error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM) {
                   setError(_msg);
+                } else {
+                  setTimeout(() => toggleAttrDisabledPrejoinActions(false), 3000);
                 }
                 enqueueSnackbar(_msg, {variant: 'error', autoHideDuration: 5000});
               } else {
@@ -301,7 +303,10 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     onSubmit={handlePreJoinSubmit}
                     onError={handlePreJoinError}
                     joinLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.joinRoom', defaultMessage: 'ui.liveStreamRoom.preJoin.joinRoom'})}
-                    micLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.microphone', defaultMessage: 'ui.liveStreamRoom.preJoin.microphone'})}
+                    micLabel={intl.formatMessage({
+                      id: 'ui.liveStreamRoom.preJoin.microphone',
+                      defaultMessage: 'ui.liveStreamRoom.preJoin.microphone'
+                    })}
                     camLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.camera', defaultMessage: 'ui.liveStreamRoom.preJoin.camera'})}
                     userLabel={intl.formatMessage({id: 'ui.liveStreamRoom.preJoin.username', defaultMessage: 'ui.liveStreamRoom.preJoin.username'})}
                   />

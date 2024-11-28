@@ -2,7 +2,11 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .SCLiveStreamSelector-warning': {
-        margin: theme.spacing(2, 5, 2, 5)
+        margin: theme.spacing(2, 5, 2, 5),
+        [`& a`]: {
+          color: theme.palette.common.white,
+          fontWeight: 'bold'
+        }
       },
       '& .SCLiveStreamSelector-options': {
         display: 'flex',
