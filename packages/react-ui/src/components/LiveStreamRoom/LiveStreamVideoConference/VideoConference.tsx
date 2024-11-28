@@ -63,6 +63,7 @@ export function VideoConference({
     unreadMessages: 0,
     showSettings: showSettings || false
   });
+  const [focusInitialized, setFocusInitialized] = React.useState(false);
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
 
   const tracks = useTracks(
@@ -117,7 +118,17 @@ export function VideoConference({
       if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
         layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
       }
-    } else if (speakerFocused) {
+    }
+  }, [
+    screenShareTracks.map((ref) => `${ref.publication.trackSid}_${ref.publication.isSubscribed}`).join(),
+    focusTrack?.publication?.trackSid,
+    tracks,
+    participants,
+    speakerFocused
+  ]);
+
+  useEffect(() => {
+    if (speakerFocused && !focusInitialized) {
       const speaker = participants.find((pt) => {
         return pt.name === speakerFocused.username;
       });
@@ -129,15 +140,10 @@ export function VideoConference({
           return false;
         });
         layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
+        setFocusInitialized(true);
       }
     }
-  }, [
-    screenShareTracks.map((ref) => `${ref.publication.trackSid}_${ref.publication.isSubscribed}`).join(),
-    focusTrack?.publication?.trackSid,
-    tracks,
-    participants,
-    speakerFocused
-  ]);
+  }, [tracks, participants, speakerFocused]);
 
   return (
     <div className="lk-video-conference" {...props}>
