@@ -8,7 +8,7 @@ export const defaultVideoOptions = {
  * Checking live status on VideoLiveConference
  * In minutes
  */
-export const LIVE_CHECKING_INTERVAL = 50;
+export const LIVE_CHECKING_INTERVAL = 1;
 
 /**
  * Warning threshold expiring soon

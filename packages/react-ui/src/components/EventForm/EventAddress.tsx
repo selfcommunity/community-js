@@ -106,8 +106,10 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     [preferences]
   );
   const canViewLiveTab = useMemo(
-    () => !isFreeTrialTier && (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
-    [scUserContext?.user?.permission, isFreeTrialTier]
+    () =>
+      (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
+      (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
+    [scUserContext?.user?.permission, event]
   );
 
   // HANDLERS
@@ -184,7 +186,6 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   if (!geocodingApiKey && !isLoaded) {
     return <HiddenPlaceholder />;
   }
-
   return (
     <Root className={classNames(classes.root, className)}>
       <Tabs className={classes.tabs} value={location} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
