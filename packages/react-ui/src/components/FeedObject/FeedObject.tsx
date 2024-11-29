@@ -786,31 +786,29 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <div className={classes.category}>
                 <>
                   {obj.group && (
-                    <div className={classes.group}>
-                      <Chip
-                        color="secondary"
-                        size="small"
-                        key={obj.group.id}
-                        icon={<Icon>groups</Icon>}
-                        component={Link}
-                        to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
-                        clickable
-                      />
-                    </div>
+                    <Chip
+                      className={classes.group}
+                      color="secondary"
+                      size="small"
+                      key={obj.group.id}
+                      icon={<Icon>groups</Icon>}
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
+                      clickable
+                    />
                   )}
                   {obj.event && (
-                    <div className={classes.event}>
-                      <Chip
-                        color="secondary"
-                        size="small"
-                        key={obj.event.id}
-                        label={obj.event.name}
-                        icon={<Icon>CalendarIcon</Icon>}
-                        component={Link}
-                        to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
-                        clickable
-                      />
-                    </div>
+                    <Chip
+                      className={classes.event}
+                      color="secondary"
+                      size="small"
+                      key={obj.event.id}
+                      label={obj.event.name}
+                      icon={<Icon>CalendarIcon</Icon>}
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
+                      clickable
+                    />
                   )}
                 </>
                 {obj.categories.map((c) => (
@@ -835,18 +833,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </div>
             )}
             {obj.event && !obj.categories.length && (
-              <div className={classes.event}>
-                <Chip
-                  color="secondary"
-                  size="small"
-                  key={obj.event.id}
-                  icon={<Icon>CalendarIcon</Icon>}
-                  label={obj.event.name}
-                  component={Link}
-                  to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
-                  clickable
-                />
-              </div>
+              <Chip
+                className={classes.event}
+                color="secondary"
+                size="small"
+                key={obj.event.id}
+                icon={<Icon>CalendarIcon</Icon>}
+                label={obj.event.name}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
+                clickable
+              />
             )}
             <CardHeader
               className={classes.header}
@@ -1033,17 +1030,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     </div>
                   )}
                   {obj.event && (
-                    <div className={classes.event}>
-                      <Chip
-                        color="secondary"
-                        size="small"
-                        key={obj.event.id}
-                        icon={<Icon>CalendarIcon</Icon>}
-                        component={Link}
-                        to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
-                        clickable
-                      />
-                    </div>
+                    <Chip
+                      className={classes.event}
+                      color="secondary"
+                      size="small"
+                      key={obj.event.id}
+                      icon={<Icon>CalendarIcon</Icon>}
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
+                      clickable
+                    />
                   )}
                 </>
                 {obj.categories.map((c) => (

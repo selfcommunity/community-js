@@ -1,14 +1,14 @@
-import { LoadingButton } from '@mui/lab';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { EventService } from '@selfcommunity/api-services';
-import { useSCFetchEvent, useSCFetchUser } from '@selfcommunity/react-core';
-import { SCEventType, SCUserType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {LoadingButton} from '@mui/lab';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {EventService} from '@selfcommunity/api-services';
+import {useSCFetchEvent, useSCFetchUser} from '@selfcommunity/react-core';
+import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import { HTMLAttributes, useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCOPE_SC_UI } from '../../constants/Errors';
+import {HTMLAttributes, useCallback, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const PREFIX = 'SCAcceptRequestUserEventButton';
@@ -90,20 +90,20 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
     props: inProps,
     name: PREFIX
   });
-  const { className, eventId, event, userId, user, handleConfirm = null, ...rest } = props;
+  const {className, eventId, event, userId, user, handleConfirm = null, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
   // HOOKS
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const { scUser } = useSCFetchUser({ id: userId, user });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scUser} = useSCFetchUser({id: userId, user});
 
   const handleConfirmAction = useCallback(() => {
     setLoading(true);
 
-    EventService.inviteOrAcceptEventRequest(scEvent.id, { users: [scUser.id] })
+    EventService.inviteOrAcceptEventRequest(scEvent.id, {users: [scUser.id]})
       .then(() => {
         handleConfirm?.(scUser.id);
         setLoading(false);

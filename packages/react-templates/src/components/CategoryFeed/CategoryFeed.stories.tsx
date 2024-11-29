@@ -9,7 +9,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 export const Base: StoryObj<typeof CategoryFeedTemplate> = {
   args: {
-    categoryId: 9
+    categoryId: 13
   },
   render: (args) => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>

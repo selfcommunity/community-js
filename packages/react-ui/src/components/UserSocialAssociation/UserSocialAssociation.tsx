@@ -1,15 +1,23 @@
 import React, {useEffect, useMemo} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, IconButton, Stack, StackProps, Typography} from '@mui/material';
+import {Button, Paper, Stack, StackProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserProviderAssociationType, SCUserType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCFetchUserProviders, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import Icon from '@mui/material/Icon';
 import {SCUserSocialAssociations} from '../../types';
+import {PROVIDER_ICONS_CONTAINED} from '../../constants/SocialShare';
 
 const messages = defineMessages({
+  provider: {
+    id: 'ui.userSocialAssociation.provider',
+    defaultMessage: 'ui.userSocialAssociation.provider'
+  },
+  actions: {
+    id: 'ui.userSocialAssociation.actions',
+    defaultMessage: 'ui.userSocialAssociation.actions'
+  },
   socialAdd: {
     id: 'ui.userSocialAssociation.add',
     defaultMessage: 'ui.userSocialAssociation.add'
@@ -24,7 +32,11 @@ const PREFIX = 'SCUserSocialAssociation';
 
 const classes = {
   root: `${PREFIX}-root`,
-  field: `${PREFIX}-field`
+  field: `${PREFIX}-field`,
+  providerTable: `${PREFIX}-provider-table`,
+  providerIcon: `${PREFIX}-provider-icon`,
+  providerName: `${PREFIX}-provider-name`,
+  providerAction: `${PREFIX}-provider-action`
 };
 
 const Root = styled(Stack, {
@@ -163,33 +175,67 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   if (!providersEnabled) {
     return null;
   }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest} direction="column">
       {providersLinked.length !== 0 || (providersToLink.length !== 0 && onCreateAssociation) ? children : null}
-      {providersToLink.length !== 0 && onCreateAssociation && (
-        <Box>
-          <Typography variant="body2"> {intl.formatMessage(messages.socialAdd)}</Typography>
-          {providersToLink.map((p: string, index) => (
-            <React.Fragment key={index}>
-              <IconButton onClick={onCreateAssociation ? () => onCreateAssociation(p) : null}>
-                <Icon>{p}</Icon>
-              </IconButton>
-            </React.Fragment>
-          ))}
-        </Box>
-      )}
-      {providersLinked.length !== 0 && (
-        <Box>
-          <Typography variant="body2"> {intl.formatMessage(messages.socialRemove)}</Typography>
-          {providersLinked.map((p: SCUserProviderAssociationType, index) => (
-            <React.Fragment key={index}>
-              <IconButton color="primary" onClick={() => onDeleteAssociation(p)}>
-                <Icon>{p.provider}</Icon>
-              </IconButton>
-            </React.Fragment>
-          ))}
-        </Box>
-      )}
+      <TableContainer component={Paper} className={classes.providerTable}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{width: '60%'}}>{intl.formatMessage(messages.provider)}</TableCell>
+              <TableCell align="left">{intl.formatMessage(messages.actions)}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {providersToLink.length !== 0 && onCreateAssociation && (
+              <>
+                {providersToLink.map((p: string, index) => (
+                  <TableRow key={index}>
+                    <TableCell scope="row">
+                      <img src={PROVIDER_ICONS_CONTAINED[`${p}`]} width="30" height="30" className={classes.providerIcon} alt={p} />
+                      <span className={classes.providerName}>{p}</span>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Button
+                        variant="contained"
+                        className={classes.providerAction}
+                        color="primary"
+                        onClick={onCreateAssociation ? () => onCreateAssociation(p) : null}
+                        size="small">
+                        {intl.formatMessage(messages.socialAdd)}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
+            {providersLinked.length !== 0 && (
+              <>
+                {providersLinked.map((p: SCUserProviderAssociationType, index) => (
+                  <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                    <TableCell scope="row">
+                      <img
+                        src={PROVIDER_ICONS_CONTAINED[`${p.provider}`]}
+                        width="30"
+                        height="30"
+                        className={classes.providerIcon}
+                        alt={p.provider}
+                      />
+                      <span className={classes.providerName}>{p.provider}</span>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Button variant="outlined" className={classes.providerAction} onClick={() => onDeleteAssociation(p)} size="small">
+                        {intl.formatMessage(messages.socialRemove)}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Root>
   );
 }

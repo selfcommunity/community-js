@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
   ContributionUtils,
@@ -24,7 +24,7 @@ import {SCCustomAdvPosition, SCEventPrivacyType, SCEventSubscriptionStatusType, 
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {SnackbarKey, useSnackbar} from 'notistack';
+import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 import EventFeedSkeleton from './Skeleton';
 import {Box} from '@mui/material';
@@ -164,12 +164,12 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
   const feedRef = useRef<FeedRef>();
 
   // Hooks
-  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
     enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
-      action: (snackbarId: SnackbarKey) => (
+      action: () => (
         <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
           <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
         </Link>
@@ -194,19 +194,24 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
     () =>
       widgets.map((w) => {
         if (scEvent) {
-          return {...w, componentProps: {...w.componentProps, eventId: scEvent.id}};
+          return {...w, componentProps: {...w.componentProps, event: scEvent}};
         }
         return w;
       }),
     [widgets, scEvent]
   );
 
-  if (!scEvent || (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id)))) {
+  if (
+    scUserContext.user === undefined ||
+    !scEvent ||
+    scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED ||
+    (scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
+    (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id)))
+  ) {
     return <EventFeedSkeleton />;
   } else if (
     scEvent.privacy === SCEventPrivacyType.PRIVATE &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.SUBSCRIBED &&
-    scEvent.subscription_status !== SCEventSubscriptionStatusType.INVITED &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.GOING &&
     scEvent.subscription_status !== SCEventSubscriptionStatusType.NOT_GOING
   ) {
@@ -249,7 +254,6 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
               ((!scUserContext.user && scEvent.privacy === SCEventPrivacyType.PUBLIC) ||
                 (scUserContext.user &&
                   (scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED ||
-                    scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED ||
                     scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
                     scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING)))
           ) && (

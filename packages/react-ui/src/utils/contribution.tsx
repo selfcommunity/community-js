@@ -65,6 +65,18 @@ export function getContributionHtml(html, handleUrl) {
 }
 
 /**
+ * Get the contribution text for comment object
+ * Hydrate text with mention, etc.
+ * @param html Html of the contribution
+ * @param handleUrl Func that handle urls
+ */
+export function getCommentContributionHtml(html, handleUrl) {
+  return html.replace(/<mention.*? id="([0-9]+)"{1}.*?>@([a-z\d_-]+)<\/mention>/gi, (match, id, username) => {
+    return `<a href='${handleUrl(SCRoutes.USER_PROFILE_ROUTE_NAME, {id, username})}'>@${username}</a>`;
+  });
+}
+
+/**
  * Get route name for a contribution
  * @param obj
  */

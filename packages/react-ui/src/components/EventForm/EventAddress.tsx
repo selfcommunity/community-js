@@ -2,17 +2,16 @@ import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/mate
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {useLoadScript} from '@react-google-maps/api';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
-import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from 'react';
+import {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import UrlTextField from '../../shared/UrlTextField';
 import {PREFIX} from './constants';
 import {Geolocation, Place} from './types';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {useSCGoogleApiLoader} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   virtualPlaceholder: {
@@ -56,21 +55,8 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Place[]>([]);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-
-  // PREFERENCES
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
-
-  // MEMO
-  const geocodingApiKey = useMemo(() => {
-    return preferences && SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY in preferences
-      ? preferences[SCPreferences.PROVIDERS_GOOGLE_GEOCODING_API_KEY].value
-      : null;
-  }, [preferences]);
-
-  const {isLoaded} = useLoadScript({
-    googleMapsApiKey: geocodingApiKey,
-    libraries: ['places', 'geocoding']
-  });
+  // HOOKS
+  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
 
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
@@ -91,7 +77,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         setGeoLocation(newValue);
         forwardGeolocationData({
           location,
-          geolocation: place.formatted_address,
+          geolocation: newValue.description.split(',')[0] + '. ' + place.formatted_address,
           lat: place.geometry.location.lat,
           lng: place.geometry.location.lng
         });
