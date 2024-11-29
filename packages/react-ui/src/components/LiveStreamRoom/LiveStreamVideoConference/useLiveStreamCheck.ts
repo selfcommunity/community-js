@@ -128,7 +128,7 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
   useEffect(() => {
     intervalRef.current = setInterval(check, LIVE_CHECKING_INTERVAL * 60000);
     return () => intervalRef.current && clearInterval(intervalRef.current);
-  }, [isExpired, isExpiringSoon]);
+  }, [isExpired, isExpiringSoon, participants]);
 
   return {timeRemaining, isExpiringSoon, isExpired};
 }

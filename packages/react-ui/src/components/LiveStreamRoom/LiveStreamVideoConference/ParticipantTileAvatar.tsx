@@ -52,8 +52,7 @@ export default function ParticipantTileAvatar(inProps: ParticipantTileAvatarProp
   // CONTEXT
   const scContext: SCContextType = useSCContext();
 
-	console.log(participant);
-
+  // RENDER
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       {user ? (

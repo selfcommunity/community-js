@@ -22,8 +22,30 @@ import {ControlBar} from './ControlBar';
 import {useEffect} from 'react';
 import {useLivestreamCheck} from './useLiveStreamCheck';
 import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} from './FocusLayout';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
+import {useThemeProps} from '@mui/system';
 
-export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
+const PREFIX = 'SCVideoConference';
+
+const classes = {
+	root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+	name: PREFIX,
+	slot: 'Root',
+	overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+	'& .lk-chat': {
+		height: '100%'
+	}
+}));
+
+export interface VideoConferenceProps {
+	className?: string;
   chatMessageFormatter?: MessageFormatter;
   chatMessageEncoder?: MessageEncoder;
   chatMessageDecoder?: MessageDecoder;
@@ -44,20 +66,24 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
  * of participants, basic non-persistent chat, screen sharing, and more.
  *
  */
-export function VideoConference({
-  chatMessageFormatter,
-  chatMessageDecoder,
-  chatMessageEncoder,
-  SettingsComponent,
-  speakerFocused,
-  disableChat = false,
-  disableMicrophone = false,
-  disableCamera = false,
-  disableShareScreen = false,
-  hideParticipantsList = false,
-  showSettings,
-  ...props
-}: VideoConferenceProps) {
+export function VideoConference(inProps: VideoConferenceProps) {
+	// PROPS
+	const props: VideoConferenceProps = useThemeProps({
+		props: inProps,
+		name: PREFIX
+	});
+	const {className,chatMessageFormatter,
+		chatMessageDecoder,
+		chatMessageEncoder,
+		SettingsComponent,
+		speakerFocused,
+		disableChat = false,
+		disableMicrophone = false,
+		disableCamera = false,
+		disableShareScreen = false,
+		hideParticipantsList = false,
+		showSettings, ...rest} = props;
+
   // STATE
   const [widgetState, setWidgetState] = React.useState<WidgetState>({
     showChat: false,
@@ -68,6 +94,7 @@ export function VideoConference({
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
 
   // HOOKS
+  const scUserContext: SCUserContextType = useSCUser();
   const tracks = useTracks(
     [
       {source: Track.Source.Camera, withPlaceholder: true},
@@ -119,10 +146,26 @@ export function VideoConference({
       layoutContext.pin.dispatch?.({msg: 'clear_pin'});
       lastAutoFocusedScreenShareTrack.current = null;
     }
-    if (focusTrack && !isTrackReference(focusTrack)) {
-      const updatedFocusTrack = tracks.find((tr) => tr.participant.identity === focusTrack.participant.identity && tr.source === focusTrack.source);
-      if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
+
+    console.log(participants.length);
+    console.log(focusTrack);
+    if (focusTrack) {
+      console.log('isFocusTrack');
+      let updatedFocusTrack;
+      const isFocusTrackParticipantExist = participants.find((pt) => pt.identity === focusTrack.participant.identity);
+      console.log(isFocusTrackParticipantExist);
+      if (!isFocusTrackParticipantExist) {
+        // Focus track is relative to a participant that has left the room
+        updatedFocusTrack = tracks.find((tr) => tr.participant.identity === scUserContext.user.id.toString());
+        console.log(updatedFocusTrack);
         layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
+      } else if (!isTrackReference(focusTrack)) {
+        // You are not subscribet to the track
+        updatedFocusTrack = tracks.find((tr) => tr.participant.identity === focusTrack.participant.identity && tr.source === focusTrack.source);
+        if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
+          console.log('layoutContext.pin.dispatch');
+          layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
+        }
       }
     }
   }, [
@@ -152,7 +195,7 @@ export function VideoConference({
   }, [tracks, participants, speakerFocused]);
 
   return (
-    <div className="lk-video-conference" {...props}>
+		<Root className={classNames(className, classes.root, "lk-video-conference")} {...rest}>
       {isWeb() && (
         <LayoutContextProvider value={layoutContext} onPinChange={handleFocusStateChange} onWidgetChange={widgetUpdate}>
           <div className="lk-video-conference-inner">
@@ -209,6 +252,6 @@ export function VideoConference({
       )}
       <RoomAudioRenderer />
       <ConnectionStateToast />
-    </div>
+    </Root>
   );
 }
