@@ -284,7 +284,7 @@ export default function LiveStream(inProps: LiveStreamProps): JSX.Element {
           </Box>
         }
         primary={
-          <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scLiveStream)} className={classes.snippetPrimary}>
+          <Link {...(scLiveStream.id && {to: scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scLiveStream)})} className={classes.snippetPrimary}>
             <Typography component="span">{`${intl.formatDate(scLiveStream.created_at, {
               weekday: 'long',
               month: 'long',
