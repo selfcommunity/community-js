@@ -22,7 +22,7 @@ const Component = {
           marginRight: theme.spacing(2)
         },
         '& .MuiIcon-root': {
-          fontSize: 15
+          fontSize: 18
         }
       }
     })
