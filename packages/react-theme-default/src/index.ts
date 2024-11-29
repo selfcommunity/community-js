@@ -59,6 +59,7 @@ import SCCustomAdv from './components/SCCustomAdv';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
 import SCDateTimeAgo from './components/SCDateTimeAgo';
 import SCDefaultHeaderContent from './components/SCDefaultHeaderContent';
+import SCDefaultDrawerContent from './components/SCDefaultDrawerContent';
 import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
 import SCEmojiPicker from './components/SCEmojiPicker';
@@ -299,6 +300,7 @@ const theme = {
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCDefaultHeaderContent,
+    SCDefaultDrawerContent,
     SCEditGroupButton,
     SCEditor,
     SCEmojiPicker,
