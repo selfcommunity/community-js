@@ -361,6 +361,7 @@
   "ui.eventInfoDetails.frequency.daily.placeholder": "Giornaliera",
   "ui.eventInfoDetails.frequency.weekly.placeholder": "Settimanale",
   "ui.eventInfoDetails.frequency.monthly.placeholder": "Mensile",
+  "ui.eventInfoDetails.live.join": "Partecipa alla diretta",
   "ui.eventInviteButton": "Invita al tuo Evento",
   "ui.eventInviteButton.dialog.title": "Invita all'Evento",
   "ui.eventInviteButton.dialog.content.search.placeholder": "Cerca persone da invitare",

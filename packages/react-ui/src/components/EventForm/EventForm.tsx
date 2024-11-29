@@ -137,7 +137,7 @@ export interface EventFormProps extends BoxProps {
    * Props to spread to EventAddress component
    * @default empty object
    */
-  EventAddressComponentProps: Pick<EventAddressProps, 'locations'>;
+  EventAddressComponentProps?: Pick<EventAddressProps, 'locations'>;
 
   /**
    * Any other properties
