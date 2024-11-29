@@ -1,10 +1,21 @@
-import {Box, BoxProps, Button, ListItem, Typography, Zoom} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategories, useSCRouting} from '@selfcommunity/react-core';
-import React, {useEffect, useState} from 'react';
+import {Box, BoxProps, Divider, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Zoom} from '@mui/material';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCFetchCategories,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
+import React, {useEffect, useMemo, useState} from 'react';
 import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
-import {SCCategoryType} from '@selfcommunity/types';
+import {SCCategoryType, SCFeatureName} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -12,7 +23,10 @@ import {useThemeProps} from '@mui/system';
 const PREFIX = 'SCDefaultDrawerContent';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  navigation: `${PREFIX}-navigation`,
+  noResults: `${PREFIX}-no-results`,
+  title: `${PREFIX}-title`
 };
 
 const Root = styled(Box, {
@@ -38,8 +52,38 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // PREFERENCES
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+
   //STATE
   const [isHovered, setIsHovered] = useState({});
+
+  // MEMO
+  const groupsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.GROUPING) &&
+      SCPreferences.CONFIGURATIONS_GROUPS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_GROUPS_ENABLED].value,
+    [preferences, features]
+  );
+  const eventsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
+  const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
+  const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
   // HANDLERS
   const handleMouseEnter = (index: number) => {
@@ -69,20 +113,89 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
   //order
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <Typography variant="subtitle1">
-        <span>
-          <FormattedMessage
-            id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
-            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
-          />
-        </span>{' '}
-        <Button variant="text" component={Link} color="secondary" to={scRoutingContext.url(SCRoutes.CATEGORIES_LIST_ROUTE_NAME, {})}>
-          <FormattedMessage
-            id="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll"
-            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.seeAll"
-          />
-        </Button>
+      <List className={classes.navigation}>
+        <ListItem disablePadding>
+          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
+            <ListItemIcon>
+              <Icon>home</Icon>
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <FormattedMessage
+                  id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                  defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                />
+              }
+            />
+          </ListItemButton>
+        </ListItem>
+        {groupsEnabled && scUserContext.user && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>groups</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {eventsEnabled && (scUserContext.user || contentAvailable) && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>CalendarIcon</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {exploreStreamEnabled && (contentAvailable || scUserContext.user) && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>explore</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+      </List>
+      <Divider />
+      <Typography variant="subtitle1" className={classes.title}>
+        <FormattedMessage
+          id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
+          defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
+        />
       </Typography>
+      {!categoriesOrdered.length && (
+        <Typography variant="body1" className={classes.noResults}>
+          <FormattedMessage
+            id="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
+            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
+          />
+        </Typography>
+      )}
       {categoriesOrdered.map((c: SCCategoryType, index: number) => (
         <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
           <ListItem key={c.id}>
