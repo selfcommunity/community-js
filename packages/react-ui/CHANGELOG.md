@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.20...@selfcommunity/react-ui@0.10.2-alpha.21) (2024-11-29)
+
+
+### Performance Improvements
+
+* added navigation section to flap menu. Linear issue: https://linear.app/quentral/issue/QUE-1015/flap-menu ([6391a84](https://github.com/selfcommunity/community-js/commit/6391a84179e194d46a4e869c0c70e7af3609db49))
+
+
+
+
+
 ## [0.10.2-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.19...@selfcommunity/react-ui@0.10.2-alpha.20) (2024-11-28)
 
 
