@@ -25,7 +25,6 @@ import {
 import ParticipantTileAvatar from './ParticipantTileAvatar';
 import ParticipantTileActions from './ParticipantTileActions';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import liveStream from '../../LiveStream';
 import {useLiveStream} from './LiveStreamProvider';
 
 /**
@@ -90,7 +89,6 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
     });
     const isEncrypted = useIsEncrypted(trackReference.participant);
     const layoutContext = useMaybeLayoutContext();
-    const {liveStream} = useLiveStream();
     const autoManageSubscription = useFeatureContext()?.autoSubscription;
 
     const handleSubscribe = React.useCallback(

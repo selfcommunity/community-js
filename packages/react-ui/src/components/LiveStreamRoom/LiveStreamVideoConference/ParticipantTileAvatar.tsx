@@ -52,11 +52,13 @@ export default function ParticipantTileAvatar(inProps: ParticipantTileAvatarProp
   // CONTEXT
   const scContext: SCContextType = useSCContext();
 
+	console.log(participant);
+
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       {user ? (
         <img src={`${user.avatar}`} />
-      ) : participant ? (
+      ) : participant && participant.identity ? (
         <img src={`${scContext.settings.portal}/api/v2/avatar/${participant.identity}`} />
       ) : (
         <ParticipantPlaceholder />
