@@ -58,6 +58,7 @@ export function VideoConference({
   showSettings,
   ...props
 }: VideoConferenceProps) {
+  // STATE
   const [widgetState, setWidgetState] = React.useState<WidgetState>({
     showChat: false,
     unreadMessages: 0,
@@ -66,6 +67,7 @@ export function VideoConference({
   const [focusInitialized, setFocusInitialized] = React.useState(false);
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
 
+  // HOOKS
   const tracks = useTracks(
     [
       {source: Track.Source.Camera, withPlaceholder: true},
@@ -73,14 +75,26 @@ export function VideoConference({
     ],
     {updateOnlyOn: [RoomEvent.ActiveSpeakersChanged], onlySubscribed: false}
   );
-
   const participants = useParticipants();
+  const layoutContext = useCreateLayoutContext();
+  const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
+  const focusTrack = usePinnedTracks(layoutContext)?.[0];
+  const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
+  useLivestreamCheck();
 
+  /**
+   * widgetUpdate
+   * @param state
+   */
   const widgetUpdate = (state: WidgetState) => {
     log.debug('updating widget state', state);
     setWidgetState(state);
   };
 
+  /**
+   * handleFocusStateChange
+   * @param state
+   */
   const handleFocusStateChange = (state) => {
     log.debug('updating widget state', state);
     if (state && state.participant) {
@@ -90,14 +104,6 @@ export function VideoConference({
       }
     }
   };
-
-  const layoutContext = useCreateLayoutContext();
-  const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
-  const focusTrack = usePinnedTracks(layoutContext)?.[0];
-  const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
-
-  // HOOKS
-  useLivestreamCheck();
 
   useEffect(() => {
     // If screen share tracks are published, and no pin is set explicitly, auto set the screen share.

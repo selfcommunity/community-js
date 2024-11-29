@@ -3,6 +3,7 @@ import {useIsRecording} from '@livekit/components-react';
 import {useEffect, useState} from 'react';
 
 /**
+ * RecordingIndicator
  * @alpha
  */
 export default function RecordingIndicator() {

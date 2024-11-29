@@ -35,7 +35,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import {DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_LATER_DAYS} from './constants';
-import EventAddress from './EventAddress';
+import EventAddress, {EventAddressProps} from './EventAddress';
 import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
 import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
@@ -134,6 +134,12 @@ export interface EventFormProps extends BoxProps {
   onError?: (error: any) => void;
 
   /**
+   * Props to spread to EventAddress component
+   * @default empty object
+   */
+  EventAddressComponentProps: Pick<EventAddressProps, 'locations'>;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -176,7 +182,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, event, presetLocation = SCEventLocationType.PERSON, ...rest} = props;
+  const {className, onSuccess, onError, event, presetLocation, EventAddressComponentProps = {}, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -199,7 +205,11 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       ? event.location === SCEventLocationType.ONLINE && event.live_stream
         ? SCEventLocationType.LIVESTREAM
         : SCEventLocationType.ONLINE
-      : presetLocation,
+      : EventAddressComponentProps.locations?.length
+      ? presetLocation in EventAddressComponentProps.locations
+        ? presetLocation
+        : EventAddressComponentProps.locations[0]
+      : SCEventLocationType.PERSON,
     geolocation: event?.geolocation || '',
     lat: event?.geolocation_lat || null,
     lng: event?.geolocation_lng || null,
@@ -644,6 +654,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }
             } as unknown as SCEventType
           }
+          {...EventAddressComponentProps}
         />
         {privateEnabled && (
           <Box className={classes.privacySection}>
