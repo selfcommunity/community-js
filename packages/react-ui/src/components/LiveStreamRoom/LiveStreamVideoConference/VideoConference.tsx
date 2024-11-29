@@ -31,21 +31,21 @@ import {useThemeProps} from '@mui/system';
 const PREFIX = 'SCVideoConference';
 
 const classes = {
-	root: `${PREFIX}-root`
+  root: `${PREFIX}-root`
 };
 
 const Root = styled(Box, {
-	name: PREFIX,
-	slot: 'Root',
-	overridesResolver: (props, styles) => styles.root
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({
-	'& .lk-chat': {
-		height: '100%'
-	}
+  '& .lk-chat': {
+    height: '100%'
+  }
 }));
 
 export interface VideoConferenceProps {
-	className?: string;
+  className?: string;
   chatMessageFormatter?: MessageFormatter;
   chatMessageEncoder?: MessageEncoder;
   chatMessageDecoder?: MessageDecoder;
@@ -67,22 +67,26 @@ export interface VideoConferenceProps {
  *
  */
 export function VideoConference(inProps: VideoConferenceProps) {
-	// PROPS
-	const props: VideoConferenceProps = useThemeProps({
-		props: inProps,
-		name: PREFIX
-	});
-	const {className,chatMessageFormatter,
-		chatMessageDecoder,
-		chatMessageEncoder,
-		SettingsComponent,
-		speakerFocused,
-		disableChat = false,
-		disableMicrophone = false,
-		disableCamera = false,
-		disableShareScreen = false,
-		hideParticipantsList = false,
-		showSettings, ...rest} = props;
+  // PROPS
+  const props: VideoConferenceProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    className,
+    chatMessageFormatter,
+    chatMessageDecoder,
+    chatMessageEncoder,
+    SettingsComponent,
+    speakerFocused,
+    disableChat = false,
+    disableMicrophone = false,
+    disableCamera = false,
+    disableShareScreen = false,
+    hideParticipantsList = false,
+    showSettings,
+    ...rest
+  } = props;
 
   // STATE
   const [widgetState, setWidgetState] = React.useState<WidgetState>({
@@ -147,23 +151,17 @@ export function VideoConference(inProps: VideoConferenceProps) {
       lastAutoFocusedScreenShareTrack.current = null;
     }
 
-    console.log(participants.length);
-    console.log(focusTrack);
     if (focusTrack) {
-      console.log('isFocusTrack');
       let updatedFocusTrack;
       const isFocusTrackParticipantExist = participants.find((pt) => pt.identity === focusTrack.participant.identity);
-      console.log(isFocusTrackParticipantExist);
       if (!isFocusTrackParticipantExist) {
         // Focus track is relative to a participant that has left the room
         updatedFocusTrack = tracks.find((tr) => tr.participant.identity === scUserContext.user.id.toString());
-        console.log(updatedFocusTrack);
         layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
       } else if (!isTrackReference(focusTrack)) {
         // You are not subscribet to the track
         updatedFocusTrack = tracks.find((tr) => tr.participant.identity === focusTrack.participant.identity && tr.source === focusTrack.source);
         if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
-          console.log('layoutContext.pin.dispatch');
           layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
         }
       }
@@ -195,7 +193,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
   }, [tracks, participants, speakerFocused]);
 
   return (
-		<Root className={classNames(className, classes.root, "lk-video-conference")} {...rest}>
+    <Root className={classNames(className, classes.root, 'lk-video-conference')} {...rest}>
       {isWeb() && (
         <LayoutContextProvider value={layoutContext} onPinChange={handleFocusStateChange} onWidgetChange={widgetUpdate}>
           <div className="lk-video-conference-inner">
