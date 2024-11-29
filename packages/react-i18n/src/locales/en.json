@@ -1025,6 +1025,7 @@
   "ui.liveStreamRoom.connect.error.monthlyMinuteLimitReached": "Unable to access live broadcast. The limit of minutes available for live broadcasts has been exceeded.",
   "ui.liveStreamRoom.connect.error.waitingHostToStartLiveStream": "The live has not yet been started by the organizer.",
   "ui.liveStreamRoom.connect.error.participantLimitReached": "The live has reached the maximum number of participants.",
+  "ui.liveStreamRoom.connect.error.participateTheEventToJoinLiveStream": "The live has reached the maximum number of participants.",
   "ui.liveStreamRoom.connect.error.generic": "An error occurred while accessing the live stream. Please try again later!",
   "ui.liveStreamRoom.check.youAreAloneInTheRoom": "You are alone in the room. If no one else participates, the live will end shortly.",
   "ui.liveStreamRoom.check.hostMissing": "The host of the live event is not present. The live will be finished soon.",
