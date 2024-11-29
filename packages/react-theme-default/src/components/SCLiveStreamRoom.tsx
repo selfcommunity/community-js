@@ -44,7 +44,8 @@ const Component = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: -30
+        marginTop: -30,
+        paddingBottom: theme.spacing(3)
       },
       '& .lk-prejoin': {
         maxWidth: 620,
