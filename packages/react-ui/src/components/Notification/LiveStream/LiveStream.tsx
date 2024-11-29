@@ -68,7 +68,11 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
-	const inProgress = Boolean(!notificationObject.live_stream.closed_at_by_host && (notificationObject.live_stream.last_started_at && !notificationObject.live_stream.last_finished_at));
+  const inProgress = Boolean(
+    !notificationObject.live_stream.closed_at_by_host &&
+      notificationObject.live_stream.last_started_at &&
+      !notificationObject.live_stream.last_finished_at
+  );
 
   // RENDER
   if (isSnippetTemplate) {
