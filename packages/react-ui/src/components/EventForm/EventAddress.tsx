@@ -1,4 +1,4 @@
-import {Autocomplete, Box, Chip, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
+import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -51,6 +51,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface EventAddressProps {
+  locations?: SCEventLocationType[];
   event?: SCEventType | Partial<SCEventType>;
   forwardGeolocationData: (data: Geolocation) => void;
   forwardLivestreamSettingsData: (settings) => void;
@@ -66,10 +67,16 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   // INTL
   const intl = useIntl();
   // PROPS
-  const {className, forwardGeolocationData, forwardLivestreamSettingsData, event} = props;
+  const {
+    className,
+    locations = [SCEventLocationType.PERSON, SCEventLocationType.ONLINE, SCEventLocationType.LIVESTREAM],
+    event,
+    forwardGeolocationData,
+    forwardLivestreamSettingsData
+  } = props;
 
   // STATE
-  const [location, setLocation] = useState<SCEventLocationType>(event?.location || SCEventLocationType.PERSON);
+  const [location, setLocation] = useState<SCEventLocationType>(event?.location || locations[0]);
   const [geolocation, setGeoLocation] = useState<Place | null>(event ? {description: event.geolocation} : null);
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Place[]>([]);
@@ -107,6 +114,21 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   );
   const canViewLiveTab = useMemo(
     () =>
+      (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
+      (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
+    [scUserContext?.user?.permission, event]
+  );
+  const isInPersonTabActive = useMemo(
+    () => locations.includes(SCEventLocationType.PERSON) || event.location === SCEventLocationType.PERSON,
+    [locations]
+  );
+  const isOnlineTabActive = useMemo(
+    () => locations.includes(SCEventLocationType.ONLINE) || event.location === SCEventLocationType.ONLINE,
+    [locations]
+  );
+  const isLiveTabActive = useMemo(
+    () =>
+      locations.includes(SCEventLocationType.LIVESTREAM) &&
       (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
       (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
     [scUserContext?.user?.permission, event]
@@ -184,26 +206,34 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   }, [inputValue]);
 
   if (!geocodingApiKey && !isLoaded) {
-    return <HiddenPlaceholder />;
+    return null;
   }
+  if (!isInPersonTabActive && !isOnlineTabActive && !isLiveTabActive) {
+    return null;
+  }
+
   return (
     <Root className={classNames(classes.root, className)}>
       <Tabs className={classes.tabs} value={location} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
-        <Tab
-          value={SCEventLocationType.PERSON}
-          classes={{root: classes.tab}}
-          icon={<Icon>add_location_alt</Icon>}
-          iconPosition="start"
-          label={<FormattedMessage id="ui.eventForm.address.live.label" defaultMessage="ui.eventForm.address.live.label" />}
-        />
-        <Tab
-          value={SCEventLocationType.ONLINE}
-          classes={{root: classes.tab}}
-          icon={<Icon>play_circle_outline</Icon>}
-          iconPosition="start"
-          label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
-        />
-        {canViewLiveTab && (
+        {isInPersonTabActive && (
+          <Tab
+            value={SCEventLocationType.PERSON}
+            classes={{root: classes.tab}}
+            icon={<Icon>add_location_alt</Icon>}
+            iconPosition="start"
+            label={<FormattedMessage id="ui.eventForm.address.live.label" defaultMessage="ui.eventForm.address.live.label" />}
+          />
+        )}
+        {isOnlineTabActive && (
+          <Tab
+            value={SCEventLocationType.ONLINE}
+            classes={{root: classes.tab}}
+            icon={<Icon>play_circle_outline</Icon>}
+            iconPosition="start"
+            label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
+          />
+        )}
+        {isLiveTabActive && canViewLiveTab && (
           <Tab
             value={SCEventLocationType.LIVESTREAM}
             classes={{root: classes.tab}}
@@ -218,7 +248,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         )}
       </Tabs>
       <Box className={classes.tabContent}>
-        {location === SCEventLocationType.PERSON && (
+        {isInPersonTabActive && location === SCEventLocationType.PERSON && (
           <Autocomplete
             size="small"
             value={geolocation}
@@ -250,7 +280,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             )}
           />
         )}
-        {location === SCEventLocationType.ONLINE && (
+        {isOnlineTabActive && location === SCEventLocationType.ONLINE && (
           <UrlTextField
             size="small"
             fullWidth
@@ -263,7 +293,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             onChange={handleLinkChange}
           />
         )}
-        {canViewLiveTab && location === SCEventLocationType.LIVESTREAM && (
+        {isLiveTabActive && canViewLiveTab && location === SCEventLocationType.LIVESTREAM && (
           <>
             <LiveStream template={SCLiveStreamTemplateType.SNIPPET} liveStream={liveStream} actions={<></>} />
             <LiveStreamFormSettings settings={liveStream.settings || LIVESTREAM_DEFAULT_SETTINGS} onChange={handleLiveStreamSettingsChange} />

@@ -207,6 +207,16 @@ export function PreJoin({
   const scUserContext = useSCUser();
   const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
 
+  const canUseAudio = useMemo(
+    () =>
+      scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.muteParticipants)),
+    [scUserContext, liveStream]
+  );
+  const canUseVideo = useMemo(
+    () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableVideo)),
+    [scUserContext, liveStream]
+  );
+
   // TODO: Remove and pipe `defaults` object directly into `usePersistentUserChoices` once we fully switch from type `LocalUserChoices` to `UserChoices`.
   const partialDefaults: Partial<LocalUserChoices> = {
     ...(defaults.audioDeviceId !== undefined && {audioDeviceId: defaults.audioDeviceId}),
@@ -230,19 +240,19 @@ export function PreJoin({
   });
 
   // Initialize device settings
-  const [audioEnabled, setAudioEnabled] = React.useState<boolean>(initialUserChoices.audioEnabled);
-  const [videoEnabled, setVideoEnabled] = React.useState<boolean>(initialUserChoices.videoEnabled);
+  const [audioEnabled, setAudioEnabled] = React.useState<boolean>(initialUserChoices.audioEnabled && canUseAudio);
+  const [videoEnabled, setVideoEnabled] = React.useState<boolean>(initialUserChoices.videoEnabled && canUseVideo);
   const [audioDeviceId, setAudioDeviceId] = React.useState<string>(initialUserChoices.audioDeviceId);
   const [videoDeviceId, setVideoDeviceId] = React.useState<string>(initialUserChoices.videoDeviceId);
   const [username, setUsername] = React.useState(initialUserChoices.username);
 
   // Save user choices to persistent storage.
   React.useEffect(() => {
-    saveAudioInputEnabled(audioEnabled);
-  }, [audioEnabled, saveAudioInputEnabled]);
+    saveAudioInputEnabled(audioEnabled && canUseAudio);
+  }, [audioEnabled, saveAudioInputEnabled, canUseAudio]);
   React.useEffect(() => {
-    saveVideoInputEnabled(videoEnabled);
-  }, [videoEnabled, saveVideoInputEnabled]);
+    saveVideoInputEnabled(videoEnabled && canUseVideo);
+  }, [videoEnabled, saveVideoInputEnabled, canUseVideo]);
   React.useEffect(() => {
     saveAudioInputDeviceId(audioDeviceId);
   }, [audioDeviceId, saveAudioInputDeviceId]);
@@ -322,16 +332,6 @@ export function PreJoin({
       log.warn('Validation failed with: ', userChoices);
     }
   }
-
-  const canUseAudio = useMemo(
-    () =>
-      scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.muteParticipants)),
-    [scUserContext, liveStream]
-  );
-  const canUseVideo = useMemo(
-    () => scUserContext.user && liveStream && (liveStream.host.id === scUserContext.user.id || (liveStream && !liveStream?.settings?.disableVideo)),
-    [scUserContext, liveStream]
-  );
 
   return (
     <div className="lk-prejoin" {...htmlProps}>

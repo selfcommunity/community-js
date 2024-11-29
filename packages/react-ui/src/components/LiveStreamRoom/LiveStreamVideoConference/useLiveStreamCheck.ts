@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef, useCallback} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {useDisconnectButton, useParticipants} from '@livekit/components-react';
 import {useLiveStream} from './LiveStreamProvider';
@@ -6,6 +6,7 @@ import {useSnackbar} from 'notistack';
 import {useIntl} from 'react-intl';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {LIVE_CHECKING_INTERVAL, WARNING_THRESHOLD_EXPIRING_SOON} from '../constants';
+import {RoomEvent} from 'livekit-client';
 
 /**
  * Custom hook for monitoring livestream.
@@ -14,23 +15,36 @@ import {LIVE_CHECKING_INTERVAL, WARNING_THRESHOLD_EXPIRING_SOON} from '../consta
  * @param performDisconnect
  */
 export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING_SOON, showWarnings = true, performDisconnect = true) {
-  // HOOKS
-  const scUserContext: SCUserContextType = useSCUser();
-  const participants = useParticipants();
-  const {liveStream} = useLiveStream();
-  const {buttonProps} = useDisconnectButton({});
-  const {enqueueSnackbar} = useSnackbar();
-  const __DEBUG = useRef(true);
-
   // STATE
   const [timeRemaining, setTimeRemaining] = useState(60);
   const [isExpiringSoon, setIsExpiringSoon] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
   const intervalRef = useRef(null);
 
+  // HOOKS
+  const scUserContext: SCUserContextType = useSCUser();
+  const participants = useParticipants({
+    updateOnlyOn: [
+      RoomEvent.ParticipantConnected,
+      RoomEvent.ParticipantDisconnected,
+      RoomEvent.ConnectionStateChanged,
+      RoomEvent.Connected,
+      RoomEvent.Disconnected,
+      RoomEvent.TrackSubscribed,
+      RoomEvent.TrackUnsubscribed
+    ]
+  });
+  const {liveStream} = useLiveStream();
+  const {buttonProps} = useDisconnectButton({});
+  const {enqueueSnackbar} = useSnackbar();
+  const __DEBUG = useRef(true);
+
   // INTL
   const intl = useIntl();
 
+  /**
+   * fetchLivestreamStatus
+   */
   const fetchLivestreamStatus = () => {
     LiveStreamApiClient.getMonthlyDuration()
       .then((r) => {
@@ -60,6 +74,9 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
       });
   };
 
+  /**
+   * Check live
+   */
   const check = useCallback(() => {
     if (__DEBUG) {
       console.log('Checking live status');
@@ -111,7 +128,7 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
   useEffect(() => {
     intervalRef.current = setInterval(check, LIVE_CHECKING_INTERVAL * 60000);
     return () => intervalRef.current && clearInterval(intervalRef.current);
-  }, [isExpired, isExpiringSoon]);
+  }, [isExpired, isExpiringSoon, participants]);
 
   return {timeRemaining, isExpiringSoon, isExpired};
 }

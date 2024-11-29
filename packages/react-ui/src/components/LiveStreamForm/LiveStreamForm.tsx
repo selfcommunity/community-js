@@ -2,7 +2,7 @@ import {LoadingButton} from '@mui/lab';
 import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
@@ -15,7 +15,6 @@ import LiveStreamSettingsForm from './LiveStreamFormSettings';
 import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-import {WARNING_THRESHOLD_EXPIRING_SOON} from '../LiveStreamRoom/constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -148,15 +147,12 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     (cover: Blob) => {
       setField((prev) => ({...prev, ['coverFile']: cover}));
       const reader = new FileReader();
-
       reader.onloadend = () => {
         setField((prev) => ({...prev, ['cover']: reader.result}));
       };
       reader.readAsDataURL(cover);
-
       if (error.coverError) {
         delete error.coverError;
-
         setError(error);
       }
     },
@@ -203,19 +199,26 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
         } else {
           setGenericError(null);
         }
-        if ('titleError' in Object.values(_error)) {
-          setError({
-            ...error,
+        let __errors = {};
+        if ('coverError' in _error) {
+          __errors = {
+            ...__errors,
+            ['coverError']: <FormattedMessage id="ui.liveStreamForm.cover.error.invalid" defaultMessage="ui.liveStreamForm.cover.error.invalid" />
+          };
+        }
+        if ('titleError' in _error) {
+          __errors = {
+            ...__errors,
             ['titleError']: <FormattedMessage id="ui.liveStreamForm.title.error.invalid" defaultMessage="ui.liveStreamForm.title.error.invalid" />
-          });
+          };
         }
-        if ('slugError' in Object.values(_error)) {
-          setError({
-            ...error,
+        if ('slugError' in _error) {
+          __errors = {
+            ...__errors,
             ['slugError']: <FormattedMessage id="ui.liveStreamForm.slug.error.invalid" defaultMessage="ui.liveStreamForm.slug.error.invalid" />
-          });
+          };
         }
-
+        setError(__errors);
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
@@ -250,6 +253,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
       </Paper>
+      {Boolean(error['coverError']) && <Typography color="error">{error['coverError']}</Typography>}
       <FormGroup className={classes.form}>
         <TextField
           required

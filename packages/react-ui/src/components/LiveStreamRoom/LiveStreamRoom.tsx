@@ -1,4 +1,4 @@
-import {Alert, Box, BoxProps, Button, CircularProgress, Stack, Typography} from '@mui/material';
+import {Alert, AlertTitle, Box, BoxProps, Button, CircularProgress, Stack, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
@@ -334,15 +334,24 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     scLiveStream &&
                     (scLiveStream.settings?.muteParticipants || (scLiveStream && scLiveStream.settings?.disableVideo))
                 ) && (
-                  <Stack sx={{width: '60%'}} spacing={1}>
-                    {scLiveStream && scLiveStream.settings?.muteParticipants && (
-                      <Alert variant="filled" severity="info" component={'div'}>
-                        <FormattedMessage id="ui.liveStreamRoom.hostDisableMicrophone" defaultMessage="ui.liveStreamRoom.hostDisableMicrophone" />
-                      </Alert>
-                    )}
-                    {scLiveStream && scLiveStream.settings?.disableVideo && (
+                  <Stack sx={{width: '45%'}} spacing={1}>
+                    {scLiveStream && (scLiveStream.settings?.muteParticipants || scLiveStream.settings?.disableVideo) && (
                       <Alert variant="filled" severity="info">
-                        <FormattedMessage id="ui.liveStreamRoom.hostDisableVideo" defaultMessage="ui.liveStreamRoom.hostDisableVideo" />
+                        <AlertTitle>
+                          <b>Info</b>
+                        </AlertTitle>
+                        {scLiveStream.settings?.muteParticipants && (
+                          <>
+                            -{' '}
+                            <FormattedMessage id="ui.liveStreamRoom.hostDisableMicrophone" defaultMessage="ui.liveStreamRoom.hostDisableMicrophone" />
+                            <br />
+                          </>
+                        )}
+                        {scLiveStream.settings?.disableVideo && (
+                          <>
+                            - <FormattedMessage id="ui.liveStreamRoom.hostDisableVideo" defaultMessage="ui.liveStreamRoom.hostDisableVideo" />
+                          </>
+                        )}
                       </Alert>
                     )}
                   </Stack>

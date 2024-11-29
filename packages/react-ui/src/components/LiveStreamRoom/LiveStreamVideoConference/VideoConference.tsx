@@ -22,8 +22,30 @@ import {ControlBar} from './ControlBar';
 import {useEffect} from 'react';
 import {useLivestreamCheck} from './useLiveStreamCheck';
 import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} from './FocusLayout';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import {styled} from '@mui/material/styles';
+import {Box} from '@mui/material';
+import {useThemeProps} from '@mui/system';
 
-export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
+const PREFIX = 'SCVideoConference';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})(({theme}) => ({
+  '& .lk-chat': {
+    height: '100%'
+  }
+}));
+
+export interface VideoConferenceProps {
+  className?: string;
   chatMessageFormatter?: MessageFormatter;
   chatMessageEncoder?: MessageEncoder;
   chatMessageDecoder?: MessageDecoder;
@@ -44,20 +66,29 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
  * of participants, basic non-persistent chat, screen sharing, and more.
  *
  */
-export function VideoConference({
-  chatMessageFormatter,
-  chatMessageDecoder,
-  chatMessageEncoder,
-  SettingsComponent,
-  speakerFocused,
-  disableChat = false,
-  disableMicrophone = false,
-  disableCamera = false,
-  disableShareScreen = false,
-  hideParticipantsList = false,
-  showSettings,
-  ...props
-}: VideoConferenceProps) {
+export function VideoConference(inProps: VideoConferenceProps) {
+  // PROPS
+  const props: VideoConferenceProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {
+    className,
+    chatMessageFormatter,
+    chatMessageDecoder,
+    chatMessageEncoder,
+    SettingsComponent,
+    speakerFocused,
+    disableChat = false,
+    disableMicrophone = false,
+    disableCamera = false,
+    disableShareScreen = false,
+    hideParticipantsList = false,
+    showSettings,
+    ...rest
+  } = props;
+
+  // STATE
   const [widgetState, setWidgetState] = React.useState<WidgetState>({
     showChat: false,
     unreadMessages: 0,
@@ -66,6 +97,8 @@ export function VideoConference({
   const [focusInitialized, setFocusInitialized] = React.useState(false);
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
 
+  // HOOKS
+  const scUserContext: SCUserContextType = useSCUser();
   const tracks = useTracks(
     [
       {source: Track.Source.Camera, withPlaceholder: true},
@@ -73,14 +106,26 @@ export function VideoConference({
     ],
     {updateOnlyOn: [RoomEvent.ActiveSpeakersChanged], onlySubscribed: false}
   );
-
   const participants = useParticipants();
+  const layoutContext = useCreateLayoutContext();
+  const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
+  const focusTrack = usePinnedTracks(layoutContext)?.[0];
+  const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
+  useLivestreamCheck();
 
+  /**
+   * widgetUpdate
+   * @param state
+   */
   const widgetUpdate = (state: WidgetState) => {
     log.debug('updating widget state', state);
     setWidgetState(state);
   };
 
+  /**
+   * handleFocusStateChange
+   * @param state
+   */
   const handleFocusStateChange = (state) => {
     log.debug('updating widget state', state);
     if (state && state.participant) {
@@ -90,14 +135,6 @@ export function VideoConference({
       }
     }
   };
-
-  const layoutContext = useCreateLayoutContext();
-  const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
-  const focusTrack = usePinnedTracks(layoutContext)?.[0];
-  const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
-
-  // HOOKS
-  useLivestreamCheck();
 
   useEffect(() => {
     // If screen share tracks are published, and no pin is set explicitly, auto set the screen share.
@@ -113,10 +150,20 @@ export function VideoConference({
       layoutContext.pin.dispatch?.({msg: 'clear_pin'});
       lastAutoFocusedScreenShareTrack.current = null;
     }
-    if (focusTrack && !isTrackReference(focusTrack)) {
-      const updatedFocusTrack = tracks.find((tr) => tr.participant.identity === focusTrack.participant.identity && tr.source === focusTrack.source);
-      if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
+
+    if (focusTrack) {
+      let updatedFocusTrack;
+      const isFocusTrackParticipantExist = participants.find((pt) => pt.identity === focusTrack.participant.identity);
+      if (!isFocusTrackParticipantExist) {
+        // Focus track is relative to a participant that has left the room
+        updatedFocusTrack = tracks.find((tr) => tr.participant.identity === scUserContext.user.id.toString());
         layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
+      } else if (!isTrackReference(focusTrack)) {
+        // You are not subscribet to the track
+        updatedFocusTrack = tracks.find((tr) => tr.participant.identity === focusTrack.participant.identity && tr.source === focusTrack.source);
+        if (updatedFocusTrack !== focusTrack && isTrackReference(updatedFocusTrack)) {
+          layoutContext.pin.dispatch?.({msg: 'set_pin', trackReference: updatedFocusTrack});
+        }
       }
     }
   }, [
@@ -146,7 +193,7 @@ export function VideoConference({
   }, [tracks, participants, speakerFocused]);
 
   return (
-    <div className="lk-video-conference" {...props}>
+    <Root className={classNames(className, classes.root, 'lk-video-conference')} {...rest}>
       {isWeb() && (
         <LayoutContextProvider value={layoutContext} onPinChange={handleFocusStateChange} onWidgetChange={widgetUpdate}>
           <div className="lk-video-conference-inner">
@@ -203,6 +250,6 @@ export function VideoConference({
       )}
       <RoomAudioRenderer />
       <ConnectionStateToast />
-    </div>
+    </Root>
   );
 }
