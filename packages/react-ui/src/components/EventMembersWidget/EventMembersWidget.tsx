@@ -18,6 +18,7 @@ import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 import TabContentComponent from './TabContentComponent';
 import {TabContentEnum, TabContentType} from './types';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -255,6 +256,10 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     }
     setRefresh(_tabValue);
   }, []);
+
+  if (!scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
 
   if (
     !scEvent ||
