@@ -141,6 +141,15 @@ import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
+import SCLiveStream from './components/SCLiveStream';
+import SCCreateLiveStreamDialog from './components/SCLiveStreamDialog';
+import SCLiveStreamSelector from './components/SCLiveStreamSelector';
+import SCLiveStreamForm from './components/SCLiveStreamForm';
+import SCLiveStreamFormSettings from './components/SCLiveStreamFormSettings';
+import SCLiveStreamRoom from './components/SCLiveStreamRoom';
+import SCLiveStreamVideoConference from './components/SCLiveStreamVideoConference';
+import SCLiveStreamInfoDetails from './components/SCLiveStreamInfoDetails';
+import SCUserLiveStreamWidget from './components/SCUserLiveStreamWidget';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
@@ -399,6 +408,7 @@ const theme = {
     SCEventSubscribeButton,
     SCEventParticipantsButton,
     SCMyEventsWidget,
+    SCEventMediaWidget,
     SCCalendar,
     SCCreateEventWidget,
     SCSuggestedEventsWidget,
@@ -407,7 +417,15 @@ const theme = {
     SCVoteAudienceButton,
     SCVoteButton,
     SCWidget,
-    SCEventMediaWidget
+    SCLiveStream,
+    SCLiveStreamInfoDetails,
+		SCUserLiveStreamWidget,
+    SCCreateLiveStreamDialog,
+    SCLiveStreamSelector,
+    SCLiveStreamForm,
+    SCLiveStreamFormSettings,
+    SCLiveStreamRoom,
+    SCLiveStreamVideoConference
   },
   selfcommunity: {
     user: {

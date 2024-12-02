@@ -1,5 +1,6 @@
 import {LoadingButton} from '@mui/lab';
 import {
+  Alert,
   Box,
   BoxProps,
   FormControl,
@@ -28,16 +29,17 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import {DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_LATER_DAYS} from './constants';
-import EventAddress from './EventAddress';
+import EventAddress, {EventAddressProps} from './EventAddress';
 import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
 import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
+import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 
 const messages = defineMessages({
   name: {
@@ -91,7 +93,8 @@ const classes = {
   actions: `${PREFIX}-actions`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  genericError: `${PREFIX}-generic-error`
 };
 
 const Root = styled(Box, {
@@ -113,6 +116,12 @@ export interface EventFormProps extends BoxProps {
   event?: SCEventType;
 
   /**
+   * Initial location
+   * @default SCEventLocationType.PERSON
+   */
+  presetLocation?: SCEventLocationType;
+
+  /**
    * On success callback function
    * @default null
    */
@@ -123,6 +132,12 @@ export interface EventFormProps extends BoxProps {
    * @default null
    */
   onError?: (error: any) => void;
+
+  /**
+   * Props to spread to EventAddress component
+   * @default empty object
+   */
+  EventAddressComponentProps?: Pick<EventAddressProps, 'locations'>;
 
   /**
    * Any other properties
@@ -167,7 +182,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, event = null, ...rest} = props;
+  const {className, onSuccess, onError, event, presetLocation, EventAddressComponentProps = {}, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -178,20 +193,29 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const endDateTime = useMemo(() => getNewDate(event?.end_date), [event]);
 
   const initialFieldState: InitialFieldState = {
+    name: event?.name || '',
+    description: event ? event.description : '',
     imageOriginal: event?.image_bigger || '',
     imageOriginalFile: '',
     startDate: event ? startDateTime : getNewDate(),
     startTime: event ? startDateTime : getLaterHoursDate(1),
     endDate: event?.end_date ? endDateTime : getNewDate(),
     endTime: event?.end_date ? endDateTime : getLaterHoursDate(3),
-    location: event?.location || SCEventLocationType.PERSON,
+    location: event?.location
+      ? event.location === SCEventLocationType.ONLINE && event.live_stream
+        ? SCEventLocationType.LIVESTREAM
+        : SCEventLocationType.ONLINE
+      : EventAddressComponentProps.locations?.length
+      ? presetLocation in EventAddressComponentProps.locations
+        ? presetLocation
+        : EventAddressComponentProps.locations[0]
+      : SCEventLocationType.PERSON,
     geolocation: event?.geolocation || '',
     lat: event?.geolocation_lat || null,
     lng: event?.geolocation_lng || null,
     link: event?.link || '',
+    liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
-    name: event?.name || '',
-    description: event ? event.description : '',
     isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
     isSubmitting: false
   };
@@ -199,6 +223,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // STATE
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
+  const [genericError, setGenericError] = useState<string | null>(null);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -262,8 +287,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     }));
   }, []);
 
+  const handleLiveStreamSettingsData = useCallback((data: Geolocation) => {
+    setField((prev) => ({
+      ...prev,
+      liveStreamSettings: {...prev.liveStreamSettings, ...data}
+    }));
+  }, []);
+
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, ['isSubmitting']: true}));
+    setGenericError(null);
 
     const formData = new FormData();
 
@@ -275,14 +308,20 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     formData.append('start_date', combineDateAndTime(field.startDate, field.startTime));
     formData.append('recurring', field.recurring);
     formData.append('end_date', combineDateAndTime(field.endDate, field.endTime));
-    formData.append('location', field.location);
+    formData.append('location', field.location === SCEventLocationType.PERSON ? SCEventLocationType.PERSON : SCEventLocationType.ONLINE);
 
     if (field.location === SCEventLocationType.ONLINE) {
       formData.append('link', field.link);
+      formData.append('live_stream_settings', '');
+    } else if (field.location === SCEventLocationType.LIVESTREAM) {
+      formData.append('link', '');
+      formData.append('live_stream_settings', JSON.stringify({...LIVESTREAM_DEFAULT_SETTINGS, ...field.liveStreamSettings}));
     } else if (field.location === SCEventLocationType.PERSON) {
       formData.append('geolocation', field.geolocation);
       formData.append('geolocation_lat', field.lat.toString());
       formData.append('geolocation_lng', field.lng.toString());
+      formData.append('link', '');
+      formData.append('live_stream_settings', '');
     }
 
     if (privateEnabled) {
@@ -320,6 +359,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           setError({...error, ..._error});
         }
 
+        if ('errorsError' in _error) {
+          setGenericError(
+            intl.formatMessage({
+              id: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached',
+              defaultMessage: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached'
+            })
+          );
+        } else {
+          setGenericError(null);
+        }
+
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
@@ -336,8 +386,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setError(error);
       }
+      setGenericError(null);
     },
-    [setField, error]
+    [error, setField, setGenericError]
   );
 
   const handleChangeDateTime = useCallback(
@@ -353,8 +404,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setError(error);
       }
+      setGenericError(null);
     },
-    [setField, error]
+    [error, setField, setGenericError]
   );
 
   const shouldDisableDate = useCallback(
@@ -591,7 +643,27 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             />
           </LocalizationProvider>
         </Box>
-        <EventAddress forwardGeolocationData={handleGeoData} event={event ?? null} />
+        <EventAddress
+          forwardGeolocationData={handleGeoData}
+          forwardLivestreamSettingsData={handleLiveStreamSettingsData}
+          event={
+            {
+              ...event,
+              ...{
+                name: field.name,
+                start_date: field.startDate,
+                location: field.location,
+                geolocation: field.geolocation,
+                live_stream: {
+                  title: field.name || `${intl.formatMessage(messages.name)}`,
+                  created_at: field.startDate,
+                  settings: field.liveStreamSettings
+                }
+              }
+            } as unknown as SCEventType
+          }
+          {...EventAddressComponentProps}
+        />
         {privateEnabled && (
           <Box className={classes.privacySection}>
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
@@ -657,6 +729,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
+        {genericError && (
+          <Box className={classes.genericError}>
+            <Alert variant="filled" severity="error">
+              {genericError}
+            </Alert>
+          </Box>
+        )}
         <Box className={classes.actions}>
           <LoadingButton
             loading={field.isSubmitting}
@@ -666,6 +745,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               !field.startTime ||
               !field.endDate ||
               !field.endTime ||
+              Boolean(genericError) ||
               (field.location === SCEventLocationType.ONLINE && !field.link) ||
               (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
               (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
