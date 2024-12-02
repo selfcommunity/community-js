@@ -328,6 +328,10 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
     }
   }, [isMobile, openDialog, state.next]);
 
+  if (!scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
+
   // RENDER
   if (
     !scEvent ||

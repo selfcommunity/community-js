@@ -25,6 +25,9 @@ const Component = {
           paddingLeft: theme.spacing(1.5)
         }
       },
+      '& .SCNavigationMenuDrawer-drawer-content': {
+        paddingTop: 0
+      },
       '& .MuiTypography-subtitle1': {
         fontSize: '1.286rem',
         padding: theme.spacing(0, 2),
