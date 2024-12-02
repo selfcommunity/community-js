@@ -36,6 +36,7 @@ const messages = defineMessages({
 
 const classes = {
   root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
   content: `${PREFIX}-content`,
   header: `${PREFIX}-header`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
@@ -221,8 +222,8 @@ export default function UserLiveStreamWidget(inProps: UserLiveStreamWidgetProps)
   return (
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
-        <Typography variant="h4">
-          <b>{intl.formatMessage(messages.title, {user: scUser.username})}</b>
+        <Typography className={classes.title} variant="h5">
+          {intl.formatMessage(messages.title, {user: scUser.username})}
         </Typography>
         <Stack className={classes.liveWrapper}>
           {state?.results.map((_live, i: number, array) => (
