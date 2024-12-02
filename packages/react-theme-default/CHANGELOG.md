@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.3-alpha.1...@selfcommunity/react-theme-default@0.4.3) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.3-alpha.0...@selfcommunity/react-theme-default@0.4.3-alpha.1) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2...@selfcommunity/react-theme-default@0.4.3-alpha.0) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.26...@selfcommunity/react-theme-default@0.4.2) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.2-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.25...@selfcommunity/react-theme-default@0.4.2-alpha.26) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.2-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.24...@selfcommunity/react-theme-default@0.4.2-alpha.25) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.4.2-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.23...@selfcommunity/react-theme-default@0.4.2-alpha.24) (2024-11-29)
 
 
