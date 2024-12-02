@@ -91,7 +91,7 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
       if (!isExpiringSoon && !isExpired && showWarnings) {
         enqueueSnackbar(
           intl.formatMessage({id: 'ui.liveStreamRoom.check.youAreAloneInTheRoom', defaultMessage: 'ui.liveStreamRoom.check.youAreAloneInTheRoom'}),
-          {variant: 'warning', autoHideDuration: 7000}
+          {variant: 'warning', autoHideDuration: 10000}
         );
       } else if (isExpired && performDisconnect) {
         // Leave the room
@@ -111,7 +111,7 @@ export function useLivestreamCheck(warningThreshold = WARNING_THRESHOLD_EXPIRING
       if (!isExpiringSoon && !isExpired && liveStream.host.id !== scUserContext.user.id && showWarnings) {
         enqueueSnackbar(intl.formatMessage({id: 'ui.liveStreamRoom.check.hostMissing', defaultMessage: 'ui.liveStreamRoom.check.hostMissing'}), {
           variant: 'warning',
-          autoHideDuration: 7000
+          autoHideDuration: 10000
         });
       } else if (isExpired && performDisconnect) {
         // Leave the room

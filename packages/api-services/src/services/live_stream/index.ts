@@ -124,6 +124,7 @@ export class LiveStreamApiClient {
 
   /**
    * This endpoint remove participant from the specified live stream.
+   * If ban=true in the payload the user can no longer join the meet
    * @param id
    * @param data
    * @param config

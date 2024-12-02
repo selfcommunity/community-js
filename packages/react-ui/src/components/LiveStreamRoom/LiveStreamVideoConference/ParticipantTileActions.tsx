@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import {Endpoints, http, HttpResponse, LiveStreamApiClient} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import {BAN_ROOM_USER} from './constants';
+import {BAN_ROOM_USER, REMOVE_ROOM_USER} from './constants';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import {useEnsureParticipant} from '@livekit/components-react';
 import {useLiveStream} from './LiveStreamProvider';
@@ -81,7 +81,12 @@ export interface ParticipantTileActionsMenuProps {
   participant?: any;
 
   /**
-   * Handle delete obj
+   * Handle remove user
+   */
+  onRemoveParticipant?: (p) => void;
+
+  /**
+   * Handle ban user
    */
   onBanParticipant?: (p) => void;
 
@@ -99,10 +104,7 @@ export interface ParticipantTileActionsMenuProps {
 
 export default function ContributionActionsMenu(props: ParticipantTileActionsMenuProps): JSX.Element {
   // PROPS
-  const {className, participant, onBanParticipant, PopperProps = {}, ...rest} = props;
-
-  // INTL
-  const intl = useIntl();
+  const {className, participant, onRemoveParticipant, onBanParticipant, PopperProps = {}, ...rest} = props;
 
   // CONTEXT
   const theme = useTheme<SCThemeType>();
@@ -152,14 +154,15 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   /**
    * Perform ban participant
    */
-  const performBanParticipant = useMemo(
-    () => async () => {
-      const res = await LiveStreamApiClient.removeParticipant(liveStream.id, {participant_id: p.identity});
-      if (res.status >= 300) {
-        return Promise.reject(res);
-      }
-      return await Promise.resolve(res.data);
-    },
+  const performRemoveOrBanParticipant = useMemo(
+    () =>
+      async (ban = false) => {
+        const res = await LiveStreamApiClient.removeParticipant(liveStream.id, {participant_id: p.identity, ban});
+        if (res.status >= 300) {
+          return Promise.reject(res);
+        }
+        return await Promise.resolve(res.data);
+      },
     [p]
   );
 
@@ -167,8 +170,8 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
    * Handle action
    */
   function handleAction(action) {
-    if (action === BAN_ROOM_USER) {
-      setCurrentAction(BAN_ROOM_USER);
+    if ([REMOVE_ROOM_USER, BAN_ROOM_USER].indexOf(action) > -1) {
+      setCurrentAction(action);
       setOpenConfirmDialog(true);
       handleClose();
     }
@@ -200,9 +203,20 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
    */
   function handleConfirmedAction() {
     if (p && !isLoading && !currentActionLoading) {
-      if (currentAction === BAN_ROOM_USER) {
+      if (currentAction === REMOVE_ROOM_USER) {
+        setCurrentActionLoading(REMOVE_ROOM_USER);
+        performRemoveOrBanParticipant()
+          .then(() => {
+            onRemoveParticipant && onRemoveParticipant(p);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      } else if (currentAction === BAN_ROOM_USER) {
         setCurrentActionLoading(BAN_ROOM_USER);
-        performBanParticipant()
+        performRemoveOrBanParticipant(true)
           .then(() => {
             onBanParticipant && onBanParticipant(p);
             performPostConfirmAction(true);
@@ -218,7 +232,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   /**
    * Can authenticated ban a user in a room
    */
-  const canBanUser = useMemo(
+  const canRemoveOrBanUser = useMemo(
     () => () => {
       return (
         scUserContext.user &&
@@ -238,22 +252,39 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   function renderGeneralSection() {
     return (
       <Box>
-        {canBanUser() && (
-          <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER}>
-            <ListItemIcon>
-              <Icon>person</Icon>
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <FormattedMessage
-                  id="ui.liveStreamRoom.participantTileActions.banRoomUser"
-                  defaultMessage="ui.liveStreamRoom.participantTileActions.banRoomUser"
-                />
-              }
-              onClick={() => handleAction(BAN_ROOM_USER)}
-              classes={{root: classes.itemText}}
-            />
-          </MenuItem>
+        {canRemoveOrBanUser() && (
+          <>
+            <MenuItem className={classes.subItem} disabled={currentActionLoading === REMOVE_ROOM_USER}>
+              <ListItemIcon>
+                <Icon>person</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.liveStreamRoom.participantTileActions.removeRoomUser"
+                    defaultMessage="ui.liveStreamRoom.participantTileActions.removeRoomUser"
+                  />
+                }
+                onClick={() => handleAction(REMOVE_ROOM_USER)}
+                classes={{root: classes.itemText}}
+              />
+            </MenuItem>
+            <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER}>
+              <ListItemIcon>
+                <Icon>person</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.liveStreamRoom.participantTileActions.banRoomUser"
+                    defaultMessage="ui.liveStreamRoom.participantTileActions.banRoomUser"
+                  />
+                }
+                onClick={() => handleAction(BAN_ROOM_USER)}
+                classes={{root: classes.itemText}}
+              />
+            </MenuItem>
+          </>
         )}
       </Box>
     );
@@ -273,7 +304,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
   /**
    * Renders component only if the logged user has actions available
    */
-  if (!canBanUser()) {
+  if (!canRemoveOrBanUser()) {
     return null;
   }
 
@@ -317,7 +348,16 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
       {openConfirmDialog && (
         <ConfirmDialog
           open={openConfirmDialog}
-          {...(currentAction === BAN_ROOM_USER
+          {...(currentAction === REMOVE_ROOM_USER
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.liveStreamRoom.participantTileActions.removeRoomUser"
+                    defaultMessage="ui.liveStreamRoom.participantTileActions.removeRoomUser"
+                  />
+                )
+              }
+            : currentAction === BAN_ROOM_USER
             ? {
                 content: (
                   <FormattedMessage
