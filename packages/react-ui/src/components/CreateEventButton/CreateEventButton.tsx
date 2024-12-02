@@ -1,13 +1,12 @@
-import {Button, Icon} from '@mui/material';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {styled} from '@mui/material/styles';
-import {useThemeProps} from '@mui/system';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import { Button, ButtonProps, Icon } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useThemeProps } from '@mui/system';
+import { SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences } from '@selfcommunity/react-core';
+import { SCFeatureName } from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, {useContext, useMemo} from 'react';
-import {FormattedMessage} from 'react-intl';
-import EventFormDialog, {EventFormDialogProps} from '../EventFormDialog';
-import {SCFeatureName} from '@selfcommunity/types';
+import React, { useContext, useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
+import EventFormDialog, { EventFormDialogProps } from '../EventFormDialog';
 
 const PREFIX = 'SCCreateEventButton';
 
@@ -64,7 +63,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className, EventFormDialogComponentProps = {}, children, ...rest} = props;
+  const { className, EventFormDialogComponentProps = {}, children, ...rest } = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -74,7 +73,7 @@ export default function CreateEventButton(inProps: CreateEventButtonProps): JSX.
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const { preferences, features }: SCPreferencesContextType = useSCPreferences();
   const eventsEnabled = useMemo(
     () =>
       preferences &&

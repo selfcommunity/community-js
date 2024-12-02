@@ -284,7 +284,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           className={classNames(classes.events, {
             [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {}))
           })}
-          aria-label="Groups"
+          aria-label="Events"
           to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}
           component={Link}>
           <Icon>CalendarIcon</Icon>

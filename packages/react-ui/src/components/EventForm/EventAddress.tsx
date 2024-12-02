@@ -26,6 +26,7 @@ import LiveStreamFormSettings from '../LiveStreamForm/LiveStreamFormSettings';
 import {SCLiveStreamTemplateType} from '../../types/liveStream';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import {getNewDate} from './utils';
+import {useSCGoogleApiLoader} from '@selfcommunity/react-core';
 
 const messages = defineMessages({
   virtualPlaceholder: {
@@ -81,6 +82,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<Place[]>([]);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
   const liveStream: SCLiveStreamType = useMemo(() => {
     return (
       event.live_stream ||
@@ -96,14 +98,6 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const {preferences}: SCPreferencesContextType = useSCPreferences();
-  const geocodingApiKey = useMemo(
-    () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
-    [scContext.settings.integrations]
-  );
-  const {isLoaded} = useLoadScript({
-    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
-    libraries: ['places', 'geocoding']
-  });
   const isFreeTrialTier = useMemo(
     () =>
       preferences &&
@@ -134,6 +128,9 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
     [scUserContext?.user?.permission, event]
   );
 
+  // HOOKS
+  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
+
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
     setLocation(newValue);
@@ -154,7 +151,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         setGeoLocation(newValue);
         forwardGeolocationData({
           location,
-          geolocation: place.formatted_address,
+          geolocation: newValue.description.split(',')[0] + '. ' + place.formatted_address,
           lat: place.geometry.location.lat,
           lng: place.geometry.location.lng
         });
@@ -239,17 +236,14 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             classes={{root: classes.tab}}
             icon={<Icon>photo_camera</Icon>}
             iconPosition="start"
-            label={
-              <>
-                <FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />
-              </>
-            }
+            label={<FormattedMessage id="ui.eventForm.address.liveStream.label" defaultMessage="ui.eventForm.address.liveStream.label" />}
           />
         )}
       </Tabs>
       <Box className={classes.tabContent}>
         {isInPersonTabActive && location === SCEventLocationType.PERSON && (
           <Autocomplete
+            disabled={!geocodingApiKey}
             size="small"
             value={geolocation}
             onChange={handleSelection}

@@ -20,7 +20,8 @@ const templateContainerFixed = (args) => (
 
 export const Base: StoryObj<typeof FeedObjectDetailTemplate> = {
   args: {
-    feedObjectId: 1662,
+    //    feedObjectId: 2959 evento inattivo,
+    feedObjectId: 3012,
     feedObjectType: SCContributionType.POST
 	},
   render: template
@@ -28,9 +29,9 @@ export const Base: StoryObj<typeof FeedObjectDetailTemplate> = {
 
 export const BaseContainerFixed: StoryObj<typeof FeedObjectDetailTemplate> = {
 	args: {
-		feedObjectId: 1400,
+		feedObjectId: 2936,
 		feedObjectType: SCContributionType.DISCUSSION,
-		CommentsFeedObjectProps: {commentObjectId: 5232}
+		CommentsFeedObjectProps: {cacheStrategy: CacheStrategies.STALE_WHILE_REVALIDATE}
 	},
 	render: templateContainerFixed
 };

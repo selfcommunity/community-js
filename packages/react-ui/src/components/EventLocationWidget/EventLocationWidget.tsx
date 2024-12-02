@@ -1,16 +1,16 @@
-import { Box, CardContent, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
-import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
-import { SCContextType, useSCContext, useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventLocationType, SCEventType } from '@selfcommunity/types';
+import {Box, CardContent, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {useThemeProps} from '@mui/system';
+import {GoogleMap, MarkerF} from '@react-google-maps/api';
+import {useSCGoogleApiLoader, useSCFetchEvent} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { VirtualScrollerItemProps } from '../../types/virtualScroller';
-import { formatEventLocationGeolocation } from '../../utils/string';
+import {VirtualScrollerItemProps} from '../../types/virtualScroller';
+import {formatEventLocationGeolocation} from '../../utils/string';
 import Widget from '../Widget';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 import EventLocationWidgetSkeleton from './Skeleton';
 
 const classes = {
@@ -85,14 +85,13 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
     props: inProps,
     name: PREFIX
   });
-  const { className, event, eventId, ...rest } = props;
+  const {className, event, eventId, ...rest} = props;
   // STATE
-  const { scEvent } = useSCFetchEvent({ id: eventId, event });
-  const scContext: SCContextType = useSCContext();
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
-    libraries: ['maps']
-  });
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
+
+  // HOOKS
+  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
+
   const mapOptions = {
     fullscreenControl: false, // Disables the fullscreen control
     mapTypeControl: false, // Disables the map type selector (satellite/map)
@@ -100,7 +99,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
     zoomControl: false // Disables the zoom control (+/- buttons)
   };
 
-  if (!scContext?.settings?.integrations?.geocoding?.apiKey || scEvent?.location === SCEventLocationType.ONLINE) {
+  if (!geocodingApiKey || scEvent?.location === SCEventLocationType.ONLINE) {
     return <HiddenPlaceholder />;
   }
 

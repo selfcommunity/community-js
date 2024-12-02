@@ -69,6 +69,18 @@ const Component = {
           '& img': {
             maxWidth: '100%'
           }
+        },
+        '& .SCCommentObject-flag-chip': {
+          borderRadius: 0,
+          display: 'flex',
+          width: 'fit-content'
+        }
+      },
+      '& .SCCommentObject-collapsed': {
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& .MuiCardContent-root': {
+          marginLeft: theme.spacing(1)
         }
       },
       '& .SCCommentObject-show-more-content': {

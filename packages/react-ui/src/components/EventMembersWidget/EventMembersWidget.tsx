@@ -71,9 +71,9 @@ export interface EventMembersWidgetProps extends WidgetProps {
    */
   dialogProps?: BaseDialogProps;
 
-	/**
-	 * Limit items
-	 */
+  /**
+   * Limit items
+   */
   limit?: number;
 
   /**

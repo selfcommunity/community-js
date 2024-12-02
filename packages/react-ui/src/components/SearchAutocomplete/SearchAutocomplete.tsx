@@ -165,9 +165,9 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
   const optionLabel = (option) => {
     switch (option.type) {
       case SuggestionType.CATEGORY:
-        return option[option.type]['name_synonyms'] || option[option.type]['name'];
+        return `${option[option.type]?.name_synonyms || ''} ${option[option.type]?.name || ''}`.trim();
       case SuggestionType.USER:
-        return option[option.type]['username'] && option[option.type]['real_name'];
+        return `${option[option.type]?.username || ''} ${option[option.type]?.real_name || ''}`.trim();
       default:
         return option[option.type]['name'];
     }

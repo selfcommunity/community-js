@@ -130,10 +130,10 @@ export default function CommentNotification(props: CommentNotificationProps): JS
               {notificationObject.comment.author.username}
             </Link>{' '}
             {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
-              ? intl.formatMessage(messages.comment, {
+              ? intl.formatMessage(messages.nestedComment, {
                   b: (...chunks) => <strong>{chunks}</strong>
                 })
-              : intl.formatMessage(messages.nestedComment, {
+              : intl.formatMessage(messages.comment, {
                   b: (...chunks) => <strong>{chunks}</strong>
                 })}
           </>

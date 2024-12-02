@@ -46,9 +46,11 @@ const Component = {
         '& a:not(.MuiChip-clickable)': {
           color: 'inherit',
           textDecoration: 'none',
+          display: 'inline-flex',
           '&::after': {
             content: '"\\2022"',
-            padding: theme.spacing()
+            padding: theme.spacing(),
+            alignSelf: 'center'
           },
           '&:last-child::after': {
             display: 'none'
@@ -62,7 +64,9 @@ const Component = {
           }
         },
         '& .SCFeedObject-group, & .SCFeedObject-event': {
-          marginRight: `${theme.spacing(1)} !important`
+          [theme.breakpoints.up('sm')]: {
+            marginRight: `${theme.spacing(1)} !important`
+          }
         }
       },
       '& .SCFeedObject-group, & .SCFeedObject-event': {
@@ -79,7 +83,9 @@ const Component = {
             color: theme.palette.common.white,
             textTransform: 'initial'
           }
-        }
+        },
+        borderBottom: '1px solid rgba(221, 221, 221, 1)',
+        margin: theme.spacing(1, 2, 0, 2)
       },
       '& .SCFeedObject-content': {
         padding: theme.spacing(1, 0, 0, 0),
@@ -143,17 +149,18 @@ const Component = {
           margin: theme.spacing(0, 2),
           '& .SCFeedObject-group, & .SCFeedObject-event': {
             borderBottom: 'none',
-            margin: theme.spacing(0),
+            marginTop: theme.spacing(0.5),
             '& .MuiChip-icon': {
-              marginLeft: theme.spacing(1),
-              marginRight: theme.spacing(-1),
               fontWeight: theme.typography.fontWeightRegular
             }
+          },
+          '& .SCFeedObject-group .MuiChip-icon': {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(-1)
+          },
+          [theme.breakpoints.down('md')]: {
+            justifyContent: 'space-evenly'
           }
-        },
-        '& .SCFeedObject-group, & .SCFeedObject-event': {
-          borderBottom: '1px solid rgba(221, 221, 221, 1)',
-          margin: theme.spacing(1, 2, 0, 2)
         },
         '& .SCFeedObject-header': {
           '& .MuiCardHeader-avatar': {

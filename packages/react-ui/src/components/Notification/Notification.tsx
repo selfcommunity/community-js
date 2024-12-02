@@ -407,7 +407,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                   color={'inherit'}
                   classes={{root: classes.stopButton}}
                   onClick={() => handleStopContentNotification(contribution)}>
-                  {contribution.suspended ? <Icon color={'primary'}>notifications_off</Icon> : <Icon color={'inherit'}>notifications</Icon>}
+                  {contribution.suspended ? <Icon color={'primary'}>notifications_off</Icon> : <Icon color={'inherit'}>notifications_active</Icon>}
                 </LoadingButton>
               </Tooltip>
             )

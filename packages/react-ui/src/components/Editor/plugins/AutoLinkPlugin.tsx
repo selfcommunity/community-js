@@ -15,6 +15,13 @@ const URL_MATCHER = /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}
 const EMAIL_MATCHER =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
+const normalizeURL = (url) => {
+  if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
+    return `https://${url}`;
+  }
+  return url;
+};
+
 const MATCHERS = [
   (text) => {
     const match = URL_MATCHER.exec(text);
@@ -23,7 +30,7 @@ const MATCHERS = [
         index: match.index,
         length: match[0].length,
         text: match[0],
-        url: match[0]
+        url: normalizeURL(match[0])
       }
     );
   },

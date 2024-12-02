@@ -1,16 +1,14 @@
-import React, {useCallback, useEffect, useReducer, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Preferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
-import {Button, CircularProgress, Drawer, IconButton, Tab, Tabs, TextField, Typography} from '@mui/material';
+import {Button, Drawer, IconButton, Tab, Tabs, TextField, Typography} from '@mui/material';
 import {MuiColorInput} from 'mui-color-input';
-import {actionTypes} from './reducer';
-import {getInitialState, reducer} from './reducer';
 import {PreferenceService, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCPreferenceType} from '@selfcommunity/types';
+import {SCPreferenceSection, SCPreferenceType} from '@selfcommunity/types';
 import {formatColorLabel, formatLogoLabel} from '../../../../utils/onBoarding';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import Icon from '@mui/material/Icon';
@@ -45,6 +43,11 @@ const classes = {
   drawerHeaderAction: `${PREFIX}-appearance-drawer-header-action`,
   drawerContent: `${PREFIX}-appearance-drawer-content`
 };
+enum AppearanceTabType {
+  COLOR = 'color',
+  LOGO = 'logo',
+  SLOGAN = 'slogan'
+}
 
 export interface AppearanceProps {
   /**
@@ -79,12 +82,13 @@ export default function Appearance(inProps: AppearanceProps) {
   const {className, onCompleteAction} = props;
 
   // STATE
-  const [state, dispatch] = useReducer(reducer, getInitialState(null));
+  const [preferences, setPreferences] = useState<SCPreferenceType[]>([]);
+  const [data, setData] = useState<any>({});
+  const [loading, setLoading] = useState<boolean>(true);
   const [loadingLogo, setLoadingLogo] = useState<string>('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(AppearanceTabType.COLOR);
   const [updating, setUpdating] = useState<boolean>(false);
-  const [updatingColor, setUpdatingColor] = useState<string>('');
   const colorRef = useRef(null);
 
   // INTL
@@ -93,6 +97,7 @@ export default function Appearance(inProps: AppearanceProps) {
   // HANDLERS
   const handleTabChange = (event, newValue) => {
     setTab(newValue);
+    setData({});
   };
   const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -101,88 +106,67 @@ export default function Appearance(inProps: AppearanceProps) {
     setAnchorEl(null);
   }, []);
 
-  const fetchColors = () => {
-    dispatch({type: actionTypes.LOADING, payload: {loading: true}});
-    PreferenceService.searchPreferences(
-      '',
-      '',
-      `${Preferences.COLORS_COLORBACK},${Preferences.COLORS_COLORPRIMARY},${Preferences.COLORS_COLORSECONDARY},${Preferences.COLORS_NAVBARBACK},${Preferences.COLORS_COLORFONT},${Preferences.COLORS_COLORFONTSECONDARY}`
-    )
-      .then((res: SCPaginatedResponse<SCPreferenceType>) => {
-        dispatch({
-          type: actionTypes.SET_COLORS,
-          payload: {
-            loading: false,
-            colors: res.results
-          }
-        });
-      })
-      .catch((e) => {
-        Logger.error(SCOPE_SC_UI, e);
-        dispatch({type: actionTypes.SET_COLORS, payload: {loading: false, colors: []}});
-      });
-  };
-
-  const fetchLogos = () => {
-    dispatch({type: actionTypes.LOADING, payload: {loading: true}});
-    PreferenceService.searchPreferences('', '', `${Preferences.LOGO_NAVBAR_LOGO},${Preferences.LOGO_NAVBAR_LOGO_MOBILE}`)
-      .then((res: SCPaginatedResponse<SCPreferenceType>) => {
-        dispatch({
-          type: actionTypes.SET_LOGOS,
-          payload: {
-            loading: false,
-            logos: res.results
-          }
-        });
-      })
-      .catch((e) => {
-        Logger.error(SCOPE_SC_UI, e);
-        dispatch({type: actionTypes.SET_LOGOS, payload: {loading: false, logos: []}});
-      });
-  };
-
-  const fetchSlogans = () => {
-    dispatch({type: actionTypes.LOADING, payload: {loading: true}});
-    PreferenceService.searchPreferences('', '', `${Preferences.TEXT_APPLICATION_SLOGAN1},${Preferences.TEXT_APPLICATION_SLOGAN2}`)
-      .then((res: SCPaginatedResponse<SCPreferenceType>) => {
-        dispatch({
-          type: actionTypes.SET_SLOGANS,
-          payload: {
-            loading: false,
-            slogans: res.results
-          }
-        });
-      })
-      .catch((e) => {
-        Logger.error(SCOPE_SC_UI, e);
-        dispatch({type: actionTypes.SET_SLOGANS, payload: {loading: false, slogans: []}});
-      });
-  };
-
-  const updatePreference = async (preference: any) => {
-    try {
-      await PreferenceService.updatePreferences(preference);
-    } catch (e) {
-      Logger.error(SCOPE_SC_UI, e);
-    } finally {
-      setUpdating(false);
-      setUpdatingColor('');
-      onCompleteAction();
+  const handleClosePopover = () => {
+    if (colorRef.current) {
+      colorRef.current.blur();
     }
   };
 
-  const updateSlogans = async () => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = event.target;
+    setPreferences((prev) => {
+      return prev.map((p) => Object.assign({}, p, {value: p.name === name ? value : p.value}));
+    });
+    handleDataUpdate(name, value);
+  };
+
+  const handleColorChange = (newColor, name) => {
+    setPreferences((prev) => {
+      return prev.map((p) => Object.assign({}, p, {value: p.name === name ? newColor : p.value}));
+    });
+    handleDataUpdate(name, newColor);
+  };
+
+  const handleDataUpdate = (key: string, value: any) => {
+    const elementInDict = preferences.filter((p: SCPreferenceType) => p.name === key && p.value === value);
+    if (elementInDict.length) {
+      const newData = {...data};
+      delete newData[key];
+      setData(newData);
+    } else {
+      setData((prevData: any) => ({
+        ...prevData,
+        [key]: value
+      }));
+    }
+  };
+
+  const fetchPreferences = () => {
+    PreferenceService.searchPreferences(
+      '',
+      '',
+      `${Preferences.COLORS_COLORBACK},${Preferences.COLORS_COLORPRIMARY},${Preferences.COLORS_COLORSECONDARY},${Preferences.COLORS_NAVBARBACK},${Preferences.COLORS_COLORFONT},${Preferences.COLORS_COLORFONTSECONDARY}, ${Preferences.LOGO_NAVBAR_LOGO},${Preferences.LOGO_NAVBAR_LOGO_MOBILE}, ${Preferences.TEXT_APPLICATION_SLOGAN1},${Preferences.TEXT_APPLICATION_SLOGAN2}`
+    )
+      .then((res: SCPaginatedResponse<SCPreferenceType>) => {
+        setPreferences(res.results);
+        setLoading(false);
+      })
+      .catch((e) => {
+        Logger.error(SCOPE_SC_UI, e);
+        setLoading(false);
+      });
+  };
+
+  const updatePreference = async () => {
     setUpdating(true);
     try {
-      await Promise.all(
-        state.slogans.map(({name, value}) => {
-          return updatePreference({[name]: value});
-        })
-      );
+      await PreferenceService.updatePreferences(data);
     } catch (e) {
       Logger.error(SCOPE_SC_UI, e);
     } finally {
       setUpdating(false);
+      setData({});
+      onCompleteAction();
     }
   };
 
@@ -193,14 +177,15 @@ export default function Appearance(inProps: AppearanceProps) {
     await PreferenceService.updatePreferences(formData)
       .then((preference: SCPreferenceType) => {
         setLoadingLogo('');
-        dispatch({
-          type: actionTypes.SET_LOGOS,
-          payload: {logos: state.logos.map((l) => (l.name === name ? {...l, value: preference[name].value} : l))}
+        setData({});
+        setPreferences((prev) => {
+          return prev.map((p) => Object.assign({}, p, {value: p.name === name ? preference[name].value : p.value}));
         });
         onCompleteAction();
       })
       .catch((e) => {
         setLoadingLogo('');
+        setData({});
         Logger.error(SCOPE_SC_UI, e);
       });
   };
@@ -218,38 +203,8 @@ export default function Appearance(inProps: AppearanceProps) {
   };
 
   useEffect(() => {
-    fetchColors();
-    fetchLogos();
-    fetchSlogans();
+    fetchPreferences();
   }, []);
-
-  // HANDLERS
-  const handleColorChange = (color, name) => {
-    setUpdatingColor(name);
-    const currentColor = state.colors.find((col) => col.name === name);
-    if (currentColor && currentColor.value !== color) {
-      setUpdating(true);
-      dispatch({
-        type: actionTypes.SET_COLORS,
-        payload: {colors: state.colors.map((col) => (col.name === name ? {...col, value: color} : col))}
-      });
-      updatePreference({[`${name}`]: color});
-    }
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-    dispatch({
-      type: actionTypes.SET_SLOGANS,
-      payload: {slogans: state.slogans.map((s) => (s.name === name ? {...s, value: value} : s))}
-    });
-  };
-
-  const handleClosePopover = () => {
-    if (colorRef.current) {
-      colorRef.current.blur();
-    }
-  };
 
   return (
     <Root className={classNames(classes.root, className)}>
@@ -277,6 +232,7 @@ export default function Appearance(inProps: AppearanceProps) {
         {/*<Divider />*/}
         <Tabs value={tab} onChange={handleTabChange} variant="scrollable" scrollButtons="auto" aria-label="scrollable-tabs">
           <Tab
+            value={AppearanceTabType.COLOR}
             label={
               <FormattedMessage
                 id="ui.onBoardingWidget.step.appearance.colors.title"
@@ -285,11 +241,13 @@ export default function Appearance(inProps: AppearanceProps) {
             }
           />
           <Tab
+            value={AppearanceTabType.LOGO}
             label={
               <FormattedMessage id="ui.onBoardingWidget.step.appearance.logo.title" defaultMessage="ui.onBoardingWidget.step.appearance.logo.title" />
             }
           />
           <Tab
+            value={AppearanceTabType.SLOGAN}
             label={
               <FormattedMessage
                 id="ui.onBoardingWidget.step.appearance.titleSlogan.title"
@@ -301,83 +259,110 @@ export default function Appearance(inProps: AppearanceProps) {
 
         <ScrollContainer>
           <Box className={classes.drawerContent}>
-            {tab === 0 && (
-              <>
-                {state.colors.map((color) => (
-                  <React.Fragment key={color.id}>
-                    <Typography variant="h6">{formatColorLabel(color)}</Typography>
-                    <Box className={classes.colorContainer}>
-                      <MuiColorInput
-                        inputRef={colorRef}
-                        className={classes.color}
-                        format="hex"
-                        value={color.value}
-                        onChange={(newColor) => handleColorChange(newColor, color.name)}
-                        isAlphaHidden
-                        PopoverProps={{onClose: handleClosePopover}}
-                      />
-                      {updatingColor && updatingColor === color.name && (
-                        <CircularProgress className={classes.colorProgress} color="secondary" size={24} />
-                      )}
-                    </Box>
-                  </React.Fragment>
-                ))}
-              </>
+            {tab === AppearanceTabType.COLOR && (
+              <Box className={classes.colorContainer}>
+                {preferences
+                  .filter((item) => item.section === SCPreferenceSection.COLORS)
+                  .map((color) => (
+                    <React.Fragment key={color.id}>
+                      <Typography variant="h6">{formatColorLabel(color)}</Typography>
+                      <Box>
+                        <MuiColorInput
+                          inputRef={colorRef}
+                          className={classes.color}
+                          format="hex"
+                          value={color.value}
+                          onChange={(value) => handleColorChange(value, color.name)}
+                          isAlphaHidden
+                          PopoverProps={{onClose: handleClosePopover}}
+                        />
+                      </Box>
+                    </React.Fragment>
+                  ))}
+                <LoadingButton
+                  loading={loading || updating}
+                  disabled={loading || updating || Object.keys(data).length === 0}
+                  variant="outlined"
+                  size="small"
+                  color="primary"
+                  onClick={updatePreference}>
+                  <FormattedMessage
+                    id="ui.onBoardingWidget.step.appearance.titleSlogan.button"
+                    defaultMessage="ui.onBoardingWidget.step.appearance.titleSlogan.button"
+                  />
+                </LoadingButton>
+              </Box>
             )}
 
-            {tab === 1 && (
+            {tab === AppearanceTabType.LOGO && (
               <>
-                {state.logos.map((logo) => (
-                  <React.Fragment key={logo.id}>
-                    <Typography variant="h6">{formatLogoLabel(logo.name)}</Typography>
-                    <Box className={classes.logoContainer}>
-                      <img src={logo.value} className={classes.logo} />
-                      <input type="file" onChange={(event) => handleUpload(event, logo.name)} hidden accept=".gif,.png,.jpg,.jpeg" id={logo.name} />
-                      <LoadingButton
-                        className={classes.uploadButton}
-                        onClick={() => document.getElementById(`${logo.name}`).click()}
-                        loading={Boolean(loadingLogo) && Boolean(logo.name === loadingLogo)}
-                        disabled={Boolean(loadingLogo) && Boolean(logo.name !== loadingLogo)}>
-                        <Icon>upload</Icon>
-                      </LoadingButton>
-                    </Box>
-                  </React.Fragment>
-                ))}
+                {preferences
+                  .filter((item) => item.section === SCPreferenceSection.LOGO)
+                  .map((logo) => (
+                    <React.Fragment key={logo.id}>
+                      <Typography variant="h6">{formatLogoLabel(logo.name)}</Typography>
+                      <Box className={classes.logoContainer}>
+                        <img src={logo.value} className={classes.logo} />
+                        <input type="file" onChange={(event) => handleUpload(event, logo.name)} hidden accept=".gif,.png,.jpg,.jpeg" id={logo.name} />
+                        <LoadingButton
+                          className={classes.uploadButton}
+                          onClick={() => document.getElementById(`${logo.name}`).click()}
+                          loading={Boolean(loadingLogo) && Boolean(logo.name === loadingLogo)}
+                          disabled={Boolean(loadingLogo) && Boolean(logo.name !== loadingLogo)}>
+                          <Icon>upload</Icon>
+                        </LoadingButton>
+                      </Box>
+                    </React.Fragment>
+                  ))}
               </>
             )}
-            {tab === 2 && (
+            {tab === AppearanceTabType.SLOGAN && (
               <Box>
                 <TextField
                   multiline
                   fullWidth
-                  //className={classes.field}
                   label={`${intl.formatMessage(messages.titleField)}`}
                   margin="normal"
-                  value={state?.slogans[0]?.value}
+                  value={preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value || ''}
                   name="application_slogan1"
                   onChange={handleChange}
                   InputProps={{
-                    endAdornment: <Typography variant="body2">{state.slogans[0].value?.length ? 50 - state.slogans[0].value?.length : 50}</Typography>
+                    endAdornment: (
+                      <Typography variant="body2">
+                        {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length
+                          ? 50 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value.length
+                          : 50}
+                      </Typography>
+                    )
                   }}
-                  error={Boolean(state?.slogans[0]?.value?.length > 50)}
+                  error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length > 50)}
                 />
                 <TextField
                   multiline
                   fullWidth
-                  //className={classes.field}
                   label={`${intl.formatMessage(messages.sloganField)}`}
                   margin="normal"
-                  value={state?.slogans[1]?.value}
+                  value={preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value || ''}
                   name="application_slogan2"
                   onChange={handleChange}
                   InputProps={{
                     endAdornment: (
-                      <Typography variant="body2">{state.slogans[1].value?.length ? 150 - state.slogans[1].value?.length : 150}</Typography>
+                      <Typography variant="body2">
+                        {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length
+                          ? 150 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value.length
+                          : 150}
+                      </Typography>
                     )
                   }}
-                  error={Boolean(state?.slogans[1]?.value?.length > 150)}
+                  error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length > 150)}
                 />
-                <LoadingButton loading={updating} disabled={updating} variant="outlined" size="small" color="primary" onClick={updateSlogans}>
+                <LoadingButton
+                  loading={updating}
+                  disabled={updating || Object.keys(data).length === 0}
+                  variant="outlined"
+                  size="small"
+                  color="primary"
+                  onClick={updatePreference}>
                   <FormattedMessage
                     id="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                     defaultMessage="ui.onBoardingWidget.step.appearance.titleSlogan.button"

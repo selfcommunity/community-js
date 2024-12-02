@@ -30,7 +30,7 @@ export interface UserProfileEditProps {
    * Id of user object
    * @default null
    */
-  id?: string;
+  id?: string | number;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -128,7 +128,7 @@ export default function UserProfileEdit(inProps: UserProfileEditProps): JSX.Elem
 
   // RENDER
   return (
-    <Root id={id} className={classNames(classes.root, className)} {...rest}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <Tabs className={classes.tabs} value={tab} onChange={handleChange} variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile>
         <Tab label={<FormattedMessage id="ui.userProfileEdit.info" defaultMessage="ui.userProfileEdit.info" />} />
         <Tab label={<FormattedMessage id="ui.userProfileEdit.account" defaultMessage="ui.userProfileEdit.account" />} />

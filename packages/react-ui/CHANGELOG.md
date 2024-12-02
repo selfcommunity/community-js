@@ -3,6 +3,636 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.20...@selfcommunity/react-ui@0.10.2-alpha.21) (2024-11-29)
+
+
+### Performance Improvements
+
+* added navigation section to flap menu. Linear issue: https://linear.app/quentral/issue/QUE-1015/flap-menu ([6391a84](https://github.com/selfcommunity/community-js/commit/6391a84179e194d46a4e869c0c70e7af3609db49))
+
+
+
+
+
+## [0.10.2-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.19...@selfcommunity/react-ui@0.10.2-alpha.20) (2024-11-28)
+
+
+### Bug Fixes
+
+* linear issue: https://linear.app/quentral/issue/QUE-914/nei-messaggi-privati-non-viene-passata-una-lista-di-id-a-volte + event/group tag header in feed objs ([d731c2b](https://github.com/selfcommunity/community-js/commit/d731c2be752b191b173611aca4afcfdf7b1db260))
+
+
+
+
+
+## [0.10.2-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.18...@selfcommunity/react-ui@0.10.2-alpha.19) (2024-11-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.2-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.17...@selfcommunity/react-ui@0.10.2-alpha.18) (2024-11-27)
+
+
+### Bug Fixes
+
+* feedObj header tags. Linear issue: https://linear.app/quentral/issue/QUE-989/header-categorie-con-molti-tag ([bd09135](https://github.com/selfcommunity/community-js/commit/bd091352df1e6a3f00680354387f3ef99871dc28))
+
+
+
+
+
+## [0.10.2-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.16...@selfcommunity/react-ui@0.10.2-alpha.17) (2024-11-26)
+
+
+### Bug Fixes
+
+* fixed subscribed call into event pages ([873d31e](https://github.com/selfcommunity/community-js/commit/873d31e423c3e30b7bf351034c3739e5d525f2f3))
+
+
+
+
+
+## [0.10.2-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.15...@selfcommunity/react-ui@0.10.2-alpha.16) (2024-11-26)
+
+
+### Bug Fixes
+
+* inverted comment notification comment for nested comments. Linear issue: https://linear.app/quentral/issue/QUE-985/notifiche-copy-errato ([fb760d1](https://github.com/selfcommunity/community-js/commit/fb760d1e63ea88c67ae846ad74cbfd10437cf06a))
+
+
+
+
+
+## [0.10.2-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.14...@selfcommunity/react-ui@0.10.2-alpha.15) (2024-11-26)
+
+
+### Bug Fixes
+
+* notifications icon missing. Linear issue: https://linear.app/quentral/issue/QUE-986/elemento-fantasma-view-notifiche ([e55013a](https://github.com/selfcommunity/community-js/commit/e55013a88f500020fa222d085de686decd74c0d5))
+
+
+
+
+
+## [0.10.2-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.13...@selfcommunity/react-ui@0.10.2-alpha.14) (2024-11-25)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.2-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.12...@selfcommunity/react-ui@0.10.2-alpha.13) (2024-11-22)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.2-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.11...@selfcommunity/react-ui@0.10.2-alpha.12) (2024-11-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.2-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.10...@selfcommunity/react-ui@0.10.2-alpha.11) (2024-11-21)
+
+
+### Bug Fixes
+
+* comment formatting. Linear issue: https://linear.app/quentral/issue/QUE-976/problema-a-capo-sui-commenti ([fb958cf](https://github.com/selfcommunity/community-js/commit/fb958cfebacbadf80cec0b92d04ab75c68b55ea1))
+
+
+
+
+
+## [0.10.2-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.9...@selfcommunity/react-ui@0.10.2-alpha.10) (2024-11-20)
+
+
+### Bug Fixes
+
+* url issue in editor. Linear issue: https://linear.app/quentral/issue/QUE-975/link-su-feedobjcommenti ([1bde26a](https://github.com/selfcommunity/community-js/commit/1bde26a180a31b02a60c36c15a7f4aa37d2b3241))
+
+
+
+
+
+## [0.10.2-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.8...@selfcommunity/react-ui@0.10.2-alpha.9) (2024-11-20)
+
+
+### Bug Fixes
+
+* fix hidden comment rendering. Linear issue: https://linear.app/quentral/issue/QUE-932/contributi-nascosti-comunque-visibili ([87bd32e](https://github.com/selfcommunity/community-js/commit/87bd32e7ae16d376bab6c4289f85070f84295a97))
+
+
+
+
+
+## [0.10.2-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.7...@selfcommunity/react-ui@0.10.2-alpha.8) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([208b8d9](https://github.com/selfcommunity/community-js/commit/208b8d94efb19fcf91edcc25647caa5aefc02068))
+
+
+
+
+
+## [0.10.2-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.6...@selfcommunity/react-ui@0.10.2-alpha.7) (2024-11-19)
+
+
+### Bug Fixes
+
+* fixed date control on CreateEvent ([a8bd98b](https://github.com/selfcommunity/community-js/commit/a8bd98bd6f8a18f57fcecefea8ff4da8c1f7c9db))
+* restore [@ts-ignore](https://github.com/ts-ignore) instead of [@ts-expect-error](https://github.com/ts-expect-error) ([cc9b763](https://github.com/selfcommunity/community-js/commit/cc9b76381cba1ab06b1c1ea7e9f93bd1a5cc037a))
+* restore [@ts-ignore](https://github.com/ts-ignore) instead of [@ts-expect-error](https://github.com/ts-expect-error) ([c93d37f](https://github.com/selfcommunity/community-js/commit/c93d37facf4ff8e2cc61a1f8dc258b2a35823b2f))
+
+
+
+
+
+## [0.10.2-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.5...@selfcommunity/react-ui@0.10.2-alpha.6) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([2dd5db6](https://github.com/selfcommunity/community-js/commit/2dd5db63f35f59881c4f3f713db43d9355a963b1))
+* socialAssociation ([80bf5dd](https://github.com/selfcommunity/community-js/commit/80bf5ddbe2179589c13aad1014f551d17101abb4))
+
+
+
+
+
+## [0.10.2-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.4...@selfcommunity/react-ui@0.10.2-alpha.5) (2024-11-18)
+
+
+### Bug Fixes
+
+* socialAssociation ([50d7480](https://github.com/selfcommunity/community-js/commit/50d7480f585b74cd3fcd37086b0752edaa32f483))
+
+
+
+
+
+## [0.10.2-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.3...@selfcommunity/react-ui@0.10.2-alpha.4) (2024-11-18)
+
+
+### Bug Fixes
+
+* Added hook to load api google maps script and fix error. Linear issue: https://linear.app/quentral/issue/QUE-960/errori-in-console-google-maps ([b6e7e9b](https://github.com/selfcommunity/community-js/commit/b6e7e9ba7d075afc3117e3a37f63e2b7464f9e09))
+
+
+
+
+
+## [0.10.2-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.2...@selfcommunity/react-ui@0.10.2-alpha.3) (2024-11-15)
+
+
+### Bug Fixes
+
+* fixed some ui bugs on events ([7e3d4a9](https://github.com/selfcommunity/community-js/commit/7e3d4a96169b50e57ef6d9cb03de188a38387515))
+
+
+
+
+
+## [0.10.2-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.1...@selfcommunity/react-ui@0.10.2-alpha.2) (2024-11-15)
+
+
+### Bug Fixes
+
+* fixed appearance color change. Linear issue: https://linear.app/quentral/issue/QUE-947/modifica-colori-del-tema-dovrebbe-lanciare-un-solo-update ([5be4687](https://github.com/selfcommunity/community-js/commit/5be468752705beb7c6a22d800dc18747d4867a92))
+* fixed skeleton's css; fixed bug on subscribers_counter ([9302d22](https://github.com/selfcommunity/community-js/commit/9302d22de355a99ad9fc0426cc7ef7a0432dea00))
+* update react-ui deps -> react-lazyload ([5e37f63](https://github.com/selfcommunity/community-js/commit/5e37f63d092ed6f14e1f7c6808ef86ee4e490c83))
+
+
+
+
+
+## [0.10.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.0...@selfcommunity/react-ui@0.10.2-alpha.1) (2024-11-14)
+
+
+### Bug Fixes
+
+* fixed avatar's width to safari ([106f254](https://github.com/selfcommunity/community-js/commit/106f254b1e5e86f076ee50b95b07b08a806982a5))
+
+
+
+
+
+## [0.10.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1...@selfcommunity/react-ui@0.10.2-alpha.0) (2024-11-13)
+
+
+### Bug Fixes
+
+* fixed search autocomplete results. Linear issue: https://linear.app/quentral/issue/QUE-938/suggest-ricerca-utenti-senza-real-name ([3bfea64](https://github.com/selfcommunity/community-js/commit/3bfea64411ebf59c1bda05acdcb09a556c299c55))
+
+
+### Performance Improvements
+
+* added location name when saving event details. Linear issue: https://linear.app/quentral/issue/QUE-941/la-location-non-salva-il-posto-selezionato ([a417be5](https://github.com/selfcommunity/community-js/commit/a417be5d64cd495bfffa193fdedb6cd284a6d528))
+
+
+
+
+
+## [0.10.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.6...@selfcommunity/react-ui@0.10.1) (2024-11-12)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.1-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.5...@selfcommunity/react-ui@0.10.1-alpha.6) (2024-11-12)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.1-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.4...@selfcommunity/react-ui@0.10.1-alpha.5) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices revert to previous version ([65f11ce](https://github.com/selfcommunity/community-js/commit/65f11ced9163a9a809a3059b59876d260caf9da3))
+
+
+
+
+
+## [0.10.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.3...@selfcommunity/react-ui@0.10.1-alpha.4) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices test ([7c4906c](https://github.com/selfcommunity/community-js/commit/7c4906ca00bac02310fdd5277037b1b9dca60b94))
+
+
+
+
+
+## [0.10.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.2...@selfcommunity/react-ui@0.10.1-alpha.3) (2024-11-12)
+
+
+### Bug Fixes
+
+* comment edit issue on mobile devices. Linear issue: https://linear.app/quentral/issue/QUE-936/impossibile-sulla-pwa-da-mobile-rieditare-un-testo-in-fase-di ([dad0a63](https://github.com/selfcommunity/community-js/commit/dad0a63b1174a051528be2ca884113567ee27d8e))
+
+
+
+
+
+## [0.10.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.1...@selfcommunity/react-ui@0.10.1-alpha.2) (2024-11-12)
+
+
+### Bug Fixes
+
+* share image media. Linear issue: https://linear.app/quentral/issue/QUE-939/condividi-ora-non-funziona-su-post-con-immagini ([f9cc16a](https://github.com/selfcommunity/community-js/commit/f9cc16a745d2223438ec8906537938b2d54c0914))
+
+
+
+
+
+## [0.10.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.1-alpha.0...@selfcommunity/react-ui@0.10.1-alpha.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* replaced google api key env with dynamic preference ([c925b15](https://github.com/selfcommunity/community-js/commit/c925b1575c0b509d15af3e1388473b351630c5cd))
+
+
+
+
+
+## [0.10.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0...@selfcommunity/react-ui@0.10.1-alpha.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* past events filter when there are no ongoing events ([65aed1d](https://github.com/selfcommunity/community-js/commit/65aed1d4c91846b035e667bcee6eba5ceca10428))
+
+
+
+
+
+# [0.10.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.10...@selfcommunity/react-ui@0.10.0) (2024-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.10.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.9...@selfcommunity/react-ui@0.10.0-alpha.10) (2024-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.10.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.8...@selfcommunity/react-ui@0.10.0-alpha.9) (2024-11-08)
+
+
+### Bug Fixes
+
+* user action moderation ([827c48a](https://github.com/selfcommunity/community-js/commit/827c48abb0fddf1cfd391164f36cbb495002a2b7))
+
+
+
+
+
+# [0.10.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.7...@selfcommunity/react-ui@0.10.0-alpha.8) (2024-11-08)
+
+
+### Bug Fixes
+
+* user action moderation ([4ea137b](https://github.com/selfcommunity/community-js/commit/4ea137b453e67bf8b8cc349517db3af2fe4c9836))
+
+
+
+
+
+# [0.10.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.6...@selfcommunity/react-ui@0.10.0-alpha.7) (2024-11-08)
+
+
+### Bug Fixes
+
+* EventHeader ([29cd640](https://github.com/selfcommunity/community-js/commit/29cd6400fc976ad49832388dfecbf3bd2ea9bcc5))
+
+
+
+
+
+# [0.10.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.5...@selfcommunity/react-ui@0.10.0-alpha.6) (2024-11-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.10.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.4...@selfcommunity/react-ui@0.10.0-alpha.5) (2024-11-08)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([0bee0cc](https://github.com/selfcommunity/community-js/commit/0bee0cc3ea1884ce6f5367190931798f330e56b9))
+
+
+
+
+
+# [0.10.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.3...@selfcommunity/react-ui@0.10.0-alpha.4) (2024-11-07)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([a97189b](https://github.com/selfcommunity/community-js/commit/a97189bb1982801c851af649a031b9246fea5893))
+
+
+
+
+
+# [0.10.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.2...@selfcommunity/react-ui@0.10.0-alpha.3) (2024-11-07)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([c655d56](https://github.com/selfcommunity/community-js/commit/c655d5643755f3c1148f2b03cebe5aa02d26e428))
+
+
+
+
+
+# [0.10.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.1...@selfcommunity/react-ui@0.10.0-alpha.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* fixed TagAutocomplete component ([970b575](https://github.com/selfcommunity/community-js/commit/970b575c85779867d66ccd2c5a5a649d6e06fdc4))
+
+
+
+
+
+# [0.10.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.0-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.1) (2024-11-07)
+
+
+### Performance Improvements
+
+* added TagAutocomplete component ([e65f552](https://github.com/selfcommunity/community-js/commit/e65f55222a64749bb41666ebd8e02c23fbf41772))
+
+
+
+
+
+# [0.10.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.2-alpha.0...@selfcommunity/react-ui@0.10.0-alpha.0) (2024-11-06)
+
+
+### Bug Fixes
+
+* added eventId into EventParticipantsButton.stories ([ed1976f](https://github.com/selfcommunity/community-js/commit/ed1976fdf431abd37db9ade67875bc47fc106baa))
+
+
+### Features
+
+* added new utility to format number to thousands and more; modified all related components ([dcb4121](https://github.com/selfcommunity/community-js/commit/dcb412188d5b6cf61d365fe467087b3b73dd1e73))
+
+
+
+
+
+## [0.9.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1...@selfcommunity/react-ui@0.9.2-alpha.0) (2024-11-05)
+
+
+### Bug Fixes
+
+* added control to manage when to show right arrow ([a0b69a8](https://github.com/selfcommunity/community-js/commit/a0b69a80a813d9360a06b68f52186e0d52ad7043))
+* fixed console error ([f397346](https://github.com/selfcommunity/community-js/commit/f39734636180433716c81c5ce516956fcca00186))
+
+
+
+
+
+## [0.9.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.4...@selfcommunity/react-ui@0.9.1) (2024-11-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.9.1-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.3...@selfcommunity/react-ui@0.9.1-alpha.4) (2024-11-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.9.1-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.2...@selfcommunity/react-ui@0.9.1-alpha.3) (2024-11-05)
+
+
+### Bug Fixes
+
+* feedObject ([c818188](https://github.com/selfcommunity/community-js/commit/c818188fbe3cbe0c52eda6f1a58112c34ff44baf))
+
+
+
+
+
+## [0.9.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.1...@selfcommunity/react-ui@0.9.1-alpha.2) (2024-11-05)
+
+
+### Bug Fixes
+
+* feedObj detail comment action ([1d06cbf](https://github.com/selfcommunity/community-js/commit/1d06cbfd4cc7d475a646347c62fc19727847119b))
+* onBoarding useEffect ([315ce1d](https://github.com/selfcommunity/community-js/commit/315ce1d7aa61ff7f63935f769d7b6ec93a4d4276))
+
+
+
+
+
+## [0.9.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.1-alpha.0...@selfcommunity/react-ui@0.9.1-alpha.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* metadata editable state in user edit public info. Linear issue: https://linear.app/quentral/issue/QUE-900/da-modifica-profilo-se-valorizzo-un-campo-non-editable-si-disabilita ([9dff9d2](https://github.com/selfcommunity/community-js/commit/9dff9d2a90a68e4fef3f9ee1e5471f785e1ff1f0))
+* private message recipient bug. Linear issue: https://linear.app/quentral/issue/QUE-914/nei-messaggi-privati-non-viene-passata-una-lista-di-id-a-volte ([d940b5e](https://github.com/selfcommunity/community-js/commit/d940b5ef0fe4363e1f78ba25d9852a7185859214))
+
+
+
+
+
+## [0.9.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0...@selfcommunity/react-ui@0.9.1-alpha.0) (2024-10-31)
+
+
+### Bug Fixes
+
+* CopyTextField component ([33a4763](https://github.com/selfcommunity/community-js/commit/33a4763aeb59c99f644126c97cb4f724bb6bbecc))
+* Events i18n ([e71e209](https://github.com/selfcommunity/community-js/commit/e71e2090aa95663d71fda4944fda9dbacf9a4ffa))
+
+
+
+
+
+# [0.9.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.22...@selfcommunity/react-ui@0.9.0) (2024-10-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.9.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.21...@selfcommunity/react-ui@0.9.0-alpha.22) (2024-10-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.9.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.20...@selfcommunity/react-ui@0.9.0-alpha.21) (2024-10-30)
+
+
+### Bug Fixes
+
+* Events component ([89ae2af](https://github.com/selfcommunity/community-js/commit/89ae2afb576b5b34fc325e9a0d567d20a4e46748))
+
+
+
+
+
+# [0.9.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.19...@selfcommunity/react-ui@0.9.0-alpha.20) (2024-10-29)
+
+
+### Performance Improvements
+
+* custom field disable state if not editable. Linear issue: https://linear.app/quentral/issue/QUE-886/se-un-custom-fields-viene-ritornato-editable-false-allora-nella-pagina ([1766ba1](https://github.com/selfcommunity/community-js/commit/1766ba180b2f2fd48df698798f4ee0dddd5431c7))
+
+
+
+
+
+# [0.9.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.18...@selfcommunity/react-ui@0.9.0-alpha.19) (2024-10-28)
+
+
+### Bug Fixes
+
+* fixed some files to improve events manager ([b6f2acd](https://github.com/selfcommunity/community-js/commit/b6f2acdcb704a7ab2d4fe9960e1185d09cd4476f))
+
+
+
+
+
+# [0.9.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.17...@selfcommunity/react-ui@0.9.0-alpha.18) (2024-10-25)
+
+
+### Bug Fixes
+
+* fixed onBoarding app section, reduced android image size. ([b29052f](https://github.com/selfcommunity/community-js/commit/b29052f571832a61a433d51fe1b82168a4e07082))
+
+
+
+
+
+# [0.9.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.16...@selfcommunity/react-ui@0.9.0-alpha.17) (2024-10-24)
+
+
+### Bug Fixes
+
+* restored changes on EventHeader ([b51429f](https://github.com/selfcommunity/community-js/commit/b51429f754f0692decf5457518a825947bc3bdca))
+
+
+
+
+
+# [0.9.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.15...@selfcommunity/react-ui@0.9.0-alpha.16) (2024-10-24)
+
+
+### Bug Fixes
+
+* fixed some bugs into useSCFetchEvent and EventHeader ([22f80f1](https://github.com/selfcommunity/community-js/commit/22f80f10cde073cfbe90c3df52c3c9845f3f4407))
+
+
+
+
+
+# [0.9.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.14...@selfcommunity/react-ui@0.9.0-alpha.15) (2024-10-24)
+
+
+### Bug Fixes
+
+* EventSubscribedButton ([6a33966](https://github.com/selfcommunity/community-js/commit/6a33966859667b353bfdbedb5bbf703c85111f66))
+* fixed EventHeader, EventSubscribeButton; refactored TabContentComponent ([8124919](https://github.com/selfcommunity/community-js/commit/81249196aff21cc7aaeab1d6dac9da34ccb8bbbf))
+
+
+
+
+
+# [0.9.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.13...@selfcommunity/react-ui@0.9.0-alpha.14) (2024-10-22)
+
+
+### Bug Fixes
+
+* fixed NavigationSettingsIconButton start guide visibility condition ([cd0c5eb](https://github.com/selfcommunity/community-js/commit/cd0c5ebceaec95a3bde8306bbbcbccc0483bd227))
+
+
+
+
+
 # [0.9.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.9.0-alpha.12...@selfcommunity/react-ui@0.9.0-alpha.13) (2024-10-22)
 
 

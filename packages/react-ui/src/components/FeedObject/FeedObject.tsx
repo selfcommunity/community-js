@@ -392,7 +392,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [selectedActivities, setSelectedActivities] = useState<SCFeedObjectActivitiesType>(getInitialSelectedActivitiesType());
   const [expanded, setExpanded] = useState(summaryExpanded);
-  const hasEvent = useMemo(() => obj?.medias.length && obj.medias[0].embed?.embed_type === MEDIA_EMBED_SC_SHARED_EVENT, [obj?.medias]);
+  const hasEvent = useMemo(() => obj?.medias.length > 0 && obj.medias[0].embed?.embed_type === MEDIA_EMBED_SC_SHARED_EVENT, [obj?.medias]);
   const _hideFollowAction = useMemo(
     () => hideFollowAction || (hasEvent && obj?.medias?.[0]?.embed?.metadata?.active === false),
     [hideFollowAction, hasEvent, obj]
@@ -786,31 +786,29 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               <div className={classes.category}>
                 <>
                   {obj.group && (
-                    <div className={classes.group}>
-                      <Chip
-                        color="secondary"
-                        size="small"
-                        key={obj.group.id}
-                        icon={<Icon>groups</Icon>}
-                        component={Link}
-                        to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
-                        clickable
-                      />
-                    </div>
+                    <Chip
+                      className={classes.group}
+                      color="secondary"
+                      size="small"
+                      key={obj.group.id}
+                      icon={<Icon>groups</Icon>}
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, obj.group)}
+                      clickable
+                    />
                   )}
                   {obj.event && (
-                    <div className={classes.event}>
-                      <Chip
-                        color="secondary"
-                        size="small"
-                        key={obj.event.id}
-                        label={obj.event.name}
-                        icon={<Icon>CalendarIcon</Icon>}
-                        component={Link}
-                        to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
-                        clickable
-                      />
-                    </div>
+                    <Chip
+                      className={classes.event}
+                      color="secondary"
+                      size="small"
+                      key={obj.event.id}
+                      label={obj.event.name}
+                      icon={<Icon>CalendarIcon</Icon>}
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
+                      clickable
+                    />
                   )}
                 </>
                 {obj.categories.map((c) => (
@@ -835,18 +833,17 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </div>
             )}
             {obj.event && !obj.categories.length && (
-              <div className={classes.event}>
-                <Chip
-                  color="secondary"
-                  size="small"
-                  key={obj.event.id}
-                  icon={<Icon>CalendarIcon</Icon>}
-                  label={obj.event.name}
-                  component={Link}
-                  to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
-                  clickable
-                />
-              </div>
+              <Chip
+                className={classes.event}
+                color="secondary"
+                size="small"
+                key={obj.event.id}
+                icon={<Icon>CalendarIcon</Icon>}
+                label={obj.event.name}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
+                clickable
+              />
             )}
             <CardHeader
               className={classes.header}
@@ -964,23 +961,20 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 feedObject={obj}
                 hideCommentAction={template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)}
                 handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
-                hideVoteAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
-                hideShareAction={hasEvent && !obj?.medias[0].embed?.metadata?.active}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {(template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active === true)) ||
-                (expandedActivities && (
-                  <Box className={classes.replyContent}>
-                    <CommentObjectReplyComponent
-                      id={`reply-feedObject-${obj.id}`}
-                      onReply={handleReply}
-                      editable={!isReplying || Boolean(obj)}
-                      key={Number(isReplying)}
-                      {...CommentObjectReplyComponentProps}
-                    />
-                  </Box>
-                ))}
+              {((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active)) || expandedActivities) && (
+                <Box className={classes.replyContent}>
+                  <CommentObjectReplyComponent
+                    id={`reply-feedObject-${obj.id}`}
+                    onReply={handleReply}
+                    editable={!isReplying || Boolean(obj)}
+                    key={Number(isReplying)}
+                    {...CommentObjectReplyComponentProps}
+                  />
+                </Box>
+              )}
             </CardActions>
             {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
               <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
@@ -1036,17 +1030,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     </div>
                   )}
                   {obj.event && (
-                    <div className={classes.event}>
-                      <Chip
-                        color="secondary"
-                        size="small"
-                        key={obj.event.id}
-                        icon={<Icon>CalendarIcon</Icon>}
-                        component={Link}
-                        to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
-                        clickable
-                      />
-                    </div>
+                    <Chip
+                      className={classes.event}
+                      color="secondary"
+                      size="small"
+                      key={obj.event.id}
+                      icon={<Icon>CalendarIcon</Icon>}
+                      component={Link}
+                      to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
+                      clickable
+                    />
                   )}
                 </>
                 {obj.categories.map((c) => (
