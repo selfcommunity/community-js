@@ -204,8 +204,9 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
   if (
     scUserContext.user === undefined ||
     !scEvent ||
-    scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED ||
-    (scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
+    (scUserContext.user &&
+      ((scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
+        scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED)) ||
     (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id)))
   ) {
     return <EventFeedSkeleton />;
