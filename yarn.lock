@@ -5749,105 +5749,10 @@
     "@rpldy/shared-ui" "1.7.1"
     "@rpldy/uploader" "1.7.1"
 
-"@selfcommunity/api-services@^0.6.0-alpha.1", "@selfcommunity/api-services@^0.6.1", "@selfcommunity/api-services@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/api-services/-/api-services-0.6.4.tgz#94fb93c800a4000e7ddde3294fb89bc79efd18d3"
-  integrity sha512-B0+982JmSxcSWnbxhoh1RRUbPm5AI0FnTsHjgJcLgOgMjY1CS/IzoxzbSH7ukAPexZ+jYepoqKJ5xx1hgW9gIA==
-  dependencies:
-    "@selfcommunity/types" "^0.7.4"
-    "@selfcommunity/utils" "^0.2.61"
-    axios "^1.4.0"
-    jose "^4.14.4"
-
-"@selfcommunity/react-core@^0.6.0-alpha.7", "@selfcommunity/react-core@^0.6.1":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/react-core/-/react-core-0.6.4.tgz#232fc8bbb8eea906b8fd5087964d6571d1e81738"
-  integrity sha512-SQ4r7zofi4gCaNiEtH+DNYPrYtPHVAV/W4WM+VXt3U9HBbHePgx59X4qDpVuIiLqslTfDu+pGC8k2xVyClMnvQ==
-  dependencies:
-    "@selfcommunity/api-services" "^0.6.4"
-    "@selfcommunity/react-i18n" "^0.7.4"
-    "@selfcommunity/types" "^0.7.4"
-    "@selfcommunity/utils" "^0.2.61"
-    js-cookie "^3.0.5"
-    pubsub-js "^1.9.4"
-    use-deep-compare-effect "^1.8.1"
-    validate-color "^2.2.4"
-
-"@selfcommunity/react-i18n@^0.7.0-alpha.1", "@selfcommunity/react-i18n@^0.7.1", "@selfcommunity/react-i18n@^0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/react-i18n/-/react-i18n-0.7.4.tgz#ebe78ac37f4f6da3c5fd717ba47fafec05594d06"
-  integrity sha512-Z2QTIM1DnWnvdLvS7BAWx3hQ9ZPMq1wMm0V/HrX8SPnL4oj7e1Xt1peK73Ezu/TqU4jXisdlKjyf0dXGKbg/5w==
-
-"@selfcommunity/react-ui@^0.9.0-alpha.14":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/react-ui/-/react-ui-0.9.1.tgz#74a23e0812d52be8fc70caf18b0004649a8b9b54"
-  integrity sha512-XMiqs72t88yBs3Rt8PuPhNAUHpxYnuwmtvZlizgZR9CDpHK3QWCq7gwPZHQCFsnvBdq6bgHm1I1Zo2EVubDpAg==
-  dependencies:
-    "@emotion/react" "^11.11.3"
-    "@emotion/styled" "^11.11.0"
-    "@lexical/html" "^0.15.0"
-    "@lexical/react" "^0.15.0"
-    "@lottiefiles/react-lottie-player" "^3.5.4"
-    "@mui/lab" "~5.0.0-alpha.159"
-    "@mui/material" "^5.15.3"
-    "@mui/x-date-pickers" "^6.18.7"
-    "@react-google-maps/api" "^2.19.3"
-    "@rpldy/chunked-sender" "^1.7.1"
-    "@rpldy/chunked-uploady" "^1.7.1"
-    "@rpldy/upload-button" "^1.7.1"
-    "@rpldy/upload-drop-zone" "^1.7.1"
-    "@rpldy/upload-preview" "^1.7.1"
-    "@rpldy/uploady" "^1.7.1"
-    "@selfcommunity/api-services" "^0.6.1"
-    "@selfcommunity/react-core" "^0.6.1"
-    "@selfcommunity/react-i18n" "^0.7.1"
-    "@selfcommunity/types" "^0.7.1"
-    "@selfcommunity/utils" "^0.2.58"
-    "@types/classnames" "^2.3.1"
-    "@types/sortablejs" "1"
-    autosuggest-highlight "^3.3.4"
-    classnames "^2.3.2"
-    date-fns "^2.30.0"
-    emoji-picker-react "4.5.16"
-    lexical "0.15.0"
-    libphonenumber-js "^1.10.53"
-    mui-color-input "4.0.1"
-    notistack "^3.0.1"
-    pdfjs-dist "3.11.174"
-    prop-types "^15.8.1"
-    prop-types-extra "^1.1.1"
-    pubsub-js "^1.9.4"
-    react "^17.0.2 || 18"
-    react-custom-scrollbars-2 "^4.5.0"
-    react-dom "17 || 18"
-    react-intersection-observer "^9.4.3"
-    react-intl "^6.4.7"
-    react-lazyload "^3.2.0"
-    react-photo-view "^1.2.6"
-    react-player "^2.12.0"
-    react-share "^4.4.1"
-    react-sortablejs "^6.1.4"
-    react-waypoint "^10.3.0"
-    resize-observer-polyfill "^1.5.1"
-    seamless-scroll-polyfill "^2.3.4"
-    sortablejs "^1.15.0"
-    spark-md5 "~3.0.2"
-    swiper "^11.1.9"
-    throttle-debounce "^2.1.0"
-    use-deep-compare-effect "^1.8.1"
-    use-resize-observer "^9.1.0"
-    virtual-scroller "^1.12.3"
-    yjs "^13.6.7"
-
-"@selfcommunity/types@^0.7.0-alpha.1", "@selfcommunity/types@^0.7.1", "@selfcommunity/types@^0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/types/-/types-0.7.4.tgz#0bd2074639976b0630e6340d255b9896be6fb8f6"
-  integrity sha512-SvRQYJOuuChNeMGm4wMosl+L6jC96XIS+APc/TPO+NWAJ2xIajd4MqcQ+AcaC2U/D9FfKa4hP1RBKDcn603d/Q==
-
-"@selfcommunity/utils@^0.2.57-alpha.0", "@selfcommunity/utils@^0.2.58", "@selfcommunity/utils@^0.2.61":
-  version "0.2.61"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/utils/-/utils-0.2.61.tgz#d25c58d15cdbecfef8f7865b7cbf415142bbbb5a"
-  integrity sha512-QRCv23PzQ8ikLOnCND1Kte+q1W5t2KSnpf5v3mOWBOkDahKqtjjCxfUcu5MPLujKu1sozbKtT5W7VbErCWjQFA==
+"@selfcommunity/utils@^0.2.61-alpha.0":
+  version "0.2.62"
+  resolved "https://registry.yarnpkg.com/@selfcommunity/utils/-/utils-0.2.62.tgz#284ce05f73830ad8a695ae13002b55ac869648c1"
+  integrity sha512-cyDg5+5Op9t9rOHb+WORfMJ3CKokTtsEAZIl0ckKla7MifmcxbT11kDdTIo+pvly/Ek15fBD2sLBQWup511jzw==
 
 "@sinclair/typebox@^0.25.16":
   version "0.25.24"
