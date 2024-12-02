@@ -2,8 +2,6 @@ const Component = {
   styleOverrides: {
     root: ({theme}) => ({
       '& .SCUserLiveStreamWidget-content': {
-        padding: `10px ${theme.spacing(2)} 12px`,
-
         '& .SCUserLiveStreamWidget-header': {
           flexDirection: 'row',
           justifyContent: 'flex-start',
@@ -28,6 +26,7 @@ const Component = {
         },
 
         '& .SCUserLiveStreamWidget-live-wrapper': {
+          paddingTop: theme.spacing(2),
           gap: theme.spacing(2),
 
           '& .SCUserLiveStreamWidget-live': {
