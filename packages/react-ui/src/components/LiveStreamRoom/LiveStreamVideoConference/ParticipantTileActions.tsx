@@ -271,7 +271,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
             </MenuItem>
             <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER}>
               <ListItemIcon>
-                <Icon>person</Icon>
+                <Icon>error</Icon>
               </ListItemIcon>
               <ListItemText
                 primary={
