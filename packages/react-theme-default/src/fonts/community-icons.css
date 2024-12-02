@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?9935da');
-  src:  url('./community/icons.eot?9935da#9935da') format('embedded-opentype'),
-  url('./community/icons.woff2?9935da') format('woff2'),
-  url('./community/icons.ttf?9935da') format('truetype'),
-  url('./community/icons.woff?9935da') format('woff'),
-  url('./community/icons.svg?9935da#community-icons') format('svg');
+  src:  url('./community/icons.eot?fu9iod');
+  src:  url('./community/icons.eot?fu9iod#fu9iod') format('embedded-opentype'),
+  url('./community/icons.woff2?fu9iod') format('woff2'),
+  url('./community/icons.ttf?fu9iod') format('truetype'),
+  url('./community/icons.woff?fu9iod') format('woff'),
+  url('./community/icons.svg?fu9iod#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-arrow_next:before {
+  content: "\e970";
+}
+.icon-courses:before {
+  content: "\e971";
+}
 .icon-add_to_home:before {
   content: "\e96f";
 }
