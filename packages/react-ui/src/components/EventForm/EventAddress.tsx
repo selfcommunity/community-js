@@ -98,14 +98,6 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const {preferences}: SCPreferencesContextType = useSCPreferences();
-  const geocodingApiKey = useMemo(
-    () => scContext.settings.integrations && scContext.settings.integrations.geocoding.apiKey,
-    [scContext.settings.integrations]
-  );
-  const {isLoaded} = useLoadScript({
-    googleMapsApiKey: scContext.settings.integrations.geocoding.apiKey,
-    libraries: ['places', 'geocoding']
-  });
   const isFreeTrialTier = useMemo(
     () =>
       preferences &&

@@ -4,10 +4,14 @@ import {useThemeProps} from '@mui/system';
 import {
   Link,
   SCPreferences,
+  SCPreferencesContext,
   SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
   SCUserContextType,
   useSCFetchLiveStream,
   useSCPreferences,
+  useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
 import {SCFeatureName, SCLiveStreamConnectionDetailsErrorType, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
@@ -15,7 +19,7 @@ import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {LocalUserChoices} from '@livekit/components-react';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
 import '@livekit/components-styles';
@@ -27,6 +31,7 @@ import {LiveStreamContext} from './LiveStreamVideoConference/LiveStreamProvider'
 import {useSnackbar} from 'notistack';
 import DialogContent from '@mui/material/DialogContent';
 import BaseDialog from '../../shared/BaseDialog';
+import CopyTextField from '../../shared/CopyTextArea';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -39,6 +44,7 @@ const classes = {
   preJoin: `${PREFIX}-prejoin`,
   preJoinLoading: `${PREFIX}-prejoin-loading`,
   prejoinLoader: `${PREFIX}-prejoin-loader`,
+  shareLink: `${PREFIX}-share-link`,
   endPrejoinContent: `${PREFIX}-end-prejoin-content`,
   conference: `${PREFIX}-conference`,
   error: `${PREFIX}-error`
@@ -156,6 +162,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // STATE
@@ -179,6 +186,11 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
       SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
     [preferences, features]
+  );
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const appUrl = useMemo(
+    () => scPreferencesContext.preferences && scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_APP_URL].value,
+    [scPreferencesContext.preferences]
   );
 
   // INTL
@@ -334,7 +346,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     scLiveStream &&
                     (scLiveStream.settings?.muteParticipants || (scLiveStream && scLiveStream.settings?.disableVideo))
                 ) && (
-                  <Stack sx={{width: '45%'}} spacing={1}>
+                  <Stack sx={{width: '47%'}} spacing={1}>
                     {scLiveStream && (scLiveStream.settings?.muteParticipants || scLiveStream.settings?.disableVideo) && (
                       <Alert variant="filled" severity="info">
                         <AlertTitle>
@@ -354,6 +366,11 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                         )}
                       </Alert>
                     )}
+                    <CopyTextField
+                      className={classes.shareLink}
+                      value={`${appUrl}${scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scLiveStream)}`}
+                      label={<FormattedMessage id="ui.liveStreamRoom.shareLink" defaultMessage="ui.liveStreamRoom.shareLink" />}
+                    />
                   </Stack>
                 )}
                 {endPrejoinContent}

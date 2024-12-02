@@ -9,7 +9,7 @@ const Component = {
         width: '100%'
       },
       [`& .SCLiveStreamRoom-prejoin`]: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(),
         display: 'grid',
         placeItems: 'center',
         height: '100%',
@@ -22,6 +22,9 @@ const Component = {
         '& .lk-prejoin': {
           opacity: 0.5
         }
+      },
+      [`& .SCLiveStreamRoom-share-link`]: {
+        marginTop: theme.spacing(3)
       },
       [`& .SCLiveStreamRoom-conference`]: {
         width: '100%',

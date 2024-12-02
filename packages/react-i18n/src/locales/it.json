@@ -1031,6 +1031,7 @@
   "ui.liveStreamRoom.preJoin.username": "Username",
   "ui.liveStreamRoom.hostDisableMicrophone": "L'organizzatore del live ha disabilitato il microfono dei partecipanti",
   "ui.liveStreamRoom.hostDisableVideo": "L'organizzatore del live ha disabilitato la camera dei partecipanti",
+  "ui.liveStreamRoom.shareLink": "Copia il link del meet per condividerlo",
   "ui.liveStreamRoom.conference.end": "La diretta live è finita!",
   "ui.liveStreamRoom.conference.closed": "Impossibile accedere alla diretta. Il live è stato chiuso e non più disponibile!",
   "ui.liveStreamRoom.connect.error.liveStreamIsClosed": "Impossibile accedere alla diretta. Il live è stato chiuso e non più disponibile!",
