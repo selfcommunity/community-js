@@ -50,4 +50,8 @@ export interface LiveStreamRemoveParticipantParams {
    * Participant Id
    */
   participant_id?: string | number;
+  /**
+   * Ban participant
+   */
+  ban?: boolean;
 }

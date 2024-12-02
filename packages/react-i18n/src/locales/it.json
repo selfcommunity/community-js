@@ -1045,7 +1045,8 @@
   "ui.liveStreamRoom.check.fewMinutesRemaining": "In base al piano dei prezzi acquistato i minuti a disposizone per le dirette live stanno per terminare. Sei stai facendo una diretta live avvisa i partecipanti che il live verrà terminato a breve.",
   "ui.liveStreamRoom.button.backHome": "Vai alla home",
   "ui.liveStreamRoom.connecting": "Connessione in corso...",
-  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi l'utente dal live",
+  "ui.liveStreamRoom.participantTileActions.removeRoomUser": "Rimuovi l'utente dal live",
+  "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi e banna l'utente dal live",
   "ui.liveStreamRoom.live.terminate": "Sei sicuro di voler uscire dal live?",
   "ui.liveStreamRoom.live.terminatePermanently": "Imposta questo live come chiuso definitivamente"
 }
