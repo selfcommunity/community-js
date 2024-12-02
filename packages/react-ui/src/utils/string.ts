@@ -10,7 +10,7 @@ export const formatEventLocationGeolocation = (geolocation: string | null, isTit
     return null;
   }
 
-  const parts = geolocation.split(',');
+  const parts = geolocation.split('.');
 
   if (isTitle) {
     return parts[0].trim();

@@ -3,6 +3,206 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.7...@selfcommunity/react-i18n@0.7.4-alpha.8) (2024-11-29)
+
+
+### Performance Improvements
+
+* added navigation section to flap menu. Linear issue: https://linear.app/quentral/issue/QUE-1015/flap-menu ([6391a84](https://github.com/selfcommunity/community-js/commit/6391a84179e194d46a4e869c0c70e7af3609db49))
+
+
+
+
+
+## [0.7.4-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.6...@selfcommunity/react-i18n@0.7.4-alpha.7) (2024-11-28)
+
+
+### Performance Improvements
+
+* made comment notification generic. Linaer issue: https://linear.app/quentral/issue/QUE-994/messaggio-notifiche-in-app-incoerente ([7122732](https://github.com/selfcommunity/community-js/commit/7122732e2251f67666686555a798050bbe77f075))
+
+
+
+
+
+## [0.7.4-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.5...@selfcommunity/react-i18n@0.7.4-alpha.6) (2024-11-25)
+
+
+### Bug Fixes
+
+* account email error. Linear issue: https://linear.app/quentral/issue/QUE-984/cambio-mail ([d9a0d94](https://github.com/selfcommunity/community-js/commit/d9a0d94a38087b583ebb46653c6f0a45b1e19858))
+
+
+
+
+
+## [0.7.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.4...@selfcommunity/react-i18n@0.7.4-alpha.5) (2024-11-22)
+
+
+### Performance Improvements
+
+* changed login username helper message. Linear issue: https://linear.app/quentral/issue/QUE-966/correzioni-copy-messaggi-errore-in-fase-di-login ([3e49113](https://github.com/selfcommunity/community-js/commit/3e49113f9e34c20d54acdff63777bcebd0d1d939))
+
+
+
+
+
+## [0.7.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.3...@selfcommunity/react-i18n@0.7.4-alpha.4) (2024-11-21)
+
+
+### Bug Fixes
+
+* fixed a label action in it.json ([08221ef](https://github.com/selfcommunity/community-js/commit/08221ef440d4fd5c9bcd67de6dc56b41708a1a26))
+
+
+
+
+
+## [0.7.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.2...@selfcommunity/react-i18n@0.7.4-alpha.3) (2024-11-20)
+
+
+### Bug Fixes
+
+* fix hidden comment rendering. Linear issue: https://linear.app/quentral/issue/QUE-932/contributi-nascosti-comunque-visibili ([87bd32e](https://github.com/selfcommunity/community-js/commit/87bd32e7ae16d376bab6c4289f85070f84295a97))
+
+
+
+
+
+## [0.7.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.1...@selfcommunity/react-i18n@0.7.4-alpha.2) (2024-11-19)
+
+
+### Bug Fixes
+
+* socialAssociation ([2dd5db6](https://github.com/selfcommunity/community-js/commit/2dd5db63f35f59881c4f3f713db43d9355a963b1))
+
+
+
+
+
+## [0.7.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.4-alpha.0...@selfcommunity/react-i18n@0.7.4-alpha.1) (2024-11-18)
+
+
+### Bug Fixes
+
+* socialAssociation ([50d7480](https://github.com/selfcommunity/community-js/commit/50d7480f585b74cd3fcd37086b0752edaa32f483))
+
+
+
+
+
+## [0.7.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.3...@selfcommunity/react-i18n@0.7.4-alpha.0) (2024-11-13)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.3-alpha.1...@selfcommunity/react-i18n@0.7.3) (2024-11-12)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.3-alpha.0...@selfcommunity/react-i18n@0.7.3-alpha.1) (2024-11-12)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.2...@selfcommunity/react-i18n@0.7.3-alpha.0) (2024-11-12)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.2-alpha.1...@selfcommunity/react-i18n@0.7.2) (2024-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.2-alpha.0...@selfcommunity/react-i18n@0.7.2-alpha.1) (2024-11-11)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.1...@selfcommunity/react-i18n@0.7.2-alpha.0) (2024-11-05)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.1-alpha.1...@selfcommunity/react-i18n@0.7.1) (2024-11-05)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.1-alpha.0...@selfcommunity/react-i18n@0.7.1-alpha.1) (2024-11-05)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+## [0.7.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0...@selfcommunity/react-i18n@0.7.1-alpha.0) (2024-10-31)
+
+
+### Bug Fixes
+
+* CopyTextField component ([33a4763](https://github.com/selfcommunity/community-js/commit/33a4763aeb59c99f644126c97cb4f724bb6bbecc))
+* Events i18n ([e71e209](https://github.com/selfcommunity/community-js/commit/e71e2090aa95663d71fda4944fda9dbacf9a4ffa))
+
+
+
+
+
+# [0.7.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.3...@selfcommunity/react-i18n@0.7.0) (2024-10-30)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+# [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.2...@selfcommunity/react-i18n@0.7.0-alpha.3) (2024-10-30)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
+# [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.1...@selfcommunity/react-i18n@0.7.0-alpha.2) (2024-10-30)
+
+
+### Bug Fixes
+
+* Events component ([00da33a](https://github.com/selfcommunity/community-js/commit/00da33abd67ef150082c25cfcced636a72848c59))
+* Events component ([89ae2af](https://github.com/selfcommunity/community-js/commit/89ae2afb576b5b34fc325e9a0d567d20a4e46748))
+
+
+
+
+
 # [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.0-alpha.0...@selfcommunity/react-i18n@0.7.0-alpha.1) (2024-10-22)
 
 

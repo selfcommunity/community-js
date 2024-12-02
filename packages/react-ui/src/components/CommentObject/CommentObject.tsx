@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Chip, Icon, IconButton, Typography} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -12,7 +12,7 @@ import CommentsObject, {CommentsObjectProps} from '../CommentsObject';
 import CommentObjectReply from '../CommentObjectReply';
 import ContributionActionsMenu from '../../shared/ContributionActionsMenu';
 import DateTimeAgo from '../../shared/DateTimeAgo';
-import {getContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
+import {getCommentContributionHtml, getContributionType, getRouteData} from '../../utils/contribution';
 import {useSnackbar} from 'notistack';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
@@ -54,7 +54,9 @@ const classes = {
   vote: `${PREFIX}-vote`,
   voteAudience: `${PREFIX}-vote-audience`,
   reply: `${PREFIX}-reply`,
-  contentSubSection: `${PREFIX}-comment-sub-section`
+  contentSubSection: `${PREFIX}-comment-sub-section`,
+  collapsed: `${PREFIX}-collapsed`,
+  flagChip: `${PREFIX}-flag-chip`
 };
 
 const Root = styled(Box, {
@@ -267,6 +269,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
 
   // STATE
   const {obj, setObj} = useSCFetchCommentObject({id: commentObjectId, commentObject, cacheStrategy});
+  const [collapsed, setCollapsed] = useState<boolean>(obj?.collapsed);
   const [replyComment, setReplyComment] = useState<SCCommentType>(commentReply);
   const [isReplying, setIsReplying] = useState<boolean>(false);
   const [isSavingComment, setIsSavingComment] = useState<boolean>(false);
@@ -497,10 +500,28 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     }
     const summaryHtmlTruncated = 'summary_truncated' in comment ? comment.summary_truncated : false;
     const commentHtml = 'summary_html' in comment && truncateContent && summaryHtmlTruncated ? comment.summary_html : comment.html;
-    const summaryHtml = getContributionHtml(commentHtml, scRoutingContext.url);
+    const summaryHtml = getCommentContributionHtml(commentHtml, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
-        {editComment && editComment.id === comment.id ? (
+        {collapsed ? (
+          <BaseItem
+            elevation={0}
+            className={classes.comment}
+            disableTypography
+            primary={
+              <Widget className={classNames(classes.content, classes.collapsed)} elevation={elevation} {...rest}>
+                <CardContent className={classNames({[classes.deleted]: obj && obj.deleted})}>
+                  <FormattedMessage id="ui.commentObject.collapsed" defaultMessage="ui.commentObject.collapsed" />
+                </CardContent>
+                <Box className={classes.commentActionsMenu}>
+                  <IconButton onClick={() => setCollapsed(!collapsed)}>
+                    <Icon>visibility</Icon>
+                  </IconButton>
+                </Box>
+              </Widget>
+            }
+          />
+        ) : editComment && editComment.id === comment.id ? (
           <Box className={classes.comment}>
             <CommentObjectReply
               text={comment.html}
@@ -536,6 +557,14 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
+                    {comment.collapsed && (
+                      <Chip
+                        className={classes.flagChip}
+                        color="error"
+                        size="small"
+                        label={<FormattedMessage id="ui.commentObject.flag" defaultMessage="ui.commentObject.flag" />}
+                      />
+                    )}
                     <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
                     {summaryHtmlTruncated && truncateContent && (
                       <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>

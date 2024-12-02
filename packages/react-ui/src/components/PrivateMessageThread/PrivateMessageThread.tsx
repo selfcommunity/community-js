@@ -240,13 +240,9 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
    * Memoized message recipients ids
    */
   const ids = useMemo(() => {
-    if (recipients && openNewMessage) {
-      return recipients.map((u) => {
-        return parseInt(u.id, 10);
-      });
-    }
-    return [recipients];
-  }, [recipients]);
+    if (!recipients) return [];
+    return Array.isArray(recipients) ? recipients.map((u) => parseInt(u.id, 10)) : [parseInt(recipients.id || recipients, 10)];
+  }, [recipients, openNewMessage]);
 
   function fetchResults() {
     setLoading(true);

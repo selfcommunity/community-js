@@ -453,6 +453,11 @@ const Component = {
         alignItems: 'center',
         '& .SCOnBoardingWidget-app-image': {
           width: 'auto'
+        },
+        '& .SCOnBoardingWidget-app-image-android': {
+          width: 'auto',
+          marginTop: theme.spacing(1),
+          marginBottom: theme.spacing(2)
         }
       },
       '& .SCOnBoardingWidget-app-step': {

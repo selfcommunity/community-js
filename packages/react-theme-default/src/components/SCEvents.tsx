@@ -20,6 +20,11 @@ const Component = {
       },
       '& .SCEvents-events': {
         marginTop: theme.spacing(2),
+
+        [theme.breakpoints.down('md')]: {
+          marginBottom: theme.spacing(7)
+        },
+
         '& .SCEvents-item': {
           paddingTop: theme.spacing(2)
         },
@@ -46,7 +51,10 @@ const Component = {
         alignItems: 'flex-start',
         '& .SCEvent-skeleton-root': {
           marginBottom: theme.spacing(2),
-          minWidth: '50%'
+          minWidth: '50%',
+          [theme.breakpoints.down('md')]: {
+            width: '100%'
+          }
         },
         '& .SCEvent-skeleton-snippet .SCBaseItem-content': {
           maxWidth: '70%'

@@ -2,7 +2,7 @@ import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider,
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -49,25 +49,25 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const DetailRoot = styled(Box, {
   name: PREFIX,
   slot: 'DetailRoot',
-  overridesResolver: (props, styles) => styles.detailRoot
+  overridesResolver: (_props, styles) => styles.detailRoot
 })(() => ({}));
 
 const PreviewRoot = styled(Box, {
   name: PREFIX,
   slot: 'PreviewRoot',
-  overridesResolver: (props, styles) => styles.previewRoot
+  overridesResolver: (_props, styles) => styles.previewRoot
 })(() => ({}));
 
 const SnippetRoot = styled(BaseItem, {
   name: PREFIX,
   slot: 'SnippetRoot',
-  overridesResolver: (props, styles) => styles.snippetRoot
+  overridesResolver: (_props, styles) => styles.snippetRoot
 })(() => ({}));
 
 export interface EventProps extends WidgetProps {

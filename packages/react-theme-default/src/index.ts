@@ -59,6 +59,7 @@ import SCCustomAdv from './components/SCCustomAdv';
 import SCCustomSnackMessage from './components/SCCustomSnackMessage';
 import SCDateTimeAgo from './components/SCDateTimeAgo';
 import SCDefaultHeaderContent from './components/SCDefaultHeaderContent';
+import SCDefaultDrawerContent from './components/SCDefaultDrawerContent';
 import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
 import SCEmojiPicker from './components/SCEmojiPicker';
@@ -168,11 +169,27 @@ import SCUserProfileHeader from './components/SCUserProfileHeader';
 import SCUserProfileTemplate from './components/SCUserProfileTemplate';
 import SCUserSubscribedGroupsWidget from './components/SCUserSubscribedGroupsWidget';
 import SCUserSuggestionWidget from './components/SCUserSuggestionWidget';
+import SCTagAutocomplete from './components/SCTagAutocomplete';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
 /**
  * Style fragments - Imports - End
+ */
+
+/**
+ * Style assets - Imports - Start
+ */
+import GoogleIconContained from './assets/social/contained/google';
+import FacebookIconContained from './assets/social/contained/facebook';
+import TwitterIconContained from './assets/social/contained/twitter';
+import LinkedinIconContained from './assets/social/contained/linkedin';
+import GoogleIconOutlined from './assets/social/outlined/google';
+import FacebookIconOutlined from './assets/social/outlined/facebook';
+import TwitterIconOutlined from './assets/social/outlined/twitter';
+import LinkedinIconOutlined from './assets/social/outlined/linkedin';
+/**
+ * Style assets - Imports - End
  */
 
 /**
@@ -243,8 +260,6 @@ const theme = {
     MuiAppBar,
     MuiAutocomplete,
     MuiAvatar,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     MuiButton,
     MuiContainer,
     MuiDialog,
@@ -294,6 +309,7 @@ const theme = {
     SCCustomSnackMessage,
     SCDateTimeAgo,
     SCDefaultHeaderContent,
+    SCDefaultDrawerContent,
     SCEditGroupButton,
     SCEditor,
     SCEmojiPicker,
@@ -377,6 +393,7 @@ const theme = {
     SCUserProfileTemplate,
     SCUserSubscribedGroupsWidget,
     SCUserSuggestionWidget,
+    SCTagAutocomplete,
     SCEventForm,
     SCEventFormDialog,
     SCCreateEventButton,
@@ -437,3 +454,20 @@ const theme = {
   }
 };
 export default theme;
+
+/**
+ * Style assets - Exports - Start
+ */
+export {
+  GoogleIconContained,
+  FacebookIconContained,
+  LinkedinIconContained,
+  TwitterIconContained,
+  GoogleIconOutlined,
+  FacebookIconOutlined,
+  LinkedinIconOutlined,
+  TwitterIconOutlined
+};
+/**
+ * Style assets - Exports - End
+ */

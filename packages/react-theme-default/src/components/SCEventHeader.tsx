@@ -1,8 +1,8 @@
-import {alpha} from '@mui/system';
+import { alpha } from '@mui/material';
 
 const Component = {
   styleOverrides: {
-    root: ({theme, isEventAdmin, isEventFinished}: any) => ({
+    root: ({ theme, isEventAdmin, isEventFinished }: any) => ({
       '& .SCEventHeader-cover': {
         position: 'relative',
         minHeight: 150,
@@ -44,7 +44,9 @@ const Component = {
       '& .SCEventHeader-chip': {
         marginLeft: theme.spacing(2),
         marginBottom: theme.spacing(),
-				backgroundColor: theme.palette.grey[500],
+        backgroundColor: theme.palette.common.white,
+        color: theme.palette.error.light,
+        border: `1px solid ${theme.palette.grey[400]}`,
         '& .SCEventHeader-chip-icon': {
           marginLeft: theme.spacing(1)
         }
@@ -120,13 +122,9 @@ const Component = {
             paddingRight: theme.spacing(2)
           }
         }
-      },
-      '& .SCEventHeader-name': {
-        fontWeight: theme.typography.fontWeightBold,
-        fontSize: '1.429rem'
       }
     }),
-    skeletonRoot: ({theme}: any) => ({
+    skeletonRoot: ({ theme }: any) => ({
       position: 'relative',
       '& .SCEventHeader-cover': {
         height: 190

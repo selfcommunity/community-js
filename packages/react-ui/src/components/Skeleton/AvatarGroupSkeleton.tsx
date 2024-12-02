@@ -1,4 +1,3 @@
-import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, AvatarGroup, AvatarGroupProps, Skeleton, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -13,8 +12,8 @@ const classes = {
 const Root = styled(AvatarGroup, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface AvatarGroupSkeletonProps extends AvatarGroupProps {
   /**
@@ -58,12 +57,12 @@ export default function AvatarGroupSkeleton(inProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, skeletonsAnimation = 'wave', count = 2, ...rest} = props;
+  const {skeletonsAnimation = 'wave', count = 3, ...rest} = props;
   const theme = useTheme<SCThemeType>();
 
   return (
     <Root className={classes.root} {...rest}>
-      {[...Array(count + 1)].map((x, i) => (
+      {[...Array(count)].map((_x, i) => (
         <Avatar key={i}>
           <Skeleton
             variant="circular"

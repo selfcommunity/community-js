@@ -121,6 +121,7 @@ import SearchDialog, {SearchDialogProps} from './components/SearchDialog';
 import {AvatarGroupSkeleton, GenericSkeleton} from './components/Skeleton';
 import SnippetNotifications, {SnippetNotificationsProps, SnippetNotificationsSkeleton} from './components/SnippetNotifications';
 import SuggestedEventsWidget, {SuggestedEventsWidgetProps, SuggestedEventsWidgetSkeleton} from './components/SuggestedEventsWidget';
+import TagAutocomplete, {TagAutocompleteProps} from './components/TagAutocomplete';
 import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
 import User, {UserProps, UserSkeleton} from './components/User';
 import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
@@ -227,7 +228,7 @@ import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOA
 import {LEGAL_POLICIES} from './constants/LegalPolicies';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from './constants/Pagination';
 import {SCEventMembersEventType, SCGroupMembersEventType} from './constants/PubSub';
-import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from './constants/SocialShare';
+import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE, PROVIDER_ICONS_CONTAINED, PROVIDER_ICONS_OUTLINED} from './constants/SocialShare';
 import {DEFAULT_FIELDS} from './constants/UserProfile';
 
 /**
@@ -607,6 +608,8 @@ export {
   StickyBoxComponent,
   StickyBoxProps,
   SuggestedEventsWidget,
+  TagAutocomplete,
+  TagAutocompleteProps,
   SuggestedEventsWidgetProps,
   SuggestedEventsWidgetSkeleton,
   TagChip,
@@ -696,5 +699,7 @@ export {
   VirtualScrollerItemProps,
   Widget,
   WidgetProps,
-  X_SHARE
+  X_SHARE,
+  PROVIDER_ICONS_CONTAINED,
+  PROVIDER_ICONS_OUTLINED
 };

@@ -384,13 +384,13 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
   }, [allStepsDone]);
 
   useEffect(() => {
-    if (isAdmin) {
+    if (isAdmin && showOnBoarding) {
       getSteps();
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const intervalId = setInterval(getSteps, isGenerating ? 6000 : 3 * 60 * 1000);
       return () => clearInterval(intervalId);
     }
-  }, [scUserContext?.user, isGenerating, isAdmin]);
+  }, [scUserContext?.user, isGenerating, isAdmin, showOnBoarding]);
 
   /**
    * updates categories info when generating category content

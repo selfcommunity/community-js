@@ -12,13 +12,13 @@ import {
   MenuItem,
   Radio,
   Select,
+  styled,
   TextField,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  useThemeProps
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
-import {useThemeProps} from '@mui/system';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCPreferences,
@@ -29,21 +29,21 @@ import {
   SCUserContextType,
   UserUtils
 } from '@selfcommunity/react-core';
-import {SCEventDateFilterType, SCEventSubscriptionStatusType, SCEventType, SCEventLocationFilterType} from '@selfcommunity/types';
+import {SCEventDateFilterType, SCEventLocationFilterType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
+import PubSub from 'pubsub-js';
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import CreateEventButton from '../CreateEventButton';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
 import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
-import PastEventsFilter from './PastEventsFilter';
-import PubSub from 'pubsub-js';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import LocationEventsFilter from './LocationEventsFilter';
+import PastEventsFilter from './PastEventsFilter';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -378,20 +378,14 @@ export default function Events(inProps: EventsProps): JSX.Element {
               {(events.length !== 0 || (events.length === 0 && showMyEvents)) && (
                 <Grid item>
                   <EventsChipRoot
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     color={showMyEvents ? 'secondary' : 'default'}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     variant={showMyEvents ? 'filled' : 'outlined'}
                     label={<FormattedMessage id="ui.events.filterByCreatedByMe" defaultMessage="ui.events.filterByCreatedByMe" />}
                     onClick={() => setShowMyEvents(!showMyEvents)}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
+                    // @ts-expect-error this is needed to use showFollowed into SCEvents
                     showFollowed={showMyEvents}
                     deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
                     onDelete={showMyEvents ? handleDeleteClick : null}
-                    autoHide={!loading && !events.length}
                     disabled={loading}
                   />
                 </Grid>
@@ -401,7 +395,6 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  autoHide={!loading && !events.length && !showPastEvents}
                   disabled={loading}
                 />
               </Grid>
@@ -486,16 +479,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
               {authUserId && (
                 <Grid item>
                   <EventsChipRoot
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     color={showFollowed ? 'secondary' : 'default'}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     variant={showFollowed ? 'filled' : 'outlined'}
                     label={<FormattedMessage id="ui.events.filterByFollowedInterest" defaultMessage="ui.events.filterByFollowedInterest" />}
                     onClick={handleChipClick}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
+                    // @ts-expect-error this is needed to use showFollowed into SCEvents
                     showFollowed={showFollowed}
                     deleteIcon={showFollowed ? <Icon>close</Icon> : null}
                     onDelete={showFollowed ? handleDeleteClick : null}
@@ -508,7 +496,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
-                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading || (!events.length && !showPastEvents)}
+                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading}
                 />
               </Grid>
             </>
@@ -522,19 +510,26 @@ export default function Events(inProps: EventsProps): JSX.Element {
           <>
             {!events.length ? (
               <Box className={classes.noResults}>
-                {(onlyStaffEnabled && !UserUtils.isStaff(scUserContext.user)) ||
-                (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user) && general) ? (
+                {general ? (
                   <>
-                    <EventSkeleton {...EventSkeletonComponentProps} />
+                    <EventSkeleton
+                      {...EventSkeletonComponentProps}
+                      skeletonsAnimation={false}
+                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                    />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                     </Typography>
                   </>
                 ) : (
                   <>
-                    <EventSkeleton {...EventSkeletonComponentProps} skeletonsAnimation={false} actions={<CreateEventButton />} />
+                    <EventSkeleton
+                      {...EventSkeletonComponentProps}
+                      skeletonsAnimation={false}
+                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                    />
                     <Typography variant="body1">
-                      <FormattedMessage id="ui.events.noEvents.title.onlyStaff" defaultMessage="ui.events.noEvents.title.onlyStaff" />
+                      <FormattedMessage id="ui.events.noEvents.title.personal" defaultMessage="ui.events.noEvents.title.personal" />
                     </Typography>
                   </>
                 )}

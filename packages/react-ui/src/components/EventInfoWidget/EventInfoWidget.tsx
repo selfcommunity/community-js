@@ -1,14 +1,14 @@
-import { Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps } from '@mui/material';
-import { useSCFetchEvent } from '@selfcommunity/react-core';
-import { SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType } from '@selfcommunity/types';
+import {Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {useSCFetchEvent} from '@selfcommunity/react-core';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SCGroupEventType, SCTopicType } from '../../constants/PubSub';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import EventInfoDetails from '../../shared/EventInfoDetails';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import Widget, { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import Widget, {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 
 const classes = {
@@ -68,7 +68,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
     name: PREFIX
   });
 
-  const { event, eventId, summaryExpanded = false, ...rest } = props;
+  const {event, eventId, summaryExpanded = false, ...rest} = props;
 
   // STATE
   const [expanded, setExpanded] = useState(summaryExpanded);
@@ -76,7 +76,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   const [loading, setLoading] = useState(true);
 
   // HOOKS
-  const { scEvent, setSCEvent } = useSCFetchEvent({ id: eventId, event });
+  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
 
   // REFS
   const updatesSubscription = useRef(null);
