@@ -1,4 +1,4 @@
-import {Track} from 'livekit-client';
+import {Track, VideoPresets} from 'livekit-client';
 import * as React from 'react';
 import {supportsScreenSharing} from '@livekit/components-core';
 import {
@@ -146,7 +146,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
           {/* @ts-ignore */}
           <TrackToggle
             source={Track.Source.ScreenShare}
-            captureOptions={{audio: true, selfBrowserSurface: 'include'}}
+            captureOptions={{audio: true, selfBrowserSurface: 'include', resolution: VideoPresets.h720.resolution}}
             showIcon={showIcon}
             onChange={onScreenShareChange}
             onDeviceError={(error) => onDeviceError?.({source: Track.Source.ScreenShare, error})}>

@@ -88,6 +88,16 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       scEvent && scEvent.location === SCEventLocationType.ONLINE ? 'ui.eventInfoDetails.location.virtual' : 'ui.eventInfoDetails.location.inPerson',
     [scEvent]
   );
+  const disableJoinEvent = useMemo(
+    () =>
+      Boolean(
+        !scEvent ||
+          !scUserContext.user ||
+          (scEvent.live_stream.host.id !== scUserContext.user.id &&
+            (scEvent.live_stream.closed_at_by_host || (scEvent.live_stream.last_started_at && scEvent.live_stream.last_finished_at)))
+      ),
+    [scUserContext.user, scEvent]
+  );
 
   if (!scEvent) {
     return null;
@@ -172,13 +182,7 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
                 variant="contained"
                 color="secondary"
                 component={Link}
-                disabled={Boolean(
-                  !scUserContext.user ||
-                    (scEvent.live_stream.host.id !== scUserContext.user.id &&
-                      !scEvent.live_stream.closed_at_by_host &&
-                      scEvent.live_stream.last_started_at &&
-                      !scEvent.live_stream.last_finished_at)
-                )}
+                disabled={disableJoinEvent}
                 to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scEvent.live_stream)}
                 className={classes.joinLive}>
                 <FormattedMessage defaultMessage="ui.eventInfoDetails.live.join" id="ui.eventInfoDetails.live.join" />

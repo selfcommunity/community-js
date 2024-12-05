@@ -14,7 +14,13 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCFeatureName, SCLiveStreamConnectionDetailsErrorType, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
+import {
+  SCFeatureName,
+  SCLiveStreamConnectionDetailsErrorType,
+  SCLiveStreamConnectionDetailsType,
+  SCLiveStreamType,
+  SCNotificationTypologyType
+} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
@@ -44,9 +50,10 @@ const classes = {
   preJoin: `${PREFIX}-prejoin`,
   preJoinLoading: `${PREFIX}-prejoin-loading`,
   prejoinLoader: `${PREFIX}-prejoin-loader`,
-	preJoinAlert: `${PREFIX}-prejoin-alert`,
+  preJoinAlert: `${PREFIX}-prejoin-alert`,
   shareLink: `${PREFIX}-share-link`,
   endPrejoinContent: `${PREFIX}-end-prejoin-content`,
+  endPrejoinContentBox: `${PREFIX}-end-prejoin-content-box`,
   conference: `${PREFIX}-conference`,
   error: `${PREFIX}-error`
 };
@@ -170,7 +177,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   const {scLiveStream} = useSCFetchLiveStream({id: liveStreamId, liveStream});
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(presetPreJoinChoices);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<null | string | JSX.Element | (string | JSX.Element)[]>(null);
   const preJoinDefaults = useMemo(() => {
     return {
       username: scUserContext.user?.username || '',
@@ -226,17 +233,36 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               error.response.data.errors &&
               error.response.data.errors.length
             ) {
-              let _msg = intl.formatMessage({
-                id: 'ui.liveStreamRoom.connect.error.generic',
-                defaultMessage: 'ui.liveStreamRoom.connect.error.generic'
-              });
+              let _msg = (
+                <FormattedMessage
+                  id="ui.liveStreamRoom.connect.error.generic"
+                  defaultMessage="'ui.liveStreamRoom.connect.error.generic"
+                  values={{link: (...chunks) => <Link to={'/'}>{chunks}</Link>}}
+                />
+              );
+              // TODO: return event in a livestream???
               if (error.response.data.errors[0].code) {
                 const _error = `ui.liveStreamRoom.connect.error.${camelCase(error.response.data.errors[0].code)}`;
-                _msg = intl.formatMessage({id: _error, defaultMessage: _error});
-                if (error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM) {
+                _msg = (
+                  <FormattedMessage
+                    id={_error}
+                    defaultMessage={_error}
+                    values={{
+                      link: (...chunks) => (
+                        <Link style={{color: '#FFF'}} to={'/'}>
+                          {chunks}
+                        </Link>
+                      )
+                    }}
+                  />
+                );
+                if (
+                  error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM &&
+                  error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.PARTICIPANTS_LIMIT_REACHED
+                ) {
                   setError(_msg);
                 } else {
-                  setTimeout(() => toggleAttrDisabledPrejoinActions(false), 3000);
+                  setTimeout(() => toggleAttrDisabledPrejoinActions(false), 10000);
                 }
                 enqueueSnackbar(_msg, {variant: 'error', autoHideDuration: 5000});
               } else {
@@ -304,11 +330,6 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                   {scLiveStream?.title}
                 </Typography>
               )}
-              {scLiveStream?.description && (
-                <Typography component={'div'} variant="body2" className={classes.description} alignContent={'center'}>
-                  {scLiveStream?.description}
-                </Typography>
-              )}
               <Box className={classNames(classes.preJoin, {[classes.preJoinLoading]: loading || error})}>
                 <LiveStreamContext.Provider value={{liveStream: scLiveStream}}>
                   <PreJoin
@@ -347,7 +368,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     scLiveStream &&
                     (scLiveStream.settings?.muteParticipants || (scLiveStream && scLiveStream.settings?.disableVideo))
                 ) && (
-                  <Stack sx={{width: '47%'}} spacing={1}>
+                  <Stack sx={{width: '47%'}} spacing={1} className={classes.endPrejoinContentBox}>
                     {scLiveStream && (scLiveStream.settings?.muteParticipants || scLiveStream.settings?.disableVideo) && (
                       <Alert variant="filled" severity="info" className={classes.preJoinAlert}>
                         <AlertTitle>
@@ -372,6 +393,16 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                       value={`${appUrl}${scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scLiveStream)}`}
                       label={<FormattedMessage id="ui.liveStreamRoom.shareLink" defaultMessage="ui.liveStreamRoom.shareLink" />}
                     />
+                    {scLiveStream?.description && (
+                      <Alert variant="filled" severity="info" className={classes.description}>
+                        <AlertTitle>
+                          <b>
+                            <FormattedMessage id="ui.liveStreamRoom.description" defaultMessage="ui.liveStreamRoom.description" />
+                          </b>
+                        </AlertTitle>
+                        {scLiveStream?.description}
+                      </Alert>
+                    )}
                   </Stack>
                 )}
                 {endPrejoinContent}

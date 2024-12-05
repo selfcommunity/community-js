@@ -40,6 +40,7 @@ import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from '
 import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
+import CoverPlaceholder from '../../assets/deafultCover';
 
 const messages = defineMessages({
   name: {
@@ -241,7 +242,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const _backgroundCover = {
     ...(field.imageOriginal
       ? {background: `url('${field.imageOriginal}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+      : {background: `url('${CoverPlaceholder}') no-repeat 0 0 / 100% 100%`})
   };
 
   const handleChangeCover = useCallback(
