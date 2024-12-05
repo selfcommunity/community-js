@@ -1,10 +1,25 @@
-import {Box, BoxProps, Divider, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Zoom} from '@mui/material';
+import {
+  Box,
+  BoxProps,
+  Divider,
+  Icon,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Zoom
+} from '@mui/material';
 import {
   Link,
   SCPreferences,
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContextType,
   useSCFetchCategories,
   useSCPreferences,
@@ -55,6 +70,8 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // PREFERENCES
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
@@ -113,75 +130,79 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
   //order
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <List className={classes.navigation}>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
-            <ListItemIcon>
-              <Icon>home</Icon>
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <FormattedMessage
-                  id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
-                  defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+      {isMobile && (
+        <>
+          <List className={classes.navigation}>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
+                <ListItemIcon>
+                  <Icon>home</Icon>
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <FormattedMessage
+                      id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                      defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                    />
+                  }
                 />
-              }
-            />
-          </ListItemButton>
-        </ListItem>
-        {groupsEnabled && scUserContext.user && (
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
-              <ListItemIcon>
-                <Icon>groups</Icon>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <FormattedMessage
-                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
-                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
+              </ListItemButton>
+            </ListItem>
+            {groupsEnabled && scUserContext.user && (
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
+                  <ListItemIcon>
+                    <Icon>groups</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
+                        defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
+                      />
+                    }
                   />
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {eventsEnabled && (scUserContext.user || contentAvailable) && (
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}>
-              <ListItemIcon>
-                <Icon>CalendarIcon</Icon>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <FormattedMessage
-                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
-                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                </ListItemButton>
+              </ListItem>
+            )}
+            {eventsEnabled && (scUserContext.user || contentAvailable) && (
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}>
+                  <ListItemIcon>
+                    <Icon>CalendarIcon</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                        defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                      />
+                    }
                   />
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {exploreStreamEnabled && (contentAvailable || scUserContext.user) && (
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}>
-              <ListItemIcon>
-                <Icon>explore</Icon>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <FormattedMessage
-                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
-                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                </ListItemButton>
+              </ListItem>
+            )}
+            {exploreStreamEnabled && (contentAvailable || scUserContext.user) && (
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}>
+                  <ListItemIcon>
+                    <Icon>explore</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                        defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                      />
+                    }
                   />
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-        )}
-      </List>
-      <Divider />
+                </ListItemButton>
+              </ListItem>
+            )}
+          </List>
+          <Divider />
+        </>
+      )}
       <Typography variant="subtitle1" className={classes.title}>
         <FormattedMessage
           id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"

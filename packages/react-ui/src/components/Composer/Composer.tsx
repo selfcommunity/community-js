@@ -66,6 +66,7 @@ import Attributes from './Attributes';
 import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
+import BackdropScrollDisabled from '../../shared/BackdropScrollDisabled';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -804,6 +805,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     <Root
       ref={dialogRef}
       TransitionComponent={DialogTransition}
+      BackdropComponent={BackdropScrollDisabled}
       keepMounted
       onClose={handleClose}
       {...rest}
