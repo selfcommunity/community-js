@@ -8,5 +8,5 @@ export default function BackdropScrollDisabled(props: BackdropProps): JSX.Elemen
     event.preventDefault();
   };
 
-  return <Backdrop {...props} onTouchMove={onTouchMove} />;
+  return <Backdrop {...props} onTouchMove={onTouchMove} style={{touchAction: 'none', position: 'fixed'}} />;
 }
