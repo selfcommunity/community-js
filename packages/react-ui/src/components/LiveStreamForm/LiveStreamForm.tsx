@@ -2,7 +2,6 @@ import {LoadingButton} from '@mui/lab';
 import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
@@ -15,6 +14,7 @@ import LiveStreamSettingsForm from './LiveStreamFormSettings';
 import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
+import CoverPlaceholder from '../../assets/deafultCover';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -134,13 +134,8 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   const [error, setError] = useState<any>({});
   const [genericError, setGenericError] = useState<string | null>(null);
 
-  // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
-
   const _backgroundCover = {
-    ...(field.cover
-      ? {background: `url('${field.cover}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+    ...(field.cover ? {background: `url('${field.cover}') center / cover`} : {background: `url('${CoverPlaceholder}') no-repeat 0 0 / 100% 100%`})
   };
 
   const handleChangeCover = useCallback(

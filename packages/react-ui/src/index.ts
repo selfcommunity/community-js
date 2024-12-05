@@ -248,6 +248,7 @@ import * as MessageUploaderUtils from './utils/thumbnailCoverter';
  * Import Assets
  */
 import LogoSelfCommunity from './assets/logo';
+import DefaultCoverSelfCommunity from './assets/deafultCover';
 /**
  * List all exports
  */
@@ -500,6 +501,7 @@ export {
   LocationAutocompleteProps,
   /* Assets */
   LogoSelfCommunity,
+	DefaultCoverSelfCommunity,
   LoyaltyProgramWidget,
   LoyaltyProgramWidgetProps,
   LoyaltyProgramWidgetSkeleton,

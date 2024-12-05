@@ -11,9 +11,13 @@ const Component = {
         color: theme.palette.text.primary
       },
       [`& .SCLiveStreamRoom-description`]: {
-        marginBottom: theme.spacing(),
-        textAlign: 'center',
-        color: theme.palette.text.secondary
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        border: '1px solid #555555',
+        borderRadius: '5px',
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        padding: theme.spacing(0, 2)
       },
       [`& .SCLiveStreamRoom-content`]: {
         width: '100%'
@@ -70,7 +74,13 @@ const Component = {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: theme.spacing(2),
-        paddingBottom: theme.spacing(3)
+        paddingBottom: theme.spacing(3),
+        [`& .SCLiveStreamRoom-end-prejoin-content-box`]: {
+          width: '47%',
+          [theme.breakpoints.down('md')]: {
+            width: '90%'
+          }
+        }
       },
       '& .lk-prejoin': {
         maxWidth: 620,
