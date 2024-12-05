@@ -44,6 +44,7 @@ const classes = {
   preJoin: `${PREFIX}-prejoin`,
   preJoinLoading: `${PREFIX}-prejoin-loading`,
   prejoinLoader: `${PREFIX}-prejoin-loader`,
+	preJoinAlert: `${PREFIX}-prejoin-alert`,
   shareLink: `${PREFIX}-share-link`,
   endPrejoinContent: `${PREFIX}-end-prejoin-content`,
   conference: `${PREFIX}-conference`,
@@ -299,12 +300,12 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
             <>
               {startPrejoinContent && <Box className={classes.startPrejoinContent}>{startPrejoinContent}</Box>}
               {scLiveStream?.title && (
-                <Typography component={'div'} variant="h5" className={classes.title}>
+                <Typography component={'div'} variant="h4" className={classes.title} alignContent={'center'}>
                   {scLiveStream?.title}
                 </Typography>
               )}
               {scLiveStream?.description && (
-                <Typography component={'div'} variant="body1" className={classes.description}>
+                <Typography component={'div'} variant="body2" className={classes.description} alignContent={'center'}>
                   {scLiveStream?.description}
                 </Typography>
               )}
@@ -348,7 +349,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 ) && (
                   <Stack sx={{width: '47%'}} spacing={1}>
                     {scLiveStream && (scLiveStream.settings?.muteParticipants || scLiveStream.settings?.disableVideo) && (
-                      <Alert variant="filled" severity="info">
+                      <Alert variant="filled" severity="info" className={classes.preJoinAlert}>
                         <AlertTitle>
                           <b>Info</b>
                         </AlertTitle>

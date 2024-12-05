@@ -11,7 +11,7 @@ const classes = {
   iconTextWrapper: `${PREFIX}-icon-text-wrapper`,
   inProgress: `${PREFIX}-in-progress`,
   link: `${PREFIX}-link`,
-	joinLive: `${PREFIX}-join-live`,
+  joinLive: `${PREFIX}-join-live`,
   url: `${PREFIX}-url`,
   creationWrapper: `${PREFIX}-creation-wrapper`
 };

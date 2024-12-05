@@ -5,14 +5,25 @@ const Component = {
       display: 'flex',
       justifyContent: 'center',
       alignContent: 'center',
+      [`& .SCLiveStreamRoom-title`]: {
+        margin: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.primary
+      },
+      [`& .SCLiveStreamRoom-description`]: {
+        marginBottom: theme.spacing(),
+        textAlign: 'center',
+        color: theme.palette.text.secondary
+      },
       [`& .SCLiveStreamRoom-content`]: {
         width: '100%'
       },
       [`& .SCLiveStreamRoom-prejoin`]: {
+        margin: theme.spacing(2),
         padding: theme.spacing(),
         display: 'grid',
         placeItems: 'center',
-        height: '100%',
+        height: 'auto',
         position: 'relative',
         '& .lk-form-control': {
           display: 'none'
@@ -23,8 +34,19 @@ const Component = {
           opacity: 0.5
         }
       },
+      [`& .SCLiveStreamRoom-prejoin-alert`]: {
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        border: '1px solid #555555',
+        borderRadius: '5px'
+      },
       [`& .SCLiveStreamRoom-share-link`]: {
-        marginTop: theme.spacing(3)
+        marginTop: theme.spacing(3),
+        backgroundColor: theme.palette.background.paper,
+        '& textarea': {
+          color: theme.palette.text.primary,
+          '-webkit-text-fill-color': theme.palette.text.primary
+        }
       },
       [`& .SCLiveStreamRoom-conference`]: {
         width: '100%',
@@ -47,7 +69,7 @@ const Component = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: -30,
+        marginTop: theme.spacing(2),
         paddingBottom: theme.spacing(3)
       },
       '& .lk-prejoin': {

@@ -12,6 +12,11 @@ const Component = {
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'column',
+        [`& .SCLiveStreamVideoConference-logo`]: {
+          img: {
+            maxHeight: '100px'
+          }
+        },
         [`& .SCLiveStreamVideoConference-btn-back-home`]: {
           marginTop: theme.spacing(2)
         }
