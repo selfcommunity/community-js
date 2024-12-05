@@ -146,7 +146,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
           {/* @ts-ignore */}
           <TrackToggle
             source={Track.Source.ScreenShare}
-            captureOptions={{audio: true, selfBrowserSurface: 'include', resolution: VideoPresets.h720.resolution}}
+            captureOptions={{audio: true, selfBrowserSurface: 'include'}}
             showIcon={showIcon}
             onChange={onScreenShareChange}
             onDeviceError={(error) => onDeviceError?.({source: Track.Source.ScreenShare, error})}>
