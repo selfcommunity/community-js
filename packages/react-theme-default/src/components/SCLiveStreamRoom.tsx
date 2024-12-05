@@ -23,7 +23,7 @@ const Component = {
         width: '100%'
       },
       [`& .SCLiveStreamRoom-prejoin`]: {
-        margin: theme.spacing(2),
+        margin: theme.spacing(),
         padding: theme.spacing(),
         display: 'grid',
         placeItems: 'center',
