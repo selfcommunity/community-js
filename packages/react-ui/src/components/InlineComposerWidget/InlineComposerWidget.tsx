@@ -1,13 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {
-  SCCategoryType,
-  SCEventType,
-  SCFeedTypologyType,
-  SCGroupType,
-  SCMediaType,
-  SCPollType,
-  SCTagType,
-} from '@selfcommunity/types';
+import {SCCategoryType, SCEventType, SCFeedTypologyType, SCGroupType, SCMediaType, SCPollType, SCTagType} from '@selfcommunity/types';
 import {
   Link,
   SCContextType,
@@ -190,15 +182,17 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
           </Box>
         </CardContent>
       </Root>
-      <Composer
-        open={open}
-        mediaObjectTypes={mediaObjectTypes}
-        defaultValue={defaultValue}
-        fullWidth
-        onClose={handleClose}
-        onSuccess={handleSuccess}
-        feedType={feedType}
-      />
+      {open && (
+        <Composer
+          open={open}
+          mediaObjectTypes={mediaObjectTypes}
+          defaultValue={defaultValue}
+          fullWidth
+          onClose={handleClose}
+          onSuccess={handleSuccess}
+          feedType={feedType}
+        />
+      )}
     </React.Fragment>
   );
 }

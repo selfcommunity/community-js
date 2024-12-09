@@ -66,6 +66,8 @@ import Attributes from './Attributes';
 import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
+import BackdropScrollDisabled from '../../shared/BackdropScrollDisabled';
+import {disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks} from 'body-scroll-lock';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -399,9 +401,23 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
      */
     dialogRef.current.addEventListener('touchstart', handleTouchStart);
     dialogRef.current.addEventListener('touchmove', handleTouchmove);
+
+    dialogRef.current &&
+      disableBodyScroll(dialogRef.current, {
+        allowTouchMove: (el) => {
+          while (el && el !== document.body) {
+            if (el.getAttribute('class') !== null && el.getAttribute('class').includes('SCComposer-content')) {
+              return true;
+            }
+            el = el.parentElement;
+          }
+        }
+      });
+
     return () => {
       dialogRef.current?.removeEventListener('touchstart', handleTouchStart);
       dialogRef.current?.removeEventListener('touchmove', handleTouchmove);
+      dialogRef.current && enableBodyScroll(dialogRef.current);
     };
   }, [dialogRef.current, isIOS]);
 
@@ -662,9 +678,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     },
     [scUserContext.user, feedObjectType, id, type, title, html, categories, event, group, addressing, audience, medias, poll, location, hasPoll]
   );
+
   //edited here
   const handleClose = useCallback(
     (e: SyntheticEvent, reason?: string): void => {
+      console.log(e);
+      console.log(reason);
       if (unloadRef.current) {
         window.onbeforeunload = null;
       }
@@ -688,6 +707,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }
         });
       } else {
+        clearAllBodyScrollLocks();
         onClose && onClose(e);
         setLayer(null);
         dispatch({type: 'reset'});
@@ -804,11 +824,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     <Root
       ref={dialogRef}
       TransitionComponent={DialogTransition}
-      keepMounted
+      BackdropComponent={BackdropScrollDisabled}
       onClose={handleClose}
       {...rest}
+      disableEscapeKeyDown
       className={classNames(classes.root, {[classes.ios]: isIOS})}
-      scroll="body"
+      scroll="paper"
       fullScreen={fullScreen}
       tabIndex={-1}>
       <form onSubmit={handleSubmit} method="post">
