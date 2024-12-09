@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.4...@selfcommunity/react-ui@0.10.4-alpha.5) (2024-12-09)
+
+
+### Bug Fixes
+
+* avoid autosubscribe to event when get info event ([bb0621c](https://github.com/selfcommunity/community-js/commit/bb0621c7513bbe187dd560af71a0ab19ba474780))
+
+
+
+
+
 ## [0.10.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.3...@selfcommunity/react-ui@0.10.4-alpha.4) (2024-12-09)
 
 
