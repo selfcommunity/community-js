@@ -67,6 +67,7 @@ import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
 import BackdropScrollDisabled from '../../shared/BackdropScrollDisabled';
+import {disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks} from 'body-scroll-lock';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -400,9 +401,22 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
      */
     dialogRef.current.addEventListener('touchstart', handleTouchStart);
     dialogRef.current.addEventListener('touchmove', handleTouchmove);
+    disableBodyScroll(dialogRef.current, {
+      allowTouchMove: (el) => {
+        return (
+          el &&
+          typeof el === 'object' &&
+          el.className &&
+          typeof el.className === 'string' &&
+          el.className.include &&
+          el.className.include('SCComposer-content')
+        );
+      }
+    });
     return () => {
       dialogRef.current?.removeEventListener('touchstart', handleTouchStart);
       dialogRef.current?.removeEventListener('touchmove', handleTouchmove);
+      enableBodyScroll(dialogRef.current);
     };
   }, [dialogRef.current, isIOS]);
 
@@ -663,6 +677,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     },
     [scUserContext.user, feedObjectType, id, type, title, html, categories, event, group, addressing, audience, medias, poll, location, hasPoll]
   );
+
   //edited here
   const handleClose = useCallback(
     (e: SyntheticEvent, reason?: string): void => {
@@ -689,6 +704,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           }
         });
       } else {
+        clearAllBodyScrollLocks();
         onClose && onClose(e);
         setLayer(null);
         dispatch({type: 'reset'});

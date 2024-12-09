@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, {ReactElement, useCallback, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Icon, IconButton, IconButtonProps} from '@mui/material';
 import {
@@ -122,7 +122,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
       <Root className={classNames(classes.root, className)} {...rest} onClick={handleClick} ref={ref}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      <Composer open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />
+      {open && <Composer open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />}
     </>
   );
 });
