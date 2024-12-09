@@ -403,14 +403,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     dialogRef.current.addEventListener('touchmove', handleTouchmove);
     disableBodyScroll(dialogRef.current, {
       allowTouchMove: (el) => {
-        return (
-          el &&
-          typeof el === 'object' &&
-          el.className &&
-          typeof el.className === 'string' &&
-          el.className.include &&
-          el.className.include('SCComposer-content')
-        );
+        while (el && el !== document.body) {
+          if (el.getAttribute('class') !== null && el.getAttribute('class').includes('SCComposer-content')) {
+            return true;
+          }
+          el = el.parentElement;
+        }
       }
     });
     return () => {
