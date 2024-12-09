@@ -122,7 +122,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
       <Root className={classNames(classes.root, className)} {...rest} onClick={handleClick} ref={ref}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      {open && <Composer open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />}
+      {open && <Composer disablePortal open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />}
     </>
   );
 });

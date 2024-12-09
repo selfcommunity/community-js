@@ -825,7 +825,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       ref={dialogRef}
       TransitionComponent={DialogTransition}
       BackdropComponent={BackdropScrollDisabled}
-      keepMounted
       onClose={handleClose}
       {...rest}
       disableEscapeKeyDown
