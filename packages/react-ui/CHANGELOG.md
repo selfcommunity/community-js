@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.7...@selfcommunity/react-ui@0.10.4-alpha.8) (2024-12-09)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([e620e37](https://github.com/selfcommunity/community-js/commit/e620e377df8396e21bd4f7f362507abccd1f3a28))
+
+
+
+
+
 ## [0.10.4-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.6...@selfcommunity/react-ui@0.10.4-alpha.7) (2024-12-09)
 
 
