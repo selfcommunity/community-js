@@ -401,20 +401,23 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
      */
     dialogRef.current.addEventListener('touchstart', handleTouchStart);
     dialogRef.current.addEventListener('touchmove', handleTouchmove);
-    disableBodyScroll(dialogRef.current, {
-      allowTouchMove: (el) => {
-        while (el && el !== document.body) {
-          if (el.getAttribute('class') !== null && el.getAttribute('class').includes('SCComposer-content')) {
-            return true;
+
+    dialogRef.current &&
+      disableBodyScroll(dialogRef.current, {
+        allowTouchMove: (el) => {
+          while (el && el !== document.body) {
+            if (el.getAttribute('class') !== null && el.getAttribute('class').includes('SCComposer-content')) {
+              return true;
+            }
+            el = el.parentElement;
           }
-          el = el.parentElement;
         }
-      }
-    });
+      });
+
     return () => {
       dialogRef.current?.removeEventListener('touchstart', handleTouchStart);
       dialogRef.current?.removeEventListener('touchmove', handleTouchmove);
-      enableBodyScroll(dialogRef.current);
+      dialogRef.current && enableBodyScroll(dialogRef.current);
     };
   }, [dialogRef.current, isIOS]);
 
@@ -679,6 +682,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   //edited here
   const handleClose = useCallback(
     (e: SyntheticEvent, reason?: string): void => {
+      console.log(e);
+      console.log(reason);
       if (unloadRef.current) {
         window.onbeforeunload = null;
       }
@@ -823,8 +828,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       keepMounted
       onClose={handleClose}
       {...rest}
+      disableEscapeKeyDown
       className={classNames(classes.root, {[classes.ios]: isIOS})}
-      scroll="body"
+      scroll="paper"
       fullScreen={fullScreen}
       tabIndex={-1}>
       <form onSubmit={handleSubmit} method="post">
