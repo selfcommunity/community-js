@@ -402,22 +402,28 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     dialogRef.current.addEventListener('touchstart', handleTouchStart);
     dialogRef.current.addEventListener('touchmove', handleTouchmove);
 
-    dialogRef.current &&
-      disableBodyScroll(dialogRef.current, {
-        allowTouchMove: (el) => {
-          while (el && el !== document.body) {
-            if (el.getAttribute('class') !== null && el.getAttribute('class').includes('SCComposer-content')) {
-              return true;
-            }
-            el = el.parentElement;
-          }
-        }
-      });
+    /**
+     * To disable scroll on iOS
+     */
+    // dialogRef.current &&
+    //   disableBodyScroll(dialogRef.current, {
+    //     allowTouchMove: (el) => {
+    //       while (el && el !== document.body) {
+    //         if (el.getAttribute('class') !== null && el.getAttribute('class').includes('SCComposer-content')) {
+    //           return true;
+    //         }
+    //         el = el.parentElement;
+    //       }
+    //     }
+    //   });
 
     return () => {
       dialogRef.current?.removeEventListener('touchstart', handleTouchStart);
       dialogRef.current?.removeEventListener('touchmove', handleTouchmove);
-      dialogRef.current && enableBodyScroll(dialogRef.current);
+      /**
+       * To re-enable scroll on iOS
+       */
+      // dialogRef.current && enableBodyScroll(dialogRef.current);
     };
   }, [dialogRef.current, isIOS]);
 
@@ -829,7 +835,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       {...rest}
       disableEscapeKeyDown
       className={classNames(classes.root, {[classes.ios]: isIOS})}
-      scroll="paper"
+      scroll="body"
       fullScreen={fullScreen}
       tabIndex={-1}>
       <form onSubmit={handleSubmit} method="post">
