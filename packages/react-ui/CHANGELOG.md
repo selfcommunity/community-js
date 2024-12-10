@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.8...@selfcommunity/react-ui@0.10.4-alpha.9) (2024-12-10)
+
+
+### Bug Fixes
+
+* fix composer iOS ([3ce213a](https://github.com/selfcommunity/community-js/commit/3ce213af636e92e1d62b726b5f32f277dfb8b1f6))
+* optimization performance feed ([bf0a32f](https://github.com/selfcommunity/community-js/commit/bf0a32f1cac8827385e634168acdd2f9bb359f60))
+
+
+
+
+
 ## [0.10.4-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.7...@selfcommunity/react-ui@0.10.4-alpha.8) (2024-12-09)
 
 
