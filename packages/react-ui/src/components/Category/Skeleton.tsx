@@ -58,9 +58,13 @@ export default function CategorySkeleton(props): JSX.Element {
       primary={<Skeleton animation="wave" height={10} width={120} className={classes.primary} />}
       secondary={<Skeleton animation="wave" height={10} width={70} className={classes.secondary} />}
       actions={
-        <Button size="small" variant="outlined" disabled className={classes.button}>
-          <Skeleton animation="wave" height={10} width={50} className={classes.action} />
-        </Button>
+        props.actions !== undefined ? (
+          props.actions
+        ) : (
+          <Button size="small" variant="outlined" disabled className={classes.button}>
+            <Skeleton animation="wave" height={10} width={50} className={classes.action} />
+          </Button>
+        )
       }
     />
   );

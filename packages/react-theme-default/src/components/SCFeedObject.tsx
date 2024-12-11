@@ -71,7 +71,8 @@ const Component = {
       },
       '& .SCFeedObject-group, & .SCFeedObject-event': {
         justifyContent: 'flex-start',
-        padding: theme.spacing(0.5),
+        padding: theme.spacing(0.2, 0.5),
+        height: 20,
         '& a': {
           padding: theme.spacing(0.5),
           marginBottom: theme.spacing(0.5),
@@ -149,7 +150,7 @@ const Component = {
           margin: theme.spacing(0, 2),
           '& .SCFeedObject-group, & .SCFeedObject-event': {
             borderBottom: 'none',
-            marginTop: theme.spacing(0.5),
+            marginTop: 5,
             '& .MuiChip-icon': {
               fontWeight: theme.typography.fontWeightRegular
             }
@@ -159,7 +160,10 @@ const Component = {
             marginRight: theme.spacing(-1)
           },
           [theme.breakpoints.down('md')]: {
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
+            '@supports (-webkit-touch-callout: none)': {
+              justifyContent: 'start !important'
+            }
           }
         },
         '& .SCFeedObject-header': {
