@@ -34,6 +34,8 @@ import {SCCategoryType, SCFeatureName} from '@selfcommunity/types';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
+import CategorySkeleton from '../Category/Skeleton';
+import DefaultDrawerSkeleton from './DefaultDrawerSkeleton';
 
 const PREFIX = 'SCDefaultDrawerContent';
 
@@ -62,7 +64,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
   const {className, CategoryItemProps = {showTooltip: true}, ...rest} = props;
 
   // HOOKS
-  const {categories} = useSCFetchCategories();
+  const {categories, isLoading} = useSCFetchCategories();
   const [categoriesOrdered, setCategoriesOrdered] = useState<SCCategoryType[]>([]);
 
   // ROUTING
@@ -209,31 +211,37 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
           defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
         />
       </Typography>
-      {!categoriesOrdered.length && (
-        <Typography variant="body1" className={classes.noResults}>
-          <FormattedMessage
-            id="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
-            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
-          />
-        </Typography>
+      {isLoading ? (
+        <DefaultDrawerSkeleton />
+      ) : (
+        <>
+          {!categoriesOrdered.length && (
+            <Typography variant="body1" className={classes.noResults}>
+              <FormattedMessage
+                id="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
+                defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
+              />
+            </Typography>
+          )}
+          {categoriesOrdered.map((c: SCCategoryType, index: number) => (
+            <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
+              <ListItem key={c.id}>
+                <Category
+                  ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)}}
+                  elevation={0}
+                  category={c}
+                  actions={null}
+                  {...CategoryItemProps}
+                  {...getMouseEvents(
+                    () => handleMouseEnter(c.id),
+                    () => handleMouseLeave(c.id)
+                  )}
+                />
+              </ListItem>
+            </Zoom>
+          ))}
+        </>
       )}
-      {categoriesOrdered.map((c: SCCategoryType, index: number) => (
-        <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
-          <ListItem key={c.id}>
-            <Category
-              ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)}}
-              elevation={0}
-              category={c}
-              actions={null}
-              {...CategoryItemProps}
-              {...getMouseEvents(
-                () => handleMouseEnter(c.id),
-                () => handleMouseLeave(c.id)
-              )}
-            />
-          </ListItem>
-        </Zoom>
-      ))}
     </Root>
   );
 }

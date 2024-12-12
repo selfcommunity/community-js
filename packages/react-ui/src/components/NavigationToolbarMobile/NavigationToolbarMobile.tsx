@@ -23,7 +23,7 @@ import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '.
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
 import {SCFeatureName} from '@selfcommunity/types';
-import ComposerIconButton from '../ComposerIconButton';
+import ComposerIconButton, {ComposerIconButtonProps} from '../ComposerIconButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -72,6 +72,11 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    * Component for Navigation Settings
    */
   NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
+	/**
+	 * Props to spread to the ComposerIconButton
+	 * @default {}
+	 */
+	ComposerIconButtonProps?: ComposerIconButtonProps;
 }
 
 /**
@@ -123,6 +128,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     endActions = null,
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
+		ComposerIconButtonProps = {},
     ...rest
   } = props;
 
@@ -216,7 +222,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         groupsEnabled &&
         eventsEnabled &&
         (scUserContext.user || contentAvailable) &&
-        exploreStreamEnabled && <ComposerIconButton />}
+        exploreStreamEnabled && <ComposerIconButton {...ComposerIconButtonProps} />}
       {scUserContext.user && (groupsEnabled || eventsEnabled) && (
         <IconButton className={classes.notifications} component={Link} to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
           <Badge

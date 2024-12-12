@@ -1,11 +1,13 @@
 import {Box, BoxProps, FormControl, Icon, InputLabel, MenuItem, Select, Stack, Switch, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
+import {SCCommunitySubscriptionTier, SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {LIVESTREAM_DEFAULT_SETTINGS} from './constants';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import UpScalingTierBadge from '../../shared/UpScalingTierBadge';
 
 export const PREFIX = 'SCLiveStreamFormSettings';
 
@@ -77,6 +79,22 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
   });
   const {className, settings = LIVESTREAM_DEFAULT_SETTINGS, onChange, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
+  const isCommunityOwner = useMemo(() => authUserId === 1, [authUserId]);
+  const isEnterpriseTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.ENTERPRISE,
+    [preferences]
+  );
+  const isEnterpriseFeaturesVisible = useMemo(() => Boolean(isEnterpriseTier || isCommunityOwner), [isEnterpriseTier, isCommunityOwner]);
+
   /**
    * Renders root object
    */
@@ -92,16 +110,34 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           <FormattedMessage id="ui.liveStreamForm.muteParticipants" defaultMessage="ui.liveStreamForm.muteParticipants" />
         </Typography>
       </Stack>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Switch
-          className={classes.switch}
-          checked={Boolean(settings?.disableVideo)}
-          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableVideo']: !settings?.disableVideo}})}
-        />
-        <Typography className={classes.switchLabel}>
-          <FormattedMessage id="ui.liveStreamForm.disableVideo" defaultMessage="ui.liveStreamForm.disableVideo" />
-        </Typography>
-      </Stack>
+      {isEnterpriseFeaturesVisible && (
+        <>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Switch
+              className={classes.switch}
+              checked={Boolean(settings?.disableVideo)}
+              disabled={!isEnterpriseTier}
+              onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableVideo']: !settings?.disableVideo}})}
+            />
+            <Typography className={classes.switchLabel}>
+              <FormattedMessage id="ui.liveStreamForm.disableVideo" defaultMessage="ui.liveStreamForm.disableVideo" />
+            </Typography>
+            <UpScalingTierBadge desiredTier={SCCommunitySubscriptionTier.ENTERPRISE} />
+          </Stack>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Switch
+              className={classes.switch}
+              checked={Boolean(settings?.disableShareScreen)}
+              disabled={!isEnterpriseTier}
+              onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
+            />
+            <Typography className={classes.switchLabel}>
+              <FormattedMessage id="ui.liveStreamForm.disableShareScreen" defaultMessage="ui.liveStreamForm.disableShareScreen" />
+            </Typography>
+            <UpScalingTierBadge desiredTier={SCCommunitySubscriptionTier.ENTERPRISE} />
+          </Stack>
+        </>
+      )}
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
@@ -110,16 +146,6 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         />
         <Typography className={classes.switchLabel}>
           <FormattedMessage id="ui.liveStreamForm.disableChat" defaultMessage="ui.liveStreamForm.disableChat" />
-        </Typography>
-      </Stack>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Switch
-          className={classes.switch}
-          checked={Boolean(settings?.disableShareScreen)}
-          onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
-        />
-        <Typography className={classes.switchLabel}>
-          <FormattedMessage id="ui.liveStreamForm.disableShareScreen" defaultMessage="ui.liveStreamForm.disableShareScreen" />
         </Typography>
       </Stack>
       <Stack direction="row" spacing={1} alignItems="center">

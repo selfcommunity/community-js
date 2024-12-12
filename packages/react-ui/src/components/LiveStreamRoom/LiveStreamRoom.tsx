@@ -240,7 +240,6 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                   values={{link: (...chunks) => <Link to={'/'}>{chunks}</Link>}}
                 />
               );
-              // TODO: return event in a livestream???
               if (error.response.data.errors[0].code) {
                 const _error = `ui.liveStreamRoom.connect.error.${camelCase(error.response.data.errors[0].code)}`;
                 _msg = (
@@ -249,7 +248,14 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     defaultMessage={_error}
                     values={{
                       link: (...chunks) => (
-                        <Link style={{color: '#FFF'}} to={'/'}>
+                        <Link
+                          style={{color: '#FFF'}}
+                          to={
+                            error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.PARTICIPATE_THE_EVENT_TO_JOIN_LIVE_STREAM &&
+                            scLiveStream.event
+                              ? scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, scLiveStream.event)
+                              : '/'
+                          }>
                           {chunks}
                         </Link>
                       )

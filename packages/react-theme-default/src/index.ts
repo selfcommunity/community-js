@@ -149,6 +149,7 @@ import SCLiveStreamFormSettings from './components/SCLiveStreamFormSettings';
 import SCLiveStreamRoom from './components/SCLiveStreamRoom';
 import SCLiveStreamVideoConference from './components/SCLiveStreamVideoConference';
 import SCLiveStreamInfoDetails from './components/SCLiveStreamInfoDetails';
+import SCUpScalingTierBadge from './components/SCUpScalingTierBadge';
 import SCUserLiveStreamWidget from './components/SCUserLiveStreamWidget';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
@@ -419,7 +420,8 @@ const theme = {
     SCWidget,
     SCLiveStream,
     SCLiveStreamInfoDetails,
-		SCUserLiveStreamWidget,
+    SCUpScalingTierBadge,
+    SCUserLiveStreamWidget,
     SCCreateLiveStreamDialog,
     SCLiveStreamSelector,
     SCLiveStreamForm,
