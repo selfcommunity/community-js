@@ -1,4 +1,5 @@
 import {SCUserType} from './user';
+import {SCEventType} from './event';
 
 export interface SCLiveStreamType {
   id?: number;
@@ -13,6 +14,7 @@ export interface SCLiveStreamType {
   settings?: Record<string, any>;
   host?: SCUserType;
   cover?: string;
+  event?: SCEventType;
 }
 
 export enum SCLiveStreamViewType {

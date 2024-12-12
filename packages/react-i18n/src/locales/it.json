@@ -1050,5 +1050,11 @@
   "ui.liveStreamRoom.participantTileActions.removeRoomUser": "Rimuovi l'utente dal live",
   "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi e banna l'utente dal live",
   "ui.liveStreamRoom.live.terminate": "Sei sicuro di voler uscire dal live?",
-  "ui.liveStreamRoom.live.terminatePermanently": "Imposta questo live come chiuso definitivamente"
+  "ui.liveStreamRoom.live.terminatePermanently": "Imposta questo live come chiuso definitivamente",
+	"ui.upScalingTierBadge.go": "GO",
+	"ui.upScalingTierBadge.professional": "PROFESSIONAL",
+	"ui.upScalingTierBadge.enterprise": "ENTERPRISE",
+	"ui.upScalingTierBadge.goFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Go.",
+	"ui.upScalingTierBadge.professionalFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Professional.",
+  "ui.upScalingTierBadge.enterpriseFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto un piano Enterprise."
 }
