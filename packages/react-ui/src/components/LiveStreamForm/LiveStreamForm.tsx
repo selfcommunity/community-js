@@ -279,7 +279,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           name="slug"
           onChange={handleChange}
           InputProps={{
-            endAdornment: <Typography variant="body2">{LIVE_STREAM_SLUG_MAX_LENGTH - field.title.length}</Typography>
+            endAdornment: <Typography variant="body2">{LIVE_STREAM_SLUG_MAX_LENGTH - field.slug.length}</Typography>
           }}
           error={Boolean(field.slug.length > LIVE_STREAM_SLUG_MAX_LENGTH) || Boolean(error['slugError'])}
           helperText={
