@@ -1011,7 +1011,7 @@
   "ui.liveStreamForm.selector.scheduleLiveStream": "Schedule a live stream",
   "ui.liveStreamForm.selector.scheduleLiveStreamItem1": "Best for webinars, Q&As and for presentations",
   "ui.liveStreamForm.selector.scheduleLiveStreamItem2": "Talk to each other with audio/video",
-  "ui.liveStreamForm.selector.scheduleLiveStreamItem3": "Participants can chat or be promoted to the stage",
+  "ui.liveStreamForm.selector.scheduleLiveStreamItem3": "Participants can chat with others",
   "ui.liveStreamForm.selector.next": "Next",
   "ui.liveStreamForm.selector.warningRemainingMinutes": "You have a few minutes {minutes} to do live broadcasts.",
   "ui.liveStreamForm.selector.warningMinutesExausted": "You've run out of time to do live broadcasts.",
