@@ -73,7 +73,7 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
 
   // HOOKS
   const intl = useIntl();
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();

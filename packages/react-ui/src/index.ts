@@ -100,6 +100,7 @@ import NavigationMenuIconButton, {
 } from './components/NavigationMenuIconButton';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './components/NavigationMenuIconButton/DefaultDrawerContent';
 import DefaultHeaderContent, {DefaultHeaderContentProps} from './components/NavigationMenuIconButton/DefaultHeaderContent';
+import DefaultDrawerSkeleton, {DefaultDrawerSkeletonProps} from './components/NavigationMenuIconButton/DefaultDrawerSkeleton';
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps, NavigationSettingsItem} from './components/NavigationSettingsIconButton';
 import NavigationToolbar, {NavigationToolbarProps, NavigationToolbarSkeleton} from './components/NavigationToolbar';
 import NavigationToolbarMobile, {NavigationToolbarMobileProps, NavigationToolbarMobileSkeleton} from './components/NavigationToolbarMobile';
@@ -376,6 +377,8 @@ export {
   DefaultDrawerContentProps,
   DefaultHeaderContent,
   DefaultHeaderContentProps,
+  DefaultDrawerSkeleton,
+  DefaultDrawerSkeletonProps,
   EditEventButton,
   EditEventButtonProps,
   EditGroupButton,

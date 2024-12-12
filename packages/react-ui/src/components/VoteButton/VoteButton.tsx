@@ -220,11 +220,11 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
           <span>{button}</span>
         </Tooltip>
       )}
-      {reactions.default && (
+      {reactions.default && Boolean(anchorEl) && !isVoting && !isLoading && (
         <PopperRoot
           id={`vote_${contributionId}_${contributionType}_popper`}
           className={classes.popperRoot}
-          open={Boolean(anchorEl) && !isVoting && !isLoading}
+          open
           anchorEl={anchorEl}
           placement="top"
           keepMounted>

@@ -1,23 +1,23 @@
-import { Button, CardActions, CardContent, Typography, useTheme, useThemeProps } from '@mui/material';
-import { styled } from '@mui/system';
-import { Endpoints, http, SCPaginatedResponse, SuggestionService } from '@selfcommunity/api-services';
-import { Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting } from '@selfcommunity/react-core';
-import { SCEventType } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
-import { AxiosResponse } from 'axios';
+import {Button, CardActions, CardContent, Typography, useTheme, useThemeProps} from '@mui/material';
+import {styled} from '@mui/system';
+import {Endpoints, http, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {SCEventType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
+import {AxiosResponse} from 'axios';
 import classNames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Swiper as SwiperType } from 'swiper/types';
-import { SCOPE_SC_UI } from '../../constants/Errors';
-import { DEFAULT_PAGINATION_OFFSET } from '../../constants/Pagination';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Swiper as SwiperType} from 'swiper/types';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import { SCEventTemplateType } from '../../types/event';
+import {SCEventTemplateType} from '../../types/event';
 import Event from '../Event';
-import Widget, { WidgetProps } from '../Widget';
+import Widget, {WidgetProps} from '../Widget';
 import Arrow from './Arrow';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
@@ -62,7 +62,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
     name: PREFIX
   });
 
-  const { endpointQueryParams = { limit: 3, offset: DEFAULT_PAGINATION_OFFSET }, ...rest } = props;
+  const {endpointQueryParams = {limit: 3, offset: DEFAULT_PAGINATION_OFFSET}, ...rest} = props;
 
   // STATE
   const [count, setCount] = useState<number | null>(null);
@@ -84,7 +84,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   const updatesSubscription = useRef(null);
 
   useEffect(() => {
-    SuggestionService.getEventSuggestion({ ...endpointQueryParams })
+    SuggestionService.getEventSuggestion({...endpointQueryParams})
       .then((payload: SCPaginatedResponse<SCEventType>) => {
         setCount(payload.count);
         setNext(payload.next);
