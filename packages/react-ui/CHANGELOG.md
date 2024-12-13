@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.12...@selfcommunity/react-ui@0.10.4-alpha.13) (2024-12-13)
+
+
+### Bug Fixes
+
+* fixed next call into EventMembersWidget ([d7186f1](https://github.com/selfcommunity/community-js/commit/d7186f1d54bb396d578288cdc172494e57f196a8))
+
+
+
+
+
 ## [0.10.4-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.11...@selfcommunity/react-ui@0.10.4-alpha.12) (2024-12-13)
 
 
