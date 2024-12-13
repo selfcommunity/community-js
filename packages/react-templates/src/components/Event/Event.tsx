@@ -115,8 +115,9 @@ export default function Event(inProps: EventProps): JSX.Element {
   if (
     scUserContext.user === undefined ||
     !scEvent ||
-    (scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
-    scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED
+    (scUserContext.user &&
+      ((scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
+        scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED))
   ) {
     return <EventSkeletonTemplate />;
   }

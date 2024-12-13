@@ -4,10 +4,12 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .MuiDialog-paper': {
+				height: '100%',
         position: 'relative',
         overflowX: 'hidden',
         '& > form': {
-          zIndex: 0
+          zIndex: 0,
+					height: '100%',
         },
         '& .MuiDialogTitle-root': {
           position: 'absolute',
@@ -31,7 +33,7 @@ const Component = {
         '& .MuiDialogContent-root': {
           margin: '45px 0',
           padding: theme.spacing(1, 2),
-          height: `calc(100vh - 45px - 45px - ${theme.spacing(2)})`,
+          height: `calc(100% - 45px - 45px - ${theme.spacing(2)})`,
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
             '& .SCEditor-placeholder': {

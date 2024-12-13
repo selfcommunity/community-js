@@ -109,7 +109,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
   const participantsAvailable = useMemo(
     () =>
       scEvent?.privacy === SCEventPrivacyType.PUBLIC ||
