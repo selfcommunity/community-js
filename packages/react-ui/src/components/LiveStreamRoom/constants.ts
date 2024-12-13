@@ -5,6 +5,13 @@ export const defaultVideoOptions = {
 } as const;
 
 /**
+ * Start the checking after a delay
+ * In minutes
+ */
+export const LIVE_CHECKING_INITIAL_DELAY_HOST = 4;
+export const LIVE_CHECKING_INITIAL_DELAY_GUEST = 1;
+
+/**
  * Checking live status on VideoLiveConference
  * In minutes
  */
