@@ -310,7 +310,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
-
         if (Object.values(_error)[0]['error'] === 'unique') {
           setError({
             ...error,
@@ -319,7 +318,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         } else {
           setError({...error, ..._error});
         }
-
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
@@ -333,7 +331,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
-
         setError(error);
       }
     },
@@ -346,11 +343,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
-
         setError(error);
       } else if (error['endDateError']) {
         delete error['endDateError'];
-
         setError(error);
       }
     },
@@ -386,6 +381,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   /**
    * Renders root object
    */
+  console.log(error);
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
@@ -669,7 +665,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               (field.location === SCEventLocationType.ONLINE && !field.link) ||
               (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
               (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
-              Object.keys(error).length !== 0 ||
+              field.isSubmitting ||
               field.name.length > EVENT_TITLE_MAX_LENGTH ||
               field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
             }
