@@ -53,6 +53,7 @@ import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomA
 import EditEventButton, {EditEventButtonProps} from './components/EditEventButton';
 import EditGroupButton, {EditGroupButtonProps} from './components/EditGroupButton';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
+import EditCourse, {EditCourseProps} from './components/EditCourse';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from './components/Event';
 import EventHeader, {EventHeaderProps, EventHeaderSkeleton} from './components/EventHeader';
 import EventInfoWidget, {EventInfoWidgetProps} from './components/EventInfoWidget';
@@ -370,6 +371,8 @@ export {
   EditorProps,
   EditorSkeleton,
   EmailTextField,
+  EditCourse,
+  EditCourseProps,
   Event,
   EventActionsMenu,
   EventActionsMenuProps,

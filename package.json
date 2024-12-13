@@ -81,6 +81,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@hello-pangea/dnd": "^17.0.0",
     "@mui/lab": "~5.0.0-alpha.159",
     "@mui/material": "^5.15.3",
     "@mui/system": "^5.15.3",
@@ -94,17 +95,17 @@
     "csstype": "^3.1.2",
     "emotion-theming": "^11.0.0",
     "notistack": "^3.0.1",
+    "pdfjs-dist": "3.11.174",
     "pubsub-js": "^1.9.4",
+    "react": "^17.0.2 || 18",
     "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "17 || 18",
     "react-infinite-scroll-component": "^6.1.0",
     "react-intl": "^6.5.5",
     "react-lazyload": "^3.2.0",
     "seamless-scroll-polyfill": "^2.1.8",
     "use-deep-compare-effect": "^1.8.1",
-    "validate-color": "^2.2.4",
-    "react": "^17.0.2 || 18",
-    "react-dom": "17 || 18",
-    "pdfjs-dist": "3.11.174"
+    "validate-color": "^2.2.4"
   },
   "prettier": {
     "trailingComma": "all",
