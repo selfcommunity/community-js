@@ -360,13 +360,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             })
           );
         } else if ('errorsError' in _error) {
-        setGenericError(
+          setGenericError(
             intl.formatMessage({
               id: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached',
               defaultMessage: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached'
             })
           );
-        }else {
+        } else {
           setGenericError(null);
         }
 
