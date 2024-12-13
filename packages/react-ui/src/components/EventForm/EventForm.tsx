@@ -260,6 +260,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setError(error);
       }
+      setGenericError(null);
     },
     [error]
   );
@@ -286,6 +287,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       ...prev,
       ...data
     }));
+    setGenericError(null);
   }, []);
 
   const handleLiveStreamSettingsData = useCallback((data: Geolocation) => {
@@ -350,27 +352,38 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
-
-        if (Object.values(_error)[0]['error'] === 'unique') {
-          setError({
-            ...error,
-            ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
-          });
-        } else {
-          setError({...error, ..._error});
-        }
-
-        if ('errorsError' in _error) {
+        if (!Object.keys(_error).length) {
           setGenericError(
+            intl.formatMessage({
+              id: 'ui.eventForm.genericError',
+              defaultMessage: 'ui.eventForm.genericError'
+            })
+          );
+        } else if ('errorsError' in _error) {
+        setGenericError(
             intl.formatMessage({
               id: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached',
               defaultMessage: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached'
             })
           );
-        } else {
+        }else {
           setGenericError(null);
         }
 
+        let __errors = {};
+        if ('coverError' in _error) {
+          __errors = {
+            ...__errors,
+            ['coverError']: <FormattedMessage id="ui.ui.eventForm.cover.error" defaultMessage="ui.ui.eventForm.cover.error" />
+          };
+        }
+        if ('titleError' in _error) {
+          __errors = {
+            ...__errors,
+            ['titleError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
+          };
+        }
+        setError(__errors);
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
@@ -384,7 +397,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
-
         setError(error);
       }
       setGenericError(null);
@@ -398,11 +410,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
-
         setError(error);
       } else if (error['endDateError']) {
         delete error['endDateError'];
-
         setError(error);
       }
       setGenericError(null);
@@ -444,6 +454,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
       </Paper>
+      {Boolean(error['coverError']) && <Typography color="error">{error['coverError']}</Typography>}
       <FormGroup className={classes.form}>
         <TextField
           required
@@ -750,7 +761,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               (field.location === SCEventLocationType.ONLINE && !field.link) ||
               (field.location === SCEventLocationType.PERSON && !field.geolocation) ||
               (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
-              Object.keys(error).length !== 0 ||
+              field.isSubmitting ||
               field.name.length > EVENT_TITLE_MAX_LENGTH ||
               field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
             }
