@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.11...@selfcommunity/react-ui@0.10.4-alpha.12) (2024-12-13)
+
+
+### Bug Fixes
+
+* eventForm re-enable button on submit error ([42b3f34](https://github.com/selfcommunity/community-js/commit/42b3f34775bb873c67fdaeb0db3916827acc16ff))
+
+
+
+
+
 ## [0.10.4-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.10...@selfcommunity/react-ui@0.10.4-alpha.11) (2024-12-13)
 
 
