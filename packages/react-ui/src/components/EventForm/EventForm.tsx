@@ -1,5 +1,6 @@
 import {LoadingButton} from '@mui/lab';
 import {
+  Alert,
   Box,
   BoxProps,
   FormControl,
@@ -91,7 +92,8 @@ const classes = {
   actions: `${PREFIX}-actions`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  genericError: `${PREFIX}-generic-error`
 };
 
 const Root = styled(Box, {
@@ -199,6 +201,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // STATE
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
+  const [genericError, setGenericError] = useState<string | null>(null);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -234,6 +237,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
         setError(error);
       }
+      setGenericError(null);
     },
     [error]
   );
@@ -260,11 +264,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       ...prev,
       ...data
     }));
+    setGenericError(null);
   }, []);
 
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, ['isSubmitting']: true}));
-
+    setGenericError(null);
     const formData = new FormData();
 
     if (field.imageOriginalFile) {
@@ -310,14 +315,30 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
-        if (Object.values(_error)[0]['error'] === 'unique') {
-          setError({
-            ...error,
-            ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
-          });
+        if ('errorsError' in _error || !Object.keys(_error).length) {
+          setGenericError(
+            intl.formatMessage({
+              id: 'ui.eventForm.genericError',
+              defaultMessage: 'ui.eventForm.genericError'
+            })
+          );
         } else {
-          setError({...error, ..._error});
+          setGenericError(null);
         }
+        let __errors = {};
+        if ('coverError' in _error) {
+          __errors = {
+            ...__errors,
+            ['coverError']: <FormattedMessage id="ui.ui.eventForm.cover.error" defaultMessage="ui.ui.eventForm.cover.error" />
+          };
+        }
+        if ('titleError' in _error) {
+          __errors = {
+            ...__errors,
+            ['titleError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
+          };
+        }
+        setError(__errors);
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
@@ -333,6 +354,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         delete error[`${name}Error`];
         setError(error);
       }
+      setGenericError(null);
     },
     [setField, error]
   );
@@ -348,6 +370,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         delete error['endDateError'];
         setError(error);
       }
+      setGenericError(null);
     },
     [setField, error]
   );
@@ -381,12 +404,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   /**
    * Renders root object
    */
-  console.log(error);
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
       </Paper>
+      {Boolean(error['coverError']) && <Typography color="error">{error['coverError']}</Typography>}
       <FormGroup className={classes.form}>
         <TextField
           required
@@ -653,6 +676,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
+        {genericError && (
+          <Box className={classes.genericError}>
+            <Alert variant="filled" severity="error">
+              {genericError}
+            </Alert>
+          </Box>
+        )}
         <Box className={classes.actions}>
           <LoadingButton
             loading={field.isSubmitting}
