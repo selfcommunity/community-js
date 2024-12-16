@@ -181,10 +181,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        console.log(_error);
-        if ('errorsError' in _error) {
+        if ('errorsError' in _error || !Object.keys(_error).length) {
           setGenericError(
             intl.formatMessage({
               id: 'ui.liveStreamForm.error.monthlyMinuteLimitReached',
@@ -326,8 +323,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
             loading={field.isSubmitting}
             disabled={
               !field.title ||
-              Object.keys(error).length !== 0 ||
-              Boolean(genericError) ||
+              field.isSubmitting ||
               field.title.length > LIVE_STREAM_TITLE_MAX_LENGTH ||
               field.description.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH
             }
