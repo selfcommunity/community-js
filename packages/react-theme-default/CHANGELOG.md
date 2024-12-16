@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.10...@selfcommunity/react-theme-default@0.4.4-alpha.11) (2024-12-16)
+
+
+### Bug Fixes
+
+* composer component style ([5a76bdb](https://github.com/selfcommunity/community-js/commit/5a76bdb3c265aa2d84d48978be4c267d2edc7478))
+
+
+
+
+
 ## [0.4.4-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.9...@selfcommunity/react-theme-default@0.4.4-alpha.10) (2024-12-10)
 
 
