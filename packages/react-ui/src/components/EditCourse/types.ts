@@ -2,6 +2,8 @@ export type CoursePage = 'lessons' | 'customize' | 'users' | 'options';
 
 export type TabContentType = '1' | '2' | '3' | '4';
 
+export type Status = 'draft' | 'published';
+
 export enum TabContentEnum {
   LESSONS = '1',
   CUSTOMIZE = '2',
@@ -14,9 +16,7 @@ export interface LessonRowInterface {
   name: string;
 }
 
-export interface SectionRowInterface {
-  id: number;
-  name: string;
+export interface SectionRowInterface extends LessonRowInterface {
   calendar: string;
   lessons: LessonRowInterface[];
 }

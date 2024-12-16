@@ -1,13 +1,17 @@
 import {Box, Chip, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, useCallback, useState} from 'react';
+import {Fragment, useCallback, useEffect, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
-import {getSection, LESSONS_DATA} from './data';
+import {checkSections, getSection, LESSONS_DATA} from './data';
 import SectionRow from './Lessons/SectionRow';
 import AddButton from './Lessons/AddButton';
 import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from './types';
 import Empty from './Lessons/Empty';
+import {useSnackbar} from 'notistack';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import Skeleton from './Lessons/Skeleton';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -32,8 +36,29 @@ export default function Lessons() {
   const [sections, setSections] = useState<SectionRowInterface[] | null>(null);
   const [lessons, setLessons] = useState<number>(0);
 
+  // HOOKS
+  const {enqueueSnackbar} = useSnackbar();
+
   // INTL
   const intl = useIntl();
+
+  // EFFECTS
+  useEffect(() => {
+    checkSections()
+      .then((data) => {
+        if (data) {
+          setSections(data);
+        }
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
+  }, []);
 
   // HANDLERS
   const handleDragEnd = useCallback(
@@ -72,10 +97,17 @@ export default function Lessons() {
     [setSections, setLessons]
   );
 
-  const handleAddSection = useCallback(async () => {
-    const newSection: SectionRowInterface = await getSection((sections?.[sections.length - 1].id || 0) + 1);
+  const handleAddSection = useCallback(() => {
+    getSection((sections?.[sections.length - 1]?.id || 0) + 1)
+      .then((newSection) => setSections((prevSections) => (prevSections ? [...prevSections, newSection] : [newSection])))
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
 
-    setSections((prevSections) => (prevSections ? [...prevSections, newSection] : [newSection]));
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
   }, [sections]);
 
   const handleDeleteSection = useCallback(
@@ -155,7 +187,9 @@ export default function Lessons() {
         />
       </Stack>
 
-      {(!sections || sections.length === 0) && <Empty handleAddSection={handleAddSection} />}
+      {!sections && <Skeleton />}
+
+      {sections?.length === 0 && <Empty handleAddSection={handleAddSection} />}
 
       {sections?.length > 0 && (
         <Fragment>

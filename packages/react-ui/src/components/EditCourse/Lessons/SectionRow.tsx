@@ -5,11 +5,14 @@ import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import LessonRow from './LessonRow';
 import AddButton from './AddButton';
-import {ActionLessonEnum, ActionLessonType, LessonRowInterface, SectionRowInterface} from '../types';
+import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from '../types';
 import MenuRow from './MenuRow';
 import {FormattedMessage} from 'react-intl';
 import {getLesson} from '../data';
 import FieldName from './FieldName';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
+import {enqueueSnackbar} from 'notistack';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -61,15 +64,24 @@ export default function SectionRow(props: SectionRowProps) {
     [section, handleUpdateSection]
   );
 
-  const handleAddLesson = useCallback(async () => {
-    const newLesson: LessonRowInterface = await getLesson((section.lessons[section.lessons.length - 1]?.id || 0) + 1);
+  const handleAddLesson = useCallback(() => {
+    getLesson((section.lessons[section.lessons.length - 1]?.id || 0) + 1)
+      .then((newLesson) => {
+        const tempRow: SectionRowInterface = {
+          ...section,
+          lessons: [...section.lessons, newLesson]
+        };
 
-    const tempRow: SectionRowInterface = {
-      ...section,
-      lessons: [...section.lessons, newLesson]
-    };
+        handleUpdateSection(tempRow, ActionLessonEnum.ADD);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
 
-    handleUpdateSection(tempRow, ActionLessonEnum.ADD);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
   }, [section, handleUpdateSection]);
 
   const handleDeleteLesson = useCallback(

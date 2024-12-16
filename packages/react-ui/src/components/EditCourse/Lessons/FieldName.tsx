@@ -1,8 +1,19 @@
 import {LoadingButton} from '@mui/lab';
-import {ButtonGroup, debounce, Icon, IconButton, Stack, TextField, Typography} from '@mui/material';
+import {debounce, Icon, IconButton, Stack, TextField, Typography} from '@mui/material';
 import {ChangeEvent, Dispatch, Fragment, SetStateAction, useCallback, useState} from 'react';
 import {setRowName} from '../data';
 import {LessonRowInterface} from '../types';
+import {PREFIX} from '../constants';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
+import {enqueueSnackbar} from 'notistack';
+import {FormattedMessage} from 'react-intl';
+
+const classes = {
+  editModeWrapper: `${PREFIX}-edit-mode-wrapper`,
+  editModeSaveButton: `${PREFIX}-edit-mode-save-button`,
+  editModeCloseButton: `${PREFIX}-edit-mode-close-button`
+};
 
 interface FieldNameProps<T> {
   row: T;
@@ -25,21 +36,31 @@ export default function FieldName<T extends LessonRowInterface>(props: FieldName
   }, 300);
 
   // HANDLERS
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    debounceSetData(e.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      debounceSetData(e.target.value);
+    },
+    [debounceSetData]
+  );
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     setLoading(true);
-    const response = await setRowName();
+    setRowName(rename)
+      .then(() => {
+        handleRenameRow(row.id, rename);
+        setRename(null);
+        setLoading(false);
+        setEditMode(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
 
-    if (response) {
-      handleRenameRow(row.id, rename);
-      setRename(null);
-      setLoading(false);
-      setEditMode(false);
-    }
-  }, [row, rename, setLoading, setLoading, setEditMode, handleRenameRow]);
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
+  }, [row, rename, setLoading, setEditMode, handleRenameRow]);
 
   const handleClose = useCallback(() => {
     setRename(null);
@@ -49,23 +70,23 @@ export default function FieldName<T extends LessonRowInterface>(props: FieldName
   return (
     <Fragment>
       {editMode ? (
-        <Stack
-          sx={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '5px'
-          }}>
+        <Stack className={classes.editModeWrapper}>
           <TextField type="text" variant="outlined" size="small" focused defaultValue={row.name} onChange={handleChange} />
 
-          <ButtonGroup variant="outlined">
-            <LoadingButton size="small" color="primary" variant="contained" onClick={handleSubmit} loading={loading} disabled={loading}>
-              <Icon>check</Icon>
-            </LoadingButton>
+          <LoadingButton
+            size="small"
+            color="primary"
+            variant="outlined"
+            onClick={handleSubmit}
+            loading={loading}
+            disabled={loading}
+            className={classes.editModeSaveButton}>
+            <Icon>check</Icon>
+          </LoadingButton>
 
-            <IconButton color="default" size="small" onClick={handleClose}>
-              <Icon>close</Icon>
-            </IconButton>
-          </ButtonGroup>
+          <IconButton color="default" size="small" onClick={handleClose} className={classes.editModeCloseButton}>
+            <Icon>close</Icon>
+          </IconButton>
         </Stack>
       ) : (
         <Typography variant="body1">{row.name}</Typography>

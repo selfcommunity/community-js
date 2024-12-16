@@ -6,8 +6,8 @@ import {LessonRowInterface} from '../types';
 import {useCallback, useState} from 'react';
 import MenuRow from './MenuRow';
 import {FormattedMessage} from 'react-intl';
-import SelectRow from './SelectRow';
 import FieldName from './FieldName';
+import ChangeLessonStatus from './ChangeLessonStatus';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -48,7 +48,7 @@ export default function LessonRow(props: LessonRowProps) {
       <TableCell />
       <TableCell className={classes.cellAlignRight}>
         <Stack className={classes.actionsWrapper}>
-          <SelectRow />
+          <ChangeLessonStatus />
 
           <MenuRow>
             <MenuItem>

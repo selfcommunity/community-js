@@ -22,7 +22,8 @@ const classes = {
 
 const Root = styled(Box, {
   name: PREFIX,
-  slot: 'Root'
+  slot: 'Root',
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface EditCourseProps {

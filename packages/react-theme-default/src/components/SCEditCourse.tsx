@@ -172,6 +172,24 @@ const Component = {
                 backgroundColor: theme.palette.grey[200]
               },
 
+              '& .SCEditCourse-edit-mode-wrapper': {
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '5px',
+
+                '& .SCEditCourse-edit-mode-save-button': {
+                  minWidth: 'unset',
+                  borderRadius: '5px',
+                  padding: '8px'
+                },
+
+                '& .SCEditCourse-edit-mode-close-button': {
+                  border: `1px solid ${theme.palette.action.active}`,
+                  borderRadius: '5px',
+                  padding: '8px'
+                }
+              },
+
               '& .SCEditCourse-actions-wrapper': {
                 display: 'inline-flex',
                 flexDirection: 'row',
@@ -180,15 +198,22 @@ const Component = {
 
                 [theme.breakpoints.up('md')]: {
                   gap: '22px'
-                }
-              },
+                },
 
-              '& .SCEditCourse-form-select': {
-                color: theme.palette.common.white,
-                backgroundColor: theme.palette.primary.main,
+                '& .SCEditCourse-change-lesson-status-published-wrapper': {
+                  color: theme.palette.common.white,
+                  backgroundColor: theme.palette.primary.main,
 
-                '& .MuiIcon-root': {
-                  color: theme.palette.common.white
+                  '& .MuiIcon-root': {
+                    color: theme.palette.common.white
+                  }
+                },
+
+                '& .SCEditCourse-change-lesson-status-icon-draft': {
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: 9999,
+                  backgroundColor: theme.palette.grey['600']
                 }
               },
 
@@ -201,7 +226,24 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: () => ({})
+    skeletonRoot: ({theme}) => ({
+      '& .SCEditCourse-lessons-sections-wrapper': {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: '9px',
+        padding: theme.spacing(2),
+        border: `1px solid ${theme.palette.grey[300]}`,
+        borderRadius: '5px'
+      },
+
+      '& .SCEditCourse-table-container': {
+        width: 'auto',
+        border: `1px solid ${theme.palette.grey[300]}`,
+        borderBottomLeftRadius: '5px',
+        borderBottomRightRadius: '5px'
+      }
+    })
   }
 };
 

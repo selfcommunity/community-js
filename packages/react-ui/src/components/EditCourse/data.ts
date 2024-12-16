@@ -1,4 +1,4 @@
-import {LessonRowInterface, SectionRowInterface} from './types';
+import {LessonRowInterface, SectionRowInterface, Status} from './types';
 
 export const EDIT_COURSE_DATA = {
   title: 'Accessori Moda'
@@ -25,20 +25,32 @@ function getLessonData(id: number) {
   };
 }
 
-export async function getSection(id: number): Promise<SectionRowInterface> {
+export async function getSection(id: number): Promise<SectionRowInterface | null> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(getSectionData(id)), 300);
   });
 }
 
-export async function getLesson(id: number): Promise<LessonRowInterface> {
+export async function getLesson(id: number): Promise<LessonRowInterface | null> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(getLessonData(id)), 300);
   });
 }
 
-export async function setRowName(): Promise<boolean> {
+export async function setRowName(name: string): Promise<string | null> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(true), 300);
+    setTimeout(() => resolve(name), 300);
+  });
+}
+
+export async function setStatus(status: Status): Promise<Status | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(status), 300);
+  });
+}
+
+export async function checkSections(): Promise<SectionRowInterface[] | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve([]), 300);
   });
 }
