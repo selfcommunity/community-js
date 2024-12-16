@@ -80,7 +80,7 @@ export default function TabContentComponent(props: TabComponentProps) {
   // CONSTS
   const users: SCUserType[] = useMemo(
     () => (tabValue === TabContentEnum.REQUESTS ? actionProps?.users : state.results),
-    [tabValue, actionProps, state]
+    [tabValue, actionProps?.users, state.results]
   );
 
   // EFFECTS
@@ -93,6 +93,12 @@ export default function TabContentComponent(props: TabComponentProps) {
       updatesParticipants.current && PubSub.unsubscribe(updatesParticipants.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (openDialog && state.next && state.initialized) {
+      handleNext();
+    }
+  }, [openDialog, state.next, state.initialized]);
 
   // HANDLERS
   /**
@@ -112,19 +118,19 @@ export default function TabContentComponent(props: TabComponentProps) {
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [state.next, state.isLoadingNext, state.initialized]);
+  }, [state.next, state.isLoadingNext, state.initialized, dispatch]);
 
   const handleToggleDialogOpen = useCallback(() => {
     setOpenDialog((prev) => !prev);
-  }, []);
+  }, [setOpenDialog]);
 
   const handleToggleMember = useCallback(() => {
     handleRefresh?.(TabContentEnum.PARTICIPANTS);
-  }, []);
+  }, [handleRefresh]);
 
   const handleInviteMember = useCallback(() => {
     handleRefresh?.(TabContentEnum.INVITED);
-  }, []);
+  }, [handleRefresh]);
 
   const getActionsComponent = useCallback(
     (userId: number) => {
@@ -200,7 +206,7 @@ export default function TabContentComponent(props: TabComponentProps) {
   return (
     <>
       <List>
-        {users?.map((user: SCUserType) => (
+        {users?.slice(0, state.visibleItems).map((user: SCUserType) => (
           <ListItem key={user.id}>
             <User elevation={0} user={user} {...userProps} actions={getActionsComponent(user.id)} />
           </ListItem>
