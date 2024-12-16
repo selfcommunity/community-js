@@ -4,12 +4,14 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .MuiDialog-paper': {
-				height: '100%',
+        [theme.breakpoints.down('md')]: {
+          height: '100%'
+        },
         position: 'relative',
         overflowX: 'hidden',
         '& > form': {
           zIndex: 0,
-					height: '100%',
+          height: '100%'
         },
         '& .MuiDialogTitle-root': {
           position: 'absolute',
