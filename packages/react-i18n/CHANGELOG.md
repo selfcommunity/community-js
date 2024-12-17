@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.6-alpha.0...@selfcommunity/react-i18n@0.7.6-alpha.1) (2024-12-13)
+
+
+### Bug Fixes
+
+* eventForm re-enable button on submit error ([42b3f34](https://github.com/selfcommunity/community-js/commit/42b3f34775bb873c67fdaeb0db3916827acc16ff))
+
+
+
+
+
+## [0.7.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.5...@selfcommunity/react-i18n@0.7.6-alpha.0) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.7.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.5-alpha.1...@selfcommunity/react-i18n@0.7.5) (2024-12-02)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
