@@ -375,21 +375,19 @@ export default function Events(inProps: EventsProps): JSX.Element {
             filters
           ) : !general ? (
             <>
-              {(events.length !== 0 || (events.length === 0 && showMyEvents)) && (
-                <Grid item>
-                  <EventsChipRoot
-                    color={showMyEvents ? 'secondary' : 'default'}
-                    variant={showMyEvents ? 'filled' : 'outlined'}
-                    label={<FormattedMessage id="ui.events.filterByCreatedByMe" defaultMessage="ui.events.filterByCreatedByMe" />}
-                    onClick={() => setShowMyEvents(!showMyEvents)}
-                    // @ts-expect-error this is needed to use showFollowed into SCEvents
-                    showFollowed={showMyEvents}
-                    deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
-                    onDelete={showMyEvents ? handleDeleteClick : null}
-                    disabled={loading}
-                  />
-                </Grid>
-              )}
+              <Grid item>
+                <EventsChipRoot
+                  color={showMyEvents ? 'secondary' : 'default'}
+                  variant={showMyEvents ? 'filled' : 'outlined'}
+                  label={<FormattedMessage id="ui.events.filterByCreatedByMe" defaultMessage="ui.events.filterByCreatedByMe" />}
+                  onClick={() => setShowMyEvents(!showMyEvents)}
+                  // @ts-expect-error this is needed to use showFollowed into SCEvents
+                  showFollowed={showMyEvents}
+                  deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
+                  onDelete={showMyEvents ? handleDeleteClick : null}
+                  disabled={loading}
+                />
+              </Grid>
               <Grid item>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
