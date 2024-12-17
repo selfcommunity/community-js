@@ -248,7 +248,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   /**
    * Fetches events list
    */
-  const fetchEvents = (search?: boolean) => {
+  const fetchEvents = () => {
     setLoading(true);
     return http
       .request({
@@ -258,7 +258,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
           ...endpointQueryParams,
           ...(general
             ? {
-                ...(search && {search: query}),
+                ...(query && {search: query}),
                 ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
                 ...(location !== SCEventLocationFilterType.ANY && {location}),
                 ...(showFollowed && {follows: showFollowed}),
@@ -289,9 +289,9 @@ export default function Events(inProps: EventsProps): JSX.Element {
     if (!contentAvailability && !authUserId) {
       return;
     } else {
-      query === '' && fetchEvents();
+      fetchEvents();
     }
-  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents, query]);
+  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents]);
 
   /**
    * Subscriber for pubsub callback
@@ -399,12 +399,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 />
               </Grid>
               <Grid item xs={12} md={2}>
-                <LocationEventsFilter
-                  value={location}
-                  autoHide={!loading && !events.length}
-                  disabled={loading || (!events.length && !location)}
-                  handleOnChange={handleOnChangeLocation}
-                />
+                <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
             </>
           ) : (
@@ -418,18 +413,18 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   label={<FormattedMessage id="ui.events.filterByName" defaultMessage="ui.events.filterByName" />}
                   variant="outlined"
                   onChange={handleOnChangeFilterName}
-                  disabled={loading || (!events.length && !query)}
+                  disabled={loading}
                   onKeyUp={(e) => {
                     e.preventDefault();
                     if (e.key === 'Enter') {
-                      fetchEvents(true);
+                      fetchEvents();
                     }
                   }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
                         {isMobile ? (
-                          <IconButton onClick={() => fetchEvents(true)} disabled={loading || (!events.length && !query)}>
+                          <IconButton onClick={() => fetchEvents()} disabled={loading}>
                             <Icon>search</Icon>
                           </IconButton>
                         ) : (
@@ -437,9 +432,9 @@ export default function Events(inProps: EventsProps): JSX.Element {
                             size="small"
                             variant="contained"
                             color="secondary"
-                            onClick={() => fetchEvents(true)}
+                            onClick={() => fetchEvents()}
                             endIcon={<Icon>search</Icon>}
-                            disabled={loading || (!events.length && !query)}
+                            disabled={loading}
                           />
                         )}
                       </InputAdornment>
@@ -453,7 +448,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
-                    disabled={showPastEvents || loading || (!events.length && dateSearch === SCEventDateFilterType.ANY)}
+                    disabled={showPastEvents || loading}
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
@@ -474,7 +469,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 </FormControl>
               </Grid>
               <Grid item xs={12} md={2}>
-                <LocationEventsFilter value={location} disabled={loading || (!events.length && !location)} handleOnChange={handleOnChangeLocation} />
+                <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
               {authUserId && (
                 <Grid item>
@@ -487,7 +482,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     showFollowed={showFollowed}
                     deleteIcon={showFollowed ? <Icon>close</Icon> : null}
                     onDelete={showFollowed ? handleDeleteClick : null}
-                    disabled={loading || (!events.length && !showFollowed)}
+                    disabled={loading}
                   />
                 </Grid>
               )}
