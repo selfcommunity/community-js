@@ -384,7 +384,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   // @ts-expect-error this is needed to use showFollowed into SCEvents
                   showFollowed={showMyEvents}
                   deleteIcon={showMyEvents ? <Icon>close</Icon> : null}
-                  onDelete={showMyEvents ? handleDeleteClick : null}
+                  onDelete={showMyEvents ? () => setShowMyEvents(false) : null}
                   disabled={loading}
                 />
               </Grid>
