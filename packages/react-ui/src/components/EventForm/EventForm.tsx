@@ -332,10 +332,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ['coverError']: <FormattedMessage id="ui.ui.eventForm.cover.error" defaultMessage="ui.ui.eventForm.cover.error" />
           };
         }
-        if ('titleError' in _error) {
+        if ('nameError' in _error || ('nonFieldErrorsError' in _error && _error['nonFieldErrorsError'].error === 'unique')) {
           __errors = {
             ...__errors,
-            ['titleError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
+            ['nameError']: <FormattedMessage id="ui.eventForm.name.error.unique" defaultMessage="ui.eventForm.name.error.unique" />
           };
         }
         setError(__errors);
