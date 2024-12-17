@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.13...@selfcommunity/react-ui@0.10.4-alpha.14) (2024-12-17)
+
+
+### Bug Fixes
+
+* eventForm catch errors ([df1eed3](https://github.com/selfcommunity/community-js/commit/df1eed3e89bdca57813de4de90bbb47376cfb1dc))
+* events search/filters ([4461c81](https://github.com/selfcommunity/community-js/commit/4461c817f010d2814e2b0995693f06dd238e79a3))
+
+
+
+
+
 ## [0.10.4-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.12...@selfcommunity/react-ui@0.10.4-alpha.13) (2024-12-13)
 
 
