@@ -39,6 +39,9 @@ export const GROUPS_ROUTE_NAME = 'groups';
 export const GROUPS_SUBSCRIBED_ROUTE_NAME = 'groups_subscribed';
 export const EVENT_ROUTE_NAME = 'event';
 export const EVENTS_ROUTE_NAME = 'events';
+export const COURSE_ROUTE_NAME = 'course';
+export const COURSES_ROUTE_NAME = 'courses';
+export const COURSES_SUBSCRIBED_ROUTE_NAME = 'courses_subscribed';
 export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
 export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
 export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
@@ -86,4 +89,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [EVENT_ROUTE_NAME]: '/event/:id/:slug/',
   [EVENTS_SUBSCRIBED_ROUTE_NAME]: '/events/subscribed/',
   [EVENTS_HIGHLIGHT_ROUTE_NAME]: '/events/highlight/',
+  [COURSE_ROUTE_NAME]: '/course/:id/:slug/',
+  [COURSES_ROUTE_NAME]: '/courses/',
+  [COURSES_SUBSCRIBED_ROUTE_NAME]: '/courses/subscribed/',
 };

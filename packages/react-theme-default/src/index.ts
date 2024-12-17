@@ -52,6 +52,13 @@ import SCCommentsObject from './components/SCCommentsObject';
 import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
+import SCCourse from './components/SCCourse';
+import SCCourses from './components/SCCourses';
+import SCCourseForm from './components/SCCourseForm';
+import SCCourseFormDialog from './components/SCCourseFormDialog';
+import SCCourseInfoDetails from './components/SCCourseInfoDetails';
+import SCCourseParticipantsButton from './components/SCCourseParticipantsButton';
+import SCCreateCourseButton from './components/SCCreateCourseButton';
 import SCCreateEventButton from './components/SCCreateEventButton';
 import SCCreateEventWidget from './components/SCCreateEventWidget';
 import SCCreateGroupButton from './components/SCCreateGroupButton';
@@ -105,6 +112,9 @@ import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
+import SCLessonComponent from './components/SCLessonComponent';
+import SCLessonObject from './components/SCLessonObject';
+import SCLessonReleaseMenu from './components/SCLessonReleaseMenu';
 import SCLightbox from './components/SCLightbox';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
 import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
@@ -295,6 +305,12 @@ const theme = {
     SCComposer,
     SCConsentSolution,
     SCContributionActionsMenu,
+    SCCourse,
+    SCCourses,
+    SCCourseForm,
+    SCCourseFormDialog,
+    SCCourseParticipantsButton,
+    SCCourseInfoDetails,
     SCCreateGroupButton,
     SCCustomAdv,
     SCCustomSnackMessage,
@@ -332,6 +348,9 @@ const theme = {
     SCIncubatorSuggestionWidget,
     SCInlineComposerWidget,
     SCLanguageSwitcher,
+    SCLessonComponent,
+    SCLessonObject,
+    SCLessonReleaseMenu,
     SCLightbox,
     SCLoyaltyProgramDetailTemplate,
     SCLoyaltyProgramWidget,
@@ -387,6 +406,7 @@ const theme = {
     SCTagAutocomplete,
     SCEventForm,
     SCEventFormDialog,
+    SCCreateCourseButton,
     SCCreateEventButton,
     SCEventLocationWidget,
     SCEvent,

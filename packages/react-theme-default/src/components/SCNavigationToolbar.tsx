@@ -15,19 +15,20 @@ const Component = {
         flexGrow: 1,
         textAlign: 'center',
         alignSelf: 'end',
-        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore, & .SCNavigationToolbar-groups, & .SCNavigationToolbar-events': {
-          paddingTop: 12,
-          paddingLeft: theme.spacing(1),
-          paddingRight: theme.spacing(1),
-          paddingBottom: 11,
-          margin: theme.spacing(0, 1),
-          borderRadius: 0,
-          borderBottom: `2px solid transparent`,
-          '&.SCNavigationToolbar-active, &:hover': {
-            color: theme.palette.secondary.main,
-            borderBottom: `2px solid ${theme.palette.secondary.main}`
+        '& .SCNavigationToolbar-home, & .SCNavigationToolbar-explore, & .SCNavigationToolbar-groups, & .SCNavigationToolbar-events, & .SCNavigationToolbar-courses':
+          {
+            paddingTop: 12,
+            paddingLeft: theme.spacing(1),
+            paddingRight: theme.spacing(1),
+            paddingBottom: 11,
+            margin: theme.spacing(0, 1),
+            borderRadius: 0,
+            borderBottom: `2px solid transparent`,
+            '&.SCNavigationToolbar-active, &:hover': {
+              color: theme.palette.secondary.main,
+              borderBottom: `2px solid ${theme.palette.secondary.main}`
+            }
           }
-        }
       },
       '& .SCNavigationToolbar-search': {
         flexGrow: 1,

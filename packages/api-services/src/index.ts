@@ -52,6 +52,7 @@ import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
 import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
+import CourseService, {CourseApiClient, CourseApiClientInterface} from './services/course';
 
 /**
  * Types
@@ -117,7 +118,11 @@ import {
   EventFeedParams,
   EventSearchParams,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseFeedParams,
+  CourseRelatedParams,
+  CourseSearchParams
 } from './types';
 
 /**
@@ -295,5 +300,12 @@ export {
   OnBoardingApiClientInterface,
   OnBoardingApiClient,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseRelatedParams,
+  CourseFeedParams,
+  CourseService,
+  CourseApiClientInterface,
+  CourseApiClient
 };

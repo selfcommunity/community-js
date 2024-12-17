@@ -23,6 +23,14 @@ export const getCategoriesObjectCacheKey = () => `${CATEGORIES_OBJECT_CACHE_PREF
 export const CATEGORY_OBJECT_CACHE_PREFIX_KEY = '_ca_';
 export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** COURSE OBJECT **/
+export const COURSE_OBJECT_CACHE_PREFIX_KEY = '_crs_';
+export const getCourseObjectCacheKey = (id) => `${COURSE_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** COURSES OBJECT **/
+export const COURSES_OBJECT_CACHE_PREFIX_KEY = '_crss_';
+export const getCoursesObjectCacheKey = () => `${COURSES_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** EVENT OBJECT **/
 export const EVENT_OBJECT_CACHE_PREFIX_KEY = '_evt_';
 export const getEventObjectCacheKey = (id) => `${EVENT_OBJECT_CACHE_PREFIX_KEY}${id}`;

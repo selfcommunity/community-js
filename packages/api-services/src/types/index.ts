@@ -34,6 +34,7 @@ import {ReactionParams} from './reaction';
 import {GroupCreateParams, GroupFeedParams} from './group';
 import {EventCreateParams, EventFeedParams, EventRelatedParams, EventSearchParams} from './event';
 import {StartStepParams, OnBoardingStep} from './onBoarding';
+import {CourseCreateParams, CourseFeedParams, CourseRelatedParams, CourseSearchParams} from './course';
 
 export {
   AccountCreateParams,
@@ -99,5 +100,9 @@ export {
   EventRelatedParams,
   EventSearchParams,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseRelatedParams,
+  CourseFeedParams
 };

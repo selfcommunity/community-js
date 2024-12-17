@@ -119,7 +119,8 @@ import {
   type SCContributionStatus,
   type SCGroupType,
   type SCEventType,
-  type SCStepType
+  type SCStepType,
+  type SCCourseType
 } from './types';
 
 /**
@@ -164,7 +165,15 @@ import {
   SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  SCCourseLocationFilterType,
+  SCCourseLocationType,
+  SCCourseRecurrenceType,
+  SCCoursePrivacyType,
+  SCCourseDateFilterType,
+  SCCourseSubscriptionStatusType,
+  SCCourseStatusType,
+  SCCourseTypologyType
 } from './types';
 
 /**
@@ -209,7 +218,15 @@ export {
   SCEventDateFilterType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  SCCoursePrivacyType,
+  SCCourseSubscriptionStatusType,
+  SCCourseStatusType,
+  SCCourseRecurrenceType,
+  SCCourseLocationType,
+  SCCourseLocationFilterType,
+  SCCourseDateFilterType,
+  SCCourseTypologyType
 };
 export {
   type SCBannerType,
@@ -329,5 +346,6 @@ export {
   type SCSuggestionType,
   type SCGroupType,
   type SCEventType,
-  type SCStepType
+  type SCStepType,
+  type SCCourseType
 };

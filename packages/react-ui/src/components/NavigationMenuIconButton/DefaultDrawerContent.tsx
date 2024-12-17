@@ -82,6 +82,15 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
   );
+  const coursesEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_COURSES_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
+    [preferences, features]
+  );
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
@@ -129,6 +138,23 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
             />
           </ListItemButton>
         </ListItem>
+        {coursesEnabled && scUserContext.user && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>courses</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.courses"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.courses"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
         {groupsEnabled && scUserContext.user && (
           <ListItem disablePadding>
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>

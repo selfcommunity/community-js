@@ -132,6 +132,17 @@ import {
   SCEventLocationFilterType,
   SCEventSubscriptionStatusType
 } from './event';
+import {
+  type SCCourseType,
+  SCCoursePrivacyType,
+  SCCourseRecurrenceType,
+  SCCourseLocationType,
+  SCCourseDateFilterType,
+  SCCourseLocationFilterType,
+  SCCourseSubscriptionStatusType,
+  SCCourseStatusType,
+  SCCourseTypologyType
+} from './course';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
 /**
  * Exports all types
@@ -296,5 +307,14 @@ export {
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  type SCCourseType,
+  SCCourseLocationType,
+  SCCoursePrivacyType,
+  SCCourseSubscriptionStatusType,
+  SCCourseStatusType,
+  SCCourseRecurrenceType,
+  SCCourseDateFilterType,
+  SCCourseLocationFilterType,
+  SCCourseTypologyType
 };

@@ -137,6 +137,10 @@ export enum SCPreferenceName {
   EVENTS_VISIBILITY_ENABLED = 'events_visibility_enabled',
   EVENTS_PRIVATE_ENABLED = 'events_private_enabled',
   EVENTS_ONLY_STAFF_ENABLED = 'events_only_staff_enabled',
+  COURSES_ENABLED = 'courses_enabled',
+  COURSES_VISIBILITY_ENABLED = 'courses_visibility_enabled',
+  COURSES_PRIVATE_ENABLED = 'courses_private_enabled',
+  COURSES_ONLY_STAFF_ENABLED = 'courses_only_staff_enabled',
   ONBOARDING_ENABLED = 'onboarding_enabled',
   ONBOARDING_HIDDEN = 'onboarding_hidden'
 }

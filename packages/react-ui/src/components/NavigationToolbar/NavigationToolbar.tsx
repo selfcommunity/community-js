@@ -35,6 +35,7 @@ const classes = {
   explore: `${PREFIX}-explore`,
   events: `${PREFIX}-events`,
   groups: `${PREFIX}-groups`,
+  courses: `${PREFIX}-courses`,
   search: `${PREFIX}-search`,
   composer: `${PREFIX}-composer`,
   profile: `${PREFIX}-profile`,
@@ -218,6 +219,15 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
   );
+  const coursesEnabled = useMemo(
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_COURSES_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
+  );
 
   const showComposer = useMemo(() => {
     return (
@@ -256,16 +266,29 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <Icon>home</Icon>
         </IconButton>
       )}
-      {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
-        (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (
-          <IconButton
-            className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}
-            aria-label="Explore"
-            to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
-            component={Link}>
-            <Icon>explore</Icon>
-          </IconButton>
-        )}
+      {/*{preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&*/}
+      {/*  (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (*/}
+      {/*    <IconButton*/}
+      {/*      className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}*/}
+      {/*      aria-label="Explore"*/}
+      {/*      to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}*/}
+      {/*      component={Link}>*/}
+      {/*      <Icon>explore</Icon>*/}
+      {/*    </IconButton>*/}
+      {/*  )}*/}
+      {coursesEnabled && scUserContext.user && (
+        <IconButton
+          className={classNames(classes.courses, {
+            [classes.active]:
+              value.startsWith(scRoutingContext.url(SCRoutes.COURSES_SUBSCRIBED_ROUTE_NAME, {})) ||
+              value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
+          })}
+          aria-label="Courses"
+          to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
+          component={Link}>
+          <Icon>courses</Icon>
+        </IconButton>
+      )}
       {groupsEnabled && scUserContext.user && (
         <IconButton
           className={classNames(classes.groups, {
