@@ -374,17 +374,19 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
                 <Icon>notifications_active</Icon>
               </Badge>
             </IconButton>
-            <NotificationMenu
-              className={classes.notificationsMenu}
-              id="notification-menu"
-              anchorEl={anchorNotification}
-              open={Boolean(anchorNotification)}
-              onClose={handleCloseNotificationMenu}
-              onClick={handleCloseNotificationMenu}
-              transformOrigin={{horizontal: 'right', vertical: 'top'}}
-              anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-              {...NotificationMenuProps}
-            />
+            {Boolean(anchorNotification) && (
+              <NotificationMenu
+                className={classes.notificationsMenu}
+                id="notification-menu"
+                anchorEl={anchorNotification}
+                open
+                onClose={handleCloseNotificationMenu}
+                onClick={handleCloseNotificationMenu}
+                transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                {...NotificationMenuProps}
+              />
+            )}
           </>
           {privateMessagingEnabled && (
             <IconButton
@@ -400,7 +402,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
             </IconButton>
           )}
           {endActions}
-          <NavigationSettingsIconButtonComponent className={classes.settings}></NavigationSettingsIconButtonComponent>
+          <NavigationSettingsIconButtonComponent className={classes.settings} />
         </>
       ) : (
         <>

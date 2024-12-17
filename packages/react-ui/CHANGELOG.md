@@ -3,6 +3,204 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.12...@selfcommunity/react-ui@0.10.4-alpha.13) (2024-12-13)
+
+
+### Bug Fixes
+
+* fixed next call into EventMembersWidget ([d7186f1](https://github.com/selfcommunity/community-js/commit/d7186f1d54bb396d578288cdc172494e57f196a8))
+
+
+
+
+
+## [0.10.4-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.11...@selfcommunity/react-ui@0.10.4-alpha.12) (2024-12-13)
+
+
+### Bug Fixes
+
+* eventForm re-enable button on submit error ([42b3f34](https://github.com/selfcommunity/community-js/commit/42b3f34775bb873c67fdaeb0db3916827acc16ff))
+
+
+
+
+
+## [0.10.4-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.10...@selfcommunity/react-ui@0.10.4-alpha.11) (2024-12-13)
+
+
+### Bug Fixes
+
+* eventForm re-enable button on submit error ([3788855](https://github.com/selfcommunity/community-js/commit/37888551c429ca72d8f19aec6e27eb9b19537101))
+
+
+
+
+
+## [0.10.4-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.9...@selfcommunity/react-ui@0.10.4-alpha.10) (2024-12-11)
+
+
+### Bug Fixes
+
+* DefaultDrawerSkeleton ([7f1d1f5](https://github.com/selfcommunity/community-js/commit/7f1d1f59982be2ee9da0e6f7ecd9607a9f785c8c))
+
+
+
+
+
+## [0.10.4-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.8...@selfcommunity/react-ui@0.10.4-alpha.9) (2024-12-10)
+
+
+### Bug Fixes
+
+* fix composer iOS ([3ce213a](https://github.com/selfcommunity/community-js/commit/3ce213af636e92e1d62b726b5f32f277dfb8b1f6))
+* optimization performance feed ([bf0a32f](https://github.com/selfcommunity/community-js/commit/bf0a32f1cac8827385e634168acdd2f9bb359f60))
+
+
+
+
+
+## [0.10.4-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.7...@selfcommunity/react-ui@0.10.4-alpha.8) (2024-12-09)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([e620e37](https://github.com/selfcommunity/community-js/commit/e620e377df8396e21bd4f7f362507abccd1f3a28))
+
+
+
+
+
+## [0.10.4-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.6...@selfcommunity/react-ui@0.10.4-alpha.7) (2024-12-09)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([7e114a3](https://github.com/selfcommunity/community-js/commit/7e114a3df04695e5b2d3dc2bc31a746921e8278b))
+
+
+
+
+
+## [0.10.4-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.5...@selfcommunity/react-ui@0.10.4-alpha.6) (2024-12-09)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([99c16c4](https://github.com/selfcommunity/community-js/commit/99c16c4bea57ca24cfdf566954e1cee7b3ac71b4))
+
+
+
+
+
+## [0.10.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.4...@selfcommunity/react-ui@0.10.4-alpha.5) (2024-12-09)
+
+
+### Bug Fixes
+
+* avoid autosubscribe to event when get info event ([bb0621c](https://github.com/selfcommunity/community-js/commit/bb0621c7513bbe187dd560af71a0ab19ba474780))
+
+
+
+
+
+## [0.10.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.3...@selfcommunity/react-ui@0.10.4-alpha.4) (2024-12-09)
+
+
+### Bug Fixes
+
+* avoid autosubscribe to event when get going participants ([9764b36](https://github.com/selfcommunity/community-js/commit/9764b36069939232dbb698e7c53c9a056731b7fb))
+
+
+
+
+
+## [0.10.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.2...@selfcommunity/react-ui@0.10.4-alpha.3) (2024-12-09)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([df3e707](https://github.com/selfcommunity/community-js/commit/df3e707996c354c784dfd653c40eb4a56654a8f9))
+
+
+
+
+
+## [0.10.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.1...@selfcommunity/react-ui@0.10.4-alpha.2) (2024-12-05)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([727f290](https://github.com/selfcommunity/community-js/commit/727f290ea741df828277687f7d0ecae0144c8406))
+
+
+
+
+
+## [0.10.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.0...@selfcommunity/react-ui@0.10.4-alpha.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([3e69b91](https://github.com/selfcommunity/community-js/commit/3e69b9197a3e07fb9ae779ad34e18ba207bf1c98))
+
+
+
+
+
+## [0.10.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.3...@selfcommunity/react-ui@0.10.4-alpha.0) (2024-12-02)
+
+
+### Bug Fixes
+
+* lap menu only on mobile view ([957b460](https://github.com/selfcommunity/community-js/commit/957b46069a233dbb84fadc0489178db61a9162ff))
+
+
+
+
+
+## [0.10.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.3-alpha.1...@selfcommunity/react-ui@0.10.3) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.3-alpha.0...@selfcommunity/react-ui@0.10.3-alpha.1) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2...@selfcommunity/react-ui@0.10.3-alpha.0) (2024-12-02)
+
+
+### Bug Fixes
+
+* anonymous events ([483658b](https://github.com/selfcommunity/community-js/commit/483658b59a2eb44bd0f6304cbc3d549c325fa0ec))
+
+
+
+
+
+## [0.10.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.22...@selfcommunity/react-ui@0.10.2) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.2-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.21...@selfcommunity/react-ui@0.10.2-alpha.22) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [0.10.2-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.2-alpha.20...@selfcommunity/react-ui@0.10.2-alpha.21) (2024-11-29)
 
 

@@ -8,3 +8,6 @@ export enum SCLessonActionsType {
   LESSONS = 'lessons',
   EDIT = 'edit'
 }
+export type TypeOfCourse = 'autodidact' | 'calendar' | 'scheduled';
+
+export type StatusCourse = 'draft' | 'published' | 'new';

@@ -18,6 +18,7 @@ import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 import TabContentComponent from './TabContentComponent';
 import {TabContentEnum, TabContentType} from './types';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -176,7 +177,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [participants.isLoadingNext, participants.initialized, scEvent, dispatchParticipants, setParticipantsCount]);
+  }, [participants.isLoadingNext, participants.initialized, scEvent, endpointQueryParams, dispatchParticipants, setParticipantsCount]);
 
   const _initInvited = useCallback(() => {
     if (!invited.initialized && !invited.isLoadingNext && hasAllow) {
@@ -192,7 +193,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [invited.isLoadingNext, invited.initialized, scEvent, dispatchInvited, setInvitedCount]);
+  }, [invited.isLoadingNext, invited.initialized, scEvent, hasAllow, endpointQueryParams, dispatchInvited, setInvitedCount]);
 
   const _initRequests = useCallback(() => {
     if (!requests.initialized && !requests.isLoadingNext && hasAllow) {
@@ -209,7 +210,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [requests.isLoadingNext, requests.initialized, scEvent, dispatchRequests, setRequestsCount, setRequestsUsers]);
+  }, [requests.isLoadingNext, requests.initialized, scEvent, hasAllow, endpointQueryParams, dispatchRequests, setRequestsCount, setRequestsUsers]);
 
   // EFFECTS
   useEffect(() => {
@@ -232,7 +233,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, scEvent, refresh]);
+  }, [scUserContext.user, scEvent, refresh, _initParticipants, _initInvited, _initRequests]);
 
   useEffect(() => {
     if (participants.initialized && scEvent && Boolean((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) {
@@ -240,21 +241,32 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
       dispatchRequests({type: actionWidgetTypes.RESET, payload: {}});
       dispatchInvited({type: actionWidgetTypes.RESET, payload: {}});
     }
-  }, [participants.initialized, scEvent, eventId, event]);
+  }, [participants.initialized, scEvent, eventId, event, dispatchParticipants, dispatchInvited, dispatchRequests]);
 
   // HANDLERS
-  const handleTabChange = useCallback((_evt: SyntheticEvent, newTabValue: TabContentType) => {
-    setTabValue(newTabValue);
-  }, []);
+  const handleTabChange = useCallback(
+    (_evt: SyntheticEvent, newTabValue: TabContentType) => {
+      setTabValue(newTabValue);
+    },
+    [setTabValue]
+  );
 
-  const handleRefresh = useCallback((_tabValue: TabContentType) => {
-    if (_tabValue === TabContentEnum.PARTICIPANTS) {
-      dispatchParticipants({type: actionWidgetTypes.RESET});
-    } else if (_tabValue === TabContentEnum.INVITED) {
-      dispatchInvited({type: actionWidgetTypes.RESET});
-    }
-    setRefresh(_tabValue);
-  }, []);
+  const handleRefresh = useCallback(
+    (_tabValue: TabContentType) => {
+      if (_tabValue === TabContentEnum.PARTICIPANTS) {
+        dispatchParticipants({type: actionWidgetTypes.RESET});
+      } else if (_tabValue === TabContentEnum.INVITED) {
+        dispatchInvited({type: actionWidgetTypes.RESET});
+      }
+
+      setRefresh(_tabValue);
+    },
+    [dispatchParticipants, dispatchInvited, setRefresh]
+  );
+
+  if (!scUserContext.user) {
+    return <HiddenPlaceholder />;
+  }
 
   if (
     !scEvent ||

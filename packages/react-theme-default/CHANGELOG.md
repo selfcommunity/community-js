@@ -3,6 +3,154 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.9...@selfcommunity/react-theme-default@0.4.4-alpha.10) (2024-12-10)
+
+
+### Bug Fixes
+
+* feedObject tag ([f5c029b](https://github.com/selfcommunity/community-js/commit/f5c029bf076de0cc9c5ba3bd431235e8ebf8d851))
+
+
+
+
+
+## [0.4.4-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.8...@selfcommunity/react-theme-default@0.4.4-alpha.9) (2024-12-10)
+
+
+### Bug Fixes
+
+* fix composer iOS ([3ce213a](https://github.com/selfcommunity/community-js/commit/3ce213af636e92e1d62b726b5f32f277dfb8b1f6))
+
+
+
+
+
+## [0.4.4-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.7...@selfcommunity/react-theme-default@0.4.4-alpha.8) (2024-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.6...@selfcommunity/react-theme-default@0.4.4-alpha.7) (2024-12-09)
+
+
+### Bug Fixes
+
+* disable scroll backdrop composer ([7e114a3](https://github.com/selfcommunity/community-js/commit/7e114a3df04695e5b2d3dc2bc31a746921e8278b))
+
+
+
+
+
+## [0.4.4-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.5...@selfcommunity/react-theme-default@0.4.4-alpha.6) (2024-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.4...@selfcommunity/react-theme-default@0.4.4-alpha.5) (2024-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.3...@selfcommunity/react-theme-default@0.4.4-alpha.4) (2024-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.2...@selfcommunity/react-theme-default@0.4.4-alpha.3) (2024-12-09)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.1...@selfcommunity/react-theme-default@0.4.4-alpha.2) (2024-12-05)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.0...@selfcommunity/react-theme-default@0.4.4-alpha.1) (2024-12-03)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.3...@selfcommunity/react-theme-default@0.4.4-alpha.0) (2024-12-02)
+
+
+### Bug Fixes
+
+* lap menu only on mobile view ([957b460](https://github.com/selfcommunity/community-js/commit/957b46069a233dbb84fadc0489178db61a9162ff))
+
+
+
+
+
+## [0.4.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.3-alpha.1...@selfcommunity/react-theme-default@0.4.3) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.3-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.3-alpha.0...@selfcommunity/react-theme-default@0.4.3-alpha.1) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2...@selfcommunity/react-theme-default@0.4.3-alpha.0) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.26...@selfcommunity/react-theme-default@0.4.2) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.2-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.25...@selfcommunity/react-theme-default@0.4.2-alpha.26) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [0.4.2-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.24...@selfcommunity/react-theme-default@0.4.2-alpha.25) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.4.2-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.2-alpha.23...@selfcommunity/react-theme-default@0.4.2-alpha.24) (2024-11-29)
 
 

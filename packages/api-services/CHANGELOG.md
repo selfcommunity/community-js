@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.5...@selfcommunity/api-services@0.6.6-alpha.0) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.6.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.5-alpha.1...@selfcommunity/api-services@0.6.5) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.6.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.5-alpha.0...@selfcommunity/api-services@0.6.5-alpha.1) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.6.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.4...@selfcommunity/api-services@0.6.5-alpha.0) (2024-12-02)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.6.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.4-alpha.1...@selfcommunity/api-services@0.6.4) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.6.4-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.4-alpha.0...@selfcommunity/api-services@0.6.4-alpha.1) (2024-11-29)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.6.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.3...@selfcommunity/api-services@0.6.4-alpha.0) (2024-11-13)
 
 **Note:** Version bump only for package @selfcommunity/api-services

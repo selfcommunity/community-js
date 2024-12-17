@@ -1,6 +1,4 @@
-import {Box, CardActions} from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import {styled} from '@mui/material/styles';
+import {Box, CardActions, Skeleton, styled} from '@mui/material';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
 import {SCEventTemplateType} from '../../types/event';
@@ -20,6 +18,7 @@ const Root = styled(Widget, {
   slot: 'SkeletonRoot',
   overridesResolver: (_props, styles) => styles.skeletonRoot
 })(() => ({}));
+
 export default function MyEventsWidgetSkeleton() {
   return (
     <Root className={classes.root}>

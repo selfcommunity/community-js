@@ -69,6 +69,7 @@ import SCDefaultHeaderContent from './components/SCDefaultHeaderContent';
 import SCDefaultDrawerContent from './components/SCDefaultDrawerContent';
 import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
+import SCEditCourse from './components/SCEditCourse';
 import SCEmojiPicker from './components/SCEmojiPicker';
 import SCEvent from './components/SCEvent';
 import SCEventActionsMenu from './components/SCEventActionsMenu';
@@ -319,6 +320,7 @@ const theme = {
     SCDefaultDrawerContent,
     SCEditGroupButton,
     SCEditor,
+    SCEditCourse,
     SCEmojiPicker,
     SCExploreFeedTemplate,
     SCFeed,
