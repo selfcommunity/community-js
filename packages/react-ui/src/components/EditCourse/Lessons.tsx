@@ -12,6 +12,7 @@ import {useSnackbar} from 'notistack';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Skeleton from './Lessons/Skeleton';
+import {SCCourseType} from '@selfcommunity/types';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -31,7 +32,14 @@ const classes = {
   cellAlignCenter: `${PREFIX}-cell-align-center`
 };
 
-export default function Lessons() {
+interface LessonsProps {
+  course: SCCourseType;
+}
+
+export default function Lessons(props: LessonsProps) {
+  // PROPS
+  const {course} = props;
+
   // STATES
   const [sections, setSections] = useState<SectionRowInterface[] | null>(null);
   const [lessons, setLessons] = useState<number>(0);
@@ -253,6 +261,7 @@ export default function Lessons() {
                           {(innerProvider) => (
                             <SectionRow
                               key={i}
+                              course={course}
                               provider={innerProvider}
                               section={section}
                               handleUpdateSection={handleUpdateSection}

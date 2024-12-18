@@ -223,6 +223,23 @@ const Component = {
               }
             }
           }
+        },
+
+        '& .SCEditCourse-options-wrapper': {
+          gap: theme.spacing(5),
+          maxWidth: '600px',
+          margin: 'auto'
+        },
+
+        '& .SCEditCourse-options-divider': {
+          marginTop: '21px',
+          marginBottom: theme.spacing(3)
+        },
+
+        '& .SCEditCourse-options-button-wrapper': {
+          alignItems: 'flex-end',
+          maxWidth: '600px',
+          margin: 'auto'
         }
       }
     }),

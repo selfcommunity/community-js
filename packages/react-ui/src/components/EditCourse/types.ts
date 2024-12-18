@@ -17,7 +17,6 @@ export interface LessonRowInterface {
 }
 
 export interface SectionRowInterface extends LessonRowInterface {
-  calendar: string;
   lessons: LessonRowInterface[];
 }
 
@@ -26,4 +25,10 @@ export type ActionLessonType = 'add' | 'delete';
 export enum ActionLessonEnum {
   ADD = 'add',
   DELETE = 'delete'
+}
+
+export interface OptionsData {
+  options: boolean;
+  notifications: boolean;
+  permissions: boolean;
 }
