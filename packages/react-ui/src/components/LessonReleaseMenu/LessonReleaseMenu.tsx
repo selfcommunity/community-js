@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -7,8 +7,6 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  FormLabel,
-  Grid,
   Icon,
   IconButton,
   InputAdornment,

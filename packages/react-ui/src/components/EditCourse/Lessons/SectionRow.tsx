@@ -13,6 +13,8 @@ import FieldName from './FieldName';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
 import {useSnackbar} from 'notistack';
+import LessonReleaseMenu from '../../LessonReleaseMenu';
+import {SCCourseType} from '@selfcommunity/types';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -26,6 +28,7 @@ const classes = {
 };
 
 interface SectionRowProps {
+  course: SCCourseType;
   provider: DraggableProvided;
   section: SectionRowInterface;
   handleUpdateSection: (section: SectionRowInterface, lesson?: ActionLessonType) => void;
@@ -35,7 +38,7 @@ interface SectionRowProps {
 
 export default function SectionRow(props: SectionRowProps) {
   // PROPS
-  const {provider, section, handleUpdateSection, handleDeleteSection, handleRenameSection} = props;
+  const {course, provider, section, handleUpdateSection, handleDeleteSection, handleRenameSection} = props;
 
   // STATES
   const [open, setOpen] = useState(true);
@@ -149,7 +152,9 @@ export default function SectionRow(props: SectionRowProps) {
         <TableCell>
           <FieldName row={section} handleRenameRow={handleRenameSection} editMode={editMode} setEditMode={setEditMode} />
         </TableCell>
-        <TableCell className={classes.cellAlignCenter}>{section.calendar}</TableCell>
+        <TableCell className={classes.cellAlignCenter}>
+          <LessonReleaseMenu course={course} />
+        </TableCell>
         <TableCell className={classes.cellAlignRight}>
           <Stack className={classes.actionsWrapper}>
             <AddButton label="ui.editCourse.table.lesson" handleAddRow={handleAddLesson} color="primary" variant="outlined" />

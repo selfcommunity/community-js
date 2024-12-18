@@ -17,7 +17,6 @@ export interface LessonRowInterface {
 }
 
 export interface SectionRowInterface extends LessonRowInterface {
-  calendar: string;
   lessons: LessonRowInterface[];
 }
 

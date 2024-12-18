@@ -1,6 +1,6 @@
 import {Box, Icon, IconButton, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
-import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
+import {HTMLAttributes, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
@@ -10,7 +10,11 @@ import Customize from './Customize';
 import Users from './Users';
 import Options from './Options';
 import {SCThemeType} from '@selfcommunity/react-core';
-import {EDIT_COURSE_DATA} from './data';
+import {getCourseData} from './data';
+import {SCCourseType} from '@selfcommunity/types';
+import {useSnackbar} from 'notistack';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -43,11 +47,31 @@ export default function EditCourse(inProps: EditCourseProps) {
   const {page, onTabChange, className} = props;
 
   // STATES
+  const [course, setCourse] = useState<SCCourseType | null>(null);
   const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {enqueueSnackbar} = useSnackbar();
+
+  // EFFECTS
+  useEffect(() => {
+    getCourseData(1)
+      .then((course) => {
+        if (course) {
+          setCourse(course);
+        }
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
+  }, []);
 
   // HANDLERS
   const handleTabChange = useCallback(
@@ -58,13 +82,17 @@ export default function EditCourse(inProps: EditCourseProps) {
     [setTabValue]
   );
 
+  if (!course) {
+    return null;
+  }
+
   return (
     <Root className={classNames(classes.root, className)}>
       <Stack className={classes.header}>
         <IconButton size="small" aria-label="back" onClick={() => console.log('*** back ***')}>
           <Icon>arrow_back</Icon>
         </IconButton>
-        <Typography variant="h5">{EDIT_COURSE_DATA.title}</Typography>
+        <Typography variant="h5">{course.name}</Typography>
       </Stack>
 
       <TabContext value={tabValue}>
@@ -115,7 +143,7 @@ export default function EditCourse(inProps: EditCourseProps) {
         </TabList>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.LESSONS}>
-          <Lessons />
+          <Lessons course={course} />
         </TabPanel>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.CUSTOMIZE}>
