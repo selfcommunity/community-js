@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Collapse,
   Divider,
   Drawer,
   FormControl,
@@ -14,21 +15,27 @@ import {
   Icon,
   IconButton,
   List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Radio,
   RadioGroup,
   Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme
+  Typography
 } from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseStatusType, SCCourseType} from '@selfcommunity/types';
-import {SCContextType, SCRoutingContextType, SCThemeType, useSCContext, useSCRouting} from '@selfcommunity/react-core';
+import {SCContributionType, SCCourseStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCContextType, SCRoutes, SCRoutingContextType, useSCContext, useSCFetchCommentObjects, useSCRouting} from '@selfcommunity/react-core';
 import LessonObject from '../LessonObject';
 import {SCLessonActionsType} from '../../types/course';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import {SCCommentsOrderBy} from '@selfcommunity/react-ui';
+import {CacheStrategies} from '@selfcommunity/utils';
+import CommentsObject from '../CommentsObject';
+import CommentObjectReply from '../CommentObjectReply';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -38,7 +45,13 @@ const classes = {
   drawerHeader: `${PREFIX}-drawer-header`,
   drawerHeaderEdit: `${PREFIX}-drawer-header-edit`,
   drawerHeaderAction: `${PREFIX}-drawer-header-action`,
-  drawerContent: `${PREFIX}-drawer-content`
+  drawerContent: `${PREFIX}-drawer-content`,
+  listItem: `${PREFIX}-list-item`,
+  listItemIcon: `${PREFIX}-list-item-icon`,
+  item: `${PREFIX}-item`,
+  itemIcon: `${PREFIX}-item-icon`,
+  iconIncomplete: `${PREFIX}-icon-incomplete`,
+  iconComplete: `${PREFIX}-icon-complete`
 };
 
 const Root = styled(Box, {
@@ -68,11 +81,6 @@ export interface LessonComponentProps {
    */
   className?: string;
   /**
-   * If the component should be rendered in edit mode.
-   * @default false
-   */
-  isEditMode?: boolean;
-  /**
    * onArrowBack Callback
    */
   onArrowBackClick: () => any;
@@ -95,23 +103,71 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {className = null, title = 'Course Title', onArrowBackClick, ScrollContainerProps = {}, isEditMode = true, ...rest} = props;
+  const {
+    className = null,
+    title = 'Course Title',
+    onArrowBackClick,
+    ScrollContainerProps = {},
+    feedObjectId = 3078,
+    feedObject = null,
+    feedObjectType = SCContributionType.DISCUSSION,
+    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    comments = [],
+    CommentsObjectProps = {},
+    CommentComponentProps = {variant: 'outlined'},
+    ...rest
+  } = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
   const [value, setValue] = useState<SCCourseStatusType>(SCCourseStatusType.DRAFT);
+
+  const [open, setOpen] = useState(true);
+
+  const handleToggle = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const commentsObject = useSCFetchCommentObjects({
+    id: feedObjectId,
+    feedObject,
+    feedObjectType,
+    cacheStrategy,
+    orderBy: SCCommentsOrderBy.ADDED_AT_ASC
+  });
+  const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
+
+  useEffect(() => {
+    if (objId && !commentsObject.comments.length) {
+      commentsObject.getNextPage();
+    }
+  }, [objId]);
+  /**
+   * Load comments
+   */
+  function handleNext() {
+    commentsObject.getNextPage();
+  }
+
+  const items = [
+    {label: 'Cinture', completed: true},
+    {label: 'Sciarpe', completed: false},
+    {label: 'Orologi', completed: false}
+  ];
+
+  const isEditMode = useMemo(() => {
+    return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
+  }, [value, scRoutingContext]);
+
+  // HANDLERS
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
 
-  // HANDLERS
   const handleIconClick = (panel: SCLessonActionsType) => {
     setActivePanel((prevPanel) => (prevPanel === panel ? null : panel));
   };
@@ -120,7 +176,7 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
   };
 
   return (
-    <Root className={classes.root}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton edge="start" onClick={onArrowBackClick}>
@@ -144,15 +200,19 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
       </Box>
       <LessonObject
         endActions={
-          <>
-            <IconButton>
+          // TODO: add disable conditions to navigation buttons and right values to the translation above
+          <Box>
+            <IconButton disabled={true}>
               <Icon>arrow_back</Icon>
             </IconButton>
-          </>
+            <IconButton>
+              <Icon>arrow_next</Icon>
+            </IconButton>
+          </Box>
         }
       />
-      {activePanel && (
-        <DrawerRoot className={classes.drawerRoot} anchor="right" open={Boolean(activePanel)} onClose={handleCloseDrawer}>
+      {(activePanel || isEditMode) && (
+        <DrawerRoot className={classes.drawerRoot} anchor="right" open={Boolean(activePanel) || isEditMode} onClose={handleCloseDrawer}>
           <Box className={classNames(classes.drawerHeader, {[classes.drawerHeaderEdit]: isEditMode})}>
             {isEditMode ? (
               <>
@@ -165,8 +225,8 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
               </>
             ) : (
               <>
-                <Typography variant="h5" textAlign="center">
-                  {activePanel === SCLessonActionsType.COMMENTS ? 'Comments' : 'Lesson List'}
+                <Typography variant="h4" textAlign="center">
+                  <FormattedMessage id={`ui.lessonComponent.${activePanel}`} defaultMessage={`ui.lessonComponent.${activePanel}`} />
                 </Typography>
                 <IconButton className={classes.drawerHeaderAction} onClick={handleCloseDrawer}>
                   <Icon>close</Icon>
@@ -217,8 +277,62 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
             </Box>
           ) : (
             <ScrollContainer {...ScrollContainerProps}>
-              <List className={classes.drawerContent} onClick={handleCloseDrawer}>
-                {activePanel === SCLessonActionsType.COMMENTS ? 'Comment content' : 'Lesson content'}
+              <List className={classes.drawerContent}>
+                {activePanel === SCLessonActionsType.COMMENTS ? (
+                  <>
+                    <CommentsObject
+                      feedObject={commentsObject.feedObject}
+                      comments={commentsObject.comments}
+                      startComments={comments}
+                      next={commentsObject.next}
+                      isLoadingNext={commentsObject.isLoadingNext}
+                      handleNext={handleNext}
+                      totalLoadedComments={commentsObject.comments.length + comments.length}
+                      totalComments={commentsObject.feedObject.comment_count}
+                      hideAdvertising
+                      {...CommentsObjectProps}
+                      CommentComponentProps={{
+                        ...{showActions: false},
+                        ...{showUpperDateTime: true},
+                        ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {}),
+                        ...CommentComponentProps,
+                        ...{cacheStrategy}
+                      }}
+                      inPlaceLoadMoreContents={false}
+                    />
+                    <CommentObjectReply
+                      showAvatar={false}
+                      replyIcon={true}
+                      id={`reply-lessonComponent-${objId}`}
+                      onReply={() => console.log('reply')}
+                      editable={true}
+                      key={objId}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <ListItemButton onClick={handleToggle} className={classes.listItem} disableRipple>
+                      <ListItemIcon className={classes.listItemIcon}>{open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}</ListItemIcon>
+                      <ListItemText primary={title} />
+                    </ListItemButton>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                      <List component="div" disablePadding>
+                        {items.map((item, index) => (
+                          <ListItem key={index} className={classes.item}>
+                            <ListItemIcon className={classes.itemIcon}>
+                              {item.completed ? (
+                                <Icon className={classes.iconComplete}>circle_checked</Icon>
+                              ) : (
+                                <Icon className={classes.iconIncomplete}>fiber_manual_record</Icon>
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={item.label} />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Collapse>
+                  </>
+                )}
               </List>
             </ScrollContainer>
           )}

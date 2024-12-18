@@ -131,6 +131,11 @@ export interface EditorProps {
    * @default null
    * */
   onFocus?: (event: FocusEvent) => void;
+
+  /**
+   * Action to add to actions
+   */
+  action?: React.ReactNode | null;
 }
 
 /**
@@ -177,7 +182,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     editable = true,
     onChange = null,
     onFocus = null,
-    onBlur = null
+    onBlur = null,
+    action = null
   } = props;
   const apiRef = useRef<ApiRef>();
 
@@ -247,6 +253,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
             <EmojiPlugin />
+            {action && action}
           </Stack>
         )}
         <RichTextPlugin

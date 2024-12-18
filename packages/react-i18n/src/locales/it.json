@@ -682,6 +682,8 @@
   "ui.lessonComponent.edit.status.published": "Pubblicata",
   "ui.lessonComponent.edit.settings.title": "Impostazioni",
   "ui.lessonComponent.edit.settings.enableComments": "Abilita commenti",
+  "ui.lessonComponent.comments": "Commenti",
+  "ui.lessonComponent.lessons": "Lezioni",
   "ui.lessonReleaseMenu.programmed.label": "Seleziona data rilascio",
   "ui.lessonReleaseMenu.programmed.picker.placeholder": "Seleziona data e ora",
   "ui.lessonReleaseMenu.programmed.picker.cancel": "Cancella",

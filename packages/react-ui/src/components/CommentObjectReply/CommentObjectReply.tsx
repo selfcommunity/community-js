@@ -2,7 +2,7 @@ import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Stack, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme} from '@mui/material';
 import {SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef} from '../Editor';
 import classNames from 'classnames';
@@ -20,6 +20,7 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   buttonReply: `${PREFIX}-button-reply`,
+  iconReply: `${PREFIX}-icon-reply`,
   buttonSave: `${PREFIX}-button-save`,
   buttonCancel: `${PREFIX}-button-cancel`
 };
@@ -73,6 +74,17 @@ export interface CommentObjectReplyProps extends WidgetProps {
   WidgetProps?: WidgetProps;
 
   /**
+   * Prop to show user avatar
+   * @default true
+   */
+  showAvatar?: boolean;
+
+  /**
+   * Prop to show a reply icon instead of the button
+   * @default false
+   */
+  replyIcon?: boolean;
+  /**
    * Other props
    */
   [p: string]: any;
@@ -124,6 +136,8 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     editable = true,
     text = '',
     WidgetProps = {variant: 'outlined'},
+    showAvatar = true,
+    replyIcon = false,
     ...rest
   } = props;
 
@@ -203,20 +217,35 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
       elevation={elevation}
       className={classNames(classes.root, className)}
       image={
-        !scUserContext.user ? (
+        showAvatar &&
+        (!scUserContext.user ? (
           <Avatar variant="circular" className={classes.avatar} />
         ) : (
           <UserAvatar hide={!scUserContext.user.community_badge}>
             <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
           </UserAvatar>
-        )
+        ))
       }
       secondary={
         <Widget className={classNames(classes.comment, {[classes.hasValue]: !isEditorEmpty})} {...WidgetProps}>
-          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} uploadImage />
+          <Editor
+            ref={editor}
+            onChange={handleChangeText}
+            defaultValue={html}
+            editable={editable}
+            uploadImage
+            action={
+              replyIcon &&
+              onReply && (
+                <IconButton onClick={handleReply} loading={!editable} className={classes.iconReply}>
+                  <Icon>send</Icon>
+                </IconButton>
+              )
+            }
+          />
           {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>
-              {onReply && (
+              {onReply && !replyIcon && (
                 <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>
                   <FormattedMessage id="ui.commentObject.replyComment.reply" defaultMessage="ui.commentObject.replyComment.reply" />
                 </LoadingButton>

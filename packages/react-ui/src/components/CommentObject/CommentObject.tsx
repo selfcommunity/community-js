@@ -187,6 +187,18 @@ export interface CommentObjectProps {
   cacheStrategy?: CacheStrategies;
 
   /**
+   * Prop to show comment actions section (below text)
+   * @default true
+   */
+  showActions?: boolean;
+
+  /**
+   * Prop to show the comment datetime next to the author username
+   * @default false
+   */
+  showUpperDateTime?: boolean;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -258,6 +270,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     linkableCommentDateTime = true,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     CommentsObjectComponentProps = {},
+    showActions = true,
+    showUpperDateTime = false,
     ...rest
   } = props;
 
@@ -557,6 +571,12 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
+                    {showUpperDateTime && (
+                      <>
+                        <Bullet />
+                        <DateTimeAgo date={comment.added_at} showStartIcon={false} />
+                      </>
+                    )}
                     {comment.collapsed && (
                       <Chip
                         className={classes.flagChip}
@@ -584,27 +604,29 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     </Box>
                   )}
                 </Widget>
-                <Box component="span" className={classes.contentSubSection}>
-                  {renderTimeAgo(comment)}
-                  <Bullet />
-                  <VoteButton
-                    size="small"
-                    className={classes.vote}
-                    contributionId={comment.id}
-                    contributionType={SCContributionType.COMMENT}
-                    contribution={comment}
-                    onVote={handleVoteSuccess}
-                  />
-                  <Bullet />
-                  {renderActionReply(comment)}
-                  <VoteAudienceButton
-                    size="small"
-                    className={classes.voteAudience}
-                    contributionId={comment.id}
-                    contributionType={SCContributionType.COMMENT}
-                    contribution={comment}
-                  />
-                </Box>
+                {showActions && (
+                  <Box component="span" className={classes.contentSubSection}>
+                    {renderTimeAgo(comment)}
+                    <Bullet />
+                    <VoteButton
+                      size="small"
+                      className={classes.vote}
+                      contributionId={comment.id}
+                      contributionType={SCContributionType.COMMENT}
+                      contribution={comment}
+                      onVote={handleVoteSuccess}
+                    />
+                    <Bullet />
+                    {renderActionReply(comment)}
+                    <VoteAudienceButton
+                      size="small"
+                      className={classes.voteAudience}
+                      contributionId={comment.id}
+                      contributionType={SCContributionType.COMMENT}
+                      contribution={comment}
+                    />
+                  </Box>
+                )}
               </>
             }
           />
