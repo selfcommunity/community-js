@@ -27,3 +27,9 @@ export enum ActionLessonEnum {
   ADD = 'add',
   DELETE = 'delete'
 }
+
+export interface OptionsData {
+  options: boolean;
+  notifications: boolean;
+  permissions: boolean;
+}

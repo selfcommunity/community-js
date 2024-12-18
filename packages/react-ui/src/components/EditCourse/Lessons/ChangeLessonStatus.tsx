@@ -8,8 +8,8 @@ import {setStatus} from '../data';
 import {Status} from '../types';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
-import {enqueueSnackbar} from 'notistack';
 import {LoadingButton} from '@mui/lab';
+import {useSnackbar} from 'notistack';
 
 const classes = {
   changeLessonStatusPublishedWrapper: `${PREFIX}-change-lesson-status-published-wrapper`,
@@ -21,6 +21,7 @@ export default function ChangeLessonStatus() {
   const intl = useIntl();
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {enqueueSnackbar} = useSnackbar();
 
   // STATES
   const [value, setValue] = useState(

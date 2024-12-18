@@ -12,7 +12,7 @@ import {getLesson} from '../data';
 import FieldName from './FieldName';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
-import {enqueueSnackbar} from 'notistack';
+import {useSnackbar} from 'notistack';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -40,6 +40,9 @@ export default function SectionRow(props: SectionRowProps) {
   // STATES
   const [open, setOpen] = useState(true);
   const [editMode, setEditMode] = useState(false);
+
+  // HOOKS
+  const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
   const handleExpandAccordion = useCallback(() => setOpen(!open), [open]);

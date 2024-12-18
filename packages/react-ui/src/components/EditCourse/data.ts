@@ -1,4 +1,4 @@
-import {LessonRowInterface, SectionRowInterface, Status} from './types';
+import {LessonRowInterface, OptionsData, SectionRowInterface, Status} from './types';
 
 export const EDIT_COURSE_DATA = {
   title: 'Accessori Moda'
@@ -52,5 +52,25 @@ export async function setStatus(status: Status): Promise<Status | null> {
 export async function checkSections(): Promise<SectionRowInterface[] | null> {
   return new Promise((resolve) => {
     setTimeout(() => resolve([]), 300);
+  });
+}
+
+export async function getOptionsData(): Promise<OptionsData | null> {
+  return new Promise((resolve) => {
+    setTimeout(
+      () =>
+        resolve({
+          options: true,
+          notifications: false,
+          permissions: false
+        }),
+      300
+    );
+  });
+}
+
+export async function setOptionsData(options: OptionsData): Promise<OptionsData | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(options), 300);
   });
 }
