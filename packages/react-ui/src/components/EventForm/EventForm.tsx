@@ -72,6 +72,10 @@ const messages = defineMessages({
   endTime: {
     id: 'ui.eventForm.time.end.placeholder',
     defaultMessage: 'ui.eventForm.time.end.placeholder'
+  },
+  pickerCancelAction: {
+    id: 'ui.eventForm.time.picker.cancel.placeholder',
+    defaultMessage: 'ui.eventForm.time.picker.cancel.placeholder'
   }
 });
 
@@ -432,7 +436,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           }
         />
         <Box className={classes.dateTime}>
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            localeText={{
+              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`
+            }}>
             <MobileDatePicker
               className={classes.picker}
               disablePast
@@ -535,7 +544,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           </Select>
         </FormControl>
         <Box className={classes.dateTime}>
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            localeText={{
+              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`
+            }}>
             <MobileDatePicker
               className={classes.picker}
               minDate={field.startDate}
