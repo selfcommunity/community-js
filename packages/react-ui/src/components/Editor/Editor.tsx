@@ -136,6 +136,12 @@ export interface EditorProps {
    * Action to add to actions
    */
   action?: React.ReactNode | null;
+
+  /**
+   * The text displayed when the editor is empty
+   * @default   <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+   */
+  placeholder?: React.ReactNode;
 }
 
 /**
@@ -183,7 +189,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     onChange = null,
     onFocus = null,
     onBlur = null,
-    action = null
+    action = null,
+    placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
   } = props;
   const apiRef = useRef<ApiRef>();
 
@@ -260,7 +267,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           contentEditable={<ContentEditable className={classes.content} />}
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
-              <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+              {placeholder}
             </Box>
           }
           ErrorBoundary={LexicalErrorBoundary}

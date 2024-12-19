@@ -15,7 +15,6 @@ import {
   Icon,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -26,21 +25,29 @@ import {
 } from '@mui/material';
 import {PREFIX} from './constants';
 import {SCContributionType, SCCourseStatusType, SCCourseType} from '@selfcommunity/types';
-import {SCContextType, SCRoutes, SCRoutingContextType, useSCContext, useSCFetchCommentObjects, useSCRouting} from '@selfcommunity/react-core';
+import {SCRoutes, SCRoutingContextType, useSCFetchCommentObjects, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
 import LessonObject from '../LessonObject';
 import {SCLessonActionsType} from '../../types/course';
 import ScrollContainer from '../../shared/ScrollContainer';
-import {FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {SCCommentsOrderBy} from '@selfcommunity/react-ui';
 import {CacheStrategies} from '@selfcommunity/utils';
 import CommentsObject from '../CommentsObject';
 import CommentObjectReply from '../CommentObjectReply';
 
+const messages = defineMessages({
+  commentEditorPlaceholder: {
+    id: 'ui.lessonComponent.comments.editor.placeholder',
+    defaultMessage: 'ui.lessonComponent.comments.editor.placeholder'
+  }
+});
+
 const classes = {
   root: `${PREFIX}-root`,
   info: `${PREFIX}-info`,
   settings: `${PREFIX}-settings`,
+  appBarRoot: `${PREFIX}-app-bar-root`,
   drawerRoot: `${PREFIX}-drawer-root`,
   drawerHeader: `${PREFIX}-drawer-header`,
   drawerHeaderEdit: `${PREFIX}-drawer-header-edit`,
@@ -65,6 +72,33 @@ const DrawerRoot = styled(Drawer, {
   slot: 'DrawerRoot',
   overridesResolver: (props, styles) => styles.drawerRoot
 })(({theme}) => ({}));
+
+const drawerWidth = {
+  sm: '100vw',
+  md: 300
+};
+
+const AppBarRoot = styled(AppBar, {
+  name: PREFIX,
+  slot: 'AppBarRoot',
+  overridesResolver: (props, styles) => styles.appBarRoot,
+  shouldForwardProp: (prop) => prop !== 'open'
+})(({theme}) => ({}));
+
+const MainContainer = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
+  open?: boolean;
+}>(({theme, open}) => ({
+  flexGrow: 1,
+  height: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'hidden',
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  marginRight: open ? `calc(100% - ${theme.breakpoints.up('sm') ? drawerWidth.md : drawerWidth.sm})` : 0
+}));
 
 export interface LessonComponentProps {
   /**
@@ -121,6 +155,9 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // INTL
+  const intl = useIntl();
+
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
   const [value, setValue] = useState<SCCourseStatusType>(SCCourseStatusType.DRAFT);
@@ -138,6 +175,8 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
     cacheStrategy,
     orderBy: SCCommentsOrderBy.ADDED_AT_ASC
   });
+
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
 
   useEffect(() => {
@@ -162,13 +201,15 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
     return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
   }, [value, scRoutingContext]);
 
+  const isCourseCreator = true;
+
   // HANDLERS
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
 
-  const handleIconClick = (panel: SCLessonActionsType) => {
+  const handleOpenDrawer = (panel: SCLessonActionsType) => {
     setActivePanel((prevPanel) => (prevPanel === panel ? null : panel));
   };
   const handleCloseDrawer = () => {
@@ -177,7 +218,7 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <AppBar position="static" color="primary">
+      <AppBarRoot position="fixed" open={Boolean(activePanel)} className={classes.appBarRoot}>
         <Toolbar>
           <IconButton edge="start" onClick={onArrowBackClick}>
             <Icon>arrow_back</Icon>
@@ -185,34 +226,37 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
           <Typography variant="h6" sx={{flexGrow: 1}}>
             {title}
           </Typography>
-          <IconButton onClick={() => handleIconClick(SCLessonActionsType.COMMENTS)}>
+          <IconButton onClick={() => handleOpenDrawer(SCLessonActionsType.COMMENTS)}>
             <Icon>chat_bubble_outline</Icon>
           </IconButton>
-          <IconButton onClick={() => handleIconClick(SCLessonActionsType.LESSONS)}>
+          <IconButton onClick={() => handleOpenDrawer(SCLessonActionsType.LESSONS)}>
             <Icon>courses</Icon>
           </IconButton>
         </Toolbar>
-      </AppBar>
-      <Box className={classes.info}>
-        <Typography variant="body2" color="text.secondary">
-          <FormattedMessage id="ui.lessonComponent.lessonNumber" defaultMessage="ui.lessonComponent.lessonNumber" values={{from: 1, to: 5}} />
-        </Typography>
-      </Box>
-      <LessonObject
-        endActions={
-          // TODO: add disable conditions to navigation buttons and right values to the translation above
-          <Box>
-            <IconButton disabled={true}>
-              <Icon>arrow_back</Icon>
-            </IconButton>
-            <IconButton>
-              <Icon>arrow_next</Icon>
-            </IconButton>
-          </Box>
-        }
-      />
+      </AppBarRoot>
+      <MainContainer open={Boolean(activePanel)}>
+        <Box className={classes.info}>
+          <Typography variant="body2" color="text.secondary">
+            <FormattedMessage id="ui.lessonComponent.lessonNumber" defaultMessage="ui.lessonComponent.lessonNumber" values={{from: 1, to: 5}} />
+          </Typography>
+        </Box>
+        <LessonObject
+          lessonObj={obj}
+          endActions={
+            // TODO: add disable conditions to navigation buttons and right values to the translation above
+            <Box>
+              <IconButton disabled={true}>
+                <Icon>arrow_back</Icon>
+              </IconButton>
+              <IconButton>
+                <Icon>arrow_next</Icon>
+              </IconButton>
+            </Box>
+          }
+        />
+      </MainContainer>
       {(activePanel || isEditMode) && (
-        <DrawerRoot className={classes.drawerRoot} anchor="right" open={Boolean(activePanel) || isEditMode} onClose={handleCloseDrawer}>
+        <DrawerRoot className={classes.drawerRoot} anchor="right" open={Boolean(activePanel) || isEditMode} variant="persistent">
           <Box className={classNames(classes.drawerHeader, {[classes.drawerHeaderEdit]: isEditMode})}>
             {isEditMode ? (
               <>
@@ -279,36 +323,26 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
             <ScrollContainer {...ScrollContainerProps}>
               <List className={classes.drawerContent}>
                 {activePanel === SCLessonActionsType.COMMENTS ? (
-                  <>
-                    <CommentsObject
-                      feedObject={commentsObject.feedObject}
-                      comments={commentsObject.comments}
-                      startComments={comments}
-                      next={commentsObject.next}
-                      isLoadingNext={commentsObject.isLoadingNext}
-                      handleNext={handleNext}
-                      totalLoadedComments={commentsObject.comments.length + comments.length}
-                      totalComments={commentsObject.feedObject.comment_count}
-                      hideAdvertising
-                      {...CommentsObjectProps}
-                      CommentComponentProps={{
-                        ...{showActions: false},
-                        ...{showUpperDateTime: true},
-                        ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {}),
-                        ...CommentComponentProps,
-                        ...{cacheStrategy}
-                      }}
-                      inPlaceLoadMoreContents={false}
-                    />
-                    <CommentObjectReply
-                      showAvatar={false}
-                      replyIcon={true}
-                      id={`reply-lessonComponent-${objId}`}
-                      onReply={() => console.log('reply')}
-                      editable={true}
-                      key={objId}
-                    />
-                  </>
+                  <CommentsObject
+                    feedObject={commentsObject.feedObject}
+                    comments={commentsObject.comments}
+                    startComments={comments}
+                    next={commentsObject.next}
+                    isLoadingNext={commentsObject.isLoadingNext}
+                    handleNext={handleNext}
+                    totalLoadedComments={commentsObject.comments.length + comments.length}
+                    totalComments={commentsObject.feedObject.comment_count}
+                    hideAdvertising
+                    {...CommentsObjectProps}
+                    CommentComponentProps={{
+                      ...{showActions: false},
+                      ...{showUpperDateTime: true},
+                      ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {}),
+                      ...CommentComponentProps,
+                      ...{cacheStrategy}
+                    }}
+                    inPlaceLoadMoreContents={false}
+                  />
                 ) : (
                   <>
                     <ListItemButton onClick={handleToggle} className={classes.listItem} disableRipple>
@@ -318,16 +352,19 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
                     <Collapse in={open} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         {items.map((item, index) => (
-                          <ListItem key={index} className={classes.item}>
-                            <ListItemIcon className={classes.itemIcon}>
-                              {item.completed ? (
-                                <Icon className={classes.iconComplete}>circle_checked</Icon>
-                              ) : (
-                                <Icon className={classes.iconIncomplete}>fiber_manual_record</Icon>
-                              )}
-                            </ListItemIcon>
+                          // TODO: on click set the lesson object to next id
+                          <ListItemButton key={index} className={classes.item} onClick={() => console.log(item)}>
+                            {isCourseCreator && (
+                              <ListItemIcon className={classes.itemIcon}>
+                                {item.completed ? (
+                                  <Icon className={classes.iconComplete}>circle_checked</Icon>
+                                ) : (
+                                  <Icon className={classes.iconIncomplete}>fiber_manual_record</Icon>
+                                )}
+                              </ListItemIcon>
+                            )}
                             <ListItemText primary={item.label} />
-                          </ListItem>
+                          </ListItemButton>
                         ))}
                       </List>
                     </Collapse>
@@ -335,6 +372,18 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
                 )}
               </List>
             </ScrollContainer>
+          )}
+          {activePanel === SCLessonActionsType.COMMENTS && (
+            // TODO: handle message reply component
+            <CommentObjectReply
+              showAvatar={false}
+              replyIcon={true}
+              id={`reply-lessonComponent-${objId}`}
+              onReply={() => console.log('reply')}
+              editable={true}
+              key={objId}
+              EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder)}}
+            />
           )}
         </DrawerRoot>
       )}

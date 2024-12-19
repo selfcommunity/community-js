@@ -27,7 +27,10 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface LessonObjectProps {
-  course?: SCCourseType;
+  /**
+   * The lesson object
+   */
+  lessonObj: any;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -50,33 +53,21 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {
-    className = null,
-    course,
-    feedObjectId = 3078,
-    feedObject = null,
-    feedObjectType = SCContributionType.DISCUSSION,
-    endActions = null,
-    ...rest
-  } = props;
+  const {className = null, lessonObj, endActions = null, ...rest} = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-
-  // STATE
-  const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   // HANDLERS
 
-  if (!obj) {
+  if (!lessonObj) {
     return null;
   }
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       <Box className={classes.titleSection}>
-        <Typography variant="h5">{obj?.title}</Typography>
+        <Typography variant="h5">{lessonObj?.title}</Typography>
         {endActions && endActions}
       </Box>
       <Widget>
@@ -88,12 +79,12 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
               gutterBottom
               className={classes.text}
               dangerouslySetInnerHTML={{
-                __html: getContributionHtml(obj?.html, scRoutingContext.url)
+                __html: getContributionHtml(lessonObj?.html, scRoutingContext.url)
               }}
             />
           </Box>
           <Box className={classes.mediasSection}>
-            <FeedObjectMediaPreview medias={obj?.medias} />
+            <FeedObjectMediaPreview medias={lessonObj?.medias} />
           </Box>
         </CardContent>
       </Widget>

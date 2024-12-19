@@ -4,7 +4,7 @@ import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
 import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme} from '@mui/material';
 import {SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import Editor, {EditorRef} from '../Editor';
+import Editor, {EditorRef, EditorProps} from '../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import BaseItem from '../../shared/BaseItem';
@@ -74,6 +74,12 @@ export interface CommentObjectReplyProps extends WidgetProps {
   WidgetProps?: WidgetProps;
 
   /**
+   * Initial content
+   * @default {}
+   */
+  EditorProps?: EditorProps;
+
+  /**
    * Prop to show user avatar
    * @default true
    */
@@ -136,6 +142,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     editable = true,
     text = '',
     WidgetProps = {variant: 'outlined'},
+    EditorProps = {},
     showAvatar = true,
     replyIcon = false,
     ...rest
@@ -242,6 +249,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
                 </IconButton>
               )
             }
+            {...EditorProps}
           />
           {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>

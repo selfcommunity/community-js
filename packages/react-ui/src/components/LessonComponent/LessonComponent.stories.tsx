@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof LessonComponent>;
 
 const template = (args) => (
-  <div style={{width: '80%'}}>
+  <div style={{width: '100%'}}>
     <LessonComponent {...args}></LessonComponent>
   </div>
 );

@@ -689,6 +689,7 @@
   "ui.lessonComponent.edit.settings.enableComments": "Enable comments",
   "ui.lessonComponent.comments": "Comments",
   "ui.lessonComponent.lessons": "Lessons",
+  "ui.lessonComponent.comments.editor.placeholder": "Write your comment...",
   "ui.lessonReleaseMenu.programmed.label": "Select release date",
   "ui.lessonReleaseMenu.programmed.picker.placeholder": "Select date and time",
   "ui.lessonReleaseMenu.programmed.picker.cancel": "Cancel",
