@@ -309,6 +309,7 @@
   "ui.eventForm.time.title": "Seleziona Orario",
   "ui.eventForm.date.end.placeholder": "Data di fine",
   "ui.eventForm.time.end.placeholder": "Ora di fine",
+  "ui.eventForm.time.picker.cancel.placeholder": "Cancella",
   "ui.eventForm.time.end.error.invalid": "L'ora deve essere successiva a quella di inizio.",
   "ui.eventForm.frequency.label": "Frequenza",
   "ui.eventForm.frequency.never.placeholder": "Nessuna Frequenza",
