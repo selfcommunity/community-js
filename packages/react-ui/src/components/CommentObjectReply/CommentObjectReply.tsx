@@ -244,7 +244,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
             action={
               replyIcon &&
               onReply && (
-                <IconButton onClick={handleReply} loading={!editable} className={classes.iconReply}>
+                <IconButton onClick={handleReply} className={classes.iconReply}>
                   <Icon>send</Icon>
                 </IconButton>
               )

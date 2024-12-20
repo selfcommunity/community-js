@@ -8,7 +8,7 @@ import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import {LoadingButton} from '@mui/lab';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {EventService} from '@selfcommunity/api-services';
+import {CourseService} from '@selfcommunity/api-services';
 import {SCCourseType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import {defineMessages, useIntl} from 'react-intl';
@@ -135,7 +135,9 @@ export default function UploadCourseCover(inProps: UploadCourseCoverProps): JSX.
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     formData.append('image_original', fileInput);
-    EventService.changeEventCover(courseId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    CourseService.changeCourseCover(courseId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       .then((data: SCCourseType) => {
         onChange && onChange(data.image_medium);
         setLoading(false);

@@ -5,7 +5,7 @@ import {setRowName} from '../data';
 import {LessonRowInterface} from '../types';
 import {PREFIX} from '../constants';
 import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 

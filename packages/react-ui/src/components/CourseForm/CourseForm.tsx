@@ -1,28 +1,14 @@
 import {LoadingButton} from '@mui/lab';
-import {
-  Box,
-  BoxProps,
-  CardActionArea,
-  Card,
-  CardContent,
-  FormGroup,
-  Paper,
-  TextField,
-  Typography,
-  InputAdornment,
-  IconButton,
-  Icon,
-  Button
-} from '@mui/material';
+import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Button} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCFetchEvent, useSCPreferences} from '@selfcommunity/react-core';
+import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {ChangeEvent, useCallback, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -30,12 +16,6 @@ import {PREFIX} from './constants';
 import UploadCourseCover from './UploadCourseCover';
 import {COURSE_DESCRIPTION_MAX_LENGTH, COURSE_TITLE_MAX_LENGTH} from '../../constants/Course';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import {getLaterHoursDate, getNewDate} from '../EventForm/utils';
-import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
-import {FieldStateKeys, FieldStateValues} from '../EventForm/types';
 import CourseEdit from './Edit';
 
 const messages = defineMessages({
@@ -50,22 +30,6 @@ const messages = defineMessages({
   category: {
     id: 'ui.courseForm.category.placeholder',
     defaultMessage: 'ui.courseForm.category.placeholder'
-  },
-  startDate: {
-    id: 'ui.courseForm.date.placeholder',
-    defaultMessage: 'ui.courseForm.date.placeholder'
-  },
-  startTime: {
-    id: 'ui.courseForm.time.placeholder',
-    defaultMessage: 'ui.courseForm.time.placeholder'
-  },
-  endDate: {
-    id: 'ui.courseForm.date.end.placeholder',
-    defaultMessage: 'ui.courseForm.date.end.placeholder'
-  },
-  endTime: {
-    id: 'ui.courseForm.time.end.placeholder',
-    defaultMessage: 'ui.courseForm.time.end.placeholder'
   }
 });
 
@@ -77,8 +41,6 @@ const classes = {
   form: `${PREFIX}-form`,
   name: `${PREFIX}-name`,
   description: `${PREFIX}-description`,
-  picker: `${PREFIX}-picker`,
-  dateTime: `${PREFIX}-date-time`,
   content: `${PREFIX}-content`,
   actions: `${PREFIX}-actions`,
   stepOne: `${PREFIX}-step-one`,
@@ -169,26 +131,16 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   });
   const {className, onSuccess, onError, course = null, courseId, step = SCCourseFormStepType.ONE, ...rest} = props;
 
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
-
   // INTL
   const intl = useIntl();
 
-  const startDateTime = useMemo(() => getNewDate(course?.start_date), [course]);
-  const endDateTime = useMemo(() => getNewDate(course?.end_date), [course]);
-
-  const initialFieldState = {
+  const initialFieldState: any = {
     imageOriginal: course?.image_bigger || '',
     imageOriginalFile: '',
     name: course?.name || '',
     type: course?.type || '',
     description: course ? course.description : '',
     category: course ? course.category : null,
-    startDate: course ? startDateTime : getNewDate(),
-    startTime: course ? startDateTime : getLaterHoursDate(1),
-    endDate: course?.end_date ? endDateTime : getNewDate(),
-    endTime: course?.end_date ? endDateTime : getLaterHoursDate(3),
     isSubmitting: false
   };
 
@@ -196,12 +148,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const [field, setField] = useState(initialFieldState);
   const [_step, setStep] = useState<SCCourseFormStepType>(step);
   const [error, setError] = useState<any>({});
-
-  const disablePastStartTime = useMemo(() => field.startDate.getDate() === getNewDate().getDate(), [field]);
-  const disablePastEndTime = useMemo(() => field.endDate.getDate() === getNewDate().getDate(), [field]);
-  const shouldDisableTime = useCallback((date: Date) => field.startTime.getTime() > date.getTime(), [field]);
-
-  const {scEvent} = useSCFetchEvent({id: courseId, course});
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -215,11 +161,13 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const handleChangeCover = useCallback(
     (cover: Blob) => {
       setField((prev) => ({...prev, ['imageOriginalFile']: cover}));
+
       const reader = new FileReader();
 
       reader.onloadend = () => {
         setField((prev) => ({...prev, ['imageOriginal']: reader.result}));
       };
+
       reader.readAsDataURL(cover);
 
       if (error.imageOriginalError) {
@@ -263,9 +211,9 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
 
     let eventService: Promise<SCCourseType>;
     if (course) {
-      eventService = EventService.updateEvent(course.id, formData as unknown as SCCourseType, {headers: {'Content-Type': 'multipart/form-data'}});
+      eventService = CourseService.updateCourse(course.id, formData as unknown as SCCourseType, {headers: {'Content-Type': 'multipart/form-data'}});
     } else {
-      eventService = EventService.createEvent(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+      eventService = CourseService.createCourse(formData, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
     eventService
@@ -299,23 +247,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
 
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];
-
-        setError(error);
-      }
-    },
-    [setField, error]
-  );
-
-  const handleChangeDateTime = useCallback(
-    (value: FieldStateValues, name: FieldStateKeys) => {
-      setField((prev) => ({...prev, [name]: value}));
-
-      if (error[`${name}Error`]) {
-        delete error[`${name}Error`];
-
-        setError(error);
-      } else if (error['endDateError']) {
-        delete error['endDateError'];
 
         setError(error);
       }
@@ -399,161 +330,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 ) : null
               }
             />
-            {field.type === SCCourseTypologyType.PROGRAMMED && (
-              <>
-                <Box className={classes.dateTime}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
-                    <MobileDatePicker
-                      className={classes.picker}
-                      disablePast
-                      label={
-                        field.startDate && <FormattedMessage id="ui.courseForm.date.placeholder" defaultMessage="ui.courseForm.date.placeholder" />
-                      }
-                      value={field.startDate}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            InputProps={{
-                              ...params.InputProps,
-                              placeholder: `${intl.formatMessage(messages.startDate)}`,
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <IconButton>
-                                    <Icon>CalendarIcon</Icon>
-                                  </IconButton>
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        )
-                      }}
-                      slotProps={{
-                        toolbar: {
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                          // @ts-ignore
-                          toolbarTitle: <FormattedMessage id="ui.courseForm.date.title" defaultMessage="ui.courseForm.date.title" />
-                        }
-                      }}
-                      onChange={(value) => handleChangeDateTime(value, 'startDate')}
-                    />
-                    <MobileTimePicker
-                      className={classes.picker}
-                      disablePast={disablePastStartTime}
-                      label={
-                        field.startTime && <FormattedMessage id="ui.courseForm.time.placeholder" defaultMessage="ui.courseForm.time.placeholder" />
-                      }
-                      value={field.startTime}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            InputProps={{
-                              ...params.InputProps,
-                              placeholder: `${intl.formatMessage(messages.startTime)}`,
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <IconButton>
-                                    <Icon>access_time</Icon>
-                                  </IconButton>
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        )
-                      }}
-                      slotProps={{
-                        toolbar: {
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                          // @ts-ignore
-                          toolbarTitle: <FormattedMessage id="ui.courseForm.time.title" defaultMessage="ui.courseForm.time.title" />
-                        }
-                      }}
-                      onChange={(value) => handleChangeDateTime(value, 'startTime')}
-                    />
-                  </LocalizationProvider>
-                </Box>
-                <Box className={classes.dateTime}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
-                    <MobileDatePicker
-                      className={classes.picker}
-                      minDate={field.startDate}
-                      label={<FormattedMessage id="ui.courseForm.date.end.placeholder" defaultMessage="ui.courseForm.date.end.placeholder" />}
-                      value={field.endDate}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            InputProps={{
-                              ...params.InputProps,
-                              placeholder: `${intl.formatMessage(messages.endDate)}`,
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <IconButton>
-                                    <Icon>calendar_off</Icon>
-                                  </IconButton>
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        )
-                      }}
-                      slotProps={{
-                        toolbar: {
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                          // @ts-ignore
-                          toolbarTitle: <FormattedMessage id="ui.courseForm.date.title" defaultMessage="ui.courseForm.date.title" />
-                        }
-                      }}
-                      onChange={(value) => handleChangeDateTime(value, 'endDate')}
-                    />
-                    <MobileTimePicker
-                      className={classes.picker}
-                      disablePast={disablePastEndTime}
-                      label={
-                        field.endTime && (
-                          <FormattedMessage id="ui.courseForm.time.end.placeholder" defaultMessage="ui.courseForm.time.end.placeholder" />
-                        )
-                      }
-                      value={field.endTime}
-                      slots={{
-                        textField: (params) => (
-                          <TextField
-                            {...params}
-                            InputProps={{
-                              ...params.InputProps,
-                              placeholder: `${intl.formatMessage(messages.endTime)}`,
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <IconButton>
-                                    <Icon>access_time</Icon>
-                                  </IconButton>
-                                </InputAdornment>
-                              )
-                            }}
-                            error={Boolean(error['endDateError'])}
-                            helperText={
-                              error['endDateError']?.error ? (
-                                <FormattedMessage id="ui.courseForm.time.end.error.invalid" defaultMessage="ui.courseForm.time.end.error.invalid" />
-                              ) : null
-                            }
-                          />
-                        )
-                      }}
-                      slotProps={{
-                        toolbar: {
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                          // @ts-ignore
-                          toolbarTitle: <FormattedMessage id="ui.courseForm.time.title" defaultMessage="ui.courseForm.time.title" />
-                        }
-                      }}
-                      onChange={(value) => handleChangeDateTime(value, 'endTime')}
-                      shouldDisableTime={shouldDisableTime}
-                    />
-                  </LocalizationProvider>
-                </Box>
-              </>
-            )}
             <CategoryAutocomplete TextFieldProps={{label: `${intl.formatMessage(messages.category)}`}} />
             {course && <CourseEdit course={course} />}
           </FormGroup>

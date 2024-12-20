@@ -31,7 +31,7 @@ import {SCLessonActionsType} from '../../types/course';
 import ScrollContainer from '../../shared/ScrollContainer';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import {SCCommentsOrderBy} from '@selfcommunity/react-ui';
+import {SCCommentsOrderBy} from '../../types/comments';
 import {CacheStrategies} from '@selfcommunity/utils';
 import CommentsObject from '../CommentsObject';
 import CommentObjectReply from '../CommentObjectReply';
@@ -83,7 +83,7 @@ const AppBarRoot = styled(AppBar, {
   slot: 'AppBarRoot',
   overridesResolver: (props, styles) => styles.appBarRoot,
   shouldForwardProp: (prop) => prop !== 'open'
-})(({theme}) => ({}));
+})<{open: boolean}>(({theme}) => ({}));
 
 const MainContainer = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
   open?: boolean;
@@ -206,7 +206,7 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
   // HANDLERS
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    setValue(event.target.value as SCCourseStatusType);
   };
 
   const handleOpenDrawer = (panel: SCLessonActionsType) => {

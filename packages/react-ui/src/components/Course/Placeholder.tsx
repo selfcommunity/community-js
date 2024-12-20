@@ -92,7 +92,7 @@ export default function CoursePlaceholder(inProps: CourseSkeletonProps): JSX.Ele
         </Icon>
         {!actionCreate && (
           <>
-            <Avatar className={classes.placeholderAvatar} alt="placeholder avatar" img="" />
+            <Avatar className={classes.placeholderAvatar} alt="placeholder-avatar" src="" />
             <Chip
               size="small"
               component="div"

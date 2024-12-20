@@ -3,6 +3,7 @@
  * Course Schema.
  */
 import {SCUserType} from './user';
+import { SCCategoryType } from './category';
 
 /**
  * SCCoursePrivacyType enum
@@ -247,4 +248,9 @@ export interface SCCourseType {
    * The course type
    */
   type: SCCourseTypologyType;
+
+  /**
+   * The category id
+   */
+  category?: number;
 }

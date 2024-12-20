@@ -19,7 +19,6 @@ import {
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {DateTimePickerTabs, LocalizationProvider, MobileDateTimePicker} from '@mui/x-date-pickers';
-import {FieldStateKeys, FieldStateValues} from '../EventForm/types';
 import {getNewDate} from '../EventForm/utils';
 import {SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
@@ -104,7 +103,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   };
   // HANDLERS
   const handleChangeDateTime = useCallback(
-    (value: FieldStateValues, name: FieldStateKeys) => {
+    (value: any, name: any) => {
       setField((prev) => ({...prev, [name]: value}));
       if (error[`${name}Error`]) {
         delete error[`${name}Error`];

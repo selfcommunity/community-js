@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCCoursePrivacyType, SCCourseSubscriptionStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
+import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {useCallback, useEffect, useMemo, useState} from 'react';
@@ -109,11 +109,14 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   const {scEvent} = useSCFetchEvent({id: courseId, course});
   const participantsAvailable = useMemo(
     () =>
-      scEvent?.privacy === SCCoursePrivacyType.PUBLIC ||
-      [SCCourseSubscriptionStatusType.SUBSCRIBED, SCCourseSubscriptionStatusType.GOING, SCCourseSubscriptionStatusType.NOT_GOING].indexOf(
+      scEvent?.privacy === SCEventPrivacyType.PUBLIC ||
+      [SCEventSubscriptionStatusType.SUBSCRIBED, SCEventSubscriptionStatusType.GOING, SCEventSubscriptionStatusType.NOT_GOING].indexOf(
         scEvent?.subscription_status
       ) > -1,
     [scEvent]

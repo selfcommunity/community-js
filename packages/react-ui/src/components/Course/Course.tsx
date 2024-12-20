@@ -156,7 +156,10 @@ export default function Course(inProps: CourseProps): JSX.Element {
   } = props;
 
   // STATE
-  const {scEvent} = useSCFetchEvent({id: courseId, course, autoSubscribe: false});
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  const {scEvent} = useSCFetchEvent({id: courseId, course});
   const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
 
   // CONTEXT
@@ -194,6 +197,8 @@ export default function Course(inProps: CourseProps): JSX.Element {
         </Box>
       );
     } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       const progress = ((currentDate - startDate) / (endDate - startDate)) * 100;
       return (
         <Box className={classes.previewProgressStatus}>
@@ -241,7 +246,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            {isCourseAdmin ? <CourseParticipantsButton course={scEvent} {...CourseParticipantsButtonComponentProps} /> : renderProgress()}
+            {isCourseAdmin ? <CourseParticipantsButton course={scEvent as any} {...CourseParticipantsButtonComponentProps} /> : renderProgress()}
           </CardActions>
         )}
       </PreviewRoot>

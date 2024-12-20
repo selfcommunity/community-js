@@ -11,7 +11,7 @@ import {FormattedMessage} from 'react-intl';
 import {getLesson} from '../data';
 import FieldName from './FieldName';
 import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import LessonReleaseMenu from '../../LessonReleaseMenu';
 import {SCCourseType} from '@selfcommunity/types';

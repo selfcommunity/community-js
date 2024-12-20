@@ -7,7 +7,7 @@ import MenuRow from './MenuRow';
 import {setStatus} from '../data';
 import {Status} from '../types';
 import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 
