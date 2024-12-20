@@ -7,13 +7,13 @@ import {
   GridProps,
   Icon,
   IconButton,
-  InputAdornment,
+  InputAdornment, Stack,
   styled,
   TextField,
   Typography,
   useMediaQuery,
   useTheme,
-  useThemeProps
+  useThemeProps,
 } from '@mui/material';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {
@@ -22,10 +22,9 @@ import {
   SCPreferencesContextType,
   SCThemeType,
   SCUserContext,
-  SCUserContextType,
-  UserUtils
+  SCUserContextType
 } from '@selfcommunity/react-core';
-import {SCCategoryType, SCCourseDateFilterType, SCCourseLocationFilterType, SCCourseSubscriptionStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCCategoryType, SCCourseDateFilterType, SCCourseSubscriptionStatusType, SCCourseType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -34,8 +33,7 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
-import CreateCourseButton from '../CreateCourseButton';
-import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from '../Course';
+import Course, {CourseProps, CourseSkeletonProps} from '../Course';
 import Skeleton, {CoursesSkeletonProps} from '../Courses/Skeleton';
 import {PREFIX} from './constants';
 import {SCCourseTemplateType} from '../../types/course';
@@ -49,24 +47,15 @@ const classes = {
   item: `${PREFIX}-item`,
   itemPlaceholder: `${PREFIX}-item-placeholder`,
   noResults: `${PREFIX}-no-results`,
-  studentView: `${PREFIX}-student-view`,
-  teacherView: `${PREFIX}-teacher-view`,
+  studentEmptyView: `${PREFIX}-student-empty-view`,
+  teacherEmptyView: `${PREFIX}-teacher-empty-view`,
+  emptyBox: `${PREFIX}-empty-box`,
+  emptyRotatedBox: `${PREFIX}-empty-rotated-box`,
+  emptyIcon: `${PREFIX}-empty-icon`,
   showMore: `${PREFIX}-show-more`,
   search: `${PREFIX}-search`,
   category: `${PREFIX}-category`
 };
-
-const options = [
-  {value: SCCourseDateFilterType.ANY, label: <FormattedMessage id="ui.courses.select.any" defaultMessage="ui.courses.select.any" />},
-  {value: SCCourseDateFilterType.TODAY, label: <FormattedMessage id="ui.courses.select.today" defaultMessage="ui.courses.select.today" />},
-  {value: SCCourseDateFilterType.TOMORROW, label: <FormattedMessage id="ui.courses.select.tomorrow" defaultMessage="ui.courses.select.tomorrow" />},
-  {value: SCCourseDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.courses.select.thisWeek" defaultMessage="ui.courses.select.thisWeek" />},
-  {value: SCCourseDateFilterType.NEXT_WEEK, label: <FormattedMessage id="ui.courses.select.nextWeek" defaultMessage="ui.courses.select.nextWeek" />},
-  {
-    value: SCCourseDateFilterType.THIS_MONTH,
-    label: <FormattedMessage id="ui.courses.select.thisMonth" defaultMessage="ui.courses.select.thisMonth" />
-  }
-];
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -241,7 +230,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   /**
    * Fetches courses list
    */
-  const fetchCourses = (search?: boolean) => {
+  const fetchCourses = () => {
     setLoading(true);
     return http
       .request({
@@ -251,7 +240,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           ...endpointQueryParams,
           ...(general
             ? {
-                ...(search && {search: query}),
+                ...(query && {search: query}),
                 ...(showForMe && {follows: showForMe})
               }
             : {
@@ -277,9 +266,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     if (!contentAvailability && !authUserId) {
       return;
     } else {
-      query === '' && fetchCourses();
+      fetchCourses();
     }
-  }, [contentAvailability, authUserId, location, showForMe, showMyCourses, query]);
+  }, [contentAvailability, authUserId, location, showForMe, showMyCourses]);
 
   /**
    * Subscriber for pubsub callback
@@ -382,18 +371,18 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   label={<FormattedMessage id="ui.courses.filterByName" defaultMessage="ui.courses.filterByName" />}
                   variant="outlined"
                   onChange={handleOnChangeFilterName}
-                  disabled={loading || (!courses.length && !query)}
+                  disabled={loading}
                   onKeyUp={(e) => {
                     e.preventDefault();
                     if (e.key === 'Enter') {
-                      fetchCourses(true);
+                      fetchCourses();
                     }
                   }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
                         {isMobile ? (
-                          <IconButton onClick={() => fetchCourses(true)} disabled={loading || (!courses.length && !query)}>
+                          <IconButton onClick={() => fetchCourses()} disabled={loading}>
                             <Icon>search</Icon>
                           </IconButton>
                         ) : (
@@ -401,9 +390,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                             size="small"
                             variant="contained"
                             color="secondary"
-                            onClick={() => fetchCourses(true)}
+                            onClick={() => fetchCourses()}
                             endIcon={<Icon>search</Icon>}
-                            disabled={loading || (!courses.length && !query)}
+                            disabled={loading}
                           />
                         )}
                       </InputAdornment>
@@ -427,7 +416,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     showForMe={showForMe}
                     deleteIcon={showForMe ? <Icon>close</Icon> : null}
                     onDelete={showForMe ? handleDeleteClick : null}
-                    disabled={loading || (!courses.length && !showForMe)}
+                    disabled={loading}
                   />
                 </Grid>
               )}
@@ -443,8 +432,14 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
             {!courses.length ? (
               <Box className={classes.noResults}>
                 {general ? (
-                  <Box className={classes.studentView}>
-                    <Icon>courses</Icon>
+                  <Stack className={classes.studentEmptyView}>
+                    <Stack className={classes.emptyBox}>
+                      <Stack className={classes.emptyRotatedBox}>
+                        <Icon className={classes.emptyIcon} color="disabled" fontSize="large">
+                          courses
+                        </Icon>
+                      </Stack>
+                    </Stack>
                     <Typography variant="h5" textAlign="center">
                       <FormattedMessage id="ui.courses.empty.title" defaultMessage="ui.courses.empty.title" />
                     </Typography>
@@ -457,9 +452,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                       CourseSkeletonProps={CourseSkeletonComponentProps}
                       GridItemComponentProps={{md: 2}}
                     />
-                  </Box>
+                  </Stack>
                 ) : (
-                  <Box className={classes.teacherView}>
+                  <Box className={classes.teacherEmptyView}>
                     <Skeleton
                       teacherView={true}
                       coursesNumber={4}

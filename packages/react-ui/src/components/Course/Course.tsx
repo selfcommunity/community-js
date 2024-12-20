@@ -214,7 +214,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
       );
     }
   };
-
+  //TODO: aggiungere tipo corso: calendarizzato, programmato, autodidatta
   /**
    * Renders course object
    */
@@ -228,9 +228,11 @@ export default function Course(inProps: CourseProps): JSX.Element {
           <Avatar alt={scEvent.name} src={scEvent.image_medium} className={classes.previewAvatar} />
         </Box>
         <CardContent className={classes.previewContent}>
-          <Typography className={classes.previewCreator}>{scEvent.created_by.username}</Typography>
+          <Typography variant="body2" className={classes.previewCreator}>
+            {scEvent.created_by.username}
+          </Typography>
           <Box className={classes.previewNameWrapper}>
-            <Typography variant="h5" className={classes.previewName}>
+            <Typography variant="h6" className={classes.previewName}>
               {scEvent.name}
             </Typography>
           </Box>

@@ -36,6 +36,8 @@ const messages = defineMessages({
 const classes = {
   root: `${PREFIX}-root`,
   title: `${PREFIX}-title`,
+  card: `${PREFIX}-card`,
+  selected: `${PREFIX}-selected`,
   cover: `${PREFIX}-cover`,
   frequency: `${PREFIX}-frequency`,
   form: `${PREFIX}-form`,
@@ -263,10 +265,10 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         {_step === SCCourseFormStepType.ONE && (
           <>
             {Object.values(SCCourseTypologyType).map((option, index) => (
-              <Card key={index}>
+              <Card className={classNames(classes.card, {[classes.selected]: option === field.type})} key={index}>
                 <CardActionArea onClick={() => setField((prev) => ({...prev, ['type']: option}))}>
                   <CardContent>
-                    <Typography variant="h5">
+                    <Typography variant="subtitle2">
                       <FormattedMessage id={`ui.courseForm.${option}.title`} defaultMessage={`ui.courseForm.${option}.title`} />
                     </Typography>
                     <Typography variant="body2">

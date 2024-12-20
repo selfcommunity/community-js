@@ -56,16 +56,12 @@ const Component = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        '& .SCCourses-student-view': {
-          marginTop: theme.spacing(3),
-          width: '100%',
-          '& .MuiIcon-root': {
-            textAlign: 'center',
-            fontSize: theme.spacing(8),
-            color: '#B4B4B4',
-            marginBottom: theme.spacing(3),
-            width: '100%'
-          },
+        '& .SCCourses-student-empty-view': {
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '10px',
+          padding: theme.spacing(3),
+          marginTop: '9px',
           '& h5': {
             fontWeight: theme.typography.fontWeightBold,
             marginBottom: theme.spacing(0.5)
@@ -75,9 +71,32 @@ const Component = {
             [theme.breakpoints.down('md')]: {
               width: '100%'
             }
+          },
+          '& .SCCourses-empty-box': {
+            width: '130px',
+            height: '130px',
+            border: `2px solid ${theme.palette.grey[300]}`,
+            borderRadius: '20px',
+            marginBottom: '10px',
+
+            '& .SCCourses-empty-rotated-box': {
+              width: 'inherit',
+              height: 'inherit',
+              border: 'inherit',
+              borderRadius: 'inherit',
+              transform: 'rotate(-25deg)',
+              alignItems: 'center',
+              justifyContent: 'center',
+
+              '& .SCCourses-empty-icon': {
+                transform: 'rotate(25deg)',
+                fontSize: theme.spacing(8),
+                color: theme.palette.grey[400]
+              }
+            }
           }
         },
-        '& .SCCourses-teacher-view': {
+        '& .SCCourses-teacher-empty-view': {
           width: '100%',
           '& .SCCourses-skeleton-item': {
             minWidth: '250px',

@@ -76,14 +76,13 @@ const Component = {
       '& .SCCourse-preview-content': {
         padding: `16px ${theme.spacing(2)} 0 !important`,
         '& .SCCourse-preview-creator': {
-          fontSize: '0.875rem',
+          paddingTop: 0,
           marginBottom: theme.spacing(0.5)
         },
         '& .SCCourse-preview-name-wrapper': {
           textDecoration: 'none',
           color: 'inherit',
           '& .SCCourse-preview-name': {
-            fontSize: '1rem',
             marginBottom: theme.spacing(0.5)
           }
         },

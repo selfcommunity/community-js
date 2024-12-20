@@ -7,6 +7,7 @@ const Component = {
         position: 'relative',
         height: 103,
         minHeight: 103,
+        borderRadius: '10px',
         '& .SCCourseForm-upload-course-cover-root': {
           position: 'absolute',
           right: theme.spacing(2),
@@ -23,16 +24,11 @@ const Component = {
         '& h5': {
           padding: theme.spacing(1)
         },
-        '& .SCCourseForm-date-time': {
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: theme.spacing(1),
-          marginTop: theme.spacing(2),
-          marginBottom: theme.spacing(1.5),
-          '& .MuiInputBase-root': {
-            paddingLeft: theme.spacing(0.5)
-          }
+        '& .SCCourseForm-name': {
+          marginTop: theme.spacing(3)
+        },
+        '& .SCCategoryAutocomplete-root ': {
+          marginTop: theme.spacing(1)
         },
         '& .SCCourseForm-edit-root': {
           marginTop: theme.spacing(1),
@@ -89,10 +85,20 @@ const Component = {
         justifyContent: 'center',
         gap: theme.spacing(2.5),
         marginTop: theme.spacing(1.5),
+        '& .SCCourseForm-selected': {
+          backgroundColor: alpha(theme.palette.success.main, theme.palette.action.selectedOpacity),
+          border: `1px solid ${theme.palette.success.main} !important`,
+          '&:hover': {
+            backgroundColor: alpha(theme.palette.success.main, theme.palette.action.selectedOpacity)
+          }
+        },
         '& .MuiCard-root': {
           boxShadow: 'none',
           border: `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '10px',
+          '&:hover': {
+            backgroundColor: theme.palette.grey[200]
+          },
           '& .MuiCardContent-root': {
             '& .MuiTypography-h5': {
               fontWeight: theme.typography.fontWeightBold

@@ -488,6 +488,8 @@
   "ui.course.placeholder.title": "Titolo del corso {number}",
   "ui.course.placeholder.subtitle": "Tipologia del corso",
   "ui.courseParticipantsButton.participants": "{total} partecipanti",
+  "ui.courseParticipantsButton.dialogTitle": "Partecipanti ({total})",
+  "ui.courseParticipantsButton.noOtherParticipants": "Non ci sono altri partecipanti.",
   "ui.createCourseButton": "Crea Corso",
   "ui.createEventButton": "Crea Evento",
   "ui.createGroupButton": "Crea",

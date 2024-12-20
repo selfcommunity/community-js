@@ -10,7 +10,7 @@ const Component = {
       },
 
       '& .MuiAvatarGroup-root': {
-        '&:not(.SCAvatarGroupSkeleton-root) .MuiAvatar-root': {
+        '&:not(.SCAvatarCourseSkeleton-root) .MuiAvatar-root': {
           '&.MuiAvatar-colorDefault': {
             marginLeft: 0,
             backgroundColor: 'transparent',
@@ -37,6 +37,7 @@ const Component = {
       },
 
       '& .SCCourseParticipantsButton-participants': {
+        color: theme.palette.text.primary,
         '& .MuiIcon-root': {
           marginRight: theme.spacing(1)
         }

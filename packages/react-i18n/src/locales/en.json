@@ -487,6 +487,8 @@
   "ui.course.placeholder.title": "Course Title {number}",
   "ui.course.placeholder.subtitle": "Course Type",
   "ui.courseParticipantsButton.participants": "{total} participants",
+  "ui.courseParticipantsButton.dialogTitle": "Participants ({total})",
+  "ui.courseParticipantsButton.noOtherParticipants": "No other participants",
   "ui.createCourseButton": "Create Course",
   "ui.createGroupButton": "Create",
   "ui.createEventButton": "Create Event",
