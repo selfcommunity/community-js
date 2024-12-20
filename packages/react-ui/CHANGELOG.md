@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.0...@selfcommunity/react-ui@0.10.5-alpha.1) (2024-12-19)
+
+
+### Performance Improvements
+
+* added it translation for cancel action in event form datetime pickers ([d7507bc](https://github.com/selfcommunity/community-js/commit/d7507bcd69f89296a67ce4f9d62859d93ea9e85b))
+
+
+
+
+
+## [0.10.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4...@selfcommunity/react-ui@0.10.5-alpha.0) (2024-12-19)
+
+
+### Bug Fixes
+
+* removed account delete button for community creator. Linear issue: https://linear.app/quentral/issue/QUE-1058/inibire-la-possibilita-di-cancellare-lutente-che-ha-creato-la ([460e9bb](https://github.com/selfcommunity/community-js/commit/460e9bbac899cef3d7b2ee55d88fd975bbf0e918))
+
+
+
+
+
 ## [0.10.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.17...@selfcommunity/react-ui@0.10.4) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

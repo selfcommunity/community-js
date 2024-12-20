@@ -343,6 +343,7 @@
   "ui.eventForm.time.end.placeholder": "End Time",
   "ui.eventForm.time.end.error.invalid": "The end time must be later than the start one.",
   "ui.eventForm.time.end.title": "Select Time",
+  "ui.eventForm.time.picker.cancel.placeholder": "Cancel",
   "ui.eventForm.frequency.label": "Frequency",
   "ui.eventForm.frequency.never.placeholder": "No Frequency",
   "ui.eventForm.frequency.daily.placeholder": "Daily",
