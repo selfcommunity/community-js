@@ -93,7 +93,8 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       Boolean(
         !scEvent ||
           !scUserContext.user ||
-          (scEvent.live_stream.host.id !== scUserContext.user.id &&
+          (scEvent.live_stream &&
+            scEvent.live_stream.host.id !== scUserContext.user.id &&
             (scEvent.live_stream.closed_at_by_host || (scEvent.live_stream.last_started_at && scEvent.live_stream.last_finished_at)))
       ),
     [scUserContext.user, scEvent]
