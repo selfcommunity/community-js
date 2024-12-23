@@ -31,16 +31,16 @@ function Empty(props: EmptyProps) {
       </Stack>
 
       <Typography variant="body1">
-        <FormattedMessage id="ui.editCourse.table.empty.title" defaultMessage="ui.editCourse.table.empty.title" />
+        <FormattedMessage id="ui.editCourse.tab.lessons.table.empty.title" defaultMessage="ui.editCourse.tab.lessons.table.empty.title" />
       </Typography>
 
       <Typography variant="body1">
-        <FormattedMessage id="ui.editCourse.table.empty.description" defaultMessage="ui.editCourse.table.empty.description" />
+        <FormattedMessage id="ui.editCourse.tab.lessons.table.empty.description" defaultMessage="ui.editCourse.tab.lessons.table.empty.description" />
       </Typography>
 
       <AddButton
         className={classes.emptyButton}
-        label="ui.editCourse.table.section"
+        label="ui.editCourse.tab.lessons.table.section"
         handleAddRow={handleAddSection}
         color="inherit"
         variant="outlined"

@@ -164,8 +164,8 @@ function Lessons(props: LessonsProps) {
 
           <Typography variant="body2">
             <FormattedMessage
-              id="ui.editCourse.lessons.typeOfCourse"
-              defaultMessage="ui.editCourse.lessons.typeOfCourse"
+              id="ui.editCourse.tab.lessons.typeOfCourse"
+              defaultMessage="ui.editCourse.tab.lessons.typeOfCourse"
               values={{
                 typeOfCourse: intl.formatMessage({
                   id: `ui.typeOfCourse.${LESSONS_DATA.typeOfCourse}`,
@@ -180,8 +180,8 @@ function Lessons(props: LessonsProps) {
           label={
             <Typography variant="body1">
               <FormattedMessage
-                id="ui.editCourse.lessons.status"
-                defaultMessage="ui.editCourse.lessons.status"
+                id="ui.editCourse.tab.lessons.status"
+                defaultMessage="ui.editCourse.tab.lessons.status"
                 values={{
                   status: intl.formatMessage({
                     id: `ui.statusCourse.${LESSONS_DATA.statusCourse}`,
@@ -205,8 +205,8 @@ function Lessons(props: LessonsProps) {
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
                 <FormattedMessage
-                  id="ui.editCourse.sections.title"
-                  defaultMessage="ui.editCourse.sections.title"
+                  id="ui.editCourse.tab.lessons.table.sections.title"
+                  defaultMessage="ui.editCourse.tab.lessons.table.sections.title"
                   values={{
                     sectionsNumber: sections.length
                   }}
@@ -217,8 +217,8 @@ function Lessons(props: LessonsProps) {
 
               <Typography variant="h5">
                 <FormattedMessage
-                  id="ui.editCourse.lessons.title"
-                  defaultMessage="ui.editCourse.lessons.title"
+                  id="ui.editCourse.tab.lessons.table.lessons.title"
+                  defaultMessage="ui.editCourse.tab.lessons.table.lessons.title"
                   values={{
                     lessonsNumber: lessons
                   }}
@@ -226,7 +226,7 @@ function Lessons(props: LessonsProps) {
               </Typography>
             </Stack>
 
-            <AddButton label="ui.editCourse.table.section" handleAddRow={handleAddSection} color="primary" variant="contained" />
+            <AddButton label="ui.editCourse.tab.lessons.table.section" handleAddRow={handleAddSection} color="primary" variant="contained" />
           </Stack>
 
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -237,17 +237,26 @@ function Lessons(props: LessonsProps) {
                     <TableCell className={classes.cellWidth} />
                     <TableCell>
                       <Typography className={classes.tableHeaderTypography} variant="overline">
-                        <FormattedMessage id="ui.editCourse.table.header.lessonName" defaultMessage="ui.editCourse.table.header.lessonName" />
+                        <FormattedMessage
+                          id="ui.editCourse.tab.lessons.table.header.lessonName"
+                          defaultMessage="ui.editCourse.tab.lessons.table.header.lessonName"
+                        />
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.cellAlignCenter}>
                       <Typography className={classes.tableHeaderTypography} variant="overline">
-                        <FormattedMessage id="ui.editCourse.table.header.calendar" defaultMessage="ui.editCourse.table.header.calendar" />
+                        <FormattedMessage
+                          id="ui.editCourse.tab.lessons.table.header.calendar"
+                          defaultMessage="ui.editCourse.tab.lessons.table.header.calendar"
+                        />
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.cellAlignRight}>
                       <Typography className={classes.tableHeaderTypography} variant="overline">
-                        <FormattedMessage id="ui.editCourse.table.header.actions" defaultMessage="ui.editCourse.table.header.actions" />
+                        <FormattedMessage
+                          id="ui.editCourse.tab.lessons.table.header.actions"
+                          defaultMessage="ui.editCourse.tab.lessons.table.header.actions"
+                        />
                       </Typography>
                     </TableCell>
                   </TableRow>
