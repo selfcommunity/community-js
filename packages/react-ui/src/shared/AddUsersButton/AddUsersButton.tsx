@@ -10,7 +10,8 @@ import {
   Stack,
   styled,
   TextField,
-  Typography
+  Typography,
+  useThemeProps
 } from '@mui/material';
 import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -84,8 +85,13 @@ export interface AddUsersButtonProps extends ButtonProps {
   [p: string]: any;
 }
 
-function AddUsersButton(props: AddUsersButtonProps) {
+function AddUsersButton(inProps: AddUsersButtonProps) {
   // PROPS
+  const props: AddUsersButtonProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
   const {
     label,
     variant = 'outlined',
