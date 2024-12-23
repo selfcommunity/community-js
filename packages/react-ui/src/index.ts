@@ -177,6 +177,7 @@ import {
   MEDIA_TYPE_URL,
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
+import AddUsersButton, {AddUsersButtonProps} from './shared/AddUsersButton';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
@@ -466,6 +467,8 @@ export {
   GroupSubscribeButton,
   GroupSubscribeButtonProps,
   /* SC UI SHARED */
+  AddUsersButton,
+  AddUsersButtonProps,
   HiddenPlaceholder,
   Incubator,
   IncubatorDetail,
