@@ -476,7 +476,6 @@
   "ui.courses.noMore": "There are no other Courses at the moment.",
   "ui.courses.filterByCreatedByMe": "Created by me",
   "ui.courses.filterByName": "Search Course",
-  "ui.courses.filterAll": "All courses",
   "ui.courses.filterByCoursesForMe": "Courses for me",
   "ui.courses.button.seeMore": "See more",
   "ui.courseStatus.new": "NEW",

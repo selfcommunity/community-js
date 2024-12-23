@@ -7,13 +7,14 @@ import {
   GridProps,
   Icon,
   IconButton,
-  InputAdornment, Stack,
+  InputAdornment,
+  Stack,
   styled,
   TextField,
   Typography,
   useMediaQuery,
   useTheme,
-  useThemeProps,
+  useThemeProps
 } from '@mui/material';
 import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
 import {
@@ -24,7 +25,7 @@ import {
   SCUserContext,
   SCUserContextType
 } from '@selfcommunity/react-core';
-import {SCCategoryType, SCCourseDateFilterType, SCCourseSubscriptionStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCCategoryType, SCCourseSubscriptionStatusType, SCCourseType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -128,11 +129,6 @@ export interface CoursesProps {
    */
   filters?: JSX.Element;
 
-  /** If true, it means that the endpoint fetches all courses available
-   * @default true
-   */
-  general?: boolean;
-
   /**
    * Other props
    */
@@ -184,7 +180,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     GridItemComponentProps = {},
     showFilters = false,
     filters,
-    general = true,
     ...rest
   } = props;
 
@@ -196,6 +191,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const [category, setCategory] = useState<SCCategoryType>(null);
   const [showForMe, setShowForMe] = useState<boolean>(false);
   const [showMyCourses, setShowMyCourses] = useState<boolean>(false);
+  const teacherView = false;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -238,15 +234,10 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
         method: endpoint.method,
         params: {
           ...endpointQueryParams,
-          ...(general
-            ? {
-                ...(query && {search: query}),
-                ...(showForMe && {follows: showForMe})
-              }
-            : {
-                subscription_status: SCCourseSubscriptionStatusType.GOING,
-                ...(showMyCourses && {created_by: authUserId})
-              })
+          ...(query && {search: query}),
+          ...(showForMe && {follows: showForMe}),
+          subscription_status: SCCourseSubscriptionStatusType.GOING,
+          ...(showMyCourses && {created_by: authUserId})
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -305,7 +296,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
       return http
         .request({
           url: next,
-          method: general ? Endpoints.SearchEvents.method : Endpoints.GetUserCourses.method
+          method: !teacherView ? Endpoints.SearchEvents.method : Endpoints.GetUserCourses.method
         })
         .then((res: HttpResponse<any>) => {
           setCourses([...courses, ...res.data.results]);
@@ -342,24 +333,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
         <Grid container className={classes.filters} gap={2}>
           {filters ? (
             filters
-          ) : !general ? (
-            <>
-              {(courses.length !== 0 || (courses.length === 0 && showMyCourses)) && (
-                <Grid item>
-                  <CoursesChipRoot
-                    color={showMyCourses ? 'secondary' : 'default'}
-                    variant={showMyCourses ? 'filled' : 'outlined'}
-                    label={<FormattedMessage id="ui.courses.filterByCreatedByMe" defaultMessage="ui.courses.filterByCreatedByMe" />}
-                    onClick={() => setShowMyCourses(!showMyCourses)}
-                    // @ts-expect-error this is needed to use showForMe into SCCourses
-                    showForMe={showMyCourses}
-                    deleteIcon={showMyCourses ? <Icon>close</Icon> : null}
-                    onDelete={showMyCourses ? handleDeleteClick : null}
-                    disabled={loading}
-                  />
-                </Grid>
-              )}
-            </>
           ) : (
             <>
               <Grid item xs={12} md={3}>
@@ -400,6 +373,21 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   }}
                 />
               </Grid>
+              {teacherView && (
+                <Grid item>
+                  <CoursesChipRoot
+                    color={showMyCourses ? 'primary' : 'default'}
+                    variant={showMyCourses ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.courses.filterByCreatedByMe" defaultMessage="ui.courses.filterByCreatedByMe" />}
+                    onClick={() => setShowMyCourses(!showMyCourses)}
+                    // @ts-expect-error this is needed to use showForMe into SCCourses
+                    showForMe={showMyCourses}
+                    deleteIcon={showMyCourses ? <Icon>close</Icon> : null}
+                    onDelete={showMyCourses ? handleDeleteClick : null}
+                    disabled={loading}
+                  />
+                </Grid>
+              )}
               <Grid item xs={12} md={2}>
                 <FormControl fullWidth>
                   <CategoryAutocomplete onChange={handleOnChangeCategory} className={classes.category} size="small" />
@@ -408,7 +396,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
               {authUserId && (
                 <Grid item>
                   <CoursesChipRoot
-                    color={showForMe ? 'secondary' : 'default'}
+                    color={showForMe ? 'primary' : 'default'}
                     variant={showForMe ? 'filled' : 'outlined'}
                     label={<FormattedMessage id="ui.courses.filterByCoursesForMe" defaultMessage="ui.courses.filterByCoursesForMe" />}
                     onClick={handleChipClick}
@@ -431,7 +419,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           <>
             {!courses.length ? (
               <Box className={classes.noResults}>
-                {general ? (
+                {!teacherView ? (
                   <Stack className={classes.studentEmptyView}>
                     <Stack className={classes.emptyBox}>
                       <Stack className={classes.emptyRotatedBox}>
