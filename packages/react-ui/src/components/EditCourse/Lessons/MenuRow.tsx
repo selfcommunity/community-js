@@ -1,13 +1,13 @@
 import Menu from '@mui/material/Menu';
 import {Icon, IconButton} from '@mui/material';
-import {Fragment, HTMLAttributes, MouseEvent, PropsWithChildren, ReactNode, useCallback, useState} from 'react';
+import {Fragment, HTMLAttributes, memo, MouseEvent, PropsWithChildren, ReactNode, useCallback, useState} from 'react';
 
 interface MenuRowProps extends PropsWithChildren {
   icon?: ReactNode;
   buttonClassName?: HTMLAttributes<HTMLButtonElement>['className'];
 }
 
-export default function MenuRow(props: MenuRowProps) {
+function MenuRow(props: MenuRowProps) {
   // PROPS
   const {icon = <Icon>more_vert</Icon>, buttonClassName, children} = props;
 
@@ -38,3 +38,5 @@ export default function MenuRow(props: MenuRowProps) {
     </Fragment>
   );
 }
+
+export default memo(MenuRow);

@@ -1,5 +1,5 @@
 import {DragDropContext, Draggable, DraggableProvided, Droppable, DropResult} from '@hello-pangea/dnd';
-import {Fragment, useCallback, useState} from 'react';
+import {Fragment, memo, useCallback, useState} from 'react';
 import {Collapse, Icon, IconButton, MenuItem, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
@@ -36,7 +36,7 @@ interface SectionRowProps {
   handleRenameSection: (oldId: number, newName: string) => void;
 }
 
-export default function SectionRow(props: SectionRowProps) {
+function SectionRow(props: SectionRowProps) {
   // PROPS
   const {course, provider, section, handleUpdateSection, handleDeleteSection, handleRenameSection} = props;
 
@@ -208,3 +208,5 @@ export default function SectionRow(props: SectionRowProps) {
     </Fragment>
   );
 }
+
+export default memo(SectionRow);

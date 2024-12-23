@@ -1,7 +1,7 @@
 import {Box, Chip, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, useCallback, useEffect, useState} from 'react';
+import {Fragment, memo, useCallback, useEffect, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 import {checkSections, getSection, LESSONS_DATA} from './data';
 import SectionRow from './Lessons/SectionRow';
@@ -36,7 +36,7 @@ interface LessonsProps {
   course: SCCourseType;
 }
 
-export default function Lessons(props: LessonsProps) {
+function Lessons(props: LessonsProps) {
   // PROPS
   const {course} = props;
 
@@ -283,3 +283,5 @@ export default function Lessons(props: LessonsProps) {
     </Box>
   );
 }
+
+export default memo(Lessons);

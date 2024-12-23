@@ -1,5 +1,5 @@
 import {FormControl, FormControlLabel, FormLabel, Switch, Typography} from '@mui/material';
-import {ChangeEvent, useCallback, useState} from 'react';
+import {ChangeEvent, memo, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 interface SwitchFormProps {
@@ -10,7 +10,7 @@ interface SwitchFormProps {
   handleChangeOptions: (key: string, value: boolean) => void;
 }
 
-export default function SwitchForm(props: SwitchFormProps) {
+function SwitchForm(props: SwitchFormProps) {
   // PROPS
   const {name, title, description, checked, handleChangeOptions} = props;
 
@@ -46,3 +46,5 @@ export default function SwitchForm(props: SwitchFormProps) {
     </FormControl>
   );
 }
+
+export default memo(SwitchForm);

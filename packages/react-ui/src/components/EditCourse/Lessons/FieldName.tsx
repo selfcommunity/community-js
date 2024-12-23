@@ -1,6 +1,6 @@
 import {LoadingButton} from '@mui/lab';
 import {debounce, Icon, IconButton, Stack, TextField, Typography} from '@mui/material';
-import {ChangeEvent, Dispatch, Fragment, SetStateAction, useCallback, useState} from 'react';
+import {ChangeEvent, Dispatch, Fragment, memo, SetStateAction, useCallback, useState} from 'react';
 import {setRowName} from '../data';
 import {LessonRowInterface} from '../types';
 import {PREFIX} from '../constants';
@@ -22,7 +22,7 @@ interface FieldNameProps<T> {
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function FieldName<T extends LessonRowInterface>(props: FieldNameProps<T>) {
+function FieldName<T extends LessonRowInterface>(props: FieldNameProps<T>) {
   // PROPS
   const {row, handleRenameRow, editMode, setEditMode} = props;
 
@@ -97,3 +97,5 @@ export default function FieldName<T extends LessonRowInterface>(props: FieldName
     </Fragment>
   );
 }
+
+export default memo(FieldName);
