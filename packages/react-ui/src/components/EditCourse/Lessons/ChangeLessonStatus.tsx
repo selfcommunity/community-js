@@ -25,7 +25,7 @@ export default function ChangeLessonStatus() {
 
   // STATES
   const [value, setValue] = useState(
-    intl.formatMessage({id: 'ui.editCourse.table.select.draft', defaultMessage: 'ui.editCourse.table.select.draft'})
+    intl.formatMessage({id: 'ui.editCourse.tab.lessons.table.select.draft', defaultMessage: 'ui.editCourse.tab.lessons.table.select.draft'})
   );
   const [loading, setLoading] = useState(false);
 
@@ -33,25 +33,37 @@ export default function ChangeLessonStatus() {
   const options = useMemo(
     () => [
       {
-        id: 'ui.editCourse.table.select.draft',
-        value: intl.formatMessage({id: 'ui.editCourse.table.select.draft', defaultMessage: 'ui.editCourse.table.select.draft'})
+        id: 'ui.editCourse.tab.lessons.table.select.draft',
+        value: intl.formatMessage({
+          id: 'ui.editCourse.tab.lessons.table.select.draft',
+          defaultMessage: 'ui.editCourse.tab.lessons.table.select.draft'
+        })
       },
       {
-        id: 'ui.editCourse.table.select.published',
-        value: intl.formatMessage({id: 'ui.editCourse.table.select.published', defaultMessage: 'ui.editCourse.table.select.published'})
+        id: 'ui.editCourse.tab.lessons.table.select.published',
+        value: intl.formatMessage({
+          id: 'ui.editCourse.tab.lessons.table.select.published',
+          defaultMessage: 'ui.editCourse.tab.lessons.table.select.published'
+        })
       }
     ],
     []
   );
 
   const hasPublished = useMemo(
-    () => value === intl.formatMessage({id: 'ui.editCourse.table.select.published', defaultMessage: 'ui.editCourse.table.select.published'}),
+    () =>
+      value ===
+      intl.formatMessage({
+        id: 'ui.editCourse.tab.lessons.table.select.published',
+        defaultMessage: 'ui.editCourse.tab.lessons.table.select.published'
+      }),
     [value]
   );
 
   const icon = useMemo(
     () =>
-      value === intl.formatMessage({id: 'ui.editCourse.table.select.draft', defaultMessage: 'ui.editCourse.table.select.draft'}) ? (
+      value ===
+      intl.formatMessage({id: 'ui.editCourse.tab.lessons.table.select.draft', defaultMessage: 'ui.editCourse.tab.lessons.table.select.draft'}) ? (
         <Box className={classes.changeLessonStatusIconDraft} />
       ) : (
         <Icon>circle_checked</Icon>

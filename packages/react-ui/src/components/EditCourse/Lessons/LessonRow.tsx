@@ -53,22 +53,22 @@ function LessonRow(props: LessonRowProps) {
           <MenuRow>
             <MenuItem>
               <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.table.menu.edit" defaultMessage="ui.editCourse.table.menu.edit" />
+                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
             <MenuItem>
               <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.table.menu.view" defaultMessage="ui.editCourse.table.menu.view" />
+                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.view" defaultMessage="ui.editCourse.tab.lessons.table.menu.view" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleSetEditMode}>
               <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.table.menu.rename" defaultMessage="ui.editCourse.table.menu.rename" />
+                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={() => handleDeleteLesson(lesson.id)}>
               <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.table.menu.delete" defaultMessage="ui.editCourse.table.menu.delete" />
+                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
               </Typography>
             </MenuItem>
           </MenuRow>

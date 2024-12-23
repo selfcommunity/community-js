@@ -21,15 +21,15 @@ const classes = {
 const OPTIONS = {
   options: {
     title: 'ui.editCourse.tab.options',
-    description: 'ui.editCourse.options.description'
+    description: 'ui.editCourse.tab.options.description'
   },
   notifications: {
-    title: 'ui.editCourse.options.notifications',
-    description: 'ui.editCourse.options.notifications.description'
+    title: 'ui.editCourse.tab.options.notifications',
+    description: 'ui.editCourse.tab.options.notifications.description'
   },
   permissions: {
-    title: 'ui.editCourse.options.permissions',
-    description: 'ui.editCourse.options.permissions.description'
+    title: 'ui.editCourse.tab.options.permissions',
+    description: 'ui.editCourse.tab.options.permissions.description'
   }
 };
 
@@ -156,7 +156,7 @@ export default function Options() {
       <Stack className={classes.optionsButtonWrapper}>
         <LoadingButton size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
           <Typography variant="body1">
-            <FormattedMessage id="ui.editCourse.options.button.save" defaultMessage="ui.editCourse.options.button.save" />
+            <FormattedMessage id="ui.editCourse.tab.options.button.save" defaultMessage="ui.editCourse.tab.options.button.save" />
           </Typography>
         </LoadingButton>
       </Stack>

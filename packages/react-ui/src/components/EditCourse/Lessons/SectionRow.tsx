@@ -157,17 +157,17 @@ function SectionRow(props: SectionRowProps) {
         </TableCell>
         <TableCell className={classes.cellAlignRight}>
           <Stack className={classes.actionsWrapper}>
-            <AddButton label="ui.editCourse.table.lesson" handleAddRow={handleAddLesson} color="primary" variant="outlined" />
+            <AddButton label="ui.editCourse.tab.lessons.table.lesson" handleAddRow={handleAddLesson} color="primary" variant="outlined" />
 
             <MenuRow>
               <MenuItem onClick={handleSetEditMode}>
                 <Typography variant="body1">
-                  <FormattedMessage id="ui.editCourse.table.menu.rename" defaultMessage="ui.editCourse.table.menu.rename" />
+                  <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
                 </Typography>
               </MenuItem>
               <MenuItem onClick={() => handleDeleteSection(section.id)}>
                 <Typography variant="body1">
-                  <FormattedMessage id="ui.editCourse.table.menu.delete" defaultMessage="ui.editCourse.table.menu.delete" />
+                  <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
                 </Typography>
               </MenuItem>
             </MenuRow>
