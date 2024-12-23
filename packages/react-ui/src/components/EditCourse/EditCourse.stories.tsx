@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import EditCourse from './index';
+import {CoursePage} from './types';
 
 export default {
   title: 'Design System/React UI/Edit Course',
@@ -12,7 +13,7 @@ export default {
   },
   args: {
     page: 'lessons',
-    onChange() {},
+    onTabChange() {},
     className: ''
   },
   render: (args) => (

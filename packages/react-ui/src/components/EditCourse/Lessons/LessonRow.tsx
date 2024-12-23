@@ -3,7 +3,7 @@ import {Icon, MenuItem, Stack, TableCell, TableRow, Typography} from '@mui/mater
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import {LessonRowInterface} from '../types';
-import {useCallback, useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import MenuRow from './MenuRow';
 import {FormattedMessage} from 'react-intl';
 import FieldName from './FieldName';
@@ -24,7 +24,7 @@ interface LessonRowProps {
   handleRenameLesson: (oldId: number, newName: string) => void;
 }
 
-export default function LessonRow(props: LessonRowProps) {
+function LessonRow(props: LessonRowProps) {
   // PROPS
   const {provider, lesson, handleDeleteLesson, handleRenameLesson} = props;
 
@@ -77,3 +77,5 @@ export default function LessonRow(props: LessonRowProps) {
     </TableRow>
   );
 }
+
+export default memo(LessonRow);

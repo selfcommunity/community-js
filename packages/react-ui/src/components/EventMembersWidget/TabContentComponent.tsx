@@ -221,34 +221,32 @@ export default function TabContentComponent(props: TabComponentProps) {
         </Button>
       )}
 
-      {openDialog && (
-        <DialogRoot
-          className={classes.dialogRoot}
-          title={<FormattedMessage defaultMessage="ui.eventMembersWidget.title" id="ui.eventMembersWidget.title" />}
-          onClose={handleToggleDialogOpen}
-          open={openDialog}
-          {...dialogProps}>
-          <InfiniteScroll
-            dataLength={state.results.length}
-            next={handleNext}
-            hasMoreNext={Boolean(state.next)}
-            loaderNext={<UserSkeleton elevation={0} {...userProps} />}
-            className={classes.infiniteScroll}
-            endMessage={
-              <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.eventMembersWidget.noMoreResults" defaultMessage="ui.eventMembersWidget.noMoreResults" />
-              </Typography>
-            }>
-            <List>
-              {state.results.map((user: SCUserType) => (
-                <ListItem key={user.id}>
-                  <User elevation={0} user={user} {...userProps} />
-                </ListItem>
-              ))}
-            </List>
-          </InfiniteScroll>
-        </DialogRoot>
-      )}
+      <DialogRoot
+        className={classes.dialogRoot}
+        title={<FormattedMessage defaultMessage="ui.eventMembersWidget.title" id="ui.eventMembersWidget.title" />}
+        onClose={handleToggleDialogOpen}
+        open={openDialog}
+        {...dialogProps}>
+        <InfiniteScroll
+          dataLength={state.results.length}
+          next={handleNext}
+          hasMoreNext={Boolean(state.next)}
+          loaderNext={<UserSkeleton elevation={0} {...userProps} />}
+          className={classes.infiniteScroll}
+          endMessage={
+            <Typography className={classes.endMessage}>
+              <FormattedMessage id="ui.eventMembersWidget.noMoreResults" defaultMessage="ui.eventMembersWidget.noMoreResults" />
+            </Typography>
+          }>
+          <List>
+            {state.results.map((user: SCUserType) => (
+              <ListItem key={user.id}>
+                <User elevation={0} user={user} {...userProps} />
+              </ListItem>
+            ))}
+          </List>
+        </InfiniteScroll>
+      </DialogRoot>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import {Button, Divider, Stack, Typography} from '@mui/material';
+import {Divider, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
 import {useCallback, useEffect, useState} from 'react';
@@ -10,6 +10,7 @@ import {useSnackbar} from 'notistack';
 import SwitchForm from './Options/SwitchForm';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import OptionsSkeleton from './Options/Skeleton';
+import {LoadingButton} from '@mui/lab';
 
 const classes = {
   optionsWrapper: `${PREFIX}-options-wrapper`,
@@ -37,6 +38,7 @@ export default function Options() {
   const [options, setOptions] = useState<OptionsData | null>(null);
   const [tempOptions, setTempOptions] = useState<OptionsData | null>(null);
   const [canSave, setCanSave] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -96,12 +98,15 @@ export default function Options() {
   );
 
   const handleSubmit = useCallback(() => {
+    setLoading(true);
+
     setOptionsData(tempOptions)
       .then((data) => {
         if (data) {
           setOptions(data);
           setTempOptions(null);
           setCanSave(false);
+          setLoading(false);
 
           enqueueSnackbar(
             <FormattedMessage id="ui.contributionActionMenu.actionSuccess" defaultMessage="ui.contributionActionMenu.actionSuccess" />,
@@ -125,7 +130,7 @@ export default function Options() {
           autoHideDuration: 3000
         });
       });
-  }, [options, tempOptions, setCanSave]);
+  }, [options, tempOptions, setCanSave, setLoading]);
 
   if (!options) {
     return <OptionsSkeleton />;
@@ -149,11 +154,11 @@ export default function Options() {
       <Divider className={classes.optionsDivider} />
 
       <Stack className={classes.optionsButtonWrapper}>
-        <Button size="small" variant="contained" disabled={!canSave} onClick={handleSubmit}>
+        <LoadingButton size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
           <Typography variant="body1">
             <FormattedMessage id="ui.editCourse.options.button.save" defaultMessage="ui.editCourse.options.button.save" />
           </Typography>
-        </Button>
+        </LoadingButton>
       </Stack>
     </>
   );

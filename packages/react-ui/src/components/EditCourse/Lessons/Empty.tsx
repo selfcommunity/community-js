@@ -2,6 +2,7 @@ import {Icon, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AddButton from './AddButton';
 import {PREFIX} from '../constants';
+import {memo} from 'react';
 
 const classes = {
   emptyWrapper: `${PREFIX}-empty-wrapper`,
@@ -15,7 +16,7 @@ interface EmptyProps {
   handleAddSection: () => void;
 }
 
-export default function Empty(props: EmptyProps) {
+function Empty(props: EmptyProps) {
   // PROPS
   const handleAddSection = props.handleAddSection;
 
@@ -47,3 +48,5 @@ export default function Empty(props: EmptyProps) {
     </Stack>
   );
 }
+
+export default memo(Empty);

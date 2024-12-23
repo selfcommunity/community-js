@@ -22,6 +22,7 @@ import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
 import SCAccountReset from './components/SCAccountReset';
 import SCAccountVerify from './components/SCAccountVerify';
+import SCAddUsersButton from './components/SCAddUsersButton';
 import SCBaseDialog from './components/SCBaseDialog';
 import SCBaseItem from './components/SCBaseItem';
 import SCBaseItemButton from './components/SCBaseItemButton';
@@ -277,6 +278,7 @@ const theme = {
     SCAccountDelete,
     SCAccountReset,
     SCAccountVerify,
+    SCAddUsersButton,
     SCBaseDialog,
     SCBaseItem,
     SCBaseItemButton,
