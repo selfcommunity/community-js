@@ -9,29 +9,40 @@ import {
 } from '@selfcommunity/types';
 import {LessonRowInterface, OptionsData, SectionRowInterface, Status} from './types';
 
-const USER_DATA: SCUserType = {
-  id: 1,
-  username: '',
-  real_name: '',
-  bio: '',
-  date_joined: new Date(),
-  description: '',
-  avatar: '',
-  gender: '',
-  location: '',
-  reputation: 1,
-  tags: [],
-  website: '',
-  can_send_pm_to: false,
-  categories_counter: 1,
-  community_badge: false,
-  connection_requests_received_counter: 0,
-  connection_requests_sent_counter: 0,
-  connection_status: '',
-  connections_counter: 0
-};
+function getUserData(id: number, username: string, name: string): SCUserType {
+  return {
+    id,
+    username,
+    real_name: name,
+    bio: '',
+    date_joined: new Date(),
+    description: '',
+    avatar: '',
+    gender: '',
+    location: '',
+    reputation: 1,
+    tags: [],
+    website: '',
+    can_send_pm_to: false,
+    categories_counter: 1,
+    community_badge: false,
+    connection_requests_received_counter: 0,
+    connection_requests_sent_counter: 0,
+    connection_status: '',
+    connections_counter: 0
+  };
+}
 
-export const EDIT_COURSE_DATA: SCCourseType = {
+const USERS_DATA: SCUserType[] = [
+  getUserData(1, 'user1', 'Utente 1'),
+  getUserData(2, 'user2', 'Utente 2'),
+  getUserData(3, 'user3', 'Utente 3'),
+  getUserData(4, 'user4', 'Utente 4'),
+  getUserData(5, 'user5', 'Utente 5'),
+  getUserData(6, 'user6', 'Utente 6')
+];
+
+const EDIT_COURSE_DATA: SCCourseType = {
   id: 1,
   name: 'Accessori Moda',
   description: '',
@@ -39,8 +50,8 @@ export const EDIT_COURSE_DATA: SCCourseType = {
   active: true,
   color: '',
   created_at: '',
-  created_by: USER_DATA,
-  managed_by: USER_DATA,
+  created_by: getUserData(1, 'user1', 'Utente 1'),
+  managed_by: getUserData(1, 'user1', 'Utente 1'),
   start_date: '',
   end_date: '',
   next_start_date: '',
@@ -140,5 +151,23 @@ export async function getOptionsData(): Promise<OptionsData | null> {
 export async function setOptionsData(options: OptionsData): Promise<OptionsData | null> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(options), 300);
+  });
+}
+
+export async function getUsersToAdd(_id: number): Promise<SCUserType[] | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(USERS_DATA), 300);
+  });
+}
+
+export async function getUsersData(_id: number): Promise<SCUserType[] | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(null), 300);
+  });
+}
+
+export async function setUsersData(_id: number, users: SCUserType[]): Promise<SCUserType[] | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(users), 300);
   });
 }

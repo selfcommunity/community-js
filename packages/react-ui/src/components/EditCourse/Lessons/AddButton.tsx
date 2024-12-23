@@ -1,6 +1,6 @@
 import {Button, ButtonOwnProps, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
-import {Fragment, HTMLAttributes} from 'react';
+import {Fragment, HTMLAttributes, memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ interface AddButtonProps {
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-export default function AddButton(props: AddButtonProps) {
+function AddButton(props: AddButtonProps) {
   // PROPS
   const {label, handleAddRow, color, variant, className} = props;
 
@@ -48,3 +48,5 @@ export default function AddButton(props: AddButtonProps) {
     </Fragment>
   );
 }
+
+export default memo(AddButton);
