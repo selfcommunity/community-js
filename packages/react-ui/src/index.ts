@@ -71,6 +71,7 @@ import Footer, {FooterProps, FooterSkeleton} from './components/Footer';
 import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
 import Group, {GroupProps, GroupSkeleton} from './components/Group';
 import GroupActionsMenu, {GroupActionsMenuProps} from './components/GroupActionsMenu';
+import LessonCompletedDialog, {LessonCompletedDialogProps} from './components/LessonCompletedDialog';
 import GroupForm, {GroupFormProps} from './components/GroupForm';
 import GroupHeader, {GroupHeaderProps, GroupHeaderSkeleton} from './components/GroupHeader';
 import GroupInfoWidget, {GroupInfoWidgetProps, GroupInfoWidgetSkeleton} from './components/GroupInfoWidget';
@@ -488,6 +489,8 @@ export {
   InviteUserEventButtonProps,
   LanguageSwitcher,
   LEGAL_POLICIES,
+  LessonCompletedDialog,
+  LessonCompletedDialogProps,
   Lightbox,
   LightboxProps,
   Link,
