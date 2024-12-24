@@ -52,16 +52,19 @@ const Component = {
             flexDirection: 'row',
             alignItems: 'center',
             gap: theme.spacing(1)
-          },
-
-          '& .SCEditCourse-lesson-status': {
-            borderRadius: theme.spacing(1)
           }
         },
 
-        '& .SCEditCourse-empty-wrapper': {
+        '& .SCEditCourse-status': {
+          borderRadius: theme.spacing(1)
+        },
+
+        '& .SCEditCourse-lesson-empty-wrapper': {
           border: `1px solid ${theme.palette.grey[300]}`,
-          borderRadius: '5px',
+          borderRadius: '5px'
+        },
+
+        '& .SCEditCourse-empty-wrapper': {
           alignItems: 'center',
           justifyContent: 'center',
           gap: '10px',

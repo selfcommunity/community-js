@@ -1,24 +1,24 @@
-import {Box, Chip, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Box, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {Fragment, memo, useCallback, useEffect, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
-import {checkSections, getSection, LESSONS_DATA} from './data';
+import {getSections, getSection, LESSONS_DATA} from './data';
 import SectionRow from './Lessons/SectionRow';
 import AddButton from './Lessons/AddButton';
 import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from './types';
-import Empty from './Lessons/Empty';
+import Empty from './Empty';
 import {useSnackbar} from 'notistack';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Skeleton from './Lessons/Skeleton';
 import {SCCourseType} from '@selfcommunity/types';
+import Status from './Status';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
   lessonInfoWrapper: `${PREFIX}-lesson-info-wrapper`,
   lessonInfo: `${PREFIX}-lesson-info`,
-  lessonStatus: `${PREFIX}-lesson-status`,
   lessonsSectionsWrapper: `${PREFIX}-lessons-sections-wrapper`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -29,8 +29,25 @@ const classes = {
   tableBody: `${PREFIX}-table-body`,
   cellWidth: `${PREFIX}-cell-width`,
   cellAlignRight: `${PREFIX}-cell-align-right`,
-  cellAlignCenter: `${PREFIX}-cell-align-center`
+  cellAlignCenter: `${PREFIX}-cell-align-center`,
+  lessonEmptyWrapper: `${PREFIX}-lesson-empty-wrapper`,
+  emptyButton: `${PREFIX}-empty-button`
 };
+
+const headerCells = [
+  {
+    className: undefined,
+    id: 'ui.editCourse.tab.lessons.table.header.lessonName'
+  },
+  {
+    className: classes.cellAlignCenter,
+    id: 'ui.editCourse.tab.lessons.table.header.calendar'
+  },
+  {
+    className: classes.cellAlignRight,
+    id: 'ui.editCourse.tab.lessons.table.header.actions'
+  }
+];
 
 interface LessonsProps {
   course: SCCourseType;
@@ -46,13 +63,11 @@ function Lessons(props: LessonsProps) {
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
-
-  // INTL
   const intl = useIntl();
 
   // EFFECTS
   useEffect(() => {
-    checkSections()
+    getSections()
       .then((data) => {
         if (data) {
           setSections(data);
@@ -176,28 +191,28 @@ function Lessons(props: LessonsProps) {
           </Typography>
         </Stack>
 
-        <Chip
-          label={
-            <Typography variant="body1">
-              <FormattedMessage
-                id="ui.editCourse.tab.lessons.status"
-                defaultMessage="ui.editCourse.tab.lessons.status"
-                values={{
-                  status: intl.formatMessage({
-                    id: `ui.statusCourse.${LESSONS_DATA.statusCourse}`,
-                    defaultMessage: `ui.statusCourse.${LESSONS_DATA.statusCourse}`
-                  })
-                }}
-              />
-            </Typography>
-          }
-          className={classes.lessonStatus}
-        />
+        <Status />
       </Stack>
 
       {!sections && <Skeleton />}
 
-      {sections?.length === 0 && <Empty handleAddSection={handleAddSection} />}
+      {sections?.length === 0 && (
+        <Empty
+          icon="courses"
+          title="ui.editCourse.tab.lessons.table.empty.title"
+          description="ui.editCourse.tab.lessons.table.empty.description"
+          actions={
+            <AddButton
+              className={classes.emptyButton}
+              label="ui.editCourse.tab.lessons.table.section"
+              handleAddRow={handleAddSection}
+              color="inherit"
+              variant="outlined"
+            />
+          }
+          className={classes.lessonEmptyWrapper}
+        />
+      )}
 
       {sections?.length > 0 && (
         <Fragment>
@@ -235,30 +250,14 @@ function Lessons(props: LessonsProps) {
                 <TableHead className={classes.tableHeader}>
                   <TableRow>
                     <TableCell className={classes.cellWidth} />
-                    <TableCell>
-                      <Typography className={classes.tableHeaderTypography} variant="overline">
-                        <FormattedMessage
-                          id="ui.editCourse.tab.lessons.table.header.lessonName"
-                          defaultMessage="ui.editCourse.tab.lessons.table.header.lessonName"
-                        />
-                      </Typography>
-                    </TableCell>
-                    <TableCell className={classes.cellAlignCenter}>
-                      <Typography className={classes.tableHeaderTypography} variant="overline">
-                        <FormattedMessage
-                          id="ui.editCourse.tab.lessons.table.header.calendar"
-                          defaultMessage="ui.editCourse.tab.lessons.table.header.calendar"
-                        />
-                      </Typography>
-                    </TableCell>
-                    <TableCell className={classes.cellAlignRight}>
-                      <Typography className={classes.tableHeaderTypography} variant="overline">
-                        <FormattedMessage
-                          id="ui.editCourse.tab.lessons.table.header.actions"
-                          defaultMessage="ui.editCourse.tab.lessons.table.header.actions"
-                        />
-                      </Typography>
-                    </TableCell>
+
+                    {headerCells.map((cell, i) => (
+                      <TableCell key={i} className={cell.className}>
+                        <Typography className={classes.tableHeaderTypography} variant="overline">
+                          <FormattedMessage id={cell.id} defaultMessage={cell.id} />
+                        </Typography>
+                      </TableCell>
+                    ))}
                   </TableRow>
                 </TableHead>
 

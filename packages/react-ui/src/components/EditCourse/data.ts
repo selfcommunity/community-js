@@ -42,7 +42,7 @@ const USERS_DATA: SCUserType[] = [
   getUserData(6, 'user6', 'Utente 6')
 ];
 
-const EDIT_COURSE_DATA: SCCourseType = {
+const COURSE_DATA: SCCourseType = {
   id: 1,
   name: 'Accessori Moda',
   description: '',
@@ -100,7 +100,7 @@ function getLessonData(id: number) {
 
 export async function getCourseData(_id: number): Promise<SCCourseType | null> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(EDIT_COURSE_DATA), 300);
+    setTimeout(() => resolve(COURSE_DATA), 300);
   });
 }
 
@@ -128,7 +128,7 @@ export async function setStatus(status: Status): Promise<Status | null> {
   });
 }
 
-export async function checkSections(): Promise<SectionRowInterface[] | null> {
+export async function getSections(): Promise<SectionRowInterface[] | null> {
   return new Promise((resolve) => {
     setTimeout(() => resolve([]), 300);
   });
@@ -162,7 +162,7 @@ export async function getUsersToAdd(_id: number): Promise<SCUserType[] | null> {
 
 export async function getUsersData(_id: number): Promise<SCUserType[] | null> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(null), 300);
+    setTimeout(() => resolve([]), 300);
   });
 }
 
