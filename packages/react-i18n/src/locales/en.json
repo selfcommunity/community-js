@@ -299,6 +299,7 @@
   "ui.editCourse.tab.users": "Users",
   "ui.editCourse.tab.users.addUsersButton.label": "Add users to the course",
   "ui.editCourse.tab.users.searchBar.placeholder": "Search users",
+  "ui.editCourse.tab.users.table.button.label": "See more",
   "ui.editCourse.tab.users.table.header.latestActivity": "Latest activity",
   "ui.editCourse.tab.users.table.header.name": "Name",
   "ui.editCourse.tab.users.table.header.registration": "Registration",

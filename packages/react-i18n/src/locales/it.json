@@ -301,6 +301,7 @@
   "ui.editCourse.tab.users.searchBar.placeholder": "Cerca utenti",
   "ui.editCourse.tab.users.empty.description": "Ti invitiamo ad aggiungere Utenti nella lista",
   "ui.editCourse.tab.users.empty.title": "Attualmente non ci sono Utenti invitati al Corso",
+  "ui.editCourse.tab.users.table.button.label": "Vedi altri",
   "ui.editCourse.tab.users.table.header.latestActivity": "Ultima attività",
   "ui.editCourse.tab.users.table.header.name": "Nome",
   "ui.editCourse.tab.users.table.header.registration": "Iscrizione",

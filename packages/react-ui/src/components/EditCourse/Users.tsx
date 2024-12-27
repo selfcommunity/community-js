@@ -1,7 +1,8 @@
 import {
+  Avatar,
+  Box,
   Icon,
   InputAdornment,
-  Skeleton,
   Stack,
   Table,
   TableBody,
@@ -14,7 +15,7 @@ import {
 } from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import AddUsersButton from '../../shared/AddUsersButton';
-import {useCallback, useEffect, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {SCUserType} from '@selfcommunity/types';
 import {getUsersData, setUsersData} from './data';
 import {Logger} from '@selfcommunity/utils';
@@ -22,6 +23,19 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import Status from './Status';
 import Empty from './Empty';
+import RowSkeleton from './Users/RowSkeleton';
+import UsersSkeleton from './Users/Skeleton';
+import {PREFIX} from './constants';
+import {LoadingButton} from '@mui/lab';
+
+const USERS_TO_SHOW = 6;
+
+const classes = {
+  usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
+  usersSearch: `${PREFIX}-users-search`,
+  usersAvatarWrapper: `${PREFIX}-users-avatar-wrapper`,
+  usersLoadingButton: `${PREFIX}-users-loading-button`
+};
 
 const headerCells = [
   {
@@ -38,10 +52,18 @@ const headerCells = [
   }
 ];
 
+function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
+  return users.filter((user) => (user.username || user.real_name).includes(value));
+}
+
 export default function Users() {
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
+  const [usersToShow, setUsersToShow] = useState(USERS_TO_SHOW);
+  const [isAddingUser, setIsAddingUser] = useState(false);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [value, setValue] = useState('');
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -68,12 +90,12 @@ export default function Users() {
   // HANDLERS
   const handleConfirm = useCallback(
     (newUsers: SCUserType[]) => {
-      setIsUpdating(true);
+      setIsAddingUser(true);
 
       setUsersData(1, newUsers)
         .then((data) => {
           setUsers((oldUsers) => (oldUsers ? [...data, ...oldUsers] : [...data]));
-          setIsUpdating(false);
+          setIsAddingUser(false);
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -87,24 +109,47 @@ export default function Users() {
     [setUsers]
   );
 
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const _value = e.target.value;
+
+      if (_value.length > 0) {
+        if (!tempUsers) {
+          setTempUsers(users);
+          setUsers((prevUsers) => filteredUsers(prevUsers, _value));
+        } else {
+          setUsers(filteredUsers(tempUsers, _value));
+        }
+      } else {
+        setUsers(tempUsers);
+        setTempUsers(null);
+      }
+
+      setValue(_value);
+    },
+    [users, tempUsers, setUsers, setValue]
+  );
+
+  const handleSeeMore = useCallback(() => {
+    setIsLoadingUsers(true);
+
+    setTimeout(() => {
+      setUsersToShow((prev) => prev + USERS_TO_SHOW);
+      setIsLoadingUsers(false);
+    }, 300);
+  }, [setIsLoadingUsers, setUsersToShow]);
+
   if (!users) {
-    return <>Skeleton</>;
+    return <UsersSkeleton />;
   }
 
   return (
-    <>
-      <Typography variant="h6" sx={{marginBottom: '7px'}}>
+    <Box>
+      <Typography variant="h6">
         <FormattedMessage id="ui.editCourse.tab.users.title" defaultMessage="ui.editCourse.tab.users.title" values={{usersNumber: users.length}} />
       </Typography>
 
-      <Stack
-        sx={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '5px',
-          marginBottom: '16px'
-        }}>
+      <Stack className={classes.usersStatusWrapper}>
         <Status />
 
         <AddUsersButton
@@ -114,7 +159,7 @@ export default function Users() {
             method: 'GET'
           }}
           onConfirm={handleConfirm}
-          isUpdating={isUpdating}
+          isUpdating={isAddingUser}
         />
       </Stack>
 
@@ -130,13 +175,11 @@ export default function Users() {
             </InputAdornment>
           )
         }}
+        value={value}
+        onChange={handleChange}
+        disabled={users.length === 0 && value.length === 0}
         fullWidth
-        sx={{
-          '& > div:first-of-type': {
-            borderBottomLeftRadius: 'unset',
-            borderBottomRightRadius: 'unset'
-          }
-        }}
+        className={classes.usersSearch}
       />
 
       <TableContainer>
@@ -154,41 +197,48 @@ export default function Users() {
           </TableHead>
 
           <TableBody>
-            <TableRow>
-              {Array.from(new Array(4)).map((_, i) => (
-                <TableCell key={i}>
-                  {i === 0 && (
-                    <Stack
-                      sx={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: '15px'
-                      }}>
-                      <Skeleton animation={false} variant="circular" width="30px" height="30px" />
-                      <Skeleton animation={false} variant="text" width="118px" height="24px" />
+            {users.length === 0 && <RowSkeleton animation={false} />}
+            {users.length > 0 &&
+              users.slice(0, usersToShow).map((user, i) => (
+                <TableRow key={i}>
+                  <TableCell>
+                    <Stack className={classes.usersAvatarWrapper}>
+                      <Avatar alt={user.username} src={user.avatar} />
+                      <Typography variant="body2">{user.username}</Typography>
                     </Stack>
-                  )}
-                  {i > 0 && <Skeleton animation={false} variant="text" width="78px" height="24px" />}
-                </TableCell>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{user.role}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
+                  </TableCell>
+                </TableRow>
               ))}
-            </TableRow>
+            {isLoadingUsers && <RowSkeleton />}
           </TableBody>
         </Table>
       </TableContainer>
 
+      <LoadingButton
+        size="small"
+        variant="outlined"
+        color="inherit"
+        loading={isLoadingUsers}
+        disabled={users.length <= usersToShow}
+        className={classes.usersLoadingButton}
+        onClick={handleSeeMore}>
+        <Typography variant="body2">
+          <FormattedMessage id="ui.editCourse.tab.users.table.button.label" defaultMessage="ui.editCourse.tab.users.table.button.label" />
+        </Typography>
+      </LoadingButton>
+
       {users.length === 0 && (
         <Empty icon="face" title="ui.editCourse.tab.users.empty.title" description="ui.editCourse.tab.users.empty.description" />
       )}
-
-      {users.length > 0 && (
-        <Stack>
-          {users.map((user, i) => (
-            <Typography variant="body2" key={i}>
-              {user.username || user.real_name}
-            </Typography>
-          ))}
-        </Stack>
-      )}
-    </>
+    </Box>
   );
 }

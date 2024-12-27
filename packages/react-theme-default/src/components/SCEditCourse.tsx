@@ -228,6 +228,38 @@ const Component = {
           }
         },
 
+        '& .SCEditCourse-users-status-wrapper': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '5px',
+          marginTop: '7px',
+          marginBottom: theme.spacing(2)
+        },
+
+        '& .SCEditCourse-users-search': {
+          '& > .MuiInputBase-root': {
+            borderBottomLeftRadius: 'unset',
+            borderBottomRightRadius: 'unset'
+          }
+        },
+
+        '& .SCEditCourse-users-avatar-wrapper': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: theme.spacing(2),
+
+          '& .MuiAvatar-root': {
+            width: '30px',
+            height: '30px'
+          }
+        },
+
+        '& .SCEditCourse-users-loading-button': {
+          marginTop: theme.spacing(3),
+          marginLeft: theme.spacing(3)
+        },
+
         '& .SCEditCourse-options-wrapper': {
           gap: theme.spacing(5),
           maxWidth: '600px',
@@ -246,7 +278,7 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({theme}) => ({
+    lessonsSkeletonRoot: ({theme}) => ({
       '& .SCEditCourse-lessons-sections-wrapper': {
         flexDirection: 'row',
         alignItems: 'center',
@@ -262,6 +294,14 @@ const Component = {
         border: `1px solid ${theme.palette.grey[300]}`,
         borderBottomLeftRadius: '5px',
         borderBottomRightRadius: '5px'
+      }
+    }),
+    usersSkeletonRoot: ({theme}) => ({
+      '& .SCEditCourse-users-status-wrapper': {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: '7px',
+        marginBottom: theme.spacing(2)
       }
     })
   }

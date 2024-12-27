@@ -2,7 +2,7 @@ import {Stack, styled, Skeleton, TableContainer, Table, TableHead, TableRow, Tab
 import {PREFIX} from '../constants';
 
 const classes = {
-  root: `${PREFIX}-skeleton-root`,
+  root: `${PREFIX}-lessons-skeleton-root`,
   lessonsSectionsWrapper: `${PREFIX}-lessons-sections-wrapper`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   tableContainer: `${PREFIX}-table-container`
@@ -10,11 +10,11 @@ const classes = {
 
 const Root = styled(Stack, {
   name: PREFIX,
-  slot: 'SkeletonRoot',
-  overridesResolver: (_props, styles) => styles.skeletonRoot
+  slot: 'LessonsSkeletonRoot',
+  overridesResolver: (_props, styles) => styles.lessonsSkeletonRoot
 })(() => ({}));
 
-export default function TableSkeleton() {
+export default function LessonsSkeleton() {
   return (
     <Root className={classes.root}>
       <Stack className={classes.lessonsSectionsWrapper}>

@@ -29,7 +29,8 @@ function getUserData(id: number, username: string, name: string): SCUserType {
     connection_requests_received_counter: 0,
     connection_requests_sent_counter: 0,
     connection_status: '',
-    connections_counter: 0
+    connections_counter: 0,
+    role: 'Admin'
   };
 }
 
