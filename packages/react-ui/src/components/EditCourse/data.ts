@@ -81,7 +81,8 @@ const COURSE_DATA: SCCourseType = {
 
 export const LESSONS_DATA = {
   statusCourse: 'draft',
-  typeOfCourse: 'calendar'
+  typeOfCourse: 'calendar',
+  privacy: 'public'
 };
 
 function getSectionData(id: number) {
