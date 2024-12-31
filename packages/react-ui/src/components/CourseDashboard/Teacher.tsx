@@ -13,6 +13,7 @@ import {SCOPE_SC_UI} from './../../constants/Errors';
 import InfoCourseDashboard from './Teacher/Info';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import {SCThemeType} from '@selfcommunity/react-core';
+import Students from './Teacher/Students';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -128,7 +129,7 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
         </TabList>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.STUDENTS}>
-          Students
+          <Students />
         </TabPanel>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.COMMENTS}>

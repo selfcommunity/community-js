@@ -14,12 +14,14 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import {ChangeEvent} from 'react';
+import {ChangeEvent, Dispatch, SetStateAction, useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
 import {SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
+
+const USERS_TO_SHOW = 6;
 
 const classes = {
   search: `${PREFIX}-search`,
@@ -39,20 +41,57 @@ type HeaderCellsType = {
 
 export interface CourseUsersTableProps {
   users: SCUserType[];
+  setUsers: Dispatch<SetStateAction<SCUserType[]>>;
   headerCells: HeaderCellsType[];
-  value: string;
-  isLoadingUsers: boolean;
-  usersToShow: number;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleSeeMore: () => void;
+}
+
+function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
+  return users.filter((user) => (user.username || user.real_name).includes(value));
 }
 
 export default function CourseUsersTable(props: CourseUsersTableProps) {
   // PROPS
-  const {users, headerCells, value, isLoadingUsers, usersToShow, handleChange, handleSeeMore} = props;
+  const {users, setUsers, headerCells} = props;
+
+  // STATES
+  const [usersToShow, setUsersToShow] = useState(USERS_TO_SHOW);
+  const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [value, setValue] = useState('');
 
   // HOOKS
   const intl = useIntl();
+
+  // HANDLERS
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const _value = e.target.value;
+
+      if (_value.length > 0) {
+        if (!tempUsers) {
+          setTempUsers(users);
+          setUsers((prevUsers) => filteredUsers(prevUsers, _value));
+        } else {
+          setUsers(filteredUsers(tempUsers, _value));
+        }
+      } else {
+        setUsers(tempUsers);
+        setTempUsers(null);
+      }
+
+      setValue(_value);
+    },
+    [users, tempUsers, setUsers, setValue]
+  );
+
+  const handleSeeMore = useCallback(() => {
+    setIsLoadingUsers(true);
+
+    setTimeout(() => {
+      setUsersToShow((prev) => prev + USERS_TO_SHOW);
+      setIsLoadingUsers(false);
+    }, 300);
+  }, [setIsLoadingUsers, setUsersToShow]);
 
   return (
     <Root>
