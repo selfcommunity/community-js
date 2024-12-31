@@ -13,16 +13,28 @@ const Component = {
         }
       },
       '& .SCCourseDashboard-header-outer-wrapper': {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: theme.spacing(3),
-        marginBottom: '19px',
+        alignItems: 'flex-start',
+        gap: '32px',
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(3),
 
-        '& .SCCourseDashboard-header-inner-wrapper': {
+        [theme.breakpoints.up('sm')]: {
           flexDirection: 'row',
           alignItems: 'center',
-          gap: '28px',
+          justifyContent: 'space-between',
+          marginTop: theme.spacing(3),
+          marginBottom: '19px'
+        },
+
+        '& .SCCourseDashboard-header-inner-wrapper': {
+          alignItems: 'flex-start',
+          gap: '17px',
+
+          [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '28px'
+          },
 
           '& .SCCourseDashboard-header-icon-wrapper': {
             flexDirection: 'row',
