@@ -237,29 +237,6 @@ const Component = {
           marginBottom: theme.spacing(2)
         },
 
-        '& .SCEditCourse-users-search': {
-          '& > .MuiInputBase-root': {
-            borderBottomLeftRadius: 'unset',
-            borderBottomRightRadius: 'unset'
-          }
-        },
-
-        '& .SCEditCourse-users-avatar-wrapper': {
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: theme.spacing(2),
-
-          '& .MuiAvatar-root': {
-            width: '30px',
-            height: '30px'
-          }
-        },
-
-        '& .SCEditCourse-users-loading-button': {
-          marginTop: theme.spacing(3),
-          marginLeft: theme.spacing(3)
-        },
-
         '& .SCEditCourse-options-wrapper': {
           gap: theme.spacing(5),
           maxWidth: '600px',

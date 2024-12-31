@@ -183,6 +183,7 @@ import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
+import CourseUsersTable, {CourseUsersTableProps, CourseUsersTableSkeleton} from './shared/CourseUsersTable';
 import EmailTextField from './shared/EmailTextField';
 import EventActionsMenu, {EventActionsMenuProps} from './shared/EventActionsMenu';
 import EventInfoDetails, {EventInfoDetailsProps} from './shared/EventInfoDetails';
@@ -470,6 +471,9 @@ export {
   /* SC UI SHARED */
   AddUsersButton,
   AddUsersButtonProps,
+  CourseUsersTable,
+  CourseUsersTableProps,
+  CourseUsersTableSkeleton,
   HiddenPlaceholder,
   Incubator,
   IncubatorDetail,

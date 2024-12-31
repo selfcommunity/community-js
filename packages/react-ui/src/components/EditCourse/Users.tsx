@@ -1,19 +1,5 @@
-import {
-  Avatar,
-  Box,
-  Icon,
-  InputAdornment,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography
-} from '@mui/material';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {Box, Stack, Typography} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
 import AddUsersButton from '../../shared/AddUsersButton';
 import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {SCUserType} from '@selfcommunity/types';
@@ -23,18 +9,14 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import Status from './Status';
 import Empty from './Empty';
-import RowSkeleton from './Users/RowSkeleton';
 import UsersSkeleton from './Users/Skeleton';
 import {PREFIX} from './constants';
-import {LoadingButton} from '@mui/lab';
+import CourseUsersTable from '../../shared/CourseUsersTable';
 
 const USERS_TO_SHOW = 6;
 
 const classes = {
-  usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
-  usersSearch: `${PREFIX}-users-search`,
-  usersAvatarWrapper: `${PREFIX}-users-avatar-wrapper`,
-  usersLoadingButton: `${PREFIX}-users-loading-button`
+  usersStatusWrapper: `${PREFIX}-users-status-wrapper`
 };
 
 const headerCells = [
@@ -67,7 +49,6 @@ export default function Users() {
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
-  const intl = useIntl();
 
   // EFFECTS
   useEffect(() => {
@@ -163,78 +144,15 @@ export default function Users() {
         />
       </Stack>
 
-      <TextField
-        placeholder={intl.formatMessage({
-          id: 'ui.editCourse.tab.users.searchBar.placeholder',
-          defaultMessage: 'ui.editCourse.tab.users.searchBar.placeholder'
-        })}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon>search</Icon>
-            </InputAdornment>
-          )
-        }}
+      <CourseUsersTable
+        users={users}
+        headerCells={headerCells}
         value={value}
-        onChange={handleChange}
-        disabled={users.length === 0 && value.length === 0}
-        fullWidth
-        className={classes.usersSearch}
+        isLoadingUsers={isLoadingUsers}
+        usersToShow={usersToShow}
+        handleChange={handleChange}
+        handleSeeMore={handleSeeMore}
       />
-
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {headerCells.map((cell, i) => (
-                <TableCell width="25%" key={i}>
-                  <Typography variant="body2">
-                    <FormattedMessage id={cell.id} defaultMessage={cell.id} />
-                  </Typography>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {users.length === 0 && <RowSkeleton animation={false} />}
-            {users.length > 0 &&
-              users.slice(0, usersToShow).map((user, i) => (
-                <TableRow key={i}>
-                  <TableCell>
-                    <Stack className={classes.usersAvatarWrapper}>
-                      <Avatar alt={user.username} src={user.avatar} />
-                      <Typography variant="body2">{user.username}</Typography>
-                    </Stack>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">{user.role}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
-                  </TableCell>
-                </TableRow>
-              ))}
-            {isLoadingUsers && <RowSkeleton />}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <LoadingButton
-        size="small"
-        variant="outlined"
-        color="inherit"
-        loading={isLoadingUsers}
-        disabled={users.length <= usersToShow}
-        className={classes.usersLoadingButton}
-        onClick={handleSeeMore}>
-        <Typography variant="body2">
-          <FormattedMessage id="ui.editCourse.tab.users.table.button.label" defaultMessage="ui.editCourse.tab.users.table.button.label" />
-        </Typography>
-      </LoadingButton>
 
       {users.length === 0 && (
         <Empty icon="face" title="ui.editCourse.tab.users.empty.title" description="ui.editCourse.tab.users.empty.description" />

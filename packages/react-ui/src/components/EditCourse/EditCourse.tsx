@@ -44,7 +44,7 @@ export default function EditCourse(inProps: EditCourseProps) {
     name: PREFIX
   });
 
-  const {page, onTabChange, className} = props;
+  const {page, onTabChange, className, ...rest} = props;
 
   // STATES
   const [course, setCourse] = useState<SCCourseType | null>(null);
@@ -87,7 +87,7 @@ export default function EditCourse(inProps: EditCourseProps) {
   }
 
   return (
-    <Root className={classNames(classes.root, className)}>
+    <Root className={classNames(classes.root, className)} {...rest}>
       <Stack className={classes.header}>
         <IconButton size="small" aria-label="back" onClick={() => console.log('*** back ***')}>
           <Icon>arrow_back</Icon>

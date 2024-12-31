@@ -179,12 +179,12 @@ function Lessons(props: LessonsProps) {
 
           <Typography variant="body2">
             <FormattedMessage
-              id="ui.editCourse.tab.lessons.typeOfCourse"
-              defaultMessage="ui.editCourse.tab.lessons.typeOfCourse"
+              id="ui.course.type"
+              defaultMessage="ui.course.type"
               values={{
                 typeOfCourse: intl.formatMessage({
-                  id: `ui.typeOfCourse.${LESSONS_DATA.typeOfCourse}`,
-                  defaultMessage: `ui.typeOfCourse.${LESSONS_DATA.typeOfCourse}`
+                  id: `ui.course.type.${LESSONS_DATA.typeOfCourse}`,
+                  defaultMessage: `ui.course.type.${LESSONS_DATA.typeOfCourse}`
                 })
               }}
             />

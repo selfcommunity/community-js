@@ -1,11 +1,11 @@
 import {Skeleton, SkeletonOwnProps, Stack, TableCell, TableRow} from '@mui/material';
 
-interface RowSkeletonProps {
+interface CourseUsersTableRowSkeletonProps {
   header?: boolean;
   animation?: SkeletonOwnProps['animation'];
 }
 
-export default function RowSkeleton(props: RowSkeletonProps) {
+export default function CourseUsersTableRowSkeleton(props: CourseUsersTableRowSkeletonProps) {
   const {header = false, animation = 'wave'} = props;
 
   return (

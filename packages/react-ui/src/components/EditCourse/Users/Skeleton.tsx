@@ -1,6 +1,6 @@
-import {Skeleton, Stack, styled, Table, TableBody, TableContainer, TableHead} from '@mui/material';
-import RowSkeleton from './RowSkeleton';
+import {Skeleton, Stack, styled} from '@mui/material';
 import {PREFIX} from '../constants';
+import {CourseUsersTableSkeleton} from '@selfcommunity/react-ui';
 
 const classes = {
   root: `${PREFIX}-users-skeleton-root`,
@@ -23,19 +23,7 @@ export default function UsersSkeleton() {
         <Skeleton animation="wave" variant="rounded" width="154px" height="29px" />
       </Stack>
 
-      <Skeleton animation="wave" variant="rectangular" width="100%" height="53px" />
-
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <RowSkeleton header={true} />
-          </TableHead>
-
-          <TableBody>
-            <RowSkeleton />
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <CourseUsersTableSkeleton />
     </Root>
   );
 }

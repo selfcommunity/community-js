@@ -19,8 +19,8 @@ export default function Status() {
             {id: 'ui.editCourse.tab.lessons.status', defaultMessage: 'ui.editCourse.tab.lessons.status'},
             {
               status: intl.formatMessage({
-                id: `ui.statusCourse.${LESSONS_DATA.statusCourse}`,
-                defaultMessage: `ui.statusCourse.${LESSONS_DATA.statusCourse}`
+                id: `ui.course.status.${LESSONS_DATA.statusCourse}`,
+                defaultMessage: `ui.course.status.${LESSONS_DATA.statusCourse}`
               }),
               b: (chunks) => (
                 <Typography component="b" fontWeight="bold">
