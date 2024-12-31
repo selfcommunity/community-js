@@ -2,6 +2,29 @@ import {Button, Icon, Stack, Typography} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {LESSONS_DATA} from '../EditCourse/data';
+import {PREFIX} from './constants';
+
+const classes = {
+  img: `${PREFIX}-header-img`,
+  outerWrapper: `${PREFIX}-header-outer-wrapper`,
+  innerWrapper: `${PREFIX}-header-inner-wrapper`,
+  iconWrapper: `${PREFIX}-header-icon-wrapper`
+};
+
+const ICON_DATA = [
+  {
+    id: 'ui.course.label',
+    icon: 'public',
+    key: 'privacy',
+    underId: `ui.course.privacy.${LESSONS_DATA.privacy}`
+  },
+  {
+    id: 'ui.course.type',
+    icon: 'courses',
+    key: 'typeOfCourse',
+    underId: `ui.course.type.${LESSONS_DATA.typeOfCourse}`
+  }
+];
 
 interface HeaderCourseDashboardProps {
   course: SCCourseType;
@@ -17,77 +40,30 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
 
   return (
     <>
-      <img
-        src={course.image_big}
-        alt={course.image_big}
-        width="100%"
-        height="150px"
-        style={{
-          borderBottomLeftRadius: '10px',
-          borderBottomRightRadius: '10px',
-          marginBottom: '17px'
-        }}
-      />
+      <img src={course.image_big} alt={course.image_big} className={classes.img} />
 
       <Typography variant="h3">{course.name}</Typography>
 
-      <Stack
-        sx={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginTop: '24px',
-          marginBottom: '19px'
-        }}>
-        <Stack
-          sx={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '28px'
-          }}>
-          <Stack
-            sx={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-            <Icon fontSize="small">public</Icon>
+      <Stack className={classes.outerWrapper}>
+        <Stack className={classes.innerWrapper}>
+          {ICON_DATA.map((data, i) => (
+            <Stack key={i} className={classes.iconWrapper}>
+              <Icon fontSize="small">{data.icon}</Icon>
 
-            <Typography variant="body2">
-              <FormattedMessage
-                id="ui.course.label"
-                defaultMessage="ui.course.label"
-                values={{
-                  privacy: intl.formatMessage({
-                    id: `ui.course.privacy.${LESSONS_DATA.privacy}`,
-                    defaultMessage: `ui.course.privacy.${LESSONS_DATA.privacy}`
-                  })
-                }}
-              />
-            </Typography>
-          </Stack>
-
-          <Stack
-            sx={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-            <Icon fontSize="small">courses</Icon>
-
-            <Typography variant="body2">
-              <FormattedMessage
-                id="ui.course.type"
-                defaultMessage="ui.course.type"
-                values={{
-                  typeOfCourse: intl.formatMessage({
-                    id: `ui.course.type.${LESSONS_DATA.typeOfCourse}`,
-                    defaultMessage: `ui.course.type.${LESSONS_DATA.typeOfCourse}`
-                  })
-                }}
-              />
-            </Typography>
-          </Stack>
+              <Typography variant="body2">
+                <FormattedMessage
+                  id={data.id}
+                  defaultMessage={data.id}
+                  values={{
+                    [`${data.key}`]: intl.formatMessage({
+                      id: data.underId,
+                      defaultMessage: data.underId
+                    })
+                  }}
+                />
+              </Typography>
+            </Stack>
+          ))}
         </Stack>
 
         {handleAction && (

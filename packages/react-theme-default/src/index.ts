@@ -55,6 +55,7 @@ import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCCourse from './components/SCCourse';
+import SCCourseDashboard from './components/SCCourseDashboard';
 import SCCourses from './components/SCCourses';
 import SCCourseForm from './components/SCCourseForm';
 import SCCourseFormDialog from './components/SCCourseFormDialog';
@@ -311,6 +312,7 @@ const theme = {
     SCConsentSolution,
     SCContributionActionsMenu,
     SCCourse,
+    SCCourseDashboard,
     SCCourses,
     SCCourseForm,
     SCCourseFormDialog,
