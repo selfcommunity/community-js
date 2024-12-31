@@ -24,6 +24,46 @@ const classes = {
   tabPanel: `${PREFIX}-tab-panel`
 };
 
+const TAB_DATA = [
+  {
+    label: 'ui.editCourse.tab.lessons',
+    value: TabContentEnum.LESSONS
+  },
+  {
+    label: 'ui.editCourse.tab.customize',
+    value: TabContentEnum.CUSTOMIZE
+  },
+  {
+    label: 'ui.editCourse.tab.users',
+    value: TabContentEnum.USERS
+  },
+  {
+    label: 'ui.editCourse.tab.options',
+    value: TabContentEnum.OPTIONS
+  }
+];
+
+function getPanelData(course: SCCourseType) {
+  return [
+    {
+      value: TabContentEnum.LESSONS,
+      children: <Lessons course={course} />
+    },
+    {
+      value: TabContentEnum.CUSTOMIZE,
+      children: <Customize />
+    },
+    {
+      value: TabContentEnum.USERS,
+      children: <Users />
+    },
+    {
+      value: TabContentEnum.OPTIONS,
+      children: <Options />
+    }
+  ];
+}
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -104,59 +144,25 @@ export default function EditCourse(inProps: EditCourseProps) {
           variant={isMobile ? 'scrollable' : 'standard'}
           scrollButtons={isMobile}
           centered={!isMobile}>
-          <Tab
-            label={
-              <Typography variant="h6">
-                <FormattedMessage id="ui.editCourse.tab.lessons" defaultMessage="ui.editCourse.tab.lessons" />
-              </Typography>
-            }
-            value={TabContentEnum.LESSONS}
-            className={classes.tab}
-          />
-          <Tab
-            label={
-              <Typography variant="h6">
-                <FormattedMessage id="ui.editCourse.tab.customize" defaultMessage="ui.editCourse.tab.customize" />
-              </Typography>
-            }
-            value={TabContentEnum.CUSTOMIZE}
-            className={classes.tab}
-          />
-          <Tab
-            label={
-              <Typography variant="h6">
-                <FormattedMessage id="ui.editCourse.tab.users" defaultMessage="ui.editCourse.tab.users" />
-              </Typography>
-            }
-            value={TabContentEnum.USERS}
-            className={classes.tab}
-          />
-          <Tab
-            label={
-              <Typography variant="h6">
-                <FormattedMessage id="ui.editCourse.tab.options" defaultMessage="ui.editCourse.tab.options" />
-              </Typography>
-            }
-            value={TabContentEnum.OPTIONS}
-            className={classes.tab}
-          />
+          {TAB_DATA.map((data, i) => (
+            <Tab
+              key={i}
+              label={
+                <Typography variant="h6">
+                  <FormattedMessage id={data.label} defaultMessage={data.label} />
+                </Typography>
+              }
+              value={data.value}
+              className={classes.tab}
+            />
+          ))}
         </TabList>
 
-        <TabPanel className={classes.tabPanel} value={TabContentEnum.LESSONS}>
-          <Lessons course={course} />
-        </TabPanel>
-
-        <TabPanel className={classes.tabPanel} value={TabContentEnum.CUSTOMIZE}>
-          <Customize />
-        </TabPanel>
-
-        <TabPanel className={classes.tabPanel} value={TabContentEnum.USERS}>
-          <Users />
-        </TabPanel>
-
-        <TabPanel className={classes.tabPanel} value={TabContentEnum.OPTIONS}>
-          <Options />
-        </TabPanel>
+        {getPanelData(course).map((data, i) => (
+          <TabPanel key={i} className={classes.tabPanel} value={data.value}>
+            {data.children}
+          </TabPanel>
+        ))}
       </TabContext>
     </Root>
   );
