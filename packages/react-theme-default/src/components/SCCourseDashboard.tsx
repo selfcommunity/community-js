@@ -42,6 +42,53 @@ const Component = {
             gap: theme.spacing(1)
           }
         }
+      },
+
+      '& .SCCourseDashboard-info-wrapper': {
+        gap: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+
+        [theme.breakpoints.up('sm')]: {
+          flexDirection: 'row',
+          gap: '38px'
+        },
+
+        '& .SCCourseDashboard-info': {
+          flex: 1,
+          gap: '6px',
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderRadius: '10px',
+          padding: theme.spacing('17px', 3, '19px'),
+
+          '& .SCCourseParticipantsButton-root': {
+            justifyContent: 'flex-start',
+            padding: 0
+          }
+        }
+      },
+
+      '& .SCCourseDashboard-tab-list': {
+        borderBottom: `1px solid ${theme.palette.grey['300']}`,
+
+        '& .SCCourseDashboard-tab': {
+          textTransform: 'inherit'
+        },
+
+        '& > .Mui-disabled': {
+          opacity: 0.3
+        },
+
+        '& > .MuiTabs-scrollButtons': {
+          display: 'inline-flex'
+        }
+      },
+
+      '& .SCCourseDashboard-tab-panel': {
+        padding: '13px 0 0',
+
+        [theme.breakpoints.down('md')]: {
+          marginLeft: '14px'
+        }
       }
     }),
     skeletonRoot: () => ({})
