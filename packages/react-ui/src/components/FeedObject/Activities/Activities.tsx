@@ -130,7 +130,7 @@ export default function Activities(props: ActivitiesProps): JSX.Element {
     feedObject,
     feedObjectType,
     cacheStrategy,
-    pageSize: 2,
+    pageSize: 1,
     orderBy:
       selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
         ? SCCommentsOrderBy.CONNECTION_DESC

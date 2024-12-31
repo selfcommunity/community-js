@@ -309,8 +309,19 @@ const Component = {
               margin: '0 32px'
             },
             '& span span': {
-              display: 'inline-block',
+              display: 'inline-block'
+            },
+            '& span span:not(:has(+ a))': {
               width: '100%'
+            },
+            '& span a': {
+              display: 'inline-block',
+              margin: theme.spacing(0, 0.3)
+            },
+            '& span a:hover': {
+              '& span': {
+                textDecoration: 'underline'
+              }
             }
           },
           '& .SCFeedObject-medias-section': {
