@@ -179,6 +179,7 @@ import {
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
 import AddUsersButton, {AddUsersButtonProps} from './shared/AddUsersButton';
+import EmptyStatus, {EmptyStatusProps} from './shared/EmptyStatus';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
@@ -474,6 +475,8 @@ export {
   CourseUsersTable,
   CourseUsersTableProps,
   CourseUsersTableSkeleton,
+  EmptyStatus,
+  EmptyStatusProps,
   HiddenPlaceholder,
   Incubator,
   IncubatorDetail,

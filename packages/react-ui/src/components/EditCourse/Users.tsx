@@ -8,7 +8,6 @@ import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import Status from './Status';
-import Empty from './Empty';
 import UsersSkeleton from './Users/Skeleton';
 import {PREFIX} from './constants';
 import CourseUsersTable from '../../shared/CourseUsersTable';
@@ -105,10 +104,6 @@ export default function Users() {
       </Stack>
 
       <CourseUsersTable users={users} setUsers={setUsers} headerCells={headerCells} />
-
-      {users.length === 0 && (
-        <Empty icon="face" title="ui.editCourse.tab.users.empty.title" description="ui.editCourse.tab.users.empty.description" />
-      )}
     </Box>
   );
 }

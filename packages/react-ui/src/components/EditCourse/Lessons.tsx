@@ -7,7 +7,7 @@ import {getSections, getSection, LESSONS_DATA} from './data';
 import SectionRow from './Lessons/SectionRow';
 import AddButton from './Lessons/AddButton';
 import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from './types';
-import Empty from './Empty';
+import EmptyStatus from '../../shared/EmptyStatus/EmptyStatus';
 import {useSnackbar} from 'notistack';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -30,8 +30,8 @@ const classes = {
   cellWidth: `${PREFIX}-cell-width`,
   cellAlignRight: `${PREFIX}-cell-align-right`,
   cellAlignCenter: `${PREFIX}-cell-align-center`,
-  lessonEmptyWrapper: `${PREFIX}-lesson-empty-wrapper`,
-  emptyButton: `${PREFIX}-empty-button`
+  lessonEmptyStatus: `${PREFIX}-lesson-empty-status`,
+  emptyStatusButton: `${PREFIX}-empty-status-button`
 };
 
 const headerCells = [
@@ -197,20 +197,20 @@ function Lessons(props: LessonsProps) {
       {!sections && <Skeleton />}
 
       {sections?.length === 0 && (
-        <Empty
+        <EmptyStatus
           icon="courses"
           title="ui.editCourse.tab.lessons.table.empty.title"
           description="ui.editCourse.tab.lessons.table.empty.description"
           actions={
             <AddButton
-              className={classes.emptyButton}
+              className={classes.emptyStatusButton}
               label="ui.editCourse.tab.lessons.table.section"
               handleAddRow={handleAddSection}
               color="inherit"
               variant="outlined"
             />
           }
-          className={classes.lessonEmptyWrapper}
+          className={classes.lessonEmptyStatus}
         />
       )}
 

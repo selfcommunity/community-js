@@ -20,6 +20,7 @@ import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
 import {SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
+import EmptyStatus from '../EmptyStatus';
 
 const USERS_TO_SHOW = 6;
 
@@ -165,10 +166,12 @@ export default function CourseUsersTable(props: CourseUsersTableProps) {
           className={classes.loadingButton}
           onClick={handleSeeMore}>
           <Typography variant="body2">
-            <FormattedMessage id="ui.editCourse.tab.users.table.button.label" defaultMessage="ui.editCourse.tab.users.table.button.label" />
+            <FormattedMessage id="ui.courseUsersTable.button.label" defaultMessage="ui.courseUsersTable.button.label" />
           </Typography>
         </LoadingButton>
       )}
+
+      {users.length === 0 && <EmptyStatus icon="face" title="ui.courseUsersTable.empty.title" description="ui.courseUsersTable.empty.description" />}
     </Root>
   );
 }

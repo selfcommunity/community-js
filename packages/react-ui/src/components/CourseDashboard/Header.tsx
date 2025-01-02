@@ -1,10 +1,11 @@
-import {Button, Icon, Stack, Typography} from '@mui/material';
+import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {LESSONS_DATA} from '../EditCourse/data';
 import {PREFIX} from './constants';
 
 const classes = {
+  header: `${PREFIX}-header`,
   img: `${PREFIX}-header-img`,
   outerWrapper: `${PREFIX}-header-outer-wrapper`,
   innerWrapper: `${PREFIX}-header-inner-wrapper`,
@@ -39,7 +40,7 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
   const intl = useIntl();
 
   return (
-    <>
+    <Box className={classes.header}>
       <img src={course.image_big} alt={course.image_big} className={classes.img} />
 
       <Typography variant="h3">{course.name}</Typography>
@@ -74,6 +75,6 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
           </Button>
         )}
       </Stack>
-    </>
+    </Box>
   );
 }

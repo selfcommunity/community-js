@@ -6,8 +6,8 @@ const Component = {
         alignItems: 'center',
         gap: theme.spacing(0.5),
 
-        [theme.breakpoints.down('md')]: {
-          marginLeft: theme.spacing(2)
+        [theme.breakpoints.down('sm')]: {
+          paddingLeft: theme.spacing(2)
         }
       },
 
@@ -30,14 +30,15 @@ const Component = {
       '& .SCEditCourse-tab-panel': {
         padding: '13px 0 0',
 
-        [theme.breakpoints.down('md')]: {
-          marginLeft: '14px'
+        [theme.breakpoints.down('sm')]: {
+          paddingLeft: '14px',
+          paddingRight: '14px'
         },
 
         '& .SCEditCourse-lesson-title': {
           marginBottom: '20px',
 
-          [theme.breakpoints.down('md')]: {
+          [theme.breakpoints.down('sm')]: {
             display: 'none'
           }
         },
@@ -59,47 +60,13 @@ const Component = {
           borderRadius: theme.spacing(1)
         },
 
-        '& .SCEditCourse-lesson-empty-wrapper': {
+        '& .SCEditCourse-lesson-empty-status': {
           border: `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px'
         },
 
-        '& .SCEditCourse-empty-wrapper': {
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '10px',
-          padding: theme.spacing(3),
-          marginTop: '9px',
-
-          '& .SCEditCourse-empty-box': {
-            width: '130px',
-            height: '130px',
-            border: `2px solid ${theme.palette.grey[300]}`,
-            borderRadius: '20px',
-            marginBottom: '10px',
-
-            '& .SCEditCourse-empty-rotated-box': {
-              width: 'inherit',
-              height: 'inherit',
-              border: 'inherit',
-              borderRadius: 'inherit',
-              transform: 'rotate(-25deg)',
-              alignItems: 'center',
-              justifyContent: 'center',
-
-              '& .SCEditCourse-empty-icon': {
-                transform: 'rotate(25deg)'
-              }
-            }
-          },
-
-          '& .SCEditCourse-empty-button': {
-            marginTop: '7px'
-          },
-
-          '& .SCEditCourse-lesson-status': {
-            borderRadius: theme.spacing(1)
-          }
+        '& .SCEditCourse-empty-status-button': {
+          marginTop: '7px'
         },
 
         '& .SCEditCourse-lessons-sections-wrapper': {
@@ -199,7 +166,7 @@ const Component = {
                 alignItems: 'center',
                 gap: '14px',
 
-                [theme.breakpoints.up('md')]: {
+                [theme.breakpoints.up('sm')]: {
                   gap: '22px'
                 },
 

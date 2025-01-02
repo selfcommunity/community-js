@@ -5,7 +5,8 @@ export default {
   title: 'Design System/React UI/Course Participants Button ',
   component: CourseParticipantsButton,
   args: {
-    courseId: 129
+    courseId: 129,
+    hideCaption: false
   }
 } as Meta<typeof CourseParticipantsButton>;
 

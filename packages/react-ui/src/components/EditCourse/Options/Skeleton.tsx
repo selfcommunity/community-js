@@ -16,7 +16,7 @@ export default function OptionsSkeleton() {
             <FormLabel component="legend">
               <Skeleton animation="wave" variant="text" width="52px" height="21px" />
             </FormLabel>
-            <FormControlLabel control={<Switch />} label={<Skeleton animation="wave" variant="text" width="595px" height="38px" />} />
+            <FormControlLabel control={<Switch />} label={<Skeleton animation="wave" variant="text" width="215px" height="38px" />} />
           </FormControl>
         ))}
       </Stack>

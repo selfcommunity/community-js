@@ -74,6 +74,7 @@ import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
 import SCEditCourse from './components/SCEditCourse';
 import SCEmojiPicker from './components/SCEmojiPicker';
+import SCEmptyStatus from './components/SCEmptyStatus';
 import SCEvent from './components/SCEvent';
 import SCEventActionsMenu from './components/SCEventActionsMenu';
 import SCEventForm from './components/SCEventForm';
@@ -437,7 +438,8 @@ const theme = {
     SCVoteAudienceButton,
     SCVoteButton,
     SCWidget,
-    SCEventMediaWidget
+    SCEventMediaWidget,
+    SCEmptyStatus
   },
   selfcommunity: {
     user: {
