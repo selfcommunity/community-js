@@ -103,7 +103,7 @@ export default function Users() {
         />
       </Stack>
 
-      <CourseUsersTable users={users} setUsers={setUsers} headerCells={headerCells} />
+      <CourseUsersTable users={users} setUsers={setUsers} headerCells={headerCells} editMode />
     </Box>
   );
 }

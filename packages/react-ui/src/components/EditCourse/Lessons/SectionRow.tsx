@@ -48,7 +48,7 @@ function SectionRow(props: SectionRowProps) {
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
-  const handleExpandAccordion = useCallback(() => setOpen(!open), [open]);
+  const handleExpandAccordion = useCallback(() => setOpen((prev) => !prev), [setOpen]);
 
   const handleDragEnd = useCallback(
     (e: DropResult<string>) => {

@@ -9,7 +9,7 @@ import {
 } from '@selfcommunity/types';
 import {LessonRowInterface, OptionsData, SectionRowInterface, Status} from './types';
 
-function getUserData(id: number, username: string, name: string): SCUserType {
+function getUserData(id: number, username: string, name: string, completion: number): SCUserType & {completion?: number} {
   return {
     id,
     username,
@@ -30,17 +30,19 @@ function getUserData(id: number, username: string, name: string): SCUserType {
     connection_requests_sent_counter: 0,
     connection_status: '',
     connections_counter: 0,
-    role: 'Admin'
+    role: 'Admin',
+    completion
   };
 }
 
 const USERS_DATA: SCUserType[] = [
-  getUserData(1, 'user1', 'Utente 1'),
-  getUserData(2, 'user2', 'Utente 2'),
-  getUserData(3, 'user3', 'Utente 3'),
-  getUserData(4, 'user4', 'Utente 4'),
-  getUserData(5, 'user5', 'Utente 5'),
-  getUserData(6, 'user6', 'Utente 6')
+  getUserData(1, 'user1', 'Utente 1', 20),
+  getUserData(2, 'user2', 'Utente 2', 55),
+  getUserData(3, 'user3', 'Utente 3', 12),
+  getUserData(4, 'user4', 'Utente 4', 7),
+  getUserData(5, 'user5', 'Utente 5', 84),
+  getUserData(6, 'user6', 'Utente 6', 100),
+  getUserData(7, 'user7', 'Utente 7', 69)
 ];
 
 const COURSE_DATA: SCCourseType = {
@@ -51,8 +53,8 @@ const COURSE_DATA: SCCourseType = {
   active: true,
   color: '',
   created_at: '',
-  created_by: getUserData(1, 'user1', 'Utente 1'),
-  managed_by: getUserData(1, 'user1', 'Utente 1'),
+  created_by: getUserData(1, 'user1', 'Utente 1', undefined),
+  managed_by: getUserData(1, 'user1', 'Utente 1', undefined),
   start_date: '',
   end_date: '',
   next_start_date: '',
@@ -164,7 +166,7 @@ export async function getUsersToAdd(_id: number): Promise<SCUserType[] | null> {
 
 export async function getUsersData(_id: number): Promise<SCUserType[] | null> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve([]), 300);
+    setTimeout(() => resolve(USERS_DATA), 300);
   });
 }
 

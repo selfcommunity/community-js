@@ -9,17 +9,18 @@ import CourseUsersTable from '../../../shared/CourseUsersTable';
 
 const headerCells = [
   {
-    id: 'ui.editCourse.tab.users.table.header.name'
+    id: 'ui.course.dashboard.teacher.tab.students.table.header.name'
   },
   {
-    id: 'ui.editCourse.tab.users.table.header.role'
+    id: 'ui.course.dashboard.teacher.tab.students.table.header.progress'
   },
   {
-    id: 'ui.editCourse.tab.users.table.header.registration'
+    id: 'ui.course.dashboard.teacher.tab.students.table.header.registration'
   },
   {
-    id: 'ui.editCourse.tab.users.table.header.latestActivity'
-  }
+    id: 'ui.course.dashboard.teacher.tab.students.table.header.latestActivity'
+  },
+  {}
 ];
 
 export default function Students() {

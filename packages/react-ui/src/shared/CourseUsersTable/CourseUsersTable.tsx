@@ -3,6 +3,7 @@ import {
   Box,
   Icon,
   InputAdornment,
+  LinearProgress,
   Stack,
   styled,
   Table,
@@ -21,12 +22,15 @@ import {LoadingButton} from '@mui/lab';
 import {SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
+import ActionButton from './ActionButton';
 
 const USERS_TO_SHOW = 6;
 
 const classes = {
   search: `${PREFIX}-search`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
+  progressWrapper: `${PREFIX}-progress-wrapper`,
+  progress: `${PREFIX}-progress`,
   loadingButton: `${PREFIX}-loading-button`
 };
 
@@ -37,13 +41,14 @@ const Root = styled(Box, {
 })(() => ({}));
 
 type HeaderCellsType = {
-  id: string;
+  id?: string;
 };
 
 export interface CourseUsersTableProps {
   users: SCUserType[];
   setUsers: Dispatch<SetStateAction<SCUserType[]>>;
   headerCells: HeaderCellsType[];
+  editMode?: boolean;
 }
 
 function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
@@ -52,7 +57,7 @@ function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
 
 export default function CourseUsersTable(props: CourseUsersTableProps) {
   // PROPS
-  const {users, setUsers, headerCells} = props;
+  const {users, setUsers, headerCells, editMode = false} = props;
 
   // STATES
   const [usersToShow, setUsersToShow] = useState(USERS_TO_SHOW);
@@ -119,18 +124,24 @@ export default function CourseUsersTable(props: CourseUsersTableProps) {
         <Table>
           <TableHead>
             <TableRow>
-              {headerCells.map((cell, i) => (
-                <TableCell width="25%" key={i}>
-                  <Typography variant="body2">
-                    <FormattedMessage id={cell.id} defaultMessage={cell.id} />
-                  </Typography>
-                </TableCell>
-              ))}
+              {headerCells.map((cell, i, array) => {
+                if (!editMode && i === array.length - 1) {
+                  return <TableCell width="14%" key={i} />;
+                }
+
+                return (
+                  <TableCell width={editMode ? '25%' : '20%'} key={i}>
+                    <Typography variant="body2">
+                      <FormattedMessage id={cell.id} defaultMessage={cell.id} />
+                    </Typography>
+                  </TableCell>
+                );
+              })}
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {users.length === 0 && <RowSkeleton animation={false} />}
+            {users.length === 0 && <RowSkeleton animation={false} editMode={editMode} />}
             {users.length > 0 &&
               users.slice(0, usersToShow).map((user, i) => (
                 <TableRow key={i}>
@@ -140,18 +151,33 @@ export default function CourseUsersTable(props: CourseUsersTableProps) {
                       <Typography variant="body2">{user.username}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">{user.role}</Typography>
-                  </TableCell>
+                  {editMode ? (
+                    <TableCell>
+                      <Typography variant="body2">{user.role}</Typography>
+                    </TableCell>
+                  ) : (
+                    <TableCell>
+                      <Stack className={classes.progressWrapper}>
+                        <LinearProgress className={classes.progress} variant="determinate" value={user['completion']} />
+
+                        <Typography variant="body2">{`${Math.round(user['completion'])}%`}</Typography>
+                      </Stack>
+                    </TableCell>
+                  )}
                   <TableCell>
                     <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
                   </TableCell>
+                  {!editMode && (
+                    <TableCell>
+                      <ActionButton course={[]} />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
-            {isLoadingUsers && <RowSkeleton />}
+            {isLoadingUsers && <RowSkeleton editMode={editMode} />}
           </TableBody>
         </Table>
       </TableContainer>
@@ -166,12 +192,14 @@ export default function CourseUsersTable(props: CourseUsersTableProps) {
           className={classes.loadingButton}
           onClick={handleSeeMore}>
           <Typography variant="body2">
-            <FormattedMessage id="ui.courseUsersTable.button.label" defaultMessage="ui.courseUsersTable.button.label" />
+            <FormattedMessage id="ui.courseUsersTable.btn.label" defaultMessage="ui.courseUsersTable.btn.label" />
           </Typography>
         </LoadingButton>
       )}
 
-      {users.length === 0 && <EmptyStatus icon="face" title="ui.courseUsersTable.empty.title" description="ui.courseUsersTable.empty.description" />}
+      {users.length === 0 && value.length === 0 && (
+        <EmptyStatus icon="face" title="ui.courseUsersTable.empty.title" description="ui.courseUsersTable.empty.description" />
+      )}
     </Root>
   );
 }
