@@ -1,4 +1,4 @@
-import {SCUserType} from '@selfcommunity/types';
+import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {useSnackbar} from 'notistack';
 import {useEffect, useState} from 'react';
 import {getUsersData} from '../../EditCourse/data';
@@ -23,7 +23,14 @@ const headerCells = [
   {}
 ];
 
-export default function Students() {
+interface StudentsProps {
+  course: SCCourseType;
+}
+
+export default function Students(props: StudentsProps) {
+  // PROPS
+  const {course} = props;
+
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
 
@@ -52,5 +59,5 @@ export default function Students() {
     return <>Skeleton</>;
   }
 
-  return <CourseUsersTable users={users} setUsers={setUsers} headerCells={headerCells} />;
+  return <CourseUsersTable course={course} users={users} setUsers={setUsers} headerCells={headerCells} />;
 }

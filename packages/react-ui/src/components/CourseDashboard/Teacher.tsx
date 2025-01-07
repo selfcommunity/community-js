@@ -1,4 +1,4 @@
-import {Box, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
+import {Box, Stack, styled, Tab, Typography, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
 import HeaderCourseDashboard from './Header';
 import {HTMLAttributes, SyntheticEvent, useCallback, useEffect, useState} from 'react';
@@ -12,7 +12,6 @@ import {getCourseData} from './../EditCourse/data';
 import {SCOPE_SC_UI} from './../../constants/Errors';
 import InfoCourseDashboard from './Teacher/Info';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
-import {SCThemeType} from '@selfcommunity/react-core';
 import Students from './Teacher/Students';
 
 const classes = {
@@ -61,8 +60,6 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
   const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
 
   // HOOKS
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {enqueueSnackbar} = useSnackbar();
 
   // EFFECTS
@@ -106,14 +103,7 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
       </Stack>
 
       <TabContext value={tabValue}>
-        <TabList
-          className={classes.tabList}
-          onChange={handleTabChange}
-          textColor="primary"
-          indicatorColor="primary"
-          variant={isMobile ? 'scrollable' : 'standard'}
-          scrollButtons={isMobile}
-          centered={!isMobile}>
+        <TabList className={classes.tabList} onChange={handleTabChange} textColor="primary" indicatorColor="primary" variant="standard" centered>
           {TAB_DATA.map((data, i) => (
             <Tab
               key={i}
@@ -129,7 +119,7 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
         </TabList>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.STUDENTS}>
-          <Students />
+          <Students course={course} />
         </TabPanel>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.COMMENTS}>

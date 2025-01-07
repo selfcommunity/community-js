@@ -42,33 +42,39 @@ const Component = {
     }),
     skeletonRoot: () => ({}),
     dialogRoot: ({theme}) => ({
-      '& .SCCourseUsersTable-dialog-content-wrapper': {
-        gap: '8px',
-
-        [theme.breakpoints.down('sm')]: {
-          marginTop: '22px'
+      '& .MuiDialogContent-root': {
+        [theme.breakpoints.down('md')]: {
+          paddingBottom: '20px'
         },
 
-        '& .SCCourseUsersTable-dialog-info-outer-wrapper': {
-          gap: '9px',
-          border: `1px solid ${theme.palette.grey['300']}`,
-          borderRadius: '10px',
-          padding: theme.spacing('15px', 3, '25px'),
+        '& .SCCourseUsersTable-content-wrapper': {
+          gap: theme.spacing(1),
 
-          '& .SCCourseUsersTable-dialog-info-inner-wrapper': {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: theme.spacing(2),
+          [theme.breakpoints.down('md')]: {
+            marginTop: '22px'
+          },
 
-            '& .SCCourseUsersTable-dialog-avatar-wrapper': {
+          '& .SCCourseUsersTable-info-outer-wrapper': {
+            gap: '9px',
+            border: `1px solid ${theme.palette.grey['300']}`,
+            borderRadius: '10px',
+            padding: theme.spacing('15px', 3, '25px'),
+
+            '& .SCCourseUsersTable-info-inner-wrapper': {
               flexDirection: 'row',
               alignItems: 'center',
-              gap: theme.spacing(1),
+              justifyContent: 'space-between',
+              marginBottom: theme.spacing(2),
 
-              '& .SCCourseUsersTable-dialog-avatar': {
-                width: '30px',
-                height: '30px'
+              '& .SCCourseUsersTable-avatar-wrapper': {
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: theme.spacing(1),
+
+                '& .SCCourseUsersTable-avatar': {
+                  width: '30px',
+                  height: '30px'
+                }
               }
             }
           }

@@ -37,7 +37,7 @@ const USERS_DATA: SCUserType[] = [
   getUserData(7, 'user7', 'Utente 7', 69)
 ];
 
-const COURSE_DATA: SCCourseType = {
+const COURSE_DATA: SCCourseType & {lessons_completed?: string; course_completed?: string; sections?: SectionRowInterface[]} = {
   id: 1,
   name: 'Accessori Moda',
   description: '',
@@ -51,7 +51,48 @@ const COURSE_DATA: SCCourseType = {
   image_bigger: '',
   slug: '',
   privacy: SCCoursePrivacyType.OPEN,
-  join_status: SCCourseJoinStatusType.JOINED
+  join_status: SCCourseJoinStatusType.JOINED,
+  lessons_completed: '3/5',
+  course_completed: '75%',
+  sections: [
+    {
+      id: 1,
+      name: 'Accessori Principali',
+      lessons: [
+        {
+          id: 1,
+          name: 'Cinture',
+          completed: true
+        },
+        {
+          id: 2,
+          name: 'Sciarpe',
+          completed: true
+        },
+        {
+          id: 3,
+          name: 'Orologi',
+          completed: true
+        },
+        {
+          id: 4,
+          name: 'Test Sezione 1 - Accessori principali',
+          completed: false
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Pelletteria',
+      lessons: [
+        {
+          id: 1,
+          name: 'Borse',
+          completed: false
+        }
+      ]
+    }
+  ]
 };
 
 export const LESSONS_DATA = {

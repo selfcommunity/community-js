@@ -14,9 +14,10 @@ export enum TabContentEnum {
 export interface LessonRowInterface {
   id: number;
   name: string;
+  completed?: boolean;
 }
 
-export interface SectionRowInterface extends LessonRowInterface {
+export interface SectionRowInterface extends Omit<LessonRowInterface, 'completed'> {
   lessons: LessonRowInterface[];
 }
 

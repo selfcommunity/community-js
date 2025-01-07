@@ -178,6 +178,7 @@ import {
   MEDIA_TYPE_URL,
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
+import AccordionLessons, {AccordionLessonsProps} from './shared/AccordionLessons';
 import AddUsersButton, {AddUsersButtonProps} from './shared/AddUsersButton';
 import EmptyStatus, {EmptyStatusProps} from './shared/EmptyStatus';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
@@ -470,6 +471,8 @@ export {
   GroupSubscribeButton,
   GroupSubscribeButtonProps,
   /* SC UI SHARED */
+  AccordionLessons,
+  AccordionLessonsProps,
   AddUsersButton,
   AddUsersButtonProps,
   CourseUsersTable,

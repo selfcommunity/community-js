@@ -232,8 +232,8 @@ function Lessons(props: LessonsProps) {
 
               <Typography variant="h5">
                 <FormattedMessage
-                  id="ui.editCourse.tab.lessons.table.lessons.title"
-                  defaultMessage="ui.editCourse.tab.lessons.table.lessons.title"
+                  id="ui.course.table.lessons.title"
+                  defaultMessage="ui.course.table.lessons.title"
                   values={{
                     lessonsNumber: lessons
                   }}

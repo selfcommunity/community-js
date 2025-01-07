@@ -17,6 +17,7 @@ import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiPopover from './components/MuiPopover';
 import MuiSelect from './components/MuiSelect';
 import MuiTooltip from './components/MuiTooltip';
+import SCAccordionLessons from './components/SCAccordionLessons';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
@@ -277,6 +278,7 @@ const theme = {
     MuiPopover,
     MuiSelect,
     MuiTooltip,
+    SCAccordionLessons,
     SCAccountChangeMailValidation,
     SCAccountDataPortability,
     SCAccountDelete,

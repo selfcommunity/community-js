@@ -13,13 +13,14 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography
+  Typography,
+  useThemeProps
 } from '@mui/material';
 import {ChangeEvent, Dispatch, SetStateAction, useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
-import {SCUserType} from '@selfcommunity/types';
+import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
 import ActionButton from './ActionButton';
@@ -45,6 +46,7 @@ type HeaderCellsType = {
 };
 
 export interface CourseUsersTableProps {
+  course: SCCourseType;
   users: SCUserType[];
   setUsers: Dispatch<SetStateAction<SCUserType[]>>;
   headerCells: HeaderCellsType[];
@@ -55,9 +57,14 @@ function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
   return users.filter((user) => (user.username || user.real_name).includes(value));
 }
 
-export default function CourseUsersTable(props: CourseUsersTableProps) {
+export default function CourseUsersTable(inProps: CourseUsersTableProps) {
   // PROPS
-  const {users, setUsers, headerCells, editMode = false} = props;
+  const props: CourseUsersTableProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
+  const {course, users, setUsers, headerCells, editMode = false} = props;
 
   // STATES
   const [usersToShow, setUsersToShow] = useState(USERS_TO_SHOW);
@@ -160,7 +167,7 @@ export default function CourseUsersTable(props: CourseUsersTableProps) {
                       <Stack className={classes.progressWrapper}>
                         <LinearProgress className={classes.progress} variant="determinate" value={user['completion']} />
 
-                        <Typography variant="body2">{`${Math.round(user['completion'])}%`}</Typography>
+                        <Typography variant="body1">{`${Math.round(user['completion'])}%`}</Typography>
                       </Stack>
                     </TableCell>
                   )}
@@ -172,7 +179,7 @@ export default function CourseUsersTable(props: CourseUsersTableProps) {
                   </TableCell>
                   {!editMode && (
                     <TableCell>
-                      <ActionButton course={[]} />
+                      <ActionButton course={course} user={user} />
                     </TableCell>
                   )}
                 </TableRow>
