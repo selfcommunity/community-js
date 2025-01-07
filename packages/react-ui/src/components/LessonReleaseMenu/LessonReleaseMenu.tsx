@@ -146,7 +146,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {course && course.type === SCCourseTypologyType.PROGRAMMED ? (
+      {course && course.type === SCCourseTypologyType.STRUCTURED ? (
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
           adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}

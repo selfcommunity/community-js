@@ -134,13 +134,12 @@ import {
 } from './event';
 import {
   type SCCourseType,
+  type SCCourseLessonType,
+  type SCCourseSectionType,
   SCCoursePrivacyType,
-  SCCourseRecurrenceType,
-  SCCourseLocationType,
-  SCCourseDateFilterType,
-  SCCourseLocationFilterType,
-  SCCourseSubscriptionStatusType,
-  SCCourseStatusType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
   SCCourseTypologyType
 } from './course';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
@@ -309,12 +308,11 @@ export {
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
   type SCCourseType,
-  SCCourseLocationType,
+  type SCCourseSectionType,
+  type SCCourseLessonType,
   SCCoursePrivacyType,
-  SCCourseSubscriptionStatusType,
-  SCCourseStatusType,
-  SCCourseRecurrenceType,
-  SCCourseDateFilterType,
-  SCCourseLocationFilterType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
   SCCourseTypologyType
 };

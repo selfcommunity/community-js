@@ -1,6 +1,6 @@
 import {Skeleton, Stack, styled} from '@mui/material';
 import {PREFIX} from '../constants';
-import {CourseUsersTableSkeleton} from '@selfcommunity/react-ui';
+import {CourseUsersTableSkeleton} from '../../../shared/CourseUsersTable';
 
 const classes = {
   root: `${PREFIX}-users-skeleton-root`,

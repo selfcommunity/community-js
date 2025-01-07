@@ -1,28 +1,17 @@
-import {SCCourseType, SCMediaType, SCUserType} from '@selfcommunity/types';
+import {SCCourseLessonType, SCCourseSectionType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {
-  BaseGetParams,
-  BaseSearchParams,
-  CourseCreateParams,
-  CourseFeedParams,
-  CourseRelatedParams,
-  CourseSearchParams,
-  SCPaginatedResponse
-} from '../../types';
-import {CourseUserParams} from '../../types/course';
+import {BaseGetParams, BaseSearchParams, CourseCreateParams, CourseSearchParams, SCPaginatedResponse} from '../../types';
+import {CourseSectionParams, CourseUserParams} from '../../types/course';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 
 export interface CourseApiClientInterface {
   // Courses subscribed to by the user
-  getUserCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
+  getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
 
   // Courses subscribed by the user identified with :id in the path params (for the rest it is the same as getUserCourses)
-  getUserSubscribedCourses(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
-
-  // Courses created by the user
-  getUserCreatedCourses(params?: CourseRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
+  getUserJoinedCourses(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
 
   // Courses search
   searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
@@ -30,78 +19,99 @@ export interface CourseApiClientInterface {
   // Course detail
   getSpecificCourseInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType>;
 
-  // Course feed - if I am not subscribed to the course it does not return the data
-  getCourseFeed(id: number | string, params?: CourseFeedParams, config?: AxiosRequestConfig): Promise<any>;
-
   // Courses CRUD
   createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
   updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
   patchCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
   deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
+  // Courses section CRUD
+  getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
+  getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
+  createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
+  updateCourseSection(
+    id: number | string,
+    section_id: number | string,
+    data: SCCourseSectionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseSectionType>;
+  patchCourseSection(
+    id: number | string,
+    section_id: number | string,
+    data: SCCourseSectionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseSectionType>;
+  deleteCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // Courses lessons CRUD
+  getCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType>;
+  getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType>;
+  createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType>;
+  updateCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType>;
+  patchCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType>;
+  deleteCourseLesson(id: number | string, section_id: number | string, lesson_id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // Course Lesson mark complete/incomplete
+  markLessonComplete(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<any>;
+  markLessonInComplete(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<any>;
+
   // Course image change (bigger, big, medium, small)
   changeCourseCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
 
-  // Users subscribed to the course
-  getCourseMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-
   // Users awaiting approval subscribers
-  getCourseWaitingApprovalSubscribers(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCUserType>>;
+  getCourseWaitingApproval(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
   // Given an already existing course, it suggests users to invite
   getCourseSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
-  // Given a course being created, it suggests users to invite
-  getCoursesSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-
   // Users invited to the course
   getCourseInvitedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
-  // Users participating in the course - going to the course
-  getUsersGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
-
-  // Users who declare not to participate in the course
-  getUsersNotGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  // Users who joined to the course
+  getCourseJoinedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
   // Subscribe/Unsubscribe
-  subscribeToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  unsubscribeFromCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  leaveOrRemoveCourseRequest(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
   // To invite a user or to accept a request to participate in the course (in the end the user is ONLY subscribed to the course)
-  // To request participation in a private course use subscribeToCourse which automatically manages the subscription to a private/public course
-  inviteOrAcceptCourseRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+  // To request participation in a private course use joinOrAcceptInviteToCourse which automatically manages the subscription to a private/public course
+  inviteOrAcceptUsersToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
 
   // Remove invites - only for course moderator or user authenticated
-  removeInviteCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+  removeInvitationToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
 
   // Course subscription status
-  getCourseSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-
-  // Action go to course
-  goToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  // Action remove go to course
-  removeGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-
-  // Action not going to the course
-  notGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  // Action remove not going to the course
-  removeNotGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-
-  // Related events - created_by -> filter by a user
-  getCourseRelated(id: number | string, params?: CourseRelatedParams, config?: AxiosRequestConfig): Promise<any>;
-
-  // Hide/Show apis Course -> to remove contents related to the course in the feed
-  showCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  hideCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-
-  // Get/Add/Remove Course Photo gallery
-  getCoursePhotoGallery(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCMediaType>>;
-  addMediaToCoursePhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType>;
-  removeMediasFromCoursePhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<void>;
+  getCourseStatus(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 }
 /**
  * Contains all the endpoints needed to manage events.
@@ -112,40 +122,18 @@ export class CourseApiClient {
    * @param params
    * @param config
    */
-  static getUserCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
+  static getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetUserCourses.url({})}?${p.toString()}`, method: Endpoints.GetUserCourses.method});
+    return apiRequest({...config, url: `${Endpoints.GetJoinedCourses.url({})}?${p.toString()}`, method: Endpoints.GetJoinedCourses.method});
   }
-
   /**
-   * This endpoint retrieves a specific user events.
+   * This endpoint retrieves a specific course.
    * @param id
-   * @param params
    * @param config
    */
-  static getUserSubscribedCourses(
-    id: number | string,
-    params?: BaseSearchParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCCourseType>> {
-    const p = urlParams(params);
-    return apiRequest({
-      ...config,
-      url: `${Endpoints.GetUserSubscribedCourses.url({id})}?${p.toString()}`,
-      method: Endpoints.GetUserSubscribedCourses.method
-    });
+  static getUserJoinedCourses(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
+    return apiRequest({...config, url: Endpoints.GetUserJoinedCourses.url({id}), method: Endpoints.GetUserJoinedCourses.method});
   }
-
-  /**
-   * This endpoint returns all events created by a specific course.
-   * @param params
-   * @param config
-   */
-  static getUserCreatedCourses(params?: CourseRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetUserCreatedCourses.url({})}?${p.toString()}`, method: Endpoints.GetUserCreatedCourses.method});
-  }
-
   /**
    * This endpoint performs events search
    * @param params
@@ -163,17 +151,6 @@ export class CourseApiClient {
    */
   static getSpecificCourseInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return apiRequest({...config, url: Endpoints.GetCourseInfo.url({id}), method: Endpoints.GetCourseInfo.method});
-  }
-
-  /**
-   * This endpoint performs events search
-   * @param id
-   * @param params
-   * @param config
-   */
-  static getCourseFeed(id: number | string, params?: CourseFeedParams, config?: AxiosRequestConfig): Promise<any> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetCourseFeed.url({id})}?${p.toString()}`, method: Endpoints.GetCourseFeed.method});
   }
 
   /**
@@ -214,6 +191,202 @@ export class CourseApiClient {
   }
 
   /**
+   * This endpoint retrieves a specific course section.
+   * @param id
+   * @param section_id
+   * @param config
+   */
+  static getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return apiRequest({...config, url: Endpoints.GetCourseSection.url({id, section_id}), method: Endpoints.GetCourseSection.method});
+  }
+
+  /**
+   * This endpoint retrieves the course sections.
+   * @param id
+   * @param config
+   */
+  static getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return apiRequest({...config, url: Endpoints.GetCourseSections.url({id}), method: Endpoints.GetCourseSections.method});
+  }
+
+  /**
+   * This endpoint creates a course section.
+   * @param data
+   * @param config
+   */
+  static createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({}), method: Endpoints.CreateCourseSection.method, data: data});
+  }
+
+  /**
+   * This endpoint updates a course section.
+   * @param id
+   * @param section_id
+   * @param data
+   * @param config
+   */
+  static updateCourseSection(
+    id: number | string,
+    section_id: number | string,
+    data: SCCourseSectionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseSectionType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.UpdateCourseSection.url({id, section_id}),
+      method: Endpoints.UpdateCourseSection.method,
+      data: data
+    });
+  }
+
+  /**
+   * This endpoint patches a  course section.
+   * @param id
+   * @param section_id
+   * @param data
+   * @param config
+   */
+  static patchCourseSection(
+    id: number | string,
+    section_id: number | string,
+    data: SCCourseSectionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseSectionType> {
+    return apiRequest({...config, url: Endpoints.PatchCourseSection.url({id, section_id}), method: Endpoints.PatchCourseSection.method, data: data});
+  }
+  /**
+   * This endpoint deletes a course section.
+   * @param id
+   * @param section_id
+   * @param config
+   */
+  static deleteCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.DeleteCourseSection.url({id, section_id}), method: Endpoints.DeleteCourseSection.method});
+  }
+
+  /**
+   * This endpoint retrieves a specific course lesson.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param config
+   */
+  static getCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType> {
+    return apiRequest({...config, url: Endpoints.GetCourseLesson.url({id, section_id, lesson_id}), method: Endpoints.GetCourseLesson.method});
+  }
+
+  /**
+   * This endpoint retrieves the course lessons.
+   * @param id
+   * @param section_id
+   * @param config
+   */
+  static getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
+    return apiRequest({...config, url: Endpoints.GetCourseLessons.url({id, section_id}), method: Endpoints.GetCourseLessons.method});
+  }
+
+  /**
+   * This endpoint creates a course lesson.
+   * @param data
+   * @param config
+   */
+  static createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
+    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({}), method: Endpoints.CreateCourseSection.method, data: data});
+  }
+
+  /**
+   * This endpoint updates a course lesson.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param data
+   * @param config
+   */
+  static updateCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.UpdateCourseSection.url({id, section_id, lesson_id}),
+      method: Endpoints.UpdateCourseSection.method,
+      data: data
+    });
+  }
+
+  /**
+   * This endpoint patches a  course lesson.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param data
+   * @param config
+   */
+  static patchCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.PatchCourseSection.url({id, section_id, lesson_id}),
+      method: Endpoints.PatchCourseSection.method,
+      data: data
+    });
+  }
+  /**
+   * This endpoint deletes a course lesson.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param config
+   */
+  static deleteCourseLesson(id: number | string, section_id: number | string, lesson_id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.DeleteCourseSection.url({id, section_id, lesson_id}), method: Endpoints.DeleteCourseSection.method});
+  }
+
+  /**
+   * This endpoint marks a course lesson as complete.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param config
+   */
+  static markLessonComplete(id: number | string, section_id: number | string, lesson_id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.MarkLessonComplete.url({id, section_id, lesson_id}), method: Endpoints.MarkLessonComplete.method});
+  }
+
+  /**
+   * This endpoint marks a course lesson as incomplete.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param config
+   */
+  static markLessonIncomplete(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.MarkLessonIncomplete.url({id, section_id, lesson_id}),
+      method: Endpoints.MarkLessonIncomplete.method
+    });
+  }
+
+  /**
    * This endpoint changes the course avatar
    * @param id
    * @param data
@@ -222,23 +395,14 @@ export class CourseApiClient {
   static changeCourseCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return apiRequest({url: Endpoints.PatchCourse.url({id}), method: Endpoints.PatchCourse.method, data, ...config});
   }
-  /**
-   * This endpoint returns all subscribers of a specific course.
-   * @param id
-   * @param params
-   * @param config
-   */
-  static getCourseMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetCourseSubscribers.url({id})}?${p.toString()}`, method: Endpoints.GetCourseSubscribers.method});
-  }
+
   /**
    * This endpoint returns all waiting approval subscribers
    * @param id
    * @param params
    * @param config
    */
-  static getCourseWaitingApprovalSubscribers(
+  static getCourseWaitingApproval(
     id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
@@ -246,8 +410,8 @@ export class CourseApiClient {
     const p = urlParams(params);
     return apiRequest({
       ...config,
-      url: `${Endpoints.GetCourseWaitingApprovalSubscribers.url({id})}?${p.toString()}`,
-      method: Endpoints.GetCourseSubscribers.method
+      url: `${Endpoints.GetCourseWaitingApproval.url({id})}?${p.toString()}`,
+      method: Endpoints.GetCourseWaitingApproval.method
     });
   }
   /**
@@ -261,19 +425,6 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.GetCourseSuggestedUsers.url({id, search}),
       method: Endpoints.GetCourseSuggestedUsers.method
-    });
-  }
-
-  /**
-   * This endpoint returns a list of suggested users to invite to the events.
-   * @param search
-   * @param config
-   */
-  static getCoursesSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return apiRequest({
-      ...config,
-      url: Endpoints.GetCoursesSuggestedUsers.url({search}),
-      method: Endpoints.GetCoursesSuggestedUsers.method
     });
   }
 
@@ -293,36 +444,17 @@ export class CourseApiClient {
   }
 
   /**
-   * This endpoint returns a list of users attending the course.
+   * This endpoint returns a list of joined users.
    * @param id
    * @param params
    * @param config
    */
-  static getUsersGoingToCourse(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getCourseJoinedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams(params);
     return apiRequest({
       ...config,
-      url: `${Endpoints.GetUsersGoingToCourse.url({id})}?${p.toString()}`,
-      method: Endpoints.GetUsersGoingToCourse.method
-    });
-  }
-
-  /**
-   * This endpoint returns a list of users not attending the course.
-   * @param id
-   * @param params
-   * @param config
-   */
-  static getUsersNotGoingToCourse(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCUserType>> {
-    const p = urlParams(params);
-    return apiRequest({
-      ...config,
-      url: `${Endpoints.GetUsersNotGoingToCourse.url({id})}?${p.toString()}`,
-      method: Endpoints.GetUsersNotGoingToCourse.method
+      url: `${Endpoints.GetCourseJoinedUsers.url({id})}?${p.toString()}`,
+      method: Endpoints.GetCourseJoinedUsers.method
     });
   }
 
@@ -331,8 +463,8 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static subscribeToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.SubscribeToCourse.url({id}), method: Endpoints.SubscribeToCourse.method});
+  static joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.JoinOrAcceptInviteToCourse.url({id}), method: Endpoints.JoinOrAcceptInviteToCourse.method});
   }
 
   /**
@@ -340,8 +472,8 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static unsubscribeFromCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.UnsubscribeFromCourse.url({id}), method: Endpoints.UnsubscribeFromCourse.method});
+  static leaveOrRemoveCourseRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.LeaveOrRemoveCourseRequest.url({id}), method: Endpoints.LeaveOrRemoveCourseRequest.method});
   }
 
   /**
@@ -350,11 +482,11 @@ export class CourseApiClient {
    * @param data
    * @param config
    */
-  static inviteOrAcceptCourseRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+  static inviteOrAcceptUsersToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
-      url: Endpoints.InviteOrAcceptCourseRequest.url({id}),
-      method: Endpoints.InviteOrAcceptCourseRequest.method,
+      url: Endpoints.InviteOrAcceptUsersToCourse.url({id}),
+      method: Endpoints.InviteOrAcceptUsersToCourse.method,
       data: data
     });
   }
@@ -364,11 +496,11 @@ export class CourseApiClient {
    * @param data
    * @param config
    */
-  static removeInviteCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+  static removeInvitationToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
-      url: Endpoints.RemoveInviteCourse.url({id}),
-      method: Endpoints.RemoveInviteCourse.method,
+      url: Endpoints.RemoveInvitationToCourse.url({id}),
+      method: Endpoints.RemoveInvitationToCourse.method,
       data: data
     });
   }
@@ -377,109 +509,8 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static getCourseSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.GetCourseSubscriptionStatus.url({id}), method: Endpoints.GetCourseSubscriptionStatus.method});
-  }
-  /**
-   * This endpoint allows to attend a course
-   * @param id
-   * @param config
-   */
-  static goToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.GoToCourse.url({id}), method: Endpoints.GoToCourse.method});
-  }
-  /**
-   * This endpoint allows to remove a course participation
-   * @param id
-   * @param config
-   */
-  static removeGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.RemoveGoingToCourse.url({id}), method: Endpoints.RemoveGoingToCourse.method});
-  }
-  /**
-   * This endpoint allows to not attend a course
-   * @param id
-   * @param config
-   */
-  static notGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.NotGoingToCourse.url({id}), method: Endpoints.NotGoingToCourse.method});
-  }
-  /**
-   * This endpoint allows to remove the course not attending
-   * @param id
-   * @param config
-   */
-  static removeNotGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.RemoveNotGoingToCourse.url({id}), method: Endpoints.RemoveNotGoingToCourse.method});
-  }
-  /**
-   * This endpoint returns all events related of a specific course.
-   * @param id
-   * @param params
-   * @param config
-   */
-  static getCourseRelated(
-    id: number | string,
-    params?: CourseRelatedParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCCourseType>> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetCourseRelated.url({id})}?${p.toString()}`, method: Endpoints.GetCourseRelated.method});
-  }
-  /**
-   * This endpoint show a specific course.
-   * @param id
-   * @param config
-   */
-  static showCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.ShowCourse.url({id}), method: Endpoints.ShowCourse.method});
-  }
-  /**
-   * This endpoint hide a specific course.
-   * @param id
-   * @param config
-   */
-  static hideCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.hideCourse.url({id}), method: Endpoints.hideCourse.method});
-  }
-  /**
-   * This endpoint returns the gallery of a specific course.
-   * @param id
-   * @param params
-   * @param config
-   */
-  static getCoursePhotoGallery(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCMediaType>> {
-    const p = urlParams(params);
-
-    return apiRequest({
-      ...config,
-      url: `${Endpoints.GetCoursePhotoGallery.url({id})}?${p.toString()}`,
-      method: Endpoints.GetCoursePhotoGallery.method
-    });
-  }
-  /**
-   * This endpoint adds the media in a gallery of a specific course.
-   * @param id
-   * @param config
-   */
-  static addMediaToCoursePhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType> {
-    return apiRequest({
-      ...config,
-      url: Endpoints.AddMediaToCoursePhotoGallery.url({id}),
-      method: Endpoints.AddMediaToCoursePhotoGallery.method
-    });
-  }
-  /**
-   * This endpoint removes the medias in a gallery of a specific course.
-   * @param id
-   * @param config
-   */
-  static removeMediasFromCoursePhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<void> {
-    return apiRequest({
-      ...config,
-      url: Endpoints.RemoveMediasFromCoursePhotoGallery.url({id}),
-      method: Endpoints.RemoveMediasFromCoursePhotoGallery.method
-    });
+  static getCourseStatus(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.GetCourseStatus.url({id}), method: Endpoints.GetCourseStatus.method});
   }
 }
 
@@ -519,27 +550,17 @@ export class CourseApiClient {
  :::
  */
 export default class CourseService {
-  static async getUserCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
-    return CourseApiClient.getUserCourses(params, config);
+  static async getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
+    return CourseApiClient.getJoinedCourses(params, config);
   }
-  static async getUserSubscribedCourses(
-    id: number | string,
-    params?: BaseSearchParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCCourseType>> {
-    return CourseApiClient.getUserSubscribedCourses(id, params, config);
-  }
-  static async getUserCreatedCourses(params?: CourseRelatedParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
-    return CourseApiClient.getUserCreatedCourses(params, config);
+  static async getUserJoinedCourses(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
+    return CourseApiClient.getUserJoinedCourses(id, config);
   }
   static async searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     return CourseApiClient.searchCourses(params, config);
   }
   static async getSpecificCourseInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.getSpecificCourseInfo(id, config);
-  }
-  static async getCourseFeed(id: number | string, params?: CourseFeedParams, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.getCourseFeed(id, params, config);
   }
   static async createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.createCourse(data, config);
@@ -553,24 +574,102 @@ export default class CourseService {
   static async deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.deleteCourse(id, config);
   }
+  static async getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return CourseApiClient.getCourseSection(id, section_id, config);
+  }
+  static async getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return CourseApiClient.getCourseSections(id, config);
+  }
+  static async createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return CourseApiClient.createCourseSection(data, config);
+  }
+  static async updateCourseSection(
+    id: number | string,
+    section_id: number | string,
+    data: SCCourseSectionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseSectionType> {
+    return CourseApiClient.updateCourseSection(id, section_id, data, config);
+  }
+  static async patchCourseSection(
+    id: number | string,
+    section_id: number | string,
+    data: SCCourseSectionType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseSectionType> {
+    return CourseApiClient.patchCourseSection(id, section_id, data, config);
+  }
+  static async deleteCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.deleteCourseSection(id, section_id, config);
+  }
+  static async getCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType> {
+    return CourseApiClient.getCourseLesson(id, section_id, lesson_id, config);
+  }
+  static async getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
+    return CourseApiClient.getCourseLessons(id, section_id, config);
+  }
+  static async createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
+    return CourseApiClient.createCourseLesson(data, config);
+  }
+  static async updateCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType> {
+    return CourseApiClient.updateCourseLesson(id, section_id, lesson_id, data, config);
+  }
+  static async patchCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseLessonType> {
+    return CourseApiClient.patchCourseLesson(id, section_id, lesson_id, data, config);
+  }
+  static async deleteCourseLesson(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return CourseApiClient.deleteCourseLesson(id, section_id, lesson_id, config);
+  }
+  static async markLessonComplete(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return CourseApiClient.markLessonComplete(id, section_id, lesson_id, config);
+  }
+  static async markLessonIncomplete(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return CourseApiClient.markLessonIncomplete(id, section_id, lesson_id, config);
+  }
   static async changeCourseCover(id: number | string, data: FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.changeCourseCover(id, data, config);
   }
-  static async getCourseMembers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return CourseApiClient.getCourseMembers(id, params, config);
-  }
-  static async getCourseWaitingApprovalSubscribers(
+  static async getCourseWaitingApproval(
     id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
-    return CourseApiClient.getCourseWaitingApprovalSubscribers(id, params, config);
+    return CourseApiClient.getCourseWaitingApproval(id, params, config);
   }
   static async getCourseSuggestedUsers(id: number | string, search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
     return CourseApiClient.getCourseSuggestedUsers(id, search, config);
-  }
-  static async getCoursesSuggestedUsers(search: string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
-    return CourseApiClient.getCoursesSuggestedUsers(search, config);
   }
   static async getCourseInvitedUsers(
     id: number | string,
@@ -579,71 +678,26 @@ export default class CourseService {
   ): Promise<SCPaginatedResponse<SCUserType>> {
     return CourseApiClient.getCourseInvitedUsers(id, params, config);
   }
-  static async getUsersGoingToCourse(
+  static async getCourseJoinedUsers(
     id: number | string,
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
-    return CourseApiClient.getUsersGoingToCourse(id, params, config);
+    return CourseApiClient.getCourseJoinedUsers(id, params, config);
   }
-  static async getUsersNotGoingToCourse(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCUserType>> {
-    return CourseApiClient.getUsersNotGoingToCourse(id, params, config);
+  static async joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.joinOrAcceptInviteToCourse(id, config);
   }
-  static async subscribeToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.subscribeToCourse(id, config);
+  static async leaveOrRemoveCourseRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.leaveOrRemoveCourseRequest(id, config);
   }
-  static async unsubscribeFromCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.unsubscribeFromCourse(id, config);
+  static async inviteOrAcceptUsersToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.inviteOrAcceptUsersToCourse(id, data, config);
   }
-  static async inviteOrAcceptCourseRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.inviteOrAcceptCourseRequest(id, data, config);
+  static async removeInvitationToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.removeInvitationToCourse(id, data, config);
   }
-  static async removeInviteCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.removeInviteCourse(id, data, config);
-  }
-  static async getCourseSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
-    return CourseApiClient.getCourseSubscriptionStatus(id, config);
-  }
-  static async goToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
-    return CourseApiClient.goToCourse(id, config);
-  }
-  static async removeGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
-    return CourseApiClient.removeGoingToCourse(id, config);
-  }
-  static async notGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
-    return CourseApiClient.notGoingToCourse(id, config);
-  }
-  static async removeNotGoingToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
-    return CourseApiClient.removeNotGoingToCourse(id, config);
-  }
-  static async getCourseRelated(
-    id: number | string,
-    params?: CourseRelatedParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCCourseType>> {
-    return CourseApiClient.getCourseRelated(id, params, config);
-  }
-  static async showCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.showCourse(id, config);
-  }
-  static async hideCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.hideCourse(id, config);
-  }
-  static async getCoursePhotoGallery(
-    id: number | string,
-    params?: BaseGetParams,
-    config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCMediaType>> {
-    return CourseApiClient.getCoursePhotoGallery(id, params, config);
-  }
-  static async addMediaToCoursePhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<SCMediaType> {
-    return CourseApiClient.addMediaToCoursePhotoGallery(id, config);
-  }
-  static async removeMediasFromCoursePhotoGallery(id: number | string, config?: AxiosRequestConfig): Promise<void> {
-    return CourseApiClient.removeMediasFromCoursePhotoGallery(id, config);
+  static async getCourseStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
+    return CourseApiClient.getCourseStatus(id, config);
   }
 }

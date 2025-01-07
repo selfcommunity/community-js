@@ -1,12 +1,4 @@
-import {
-  SCCourseLocationType,
-  SCCoursePrivacyType,
-  SCCourseRecurrenceType,
-  SCCourseSubscriptionStatusType,
-  SCCourseType,
-  SCCourseTypologyType,
-  SCUserType
-} from '@selfcommunity/types';
+import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseType, SCCourseTypologyType, SCUserType} from '@selfcommunity/types';
 import {LessonRowInterface, OptionsData, SectionRowInterface, Status} from './types';
 
 function getUserData(id: number, username: string, name: string, completion: number): SCUserType & {completion?: number} {
@@ -50,35 +42,16 @@ const COURSE_DATA: SCCourseType = {
   name: 'Accessori Moda',
   description: '',
   type: SCCourseTypologyType.SELF,
-  active: true,
-  color: '',
   created_at: '',
   created_by: getUserData(1, 'user1', 'Utente 1', undefined),
-  managed_by: getUserData(1, 'user1', 'Utente 1', undefined),
-  start_date: '',
-  end_date: '',
-  next_start_date: '',
-  next_end_date: '',
-  geolocation: '',
-  geolocation_lat: 0,
-  geolocation_lng: 0,
-  goings_counter: 0,
+  image_original: '',
   image_small: '',
   image_medium: '',
   image_big: '',
   image_bigger: '',
-  link: '',
   slug: '',
-  location: SCCourseLocationType.ONLINE,
-  privacy: SCCoursePrivacyType.PUBLIC,
-  recurring: SCCourseRecurrenceType.DAILY,
-  running: true,
-  running_start_date: '',
-  running_end_date: '',
-  show_on_feed: true,
-  subscribers_counter: 0,
-  subscription_status: SCCourseSubscriptionStatusType.GOING,
-  visible: true
+  privacy: SCCoursePrivacyType.OPEN,
+  join_status: SCCourseJoinStatusType.JOINED
 };
 
 export const LESSONS_DATA = {

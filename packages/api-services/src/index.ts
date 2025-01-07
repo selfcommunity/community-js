@@ -120,8 +120,6 @@ import {
   StartStepParams,
   OnBoardingStep,
   CourseCreateParams,
-  CourseFeedParams,
-  CourseRelatedParams,
   CourseSearchParams
 } from './types';
 
@@ -303,8 +301,6 @@ export {
   OnBoardingStep,
   CourseCreateParams,
   CourseSearchParams,
-  CourseRelatedParams,
-  CourseFeedParams,
   CourseService,
   CourseApiClientInterface,
   CourseApiClient

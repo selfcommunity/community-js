@@ -24,7 +24,7 @@ import {
   Typography
 } from '@mui/material';
 import {PREFIX} from './constants';
-import {SCContributionType, SCCourseStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCContributionType, SCCourseLessonStatusType, SCCourseType} from '@selfcommunity/types';
 import {SCRoutes, SCRoutingContextType, useSCFetchCommentObjects, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
 import LessonObject from '../LessonObject';
 import {SCLessonActionsType} from '../../types/course';
@@ -160,7 +160,7 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
-  const [value, setValue] = useState<SCCourseStatusType>(SCCourseStatusType.DRAFT);
+  const [value, setValue] = useState<SCCourseLessonStatusType>(SCCourseLessonStatusType.DRAFT);
 
   const [open, setOpen] = useState(true);
 
@@ -206,7 +206,7 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
   // HANDLERS
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value as SCCourseStatusType);
+    setValue(event.target.value as SCCourseLessonStatusType);
   };
 
   const handleOpenDrawer = (panel: SCLessonActionsType) => {
@@ -291,12 +291,12 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
                   value={value}
                   onChange={handleChange}>
                   <FormControlLabel
-                    value={SCCourseStatusType.DRAFT}
+                    value={SCCourseLessonStatusType.DRAFT}
                     control={<Radio />}
                     label={<FormattedMessage id="ui.lessonComponent.edit.status.draft" defaultMessage="ui.lessonComponent.edit.status.draft" />}
                   />
                   <FormControlLabel
-                    value={SCCourseStatusType.PUBLISHED}
+                    value={SCCourseLessonStatusType.PUBLISHED}
                     control={<Radio />}
                     label={
                       <FormattedMessage id="ui.lessonComponent.edit.status.published" defaultMessage="ui.lessonComponent.edit.status.published" />

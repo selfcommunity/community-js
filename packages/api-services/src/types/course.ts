@@ -1,7 +1,7 @@
 /**
  * CourseCreateParams interface
  */
-import {SCCourseDateFilterType, SCCoursePrivacyType, SCCourseRecurrenceType, SCCourseSubscriptionStatusType} from '@selfcommunity/types';
+import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseTypologyType} from '@selfcommunity/types';
 import {BaseGetParams, BaseSearchParams} from './baseParams';
 
 export interface CourseCreateParams {
@@ -10,69 +10,28 @@ export interface CourseCreateParams {
    */
   name: string;
   /**
-   * The course privacy
-   */
-  privacy: SCCoursePrivacyType;
-  /**
-   * The course visibility. It is required when privacy = private.
-   */
-  visible?: boolean;
-  /**
    * The course description
    */
   description?: string;
   /**
-   * The course starting date and time
+   * The course type
    */
-  start_date: string;
+  type: SCCourseTypologyType;
   /**
-   * The course ending date and time
+   * The course privacy
    */
-  end_date?: string;
+  privacy: SCCoursePrivacyType;
   /**
-   * The users to invite to the course
+   * The categories id
    */
-  invite_users?: number[];
-  /**
-   * The course image
-   */
-  image_original?: File;
-  /**
-   * The course exact point
-   */
-  geolocation: string;
-  /**
-   * The course latitude
-   */
-  geolocation_lat: number;
-  /**
-   * The course longitude
-   */
-  geolocation_lng: number;
-  /**
-   * The course recurrency
-   */
-  recurring?: SCCourseRecurrenceType;
+  categories: number[];
 }
 
-/**
- * CourseFeedParams interface.
- */
-export interface CourseFeedParams extends BaseGetParams {
+export interface CourseSectionParams {
   /**
-   * Which field to use when ordering the results.
+   * A unique name for the course section
    */
-  ordering?: string;
-}
-
-/**
- * CourseRelatedParams interface.
- */
-export interface CourseRelatedParams extends BaseGetParams {
-  /**
-   * Filter results by created_by user id.
-   */
-  created_by?: number;
+  name: string;
 }
 
 /**
@@ -82,27 +41,15 @@ export interface CourseUserParams extends BaseGetParams {
   /**
    * Filter results by subscription_status
    */
-  subscription_status?: SCCourseSubscriptionStatusType;
-  /**
-   *  Filtered past events
-   */
-  past?: boolean | number;
+  join_status?: SCCourseJoinStatusType;
 }
 
 /**
- * CourseFeedParams interface.
+ * CourseSearchParams interface.
  */
 export interface CourseSearchParams extends BaseSearchParams {
   /**
-   * The events filtered by a specific time frame
+   * The categories ids
    */
-  date_filter?: SCCourseDateFilterType;
-  /**
-   * The events created or followed by the users followed
-   */
-  follows?: boolean | number;
-  /**
-   * Filtered past events
-   */
-  past?: boolean | number;
+  categories?: number[];
 }

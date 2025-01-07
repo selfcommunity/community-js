@@ -120,7 +120,9 @@ import {
   type SCGroupType,
   type SCEventType,
   type SCStepType,
-  type SCCourseType
+  type SCCourseType,
+  type SCCourseLessonType,
+  type SCCourseSectionType
 } from './types';
 
 /**
@@ -166,14 +168,11 @@ import {
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
-  SCCourseLocationFilterType,
-  SCCourseLocationType,
-  SCCourseRecurrenceType,
   SCCoursePrivacyType,
-  SCCourseDateFilterType,
-  SCCourseSubscriptionStatusType,
-  SCCourseStatusType,
-  SCCourseTypologyType
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseTypologyType,
+  SCCourseLessonStatusType
 } from './types';
 
 /**
@@ -220,13 +219,10 @@ export {
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
   SCCoursePrivacyType,
-  SCCourseSubscriptionStatusType,
-  SCCourseStatusType,
-  SCCourseRecurrenceType,
-  SCCourseLocationType,
-  SCCourseLocationFilterType,
-  SCCourseDateFilterType,
-  SCCourseTypologyType
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseTypologyType,
+  SCCourseLessonStatusType
 };
 export {
   type SCBannerType,
@@ -347,5 +343,7 @@ export {
   type SCGroupType,
   type SCEventType,
   type SCStepType,
-  type SCCourseType
+  type SCCourseType,
+  type SCCourseSectionType,
+  type SCCourseLessonType
 };

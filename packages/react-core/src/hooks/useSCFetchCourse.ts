@@ -1,5 +1,5 @@
 import {Endpoints, CourseService, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCCoursePrivacyType, SCCourseSubscriptionStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
 import {useEffect, useMemo, useState} from 'react';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
@@ -37,7 +37,7 @@ export default function useSCFetchCourse({
 
   // CACHE
   const __courseCacheKey = useMemo(() => getCourseObjectCacheKey(__courseId), [__courseId]);
-  const __course = useMemo(() => (authUserId ? course : objectWithoutProperties<SCCourseType>(course, ['subscription_status'])), [authUserId, course]);
+  const __course = useMemo(() => (authUserId ? course : objectWithoutProperties<SCCourseType>(course, ['join_status'])), [authUserId, course]);
 
   const [scCourse, setScCourse] = useState<SCCourseType>(
     cacheStrategy !== CacheStrategies.NETWORK_ONLY ? LRUCache.get(__courseCacheKey, __course) : null
@@ -52,12 +52,12 @@ export default function useSCFetchCourse({
       if (
         autoSubscribe &&
         authUserId !== null &&
-        ((e.privacy === SCCoursePrivacyType.PUBLIC && !e.subscription_status) || e.subscription_status === SCCourseSubscriptionStatusType.INVITED)
+        ((e.privacy === SCCoursePrivacyType.OPEN && !e.join_status) || e.join_status === SCCourseJoinStatusType.INVITED)
       ) {
         // Auto subscribe to the course
-        CourseService.subscribeToCourse(e.id)
+        CourseService.joinOrAcceptInviteToCourse(e.id)
           .then(() => {
-            const updatedCourse = {...e, subscription_status: SCCourseSubscriptionStatusType.SUBSCRIBED};
+            const updatedCourse = {...e, join_status: SCCourseJoinStatusType.JOINED};
             setScCourse(updatedCourse);
             LRUCache.set(__courseCacheKey, updatedCourse);
           })

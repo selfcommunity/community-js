@@ -25,7 +25,7 @@ import {
   SCUserContext,
   SCUserContextType
 } from '@selfcommunity/react-core';
-import {SCCategoryType, SCCourseSubscriptionStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCCategoryType, SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -236,7 +236,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           ...endpointQueryParams,
           ...(query && {search: query}),
           ...(showForMe && {follows: showForMe}),
-          subscription_status: SCCourseSubscriptionStatusType.GOING,
+          subscription_status: SCCourseJoinStatusType.JOINED,
           ...(showMyCourses && {created_by: authUserId})
         }
       })

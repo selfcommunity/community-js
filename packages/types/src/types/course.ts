@@ -1,15 +1,10 @@
-/**
- * Interface SCGroupCourseType.
- * Course Schema.
- */
 import {SCUserType} from './user';
-import { SCCategoryType } from './category';
 
 /**
  * SCCoursePrivacyType enum
  */
 export enum SCCoursePrivacyType {
-  PUBLIC = 'public',
+  OPEN = 'open',
   PRIVATE = 'private',
   SECRET = 'secret'
 }
@@ -18,239 +13,185 @@ export enum SCCoursePrivacyType {
  * SCCourseTypologyType enum
  */
 export enum SCCourseTypologyType {
-  SELF = 'self',
-  CALENDARIZED = 'calendarized',
-  PROGRAMMED = 'programmed'
+  SELF = 'self-paced',
+  SCHEDULED = 'scheduled',
+  STRUCTURED = 'structured'
 }
 
 /**
  * SCGroupSubscriptionStatusType enum
  */
-export enum SCCourseSubscriptionStatusType {
-  SUBSCRIBED = 'subscribed',
+export enum SCCourseJoinStatusType {
+  JOINED = 'joined',
   REQUESTED = 'requested',
   INVITED = 'invited',
-  GOING = 'going',
-  NOT_GOING = 'not_going'
+  MANAGER = 'manager'
 }
 
 /**
- * SCCourseStatusType enum
+ * Interface SCGroupCourseType.
+ * Course Schema.
  */
-export enum SCCourseStatusType {
-  DRAFT = 'draft',
-  PUBLISHED = 'published'
-}
-
-/**
- * SCCourseLocationType enum
- */
-export enum SCCourseLocationType {
-  PERSON = 'in person',
-  ONLINE = 'virtual'
-}
-
-/**
- * SCCourseLocationFilterType enum
- */
-export enum SCCourseLocationFilterType {
-  ANY = 'any',
-  PERSON = 'in person',
-  ONLINE = 'virtual'
-}
-
-/**
- * SCCourseRecurrenceType enum
- */
-export enum SCCourseRecurrenceType {
-  NEVER = 'never',
-  DAILY = 'daily',
-  WEEKLY = 'weekly',
-  MONTHLY = 'monthly'
-}
-
-/**
- * SCCourseRecurrenceType enum
- */
-export enum SCCourseDateFilterType {
-  ANY = 'any',
-  TODAY = 'today',
-  TOMORROW = 'tomorrow',
-  THIS_WEEK = 'this_week',
-  NEXT_WEEK = 'next_week',
-  THIS_MONTH = 'this_month',
-  PAST = 'past'
-}
-
 export interface SCCourseType {
   /**
    * The ID of the course.
    */
   id: number;
-
   /**
    * The name of the course.
    */
   name: string;
-
-  /**
-   * The description of the course.
-   */
-  description: string;
-
   /**
    * The slug for the course.
    */
   slug: string;
-
   /**
-   * The color of the course.
+   * The description of the course.
    */
-  color: string;
-
-  /**
-   * The course privacy.
-   */
-  privacy: SCCoursePrivacyType;
-
-  /**
-   * The course visibility.
-   */
-  visible: boolean;
-
-  /**
-   * The course active status.
-   */
-  active: boolean;
-
-  /**
-   * If the course is showed in the feed.
-   */
-  show_on_feed: boolean;
-
-  /**
-   * The course subscription status.
-   */
-  subscription_status: SCCourseSubscriptionStatusType;
-
-  /**
-   * The course image, bigger format.
-   */
-  image_bigger: string;
-
-  /**
-   * The course image, big format.
-   */
-  image_big: string;
-
-  /**
-   * The course image, medium format.
-   */
-  image_medium: string;
-
-  /**
-   * The course image, small format.
-   */
-  image_small: string;
-
-  /**
-   * The number of course members
-   */
-  subscribers_counter: number;
-
-  /**
-   * The number of participating members
-   */
-  goings_counter: number;
-
-  /**
-   * The course start date.
-   */
-  start_date: string;
-
-  /**
-   * The course end date.
-   */
-  end_date: string | null;
-
-  /**
-   * If the course is currently running
-   */
-  running: boolean;
-
-  /**
-   *  The start date and time when the course running period began.
-   */
-  running_start_date: string;
-
-  /**
-   * The expected or actual end date and time for the course running period.
-   */
-  running_end_date: string;
-
-  /**
-   *  The start date  when the next course running period is scheduled to begin (for recurrent events).
-   */
-  next_start_date: string;
-
-  /**
-   * The end date for the next course running period (for recurrent events).
-   */
-  next_end_date: string;
-
-  /**
-   * The course recurrence
-   */
-  recurring: SCCourseRecurrenceType;
-
-  /**
-   * The course location (in person, online)
-   */
-  location: SCCourseLocationType;
-
-  /**
-   * The course place
-   */
-  geolocation: string | null;
-
-  /**
-   * The course latitude
-   */
-  geolocation_lat: number | null;
-
-  /**
-   * The course longitude
-   */
-  geolocation_lng: number | null;
-
-  /**
-   * The course link(if virtual)
-   */
-
-  link: string | null;
-
-  /**
-   * The course creation date.
-   */
-  created_at: string;
-
-  /**
-   * The course creator.
-   */
-  created_by: SCUserType;
-
-  /**
-   * The course admin.
-   */
-  managed_by: SCUserType;
-
+  description: string;
   /**
    * The course type
    */
   type: SCCourseTypologyType;
-
   /**
-   * The category id
+   * The course privacy.
    */
-  category?: number;
+  privacy: SCCoursePrivacyType;
+  /**
+   * The lesson order enforcement
+   */
+  enforce_lessons_order?: boolean;
+  /**
+   * Notifies course admins about new lesson comments
+   */
+  new_comment_notification_enabled?: boolean;
+  /**
+   * The list of all section IDs belonging to the current course
+   */
+  sections_order?: number[];
+  /**
+   * The course image, original format.
+   */
+  image_original: string;
+  /**
+   * The course image, bigger format.
+   */
+  image_bigger: string;
+  /**
+   * The course image, big format.
+   */
+  image_big: string;
+  /**
+   * The course image, medium format.
+   */
+  image_medium: string;
+  /**
+   * The course image, small format.
+   */
+  image_small: string;
+  /**
+   * The course subscription status.
+   */
+  join_status: SCCourseJoinStatusType;
+  /**
+   * The course creation date.
+   */
+  created_at: string;
+  /**
+   * The course creator.
+   */
+  created_by: SCUserType;
+  /**
+   * The categories list ids
+   */
+  categories?: number[];
+}
+/**
+ * Interface SCCourseSectionType.
+ * Course Schema.
+ */
+export interface SCCourseSectionType {
+  /**
+   * The ID of the course section.
+   */
+  id: number;
+  /**
+   * The name of the section course
+   */
+  name: string;
+  /**
+   * Sections are dripped relative to this date; used only id course type is scheduled
+   */
+  dripped_at: string;
+  /**
+   * Sections are dripped relative to the enrollment date of the current user; used only if the course type is structured .
+   */
+  drip_delay: number;
+  /**
+   * The list of all lesson IDs belonging to the current section course
+   */
+  lessons_order: [];
+}
+
+/**
+ * SCCourseLessonTypologyType enum
+ */
+export enum SCCourseLessonTypologyType {
+  LESSON = 'lesson',
+  QUIZ = 'quiz'
+}
+
+/**
+ * SCCourseLessonStatusType enum
+ */
+export enum SCCourseLessonStatusType {
+  DRAFT = 'draft',
+  PUBLISHED = 'published'
+}
+
+/**
+ * Interface SCCourseLessonType.
+ * Course Schema.
+ */
+export interface SCCourseLessonType {
+  /**
+   * The ID of the lesson.
+   */
+  id: number;
+  /**
+   * The name of the lesson
+   */
+  name: string;
+  /**
+   * The type of the lesson.
+   */
+  type: SCCourseLessonTypologyType;
+  /**
+   * The status of the lesson.
+   */
+  status: SCCourseLessonStatusType;
+  /**
+   * Enable the comments on the current lesson.
+   */
+  comments_enabled: boolean;
+  /**
+   * The lesson course text.
+   */
+  text: string;
+  /**
+   * The lesson course html.
+   */
+  html: string;
+  /**
+   * Datetime of lesson course creation.
+   */
+  created_at: string;
+  /**
+   * The lesson course creator.
+   */
+  created_by: SCUserType;
+  /**
+   * The list of Media ids for the lesson course
+   */
+  medias: number[];
 }

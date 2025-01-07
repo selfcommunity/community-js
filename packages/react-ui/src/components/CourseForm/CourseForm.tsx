@@ -142,7 +142,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     name: course?.name || '',
     type: course?.type || '',
     description: course ? course.description : '',
-    category: course ? course.category : null,
+    categories: course ? course.categories : [],
     isSubmitting: false
   };
 
