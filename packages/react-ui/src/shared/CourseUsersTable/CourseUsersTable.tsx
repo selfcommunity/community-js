@@ -24,6 +24,7 @@ import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
 import ActionButton from './ActionButton';
+import CourseUsersTableSkeleton from './Skeleton';
 
 const USERS_TO_SHOW = 6;
 
@@ -46,8 +47,8 @@ type HeaderCellsType = {
 };
 
 export interface CourseUsersTableProps {
-  course: SCCourseType;
-  users: SCUserType[];
+  users: SCUserType[] | null;
+  course?: SCCourseType | null;
   setUsers: Dispatch<SetStateAction<SCUserType[]>>;
   headerCells: HeaderCellsType[];
   editMode?: boolean;
@@ -105,6 +106,10 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
       setIsLoadingUsers(false);
     }, 300);
   }, [setIsLoadingUsers, setUsersToShow]);
+
+  if (!editMode && (!course || !users)) {
+    return <CourseUsersTableSkeleton />;
+  }
 
   return (
     <Root>

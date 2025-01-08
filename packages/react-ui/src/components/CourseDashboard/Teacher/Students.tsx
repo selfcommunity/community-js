@@ -24,7 +24,7 @@ const headerCells = [
 ];
 
 interface StudentsProps {
-  course: SCCourseType;
+  course: SCCourseType | null;
 }
 
 export default function Students(props: StudentsProps) {
@@ -54,10 +54,6 @@ export default function Students(props: StudentsProps) {
         });
       });
   }, []);
-
-  if (!users) {
-    return <>Skeleton</>;
-  }
 
   return <CourseUsersTable course={course} users={users} setUsers={setUsers} headerCells={headerCells} />;
 }

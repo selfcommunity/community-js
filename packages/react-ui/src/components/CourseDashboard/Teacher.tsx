@@ -89,10 +89,6 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
     [setTabValue]
   );
 
-  if (!course) {
-    return null;
-  }
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <HeaderCourseDashboard course={course} handleAction={() => console.log()} />
