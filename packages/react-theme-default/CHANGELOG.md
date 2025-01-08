@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.2...@selfcommunity/react-theme-default@0.4.5-alpha.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* chip post group ([d951b61](https://github.com/selfcommunity/community-js/commit/d951b613226732a91efb1540bd621aeca29ff051))
+
+
+
+
+
 ## [0.4.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.1...@selfcommunity/react-theme-default@0.4.5-alpha.2) (2025-01-08)
 
 
