@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.1...@selfcommunity/react-templates@0.4.8-alpha.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* load video (problem with lazy load in the pwa preview container) ([19534d5](https://github.com/selfcommunity/community-js/commit/19534d55131093f9c9967951636f260b6fde93c9))
+
+
+
+
+
 ## [0.4.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.0...@selfcommunity/react-templates@0.4.8-alpha.1) (2024-12-19)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

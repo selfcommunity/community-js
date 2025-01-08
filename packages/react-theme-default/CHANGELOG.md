@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.0...@selfcommunity/react-theme-default@0.4.5-alpha.1) (2024-12-30)
+
+
+### Bug Fixes
+
+* link in post target 'blank' and display inline ([2b7d90d](https://github.com/selfcommunity/community-js/commit/2b7d90d25d10bb607eb8140d2c7ce6b67ca195d5))
+* sort media in composer ([243fcfb](https://github.com/selfcommunity/community-js/commit/243fcfbfa752270ef78334a7b7fd7689983601bf))
+
+
+
+
+
 ## [0.4.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4...@selfcommunity/react-theme-default@0.4.5-alpha.0) (2024-12-19)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

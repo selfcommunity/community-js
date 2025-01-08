@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.1...@selfcommunity/react-ui@0.10.5-alpha.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* feedObject comments pagination ([c476e6b](https://github.com/selfcommunity/community-js/commit/c476e6bab81829bed84571e1370da6813a3b95f3))
+* link in post target 'blank' and display inline ([2b7d90d](https://github.com/selfcommunity/community-js/commit/2b7d90d25d10bb607eb8140d2c7ce6b67ca195d5))
+* load video (problem with lazy load in the pwa preview container) ([19534d5](https://github.com/selfcommunity/community-js/commit/19534d55131093f9c9967951636f260b6fde93c9))
+* scrollContainer stories ([902ee0f](https://github.com/selfcommunity/community-js/commit/902ee0f4af2c9f0c1dd5dfd21edde857d257465c))
+* sort media in composer ([243fcfb](https://github.com/selfcommunity/community-js/commit/243fcfbfa752270ef78334a7b7fd7689983601bf))
+
+
+
+
+
 ## [0.10.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.0...@selfcommunity/react-ui@0.10.5-alpha.1) (2024-12-19)
 
 
