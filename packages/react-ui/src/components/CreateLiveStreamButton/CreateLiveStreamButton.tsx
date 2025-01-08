@@ -95,6 +95,7 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
     () =>
       preferences &&
       features &&
+      features.includes(SCFeatureName.LIVE_STREAM) &&
       SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
     [preferences, features]

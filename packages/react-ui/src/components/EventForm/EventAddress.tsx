@@ -2,22 +2,24 @@ import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/mate
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {useLoadScript} from '@react-google-maps/api';
 import {
-  SCContextType,
   SCPreferences,
   SCPreferencesContextType,
   SCUserContextType,
-  useSCContext,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCommunitySubscriptionTier, SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
+import {
+	SCCommunitySubscriptionTier,
+	SCEventLocationType,
+	SCEventType,
+	SCFeatureName,
+	SCLiveStreamType
+} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
 import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import UrlTextField from '../../shared/UrlTextField';
 import {PREFIX} from './constants';
 import {Geolocation, Place} from './types';
@@ -95,9 +97,8 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   }, [event]);
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   const isFreeTrialTier = useMemo(
     () =>
       preferences &&
@@ -106,6 +107,15 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
     [preferences]
   );
+	const liveStreamEnabled = useMemo(
+		() =>
+			preferences &&
+			features &&
+			features.includes(SCFeatureName.LIVE_STREAM) &&
+			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+		[preferences, features]
+	);
   const canViewLiveTab = useMemo(
     () =>
       (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
@@ -122,10 +132,11 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   );
   const isLiveTabActive = useMemo(
     () =>
+			liveStreamEnabled &&
       locations.includes(SCEventLocationType.LIVESTREAM) &&
       (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
       (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
-    [scUserContext?.user?.permission, event]
+    [liveStreamEnabled, scUserContext?.user?.permission, event]
   );
 
   // HOOKS
