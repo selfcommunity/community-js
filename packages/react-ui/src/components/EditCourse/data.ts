@@ -1,5 +1,6 @@
 import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseType, SCCourseTypologyType, SCUserType} from '@selfcommunity/types';
 import {LessonRowInterface, OptionsData, SectionRowInterface, Status} from './types';
+import {CommentsType} from '../CourseDashboard/types';
 
 function getUserData(id: number, username: string, name: string, completion: number): SCUserType & {completion?: number} {
   return {
@@ -97,6 +98,94 @@ const COURSE_DATA: SCCourseType & {lessons_completed?: string; course_completed?
     ]
   };
 
+const COMMENTS_DATA: CommentsType = {
+  total: 34,
+  next: true,
+  lessons: [
+    {
+      id: 1,
+      name: 'Cinture',
+      users: [
+        {
+          id: 1,
+          name: 'Steve',
+          avatar: '',
+          date: '21:54',
+          comment: 'Penso che questo corso debba avere questa illustrazione'
+        },
+        {
+          id: 2,
+          name: 'TU',
+          avatar: '',
+          date: '21:58',
+          comment: 'Grazie per il tuo suggerimento al mio corso. Lo prenderò in cosiderazione per il prossimo livello.'
+        },
+        {
+          id: 3,
+          name: 'Steve',
+          avatar: '',
+          date: '22:04',
+          comment: 'Aggiungo questo PDF per essere ancora più chiaro. Buon lavoro!'
+        },
+        {
+          id: 4,
+          name: 'Carol',
+          avatar: '',
+          date: '22:14',
+          comment: 'Non saepe omnis exercitationem et sed voluptatem similique assumenda earum'
+        },
+        {
+          id: 5,
+          name: 'Davide',
+          avatar: '',
+          date: '22:18',
+          comment: 'Aliquam est incidunt dolores perferendis asperiores et est enim consectetur'
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Sciarpe',
+      users: [
+        {
+          id: 1,
+          name: 'Steve',
+          avatar: '',
+          date: '21:54',
+          comment: 'Penso che questo corso debba avere questa illustrazione'
+        },
+        {
+          id: 2,
+          name: 'Carol',
+          avatar: '',
+          date: '22:14',
+          comment: 'Non saepe omnis exercitationem et sed voluptatem similique assumenda earum'
+        }
+      ]
+    }
+  ]
+};
+
+const OTHER_DATA: CommentsType = {
+  total: 34,
+  next: false,
+  lessons: [
+    {
+      id: 3,
+      name: 'Borse',
+      users: [
+        {
+          id: 1,
+          name: 'Steve',
+          avatar: '',
+          date: '21:54',
+          comment: 'Penso che questo corso debba avere questa illustrazione'
+        }
+      ]
+    }
+  ]
+};
+
 export const LESSONS_DATA = {
   statusCourse: 'draft',
   typeOfCourse: 'calendar',
@@ -189,5 +278,17 @@ export async function getUsersData(_id: number): Promise<SCUserType[] | null> {
 export async function setUsersData(_id: number, users: SCUserType[]): Promise<SCUserType[] | null> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(users), 300);
+  });
+}
+
+export async function getCommentsData(_id: number): Promise<CommentsType | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(COMMENTS_DATA), 300);
+  });
+}
+
+export async function getOtherCommentsData(_id: number): Promise<CommentsType | null> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(OTHER_DATA), 300);
   });
 }

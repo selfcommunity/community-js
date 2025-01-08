@@ -39,21 +39,23 @@ export default function Students(props: StudentsProps) {
 
   // EFFECTS
   useEffect(() => {
-    getUsersData(1)
-      .then((data) => {
-        if (data) {
-          setUsers(data);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
+    if (course) {
+      getUsersData(course.id)
+        .then((data) => {
+          if (data) {
+            setUsers(data);
+          }
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
 
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
         });
-      });
-  }, []);
+    }
+  }, [course]);
 
   return <CourseUsersTable course={course} users={users} setUsers={setUsers} headerCells={headerCells} />;
 }

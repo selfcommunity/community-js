@@ -13,6 +13,7 @@ import {SCOPE_SC_UI} from './../../constants/Errors';
 import InfoCourseDashboard from './Teacher/Info';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import Students from './Teacher/Students';
+import Comments from './Teacher/Comments';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -65,9 +66,9 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
   // EFFECTS
   useEffect(() => {
     getCourseData(1)
-      .then((course) => {
-        if (course) {
-          setCourse(course);
+      .then((courseData) => {
+        if (courseData) {
+          setCourse(courseData);
         }
       })
       .catch((error) => {
@@ -119,7 +120,7 @@ export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardPr
         </TabPanel>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.COMMENTS}>
-          Comments
+          <Comments course={course} />
         </TabPanel>
       </TabContext>
     </Root>
