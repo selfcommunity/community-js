@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.2...@selfcommunity/react-templates@0.4.8-alpha.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([6f16326](https://github.com/selfcommunity/community-js/commit/6f1632698e7c00d3f3019cec12292d6044f95412))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
 ## [0.4.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.1...@selfcommunity/react-templates@0.4.8-alpha.2) (2024-12-30)
 
 

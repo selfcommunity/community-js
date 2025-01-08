@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.1...@selfcommunity/react-theme-default@0.4.5-alpha.2) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* initial livestream ([d81f1b7](https://github.com/selfcommunity/community-js/commit/d81f1b7640e34f1fd85ab2720b364f612cb4a505))
+* livestream ([89c9e54](https://github.com/selfcommunity/community-js/commit/89c9e546bdab64e18d2897f2d785e924faec64c9))
+* livestream ([4aad356](https://github.com/selfcommunity/community-js/commit/4aad356dea12e1e770258172598ac85d6fc5767c))
+* livestream ([a5cf702](https://github.com/selfcommunity/community-js/commit/a5cf702e447842e9a9abdf461b066dbe309c6801))
+* livestream ([def85a6](https://github.com/selfcommunity/community-js/commit/def85a6afbf1bb50292fffbeaf416006d77bb2f4))
+* livestream ([3360995](https://github.com/selfcommunity/community-js/commit/336099543199d371000288c019fc2d2bacf855c4))
+* livestream ([eafaa82](https://github.com/selfcommunity/community-js/commit/eafaa824d1092cfd97a73b68382c36cf8d667b1e))
+* livestream ([ff1cbb8](https://github.com/selfcommunity/community-js/commit/ff1cbb873c51c864c4dc38bd5bc6a42924502105))
+* livestream ([1147934](https://github.com/selfcommunity/community-js/commit/11479345459d7fd0ac3f08c77b7379d795d779f0))
+* livestream ([b4f0ebd](https://github.com/selfcommunity/community-js/commit/b4f0ebd98a2318650727677e1a08bc439ee6546f))
+* livestream ([a15c02f](https://github.com/selfcommunity/community-js/commit/a15c02f7dbe96b5eaaab60a04384a1cb928ba9b5))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([b3df735](https://github.com/selfcommunity/community-js/commit/b3df7359d334426f09c6619630f1ade4a8ca462a))
+* livestream ([71d006b](https://github.com/selfcommunity/community-js/commit/71d006b642183eeda860f21772789a3cdf0bd3d7))
+* livestream ([37d2561](https://github.com/selfcommunity/community-js/commit/37d2561218ed54bcbfc7e8725dd39ef7196e78d8))
+* livestream ([a5b9329](https://github.com/selfcommunity/community-js/commit/a5b9329f7b8b578f583653c6aa8e4478d422d9fa))
+* livestream ([5edaa84](https://github.com/selfcommunity/community-js/commit/5edaa8489f5accf087793e060bc57fd58c1889c3))
+* livestream ([9e7d4f2](https://github.com/selfcommunity/community-js/commit/9e7d4f293b64190ed520194ab1ff4d381d9a443e))
+* livestream ([111eeae](https://github.com/selfcommunity/community-js/commit/111eeae0c2a9809edcc1b14ad8dbe0c8f34e2f08))
+* livestream ([621d293](https://github.com/selfcommunity/community-js/commit/621d29305b2c13b28bf1dc777794168f5b55341e))
+* livestream ([f1636e8](https://github.com/selfcommunity/community-js/commit/f1636e856c2e78e5040a868ea0bf161fc2dc9384))
+* livestream ([3cc5749](https://github.com/selfcommunity/community-js/commit/3cc5749afda55ae8185f98c8b7eb5174171720ef))
+* livestream ([646a4e6](https://github.com/selfcommunity/community-js/commit/646a4e671fa5ab5cd1253155eba1bc521a4a9172))
+* livestream ([c618a19](https://github.com/selfcommunity/community-js/commit/c618a19c29446456c4d300cde6303a16c825c8b2))
+* livestream ([6f16326](https://github.com/selfcommunity/community-js/commit/6f1632698e7c00d3f3019cec12292d6044f95412))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream ([d960f5f](https://github.com/selfcommunity/community-js/commit/d960f5f8c5ffab0b2597350f3c659ab5f71701c2))
+* livestream assets, resolution ([8f82747](https://github.com/selfcommunity/community-js/commit/8f8274764e086abf8c47a4307e21c0d93fbab1de))
+* livestream assets, resolution ([b9efade](https://github.com/selfcommunity/community-js/commit/b9efade9dfb276968fa11b829146ba2dc5479ea1))
+* livestream assets, resolution ([b7c31d2](https://github.com/selfcommunity/community-js/commit/b7c31d2bf6941f7f7f84a64dc9893b8a779080c7))
+* livestream copy link ([42a8b35](https://github.com/selfcommunity/community-js/commit/42a8b35a9b4d67d683f7f31a7b73f171f7b2ac74))
+* livestream in progress ([e7e0575](https://github.com/selfcommunity/community-js/commit/e7e0575714277f3ed0fd8829ad02cf37f2d8f60c))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
 ## [0.4.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.0...@selfcommunity/react-theme-default@0.4.5-alpha.1) (2024-12-30)
 
 
