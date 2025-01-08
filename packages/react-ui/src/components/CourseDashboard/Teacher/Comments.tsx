@@ -25,36 +25,42 @@ interface CommentsProps {
   course: SCCourseType | null;
 }
 
+function CommentSkeleton({id}: {id: number}) {
+  return (
+    <Box className={classes.outerWrapper}>
+      <Skeleton animation="wave" variant="text" width="90px" height="21px" />
+      <Divider />
+      <Stack className={classes.innerWrapper}>
+        {Array.from(new Array(id)).map((_, i) => (
+          <Stack key={i} className={classes.userWrapper}>
+            <Skeleton animation="wave" variant="circular" className={classes.avatar} />
+
+            <Box>
+              <Stack className={classes.userInfo}>
+                <Skeleton animation="wave" variant="text" width="90px" height="21px" />
+                <Box className={classes.circle} />
+
+                <Skeleton animation="wave" variant="text" width="90px" height="21px" />
+              </Stack>
+
+              <Skeleton animation="wave" variant="text" width="180px" height="21px" />
+            </Box>
+          </Stack>
+        ))}
+
+        <Skeleton animation="wave" variant="rounded" width="112px" height="36px" className={classes.button} />
+      </Stack>
+    </Box>
+  );
+}
+
 function CommentsSkeleton() {
   return (
     <Box className={classes.container}>
       <Skeleton animation="wave" variant="text" width="90px" height="21px" />
 
       {Array.from(new Array(2)).map((_, i) => (
-        <Box key={i} className={classes.outerWrapper}>
-          <Skeleton animation="wave" variant="text" width="90px" height="21px" />
-          <Divider />
-          <Stack className={classes.innerWrapper}>
-            {Array.from(new Array(4)).map((_, j) => (
-              <Stack key={j} className={classes.userWrapper}>
-                <Skeleton animation="wave" variant="circular" className={classes.avatar} />
-
-                <Box>
-                  <Stack className={classes.userInfo}>
-                    <Skeleton animation="wave" variant="text" width="90px" height="21px" />
-                    <Box className={classes.circle} />
-
-                    <Skeleton animation="wave" variant="text" width="90px" height="21px" />
-                  </Stack>
-
-                  <Skeleton animation="wave" variant="text" width="180px" height="21px" />
-                </Box>
-              </Stack>
-            ))}
-
-            <Skeleton animation="wave" variant="rounded" width="112px" height="36px" className={classes.button} />
-          </Stack>
-        </Box>
+        <CommentSkeleton key={i} id={4} />
       ))}
 
       <Skeleton animation="wave" variant="rounded" width="88px" height="36px" />
@@ -166,6 +172,8 @@ export default function Comments(props: CommentsProps) {
           </Stack>
         </Box>
       ))}
+
+      {isLoadingComments && <CommentSkeleton id={1} />}
 
       <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!comments.next} onClick={handleSeeMore}>
         <Typography variant="body2">

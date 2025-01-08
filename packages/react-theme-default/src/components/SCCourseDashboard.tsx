@@ -105,8 +105,10 @@ const Component = {
       },
 
       '& .SCCourseDashboard-comments-container': {
-        paddingLeft: '36px',
-        paddingRight: '36px',
+        [theme.breakpoints.up('sm')]: {
+          paddingLeft: '36px',
+          paddingRight: '36px'
+        },
 
         '& .SCCourseDashboard-outer-wrapper': {
           marginTop: '15px',
