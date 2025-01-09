@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.8...@selfcommunity/react-templates@0.4.8-alpha.9) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form ([2b12782](https://github.com/selfcommunity/community-js/commit/2b12782cc0d83d843f2c8f468b3a42091c854933))
+
+
+
+
+
 ## [0.4.8-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.7...@selfcommunity/react-templates@0.4.8-alpha.8) (2025-01-09)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
