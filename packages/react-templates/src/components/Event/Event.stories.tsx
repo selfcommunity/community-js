@@ -14,7 +14,7 @@ export default {
 
 export const Base: StoryObj<typeof EventTemplate> = {
   args: {
-    eventId: 251,
+    eventId: 252,
 
   },
   render: (args) => (
