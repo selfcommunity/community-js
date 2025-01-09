@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.7...@selfcommunity/react-ui@0.10.5-alpha.8) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form ([ee1e9ea](https://github.com/selfcommunity/community-js/commit/ee1e9ea51175306632fc42be716f7b85b351a33e))
+
+
+
+
+
 ## [0.10.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.6...@selfcommunity/react-ui@0.10.5-alpha.7) (2025-01-09)
 
 
