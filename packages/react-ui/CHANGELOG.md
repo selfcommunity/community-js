@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.5...@selfcommunity/react-ui@0.10.5-alpha.6) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
 ## [0.10.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.4...@selfcommunity/react-ui@0.10.5-alpha.5) (2025-01-08)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
