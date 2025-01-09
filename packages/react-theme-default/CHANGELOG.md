@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.3...@selfcommunity/react-theme-default@0.4.5-alpha.4) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([bbdf085](https://github.com/selfcommunity/community-js/commit/bbdf08546e4811bdd27ad3398a2a8fca1d1cde94))
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
 ## [0.4.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.2...@selfcommunity/react-theme-default@0.4.5-alpha.3) (2025-01-08)
 
 
