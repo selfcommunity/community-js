@@ -108,8 +108,8 @@ export default function Student(inProps: StudentCourseDashboardProps) {
           <Box>
             {course ? (
               <Fragment>
-                <Typography variant="body1">{course?.created_by.username}</Typography>
-                <Typography variant="body1">{course?.created_by.role}</Typography>
+                <Typography variant="body1">{course.created_by.username}</Typography>
+                <Typography variant="body1">{course.created_by.role}</Typography>
               </Fragment>
             ) : (
               <Fragment>
@@ -130,7 +130,7 @@ export default function Student(inProps: StudentCourseDashboardProps) {
       </Typography>
 
       <Stack className={classes.box}>
-        {course ? <Typography variant="body1">{course?.description}</Typography> : <Skeleton animation="wave" variant="text" height="130px" />}
+        {course ? <Typography variant="body1">{course.description}</Typography> : <Skeleton animation="wave" variant="text" height="130px" />}
       </Stack>
 
       <Typography variant="h6" className={classes.margin}>

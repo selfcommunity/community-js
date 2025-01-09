@@ -209,8 +209,12 @@ const Component = {
         },
 
         '& .SCCourseDashboard-percentage-wrapper': {
-          flexDirection: 'row',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          gap: '5px',
+
+          [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row'
+          }
         },
 
         '& .SCCourseDashboard-completed-wrapper': {
