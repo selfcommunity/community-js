@@ -1034,7 +1034,7 @@
   "ui.liveStreamRoom.preJoin.username": "Username",
   "ui.liveStreamRoom.hostDisableMicrophone": "The host of the live set your microphone as off",
   "ui.liveStreamRoom.hostDisableVideo": "The host of the live set your camera as off",
-  "ui.liveStreamRoom.shareLink": "Copy the meet link to share it",
+  "ui.liveStreamRoom.shareLink": "Copy the live link to share it",
   "ui.liveStreamRoom.description": "Description",
   "ui.liveStreamRoom.conference.end": "The livestream has ended!",
   "ui.liveStreamRoom.conference.closed": "Unable to access. The live has been closed and it's no longer available!",
