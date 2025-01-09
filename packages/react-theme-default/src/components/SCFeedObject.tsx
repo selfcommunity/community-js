@@ -64,7 +64,7 @@ const Component = {
           }
         },
         '& .SCFeedObject-group, & .SCFeedObject-event': {
-					height: 20,
+          height: 20,
           [theme.breakpoints.up('sm')]: {
             marginRight: `${theme.spacing(1)} !important`
           }

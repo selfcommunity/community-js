@@ -1009,7 +1009,7 @@
   "ui.liveStreamForm.view.speaker": "Speaker",
   "ui.liveStreamForm.selector.scheduleLiveEvent": "Crea un evento dal vivo",
   "ui.liveStreamForm.selector.scheduleLiveEventItem1": "Crea una stanza dal vivo o uno streaming nel tuo evento",
-  "ui.liveStreamForm.selector.scheduleLiveEventItem2": "Consenti ai tuoi membri di rispondere, aggiungere al calendario e ricevere promemoria di eventi",
+  "ui.liveStreamForm.selector.scheduleLiveEventItem2": "Consenti ai partecipanti dell'evento di accedere alla diretta live e di aggiungere al calendario e ricevere promemoria dell'evento",
   "ui.liveStreamForm.selector.scheduleLiveEventItem3": "Pubblica automaticamente l'evento",
   "ui.liveStreamForm.selector.scheduleLiveStream": "Crea una diretta live",
   "ui.liveStreamForm.selector.scheduleLiveStreamItem1": "Ideale per webinar, sessioni di domande e risposte e presentazioni",

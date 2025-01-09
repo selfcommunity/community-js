@@ -1009,7 +1009,7 @@
   "ui.liveStreamForm.view.speaker": "Speaker",
   "ui.liveStreamForm.selector.scheduleLiveEvent": "Schedule a live event",
   "ui.liveStreamForm.selector.scheduleLiveEventItem1": "Schedule a live room or stream in your event",
-  "ui.liveStreamForm.selector.scheduleLiveEventItem2": "Allow your members add to calendar, and receive event reminders",
+  "ui.liveStreamForm.selector.scheduleLiveEventItem2": "Allow event attendees to access the live and add to calendar and receive event reminders",
   "ui.liveStreamForm.selector.scheduleLiveEventItem3": "Automatically post the event",
   "ui.liveStreamForm.selector.scheduleLiveStream": "Schedule a live stream",
   "ui.liveStreamForm.selector.scheduleLiveStreamItem1": "Best for webinars, Q&As and for presentations",
