@@ -253,7 +253,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                           to={
                             error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.PARTICIPATE_THE_EVENT_TO_JOIN_LIVE_STREAM &&
                             scLiveStream.event
-                              ? scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, scLiveStream.event)
+                              ? scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scLiveStream.event)
                               : '/'
                           }>
                           {chunks}
