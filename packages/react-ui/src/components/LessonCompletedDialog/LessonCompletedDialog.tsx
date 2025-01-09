@@ -55,7 +55,7 @@ export default function LessonCompletedDialog(inProps: LessonCompletedDialogProp
       <Stack className={classes.wrapper}>
         <img
           src={IMAGE}
-          alt={intl.formatMessage({id: 'ui.course.completedDialog.altImage', defaultMessage: 'ui.course.completedDialog.altImage'})}
+          alt={intl.formatMessage({id: 'ui.course.completedDialog.title', defaultMessage: 'ui.course.completedDialog.title'})}
           width={100}
           height={100}
         />

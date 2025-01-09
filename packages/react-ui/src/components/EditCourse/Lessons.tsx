@@ -220,8 +220,8 @@ function Lessons(props: LessonsProps) {
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
                 <FormattedMessage
-                  id="ui.editCourse.tab.lessons.table.sections.title"
-                  defaultMessage="ui.editCourse.tab.lessons.table.sections.title"
+                  id="ui.course.table.sections.title"
+                  defaultMessage="ui.course.table.sections.title"
                   values={{
                     sectionsNumber: sections.length
                   }}

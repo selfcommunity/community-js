@@ -44,6 +44,7 @@ import ComposerIconButton, {ComposerIconButtonProps} from './components/Composer
 import ConnectionUserButton from './components/ConnectionUserButton';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
+import CourseDashboard, {TeacherCourseDashboardProps, StudentCourseDashboardProps} from './components/CourseDashboard';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import CreateEventWidget, {CreateEventWidgetProps, CreateEventWidgetSkeleton} from './components/CreateEventWidget';
 import EventForm, {EventFormProps} from './components/EventForm';
@@ -343,6 +344,9 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
+  CourseDashboard,
+  TeacherCourseDashboardProps,
+  StudentCourseDashboardProps,
   CreateEventButton,
   CreateEventButtonProps,
   CreateEventWidget,

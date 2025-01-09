@@ -42,15 +42,13 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
 
   // MEMOS
   const button = useMemo(() => {
-    if (!course) {
+    if (!course && handleAction) {
       return <Skeleton animation="wave" variant="rounded" width="160px" height="28px" />;
-    }
-
-    if (handleAction) {
+    } else if (handleAction) {
       return (
         <Button size="small" color="primary" variant="contained" onClick={handleAction}>
           <Typography variant="body2">
-            <FormattedMessage id="ui.course.dashboard.teacher.btnLabel" defaultMessage="ui.course.dashboard.teacher.btnLabel" />
+            <FormattedMessage id="ui.course.dashboard.teacher.btn.label" defaultMessage="ui.course.dashboard.teacher.btn.label" />
           </Typography>
         </Button>
       );

@@ -29,6 +29,7 @@ const Component = {
           },
 
           '& .SCAccordionLessons-circle': {
+            flexShrink: 0,
             width: theme.spacing(2),
             height: theme.spacing(2),
             borderRadius: '9999px',

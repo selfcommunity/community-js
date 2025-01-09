@@ -42,7 +42,8 @@ const COURSE_DATA: SCCourseType & {lessons_completed?: string; course_completed?
   {
     id: 1,
     name: 'Accessori Moda',
-    description: '',
+    description:
+      'Il corso online di Accessori di Moda 👜 👠👞 è progettato per chi desidera esplorare il mondo del design e della creazione di accessori unici e alla moda. Attraverso lezioni interattive e materiali didattici approfonditi, gli studenti apprenderanno le tecniche essenziali per realizzare borse, gioielli, cinture, cappelli e altri accessori, combinando creatività, tendenze e artigianalità. Il corso include esercitazioni pratiche, consigli su materiali e strumenti, e spunti per sviluppare un proprio stile distintivo. Ideale sia per principianti che per chi vuole perfezionare le proprie competenze, il programma offre anche strategie per promuovere i propri accessori nel mercato della moda.',
     type: SCCourseTypologyType.SELF,
     created_at: '',
     created_by: getUserData(1, 'user1', 'Utente 1', undefined),

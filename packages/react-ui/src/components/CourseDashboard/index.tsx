@@ -1,3 +1,5 @@
-import TeacherCourseDashboard from './Teacher';
+import Teacher, {TeacherCourseDashboardProps} from './Teacher';
+import Student, {StudentCourseDashboardProps} from './Student';
 
-export default TeacherCourseDashboard;
+export default {Teacher, Student};
+export {TeacherCourseDashboardProps, StudentCourseDashboardProps};

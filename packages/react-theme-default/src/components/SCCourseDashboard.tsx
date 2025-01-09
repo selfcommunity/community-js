@@ -147,6 +147,77 @@ const Component = {
             }
           }
         }
+      },
+
+      '&.SCCourseDashboard-student-container': {
+        '& .SCCourseDashboard-progress': {
+          borderRadius: '28px',
+          backgroundColor: theme.palette.grey['300']
+        },
+
+        '& .SCCourseDashboard-accordion': {
+          borderTopLeftRadius: 'unset',
+          borderTopRightRadius: 'unset'
+        },
+
+        '& .SCCourseDashboard-user-wrapper': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+
+          '& .SCCourseDashboard-user': {
+            flexDirection: 'row',
+            gap: '4px',
+            marginTop: '6px',
+            marginBottom: '6px',
+
+            '& .SCCourseDashboard-avatar': {
+              width: '36px',
+              height: '36px'
+            }
+          }
+        },
+
+        '& .SCCourseDashboard-lessons-sections': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: '6px',
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderBottom: 'unset',
+          borderTopLeftRadius: '5px',
+          borderTopRightRadius: '5px',
+          padding: '19px 24px',
+
+          '& .SCCourseDashboard-circle': {
+            width: '6px',
+            height: '6px',
+            borderRadius: 9999,
+            backgroundColor: theme.palette.common.black
+          }
+        },
+
+        '& .SCCourseDashboard-margin': {
+          marginTop: '19px',
+          marginBottom: '11px'
+        },
+
+        '& .SCCourseDashboard-box': {
+          gap: '13px',
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderRadius: '5px',
+          padding: '11px 24px'
+        },
+
+        '& .SCCourseDashboard-percentage-wrapper': {
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        },
+
+        '& .SCCourseDashboard-completed-wrapper': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: '11px'
+        }
       }
     }),
     skeletonRoot: () => ({})

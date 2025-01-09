@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import TeacherCourseDashboard from '../index';
+import CourseDashboard from '../index';
 
 export default {
   title: 'Design System/React UI/Teacher Course Dashboard',
-  component: TeacherCourseDashboard,
+  component: CourseDashboard.Teacher,
   argTypes: {
     page: {
       options: ['students', 'comments'],
@@ -17,9 +17,9 @@ export default {
   },
   render: (args) => (
     <div style={{maxWidth: 1280, margin: 'auto'}}>
-      <TeacherCourseDashboard {...args} />
+      <CourseDashboard.Teacher {...args} />
     </div>
   ) 
-} as Meta<typeof TeacherCourseDashboard>;
+} as Meta<typeof CourseDashboard.Teacher>;
 
-export const Base: StoryObj<typeof TeacherCourseDashboard> = {};
+export const Base: StoryObj<typeof CourseDashboard.Teacher> = {};

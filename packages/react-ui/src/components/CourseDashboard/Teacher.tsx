@@ -47,7 +47,7 @@ export interface TeacherCourseDashboardProps {
   [p: string]: any;
 }
 
-export default function TeacherCourseDashboard(inProps: TeacherCourseDashboardProps) {
+export default function Teacher(inProps: TeacherCourseDashboardProps) {
   // PROPS
   const props: TeacherCourseDashboardProps = useThemeProps({
     props: inProps,

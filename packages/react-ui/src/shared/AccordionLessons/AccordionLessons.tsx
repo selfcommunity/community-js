@@ -22,7 +22,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface AccordionLessonsProps {
-  course: SCCourseType;
+  course: SCCourseType | null;
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
@@ -45,6 +45,10 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     },
     [setExpanded]
   );
+
+  if (!course) {
+    return null;
+  }
 
   return (
     <Root className={classNames(classes.root, className)}>
