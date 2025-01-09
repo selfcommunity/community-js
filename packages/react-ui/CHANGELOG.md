@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.11...@selfcommunity/react-ui@0.10.5-alpha.12) (2025-01-09)
+
+
+### Bug Fixes
+
+* event id error on partecipate live ([8c7f9ce](https://github.com/selfcommunity/community-js/commit/8c7f9cebea886098d1e18bc1bc9b7a0e5b21cc4c))
+
+
+
+
+
 ## [0.10.5-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.10...@selfcommunity/react-ui@0.10.5-alpha.11) (2025-01-09)
 
 
