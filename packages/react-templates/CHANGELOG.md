@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.6...@selfcommunity/react-templates@0.4.8-alpha.7) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form live stream ([5a53805](https://github.com/selfcommunity/community-js/commit/5a538058c97df59586789fa47c61703dc10e0f77))
+
+
+
+
+
 ## [0.4.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.5...@selfcommunity/react-templates@0.4.8-alpha.6) (2025-01-09)
 
 
