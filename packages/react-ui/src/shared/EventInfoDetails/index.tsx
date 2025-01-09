@@ -1,6 +1,17 @@
 import {Box, Button, Icon, Stack, styled, Tooltip, Typography, useThemeProps} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContext, SCUserContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContext,
+  SCUserContextType,
+  useSCFetchEvent,
+  useSCPreferences,
+  useSCRouting
+} from '@selfcommunity/react-core';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import React, {ReactNode, useContext, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -78,7 +89,16 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const liveStreamEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.LIVE_STREAM) &&
+      SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+    [preferences, features]
+  );
   const privacy = useMemo(
     () => (scEvent && scEvent.privacy === SCEventPrivacyType.PUBLIC ? 'ui.eventInfoDetails.privacy.public' : 'ui.eventInfoDetails.privacy.private'),
     [scEvent]
@@ -91,7 +111,8 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
   const disableJoinEvent = useMemo(
     () =>
       Boolean(
-        !scEvent ||
+        !liveStreamEnabled ||
+          !scEvent ||
           !scUserContext.user ||
           (scEvent.live_stream &&
             scEvent.live_stream.host.id !== scUserContext.user.id &&

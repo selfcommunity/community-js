@@ -104,19 +104,13 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
     [preferences, features]
   );
-  const canViewLiveTab = useMemo(
-    () =>
-      (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
-      (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
-    [scUserContext?.user?.permission, event]
-  );
   const isInPersonTabActive = useMemo(
     () => locations.includes(SCEventLocationType.PERSON) || event.location === SCEventLocationType.PERSON,
-    [locations]
+    [locations, event]
   );
   const isOnlineTabActive = useMemo(
     () => locations.includes(SCEventLocationType.ONLINE) || event.location === SCEventLocationType.ONLINE,
-    [locations]
+    [locations, event]
   );
   const isLiveTabActive = useMemo(
     () =>
@@ -124,7 +118,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
         locations.includes(SCEventLocationType.LIVESTREAM) &&
         !isFreeTrialTier /* || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)*/ &&
         scUserContext?.user?.permission?.create_live_stream) ||
-      event.live_stream,
+      (event.live_stream && event.live_stream.created_at),
     [liveStreamEnabled, scUserContext?.user?.permission, event]
   );
 
@@ -230,7 +224,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             label={<FormattedMessage id="ui.eventForm.address.online.label" defaultMessage="ui.eventForm.address.online.label" />}
           />
         )}
-        {isLiveTabActive && canViewLiveTab && (
+        {isLiveTabActive && (
           <Tab
             value={SCEventLocationType.LIVESTREAM}
             classes={{root: classes.tab}}
@@ -287,7 +281,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             onChange={handleLinkChange}
           />
         )}
-        {isLiveTabActive && canViewLiveTab && location === SCEventLocationType.LIVESTREAM && (
+        {isLiveTabActive && location === SCEventLocationType.LIVESTREAM && (
           <>
             <LiveStream template={SCLiveStreamTemplateType.SNIPPET} liveStream={liveStream} actions={<></>} />
             <LiveStreamFormSettings settings={liveStream.settings || LIVESTREAM_DEFAULT_SETTINGS} onChange={handleLiveStreamSettingsChange} />
