@@ -691,7 +691,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 geolocation: field.geolocation,
                 live_stream: {
                   title: field.name || `${intl.formatMessage(messages.name)}`,
-                  ...(event && event.live_stream.created_at && {created_at: field.startDate}),
+                  ...(event && event.live_stream?.created_at && {created_at: field.startDate}),
                   settings: field.liveStreamSettings
                 }
               }
