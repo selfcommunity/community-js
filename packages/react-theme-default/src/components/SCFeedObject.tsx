@@ -64,6 +64,7 @@ const Component = {
           }
         },
         '& .SCFeedObject-group, & .SCFeedObject-event': {
+          height: 20,
           [theme.breakpoints.up('sm')]: {
             marginRight: `${theme.spacing(1)} !important`
           }
@@ -71,11 +72,9 @@ const Component = {
       },
       '& .SCFeedObject-group, & .SCFeedObject-event': {
         justifyContent: 'flex-start',
-        padding: theme.spacing(0.4, 0.5),
-        height: 20,
         '& a': {
           padding: theme.spacing(0.5),
-          marginBottom: theme.spacing(0.5),
+          margin: theme.spacing(0.5),
           color: theme.palette.common.white,
           maxHeight: 20,
           '&:hover': {
