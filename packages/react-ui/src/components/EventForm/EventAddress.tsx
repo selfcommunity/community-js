@@ -2,20 +2,8 @@ import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/mate
 import Icon from '@mui/material/Icon';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
-import {
-	SCCommunitySubscriptionTier,
-	SCEventLocationType,
-	SCEventType,
-	SCFeatureName,
-	SCLiveStreamType
-} from '@selfcommunity/types';
+import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCCommunitySubscriptionTier, SCEventLocationType, SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
 import axios from 'axios';
 import classNames from 'classnames';
 import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from 'react';
@@ -107,15 +95,15 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
       preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
     [preferences]
   );
-	const liveStreamEnabled = useMemo(
-		() =>
-			preferences &&
-			features &&
-			features.includes(SCFeatureName.LIVE_STREAM) &&
-			SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
-			preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
-		[preferences, features]
-	);
+  const liveStreamEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.LIVE_STREAM) &&
+      SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+    [preferences, features]
+  );
   const canViewLiveTab = useMemo(
     () =>
       (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
@@ -132,10 +120,11 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   );
   const isLiveTabActive = useMemo(
     () =>
-			liveStreamEnabled &&
-      locations.includes(SCEventLocationType.LIVESTREAM) &&
-      (!isFreeTrialTier || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)) &&
-      (scUserContext?.user?.permission?.create_live_stream || event.live_stream),
+      (liveStreamEnabled &&
+        locations.includes(SCEventLocationType.LIVESTREAM) &&
+        !isFreeTrialTier /* || (isFreeTrialTier && scUserContext?.user && scUserContext?.user.id === 1)*/ &&
+        scUserContext?.user?.permission?.create_live_stream) ||
+      event.live_stream,
     [liveStreamEnabled, scUserContext?.user?.permission, event]
   );
 

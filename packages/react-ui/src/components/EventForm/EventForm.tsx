@@ -23,7 +23,7 @@ import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-d
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
@@ -232,6 +232,15 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const liveStreamEnabled = useMemo(
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.LIVE_STREAM) &&
+      SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
+  );
   const privateEnabled = useMemo(
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_PRIVATE_ENABLED].value,
     [scPreferences.preferences]
@@ -363,7 +372,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               defaultMessage: 'ui.eventForm.genericError'
             })
           );
-        } else if ('errorsError' in _error) {
+        } else if ('codeError' in _error) {
           setGenericError(
             intl.formatMessage({
               id: 'ui.eventForm.liveStream.error.monthlyMinuteLimitReached',
@@ -777,7 +786,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               (field.recurring !== SCEventRecurrenceType.NEVER && !field.endDate && !field.endTime) ||
               field.isSubmitting ||
               field.name.length > EVENT_TITLE_MAX_LENGTH ||
-              field.description.length > EVENT_DESCRIPTION_MAX_LENGTH
+              field.description.length > EVENT_DESCRIPTION_MAX_LENGTH ||
+              (field.location === SCEventLocationType.LIVESTREAM && !liveStreamEnabled)
             }
             variant="contained"
             onClick={handleSubmit}

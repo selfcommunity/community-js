@@ -1,7 +1,7 @@
 import {Box, BoxProps, FormControl, Icon, InputLabel, MenuItem, Select, Stack, Switch, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCCommunitySubscriptionTier, SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
+import {SCCommunitySubscriptionTier, SCFeatureName, SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -81,8 +81,16 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
-
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const liveStreamEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.LIVE_STREAM) &&
+      SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
+    [preferences, features]
+  );
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
   const isCommunityOwner = useMemo(() => authUserId === 1, [authUserId]);
   const isEnterpriseTier = useMemo(
@@ -103,6 +111,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
+          disabled={!liveStreamEnabled}
           checked={Boolean(settings?.muteParticipants)}
           onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['muteParticipants']: !settings?.muteParticipants}})}
         />
@@ -116,7 +125,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
             <Switch
               className={classes.switch}
               checked={Boolean(settings?.disableVideo)}
-              disabled={!isEnterpriseTier}
+              disabled={!isEnterpriseTier || !liveStreamEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableVideo']: !settings?.disableVideo}})}
             />
             <Typography className={classes.switchLabel}>
@@ -128,7 +137,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
             <Switch
               className={classes.switch}
               checked={Boolean(settings?.disableShareScreen)}
-              disabled={!isEnterpriseTier}
+              disabled={!isEnterpriseTier || !liveStreamEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
             />
             <Typography className={classes.switchLabel}>
@@ -141,6 +150,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
+          disabled={!liveStreamEnabled}
           checked={Boolean(settings?.disableChat)}
           onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableChat']: !settings?.disableChat}})}
         />
@@ -151,6 +161,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
+          disabled={!liveStreamEnabled}
           checked={Boolean(settings?.hideParticipantsList)}
           onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['hideParticipantsList']: !settings?.hideParticipantsList}})}
         />
@@ -161,6 +172,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
+          disabled={!liveStreamEnabled}
           checked={Boolean(settings?.automaticallyNotifyFollowers)}
           onChange={() =>
             onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['automaticallyNotifyFollowers']: !settings?.automaticallyNotifyFollowers}})
@@ -173,6 +185,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       <Stack direction="row" spacing={1} alignItems="center">
         <Switch
           className={classes.switch}
+          disabled={!liveStreamEnabled}
           checked={Boolean(settings?.showInProfile)}
           onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['showInProfile']: !settings?.showInProfile}})}
         />
@@ -188,6 +201,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           name="view"
           label={<FormattedMessage id="ui.liveStreamForm.view.label" defaultMessage="ui.liveStreamForm.view.label" />}
           labelId="viewLabel"
+          disabled={!liveStreamEnabled}
           fullWidth
           value={settings?.view ?? SCLiveStreamViewType.SPEAKER}
           onChange={(e) => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['view']: e.target.value}})}
