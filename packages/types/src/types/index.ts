@@ -327,7 +327,7 @@ export {
   SCCourseJoinStatusType,
   SCCourseLessonTypologyType,
   SCCourseLessonStatusType,
-  SCCourseTypologyType
+  SCCourseTypologyType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,
@@ -335,6 +335,5 @@ export {
   type SCLiveStreamMonthlyDurationType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
-  SCOnBoardingStepIdType,
   SCCommunitySubscriptionTier
 };

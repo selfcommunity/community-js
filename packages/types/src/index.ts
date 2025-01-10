@@ -123,7 +123,7 @@ import {
   type SCStepType,
   type SCCourseType,
   type SCCourseLessonType,
-  type SCCourseSectionType
+  type SCCourseSectionType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamMonthlyDurationType,
@@ -178,7 +178,7 @@ import {
   SCCourseJoinStatusType,
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
-  SCCourseLessonStatusType
+  SCCourseLessonStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier
@@ -231,7 +231,7 @@ export {
   SCCourseJoinStatusType,
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
-  SCCourseLessonStatusType
+  SCCourseLessonStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier
@@ -358,7 +358,7 @@ export {
   type SCStepType,
   type SCCourseType,
   type SCCourseSectionType,
-  type SCCourseLessonType
+  type SCCourseLessonType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamMonthlyDurationType,
