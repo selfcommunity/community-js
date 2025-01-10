@@ -12,10 +12,12 @@ const Component = {
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'column',
+        textAlign: 'center',
         [`& .SCLiveStreamVideoConference-logo`]: {
           img: {
             maxHeight: '100px'
-          }
+          },
+          marginBottom: theme.spacing(2)
         },
         [`& .SCLiveStreamVideoConference-btn-back-home`]: {
           marginTop: theme.spacing(2)

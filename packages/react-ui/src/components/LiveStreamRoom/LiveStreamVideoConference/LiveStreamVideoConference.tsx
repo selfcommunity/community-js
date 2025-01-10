@@ -29,7 +29,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {ConnectionDetails} from '../types';
 import {defaultUserChoices} from '@livekit/components-core';
 import {defaultVideoOptions} from '../constants';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {VideoConference} from './VideoConference';
 import {useLiveStream} from './LiveStreamProvider';
 import DialogContent from '@mui/material/DialogContent';
@@ -172,6 +172,9 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
   const [liveActive, setLiveActive] = useState(true);
   const [error, setError] = useState(null);
 
+  // INTL
+  const intl = useIntl();
+
   // PREFERENCES
   const preferences = useMemo(() => {
     const _preferences = {};
@@ -225,8 +228,28 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
    */
   const handleError = useCallback((error: Error) => {
     console.error(error);
-    if (error.message !== 'Client initiated disconnect') {
-      setError(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    if (error.message === 'Permission denied') {
+      setError(
+        intl.formatMessage({
+          id: 'ui.liveStreamRoom.connect.error.device.permission',
+          defaultMessage: 'ui.liveStreamRoom.connect.error.device.permission'
+        })
+      );
+    } else if (error.message === 'Requested device not found') {
+      setError(
+        intl.formatMessage({
+          id: 'ui.liveStreamRoom.connect.error.device.notFound',
+          defaultMessage: 'ui.liveStreamRoom.connect.error.device.notFound'
+        })
+      );
+    } else {
+      console.log(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+      setError(
+        intl.formatMessage({
+          id: 'ui.liveStreamRoom.connect.error.clientInitiatedDisconnect',
+          defaultMessage: 'ui.liveStreamRoom.connect.error.clientInitiatedDisconnect'
+        })
+      );
     }
     setLiveActive(false);
   }, []);

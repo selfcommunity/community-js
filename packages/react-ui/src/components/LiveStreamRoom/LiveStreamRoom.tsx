@@ -301,7 +301,26 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   /**
    * Handle PreJoin Error
    */
-  const handlePreJoinError = useCallback((e: any) => console.error(e), []);
+  const handlePreJoinError = useCallback((e: any) => {
+    console.error(e);
+    if (e.message !== 'NotAllowedError: Permission denied') {
+      enqueueSnackbar(
+        intl.formatMessage({
+          id: 'ui.liveStreamRoom.connect.error.device.permission',
+          defaultMessage: 'ui.liveStreamRoom.connect.error.device.permission'
+        }),
+        {variant: 'error', autoHideDuration: 5000}
+      );
+    } else if (e.message !== 'NotFoundError: Requested device not found') {
+      enqueueSnackbar(
+        intl.formatMessage({
+          id: 'ui.liveStreamRoom.connect.error.device.notFound',
+          defaultMessage: 'ui.liveStreamRoom.connect.error.device.notFound'
+        }),
+        {variant: 'error', autoHideDuration: 5000}
+      );
+    }
+  }, []);
 
   /**
    * User must be authenticated
