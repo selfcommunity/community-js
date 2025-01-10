@@ -45,6 +45,7 @@ export interface ControlBarProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export function ControlBar({variation, controls, saveUserChoices = true, onDeviceError, ...props}: ControlBarProps) {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
+	
   const layoutContext = useMaybeLayoutContext();
   React.useEffect(() => {
     if (layoutContext?.widget.state?.showChat !== undefined) {

@@ -43,9 +43,9 @@ export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
 /** @alpha */
 export function usePreviewTracks(options: CreateLocalTracksOptions, onError?: (err: Error) => void) {
   const [tracks, setTracks] = React.useState<LocalTrack[]>();
+  const [error, setError] = React.useState<boolean>(false);
 
   const trackLock = React.useMemo(() => new Mutex(), []);
-
   React.useEffect(() => {
     let needsCleanup = false;
     let localTracks: Array<LocalTrack> = [];
@@ -59,6 +59,7 @@ export function usePreviewTracks(options: CreateLocalTracksOptions, onError?: (e
           } else {
             setTracks(localTracks);
           }
+          setError(false);
         }
       } catch (e: unknown) {
         if (onError && e instanceof Error) {
@@ -66,6 +67,7 @@ export function usePreviewTracks(options: CreateLocalTracksOptions, onError?: (e
         } else {
           log.error(e);
         }
+        setError(true);
       } finally {
         unlock();
       }
@@ -76,10 +78,11 @@ export function usePreviewTracks(options: CreateLocalTracksOptions, onError?: (e
       localTracks.forEach((track) => {
         track.stop();
       });
+      setError(false);
     };
   }, [JSON.stringify(options), onError, trackLock]);
 
-  return tracks;
+  return {tracks, error};
 }
 
 /** @public */
@@ -265,7 +268,7 @@ export function PreJoin({
     }
   }, [username, saveUsername, scUserContext.user]);
 
-  const tracks = usePreviewTracks(
+  const {tracks, error} = usePreviewTracks(
     {
       audio: audioEnabled ? {deviceId: initialUserChoices.audioDeviceId} : false,
       video: videoEnabled ? {deviceId: initialUserChoices.videoDeviceId} : false
@@ -304,7 +307,11 @@ export function PreJoin({
       if (typeof onValidate === 'function') {
         return onValidate(values);
       } else {
-        return values.username !== '';
+        return Boolean(
+          values.username !== '' &&
+            ((values.audioEnabled && values.audioDeviceId) || !values.audioEnabled) &&
+            ((values.videoEnabled && values.videoDeviceId) || !values.videoEnabled)
+        );
       }
     },
     [onValidate]
@@ -358,7 +365,7 @@ export function PreJoin({
             <MediaDeviceMenu
               initialSelection={audioDeviceId}
               kind="audioinput"
-              disabled={!audioTrack || !canUseAudio}
+              disabled={!audioTrack || !canUseAudio || !audioEnabled}
               tracks={{audioinput: audioTrack}}
               onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
             />
@@ -378,7 +385,7 @@ export function PreJoin({
             <MediaDeviceMenu
               initialSelection={videoDeviceId}
               kind="videoinput"
-              disabled={!videoTrack || !canUseVideo}
+              disabled={!videoTrack || !canUseVideo || !videoEnabled}
               tracks={{videoinput: videoTrack}}
               onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
             />
@@ -398,7 +405,7 @@ export function PreJoin({
         /> */}
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
-        <button className="lk-button lk-join-button" type="submit" onClick={handleSubmit} disabled={!isValid}>
+        <button className="lk-button lk-join-button" type="submit" onClick={handleSubmit} disabled={!isValid || error}>
           {joinLabel}
         </button>
       </form>
