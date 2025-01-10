@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.12...@selfcommunity/react-templates@0.4.8-alpha.13) (2025-01-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.11...@selfcommunity/react-templates@0.4.8-alpha.12) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.10...@selfcommunity/react-templates@0.4.8-alpha.11) (2025-01-09)
+
+
+### Bug Fixes
+
+* event id error on partecipate live ([325a53f](https://github.com/selfcommunity/community-js/commit/325a53f571410ecb009fa46b9cf0171b628f64f7))
+
+
+
+
+
+## [0.4.8-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.9...@selfcommunity/react-templates@0.4.8-alpha.10) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.8...@selfcommunity/react-templates@0.4.8-alpha.9) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form ([2b12782](https://github.com/selfcommunity/community-js/commit/2b12782cc0d83d843f2c8f468b3a42091c854933))
+
+
+
+
+
+## [0.4.8-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.7...@selfcommunity/react-templates@0.4.8-alpha.8) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.6...@selfcommunity/react-templates@0.4.8-alpha.7) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form live stream ([5a53805](https://github.com/selfcommunity/community-js/commit/5a538058c97df59586789fa47c61703dc10e0f77))
+
+
+
+
+
+## [0.4.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.5...@selfcommunity/react-templates@0.4.8-alpha.6) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
+## [0.4.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.4...@selfcommunity/react-templates@0.4.8-alpha.5) (2025-01-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.3...@selfcommunity/react-templates@0.4.8-alpha.4) (2025-01-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.2...@selfcommunity/react-templates@0.4.8-alpha.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([6f16326](https://github.com/selfcommunity/community-js/commit/6f1632698e7c00d3f3019cec12292d6044f95412))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
+## [0.4.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.1...@selfcommunity/react-templates@0.4.8-alpha.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* load video (problem with lazy load in the pwa preview container) ([19534d5](https://github.com/selfcommunity/community-js/commit/19534d55131093f9c9967951636f260b6fde93c9))
+
+
+
+
+
 ## [0.4.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.0...@selfcommunity/react-templates@0.4.8-alpha.1) (2024-12-19)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

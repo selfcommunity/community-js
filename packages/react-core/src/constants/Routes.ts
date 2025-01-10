@@ -46,6 +46,7 @@ export const COURSES_SUBSCRIBED_ROUTE_NAME = 'courses_subscribed';
 export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
 export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
 export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
+export const LIVESTREAM_ROUTE_NAME = 'live';
 
 /**
  * Default Routes
@@ -94,4 +95,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [COURSES_ROUTE_NAME]: '/courses/',
   [COURSE_EDIT_ROUTE_NAME]: '/course/:id/:slug/edit',
   [COURSES_SUBSCRIBED_ROUTE_NAME]: '/courses/subscribed/',
+  [LIVESTREAM_ROUTE_NAME]: '/live/:slug/',
 };

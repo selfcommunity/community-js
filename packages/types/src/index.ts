@@ -80,6 +80,7 @@ import {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -123,6 +124,11 @@ import {
   type SCCourseType,
   type SCCourseLessonType,
   type SCCourseSectionType
+  type SCLiveStreamType,
+  type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamMonthlyDurationType,
+  type SCLiveStreamSettingsType,
+  type SCLiveStreamConnectionDetailsResponseErrorType
 } from './types';
 
 /**
@@ -173,6 +179,9 @@ import {
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
   SCCourseLessonStatusType
+  SCLiveStreamConnectionDetailsErrorType,
+  SCLiveStreamViewType,
+  SCCommunitySubscriptionTier
 } from './types';
 
 /**
@@ -223,6 +232,9 @@ export {
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
   SCCourseLessonStatusType
+  SCLiveStreamConnectionDetailsErrorType,
+  SCLiveStreamViewType,
+  SCCommunitySubscriptionTier
 };
 export {
   type SCBannerType,
@@ -303,6 +315,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
   type SCInviteType,
@@ -346,4 +359,9 @@ export {
   type SCCourseType,
   type SCCourseSectionType,
   type SCCourseLessonType
+  type SCLiveStreamType,
+  type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamMonthlyDurationType,
+  type SCLiveStreamSettingsType,
+  type SCLiveStreamConnectionDetailsResponseErrorType
 };

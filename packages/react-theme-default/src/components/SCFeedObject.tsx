@@ -64,6 +64,7 @@ const Component = {
           }
         },
         '& .SCFeedObject-group, & .SCFeedObject-event': {
+          height: 20,
           [theme.breakpoints.up('sm')]: {
             marginRight: `${theme.spacing(1)} !important`
           }
@@ -71,12 +72,11 @@ const Component = {
       },
       '& .SCFeedObject-group, & .SCFeedObject-event': {
         justifyContent: 'flex-start',
-        padding: theme.spacing(0.2, 0.5),
-        height: 20,
         '& a': {
           padding: theme.spacing(0.5),
-          marginBottom: theme.spacing(0.5),
+          margin: theme.spacing(0.5),
           color: theme.palette.common.white,
+          maxHeight: 20,
           '&:hover': {
             backgroundColor: theme.palette.common.black
           },
@@ -86,7 +86,7 @@ const Component = {
           }
         },
         borderBottom: '1px solid rgba(221, 221, 221, 1)',
-        margin: theme.spacing(1, 2, 0, 2)
+        margin: theme.spacing(0.5, 2, 0, 2)
       },
       '& .SCFeedObject-content': {
         padding: theme.spacing(1, 0, 0, 0),
