@@ -11,7 +11,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import AccordionLessons from '../../shared/AccordionLessons';
-import {IMAGE} from '../LessonCompletedDialog/image';
+import {CLAPPING} from '../../assets/courses/clapping';
 
 const messages = {
   request: 'ui.course.dashboard.student.button.request',
@@ -174,7 +174,7 @@ export default function Student(inProps: StudentCourseDashboardProps) {
         </Typography>
 
         <img
-          src={IMAGE}
+          src={CLAPPING}
           alt={intl.formatMessage({id: 'ui.course.dashboard.student.completed', defaultMessage: 'ui.course.dashboard.student.completed'})}
           width={32}
           height={32}

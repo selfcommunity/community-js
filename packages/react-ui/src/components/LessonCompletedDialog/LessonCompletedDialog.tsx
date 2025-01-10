@@ -1,7 +1,7 @@
 import BaseDialog from '../../shared/BaseDialog';
 import {Button, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {IMAGE} from './image';
+import {CLAPPING} from '../../assets/courses/clapping';
 import {SCCourseType} from '@selfcommunity/types';
 
 const PREFIX = 'SCLessonCompletedDialog';
@@ -54,7 +54,7 @@ export default function LessonCompletedDialog(inProps: LessonCompletedDialogProp
       className={classes.root}>
       <Stack className={classes.wrapper}>
         <img
-          src={IMAGE}
+          src={CLAPPING}
           alt={intl.formatMessage({id: 'ui.course.completedDialog.title', defaultMessage: 'ui.course.completedDialog.title'})}
           width={100}
           height={100}
