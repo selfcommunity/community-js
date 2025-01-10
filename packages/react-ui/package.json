@@ -193,6 +193,6 @@
 		"url": "https://github.com/selfcommunity/community-js/issues"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=20.x"
 	}
 }
