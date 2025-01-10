@@ -142,7 +142,7 @@ import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
 import SCLiveStream from './components/SCLiveStream';
-import SCCreateLivestreamButton from './components/SCCreateLivestreamButton';
+import SCCreateLiveStreamButton from './components/SCCreateLiveStreamButton';
 import SCCreateLiveStreamDialog from './components/SCLiveStreamDialog';
 import SCLiveStreamSelector from './components/SCLiveStreamSelector';
 import SCLiveStreamForm from './components/SCLiveStreamForm';
@@ -423,7 +423,7 @@ const theme = {
     SCLiveStreamInfoDetails,
     SCUpScalingTierBadge,
     SCUserLiveStreamWidget,
-		SCCreateLivestreamButton,
+    SCCreateLiveStreamButton,
     SCCreateLiveStreamDialog,
     SCLiveStreamSelector,
     SCLiveStreamForm,
