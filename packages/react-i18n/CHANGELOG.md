@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.7-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.4...@selfcommunity/react-i18n@0.7.7-alpha.5) (2025-01-10)
+
+
+### Bug Fixes
+
+* liveStream errors ([b399573](https://github.com/selfcommunity/community-js/commit/b3995738bda178ce82eace90f78b5d2b1f45b6c0))
+
+
+
+
+
 ## [0.7.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.3...@selfcommunity/react-i18n@0.7.7-alpha.4) (2025-01-09)
 
 
