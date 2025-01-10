@@ -1,9 +1,10 @@
-import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useThemeProps} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
 import {SectionRowInterface} from '../../components/EditCourse/types';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import {SCCourseType} from '@selfcommunity/types';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCAccordionLessons';
 
@@ -38,6 +39,10 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
   //STATES
   const [expanded, setExpanded] = useState<number | false>(false);
 
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   // HANDLERS
   const handleChange = useCallback(
     (panel: number) => (_: SyntheticEvent, newExpanded: boolean) => {
@@ -65,15 +70,17 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
             <Typography component="span" variant="body1">
               {section.name}
             </Typography>
-            <Typography component="span" variant="body1">
-              <FormattedMessage
-                id="ui.course.table.lessons.title"
-                defaultMessage="ui.course.table.lessons.title"
-                values={{
-                  lessonsNumber: section.lessons.length
-                }}
-              />
-            </Typography>
+            {!isMobile && (
+              <Typography component="span" variant="body1">
+                <FormattedMessage
+                  id="ui.course.table.lessons.title"
+                  defaultMessage="ui.course.table.lessons.title"
+                  values={{
+                    lessonsNumber: section.lessons.length
+                  }}
+                />
+              </Typography>
+            )}
           </AccordionSummary>
           {section.lessons.map((lesson) => (
             <AccordionDetails key={lesson.id} className={classes.details}>
