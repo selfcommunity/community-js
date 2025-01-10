@@ -452,7 +452,7 @@ const theme = {
     SCVoteButton,
     SCWidget,
     SCEventMediaWidget,
-    SCEmptyStatus
+    SCEmptyStatus,
     SCLiveStream,
     SCLiveStreamInfoDetails,
     SCUpScalingTierBadge,
