@@ -254,7 +254,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
       <Box>
         {canRemoveOrBanUser() && (
           <>
-            <MenuItem className={classes.subItem} disabled={currentActionLoading === REMOVE_ROOM_USER}>
+            <MenuItem className={classes.subItem} disabled={currentActionLoading === REMOVE_ROOM_USER} onClick={() => handleAction(REMOVE_ROOM_USER)}>
               <ListItemIcon>
                 <Icon>person</Icon>
               </ListItemIcon>
@@ -265,11 +265,10 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
                     defaultMessage="ui.liveStreamRoom.participantTileActions.removeRoomUser"
                   />
                 }
-                onClick={() => handleAction(REMOVE_ROOM_USER)}
                 classes={{root: classes.itemText}}
               />
             </MenuItem>
-            <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER}>
+            <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER} onClick={() => handleAction(BAN_ROOM_USER)}>
               <ListItemIcon>
                 <Icon>error</Icon>
               </ListItemIcon>
@@ -280,7 +279,6 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
                     defaultMessage="ui.liveStreamRoom.participantTileActions.banRoomUser"
                   />
                 }
-                onClick={() => handleAction(BAN_ROOM_USER)}
                 classes={{root: classes.itemText}}
               />
             </MenuItem>
@@ -323,27 +321,31 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
         size="small">
         <Icon>expand_more</Icon>
       </IconButton>
-      {isMobile ? (
-        <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
-          {renderContent()}
-        </SwipeableDrawer>
-      ) : (
-        <PopperRoot
-          open={open}
-          anchorEl={popperRef.current}
-          role={undefined}
-          transition
-          className={classes.popperRoot}
-          {...PopperProps}
-          placement="right">
-          {({TransitionProps, placement}) => (
-            <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-              <Paper variant={'outlined'} className={classes.paper}>
-                <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
-              </Paper>
-            </Grow>
+      {open && (
+        <>
+          {isMobile ? (
+            <SwipeableDrawer open onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
+              {renderContent()}
+            </SwipeableDrawer>
+          ) : (
+            <PopperRoot
+              open
+              anchorEl={popperRef.current}
+              role={undefined}
+              transition
+              className={classes.popperRoot}
+              {...PopperProps}
+              placement="right">
+              {({TransitionProps, placement}) => (
+                <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+                  <Paper variant={'outlined'} className={classes.paper}>
+                    <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </PopperRoot>
           )}
-        </PopperRoot>
+        </>
       )}
       {openConfirmDialog && (
         <ConfirmDialog
