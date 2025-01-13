@@ -91,6 +91,7 @@ import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './compone
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import InviteUserEventButton, {InviteUserEventButtonProps} from './components/InviteUserEventButton';
+import LessonObject, {LessonObjectProps} from './components/LessonObject';
 import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
 import MyEventsWidget, {MyEventsWidgetProps, MyEventsWidgetSkeleton} from './components/MyEventsWidget';
@@ -227,7 +228,10 @@ import {
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,
-  VirtualScrollerItemProps
+  VirtualScrollerItemProps,
+  SCCourseTemplateType,
+  SCLessonActionsType,
+  SCLessonModeType
 } from './types';
 /**
  * Constants
@@ -246,6 +250,7 @@ import {DEFAULT_FIELDS} from './constants/UserProfile';
 import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from './components/FeedObjectMediaPreview';
 import CentralProgress from './shared/CentralProgress';
 import InfiniteScroll from './shared/InfiniteScroll';
+import ScrollContainer from './shared/ScrollContainer';
 import MetadataField, {MetadataFieldProps} from './shared/MetadataField';
 import * as ContributionUtils from './utils/contribution';
 import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
@@ -511,10 +516,13 @@ export {
   IncubatorSuggestionWidget,
   IncubatorSuggestionWidgetProps,
   InfiniteScroll,
+  ScrollContainer,
   InlineComposerWidget,
   InlineComposerWidgetProps,
   InlineComposerWidgetSkeleton,
   InviteUserEventButton,
+  LessonObject,
+  LessonObjectProps,
   InviteUserEventButtonProps,
   LanguageSwitcher,
   LEGAL_POLICIES,
@@ -728,6 +736,9 @@ export {
   LiveStreamVideoConference,
   LiveStreamVideoConferenceProps,
   VirtualScrollerItemProps,
+  SCCourseTemplateType,
+  SCLessonActionsType,
+  SCLessonModeType,
   Widget,
   WidgetProps,
   X_SHARE,

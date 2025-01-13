@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
@@ -24,22 +24,17 @@ import {
   Typography
 } from '@mui/material';
 import {PREFIX} from './constants';
-import {SCContributionType, SCCourseLessonStatusType, SCCourseType} from '@selfcommunity/types';
-import {SCRoutes, SCRoutingContextType, useSCFetchCommentObjects, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
-import LessonObject from '../LessonObject';
-import {SCLessonActionsType} from '../../types/course';
-import ScrollContainer from '../../shared/ScrollContainer';
+import {SCCommentsOrderBy, SCContributionType, SCCourseLessonStatusType, SCCourseType} from '@selfcommunity/types';
+import {SCRoutingContextType, useSCFetchCommentObjects, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import {SCCommentsOrderBy} from '../../types/comments';
 import {CacheStrategies} from '@selfcommunity/utils';
-import CommentsObject from '../CommentsObject';
-import CommentObjectReply from '../CommentObjectReply';
+import {CommentObjectReply, CommentsObject, LessonObject, SCLessonActionsType, SCLessonModeType, ScrollContainer} from '@selfcommunity/react-ui';
 
 const messages = defineMessages({
   commentEditorPlaceholder: {
-    id: 'ui.lessonComponent.comments.editor.placeholder',
-    defaultMessage: 'ui.lessonComponent.comments.editor.placeholder'
+    id: 'templates.lesson.comments.editor.placeholder',
+    defaultMessage: 'templates.lesson.comments.editor.placeholder'
   }
 });
 
@@ -74,7 +69,7 @@ const DrawerRoot = styled(Drawer, {
 })(({theme}) => ({}));
 
 const drawerWidth = {
-  sm: '100vw',
+  sm: 100,
   md: 300
 };
 
@@ -89,7 +84,6 @@ const MainContainer = styled('main', {shouldForwardProp: (prop) => prop !== 'ope
   open?: boolean;
 }>(({theme, open}) => ({
   flexGrow: 1,
-  height: '100vh',
   display: 'flex',
   flexDirection: 'column',
   overflow: 'hidden',
@@ -97,10 +91,10 @@ const MainContainer = styled('main', {shouldForwardProp: (prop) => prop !== 'ope
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
-  marginRight: open ? `calc(100% - ${theme.breakpoints.up('sm') ? drawerWidth.md : drawerWidth.sm})` : 0
+  marginRight: open ? `${theme.breakpoints.up('sm') ? `${drawerWidth.md}px` : `${drawerWidth.sm}vw`}` : 0
 }));
 
-export interface LessonComponentProps {
+export interface LessonProps {
   /**
    * The Course title
    */
@@ -131,9 +125,9 @@ export interface LessonComponentProps {
   [p: string]: any;
 }
 
-export default function LessonComponent(inProps: LessonComponentProps): JSX.Element {
+export default function Lesson(inProps: LessonProps): JSX.Element {
   // PROPS
-  const props: LessonComponentProps = useThemeProps({
+  const props: LessonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -162,10 +156,10 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
   const [value, setValue] = useState<SCCourseLessonStatusType>(SCCourseLessonStatusType.DRAFT);
 
-  const [open, setOpen] = useState(true);
+  const [expanded, setExpanded] = useState(true);
 
   const handleToggle = () => {
-    setOpen((prev) => !prev);
+    setExpanded((prev) => !prev);
   };
 
   const commentsObject = useSCFetchCommentObjects({
@@ -197,14 +191,20 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
     {label: 'Orologi', completed: false}
   ];
 
-  const isEditMode = useMemo(() => {
-    return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
-  }, [value, scRoutingContext]);
+  // const isEditMode = useMemo(() => {
+  //   return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
+  // }, [value, scRoutingContext]);
+
+  const isEditMode = true;
 
   const isCourseCreator = true;
 
   // HANDLERS
 
+  /**
+   * Handles lesson status change
+   * @param event
+   */
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value as SCCourseLessonStatusType);
   };
@@ -214,6 +214,10 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
   };
   const handleCloseDrawer = () => {
     setActivePanel(null);
+  };
+
+  const handleLessonContentEdit = (content) => {
+    console.log(content);
   };
 
   return (
@@ -234,14 +238,16 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
           </IconButton>
         </Toolbar>
       </AppBarRoot>
-      <MainContainer open={Boolean(activePanel)}>
+      <MainContainer open={Boolean(activePanel) || isEditMode}>
         <Box className={classes.info}>
           <Typography variant="body2" color="text.secondary">
-            <FormattedMessage id="ui.lessonComponent.lessonNumber" defaultMessage="ui.lessonComponent.lessonNumber" values={{from: 1, to: 5}} />
+            <FormattedMessage id="templates.lesson.lessonNumber" defaultMessage="templates.lesson.lessonNumber" values={{from: 1, to: 5}} />
           </Typography>
         </Box>
         <LessonObject
           lessonObj={obj}
+          mode={isEditMode ? SCLessonModeType.EDIT : SCLessonModeType.VIEW}
+          onContentChange={handleLessonContentEdit}
           endActions={
             // TODO: add disable conditions to navigation buttons and right values to the translation above
             <Box>
@@ -261,16 +267,16 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
             {isEditMode ? (
               <>
                 <Button variant="outlined" size="small" onClick={handleCloseDrawer}>
-                  <FormattedMessage id="ui.lessonComponent.edit.button.see" defaultMessage="ui.lessonComponent.edit.button.see" />
+                  <FormattedMessage id="templates.lesson.edit.button.see" defaultMessage="templates.lesson.edit.button.see" />
                 </Button>
                 <Button variant="contained" size="small" onClick={handleCloseDrawer}>
-                  <FormattedMessage id="ui.lessonComponent.edit.button.save" defaultMessage="ui.lessonComponent.edit.button.save" />
+                  <FormattedMessage id="templates.lesson.edit.button.save" defaultMessage="templates.lesson.edit.button.save" />
                 </Button>
               </>
             ) : (
               <>
                 <Typography variant="h4" textAlign="center">
-                  <FormattedMessage id={`ui.lessonComponent.${activePanel}`} defaultMessage={`ui.lessonComponent.${activePanel}`} />
+                  <FormattedMessage id={`templates.lesson.${activePanel}`} defaultMessage={`templates.lesson.${activePanel}`} />
                 </Typography>
                 <IconButton className={classes.drawerHeaderAction} onClick={handleCloseDrawer}>
                   <Icon>close</Icon>
@@ -283,7 +289,7 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
             <Box className={classes.drawerContent}>
               <FormControl>
                 <FormLabel id="status">
-                  <FormattedMessage id="ui.lessonComponent.edit.status.title" defaultMessage="ui.lessonComponent.edit.status.title" />
+                  <FormattedMessage id="templates.lesson.edit.status.title" defaultMessage="templates.lesson.edit.status.title" />
                 </FormLabel>
                 <RadioGroup
                   aria-labelledby="course-status-radio-buttons-group"
@@ -293,27 +299,25 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
                   <FormControlLabel
                     value={SCCourseLessonStatusType.DRAFT}
                     control={<Radio />}
-                    label={<FormattedMessage id="ui.lessonComponent.edit.status.draft" defaultMessage="ui.lessonComponent.edit.status.draft" />}
+                    label={<FormattedMessage id="templates.lesson.edit.status.draft" defaultMessage="templates.lesson.edit.status.draft" />}
                   />
                   <FormControlLabel
                     value={SCCourseLessonStatusType.PUBLISHED}
                     control={<Radio />}
-                    label={
-                      <FormattedMessage id="ui.lessonComponent.edit.status.published" defaultMessage="ui.lessonComponent.edit.status.published" />
-                    }
+                    label={<FormattedMessage id="templates.lesson.edit.status.published" defaultMessage="templates.lesson.edit.status.published" />}
                   />
                 </RadioGroup>
               </FormControl>
               <FormControl className={classes.settings}>
                 <FormLabel id="settings">
-                  <FormattedMessage id="ui.lessonComponent.edit.settings.title" defaultMessage="ui.lessonComponent.edit.settings.title" />
+                  <FormattedMessage id="templates.lesson.edit.settings.title" defaultMessage="templates.lesson.edit.settings.title" />
                 </FormLabel>
                 <FormControlLabel
                   control={<Checkbox />}
                   label={
                     <FormattedMessage
-                      id="ui.lessonComponent.edit.settings.enableComments"
-                      defaultMessage="ui.lessonComponent.edit.settings.enableComments"
+                      id="templates.lesson.edit.settings.enableComments"
+                      defaultMessage="templates.lesson.edit.settings.enableComments"
                     />
                   }
                 />
@@ -346,15 +350,15 @@ export default function LessonComponent(inProps: LessonComponentProps): JSX.Elem
                 ) : (
                   <>
                     <ListItemButton onClick={handleToggle} className={classes.listItem} disableRipple>
-                      <ListItemIcon className={classes.listItemIcon}>{open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}</ListItemIcon>
+                      <ListItemIcon className={classes.listItemIcon}>{expanded ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}</ListItemIcon>
                       <ListItemText primary={title} />
                     </ListItemButton>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         {items.map((item, index) => (
                           // TODO: on click set the lesson object to next id
                           <ListItemButton key={index} className={classes.item} onClick={() => console.log(item)}>
-                            {isCourseCreator && (
+                            {!isCourseCreator && (
                               <ListItemIcon className={classes.itemIcon}>
                                 {item.completed ? (
                                   <Icon className={classes.iconComplete}>circle_checked</Icon>

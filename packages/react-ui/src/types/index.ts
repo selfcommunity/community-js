@@ -8,6 +8,7 @@ import {VirtualScrollerItemProps} from './virtualScroller';
 import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} from './user';
 import {PlatformWidgetActionType} from './platformWidget';
 import {SCEventTemplateType} from './event';
+import {SCCourseTemplateType, SCLessonActionsType, SCLessonModeType} from './course';
 
 export {
   SCFeedWidgetType,
@@ -23,5 +24,8 @@ export {
   SCUserSocialAssociations,
   VirtualScrollerItemProps,
   PlatformWidgetActionType,
-  SCEventTemplateType
+  SCEventTemplateType,
+  SCCourseTemplateType,
+  SCLessonActionsType,
+  SCLessonModeType
 };

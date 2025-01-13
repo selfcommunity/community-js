@@ -4,7 +4,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {CommentsType} from '../types';
 import {getCommentsData, getOtherCommentsData} from '../../EditCourse/data';
 import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from 'packages/react-ui/src/constants/Errors';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';

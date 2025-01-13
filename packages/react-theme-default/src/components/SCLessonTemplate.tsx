@@ -20,18 +20,18 @@ const Component = {
         },
         backgroundColor: theme.palette.grey[200]
       },
-      '& .SCLessonComponent-drawer-header': {
+      '& .SCLessonTemplate-drawer-header': {
         minHeight: theme.mixins.toolbar.minHeight,
         padding: theme.spacing(1, 1, 1, 2),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between'
       },
-      '& .SCLessonComponent-drawer-header-edit': {
+      '& .SCLessonTemplate-drawer-header-edit': {
         justifyContent: 'center',
         gap: theme.spacing(2)
       },
-      '& .SCLessonComponent-drawer-content': {
+      '& .SCLessonTemplate-drawer-content': {
         display: 'flex',
         flexDirection: 'column',
         padding: theme.spacing(2),
@@ -47,32 +47,32 @@ const Component = {
           fontWeight: 700,
           color: 'inherit'
         },
-        '& .SCLessonComponent-settings': {
+        '& .SCLessonTemplate-settings': {
           marginTop: theme.spacing(2)
         },
-        '& .SCLessonComponent-list-item': {
+        '& .SCLessonTemplate-list-item': {
           padding: 0,
           '&:hover, &:focus, &:active': {
             backgroundColor: 'transparent'
           }
         },
-        '& .SCLessonComponent-list-item-icon': {
+        '& .SCLessonTemplate-list-item-icon': {
           minWidth: theme.spacing(3),
           color: theme.palette.text.secondary
         },
-        '& .SCLessonComponent-item': {
+        '& .SCLessonTemplate-item': {
           padding: theme.spacing(0.5, 3, 0.5, 3),
           '& .MuiListItemText-primary': {
             fontWeight: theme.typography.fontWeightMedium
           }
         },
-        '& .SCLessonComponent-item-icon': {
+        '& .SCLessonTemplate-item-icon': {
           minWidth: theme.spacing(4)
         },
-        '& .SCLessonComponent-icon-complete': {
+        '& .SCLessonTemplate-icon-complete': {
           color: theme.palette.success.main
         },
-        '& .SCLessonComponent-icon-incomplete': {
+        '& .SCLessonTemplate-icon-incomplete': {
           color: theme.palette.grey[300]
         },
         '& .SCCommentsObject-root': {
@@ -118,7 +118,7 @@ const Component = {
       },
       transition: theme.transitions.create(['margin', 'width'], {
         easing: open ? theme.transitions.easing.easeOut : theme.transitions.easing.sharp,
-        duration: open ? theme.transitions.duration : theme.transitions.duration.leavingScreen
+        duration: open ? theme.transitions.duration.enteringScreen : theme.transitions.duration.leavingScreen
       }),
       ...(open && {
         [theme.breakpoints.down('md')]: {marginRight: '100vw'},

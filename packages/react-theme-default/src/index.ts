@@ -119,7 +119,7 @@ import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidge
 import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
 import SCLessonCompletedDialog from './components/SCLessonCompletedDialog';
-import SCLessonComponent from './components/SCLessonComponent';
+import SCLessonTemplate from './components/SCLessonTemplate';
 import SCLessonObject from './components/SCLessonObject';
 import SCLessonReleaseMenu from './components/SCLessonReleaseMenu';
 import SCLightbox from './components/SCLightbox';
@@ -372,7 +372,7 @@ const theme = {
     SCInlineComposerWidget,
     SCLanguageSwitcher,
     SCLessonCompletedDialog,
-    SCLessonComponent,
+    SCLessonTemplate,
     SCLessonObject,
     SCLessonReleaseMenu,
     SCLightbox,

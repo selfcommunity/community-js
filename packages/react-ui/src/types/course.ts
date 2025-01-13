@@ -5,9 +5,10 @@ export enum SCCourseTemplateType {
 
 export enum SCLessonActionsType {
   COMMENTS = 'comments',
-  LESSONS = 'lessons',
+  LESSONS = 'lessons'
+}
+
+export enum SCLessonModeType {
+  VIEW = 'view',
   EDIT = 'edit'
 }
-export type TypeOfCourse = 'autodidact' | 'calendar' | 'scheduled';
-
-export type StatusCourse = 'draft' | 'published' | 'new';
