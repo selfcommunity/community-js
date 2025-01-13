@@ -180,7 +180,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     return (
       <MenuList>
         {listItem.map((item, i) => (
-          <MenuItem key={i}>
+          <MenuItem key={i} onClick={item.onClick}>
             <ListItemIcon>
               <Icon fontSize="small">{item.icon}</Icon>
             </ListItemIcon>
@@ -190,7 +190,6 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
                   <FormattedMessage id={item.text} defaultMessage={item.text} />
                 </Typography>
               }
-              onClick={item.onClick}
             />
           </MenuItem>
         ))}
@@ -316,35 +315,38 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
         {...rest}>
         <Icon>add_circle_outline</Icon>
       </Root>
-
-      <Composer open={openComposer} fullWidth onClose={handleCloseComposer} onSuccess={handleSuccess} {...ComposerProps} />
-
-      {isMobile ? (
-        <SwipeableDrawer open={openPopper} onClose={handleClosePopper} onOpen={() => null} anchor="bottom" disableSwipeToOpen>
-          {renderContent}
-        </SwipeableDrawer>
-      ) : (
-        <PopperRoot
-          open={openPopper}
-          anchorEl={popperRef.current}
-          role={undefined}
-          transition
-          className={classes.popperRoot}
-          {...PopperProps}
-          placement="bottom-end">
-          {({TransitionProps, placement}) => (
-            <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-              <Paper variant="outlined">
-                <ClickAwayListener onClickAway={handleClosePopper}>{renderContent}</ClickAwayListener>
-              </Paper>
-            </Grow>
+      {openComposer && <Composer open={openComposer} fullWidth onClose={handleCloseComposer} onSuccess={handleSuccess} {...ComposerProps} />}
+      {openPopper && (
+        <>
+          {isMobile ? (
+            <SwipeableDrawer open onClose={handleClosePopper} onOpen={() => null} anchor="bottom" disableSwipeToOpen>
+              {renderContent}
+            </SwipeableDrawer>
+          ) : (
+            <PopperRoot
+              open
+              anchorEl={popperRef.current}
+              role={undefined}
+              transition
+              className={classes.popperRoot}
+              {...PopperProps}
+              placement="bottom-end">
+              {({TransitionProps, placement}) => (
+                <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+                  <Paper variant="outlined">
+                    <ClickAwayListener onClickAway={handleClosePopper}>{renderContent}</ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </PopperRoot>
           )}
-        </PopperRoot>
+        </>
       )}
-
-      <GroupForm open={openCreateGroup} onClose={handleCloseCreateGroup} {...GroupFormProps} />
-      <EventFormDialog open={openCreateEvent} onClose={handleCloseCreateEvent} {...EventFormDialogComponentProps} />
-      <CreateLiveStreamDialog open={openCreateLiveStream} onClose={handleCloseCreateLiveStream} {...CreateLiveStreamDialogComponentProps} />
+      {openCreateGroup && <GroupForm open={openCreateGroup} onClose={handleCloseCreateGroup} {...GroupFormProps} />}
+      {openCreateEvent && <EventFormDialog open={openCreateEvent} onClose={handleCloseCreateEvent} {...EventFormDialogComponentProps} />}
+      {openCreateLiveStream && (
+        <CreateLiveStreamDialog open={openCreateLiveStream} onClose={handleCloseCreateLiveStream} {...CreateLiveStreamDialogComponentProps} />
+      )}
     </>
   );
 });
