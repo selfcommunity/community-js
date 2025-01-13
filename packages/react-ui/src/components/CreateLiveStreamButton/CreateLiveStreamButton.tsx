@@ -1,4 +1,4 @@
-import {Button, Icon} from '@mui/material';
+import {Button, Divider, Icon} from '@mui/material';
 import {ButtonProps} from '@mui/material/Button/Button';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
