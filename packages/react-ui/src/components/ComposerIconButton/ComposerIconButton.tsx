@@ -7,17 +7,14 @@ import {
   styled,
   useTheme,
   SwipeableDrawer,
-  Grow,
-  Paper,
-  ClickAwayListener,
-  Popper,
   PopperProps,
   MenuList,
   MenuItem,
   ListItemIcon,
   ListItemText,
   Typography,
-  useThemeProps
+  useThemeProps,
+  Menu
 } from '@mui/material';
 import {
   Link,
@@ -45,7 +42,7 @@ const PREFIX = 'SCComposerIconButton';
 
 const classes = {
   root: `${PREFIX}-root`,
-  popperRoot: `${PREFIX}-popper-root`
+  menuRoot: `${PREFIX}-menu-root`
 };
 
 const Root = styled(IconButton, {
@@ -53,7 +50,7 @@ const Root = styled(IconButton, {
   slot: 'Root'
 })(() => ({}));
 
-const PopperRoot = styled(Popper, {
+const MenuRoot = styled(Menu, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.popperRoot
@@ -271,7 +268,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     onClose?.();
   }, [setOpenComposer, onClose]);
 
-  const handleClosePopper = useCallback(() => {
+  const handleCloseMenu = useCallback(() => {
     setOpenPopper(false);
   }, [setOpenPopper]);
 
@@ -319,26 +316,13 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
       {openPopper && (
         <>
           {isMobile ? (
-            <SwipeableDrawer open onClose={handleClosePopper} onOpen={() => null} anchor="bottom" disableSwipeToOpen>
+            <SwipeableDrawer open onClose={handleCloseMenu} onOpen={() => null} anchor="bottom" disableSwipeToOpen>
               {renderContent}
             </SwipeableDrawer>
           ) : (
-            <PopperRoot
-              open
-              anchorEl={popperRef.current}
-              role={undefined}
-              transition
-              className={classes.popperRoot}
-              {...PopperProps}
-              placement="bottom-end">
-              {({TransitionProps, placement}) => (
-                <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-                  <Paper variant="outlined">
-                    <ClickAwayListener onClickAway={handleClosePopper}>{renderContent}</ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </PopperRoot>
+            <MenuRoot open anchorEl={popperRef.current} role={undefined} className={classes.menuRoot} onClose={handleCloseMenu} {...PopperProps}>
+              {renderContent}
+            </MenuRoot>
           )}
         </>
       )}
