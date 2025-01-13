@@ -67,7 +67,7 @@ import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
 import BackdropScrollDisabled from '../../shared/BackdropScrollDisabled';
-import {disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks} from 'body-scroll-lock';
+import {clearAllBodyScrollLocks} from 'body-scroll-lock';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -248,7 +248,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     EditorProps = {},
     onClose = null,
     onSuccess = null,
-    maxWidth,
     feedType,
     ...rest
   } = props;
@@ -830,7 +829,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     <Root
       ref={dialogRef}
       TransitionComponent={DialogTransition}
-      BackdropComponent={BackdropScrollDisabled}
+      slots={{backdrop: BackdropScrollDisabled}}
       onClose={handleClose}
       {...rest}
       disableEscapeKeyDown
