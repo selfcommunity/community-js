@@ -248,23 +248,23 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     defaultMessage={_error}
                     values={{
                       link: (...chunks) => (
-                        <Link
+                        <a
                           style={{color: '#FFF'}}
-                          to={
+                          href={
                             error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.PARTICIPATE_THE_EVENT_TO_JOIN_LIVE_STREAM &&
                             scLiveStream.event
                               ? scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scLiveStream.event)
                               : '/'
                           }>
                           {chunks}
-                        </Link>
+                        </a>
                       )
                     }}
                   />
                 );
                 if (
-                  error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM &&
-                  error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.PARTICIPANTS_LIMIT_REACHED
+                  error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM ||
+                  error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.PARTICIPANTS_LIMIT_REACHED
                 ) {
                   setError(_msg);
                 } else {

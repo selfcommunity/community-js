@@ -94,7 +94,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   } = props;
 
   const scUserContext = useSCUser();
-  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_livestream, [scUserContext?.user?.permission]);
+  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
 
   return (
     <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
