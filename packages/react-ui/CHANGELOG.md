@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.17...@selfcommunity/react-ui@0.11.0-alpha.0) (2025-01-13)
+
+
+### Bug Fixes
+
+* optimization ([c69948e](https://github.com/selfcommunity/community-js/commit/c69948e9a5023a08227eb0482ce08a06f9b2a826))
+* optimization ([f04e305](https://github.com/selfcommunity/community-js/commit/f04e305752c5f69d04faa7720494851ed65942c2))
+
+
+### Features
+
+* modified ComposerIconButton to accept Menu ([96189ba](https://github.com/selfcommunity/community-js/commit/96189ba88f517868e1895e9aa2f18a81e35935ba))
+
+
+
+
+
 ## [0.10.5-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.16...@selfcommunity/react-ui@0.10.5-alpha.17) (2025-01-13)
 
 
