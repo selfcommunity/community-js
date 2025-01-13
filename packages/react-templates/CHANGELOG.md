@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.15...@selfcommunity/react-templates@0.4.8-alpha.16) (2025-01-13)
+
+
+### Bug Fixes
+
+* style feddObjectDetail ([53de310](https://github.com/selfcommunity/community-js/commit/53de310346e27f9827ab369598edbf3f6a97e96c))
+
+
+
+
+
 ## [0.4.8-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.14...@selfcommunity/react-templates@0.4.8-alpha.15) (2025-01-13)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
