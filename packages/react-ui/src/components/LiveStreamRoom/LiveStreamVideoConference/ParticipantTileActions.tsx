@@ -254,7 +254,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
       <Box>
         {canRemoveOrBanUser() && (
           <>
-            <MenuItem className={classes.subItem} disabled={currentActionLoading === REMOVE_ROOM_USER}>
+            <MenuItem className={classes.subItem} disabled={currentActionLoading === REMOVE_ROOM_USER} onClick={() => handleAction(REMOVE_ROOM_USER)}>
               <ListItemIcon>
                 <Icon>person</Icon>
               </ListItemIcon>
@@ -265,11 +265,10 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
                     defaultMessage="ui.liveStreamRoom.participantTileActions.removeRoomUser"
                   />
                 }
-                onClick={() => handleAction(REMOVE_ROOM_USER)}
                 classes={{root: classes.itemText}}
               />
             </MenuItem>
-            <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER}>
+            <MenuItem className={classes.subItem} disabled={currentActionLoading === BAN_ROOM_USER} onClick={() => handleAction(BAN_ROOM_USER)}>
               <ListItemIcon>
                 <Icon>error</Icon>
               </ListItemIcon>
@@ -280,7 +279,6 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
                     defaultMessage="ui.liveStreamRoom.participantTileActions.banRoomUser"
                   />
                 }
-                onClick={() => handleAction(BAN_ROOM_USER)}
                 classes={{root: classes.itemText}}
               />
             </MenuItem>
