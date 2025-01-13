@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
+import {SCCategoryType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -26,6 +26,10 @@ const messages = defineMessages({
   description: {
     id: 'ui.courseForm.description.placeholder',
     defaultMessage: 'ui.courseForm.description.placeholder'
+  },
+  categoryEmpty: {
+    id: 'ui.courseForm.category.placeholder.empty',
+    defaultMessage: 'ui.courseForm.category.placeholder.empty'
   },
   category: {
     id: 'ui.courseForm.category.placeholder',
@@ -142,7 +146,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     name: course?.name || '',
     type: course?.type || '',
     description: course ? course.description : '',
-    categories: course ? course.categories : [],
+    categories: course ? course.categories : {},
     isSubmitting: false
   };
 
@@ -181,8 +185,32 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     [error]
   );
 
+  /**
+   * Handles step change
+   * @param newStep
+   */
   const handleChangeStep = (newStep: SCCourseFormStepType) => {
     setStep(newStep);
+  };
+
+  /**
+   * Formats categories object to a specific format needed in the form body
+   * @param data
+   */
+  function convertToCategoriesObject(data) {
+    const categories = {};
+    data.forEach((category, index) => {
+      categories[`categories[${index}]`] = category.id;
+    });
+    return categories;
+  }
+
+  /**
+   * Handle change category
+   * @param categories
+   */
+  const handleOnChangeCategory = (categories: SCCategoryType) => {
+    setField((prev: any) => ({...prev, ['categories']: convertToCategoriesObject(categories)}));
   };
 
   /**
@@ -202,6 +230,9 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     [course]
   );
 
+  /**
+   * Handles the form submission
+   */
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, ['isSubmitting']: true}));
     const formData = new FormData();
@@ -210,15 +241,21 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     }
     formData.append('name', field.name);
     formData.append('description', field.description);
-
-    let eventService: Promise<SCCourseType>;
-    if (course) {
-      eventService = CourseService.updateCourse(course.id, formData as unknown as SCCourseType, {headers: {'Content-Type': 'multipart/form-data'}});
-    } else {
-      eventService = CourseService.createCourse(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+    formData.append('type', field.type);
+    if (field.categories) {
+      for (const key in field.categories) {
+        formData.append(key, field.categories[key]);
+      }
     }
 
-    eventService
+    let courseService: Promise<SCCourseType>;
+    if (course) {
+      courseService = CourseService.updateCourse(course.id, formData as unknown as SCCourseType, {headers: {'Content-Type': 'multipart/form-data'}});
+    } else {
+      courseService = CourseService.createCourse(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+    }
+
+    courseService
       .then((data) => {
         notifyChanges(data);
         setField((prev) => ({...prev, ['isSubmitting']: false}));
@@ -242,6 +279,9 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
       });
   }, [field, onSuccess, onError, notifyChanges]);
 
+  /**
+   * Handles course fields change
+   */
   const handleChange = useCallback(
     (course: ChangeEvent<HTMLInputElement>) => {
       const {name, value} = course.target;
@@ -332,7 +372,11 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 ) : null
               }
             />
-            <CategoryAutocomplete TextFieldProps={{label: `${intl.formatMessage(messages.category)}`}} />
+            <CategoryAutocomplete
+              TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
+              multiple={true}
+              onChange={handleOnChangeCategory}
+            />
             {course && <CourseEdit course={course} />}
           </FormGroup>
         )}
