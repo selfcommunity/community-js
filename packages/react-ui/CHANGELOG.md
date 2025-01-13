@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.16...@selfcommunity/react-ui@0.10.5-alpha.17) (2025-01-13)
+
+
+### Bug Fixes
+
+* style liveStream navigation ([fa19ef9](https://github.com/selfcommunity/community-js/commit/fa19ef9220037e00170598f316a006e2dad26091))
+
+
+
+
+
 ## [0.10.5-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.15...@selfcommunity/react-ui@0.10.5-alpha.16) (2025-01-13)
 
 
