@@ -160,6 +160,7 @@ export default function OnBoardingActionsButton(inProps: OnBoardingActionsButton
               onClick={() => setAnchorEl(null)}
               className={classes.drawerRoot}
               anchor="bottom"
+              open
               onClose={handleClose}
               onOpen={handleOpen}
               PaperProps={{className: classes.paper}}
@@ -171,6 +172,7 @@ export default function OnBoardingActionsButton(inProps: OnBoardingActionsButton
               onClick={() => setAnchorEl(null)}
               className={classes.menuRoot}
               anchorEl={anchorEl}
+              open
               onClose={handleClose}
               PaperProps={{className: classes.paper}}>
               {renderList()}
