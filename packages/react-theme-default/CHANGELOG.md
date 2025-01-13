@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.5...@selfcommunity/react-theme-default@0.4.5-alpha.6) (2025-01-13)
+
+
+### Bug Fixes
+
+* icon CreateLiveStreamButton ([ec2d22f](https://github.com/selfcommunity/community-js/commit/ec2d22f15dc182a1f1f275fc82e33ec05ab71253))
+* icon CreateLiveStreamButton ([7d3b875](https://github.com/selfcommunity/community-js/commit/7d3b875baa23419126f12c83f1a17be1d30dc919))
+
+
+
+
+
 ## [0.4.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.4...@selfcommunity/react-theme-default@0.4.5-alpha.5) (2025-01-10)
 
 

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.13...@selfcommunity/react-ui@0.10.5-alpha.14) (2025-01-13)
+
+
+### Bug Fixes
+
+* create_live_stream and create_event permissions ([1856088](https://github.com/selfcommunity/community-js/commit/18560886796be2e23e02572627bb8be6048ca337))
+* icon CreateLiveStreamButton ([7d3b875](https://github.com/selfcommunity/community-js/commit/7d3b875baa23419126f12c83f1a17be1d30dc919))
+* livestream ([b891f46](https://github.com/selfcommunity/community-js/commit/b891f46d612f6a3ca55a35821c967cbf7679e7a3))
+* peerDependencies project root ([7c29158](https://github.com/selfcommunity/community-js/commit/7c29158cff08f6b43525a5e9a0c345cb3bc403ce))
+
+
+
+
+
 ## [0.10.5-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.12...@selfcommunity/react-ui@0.10.5-alpha.13) (2025-01-10)
 
 
