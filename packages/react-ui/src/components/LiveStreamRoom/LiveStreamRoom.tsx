@@ -263,8 +263,8 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                   />
                 );
                 if (
-                  error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM &&
-                  error.response.data.errors[0].code !== SCLiveStreamConnectionDetailsErrorType.PARTICIPANTS_LIMIT_REACHED
+                  error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.WAITING_HOST_TO_START_LIVE_STREAM ||
+                  error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.PARTICIPANTS_LIMIT_REACHED
                 ) {
                   setError(_msg);
                 } else {
