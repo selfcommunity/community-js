@@ -42,6 +42,9 @@ const Component = {
         maxWidth: '80%'
       },
       '& .SCNavigationMenuDrawer-drawer-footer': {
+        marginTop: theme.spacing(3)
+      },
+      '& .SCNavigationMenuDrawer-drawer-footer-live': {
         padding: theme.spacing(3)
       }
     })
