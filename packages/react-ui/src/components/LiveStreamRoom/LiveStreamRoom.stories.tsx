@@ -13,7 +13,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof LiveStreamRoom> = {
   args: {
-		liveStreamId: 2
+		liveStreamId: 3
 	},
   render: template
 };

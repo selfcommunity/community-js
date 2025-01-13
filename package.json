@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"bootstrap": "yarn && lerna bootstrap --use-workspaces && yarn install-peers",
-		"install-peers": "install-peers -f",
+		"install-peers": "node ./scripts/peerDependencies/installPeers",
 		"build:essentials": "lerna run build --scope @selfcommunity/utils && lerna run build --scope @selfcommunity/types && lerna run build --scope @selfcommunity/api-services && lerna run build --scope @selfcommunity/react-theme-default",
 		"build": "yarn run build:essentials && lerna run build --ignore @selfcommunity/utils --ignore @selfcommunity/types --ignore @selfcommunity/api-services --ignore @selfcommunity/react-theme-default",
 		"prerelease": "lerna publish --conventional-commits --conventional-prerelease --yes",
