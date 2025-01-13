@@ -86,7 +86,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     drawerContent = <DefaultDrawerContent />,
     showDrawerFooterContent = true,
     drawerFooterContent = null,
-    ScrollContainerProps = {},
+    ScrollContainerProps = {hideTracksWhenNotNeeded: true},
     CreateLiveStreamButtonComponentProps = {},
     open,
     onClose,

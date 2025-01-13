@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.6...@selfcommunity/react-theme-default@0.4.5-alpha.7) (2025-01-13)
+
+
+### Bug Fixes
+
+* style feddObjectDetail ([53de310](https://github.com/selfcommunity/community-js/commit/53de310346e27f9827ab369598edbf3f6a97e96c))
+* style liveStream card ([bb61645](https://github.com/selfcommunity/community-js/commit/bb6164577bae93cd692e342d9a5e8f0ce36c3023))
+* style liveStream navigation ([c315f47](https://github.com/selfcommunity/community-js/commit/c315f47d854b6739cee63d38bf82fc5aee0f4a14))
+
+
+
+
+
 ## [0.4.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.5...@selfcommunity/react-theme-default@0.4.5-alpha.6) (2025-01-13)
 
 
