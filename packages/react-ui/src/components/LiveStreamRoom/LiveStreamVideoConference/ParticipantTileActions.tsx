@@ -323,27 +323,31 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
         size="small">
         <Icon>expand_more</Icon>
       </IconButton>
-      {isMobile ? (
-        <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
-          {renderContent()}
-        </SwipeableDrawer>
-      ) : (
-        <PopperRoot
-          open={open}
-          anchorEl={popperRef.current}
-          role={undefined}
-          transition
-          className={classes.popperRoot}
-          {...PopperProps}
-          placement="right">
-          {({TransitionProps, placement}) => (
-            <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-              <Paper variant={'outlined'} className={classes.paper}>
-                <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
-              </Paper>
-            </Grow>
+      {open && (
+        <>
+          {isMobile ? (
+            <SwipeableDrawer open onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
+              {renderContent()}
+            </SwipeableDrawer>
+          ) : (
+            <PopperRoot
+              open
+              anchorEl={popperRef.current}
+              role={undefined}
+              transition
+              className={classes.popperRoot}
+              {...PopperProps}
+              placement="right">
+              {({TransitionProps, placement}) => (
+                <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+                  <Paper variant={'outlined'} className={classes.paper}>
+                    <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </PopperRoot>
           )}
-        </PopperRoot>
+        </>
       )}
       {openConfirmDialog && (
         <ConfirmDialog

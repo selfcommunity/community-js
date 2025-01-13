@@ -1,34 +1,69 @@
-import React, {ReactElement, useCallback, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Icon, IconButton, IconButtonProps} from '@mui/material';
+import React, {MouseEvent, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  Icon,
+  IconButton,
+  IconButtonProps,
+  useMediaQuery,
+  styled,
+  useTheme,
+  SwipeableDrawer,
+  Grow,
+  Paper,
+  ClickAwayListener,
+  Popper,
+  PopperProps,
+  MenuList,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  useThemeProps
+} from '@mui/material';
 import {
   Link,
   SCContextType,
   SCRoutes,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import classNames from 'classnames';
-import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
 import Composer, {ComposerProps} from '../Composer';
-import {SnackbarKey, useSnackbar} from 'notistack';
+import {useSnackbar} from 'notistack';
 import {getRouteData} from '../../utils/contribution';
+import {FeedObjectProps} from '../FeedObject';
+import EventFormDialog, {EventFormDialogProps} from '../EventFormDialog';
+import classNames from 'classnames';
+import GroupForm, {GroupFormProps} from '../GroupForm';
+import CreateLiveStreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 
 const PREFIX = 'SCComposerIconButton';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  popperRoot: `${PREFIX}-popper-root`
 };
 
 const Root = styled(IconButton, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
+
+const PopperRoot = styled(Popper, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (_props, styles) => styles.popperRoot
+})(() => ({}));
+
+type ItemProps = {
+  icon: string;
+  text: string;
+  onClick: () => void;
+};
 
 export interface ComposerIconButtonProps extends IconButtonProps {
   /**
@@ -41,6 +76,30 @@ export interface ComposerIconButtonProps extends IconButtonProps {
    * @default null
    */
   onClose?: () => void;
+
+  /**
+   * Props to spread to popper
+   * @default empty object
+   */
+  PopperProps?: PopperProps;
+
+  /**
+   * Props to spread to CreateGroup component
+   * @default empty object
+   */
+  GroupFormProps?: GroupFormProps;
+
+  /**
+   * Props to spread to CreateGroup component
+   * @default empty object
+   */
+  EventFormDialogComponentProps?: EventFormDialogProps;
+
+  /**
+   * Props to spread to CreateGroup component
+   * @default empty object
+   */
+  CreateLiveStreamDialogComponentProps?: CreateLiveStreamDialogProps;
 }
 
 /**
@@ -71,10 +130,37 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     props: inProps,
     name: PREFIX
   });
-  const {className = null, ComposerProps = {}, onClick, onClose, ...rest} = props;
+  const {
+    className = null,
+    ComposerProps = {},
+    onClick,
+    onClose,
+    PopperProps = {},
+    GroupFormProps = {},
+    EventFormDialogComponentProps = {},
+    CreateLiveStreamDialogComponentProps = {},
+    ...rest
+  } = props;
 
   // STATE
-  const [open, setOpen] = useState<boolean>(false);
+  const [openComposer, setOpenComposer] = useState<boolean>(false);
+  const [openPopper, setOpenPopper] = useState<boolean>(false);
+  const [openCreateGroup, setOpenCreateGroup] = useState<boolean>(false);
+  const [openCreateEvent, setOpenCreateEvent] = useState<boolean>(false);
+  const [openCreateLiveStream, setOpenCreateLiveStream] = useState<boolean>(false);
+  const [listItem, setListItem] = useState<ItemProps[]>([
+    {
+      icon: 'edit',
+      text: 'ui.composerIconButton.list.content',
+      onClick: () => {
+        setOpenComposer(true);
+        setOpenPopper(false);
+      }
+    }
+  ]);
+
+  // REFS
+  const popperRef = useRef(null);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -82,9 +168,83 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
 
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // MEMOS
+  const canCreateGroup = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
+  const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
+  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const renderContent = useMemo(() => {
+    return (
+      <MenuList>
+        {listItem.map((item, i) => (
+          <MenuItem key={i} onClick={item.onClick}>
+            <ListItemIcon>
+              <Icon fontSize="small">{item.icon}</Icon>
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography variant="h5">
+                  <FormattedMessage id={item.text} defaultMessage={item.text} />
+                </Typography>
+              }
+            />
+          </MenuItem>
+        ))}
+      </MenuList>
+    );
+  }, [listItem]);
+
+  // EFFETCS
+  useEffect(() => {
+    if (canCreateGroup) {
+      setListItem((prev) => [
+        ...prev,
+        {
+          icon: 'groups',
+          text: 'ui.composerIconButton.list.group',
+          onClick: () => {
+            setOpenCreateGroup(true);
+            setOpenPopper(false);
+          }
+        }
+      ]);
+    }
+
+    if (canCreateEvent) {
+      setListItem((prev) => [
+        ...prev,
+        {
+          icon: 'CalendarIcon',
+          text: 'ui.composerIconButton.list.event',
+          onClick: () => {
+            setOpenCreateEvent(true);
+            setOpenPopper(false);
+          }
+        }
+      ]);
+    }
+
+    if (canCreateLiveStream) {
+      setListItem((prev) => [
+        ...prev,
+        {
+          icon: 'movie',
+          text: 'ui.composerIconButton.list.liveStream',
+          onClick: () => {
+            setOpenCreateLiveStream(true);
+            setOpenPopper(false);
+          }
+        }
+      ]);
+    }
+  }, [canCreateGroup, setListItem]);
+
   // HANDLERS
   const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       if (scUserContext.user) {
         if (UserUtils.isBlocked(scUserContext.user)) {
           enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
@@ -92,26 +252,46 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
             autoHideDuration: 3000
           });
         } else {
-          setOpen(true);
+          if (canCreateGroup || canCreateEvent || canCreateLiveStream) {
+            setOpenPopper(true);
+          } else {
+            setOpenComposer(true);
+          }
         }
       } else {
         scContext.settings.handleAnonymousAction();
       }
-      onClick && onClick(event);
+      onClick?.(event);
     },
-    [onClick, enqueueSnackbar, scContext.settings, scUserContext.user]
+    [onClick, scContext.settings, scUserContext.user]
   );
 
-  const handleClose = useCallback(() => {
-    setOpen(false);
-    onClose && onClose();
-  }, []);
+  const handleCloseComposer = useCallback(() => {
+    setOpenComposer(false);
+    onClose?.();
+  }, [setOpenComposer, onClose]);
 
-  const handleSuccess = useMemo(
-    () => (feedObject) => {
-      setOpen(false);
+  const handleClosePopper = useCallback(() => {
+    setOpenPopper(false);
+  }, [setOpenPopper]);
+
+  const handleCloseCreateGroup = useCallback(() => {
+    setOpenCreateGroup(false);
+  }, [setOpenCreateGroup]);
+
+  const handleCloseCreateEvent = useCallback(() => {
+    setOpenCreateEvent(false);
+  }, [setOpenCreateEvent]);
+
+  const handleCloseCreateLiveStream = useCallback(() => {
+    setOpenCreateLiveStream(false);
+  }, [setOpenCreateLiveStream]);
+
+  const handleSuccess = useCallback(
+    (feedObject: FeedObjectProps) => {
+      setOpenComposer(false);
       enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
-        action: (snackbarId: SnackbarKey) => (
+        action: () => (
           <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], getRouteData(feedObject))}>
             <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
           </Link>
@@ -120,15 +300,53 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
         autoHideDuration: 7000
       });
     },
-    []
+    [setOpenComposer]
   );
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} {...rest} onClick={handleClick} ref={ref}>
+      <Root
+        className={classNames(classes.root, className)}
+        onClick={handleClick}
+        ref={(innerRef) => {
+          popperRef.current = innerRef;
+          return ref;
+        }}
+        {...rest}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      {open && <Composer open={open} fullWidth onClose={handleClose} onSuccess={handleSuccess} {...ComposerProps} />}
+      {openComposer && <Composer open={openComposer} fullWidth onClose={handleCloseComposer} onSuccess={handleSuccess} {...ComposerProps} />}
+      {openPopper && (
+        <>
+          {isMobile ? (
+            <SwipeableDrawer open onClose={handleClosePopper} onOpen={() => null} anchor="bottom" disableSwipeToOpen>
+              {renderContent}
+            </SwipeableDrawer>
+          ) : (
+            <PopperRoot
+              open
+              anchorEl={popperRef.current}
+              role={undefined}
+              transition
+              className={classes.popperRoot}
+              {...PopperProps}
+              placement="bottom-end">
+              {({TransitionProps, placement}) => (
+                <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
+                  <Paper variant="outlined">
+                    <ClickAwayListener onClickAway={handleClosePopper}>{renderContent}</ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </PopperRoot>
+          )}
+        </>
+      )}
+      {openCreateGroup && <GroupForm open={openCreateGroup} onClose={handleCloseCreateGroup} {...GroupFormProps} />}
+      {openCreateEvent && <EventFormDialog open={openCreateEvent} onClose={handleCloseCreateEvent} {...EventFormDialogComponentProps} />}
+      {openCreateLiveStream && (
+        <CreateLiveStreamDialog open={openCreateLiveStream} onClose={handleCloseCreateLiveStream} {...CreateLiveStreamDialogComponentProps} />
+      )}
     </>
   );
 });
