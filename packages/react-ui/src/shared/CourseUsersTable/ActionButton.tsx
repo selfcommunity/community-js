@@ -51,7 +51,7 @@ function ActionButton(props: ActionButtonProps) {
     <Fragment>
       {isMobile ? (
         <IconButton size="small" color="inherit" onClick={handleToggleOpen}>
-          <Icon>more_vert</Icon>
+          <Icon>chevron_right</Icon>
         </IconButton>
       ) : (
         <Button variant="outlined" size="small" color="inherit" onClick={handleToggleOpen}>
