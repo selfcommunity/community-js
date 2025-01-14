@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.8...@selfcommunity/react-theme-default@0.4.5-alpha.9) (2025-01-14)
+
+
+### Bug Fixes
+
+* Composer with fixed toolbar editor when create discussion ([3cdc1a5](https://github.com/selfcommunity/community-js/commit/3cdc1a52e3b4d5667c6c1e030303bdc07b391c2b))
+
+
+
+
+
 ## [0.4.5-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.7...@selfcommunity/react-theme-default@0.4.5-alpha.8) (2025-01-13)
 
 

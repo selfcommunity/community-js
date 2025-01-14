@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.2...@selfcommunity/react-ui@0.11.0-alpha.3) (2025-01-14)
+
+
+### Bug Fixes
+
+* Composer with fixed toolbar editor when create discussion ([3cdc1a5](https://github.com/selfcommunity/community-js/commit/3cdc1a52e3b4d5667c6c1e030303bdc07b391c2b))
+* font ComposerIconButton ([4b2530b](https://github.com/selfcommunity/community-js/commit/4b2530bc317c0d8aa9c484422f9a56f81187eaf6))
+* font ComposerIconButton ([fd285fd](https://github.com/selfcommunity/community-js/commit/fd285fd504dbb81e17d599b7314a42f9d6a96b49))
+
+
+
+
+
 # [0.11.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.1...@selfcommunity/react-ui@0.11.0-alpha.2) (2025-01-13)
 
 
