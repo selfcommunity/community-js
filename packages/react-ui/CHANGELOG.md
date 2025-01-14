@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.3...@selfcommunity/react-ui@0.11.0-alpha.4) (2025-01-14)
+
+
+### Bug Fixes
+
+* error on play video ([00603d9](https://github.com/selfcommunity/community-js/commit/00603d9d60defefbef0f8a5aa5113ba9c2cdab65))
+
+
+
+
+
 # [0.11.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.2...@selfcommunity/react-ui@0.11.0-alpha.3) (2025-01-14)
 
 
