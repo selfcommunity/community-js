@@ -95,7 +95,7 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
 
       setValue(_value);
     },
-    [users, tempUsers, setUsers, setValue]
+    [users, tempUsers, setValue]
   );
 
   const handleSeeMore = useCallback(() => {

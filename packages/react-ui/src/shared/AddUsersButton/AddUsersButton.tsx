@@ -105,7 +105,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
   } = props;
 
   // STATES
-  const [open, setOpen] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [invited, setInvited] = useState<SCUserType[]>([]);
   const [suggested, setSuggested] = useState<SCUserType[]>([]);
   const [value, setValue] = useState<string>('');
@@ -151,9 +151,9 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
    */
   const handleToggleDialogOpen = useCallback(() => {
     if (!isUpdating) {
-      setOpen((prev) => !prev);
+      setOpenDialog((prev) => !prev);
     }
-  }, [isUpdating, setOpen, setInvited]);
+  }, [isUpdating, setOpenDialog]);
 
   /**
    * Handles action confirm
@@ -178,7 +178,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
           break;
       }
     },
-    [setValue]
+    [setValue, setSuggested]
   );
 
   const filterOptions = useCallback((options: SCUserType[], state: {inputValue: string}) => {
@@ -219,78 +219,82 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
         <FormattedMessage id={label} defaultMessage={label} />
       </Root>
 
-      <DialogRoot
-        DialogContentProps={{dividers: false}}
-        open={open}
-        onClose={handleToggleDialogOpen}
-        title={
-          <Typography variant="h5">
-            <FormattedMessage id="ui.addUserButton.dialog.title" defaultMessage="ui.addUserButton.dialog.title" />
-          </Typography>
-        }
-        actions={
-          <LoadingButton onClick={handleConfirm} size="medium" variant="contained" autoFocus disabled={!invited.length} loading={isUpdating}>
-            <Typography variant="body1">
-              <FormattedMessage id="ui.addUserButton.dialog.confirm" defaultMessage="ui.addUserButton.dialog.confirm" />
+      {openDialog && (
+        <DialogRoot
+          DialogContentProps={{dividers: false}}
+          open
+          onClose={handleToggleDialogOpen}
+          title={
+            <Typography variant="h5">
+              <FormattedMessage id="ui.addUserButton.dialog.title" defaultMessage="ui.addUserButton.dialog.title" />
             </Typography>
-          </LoadingButton>
-        }
-        className={classes.dialogRoot}>
-        <Stack className={classes.dialogAutocompleteWrapper}>
-          <Autocomplete
-            loading={loading}
-            size="small"
-            multiple
-            options={suggested}
-            onChange={handleChange}
-            onInputChange={handleInputChange}
-            inputValue={value}
-            filterOptions={filterOptions}
-            value={invited}
-            getOptionLabel={(option) => option?.username || '...'}
-            isOptionEqualToValue={(option, value) => option?.id === value.id}
-            loadingText={<FormattedMessage id="ui.addUserButton.autocomplete.loading" defaultMessage="ui.addUserButton.autocomplete.loading" />}
-            noOptionsText={<FormattedMessage id="ui.addUserButton.autocomplete.noResults" defaultMessage="ui.addUserButton.autocomplete.noResults" />}
-            renderTags={() => null}
-            popupIcon={null}
-            disableClearable
-            renderOption={(props, option) => (
-              <Stack
-                component="li"
-                sx={{
-                  flexDirection: 'row',
-                  gap: '5px'
-                }}
-                {...props}>
-                <Avatar alt={option.username} src={option.avatar} />
-                <Typography>{option.username}</Typography>
-              </Stack>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder={`${intl.formatMessage(messages.placeholder)}`}
-                InputProps={{
-                  ...params.InputProps
-                }}
-              />
-            )}
-          />
-          <Stack className={classes.dialogChipWrapper}>
-            {invited.map((option, index) => (
-              <Chip
-                key={index}
-                avatar={<Avatar alt={option.username} src={option.avatar} />}
-                label={option.username}
-                onDelete={() => {
-                  handleDelete(option);
-                }}
-              />
-            ))}
+          }
+          actions={
+            <LoadingButton onClick={handleConfirm} size="medium" variant="contained" autoFocus disabled={!invited.length} loading={isUpdating}>
+              <Typography variant="body1">
+                <FormattedMessage id="ui.addUserButton.dialog.confirm" defaultMessage="ui.addUserButton.dialog.confirm" />
+              </Typography>
+            </LoadingButton>
+          }
+          className={classes.dialogRoot}>
+          <Stack className={classes.dialogAutocompleteWrapper}>
+            <Autocomplete
+              loading={loading}
+              size="small"
+              multiple
+              options={suggested}
+              onChange={handleChange}
+              onInputChange={handleInputChange}
+              inputValue={value}
+              filterOptions={filterOptions}
+              value={invited}
+              getOptionLabel={(option) => option?.username || '...'}
+              isOptionEqualToValue={(option, value) => option?.id === value.id}
+              loadingText={<FormattedMessage id="ui.addUserButton.autocomplete.loading" defaultMessage="ui.addUserButton.autocomplete.loading" />}
+              noOptionsText={
+                <FormattedMessage id="ui.addUserButton.autocomplete.noResults" defaultMessage="ui.addUserButton.autocomplete.noResults" />
+              }
+              renderTags={() => null}
+              popupIcon={null}
+              disableClearable
+              renderOption={(props, option) => (
+                <Stack
+                  component="li"
+                  sx={{
+                    flexDirection: 'row',
+                    gap: '5px'
+                  }}
+                  {...props}>
+                  <Avatar alt={option.username} src={option.avatar} />
+                  <Typography>{option.username}</Typography>
+                </Stack>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder={`${intl.formatMessage(messages.placeholder)}`}
+                  InputProps={{
+                    ...params.InputProps
+                  }}
+                />
+              )}
+            />
+            <Stack className={classes.dialogChipWrapper}>
+              {invited.map((option, index) => (
+                <Chip
+                  key={index}
+                  avatar={<Avatar alt={option.username} src={option.avatar} />}
+                  label={option.username}
+                  onDelete={() => {
+                    handleDelete(option);
+                  }}
+                />
+              ))}
+            </Stack>
           </Stack>
-        </Stack>
-      </DialogRoot>
+        </DialogRoot>
+      )}
     </Fragment>
   );
 }
