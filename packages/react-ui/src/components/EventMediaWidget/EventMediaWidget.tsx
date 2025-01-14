@@ -405,59 +405,63 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
         </CardActions>
       )}
 
-      <DialogRoot
-        className={classes.dialogRoot}
-        title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
-        onClose={handleToggleDialogOpen}
-        open={openDialog}
-        {...dialogProps}>
-        <InfiniteScroll
-          dataLength={medias.length}
-          height={isMobile ? '100%' : '515px'}
-          next={handleNext}
-          hasMoreNext={Boolean(state.next)}
-          className={classes.dialogInfiniteScroll}
-          endMessage={
-            <Typography className={classes.endMessage}>
-              <FormattedMessage id="ui.eventMediaWidget.noMoreResults" defaultMessage="ui.eventMediaWidget.noMoreResults" />
-            </Typography>
-          }>
-          <Box className={classes.grid}>
-            {medias.map((media: SCMediaType) => (
-              <Box
-                key={media.id}
-                sx={{
-                  background: `url(${media.image}) no-repeat center`
-                }}
-                className={classes.dialogMediaWrapper}>
-                <Stack className={classes.dialogButtonWrapper}>
-                  <LoadingButton
-                    className={classes.dialogLoadingButton}
-                    loading={mediaId === media.id}
-                    size="large"
-                    onClick={() => handleRemoveMedia(media.id)}
-                    sx={{
-                      color: (theme) => (mediaId === media.id ? 'transparent' : theme.palette.common.white)
-                    }}>
-                    <Icon fontSize="inherit">delete</Icon>
-                  </LoadingButton>
-                </Stack>
-              </Box>
-            ))}
-            {showSkeleton === 'dialog' && Array.from(Array(countHiddenMedia)).map((_, i) => <EventMediaSkeleton key={i} />)}
-          </Box>
-        </InfiniteScroll>
-      </DialogRoot>
+      {openDialog && (
+        <DialogRoot
+          className={classes.dialogRoot}
+          title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
+          onClose={handleToggleDialogOpen}
+          open
+          {...dialogProps}>
+          <InfiniteScroll
+            dataLength={medias.length}
+            height={isMobile ? '100%' : '515px'}
+            next={handleNext}
+            hasMoreNext={Boolean(state.next)}
+            className={classes.dialogInfiniteScroll}
+            endMessage={
+              <Typography className={classes.endMessage}>
+                <FormattedMessage id="ui.eventMediaWidget.noMoreResults" defaultMessage="ui.eventMediaWidget.noMoreResults" />
+              </Typography>
+            }>
+            <Box className={classes.grid}>
+              {medias.map((media: SCMediaType) => (
+                <Box
+                  key={media.id}
+                  sx={{
+                    background: `url(${media.image}) no-repeat center`
+                  }}
+                  className={classes.dialogMediaWrapper}>
+                  <Stack className={classes.dialogButtonWrapper}>
+                    <LoadingButton
+                      className={classes.dialogLoadingButton}
+                      loading={mediaId === media.id}
+                      size="large"
+                      onClick={() => handleRemoveMedia(media.id)}
+                      sx={{
+                        color: (theme) => (mediaId === media.id ? 'transparent' : theme.palette.common.white)
+                      }}>
+                      <Icon fontSize="inherit">delete</Icon>
+                    </LoadingButton>
+                  </Stack>
+                </Box>
+              ))}
+              {showSkeleton === 'dialog' && Array.from(Array(countHiddenMedia)).map((_, i) => <EventMediaSkeleton key={i} />)}
+            </Box>
+          </InfiniteScroll>
+        </DialogRoot>
+      )}
 
-      <ConfirmDialog
-        open={openDialogConfirm}
-        title={<FormattedMessage id="ui.eventMediaWidget.dialog.title" defaultMessage="ui.eventMediaWidget.dialog.title" />}
-        content={<FormattedMessage id="ui.eventMediaWidget.dialog.msg" defaultMessage="ui.eventMediaWidget.dialog.msg" />}
-        btnConfirm={<FormattedMessage id="ui.eventMediaWidget.dialog.confirm" defaultMessage="ui.eventMediaWidget.dialog.confirm" />}
-        isUpdating={loading}
-        onConfirm={handleConfirmAction}
-        onClose={handleCloseAction}
-      />
+      {openDialogConfirm && (
+        <ConfirmDialog
+          open
+          title={<FormattedMessage id="ui.eventMediaWidget.dialog.title" defaultMessage="ui.eventMediaWidget.dialog.title" />}
+          content={<FormattedMessage id="ui.eventMediaWidget.dialog.msg" defaultMessage="ui.eventMediaWidget.dialog.msg" />}
+          btnConfirm={<FormattedMessage id="ui.eventMediaWidget.dialog.confirm" defaultMessage="ui.eventMediaWidget.dialog.confirm" />}
+          isUpdating={loading}
+          onConfirm={handleConfirmAction}
+          onClose={handleCloseAction}
+        />
+      )}
     </Root>
   );
 }
