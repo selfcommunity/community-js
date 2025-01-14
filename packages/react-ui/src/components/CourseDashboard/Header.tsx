@@ -4,6 +4,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {LESSONS_DATA} from '../EditCourse/data';
 import {PREFIX} from './constants';
 import {useMemo} from 'react';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
 const classes = {
   header: `${PREFIX}-header`,
@@ -30,30 +31,33 @@ const ICON_DATA = [
 
 interface HeaderCourseDashboardProps {
   course: SCCourseType | null;
-  handleAction?: () => void;
+  hasAction?: boolean;
 }
 
 export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   // PROPS
-  const {course, handleAction} = props;
+  const {course, hasAction = false} = props;
+
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
   const intl = useIntl();
 
   // MEMOS
   const button = useMemo(() => {
-    if (!course && handleAction) {
+    if (!course && hasAction) {
       return <Skeleton animation="wave" variant="rounded" width="160px" height="28px" />;
-    } else if (handleAction) {
+    } else if (hasAction) {
       return (
-        <Button size="small" color="primary" variant="contained" onClick={handleAction}>
+        <Button component={Link} to={scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, course)} size="small" color="primary" variant="contained">
           <Typography variant="body2">
             <FormattedMessage id="ui.course.dashboard.teacher.btn.label" defaultMessage="ui.course.dashboard.teacher.btn.label" />
           </Typography>
         </Button>
       );
     }
-  }, [course, handleAction]);
+  }, [course, hasAction]);
 
   return (
     <Box className={classes.header}>

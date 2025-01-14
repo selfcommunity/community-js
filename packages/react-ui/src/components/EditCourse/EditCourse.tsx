@@ -9,7 +9,7 @@ import Lessons from './Lessons';
 import Customize from './Customize';
 import Users from './Users';
 import Options from './Options';
-import {SCThemeType} from '@selfcommunity/react-core';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {getCourseData} from './data';
 import {SCCourseType} from '@selfcommunity/types';
 import {useSnackbar} from 'notistack';
@@ -90,6 +90,9 @@ export default function EditCourse(inProps: EditCourseProps) {
   const [course, setCourse] = useState<SCCourseType | null>(null);
   const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
 
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -129,7 +132,7 @@ export default function EditCourse(inProps: EditCourseProps) {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Stack className={classes.header}>
-        <IconButton size="small" aria-label="back" onClick={() => console.log('*** back ***')}>
+        <IconButton href={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, course)} size="small">
           <Icon>arrow_back</Icon>
         </IconButton>
         <Typography variant="h5">{course.name}</Typography>

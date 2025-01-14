@@ -92,7 +92,7 @@ export default function Teacher(inProps: TeacherCourseDashboardProps) {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <HeaderCourseDashboard course={course} handleAction={() => console.log()} />
+      <HeaderCourseDashboard course={course} hasAction />
 
       <Stack className={classes.infoWrapper}>
         <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={course} position="first" />

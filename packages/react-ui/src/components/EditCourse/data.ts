@@ -52,7 +52,7 @@ const COURSE_DATA: SCCourseType & {lessons_completed?: string; course_completed?
     image_medium: '',
     image_big: '',
     image_bigger: '',
-    slug: '',
+    slug: 'fashion',
     privacy: SCCoursePrivacyType.OPEN,
     join_status: SCCourseJoinStatusType.JOINED,
     lessons_completed: '3/5',
