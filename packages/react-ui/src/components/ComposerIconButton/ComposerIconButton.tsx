@@ -194,7 +194,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     );
   }, [listItem]);
 
-  // EFFETCS
+  // EFFECTS
   useEffect(() => {
     if (canCreateGroup) {
       setListItem((prev) => [
