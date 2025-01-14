@@ -106,7 +106,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const [next, setNext] = useState<string | null>(null);
   const [offset, setOffset] = useState<number | null>(null);
   const [followers, setFollowers] = useState<SCUserType[]>([]);
-  const [open, setOpen] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // HOOKS
   const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
@@ -179,8 +179,8 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
    * Opens dialog votes
    */
   const handleToggleDialogOpen = useCallback(() => {
-    setOpen((prev) => !prev);
-  }, [setOpen]);
+    setOpenDialog((prev) => !prev);
+  }, [setOpenDialog]);
 
   return (
     <>
@@ -208,38 +208,43 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
         )}
       </Root>
 
-      <DialogRoot
-        className={classes.dialogRoot}
-        title={
-          <FormattedMessage
-            defaultMessage="ui.eventParticipantsButton.dialogTitle"
-            id="ui.eventParticipantsButton.dialogTitle"
-            values={{total: scEvent?.goings_counter || 0}}
-          />
-        }
-        onClose={handleToggleDialogOpen}
-        open={open}
-        {...DialogProps}>
-        <InfiniteScroll
-          dataLength={followers.length}
-          next={fetchFollowers}
-          hasMoreNext={next !== null || loading}
-          loaderNext={<UserSkeleton elevation={0} />}
-          className={classes.infiniteScroll}
-          endMessage={
-            <Typography className={classes.endMessage}>
-              <FormattedMessage id="ui.eventParticipantsButton.noOtherParticipants" defaultMessage="ui.eventParticipantsButton.noOtherParticipants" />
-            </Typography>
-          }>
-          <List>
-            {followers.map((follower: SCUserType) => (
-              <ListItem key={follower.id}>
-                <User elevation={0} user={follower} />
-              </ListItem>
-            ))}
-          </List>
-        </InfiniteScroll>
-      </DialogRoot>
+      {openDialog && (
+        <DialogRoot
+          className={classes.dialogRoot}
+          title={
+            <FormattedMessage
+              defaultMessage="ui.eventParticipantsButton.dialogTitle"
+              id="ui.eventParticipantsButton.dialogTitle"
+              values={{total: scEvent?.goings_counter || 0}}
+            />
+          }
+          onClose={handleToggleDialogOpen}
+          open
+          {...DialogProps}>
+          <InfiniteScroll
+            dataLength={followers.length}
+            next={fetchFollowers}
+            hasMoreNext={next !== null || loading}
+            loaderNext={<UserSkeleton elevation={0} />}
+            className={classes.infiniteScroll}
+            endMessage={
+              <Typography className={classes.endMessage}>
+                <FormattedMessage
+                  id="ui.eventParticipantsButton.noOtherParticipants"
+                  defaultMessage="ui.eventParticipantsButton.noOtherParticipants"
+                />
+              </Typography>
+            }>
+            <List>
+              {followers.map((follower: SCUserType) => (
+                <ListItem key={follower.id}>
+                  <User elevation={0} user={follower} />
+                </ListItem>
+              ))}
+            </List>
+          </InfiniteScroll>
+        </DialogRoot>
+      )}
     </>
   );
 }

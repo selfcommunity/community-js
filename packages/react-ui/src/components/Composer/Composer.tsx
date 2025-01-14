@@ -687,8 +687,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   //edited here
   const handleClose = useCallback(
     (e: SyntheticEvent, reason?: string): void => {
-      console.log(e);
-      console.log(reason);
       if (unloadRef.current) {
         window.onbeforeunload = null;
       }
@@ -779,6 +777,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             error={{titleError, error}}
             onChange={handleChangeDiscussion}
             disabled={isSubmitting}
+            isContentSwitchButtonVisible={!canSubmit && !editMode}
             EditorProps={{
               toolbar: true,
               uploadImage: true,
@@ -818,7 +817,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     error,
     handleChangePoll,
     handleChangePost,
-    isSubmitting
+    isSubmitting,
+    canSubmit,
+    editMode
   ]);
 
   if (!scUserContext.user && !(scUserContext.loading && open)) {

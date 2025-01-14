@@ -183,7 +183,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
             </ListItemIcon>
             <ListItemText
               primary={
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <FormattedMessage id={item.text} defaultMessage={item.text} />
                 </Typography>
               }
@@ -194,7 +194,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     );
   }, [listItem]);
 
-  // EFFETCS
+  // EFFECTS
   useEffect(() => {
     if (canCreateGroup) {
       setListItem((prev) => [
@@ -312,7 +312,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
         {...rest}>
         <Icon>add_circle_outline</Icon>
       </Root>
-      {openComposer && <Composer open={openComposer} fullWidth onClose={handleCloseComposer} onSuccess={handleSuccess} {...ComposerProps} />}
+      {openComposer && <Composer open fullWidth onClose={handleCloseComposer} onSuccess={handleSuccess} {...ComposerProps} />}
       {openPopper && (
         <>
           {isMobile ? (
@@ -326,11 +326,9 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
           )}
         </>
       )}
-      {openCreateGroup && <GroupForm open={openCreateGroup} onClose={handleCloseCreateGroup} {...GroupFormProps} />}
-      {openCreateEvent && <EventFormDialog open={openCreateEvent} onClose={handleCloseCreateEvent} {...EventFormDialogComponentProps} />}
-      {openCreateLiveStream && (
-        <CreateLiveStreamDialog open={openCreateLiveStream} onClose={handleCloseCreateLiveStream} {...CreateLiveStreamDialogComponentProps} />
-      )}
+      {openCreateGroup && <GroupForm open onClose={handleCloseCreateGroup} {...GroupFormProps} />}
+      {openCreateEvent && <EventFormDialog open onClose={handleCloseCreateEvent} {...EventFormDialogComponentProps} />}
+      {openCreateLiveStream && <CreateLiveStreamDialog open onClose={handleCloseCreateLiveStream} {...CreateLiveStreamDialogComponentProps} />}
     </>
   );
 });

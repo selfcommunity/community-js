@@ -36,19 +36,16 @@ const Component = {
           margin: '45px 0',
           padding: theme.spacing(1, 2),
           height: `calc(100% - 45px - 45px - ${theme.spacing(2)})`,
+          overflowY: 'hidden',
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
+            marginBottom: theme.spacing(3),
+            position: 'relative',
             '& .SCEditor-placeholder': {
               left: 0,
-              top: theme.spacing(1),
               position: 'absolute'
             },
             '&.SCEditor-toolbar': {
-              position: 'static',
-              '& .SCEditor-placeholder': {
-                marginTop: -40,
-                position: 'static'
-              },
               '& .SCEditorToolbarPlugin-root': {
                 zIndex: 1,
                 position: 'absolute',
@@ -104,16 +101,20 @@ const Component = {
         }
       }
     }),
-    attributesRoot: ({theme}: any) => ({}),
+    attributesRoot: () => ({}),
     contentDiscussionRoot: ({theme}: any) => ({
       '& .SCComposer-content-discussion-title': {
-        paddingBottom: theme.spacing(2),
         '& .MuiInputBase-root': {
+          maxHeight: 160,
+          overflowY: 'auto',
           paddingLeft: 0,
           paddingRight: 0,
           paddingBottom: 0,
-          fontSize: '1.429rem',
+          fontSize: '1.3rem',
           fontWeight: theme.typography.fontWeightBold,
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 110
+          },
           '& fieldset': {
             display: 'none'
           },
@@ -126,6 +127,19 @@ const Component = {
         },
         '& .MuiFormHelperText-root': {
           marginLeft: 0
+        }
+      },
+      '& .SCEditor-root': {
+        '& .SCEditor-placeholder': {
+          top: theme.spacing(7)
+        },
+        '& .SCEditor-content': {
+          overflowY: 'auto',
+          minHeight: 300,
+          maxHeight: `calc(100vh - 45px - 45px - 55px - 45px - ${theme.spacing(2)})`,
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 380
+          }
         }
       }
     }),
@@ -142,7 +156,21 @@ const Component = {
         marginTop: theme.spacing(3)
       }
     }),
-    contentPostRoot: ({theme}: any) => ({}),
+    contentPostRoot: ({theme}: any) => ({
+      '& .SCEditor-root': {
+        '& .SCEditor-placeholder': {
+          top: theme.spacing()
+        },
+        '& .SCEditor-content': {
+          overflowY: 'auto',
+          minHeight: 300,
+          maxHeight: `calc(100vh - 45px - 45px - ${theme.spacing(3)})`,
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 400
+          }
+        }
+      }
+    }),
     contentLessonRoot: ({theme}: any) => ({
       '& .SCComposer-content-lesson-title': {
         paddingBottom: theme.spacing(2),
@@ -200,8 +228,8 @@ const Component = {
         marginBottom: theme.spacing(4)
       }
     }),
-    layerCategoryRoot: ({theme}: any) => ({}),
-    layerGroupRoot: ({theme}: any) => ({}),
+    layerCategoryRoot: () => ({}),
+    layerGroupRoot: () => ({}),
     layerCloseRoot: ({theme}: any) => ({
       '& .SCComposer-layer-content': {
         '& .MuiTypography-root': {
@@ -220,8 +248,8 @@ const Component = {
         }
       }
     }),
-    layerLocationRoot: ({theme}: any) => ({}),
-    skeletonRoot: ({theme}: any) => ({}),
+    layerLocationRoot: () => ({}),
+    skeletonRoot: () => ({}),
     typeSwitchButtonGroupRoot: ({theme}: any) => ({
       '& .MuiToggleButton-root': {
         backgroundColor: theme.palette.common.black,
