@@ -183,7 +183,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
             </ListItemIcon>
             <ListItemText
               primary={
-                <Typography variant="h5">
+                <Typography variant="h6">
                   <FormattedMessage id={item.text} defaultMessage={item.text} />
                 </Typography>
               }
@@ -194,7 +194,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     );
   }, [listItem]);
 
-  // EFFETCS
+  // EFFECTS
   useEffect(() => {
     if (canCreateGroup) {
       setListItem((prev) => [
