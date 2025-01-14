@@ -15,7 +15,6 @@ const Component = {
       '& .MuiDrawer-paper': {
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          //width: theme.spacing(40)
           width: '300px'
         },
         backgroundColor: theme.palette.grey[200]
@@ -35,46 +34,6 @@ const Component = {
         display: 'flex',
         flexDirection: 'column',
         padding: theme.spacing(2),
-        '& .MuiList-root': {
-          '& .Mui-selected': {
-            backgroundColor: theme.palette.grey[300]
-          },
-          '& .MuiButtonBase-root, MuiListItemButton-root': {
-            '&:hover': {backgroundColor: theme.palette.grey[300]}
-          }
-        },
-        '& .MuiFormLabel-root': {
-          fontWeight: 700,
-          color: 'inherit'
-        },
-        '& .SCLessonTemplate-settings': {
-          marginTop: theme.spacing(2)
-        },
-        '& .SCLessonTemplate-list-item': {
-          padding: 0,
-          '&:hover, &:focus, &:active': {
-            backgroundColor: 'transparent'
-          }
-        },
-        '& .SCLessonTemplate-list-item-icon': {
-          minWidth: theme.spacing(3),
-          color: theme.palette.text.secondary
-        },
-        '& .SCLessonTemplate-item': {
-          padding: theme.spacing(0.5, 3, 0.5, 3),
-          '& .MuiListItemText-primary': {
-            fontWeight: theme.typography.fontWeightMedium
-          }
-        },
-        '& .SCLessonTemplate-item-icon': {
-          minWidth: theme.spacing(4)
-        },
-        '& .SCLessonTemplate-icon-complete': {
-          color: theme.palette.success.main
-        },
-        '& .SCLessonTemplate-icon-incomplete': {
-          color: theme.palette.grey[300]
-        },
         '& .SCCommentsObject-root': {
           backgroundColor: 'transparent',
           '& .SCCommentObject-root, & .SCCommentObject-comment, & .SCCommentObject-content': {

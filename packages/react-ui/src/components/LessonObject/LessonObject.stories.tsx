@@ -12,7 +12,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<LessonObject> = {
+export const Base: StoryObj<typeof LessonObject> = {
   args: {},
   render: template
 };

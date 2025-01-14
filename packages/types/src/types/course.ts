@@ -102,6 +102,10 @@ export interface SCCourseType {
    */
   created_by: SCUserType;
   /**
+   * The course sections
+   */
+  sections?: SCCourseSectionType[] | any;
+  /**
    * The categories list ids
    */
   categories?: number[];
@@ -130,7 +134,11 @@ export interface SCCourseSectionType {
   /**
    * The list of all lesson IDs belonging to the current section course
    */
-  lessons_order: [];
+  lessons_order: number[];
+  /**
+   * The lessons associated to the course section
+   */
+  lessons: SCCourseLessonType[];
 }
 
 /**
@@ -165,33 +173,34 @@ export interface SCCourseLessonType {
   /**
    * The type of the lesson.
    */
-  type: SCCourseLessonTypologyType;
+  type?: SCCourseLessonTypologyType;
   /**
    * The status of the lesson.
    */
-  status: SCCourseLessonStatusType;
+  status?: SCCourseLessonStatusType;
   /**
    * Enable the comments on the current lesson.
    */
-  comments_enabled: boolean;
+  comments_enabled?: boolean;
   /**
    * The lesson course text.
    */
-  text: string;
+  text?: string;
   /**
    * The lesson course html.
    */
-  html: string;
+  html?: string;
   /**
    * Datetime of lesson course creation.
    */
-  created_at: string;
+  created_at?: string;
   /**
    * The lesson course creator.
    */
-  created_by: SCUserType;
+  created_by?: SCUserType;
   /**
    * The list of Media ids for the lesson course
    */
-  medias: number[];
+  medias?: number[];
+  completed?: boolean;
 }

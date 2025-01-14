@@ -56,6 +56,7 @@ import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
 import SCCourse from './components/SCCourse';
+import SCCourseContentMenu from './components/SCCourseContentMenu';
 import SCCourseDashboard from './components/SCCourseDashboard';
 import SCCourses from './components/SCCourses';
 import SCCourseForm from './components/SCCourseForm';
@@ -119,6 +120,7 @@ import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidge
 import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
 import SCLessonCompletedDialog from './components/SCLessonCompletedDialog';
+import SCLessonEditForm from './components/SCLessonEditForm';
 import SCLessonTemplate from './components/SCLessonTemplate';
 import SCLessonObject from './components/SCLessonObject';
 import SCLessonReleaseMenu from './components/SCLessonReleaseMenu';
@@ -326,6 +328,7 @@ const theme = {
     SCConsentSolution,
     SCContributionActionsMenu,
     SCCourse,
+    SCCourseContentMenu,
     SCCourseDashboard,
     SCCourses,
     SCCourseForm,
@@ -372,6 +375,7 @@ const theme = {
     SCInlineComposerWidget,
     SCLanguageSwitcher,
     SCLessonCompletedDialog,
+    SCLessonEditForm,
     SCLessonTemplate,
     SCLessonObject,
     SCLessonReleaseMenu,

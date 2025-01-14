@@ -44,6 +44,7 @@ import ComposerIconButton, {ComposerIconButtonProps} from './components/Composer
 import ConnectionUserButton from './components/ConnectionUserButton';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
+import CourseContentMenu, {CourseContentMenuProps} from './components/CourseContentMenu';
 import CourseDashboard, {TeacherCourseDashboardProps, StudentCourseDashboardProps} from './components/CourseDashboard';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import CreateEventWidget, {CreateEventWidgetProps, CreateEventWidgetSkeleton} from './components/CreateEventWidget';
@@ -91,6 +92,7 @@ import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './compone
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import InviteUserEventButton, {InviteUserEventButtonProps} from './components/InviteUserEventButton';
+import LessonEditForm, {LessonEditFormProps} from './components/LessonEditForm';
 import LessonObject, {LessonObjectProps} from './components/LessonObject';
 import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
@@ -364,6 +366,8 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
+  CourseContentMenu,
+  CourseContentMenuProps,
   CourseDashboard,
   TeacherCourseDashboardProps,
   StudentCourseDashboardProps,
@@ -521,6 +525,8 @@ export {
   InlineComposerWidgetProps,
   InlineComposerWidgetSkeleton,
   InviteUserEventButton,
+  LessonEditForm,
+  LessonEditFormProps,
   LessonObject,
   LessonObjectProps,
   InviteUserEventButtonProps,
