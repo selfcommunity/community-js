@@ -109,7 +109,6 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
           <Collapse in={expandedSections.includes(section.id)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {section.lessons.map((_lesson) => (
-                // TODO: on click set the lesson object to next id
                 <ListItemButton
                   key={_lesson.id}
                   className={classes.item}

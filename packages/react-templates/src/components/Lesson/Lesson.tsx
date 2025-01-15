@@ -1,41 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {AppBar, Box, Button, Divider, Drawer, Icon, IconButton, List, Toolbar, Typography} from '@mui/material';
+import {Box} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCommentsOrderBy, SCContributionType, SCCourseLessonStatusType, SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCommentObjects, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {SCContributionType, SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
+import {SCRoutingContextType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {CacheStrategies} from '@selfcommunity/utils';
-import {
-  CommentObjectReply,
-  CommentsObject,
-  CourseContentMenu,
-  LessonEditForm,
-  LessonObject,
-  SCLessonActionsType,
-  SCLessonModeType,
-  ScrollContainer
-} from '@selfcommunity/react-ui';
+import {LessonAppbar, LessonAppbarProps, LessonDrawer, LessonObject, SCLessonActionsType, LessonDrawerProps} from '@selfcommunity/react-ui';
 import {CourseService} from '@selfcommunity/api-services';
-
-const messages = defineMessages({
-  commentEditorPlaceholder: {
-    id: 'templates.lesson.comments.editor.placeholder',
-    defaultMessage: 'templates.lesson.comments.editor.placeholder'
-  }
-});
 
 const classes = {
   root: `${PREFIX}-root`,
-  info: `${PREFIX}-info`,
-  appBarRoot: `${PREFIX}-app-bar-root`,
-  drawerRoot: `${PREFIX}-drawer-root`,
-  drawerHeader: `${PREFIX}-drawer-header`,
-  drawerHeaderEdit: `${PREFIX}-drawer-header-edit`,
-  drawerHeaderAction: `${PREFIX}-drawer-header-action`,
-  drawerContent: `${PREFIX}-drawer-content`
+  containerRoot: `${PREFIX}-container-root`
 };
 
 const Root = styled(Box, {
@@ -44,62 +20,33 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => [styles.root]
 })(() => ({}));
 
-const DrawerRoot = styled(Drawer, {
+const Container = styled(Box, {
   name: PREFIX,
-  slot: 'DrawerRoot',
-  overridesResolver: (props, styles) => styles.drawerRoot
-})(({theme}) => ({}));
-
-const drawerWidth = {
-  sm: 100,
-  md: 300
-};
-
-const AppBarRoot = styled(AppBar, {
-  name: PREFIX,
-  slot: 'AppBarRoot',
-  overridesResolver: (props, styles) => styles.appBarRoot,
+  slot: 'ContainerRoot',
+  overridesResolver: (props, styles) => styles.containerRoot,
   shouldForwardProp: (prop) => prop !== 'open'
-})<{open: boolean}>(({theme}) => ({}));
-
-const MainContainer = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
-  open?: boolean;
-}>(({theme, open}) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  marginRight: open ? `${theme.breakpoints.up('sm') ? `${drawerWidth.md}px` : `${drawerWidth.sm}vw`}` : 0
-}));
+})<{open?: boolean}>(({theme}) => ({}));
 
 export interface LessonProps {
-  /**
-   * The Course title
-   */
-  title: string;
-  /**
-   * The course object
-   */
-  course: SCCourseType;
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
    */
   className?: string;
   /**
-   * onArrowBack Callback
+   * The course object
    */
-  onArrowBackClick: () => any;
+  course: SCCourseType;
   /**
-   * Props to spread to ScrollContainer component
-   * This lib use 'react-custom-scrollbars' component to perform scrollbars
-   * For more info: https://github.com/malte-wessel/react-custom-scrollbars/blob/master/docs/API.md
+   * Props to spread to LessonAppbar Component
+   * @default {title: '', onArrowBackClick: null}
+   */
+  LessonAppbarProps?: LessonAppbarProps;
+  /**
+   * Props to spread to LessonDrawer Component
    * @default {}
    */
-  ScrollContainerProps?: Record<string, any>;
+  LessonDrawerProps?: LessonDrawerProps;
   /**
    * Any other properties
    */
@@ -116,61 +63,27 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   });
   const {
     className = null,
-    title = 'Course Title',
-    onArrowBackClick,
-    ScrollContainerProps = {},
     feedObjectId = 3078,
     feedObject = null,
     feedObjectType = SCContributionType.DISCUSSION,
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
-    comments = [],
-    CommentsObjectProps = {},
-    CommentComponentProps = {variant: 'outlined'},
+    LessonAppbarProps = {title: '', onArrowBackClick: null},
+    LessonDrawerProps = {},
     ...rest
   } = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
-  // INTL
-  const intl = useIntl();
-
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
   const [settings, setSettings] = useState(initialLesson);
   const [updating, setUpdating] = useState(true);
-
-  const commentsObject = useSCFetchCommentObjects({
-    id: feedObjectId,
-    feedObject,
-    feedObjectType,
-    cacheStrategy,
-    orderBy: SCCommentsOrderBy.ADDED_AT_ASC
-  });
-
-  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
-  const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-
   const [lesson, setLesson] = useState({id: 1, name: 'Cinture', completed: true});
-
-  useEffect(() => {
-    if (objId && !commentsObject.comments.length) {
-      commentsObject.getNextPage();
-    }
-  }, [objId]);
-  /**
-   * Load comments
-   */
-  function handleNext() {
-    commentsObject.getNextPage();
-  }
-
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   // const isEditMode = useMemo(() => {
   //   return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
   // }, [value, scRoutingContext]);
-
-  const isEditMode = false;
-
+  const isEditMode = true;
   const isCourseCreator = false;
 
   // HANDLERS
@@ -216,101 +129,33 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <AppBarRoot position="fixed" open={Boolean(activePanel)} className={classes.appBarRoot}>
-        <Toolbar>
-          <IconButton edge="start" onClick={onArrowBackClick}>
-            <Icon>arrow_back</Icon>
-          </IconButton>
-          <Typography variant="h6" sx={{flexGrow: 1}}>
-            {title}
-          </Typography>
-          <IconButton onClick={() => handleOpenDrawer(SCLessonActionsType.COMMENTS)}>
-            <Icon>chat_bubble_outline</Icon>
-          </IconButton>
-          <IconButton onClick={() => handleOpenDrawer(SCLessonActionsType.LESSONS)}>
-            <Icon>courses</Icon>
-          </IconButton>
-        </Toolbar>
-      </AppBarRoot>
-      <MainContainer open={Boolean(activePanel) || isEditMode}>
+      <LessonAppbar
+        title={LessonAppbarProps.title}
+        activePanel={activePanel}
+        handleClose={handleCloseDrawer}
+        handleOpen={handleOpenDrawer}
+        onArrowBackClick={LessonAppbarProps.onArrowBackClick}
+        {...LessonAppbarProps}
+      />
+      <Container open={Boolean(activePanel) || isEditMode} className={classes.containerRoot}>
         <LessonObject
+          editMode={isEditMode}
           lesson={lesson}
           lessonObj={obj}
-          mode={isEditMode ? SCLessonModeType.EDIT : SCLessonModeType.VIEW}
           onContentChange={handleLessonContentEdit}
           onLessonNavigationChange={(l: any) => setLesson(l)}
         />
-      </MainContainer>
-      {(activePanel || isEditMode) && (
-        <DrawerRoot className={classes.drawerRoot} anchor="right" open={Boolean(activePanel) || isEditMode} variant="persistent">
-          <Box className={classNames(classes.drawerHeader, {[classes.drawerHeaderEdit]: isEditMode})}>
-            {isEditMode ? (
-              <>
-                <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, obj)}>
-                  <FormattedMessage id="ui.lessonEditForm.button.see" defaultMessage="ui.lessonEditForm.button.see" />
-                </Button>
-                <Button variant="contained" size="small" onClick={handleLessonUpdate}>
-                  <FormattedMessage id="ui.lessonEditForm.button.save" defaultMessage="ui.lessonEditForm.button.save" />
-                </Button>
-              </>
-            ) : (
-              <>
-                <Typography variant="h4" textAlign="center">
-                  <FormattedMessage id={`templates.lesson.${activePanel}`} defaultMessage={`templates.lesson.${activePanel}`} />
-                </Typography>
-                <IconButton className={classes.drawerHeaderAction} onClick={handleCloseDrawer}>
-                  <Icon>close</Icon>
-                </IconButton>
-              </>
-            )}
-          </Box>
-          <Divider />
-          {isEditMode ? (
-            <LessonEditForm className={classes.drawerContent} onSettingsChange={handleSettingsChange} />
-          ) : (
-            <ScrollContainer {...ScrollContainerProps}>
-              <List className={classes.drawerContent}>
-                {activePanel === SCLessonActionsType.COMMENTS ? (
-                  <CommentsObject
-                    feedObject={commentsObject.feedObject}
-                    comments={commentsObject.comments}
-                    startComments={comments}
-                    next={commentsObject.next}
-                    isLoadingNext={commentsObject.isLoadingNext}
-                    handleNext={handleNext}
-                    totalLoadedComments={commentsObject.comments.length + comments.length}
-                    totalComments={commentsObject.feedObject.comment_count}
-                    hideAdvertising
-                    {...CommentsObjectProps}
-                    CommentComponentProps={{
-                      ...{showActions: false},
-                      ...{showUpperDateTime: true},
-                      ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {}),
-                      ...CommentComponentProps,
-                      ...{cacheStrategy}
-                    }}
-                    inPlaceLoadMoreContents={false}
-                  />
-                ) : (
-                  <CourseContentMenu courseId={1} lesson={lesson} onLessonClick={handleChangeLesson} />
-                )}
-              </List>
-            </ScrollContainer>
-          )}
-          {activePanel === SCLessonActionsType.COMMENTS && (
-            // TODO: handle message reply component
-            <CommentObjectReply
-              showAvatar={false}
-              replyIcon={true}
-              id={`reply-lessonComponent-${objId}`}
-              onReply={() => console.log('reply')}
-              editable={true}
-              key={objId}
-              EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder)}}
-            />
-          )}
-        </DrawerRoot>
-      )}
+      </Container>
+      <LessonDrawer
+        editMode={isEditMode}
+        activePanel={activePanel}
+        lesson={lesson}
+        handleUpdate={handleLessonUpdate}
+        handleClose={handleCloseDrawer}
+        handleSettingsChange={handleSettingsChange}
+        handleChangeLesson={handleChangeLesson}
+        {...LessonDrawerProps}
+      />
     </Root>
   );
 }

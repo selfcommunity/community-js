@@ -1,84 +1,15 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({}),
-    drawerRoot: ({theme}: any) => ({
-      [theme.breakpoints.down('md')]: {
-        width: '100vw',
-        flexShrink: 0
-      },
-      [theme.breakpoints.up('sm')]: {
-        width: '300px'
-      },
-      '& h4': {
-        fontWeight: theme.typography.fontWeightMedium
-      },
-      '& .MuiDrawer-paper': {
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          width: '300px'
-        },
-        backgroundColor: theme.palette.grey[200]
-      },
-      '& .SCLessonTemplate-drawer-header': {
-        minHeight: theme.mixins.toolbar.minHeight,
-        padding: theme.spacing(1, 1, 1, 2),
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-      },
-      '& .SCLessonTemplate-drawer-header-edit': {
-        justifyContent: 'center',
-        gap: theme.spacing(2)
-      },
-      '& .SCLessonTemplate-drawer-content': {
-        display: 'flex',
-        flexDirection: 'column',
-        padding: theme.spacing(2),
-        '& .SCCommentsObject-root': {
-          backgroundColor: 'transparent',
-          '& .SCCommentObject-root, & .SCCommentObject-comment, & .SCCommentObject-content': {
-            backgroundColor: 'transparent',
-            border: 0
-          },
-          '& .SCBaseItem-image': {
-            marginRight: 0
-          },
-          '& .SCBaseItem-text': {
-            '& .SCCommentObject-author': {
-              marginRight: theme.spacing(1)
-            },
-            '& .SCBullet-root, & .SCDateTimeAgo-root': {
-              color: theme.palette.text.secondary
-            }
-          },
-          '& .SCCommentObject-text-content': {
-            paddingTop: 0
-          }
-        }
-      },
-      '& .SCCommentObjectReply-root': {
-        backgroundColor: 'transparent',
-        '& .SCEditor-actions': {
-          left: theme.spacing(1),
-          '& .SCCommentObjectReply-icon-reply': {
-            marginLeft: 'auto'
-          }
-        },
-        '& .SCBaseItem-content': {
-          padding: theme.spacing(0, 2, 1, 2)
-        }
-      }
-    }),
-    appBarRoot: ({theme, open}: any) => ({
-      boxShadow: 'none',
-      borderBottom: `1px solid ${theme.palette.grey[300]}`,
-      '& .MuiToolbar-root': {
-        minHeight: '60px'
-      },
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: open ? theme.transitions.easing.easeOut : theme.transitions.easing.sharp,
-        duration: open ? theme.transitions.duration.enteringScreen : theme.transitions.duration.leavingScreen
+    containerRoot: ({theme, open}: any) => ({
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
       }),
+      marginRight: 0,
       ...(open && {
         [theme.breakpoints.down('md')]: {marginRight: '100vw'},
         [theme.breakpoints.up('sm')]: {marginRight: '300px'},

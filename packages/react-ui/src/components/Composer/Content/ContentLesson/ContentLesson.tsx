@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
 import {ComposerContentType} from '../../../../types/composer';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {COMPOSER_TITLE_MAX_LENGTH} from '../../../../constants/Composer';
 import {PREFIX} from '../../constants';
 
 const classes = {
@@ -86,25 +85,25 @@ export default (props: ContentLessonProps): JSX.Element => {
           <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
         </Typography>
       )}
-      <TextField
-        className={classes.title}
-        placeholder={intl.formatMessage({
-          id: 'ui.composer.content.discussion.title.label',
-          defaultMessage: 'ui.composer.content.discussion.title.label'
-        })}
-        autoFocus
-        fullWidth
-        variant="outlined"
-        value={value.title}
-        multiline
-        onChange={handleChangeTitle}
-        InputProps={{
-          endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>
-        }}
-        error={Boolean(titleError)}
-        helperText={titleError}
-        disabled={disabled}
-      />
+      {/*<TextField*/}
+      {/*  className={classes.title}*/}
+      {/*  placeholder={intl.formatMessage({*/}
+      {/*    id: 'ui.composer.content.discussion.title.label',*/}
+      {/*    defaultMessage: 'ui.composer.content.discussion.title.label'*/}
+      {/*  })}*/}
+      {/*  autoFocus*/}
+      {/*  fullWidth*/}
+      {/*  variant="outlined"*/}
+      {/*  value={value.title}*/}
+      {/*  multiline*/}
+      {/*  onChange={handleChangeTitle}*/}
+      {/*  InputProps={{*/}
+      {/*    endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>*/}
+      {/*  }}*/}
+      {/*  error={Boolean(titleError)}*/}
+      {/*  helperText={titleError}*/}
+      {/*  disabled={disabled}*/}
+      {/*/>*/}
       <Editor {...EditorProps} editable={!disabled} className={classes.editor} onChange={handleChangeHtml} defaultValue={value.html} />
     </Root>
   );

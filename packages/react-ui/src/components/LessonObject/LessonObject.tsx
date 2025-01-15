@@ -2,19 +2,17 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Icon, IconButton, Typography} from '@mui/material';
+import {Box, Button, Icon, IconButton, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import CardContent from '@mui/material/CardContent';
 import {getContributionHtml} from '../../utils/contribution';
 import Widget from '../Widget';
-import {SCLessonModeType} from '../../types';
 import ContentLesson from '../Composer/Content/ContentLesson';
 import {EditorProps} from '../Editor';
-import {ComposerContentType} from '../../types/composer';
-import {SCCourseLessonType, SCCourseSectionType} from '@selfcommunity/types';
+import {SCCourseLessonType} from '@selfcommunity/types';
 import {SectionRowInterface} from '../EditCourse/types';
-import {getCourseData, getSections} from '../EditCourse/data';
+import {getCourseData} from '../EditCourse/data';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {enqueueSnackbar} from 'notistack';
@@ -23,11 +21,11 @@ import {Logger} from '@selfcommunity/utils';
 const classes = {
   root: `${PREFIX}-root`,
   content: `${PREFIX}-content`,
-  titleSection: `${PREFIX}-title-section`,
+  title: `${PREFIX}-title`,
   text: `${PREFIX}-text`,
-  info: `${PREFIX}-info`,
-  textSection: `${PREFIX}-text-section`,
-  editor: `${PREFIX}-editor`
+  navigation: `${PREFIX}-navigation`,
+  editor: `${PREFIX}-editor`,
+  button: `${PREFIX}-button`
 };
 
 const Root = styled(Box, {
@@ -48,10 +46,10 @@ export interface LessonObjectProps {
    */
   className?: string;
   /**
-   * The way the lesson is rendered
-   * @default SCLessonModeType.VIEW
+   * The edit mode
+   * @default false
    */
-  mode: SCLessonModeType;
+  editMode: boolean;
   /**
    * Callback fired on lesson change
    */
@@ -82,7 +80,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     lesson,
     lessonObj,
     onLessonNavigationChange,
-    mode = SCLessonModeType.VIEW,
+    editMode = false,
     EditorProps = {},
     onContentChange,
     isSubmitting,
@@ -95,6 +93,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
 
   const currentSection = sections?.[currentSectionIndex] || null;
   const currentLesson = currentSection?.lessons?.[currentLessonIndex] || null;
+  const [completed, setCompleted] = useState<boolean>(lesson.completed);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -157,12 +156,16 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
 
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      <Box className={classes.info}>
+      <Box className={classes.navigation}>
         <Typography variant="body2" color="text.secondary">
-          <FormattedMessage id="ui.lessonObject.lesson.number" defaultMessage="Lesson {from} of {to}" values={{from: 1, to: 5}} />
+          <FormattedMessage
+            id="ui.lessonObject.lesson.number"
+            defaultMessage="Lesson {from} of {to}"
+            values={{from: currentLessonIndex + 1, to: currentSection?.lessons?.length}}
+          />
         </Typography>
       </Box>
-      <Box className={classes.titleSection}>
+      <Box className={classes.title}>
         <Typography variant="h5">{lesson.name}</Typography>
         <Box>
           <IconButton onClick={handlePrev} disabled={isPrevDisabled}>
@@ -175,7 +178,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
       </Box>
       <Widget>
         <CardContent classes={{root: classes.content}}>
-          {mode === SCLessonModeType.EDIT ? (
+          {editMode ? (
             <ContentLesson
               value={lessonObj}
               //error={{titleError, error}}
@@ -188,19 +191,32 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
               }}
             />
           ) : (
-            <Box className={classes.textSection}>
-              <Typography
-                component="div"
-                gutterBottom
-                className={classes.text}
-                dangerouslySetInnerHTML={{
-                  __html: getContributionHtml(lessonObj?.html, scRoutingContext.url)
-                }}
-              />
-            </Box>
+            <Typography
+              component="div"
+              gutterBottom
+              className={classes.text}
+              dangerouslySetInnerHTML={{
+                __html: getContributionHtml(lessonObj?.html, scRoutingContext.url)
+              }}
+            />
           )}
         </CardContent>
       </Widget>
+      {!editMode && (
+        <Button
+          className={classes.button}
+          size="small"
+          variant={completed ? 'outlined' : 'contained'}
+          startIcon={!completed && <Icon>arrow_next</Icon>}
+          endIcon={completed && <Icon>circle_checked</Icon>}
+          onClick={() => setCompleted(!completed)}>
+          {completed ? (
+            <FormattedMessage id="ui.lessonObject.button.completed" defaultMessage="ui.lessonObject.button.completed" />
+          ) : (
+            <FormattedMessage id="ui.lessonObject.button.complete" defaultMessage="ui.lessonObject.button.complete" />
+          )}
+        </Button>
+      )}
     </Root>
   );
 }
