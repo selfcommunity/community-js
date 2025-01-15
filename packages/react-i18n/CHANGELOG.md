@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.0...@selfcommunity/react-i18n@0.8.0-alpha.1) (2025-01-15)
+
+
+### Bug Fixes
+
+* liveStream dialog copy ([3b8accc](https://github.com/selfcommunity/community-js/commit/3b8accc926af1021da37699ab8b4837bcb7775a1))
+
+
+
+
+
 # [0.8.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.5...@selfcommunity/react-i18n@0.8.0-alpha.0) (2025-01-13)
 
 
