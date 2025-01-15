@@ -308,19 +308,24 @@ const Component = {
             '& li': {
               margin: '0 32px'
             },
-            '& span span': {
-              display: 'inline'
-            },
-            '& span span:not(:has(+ a))': {
-              width: '100%'
-            },
-            '& span a': {
-              display: 'inline-block',
-              margin: theme.spacing(0, 0.3)
-            },
-            '& span a:hover': {
+            '& span': {
               '& span': {
-                textDecoration: 'underline'
+                display: 'inline'
+              },
+              '& span:not(:has(+ a))': {
+                width: '100%'
+              },
+              '& a': {
+                display: 'inline-block',
+                margin: theme.spacing(0, 0.3)
+              },
+              '& a:hover': {
+                '& span': {
+                  textDecoration: 'underline'
+                }
+              },
+              '& :last-child': {
+                display: 'inline'
               }
             }
           },
@@ -333,6 +338,7 @@ const Component = {
             fontSize: theme.typography.fontSize,
             fontWeight: theme.typography.fontWeightBold,
             padding: theme.spacing(0.25),
+            marginTop: -2,
             justifyContent: 'start',
             '&:hover': {backgroundColor: 'transparent'}
           }
