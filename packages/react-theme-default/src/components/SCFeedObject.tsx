@@ -309,7 +309,7 @@ const Component = {
               margin: '0 32px'
             },
             '& span span': {
-              display: 'inline-block'
+              display: 'inline'
             },
             '& span span:not(:has(+ a))': {
               width: '100%'

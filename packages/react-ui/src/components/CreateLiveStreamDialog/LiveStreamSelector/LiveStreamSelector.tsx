@@ -34,7 +34,12 @@ const OptionCard = styled(Paper, {
   name: PREFIX,
   slot: 'optionCardRoot',
   shouldForwardProp: (prop) => prop !== 'selected'
-})<{theme: Theme; selected: boolean}>(({theme, selected}) => ({}));
+})<{theme: Theme; selected: boolean}>(({theme, selected}) => ({
+  '& h6': {
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
+  }
+}));
 
 const FeatureItem = styled(Box, {
   name: PREFIX,
@@ -134,8 +139,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
           id: 'ui.liveStreamForm.selector.scheduleLiveEventItem3',
           defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveEventItem3'
         })
-      ],
-      icons: [<Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>]
+      ]
     },
     {
       title: intl.formatMessage({
@@ -157,8 +161,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
           id: 'ui.liveStreamForm.selector.scheduleLiveStreamItem3',
           defaultMessage: 'ui.liveStreamForm.selector.scheduleLiveStreamItem3'
         })
-      ],
-      icons: [<Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>, <Icon>chevron_right</Icon>]
+      ]
     }
   ];
 
@@ -239,7 +242,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
   return (
     <Root className={classNames(classes.root, className)} maxWidth="lg" sx={{py: 4}}>
       <Typography variant="h4" component="h1" align="center" gutterBottom sx={{mb: 4, fontWeight: 500}}>
-        How do you want to go live?
+        <FormattedMessage id="ui.liveStreamForm.selector.title" defaultMessage="ui.liveStreamForm.selector.title" />
       </Typography>
       {warning}
       <Box className={classes.options}>
@@ -256,21 +259,16 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
                 handleOptionSelect(index);
                 e.preventDefault();
               }
-            }}
-            theme={undefined}>
+            }}>
             <Box>
-              <Typography variant="h6" component="h2" sx={{fontWeight: 500}}>
-                {option.title}
-              </Typography>
+              <Typography variant="h6">{option.title}</Typography>
               <Radio checked={selectedOption === option.type} />
             </Box>
-            <img src={option.image} alt="logo" />
+            <img src={option.image} alt="option-image" />
             <Box component="ul">
               {option.features.map((feature, featureIndex) => {
-                const _Icon = option.icons[featureIndex];
                 return (
                   <FeatureItem component="li" key={featureIndex}>
-                    {_Icon}
                     <Typography variant="body2" color="text.secondary" sx={{flex: 1}}>
                       {feature}
                     </Typography>
@@ -282,11 +280,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
         ))}
       </Box>
       <Box className={classes.actions}>
-        <Button
-          disabled={!selectedOption || !timeRemaining || isFreeTrialTier}
-          variant="contained"
-          onClick={handleNext}
-          color="secondary">
+        <Button disabled={!selectedOption || !timeRemaining || isFreeTrialTier} variant="contained" onClick={handleNext} color="secondary">
           <FormattedMessage id="ui.liveStreamForm.selector.next" defaultMessage="ui.liveStreamForm.selector.next" />
         </Button>
       </Box>

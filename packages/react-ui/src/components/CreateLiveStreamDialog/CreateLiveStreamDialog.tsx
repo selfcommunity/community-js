@@ -148,7 +148,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
         <Box className={classes.title} component={'span'}>
           {Boolean(step === CreateLiveStreamStep.CREATE_LIVE && canCreateEvent) && (
             <Button variant="text" onClick={handleBack} startIcon={<Icon>arrow_back</Icon>}>
-              Back
+              <FormattedMessage id="ui.createLivestreamDialog.button.back" defaultMessage="ui.createLivestreamDialog.button.back" />
             </Button>
           )}
           <Box component={'span'}>
@@ -158,7 +158,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       }
       fullWidth
       open={open}
-      scroll={'paper'}
+      scroll="body"
       onClose={onClose}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
