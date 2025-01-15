@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.5...@selfcommunity/react-ui@0.11.0-alpha.6) (2025-01-15)
+
+
+### Bug Fixes
+
+* FeedObject format content ([52729f8](https://github.com/selfcommunity/community-js/commit/52729f83e4b0501b93d45adac1db02994516078d))
+
+
+
+
+
 # [0.11.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.4...@selfcommunity/react-ui@0.11.0-alpha.5) (2025-01-15)
 
 
