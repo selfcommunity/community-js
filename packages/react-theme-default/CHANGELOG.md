@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.10...@selfcommunity/react-theme-default@0.4.5-alpha.11) (2025-01-15)
+
+
+### Bug Fixes
+
+* FeedObject format content ([52729f8](https://github.com/selfcommunity/community-js/commit/52729f83e4b0501b93d45adac1db02994516078d))
+
+
+
+
+
 ## [0.4.5-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.9...@selfcommunity/react-theme-default@0.4.5-alpha.10) (2025-01-15)
 
 
