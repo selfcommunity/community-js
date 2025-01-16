@@ -26,11 +26,7 @@ const Component = {
         justifyContent: 'space-between'
       },
       '& .SCLessonDrawer-header-edit': {
-        justifyContent: 'center',
-        gap: theme.spacing(2),
-        [theme.breakpoints.down('md')]: {
-          justifyContent: 'space-between'
-        }
+        justifyContent: 'space-between'
       },
       '& .SCLessonDrawer-content': {
         display: 'flex',

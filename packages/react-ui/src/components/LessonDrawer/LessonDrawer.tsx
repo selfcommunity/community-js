@@ -57,7 +57,7 @@ export interface LessonDrawerProps {
   /**
    * Callback to handle settings update
    */
-  handleUpdate: () => void;
+  onSave: () => void;
   /**
    * Callback to handle drawer closing
    */
@@ -93,7 +93,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
     comments = [],
     CommentComponentProps = {variant: 'outlined'},
     CommentsObjectProps = {},
-    handleUpdate,
+    onSave,
     handleClose,
     lesson,
     handleSettingsChange,
@@ -135,42 +135,22 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} anchor="right" open={Boolean(activePanel) || editMode} variant="persistent">
       <Box className={classNames(classes.header, {[classes.headerEdit]: editMode})}>
-        {editMode ? (
-          <>
-            {isMobile ? (
-              <>
-                <Typography variant="h4" textAlign="center">
-                  <FormattedMessage id="ui.lessonDrawer.settings" defaultMessage="ui.lessonDrawer.settings" />
-                </Typography>
-                <IconButton className={classes.headerAction} onClick={handleClose}>
-                  <Icon>close</Icon>
-                </IconButton>
-              </>
+        <>
+          <Typography variant="h4" textAlign="center">
+            {editMode ? (
+              <FormattedMessage id="ui.lessonDrawer.settings" defaultMessage="ui.lessonDrawer.settings" />
             ) : (
-              <>
-                <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, obj)}>
-                  <FormattedMessage id="ui.lessonDrawer.button.see" defaultMessage="ui.lessonDrawer.button.see" />
-                </Button>
-                <Button variant="contained" size="small" onClick={handleUpdate}>
-                  <FormattedMessage id="ui.lessonDrawer.button.save" defaultMessage="ui.lessonDrawer.button.save" />
-                </Button>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <Typography variant="h4" textAlign="center">
               <FormattedMessage id={`ui.lessonDrawer.${activePanel}`} defaultMessage={`ui.lessonDrawer.${activePanel}`} />
-            </Typography>
-            <IconButton className={classes.headerAction} onClick={handleClose}>
-              <Icon>close</Icon>
-            </IconButton>
-          </>
-        )}
+            )}
+          </Typography>
+          <IconButton className={classes.headerAction} onClick={handleClose}>
+            <Icon>close</Icon>
+          </IconButton>
+        </>
       </Box>
       <Divider />
       {editMode ? (
-        <LessonEditForm className={classes.content} onSettingsChange={handleSettingsChange} />
+        <LessonEditForm className={classes.content} onSettingsChange={handleSettingsChange} onSave={onSave} />
       ) : (
         <ScrollContainer>
           <List className={classes.content}>

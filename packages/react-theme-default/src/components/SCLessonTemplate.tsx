@@ -11,7 +11,7 @@ const Component = {
       }),
       marginRight: 0,
       ...(open && {
-        [theme.breakpoints.down('md')]: {marginRight: '100vw'},
+        [theme.breakpoints.down('md')]: {marginRight: '100vw', width: '100%'},
         [theme.breakpoints.up('sm')]: {marginRight: '300px'},
         width: `calc(100% - 300px)`
       })

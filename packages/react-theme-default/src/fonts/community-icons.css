@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'community-icons';
-  src:  url('./community/icons.eot?fu9iod');
-  src:  url('./community/icons.eot?fu9iod#fu9iod') format('embedded-opentype'),
-  url('./community/icons.woff2?fu9iod') format('woff2'),
-  url('./community/icons.ttf?fu9iod') format('truetype'),
-  url('./community/icons.woff?fu9iod') format('woff'),
-  url('./community/icons.svg?fu9iod#community-icons') format('svg');
+  src:  url('./community/icons.eot?15qv4t');
+  src:  url('./community/icons.eot?15qv4t#iefix') format('embedded-opentype'),
+  url('./community/icons.woff2?15qv4t') format('woff2'),
+  url('./community/icons.ttf?15qv4t') format('truetype'),
+  url('./community/icons.woff?15qv4t') format('woff'),
+  url('./community/icons.svg?15qv4t#community-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,6 +36,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-settings:before {
+  content: "\e972";
+}
 .icon-arrow_next:before {
   content: "\e970";
 }

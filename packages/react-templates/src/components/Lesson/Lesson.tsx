@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Box} from '@mui/material';
+import {Box, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCContributionType, SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
-import {SCRoutingContextType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
+import {SCRoutingContextType, SCThemeType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {LessonAppbar, LessonAppbarProps, LessonDrawer, LessonObject, SCLessonActionsType, LessonDrawerProps} from '@selfcommunity/react-ui';
+import {LessonAppbar, LessonAppbarProps, LessonDrawer, LessonDrawerProps, LessonObject, SCLessonActionsType} from '@selfcommunity/react-ui';
 import {CourseService} from '@selfcommunity/api-services';
 
 const classes = {
@@ -66,7 +66,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     feedObjectId = 3078,
     feedObject = null,
     feedObjectType = SCContributionType.DISCUSSION,
-    LessonAppbarProps = {title: '', onArrowBackClick: null},
+    LessonAppbarProps = {title: 'Cinture di castita lunghe lunghissime', onArrowBackClick: null},
     LessonDrawerProps = {},
     ...rest
   } = props;
@@ -80,11 +80,16 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [updating, setUpdating] = useState(true);
   const [lesson, setLesson] = useState({id: 1, name: 'Cinture', completed: true});
   const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const [editMode, setEditMode] = useState(true);
   // const isEditMode = useMemo(() => {
   //   return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
   // }, [value, scRoutingContext]);
-  const isEditMode = true;
+  const isEditMode = editMode;
   const isCourseCreator = false;
+
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // HANDLERS
 
@@ -101,6 +106,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   };
   const handleCloseDrawer = () => {
     setActivePanel(null);
+    setEditMode(false);
   };
 
   const handleLessonContentEdit = (content) => {
@@ -130,10 +136,11 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <LessonAppbar
-        title={LessonAppbarProps.title}
+        editMode={isEditMode}
         activePanel={activePanel}
-        handleClose={handleCloseDrawer}
+        title={LessonAppbarProps.title}
         handleOpen={handleOpenDrawer}
+        onSave={handleLessonUpdate}
         onArrowBackClick={LessonAppbarProps.onArrowBackClick}
         {...LessonAppbarProps}
       />
@@ -147,10 +154,10 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         />
       </Container>
       <LessonDrawer
-        editMode={isEditMode}
+        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : isEditMode}
         activePanel={activePanel}
         lesson={lesson}
-        handleUpdate={handleLessonUpdate}
+        onSave={handleLessonUpdate}
         handleClose={handleCloseDrawer}
         handleSettingsChange={handleSettingsChange}
         handleChangeLesson={handleChangeLesson}

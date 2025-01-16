@@ -2,12 +2,14 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {AppBar, Icon, IconButton, Toolbar, Typography} from '@mui/material';
+import {AppBar, Button, Icon, IconButton, Toolbar, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
+import {FormattedMessage} from 'react-intl';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`
 };
 
 const Root = styled(AppBar, {
@@ -23,9 +25,18 @@ export interface LessonAppbarProps {
    */
   title: string;
   /**
+   * The edit mode
+   * @default false
+   */
+  editMode: boolean;
+  /**
    * onArrowBack Callback
    */
   onArrowBackClick: () => void;
+  /**
+   * onSaveCallback
+   */
+  onSave: () => void;
   /**
    * The active panel
    */
@@ -35,10 +46,6 @@ export interface LessonAppbarProps {
    * @param panel
    */
   handleOpen: (panel: SCLessonActionsType) => void;
-  /**
-   * Handles panel closing
-   */
-  handleClose: () => void;
   /**
    * Any other properties
    */
@@ -51,7 +58,7 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, title = '', activePanel = null, handleOpen, handleClose, onArrowBackClick, ...rest} = props;
+  const {className = null, title = '', activePanel = null, handleOpen, onSave, editMode, onArrowBackClick, ...rest} = props;
 
   return (
     <Root position="fixed" open={Boolean(activePanel)} className={classNames(classes.root, className)} {...rest}>
@@ -59,15 +66,28 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
         <IconButton edge="start" onClick={onArrowBackClick}>
           <Icon>arrow_back</Icon>
         </IconButton>
-        <Typography variant="h6" sx={{flexGrow: 1}}>
+        <Typography variant="h6" className={classes.title}>
           {title}
         </Typography>
-        <IconButton onClick={() => handleOpen(SCLessonActionsType.COMMENTS)}>
-          <Icon>chat_bubble_outline</Icon>
-        </IconButton>
-        <IconButton onClick={() => handleOpen(SCLessonActionsType.LESSONS)}>
-          <Icon>courses</Icon>
-        </IconButton>
+        {editMode ? (
+          <>
+            <IconButton onClick={() => handleOpen(SCLessonActionsType.SETTINGS)} color="primary">
+              <Icon>settings</Icon>
+            </IconButton>
+            <Button variant="contained" size="small" onClick={onSave}>
+              <FormattedMessage id="ui.lessonAppbar.button.save" defaultMessage="ui.lessonAppbar.button.save" />
+            </Button>
+          </>
+        ) : (
+          <>
+            <IconButton onClick={() => handleOpen(SCLessonActionsType.COMMENTS)}>
+              <Icon>chat_bubble_outline</Icon>
+            </IconButton>
+            <IconButton onClick={() => handleOpen(SCLessonActionsType.LESSONS)}>
+              <Icon>courses</Icon>
+            </IconButton>
+          </>
+        )}
       </Toolbar>
     </Root>
   );

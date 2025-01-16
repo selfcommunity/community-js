@@ -1,6 +1,14 @@
 const Component = {
   styleOverrides: {
     root: ({theme, open}: any) => ({
+      '& .SCLessonAppbar-title': {
+        flexGrow: 1,
+        [theme.breakpoints.down('md')]: {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }
+      },
       boxShadow: 'none',
       borderBottom: `1px solid ${theme.palette.grey[300]}`,
       '& .MuiToolbar-root': {

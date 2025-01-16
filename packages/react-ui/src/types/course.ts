@@ -5,7 +5,8 @@ export enum SCCourseTemplateType {
 
 export enum SCLessonActionsType {
   COMMENTS = 'comments',
-  LESSONS = 'lessons'
+  LESSONS = 'lessons',
+  SETTINGS = 'settings'
 }
 
 export enum SCLessonModeType {
