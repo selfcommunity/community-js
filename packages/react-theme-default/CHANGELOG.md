@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.11...@selfcommunity/react-theme-default@0.4.5-alpha.12) (2025-01-16)
+
+
+### Bug Fixes
+
+* fixed css on BaseItemButton ([b476a72](https://github.com/selfcommunity/community-js/commit/b476a726e12e82c80933082c454d8264af168045))
+* fixed some css reports ([e4a03bd](https://github.com/selfcommunity/community-js/commit/e4a03bdbe8df21dfa69b10938fc1632835f34d82))
+
+
+
+
+
 ## [0.4.5-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.10...@selfcommunity/react-theme-default@0.4.5-alpha.11) (2025-01-15)
 
 
