@@ -120,11 +120,15 @@ import {
   EventSearchParams,
   LiveStreamCreateParams,
   LiveStreamSearchParams,
-	LiveStreamRemoveParticipantParams,
+  LiveStreamRemoveParticipantParams,
   StartStepParams,
   OnBoardingStep,
   CourseCreateParams,
-  CourseSearchParams
+  CourseSearchParams,
+  CourseInfoViewType,
+  CourseInfoParams,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams
 } from './types';
 
 /**
@@ -303,7 +307,7 @@ export {
   LiveStreamApiClientInterface,
   LiveStreamCreateParams,
   LiveStreamSearchParams,
-	LiveStreamRemoveParticipantParams,
+  LiveStreamRemoveParticipantParams,
   OnBoardingService,
   OnBoardingApiClientInterface,
   OnBoardingApiClient,
@@ -311,7 +315,11 @@ export {
   OnBoardingStep,
   CourseCreateParams,
   CourseSearchParams,
+  CourseInfoParams,
+  CourseInfoViewType,
   CourseService,
   CourseApiClientInterface,
-  CourseApiClient
+  CourseApiClient,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams
 };

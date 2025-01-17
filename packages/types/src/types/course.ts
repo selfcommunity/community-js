@@ -1,4 +1,5 @@
 import {SCUserType} from './user';
+import {SCCategoryType} from './category';
 
 /**
  * SCCoursePrivacyType enum
@@ -29,7 +30,7 @@ export enum SCCourseJoinStatusType {
 }
 
 /**
- * Interface SCGroupCourseType.
+ * Interface SCCourseType.
  * Course Schema.
  */
 export interface SCCourseType {
@@ -108,8 +109,90 @@ export interface SCCourseType {
   /**
    * The categories list ids
    */
-  categories?: number[];
+  categories?: SCCategoryType[];
 }
+
+/**
+ * Interface SCCourseCommentType.
+ * Course Comment Schema.
+ */
+export interface SCCourseCommentType {
+  /**
+   * The unique integer value identifying this comment on a specific course
+   */
+  id: number;
+  /**
+   * The comment text.
+   * @default empty string.
+   * Only available when creating or updating a comment
+   */
+  text: string;
+  /**
+   * The comment text.
+   * Only available when getting a comment
+   */
+  html: string;
+  /**
+   * The Id of the parent comment
+   */
+  parent: number;
+  /**
+   * The Id of the reply comment.
+   * It must have the same parent
+   */
+  in_reply_to: number;
+  /**
+   * Datetime of comment creation
+   */
+  created_at: string;
+  /**
+   * The comment creator
+   */
+  created_by: SCUserType;
+  /**
+   * List of id of Media for this comment
+   */
+  medias: number[];
+  /**
+   * The last comment in reply to (with parent) this comment.
+   * Not available if replies are presents.
+   */
+  latest_reply: SCCourseCommentType | null;
+  /**
+   * The list of comments in reply to (with parent) this comment.
+   * Not available if latest_reply are presents.
+   * Only available on the route: Get Course Comments
+   */
+  replies: SCCourseCommentType[];
+  /**
+   * Some extra useful data for the call that retrieves all the comments received within the entire course.
+   * Only available on the route: Get Course Comments
+   */
+  extras: {
+    /**
+     * The course object associated to this comment
+     */
+    course: {
+      id: number;
+      slug: string;
+    };
+    /**
+     * The section object associated to this comment
+     */
+    section: {
+      id: number;
+      name: string;
+    };
+    /**
+     * The lesson object associated to this comment
+     */
+    lesson: {
+      id: number;
+      name: string;
+    };
+  };
+}
+
 /**
  * Interface SCCourseSectionType.
  * Course Schema.

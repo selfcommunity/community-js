@@ -42,6 +42,10 @@ export interface CourseUserParams extends BaseGetParams {
    * Filter results by subscription_status
    */
   join_status?: SCCourseJoinStatusType;
+  /**
+   * Return only courses created by this user id
+   */
+  created_by?: number;
 }
 
 /**
@@ -52,4 +56,56 @@ export interface CourseSearchParams extends BaseSearchParams {
    * The categories ids
    */
   categories?: number[];
+}
+
+/**
+ * CourseInfoView enum
+ */
+export enum CourseInfoViewType {
+  USER = 'user',
+  EDIT = 'edit',
+  DASHBOARD = 'dashboard'
+}
+
+/**
+ * CourseInfoParams interface.
+ */
+export interface CourseInfoParams {
+  view?: CourseInfoViewType;
+}
+
+/**
+ * CourseLessonCommentsParams interface.
+ */
+export interface CourseLessonCommentsParams extends BaseGetParams {
+  /**
+   * The ordering of the comments; use - for order desc.
+   * Default to created_at
+   */
+  ordering?: string;
+  /**
+   * The Id of the parent Course Comment; used for retrieve nested comments
+   */
+  parent?: string;
+}
+
+/**
+ * CourseUserRoleParams interface.
+ */
+export interface CourseUserRoleParams {
+  /**
+   * List of id of User to set as managers role.
+   * At least one parameter between managers, joined and unjoined is required.
+   */
+  managers?: number[];
+  /**
+   * List of id of User to force to join the course as normal users.
+   * At least one parameter between managers, joined and unjoined is required.
+   */
+  joined?: number[];
+  /**
+   * List of id of User to force to unjoin the course.
+   * At least one parameter between managers, joined and unjoined is required.
+   */
+  unjoined?: number[];
 }

@@ -13,8 +13,8 @@ const hydrate = (ids: number[]) => {
     return null;
   }
   const courses: SCCourseType[] = ids.map((id) => {
-    const __eventCacheKey = getCourseObjectCacheKey(id);
-    return LRUCache.get(__eventCacheKey);
+    const __courseCacheKey = getCourseObjectCacheKey(id);
+    return LRUCache.get(__courseCacheKey);
   });
 
   if (courses.filter((c) => !c).length > 0) {
@@ -52,10 +52,10 @@ const useSCFetchCourses = (props?: {cacheStrategy?: CacheStrategies}) => {
   /**
    * Fetch courses
    */
-  const fetchCourses = async (next: string = Endpoints.GetUserCourses.url()): Promise<[]> => {
+  const fetchCourses = async (next: string = Endpoints.GetJoinedCourses.url()): Promise<[]> => {
     const response = await http.request({
       url: next,
-      method: Endpoints.GetUserCourses.method,
+      method: Endpoints.GetJoinedCourses.method,
     });
     const data: any = response.data;
     if (data.next) {
@@ -76,10 +76,10 @@ const useSCFetchCourses = (props?: {cacheStrategy?: CacheStrategies}) => {
         setData({courses: data, isLoading: false});
         LRUCache.set(
           __coursesCacheKey,
-          data.map((event: SCCourseType) => {
-            const __eventCacheKey = getCourseObjectCacheKey(event.id);
-            LRUCache.set(__eventCacheKey, event);
-            return event.id;
+          data.map((course: SCCourseType) => {
+            const __courseCacheKey = getCourseObjectCacheKey(course.id);
+            LRUCache.set(__courseCacheKey, course);
+            return course.id;
           })
         );
       })

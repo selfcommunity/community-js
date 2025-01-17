@@ -78,7 +78,7 @@ export interface CoursesProps {
 
   /**
    * Course API Endpoint
-   * @default Endpoints.SearchEvents
+   * @default Endpoints.SearchCourses
    */
   endpoint: EndpointType;
 
@@ -170,7 +170,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   });
 
   const {
-    endpoint = Endpoints.SearchEvents,
+    endpoint = Endpoints.SearchCourses,
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     CourseComponentProps = {},
@@ -196,10 +196,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
-  const onlyStaffEnabled = useMemo(
-    () => scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ONLY_STAFF_ENABLED].value,
-    [scPreferencesContext.preferences]
-  );
   // MEMO
   const contentAvailability =
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
@@ -236,7 +232,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           ...endpointQueryParams,
           ...(query && {search: query}),
           ...(showForMe && {follows: showForMe}),
-          subscription_status: SCCourseJoinStatusType.JOINED,
+          join_status: SCCourseJoinStatusType.JOINED,
           ...(showMyCourses && {created_by: authUserId})
         }
       })
@@ -296,7 +292,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
       return http
         .request({
           url: next,
-          method: !teacherView ? Endpoints.SearchEvents.method : Endpoints.GetUserCourses.method
+          method: !teacherView ? Endpoints.SearchCourses.method : Endpoints.GetJoinedCourses.method
         })
         .then((res: HttpResponse<any>) => {
           setCourses([...courses, ...res.data.results]);

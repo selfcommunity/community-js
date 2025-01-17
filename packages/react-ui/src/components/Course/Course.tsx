@@ -1,8 +1,8 @@
 import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Icon, LinearProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';
-import {SCCourseType, SCEventLocationType} from '@selfcommunity/types';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchCourse, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -78,16 +78,6 @@ export interface CourseProps extends WidgetProps {
    */
   actions?: React.ReactNode;
   /**
-   * Hide in progress
-   * @default false
-   */
-  hideInProgress?: boolean;
-  /**
-   * Hide participants
-   * @default false
-   */
-  hideCourseParticipants?: boolean;
-  /**
    * Props to spread to CourseParticipantsButton component
    * @default {}
    */
@@ -147,8 +137,6 @@ export default function Course(inProps: CourseProps): JSX.Element {
     course = null,
     className = null,
     template = SCCourseTemplateType.PREVIEW,
-    hideInProgress = false,
-    hideCourseParticipants = false,
     actions,
     CourseParticipantsButtonComponentProps = {},
     CourseSkeletonComponentProps = {},
@@ -156,65 +144,61 @@ export default function Course(inProps: CourseProps): JSX.Element {
   } = props;
 
   // STATE
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const {scEvent} = useSCFetchEvent({id: courseId, course});
-  const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
+  const {scCourse} = useSCFetchCourse({id: courseId, course});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
   const isCourseAdmin = useMemo(
-    () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scEvent?.managed_by?.id]
+    () => scUserContext.user && scCourse?.created_by?.id === scUserContext.user.id,
+    [scUserContext.user, scCourse?.created_by?.id]
   );
 
   /**
    * Renders course object
    */
-  if (!scEvent) {
+  if (!scCourse) {
     return <CourseSkeleton template={template} {...CourseSkeletonComponentProps} {...rest} actions={actions} />;
   }
-  const renderProgress = () => {
-    const currentDate = new Date();
-    const startDate = new Date(scEvent.start_date);
-    const endDate = new Date(scEvent.end_date);
+  // const renderProgress = () => {
+  //   const currentDate = new Date();
+  //   const startDate = new Date();
+  //   const endDate = scCourse?.end_date ? new Date(scCourse?.end_date) : null;
+  //
+  //   if (!scCourse.join_status) {
+  //     return (
+  //       <Button variant="outlined" size="small">
+  //         <FormattedMessage defaultMessage="ui.course.enroll" id="ui.course.enroll" />
+  //       </Button>
+  //     );
+  //   } else if (currentDate > endDate) {
+  //     return (
+  //       <Box className={classes.previewCompletedStatus}>
+  //         <Icon color="success">circle_checked</Icon>
+  //         <Typography variant="body1">
+  //           <FormattedMessage defaultMessage="ui.course.completed" id="ui.course.completed" />
+  //         </Typography>
+  //       </Box>
+  //     );
+  //   } else {
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  //     // @ts-ignore
+  //     const progress = ((currentDate - startDate) / (endDate - startDate)) * 100;
+  //     return (
+  //       <Box className={classes.previewProgressStatus}>
+  //         <Typography variant="h4">
+  //           <FormattedMessage
+  //             id="ui.course.completion.percentage"
+  //             defaultMessage="ui.course.completion.percentage"
+  //             values={{percentage: `${Math.round(progress)}%`}}
+  //           />
+  //         </Typography>
+  //         <LinearProgress variant="determinate" color="success" value={progress} />
+  //       </Box>
+  //     );
+  //   }
+  // };
 
-    if (currentDate < startDate) {
-      return (
-        <Button variant="outlined" size="small">
-          <FormattedMessage defaultMessage="ui.course.enroll" id="ui.course.enroll" />
-        </Button>
-      );
-    } else if (currentDate > endDate) {
-      return (
-        <Box className={classes.previewCompletedStatus}>
-          <Icon color="success">circle_checked</Icon>
-          <Typography variant="body1">
-            <FormattedMessage defaultMessage="ui.course.completed" id="ui.course.completed" />
-          </Typography>
-        </Box>
-      );
-    } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      const progress = ((currentDate - startDate) / (endDate - startDate)) * 100;
-      return (
-        <Box className={classes.previewProgressStatus}>
-          <Typography variant="h4">
-            <FormattedMessage
-              id="ui.course.completion.percentage"
-              defaultMessage="ui.course.completion.percentage"
-              values={{percentage: `${Math.round(progress)}%`}}
-            />
-          </Typography>
-          <LinearProgress variant="determinate" color="success" value={progress} />
-        </Box>
-      );
-    }
-  };
-  //TODO: aggiungere tipo corso: calendarizzato, programmato, autodidatta
   /**
    * Renders course object
    */
@@ -223,32 +207,36 @@ export default function Course(inProps: CourseProps): JSX.Element {
     contentObj = (
       <PreviewRoot className={classes.previewRoot}>
         <Box className={classes.previewImageWrapper}>
-          <CardMedia component="img" image={scEvent.image_medium} alt={scEvent.name} className={classes.previewImage} />
-          {!hideInProgress && inProgress && <Chip size="small" component="div" label="NEW" className={classes.previewChip} />}
-          <Avatar alt={scEvent.name} src={scEvent.image_medium} className={classes.previewAvatar} />
+          <CardMedia component="img" image={scCourse.image_medium} alt={scCourse.name} className={classes.previewImage} />
+          <Chip size="small" component="div" label="NEW" className={classes.previewChip} />
+          <Avatar alt={scCourse.name} src={scCourse.image_medium} className={classes.previewAvatar} />
         </Box>
         <CardContent className={classes.previewContent}>
           <Typography variant="body2" className={classes.previewCreator}>
-            {scEvent.created_by.username}
+            {scCourse.created_by.username}
           </Typography>
           <Box className={classes.previewNameWrapper}>
             <Typography variant="h6" className={classes.previewName}>
-              {scEvent.name}
+              {scCourse.name}
             </Typography>
           </Box>
           <Typography className={classes.previewInfo}>
-            <FormattedMessage id={`ui.course.privacy.${scEvent.privacy}`} defaultMessage={`ui.course.privacy.${scEvent.privacy}`} />-
-            {scEvent?.location === SCEventLocationType.PERSON ? (
-              <FormattedMessage id={`ui.eventForm.address.live.label`} defaultMessage={`ui.eventForm.address.live.label`} />
-            ) : (
-              <FormattedMessage id={`ui.eventForm.address.online.label`} defaultMessage={`ui.eventForm.address.online.label`} />
-            )}
+            <FormattedMessage id={`ui.course.privacy.${scCourse.privacy}`} defaultMessage={`ui.course.privacy.${scCourse.privacy}`} />-
+            <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
-          <Chip size="small" component="div" label="Category" className={classes.previewChip} />
+          {scCourse.categories.map((category, index) => (
+            <Chip size="small" component="div" label={category.name} className={classes.previewChip} />
+          ))}
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            {isCourseAdmin ? <CourseParticipantsButton course={scEvent as any} {...CourseParticipantsButtonComponentProps} /> : renderProgress()}
+            {isCourseAdmin ? (
+              <CourseParticipantsButton course={scCourse as any} {...CourseParticipantsButtonComponentProps} />
+            ) : (
+              <Button variant="outlined" size="small">
+                <FormattedMessage defaultMessage="ui.course.enroll" id="ui.course.enroll" />
+              </Button>
+            )}
           </CardActions>
         )}
       </PreviewRoot>
@@ -260,37 +248,31 @@ export default function Course(inProps: CourseProps): JSX.Element {
         className={classes.snippetRoot}
         image={
           <Box className={classes.snippetImage}>
-            <Avatar variant="square" alt={scEvent.name} src={scEvent.image_medium} className={classes.snippetAvatar} />{' '}
-            {!hideInProgress && inProgress && (
-              <Chip
-                size="small"
-                component="div"
-                label={<FormattedMessage id="ui.event.inProgress" defaultMessage="ui.event.inProgress" />}
-                className={classes.snippetInProgress}
-              />
-            )}
+            <Avatar variant="square" alt={scCourse.name} src={scCourse.image_medium} className={classes.snippetAvatar} />{' '}
+            <Chip
+              size="small"
+              component="div"
+              label={<FormattedMessage id="ui.event.inProgress" defaultMessage="ui.event.inProgress" />}
+              className={classes.snippetInProgress}
+            />
           </Box>
         }
         primary={
-          <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scEvent)} className={classes.snippetPrimary}>
-            <Typography component="span">{scEvent.created_by.username}</Typography>
-            <Typography variant="body1">{scEvent.name}</Typography>
+          <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.snippetPrimary}>
+            <Typography component="span">{scCourse.created_by.username}</Typography>
+            <Typography variant="body1">{scCourse.name}</Typography>
           </Link>
         }
         secondary={
           <Typography component="p" variant="body2" className={classes.snippetSecondary}>
-            <FormattedMessage id={`ui.course.privacy.${scEvent.privacy}`} defaultMessage={`ui.course.privacy.${scEvent.privacy}`} /> -{' '}
-            {scEvent?.location === SCEventLocationType.PERSON ? (
-              <FormattedMessage id={`ui.eventForm.address.live.label`} defaultMessage={`ui.eventForm.address.live.label`} />
-            ) : (
-              <FormattedMessage id={`ui.eventForm.address.online.label`} defaultMessage={`ui.eventForm.address.online.label`} />
-            )}
+            <FormattedMessage id={`ui.course.privacy.${scCourse.privacy}`} defaultMessage={`ui.course.privacy.${scCourse.privacy}`} /> -
+            <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
         }
         actions={
           actions ?? (
             <Box className={classes.snippetActions}>
-              <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scEvent)}>
+              <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
                 <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
               </Button>
             </Box>

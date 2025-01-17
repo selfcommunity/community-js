@@ -98,9 +98,9 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
   /**
    * If there's no authUserId, component is hidden.
    */
-  // if (!coursesEnabled || (!canCreateCourse && onlyStaffEnabled) || !authUserId) {
-  //   return null;
-  // }
+  if (!coursesEnabled || (!canCreateCourse && onlyStaffEnabled) || !authUserId) {
+    return null;
+  }
 
   /**
    * Renders root object

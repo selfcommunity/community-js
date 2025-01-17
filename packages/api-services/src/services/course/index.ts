@@ -1,12 +1,24 @@
-import {SCCourseLessonType, SCCourseSectionType, SCCourseType, SCUserType} from '@selfcommunity/types';
+import {SCCourseCommentType, SCCourseLessonType, SCCourseSectionType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {BaseGetParams, BaseSearchParams, CourseCreateParams, CourseSearchParams, SCPaginatedResponse} from '../../types';
+import {
+  BaseGetParams,
+  BaseSearchParams,
+  CourseCreateParams,
+  CourseInfoParams,
+  CourseLessonCommentsParams,
+  CourseSearchParams,
+  CourseUserRoleParams,
+  SCPaginatedResponse
+} from '../../types';
 import {CourseSectionParams, CourseUserParams} from '../../types/course';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 
 export interface CourseApiClientInterface {
+  //Allows user managers to change the role of some users for the course identified with :id
+  changeCourseUserRole(id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any>;
+
   // Courses subscribed to by the user
   getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
 
@@ -17,13 +29,53 @@ export interface CourseApiClientInterface {
   searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
 
   // Course detail
-  getSpecificCourseInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType>;
+  getSpecificCourseInfo(id: number | string, params?: CourseInfoParams, config?: AxiosRequestConfig): Promise<SCCourseType>;
 
   // Courses CRUD
   createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
   updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
   patchCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
   deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+
+  // Course Comments CRUD
+  getCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType>;
+  getCourseComments(id: number | string, course_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseCommentType[]>;
+  createCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseCommentType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType>;
+  updateCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    data: SCCourseCommentType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType>;
+  patchCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType>;
+  deleteCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any>;
 
   // Courses section CRUD
   getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
@@ -50,6 +102,13 @@ export interface CourseApiClientInterface {
     lesson_id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType>;
+  getCourseLessonComments(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    params?: CourseLessonCommentsParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType[]>;
   getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType>;
   createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType>;
   updateCourseLesson(
@@ -118,6 +177,15 @@ export interface CourseApiClientInterface {
  */
 export class CourseApiClient {
   /**
+   * This endpoint allows user managers to change the role of some users in the specified course.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static changeCourseUserRole(id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, params, url: Endpoints.ChangeCourseUserRole.url({}), method: Endpoints.ChangeCourseUserRole.method});
+  }
+  /**
    * This endpoint retrieves all the events of the logged-in user.
    * @param params
    * @param config
@@ -147,10 +215,11 @@ export class CourseApiClient {
   /**
    * This endpoint retrieves a specific course.
    * @param id
+   * @param params
    * @param config
    */
-  static getSpecificCourseInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType> {
-    return apiRequest({...config, url: Endpoints.GetCourseInfo.url({id}), method: Endpoints.GetCourseInfo.method});
+  static getSpecificCourseInfo(id: number | string, params?: CourseInfoParams, config?: AxiosRequestConfig): Promise<SCCourseType> {
+    return apiRequest({...config, params, url: Endpoints.GetCourseInfo.url({id}), method: Endpoints.GetCourseInfo.method});
   }
 
   /**
@@ -188,6 +257,136 @@ export class CourseApiClient {
    */
   static deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.DeleteCourse.url({id}), method: Endpoints.DeleteCourse.method});
+  }
+
+  /**
+   * This endpoint retrieves a specific course comment.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param comment_id
+   * @param config
+   */
+  static getCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.GetCourseComment.url({id, section_id, lesson_id, comment_id}),
+      method: Endpoints.GetCourseComment.method
+    });
+  }
+
+  /**
+   * This endpoint retrieves the course comments.
+   * @param id
+   * @param config
+   */
+  static getCourseComments(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseCommentType[]> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.GetCourseComments.url({id}),
+      method: Endpoints.GetCourseComments.method
+    });
+  }
+
+  /**
+   * This endpoint creates a course comment.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param data
+   * @param config
+   */
+  static createCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseCommentType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.CreateCourseComment.url({id, section_id, lesson_id}),
+      method: Endpoints.CreateCourseComment.method,
+      data: data
+    });
+  }
+
+  /**
+   * This endpoint updates a course comment.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param comment_id
+   * @param data
+   * @param config
+   */
+  static updateCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    data: SCCourseCommentType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.UpdateCourseComment.url({id, section_id, lesson_id, comment_id}),
+      method: Endpoints.UpdateCourseComment.method,
+      data: data
+    });
+  }
+
+  /**
+   * This endpoint patches a course comment.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param comment_id
+   * @param data
+   * @param config
+   */
+  static patchCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.PatchCourseComment.url({id, section_id, lesson_id, comment_id}),
+      method: Endpoints.PatchCourseComment.method,
+      data: data
+    });
+  }
+
+  /**
+   * This endpoint deletes a course comment.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param comment_id
+   * @param config
+   */
+  static deleteCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.DeleteCourseComment.url({id, section_id, lesson_id, comment_id}),
+      method: Endpoints.DeleteCourseComment.method
+    });
   }
 
   /**
@@ -278,6 +477,29 @@ export class CourseApiClient {
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType> {
     return apiRequest({...config, url: Endpoints.GetCourseLesson.url({id, section_id, lesson_id}), method: Endpoints.GetCourseLesson.method});
+  }
+
+  /**
+   * This endpoint retrieves the comments for a specific course lesson.
+   * @param id
+   * @param section_id
+   * @param lesson_id
+   * @param params
+   * @param config
+   */
+  static getCourseLessonComments(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    params?: CourseLessonCommentsParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType[]> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.GetCourseLessonComments.url({id, section_id, lesson_id}),
+      method: Endpoints.GetCourseLessonComments.method,
+      params: params
+    });
   }
 
   /**
@@ -550,6 +772,9 @@ export class CourseApiClient {
  :::
  */
 export default class CourseService {
+  static async changeCourseUserRole(id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.changeCourseUserRole(id, params, config);
+  }
   static async getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     return CourseApiClient.getJoinedCourses(params, config);
   }
@@ -559,8 +784,8 @@ export default class CourseService {
   static async searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     return CourseApiClient.searchCourses(params, config);
   }
-  static async getSpecificCourseInfo(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType> {
-    return CourseApiClient.getSpecificCourseInfo(id, config);
+  static async getSpecificCourseInfo(id: number | string, params?: CourseInfoParams, config?: AxiosRequestConfig): Promise<SCCourseType> {
+    return CourseApiClient.getSpecificCourseInfo(id, params, config);
   }
   static async createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.createCourse(data, config);
@@ -574,6 +799,62 @@ export default class CourseService {
   static async deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.deleteCourse(id, config);
   }
+  static async getCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return CourseApiClient.getCourseComment(id, section_id, lesson_id, comment_id, config);
+  }
+
+  static async getCourseComments(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseCommentType[]> {
+    return CourseApiClient.getCourseComments(id, config);
+  }
+
+  static async createCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    data: SCCourseCommentType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return CourseApiClient.createCourseComment(id, section_id, lesson_id, data, config);
+  }
+
+  static async updateCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    data: SCCourseCommentType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return CourseApiClient.updateCourseComment(id, section_id, lesson_id, comment_id, data, config);
+  }
+
+  static async patchCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    data: SCCourseLessonType,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType> {
+    return CourseApiClient.patchCourseComment(id, section_id, lesson_id, comment_id, data, config);
+  }
+
+  static async deleteCourseComment(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    comment_id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return CourseApiClient.deleteCourseComment(id, section_id, lesson_id, comment_id, config);
+  }
+
   static async getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
     return CourseApiClient.getCourseSection(id, section_id, config);
   }
@@ -609,6 +890,15 @@ export default class CourseService {
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType> {
     return CourseApiClient.getCourseLesson(id, section_id, lesson_id, config);
+  }
+  static async getCourseLessonComments(
+    id: number | string,
+    section_id: number | string,
+    lesson_id: number | string,
+    params?: CourseLessonCommentsParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCCourseCommentType[]> {
+    return CourseApiClient.getCourseLessonComments(id, section_id, lesson_id, params, config);
   }
   static async getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
     return CourseApiClient.getCourseLessons(id, section_id, config);

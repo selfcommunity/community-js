@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SCCourseTemplateType } from '../../types/course';
-import CoursePlaceholder from './Placeholder';
+import Course from './index';
+import { SCCourseTemplateType } from '../../types';
 
 export default {
-	title: 'Design System/React UI/CoursePlaceholder',
-	component: CoursePlaceholder,
+	title: 'Design System/React UI/Course',
+	component: Course,
 	argTypes: {
 		courseId: {
 			control: { type: 'number' },
-			description: 'CoursePlaceholder Id',
+			description: 'Course Id',
 			table: { defaultValue: { summary: 1 } }
 		},
 		elevation: {
@@ -23,16 +23,30 @@ export default {
 			table: { defaultValue: { summary: 'elevation' } }
 		}
 	}
-} as Meta<typeof CoursePlaceholder>;
+} as Meta<typeof Course>;
 
 const template = (args) => (
 	<div style={{ maxWidth: 400 }}>
-		<CoursePlaceholder {...args} />
+		<Course {...args} />
 	</div>
 );
 
-export const Base: StoryObj<typeof CoursePlaceholder> = {
-	args: {},
+export const Base: StoryObj<typeof Course> = {
+	args: {
+		courseId: 1
+	},
 	render: template
 };
+
+export const Snippet: StoryObj<typeof Course> = {
+	args: {
+		template: SCCourseTemplateType.SNIPPET,
+		courseId: 1,
+		elevation: 0,
+		variant: 'elevation',
+		square: false
+	},
+	render: template
+};
+
 

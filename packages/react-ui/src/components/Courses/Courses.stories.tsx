@@ -24,11 +24,11 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<CoursesSkeleton> = {
+export const Base: StoryObj<typeof CoursesSkeleton> = {
   render: template
 };
 
-export const BasePrefetchedCourses: StoryObj<Courses> = {
+export const BasePrefetchedCourses: StoryObj<typeof Courses> = {
   args: {
     prefetchedCourses
   },
