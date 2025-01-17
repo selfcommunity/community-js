@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.5...@selfcommunity/react-ui@0.11.0-alpha.6) (2025-01-15)
+
+
+### Bug Fixes
+
+* FeedObject format content ([52729f8](https://github.com/selfcommunity/community-js/commit/52729f83e4b0501b93d45adac1db02994516078d))
+
+
+
+
+
+# [0.11.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.4...@selfcommunity/react-ui@0.11.0-alpha.5) (2025-01-15)
+
+
+### Bug Fixes
+
+* ComposerIconButton ([eba379d](https://github.com/selfcommunity/community-js/commit/eba379dc5f21d12a62a9462253c170ee4b9a0ff2))
+* FeedObject format content ([0eb9341](https://github.com/selfcommunity/community-js/commit/0eb934199f8b7524aa1e916db684b8a0cf9865d4))
+* fixed some dialog opening condition ([4b20867](https://github.com/selfcommunity/community-js/commit/4b20867fe591c484543f2fa8aebd36f27ab3f441))
+* liveStream dialog copy ([3b8accc](https://github.com/selfcommunity/community-js/commit/3b8accc926af1021da37699ab8b4837bcb7775a1))
+* LiveStreamSelector component ([5e24d4b](https://github.com/selfcommunity/community-js/commit/5e24d4b994ff49bd19b3eab357265e57133edf17))
+* ToolbarPlugin, PrivateMessage content style ([f0547e5](https://github.com/selfcommunity/community-js/commit/f0547e59e67c55b9e3afa8f48ec4d94df160b587))
+
+
+
+
+
 # [0.11.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.3...@selfcommunity/react-ui@0.11.0-alpha.4) (2025-01-14)
 
 

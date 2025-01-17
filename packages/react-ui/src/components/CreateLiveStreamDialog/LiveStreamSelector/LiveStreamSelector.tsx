@@ -34,7 +34,7 @@ const OptionCard = styled(Paper, {
   name: PREFIX,
   slot: 'optionCardRoot',
   shouldForwardProp: (prop) => prop !== 'selected'
-})<{theme: Theme; selected: boolean}>(({theme, selected}) => ({
+})<{theme?: Theme; selected: boolean}>(({theme, selected}) => ({
   '& h6': {
     fontWeight: 'bold',
     textTransform: 'uppercase'
