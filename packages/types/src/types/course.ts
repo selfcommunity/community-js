@@ -103,13 +103,29 @@ export interface SCCourseType {
    */
   created_by: SCUserType;
   /**
+   * The categories list ids
+   */
+  categories?: SCCategoryType[];
+  /**
    * The course sections
    */
   sections?: SCCourseSectionType[] | any;
   /**
-   * The categories list ids
+   * 	Total number of published lessons of the course
    */
-  categories?: SCCategoryType[];
+  num_lessons?: number;
+  /**
+   * Total number of sections with at least one lesson
+   */
+  num_sections?: number;
+  /**
+   * Number of lessons completed by the user
+   */
+  num_lessons_completed?: number;
+  /**
+   * User completion rate of the course (percentage)
+   */
+  user_completion_rate?: number;
 }
 
 /**
@@ -222,6 +238,24 @@ export interface SCCourseSectionType {
    * The lessons associated to the course section
    */
   lessons: SCCourseLessonType[];
+  /**
+   * Determines when the current section will be available for the user.
+   * The value will be null if the course type is self-paced
+   */
+  available_date?: string;
+  /**
+   * Determines whether the current section is locked for the user based on the section availability strategy.
+   * The value will not be considered if the course type is self-paced
+   */
+  locked?: boolean;
+  /**
+   * Total number of published lessons of the current course section
+   */
+  num_lessons?: number;
+  /**
+   * Number of lessons completed by the user in the current course section
+   */
+  num_lessons_completed?: number;
 }
 
 /**

@@ -47,6 +47,18 @@ const Component = {
         '& .SCCourse-snippet-secondary': {
           color: theme.palette.text.secondary
         }
+      },
+      '& .SCCourse-chip': {
+        textTransform: 'uppercase',
+        position: 'absolute',
+        top: theme.spacing(1),
+        left: theme.spacing(0.5),
+        color: theme.palette.common.white,
+        borderRadius: 0,
+        '& .MuiChip-label': {
+          fontWeight: 700,
+          padding: theme.spacing(0.5)
+        }
       }
     }),
     previewRoot: ({theme}: any) => ({
@@ -55,14 +67,17 @@ const Component = {
         '& .SCCourse-preview-image': {
           height: '110px'
         },
-        '& .SCCourse-preview-chip': {
-          backgroundColor: theme.palette.secondary.main,
+        '& .SCCourse-chip': {
+          textTransform: 'uppercase',
           position: 'absolute',
           top: theme.spacing(2),
           left: theme.spacing(2),
           color: theme.palette.common.white,
           borderRadius: 0,
-          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'
+          '& .MuiChip-label': {
+            fontWeight: 700,
+            padding: theme.spacing(0.5)
+          }
         },
         '& .SCCourse-preview-avatar': {
           position: 'absolute',
@@ -109,6 +124,9 @@ const Component = {
           '& .MuiIcon-root': {
             marginRight: theme.spacing(1)
           }
+        },
+        '& .SCCourse-preview-progress-bar': {
+          backgroundColor: theme.palette.grey['300']
         }
       }
     }),
@@ -131,10 +149,10 @@ const Component = {
           top: theme.spacing(2),
           left: theme.spacing(2),
           color: theme.palette.common.white,
-          borderRadius: '2px',
-          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          borderRadius: 0,
           '& .MuiChip-label': {
-            fontWeight: 700
+            fontWeight: 700,
+            padding: theme.spacing(0.5)
           }
         },
         '& .SCCourse-placeholder-avatar': {

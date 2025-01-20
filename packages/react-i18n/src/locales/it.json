@@ -303,6 +303,7 @@
   "ui.course.status.draft": "Bozza",
   "ui.course.status.new": "Nuovo",
   "ui.course.status.published": "Pubblicato",
+  "ui.course.status.completed": "Concluso",
   "ui.course.table.lessons.title": "{lessonsNumber, plural, =0 {# Lezioni} one {# Lezione} other {# Lezioni}}",
   "ui.course.table.sections.title": "{sectionsNumber, plural, =0 {# Sezioni} one {# Sezione} other {# Sezioni}}",
   "ui.course.type": "Tipo di corso: {typeOfCourse}",
