@@ -18,10 +18,13 @@ const Component = {
           }
         },
         '& .SCCourses-category': {
-          //height: theme.spacing(5.25),
           borderRadius: theme.spacing(0.5),
+          minWidth: '213px',
           '& .MuiTextField-root': {
-            marginTop: '2px'
+            margin: 0,
+            '& .MuiInputBase-root': {
+              padding: theme.spacing(1, 2, 1, 2)
+            }
           }
         }
       },

@@ -208,8 +208,7 @@ export class CourseApiClient {
    * @param config
    */
   static searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.SearchCourses.url({})}?${p.toString()}`, method: Endpoints.SearchCourses.method});
+    return apiRequest({...config, params, url: Endpoints.SearchCourses.url({}), method: Endpoints.SearchCourses.method});
   }
 
   /**

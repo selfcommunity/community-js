@@ -1,5 +1,5 @@
-import {Endpoints, CourseService, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCCourseType} from '@selfcommunity/types';
 import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
 import {useEffect, useMemo, useState} from 'react';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
@@ -15,18 +15,15 @@ import {SCUserContextType} from '../types/context';
  * @param object
  * @param object.id
  * @param object.course
- * @param object.subscribe
  * @param object.cacheStrategy
  */
 export default function useSCFetchCourse({
   id = null,
   course = null,
-  autoSubscribe = true,
   cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
   id?: number | string;
   course?: SCCourseType;
-  autoSubscribe?: boolean;
   cacheStrategy?: CacheStrategies;
 }) {
   const __courseId = useMemo(() => course?.id || id, [course, id]);
@@ -44,34 +41,11 @@ export default function useSCFetchCourse({
   );
   const [error, setError] = useState<string>(null);
 
-  /**
-   * Memoized setSCCourse (auto-subscription if need it)
-   */
-  const setSCCourse = useMemo(
-    () => (e: SCCourseType) => {
-      if (
-        autoSubscribe &&
-        authUserId !== null &&
-        ((e.privacy === SCCoursePrivacyType.OPEN && !e.join_status) || e.join_status === SCCourseJoinStatusType.INVITED)
-      ) {
-        // Auto subscribe to the course
-        CourseService.joinOrAcceptInviteToCourse(e.id)
-          .then(() => {
-            const updatedCourse = {...e, join_status: SCCourseJoinStatusType.JOINED};
-            setScCourse(updatedCourse);
-            LRUCache.set(__courseCacheKey, updatedCourse);
-          })
-          .catch(() => {
-            setScCourse(e);
-            LRUCache.set(__courseCacheKey, e);
-          });
-      } else {
-        setScCourse(e);
-        LRUCache.set(__courseCacheKey, e);
-      }
-    },
-    [autoSubscribe, authUserId, setScCourse]
-  );
+  const setSCCourse = (course: SCCourseType) => {
+    const _c: SCCourseType = authUserId ? course : objectWithoutProperties<SCCourseType>(course, ['join_status']);
+    setScCourse(_c);
+    LRUCache.set(__courseCacheKey, _c);
+  };
 
   /**
    * Memoized fetchTag

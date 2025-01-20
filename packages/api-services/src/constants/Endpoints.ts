@@ -588,6 +588,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET'
   },
+  CourseSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/course/'),
+    method: 'GET'
+  },
   GetIncubatorSuggestion: {
     url: urlReplacer('/api/v2/suggestion/incubator/'),
     method: 'GET'

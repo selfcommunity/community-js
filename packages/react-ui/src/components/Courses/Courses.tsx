@@ -16,16 +16,9 @@ import {
   useTheme,
   useThemeProps
 } from '@mui/material';
-import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-services';
-import {
-  SCPreferences,
-  SCPreferencesContext,
-  SCPreferencesContextType,
-  SCThemeType,
-  SCUserContext,
-  SCUserContextType
-} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {SCPreferences, SCPreferencesContextType, SCThemeType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {SCCategoryType, SCCourseType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -43,19 +36,19 @@ import CoursePlaceholder from '../Course/Placeholder';
 
 const classes = {
   root: `${PREFIX}-root`,
-  filters: `${PREFIX}-filters`,
+  category: `${PREFIX}-category`,
   courses: `${PREFIX}-courses`,
+  emptyBox: `${PREFIX}-empty-box`,
+  emptyIcon: `${PREFIX}-empty-icon`,
+  emptyRotatedBox: `${PREFIX}-empty-rotated-box`,
+  filters: `${PREFIX}-filters`,
   item: `${PREFIX}-item`,
   itemPlaceholder: `${PREFIX}-item-placeholder`,
   noResults: `${PREFIX}-no-results`,
-  studentEmptyView: `${PREFIX}-student-empty-view`,
-  teacherEmptyView: `${PREFIX}-teacher-empty-view`,
-  emptyBox: `${PREFIX}-empty-box`,
-  emptyRotatedBox: `${PREFIX}-empty-rotated-box`,
-  emptyIcon: `${PREFIX}-empty-icon`,
-  showMore: `${PREFIX}-show-more`,
   search: `${PREFIX}-search`,
-  category: `${PREFIX}-category`
+  showMore: `${PREFIX}-show-more`,
+  studentEmptyView: `${PREFIX}-student-empty-view`,
+  teacherEmptyView: `${PREFIX}-teacher-empty-view`
 };
 
 const Root = styled(Box, {
@@ -75,12 +68,6 @@ export interface CoursesProps {
    * @default null
    */
   className?: string;
-
-  /**
-   * Course API Endpoint
-   * @default Endpoints.SearchCourses
-   */
-  endpoint: EndpointType;
 
   /**
    * Feed API Query Params
@@ -154,11 +141,20 @@ export interface CoursesProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCourses-root|Styles applied to the root element.|
- |filters|.SCCourses-filters|Styles applied to the title element.|
- |courses|.SCCourses-courses|Styles applied to the title element.|
- |item|.SCCourses-item|Styles applied to the title element.|
- |noResults|.SCCourses-no-results|Styles applied to no results section.|
- |showMore|.SCCourses-show-more|Styles applied to show more button element.|
+ |category|.SCCourses-category|Styles applied to the category autocomplete element.|
+ |courses|.SCCourses-courses|Styles applied to the courses section.|
+ |emptyBox|.SCCourses-empty-box|Styles applied to the empty box element.|
+ |emptyIcon|.SCCourses-empty-icon|Styles applied to the empty icon element.|
+ |emptyRotatedBox|.SCCourses-empty-rotated-box|Styles applied to the rotated empty box element.|
+ |filters|.SCCourses-filters|Styles applied to the filters section.|
+ |item|.SCCourses-item|Styles applied to an individual item.|
+ |itemPlaceholder|.SCCourses-item-placeholder|Styles applied to the placeholder for an item.|
+ |noResults|.SCCourses-no-results|Styles applied when there are no results.|
+ |search|.SCCourses-search|Styles applied to the search element.|
+ |showMore|.SCCourses-show-more|Styles applied to the show more button or section.|
+ |studentEmptyView|.SCCourses-student-empty-view|Styles applied to the student empty view.|
+ |teacherEmptyView|.SCCourses-teacher-empty-view|Styles applied to the teacher empty view.|
+
 
  * @param inProps
  */
@@ -170,7 +166,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   });
 
   const {
-    endpoint = Endpoints.SearchCourses,
     endpointQueryParams = {limit: 8, offset: DEFAULT_PAGINATION_OFFSET},
     className,
     CourseComponentProps = {},
@@ -178,7 +173,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     CourseSkeletonComponentProps = {template: SCCourseTemplateType.PREVIEW},
     GridContainerComponentProps = {},
     GridItemComponentProps = {},
-    showFilters = false,
+    showFilters = true,
     filters,
     ...rest
   } = props;
@@ -188,18 +183,26 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string>(null);
   const [query, setQuery] = useState<string>('');
-  const [category, setCategory] = useState<SCCategoryType>(null);
+  const [_categories, setCategories] = useState<number[]>([]);
   const [showForMe, setShowForMe] = useState<boolean>(false);
   const [showMyCourses, setShowMyCourses] = useState<boolean>(false);
-  const teacherView = false;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
   // MEMO
   const contentAvailability =
-    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
-    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+    SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in preferences && preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+  const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ONLY_STAFF_ENABLED]?.value, [preferences]);
+  const canCreateCourse = useMemo(() => scUserContext?.user?.permission?.create_course, [scUserContext?.user?.permission]);
+  const endpoint = useMemo(() => {
+    if (showMyCourses) {
+      return Endpoints.GetJoinedCourses;
+    } else if (showForMe) {
+      return Endpoints.CourseSuggestion;
+    }
+    return Endpoints.SearchCourses;
+  }, [showMyCourses, showForMe]);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -230,9 +233,8 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
         method: endpoint.method,
         params: {
           ...endpointQueryParams,
+          ...(_categories.length && {categories: JSON.stringify(_categories)}),
           ...(query && {search: query}),
-          ...(showForMe && {follows: showForMe}),
-          join_status: SCCourseJoinStatusType.JOINED,
           ...(showMyCourses && {created_by: authUserId})
         }
       })
@@ -255,7 +257,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     } else {
       fetchCourses();
     }
-  }, [contentAvailability, authUserId, location, showForMe, showMyCourses]);
+  }, [contentAvailability, authUserId, showForMe, showMyCourses, _categories]);
 
   /**
    * Subscriber for pubsub callback
@@ -292,7 +294,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
       return http
         .request({
           url: next,
-          method: !teacherView ? Endpoints.SearchCourses.method : Endpoints.GetJoinedCourses.method
+          method: showMyCourses ? Endpoints.GetJoinedCourses.method : Endpoints.SearchCourses.method
         })
         .then((res: HttpResponse<any>) => {
           setCourses([...courses, ...res.data.results]);
@@ -314,10 +316,11 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
 
   /**
    * Handle change category
-   * @param category
+   * @param categories
    */
-  const handleOnChangeCategory = (category: SCCategoryType) => {
-    setCategory(category);
+  const handleOnChangeCategory = (categories: SCCategoryType[]) => {
+    const categoriesIds = categories.map((item) => item.id);
+    setCategories(categoriesIds);
   };
 
   /**
@@ -369,7 +372,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   }}
                 />
               </Grid>
-              {teacherView && (
+              {((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
                 <Grid item>
                   <CoursesChipRoot
                     color={showMyCourses ? 'primary' : 'default'}
@@ -384,9 +387,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   />
                 </Grid>
               )}
-              <Grid item xs={12} md={2}>
+              <Grid item xs={12} md="auto">
                 <FormControl fullWidth>
-                  <CategoryAutocomplete onChange={handleOnChangeCategory} className={classes.category} size="small" />
+                  <CategoryAutocomplete onChange={handleOnChangeCategory} className={classes.category} size="small" multiple={true} />
                 </FormControl>
               </Grid>
               {authUserId && (
@@ -415,7 +418,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           <>
             {!courses.length ? (
               <Box className={classes.noResults}>
-                {!teacherView ? (
+                {!canCreateCourse && onlyStaffEnabled ? (
                   <Stack className={classes.studentEmptyView}>
                     <Stack className={classes.emptyBox}>
                       <Stack className={classes.emptyRotatedBox}>
@@ -440,7 +443,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 ) : (
                   <Box className={classes.teacherEmptyView}>
                     <Skeleton
-                      teacherView={true}
+                      teacherView={(onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled}
                       coursesNumber={4}
                       {...CoursesSkeletonComponentProps}
                       CourseSkeletonProps={CourseSkeletonComponentProps}
@@ -455,7 +458,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   <>
                     {courses.map((course: SCCourseType) => (
                       <Grid item xs={12} sm={12} md={6} key={course.id} className={classes.item} {...GridItemComponentProps}>
-                        <Course course={course} courseId={course.id} {...CourseComponentProps} />
+                        <Course courseId={course.id} {...CourseComponentProps} />
                       </Grid>
                     ))}
                     {authUserId && courses.length % 2 !== 0 && (

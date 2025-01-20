@@ -13,9 +13,7 @@ export default {
       table: {defaultValue: {summary: 1}}
     }
   },
-  args: {
-    showFilters: true,
-  }
+  args: {}
 } as Meta<typeof Courses>;
 
 const template = (args) => (

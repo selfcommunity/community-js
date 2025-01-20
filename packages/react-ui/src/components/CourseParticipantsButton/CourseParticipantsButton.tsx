@@ -16,7 +16,7 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import {numberFormatter} from '../../utils/buttonCounters';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import User, {UserSkeleton} from '../User';
-import {HiddenPlaceholder} from '@selfcommunity/react-ui';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCCourseParticipantsButton';
 

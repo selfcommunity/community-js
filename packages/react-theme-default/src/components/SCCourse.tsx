@@ -105,6 +105,10 @@ const Component = {
           display: 'flex',
           alignItems: 'center',
           marginBottom: theme.spacing(1)
+        },
+        '& .SCCourse-preview-category': {
+          marginRight: theme.spacing(0.5),
+          marginBottom: theme.spacing(0.5)
         }
       },
       '& .SCCourse-preview-actions': {

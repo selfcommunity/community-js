@@ -17,25 +17,26 @@ import {isCourseCompleted, isCourseNew} from '../../utils/course';
 const classes = {
   root: `${PREFIX}-root`,
   chip: `${PREFIX}-chip`,
-  snippetRoot: `${PREFIX}-snippet-root`,
-  snippetImage: `${PREFIX}-snippet-image`,
-  snippetAvatar: `${PREFIX}-snippet-avatar`,
-  snippetPrimary: `${PREFIX}-snippet-primary`,
-  snippetSecondary: `${PREFIX}-snippet-secondary`,
-  snippetActions: `${PREFIX}-snippet-actions`,
   previewRoot: `${PREFIX}-preview-root`,
-  previewImageWrapper: `${PREFIX}-preview-image-wrapper`,
-  previewImage: `${PREFIX}-preview-image`,
-  previewAvatar: `${PREFIX}-preview-avatar`,
-  previewCreator: `${PREFIX}-preview-creator`,
-  previewNameWrapper: `${PREFIX}-preview-name-wrapper`,
-  previewName: `${PREFIX}-preview-name`,
-  previewContent: `${PREFIX}-preview-content`,
-  previewInfo: `${PREFIX}-preview-info`,
   previewActions: `${PREFIX}-preview-actions`,
+  previewAvatar: `${PREFIX}-preview-avatar`,
+  previewCategory: `${PREFIX}-preview-category`,
+  previewCompletedStatus: `${PREFIX}-preview-completed-status`,
+  previewContent: `${PREFIX}-preview-content`,
+  previewCreator: `${PREFIX}-preview-creator`,
+  previewImage: `${PREFIX}-preview-image`,
+  previewImageWrapper: `${PREFIX}-preview-image-wrapper`,
+  previewInfo: `${PREFIX}-preview-info`,
+  previewName: `${PREFIX}-preview-name`,
+  previewNameWrapper: `${PREFIX}-preview-name-wrapper`,
   previewProgressBar: `${PREFIX}-preview-progress-bar`,
   previewProgressStatus: `${PREFIX}-preview-progress-status`,
-  previewCompletedStatus: `${PREFIX}-preview-completed-status`
+  snippetRoot: `${PREFIX}-snippet-root`,
+  snippetActions: `${PREFIX}-snippet-actions`,
+  snippetAvatar: `${PREFIX}-snippet-avatar`,
+  snippetImage: `${PREFIX}-snippet-image`,
+  snippetPrimary: `${PREFIX}-snippet-primary`,
+  snippetSecondary: `${PREFIX}-snippet-secondary`
 };
 
 const Root = styled(Widget, {
@@ -115,28 +116,28 @@ export interface CourseProps extends WidgetProps {
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCourse-root|Styles applied to the root element.|
- |chip|.SCCourse-chip|Styles applied to the chip element.|
- |snippetRoot|.SCCourse-snippet-root|Styles applied to the root element of the snippet template.|
- |snippetImage|.SCCourse-snippet-image|Styles applied to the image element in the snippet template.|
- |snippetAvatar|.SCCourse-snippet-avatar|Styles applied to the avatar element in the snippet template.|
- |snippetPrimary|.SCCourse-snippet-primary|Styles applied to the primary section in the snippet template.|
- |snippetSecondary|.SCCourse-snippet-secondary|Styles applied to the secondary section in the snippet template.|
- |snippetActions|.SCCourse-snippet-actions|Styles applied to the actions section in the snippet template.|
- |previewRoot|.SCCourse-preview-root|Styles applied to the root element of the preview template.|
- |previewImageWrapper|.SCCourse-preview-image-wrapper|Styles applied to the wrapper of the image in the preview template.|
- |previewImage|.SCCourse-preview-image|Styles applied to the image in the preview template.|
- |previewAvatar|.SCCourse-preview-avatar|Styles applied to the avatar in the preview template.|
- |previewCreator|.SCCourse-preview-creator|Styles applied to the creator element in the preview template.|
- |previewNameWrapper|.SCCourse-preview-name-wrapper|Styles applied to the name wrapper in the preview template.|
- |previewName|.SCCourse-preview-name|Styles applied to the name element in the preview template.|
- |previewContent|.SCCourse-preview-content|Styles applied to the content section in the preview template.|
- |previewInfo|.SCCourse-preview-info|Styles applied to the info section in the preview template.|
- |previewActions|.SCCourse-preview-actions|Styles applied to the actions section in the preview template.|
- |previewProgressBar|.SCCourse-preview-progress-bar|Styles applied to the progress bar in the preview template.|
- |previewProgressStatus|.SCCourse-preview-progress-status|Styles applied to indicate the progress status in the preview template.|
- |previewCompletedStatus|.SCCourse-preview-completed-status|Styles applied to indicate the completed status in the preview template.|
-
+ |root|.SCCourses-root|Styles applied to the root element.|
+ |chip|.SCCourses-chip|Styles applied to the chip element.|
+ |previewRoot|.SCCourses-preview-root|Styles applied to the root element in the preview template.|
+ |previewActions|.SCCourses-preview-actions|Styles applied to the actions section in the preview template.|
+ |previewAvatar|.SCCourses-preview-avatar|Styles applied to the avatar in the preview template.|
+ |previewCategory|.SCCourses-preview-category|Styles applied to the category element in the preview template.|
+ |previewCompletedStatus|.SCCourses-preview-completed-status|Styles applied to indicate the completed status in the preview template.|
+ |previewContent|.SCCourses-preview-content|Styles applied to the content section in the preview template.|
+ |previewCreator|.SCCourses-preview-creator|Styles applied to the creator element in the preview template.|
+ |previewImage|.SCCourses-preview-image|Styles applied to the image in the preview template.|
+ |previewImageWrapper|.SCCourses-preview-image-wrapper|Styles applied to the wrapper of the image in the preview template.|
+ |previewInfo|.SCCourses-preview-info|Styles applied to the info section in the preview template.|
+ |previewName|.SCCourses-preview-name|Styles applied to the name element in the preview template.|
+ |previewNameWrapper|.SCCourses-preview-name-wrapper|Styles applied to the name wrapper in the preview template.|
+ |previewProgressBar|.SCCourses-preview-progress-bar|Styles applied to the progress bar in the preview template.|
+ |previewProgressStatus|.SCCourses-preview-progress-status|Styles applied to indicate the progress status in the preview template.|
+ |snippetRoot|.SCCourses-snippet-root|Styles applied to the root element in the snippet template.|
+ |snippetActions|.SCCourses-snippet-actions|Styles applied to the actions section in the snippet template.|
+ |snippetAvatar|.SCCourses-snippet-avatar|Styles applied to the avatar element in the snippet template.|
+ |snippetImage|.SCCourses-snippet-image|Styles applied to the image element in the snippet template.|
+ |snippetPrimary|.SCCourses-snippet-primary|Styles applied to the primary section in the snippet template.|
+ |snippetSecondary|.SCCourses-snippet-secondary|Styles applied to the secondary section in the snippet template.|
 
  *
  * @param inProps
@@ -248,7 +249,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
           {scCourse.categories.map((category) => (
-            <Chip key={category.id} size="small" component="div" label={category.name} className={classes.chip} />
+            <Chip key={category.id} size="small" component="div" label={category.name} className={classes.previewCategory} />
           ))}
         </CardContent>
         {actions ?? (
