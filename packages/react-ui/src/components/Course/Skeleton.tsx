@@ -84,7 +84,7 @@ export default function CourseSkeleton(inProps: CourseSkeletonProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className, template = SCCourseTemplateType.PREVIEW, skeletonsAnimation = 'wave', actions, ...rest} = props;
+  const {className, template, skeletonsAnimation = 'wave', actions, ...rest} = props;
 
   /**
    * Renders course object

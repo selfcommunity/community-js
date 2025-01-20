@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CourseSkeleton from './Skeleton';
-import Course from './index';
 import { SCCourseTemplateType } from '../../types/course';
 
 export default {
@@ -19,7 +18,7 @@ export const Snippet: StoryObj<typeof CourseSkeleton> = {
 };
 
 
-export const Preview: StoryObj<typeof Course> = {
+export const Preview: StoryObj<typeof CourseSkeleton> = {
   args: {
     template: SCCourseTemplateType.PREVIEW
   },
