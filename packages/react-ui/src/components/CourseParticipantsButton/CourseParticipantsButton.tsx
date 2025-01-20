@@ -2,9 +2,9 @@ import {Avatar, AvatarGroup, Button, Icon, List, ListItem, Typography} from '@mu
 import {ButtonProps} from '@mui/material/Button/Button';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
+import {CourseService, Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {useSCFetchCourse} from '@selfcommunity/react-core';
+import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {useCallback, useEffect, useMemo, useState} from 'react';
@@ -16,22 +16,23 @@ import InfiniteScroll from '../../shared/InfiniteScroll';
 import {numberFormatter} from '../../utils/buttonCounters';
 import AvatarGroupSkeleton from '../Skeleton/AvatarGroupSkeleton';
 import User, {UserSkeleton} from '../User';
+import {HiddenPlaceholder} from '@selfcommunity/react-ui';
 
 const PREFIX = 'SCCourseParticipantsButton';
 
 const classes = {
   root: `${PREFIX}-root`,
-  participants: `${PREFIX}-participants`,
   dialogRoot: `${PREFIX}-dialog-root`,
+  endMessage: `${PREFIX}-end-message`,
   infiniteScroll: `${PREFIX}-infinite-scroll`,
-  endMessage: `${PREFIX}-end-message`
+  participants: `${PREFIX}-participants`
 };
 
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root,
-  shouldForwardProp: (prop) => prop !== 'followers'
+  shouldForwardProp: (prop) => prop !== 'enrolled'
 })(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
@@ -87,9 +88,11 @@ export interface CourseParticipantsButtonProps extends Pick<ButtonProps, Exclude
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCCourseParticipantsButton-root|Styles applied to the root element.|
- |dialogRoot|.SCCourseParticipantsButton-dialog-root|Styles applied to the root element.|
+ |dialogRoot|.SCCourseParticipantsButton-dialog-root|Styles applied to the dialog root element.|
  |endMessage|.SCCourseParticipantsButton-end-message|Styles applied to the end message element.|
-
+ |infiniteScroll|.SCCourseParticipantsButton-infinite-scroll|Styles applied to the infinite scroll element.|
+ |participants|.SCCourseParticipantsButton-participants|Styles applied to the participants section.|
+ 
  * @param inProps
  */
 export default function CourseParticipantsButton(inProps: CourseParticipantsButtonProps) {
@@ -105,61 +108,51 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
   const [loading, setLoading] = useState<boolean>(true);
   const [next, setNext] = useState<string | null>(null);
   const [offset, setOffset] = useState<number | null>(null);
-  const [followers, setFollowers] = useState<SCUserType[]>([]);
+  const [enrolled, setEnrolled] = useState<SCUserType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
   // HOOKS
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const {scEvent} = useSCFetchEvent({id: courseId, course});
-  const participantsAvailable = useMemo(
-    () =>
-      scEvent?.privacy === SCEventPrivacyType.PUBLIC ||
-      [SCEventSubscriptionStatusType.SUBSCRIBED, SCEventSubscriptionStatusType.GOING, SCEventSubscriptionStatusType.NOT_GOING].indexOf(
-        scEvent?.subscription_status
-      ) > -1,
-    [scEvent]
-  );
+  const {scCourse} = useSCFetchCourse({id: courseId, course});
+  const participantsAvailable = useMemo(() => scCourse?.join_status === SCCourseJoinStatusType.MANAGER, [scCourse]);
 
   useDeepCompareEffectNoCheck(() => {
-    setFollowers([]);
+    setEnrolled([]);
     setLoading(true);
-  }, [scEvent]);
+  }, [scCourse]);
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
-    if (!scEvent) {
+    if (!scCourse) {
       return;
     }
 
-    if (!followers.length && participantsAvailable) {
-      EventService.getUsersGoingToEvent(scEvent.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
-        setFollowers([...res.results]);
+    if (!enrolled.length && participantsAvailable) {
+      CourseService.getCourseJoinedUsers(scCourse.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
+        setEnrolled([...res.results]);
         setOffset(4);
         setLoading(false);
       });
     } else {
       setOffset(0);
     }
-  }, [scEvent, participantsAvailable, followers]);
+  }, [scCourse, participantsAvailable, enrolled]);
 
   useEffect(() => {
     if (open && offset !== null) {
       setLoading(true);
-      EventService.getUsersGoingToEvent(scEvent.id, {offset, limit: 20}).then((res: SCPaginatedResponse<SCUserType>) => {
-        setFollowers([...(offset === 0 ? [] : followers), ...res.results]);
+      CourseService.getCourseJoinedUsers(scCourse.id, {offset, limit: 20}).then((res: SCPaginatedResponse<SCUserType>) => {
+        setEnrolled([...(offset === 0 ? [] : enrolled), ...res.results]);
         setNext(res.next);
         setLoading(false);
         setOffset(null);
       });
     }
-  }, [open, followers, offset]);
+  }, [open, enrolled, offset]);
 
   /**
-   * Memoized fetchFollowers
+   * Memoized fetchEnrolledUsers
    */
-  const fetchFollowers = useCallback(() => {
+  const fetchEnrolledUsers = useCallback(() => {
     if (!next) {
       return;
     }
@@ -169,30 +162,38 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         method: Endpoints.GetUsersGoingToCourse.method
       })
       .then((res: HttpResponse<any>) => {
-        setFollowers([...followers, ...res.data.results]);
+        setEnrolled([...enrolled, ...res.data.results]);
         setNext(res.data.next);
       })
       .catch((error) => Logger.error(SCOPE_SC_UI, error))
       .then(() => setLoading(false));
-  }, [followers, scEvent, next]);
+  }, [enrolled, scCourse, next]);
 
-  const renderSurplus = useCallback(() => numberFormatter(followers.length), [followers]);
+  const renderSurplus = useCallback(() => numberFormatter(enrolled.length), [enrolled]);
 
   /**
-   * Opens dialog votes
+   * Opens participants dialog
    */
   const handleToggleDialogOpen = useCallback(() => {
     setOpen((prev) => !prev);
   }, [setOpen]);
+
+  /**
+   * Rendering
+   */
+
+  if (!participantsAvailable) {
+    return <HiddenPlaceholder />;
+  }
 
   return (
     <>
       <Root
         className={classNames(classes.root, className)}
         onClick={handleToggleDialogOpen}
-        disabled={loading || !scEvent || scEvent.goings_counter === 0}
-        // @ts-expect-error this is needed to use followers into SCCourseParticipantsButton
-        followers={followers}
+        disabled={loading || !scCourse || enrolled.length === 0}
+        // @ts-expect-error this is needed to use enrolled into SCCourseParticipantsButton
+        enrolled={enrolled}
         {...rest}>
         {!hideCaption && (
           <Typography className={classes.participants}>
@@ -200,16 +201,16 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             <FormattedMessage
               defaultMessage="ui.courseParticipantsButton.participants"
               id="ui.courseParticipantsButton.participants"
-              values={{total: followers.length}}
+              values={{total: enrolled.length}}
             />
           </Typography>
         )}
 
-        {!followers.length && (loading || !scEvent) ? (
+        {!enrolled.length && (loading || !scCourse) ? (
           <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && {skeletonsAnimation: false})} count={4} />
         ) : (
-          <AvatarGroup total={followers.length} renderSurplus={renderSurplus}>
-            {followers.map((c: SCUserType) => (
+          <AvatarGroup total={enrolled.length} renderSurplus={renderSurplus}>
+            {enrolled.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} />
             ))}
           </AvatarGroup>
@@ -223,15 +224,15 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             <FormattedMessage
               defaultMessage="ui.courseParticipantsButton.dialogTitle"
               id="ui.courseParticipantsButton.dialogTitle"
-              values={{total: scEvent.goings_counter}}
+              values={{total: enrolled.length}}
             />
           }
           onClose={handleToggleDialogOpen}
           open={open}
           {...DialogProps}>
           <InfiniteScroll
-            dataLength={followers.length}
-            next={fetchFollowers}
+            dataLength={enrolled.length}
+            next={fetchEnrolledUsers}
             hasMoreNext={next !== null || loading}
             loaderNext={<UserSkeleton elevation={0} />}
             className={classes.infiniteScroll}
@@ -244,9 +245,9 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
               </Typography>
             }>
             <List>
-              {followers.map((follower: SCUserType) => (
-                <ListItem key={follower.id}>
-                  <User elevation={0} user={follower} />
+              {enrolled.map((e: SCUserType) => (
+                <ListItem key={e.id}>
+                  <User elevation={0} user={e} />
                 </ListItem>
               ))}
             </List>
