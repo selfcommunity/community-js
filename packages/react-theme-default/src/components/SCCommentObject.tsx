@@ -121,6 +121,11 @@ const Component = {
         color: theme.palette.primary.main,
         marginTop: 0,
         position: 'relative',
+        '& .SCCommentObject-reply': {
+          paddingLeft: 0,
+          paddingRight: 0,
+          lineHeight: 1
+        },
         '& .SCCommentObject-activity-at': {
           color: 'inherit',
           textDecoration: 'none',
