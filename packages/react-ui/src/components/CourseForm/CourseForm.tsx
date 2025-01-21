@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Button} from '@mui/material';
+import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
@@ -39,21 +39,21 @@ const messages = defineMessages({
 
 const classes = {
   root: `${PREFIX}-root`,
-  title: `${PREFIX}-title`,
-  card: `${PREFIX}-card`,
-  selected: `${PREFIX}-selected`,
-  cover: `${PREFIX}-cover`,
-  frequency: `${PREFIX}-frequency`,
-  form: `${PREFIX}-form`,
-  name: `${PREFIX}-name`,
-  description: `${PREFIX}-description`,
-  content: `${PREFIX}-content`,
   actions: `${PREFIX}-actions`,
-  stepOne: `${PREFIX}-step-one`,
-  stepTwo: `${PREFIX}-step-two`,
+  card: `${PREFIX}-card`,
+  content: `${PREFIX}-content`,
+  cover: `${PREFIX}-cover`,
+  description: `${PREFIX}-description`,
+  error: `${PREFIX}-error`,
+  form: `${PREFIX}-form`,
+  frequency: `${PREFIX}-frequency`,
+  name: `${PREFIX}-name`,
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
-  error: `${PREFIX}-error`
+  selected: `${PREFIX}-selected`,
+  stepOne: `${PREFIX}-step-one`,
+  stepTwo: `${PREFIX}-step-two`,
+  title: `${PREFIX}-title`
 };
 
 const Root = styled(Box, {
@@ -118,14 +118,22 @@ export interface CourseFormProps extends BoxProps {
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCCourseForm-root|Styles applied to the root element.|
- |title|.SCCourseForm-title|Styles applied to the title element.|
- |cover|.SCCourseForm-cover|Styles applied to the cover field.|
- |form|.SCCourseForm-form|Styles applied to the form element.|
- |name|.SCCourseForm-name|Styles applied to the name field.|
- |description|.SCCourseForm-description|Styles applied to the description field.|
- |content|.SCCourseForm-content|Styles applied to the  element.|
- |error|.SCCourseForm-error|Styles applied to the error elements.|
+ | root                  | .SCCourseForm-root            | Styles applied to the root element.            |
+ | actions               | .SCCourseForm-actions         | Styles applied to the actions element.         |
+ | card                  | .SCCourseForm-card            | Styles applied to the card element.            |
+ | content               | .SCCourseForm-content         | Styles applied to the content element.         |
+ | cover                 | .SCCourseForm-cover           | Styles applied to the cover element.           |
+ | description           | .SCCourseForm-description     | Styles applied to the description element.     |
+ | error                 | .SCCourseForm-error           | Styles applied to the error element.           |
+ | form                  | .SCCourseForm-form            | Styles applied to the form element.            |
+ | frequency             | .SCCourseForm-frequency       | Styles applied to the frequency element.       |
+ | name                  | .SCCourseForm-name            | Styles applied to the name element.            |
+ | privacySection        | .SCCourseForm-privacy-section | Styles applied to the privacy section.         |
+ | privacySectionInfo    | .SCCourseForm-privacy-section-info | Styles applied to the privacy section info. |
+ | selected              | .SCCourseForm-selected        | Styles applied to the selected element.        |
+ | stepOne               | .SCCourseForm-step-one        | Styles applied to the step-one element.        |
+ | stepTwo               | .SCCourseForm-step-two        | Styles applied to the step-two element.        |
+ | title                 | .SCCourseForm-title           | Styles applied to the title element.           |
 
  * @param inProps
  */
@@ -135,7 +143,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, course = null, courseId, step = SCCourseFormStepType.ONE, ...rest} = props;
+  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.ONE, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -146,7 +154,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     name: course?.name || '',
     type: course?.type || '',
     description: course ? course.description : '',
-    categories: course ? course.categories : {},
+    categories: course ? course.categories : [],
+    privacy: course ? course.privacy : '',
     isSubmitting: false
   };
 
@@ -209,8 +218,9 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    * Handle change category
    * @param categories
    */
-  const handleOnChangeCategory = (categories: SCCategoryType) => {
-    setField((prev: any) => ({...prev, ['categories']: convertToCategoriesObject(categories)}));
+  const handleOnChangeCategory = (categories: SCCategoryType[]) => {
+    const categoriesIds = categories.map((item) => item.id);
+    setField((prev: any) => ({...prev, ['categories']: course ? categoriesIds : convertToCategoriesObject(categories)}));
   };
 
   /**
@@ -231,30 +241,42 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   );
 
   /**
-   * Handles the form submission
+   * Handles the form submission for create/update action
    */
   const handleSubmit = useCallback(() => {
-    setField((prev) => ({...prev, ['isSubmitting']: true}));
-    const formData = new FormData();
-    if (field.imageOriginalFile) {
-      formData.append('image_original', field.imageOriginalFile);
-    }
-    formData.append('name', field.name);
-    formData.append('description', field.description);
-    formData.append('type', field.type);
-    if (field.categories) {
-      for (const key in field.categories) {
-        formData.append(key, field.categories[key]);
-      }
-    }
-
+    setField((prev) => ({...prev, isSubmitting: true}));
     let courseService: Promise<SCCourseType>;
     if (course) {
-      courseService = CourseService.updateCourse(course.id, formData as unknown as SCCourseType, {headers: {'Content-Type': 'multipart/form-data'}});
+      // Update
+      const data = {
+        name: field.name,
+        description: field.description,
+        type: field.type,
+        categories: field.categories,
+        ...(field.imageOriginalFile && {image_original: field.imageOriginalFile}),
+        ...(field.privacy && {privacy: field.privacy})
+      };
+      courseService = CourseService.updateCourse(course.id, data, {
+        headers: {'Content-Type': 'application/json'}
+      });
     } else {
-      courseService = CourseService.createCourse(formData, {headers: {'Content-Type': 'multipart/form-data'}});
+      // Create
+      const formData = new FormData();
+      if (field.imageOriginalFile) {
+        formData.append('image_original', field.imageOriginalFile);
+      }
+      formData.append('name', field.name);
+      formData.append('description', field.description);
+      formData.append('type', field.type);
+      if (field.categories) {
+        for (const key in field.categories) {
+          formData.append(key, field.categories[key]);
+        }
+      }
+      courseService = CourseService.createCourse(formData, {
+        headers: {'Content-Type': 'multipart/form-data'}
+      });
     }
-
     courseService
       .then((data) => {
         notifyChanges(data);
@@ -263,7 +285,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
       })
       .catch((e) => {
         const _error = formatHttpErrorCode(e);
-
         if (Object.values(_error)[0]['error'] === 'unique') {
           setError({
             ...error,
@@ -272,12 +293,11 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         } else {
           setError({...error, ..._error});
         }
-
         setField((prev) => ({...prev, ['isSubmitting']: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
       });
-  }, [field, onSuccess, onError, notifyChanges]);
+  }, [course, field, onSuccess, onError, notifyChanges]);
 
   /**
    * Handles course fields change
@@ -373,19 +393,15 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               }
             />
             <CategoryAutocomplete
+              defaultValue={field.categories}
               TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
               multiple={true}
               onChange={handleOnChangeCategory}
             />
-            {course && <CourseEdit course={course} />}
+            {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
           </FormGroup>
         )}
         <Box className={classes.actions}>
-          {course && (
-            <Button size="small" variant="outlined">
-              <FormattedMessage id="ui.courseForm.edit.action.cancel" defaultMessage="ui.courseForm.edit.action.cancel" />
-            </Button>
-          )}
           <LoadingButton
             size="small"
             loading={field.isSubmitting}
@@ -400,7 +416,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
             }
             variant="contained"
             onClick={_step === SCCourseFormStepType.ONE ? () => handleChangeStep(SCCourseFormStepType.TWO) : handleSubmit}
-            color="secondary">
+            color="primary">
             {course ? (
               <FormattedMessage id="ui.courseForm.edit.action.save" defaultMessage="ui.courseForm.edit.action.save" />
             ) : _step === SCCourseFormStepType.ONE ? (

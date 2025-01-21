@@ -503,7 +503,6 @@
   "ui.courseForm.edit.publication.option.secret.title": "Secret",
   "ui.courseForm.edit.publication.option.secret.access": "<icon>private</icon>Accesso: chiuso. Solo gli utenti invitati da te, o da gli altri amministratori, potranno accedere a questo Corso.",
   "ui.courseForm.edit.publication.option.secret.visibility": "<icon>visibility</icon>Visibilità: solo utenti invitati. Gli utenti non invitati non vedranno che questo Corso esiste.",
-  "ui.courseForm.edit.action.cancel": "Cancella",
   "ui.courseForm.edit.action.save": "Salva Modifiche",
   "ui.courseForm.button.next": "Avanti",
   "ui.courseForm.button.create": "Crea Corso",

@@ -33,7 +33,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof Course> = {
 	args: {
-		courseId: 2
+		courseId: 1
 	},
 	render: template
 };

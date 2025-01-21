@@ -7,7 +7,8 @@ import {SCCategoryType} from './category';
 export enum SCCoursePrivacyType {
   OPEN = 'open',
   PRIVATE = 'private',
-  SECRET = 'secret'
+  SECRET = 'secret',
+  DRAFT = ''
 }
 
 /**
@@ -37,27 +38,27 @@ export interface SCCourseType {
   /**
    * The ID of the course.
    */
-  id: number;
+  id?: number;
   /**
    * The name of the course.
    */
-  name: string;
+  name?: string;
   /**
    * The slug for the course.
    */
-  slug: string;
+  slug?: string;
   /**
    * The description of the course.
    */
-  description: string;
+  description?: string;
   /**
    * The course type
    */
-  type: SCCourseTypologyType;
+  type?: SCCourseTypologyType;
   /**
    * The course privacy.
    */
-  privacy: SCCoursePrivacyType;
+  privacy?: SCCoursePrivacyType;
   /**
    * The lesson order enforcement
    */
@@ -73,35 +74,35 @@ export interface SCCourseType {
   /**
    * The course image, original format.
    */
-  image_original: string;
+  image_original?: string;
   /**
    * The course image, bigger format.
    */
-  image_bigger: string;
+  image_bigger?: string;
   /**
    * The course image, big format.
    */
-  image_big: string;
+  image_big?: string;
   /**
    * The course image, medium format.
    */
-  image_medium: string;
+  image_medium?: string;
   /**
    * The course image, small format.
    */
-  image_small: string;
+  image_small?: string;
   /**
    * The course subscription status.
    */
-  join_status: SCCourseJoinStatusType;
+  join_status?: SCCourseJoinStatusType;
   /**
    * The course creation date.
    */
-  created_at: string;
+  created_at?: string;
   /**
    * The course creator.
    */
-  created_by: SCUserType;
+  created_by?: SCUserType;
   /**
    * The categories list ids
    */

@@ -51,7 +51,7 @@ const Component = {
                 marginBottom: theme.spacing(1)
               },
               '& .MuiIcon-root': {
-                marginRight: theme.spacing(1)
+                marginRight: theme.spacing(0.5)
               }
             }
           },
@@ -75,6 +75,9 @@ const Component = {
                   marginRight: theme.spacing(0.5)
                 }
               }
+            },
+            '& .SCCourseForm-edit-privacy-item-info': {
+              marginLeft: theme.spacing(2)
             }
           }
         }

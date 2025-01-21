@@ -84,8 +84,6 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
     [preferences, features]
   );
   const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ONLY_STAFF_ENABLED]?.value, [preferences]);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   const canCreateCourse = useMemo(() => scUserContext?.user?.permission?.create_course, [scUserContext?.user?.permission]);
 
   /**
