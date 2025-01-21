@@ -46,6 +46,8 @@ import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
 import CourseContentMenu, {CourseContentMenuProps} from './components/CourseContentMenu';
 import CourseDashboard, {TeacherCourseDashboardProps, StudentCourseDashboardProps} from './components/CourseDashboard';
+import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from './components/Course';
+import Courses, {CoursesProps, CoursesSkeleton, CoursesSkeletonProps} from './components/Courses';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import CreateEventWidget, {CreateEventWidgetProps, CreateEventWidgetSkeleton} from './components/CreateEventWidget';
 import EventForm, {EventFormProps} from './components/EventForm';
@@ -368,6 +370,14 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
+  Course,
+  CourseProps,
+  CourseSkeleton,
+  CourseSkeletonProps,
+  Courses,
+  CoursesProps,
+  CoursesSkeleton,
+  CoursesSkeletonProps,
   CourseContentMenu,
   CourseContentMenuProps,
   CourseDashboard,
