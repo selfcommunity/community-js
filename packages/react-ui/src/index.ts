@@ -48,6 +48,7 @@ import CourseContentMenu, {CourseContentMenuProps} from './components/CourseCont
 import CourseDashboard, {TeacherCourseDashboardProps, StudentCourseDashboardProps} from './components/CourseDashboard';
 import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from './components/Course';
 import Courses, {CoursesProps, CoursesSkeleton, CoursesSkeletonProps} from './components/Courses';
+import CreateCourseButton, {CreateCourseButtonProps} from './components/CreateCourseButton';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import CreateEventWidget, {CreateEventWidgetProps, CreateEventWidgetSkeleton} from './components/CreateEventWidget';
 import EventForm, {EventFormProps} from './components/EventForm';
@@ -375,6 +376,8 @@ export {
   CourseSkeleton,
   CourseSkeletonProps,
   Courses,
+  CreateCourseButton,
+  CreateCourseButtonProps,
   CoursesProps,
   CoursesSkeleton,
   CoursesSkeletonProps,
