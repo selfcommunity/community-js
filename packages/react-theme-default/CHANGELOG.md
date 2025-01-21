@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.12...@selfcommunity/react-theme-default@0.4.5-alpha.13) (2025-01-21)
+
+
+### Bug Fixes
+
+* fixed css on reply button into CommonObject ([0583270](https://github.com/selfcommunity/community-js/commit/0583270e1c28e3e3df0f9a9415d3dc839daccf88))
+
+
+
+
+
 ## [0.4.5-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.11...@selfcommunity/react-theme-default@0.4.5-alpha.12) (2025-01-16)
 
 
