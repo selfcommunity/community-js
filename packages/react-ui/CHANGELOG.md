@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.9...@selfcommunity/react-ui@0.11.0-alpha.10) (2025-01-22)
+
+
+### Bug Fixes
+
+* fixed text overflow on LiveStreamFormSettings ([da77c9d](https://github.com/selfcommunity/community-js/commit/da77c9d5fed422c60a0af1dee392117826dd951d))
+
+
+
+
+
 # [0.11.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.8...@selfcommunity/react-ui@0.11.0-alpha.9) (2025-01-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
