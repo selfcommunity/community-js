@@ -5,7 +5,6 @@ import {SCCourseType} from '@selfcommunity/types';
 import {SCUserContextType, useSCFetchCourse, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {CourseDashboard} from '@selfcommunity/react-ui';
-import {CourseDashboardPage} from 'packages/react-ui/src/components/CourseDashboard/types';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -41,8 +40,8 @@ export interface CourseDashboardTemplateProps {
    */
   courseId?: number;
 
-  page?: CourseDashboardPage;
-  onTabChange?: (page: CourseDashboardPage) => void;
+  page?: 'students' | 'comments';
+  onTabChange?: (page: 'students' | 'comments') => void;
   isTeacher?: boolean;
 }
 

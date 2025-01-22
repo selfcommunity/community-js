@@ -5,7 +5,6 @@ import {SCCourseType} from '@selfcommunity/types';
 import {SCUserContextType, useSCFetchCourse, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {EditCourse} from '@selfcommunity/react-ui';
-import {CoursePage} from 'packages/react-ui/src/components/EditCourse/types';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -41,8 +40,8 @@ export interface EditCourseTemplateProps {
    */
   courseId?: number;
 
-  page: CoursePage;
-  onTabChange: (page: CoursePage) => void;
+  page: 'lessons' | 'customize' | 'users' | 'options';
+  onTabChange: (page: 'lessons' | 'customize' | 'users' | 'options') => void;
 }
 
 export default function EditCourseTemplate(inProps: EditCourseTemplateProps) {
