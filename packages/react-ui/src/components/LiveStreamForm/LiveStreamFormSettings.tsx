@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCCommunitySubscriptionTier, SCFeatureName, SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, {useContext, useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {LIVESTREAM_DEFAULT_SETTINGS} from './constants';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
@@ -22,7 +22,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface LiveStreamFormSettingsProps extends BoxProps {
   /**
@@ -223,7 +223,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
                     <FormattedMessage id={`ui.liveStreamForm.view.${f}`} defaultMessage={`ui.liveStreamForm.view.${f}`} />
                   </b>
                 </Typography>
-                <Typography>
+                <Typography sx={{textWrap: 'auto'}}>
                   <FormattedMessage id={`ui.liveStreamForm.view.${f}.description`} defaultMessage={`ui.liveStreamForm.view.${f}.description`} />
                 </Typography>
               </Box>
