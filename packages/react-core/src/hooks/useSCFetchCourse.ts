@@ -1,4 +1,4 @@
-import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
+import {CourseInfoParams, Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCCourseType} from '@selfcommunity/types';
 import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
 import {useEffect, useMemo, useState} from 'react';
@@ -16,15 +16,18 @@ import {SCUserContextType} from '../types/context';
  * @param object.id
  * @param object.course
  * @param object.cacheStrategy
+ * @param object.params
  */
 export default function useSCFetchCourse({
   id = null,
   course = null,
   cacheStrategy = CacheStrategies.CACHE_FIRST,
+  params = null,
 }: {
   id?: number | string;
   course?: SCCourseType;
   cacheStrategy?: CacheStrategies;
+  params?: CourseInfoParams;
 }) {
   const __courseId = useMemo(() => course?.id || id, [course, id]);
 
@@ -56,6 +59,7 @@ export default function useSCFetchCourse({
         .request({
           url: Endpoints.GetCourseInfo.url({id}),
           method: Endpoints.GetCourseInfo.method,
+          params: params ?? {},
         })
         .then((res: HttpResponse<SCCourseType>) => {
           if (res.status >= 300) {

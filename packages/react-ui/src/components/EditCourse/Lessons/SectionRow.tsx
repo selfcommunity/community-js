@@ -153,7 +153,7 @@ function SectionRow(props: SectionRowProps) {
           <FieldName row={section} handleRenameRow={handleRenameSection} editMode={editMode} setEditMode={setEditMode} />
         </TableCell>
         <TableCell className={classes.cellAlignCenter}>
-          <LessonReleaseMenu course={course} />
+          <LessonReleaseMenu course={course} section={section} />
         </TableCell>
         <TableCell className={classes.cellAlignRight}>
           <Stack className={classes.actionsWrapper}>

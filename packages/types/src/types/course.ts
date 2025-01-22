@@ -218,27 +218,27 @@ export interface SCCourseSectionType {
   /**
    * The ID of the course section.
    */
-  id: number;
+  id?: number;
   /**
    * The name of the section course
    */
-  name: string;
+  name?: string;
   /**
    * Sections are dripped relative to this date; used only id course type is scheduled
    */
-  dripped_at: string;
+  dripped_at?: Date | string;
   /**
    * Sections are dripped relative to the enrollment date of the current user; used only if the course type is structured .
    */
-  drip_delay: number;
+  drip_delay?: number;
   /**
    * The list of all lesson IDs belonging to the current section course
    */
-  lessons_order: number[];
+  lessons_order?: number[];
   /**
    * The lessons associated to the course section
    */
-  lessons: SCCourseLessonType[];
+  lessons?: SCCourseLessonType[];
   /**
    * Determines when the current section will be available for the user.
    * The value will be null if the course type is self-paced

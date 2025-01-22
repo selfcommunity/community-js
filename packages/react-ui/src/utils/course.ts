@@ -13,3 +13,15 @@ export function isCourseNew(course: SCCourseType | null): boolean {
 export function isCourseCompleted(course: SCCourseType | null): boolean {
   return course?.user_completion_rate === 100;
 }
+
+enum unitType {
+  DAYS = 'days',
+  WEEKS = 'weeks'
+}
+
+export const getDripDelayAndUnit = (value: number) => {
+  if (value > 7 && value % 7 === 0) {
+    return {delay: value / 7, _unit: unitType.WEEKS};
+  }
+  return {delay: value, _unit: unitType.DAYS};
+};
