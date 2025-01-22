@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof LiveStreamForm>;
 
 const template = (args) => (
-  <div style={{width: 800}}>
+  <div style={{maxWidth: 800}}>
     <LiveStreamForm {...args} />
   </div>
 );
