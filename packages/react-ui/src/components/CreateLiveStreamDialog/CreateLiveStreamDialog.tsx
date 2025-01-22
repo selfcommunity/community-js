@@ -24,10 +24,11 @@ const classes = {
 const Root = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({
+})(() => ({
   paddingBottom: '0px !important',
   [`& .${classes.title}`]: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   [`& .${classes.content}`]: {
     paddingBottom: 0
@@ -101,12 +102,14 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
-  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
-  const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
+  const canCreateLiveStream: boolean = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const canCreateEvent: boolean = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
 
   // STATE
   const [step, setStep] = useState<CreateLiveStreamStep>(canCreateEvent ? CreateLiveStreamStep.SELECT_TYPE : CreateLiveStreamStep.CREATE_LIVE);
   const [liveType, setLiveType] = useState<LiveStreamType>(canCreateEvent ? null : LiveStreamType.DIRECT_LIVE);
+
+  const canShowBackButton: boolean = useMemo(() => step === CreateLiveStreamStep.CREATE_LIVE && canCreateEvent, [step, canCreateEvent]);
 
   // HANDLER
   const handleLiveTypeSelected = useCallback((l) => {
@@ -118,7 +121,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
     setStep(CreateLiveStreamStep.CREATE_LIVE);
   }, []);
 
-  const handleBack = useCallback((l) => {
+  const handleBack = useCallback(() => {
     setStep(CreateLiveStreamStep.SELECT_TYPE);
   }, []);
 
@@ -143,15 +146,15 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
   return (
     <Root
       DialogContentProps={{dividers: false}}
-      maxWidth={'md'}
+      maxWidth="md"
       title={
-        <Box className={classes.title} component={'span'}>
-          {Boolean(step === CreateLiveStreamStep.CREATE_LIVE && canCreateEvent) && (
+        <Box className={classes.title} component="span">
+          {canShowBackButton && (
             <Button variant="text" onClick={handleBack} startIcon={<Icon>arrow_back</Icon>}>
               <FormattedMessage id="ui.createLivestreamDialog.button.back" defaultMessage="ui.createLivestreamDialog.button.back" />
             </Button>
           )}
-          <Box component={'span'}>
+          <Box component="span">
             <FormattedMessage id="ui.createLivestreamDialog.title" defaultMessage="ui.createLivestreamDialog.title" />
           </Box>
         </Box>
@@ -159,7 +162,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       fullWidth
       open={open}
       scroll="body"
-      onClose={onClose}
+      onClose={!canShowBackButton ? onClose : undefined}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
       PaperProps={{elevation: 0}}
