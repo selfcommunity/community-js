@@ -276,6 +276,15 @@ export enum SCCourseLessonStatusType {
 }
 
 /**
+ * SCCourseLessonCompletionStatusType enum
+ */
+export enum SCCourseLessonCompletionStatusType {
+  UNCOMPLETED = 'uncompleted',
+  COMPLETED = 'completed',
+  FAILED = 'failed'
+}
+
+/**
  * Interface SCCourseLessonType.
  * Course Schema.
  */
@@ -284,6 +293,14 @@ export interface SCCourseLessonType {
    * The ID of the lesson.
    */
   id: number;
+  /**
+   * The ID of the course the lesson belongs to.
+   */
+  course_id: number;
+  /**
+   * The ID of the section within the course the lesson belongs to,
+   */
+  section_id: number;
   /**
    * The name of the lesson
    */
@@ -320,5 +337,12 @@ export interface SCCourseLessonType {
    * The list of Media ids for the lesson course
    */
   medias?: number[];
-  completed?: boolean;
+  /**
+   * Determines whether the current lesson is locked for the user based on the user and on the course property: type and enforce_lessons_order
+   */
+  locked?: boolean;
+  /**
+   * Enum to define the course lesson completion status for the user
+   */
+  completion_status?: SCCourseLessonCompletionStatusType;
 }
