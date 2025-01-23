@@ -245,7 +245,11 @@ export default function Course(inProps: CourseProps): JSX.Element {
             </Typography>
           </Box>
           <Typography className={classes.previewInfo}>
-            <FormattedMessage id={`ui.course.privacy.${scCourse.privacy}`} defaultMessage={`ui.course.privacy.${scCourse.privacy}`} />-
+            <FormattedMessage
+              id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+              defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+            />
+            -
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
           {scCourse.categories.map((category) => (
@@ -292,7 +296,11 @@ export default function Course(inProps: CourseProps): JSX.Element {
         }
         secondary={
           <Typography component="p" variant="body2" className={classes.snippetSecondary}>
-            <FormattedMessage id={`ui.course.privacy.${scCourse.privacy}`} defaultMessage={`ui.course.privacy.${scCourse.privacy}`} /> -
+            <FormattedMessage
+              id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+              defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+            />
+            -
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
         }

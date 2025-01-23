@@ -480,6 +480,7 @@
   "ui.course.privacy.private": "Private",
   "ui.course.privacy.open": "Open",
   "ui.course.privacy.secret": "Secret",
+  "ui.course.privacy.draft": "Draft",
   "ui.course.enroll": "Start the course",
   "ui.course.completed": "Completed",
   "ui.course.completion.percentage": "{percentage} completed",
