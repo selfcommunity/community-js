@@ -517,7 +517,7 @@ export class CourseApiClient {
    * @param config
    */
   static createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
-    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({}), method: Endpoints.CreateCourseSection.method, data: data});
+    return apiRequest({...config, url: Endpoints.CreateCourseLesson.url({}), method: Endpoints.CreateCourseLesson.method, data: data});
   }
 
   /**
@@ -537,8 +537,8 @@ export class CourseApiClient {
   ): Promise<SCCourseLessonType> {
     return apiRequest({
       ...config,
-      url: Endpoints.UpdateCourseSection.url({id, section_id, lesson_id}),
-      method: Endpoints.UpdateCourseSection.method,
+      url: Endpoints.UpdateCourseLesson.url({id, section_id, lesson_id}),
+      method: Endpoints.UpdateCourseLesson.method,
       data: data
     });
   }
@@ -560,8 +560,8 @@ export class CourseApiClient {
   ): Promise<SCCourseLessonType> {
     return apiRequest({
       ...config,
-      url: Endpoints.PatchCourseSection.url({id, section_id, lesson_id}),
-      method: Endpoints.PatchCourseSection.method,
+      url: Endpoints.PatchCourseLesson.url({id, section_id, lesson_id}),
+      method: Endpoints.PatchCourseLesson.method,
       data: data
     });
   }
@@ -573,7 +573,7 @@ export class CourseApiClient {
    * @param config
    */
   static deleteCourseLesson(id: number | string, section_id: number | string, lesson_id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.DeleteCourseSection.url({id, section_id, lesson_id}), method: Endpoints.DeleteCourseSection.method});
+    return apiRequest({...config, url: Endpoints.DeleteCourseLesson.url({id, section_id, lesson_id}), method: Endpoints.DeleteCourseLesson.method});
   }
 
   /**
