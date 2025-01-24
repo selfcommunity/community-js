@@ -41,7 +41,9 @@ import {
   CourseInfoViewType,
   CourseInfoParams,
   CourseLessonCommentsParams,
-  CourseUserRoleParams
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
 } from './course';
 
 export {
@@ -117,5 +119,7 @@ export {
   CourseInfoViewType,
   CourseInfoParams,
   CourseLessonCommentsParams,
-  CourseUserRoleParams
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
 };

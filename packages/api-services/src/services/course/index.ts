@@ -5,10 +5,12 @@ import {
   BaseGetParams,
   BaseSearchParams,
   CourseCreateParams,
+  CourseDashboardUsersParams,
   CourseInfoParams,
   CourseLessonCommentsParams,
   CourseSearchParams,
   CourseUserRoleParams,
+  CourseUsersParams,
   SCPaginatedResponse
 } from '../../types';
 import {CourseSectionParams, CourseUserParams} from '../../types/course';
@@ -30,6 +32,13 @@ export interface CourseApiClientInterface {
 
   // Course detail
   getSpecificCourseInfo(id: number | string, params?: CourseInfoParams, config?: AxiosRequestConfig): Promise<SCCourseType>;
+
+  // Course dashboard users
+  getCourseDashboardUsers(
+    id: number | string,
+    params?: CourseDashboardUsersParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>>;
 
   // Courses CRUD
   createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
@@ -156,7 +165,7 @@ export interface CourseApiClientInterface {
   getCourseInvitedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
   // Users who joined to the course
-  getCourseJoinedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  getCourseJoinedUsers(id: number | string, params?: CourseUsersParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
   // Subscribe/Unsubscribe
   joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -219,6 +228,21 @@ export class CourseApiClient {
    */
   static getSpecificCourseInfo(id: number | string, params?: CourseInfoParams, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return apiRequest({...config, params, url: Endpoints.GetCourseInfo.url({id}), method: Endpoints.GetCourseInfo.method});
+  }
+
+  /**
+   * This endpoint retrieves the list of all users that joined the course identified by Id
+   * it will also return some useful stats that can be used to make a course dashboard.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getCourseDashboardUsers(
+    id: number | string,
+    params?: CourseDashboardUsersParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return apiRequest({...config, params, url: Endpoints.GetCourseDashboardUsers.url({id}), method: Endpoints.GetCourseDashboardUsers.method});
   }
 
   /**
@@ -670,7 +694,11 @@ export class CourseApiClient {
    * @param params
    * @param config
    */
-  static getCourseJoinedUsers(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+  static getCourseJoinedUsers(
+    id: number | string,
+    params?: CourseUsersParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
     const p = urlParams(params);
     return apiRequest({
       ...config,
@@ -785,6 +813,13 @@ export default class CourseService {
   }
   static async getSpecificCourseInfo(id: number | string, params?: CourseInfoParams, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.getSpecificCourseInfo(id, params, config);
+  }
+  static async getCourseDashboardUsers(
+    id: number | string,
+    params?: CourseDashboardUsersParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCUserType>> {
+    return CourseApiClient.getCourseDashboardUsers(id, params, config);
   }
   static async createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.createCourse(data, config);
@@ -969,7 +1004,7 @@ export default class CourseService {
   }
   static async getCourseJoinedUsers(
     id: number | string,
-    params?: BaseGetParams,
+    params?: CourseUsersParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
     return CourseApiClient.getCourseJoinedUsers(id, params, config);

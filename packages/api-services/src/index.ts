@@ -128,7 +128,9 @@ import {
   CourseInfoViewType,
   CourseInfoParams,
   CourseLessonCommentsParams,
-  CourseUserRoleParams
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
 } from './types';
 
 /**
@@ -321,5 +323,7 @@ export {
   CourseApiClientInterface,
   CourseApiClient,
   CourseLessonCommentsParams,
-  CourseUserRoleParams
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
 };
