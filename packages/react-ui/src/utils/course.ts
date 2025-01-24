@@ -25,3 +25,15 @@ export const getDripDelayAndUnit = (value: number) => {
   }
   return {delay: value, _unit: unitType.DAYS};
 };
+
+export function getCurrentSectionAndLessonIndex(course: SCCourseType, sectionId: number, lessonId: number) {
+  const currentSectionIndex = course.sections.findIndex((section) => section.id === sectionId);
+  if (currentSectionIndex === -1) {
+    return {currentSectionIndex: null, currentLessonIndex: null};
+  }
+  const currentLessonIndex = course.sections[currentSectionIndex].lessons.findIndex((lesson) => lesson.id === lessonId);
+  if (currentLessonIndex === -1) {
+    return {currentSectionIndex, currentLessonIndex: null};
+  }
+  return {currentSectionIndex, currentLessonIndex};
+}
