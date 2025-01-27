@@ -27,7 +27,8 @@ export enum SCCourseJoinStatusType {
   JOINED = 'joined',
   REQUESTED = 'requested',
   INVITED = 'invited',
-  MANAGER = 'manager'
+  MANAGER = 'manager',
+  CREATOR = 'creator'
 }
 
 /**
@@ -67,6 +68,31 @@ export interface SCCourseType {
    * Notifies course admins about new lesson comments
    */
   new_comment_notification_enabled?: boolean;
+  /**
+   * Hide member count (default: false).
+   * If enabled, only managers can see the member count
+   */
+  hide_member_count?: boolean;
+  /**
+   * The course meta title
+   */
+  meta_title?: string;
+  /**
+   * The course meta description
+   */
+  meta_description?: string;
+  /**
+   * The course Open Graph title
+   */
+  og_title?: string;
+  /**
+   * The course Open Graph description
+   */
+  og_description?: string;
+  /**
+   * The course Open Graph image
+   */
+  og_image?: string;
   /**
    * The list of all section IDs belonging to the current course
    */
