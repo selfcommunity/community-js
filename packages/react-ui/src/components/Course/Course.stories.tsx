@@ -41,7 +41,7 @@ export const Base: StoryObj<typeof Course> = {
 export const Snippet: StoryObj<typeof Course> = {
 	args: {
 		template: SCCourseTemplateType.SNIPPET,
-		courseId: 2,
+		courseId: 1,
 		elevation: 0,
 		variant: 'elevation',
 		square: false

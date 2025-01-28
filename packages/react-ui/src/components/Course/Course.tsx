@@ -1,8 +1,8 @@
 import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Icon, LinearProgress, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchCourse, useSCRouting, useSCUser} from '@selfcommunity/react-core';
-import {SCCourseType} from '@selfcommunity/types';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
+import {SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -29,8 +29,8 @@ const classes = {
   previewInfo: `${PREFIX}-preview-info`,
   previewName: `${PREFIX}-preview-name`,
   previewNameWrapper: `${PREFIX}-preview-name-wrapper`,
+  previewProgress: `${PREFIX}-preview-progress`,
   previewProgressBar: `${PREFIX}-preview-progress-bar`,
-  previewProgressStatus: `${PREFIX}-preview-progress-status`,
   snippetRoot: `${PREFIX}-snippet-root`,
   snippetActions: `${PREFIX}-snippet-actions`,
   snippetAvatar: `${PREFIX}-snippet-avatar`,
@@ -130,8 +130,8 @@ export interface CourseProps extends WidgetProps {
  |previewInfo|.SCCourses-preview-info|Styles applied to the info section in the preview template.|
  |previewName|.SCCourses-preview-name|Styles applied to the name element in the preview template.|
  |previewNameWrapper|.SCCourses-preview-name-wrapper|Styles applied to the name wrapper in the preview template.|
+ |previewProgress|.SCCourses-preview-progress|Styles applied to indicate the progress section in the preview template.|
  |previewProgressBar|.SCCourses-preview-progress-bar|Styles applied to the progress bar in the preview template.|
- |previewProgressStatus|.SCCourses-preview-progress-status|Styles applied to indicate the progress status in the preview template.|
  |snippetRoot|.SCCourses-snippet-root|Styles applied to the root element in the snippet template.|
  |snippetActions|.SCCourses-snippet-actions|Styles applied to the actions section in the snippet template.|
  |snippetAvatar|.SCCourses-snippet-avatar|Styles applied to the avatar element in the snippet template.|
@@ -165,10 +165,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const scUserContext: SCUserContextType = useSCUser();
   const isCourseAdmin = useMemo(
-    () => scUserContext.user && scCourse?.created_by?.id === scUserContext.user.id,
-    [scUserContext.user, scCourse?.created_by?.id]
+    () => scCourse && (scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER),
+    [scCourse]
   );
 
   /**
@@ -178,13 +177,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
     return <CourseSkeleton template={template} {...CourseSkeletonComponentProps} {...rest} actions={actions} />;
   }
   const renderProgress = () => {
-    if (!scCourse.join_status) {
-      return (
-        <Button variant="outlined" size="small">
-          <FormattedMessage defaultMessage="ui.course.enroll" id="ui.course.enroll" />
-        </Button>
-      );
-    } else if (isCourseCompleted(scCourse)) {
+    if (isCourseCompleted(scCourse)) {
       return (
         <Box className={classes.previewCompletedStatus}>
           <Icon color="success">circle_checked</Icon>
@@ -193,9 +186,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
           </Typography>
         </Box>
       );
-    } else {
+    } else if (scCourse.join_status === SCCourseJoinStatusType.JOINED) {
       return (
-        <Box className={classes.previewProgressStatus}>
+        <>
           <Typography>
             <FormattedMessage
               id="ui.course.completion.percentage"
@@ -204,10 +197,27 @@ export default function Course(inProps: CourseProps): JSX.Element {
             />
           </Typography>
           <LinearProgress className={classes.previewProgressBar} variant="determinate" color="primary" value={scCourse.user_completion_rate} />
-        </Box>
+        </>
       );
+    } else if (isCourseAdmin) {
+      return <CourseParticipantsButton course={scCourse as any} {...CourseParticipantsButtonComponentProps} />;
     }
   };
+
+  const chipLabel = (() => {
+    if (isCourseAdmin) {
+      return scCourse.privacy ? (
+        <FormattedMessage defaultMessage="ui.course.status.published" id="ui.course.status.published" />
+      ) : (
+        <FormattedMessage defaultMessage="ui.course.status.draft" id="ui.course.status.draft" />
+      );
+    } else if (isCourseCompleted(scCourse)) {
+      return <FormattedMessage defaultMessage="ui.course.status.completed" id="ui.course.status.completed" />;
+    } else if (isCourseNew(scCourse)) {
+      return <FormattedMessage defaultMessage="ui.course.status.new" id="ui.course.status.new" />;
+    }
+    return null;
+  })();
 
   /**
    * Renders course object
@@ -218,18 +228,18 @@ export default function Course(inProps: CourseProps): JSX.Element {
       <PreviewRoot className={classes.previewRoot}>
         <Box className={classes.previewImageWrapper}>
           <CardMedia component="img" image={scCourse.image_medium} alt={scCourse.name} className={classes.previewImage} />
-          {!isCourseAdmin && (isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
+          {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
             <Chip
               size="small"
               component="div"
-              color={isCourseCompleted(scCourse) ? 'primary' : 'secondary'}
-              label={
-                isCourseCompleted(scCourse) ? (
-                  <FormattedMessage defaultMessage="ui.course.status.completed" id="ui.course.status.completed" />
-                ) : (
-                  <FormattedMessage defaultMessage="ui.course.status.new" id="ui.course.status.new" />
-                )
+              color={
+                isCourseCompleted(scCourse) || (isCourseAdmin && scCourse.privacy)
+                  ? 'primary'
+                  : isCourseAdmin && !scCourse.privacy
+                  ? 'default'
+                  : 'secondary'
               }
+              label={chipLabel}
               className={classes.chip}
             />
           )}
@@ -239,11 +249,11 @@ export default function Course(inProps: CourseProps): JSX.Element {
           <Typography variant="body2" className={classes.previewCreator}>
             {scCourse.created_by.username}
           </Typography>
-          <Box className={classes.previewNameWrapper}>
+          <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.previewNameWrapper}>
             <Typography variant="h6" className={classes.previewName}>
               {scCourse.name}
             </Typography>
-          </Box>
+          </Link>
           <Typography className={classes.previewInfo}>
             <FormattedMessage
               id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
@@ -252,13 +262,24 @@ export default function Course(inProps: CourseProps): JSX.Element {
             -
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
-          {scCourse.categories.map((category) => (
-            <Chip key={category.id} size="small" component="div" label={category.name} className={classes.previewCategory} />
-          ))}
+          <Box className={classes.previewCategory}>
+            {scCourse.categories.map((category) => (
+              <Chip key={category.id} size="small" label={category.name} />
+            ))}
+          </Box>
+          <Box className={classes.previewProgress}>{renderProgress()}</Box>
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            {isCourseAdmin ? <CourseParticipantsButton course={scCourse as any} {...CourseParticipantsButtonComponentProps} /> : renderProgress()}
+            {!scCourse.join_status ? (
+              <Button variant="outlined" size="small">
+                <FormattedMessage defaultMessage="ui.course.enroll" id="ui.course.enroll" />
+              </Button>
+            ) : (
+              <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+                <FormattedMessage defaultMessage="ui.course.see.preview" id="ui.course.see.preview" />
+              </Button>
+            )}
           </CardActions>
         )}
       </PreviewRoot>
@@ -271,18 +292,18 @@ export default function Course(inProps: CourseProps): JSX.Element {
         image={
           <Box className={classes.snippetImage}>
             <Avatar variant="square" alt={scCourse.name} src={scCourse.image_medium} className={classes.snippetAvatar} />
-            {!isCourseAdmin && (isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
+            {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
               <Chip
                 size="small"
                 component="div"
-                color={isCourseCompleted(scCourse) ? 'primary' : 'secondary'}
-                label={
-                  isCourseCompleted(scCourse) ? (
-                    <FormattedMessage defaultMessage="ui.course.status.completed" id="ui.course.status.completed" />
-                  ) : (
-                    <FormattedMessage defaultMessage="ui.course.status.new" id="ui.course.status.new" />
-                  )
+                color={
+                  isCourseCompleted(scCourse) || (isCourseAdmin && scCourse.privacy)
+                    ? 'primary'
+                    : isCourseAdmin && !scCourse.privacy
+                    ? 'default'
+                    : 'secondary'
                 }
+                label={chipLabel}
                 className={classes.chip}
               />
             )}

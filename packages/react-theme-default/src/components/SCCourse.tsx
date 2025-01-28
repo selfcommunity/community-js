@@ -92,11 +92,14 @@ const Component = {
         padding: `16px ${theme.spacing(2)} 0 !important`,
         '& .SCCourse-preview-creator': {
           paddingTop: 0,
-          marginBottom: theme.spacing(0.5)
+          marginBottom: theme.spacing(1)
         },
         '& .SCCourse-preview-name-wrapper': {
           textDecoration: 'none',
           color: 'inherit',
+          h6: {
+            fontWeight: 700
+          },
           '& .SCCourse-preview-name': {
             marginBottom: theme.spacing(0.5)
           }
@@ -107,24 +110,30 @@ const Component = {
           marginBottom: theme.spacing(1)
         },
         '& .SCCourse-preview-category': {
-          marginRight: theme.spacing(0.5),
-          marginBottom: theme.spacing(0.5)
+          [theme.breakpoints.up('sm')]: {
+            height: theme.spacing(4)
+          },
+          '& .MuiChip-root': {
+            marginRight: theme.spacing(0.5)
+          }
         }
       },
-      '& .SCCourse-preview-actions': {
+      '& .SCCourse-preview-progress': {
+        [theme.breakpoints.up('sm')]: {
+          height: theme.spacing(3)
+        },
         justifyContent: 'center',
-        padding: theme.spacing(2),
-        '& .SCCourse-preview-progress-status': {
+        padding: theme.spacing(1),
+        '& .MuiLinearProgress-root': {
           width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          '& .MuiLinearProgress-root': {
-            width: '100%',
-            height: 5,
-            borderRadius: 5
-          }
+          height: 5,
+          borderRadius: 5,
+          marginTop: theme.spacing(1)
         },
         '& .SCCourse-preview-completed-status': {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           '& .MuiIcon-root': {
             marginRight: theme.spacing(1)
           }
@@ -132,6 +141,10 @@ const Component = {
         '& .SCCourse-preview-progress-bar': {
           backgroundColor: theme.palette.grey['300']
         }
+      },
+      '& .SCCourse-preview-actions': {
+        justifyContent: 'center',
+        padding: theme.spacing(2)
       }
     }),
     placeholderRoot: ({theme}: any) => ({
@@ -197,7 +210,7 @@ const Component = {
       '& .SCCourse-placeholder-create-button': {
         display: 'flex',
         justifyContent: 'center',
-        padding: theme.spacing(5)
+        padding: 100
       }
     }),
     skeletonRoot: ({theme}: any) => ({
