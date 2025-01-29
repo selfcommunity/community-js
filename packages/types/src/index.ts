@@ -233,8 +233,8 @@ export {
   SCCourseJoinStatusType,
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
-  SCCourseLessonStatusType,
   SCCourseLessonCompletionStatusType,
+  SCCourseLessonStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier
