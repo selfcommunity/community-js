@@ -54,8 +54,6 @@ export default function CoursesTemplate(inProps: CoursesTemplateProps) {
   const {scCourse} = useSCFetchCourse({id: courseId, course});
   const scUserContext: SCUserContextType = useSCUser();
 
-  console.log(scCourse, scUserContext);
-
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <Courses endpoint={{url: () => '', method: 'GET'}} />

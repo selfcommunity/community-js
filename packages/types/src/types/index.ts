@@ -142,7 +142,8 @@ import {
   SCCourseJoinStatusType,
   SCCourseLessonTypologyType,
   SCCourseLessonStatusType,
-  SCCourseTypologyType
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType
 } from './course';
 import {
   type SCLiveStreamType,
@@ -330,6 +331,7 @@ export {
   SCCourseLessonTypologyType,
   SCCourseLessonStatusType,
   SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,

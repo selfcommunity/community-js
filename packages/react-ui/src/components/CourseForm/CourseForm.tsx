@@ -248,7 +248,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     let courseService: Promise<SCCourseType>;
     if (course) {
       // Update
-      const data = {
+      const data: any = {
         name: field.name,
         description: field.description,
         type: field.type,

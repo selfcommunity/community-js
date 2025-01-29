@@ -47,6 +47,7 @@ import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/Co
 import CourseContentMenu, {CourseContentMenuProps} from './components/CourseContentMenu';
 import CourseDashboard, {TeacherCourseDashboardProps, StudentCourseDashboardProps} from './components/CourseDashboard';
 import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from './components/Course';
+import CourseJoinButton, {CourseJoinButtonProps} from './components/CourseJoinButton';
 import Courses, {CoursesProps, CoursesSkeleton, CoursesSkeletonProps} from './components/Courses';
 import CreateCourseButton, {CreateCourseButtonProps} from './components/CreateCourseButton';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
@@ -375,6 +376,8 @@ export {
   CourseProps,
   CourseSkeleton,
   CourseSkeletonProps,
+  CourseJoinButton,
+  CourseJoinButtonProps,
   Courses,
   CreateCourseButton,
   CreateCourseButtonProps,

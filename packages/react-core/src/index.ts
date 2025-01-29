@@ -27,6 +27,7 @@ import {
   SCThemeType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
 } from './types';
 
 /**
@@ -161,6 +162,7 @@ export {
   SCThemeType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
   SCContext,
   SCUserContext,
   SCThemeContext,

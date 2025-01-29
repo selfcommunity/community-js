@@ -180,6 +180,7 @@ import {
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
   SCCourseLessonStatusType,
+  SCCourseLessonCompletionStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier
@@ -233,6 +234,7 @@ export {
   SCCourseLessonTypologyType,
   SCCourseTypologyType,
   SCCourseLessonStatusType,
+  SCCourseLessonCompletionStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier

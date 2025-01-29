@@ -10,7 +10,7 @@ import {getContributionHtml} from '../../utils/contribution';
 import Widget from '../Widget';
 import ContentLesson from '../Composer/Content/ContentLesson';
 import {EditorProps} from '../Editor';
-import {SCCourseLessonType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonType} from '@selfcommunity/types';
 import {SectionRowInterface} from '../EditCourse/types';
 import {getCourseData} from '../EditCourse/data';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -93,7 +93,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
 
   const currentSection = sections?.[currentSectionIndex] || null;
   const currentLesson = currentSection?.lessons?.[currentLessonIndex] || null;
-  const [completed, setCompleted] = useState<boolean>(lesson.completed);
+  const [completed, setCompleted] = useState<boolean>(lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();

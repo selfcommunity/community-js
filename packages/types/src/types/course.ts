@@ -39,7 +39,7 @@ export interface SCCourseType {
   /**
    * The ID of the course.
    */
-  id?: number;
+  id: number;
   /**
    * The name of the course.
    */

@@ -24,12 +24,14 @@ export enum SCGroupEventType {
 }
 
 /**
- * Group/Event event types
+ * Course event types
  */
 export enum SCCourseEventType {
   CREATE = 'create',
   EDIT = 'edit',
-  DELETE = 'delete'
+  DELETE = 'delete',
+  ADD_MEMBER = 'members.add_member',
+  INVITE_MEMBER = 'members.invite_member'
 }
 
 /**

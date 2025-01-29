@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {Box, Collapse, Icon, List, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
 import {PREFIX} from './constants';
 import {FormattedMessage} from 'react-intl';
-import {SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {getCourseData} from '../EditCourse/data';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -116,7 +116,7 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
                   selected={_lesson.name === lesson?.name}>
                   {!isCourseCreator && (
                     <ListItemIcon className={classes.itemIcon}>
-                      {_lesson.completed ? (
+                      {_lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
                         <Icon className={classes.iconComplete}>circle_checked</Icon>
                       ) : (
                         <Icon className={classes.iconIncomplete}>fiber_manual_record</Icon>
