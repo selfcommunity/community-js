@@ -29,7 +29,7 @@ export default function InfoCourseDashboard(props: InfoCourseDashboardProps) {
       case 'first':
         return <CourseParticipantsButton course={course} />;
       case 'second':
-        return <Typography variant="h5">{course['avg_completion']}</Typography>;
+        return <Typography variant="h5">{course.avg_completion_rate}%</Typography>;
     }
   }, [course, position]);
 

@@ -314,7 +314,7 @@
   "ui.courseUsersTable.btn.label": "Vedi altri",
   "ui.courseUsersTable.dialog.btn.label": "Messaggio",
   "ui.courseUsersTable.dialog.info.text1": "Lezioni completate: {lessonsCompleted}",
-  "ui.courseUsersTable.dialog.info.text2": "Corso completato: {courseCompleted}",
+  "ui.courseUsersTable.dialog.info.text2": "Corso completato: {courseCompleted}%",
   "ui.courseUsersTable.dialog.title": "Avanzamento del corso",
   "ui.courseUsersTable.empty.description": "Ti invitiamo ad aggiungere Utenti nella lista",
   "ui.courseUsersTable.empty.title": "Attualmente non ci sono Utenti invitati al Corso",

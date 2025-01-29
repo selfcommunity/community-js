@@ -228,7 +228,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             />
           }
           onClose={handleToggleDialogOpen}
-          open={open}
+          open
           {...DialogProps}>
           <InfiniteScroll
             dataLength={enrolled.length}

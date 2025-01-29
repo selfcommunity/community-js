@@ -153,6 +153,10 @@ export interface SCCourseType {
    * User completion rate of the course (percentage)
    */
   user_completion_rate?: number;
+  /**
+   * Users completion rate of the course (percentage)
+   */
+  avg_completion_rate?: number;
 }
 
 /**

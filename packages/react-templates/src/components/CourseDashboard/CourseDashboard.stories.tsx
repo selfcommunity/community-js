@@ -5,15 +5,15 @@ export default {
   title: 'Design System/React TEMPLATES/Course Dashboard',
   component: CourseDashboard,
   argTypes: {
-    isTeacher: {
+    teacher: {
       control: 'string'
     }
   },
   args: {
     id: undefined,
-    courseId: undefined,
+    courseId: 2,
     course: undefined,
-    className: ''
+    className: '',
   },
   render: (args) => (
     <div style={{maxWidth: 1280, margin: 'auto'}}>
@@ -24,7 +24,7 @@ export default {
 
 export const Student: StoryObj<typeof CourseDashboard> = {
   args: {
-    isTeacher: false
+    isTeacher: false,
   }
 };
 
@@ -36,8 +36,8 @@ export const Teacher: StoryObj<typeof CourseDashboard> = {
     }
   },
   args: {
-    isTeacher: true,
     page: 'students',
-    onTabChange() {}
-  }
+    onTabChange() {},
+    isTeacher: true,
+  },
 };

@@ -88,7 +88,7 @@ export interface CourseApiClientInterface {
 
   // Courses section CRUD
   getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
-  getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
+  getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType[]>;
   createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
   updateCourseSection(
     id: number | string,
@@ -118,7 +118,7 @@ export interface CourseApiClientInterface {
     params?: CourseLessonCommentsParams,
     config?: AxiosRequestConfig
   ): Promise<SCCourseCommentType[]>;
-  getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType>;
+  getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType[]>;
   createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType>;
   updateCourseLesson(
     id: number | string,
@@ -187,11 +187,11 @@ export interface CourseApiClientInterface {
 export class CourseApiClient {
   /**
    * This endpoint allows user managers to change the role of some users in the specified course.
-   * @param id
+   * @param _id
    * @param params
    * @param config
    */
-  static changeCourseUserRole(id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
+  static changeCourseUserRole(_id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, params, url: Endpoints.ChangeCourseUserRole.url({}), method: Endpoints.ChangeCourseUserRole.method});
   }
   /**
@@ -427,7 +427,7 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+  static getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType[]> {
     return apiRequest({...config, url: Endpoints.GetCourseSections.url({id}), method: Endpoints.GetCourseSections.method});
   }
 
@@ -531,7 +531,7 @@ export class CourseApiClient {
    * @param section_id
    * @param config
    */
-  static getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
+  static getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType[]> {
     return apiRequest({...config, url: Endpoints.GetCourseLessons.url({id, section_id}), method: Endpoints.GetCourseLessons.method});
   }
 
@@ -892,7 +892,7 @@ export default class CourseService {
   static async getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
     return CourseApiClient.getCourseSection(id, section_id, config);
   }
-  static async getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+  static async getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType[]> {
     return CourseApiClient.getCourseSections(id, config);
   }
   static async createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
@@ -934,7 +934,7 @@ export default class CourseService {
   ): Promise<SCCourseCommentType[]> {
     return CourseApiClient.getCourseLessonComments(id, section_id, lesson_id, params, config);
   }
-  static async getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
+  static async getCourseLessons(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseLessonType[]> {
     return CourseApiClient.getCourseLessons(id, section_id, config);
   }
   static async createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {

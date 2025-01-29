@@ -41,6 +41,7 @@ export const EVENT_ROUTE_NAME = 'event';
 export const EVENTS_ROUTE_NAME = 'events';
 export const COURSE_ROUTE_NAME = 'course';
 export const COURSE_EDIT_ROUTE_NAME = 'course_edit';
+export const COURSE_DASHBOARD_ROUTE_NAME = 'course_dashboard';
 export const COURSES_ROUTE_NAME = 'courses';
 export const COURSES_SUBSCRIBED_ROUTE_NAME = 'courses_subscribed';
 export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
@@ -94,6 +95,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [COURSE_ROUTE_NAME]: '/course/:id/:slug/',
   [COURSES_ROUTE_NAME]: '/courses/',
   [COURSE_EDIT_ROUTE_NAME]: '/course/:id/:slug/edit',
+  [COURSE_DASHBOARD_ROUTE_NAME]: '/course/:id/:slug/dashboard',
   [COURSES_SUBSCRIBED_ROUTE_NAME]: '/courses/subscribed/',
   [LIVESTREAM_ROUTE_NAME]: '/live/:slug/',
 };

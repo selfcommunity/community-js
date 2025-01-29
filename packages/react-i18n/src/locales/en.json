@@ -314,7 +314,7 @@
   "ui.courseUsersTable.btn.label": "See more",
   "ui.courseUsersTable.dialog.btn.label": "Message",
   "ui.courseUsersTable.dialog.info.text1: ": "Lessons completed: {lessonsCompleted}",
-  "ui.courseUsersTable.dialog.info.text2: ": "Course completed: {courseCompleted}",
+  "ui.courseUsersTable.dialog.info.text2: ": "Course completed: {courseCompleted}%",
   "ui.courseUsersTable.dialog.title": "Corso progress",
   "ui.courseUsersTable.empty.description": "Start by adding a course section, then add lessons",
   "ui.courseUsersTable.empty.title": "Create your Course content",

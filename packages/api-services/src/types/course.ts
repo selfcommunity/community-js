@@ -72,6 +72,7 @@ export enum CourseInfoViewType {
  */
 export interface CourseInfoParams {
   view?: CourseInfoViewType;
+  user?: number;
 }
 
 /**

@@ -1,7 +1,6 @@
 import {Box, Button, Icon, Skeleton, Stack, Typography} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {LESSONS_DATA} from '../EditCourse/data';
 import {PREFIX} from './constants';
 import {useMemo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -13,21 +12,6 @@ const classes = {
   innerWrapper: `${PREFIX}-header-inner-wrapper`,
   iconWrapper: `${PREFIX}-header-icon-wrapper`
 };
-
-const ICON_DATA = [
-  {
-    id: 'ui.course.label',
-    icon: 'public',
-    key: 'privacy',
-    underId: `ui.course.privacy.${LESSONS_DATA.privacy}`
-  },
-  {
-    id: 'ui.course.type',
-    icon: 'courses',
-    key: 'typeOfCourse',
-    underId: `ui.course.type.${LESSONS_DATA.typeOfCourse}`
-  }
-];
 
 interface HeaderCourseDashboardProps {
   course: SCCourseType | null;
@@ -59,6 +43,23 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
     }
   }, [course, hasAction]);
 
+  const iconData = useMemo(() => {
+    return [
+      {
+        id: 'ui.course.label',
+        icon: 'public',
+        key: 'privacy',
+        underId: `ui.course.privacy.${course?.privacy}`
+      },
+      {
+        id: 'ui.course.type',
+        icon: 'courses',
+        key: 'typeOfCourse',
+        underId: `ui.course.type.${course?.type}`
+      }
+    ];
+  }, [course]);
+
   return (
     <Box className={classes.header}>
       {course ? (
@@ -71,7 +72,7 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
 
       <Stack className={classes.outerWrapper}>
         <Stack className={classes.innerWrapper}>
-          {ICON_DATA.map((data, i) => (
+          {iconData.map((data, i) => (
             <Stack key={i} className={classes.iconWrapper}>
               <Icon fontSize="small">{data.icon}</Icon>
 

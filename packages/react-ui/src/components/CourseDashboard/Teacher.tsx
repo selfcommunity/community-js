@@ -1,19 +1,17 @@
 import {Box, Stack, styled, Tab, Typography, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
 import HeaderCourseDashboard from './Header';
-import {HTMLAttributes, SyntheticEvent, useCallback, useEffect, useState} from 'react';
+import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import {CourseDashboardPage, TabContentEnum, TabContentType} from './types';
 import classNames from 'classnames';
 import {SCCourseType} from '@selfcommunity/types';
-import {useSnackbar} from 'notistack';
-import {Logger} from '@selfcommunity/utils';
 import {FormattedMessage} from 'react-intl';
-import {getCourseData} from './../EditCourse/data';
-import {SCOPE_SC_UI} from './../../constants/Errors';
 import InfoCourseDashboard from './Teacher/Info';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import Students from './Teacher/Students';
 import Comments from './Teacher/Comments';
+import {useSCFetchCourse} from '@selfcommunity/react-core';
+import {CourseInfoViewType} from '@selfcommunity/api-services';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -41,6 +39,8 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface TeacherCourseDashboardProps {
+  courseId?: number;
+  course?: SCCourseType;
   page: CourseDashboardPage;
   onTabChange: (page: CourseDashboardPage) => void;
   className?: HTMLAttributes<HTMLDivElement>['className'];
@@ -54,32 +54,13 @@ export default function Teacher(inProps: TeacherCourseDashboardProps) {
     name: PREFIX
   });
 
-  const {page, onTabChange, className, ...rest} = props;
+  const {courseId, course, page, onTabChange, className, ...rest} = props;
 
   // STATES
-  const [course, setCourse] = useState<SCCourseType | null>(null);
   const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
 
   // HOOKS
-  const {enqueueSnackbar} = useSnackbar();
-
-  // EFFECTS
-  useEffect(() => {
-    getCourseData(1)
-      .then((courseData) => {
-        if (courseData) {
-          setCourse(courseData);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
-      });
-  }, []);
+  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: CourseInfoViewType.DASHBOARD}});
 
   // HANDLERS
   const handleTabChange = useCallback(
@@ -92,11 +73,11 @@ export default function Teacher(inProps: TeacherCourseDashboardProps) {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <HeaderCourseDashboard course={course} hasAction />
+      <HeaderCourseDashboard course={scCourse} hasAction />
 
       <Stack className={classes.infoWrapper}>
-        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={course} position="first" />
-        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.completion" course={course} position="second" />
+        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={scCourse} position="first" />
+        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.completion" course={scCourse} position="second" />
       </Stack>
 
       <TabContext value={tabValue}>
@@ -116,11 +97,11 @@ export default function Teacher(inProps: TeacherCourseDashboardProps) {
         </TabList>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.STUDENTS}>
-          <Students course={course} />
+          <Students course={scCourse} />
         </TabPanel>
 
         <TabPanel className={classes.tabPanel} value={TabContentEnum.COMMENTS}>
-          <Comments course={course} />
+          <Comments course={scCourse} />
         </TabPanel>
       </TabContext>
     </Root>

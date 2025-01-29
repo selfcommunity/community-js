@@ -1499,7 +1499,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   GetCourseLessons: {
-    url: urlReplacer('/api/v2/course/$(id)/section/lesson/'),
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/'),
     method: 'GET'
   },
   GetCourseSection: {
