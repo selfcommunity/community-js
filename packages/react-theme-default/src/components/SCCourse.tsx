@@ -199,6 +199,9 @@ const Component = {
           display: 'flex',
           alignItems: 'center',
           marginBottom: theme.spacing(1)
+        },
+        [theme.breakpoints.up('sm')]: {
+          height: theme.spacing(20.5)
         }
       },
       '& .SCCourse-placeholder-actions': {
@@ -210,7 +213,8 @@ const Component = {
       '& .SCCourse-placeholder-create-button': {
         display: 'flex',
         justifyContent: 'center',
-        padding: 100
+        marginTop: theme.spacing(10.25),
+        marginBottom: theme.spacing(10.25)
       }
     }),
     skeletonRoot: ({theme}: any) => ({

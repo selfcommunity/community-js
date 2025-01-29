@@ -457,12 +457,20 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 <Grid container spacing={{xs: 2}} className={classes.courses} {...GridContainerComponentProps}>
                   <>
                     {courses.map((course: SCCourseType) => (
-                      <Grid item xs={12} sm={12} md={6} key={course.id} className={classes.item} {...GridItemComponentProps}>
+                      <Grid item xs={12} sm={12} md={6} lg={3} key={course.id} className={classes.item} {...GridItemComponentProps}>
                         <Course courseId={course.id} {...CourseComponentProps} />
                       </Grid>
                     ))}
                     {authUserId && courses.length % 2 !== 0 && (
-                      <Grid item xs={12} sm={12} md={6} key={'placeholder-item'} className={classes.itemPlaceholder} {...GridItemComponentProps}>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        lg={3}
+                        key={'placeholder-item'}
+                        className={classes.itemPlaceholder}
+                        {...GridItemComponentProps}>
                         <CoursePlaceholder actionCreate={true} />
                       </Grid>
                     )}
