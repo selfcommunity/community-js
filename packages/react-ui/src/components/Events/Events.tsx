@@ -38,13 +38,12 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
-import CreateEventButton from '../CreateEventButton';
+import CreateEventButton, {CreateEventButtonProps} from '../CreateEventButton';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
 import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
 import LocationEventsFilter from './LocationEventsFilter';
 import PastEventsFilter from './PastEventsFilter';
-import {EventFormDialogProps} from '../EventFormDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -129,7 +128,7 @@ export interface EventsProps {
    * Props to spread to CreateEvent component
    * @default empty object
    */
-  EventFormDialogComponentProps?: EventFormDialogProps;
+  CreateEventButtonProps?: CreateEventButtonProps;
 
   /**
    * Show/Hide filters
@@ -197,7 +196,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     EventSkeletonComponentProps = {elevation: 0, square: true},
     GridContainerComponentProps = {},
     GridItemComponentProps = {},
-    EventFormDialogComponentProps = {},
+    CreateEventButtonProps = {},
     showFilters = false,
     filters,
     general = true,
@@ -518,7 +517,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                       skeletonsAnimation={false}
                       actions={
                         (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? (
-                          <CreateEventButton {...EventFormDialogComponentProps} />
+                          <CreateEventButton {...CreateEventButtonProps} />
                         ) : null
                       }
                     />
@@ -533,7 +532,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                       skeletonsAnimation={false}
                       actions={
                         (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? (
-                          <CreateEventButton {...EventFormDialogComponentProps} />
+                          <CreateEventButton {...CreateEventButtonProps} />
                         ) : null
                       }
                     />
@@ -558,7 +557,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                           {...EventSkeletonComponentProps}
                           skeletonsAnimation={false}
                           actions={
-                            <CreateEventButton variant="outlined" color="primary" size="small" {...EventFormDialogComponentProps}>
+                            <CreateEventButton variant="outlined" color="primary" size="small" {...CreateEventButtonProps}>
                               <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
                             </CreateEventButton>
                           }
