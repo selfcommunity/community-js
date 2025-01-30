@@ -516,7 +516,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
                       skeletonsAnimation={false}
-                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                      actions={
+                        (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? (
+                          <CreateEventButton {...EventFormDialogComponentProps} />
+                        ) : null
+                      }
                     />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
@@ -527,7 +531,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
                       skeletonsAnimation={false}
-                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                      actions={
+                        (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? (
+                          <CreateEventButton {...EventFormDialogComponentProps} />
+                        ) : null
+                      }
                     />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title.personal" defaultMessage="ui.events.noEvents.title.personal" />
