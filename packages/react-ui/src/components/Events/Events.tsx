@@ -44,6 +44,7 @@ import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
 import LocationEventsFilter from './LocationEventsFilter';
 import PastEventsFilter from './PastEventsFilter';
+import {EventFormDialogProps} from '../EventFormDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -125,6 +126,12 @@ export interface EventsProps {
   GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
+   * Props to spread to CreateEvent component
+   * @default empty object
+   */
+  EventFormDialogComponentProps?: EventFormDialogProps;
+
+  /**
    * Show/Hide filters
    * @default true
    */
@@ -190,6 +197,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     EventSkeletonComponentProps = {elevation: 0, square: true},
     GridContainerComponentProps = {},
     GridItemComponentProps = {},
+    EventFormDialogComponentProps = {},
     showFilters = false,
     filters,
     general = true,
@@ -542,7 +550,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                           {...EventSkeletonComponentProps}
                           skeletonsAnimation={false}
                           actions={
-                            <CreateEventButton variant="outlined" color="primary" size="small">
+                            <CreateEventButton variant="outlined" color="primary" size="small" {...EventFormDialogComponentProps}>
                               <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
                             </CreateEventButton>
                           }
