@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from '@mui/material';
+import {Box, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from '@mui/material';
 import {PREFIX} from './constants';
 import {FormattedMessage} from 'react-intl';
-import {SCCourseLessonStatusType} from '@selfcommunity/types';
+import {SCCourseLessonStatusType, SCCourseLessonType} from '@selfcommunity/types';
+import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -22,13 +23,21 @@ const Root = styled(Box, {
 
 export interface LessonEditFormProps {
   /**
+   * The lesson obj
+   */
+  lesson: SCCourseLessonType;
+  /**
    * Callback fired when settings change
    */
   onSettingsChange?: (settings: any) => void;
   /**
+   * Indicates whether an update is currently in progress.
+   */
+  updating: boolean;
+  /**
    * Callback fired when clicking save button
    */
-  onSave?: () => void;
+  onSave: () => void;
   /**
    * Any other properties
    */
@@ -41,10 +50,10 @@ export default function LessonEditForm(inProps: LessonEditFormProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className = null, onSettingsChange, onSave, ...rest} = props;
+  const {className = null, lesson, onSettingsChange, onSave, updating, ...rest} = props;
 
   //STATE
-  const [settings, setSettings] = useState({comments_enabled: false, status: SCCourseLessonStatusType.DRAFT});
+  const [settings, setSettings] = useState({comments_enabled: lesson.comments_enabled, status: lesson.status});
 
   // HANDLERS
 
@@ -92,9 +101,9 @@ export default function LessonEditForm(inProps: LessonEditFormProps): JSX.Elemen
           />
         </FormControl>
       </Box>
-      <Button className={classes.button} variant="contained" size="small" onClick={onSave}>
+      <LoadingButton className={classes.button} variant="contained" size="small" onClick={onSave} loading={updating}>
         <FormattedMessage id="ui.lessonEditForm.button.save" defaultMessage="ui.lessonEditForm.button.save" />
-      </Button>
+      </LoadingButton>
     </Root>
   );
 }

@@ -31,6 +31,10 @@ export const getCourseObjectCacheKey = (id) => `${COURSE_OBJECT_CACHE_PREFIX_KEY
 export const COURSES_OBJECT_CACHE_PREFIX_KEY = '_crss_';
 export const getCoursesObjectCacheKey = () => `${COURSES_OBJECT_CACHE_PREFIX_KEY}`;
 
+/** LESSON OBJECT **/
+export const LESSON_OBJECT_CACHE_PREFIX_KEY = '_lss_';
+export const getLessonObjectCacheKey = (id) => `${LESSON_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
 /** EVENT OBJECT **/
 export const EVENT_OBJECT_CACHE_PREFIX_KEY = '_evt_';
 export const getEventObjectCacheKey = (id) => `${EVENT_OBJECT_CACHE_PREFIX_KEY}${id}`;

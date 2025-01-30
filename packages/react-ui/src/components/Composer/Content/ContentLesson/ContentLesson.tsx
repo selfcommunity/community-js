@@ -1,10 +1,9 @@
 import React, {useCallback} from 'react';
-import {Box, BoxProps, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
-import {ComposerContentType} from '../../../../types/composer';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
 
 const classes = {
@@ -43,7 +42,7 @@ export interface ContentLessonProps extends Omit<BoxProps, 'value' | 'onChange'>
    * @param value
    * @default empty object
    */
-  onChange: (value: ComposerContentType) => void;
+  onChange: (html: string) => void;
 
   /**
    * Props to spread into the editor object
@@ -55,23 +54,12 @@ export interface ContentLessonProps extends Omit<BoxProps, 'value' | 'onChange'>
 export default (props: ContentLessonProps): JSX.Element => {
   // PROPS
   const {className = null, value, error = {}, disabled = false, onChange, EditorProps = {}} = props;
-  const {titleError = null, error: generalError = null} = {...error};
-
-  // HOOKS
-  const intl = useIntl();
+  const {error: generalError = null} = {...error};
 
   // HANDLERS
-  //TODO: title-> name
-  const handleChangeTitle = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChange({...value, title: event.target.value});
-    },
-    [value]
-  );
-
   const handleChangeHtml = useCallback(
     (html: string) => {
-      onChange({...value, html});
+      onChange(html);
     },
     [value]
   );
@@ -85,25 +73,6 @@ export default (props: ContentLessonProps): JSX.Element => {
           <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
         </Typography>
       )}
-      {/*<TextField*/}
-      {/*  className={classes.title}*/}
-      {/*  placeholder={intl.formatMessage({*/}
-      {/*    id: 'ui.composer.content.discussion.title.label',*/}
-      {/*    defaultMessage: 'ui.composer.content.discussion.title.label'*/}
-      {/*  })}*/}
-      {/*  autoFocus*/}
-      {/*  fullWidth*/}
-      {/*  variant="outlined"*/}
-      {/*  value={value.title}*/}
-      {/*  multiline*/}
-      {/*  onChange={handleChangeTitle}*/}
-      {/*  InputProps={{*/}
-      {/*    endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>*/}
-      {/*  }}*/}
-      {/*  error={Boolean(titleError)}*/}
-      {/*  helperText={titleError}*/}
-      {/*  disabled={disabled}*/}
-      {/*/>*/}
       <Editor {...EditorProps} editable={!disabled} className={classes.editor} onChange={handleChangeHtml} defaultValue={value.html} />
     </Root>
   );

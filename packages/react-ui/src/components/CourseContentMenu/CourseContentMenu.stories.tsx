@@ -13,6 +13,8 @@ const template = (args) => (
 );
 
 export const Base: StoryObj<typeof CourseContentMenu> = {
-  args: {},
+  args: {
+    courseId: 1
+  },
   render: template
 };

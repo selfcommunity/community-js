@@ -1,17 +1,29 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Box, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCContributionType, SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
-import {SCRoutingContextType, SCThemeType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
+import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {LessonAppbar, LessonAppbarProps, LessonDrawer, LessonDrawerProps, LessonObject, SCLessonActionsType} from '@selfcommunity/react-ui';
-import {CourseService} from '@selfcommunity/api-services';
+import {
+  getCurrentSectionAndLessonIndex,
+  HiddenPlaceholder,
+  LessonAppbar,
+  LessonAppbarProps,
+  LessonDrawer,
+  LessonDrawerProps,
+  LessonObject,
+  SCLessonActionsType
+} from '@selfcommunity/react-ui';
+import {CourseInfoViewType, CourseService} from '@selfcommunity/api-services';
+import {FormattedMessage} from 'react-intl';
 
 const classes = {
   root: `${PREFIX}-root`,
-  containerRoot: `${PREFIX}-container-root`
+  containerRoot: `${PREFIX}-container-root`,
+  navigation: `${PREFIX}-navigation`,
+  navigationTitle: `${PREFIX}-navigation-title`
 };
 
 const Root = styled(Box, {
@@ -38,8 +50,20 @@ export interface LessonProps {
    */
   course: SCCourseType;
   /**
+   * The course id
+   */
+  courseId?: number;
+  /**
+   * The section id
+   */
+  sectionId: number;
+  /**
+   * The lesson id
+   */
+  lessonId?: number;
+  /**
    * Props to spread to LessonAppbar Component
-   * @default {title: '', onArrowBackClick: null}
+   * @default {}
    */
   LessonAppbarProps?: LessonAppbarProps;
   /**
@@ -53,46 +77,41 @@ export interface LessonProps {
   [p: string]: any;
 }
 
-const initialLesson: SCCourseLessonType = {id: 1, name: 'Cinture', completed: true};
-
 export default function Lesson(inProps: LessonProps): JSX.Element {
   // PROPS
   const props: LessonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {
-    className = null,
-    feedObjectId = 3078,
-    feedObject = null,
-    feedObjectType = SCContributionType.DISCUSSION,
-    LessonAppbarProps = {title: 'Cinture di castita lunghe lunghissime', onArrowBackClick: null},
-    LessonDrawerProps = {},
-    ...rest
-  } = props;
+  const {className = null, course, courseId, sectionId, lessonId, LessonAppbarProps = {}, LessonDrawerProps = {}, ...rest} = props;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
-  const [settings, setSettings] = useState(initialLesson);
-  const [updating, setUpdating] = useState(true);
-  const [lesson, setLesson] = useState({id: 1, name: 'Cinture', completed: true});
-  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const [settings, setSettings] = useState(null);
+  const [updating, setUpdating] = useState(false);
+  const [lessonContent, setLessonContent] = useState<string>('');
   const [editMode, setEditMode] = useState(true);
   // const isEditMode = useMemo(() => {
   //   return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
   // }, [value, scRoutingContext]);
   const isEditMode = editMode;
-  const isCourseCreator = false;
 
   // HOOKS
+  const isCourseAdmin = useMemo(
+    () => course && (course.join_status === SCCourseJoinStatusType.CREATOR || course.join_status === SCCourseJoinStatusType.MANAGER),
+    [course]
+  );
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [_lessonId, setLessonId] = useState<number>(lessonId);
+  const [_sectionId, setSectionId] = useState<number>(sectionId);
+  const {scCourse} = useSCFetchCourse({id: courseId, params: {view: isCourseAdmin ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
 
   // HANDLERS
-
   /**
    * Handles lesson settings change
    * @param newSettings
@@ -109,12 +128,14 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     setEditMode(false);
   };
 
-  const handleLessonContentEdit = (content) => {
-    console.log('.');
+  const handleLessonContentEdit = (html: string) => {
+    setLessonContent(html);
   };
 
-  const handleChangeLesson = (lessonObj) => {
-    setLesson(lessonObj);
+  const handleChangeLesson = (l: SCCourseLessonType, s: SCCourseSectionType) => {
+    setLessonId(l.id);
+    setSectionId(s.id);
+    setCurrentSection(s);
   };
 
   /**
@@ -122,10 +143,11 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
    */
   const handleLessonUpdate = () => {
     setUpdating(true);
-    const data: any = {settings};
-    CourseService.updateCourseLesson(obj.id, obj.id, obj.id, data)
-      .then(() => {
+    const data: any = {...settings, type: scLesson.type, name: scLesson.name, text: lessonContent};
+    CourseService.updateCourseLesson(scCourse.id, sectionId, scLesson.id, data)
+      .then((data: SCCourseLessonType) => {
         setUpdating(false);
+        setSCLesson(data);
       })
       .catch((error) => {
         setUpdating(false);
@@ -133,34 +155,89 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       });
   };
 
+  const currentData = getCurrentSectionAndLessonIndex(course, scLesson?.section_id, scLesson?.id);
+
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData.currentSectionIndex || 0);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData.currentLessonIndex || 0);
+  const [currentSection, setCurrentSection] = useState(course.sections?.[currentSectionIndex] || null);
+
+  const handlePrev = () => {
+    if (currentLessonIndex > 0) {
+      const newLessonIndex = currentLessonIndex - 1;
+      setCurrentLessonIndex(newLessonIndex);
+      handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
+    } else if (currentSectionIndex > 0) {
+      const prevSectionIndex = currentSectionIndex - 1;
+      const prevSection = course.sections[prevSectionIndex];
+      const newLessonIndex = prevSection.lessons.length - 1;
+      setCurrentSectionIndex(prevSectionIndex);
+      setCurrentLessonIndex(newLessonIndex);
+      handleChangeLesson(prevSection.lessons[newLessonIndex], prevSection);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentLessonIndex < currentSection.lessons.length - 1) {
+      const newLessonIndex = currentLessonIndex + 1;
+      setCurrentLessonIndex(newLessonIndex);
+      handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
+    } else if (currentSectionIndex < course.sections.length - 1) {
+      const newSectionIndex = currentSectionIndex + 1;
+      setCurrentSectionIndex(newSectionIndex);
+      setCurrentLessonIndex(0);
+      handleChangeLesson(course.sections[newSectionIndex].lessons[0], course.sections[newSectionIndex]);
+    }
+  };
+
+  const isPrevDisabled = !course.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
+  const isNextDisabled =
+    !course.sections || (currentSectionIndex === course.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1);
+
+  if (!scLesson || !scCourse) {
+    return <HiddenPlaceholder />;
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <LessonAppbar
         editMode={isEditMode}
         activePanel={activePanel}
-        title={LessonAppbarProps.title}
+        title={scCourse.name}
         handleOpen={handleOpenDrawer}
         onSave={handleLessonUpdate}
-        onArrowBackClick={LessonAppbarProps.onArrowBackClick}
+        updating={updating}
         {...LessonAppbarProps}
       />
       <Container open={Boolean(activePanel) || isEditMode} className={classes.containerRoot}>
-        <LessonObject
-          editMode={isEditMode}
-          lesson={lesson}
-          lessonObj={obj}
-          onContentChange={handleLessonContentEdit}
-          onLessonNavigationChange={(l: any) => setLesson(l)}
-        />
+        <Box className={classes.navigation}>
+          <Typography variant="body2" color="text.secondary">
+            <FormattedMessage
+              id="templates.lesson.number"
+              defaultMessage="templates.lesson.number"
+              values={{from: currentLessonIndex + 1, to: currentSection?.lessons?.length}}
+            />
+          </Typography>
+        </Box>
+        <Box className={classes.navigationTitle}>
+          <Typography variant="h5">{scLesson.name}</Typography>
+          <Box>
+            <IconButton onClick={handlePrev} disabled={isPrevDisabled}>
+              <Icon>arrow_back</Icon>
+            </IconButton>
+            <IconButton onClick={handleNext} disabled={isNextDisabled}>
+              <Icon>arrow_next</Icon>
+            </IconButton>
+          </Box>
+        </Box>
+        <LessonObject course={scCourse} lesson={scLesson} editMode={isEditMode} onContentChange={handleLessonContentEdit} />
       </Container>
       <LessonDrawer
+        course={scCourse}
         editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : isEditMode}
         activePanel={activePanel}
-        lesson={lesson}
-        onSave={handleLessonUpdate}
         handleClose={handleCloseDrawer}
-        handleSettingsChange={handleSettingsChange}
         handleChangeLesson={handleChangeLesson}
+        LessonEditFormProps={{lesson: scLesson, onSave: handleLessonUpdate, updating: updating, onSettingsChange: handleSettingsChange}}
         {...LessonDrawerProps}
       />
     </Root>

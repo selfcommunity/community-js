@@ -4,7 +4,7 @@ const Component = {
       display: 'flex',
       flexDirection: 'column',
       '& .SCLessonObject-content': {
-        padding: '0 !important',
+        padding: `${theme.spacing(2)} !important`,
         '& .SCLessonObject-text': {
           '& > div:first-of-type': {
             height: '240px',
@@ -14,12 +14,18 @@ const Component = {
             },
             padding: '0 !important'
           }
+          // '& .SCEditor-paragraph': {
+          //   paddingRight: theme.spacing(2),
+          //   paddingLeft: theme.spacing(2)
+          // }
         }
       },
-      '& .SCLessonObject-title': {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+      '& .SCLessonObject-content-edit': {
+        padding: '0 !important',
+        '& .SCEditor-content': {
+          paddingTop: 0,
+          paddingBottom: 0
+        }
       },
       '& .SCWidget-root': {
         marginBottom: theme.spacing(3)

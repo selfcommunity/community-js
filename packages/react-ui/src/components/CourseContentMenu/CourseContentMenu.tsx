@@ -1,15 +1,16 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Box, Collapse, Icon, List, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
 import {PREFIX} from './constants';
-import {FormattedMessage} from 'react-intl';
-import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
-import {getCourseData} from '../EditCourse/data';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
-import {enqueueSnackbar} from 'notistack';
+import {
+  SCCourseJoinStatusType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseLessonType,
+  SCCourseSectionType,
+  SCCourseType
+} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -29,18 +30,17 @@ const Root = styled(Box, {
 
 export interface CourseContentMenuProps {
   /**
-   * The displayed course id
+   * The course obj
    */
-  courseId: number;
+  course: SCCourseType;
   /**
-   * The displayed lesson id
+   * The lesson obj
    */
   lesson: SCCourseLessonType;
-
   /**
    * Callback fired on lesson item click
    */
-  onLessonClick: (lesson: SCCourseLessonType) => void;
+  onLessonClick: (lesson: SCCourseLessonType, section: SCCourseSectionType) => void;
   /**
    * Any other properties
    */
@@ -53,13 +53,10 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className = null, lesson, courseId = 1, onLessonClick, ...rest} = props;
+  const {className = null, lesson, course, onLessonClick, ...rest} = props;
 
   //STATE
-  const [expandedSections, setExpandedSections] = useState<number[]>([]);
-  const [course, setCourse] = useState<SCCourseType | null>(null);
-
-  const isCourseCreator = false;
+  const [expandedSections, setExpandedSections] = useState<number[]>(lesson?.course_id ? [lesson.course_id] : []);
 
   //HANDLERS
   const handleToggle = useCallback(
@@ -68,25 +65,6 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
     },
     [setExpandedSections]
   );
-
-  // EFFECTS
-  useEffect(() => {
-    getCourseData(courseId)
-      .then((courseData) => {
-        if (courseData) {
-          setCourse(courseData);
-          setExpandedSections(courseData.sections.map((section: SCCourseSectionType) => section.id));
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
-      });
-  }, []);
 
   /**
    * Rendering
@@ -112,9 +90,9 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
                 <ListItemButton
                   key={_lesson.id}
                   className={classes.item}
-                  onClick={() => onLessonClick(_lesson)}
-                  selected={_lesson.name === lesson?.name}>
-                  {!isCourseCreator && (
+                  onClick={() => onLessonClick(_lesson, section)}
+                  selected={_lesson.name === lesson.name}>
+                  {course.join_status !== SCCourseJoinStatusType.MANAGER && (
                     <ListItemIcon className={classes.itemIcon}>
                       {_lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
                         <Icon className={classes.iconComplete}>circle_checked</Icon>

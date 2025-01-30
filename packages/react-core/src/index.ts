@@ -104,6 +104,7 @@ import useSCFetchLiveStream from './hooks/useSCFetchLiveStream';
 import useSCGoogleApiLoader from './hooks/useSCGoogleApiLoader';
 import useSCFetchCourse from './hooks/useSCFetchCourse';
 import useSCFetchCourses from './hooks/useSCFetchCourses';
+import useSCFetchLesson from './hooks/useSCFetchLesson';
 
 /**
  * Routing component
@@ -233,4 +234,5 @@ export {
   useSCGoogleApiLoader,
   useSCFetchCourse,
   useSCFetchCourses,
+  useSCFetchLesson,
 };

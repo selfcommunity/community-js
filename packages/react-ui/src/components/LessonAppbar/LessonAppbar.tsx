@@ -2,10 +2,11 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {AppBar, Button, Icon, IconButton, Toolbar, Typography} from '@mui/material';
+import {AppBar, Icon, IconButton, Toolbar, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
 import {FormattedMessage} from 'react-intl';
+import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -32,7 +33,7 @@ export interface LessonAppbarProps {
   /**
    * onArrowBack Callback
    */
-  onArrowBackClick: () => void;
+  onArrowBackClick?: () => void;
   /**
    * onSaveCallback
    */
@@ -47,6 +48,10 @@ export interface LessonAppbarProps {
    */
   handleOpen: (panel: SCLessonActionsType) => void;
   /**
+   * Indicates whether an update is currently in progress.
+   */
+  updating: boolean;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -58,7 +63,7 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, title = '', activePanel = null, handleOpen, onSave, editMode, onArrowBackClick, ...rest} = props;
+  const {className = null, title = '', activePanel = null, handleOpen, onSave, editMode, onArrowBackClick, updating, ...rest} = props;
 
   return (
     <Root position="fixed" open={Boolean(activePanel)} className={classNames(classes.root, className)} {...rest}>
@@ -74,9 +79,9 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
             <IconButton onClick={() => handleOpen(SCLessonActionsType.SETTINGS)} color="primary">
               <Icon>settings</Icon>
             </IconButton>
-            <Button variant="contained" size="small" onClick={onSave}>
+            <LoadingButton variant="contained" size="small" onClick={onSave} loading={updating}>
               <FormattedMessage id="ui.lessonAppbar.button.save" defaultMessage="ui.lessonAppbar.button.save" />
-            </Button>
+            </LoadingButton>
           </>
         ) : (
           <>

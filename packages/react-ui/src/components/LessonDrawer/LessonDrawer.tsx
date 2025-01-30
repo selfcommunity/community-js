@@ -2,22 +2,14 @@ import React, {useEffect} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Button, Divider, Drawer, Icon, IconButton, List, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Divider, Drawer, Icon, IconButton, List, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
-import {
-  Link,
-  SCRoutes,
-  SCRoutingContextType,
-  SCThemeType,
-  useSCFetchCommentObjects,
-  useSCFetchFeedObject,
-  useSCRouting
-} from '@selfcommunity/react-core';
+import {useSCFetchCommentObjects} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCCommentsOrderBy, SCContributionType} from '@selfcommunity/types';
+import {SCCommentsOrderBy, SCContributionType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
-import LessonEditForm from '../LessonEditForm';
+import LessonEditForm, {LessonEditFormProps} from '../LessonEditForm';
 import CommentsObject from '../CommentsObject';
 import CourseContentMenu from '../CourseContentMenu';
 import CommentObjectReply from '../CommentObjectReply';
@@ -46,6 +38,10 @@ const Root = styled(Drawer, {
 
 export interface LessonDrawerProps {
   /**
+   * The course obj
+   */
+  course: SCCourseType;
+  /**
    * The edit mode
    * @default false
    */
@@ -55,21 +51,17 @@ export interface LessonDrawerProps {
    */
   activePanel: SCLessonActionsType | null;
   /**
-   * Callback to handle settings update
-   */
-  onSave: () => void;
-  /**
    * Callback to handle drawer closing
    */
   handleClose: () => void;
   /**
-   * Callback fired when settings change
-   */
-  handleSettingsChange: (settings: any) => void;
-  /**
    *  Callback fired when the lesson change
    */
-  handleChangeLesson: (lesson: any) => void;
+  handleChangeLesson: (lesson: SCCourseLessonType, section: SCCourseSectionType) => void;
+  /***
+   * The LessonEditFormProps
+   */
+  LessonEditFormProps: LessonEditFormProps;
   /**
    * Any other properties
    */
@@ -84,6 +76,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
   });
   const {
     className = null,
+    course,
     editMode = false,
     activePanel = null,
     feedObjectId = 3078,
@@ -93,10 +86,8 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
     comments = [],
     CommentComponentProps = {variant: 'outlined'},
     CommentsObjectProps = {},
-    onSave,
+    LessonEditFormProps,
     handleClose,
-    lesson,
-    handleSettingsChange,
     handleChangeLesson,
     ...rest
   } = props;
@@ -109,16 +100,10 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
     cacheStrategy,
     orderBy: SCCommentsOrderBy.ADDED_AT_ASC
   });
-  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
 
   // INTL
   const intl = useIntl();
-
-  // CONTEXT
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // EFFECTS
   useEffect(() => {
@@ -133,7 +118,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
   }
 
   return (
-    <Root className={classNames(classes.root, className)} anchor="right" open={Boolean(activePanel) || editMode} variant="persistent">
+    <Root className={classNames(classes.root, className)} anchor="right" open={Boolean(activePanel) || editMode} variant="persistent" {...rest}>
       <Box className={classNames(classes.header, {[classes.headerEdit]: editMode})}>
         <>
           <Typography variant="h4" textAlign="center">
@@ -150,7 +135,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
       </Box>
       <Divider />
       {editMode ? (
-        <LessonEditForm className={classes.content} onSettingsChange={handleSettingsChange} onSave={onSave} />
+        <LessonEditForm className={classes.content} {...LessonEditFormProps} />
       ) : (
         <ScrollContainer>
           <List className={classes.content}>
@@ -176,7 +161,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
                 inPlaceLoadMoreContents={false}
               />
             ) : (
-              <CourseContentMenu courseId={1} lesson={lesson} onLessonClick={handleChangeLesson} />
+              <CourseContentMenu course={course} lesson={LessonEditFormProps.lesson} onLessonClick={handleChangeLesson} />
             )}
           </List>
         </ScrollContainer>
