@@ -1,17 +1,17 @@
-import {Fragment, HTMLAttributes, useEffect, useMemo, useState} from 'react';
+import {Fragment, HTMLAttributes, memo, useEffect, useMemo, useState} from 'react';
 import {PREFIX} from './constants';
 import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
-import {SCCourseType} from '@selfcommunity/types';
-import {useSnackbar} from 'notistack';
-import {getCourseData} from '../EditCourse/data';
+import {SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import AccordionLessons from '../../shared/AccordionLessons';
 import {CLAPPING} from '../../assets/courses/clapping';
+import {useSCFetchCourse} from '@selfcommunity/react-core';
+import {CourseService} from '@selfcommunity/api-services';
 
 const messages = {
   request: 'ui.course.dashboard.student.button.request',
@@ -42,74 +42,84 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface StudentCourseDashboardProps {
+  courseId?: number;
+  course?: SCCourseType;
   className?: HTMLAttributes<HTMLDivElement>['className'];
   [p: string]: any;
 }
 
-export default function Student(inProps: StudentCourseDashboardProps) {
+function Student(inProps: StudentCourseDashboardProps) {
   // PROPS
   const props: StudentCourseDashboardProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
 
-  const {className, ...rest} = props;
+  const {courseId, course, className, ...rest} = props;
 
   // STATES
-  const [course, setCourse] = useState<SCCourseType | null>(null);
+  const [sections, setSections] = useState<SCCourseSectionType[] | null>(null);
+  const [lessons, setLessons] = useState<SCCourseLessonType[] | null>(null);
+  const [hasLessonsCalled, setHasLessonsCalled] = useState(false);
 
   // HOOKS
-  const {enqueueSnackbar} = useSnackbar();
+  const {scCourse} = useSCFetchCourse({id: courseId, course});
   const intl = useIntl();
 
   // EFFECTS
   useEffect(() => {
-    getCourseData(1)
-      .then((courseData) => {
-        if (courseData) {
-          setCourse(courseData);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
+    if (scCourse && !sections) {
+      CourseService.getCourseSections(scCourse.id)
+        .then((data) => setSections(data))
+        .catch((error) => Logger.error(SCOPE_SC_UI, error));
+    }
 
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
+    if (scCourse && sections && sections.length > 0 && !lessons && !hasLessonsCalled) {
+      sections.forEach((section) => {
+        if (section.lessons_order.length > 0) {
+          setHasLessonsCalled(true);
+
+          CourseService.getCourseLessons(scCourse.id, section.id)
+            .then((data) => setLessons((prev) => (prev ? [...prev, ...data] : data)))
+            .catch((error) => {
+              Logger.error(SCOPE_SC_UI, error);
+              setHasLessonsCalled(false);
+            });
+        }
       });
-  }, []);
+    }
+  }, [scCourse, sections, lessons, hasLessonsCalled]);
 
   // MEMOS
   const actionButton = useMemo(() => {
     // TODO - manage different buttons
 
-    if (!course) {
+    if (!scCourse) {
       return <Skeleton animation="wave" variant="rounded" width="160px" height="28px" />;
     }
 
     return <ActionButton labelId={messages.start} />;
-  }, [course]);
+  }, [scCourse]);
 
   return (
     <Root className={classNames(classes.root, classes.studentContainer, className)} {...rest}>
-      <HeaderCourseDashboard course={course} />
+      <HeaderCourseDashboard course={scCourse} />
 
       <Divider />
 
       <Stack className={classes.userWrapper}>
         <Stack className={classes.user}>
-          {course ? (
-            <Avatar className={classes.avatar} src={course.created_by.avatar} alt={course.created_by.username} />
+          {scCourse ? (
+            <Avatar className={classes.avatar} src={scCourse.created_by.avatar} alt={scCourse.created_by.username} />
           ) : (
             <Skeleton animation="wave" variant="circular" className={classes.avatar} />
           )}
 
           <Box>
-            {course ? (
+            {scCourse ? (
               <Fragment>
-                <Typography variant="body1">{course.created_by.username}</Typography>
-                <Typography variant="body1">{course.created_by.role}</Typography>
+                <Typography variant="body1">{scCourse.created_by.username}</Typography>
+                <Typography variant="body1">{scCourse.created_by.role}</Typography>
               </Fragment>
             ) : (
               <Fragment>
@@ -130,7 +140,7 @@ export default function Student(inProps: StudentCourseDashboardProps) {
       </Typography>
 
       <Stack className={classes.box}>
-        {course ? <Typography variant="body1">{course.description}</Typography> : <Skeleton animation="wave" variant="text" height="130px" />}
+        {scCourse ? <Typography variant="body1">{scCourse.description}</Typography> : <Skeleton animation="wave" variant="text" height="130px" />}
       </Stack>
 
       <Typography variant="h6" className={classes.margin}>
@@ -139,13 +149,13 @@ export default function Student(inProps: StudentCourseDashboardProps) {
 
       <Stack className={classes.box}>
         <Stack className={classes.percentageWrapper}>
-          {course ? (
+          {scCourse ? (
             <Fragment>
               <Typography variant="body1">
                 <FormattedMessage
                   id="ui.course.dashboard.student.progress.described"
                   defaultMessage="ui.course.dashboard.student.progress.described"
-                  values={{progress: 1, end: 5}}
+                  values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
                 />
               </Typography>
 
@@ -153,7 +163,7 @@ export default function Student(inProps: StudentCourseDashboardProps) {
                 <FormattedMessage
                   id="ui.course.dashboard.student.progress.percentage"
                   defaultMessage="ui.course.dashboard.student.progress.percentage"
-                  values={{percentage: 15}}
+                  values={{percentage: scCourse.user_completion_rate}}
                 />
               </Typography>
             </Fragment>
@@ -165,21 +175,23 @@ export default function Student(inProps: StudentCourseDashboardProps) {
           )}
         </Stack>
 
-        <LinearProgress className={classes.progress} variant="determinate" value={15} />
+        <LinearProgress className={classes.progress} variant="determinate" value={scCourse.user_completion_rate} />
       </Stack>
 
-      <Stack className={classNames(classes.completedWrapper, classes.margin)}>
-        <Typography variant="h3">
-          <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
-        </Typography>
+      {scCourse.user_completion_rate === 100 && (
+        <Stack className={classNames(classes.completedWrapper, classes.margin)}>
+          <Typography variant="h3">
+            <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
+          </Typography>
 
-        <img
-          src={CLAPPING}
-          alt={intl.formatMessage({id: 'ui.course.dashboard.student.completed', defaultMessage: 'ui.course.dashboard.student.completed'})}
-          width={32}
-          height={32}
-        />
-      </Stack>
+          <img
+            src={CLAPPING}
+            alt={intl.formatMessage({id: 'ui.course.dashboard.student.completed', defaultMessage: 'ui.course.dashboard.student.completed'})}
+            width={32}
+            height={32}
+          />
+        </Stack>
+      )}
 
       <Typography variant="h6" className={classes.margin}>
         <FormattedMessage id="ui.course.dashboard.student.contents" defaultMessage="ui.course.dashboard.student.contents" />
@@ -191,7 +203,7 @@ export default function Student(inProps: StudentCourseDashboardProps) {
             id="ui.course.table.sections.title"
             defaultMessage="ui.course.table.sections.title"
             values={{
-              sectionsNumber: 2
+              sectionsNumber: sections?.length || 0
             }}
           />
         </Typography>
@@ -203,12 +215,14 @@ export default function Student(inProps: StudentCourseDashboardProps) {
             id="ui.course.table.lessons.title"
             defaultMessage="ui.course.table.lessons.title"
             values={{
-              lessonsNumber: 5
+              lessonsNumber: lessons?.length || 0
             }}
           />
         </Typography>
       </Stack>
-      <AccordionLessons course={course} className={classes.accordion} />
+      <AccordionLessons lessons={lessons} sections={sections} className={classes.accordion} />
     </Root>
   );
 }
+
+export default memo(Student);

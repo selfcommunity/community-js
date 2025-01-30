@@ -3,7 +3,7 @@ import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
 import CourseParticipantsButton from '../../CourseParticipantsButton';
-import {useMemo} from 'react';
+import {memo, useMemo} from 'react';
 
 const classes = {
   info: `${PREFIX}-info`
@@ -15,7 +15,7 @@ interface InfoCourseDashboardProps {
   position: 'first' | 'second';
 }
 
-export default function InfoCourseDashboard(props: InfoCourseDashboardProps) {
+function InfoCourseDashboard(props: InfoCourseDashboardProps) {
   // PROPS
   const {title, course, position} = props;
 
@@ -43,3 +43,5 @@ export default function InfoCourseDashboard(props: InfoCourseDashboardProps) {
     </Stack>
   );
 }
+
+export default memo(InfoCourseDashboard);

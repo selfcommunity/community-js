@@ -64,7 +64,7 @@ export default function CourseDashboardTemplate(inProps: CourseDashboardTemplate
       return <CourseDashboard.Teacher course={scCourse} page={page} onTabChange={onTabChange} />;
     }
 
-    return <CourseDashboard.Student />;
+    return <CourseDashboard.Student course={scCourse} />;
   }, [isTeacher, scCourse, page, onTabChange]);
 
   return (

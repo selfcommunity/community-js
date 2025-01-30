@@ -2,7 +2,7 @@ import {Box, Button, Icon, Skeleton, Stack, Typography} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {useMemo} from 'react';
+import {memo, useMemo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
 const classes = {
@@ -18,7 +18,7 @@ interface HeaderCourseDashboardProps {
   hasAction?: boolean;
 }
 
-export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
+function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   // PROPS
   const {course, hasAction = false} = props;
 
@@ -101,3 +101,5 @@ export default function HeaderCourseDashboard(props: HeaderCourseDashboardProps)
     </Box>
   );
 }
+
+export default memo(HeaderCourseDashboard);

@@ -16,7 +16,7 @@ import {
   Typography,
   useThemeProps
 } from '@mui/material';
-import {ChangeEvent, Dispatch, SetStateAction, useCallback, useState} from 'react';
+import {ChangeEvent, Dispatch, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
@@ -25,8 +25,11 @@ import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
 import ActionButton from './ActionButton';
 import CourseUsersTableSkeleton from './Skeleton';
-
-const USERS_TO_SHOW = 6;
+import {actionWidgetTypes} from '../../utils/widget';
+import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {AxiosResponse} from 'axios';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const classes = {
   search: `${PREFIX}-search`,
@@ -47,9 +50,9 @@ type HeaderCellsType = {
 };
 
 export interface CourseUsersTableProps {
-  users: SCUserType[] | null;
+  state: any;
+  dispatch: Dispatch<any>;
   course?: SCCourseType | null;
-  setUsers: Dispatch<SetStateAction<SCUserType[]>>;
   headerCells: HeaderCellsType[];
   editMode?: boolean;
 }
@@ -65,16 +68,21 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
     name: PREFIX
   });
 
-  const {course, users, setUsers, headerCells, editMode = false} = props;
+  const {course, state, dispatch, headerCells, editMode = false} = props;
 
   // STATES
-  const [usersToShow, setUsersToShow] = useState(USERS_TO_SHOW);
+  const [users, setUsers] = useState<SCUserType[] | null>(null);
   const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const [value, setValue] = useState('');
 
   // HOOKS
   const intl = useIntl();
+
+  // EFFECTS
+  useEffect(() => {
+    setUsers(state.results);
+  }, [state.results]);
 
   // HANDLERS
   const handleChange = useCallback(
@@ -98,14 +106,23 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
     [users, tempUsers, setValue]
   );
 
-  const handleSeeMore = useCallback(() => {
+  const handleNext = useCallback(() => {
     setIsLoadingUsers(true);
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-    setTimeout(() => {
-      setUsersToShow((prev) => prev + USERS_TO_SHOW);
-      setIsLoadingUsers(false);
-    }, 300);
-  }, [setIsLoadingUsers, setUsersToShow]);
+    http
+      .request({
+        url: state.next,
+        method: Endpoints.GetCourseDashboardUsers.method
+      })
+      .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
+        setIsLoadingUsers(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }, [state.next, dispatch, setIsLoadingUsers]);
 
   if (!editMode && (!course || !users)) {
     return <CourseUsersTableSkeleton />;
@@ -155,7 +172,7 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
           <TableBody>
             {users.length === 0 && <RowSkeleton animation={false} editMode={editMode} />}
             {users.length > 0 &&
-              users.slice(0, usersToShow).map((user, i) => (
+              users.map((user, i) => (
                 <TableRow key={i}>
                   <TableCell>
                     <Stack className={classes.avatarWrapper}>
@@ -170,17 +187,17 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
                   ) : (
                     <TableCell>
                       <Stack className={classes.progressWrapper}>
-                        <LinearProgress className={classes.progress} variant="determinate" value={user['completion']} />
+                        <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
 
-                        <Typography variant="body1">{`${Math.round(user['completion'])}%`}</Typography>
+                        <Typography variant="body1">{`${Math.round(user.user_completion_rate)}%`}</Typography>
                       </Stack>
                     </TableCell>
                   )}
                   <TableCell>
-                    <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
+                    <Typography variant="body2">{new Date(user.joined_at).toLocaleDateString()}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{user.date_joined.toDateString()}</Typography>
+                    <Typography variant="body2">{new Date(user.last_active_at).toLocaleDateString()}</Typography>
                   </TableCell>
                   {!editMode && (
                     <TableCell>
@@ -200,9 +217,9 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
           variant="outlined"
           color="inherit"
           loading={isLoadingUsers}
-          disabled={users.length <= usersToShow}
+          disabled={!state.next}
           className={classes.loadingButton}
-          onClick={handleSeeMore}>
+          onClick={handleNext}>
           <Typography variant="body2">
             <FormattedMessage id="ui.courseUsersTable.btn.label" defaultMessage="ui.courseUsersTable.btn.label" />
           </Typography>

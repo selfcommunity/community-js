@@ -1,7 +1,7 @@
 import {Box, Stack, styled, Tab, Typography, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
 import HeaderCourseDashboard from './Header';
-import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
+import {HTMLAttributes, memo, SyntheticEvent, useCallback, useState} from 'react';
 import {CourseDashboardPage, TabContentEnum, TabContentType} from './types';
 import classNames from 'classnames';
 import {SCCourseType} from '@selfcommunity/types';
@@ -47,7 +47,7 @@ export interface TeacherCourseDashboardProps {
   [p: string]: any;
 }
 
-export default function Teacher(inProps: TeacherCourseDashboardProps) {
+function Teacher(inProps: TeacherCourseDashboardProps) {
   // PROPS
   const props: TeacherCourseDashboardProps = useThemeProps({
     props: inProps,
@@ -107,3 +107,5 @@ export default function Teacher(inProps: TeacherCourseDashboardProps) {
     </Root>
   );
 }
+
+export default memo(Teacher);

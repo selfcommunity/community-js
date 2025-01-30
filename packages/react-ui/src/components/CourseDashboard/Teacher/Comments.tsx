@@ -1,14 +1,16 @@
 import {Avatar, Box, Button, Divider, Skeleton, Stack, Typography} from '@mui/material';
-import {SCCourseType} from '@selfcommunity/types';
-import {useCallback, useEffect, useState} from 'react';
-import {CommentsType} from '../types';
-import {getCommentsData, getOtherCommentsData} from '../../EditCourse/data';
-import {Logger} from '@selfcommunity/utils';
+import {SCCourseCommentType, SCCourseType} from '@selfcommunity/types';
+import {memo, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
+import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
+import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../../utils/widget';
+import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {CourseService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {AxiosResponse} from 'axios';
 
 const classes = {
   container: `${PREFIX}-comments-container`,
@@ -23,6 +25,7 @@ const classes = {
 
 interface CommentsProps {
   course: SCCourseType | null;
+  endpointQueryParams?: Record<string, string | number>;
 }
 
 function CommentSkeleton({id}: {id: number}) {
@@ -68,63 +71,126 @@ function CommentsSkeleton() {
   );
 }
 
-export default function Comments(props: CommentsProps) {
+function Comments(props: CommentsProps) {
   // PROPS
-  const {course} = props;
+  const {course, endpointQueryParams = {limit: 3, offset: DEFAULT_PAGINATION_OFFSET}} = props;
 
   // STATES
-  const [comments, setComments] = useState<CommentsType | null>(null);
+  const [state, dispatch] = useReducer(
+    dataWidgetReducer,
+    {
+      isLoadingNext: false,
+      next: null,
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_COMMENTS_COURSES_STATE_CACHE_PREFIX_KEY, course?.id),
+      cacheStrategy: CacheStrategies.CACHE_FIRST,
+      visibleItems: endpointQueryParams.limit
+    },
+    stateWidgetInitializer
+  );
+
   const [isLoadingComments, setIsLoadingComments] = useState(false);
 
   // HOOKS
-  const {enqueueSnackbar} = useSnackbar();
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // CALLBACKS
+  const _init = useCallback(() => {
+    if (!state.initialized && !state.isLoadingNext) {
+      dispatch({type: actionWidgetTypes.LOADING_NEXT});
+
+      CourseService.getCourseComments(course.id, {...endpointQueryParams})
+        .then((payload: SCPaginatedResponse<SCCourseCommentType>) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
+        })
+        .catch((error) => {
+          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [state.isLoadingNext, state.initialized, course, dispatch]);
 
   // EFFECTS
   useEffect(() => {
-    if (course) {
-      getCommentsData(course.id)
-        .then((commentsData) => {
-          if (commentsData) {
-            setComments(commentsData);
-          }
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
+    let _t: NodeJS.Timeout;
 
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
-        });
+    if (scUserContext.user && course) {
+      _t = setTimeout(_init);
+
+      return () => {
+        clearTimeout(_t);
+      };
     }
-  }, [course]);
+  }, [scUserContext.user, course, _init]);
 
   // HANDLERS
-  const handleSeeMore = useCallback(() => {
+  const handleNext = useCallback(() => {
     setIsLoadingComments(true);
+    dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-    getOtherCommentsData(course.id)
-      .then((commentsData) => {
-        if (commentsData) {
-          setComments((prevComments) => ({
-            ...prevComments,
-            next: commentsData.next,
-            lessons: [...prevComments.lessons, ...commentsData.lessons]
-          }));
-          setIsLoadingComments(false);
-        }
+    http
+      .request({
+        url: state.next,
+        method: Endpoints.GetCourseComments.method
+      })
+      .then((res: AxiosResponse<SCPaginatedResponse<SCCourseCommentType>>) => {
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
+        setIsLoadingComments(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
       });
-  }, [setIsLoadingComments, setComments, course]);
+  }, [state.next, dispatch, setIsLoadingComments]);
 
-  if (!comments) {
+  // MEMOS
+  const renderComments = useMemo(() => {
+    const map = new Map();
+    state.results.forEach((comment: SCCourseCommentType) => {
+      const name = comment.extras.lesson.name;
+
+      if (!map.has(name)) {
+        map.set(name, [comment]);
+      } else {
+        map.set(name, [...map.get(name), comment]);
+      }
+    });
+
+    return Array.from(map.entries()).map(([name, comments]) => (
+      <Box key={name} className={classes.outerWrapper}>
+        <Typography variant="h5">{name}</Typography>
+        <Divider />
+        <Stack className={classes.innerWrapper}>
+          {comments.map((comment: SCCourseCommentType) => (
+            <Stack key={comment.id} className={classes.userWrapper}>
+              <Avatar src={comment.created_by.avatar} alt={comment.created_by.username} className={classes.avatar} />
+
+              <Box>
+                <Stack className={classes.userInfo}>
+                  <Typography variant="body1">{comment.created_by.username}</Typography>
+
+                  <Box className={classes.circle} />
+
+                  <Typography variant="body2">{new Date(comment.created_at).toLocaleDateString()}</Typography>
+                </Stack>
+
+                <Typography variant="body1">{comment.html}</Typography>
+              </Box>
+            </Stack>
+          ))}
+
+          <Button size="small" variant="outlined" color="inherit" onClick={() => console.log(name)} className={classes.button}>
+            <Typography variant="body2">
+              <FormattedMessage
+                id="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
+                defaultMessage="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
+              />
+            </Typography>
+          </Button>
+        </Stack>
+      </Box>
+    ));
+  }, [state.results]);
+
+  if (!state.initialized) {
     return <CommentsSkeleton />;
   }
 
@@ -134,55 +200,26 @@ export default function Comments(props: CommentsProps) {
         <FormattedMessage
           id="ui.course.dashboard.teacher.tab.comments.number"
           defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
-          values={{commentsNumber: comments.total}}
+          values={{commentsNumber: state.count}}
         />
       </Typography>
 
-      {comments?.lessons.map((lesson) => (
-        <Box key={lesson.id} className={classes.outerWrapper}>
-          <Typography variant="h5">{lesson.name}</Typography>
-          <Divider />
-          <Stack className={classes.innerWrapper}>
-            {lesson.users.map((user) => (
-              <Stack key={user.id} className={classes.userWrapper}>
-                <Avatar src={user.avatar} alt={user.name} className={classes.avatar} />
-
-                <Box>
-                  <Stack className={classes.userInfo}>
-                    <Typography variant="body1">{user.name}</Typography>
-
-                    <Box className={classes.circle} />
-
-                    <Typography variant="body2">{user.date}</Typography>
-                  </Stack>
-
-                  <Typography variant="body1">{user.comment}</Typography>
-                </Box>
-              </Stack>
-            ))}
-
-            <Button size="small" variant="outlined" color="inherit" onClick={() => console.log(lesson.id)} className={classes.button}>
-              <Typography variant="body2">
-                <FormattedMessage
-                  id="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
-                  defaultMessage="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
-                />
-              </Typography>
-            </Button>
-          </Stack>
-        </Box>
-      ))}
+      {renderComments}
 
       {isLoadingComments && <CommentSkeleton id={1} />}
 
-      <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!comments.next} onClick={handleSeeMore}>
-        <Typography variant="body2">
-          <FormattedMessage
-            id="ui.course.dashboard.teacher.tab.comments.btn.label"
-            defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
-          />
-        </Typography>
-      </LoadingButton>
+      {state.results.length > 0 && (
+        <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!state.next} onClick={handleNext}>
+          <Typography variant="body2">
+            <FormattedMessage
+              id="ui.course.dashboard.teacher.tab.comments.btn.label"
+              defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
+            />
+          </Typography>
+        </LoadingButton>
+      )}
     </Box>
   );
 }
+
+export default memo(Comments);

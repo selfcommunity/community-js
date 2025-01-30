@@ -54,7 +54,7 @@ export interface CourseApiClientInterface {
     comment_id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCCourseCommentType>;
-  getCourseComments(id: number | string, course_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseCommentType[]>;
+  getCourseComments(id: number | string, course_id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseCommentType>>;
   createCourseComment(
     id: number | string,
     section_id: number | string,
@@ -307,13 +307,19 @@ export class CourseApiClient {
   /**
    * This endpoint retrieves the course comments.
    * @param id
+   * @param params
    * @param config
    */
-  static getCourseComments(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseCommentType[]> {
+  static getCourseComments(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCCourseCommentType>> {
     return apiRequest({
       ...config,
       url: Endpoints.GetCourseComments.url({id}),
-      method: Endpoints.GetCourseComments.method
+      method: Endpoints.GetCourseComments.method,
+      params
     });
   }
 
@@ -336,7 +342,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.CreateCourseComment.url({id, section_id, lesson_id}),
       method: Endpoints.CreateCourseComment.method,
-      data: data
+      data
     });
   }
 
@@ -361,7 +367,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.UpdateCourseComment.url({id, section_id, lesson_id, comment_id}),
       method: Endpoints.UpdateCourseComment.method,
-      data: data
+      data
     });
   }
 
@@ -386,7 +392,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.PatchCourseComment.url({id, section_id, lesson_id, comment_id}),
       method: Endpoints.PatchCourseComment.method,
-      data: data
+      data
     });
   }
 
@@ -457,7 +463,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.UpdateCourseSection.url({id, section_id}),
       method: Endpoints.UpdateCourseSection.method,
-      data: data
+      data
     });
   }
 
@@ -521,7 +527,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.GetCourseLessonComments.url({id, section_id, lesson_id}),
       method: Endpoints.GetCourseLessonComments.method,
-      params: params
+      params
     });
   }
 
@@ -563,7 +569,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.UpdateCourseLesson.url({id, section_id, lesson_id}),
       method: Endpoints.UpdateCourseLesson.method,
-      data: data
+      data
     });
   }
 
@@ -586,7 +592,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.PatchCourseLesson.url({id, section_id, lesson_id}),
       method: Endpoints.PatchCourseLesson.method,
-      data: data
+      data
     });
   }
   /**
@@ -736,7 +742,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.InviteOrAcceptUsersToCourse.url({id}),
       method: Endpoints.InviteOrAcceptUsersToCourse.method,
-      data: data
+      data
     });
   }
   /**
@@ -750,7 +756,7 @@ export class CourseApiClient {
       ...config,
       url: Endpoints.RemoveInvitationToCourse.url({id}),
       method: Endpoints.RemoveInvitationToCourse.method,
-      data: data
+      data
     });
   }
   /**
@@ -843,8 +849,12 @@ export default class CourseService {
     return CourseApiClient.getCourseComment(id, section_id, lesson_id, comment_id, config);
   }
 
-  static async getCourseComments(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseCommentType[]> {
-    return CourseApiClient.getCourseComments(id, config);
+  static async getCourseComments(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCCourseCommentType>> {
+    return CourseApiClient.getCourseComments(id, params, config);
   }
 
   static async createCourseComment(

@@ -1,9 +1,8 @@
 import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
-import {SectionRowInterface} from '../../components/EditCourse/types';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
-import {SCCourseType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCAccordionLessons';
@@ -23,7 +22,8 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface AccordionLessonsProps {
-  course: SCCourseType | null;
+  sections: SCCourseSectionType[] | null;
+  lessons: SCCourseLessonType[] | null;
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
@@ -34,7 +34,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     name: PREFIX
   });
 
-  const {course, className} = props;
+  const {sections, lessons, className} = props;
 
   //STATES
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -51,13 +51,13 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     [setExpanded]
   );
 
-  if (!course) {
+  if (!sections || sections.length === 0 || !lessons || lessons.length === 0) {
     return null;
   }
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {course['sections'].map((section: SectionRowInterface) => (
+      {sections.map((section: SCCourseSectionType) => (
         <Accordion
           key={section.id}
           className={classes.accordion}
@@ -76,24 +76,28 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                   id="ui.course.table.lessons.title"
                   defaultMessage="ui.course.table.lessons.title"
                   values={{
-                    lessonsNumber: section.lessons.length
+                    lessonsNumber: lessons.filter((lesson) => lesson.section_id === section.id).length
                   }}
                 />
               </Typography>
             )}
           </AccordionSummary>
-          {section.lessons.map((lesson) => (
-            <AccordionDetails key={lesson.id} className={classes.details}>
-              {lesson.completed ? (
-                <Icon fontSize="small" color="primary">
-                  circle_checked
-                </Icon>
-              ) : (
-                <Box className={classes.circle} />
-              )}
-              <Typography>{lesson.name}</Typography>
-            </AccordionDetails>
-          ))}
+          {lessons.map((lesson) => {
+            if (lesson.section_id === section.id) {
+              return (
+                <AccordionDetails key={lesson.id} className={classes.details}>
+                  {lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
+                    <Icon fontSize="small" color="primary">
+                      circle_checked
+                    </Icon>
+                  ) : (
+                    <Box className={classes.circle} />
+                  )}
+                  <Typography>{lesson.name}</Typography>
+                </AccordionDetails>
+              );
+            }
+          })}
         </Accordion>
       ))}
     </Root>
