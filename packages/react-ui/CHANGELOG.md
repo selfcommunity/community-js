@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.11...@selfcommunity/react-ui@0.11.0-alpha.12) (2025-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.10...@selfcommunity/react-ui@0.11.0-alpha.11) (2025-01-22)
+
+
+### Bug Fixes
+
+* fixed to show back button on CreateLiveStreamDialog ([b3dde17](https://github.com/selfcommunity/community-js/commit/b3dde17345af31a11bf0d204d540ab2092579549))
+
+
+
+
+
 # [0.11.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.9...@selfcommunity/react-ui@0.11.0-alpha.10) (2025-01-22)
 
 
