@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.12...@selfcommunity/react-ui@0.11.0-alpha.13) (2025-01-30)
+
+
+### Bug Fixes
+
+* added required prop to redirect after create an event ([d08d158](https://github.com/selfcommunity/community-js/commit/d08d15800f96e0697200bdae2a917183b902abd8))
+
+
+
+
+
 # [0.11.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.11...@selfcommunity/react-ui@0.11.0-alpha.12) (2025-01-30)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
