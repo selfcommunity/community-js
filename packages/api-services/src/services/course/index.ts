@@ -47,7 +47,7 @@ export interface CourseApiClientInterface {
   deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
   // Course Comments CRUD
-  getCourseComment(
+  getCourseLessonComment(
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
@@ -290,7 +290,7 @@ export class CourseApiClient {
    * @param comment_id
    * @param config
    */
-  static getCourseComment(
+  static getCourseLessonComment(
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
@@ -299,8 +299,8 @@ export class CourseApiClient {
   ): Promise<SCCourseCommentType> {
     return apiRequest({
       ...config,
-      url: Endpoints.GetCourseComment.url({id, section_id, lesson_id, comment_id}),
-      method: Endpoints.GetCourseComment.method
+      url: Endpoints.GetCourseLessonComment.url({id, section_id, lesson_id, comment_id}),
+      method: Endpoints.GetCourseLessonComment.method
     });
   }
 
@@ -839,14 +839,14 @@ export default class CourseService {
   static async deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.deleteCourse(id, config);
   }
-  static async getCourseComment(
+  static async getCourseLessonComment(
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
     comment_id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCCourseCommentType> {
-    return CourseApiClient.getCourseComment(id, section_id, lesson_id, comment_id, config);
+    return CourseApiClient.getCourseLessonComment(id, section_id, lesson_id, comment_id, config);
   }
 
   static async getCourseComments(

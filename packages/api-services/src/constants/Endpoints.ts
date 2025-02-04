@@ -1466,10 +1466,6 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
     method: 'DELETE'
   },
-  GetCourseComment: {
-    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
-    method: 'GET'
-  },
   GetCourseComments: {
     url: urlReplacer('/api/v2/course/$(id)/comment/'),
     method: 'GET'
@@ -1492,6 +1488,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   GetCourseLesson: {
     url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'GET'
+  },
+  GetCourseLessonComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
     method: 'GET'
   },
   GetCourseLessonComments: {
