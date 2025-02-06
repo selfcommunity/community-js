@@ -13,9 +13,16 @@ const Component = {
           minWidth: 'auto'
         }
       },
-			[`& .SCLiveStreamForm-access-view`]: {
-				margin: theme.spacing(2, 0),
-			},
+      '& .SCLiveStreamSelector-warning': {
+        margin: theme.spacing(2, 5, 2, 5),
+        [`& a`]: {
+          color: theme.palette.common.white,
+          fontWeight: 'bold'
+        }
+      },
+      [`& .SCLiveStreamForm-access-view`]: {
+        margin: theme.spacing(2, 0)
+      },
       [`& .SCLiveStreamForm-actions`]: {
         display: 'flex',
         justifyContent: 'flex-end',

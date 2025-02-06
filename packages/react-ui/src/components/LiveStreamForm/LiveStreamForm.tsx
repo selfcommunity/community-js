@@ -2,7 +2,7 @@ import {LoadingButton} from '@mui/lab';
 import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCLiveStreamType} from '@selfcommunity/types';
+import {SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -15,9 +15,13 @@ import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-service
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import CoverPlaceholder from '../../assets/deafultCover';
+import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SELFCOMMUNITY_PRICING} from '../PlatformWidget/constants';
+import {WARNING_THRESHOLD_EXPIRING_SOON} from '../LiveStreamRoom/constants';
 
 const classes = {
   root: `${PREFIX}-root`,
+  warning: `${PREFIX}-warning`,
   form: `${PREFIX}-form`,
   title: `${PREFIX}-title`,
   cover: `${PREFIX}-cover`,
@@ -114,7 +118,18 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   });
   const {className, onSuccess, onError, liveStream = null, ...rest} = props;
 
-  // INTL
+  // HOOKS
+  const scUserContext = useSCUser();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
+  const isFreeTrialTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
+    [preferences]
+  );
   const intl = useIntl();
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -237,11 +252,39 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     [setField]
   );
 
+  const warning = useMemo(() => {
+    let _message;
+    if (isFreeTrialTier && isCommunityOwner) {
+      _message = (
+        <FormattedMessage
+          id="ui.liveStreamForm.selector.warningSubscriptionRequired"
+          defaultMessage="ui.liveStreamForm.selector.warningSubscriptionRequired"
+          values={{
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            link: (...chunks) => <Link to={SELFCOMMUNITY_PRICING[scContext.settings.locale.default]}>{chunks}</Link>
+          }}
+        />
+      );
+    }
+    if (_message) {
+      return (
+        <Box className={classes.warning}>
+          <Alert variant="filled" severity="warning">
+            {_message}
+          </Alert>
+        </Box>
+      );
+    }
+    return null;
+  }, [isFreeTrialTier, isCommunityOwner]);
+
   /**
    * Renders root object
    */
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
+      {warning}
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         <UploadEventCover isCreationMode={true} onChange={handleChangeCover} />
       </Paper>
@@ -325,7 +368,8 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
               !field.title ||
               field.isSubmitting ||
               field.title.length > LIVE_STREAM_TITLE_MAX_LENGTH ||
-              field.description.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH
+              field.description.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH ||
+              isFreeTrialTier
             }
             variant="contained"
             onClick={handleSubmit}
