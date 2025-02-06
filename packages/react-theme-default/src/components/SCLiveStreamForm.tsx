@@ -13,8 +13,8 @@ const Component = {
           minWidth: 'auto'
         }
       },
-      '& .SCLiveStreamSelector-warning': {
-        margin: theme.spacing(2, 5, 2, 5),
+      '& .SCLiveStreamForm-warning': {
+        margin: theme.spacing(2, 0),
         [`& a`]: {
           color: theme.palette.common.white,
           fontWeight: 'bold'

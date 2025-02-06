@@ -15,7 +15,14 @@ import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-service
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import CoverPlaceholder from '../../assets/deafultCover';
-import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+	Link,
+	SCContextType,
+	SCPreferences,
+	SCPreferencesContextType, useSCContext,
+	useSCPreferences,
+	useSCUser
+} from '@selfcommunity/react-core';
 import {SELFCOMMUNITY_PRICING} from '../PlatformWidget/constants';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../LiveStreamRoom/constants';
 
@@ -119,6 +126,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   const {className, onSuccess, onError, liveStream = null, ...rest} = props;
 
   // HOOKS
+	const scContext: SCContextType = useSCContext();
   const scUserContext = useSCUser();
   const {preferences}: SCPreferencesContextType = useSCPreferences();
   const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
