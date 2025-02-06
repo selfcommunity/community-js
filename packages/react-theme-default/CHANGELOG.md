@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.14...@selfcommunity/react-theme-default@0.4.5-alpha.15) (2025-02-06)
+
+
+### Bug Fixes
+
+* warning live stream form in a free trial community ([96fe99b](https://github.com/selfcommunity/community-js/commit/96fe99b443b74e9ce4660b097fb9d07ad7413eb7))
+* warning live stream form in a free trial community ([44a7667](https://github.com/selfcommunity/community-js/commit/44a766717ec7f5bf6b8c9f90a21c867f5a5649b0))
+
+
+
+
+
 ## [0.4.5-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.13...@selfcommunity/react-theme-default@0.4.5-alpha.14) (2025-01-30)
 
 
