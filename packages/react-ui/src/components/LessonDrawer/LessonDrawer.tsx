@@ -5,22 +5,15 @@ import classNames from 'classnames';
 import {Box, Divider, Drawer, Icon, IconButton, List, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
-import {useSCFetchCommentObjects} from '@selfcommunity/react-core';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCCommentsOrderBy, SCContributionType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {useSCFetchLessonCommentObjects} from '@selfcommunity/react-core';
+import {FormattedMessage} from 'react-intl';
+import {SCCommentsOrderBy, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import LessonEditForm, {LessonEditFormProps} from '../LessonEditForm';
-import CommentsObject from '../CommentsObject';
 import CourseContentMenu from '../CourseContentMenu';
-import CommentObjectReply from '../CommentObjectReply';
 import ScrollContainer from '../../shared/ScrollContainer';
-
-const messages = defineMessages({
-  commentEditorPlaceholder: {
-    id: 'ui.lessonDrawer.comments.editor.placeholder',
-    defaultMessage: 'ui.lessonDrawer.comments.editor.placeholder'
-  }
-});
+import LessonCommentObjects, {LessonCommentObjectsProps} from '../LessonCommentObjects';
+import {useInView} from 'react-intersection-observer';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -42,6 +35,10 @@ export interface LessonDrawerProps {
    */
   course: SCCourseType;
   /**
+   * The lesson obj
+   */
+  lesson: SCCourseLessonType;
+  /**
    * The edit mode
    * @default false
    */
@@ -62,6 +59,12 @@ export interface LessonDrawerProps {
    * The LessonEditFormProps
    */
   LessonEditFormProps: LessonEditFormProps;
+
+  /**
+   * The props to spread to comment component
+   * @default {}
+   */
+  CommentObjectsProps?: LessonCommentObjectsProps;
   /**
    * Any other properties
    */
@@ -77,40 +80,37 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
   const {
     className = null,
     course,
+    lesson,
     editMode = false,
     activePanel = null,
-    feedObjectId = 3078,
-    feedObject = null,
-    feedObjectType = SCContributionType.DISCUSSION,
     cacheStrategy = CacheStrategies.CACHE_FIRST,
-    comments = [],
-    CommentComponentProps = {variant: 'outlined'},
-    CommentsObjectProps = {},
+    CommentObjectsProps = {},
     LessonEditFormProps,
+    page = 1,
+    commentsPageCount = 5,
+    commentsOrderBy = SCCommentsOrderBy.ADDED_AT_ASC,
     handleClose,
     handleChangeLesson,
     ...rest
   } = props;
-
+  const {inView} = useInView({triggerOnce: true});
   // STATE
-  const commentsObject = useSCFetchCommentObjects({
-    id: feedObjectId,
-    feedObject,
-    feedObjectType,
-    cacheStrategy,
-    orderBy: SCCommentsOrderBy.ADDED_AT_ASC
+  const commentsObject = useSCFetchLessonCommentObjects({
+    id: lesson.id,
+    lessonObject: lesson,
+    offset: (page - 1) * commentsPageCount,
+    pageSize: commentsPageCount,
+    orderBy: commentsOrderBy,
+    cacheStrategy
   });
-  const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-
-  // INTL
-  const intl = useIntl();
+  const objId = commentsObject.lessonObject ? commentsObject.lessonObject.id : null;
 
   // EFFECTS
   useEffect(() => {
-    if (objId && !commentsObject.comments.length) {
+    if (objId && !commentsObject.comments.length && activePanel === SCLessonActionsType.COMMENTS && inView) {
       commentsObject.getNextPage();
     }
-  }, [objId]);
+  }, [objId, commentsObject.comments.length, activePanel, inView]);
 
   // HANDLERS
   function handleNext() {
@@ -137,46 +137,25 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
       {editMode ? (
         <LessonEditForm className={classes.content} {...LessonEditFormProps} />
       ) : (
-        <ScrollContainer>
-          <List className={classes.content}>
-            {activePanel === SCLessonActionsType.COMMENTS ? (
-              <CommentsObject
-                feedObject={commentsObject.feedObject}
-                comments={commentsObject.comments}
-                startComments={comments}
-                next={commentsObject.next}
-                isLoadingNext={commentsObject.isLoadingNext}
-                handleNext={handleNext}
-                totalLoadedComments={commentsObject.comments.length + comments.length}
-                totalComments={commentsObject.feedObject.comment_count}
-                hideAdvertising
-                {...CommentsObjectProps}
-                CommentComponentProps={{
-                  ...{showActions: false},
-                  ...{showUpperDateTime: true},
-                  ...(CommentsObjectProps.CommentComponentProps ? CommentsObjectProps.CommentComponentProps : {}),
-                  ...CommentComponentProps,
-                  ...{cacheStrategy}
-                }}
-                inPlaceLoadMoreContents={false}
-              />
-            ) : (
+        <List className={classes.content}>
+          {activePanel === SCLessonActionsType.COMMENTS ? (
+            <LessonCommentObjects
+              lessonObject={commentsObject.lessonObject}
+              comments={commentsObject.comments}
+              next={commentsObject.next}
+              isLoadingNext={commentsObject.isLoadingNext}
+              handleNext={handleNext}
+              page={commentsObject.page}
+              nextPage={commentsObject.nextPage}
+              onUpdate={commentsObject.updateLessonComments}
+              {...CommentObjectsProps}
+            />
+          ) : (
+            <ScrollContainer>
               <CourseContentMenu course={course} lesson={LessonEditFormProps.lesson} onLessonClick={handleChangeLesson} />
-            )}
-          </List>
-        </ScrollContainer>
-      )}
-      {activePanel === SCLessonActionsType.COMMENTS && (
-        // TODO: handle message reply component
-        <CommentObjectReply
-          showAvatar={false}
-          replyIcon={true}
-          id={`reply-lessonDrawer-${objId}`}
-          onReply={() => console.log('reply')}
-          editable={true}
-          key={objId}
-          EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder)}}
-        />
+            </ScrollContainer>
+          )}
+        </List>
       )}
     </Root>
   );

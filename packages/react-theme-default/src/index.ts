@@ -121,6 +121,9 @@ import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
 import SCLessonAppbar from './components/SCLessonAppbar';
 import SCLessonDrawer from './components/SCLessonDrawer';
+import SCLessonCommentActionsMenu from './components/SCLessonCommentActionsMenu';
+import SCLessonCommentObject from './components/SCLessonCommentObject';
+import SCLessonCommentObjects from './components/SCLessonCommentObjects';
 import SCLessonCompletedDialog from './components/SCLessonCompletedDialog';
 import SCLessonEditForm from './components/SCLessonEditForm';
 import SCLessonTemplate from './components/SCLessonTemplate';
@@ -378,6 +381,9 @@ const theme = {
     SCLanguageSwitcher,
     SCLessonAppbar,
     SCLessonDrawer,
+    SCLessonCommentActionsMenu,
+    SCLessonCommentObject,
+    SCLessonCommentObjects,
     SCLessonCompletedDialog,
     SCLessonEditForm,
     SCLessonTemplate,

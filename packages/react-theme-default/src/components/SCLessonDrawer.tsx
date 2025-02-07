@@ -29,42 +29,10 @@ const Component = {
         justifyContent: 'space-between'
       },
       '& .SCLessonDrawer-content': {
+        flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        padding: theme.spacing(2),
-        '& .SCCommentsObject-root': {
-          backgroundColor: 'transparent',
-          '& .SCCommentObject-root, & .SCCommentObject-comment, & .SCCommentObject-content': {
-            backgroundColor: 'transparent',
-            border: 0
-          },
-          '& .SCBaseItem-image': {
-            marginRight: 0
-          },
-          '& .SCBaseItem-text': {
-            '& .SCCommentObject-author': {
-              marginRight: theme.spacing(1)
-            },
-            '& .SCBullet-root, & .SCDateTimeAgo-root': {
-              color: theme.palette.text.secondary
-            }
-          },
-          '& .SCCommentObject-text-content': {
-            paddingTop: 0
-          }
-        }
-      },
-      '& .SCCommentObjectReply-root': {
-        backgroundColor: 'transparent',
-        '& .SCEditor-actions': {
-          left: theme.spacing(1),
-          '& .SCCommentObjectReply-icon-reply': {
-            marginLeft: 'auto'
-          }
-        },
-        '& .SCBaseItem-content': {
-          padding: theme.spacing(0, 2, 1, 2)
-        }
+        padding: theme.spacing(2)
       }
     })
   }

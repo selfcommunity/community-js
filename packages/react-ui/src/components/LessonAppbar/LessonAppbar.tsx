@@ -26,6 +26,10 @@ export interface LessonAppbarProps {
    */
   title: string;
   /**
+   *  If comments are enabled for the lesson showed
+   */
+  showComments: boolean;
+  /**
    * The edit mode
    * @default false
    */
@@ -63,7 +67,7 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, title = '', activePanel = null, handleOpen, onSave, editMode, onArrowBackClick, updating, ...rest} = props;
+  const {className = null, title = '', showComments, activePanel = null, handleOpen, onSave, editMode, onArrowBackClick, updating, ...rest} = props;
 
   return (
     <Root position="fixed" open={Boolean(activePanel)} className={classNames(classes.root, className)} {...rest}>
@@ -85,9 +89,11 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
           </>
         ) : (
           <>
-            <IconButton onClick={() => handleOpen(SCLessonActionsType.COMMENTS)}>
-              <Icon>chat_bubble_outline</Icon>
-            </IconButton>
+            {showComments && (
+              <IconButton onClick={() => handleOpen(SCLessonActionsType.COMMENTS)}>
+                <Icon>chat_bubble_outline</Icon>
+              </IconButton>
+            )}
             <IconButton onClick={() => handleOpen(SCLessonActionsType.LESSONS)}>
               <Icon>courses</Icon>
             </IconButton>

@@ -200,6 +200,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <LessonAppbar
+        showComments={scLesson.comments_enabled}
         editMode={isEditMode}
         activePanel={activePanel}
         title={scCourse.name}
@@ -233,6 +234,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       </Container>
       <LessonDrawer
         course={scCourse}
+        lesson={scLesson}
         editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : isEditMode}
         activePanel={activePanel}
         handleClose={handleCloseDrawer}

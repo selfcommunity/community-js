@@ -6,14 +6,23 @@
 export const FEED_OBJECT_CACHE_PREFIX_KEY = '_fo_';
 export const getFeedObjectCacheKey = (id, type) => `${FEED_OBJECT_CACHE_PREFIX_KEY}${type}_${id}`;
 
-/** COMMMENT OBJECT **/
+/** COMMENT OBJECT **/
 export const COMMENT_OBJECT_CACHE_PREFIX_KEY = '_co_';
 export const getCommentObjectCacheKey = (id) => `${COMMENT_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
-/** COMMMENT OBJECTS **/
+/** COMMENT OBJECTS **/
 export const COMMENT_OBJECTS_CACHE_PREFIX_KEY = '_cos_';
 export const getCommentObjectsCacheKey = (id, type, next) => `${COMMENT_OBJECTS_CACHE_PREFIX_KEY}${type}_${id}_${next}`;
 export const getCommentObjectsCachePrefixKeys = (id, type) => `${COMMENT_OBJECTS_CACHE_PREFIX_KEY}${type}_${id}`;
+
+/** LESSON COMMENT OBJECT **/
+export const LESSON_COMMENT_CACHE_PREFIX_KEY = '_lco_';
+export const getLessonCommentCacheKey = (id) => `${LESSON_COMMENT_CACHE_PREFIX_KEY}${id}`;
+
+/** LESSON COMMENT OBJECTS **/
+export const LESSON_COMMENTS_CACHE_PREFIX_KEY = '_lcos_';
+export const getLessonCommentsCacheKey = (id, next) => `${LESSON_COMMENTS_CACHE_PREFIX_KEY}${id}_${next}`;
+export const getLessonCommentsCachePrefixKeys = (id) => `${LESSON_COMMENTS_CACHE_PREFIX_KEY}${id}`;
 
 /** CATEGORIES OBJECT **/
 export const CATEGORIES_OBJECT_CACHE_PREFIX_KEY = '_cas_';

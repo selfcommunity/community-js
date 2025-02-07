@@ -193,12 +193,6 @@ export interface CommentObjectProps {
   showActions?: boolean;
 
   /**
-   * Prop to show the comment datetime next to the author username
-   * @default false
-   */
-  showUpperDateTime?: boolean;
-
-  /**
    * Other props
    */
   [p: string]: any;
@@ -271,7 +265,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     CommentsObjectComponentProps = {},
     showActions = true,
-    showUpperDateTime = false,
     ...rest
   } = props;
 
@@ -571,12 +564,6 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
-                    {showUpperDateTime && (
-                      <>
-                        <Bullet />
-                        <DateTimeAgo date={comment.added_at} showStartIcon={false} />
-                      </>
-                    )}
                     {comment.collapsed && (
                       <Chip
                         className={classes.flagChip}

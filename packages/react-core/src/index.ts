@@ -83,6 +83,8 @@ import useSCFetchVote from './hooks/useSCFetchVote';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
+import useSCFetchLessonCommentObject from './hooks/useSCFetchLessonCommentObject';
+import useSCFetchLessonCommentObjects from './hooks/useSCFetchLessonCommentObjects';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchAddressingTagList from './hooks/useSCFetchAddressingTagList';
@@ -207,6 +209,8 @@ export {
   useSCFetchFeedObject,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
+  useSCFetchLessonCommentObject,
+  useSCFetchLessonCommentObjects,
   useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchAddressingTagList,
