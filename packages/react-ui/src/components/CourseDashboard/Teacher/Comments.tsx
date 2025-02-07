@@ -8,7 +8,7 @@ import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
 import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../../utils/widget';
-import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {CourseService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 
@@ -90,8 +90,9 @@ function Comments(props: CommentsProps) {
 
   const [isLoadingComments, setIsLoadingComments] = useState(false);
 
-  // HOOKS
+  // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // CALLBACKS
   const _init = useCallback(() => {
@@ -177,7 +178,13 @@ function Comments(props: CommentsProps) {
             </Stack>
           ))}
 
-          <Button size="small" variant="outlined" color="inherit" onClick={() => console.log(name)} className={classes.button}>
+          <Button
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, course)}
+            size="small"
+            variant="outlined"
+            color="inherit"
+            className={classes.button}>
             <Typography variant="body2">
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
