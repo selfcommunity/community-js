@@ -1,4 +1,4 @@
-import {HTMLAttributes, useMemo} from 'react';
+import {HTMLAttributes} from 'react';
 import {PREFIX} from './constants';
 import {Box, styled, useThemeProps} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
@@ -43,7 +43,7 @@ export interface CourseDashboardTemplateProps {
 
   page?: 'students' | 'comments';
   onTabChange?: (page: 'students' | 'comments') => void;
-  isTeacher?: boolean;
+  viewDashboard?: boolean;
 }
 
 export default function CourseDashboardTemplate(inProps: CourseDashboardTemplateProps) {
@@ -53,23 +53,30 @@ export default function CourseDashboardTemplate(inProps: CourseDashboardTemplate
     name: PREFIX
   });
 
-  const {id = 'course_dashboard', className = null, course = null, courseId = null, page, onTabChange, isTeacher} = props;
+  const {id = 'course_dashboard', className = null, course = null, courseId = null, page, onTabChange, viewDashboard} = props;
 
   // HOOKS
-  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: isTeacher ? CourseInfoViewType.DASHBOARD : CourseInfoViewType.USER}});
+  const {scCourse, error} = useSCFetchCourse({
+    id: courseId,
+    course,
+    params: {view: viewDashboard ? CourseInfoViewType.DASHBOARD : CourseInfoViewType.USER}
+  });
 
-  // MEMOS
-  const dashboard = useMemo(() => {
-    if (isTeacher) {
-      return <CourseDashboard.Teacher course={scCourse} page={page} onTabChange={onTabChange} />;
-    }
+  if (error) {
+    return null;
+  }
 
-    return <CourseDashboard.Student course={scCourse} />;
-  }, [isTeacher, scCourse, page, onTabChange]);
+  if (viewDashboard) {
+    return (
+      <Root id={id} className={classNames(classes.root, className)}>
+        <CourseDashboard.Teacher course={scCourse} page={page} onTabChange={onTabChange} />
+      </Root>
+    );
+  }
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      {dashboard}
+      <CourseDashboard.Student course={scCourse} />
     </Root>
   );
 }

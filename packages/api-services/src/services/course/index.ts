@@ -169,7 +169,7 @@ export interface CourseApiClientInterface {
 
   // Subscribe/Unsubscribe
   joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  leaveOrRemoveCourseRequest(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  leaveOrRemoveCourseRequest(id: number | string, data?: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
 
   // To invite a user or to accept a request to participate in the course (in the end the user is ONLY subscribed to the course)
   // To request participation in a private course use joinOrAcceptInviteToCourse which automatically manages the subscription to a private/public course
@@ -727,8 +727,13 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static leaveOrRemoveCourseRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, url: Endpoints.LeaveOrRemoveCourseRequest.url({id}), method: Endpoints.LeaveOrRemoveCourseRequest.method});
+  static leaveOrRemoveCourseRequest(id: number | string, data?: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.LeaveOrRemoveCourseRequest.url({id}),
+      method: Endpoints.LeaveOrRemoveCourseRequest.method,
+      data
+    });
   }
 
   /**
@@ -1022,8 +1027,8 @@ export default class CourseService {
   static async joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.joinOrAcceptInviteToCourse(id, config);
   }
-  static async leaveOrRemoveCourseRequest(id: number | string, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.leaveOrRemoveCourseRequest(id, config);
+  static async leaveOrRemoveCourseRequest(id: number | string, data?: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.leaveOrRemoveCourseRequest(id, data, config);
   }
   static async inviteOrAcceptUsersToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.inviteOrAcceptUsersToCourse(id, data, config);

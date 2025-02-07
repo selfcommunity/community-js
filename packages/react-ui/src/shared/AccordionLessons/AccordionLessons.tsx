@@ -1,8 +1,20 @@
-import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Icon,
+  Skeleton,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  useThemeProps
+} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
-import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCAccordionLessons';
@@ -22,8 +34,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface AccordionLessonsProps {
-  sections: SCCourseSectionType[] | null;
-  lessons: SCCourseLessonType[] | null;
+  course: SCCourseType | null;
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
@@ -34,7 +45,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     name: PREFIX
   });
 
-  const {sections, lessons, className} = props;
+  const {course, className} = props;
 
   //STATES
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -51,13 +62,22 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     [setExpanded]
   );
 
-  if (!sections || sections.length === 0 || !lessons || lessons.length === 0) {
-    return null;
+  if (!course) {
+    return (
+      <Root className={classNames(classes.root, className)}>
+        <Box className={classes.accordion}>
+          <Box className={classes.summary}>
+            <Skeleton animation="wave" variant="text" width="210px" height="21px" />
+            <Skeleton animation="wave" variant="text" width="54px" height="21px" />
+          </Box>
+        </Box>
+      </Root>
+    );
   }
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {sections.map((section: SCCourseSectionType) => (
+      {course.sections?.map((section: SCCourseSectionType) => (
         <Accordion
           key={section.id}
           className={classes.accordion}
@@ -76,28 +96,24 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                   id="ui.course.table.lessons.title"
                   defaultMessage="ui.course.table.lessons.title"
                   values={{
-                    lessonsNumber: lessons.filter((lesson) => lesson.section_id === section.id).length
+                    lessonsNumber: section.lessons.length
                   }}
                 />
               </Typography>
             )}
           </AccordionSummary>
-          {lessons.map((lesson) => {
-            if (lesson.section_id === section.id) {
-              return (
-                <AccordionDetails key={lesson.id} className={classes.details}>
-                  {lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
-                    <Icon fontSize="small" color="primary">
-                      circle_checked
-                    </Icon>
-                  ) : (
-                    <Box className={classes.circle} />
-                  )}
-                  <Typography>{lesson.name}</Typography>
-                </AccordionDetails>
-              );
-            }
-          })}
+          {section.lessons.map((lesson) => (
+            <AccordionDetails key={lesson.id} className={classes.details}>
+              {lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
+                <Icon fontSize="small" color="primary">
+                  circle_checked
+                </Icon>
+              ) : (
+                <Box className={classes.circle} />
+              )}
+              <Typography>{lesson.name}</Typography>
+            </AccordionDetails>
+          ))}
         </Accordion>
       ))}
     </Root>

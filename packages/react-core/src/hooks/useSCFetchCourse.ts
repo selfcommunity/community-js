@@ -1,7 +1,7 @@
 import {CourseInfoParams, Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCCourseType} from '@selfcommunity/types';
 import {CacheStrategies, Logger, LRUCache, objectWithoutProperties} from '@selfcommunity/utils';
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {getCourseObjectCacheKey} from '../constants/Cache';
@@ -44,11 +44,13 @@ export default function useSCFetchCourse({
   );
   const [error, setError] = useState<string>(null);
 
-  const setSCCourse = (course: SCCourseType) => {
-    const _c: SCCourseType = authUserId ? course : objectWithoutProperties<SCCourseType>(course, ['join_status']);
-    setScCourse(_c);
-    LRUCache.set(__courseCacheKey, _c);
-  };
+  const setSCCourse = useCallback(
+    (c: SCCourseType) => {
+      setScCourse(c);
+      LRUCache.set(__courseCacheKey, c);
+    },
+    [setScCourse, __courseCacheKey]
+  );
 
   /**
    * Memoized fetchTag
@@ -82,8 +84,13 @@ export default function useSCFetchCourse({
         })
         .catch((err) => {
           LRUCache.delete(__courseCacheKey);
-          setError(`Course with id ${id} not found`);
-          Logger.error(SCOPE_SC_CORE, `Course with id ${id} not found`);
+          if (err.status === 403) {
+            setError('You do not have permission to perform this action.');
+            Logger.error(SCOPE_SC_CORE, 'You do not have permission to perform this action.');
+          } else {
+            setError(`Course with id ${id} not found`);
+            Logger.error(SCOPE_SC_CORE, `Course with id ${id} not found`);
+          }
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }

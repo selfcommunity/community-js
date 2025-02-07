@@ -5,7 +5,7 @@ export default {
   title: 'Design System/React TEMPLATES/Course Dashboard',
   component: CourseDashboard,
   argTypes: {
-    teacher: {
+    viewDashboard: {
       control: 'string'
     }
   },
@@ -24,7 +24,7 @@ export default {
 
 export const Student: StoryObj<typeof CourseDashboard> = {
   args: {
-    isTeacher: false,
+    viewDashboard: false
   }
 };
 
@@ -36,8 +36,8 @@ export const Teacher: StoryObj<typeof CourseDashboard> = {
     }
   },
   args: {
+    viewDashboard: true,
     page: 'students',
-    onTabChange() {},
-    isTeacher: true,
-  },
+    onTabChange() {}
+  }
 };

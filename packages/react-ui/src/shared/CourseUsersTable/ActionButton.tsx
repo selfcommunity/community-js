@@ -1,10 +1,10 @@
-import {Avatar, Button, Icon, IconButton, Stack, styled, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Button, Icon, IconButton, Skeleton, Stack, styled, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {Fragment, memo, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../BaseDialog';
-import {SCThemeType} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
-import {SCCourseLessonType, SCCourseSectionType, SCCourseType, SCUserType} from '@selfcommunity/types';
+import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import AccordionLessons from '../AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -37,8 +37,9 @@ function ActionButton(props: ActionButtonProps) {
   // STATES
   const [open, setOpen] = useState(false);
   const [student, setStudent] = useState<SCCourseType | null>(null);
-  const [sections, setSections] = useState<SCCourseSectionType[] | null>(null);
-  const [lessons, setLessons] = useState<SCCourseLessonType[] | null>(null);
+
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -50,31 +51,13 @@ function ActionButton(props: ActionButtonProps) {
       CourseService.getSpecificCourseInfo(course.id, {user: user.id})
         .then((data) => setStudent(data))
         .catch((error) => Logger.error(SCOPE_SC_UI, error));
-
-      CourseService.getCourseSections(course.id)
-        .then((data) => setSections(data))
-        .catch((error) => Logger.error(SCOPE_SC_UI, error));
-
-      if (sections && sections.length > 0) {
-        sections.forEach((section) => {
-          if (section.lessons_order.length > 0) {
-            CourseService.getCourseLessons(course.id, section.id)
-              .then((data) => setLessons((prev) => (prev ? [...prev, ...data] : data)))
-              .catch((error) => Logger.error(SCOPE_SC_UI, error));
-          }
-        });
-      }
     }
-  }, [open, student, sections]);
+  }, [open, student, course, user]);
 
   // HANDLERS
   const handleToggleOpen = useCallback(() => {
     setOpen((prev) => !prev);
   }, [setOpen]);
-
-  const handleClick = useCallback(() => {
-    // TODO
-  }, []);
 
   return (
     <Fragment>
@@ -110,31 +93,44 @@ function ActionButton(props: ActionButtonProps) {
                   <Typography variant="body1">{user.username}</Typography>
                 </Stack>
 
-                <Button variant="outlined" size="small" color="inherit" onClick={handleClick}>
+                <Button
+                  component={Link}
+                  to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}
+                  variant="outlined"
+                  size="small"
+                  color="inherit">
                   <Typography variant="body2">
                     <FormattedMessage id="ui.courseUsersTable.dialog.btn.label" defaultMessage="ui.courseUsersTable.dialog.btn.label" />
                   </Typography>
                 </Button>
               </Stack>
 
-              <Typography variant="body1">
-                <FormattedMessage
-                  id="ui.courseUsersTable.dialog.info.text1"
-                  defaultMessage="ui.courseUsersTable.dialog.info.text1"
-                  values={{lessonsCompleted: student?.num_lessons_completed}}
-                />
-              </Typography>
+              {student ? (
+                <Typography variant="body1">
+                  <FormattedMessage
+                    id="ui.courseUsersTable.dialog.info.text1"
+                    defaultMessage="ui.courseUsersTable.dialog.info.text1"
+                    values={{lessonsCompleted: student.num_lessons_completed}}
+                  />
+                </Typography>
+              ) : (
+                <Skeleton animation="wave" variant="text" width="100px" height="21px" />
+              )}
 
-              <Typography variant="body1">
-                <FormattedMessage
-                  id="ui.courseUsersTable.dialog.info.text2"
-                  defaultMessage="ui.courseUsersTable.dialog.info.text2"
-                  values={{courseCompleted: student?.user_completion_rate}}
-                />
-              </Typography>
+              {student ? (
+                <Typography variant="body1">
+                  <FormattedMessage
+                    id="ui.courseUsersTable.dialog.info.text2"
+                    defaultMessage="ui.courseUsersTable.dialog.info.text2"
+                    values={{courseCompleted: student.user_completion_rate}}
+                  />
+                </Typography>
+              ) : (
+                <Skeleton animation="wave" variant="text" width="100px" height="21px" />
+              )}
             </Stack>
 
-            <AccordionLessons sections={sections} lessons={lessons} />
+            <AccordionLessons course={student} />
           </Stack>
         </DialogRoot>
       )}

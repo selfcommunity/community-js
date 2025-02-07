@@ -113,7 +113,10 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
 
   // HOOKS
   const {scCourse} = useSCFetchCourse({id: courseId, course});
-  const participantsAvailable = useMemo(() => scCourse?.join_status === SCCourseJoinStatusType.MANAGER, [scCourse]);
+  const participantsAvailable = useMemo(
+    () => scCourse?.join_status === SCCourseJoinStatusType.CREATOR || scCourse?.join_status === SCCourseJoinStatusType.MANAGER,
+    [scCourse]
+  );
 
   useDeepCompareEffectNoCheck(() => {
     setEnrolled([]);

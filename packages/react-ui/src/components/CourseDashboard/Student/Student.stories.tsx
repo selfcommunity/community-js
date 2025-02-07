@@ -5,6 +5,8 @@ export default {
   title: 'Design System/React UI/Student Course Dashboard',
   component: CourseDashboard.Student,
   args: {
+    courseId: 2,
+    course: undefined,
     className: ''
   },
   render: (args) => (

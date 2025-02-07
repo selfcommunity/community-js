@@ -21,7 +21,7 @@ export enum SCCourseTypologyType {
 }
 
 /**
- * SCGroupSubscriptionStatusType enum
+ * SCCourseSubscriptionStatusType enum
  */
 export enum SCCourseJoinStatusType {
   JOINED = 'joined',
@@ -120,7 +120,7 @@ export interface SCCourseType {
   /**
    * The course subscription status.
    */
-  join_status?: SCCourseJoinStatusType;
+  join_status?: SCCourseJoinStatusType | null;
   /**
    * The course creation date.
    */
