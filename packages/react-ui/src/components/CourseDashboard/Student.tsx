@@ -38,12 +38,6 @@ const classes = {
   completedWrapper: `${PREFIX}-completed-wrapper`
 };
 
-const Root = styled(Box, {
-  name: PREFIX,
-  slot: 'Root',
-  overridesResolver: (_props, styles) => styles.root
-})(() => ({}));
-
 type DataUrlLesson = {
   id: number;
   slug: string;
@@ -68,6 +62,12 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 
   return data;
 }
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root',
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface StudentCourseDashboardProps {
   courseId?: number;
