@@ -134,6 +134,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   //STATE
   const [commenting, setIsCommenting] = useState<boolean>(false);
   const [editing, setIsEditing] = useState<boolean>(false);
+  const [replyKey, setReplyKey] = useState(0);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -199,6 +200,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
       performComment(comment)
         .then((data: SCCourseCommentType) => {
           handleCommentsUpdate(data);
+          setReplyKey(comment.id);
           setIsCommenting(false);
           scrollToBottom();
         })
@@ -263,6 +265,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
         )}
         {commentsObject.comments.length > 0 && !editing && (
           <CommentObjectReply
+            key={replyKey}
             id={`reply-lessonCommentObjects`}
             showAvatar={false}
             replyIcon={!commenting}
