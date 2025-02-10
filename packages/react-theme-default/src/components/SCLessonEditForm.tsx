@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      padding: theme.spacing(2),
       height: '100%',
       display: 'flex',
       flexDirection: 'column',

@@ -1,15 +1,31 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      position: 'relative',
-      height: '90%',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      overflowY: 'auto',
+      padding: theme.spacing(2),
+      justifyContent: 'space-between',
       '& .SCCommentObjectReply-root': {
-        position: 'absolute',
         backgroundColor: 'transparent',
         '& .SCEditor-actions': {
           left: theme.spacing(1),
           '& .SCCommentObjectReply-icon-reply': {
             marginLeft: 'auto'
+          }
+        },
+        marginTop: theme.spacing(2),
+        marginBottom: 0
+      },
+      '& .infinite-scroll-component__outerdiv': {
+        overflowY: 'auto',
+        '& .infinite-scroll-component': {
+          '& .MuiList-root ': {
+            padding: 0,
+            '& .MuiListItem-root': {
+              padding: 0
+            }
           }
         }
       }

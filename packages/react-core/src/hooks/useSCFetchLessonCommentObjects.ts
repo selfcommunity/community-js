@@ -381,7 +381,6 @@ export default function useSCFetchLessonCommentObjects(props: {
    */
   const updateLessonComments = (updatedData) => {
     if (updatedData) {
-      console.log(updatedData);
       dispatch({
         type: commentsObjectActionTypes.DATA_NEXT_LOADED,
         payload: {

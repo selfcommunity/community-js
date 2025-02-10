@@ -10,7 +10,6 @@ const Component = {
         }
       },
       '& .SCCourseContentMenu-list-item': {
-        padding: 0,
         '&:hover, &:focus, &:active': {
           backgroundColor: 'transparent'
         }

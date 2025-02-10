@@ -33,12 +33,12 @@ const Root = styled(Box, {
  |root|.SCLessonCommentObjects-skeleton-root|Styles applied to the root element.|
  *
  */
-export default function LessonCommentObjectsSkeleton(props: {count?: number; CommentObjectSkeletonProps?: any; [p: string]: any}): JSX.Element {
-  const {count = 3, CommentObjectSkeletonProps = {}, ...rest} = props;
+export default function LessonCommentObjectsSkeleton(props: {count?: number}): JSX.Element {
+  const {count = 3, ...rest} = props;
   return (
     <Root className={classes.root} {...rest}>
       {[...Array(count)].map((comment, index) => (
-        <LessonCommentObjectSkeleton key={index} {...CommentObjectSkeletonProps} />
+        <LessonCommentObjectSkeleton key={index} elevation={0} />
       ))}
     </Root>
   );

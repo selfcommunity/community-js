@@ -20,19 +20,16 @@ const Component = {
       },
       '& .SCLessonDrawer-header': {
         minHeight: theme.mixins.toolbar.minHeight,
-        padding: theme.spacing(1, 1, 1, 2),
+        display: 'block',
+        padding: theme.spacing(1, 1, 1, 2)
+      },
+      '& .SCLessonDrawer-header-content': {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between'
       },
       '& .SCLessonDrawer-header-edit': {
         justifyContent: 'space-between'
-      },
-      '& .SCLessonDrawer-content': {
-        flexGrow: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        padding: theme.spacing(2)
       }
     })
   }
