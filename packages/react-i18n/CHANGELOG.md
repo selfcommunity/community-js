@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.2...@selfcommunity/react-i18n@0.8.0-alpha.3) (2025-02-11)
+
+
+### Bug Fixes
+
+* live stream ([48bac91](https://github.com/selfcommunity/community-js/commit/48bac911f55dd95158b2ae438f18a8c9746161ac))
+
+
+
+
+
 # [0.8.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.1...@selfcommunity/react-i18n@0.8.0-alpha.2) (2025-01-21)
 
 
