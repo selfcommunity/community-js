@@ -1,6 +1,7 @@
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {Chip, Tooltip, TooltipProps} from '@mui/material';
 import React, {useMemo} from 'react';
 import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
@@ -36,6 +37,16 @@ export default function UpScalingTierBadge(inProps: UpScalingTierProps): JSX.Ele
     name: PREFIX
   });
   const {className, desiredTier = SCCommunitySubscriptionTier.GO, ...rest} = props;
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const isEnterpriseTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.ENTERPRISE,
+    [preferences]
+  );
+
   const tooltipMsg = useMemo(() => {
     let _msg = <FormattedMessage id="ui.upScalingTierBadge.goFeature" defaultMessage="ui.upScalingTierBadge.goFeature" />;
     switch (desiredTier) {
@@ -64,6 +75,10 @@ export default function UpScalingTierBadge(inProps: UpScalingTierProps): JSX.Ele
     }
     return _label;
   }, [desiredTier]);
+
+  if (desiredTier === SCCommunitySubscriptionTier.ENTERPRISE && isEnterpriseTier) {
+    return null;
+  }
 
   return (
     <Root classes={{root: classNames(className, classes.root)}} title={tooltipMsg} placement="top" {...rest}>

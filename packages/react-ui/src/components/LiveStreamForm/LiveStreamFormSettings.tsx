@@ -112,7 +112,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           disabled={!liveStreamEnabled}
-          checked={Boolean(settings?.muteParticipants)}
+          checked={!settings?.muteParticipants}
           onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['muteParticipants']: !settings?.muteParticipants}})}
         />
         <Typography className={classes.switchLabel}>
@@ -124,7 +124,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           <Stack direction="row" spacing={1} alignItems="center">
             <Switch
               className={classes.switch}
-              checked={Boolean(settings?.disableVideo)}
+              checked={!settings?.disableVideo}
               disabled={!isEnterpriseTier || !liveStreamEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableVideo']: !settings?.disableVideo}})}
             />
@@ -136,7 +136,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           <Stack direction="row" spacing={1} alignItems="center">
             <Switch
               className={classes.switch}
-              checked={Boolean(settings?.disableShareScreen)}
+              checked={!settings?.disableShareScreen}
               disabled={!isEnterpriseTier || !liveStreamEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
             />
@@ -151,7 +151,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
         <Switch
           className={classes.switch}
           disabled={!liveStreamEnabled}
-          checked={Boolean(settings?.disableChat)}
+          checked={!settings?.disableChat}
           onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableChat']: !settings?.disableChat}})}
         />
         <Typography className={classes.switchLabel}>

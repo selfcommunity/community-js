@@ -19,12 +19,15 @@ import {
 import {
   Link,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCThemeType,
   SCUserContextType,
   UserUtils,
   useSCContext,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -37,6 +40,7 @@ import EventFormDialog, {EventFormDialogProps} from '../EventFormDialog';
 import classNames from 'classnames';
 import GroupForm, {GroupFormProps} from '../GroupForm';
 import CreateLiveStreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
+import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
 
 const PREFIX = 'SCComposerIconButton';
 
@@ -168,11 +172,26 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // MEMOS
   const canCreateGroup = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
   const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
-  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const canCreateLive = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
+  const isFreeTrialTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
+    [preferences]
+  );
+  const canCreateLiveStream = useMemo(
+    () => (isFreeTrialTier && isCommunityOwner && canCreateLive) || (!isFreeTrialTier && canCreateLive),
+    [isFreeTrialTier, isCommunityOwner, canCreateLive]
+  );
+
   const renderContent = useMemo(() => {
     return (
       <MenuList>
