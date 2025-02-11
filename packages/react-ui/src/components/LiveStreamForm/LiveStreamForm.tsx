@@ -4,25 +4,18 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {LIVE_STREAM_DESCRIPTION_MAX_LENGTH, LIVE_STREAM_TITLE_MAX_LENGTH, LIVE_STREAM_SLUG_MAX_LENGTH} from '../../constants/LiveStream';
 import {LIVESTREAM_DEFAULT_SETTINGS, PREFIX} from './constants';
 import {InitialFieldState} from './types';
 import UploadEventCover from '../EventForm/UploadEventCover';
 import LiveStreamSettingsForm from './LiveStreamFormSettings';
-import {formatHttpErrorCode, LiveStreamService} from '@selfcommunity/api-services';
+import {formatHttpErrorCode, LiveStreamApiClient, LiveStreamService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import CoverPlaceholder from '../../assets/deafultCover';
-import {
-	Link,
-	SCContextType,
-	SCPreferences,
-	SCPreferencesContextType, useSCContext,
-	useSCPreferences,
-	useSCUser
-} from '@selfcommunity/react-core';
+import {Link, SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SELFCOMMUNITY_PRICING} from '../PlatformWidget/constants';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../LiveStreamRoom/constants';
 
@@ -126,7 +119,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   const {className, onSuccess, onError, liveStream = null, ...rest} = props;
 
   // HOOKS
-	const scContext: SCContextType = useSCContext();
+  const scContext: SCContextType = useSCContext();
   const scUserContext = useSCUser();
   const {preferences}: SCPreferencesContextType = useSCPreferences();
   const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
@@ -156,6 +149,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
   const [genericError, setGenericError] = useState<string | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
   const _backgroundCover = {
     ...(field.cover ? {background: `url('${field.cover}') center / cover`} : {background: `url('${CoverPlaceholder}') no-repeat 0 0 / 100% 100%`})
@@ -274,6 +268,23 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           }}
         />
       );
+    } else if (timeRemaining !== null && timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON) {
+      if (timeRemaining <= 1) {
+        _message = (
+          <FormattedMessage
+            id="ui.liveStreamForm.selector.warningMinutesExausted"
+            defaultMessage="ui.liveStreamForm.selector.warningMinutesExausted"
+          />
+        );
+      } else if (timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON) {
+        _message = (
+          <FormattedMessage
+            id="ui.liveStreamForm.selector.warningRemainingMinutes"
+            defaultMessage="ui.liveStreamForm.selector.warningRemainingMinutes"
+            values={{minutes: timeRemaining}}
+          />
+        );
+      }
     }
     if (_message) {
       return (
@@ -285,7 +296,21 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       );
     }
     return null;
-  }, [isFreeTrialTier, isCommunityOwner]);
+  }, [isFreeTrialTier, isCommunityOwner, timeRemaining]);
+
+  const fetchLivestreamStatus = () => {
+    LiveStreamApiClient.getMonthlyDuration()
+      .then((r) => {
+        setTimeRemaining(r.remaining_minutes);
+      })
+      .catch((error) => {
+        console.error('Error fetching live status:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchLivestreamStatus();
+  }, []);
 
   /**
    * Renders root object
@@ -377,7 +402,8 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
               field.isSubmitting ||
               field.title.length > LIVE_STREAM_TITLE_MAX_LENGTH ||
               field.description.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH ||
-              isFreeTrialTier
+              isFreeTrialTier ||
+              timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON
             }
             variant="contained"
             onClick={handleSubmit}
