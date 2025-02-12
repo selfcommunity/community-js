@@ -103,7 +103,7 @@ const Component = {
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'column',
-        [`& .SCLiveStreamVideoConference-btn-back-home`]: {
+        [`& .SCLiveStreamRoom-btn-back-home`]: {
           marginTop: theme.spacing(2)
         }
       }
