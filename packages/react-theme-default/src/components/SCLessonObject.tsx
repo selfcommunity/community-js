@@ -28,7 +28,8 @@ const Component = {
         }
       },
       '& .SCWidget-root': {
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
+        boxShadow: 'none'
       },
       '& .SCLessonObject-button': {
         alignSelf: 'center'

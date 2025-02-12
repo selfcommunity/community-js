@@ -2,7 +2,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Button, Icon, Typography} from '@mui/material';
+import {Box, Icon, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import CardContent from '@mui/material/CardContent';
@@ -13,6 +13,8 @@ import {EditorProps} from '../Editor';
 import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {CourseService} from '@selfcommunity/api-services';
+import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -72,6 +74,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     name: PREFIX
   });
   const {className = null, course, lesson, editMode, EditorProps = {}, onContentChange, isSubmitting, ...rest} = props;
+  const [loading, setLoading] = useState<boolean>(false);
   const [completed, setCompleted] = useState<boolean>(lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
 
   // CONTEXT
@@ -83,8 +86,6 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     [course]
   );
 
-  // TODO: mark/unmark lesson as done logic
-
   // HANDLERS
 
   const handleChangeLesson = useCallback(
@@ -95,6 +96,22 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     },
     [onContentChange]
   );
+
+  function toggleLessonCompletion(completed) {
+    setLoading(true);
+    const service = completed
+      ? () => CourseService.markLessonIncomplete(course.id, lesson.section_id, lesson.id)
+      : () => CourseService.markLessonComplete(course.id, lesson.section_id, lesson.id);
+    service()
+      .then(() => {
+        setCompleted(!completed);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }
 
   // RENDER
   if (!course || !lesson) {
@@ -130,19 +147,20 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
         </CardContent>
       </Widget>
       {!isCourseAdmin && (
-        <Button
+        <LoadingButton
           className={classes.button}
+          loading={loading}
           size="small"
           variant={completed ? 'outlined' : 'contained'}
           startIcon={!completed && <Icon>arrow_next</Icon>}
           endIcon={completed && <Icon>circle_checked</Icon>}
-          onClick={() => setCompleted(!completed)}>
+          onClick={() => toggleLessonCompletion(completed)}>
           {completed ? (
             <FormattedMessage id="ui.lessonObject.button.completed" defaultMessage="ui.lessonObject.button.completed" />
           ) : (
             <FormattedMessage id="ui.lessonObject.button.complete" defaultMessage="ui.lessonObject.button.complete" />
           )}
-        </Button>
+        </LoadingButton>
       )}
     </Root>
   );

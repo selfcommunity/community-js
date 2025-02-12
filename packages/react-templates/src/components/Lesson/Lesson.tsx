@@ -4,7 +4,7 @@ import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
-import {SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting} from '@selfcommunity/react-core';
+import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
   getCurrentSectionAndLessonIndex,
@@ -37,7 +37,7 @@ const Container = styled(Box, {
   slot: 'ContainerRoot',
   overridesResolver: (props, styles) => styles.containerRoot,
   shouldForwardProp: (prop) => prop !== 'open'
-})<{open?: boolean}>(({theme}) => ({}));
+})<{open?: boolean}>(() => ({}));
 
 export interface LessonProps {
   /**
@@ -48,7 +48,7 @@ export interface LessonProps {
   /**
    * The course object
    */
-  course: SCCourseType;
+  course?: SCCourseType;
   /**
    * The course id
    */
@@ -85,31 +85,28 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   });
   const {className = null, course, courseId, sectionId, lessonId, LessonAppbarProps = {}, LessonDrawerProps = {}, ...rest} = props;
 
-  // CONTEXT
-  const scRoutingContext: SCRoutingContextType = useSCRouting();
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [_lessonId, setLessonId] = useState<number>(lessonId);
+  const [_sectionId, setSectionId] = useState<number>(sectionId);
+  const isCourseAdmin = useMemo(
+    () => course && (course.join_status === SCCourseJoinStatusType.CREATOR || course.join_status === SCCourseJoinStatusType.MANAGER),
+    [course]
+  );
+  const {scCourse} = useSCFetchCourse({id: courseId, params: {view: isCourseAdmin ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
   const [settings, setSettings] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(isCourseAdmin);
+  const isEditMode = editMode;
   // const isEditMode = useMemo(() => {
   //   return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
   // }, [value, scRoutingContext]);
-  const isEditMode = editMode;
-
-  // HOOKS
-  const isCourseAdmin = useMemo(
-    () => course && (course.join_status === SCCourseJoinStatusType.CREATOR || course.join_status === SCCourseJoinStatusType.MANAGER),
-    [course]
-  );
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [_lessonId, setLessonId] = useState<number>(lessonId);
-  const [_sectionId, setSectionId] = useState<number>(sectionId);
-  const {scCourse} = useSCFetchCourse({id: courseId, params: {view: isCourseAdmin ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
-  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
 
   // HANDLERS
   /**
@@ -155,11 +152,14 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       });
   };
 
-  const currentData = getCurrentSectionAndLessonIndex(course, scLesson?.section_id, scLesson?.id);
+  const currentData = useMemo(() => {
+    if (!scCourse || !scLesson) return null;
+    return getCurrentSectionAndLessonIndex(scCourse, scLesson.section_id, scLesson.id);
+  }, [scCourse, scLesson]);
 
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData.currentSectionIndex || 0);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData.currentLessonIndex || 0);
-  const [currentSection, setCurrentSection] = useState(course.sections?.[currentSectionIndex] || null);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
+  const [currentSection, setCurrentSection] = useState(scCourse?.sections?.[currentSectionIndex] || null);
 
   const handlePrev = () => {
     if (currentLessonIndex > 0) {
@@ -168,7 +168,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
     } else if (currentSectionIndex > 0) {
       const prevSectionIndex = currentSectionIndex - 1;
-      const prevSection = course.sections[prevSectionIndex];
+      const prevSection = scCourse?.sections[prevSectionIndex];
       const newLessonIndex = prevSection.lessons.length - 1;
       setCurrentSectionIndex(prevSectionIndex);
       setCurrentLessonIndex(newLessonIndex);
@@ -181,17 +181,17 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       const newLessonIndex = currentLessonIndex + 1;
       setCurrentLessonIndex(newLessonIndex);
       handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
-    } else if (currentSectionIndex < course.sections.length - 1) {
+    } else if (currentSectionIndex < scCourse?.sections.length - 1) {
       const newSectionIndex = currentSectionIndex + 1;
       setCurrentSectionIndex(newSectionIndex);
       setCurrentLessonIndex(0);
-      handleChangeLesson(course.sections[newSectionIndex].lessons[0], course.sections[newSectionIndex]);
+      handleChangeLesson(scCourse?.sections[newSectionIndex].lessons[0], scCourse.sections[newSectionIndex]);
     }
   };
 
-  const isPrevDisabled = !course.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
+  const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
   const isNextDisabled =
-    !course.sections || (currentSectionIndex === course.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1);
+    !scCourse?.sections || (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1);
 
   if (!scLesson || !scCourse) {
     return <HiddenPlaceholder />;
