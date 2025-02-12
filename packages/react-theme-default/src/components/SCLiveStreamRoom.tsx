@@ -103,6 +103,13 @@ const Component = {
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'column',
+        [`& .SCLiveStreamRoom-logo`]: {
+          img: {
+            maxHeight: 60,
+            maxWidth: 300
+          },
+          marginBottom: theme.spacing(2)
+        },
         [`& .SCLiveStreamRoom-btn-back-home`]: {
           marginTop: theme.spacing(2)
         }
