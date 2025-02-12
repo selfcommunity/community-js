@@ -43,6 +43,7 @@ const classes = {
   root: `${PREFIX}-root`,
   content: `${PREFIX}-content`,
   title: `${PREFIX}-title`,
+  logo: `${PREFIX}-logo`,
   description: `${PREFIX}-description`,
   endConferenceWrap: `${PREFIX}-end-conference-wrap`,
   btnBackHome: `${PREFIX}-btn-back-home`,
@@ -337,6 +338,9 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
       {scLiveStream.closed_at_by_host ? (
         <DialogRoot open maxWidth={'md'} fullWidth>
           <DialogContent className={classes.endConferenceWrap}>
+            <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+              <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO].value} alt="logo"></img>
+            </Link>
             <Typography variant="h5">
               <FormattedMessage id="ui.liveStreamRoom.conference.closed" defaultMessage="ui.liveStreamRoom.conference.closed" />
             </Typography>

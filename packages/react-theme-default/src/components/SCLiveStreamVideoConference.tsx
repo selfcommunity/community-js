@@ -15,7 +15,8 @@ const Component = {
         textAlign: 'center',
         [`& .SCLiveStreamVideoConference-logo`]: {
           img: {
-            maxHeight: '100px'
+            maxHeight: 70,
+            maxWidth: 300
           },
           marginBottom: theme.spacing(2)
         },
