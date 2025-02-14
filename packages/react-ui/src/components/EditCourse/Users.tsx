@@ -73,7 +73,7 @@ export default function Users(props: UsersProps) {
     if (!state.initialized && !state.isLoadingNext) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-      CourseService.getCourseJoinedUsers(course.id, {...endpointQueryParams})
+      CourseService.getCourseDashboardUsers(course.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
         })
