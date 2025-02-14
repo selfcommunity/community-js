@@ -1,6 +1,6 @@
-import {Box, Icon, IconButton, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
+import {Box, Icon, IconButton, Skeleton, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
-import {HTMLAttributes, SyntheticEvent, useCallback, useEffect, useState} from 'react';
+import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import classNames from 'classnames';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
@@ -9,12 +9,9 @@ import Lessons from './Lessons';
 import Customize from './Customize';
 import Users from './Users';
 import Options from './Options';
-import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
-import {getCourseData} from './data';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseType} from '@selfcommunity/types';
-import {useSnackbar} from 'notistack';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import {CourseInfoViewType} from '@selfcommunity/api-services';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -43,7 +40,7 @@ const TAB_DATA = [
   }
 ];
 
-function getPanelData(course: SCCourseType) {
+function getPanelData(course: SCCourseType | null, setSCCourse: (course: SCCourseType) => void) {
   return [
     {
       value: TabContentEnum.LESSONS,
@@ -55,11 +52,11 @@ function getPanelData(course: SCCourseType) {
     },
     {
       value: TabContentEnum.USERS,
-      children: <Users />
+      children: <Users course={course} />
     },
     {
       value: TabContentEnum.OPTIONS,
-      children: <Options />
+      children: <Options course={course} setSCCourse={setSCCourse} />
     }
   ];
 }
@@ -71,6 +68,8 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export interface EditCourseProps {
+  courseId?: number;
+  course?: SCCourseType;
   page: CoursePage;
   onTabChange: (page: CoursePage) => void;
   className?: HTMLAttributes<HTMLDivElement>['className'];
@@ -84,37 +83,18 @@ export default function EditCourse(inProps: EditCourseProps) {
     name: PREFIX
   });
 
-  const {page, onTabChange, className, ...rest} = props;
+  const {courseId, course, page, onTabChange, className, ...rest} = props;
 
   // STATES
-  const [course, setCourse] = useState<SCCourseType | null>(null);
   const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
+  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, course, params: {view: CourseInfoViewType.EDIT}});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const {enqueueSnackbar} = useSnackbar();
-
-  // EFFECTS
-  useEffect(() => {
-    getCourseData(1)
-      .then((course) => {
-        if (course) {
-          setCourse(course);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
-      });
-  }, []);
 
   // HANDLERS
   const handleTabChange = useCallback(
@@ -125,17 +105,13 @@ export default function EditCourse(inProps: EditCourseProps) {
     [setTabValue]
   );
 
-  if (!course) {
-    return null;
-  }
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Stack className={classes.header}>
-        <IconButton href={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, course)} size="small">
+        <IconButton href={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)} size="small">
           <Icon>arrow_back</Icon>
         </IconButton>
-        <Typography variant="h5">{course.name}</Typography>
+        {scCourse ? <Typography variant="h5">{scCourse.name}</Typography> : <Skeleton animation="wave" variant="text" width="125px" height="21px" />}
       </Stack>
 
       <TabContext value={tabValue}>
@@ -161,7 +137,7 @@ export default function EditCourse(inProps: EditCourseProps) {
           ))}
         </TabList>
 
-        {getPanelData(course).map((data, i) => (
+        {getPanelData(scCourse, setSCCourse).map((data, i) => (
           <TabPanel key={i} className={classes.tabPanel} value={data.value}>
             {data.children}
           </TabPanel>

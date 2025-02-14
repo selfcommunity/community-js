@@ -279,7 +279,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
    */
   useEffect(() => {
     if (courses) {
-      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCCourseEventType.DELETE}`, onDeleteCourseHandler);
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.DELETE}`, onDeleteCourseHandler);
     }
     return () => {
       updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);

@@ -29,7 +29,7 @@ export enum ActionLessonEnum {
 }
 
 export interface OptionsData {
-  options: boolean;
-  notifications: boolean;
-  permissions: boolean;
+  enforce_lessons_order: boolean;
+  new_comment_notification_enabled: boolean;
+  hide_member_count: boolean;
 }

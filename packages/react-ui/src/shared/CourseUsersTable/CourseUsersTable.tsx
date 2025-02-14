@@ -20,16 +20,18 @@ import {ChangeEvent, Dispatch, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
-import {SCCourseType, SCUserType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
 import ActionButton from './ActionButton';
 import CourseUsersTableSkeleton from './Skeleton';
 import {actionWidgetTypes} from '../../utils/widget';
-import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import ChangeUserStatus from './ChangeUsersStatus';
+import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 
 const classes = {
   search: `${PREFIX}-search`,
@@ -73,8 +75,10 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
   const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
-  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const [value, setValue] = useState('');
+
+  // CONTEXTS
+  const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
   const intl = useIntl();
@@ -107,24 +111,22 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
   );
 
   const handleNext = useCallback(() => {
-    setIsLoadingUsers(true);
     dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
     http
       .request({
         url: state.next,
-        method: Endpoints.GetCourseDashboardUsers.method
+        method: 'GET'
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
         dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
-        setIsLoadingUsers(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [state.next, dispatch, setIsLoadingUsers]);
+  }, [state.next, dispatch]);
 
-  if (!editMode && (!course || !users)) {
+  if (!course || !users) {
     return <CourseUsersTableSkeleton />;
   }
 
@@ -182,7 +184,16 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
                   </TableCell>
                   {editMode ? (
                     <TableCell>
-                      <Typography variant="body2">{user.role}</Typography>
+                      {user.join_status !== SCCourseJoinStatusType.CREATOR && scUserContext.user.id !== user.id ? (
+                        <ChangeUserStatus course={course} user={user} />
+                      ) : (
+                        <Typography variant="body2">
+                          <FormattedMessage
+                            id={`ui.editCourse.tab.users.table.select.${user.join_status}`}
+                            defaultMessage={`ui.editCourse.tab.users.table.select.${user.join_status}`}
+                          />
+                        </Typography>
+                      )}
                     </TableCell>
                   ) : (
                     <TableCell>
@@ -206,7 +217,7 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
                   )}
                 </TableRow>
               ))}
-            {isLoadingUsers && <RowSkeleton editMode={editMode} />}
+            {state.isLoadingNext && <RowSkeleton editMode={editMode} />}
           </TableBody>
         </Table>
       </TableContainer>
@@ -216,7 +227,7 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
           size="small"
           variant="outlined"
           color="inherit"
-          loading={isLoadingUsers}
+          loading={state.isLoadingNext}
           disabled={!state.next}
           className={classes.loadingButton}
           onClick={handleNext}>

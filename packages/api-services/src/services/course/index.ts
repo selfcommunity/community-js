@@ -19,7 +19,7 @@ import {urlParams} from '../../utils/url';
 
 export interface CourseApiClientInterface {
   //Allows user managers to change the role of some users for the course identified with :id
-  changeCourseUserRole(id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any>;
+  changeCourseUserRole(id: number | string, data: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any>;
 
   // Courses subscribed to by the user
   getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
@@ -188,11 +188,11 @@ export class CourseApiClient {
   /**
    * This endpoint allows user managers to change the role of some users in the specified course.
    * @param _id
-   * @param params
+   * @param data
    * @param config
    */
-  static changeCourseUserRole(_id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
-    return apiRequest({...config, params, url: Endpoints.ChangeCourseUserRole.url({}), method: Endpoints.ChangeCourseUserRole.method});
+  static changeCourseUserRole(id: number | string, data: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.ChangeCourseUserRole.url({id}), method: Endpoints.ChangeCourseUserRole.method, data});
   }
   /**
    * This endpoint retrieves all the events of the logged-in user.
@@ -251,7 +251,7 @@ export class CourseApiClient {
    * @param config
    */
   static createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
-    return apiRequest({...config, url: Endpoints.CreateCourse.url({}), method: Endpoints.CreateCourse.method, data: data});
+    return apiRequest({...config, url: Endpoints.CreateCourse.url({}), method: Endpoints.CreateCourse.method, data});
   }
 
   /**
@@ -261,7 +261,7 @@ export class CourseApiClient {
    * @param config
    */
   static updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
-    return apiRequest({...config, url: Endpoints.UpdateCourse.url({id}), method: Endpoints.UpdateCourse.method, data: data});
+    return apiRequest({...config, url: Endpoints.UpdateCourse.url({id}), method: Endpoints.UpdateCourse.method, data});
   }
 
   /**
@@ -271,7 +271,7 @@ export class CourseApiClient {
    * @param config
    */
   static patchCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
-    return apiRequest({...config, url: Endpoints.PatchCourse.url({id}), method: Endpoints.PatchCourse.method, data: data});
+    return apiRequest({...config, url: Endpoints.PatchCourse.url({id}), method: Endpoints.PatchCourse.method, data});
   }
   /**
    * This endpoint deletes a course.
@@ -443,7 +443,7 @@ export class CourseApiClient {
    * @param config
    */
   static createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
-    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({}), method: Endpoints.CreateCourseSection.method, data: data});
+    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({}), method: Endpoints.CreateCourseSection.method, data});
   }
 
   /**
@@ -480,7 +480,7 @@ export class CourseApiClient {
     data: SCCourseSectionType,
     config?: AxiosRequestConfig
   ): Promise<SCCourseSectionType> {
-    return apiRequest({...config, url: Endpoints.PatchCourseSection.url({id, section_id}), method: Endpoints.PatchCourseSection.method, data: data});
+    return apiRequest({...config, url: Endpoints.PatchCourseSection.url({id, section_id}), method: Endpoints.PatchCourseSection.method, data});
   }
   /**
    * This endpoint deletes a course section.
@@ -547,7 +547,7 @@ export class CourseApiClient {
    * @param config
    */
   static createCourseLesson(data: SCCourseLessonType, config?: AxiosRequestConfig): Promise<SCCourseLessonType> {
-    return apiRequest({...config, url: Endpoints.CreateCourseLesson.url({}), method: Endpoints.CreateCourseLesson.method, data: data});
+    return apiRequest({...config, url: Endpoints.CreateCourseLesson.url({}), method: Endpoints.CreateCourseLesson.method, data});
   }
 
   /**
@@ -810,8 +810,8 @@ export class CourseApiClient {
  :::
  */
 export default class CourseService {
-  static async changeCourseUserRole(id: number | string, params: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.changeCourseUserRole(id, params, config);
+  static async changeCourseUserRole(id: number | string, data: CourseUserRoleParams, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.changeCourseUserRole(id, data, config);
   }
   static async getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     return CourseApiClient.getJoinedCourses(params, config);

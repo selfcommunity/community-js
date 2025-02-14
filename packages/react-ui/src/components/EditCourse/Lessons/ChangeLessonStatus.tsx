@@ -3,7 +3,7 @@ import {Fragment, MouseEvent, useCallback, useMemo, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from '../constants';
 import {SCThemeType} from '@selfcommunity/react-core';
-import MenuRow from './MenuRow';
+import MenuRow from '../MenuRow';
 import {setStatus} from '../data';
 import {Status} from '../types';
 import {Logger} from '@selfcommunity/utils';

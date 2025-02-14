@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import {LessonRowInterface} from '../types';
 import {memo, useCallback, useState} from 'react';
-import MenuRow from './MenuRow';
+import MenuRow from '../MenuRow';
 import {FormattedMessage} from 'react-intl';
 import FieldName from './FieldName';
 import ChangeLessonStatus from './ChangeLessonStatus';

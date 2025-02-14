@@ -1,9 +1,9 @@
-import {Box, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Box, Icon, Skeleton, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {Fragment, memo, useCallback, useEffect, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
-import {getSections, getSection, LESSONS_DATA} from './data';
+import {getSection} from './data';
 import SectionRow from './Lessons/SectionRow';
 import AddButton from './Lessons/AddButton';
 import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from './types';
@@ -11,7 +11,7 @@ import EmptyStatus from '../../shared/EmptyStatus/EmptyStatus';
 import {useSnackbar} from 'notistack';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import Skeleton from './Lessons/Skeleton';
+import LessonsSkeleton from './Lessons/Skeleton';
 import {SCCourseType} from '@selfcommunity/types';
 import Status from './Status';
 
@@ -50,7 +50,7 @@ const headerCells = [
 ];
 
 interface LessonsProps {
-  course: SCCourseType;
+  course: SCCourseType | null;
 }
 
 function Lessons(props: LessonsProps) {
@@ -67,21 +67,10 @@ function Lessons(props: LessonsProps) {
 
   // EFFECTS
   useEffect(() => {
-    getSections()
-      .then((data) => {
-        if (data) {
-          setSections(data);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
-      });
-  }, []);
+    if (course) {
+      setSections(course.sections);
+    }
+  }, [course]);
 
   // HANDLERS
   const handleDragEnd = useCallback(
@@ -177,24 +166,28 @@ function Lessons(props: LessonsProps) {
         <Stack className={classes.lessonInfo}>
           <Icon>courses</Icon>
 
-          <Typography variant="body2">
-            <FormattedMessage
-              id="ui.course.type"
-              defaultMessage="ui.course.type"
-              values={{
-                typeOfCourse: intl.formatMessage({
-                  id: `ui.course.type.${LESSONS_DATA.typeOfCourse}`,
-                  defaultMessage: `ui.course.type.${LESSONS_DATA.typeOfCourse}`
-                })
-              }}
-            />
-          </Typography>
+          {course ? (
+            <Typography variant="body2">
+              <FormattedMessage
+                id="ui.course.type"
+                defaultMessage="ui.course.type"
+                values={{
+                  typeOfCourse: intl.formatMessage({
+                    id: `ui.course.type.${course.type}`,
+                    defaultMessage: `ui.course.type.${course.type}`
+                  })
+                }}
+              />
+            </Typography>
+          ) : (
+            <Skeleton animation="wave" variant="text" width="150px" height="21px" />
+          )}
         </Stack>
 
-        <Status />
+        <Status course={course} />
       </Stack>
 
-      {!sections && <Skeleton />}
+      {!sections && <LessonsSkeleton />}
 
       {sections?.length === 0 && (
         <EmptyStatus

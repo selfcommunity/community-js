@@ -12,7 +12,7 @@ export default {
   },
   args: {
     id: undefined,
-    courseId: undefined,
+    courseId: 2,
     course: undefined,
     page: 'lessons',
     onTabChange() {},

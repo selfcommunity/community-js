@@ -11,6 +11,8 @@ export default {
     }
   },
   args: {
+    courseId: 2,
+    course: undefined,
     page: 'lessons',
     onTabChange() {},
     className: ''

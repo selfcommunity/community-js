@@ -15,14 +15,14 @@ import {
 } from '@mui/material';
 import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserType} from '@selfcommunity/types';
+import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import BaseDialog from '../BaseDialog';
+import {Endpoints, EndpointType, http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
+import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {enqueueSnackbar} from 'notistack';
-import {EndpointType} from '@selfcommunity/api-services';
-import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
-import {getUsersToAdd} from '../../components/EditCourse/data';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCAddUsersButton';
 
@@ -53,6 +53,7 @@ const DialogRoot = styled(BaseDialog, {
 })(() => ({}));
 
 export interface AddUsersButtonProps extends ButtonProps {
+  course: SCCourseType | null;
   label: string;
 
   /**
@@ -63,13 +64,13 @@ export interface AddUsersButtonProps extends ButtonProps {
 
   /**
    * Event API Endpoint
-   * @default Endpoints.TODO
+   * @default Endpoints.GetCourseSuggestedUsers
    */
   endpoint: EndpointType;
 
   /**
    * Feed API Query Params
-   * @default [{'limit': 10, 'offset': 0}]
+   * @default [{'limit': 10, 'offset': 0, 'search': ''}]
    */
   endpointQueryParams?: Record<string, string | number>;
 
@@ -93,13 +94,14 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
   });
 
   const {
+    course,
     label,
     variant = 'outlined',
     color = 'inherit',
     size = 'small',
     isUpdating = false,
-    endpoint,
-    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET},
+    endpoint = Endpoints.GetCourseSuggestedUsers,
+    endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET, search: ''},
     onConfirm,
     ...rest
   } = props;
@@ -113,36 +115,44 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
   // HOOKS
   const intl = useIntl();
+  const {enqueueSnackbar} = useSnackbar();
+
+  // CALLBACKS
+  const fetchUsers = useCallback(
+    (newValue: string) => {
+      setLoading(true);
+
+      http
+        .request({
+          url: endpoint.url({id: course.id}),
+          method: endpoint.method,
+          params: {
+            ...endpointQueryParams,
+            search: newValue
+          }
+        })
+        .then((response: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
+          setSuggested(response.data.results);
+          setLoading(false);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
+        });
+    },
+    [setLoading, course, endpoint, endpointQueryParams, setSuggested]
+  );
 
   // EFFECTS
   useEffect(() => {
-    setLoading(true);
-
-    /* http
-      .request({
-        url: endpoint.url({}),
-        method: endpoint.method,
-        params: {
-          ...endpointQueryParams
-        }
-      }) */
-    getUsersToAdd(1)
-      .then((users) => {
-        if (users) {
-          setSuggested(users);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        setLoading(false);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
-      });
-  }, [value]);
+    if (openDialog) {
+      fetchUsers(value);
+    }
+  }, [openDialog, value]);
 
   // HANDLERS DIALOG
   /**
@@ -165,15 +175,15 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
   // HANDLERS AUTOCOMPLETE
   const handleInputChange = useCallback(
-    (_: SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) => {
+    (_: SyntheticEvent, newValue: string, reason: AutocompleteInputChangeReason) => {
       switch (reason) {
         case 'input':
-          setValue(value);
-          !value && setSuggested([]);
+          setValue(newValue);
+          !newValue && setSuggested([]);
 
           break;
         case 'reset':
-          setValue(value);
+          setValue(newValue);
 
           break;
       }

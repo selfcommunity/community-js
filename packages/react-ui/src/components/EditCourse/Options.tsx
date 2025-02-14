@@ -1,8 +1,7 @@
 import {Divider, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {useCallback, useEffect, useState} from 'react';
-import {getOptionsData, setOptionsData} from './data';
+import {memo, useCallback, useState} from 'react';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {OptionsData} from './types';
@@ -11,6 +10,8 @@ import SwitchForm from './Options/SwitchForm';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import OptionsSkeleton from './Options/Skeleton';
 import {LoadingButton} from '@mui/lab';
+import {SCCourseType} from '@selfcommunity/types';
+import {CourseService} from '@selfcommunity/api-services';
 
 const classes = {
   optionsWrapper: `${PREFIX}-options-wrapper`,
@@ -19,23 +20,30 @@ const classes = {
 };
 
 const OPTIONS = {
-  options: {
+  enforce_lessons_order: {
     title: 'ui.editCourse.tab.options',
     description: 'ui.editCourse.tab.options.description'
   },
-  notifications: {
+  new_comment_notification_enabled: {
     title: 'ui.editCourse.tab.options.notifications',
     description: 'ui.editCourse.tab.options.notifications.description'
   },
-  permissions: {
+  hide_member_count: {
     title: 'ui.editCourse.tab.options.permissions',
     description: 'ui.editCourse.tab.options.permissions.description'
   }
 };
 
-export default function Options() {
+interface OptionsProps {
+  course: SCCourseType | null;
+  setSCCourse: (course: SCCourseType) => void;
+}
+
+function Options(props: OptionsProps) {
+  // PROPS
+  const {course, setSCCourse} = props;
+
   // STATES
-  const [options, setOptions] = useState<OptionsData | null>(null);
   const [tempOptions, setTempOptions] = useState<OptionsData | null>(null);
   const [canSave, setCanSave] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,38 +52,21 @@ export default function Options() {
   const {enqueueSnackbar} = useSnackbar();
 
   // EFFECTS
-  useEffect(() => {
-    getOptionsData()
-      .then((data) => {
-        if (data) {
-          setOptions(data);
-        }
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
-        });
-      });
-  }, []);
-
   useDeepCompareEffect(() => {
-    if (!options || !tempOptions) {
+    if (!course || !tempOptions) {
       return;
     }
 
     if (
-      options.options !== tempOptions.options ||
-      options.notifications !== tempOptions.notifications ||
-      options.permissions !== tempOptions.permissions
+      course.enforce_lessons_order !== tempOptions.enforce_lessons_order ||
+      course.new_comment_notification_enabled !== tempOptions.new_comment_notification_enabled ||
+      course.hide_member_count !== tempOptions.hide_member_count
     ) {
       setCanSave(true);
     } else {
       setCanSave(false);
     }
-  }, [options, tempOptions, setCanSave]);
+  }, [course, tempOptions, setCanSave]);
 
   // HANDLERS
   const handleChange = useCallback(
@@ -83,7 +74,9 @@ export default function Options() {
       setTempOptions((prevOptions) => {
         if (!prevOptions) {
           return {
-            ...options,
+            enforce_lessons_order: course.enforce_lessons_order,
+            new_comment_notification_enabled: course.new_comment_notification_enabled,
+            hide_member_count: course.hide_member_count,
             [key]: value
           };
         }
@@ -94,33 +87,23 @@ export default function Options() {
         };
       });
     },
-    [setTempOptions, options]
+    [setTempOptions, course]
   );
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
 
-    setOptionsData(tempOptions)
+    CourseService.patchCourse(course.id, {id: course.id, ...tempOptions})
       .then((data) => {
-        if (data) {
-          setOptions(data);
-          setTempOptions(null);
-          setCanSave(false);
-          setLoading(false);
+        setSCCourse(data);
+        setTempOptions(null);
+        setCanSave(false);
+        setLoading(false);
 
-          enqueueSnackbar(
-            <FormattedMessage id="ui.contributionActionMenu.actionSuccess" defaultMessage="ui.contributionActionMenu.actionSuccess" />,
-            {
-              variant: 'success',
-              autoHideDuration: 3000
-            }
-          );
-        } else {
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
-        }
+        enqueueSnackbar(<FormattedMessage id="ui.contributionActionMenu.actionSuccess" defaultMessage="ui.contributionActionMenu.actionSuccess" />, {
+          variant: 'success',
+          autoHideDuration: 3000
+        });
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -130,9 +113,9 @@ export default function Options() {
           autoHideDuration: 3000
         });
       });
-  }, [options, tempOptions, setCanSave, setLoading]);
+  }, [course, tempOptions, setCanSave, setLoading]);
 
-  if (!options) {
+  if (!course) {
     return <OptionsSkeleton />;
   }
 
@@ -145,7 +128,7 @@ export default function Options() {
             name={key}
             title={value.title}
             description={value.description}
-            checked={options[key]}
+            checked={course[key]}
             handleChangeOptions={handleChange}
           />
         ))}
@@ -163,3 +146,5 @@ export default function Options() {
     </>
   );
 }
+
+export default memo(Options);

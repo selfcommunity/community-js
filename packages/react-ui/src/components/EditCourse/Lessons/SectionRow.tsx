@@ -6,7 +6,7 @@ import {PREFIX} from '../constants';
 import LessonRow from './LessonRow';
 import AddButton from './AddButton';
 import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from '../types';
-import MenuRow from './MenuRow';
+import MenuRow from '../MenuRow';
 import {FormattedMessage} from 'react-intl';
 import {getLesson} from '../data';
 import FieldName from './FieldName';
@@ -28,7 +28,7 @@ const classes = {
 };
 
 interface SectionRowProps {
-  course: SCCourseType;
+  course: SCCourseType | null;
   provider: DraggableProvided;
   section: SectionRowInterface;
   handleUpdateSection: (section: SectionRowInterface, lesson?: ActionLessonType) => void;

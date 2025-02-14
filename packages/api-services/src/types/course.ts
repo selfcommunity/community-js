@@ -119,7 +119,7 @@ export interface CourseUsersParams extends BaseGetParams {
    * Filter by join_status; default: ["manager", "joined"].
    * Only creator, manager and joined are valid status for this route
    */
-  statuses?: CourseInfoViewType;
+  statuses?: SCCourseJoinStatusType[];
 }
 
 /**
@@ -129,5 +129,5 @@ export interface CourseDashboardUsersParams extends BaseSearchParams {
   /**
    *  Filter by join_status; default: ["manager", "joined"]
    */
-  statuses?: CourseInfoViewType;
+  statuses?: SCCourseJoinStatusType[];
 }

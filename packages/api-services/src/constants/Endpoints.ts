@@ -1567,7 +1567,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   GetCourseSuggestedUsers: {
-    url: urlReplacer('/api/v2/course/$(id)/user/?search=$(search)'),
+    url: urlReplacer('/api/v2/course/$(id)/user/'),
     method: 'GET'
   },
   UpdateCourse: {
