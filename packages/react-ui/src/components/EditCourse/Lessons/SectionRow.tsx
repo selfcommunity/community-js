@@ -80,14 +80,23 @@ function SectionRow(props: SectionRowProps) {
       const [sourceData] = tempLessons.splice(e.source.index, 1);
       tempLessons.splice(e.destination.index, 0, sourceData);
 
-      /* const tempRow: any = {
+      const tempSection: SCCourseSectionType = {
         ...section,
         lessons: tempLessons
       };
 
-      handleUpdateSection(tempRow); */
+      CourseService.patchCourseSection(course.id, section.id, {lessons_order: tempLessons.map((tempLesson) => tempLesson.id)})
+        .then(() => handleManageSection(tempSection, ActionLessonEnum.UPDATE))
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
+        });
     },
-    [section]
+    [course, section, handleManageSection]
   );
 
   const handleAddTempLesson = useCallback(() => {

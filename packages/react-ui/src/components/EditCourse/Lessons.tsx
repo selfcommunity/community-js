@@ -94,16 +94,16 @@ function Lessons(props: LessonsProps) {
       const [sourceData] = tempSections.splice(e.source.index, 1);
       tempSections.splice(e.destination.index, 0, sourceData);
 
-      setSCCourse({...course, sections: tempSections});
+      CourseService.patchCourse(course.id, {sections_order: tempSections.map((tempSection) => tempSection.id)})
+        .then(() => setSCCourse({...course, sections: tempSections}))
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
 
-      CourseService.patchCourse(course.id, {sections_order: tempSections.map((tempSection) => tempSection.id)}).catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
         });
-      });
     },
     [course]
   );
@@ -143,6 +143,21 @@ function Lessons(props: LessonsProps) {
             num_sections: course.num_sections - 1,
             num_lessons: course.num_lessons - section.num_lessons,
             sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
+          });
+          break;
+        case ActionLessonEnum.UPDATE:
+          setSCCourse({
+            ...course,
+            sections: course.sections.map((prevSection: SCCourseSectionType) => {
+              if (prevSection.id === section.id) {
+                return {
+                  ...prevSection,
+                  lessons: section.lessons
+                };
+              }
+
+              return prevSection;
+            })
           });
           break;
         case type.endsWith(ActionLessonEnum.UPDATE) && type: {

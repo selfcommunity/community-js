@@ -11,7 +11,7 @@ export enum TabContentEnum {
   OPTIONS = '4'
 }
 
-export type ActionLessonType = 'add' | 'rename' | 'delete' | 'add_update' | 'rename_update' | 'delete_update';
+export type ActionLessonType = 'add' | 'rename' | 'delete' | 'update' | 'add_update' | 'rename_update' | 'delete_update';
 
 export enum ActionLessonEnum {
   ADD = 'add',

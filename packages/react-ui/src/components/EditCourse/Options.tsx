@@ -1,7 +1,7 @@
 import {Divider, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {memo, useCallback, useState} from 'react';
+import {Fragment, memo, useCallback, useState} from 'react';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {OptionsData} from './types';
@@ -120,7 +120,7 @@ function Options(props: OptionsProps) {
   }
 
   return (
-    <>
+    <Fragment>
       <Stack className={classes.optionsWrapper}>
         {Object.entries(OPTIONS).map(([key, value], i) => (
           <SwitchForm
@@ -143,7 +143,7 @@ function Options(props: OptionsProps) {
           </Typography>
         </LoadingButton>
       </Stack>
-    </>
+    </Fragment>
   );
 }
 
