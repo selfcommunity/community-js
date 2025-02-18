@@ -326,11 +326,11 @@ export interface SCCourseLessonType {
   /**
    * The ID of the course the lesson belongs to.
    */
-  course_id: number;
+  course_id?: number;
   /**
    * The ID of the section within the course the lesson belongs to,
    */
-  section_id: number;
+  section_id?: number;
   /**
    * The name of the lesson
    */
@@ -338,7 +338,7 @@ export interface SCCourseLessonType {
   /**
    * The type of the lesson.
    */
-  type?: SCCourseLessonTypologyType;
+  type: SCCourseLessonTypologyType;
   /**
    * The status of the lesson.
    */

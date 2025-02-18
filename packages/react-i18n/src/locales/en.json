@@ -336,6 +336,8 @@
   "ui.editCourse.tab.lessons.table.section": "Section",
   "ui.editCourse.tab.lessons.table.select.draft": "Draft",
   "ui.editCourse.tab.lessons.table.select.published": "Published",
+  "ui.editCourse.tab.lessons.table.snackbar.delete": "Sezione successfully deleted",
+  "ui.editCourse.tab.lessons.table.snackbar.save": "Section successfully saved",
   "ui.editCourse.tab.options": "Options",
   "ui.editCourse.tab.options.button.save": "Save Changes",
   "ui.editCourse.tab.options.description": "Students enrolled in a course must complete each lesson in the prescribed order before moving on to the next.",

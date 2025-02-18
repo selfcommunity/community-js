@@ -2,12 +2,17 @@ import {DraggableProvided} from '@hello-pangea/dnd';
 import {Icon, MenuItem, Stack, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
-import {LessonRowInterface} from '../types';
 import {memo, useCallback, useState} from 'react';
 import MenuRow from '../MenuRow';
 import {FormattedMessage} from 'react-intl';
 import FieldName from './FieldName';
 import ChangeLessonStatus from './ChangeLessonStatus';
+import {SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {CourseService, Endpoints} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
+import {useSnackbar} from 'notistack';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -17,22 +22,70 @@ const classes = {
   actionsWrapper: `${PREFIX}-actions-wrapper`
 };
 
+type DataUrlLesson = {
+  id: number;
+  slug: string;
+  section_id: number;
+  lesson_id: number;
+};
+
+function getUrlLesson(course: SCCourseType, section: SCCourseSectionType, lesson: SCCourseLessonType): DataUrlLesson {
+  return {
+    id: course.id,
+    slug: course.slug,
+    section_id: section.id,
+    lesson_id: lesson.id
+  };
+}
+
 interface LessonRowProps {
   provider: DraggableProvided;
-  lesson: LessonRowInterface;
-  handleDeleteLesson: (id: number) => void;
-  handleRenameLesson: (oldId: number, newName: string) => void;
+  course: SCCourseType | null;
+  section: SCCourseSectionType;
+  lesson: SCCourseLessonType;
+  isNewRow: boolean;
+  handleManageLesson: (lesson: SCCourseLessonType, type: 'add' | 'rename' | 'delete') => void;
 }
 
 function LessonRow(props: LessonRowProps) {
   // PROPS
-  const {provider, lesson, handleDeleteLesson, handleRenameLesson} = props;
+  const {provider, course, section, lesson, isNewRow, handleManageLesson} = props;
 
   // STATES
   const [editMode, setEditMode] = useState(false);
 
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // HOOKS
+  const {enqueueSnackbar} = useSnackbar();
+
   // CALLBACKS
-  const handleSetEditMode = useCallback(() => setEditMode(true), [setEditMode]);
+  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
+  const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
+
+  const handleDeleteLesson = useCallback(() => {
+    CourseService.deleteCourseLesson(course.id, section.id, lesson.id)
+      .then(() => {
+        handleManageLesson(lesson, 'delete');
+
+        enqueueSnackbar(
+          <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,
+          {
+            variant: 'success',
+            autoHideDuration: 3000
+          }
+        );
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+
+        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
+      });
+  }, [course, section, lesson, handleManageLesson]);
 
   return (
     <TableRow {...provider.draggableProps} ref={provider.innerRef}>
@@ -43,7 +96,20 @@ function LessonRow(props: LessonRowProps) {
         </Stack>
       </TableCell>
       <TableCell>
-        <FieldName row={lesson} handleRenameRow={handleRenameLesson} editMode={editMode} setEditMode={setEditMode} />
+        <FieldName
+          endpoint={{
+            url: () =>
+              isNewRow
+                ? Endpoints.CreateCourseLesson.url({id: course.id, section_id: section.id})
+                : Endpoints.PatchCourseLesson.url({id: course.id, section_id: section.id, lesson_id: lesson.id}),
+            method: isNewRow ? Endpoints.CreateCourseLesson.method : Endpoints.PatchCourseLesson.method
+          }}
+          row={lesson}
+          isNewRow={isNewRow}
+          handleManageRow={handleManageLesson}
+          editMode={editMode}
+          handleDisableEditMode={handleDisableEditMode}
+        />
       </TableCell>
       <TableCell />
       <TableCell className={classes.cellAlignRight}>
@@ -56,17 +122,17 @@ function LessonRow(props: LessonRowProps) {
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
-            <MenuItem>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.view" defaultMessage="ui.editCourse.tab.lessons.table.menu.view" />
               </Typography>
             </MenuItem>
-            <MenuItem onClick={handleSetEditMode}>
+            <MenuItem onClick={handleAbleEditMode}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
               </Typography>
             </MenuItem>
-            <MenuItem onClick={() => handleDeleteLesson(lesson.id)}>
+            <MenuItem onClick={handleDeleteLesson}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
               </Typography>

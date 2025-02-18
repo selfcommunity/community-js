@@ -124,7 +124,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
       http
         .request({
-          url: endpoint.url({id: course.id}),
+          url: endpoint.url(),
           method: endpoint.method,
           params: {
             ...endpointQueryParams,

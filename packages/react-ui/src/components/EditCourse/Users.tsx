@@ -137,7 +137,7 @@ export default function Users(props: UsersProps) {
           course={course}
           label="ui.editCourse.tab.users.addUsersButton.label"
           endpoint={{
-            url: Endpoints.GetCourseSuggestedUsers.url,
+            url: () => Endpoints.GetCourseSuggestedUsers.url({id: course.id}),
             method: Endpoints.GetCourseSuggestedUsers.method
           }}
           onConfirm={handleConfirm}

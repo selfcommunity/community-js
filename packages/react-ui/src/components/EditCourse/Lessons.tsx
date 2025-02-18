@@ -1,19 +1,18 @@
-import {Box, Icon, Skeleton, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {Fragment, memo, useCallback, useEffect, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
-import {getSection} from './data';
-import SectionRow from './Lessons/SectionRow';
-import AddButton from './Lessons/AddButton';
-import {ActionLessonEnum, ActionLessonType, SectionRowInterface} from './types';
-import EmptyStatus from '../../shared/EmptyStatus/EmptyStatus';
-import {useSnackbar} from 'notistack';
+import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import LessonsSkeleton from './Lessons/Skeleton';
-import {SCCourseType} from '@selfcommunity/types';
+import {useSnackbar} from 'notistack';
+import {Box, Icon, Skeleton, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import Status from './Status';
+import LessonsSkeleton from './Lessons/Skeleton';
+import EmptyStatus from '../../shared/EmptyStatus';
+import AddButton from './Lessons/AddButton';
+import SectionRow from './Lessons/SectionRow';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -49,17 +48,24 @@ const headerCells = [
   }
 ];
 
+function getSection(id: number) {
+  return {
+    id,
+    name: `Sezione senza titolo - ${id}`
+  };
+}
+
 interface LessonsProps {
   course: SCCourseType | null;
+  setSCCourse: (course: SCCourseType) => void;
 }
 
 function Lessons(props: LessonsProps) {
   // PROPS
-  const {course} = props;
+  const {course, setSCCourse} = props;
 
   // STATES
-  const [sections, setSections] = useState<SectionRowInterface[] | null>(null);
-  const [lessons, setLessons] = useState<number>(0);
+  const [sections, setSections] = useState<SCCourseSectionType[]>([]);
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -79,40 +85,13 @@ function Lessons(props: LessonsProps) {
         return;
       }
 
-      const tempSections = Array.from(sections);
+      const tempSections: SCCourseSectionType[] = Array.from(course.sections);
       const [sourceData] = tempSections.splice(e.source.index, 1);
       tempSections.splice(e.destination.index, 0, sourceData);
 
-      setSections(tempSections);
-    },
-    [sections]
-  );
+      setSCCourse({...course, sections: tempSections});
 
-  const handleUpdateSection = useCallback(
-    (section: SectionRowInterface, lesson?: ActionLessonType) => {
-      if (lesson === ActionLessonEnum.ADD) {
-        setLessons((prevLesson) => prevLesson + 1);
-      } else if (lesson === ActionLessonEnum.DELETE) {
-        setLessons((prevLesson) => prevLesson - 1);
-      }
-
-      setSections((prevSection) =>
-        prevSection.map((prevSection) => {
-          if (prevSection.id === section.id) {
-            return section;
-          }
-
-          return prevSection;
-        })
-      );
-    },
-    [setSections, setLessons]
-  );
-
-  const handleAddSection = useCallback(() => {
-    getSection((sections?.[sections.length - 1]?.id || 0) + 1)
-      .then((newSection) => setSections((prevSections) => (prevSections ? [...prevSections, newSection] : [newSection])))
-      .catch((error) => {
+      CourseService.patchCourse(course.id, {sections_order: tempSections.map((tempSection) => tempSection.id)}).catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
 
         enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
@@ -120,40 +99,56 @@ function Lessons(props: LessonsProps) {
           autoHideDuration: 3000
         });
       });
-  }, [sections]);
-
-  const handleDeleteSection = useCallback(
-    (id: number) => {
-      const lessonsToRemove = sections.reduce((acc, section) => {
-        if (section.id === id) {
-          return acc + section.lessons.length;
-        }
-
-        return acc;
-      }, 0);
-
-      setLessons((prevLessons) => prevLessons - lessonsToRemove);
-      setSections((prevSections) => prevSections.filter((prevSection) => prevSection.id !== id));
     },
-    [sections, setLessons]
+    [course]
   );
 
-  const handleRenameSection = useCallback(
-    (oldId: number, newName: string) => {
-      setSections((prevSections) =>
-        prevSections.map((prevSection) => {
-          if (prevSection.id === oldId) {
-            return {
-              ...prevSection,
-              name: newName
-            };
-          }
+  const handleAddTempSection = useCallback(() => {
+    setSections((prevSections) => (prevSections.length > 0 ? [...prevSections, getSection(prevSections.length + 1)] : [getSection(1)]));
+  }, [setSections]);
 
-          return prevSection;
-        })
-      );
+  const handleManageSection = useCallback(
+    (section: SCCourseSectionType, type: 'add' | 'rename' | 'update' | 'delete') => {
+      switch (type) {
+        case 'add':
+          setSCCourse({...course, num_sections: course.num_sections + 1, sections: [...course.sections, section]});
+          break;
+        case 'update':
+          setSCCourse({
+            ...course,
+            sections: course.sections.map((prevSection: SCCourseSectionType) => {
+              if (prevSection.id === section.id) {
+                return section;
+              }
+
+              return prevSection;
+            })
+          });
+          break;
+        case 'rename':
+          setSCCourse({
+            ...course,
+            sections: course.sections.map((prevSection: SCCourseSectionType) => {
+              if (prevSection.id === section.id) {
+                return {
+                  ...prevSection,
+                  name: section.name
+                };
+              }
+
+              return prevSection;
+            })
+          });
+          break;
+        case 'delete':
+          setSCCourse({
+            ...course,
+            num_sections: course.num_sections - 1,
+            sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
+          });
+      }
     },
-    [setSections]
+    [course, setSections]
   );
 
   return (
@@ -187,9 +182,9 @@ function Lessons(props: LessonsProps) {
         <Status course={course} />
       </Stack>
 
-      {!sections && <LessonsSkeleton />}
+      {!course && <LessonsSkeleton />}
 
-      {sections?.length === 0 && (
+      {sections.length === 0 && (
         <EmptyStatus
           icon="courses"
           title="ui.editCourse.tab.lessons.table.empty.title"
@@ -198,7 +193,7 @@ function Lessons(props: LessonsProps) {
             <AddButton
               className={classes.emptyStatusButton}
               label="ui.editCourse.tab.lessons.table.section"
-              handleAddRow={handleAddSection}
+              handleAddRow={handleAddTempSection}
               color="inherit"
               variant="outlined"
             />
@@ -207,7 +202,7 @@ function Lessons(props: LessonsProps) {
         />
       )}
 
-      {sections?.length > 0 && (
+      {sections.length > 0 && (
         <Fragment>
           <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
@@ -216,7 +211,7 @@ function Lessons(props: LessonsProps) {
                   id="ui.course.table.sections.title"
                   defaultMessage="ui.course.table.sections.title"
                   values={{
-                    sectionsNumber: sections.length
+                    sectionsNumber: course.num_sections
                   }}
                 />
               </Typography>
@@ -228,13 +223,13 @@ function Lessons(props: LessonsProps) {
                   id="ui.course.table.lessons.title"
                   defaultMessage="ui.course.table.lessons.title"
                   values={{
-                    lessonsNumber: lessons
+                    lessonsNumber: course.num_lessons
                   }}
                 />
               </Typography>
             </Stack>
 
-            <AddButton label="ui.editCourse.tab.lessons.table.section" handleAddRow={handleAddSection} color="primary" variant="contained" />
+            <AddButton label="ui.editCourse.tab.lessons.table.section" handleAddRow={handleAddTempSection} color="primary" variant="contained" />
           </Stack>
 
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -257,7 +252,7 @@ function Lessons(props: LessonsProps) {
                 <Droppable droppableId="droppable-1">
                   {(outerProvider) => (
                     <TableBody ref={outerProvider.innerRef} {...outerProvider.droppableProps} className={classes.tableBody}>
-                      {sections.map((section, i) => (
+                      {sections.map((section, i, array) => (
                         <Draggable key={i} draggableId={i.toString()} index={i}>
                           {(innerProvider) => (
                             <SectionRow
@@ -265,9 +260,8 @@ function Lessons(props: LessonsProps) {
                               course={course}
                               provider={innerProvider}
                               section={section}
-                              handleUpdateSection={handleUpdateSection}
-                              handleDeleteSection={handleDeleteSection}
-                              handleRenameSection={handleRenameSection}
+                              isNewRow={array.length > course?.sections.length}
+                              handleManageSection={handleManageSection}
                             />
                           )}
                         </Draggable>

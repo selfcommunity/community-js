@@ -244,7 +244,7 @@ export async function getSections(): Promise<SectionRowInterface[] | null> {
   });
 }
 
-export async function getOptionsData(): Promise<OptionsData | null> {
+/* export async function getOptionsData(): Promise<OptionsData | null> {
   return new Promise((resolve) => {
     setTimeout(
       () =>
@@ -256,7 +256,7 @@ export async function getOptionsData(): Promise<OptionsData | null> {
       300
     );
   });
-}
+} */
 
 export async function setOptionsData(options: OptionsData): Promise<OptionsData | null> {
   return new Promise((resolve) => {
