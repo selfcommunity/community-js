@@ -94,7 +94,11 @@ function Lessons(props: LessonsProps) {
       const [sourceData] = tempSections.splice(e.source.index, 1);
       tempSections.splice(e.destination.index, 0, sourceData);
 
-      CourseService.patchCourse(course.id, {sections_order: tempSections.map((tempSection) => tempSection.id)})
+      const data: Partial<SCCourseType> = {
+        sections_order: tempSections.map((tempSection) => tempSection.id)
+      };
+
+      CourseService.patchCourse(course.id, data)
         .then(() => setSCCourse({...course, sections: tempSections}))
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);

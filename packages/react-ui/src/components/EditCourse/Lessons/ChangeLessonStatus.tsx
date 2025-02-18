@@ -1,69 +1,63 @@
 import {Box, Icon, MenuItem, Select, SelectChangeEvent, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {Fragment, MouseEvent, useCallback, useMemo, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {Fragment, memo, MouseEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
 import {SCThemeType} from '@selfcommunity/react-core';
 import MenuRow from '../MenuRow';
-import {setStatus} from '../data';
-import {Status} from '../types';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
+import {SCCourseLessonStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {CourseService} from '@selfcommunity/api-services';
+
+const OPTIONS = [
+  {
+    id: 'ui.editCourse.tab.lessons.table.select.draft',
+    value: 'ui.editCourse.tab.lessons.table.select.draft'
+  },
+  {
+    id: 'ui.editCourse.tab.lessons.table.select.published',
+    value: 'ui.editCourse.tab.lessons.table.select.published'
+  }
+];
 
 const classes = {
   changeLessonStatusPublishedWrapper: `${PREFIX}-change-lesson-status-published-wrapper`,
   changeLessonStatusIconDraft: `${PREFIX}-change-lesson-status-icon-draft`
 };
 
-export default function ChangeLessonStatus() {
+interface ChangeLessonStatusProps {
+  course: SCCourseType;
+  section: SCCourseSectionType;
+  lesson: SCCourseLessonType;
+}
+
+function ChangeLessonStatus(props: ChangeLessonStatusProps) {
+  // PROPS
+  const {course, section, lesson} = props;
+
   // HOOKS
-  const intl = useIntl();
+  // const intl = useIntl();
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {enqueueSnackbar} = useSnackbar();
 
   // STATES
-  const [value, setValue] = useState(
-    intl.formatMessage({id: 'ui.editCourse.tab.lessons.table.select.draft', defaultMessage: 'ui.editCourse.tab.lessons.table.select.draft'})
-  );
+  const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // MEMOS
-  const options = useMemo(
-    () => [
-      {
-        id: 'ui.editCourse.tab.lessons.table.select.draft',
-        value: intl.formatMessage({
-          id: 'ui.editCourse.tab.lessons.table.select.draft',
-          defaultMessage: 'ui.editCourse.tab.lessons.table.select.draft'
-        })
-      },
-      {
-        id: 'ui.editCourse.tab.lessons.table.select.published',
-        value: intl.formatMessage({
-          id: 'ui.editCourse.tab.lessons.table.select.published',
-          defaultMessage: 'ui.editCourse.tab.lessons.table.select.published'
-        })
-      }
-    ],
-    []
-  );
+  // EFFECTS
+  useEffect(() => {
+    setValue(`ui.editCourse.tab.lessons.table.select.${lesson.status || 'draft'}`);
+  }, [lesson, setValue]);
 
-  const hasPublished = useMemo(
-    () =>
-      value ===
-      intl.formatMessage({
-        id: 'ui.editCourse.tab.lessons.table.select.published',
-        defaultMessage: 'ui.editCourse.tab.lessons.table.select.published'
-      }),
-    [value]
-  );
+  // MEMOS
+  const hasPublished = useMemo(() => value === 'ui.editCourse.tab.lessons.table.select.published', [value]);
 
   const icon = useMemo(
     () =>
-      value ===
-      intl.formatMessage({id: 'ui.editCourse.tab.lessons.table.select.draft', defaultMessage: 'ui.editCourse.tab.lessons.table.select.draft'}) ? (
+      value === 'ui.editCourse.tab.lessons.table.select.draft' ? (
         <Box className={classes.changeLessonStatusIconDraft} />
       ) : (
         <Icon>circle_checked</Icon>
@@ -73,13 +67,25 @@ export default function ChangeLessonStatus() {
 
   // HANDLERS
   const handleAction = useCallback(
-    (newValue: Status) => {
+    (newValue: string) => {
       setLoading(true);
 
-      setStatus(newValue)
-        .then((value) => {
-          setValue(value);
+      const data: Partial<SCCourseLessonType> = {
+        status: newValue.endsWith(SCCourseLessonStatusType.DRAFT) ? SCCourseLessonStatusType.DRAFT : SCCourseLessonStatusType.PUBLISHED
+      };
+
+      CourseService.patchCourseLesson(course.id, section.id, lesson.id, data)
+        .then(() => {
+          setValue(newValue);
           setLoading(false);
+
+          enqueueSnackbar(
+            <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.save" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.save" />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
@@ -90,17 +96,17 @@ export default function ChangeLessonStatus() {
           });
         });
     },
-    [setLoading, setValue]
+    [course, section, lesson, setLoading, setValue]
   );
 
-  const handleChange = useCallback((e: SelectChangeEvent) => handleAction(e.target.value as Status), [handleAction]);
+  const handleChange = useCallback((e: SelectChangeEvent) => handleAction(e.target.value), [handleAction]);
 
   const handleClick = useCallback(
-    (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) => {
-      const newValue = e.currentTarget.innerText;
+    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+      const newValue = e.currentTarget.getAttribute('data-value');
 
       if (newValue !== value) {
-        handleAction(e.currentTarget.innerText as Status);
+        handleAction(newValue as SCCourseLessonStatusType);
       }
     },
     [handleAction, value]
@@ -110,7 +116,7 @@ export default function ChangeLessonStatus() {
     <Fragment>
       {isMobile ? (
         <MenuRow buttonClassName={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined} icon={icon}>
-          {options.map((option, i) => (
+          {OPTIONS.map((option, i) => (
             <MenuItem key={i}>
               <LoadingButton
                 size="small"
@@ -118,6 +124,7 @@ export default function ChangeLessonStatus() {
                 onClick={handleClick}
                 loading={loading}
                 disabled={loading}
+                data-value={option.value}
                 sx={{
                   padding: 0,
                   ':hover': {
@@ -133,7 +140,7 @@ export default function ChangeLessonStatus() {
         </MenuRow>
       ) : (
         <Select className={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined} size="small" value={value} onChange={handleChange}>
-          {options.map((option, i) => (
+          {OPTIONS.map((option, i) => (
             <MenuItem key={i} value={option.value}>
               <LoadingButton
                 size="small"
@@ -157,3 +164,5 @@ export default function ChangeLessonStatus() {
     </Fragment>
   );
 }
+
+export default memo(ChangeLessonStatus);

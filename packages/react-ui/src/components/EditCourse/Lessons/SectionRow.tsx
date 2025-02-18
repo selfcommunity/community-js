@@ -85,7 +85,11 @@ function SectionRow(props: SectionRowProps) {
         lessons: tempLessons
       };
 
-      CourseService.patchCourseSection(course.id, section.id, {lessons_order: tempLessons.map((tempLesson) => tempLesson.id)})
+      const data: SCCourseSectionType = {
+        lessons_order: tempLessons.map((tempLesson) => tempLesson.id)
+      };
+
+      CourseService.patchCourseSection(course.id, section.id, data)
         .then(() => handleManageSection(tempSection, ActionLessonEnum.UPDATE))
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);

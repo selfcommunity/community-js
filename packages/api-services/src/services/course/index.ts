@@ -131,7 +131,7 @@ export interface CourseApiClientInterface {
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
-    data: SCCourseLessonType,
+    data: Partial<SCCourseLessonType>,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType>;
   deleteCourseLesson(id: number | string, section_id: number | string, lesson_id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -585,7 +585,7 @@ export class CourseApiClient {
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
-    data: SCCourseLessonType,
+    data: Partial<SCCourseLessonType>,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType> {
     return apiRequest({
@@ -968,7 +968,7 @@ export default class CourseService {
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
-    data: SCCourseLessonType,
+    data: Partial<SCCourseLessonType>,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType> {
     return CourseApiClient.patchCourseLesson(id, section_id, lesson_id, data, config);

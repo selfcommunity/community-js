@@ -13,7 +13,7 @@ import CourseUsersTable from '../../shared/CourseUsersTable';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
-import {CourseService, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {CourseService, CourseUserRoleParams, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 
 const classes = {
   usersStatusWrapper: `${PREFIX}-users-status-wrapper`
@@ -100,7 +100,11 @@ export default function Users(props: UsersProps) {
   // HANDLERS
   const handleConfirm = useCallback(
     (newUsers: SCUserType[]) => {
-      CourseService.changeCourseUserRole(course.id, {joined: newUsers.map((user) => user.id)})
+      const data: CourseUserRoleParams = {
+        joined: newUsers.map((user) => user.id)
+      };
+
+      CourseService.changeCourseUserRole(course.id, data)
         .then(() => {
           dispatch({type: actionWidgetTypes.RESET});
         })
@@ -113,7 +117,7 @@ export default function Users(props: UsersProps) {
           });
         });
     },
-    [dispatch]
+    [course, dispatch]
   );
 
   if (!course) {

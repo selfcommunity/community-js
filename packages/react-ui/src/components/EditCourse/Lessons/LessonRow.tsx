@@ -115,7 +115,7 @@ function LessonRow(props: LessonRowProps) {
       <TableCell />
       <TableCell className={classes.cellAlignRight}>
         <Stack className={classes.actionsWrapper}>
-          <ChangeLessonStatus />
+          <ChangeLessonStatus course={course} section={section} lesson={lesson} />
 
           <MenuRow>
             <MenuItem>
