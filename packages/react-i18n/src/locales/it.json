@@ -335,6 +335,8 @@
   "ui.editCourse.tab.lessons.table.menu.edit": "Modifica",
   "ui.editCourse.tab.lessons.table.menu.rename": "Rinomina",
   "ui.editCourse.tab.lessons.table.menu.view": "Visualizza",
+  "ui.editCourse.tab.lessons.table.newLesson": "Lezione senza titolo - {num}",
+  "ui.editCourse.tab.lessons.table.newSection": "Sezione senza titolo - {num}",
   "ui.editCourse.tab.lessons.table.section": "Sezione",
   "ui.editCourse.tab.lessons.table.select.draft": "Bozza",
   "ui.editCourse.tab.lessons.table.select.published": "Pubblicata",

@@ -333,6 +333,8 @@
   "ui.editCourse.tab.lessons.table.menu.edit": "Edit",
   "ui.editCourse.tab.lessons.table.menu.rename": "Rename",
   "ui.editCourse.tab.lessons.table.menu.view": "View",
+  "ui.editCourse.tab.lessons.table.newLesson": "Lesson without title - {num}",
+  "ui.editCourse.tab.lessons.table.newSection": "Section without title - {num}",
   "ui.editCourse.tab.lessons.table.section": "Section",
   "ui.editCourse.tab.lessons.table.select.draft": "Draft",
   "ui.editCourse.tab.lessons.table.select.published": "Published",

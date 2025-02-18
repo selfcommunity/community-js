@@ -6,7 +6,7 @@ import {PREFIX} from '../constants';
 import LessonRow from './LessonRow';
 import AddButton from './AddButton';
 import MenuRow from '../MenuRow';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import FieldName from './FieldName';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -14,6 +14,7 @@ import {useSnackbar} from 'notistack';
 import LessonReleaseMenu from '../../LessonReleaseMenu';
 import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
+import {ActionLessonEnum, ActionLessonType} from '../types';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -26,20 +27,12 @@ const classes = {
   cellPadding: `${PREFIX}-cell-padding`
 };
 
-function getLesson(id: number, type: SCCourseLessonTypologyType = SCCourseLessonTypologyType.LESSON) {
-  return {
-    id,
-    type,
-    name: `Lezione senza titolo - ${id}`
-  };
-}
-
 interface SectionRowProps {
   course: SCCourseType | null;
   provider: DraggableProvided;
   section: SCCourseSectionType;
   isNewRow: boolean;
-  handleManageSection: (section: SCCourseSectionType, type: 'add' | 'rename' | 'update' | 'delete') => void;
+  handleManageSection: (section: SCCourseSectionType, type: ActionLessonType) => void;
 }
 
 function SectionRow(props: SectionRowProps) {
@@ -52,6 +45,7 @@ function SectionRow(props: SectionRowProps) {
   const [lessons, setLessons] = useState<SCCourseLessonType[]>([]);
 
   // HOOKS
+  const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
 
   // EFFECTS
@@ -60,6 +54,18 @@ function SectionRow(props: SectionRowProps) {
       setLessons(section.lessons);
     }
   }, [section]);
+
+  // FUNCTIONS
+  const getLesson = useCallback((id: number, type: SCCourseLessonTypologyType = SCCourseLessonTypologyType.LESSON) => {
+    return {
+      id,
+      type,
+      name: intl.formatMessage(
+        {id: 'ui.editCourse.tab.lessons.table.newLesson', defaultMessage: 'ui.editCourse.tab.lessons.table.newLesson'},
+        {num: id}
+      )
+    };
+  }, []);
 
   // HANDLERS
   const handleExpandAccordion = useCallback(() => setOpen((prev) => !prev), [setOpen]);
@@ -94,7 +100,12 @@ function SectionRow(props: SectionRowProps) {
   const handleDeleteSection = useCallback(() => {
     CourseService.deleteCourseSection(course.id, section.id)
       .then(() => {
-        handleManageSection(section, 'delete');
+        const tempSection: SCCourseSectionType = {
+          ...section,
+          num_lessons: section.lessons.length
+        };
+
+        handleManageSection(tempSection, ActionLessonEnum.DELETE);
 
         enqueueSnackbar(
           <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,
@@ -115,18 +126,18 @@ function SectionRow(props: SectionRowProps) {
   }, [course, section, handleManageSection]);
 
   const handleManageLesson = useCallback(
-    (lesson: SCCourseLessonType, type: 'add' | 'rename' | 'delete') => {
+    (lesson: SCCourseLessonType, type: ActionLessonType) => {
       switch (type) {
-        case 'add': {
+        case ActionLessonEnum.ADD: {
           const tempSection: SCCourseSectionType = {
             ...section,
             lessons: section.lessons ? [...section.lessons, lesson] : [lesson]
           };
 
-          handleManageSection(tempSection, 'update');
+          handleManageSection(tempSection, ActionLessonEnum.ADD_UPDATE);
           break;
         }
-        case 'rename': {
+        case ActionLessonEnum.RENAME: {
           const tempSection: SCCourseSectionType = {
             ...section,
             lessons: section.lessons.map((prevLesson) => {
@@ -141,16 +152,16 @@ function SectionRow(props: SectionRowProps) {
             })
           };
 
-          handleManageSection(tempSection, 'update');
+          handleManageSection(tempSection, ActionLessonEnum.RENAME_UPDATE);
           break;
         }
-        case 'delete': {
+        case ActionLessonEnum.DELETE: {
           const tempSection: SCCourseSectionType = {
             ...section,
             lessons: section.lessons.filter((prevLesson) => prevLesson.id !== lesson.id)
           };
 
-          handleManageSection(tempSection, 'update');
+          handleManageSection(tempSection, ActionLessonEnum.DELETE_UPDATE);
         }
       }
     },

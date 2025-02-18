@@ -11,21 +11,16 @@ export enum TabContentEnum {
   OPTIONS = '4'
 }
 
-export interface LessonRowInterface {
-  id: number;
-  name: string;
-  completed?: boolean;
-}
-
-export interface SectionRowInterface extends Omit<LessonRowInterface, 'completed'> {
-  lessons: LessonRowInterface[];
-}
-
-export type ActionLessonType = 'add' | 'delete';
+export type ActionLessonType = 'add' | 'rename' | 'delete' | 'add_update' | 'rename_update' | 'delete_update';
 
 export enum ActionLessonEnum {
   ADD = 'add',
-  DELETE = 'delete'
+  RENAME = 'rename',
+  DELETE = 'delete',
+  UPDATE = 'update',
+  ADD_UPDATE = 'add_update',
+  RENAME_UPDATE = 'rename_update',
+  DELETE_UPDATE = 'delete_update'
 }
 
 export interface OptionsData {

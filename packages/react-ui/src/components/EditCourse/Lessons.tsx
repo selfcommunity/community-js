@@ -13,6 +13,7 @@ import LessonsSkeleton from './Lessons/Skeleton';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
+import {ActionLessonEnum, ActionLessonType} from './types';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -48,13 +49,6 @@ const headerCells = [
   }
 ];
 
-function getSection(id: number) {
-  return {
-    id,
-    name: `Sezione senza titolo - ${id}`
-  };
-}
-
 interface LessonsProps {
   course: SCCourseType | null;
   setSCCourse: (course: SCCourseType) => void;
@@ -77,6 +71,17 @@ function Lessons(props: LessonsProps) {
       setSections(course.sections);
     }
   }, [course]);
+
+  // FUNCTIONS
+  const getSection = useCallback((id: number) => {
+    return {
+      id,
+      name: intl.formatMessage(
+        {id: 'ui.editCourse.tab.lessons.table.newSection', defaultMessage: 'ui.editCourse.tab.lessons.table.newSection'},
+        {num: id}
+      )
+    };
+  }, []);
 
   // HANDLERS
   const handleDragEnd = useCallback(
@@ -108,24 +113,16 @@ function Lessons(props: LessonsProps) {
   }, [setSections]);
 
   const handleManageSection = useCallback(
-    (section: SCCourseSectionType, type: 'add' | 'rename' | 'update' | 'delete') => {
+    (section: SCCourseSectionType, type: ActionLessonType) => {
       switch (type) {
-        case 'add':
-          setSCCourse({...course, num_sections: course.num_sections + 1, sections: [...course.sections, section]});
-          break;
-        case 'update':
+        case ActionLessonEnum.ADD:
           setSCCourse({
             ...course,
-            sections: course.sections.map((prevSection: SCCourseSectionType) => {
-              if (prevSection.id === section.id) {
-                return section;
-              }
-
-              return prevSection;
-            })
+            num_sections: course.num_sections + 1,
+            sections: [...course.sections, section]
           });
           break;
-        case 'rename':
+        case ActionLessonEnum.RENAME:
           setSCCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
@@ -140,12 +137,35 @@ function Lessons(props: LessonsProps) {
             })
           });
           break;
-        case 'delete':
+        case ActionLessonEnum.DELETE:
           setSCCourse({
             ...course,
             num_sections: course.num_sections - 1,
+            num_lessons: course.num_lessons - section.num_lessons,
             sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
           });
+          break;
+        case type.endsWith(ActionLessonEnum.UPDATE) && type: {
+          let numLessons = course.num_lessons;
+
+          if (type === ActionLessonEnum.ADD_UPDATE) {
+            numLessons = course.num_lessons + 1;
+          } else if (type === ActionLessonEnum.DELETE_UPDATE) {
+            numLessons = course.num_lessons - 1;
+          }
+
+          setSCCourse({
+            ...course,
+            num_lessons: numLessons,
+            sections: course.sections.map((prevSection: SCCourseSectionType) => {
+              if (prevSection.id === section.id) {
+                return section;
+              }
+
+              return prevSection;
+            })
+          });
+        }
       }
     },
     [course, setSections]

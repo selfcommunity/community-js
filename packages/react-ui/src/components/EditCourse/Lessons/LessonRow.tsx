@@ -13,6 +13,7 @@ import {Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
+import {ActionLessonEnum, ActionLessonType} from '../types';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -44,7 +45,7 @@ interface LessonRowProps {
   section: SCCourseSectionType;
   lesson: SCCourseLessonType;
   isNewRow: boolean;
-  handleManageLesson: (lesson: SCCourseLessonType, type: 'add' | 'rename' | 'delete') => void;
+  handleManageLesson: (lesson: SCCourseLessonType, type: ActionLessonType) => void;
 }
 
 function LessonRow(props: LessonRowProps) {
@@ -67,7 +68,7 @@ function LessonRow(props: LessonRowProps) {
   const handleDeleteLesson = useCallback(() => {
     CourseService.deleteCourseLesson(course.id, section.id, lesson.id)
       .then(() => {
-        handleManageLesson(lesson, 'delete');
+        handleManageLesson(lesson, ActionLessonEnum.DELETE);
 
         enqueueSnackbar(
           <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,

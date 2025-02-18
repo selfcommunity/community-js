@@ -9,6 +9,7 @@ import {useSnackbar} from 'notistack';
 import {SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {EndpointType, http} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
+import {ActionLessonEnum, ActionLessonType} from '../types';
 
 const classes = {
   editModeWrapper: `${PREFIX}-edit-mode-wrapper`,
@@ -20,7 +21,7 @@ interface FieldNameProps<T> {
   endpoint: EndpointType;
   row: T;
   isNewRow: boolean;
-  handleManageRow: (section: SCCourseSectionType, type: 'add' | 'rename') => void;
+  handleManageRow: (section: SCCourseSectionType, type: ActionLessonType) => void;
   editMode: boolean;
   handleDisableEditMode: () => void;
 }
@@ -62,7 +63,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
         }
       })
       .then((response: AxiosResponse<SCCourseType>) => {
-        handleManageRow(response.data, isNewRow ? 'add' : 'rename');
+        handleManageRow(response.data, isNewRow ? ActionLessonEnum.ADD : ActionLessonEnum.RENAME);
         setName(null);
         setLoading(false);
         handleDisableEditMode();
