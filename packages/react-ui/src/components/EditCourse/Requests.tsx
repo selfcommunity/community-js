@@ -1,19 +1,17 @@
 import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import AddUsersButton from '../../shared/AddUsersButton';
 import {memo, useCallback, useEffect, useReducer, useRef} from 'react';
 import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {useSnackbar} from 'notistack';
 import Status from './Status';
 import UsersSkeleton from './Users/Skeleton';
-import {PREFIX} from './constants';
 import CourseUsersTable from '../../shared/CourseUsersTable';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
-import {CourseService, CourseUserRoleParams, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {PREFIX} from './constants';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
@@ -26,29 +24,26 @@ const headerCells = [
     id: 'ui.editCourse.tab.users.table.header.name'
   },
   {
-    id: 'ui.editCourse.tab.users.table.header.role'
-  },
-  {
     id: 'ui.editCourse.tab.users.table.header.registration'
   },
   {
     id: 'ui.editCourse.tab.users.table.header.latestActivity'
-  }
+  },
+  {}
 ];
 
-interface UsersProps {
+interface RequestsProps {
   course: SCCourseType | null;
   endpointQueryParams?: Record<string, string | number>;
 }
 
-function Users(props: UsersProps) {
+function Requests(props: RequestsProps) {
   // PROPS
   const {
     course,
     endpointQueryParams = {
       limit: 6,
-      offset: DEFAULT_PAGINATION_OFFSET,
-      statuses: JSON.stringify(['joined', 'manager', 'creator'])
+      offset: DEFAULT_PAGINATION_OFFSET
     }
   } = props;
 
@@ -59,7 +54,7 @@ function Users(props: UsersProps) {
       isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course?.id),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course?.id),
       cacheStrategy: CacheStrategies.CACHE_FIRST,
       visibleItems: endpointQueryParams.limit
     },
@@ -69,9 +64,6 @@ function Users(props: UsersProps) {
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
 
-  // HOOKS
-  const {enqueueSnackbar} = useSnackbar();
-
   // REFS
   const updatedUsers = useRef(null);
 
@@ -80,7 +72,7 @@ function Users(props: UsersProps) {
     if (!state.initialized && !state.isLoadingNext) {
       dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
-      CourseService.getCourseDashboardUsers(course.id, {...endpointQueryParams})
+      CourseService.getCourseWaitingApproval(course.id, {...endpointQueryParams})
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
         })
@@ -105,7 +97,7 @@ function Users(props: UsersProps) {
   }, [scUserContext.user, course, _init]);
 
   useEffect(() => {
-    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.ADD_MEMBER}`, handleAddUser);
+    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.REMOVE_MEMBER}`, handleRemoveUser);
 
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
@@ -113,34 +105,14 @@ function Users(props: UsersProps) {
   }, []);
 
   // HANDLERS
-  const handleAddUser = useCallback(
+  const handleRemoveUser = useCallback(
     (user: SCUserType) => {
-      dispatch({type: actionWidgetTypes.LOAD_PREVIOUS_SUCCESS, payload: {count: state.count + 1, results: [user], initialized: true}});
+      dispatch({
+        type: actionWidgetTypes.SET_RESULTS,
+        payload: {count: state.count - 1, results: state.results.filter((result: SCUserType) => result.id !== user.id)}
+      });
     },
     [dispatch]
-  );
-
-  const handleConfirm = useCallback(
-    (newUsers: SCUserType[]) => {
-      const data: CourseUserRoleParams = {
-        joined: newUsers.map((user) => user.id)
-      };
-
-      CourseService.changeCourseUserRole(course.id, data)
-        .then(() => {
-          dispatch({type: actionWidgetTypes.RESET});
-        })
-        .catch((error) => {
-          dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
-          Logger.error(SCOPE_SC_UI, error);
-
-          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-            variant: 'error',
-            autoHideDuration: 3000
-          });
-        });
-    },
-    [course, dispatch]
   );
 
   if (!course) {
@@ -151,30 +123,19 @@ function Users(props: UsersProps) {
     <Box>
       <Typography variant="h6">
         <FormattedMessage
-          id="ui.editCourse.tab.users.title"
-          defaultMessage="ui.editCourse.tab.users.title"
-          values={{usersNumber: state.results.length}}
+          id="ui.editCourse.tab.requests.title"
+          defaultMessage="ui.editCourse.tab.requests.title"
+          values={{requestsNumber: state.results.length}}
         />
       </Typography>
 
       <Stack className={classes.usersStatusWrapper}>
         <Status course={course} />
-
-        <AddUsersButton
-          course={course}
-          label="ui.editCourse.tab.users.addUsersButton.label"
-          endpoint={{
-            url: () => Endpoints.GetCourseSuggestedUsers.url({id: course.id}),
-            method: Endpoints.GetCourseSuggestedUsers.method
-          }}
-          onConfirm={handleConfirm}
-          isUpdating={state.isLoadingPrevious}
-        />
       </Stack>
 
-      <CourseUsersTable course={course} state={state} dispatch={dispatch} headerCells={headerCells} mode="edit" />
+      <CourseUsersTable course={course} state={state} dispatch={dispatch} headerCells={headerCells} mode="requests" />
     </Box>
   );
 }
 
-export default memo(Users);
+export default memo(Requests);

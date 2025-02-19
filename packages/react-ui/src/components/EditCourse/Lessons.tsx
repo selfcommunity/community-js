@@ -67,7 +67,7 @@ function Lessons(props: LessonsProps) {
 
   // EFFECTS
   useEffect(() => {
-    if (course) {
+    if (course && course.sections) {
       setSections(course.sections);
     }
   }, [course]);

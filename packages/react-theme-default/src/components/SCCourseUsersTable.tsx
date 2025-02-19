@@ -35,6 +35,11 @@ const Component = {
         }
       },
 
+      '& .SCCourseUsersTable-request-button-wrapper': {
+        flexDirection: 'row',
+        gap: '5px'
+      },
+
       '& .SCCourseUsersTable-loading-button': {
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(3)

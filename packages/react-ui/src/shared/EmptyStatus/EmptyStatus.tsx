@@ -1,6 +1,6 @@
 import {Icon, Stack, styled, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {HTMLAttributes, ReactNode} from 'react';
+import {HTMLAttributes, memo, ReactNode} from 'react';
 import classNames from 'classnames';
 
 const PREFIX = 'SCEmptyStatus';
@@ -26,7 +26,7 @@ export interface EmptyStatusProps {
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-export default function EmptyStatus(props: EmptyStatusProps) {
+function EmptyStatus(props: EmptyStatusProps) {
   // PROPS
   const {icon, title, description, actions, className} = props;
 
@@ -52,3 +52,5 @@ export default function EmptyStatus(props: EmptyStatusProps) {
     </Root>
   );
 }
+
+export default memo(EmptyStatus);
