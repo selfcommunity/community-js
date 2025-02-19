@@ -155,6 +155,26 @@ const Component = {
       },
       '& .SCEditor-listItem': {
         margin: '0 32px'
+      },
+      '& .SCEditor-document': {
+        '& .selected': {
+          border: `2px solid ${theme.palette.secondary.main}`
+        },
+        '& .MuiBox-root': {
+          padding: theme.spacing(1),
+          borderRadius: '5px',
+          background: theme.palette.grey[300],
+          '& a': {
+            display: 'flex',
+            alignItems: 'center',
+            width: 'fit-content',
+            '& img': {
+              height: theme.spacing(3),
+              width: theme.spacing(3),
+              marginRight: theme.spacing(1)
+            }
+          }
+        }
       }
     }),
     toolbar: ({theme}: any) => ({
