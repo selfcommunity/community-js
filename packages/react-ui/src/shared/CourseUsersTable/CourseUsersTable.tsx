@@ -58,6 +58,8 @@ export interface CourseUsersTableProps {
   course: SCCourseType | null;
   headerCells: HeaderCellsType[];
   mode: 'dashboard' | 'edit' | 'requests';
+  emptyStatusTitle: string;
+  emptyStatusDescription?: string;
 }
 
 function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
@@ -71,7 +73,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
     name: PREFIX
   });
 
-  const {course, state, dispatch, headerCells, mode} = props;
+  const {course, state, dispatch, headerCells, mode, emptyStatusTitle, emptyStatusDescription} = props;
 
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
@@ -247,9 +249,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
         </LoadingButton>
       )}
 
-      {users.length === 0 && value.length === 0 && (
-        <EmptyStatus icon="face" title="ui.courseUsersTable.empty.title" description="ui.courseUsersTable.empty.description" />
-      )}
+      {users.length === 0 && value.length === 0 && <EmptyStatus icon="face" title={emptyStatusTitle} description={emptyStatusDescription} />}
     </Root>
   );
 }

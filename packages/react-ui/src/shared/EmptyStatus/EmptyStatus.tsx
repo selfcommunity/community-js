@@ -21,7 +21,7 @@ const Root = styled(Stack, {
 export interface EmptyStatusProps {
   icon: string;
   title: string;
-  description: string;
+  description?: string;
   actions?: ReactNode;
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
@@ -44,9 +44,11 @@ function EmptyStatus(props: EmptyStatusProps) {
         <FormattedMessage id={title} defaultMessage={title} />
       </Typography>
 
-      <Typography variant="body1">
-        <FormattedMessage id={description} defaultMessage={description} />
-      </Typography>
+      {description && (
+        <Typography variant="body1">
+          <FormattedMessage id={description} defaultMessage={description} />
+        </Typography>
+      )}
 
       {actions}
     </Root>

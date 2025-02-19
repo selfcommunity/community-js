@@ -172,7 +172,15 @@ function Users(props: UsersProps) {
         />
       </Stack>
 
-      <CourseUsersTable course={course} state={state} dispatch={dispatch} headerCells={headerCells} mode="edit" />
+      <CourseUsersTable
+        course={course}
+        state={state}
+        dispatch={dispatch}
+        headerCells={headerCells}
+        mode="edit"
+        emptyStatusTitle="ui.courseUsersTable.empty.users.title"
+        emptyStatusDescription="ui.courseUsersTable.empty.users.description"
+      />
     </Box>
   );
 }

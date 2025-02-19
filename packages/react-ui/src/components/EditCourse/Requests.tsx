@@ -133,7 +133,14 @@ function Requests(props: RequestsProps) {
         <Status course={course} />
       </Stack>
 
-      <CourseUsersTable course={course} state={state} dispatch={dispatch} headerCells={headerCells} mode="requests" />
+      <CourseUsersTable
+        course={course}
+        state={state}
+        dispatch={dispatch}
+        headerCells={headerCells}
+        mode="requests"
+        emptyStatusTitle="ui.courseUsersTable.empty.requests.title"
+      />
     </Box>
   );
 }
