@@ -13,11 +13,17 @@ const Component = {
               objectFit: 'cover'
             },
             padding: '0 !important'
+          },
+          // '& .SCEditor-paragraph': {}
+          '& > div:has(> a)': {
+            borderRadius: '5px',
+            padding: theme.spacing(1),
+            background: theme.palette.grey[300]
+          },
+          '& > div:has(> a) > a:first-of-type': {
+            textDecoration: 'none',
+            color: 'inherit'
           }
-          // '& .SCEditor-paragraph': {
-          //   paddingRight: theme.spacing(2),
-          //   paddingLeft: theme.spacing(2)
-          // }
         }
       },
       '& .SCLessonObject-content-edit': {

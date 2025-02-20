@@ -134,6 +134,9 @@ const Component = {
           textAlign: 'center'
         }
       }
+    }),
+    skeletonRoot: ({theme}) => ({
+      gap: theme.spacing(3)
     })
   }
 };

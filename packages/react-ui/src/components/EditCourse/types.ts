@@ -1,31 +1,25 @@
 export type CoursePage = 'lessons' | 'customize' | 'users' | 'options';
 
-export type TabContentType = '1' | '2' | '3' | '4';
-
-export type Status = 'draft' | 'published';
+export type TabContentType = '1' | '2' | '3' | '4' | '5';
 
 export enum TabContentEnum {
   LESSONS = '1',
   CUSTOMIZE = '2',
   USERS = '3',
-  OPTIONS = '4'
+  REQUESTS = '4',
+  OPTIONS = '5'
 }
 
-export interface LessonRowInterface {
-  id: number;
-  name: string;
-  completed?: boolean;
-}
-
-export interface SectionRowInterface extends Omit<LessonRowInterface, 'completed'> {
-  lessons: LessonRowInterface[];
-}
-
-export type ActionLessonType = 'add' | 'delete';
+export type ActionLessonType = 'add' | 'rename' | 'delete' | 'update' | 'add_update' | 'rename_update' | 'delete_update';
 
 export enum ActionLessonEnum {
   ADD = 'add',
-  DELETE = 'delete'
+  RENAME = 'rename',
+  DELETE = 'delete',
+  UPDATE = 'update',
+  ADD_UPDATE = 'add_update',
+  RENAME_UPDATE = 'rename_update',
+  DELETE_UPDATE = 'delete_update'
 }
 
 export interface OptionsData {

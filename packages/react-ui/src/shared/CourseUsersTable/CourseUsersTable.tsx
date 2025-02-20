@@ -16,14 +16,14 @@ import {
   Typography,
   useThemeProps
 } from '@mui/material';
-import {ChangeEvent, Dispatch, useCallback, useEffect, useState} from 'react';
+import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
-import ActionButton from './ActionButton';
+import SeeProgressButton from './SeeProgressButton';
 import CourseUsersTableSkeleton from './Skeleton';
 import {actionWidgetTypes} from '../../utils/widget';
 import {http, SCPaginatedResponse} from '@selfcommunity/api-services';
@@ -32,6 +32,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import ChangeUserStatus from './ChangeUsersStatus';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import RequestButton from './RequestButton';
 
 const classes = {
   search: `${PREFIX}-search`,
@@ -54,23 +55,25 @@ type HeaderCellsType = {
 export interface CourseUsersTableProps {
   state: any;
   dispatch: Dispatch<any>;
-  course?: SCCourseType | null;
+  course: SCCourseType | null;
   headerCells: HeaderCellsType[];
-  editMode?: boolean;
+  mode: 'dashboard' | 'edit' | 'requests';
+  emptyStatusTitle: string;
+  emptyStatusDescription?: string;
 }
 
 function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
   return users.filter((user) => (user.username || user.real_name).includes(value));
 }
 
-export default function CourseUsersTable(inProps: CourseUsersTableProps) {
+function CourseUsersTable(inProps: CourseUsersTableProps) {
   // PROPS
   const props: CourseUsersTableProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
 
-  const {course, state, dispatch, headerCells, editMode = false} = props;
+  const {course, state, dispatch, headerCells, mode, emptyStatusTitle, emptyStatusDescription} = props;
 
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
@@ -122,6 +125,7 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
         dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
       })
       .catch((error) => {
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [state.next, dispatch]);
@@ -134,8 +138,8 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
     <Root>
       <TextField
         placeholder={intl.formatMessage({
-          id: 'ui.editCourse.tab.users.searchBar.placeholder',
-          defaultMessage: 'ui.editCourse.tab.users.searchBar.placeholder'
+          id: 'ui.courseUsersTable.searchBar.placeholder',
+          defaultMessage: 'ui.courseUsersTable.searchBar.placeholder'
         })}
         InputProps={{
           startAdornment: (
@@ -156,12 +160,12 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
           <TableHead>
             <TableRow>
               {headerCells.map((cell, i, array) => {
-                if (!editMode && i === array.length - 1) {
+                if (mode !== 'edit' && i === array.length - 1) {
                   return <TableCell width="14%" key={i} />;
                 }
 
                 return (
-                  <TableCell width={editMode ? '25%' : '20%'} key={i}>
+                  <TableCell width={mode === 'dashboard' ? '20%' : '25%'} key={i}>
                     <Typography variant="body2">
                       <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                     </Typography>
@@ -172,7 +176,7 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
           </TableHead>
 
           <TableBody>
-            {users.length === 0 && <RowSkeleton animation={false} editMode={editMode} />}
+            {users.length === 0 && <RowSkeleton animation={false} editMode={mode !== 'dashboard'} />}
             {users.length > 0 &&
               users.map((user, i) => (
                 <TableRow key={i}>
@@ -182,7 +186,16 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
                       <Typography variant="body2">{user.username}</Typography>
                     </Stack>
                   </TableCell>
-                  {editMode ? (
+                  {mode === 'dashboard' && (
+                    <TableCell>
+                      <Stack className={classes.progressWrapper}>
+                        <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
+
+                        <Typography variant="body1">{`${Math.round(user.user_completion_rate)}%`}</Typography>
+                      </Stack>
+                    </TableCell>
+                  )}
+                  {mode === 'edit' && (
                     <TableCell>
                       {user.join_status !== SCCourseJoinStatusType.CREATOR && scUserContext.user.id !== user.id ? (
                         <ChangeUserStatus course={course} user={user} />
@@ -195,29 +208,28 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
                         </Typography>
                       )}
                     </TableCell>
-                  ) : (
-                    <TableCell>
-                      <Stack className={classes.progressWrapper}>
-                        <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
-
-                        <Typography variant="body1">{`${Math.round(user.user_completion_rate)}%`}</Typography>
-                      </Stack>
-                    </TableCell>
                   )}
                   <TableCell>
-                    <Typography variant="body2">{new Date(user.joined_at).toLocaleDateString()}</Typography>
+                    <Typography variant="body2">{new Date(mode === 'requests' ? user.date_joined : user.joined_at).toLocaleDateString()}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{new Date(user.last_active_at).toLocaleDateString()}</Typography>
+                    <Typography variant="body2">
+                      {new Date(mode === 'requests' ? user.date_joined : user.last_active_at).toLocaleDateString()}
+                    </Typography>
                   </TableCell>
-                  {!editMode && (
+                  {mode === 'dashboard' && (
                     <TableCell>
-                      <ActionButton course={course} user={user} />
+                      <SeeProgressButton course={course} user={user} />
+                    </TableCell>
+                  )}
+                  {mode === 'requests' && (
+                    <TableCell>
+                      <RequestButton course={course} user={user} />
                     </TableCell>
                   )}
                 </TableRow>
               ))}
-            {state.isLoadingNext && <RowSkeleton editMode={editMode} />}
+            {state.isLoadingNext && <RowSkeleton editMode={mode !== 'dashboard'} />}
           </TableBody>
         </Table>
       </TableContainer>
@@ -237,9 +249,9 @@ export default function CourseUsersTable(inProps: CourseUsersTableProps) {
         </LoadingButton>
       )}
 
-      {users.length === 0 && value.length === 0 && (
-        <EmptyStatus icon="face" title="ui.courseUsersTable.empty.title" description="ui.courseUsersTable.empty.description" />
-      )}
+      {users.length === 0 && value.length === 0 && <EmptyStatus icon="face" title={emptyStatusTitle} description={emptyStatusDescription} />}
     </Root>
   );
 }
+
+export default memo(CourseUsersTable);

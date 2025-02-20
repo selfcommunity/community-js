@@ -2,9 +2,10 @@ import {HTMLAttributes} from 'react';
 import {PREFIX} from './constants';
 import {Box, styled, useThemeProps} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
-import {SCUserContextType, useSCFetchCourse, useSCUser} from '@selfcommunity/react-core';
+import {useSCFetchCourse} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {EditCourse} from '@selfcommunity/react-ui';
+import {CourseInfoViewType} from '@selfcommunity/api-services';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -54,14 +55,11 @@ export default function EditCourseTemplate(inProps: EditCourseTemplateProps) {
   const {id = 'course_edit', className = null, course = null, courseId = null, page, onTabChange} = props;
 
   // HOOKS
-  const {scCourse} = useSCFetchCourse({id: courseId, course});
-  const scUserContext: SCUserContextType = useSCUser();
-
-  console.log(scCourse, scUserContext);
+  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: CourseInfoViewType.EDIT}});
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <EditCourse page={page} onTabChange={onTabChange} />
+      <EditCourse course={scCourse} page={page} onTabChange={onTabChange} />
     </Root>
   );
 }

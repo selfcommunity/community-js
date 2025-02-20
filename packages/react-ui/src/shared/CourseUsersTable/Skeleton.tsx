@@ -16,11 +16,11 @@ export default function CourseUsersTableSkeleton() {
       <TableContainer>
         <Table>
           <TableHead>
-            <CourseUsersTableRowSkeleton header={true} editMode />
+            <CourseUsersTableRowSkeleton header={true} editMode={true} />
           </TableHead>
 
           <TableBody>
-            <CourseUsersTableRowSkeleton editMode />
+            <CourseUsersTableRowSkeleton editMode={true} />
           </TableBody>
         </Table>
       </TableContainer>

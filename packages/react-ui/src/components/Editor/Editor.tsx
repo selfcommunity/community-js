@@ -11,7 +11,7 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MediaPlugin, MentionsPlugin, OnChangePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
@@ -74,7 +74,8 @@ const editorTheme: EditorThemeClasses = {
     superscript: `${PREFIX}-textSuperscript`,
     underline: `${PREFIX}-textUnderline`,
     underlineStrikethrough: `${PREFIX}-textUnderlineStrikethrough`
-  }
+  },
+  document: `${PREFIX}-document`
 };
 
 export interface EditorProps {
@@ -113,6 +114,11 @@ export interface EditorProps {
    * @default false
    */
   uploadImage?: boolean;
+  /**
+   * This editor can upload files
+   * @default false
+   */
+  uploadFile?: boolean;
 
   /**
    * Handler for change event of the editor
@@ -185,6 +191,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     defaultValue = '',
     toolbar = false,
     uploadImage = false,
+    uploadFile = false,
     editable = true,
     onChange = null,
     onFocus = null,
@@ -252,13 +259,14 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
       <LexicalComposer initialConfig={initialConfig}>
         {toolbar ? (
           <>
-            <ToolbarPlugin uploadImage={uploadImage} />
+            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} />
             <ListPlugin />
             <HorizontalRulePlugin />
           </>
         ) : (
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
+            {uploadFile && <MediaPlugin />}
             <EmojiPlugin />
             {action && action}
           </Stack>

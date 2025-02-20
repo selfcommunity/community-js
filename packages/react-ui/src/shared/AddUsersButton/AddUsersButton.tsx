@@ -30,6 +30,7 @@ const classes = {
   root: `${PREFIX}-root`,
   dialogRoot: `${PREFIX}-dialog-root`,
   dialogAutocompleteWrapper: `${PREFIX}-dialog-autocomplete-wrapper`,
+  dialogUserWrapper: `${PREFIX}-dialog-user-wrapper`,
   dialogChipWrapper: `${PREFIX}-dialog-chip-wrapper`
 };
 
@@ -124,7 +125,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
       http
         .request({
-          url: endpoint.url({id: course.id}),
+          url: endpoint.url(),
           method: endpoint.method,
           params: {
             ...endpointQueryParams,
@@ -268,13 +269,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
               popupIcon={null}
               disableClearable
               renderOption={(props, option) => (
-                <Stack
-                  component="li"
-                  sx={{
-                    flexDirection: 'row',
-                    gap: '5px'
-                  }}
-                  {...props}>
+                <Stack component="li" flexDirection="row" gap="5px" {...props}>
                   <Avatar alt={option.username} src={option.avatar} />
                   <Typography>{option.username}</Typography>
                 </Stack>

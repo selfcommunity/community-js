@@ -12,6 +12,7 @@ import Options from './Options';
 import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseType} from '@selfcommunity/types';
 import {CourseInfoViewType} from '@selfcommunity/api-services';
+import Requests from './Requests';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -35,6 +36,10 @@ const TAB_DATA = [
     value: TabContentEnum.USERS
   },
   {
+    label: 'ui.editCourse.tab.requests',
+    value: TabContentEnum.REQUESTS
+  },
+  {
     label: 'ui.editCourse.tab.options',
     value: TabContentEnum.OPTIONS
   }
@@ -44,15 +49,19 @@ function getPanelData(course: SCCourseType | null, setSCCourse: (course: SCCours
   return [
     {
       value: TabContentEnum.LESSONS,
-      children: <Lessons course={course} />
+      children: <Lessons course={course} setSCCourse={setSCCourse} />
     },
     {
       value: TabContentEnum.CUSTOMIZE,
-      children: <Customize />
+      children: <Customize course={course} setSCCourse={setSCCourse} />
     },
     {
       value: TabContentEnum.USERS,
       children: <Users course={course} />
+    },
+    {
+      value: TabContentEnum.REQUESTS,
+      children: <Requests course={course} />
     },
     {
       value: TabContentEnum.OPTIONS,

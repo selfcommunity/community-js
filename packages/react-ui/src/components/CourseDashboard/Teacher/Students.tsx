@@ -78,7 +78,17 @@ function Students(props: StudentsProps) {
     }
   }, [scUserContext.user, course, _init]);
 
-  return <CourseUsersTable course={course} state={state} dispatch={dispatch} headerCells={headerCells} />;
+  return (
+    <CourseUsersTable
+      course={course}
+      state={state}
+      dispatch={dispatch}
+      headerCells={headerCells}
+      mode="dashboard"
+      emptyStatusTitle="ui.courseUsersTable.empty.users.title"
+      emptyStatusDescription="ui.courseUsersTable.empty.users.description"
+    />
+  );
 }
 
 export default memo(Students);

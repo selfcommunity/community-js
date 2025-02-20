@@ -25,12 +25,12 @@ const DialogRoot = styled(BaseDialog, {
   overridesResolver: (_props, styles) => styles.dialogRoot
 })(() => ({}));
 
-interface ActionButtonProps {
+interface SeeProgressButtonProps {
   course: SCCourseType;
   user: SCUserType;
 }
 
-function ActionButton(props: ActionButtonProps) {
+function SeeProgressButton(props: SeeProgressButtonProps) {
   // PROPS
   const {course, user} = props;
 
@@ -138,4 +138,4 @@ function ActionButton(props: ActionButtonProps) {
   );
 }
 
-export default memo(ActionButton);
+export default memo(SeeProgressButton);

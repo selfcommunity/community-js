@@ -43,7 +43,7 @@ export interface CourseApiClientInterface {
   // Courses CRUD
   createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
   updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
-  patchCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
+  patchCourse(id: number | string, data: Partial<SCCourseType>, config?: AxiosRequestConfig): Promise<SCCourseType>;
   deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
   // Course Comments CRUD
@@ -89,7 +89,7 @@ export interface CourseApiClientInterface {
   // Courses section CRUD
   getCourseSection(id: number | string, section_id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
   getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType[]>;
-  createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
+  createCourseSection(id: number | string, data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType>;
   updateCourseSection(
     id: number | string,
     section_id: number | string,
@@ -131,7 +131,7 @@ export interface CourseApiClientInterface {
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
-    data: SCCourseLessonType,
+    data: Partial<SCCourseLessonType>,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType>;
   deleteCourseLesson(id: number | string, section_id: number | string, lesson_id: number | string, config?: AxiosRequestConfig): Promise<any>;
@@ -169,7 +169,7 @@ export interface CourseApiClientInterface {
 
   // Subscribe/Unsubscribe
   joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
-  leaveOrRemoveCourseRequest(id: number | string, data?: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+  leaveOrRemoveCourseRequest(id: number | string, params?: {user: number}, config?: AxiosRequestConfig): Promise<any>;
 
   // To invite a user or to accept a request to participate in the course (in the end the user is ONLY subscribed to the course)
   // To request participation in a private course use joinOrAcceptInviteToCourse which automatically manages the subscription to a private/public course
@@ -270,7 +270,7 @@ export class CourseApiClient {
    * @param data
    * @param config
    */
-  static patchCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
+  static patchCourse(id: number | string, data: Partial<SCCourseType>, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return apiRequest({...config, url: Endpoints.PatchCourse.url({id}), method: Endpoints.PatchCourse.method, data});
   }
   /**
@@ -442,8 +442,8 @@ export class CourseApiClient {
    * @param data
    * @param config
    */
-  static createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
-    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({}), method: Endpoints.CreateCourseSection.method, data});
+  static createCourseSection(id: number | string, data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return apiRequest({...config, url: Endpoints.CreateCourseSection.url({id}), method: Endpoints.CreateCourseSection.method, data});
   }
 
   /**
@@ -585,7 +585,7 @@ export class CourseApiClient {
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
-    data: SCCourseLessonType,
+    data: Partial<SCCourseLessonType>,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType> {
     return apiRequest({
@@ -727,12 +727,12 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static leaveOrRemoveCourseRequest(id: number | string, data?: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+  static leaveOrRemoveCourseRequest(id: number | string, params?: {user: number}, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({
       ...config,
       url: Endpoints.LeaveOrRemoveCourseRequest.url({id}),
       method: Endpoints.LeaveOrRemoveCourseRequest.method,
-      data
+      params
     });
   }
 
@@ -838,7 +838,7 @@ export default class CourseService {
   static async updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.updateCourse(id, data, config);
   }
-  static async patchCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
+  static async patchCourse(id: number | string, data: Partial<SCCourseType>, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.patchCourse(id, data, config);
   }
   static async deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
@@ -910,8 +910,8 @@ export default class CourseService {
   static async getCourseSections(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseSectionType[]> {
     return CourseApiClient.getCourseSections(id, config);
   }
-  static async createCourseSection(data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
-    return CourseApiClient.createCourseSection(data, config);
+  static async createCourseSection(id: number | string, data: CourseSectionParams, config?: AxiosRequestConfig): Promise<SCCourseSectionType> {
+    return CourseApiClient.createCourseSection(id, data, config);
   }
   static async updateCourseSection(
     id: number | string,
@@ -968,7 +968,7 @@ export default class CourseService {
     id: number | string,
     section_id: number | string,
     lesson_id: number | string,
-    data: SCCourseLessonType,
+    data: Partial<SCCourseLessonType>,
     config?: AxiosRequestConfig
   ): Promise<SCCourseLessonType> {
     return CourseApiClient.patchCourseLesson(id, section_id, lesson_id, data, config);
@@ -1027,8 +1027,8 @@ export default class CourseService {
   static async joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.joinOrAcceptInviteToCourse(id, config);
   }
-  static async leaveOrRemoveCourseRequest(id: number | string, data?: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
-    return CourseApiClient.leaveOrRemoveCourseRequest(id, data, config);
+  static async leaveOrRemoveCourseRequest(id: number | string, params?: {user: number}, config?: AxiosRequestConfig): Promise<any> {
+    return CourseApiClient.leaveOrRemoveCourseRequest(id, params, config);
   }
   static async inviteOrAcceptUsersToCourse(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
     return CourseApiClient.inviteOrAcceptUsersToCourse(id, data, config);

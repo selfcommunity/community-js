@@ -130,7 +130,8 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
               disabled={isSubmitting}
               EditorProps={{
                 toolbar: true,
-                uploadImage: true,
+                uploadImage: false,
+                uploadFile: true,
                 ...EditorProps
               }}
             />

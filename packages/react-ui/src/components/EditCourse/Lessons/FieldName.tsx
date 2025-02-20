@@ -1,13 +1,15 @@
 import {LoadingButton} from '@mui/lab';
 import {debounce, Icon, IconButton, Stack, TextField, Typography} from '@mui/material';
-import {ChangeEvent, Dispatch, Fragment, memo, SetStateAction, useCallback, useState} from 'react';
-import {setRowName} from '../data';
-import {LessonRowInterface} from '../types';
+import {ChangeEvent, Fragment, memo, useCallback, useState} from 'react';
 import {PREFIX} from '../constants';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
+import {SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {EndpointType, http} from '@selfcommunity/api-services';
+import {AxiosResponse} from 'axios';
+import {ActionLessonEnum, ActionLessonType} from '../types';
 
 const classes = {
   editModeWrapper: `${PREFIX}-edit-mode-wrapper`,
@@ -16,26 +18,28 @@ const classes = {
 };
 
 interface FieldNameProps<T> {
+  endpoint: EndpointType;
   row: T;
-  handleRenameRow: (oldId: number, newName: string) => void;
+  isNewRow: boolean;
+  handleManageRow: (section: SCCourseSectionType, type: ActionLessonType) => void;
   editMode: boolean;
-  setEditMode: Dispatch<SetStateAction<boolean>>;
+  handleDisableEditMode: () => void;
 }
 
-function FieldName<T extends LessonRowInterface>(props: FieldNameProps<T>) {
+function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
   // PROPS
-  const {row, handleRenameRow, editMode, setEditMode} = props;
+  const {endpoint, row, isNewRow, handleManageRow, editMode, handleDisableEditMode} = props;
 
   // STATES
   const [loading, setLoading] = useState(false);
-  const [rename, setRename] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
 
   // DEBOUNCE
   const debounceSetData = debounce((name: string) => {
-    setRename(name);
+    setName(name);
   }, 300);
 
   // HANDLERS
@@ -48,12 +52,29 @@ function FieldName<T extends LessonRowInterface>(props: FieldNameProps<T>) {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-    setRowName(rename)
-      .then(() => {
-        handleRenameRow(row.id, rename);
-        setRename(null);
+
+    http
+      .request({
+        url: endpoint.url(),
+        method: endpoint.method,
+        data: {
+          name,
+          type: SCCourseLessonTypologyType.LESSON
+        }
+      })
+      .then((response: AxiosResponse<SCCourseType>) => {
+        handleManageRow(response.data, isNewRow ? ActionLessonEnum.ADD : ActionLessonEnum.RENAME);
+        setName(null);
         setLoading(false);
-        setEditMode(false);
+        handleDisableEditMode();
+
+        enqueueSnackbar(
+          <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.save" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.save" />,
+          {
+            variant: 'success',
+            autoHideDuration: 3000
+          }
+        );
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
@@ -63,18 +84,18 @@ function FieldName<T extends LessonRowInterface>(props: FieldNameProps<T>) {
           autoHideDuration: 3000
         });
       });
-  }, [row, rename, setLoading, setEditMode, handleRenameRow]);
+  }, [name, endpoint, setLoading, handleDisableEditMode, handleManageRow]);
 
   const handleClose = useCallback(() => {
-    setRename(null);
-    setEditMode(false);
-  }, [setRename, setEditMode]);
+    setName(null);
+    handleDisableEditMode();
+  }, [setName, handleDisableEditMode]);
 
   return (
     <Fragment>
       {editMode ? (
         <Stack className={classes.editModeWrapper}>
-          <TextField type="text" variant="outlined" size="small" focused defaultValue={row.name} onChange={handleChange} />
+          <TextField type="text" variant="outlined" size="small" focused autoFocus defaultValue={row.name} onChange={handleChange} />
 
           <LoadingButton
             size="small"

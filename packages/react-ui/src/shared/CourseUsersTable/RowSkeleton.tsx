@@ -21,7 +21,7 @@ export default function CourseUsersTableRowSkeleton(props: CourseUsersTableRowSk
         }
 
         return (
-          <TableCell width="" key={i}>
+          <TableCell width={!editMode ? '20%' : '25%'} key={i}>
             {!header && i === 0 && (
               <Stack direction="row" alignItems="center" gap="16px">
                 <Skeleton animation={animation} variant="circular" width="30px" height="30px" />

@@ -37,6 +37,7 @@ import ImagePlugin from './ImagePlugin';
 import EmojiPlugin from './EmojiPlugin';
 import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
 import {PREFIX} from '../constants';
+import MediaPlugin from './MediaPlugin';
 
 const blockTypeToBlockIcon = {
   h1: 'format_heading_1',
@@ -180,6 +181,7 @@ const Root = styled(Box, {
 
 export interface ToolbarPluginProps {
   uploadImage: boolean;
+  uploadFile?: boolean;
 }
 
 export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element {
@@ -188,7 +190,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {uploadImage = false} = props;
+  const {uploadImage = false, uploadFile = false} = props;
 
   // STATE
   const [editor] = useLexicalComposerContext();
@@ -390,6 +392,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
         </Tooltip>
       </IconButton>
       {uploadImage && <ImagePlugin />}
+      {uploadFile && <MediaPlugin />}
       <IconButton disabled={!isEditable} onClick={insertLink}>
         <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.link" defaultMessage="ui.editor.toolbarPlugin.link" />}>
           <Icon>format_link</Icon>
