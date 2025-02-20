@@ -1,8 +1,8 @@
 import React, {forwardRef, useEffect, useState} from 'react';
-import {COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand, LexicalEditor} from 'lexical';
+import {COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand} from 'lexical';
 import {$insertNodeToNearestRoot} from '@lexical/utils';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
+import {Box, CircularProgress, Icon, IconButton, IconButtonProps} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints} from '@selfcommunity/api-services';
@@ -16,6 +16,7 @@ import {$createImageNode, ImageNode} from '../nodes/ImageNode';
 import {PREFIX} from '../constants';
 import {$createDocNode, DocNode} from '../nodes/DocNode';
 import {INSERT_IMAGE_COMMAND, InsertImagePayload} from './ImagePlugin';
+import classNames from 'classnames';
 
 export interface InsertDocPayload {
   src: string;
@@ -36,104 +37,35 @@ const UploadButton = asUploadButton(
     </IconButton>
   ))
 );
-
-function Media({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
-  // CONTEXT
-  const scContext: SCContextType = useSCContext();
-  const scUserContext: SCUserContextType = useSCUser();
-
-  // STATE
-  const [uploading, setUploading] = useState<Record<string, SCMediaChunkType>>({});
-  const [mediaType, setMediaType] = useState('');
-
-  // HOOKS
-  const {enqueueSnackbar} = useSnackbar();
-
-  // HANDLERS
-  const handleFileUploadFilter = (file: File): boolean => {
-    if (file.type.startsWith('image/')) {
-      setMediaType('image');
-    } else {
-      setMediaType('file');
-    }
-    return file.type.startsWith('image/') || file.type.startsWith('application/');
-  };
-
-  const handleUploadSuccess = (media: SCMediaType) => {
-    if (media.type === 'image') {
-      const data = {
-        altText: media.title,
-        src: media.image,
-        width: media.image_width,
-        height: media.image_height
-      };
-      editor.focus();
-      editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
-    } else {
-      const data = {
-        src: media.url || media.image,
-        name: media.title,
-        type: media.type
-      };
-      editor.focus();
-      editor.dispatchCommand(INSERT_DOC_COMMAND, data);
-    }
-  };
-
-  const handleUploadProgress = (chunks: any) => {
-    setUploading({...chunks});
-  };
-
-  const handleUploadError = (chunk: SCMediaChunkType, error: string) => {
-    enqueueSnackbar(error, {
-      variant: 'error',
-      autoHideDuration: 3000
-    });
-  };
-
-  if (!scUserContext.user) {
-    return null;
-  }
-
-  return (
-    <ChunkedUploady
-      destination={{
-        url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
-        headers: {
-          ...(scContext.settings.session &&
-            scContext.settings.session.authToken && {
-              Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`
-            })
-        },
-        method: Endpoints.ComposerChunkUploadMedia.method
-      }}
-      chunkSize={204800}
-      multiple
-      accept="image/*,application/*"
-      fileFilter={handleFileUploadFilter}>
-      <MediaChunkUploader type={mediaType} onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
-      <UploadButton
-        className={className}
-        extraProps={{
-          disabled: Object.keys(uploading).length !== 0,
-          progress: Object.keys(uploading).length !== 0 ? Object.values(uploading)[0].completed : null
-        }}
-      />
-    </ChunkedUploady>
-  );
-}
-
 const classes = {
   root: `${PREFIX}-media-plugin-root`
 };
 
-const Root = styled(Media, {
+export interface MediaPluginProps {
+  className?: string;
+  onMediaAdd?: (medias: SCMediaType[]) => void | null;
+}
+
+const Root = styled(Box, {
   name: PREFIX,
   slot: 'MediaPluginRoot'
 })(() => ({}));
 
-export default function MediaPlugin(): JSX.Element {
+export default function MediaPlugin(props: MediaPluginProps) {
+  const {className = '', onMediaAdd = null} = props;
+
+  // STATE
+  const [uploading, setUploading] = useState<Record<string, SCMediaChunkType>>({});
+  const [mediaType, setMediaType] = useState('');
+  const [uploadedMedia, setUploadedMedia] = useState<SCMediaType[]>([]);
   const [editor] = useLexicalComposerContext();
+
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // HOOKS
+  const {enqueueSnackbar} = useSnackbar();
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -183,11 +115,81 @@ export default function MediaPlugin(): JSX.Element {
     );
   }, [editor]);
 
+  useEffect(() => {
+    if (uploadedMedia.length > 0) {
+      onMediaAdd && onMediaAdd(uploadedMedia);
+    }
+  }, [uploadedMedia, onMediaAdd]);
+
+  // HANDLERS
+  const handleFileUploadFilter = (file: File): boolean => {
+    if (file.type.startsWith('image/')) {
+      setMediaType('image');
+    } else {
+      setMediaType('file');
+    }
+    return file.type.startsWith('image/') || file.type.startsWith('application/');
+  };
+
+  const handleUploadSuccess = (media: SCMediaType) => {
+    if (media.type === 'image') {
+      const data = {
+        altText: media.title,
+        src: media.image,
+        width: media.image_width,
+        height: media.image_height
+      };
+      editor.focus();
+      editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
+    } else {
+      const data = {
+        src: media.url || media.image,
+        name: media.title,
+        type: media.type
+      };
+      editor.focus();
+      editor.dispatchCommand(INSERT_DOC_COMMAND, data);
+      setUploadedMedia((prev) => [...prev, media]);
+    }
+  };
+
+  const handleUploadProgress = (chunks: any) => {
+    setUploading({...chunks});
+  };
+
+  const handleUploadError = (chunk: SCMediaChunkType, error: string) => {
+    enqueueSnackbar(error, {
+      variant: 'error',
+      autoHideDuration: 3000
+    });
+  };
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  if (!editor.hasNodes([ImageNode, DocNode])) {
+  if (!scUserContext.user || !editor.hasNodes([ImageNode, DocNode])) {
     return null;
   }
 
-  return <Root editor={editor} className={classes.root} />;
+  return (
+    <Root className={classNames(classes.root, className)}>
+      <ChunkedUploady
+        destination={{
+          url: `${scContext.settings.portal}${Endpoints.ComposerChunkUploadMedia.url()}`,
+          headers: scContext.settings.session?.authToken ? {Authorization: `Bearer ${scContext.settings.session.authToken.accessToken}`} : {},
+          method: Endpoints.ComposerChunkUploadMedia.method
+        }}
+        chunkSize={204800}
+        accept="image/*,application/*"
+        fileFilter={handleFileUploadFilter}>
+        <MediaChunkUploader type={mediaType} onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
+        <UploadButton
+          className={className}
+          extraProps={{
+            disabled: Object.keys(uploading).length !== 0,
+            progress: Object.keys(uploading).length !== 0 ? Object.values(uploading)[0].completed : null
+          }}
+        />
+      </ChunkedUploady>
+    </Root>
+  );
 }

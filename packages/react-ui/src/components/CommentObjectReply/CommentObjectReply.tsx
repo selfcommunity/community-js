@@ -10,6 +10,7 @@ import {LoadingButton} from '@mui/lab';
 import BaseItem from '../../shared/BaseItem';
 import UserAvatar from '../../shared/UserAvatar';
 import {useThemeProps} from '@mui/system';
+import {SCMediaType} from '@selfcommunity/types';
 
 const PREFIX = 'SCCommentObjectReply';
 
@@ -41,7 +42,7 @@ export interface CommentObjectReplyProps extends WidgetProps {
    * Callback invoked after reply
    * @param comment
    */
-  onReply?: (comment) => void;
+  onReply?: (comment, medias?) => void;
 
   /**
    * Callback invoked after save/edit
@@ -66,6 +67,12 @@ export interface CommentObjectReplyProps extends WidgetProps {
    * @default ''
    */
   text?: string;
+
+  /**
+   * Initial media content
+   * @default ''
+   */
+  medias?: SCMediaType[];
 
   /**
    * Initial content
@@ -141,6 +148,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     onCancel,
     editable = true,
     text = '',
+    medias = [],
     WidgetProps = {variant: 'outlined'},
     EditorProps = {},
     showAvatar = true,
@@ -153,6 +161,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
 
   // RETRIEVE OBJECTS
   const [html, setHtml] = useState(text);
+  const [media, setMedia] = useState(medias);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -182,7 +191,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
    * Handle Replay
    */
   const handleReply = (): void => {
-    onReply && onReply(html);
+    onReply && onReply(html, media && media.length > 0 ? media : null);
   };
 
   /**
@@ -204,6 +213,10 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
    */
   const handleChangeText = (value: string): void => {
     setHtml(value);
+  };
+
+  const handleChangeMedia = (medias: SCMediaType[]): void => {
+    setMedia(medias);
   };
 
   /**
@@ -238,6 +251,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
           <Editor
             ref={editor}
             onChange={handleChangeText}
+            onMediaChange={handleChangeMedia}
             defaultValue={html}
             editable={editable}
             uploadImage

@@ -171,12 +171,13 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   /**
    * Perform save/update comment
    */
-  const performComment = (comment) => {
+  const performComment = (comment, medias) => {
+    const mediaIds = medias ? medias.map((media) => media.id) : [];
     return http
       .request({
         url: Endpoints.CreateCourseComment.url({id: lessonObject.course_id, section_id: lessonObject.section_id, lesson_id: lessonObject.id}),
         method: Endpoints.CreateCourseComment.method,
-        data: {text: comment}
+        data: {text: comment, medias: mediaIds}
       })
       .then((res: HttpResponse<SCCourseCommentType>) => {
         if (res.status >= 300) {
@@ -189,7 +190,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   /**
    * Handle save comment
    */
-  function handleCommentAction(comment) {
+  function handleCommentAction(comment, medias) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -197,7 +198,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
       });
     } else {
       setIsCommenting(true);
-      performComment(comment)
+      performComment(comment, medias)
         .then((data: SCCourseCommentType) => {
           handleCommentsUpdate(data);
           setReplyKey(comment.id);

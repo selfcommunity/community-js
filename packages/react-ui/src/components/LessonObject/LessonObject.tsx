@@ -10,7 +10,7 @@ import {getContributionHtml} from '../../utils/contribution';
 import Widget from '../Widget';
 import ContentLesson from '../Composer/Content/ContentLesson';
 import {EditorProps} from '../Editor';
-import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseType, SCMediaType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {CourseService} from '@selfcommunity/api-services';
@@ -57,6 +57,10 @@ export interface LessonObjectProps {
    */
   onContentChange?: (content) => void;
   /**
+   * Callback fired when the lesson media on edit mode changes
+   */
+  onMediaChange?: (medias: SCMediaType[]) => void | null;
+  /**
    * Editor props
    * @default {}
    */
@@ -73,7 +77,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, course, lesson, editMode, EditorProps = {}, onContentChange, isSubmitting, ...rest} = props;
+  const {className = null, course, lesson, editMode, EditorProps = {}, onContentChange, onMediaChange, isSubmitting, ...rest} = props;
   const [loading, setLoading] = useState<boolean>(false);
   const [completed, setCompleted] = useState<boolean>(lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
 
@@ -95,6 +99,15 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
       }
     },
     [onContentChange]
+  );
+
+  const handleChangeMedia = useCallback(
+    (medias: SCMediaType[]) => {
+      if (onMediaChange) {
+        onMediaChange(medias);
+      }
+    },
+    [onMediaChange]
   );
 
   function toggleLessonCompletion(completed) {
@@ -127,6 +140,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
               value={lesson}
               //error={{error}}
               onChange={handleChangeLesson}
+              onMediaChange={handleChangeMedia}
               disabled={isSubmitting}
               EditorProps={{
                 toolbar: true,

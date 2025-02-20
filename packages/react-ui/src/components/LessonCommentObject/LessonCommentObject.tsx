@@ -286,11 +286,13 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
           <Box className={classes.comment}>
             <CommentObjectReply
               text={comment.html}
+              medias={comment.medias}
               autoFocus
               id={`edit-${comment.id}`}
               onSave={handleUpdate}
               onCancel={handleCancel}
               editable={!isSavingComment}
+              EditorProps={{uploadFile: true, uploadImage: false}}
               {...CommentObjectReplyProps}
             />
           </Box>
