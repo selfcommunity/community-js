@@ -48,7 +48,7 @@ export interface CommentObjectReplyProps extends WidgetProps {
    * Callback invoked after save/edit
    * @param comment
    */
-  onSave?: (comment) => void;
+  onSave?: (comment, medias?) => void;
 
   /**
    * Callback invoked after disccard save/edit
@@ -198,7 +198,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
    * Handle Save
    */
   const handleSave = (): void => {
-    onSave && onSave(html);
+    onSave && onSave(html, media && media.length > 0 ? media : null);
   };
 
   /**
