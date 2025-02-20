@@ -5,11 +5,12 @@ import {Fragment, HTMLAttributes, memo, MouseEvent, PropsWithChildren, ReactNode
 interface MenuRowProps extends PropsWithChildren {
   icon?: ReactNode;
   buttonClassName?: HTMLAttributes<HTMLButtonElement>['className'];
+  disabled?: boolean;
 }
 
 function MenuRow(props: MenuRowProps) {
   // PROPS
-  const {icon = <Icon>more_vert</Icon>, buttonClassName, children} = props;
+  const {icon = <Icon>more_vert</Icon>, buttonClassName, disabled, children} = props;
 
   // STATES
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -28,7 +29,7 @@ function MenuRow(props: MenuRowProps) {
 
   return (
     <Fragment>
-      <IconButton className={buttonClassName} onClick={handleClick}>
+      <IconButton className={buttonClassName} onClick={handleClick} disabled={disabled}>
         {icon}
       </IconButton>
 
