@@ -53,7 +53,7 @@ function getPanelData(course: SCCourseType | null, setSCCourse: (course: SCCours
     },
     {
       value: TabContentEnum.CUSTOMIZE,
-      children: <Customize />
+      children: <Customize course={course} setSCCourse={setSCCourse} />
     },
     {
       value: TabContentEnum.USERS,

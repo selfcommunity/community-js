@@ -326,6 +326,7 @@
   "ui.courseUsersTable.empty.users.title": "There are currently no Users invited to the Course",
   "ui.courseUsersTable.searchBar.placeholder": "Search users",
   "ui.editCourse.tab.customize": "Customize",
+  "ui.editCourse.tab.customize.snackbar.save": "Save completed!",
   "ui.editCourse.tab.lessons": "Lessons",
   "ui.editCourse.tab.lessons.status": "Status: <b>{status}</b>",
   "ui.editCourse.tab.lessons.table.empty.description": "Start by adding a course section, then add lessons",
