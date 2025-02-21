@@ -1,6 +1,6 @@
 import {DragDropContext, Draggable, DraggableProvided, Droppable, DropResult} from '@hello-pangea/dnd';
-import {Fragment, memo, useCallback, useEffect, useState} from 'react';
-import {Collapse, Icon, IconButton, MenuItem, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
+import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {Collapse, Icon, IconButton, MenuItem, Skeleton, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import LessonRow from './LessonRow';
@@ -15,6 +15,7 @@ import LessonReleaseMenu from '../../LessonReleaseMenu';
 import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
 import {ActionLessonEnum, ActionLessonType} from '../types';
+import {useDisabled} from '../hooks';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -45,6 +46,7 @@ function SectionRow(props: SectionRowProps) {
   const [lessons, setLessons] = useState<SCCourseLessonType[]>([]);
 
   // HOOKS
+  const {isDisabled} = useDisabled();
   const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -54,6 +56,9 @@ function SectionRow(props: SectionRowProps) {
       setLessons(section.lessons);
     }
   }, [section]);
+
+  // MEMOS
+  const isNewLocalRow = useMemo(() => lessons.length > section.lessons?.length, [lessons, section]);
 
   // FUNCTIONS
   const getLesson = useCallback((id: number, type: SCCourseLessonTypologyType = SCCourseLessonTypologyType.LESSON) => {
@@ -210,13 +215,23 @@ function SectionRow(props: SectionRowProps) {
           />
         </TableCell>
         <TableCell className={classes.cellAlignCenter}>
-          <LessonReleaseMenu course={course} section={section} />
+          {isDisabled ? (
+            <Skeleton animation={false} variant="rectangular" width="250px" height="53px" sx={{margin: 'auto', borderRadius: '5px'}} />
+          ) : (
+            <LessonReleaseMenu course={course} section={section} />
+          )}
         </TableCell>
         <TableCell className={classes.cellAlignRight}>
           <Stack className={classes.actionsWrapper}>
-            <AddButton label="ui.editCourse.tab.lessons.table.lesson" handleAddRow={handleAddTempLesson} color="primary" variant="outlined" />
+            <AddButton
+              label="ui.editCourse.tab.lessons.table.lesson"
+              handleAddRow={handleAddTempLesson}
+              color="primary"
+              variant="outlined"
+              disabled={isDisabled}
+            />
 
-            <MenuRow>
+            <MenuRow disabled={isDisabled}>
               <MenuItem onClick={handleAbleEditMode}>
                 <Typography variant="body1">
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
@@ -241,7 +256,7 @@ function SectionRow(props: SectionRowProps) {
                   {(outerProvider) => (
                     <TableBody ref={outerProvider.innerRef} {...outerProvider.droppableProps}>
                       {lessons.map((lesson, i, array) => (
-                        <Draggable key={i} draggableId={i.toString()} index={i}>
+                        <Draggable key={i} draggableId={i.toString()} index={i} isDragDisabled={isDisabled}>
                           {(innerProvider) => (
                             <LessonRow
                               key={i}
@@ -249,7 +264,7 @@ function SectionRow(props: SectionRowProps) {
                               course={course}
                               section={section}
                               lesson={lesson}
-                              isNewRow={array.length > (section.lessons?.length || 0)}
+                              isNewRow={isNewLocalRow && i + 1 === array.length}
                               handleManageLesson={handleManageLesson}
                             />
                           )}

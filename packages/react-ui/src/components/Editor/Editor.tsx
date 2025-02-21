@@ -21,6 +21,7 @@ import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
 import OnFocusPlugin from './plugins/OnFocusPlugin';
 import {PREFIX} from './constants';
+import {SCMediaType} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -127,6 +128,12 @@ export interface EditorProps {
   onChange?: (value: string) => void;
 
   /**
+   * Handler for change media in the editor
+   * @default null
+   * */
+  onMediaChange?: (medias: SCMediaType[]) => void;
+
+  /**
    * Handler for blur event of the editor
    * @default null
    * */
@@ -194,6 +201,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     uploadFile = false,
     editable = true,
     onChange = null,
+    onMediaChange = null,
     onFocus = null,
     onBlur = null,
     action = null,
@@ -207,6 +215,10 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   // HANDLERS
   const handleChange = (value) => {
     onChange && onChange(value);
+  };
+
+  const handleMediaChange = (media) => {
+    onMediaChange && onMediaChange(media);
   };
 
   const handleError = (error: Error, editor: LexicalEditor) => {
@@ -259,14 +271,14 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
       <LexicalComposer initialConfig={initialConfig}>
         {toolbar ? (
           <>
-            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} />
+            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} MediaPluginProps={{onMediaAdd: handleMediaChange}} />
             <ListPlugin />
             <HorizontalRulePlugin />
           </>
         ) : (
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
-            {uploadFile && <MediaPlugin />}
+            {uploadFile && <MediaPlugin onMediaAdd={handleMediaChange} />}
             <EmojiPlugin />
             {action && action}
           </Stack>

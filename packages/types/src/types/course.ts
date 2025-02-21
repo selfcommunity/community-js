@@ -1,5 +1,6 @@
 import {SCUserType} from './user';
 import {SCCategoryType} from './category';
+import {SCMediaType} from './media';
 
 /**
  * SCCoursePrivacyType enum
@@ -199,7 +200,7 @@ export interface SCCourseCommentType {
   /**
    * List of id of Media for this comment
    */
-  medias: number[];
+  medias: SCMediaType[];
   /**
    * The last comment in reply to (with parent) this comment.
    * Not available if replies are presents.
@@ -366,7 +367,7 @@ export interface SCCourseLessonType {
   /**
    * The list of Media ids for the lesson course
    */
-  medias?: number[];
+  medias?: SCMediaType[];
   /**
    * Determines whether the current lesson is locked for the user based on the user and on the course property: type and enforce_lessons_order
    */

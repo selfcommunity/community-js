@@ -10,6 +10,8 @@ import {SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@se
 import {EndpointType, http} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 import {ActionLessonEnum, ActionLessonType} from '../types';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCTopicType} from '../../../constants/PubSub';
 
 const classes = {
   editModeWrapper: `${PREFIX}-edit-mode-wrapper`,
@@ -68,6 +70,10 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
         setLoading(false);
         handleDisableEditMode();
 
+        if (isNewRow) {
+          PubSub.publish(`${SCTopicType.COURSE}.${SCGroupEventType.UPDATE}`, false);
+        }
+
         enqueueSnackbar(
           <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.save" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.save" />,
           {
@@ -84,16 +90,21 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
           autoHideDuration: 3000
         });
       });
-  }, [name, endpoint, setLoading, handleDisableEditMode, handleManageRow]);
+  }, [isNewRow, name, endpoint, setLoading, handleDisableEditMode, handleManageRow]);
 
   const handleClose = useCallback(() => {
-    setName(null);
-    handleDisableEditMode();
-  }, [setName, handleDisableEditMode]);
+    if (isNewRow) {
+      handleManageRow(row, ActionLessonEnum.DELETE);
+      PubSub.publish(`${SCTopicType.COURSE}.${SCGroupEventType.UPDATE}`, false);
+    } else {
+      setName(null);
+      handleDisableEditMode();
+    }
+  }, [row, isNewRow, handleManageRow, setName, handleDisableEditMode]);
 
   return (
     <Fragment>
-      {editMode ? (
+      {isNewRow || editMode ? (
         <Stack className={classes.editModeWrapper}>
           <TextField type="text" variant="outlined" size="small" focused autoFocus defaultValue={row.name} onChange={handleChange} />
 

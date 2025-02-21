@@ -1,6 +1,6 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useEffect, useState} from 'react';
+import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
@@ -14,6 +14,7 @@ import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
 import {ActionLessonEnum, ActionLessonType} from './types';
+import {useDisabled} from './hooks';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -62,6 +63,7 @@ function Lessons(props: LessonsProps) {
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
 
   // HOOKS
+  const {isDisabled} = useDisabled();
   const {enqueueSnackbar} = useSnackbar();
   const intl = useIntl();
 
@@ -71,6 +73,9 @@ function Lessons(props: LessonsProps) {
       setSections(course.sections);
     }
   }, [course]);
+
+  // MEMOS
+  const isNewRow = useMemo(() => sections.length > course?.sections.length, [course, sections]);
 
   // FUNCTIONS
   const getSection = useCallback((id: number) => {
@@ -268,7 +273,13 @@ function Lessons(props: LessonsProps) {
               </Typography>
             </Stack>
 
-            <AddButton label="ui.editCourse.tab.lessons.table.section" handleAddRow={handleAddTempSection} color="primary" variant="contained" />
+            <AddButton
+              label="ui.editCourse.tab.lessons.table.section"
+              handleAddRow={handleAddTempSection}
+              color="primary"
+              variant="contained"
+              disabled={isDisabled}
+            />
           </Stack>
 
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -292,14 +303,14 @@ function Lessons(props: LessonsProps) {
                   {(outerProvider) => (
                     <TableBody ref={outerProvider.innerRef} {...outerProvider.droppableProps} className={classes.tableBody}>
                       {sections.map((section, i, array) => (
-                        <Draggable key={i} draggableId={i.toString()} index={i}>
+                        <Draggable key={i} draggableId={i.toString()} index={i} isDragDisabled={isDisabled}>
                           {(innerProvider) => (
                             <SectionRow
                               key={i}
                               course={course}
                               provider={innerProvider}
                               section={section}
-                              isNewRow={array.length > course?.sections.length}
+                              isNewRow={isNewRow && i + 1 === array.length}
                               handleManageSection={handleManageSection}
                             />
                           )}

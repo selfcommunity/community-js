@@ -31,11 +31,12 @@ interface ChangeLessonStatusProps {
   course: SCCourseType;
   section: SCCourseSectionType;
   lesson: SCCourseLessonType;
+  disabled?: boolean;
 }
 
 function ChangeLessonStatus(props: ChangeLessonStatusProps) {
   // PROPS
-  const {course, section, lesson} = props;
+  const {course, section, lesson, disabled} = props;
 
   // HOOKS
   // const intl = useIntl();
@@ -139,7 +140,12 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
           ))}
         </MenuRow>
       ) : (
-        <Select className={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined} size="small" value={value} onChange={handleChange}>
+        <Select
+          className={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined}
+          size="small"
+          value={value}
+          onChange={handleChange}
+          disabled={disabled}>
           {OPTIONS.map((option, i) => (
             <MenuItem key={i} value={option.value}>
               <LoadingButton

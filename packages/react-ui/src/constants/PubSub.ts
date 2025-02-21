@@ -17,6 +17,7 @@ export enum SCGroupEventType {
   CREATE = 'create',
   EDIT = 'edit',
   DELETE = 'delete',
+  UPDATE = 'update',
   MEMBERS = 'members',
   ADD_MEMBER = 'members.add_member',
   INVITE_MEMBER = 'members.invite_member',

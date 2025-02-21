@@ -215,7 +215,8 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
   /**
    * Perform save/update comment
    */
-  const performUpdate = (comment) => {
+  const performUpdate = (comment, medias) => {
+    const mediaIds = medias ? medias.map((media) => media.id) : [];
     return http
       .request({
         url: Endpoints.UpdateCourseComment.url({
@@ -225,7 +226,7 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
           comment_id: commentObject.id
         }),
         method: Endpoints.UpdateCourseComment.method,
-        data: {text: comment}
+        data: {text: comment, medias: mediaIds}
       })
       .then((res: HttpResponse<SCCourseCommentType>) => {
         if (res.status >= 300) {
@@ -238,7 +239,7 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
   /**
    * Handle save comment
    */
-  function handleUpdate(comment) {
+  function handleUpdate(comment, medias) {
     if (UserUtils.isBlocked(scUserContext.user)) {
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
         variant: 'warning',
@@ -246,7 +247,7 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
       });
     } else {
       setIsSavingComment(true);
-      performUpdate(comment)
+      performUpdate(comment, medias)
         .then((data: SCCourseCommentType) => {
           const newObj = Object.assign({}, obj, {
             text: data.text,
@@ -286,11 +287,13 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
           <Box className={classes.comment}>
             <CommentObjectReply
               text={comment.html}
+              medias={comment.medias}
               autoFocus
               id={`edit-${comment.id}`}
               onSave={handleUpdate}
               onCancel={handleCancel}
               editable={!isSavingComment}
+              EditorProps={{uploadFile: true, uploadImage: false}}
               {...CommentObjectReplyProps}
             />
           </Box>

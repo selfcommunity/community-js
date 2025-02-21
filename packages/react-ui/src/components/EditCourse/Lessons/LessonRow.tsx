@@ -14,6 +14,7 @@ import {useSnackbar} from 'notistack';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {ActionLessonEnum, ActionLessonType} from '../types';
+import {useDisabled} from '../hooks';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -59,9 +60,10 @@ function LessonRow(props: LessonRowProps) {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
+  const {isDisabled} = useDisabled();
   const {enqueueSnackbar} = useSnackbar();
 
-  // CALLBACKS
+  // HANDLERS
   const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
 
@@ -115,9 +117,9 @@ function LessonRow(props: LessonRowProps) {
       <TableCell />
       <TableCell className={classes.cellAlignRight}>
         <Stack className={classes.actionsWrapper}>
-          <ChangeLessonStatus course={course} section={section} lesson={lesson} />
+          <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
 
-          <MenuRow>
+          <MenuRow disabled={isDisabled}>
             <MenuItem>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />

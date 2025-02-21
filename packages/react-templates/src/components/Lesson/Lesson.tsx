@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
@@ -102,6 +102,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [settings, setSettings] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
+  const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
   const [editMode, setEditMode] = useState(isCourseAdmin);
   const isEditMode = editMode;
   // const isEditMode = useMemo(() => {
@@ -129,6 +130,10 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     setLessonContent(html);
   };
 
+  const handleLessonMediaEdit = (medias: SCMediaType[]) => {
+    setLessonMedias(medias);
+  };
+
   const handleChangeLesson = (l: SCCourseLessonType, s: SCCourseSectionType) => {
     setLessonId(l.id);
     setSectionId(s.id);
@@ -140,7 +145,8 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
    */
   const handleLessonUpdate = () => {
     setUpdating(true);
-    const data: any = {...settings, type: scLesson.type, name: scLesson.name, text: lessonContent};
+    const mediaIds = lessonMedias.map((media) => media.id);
+    const data: any = {...settings, type: scLesson.type, name: scLesson.name, text: lessonContent, medias: mediaIds};
     CourseService.updateCourseLesson(scCourse.id, sectionId, scLesson.id, data)
       .then((data: SCCourseLessonType) => {
         setUpdating(false);
@@ -230,7 +236,13 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             </IconButton>
           </Box>
         </Box>
-        <LessonObject course={scCourse} lesson={scLesson} editMode={isEditMode} onContentChange={handleLessonContentEdit} />
+        <LessonObject
+          course={scCourse}
+          lesson={scLesson}
+          editMode={isEditMode}
+          onContentChange={handleLessonContentEdit}
+          onMediaChange={handleLessonMediaEdit}
+        />
       </Container>
       <LessonDrawer
         course={scCourse}
