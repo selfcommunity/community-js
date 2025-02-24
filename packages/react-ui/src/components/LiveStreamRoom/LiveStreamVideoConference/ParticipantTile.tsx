@@ -65,6 +65,7 @@ export interface ParticipantTileProps extends React.HTMLAttributes<HTMLDivElemen
   trackRef?: TrackReferenceOrPlaceholder;
   disableSpeakingIndicator?: boolean;
   disableTileActions?: boolean;
+  disableTileFocusToggle?: boolean;
   onParticipantClick?: (event: ParticipantClickEvent) => void;
 }
 
@@ -74,9 +75,18 @@ export interface ParticipantTileProps extends React.HTMLAttributes<HTMLDivElemen
  */
 export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes<HTMLDivElement>) => React.ReactNode =
   /* @__PURE__ */ React.forwardRef<HTMLDivElement, ParticipantTileProps>(function ParticipantTile(
-    {trackRef, children, onParticipantClick, disableSpeakingIndicator, disableTileActions = false, ...htmlProps}: ParticipantTileProps,
+    {
+      trackRef,
+      children,
+      onParticipantClick,
+      disableSpeakingIndicator,
+      disableTileFocusToggle = false,
+      disableTileActions = false,
+      ...htmlProps
+    }: ParticipantTileProps,
     ref
   ) {
+
     const scUserContext: SCUserContextType = useSCUser();
 
     const trackReference = useEnsureTrackRef(trackRef);
@@ -167,7 +177,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
             )}
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
-            <FocusToggle trackRef={trackReference} />
+						{!disableTileFocusToggle && <FocusToggle trackRef={trackReference} />}
           </ParticipantContextIfNeeded>
         </TrackRefContextIfNeeded>
       </div>

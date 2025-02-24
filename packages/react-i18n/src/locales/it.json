@@ -1264,6 +1264,7 @@
   "ui.liveStreamRoom.participantTileActions.banRoomUser": "Rimuovi e banna l'utente dal live",
   "ui.liveStreamRoom.live.terminate": "Sei sicuro di voler uscire dal live?",
   "ui.liveStreamRoom.live.terminatePermanently": "Imposta questo live come chiuso definitivamente",
+  "ui.liveStreamRoom.noParticipants": "Nessun partecipante",
   "ui.upScalingTierBadge.go": "GO",
   "ui.upScalingTierBadge.professional": "PROFESSIONAL",
   "ui.upScalingTierBadge.enterprise": "ENTERPRISE",
