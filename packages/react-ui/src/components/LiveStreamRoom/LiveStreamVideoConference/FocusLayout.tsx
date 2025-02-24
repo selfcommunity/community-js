@@ -29,14 +29,15 @@ export function FocusLayoutContainerNoParticipants(props: FocusLayoutContainerPr
 export interface FocusLayoutProps extends React.HTMLAttributes<HTMLElement> {
   /** The track to display in the focus layout. */
   trackRef?: TrackReferenceOrPlaceholder;
+	disableTileFocusToggle?: boolean;
   onParticipantClick?: (evt: ParticipantClickEvent) => void;
 }
 
 /**
  * The `FocusLayout` component is just a light wrapper around the `ParticipantTile` to display a single participant.
  */
-export function FocusLayout({trackRef, ...htmlProps}: FocusLayoutProps) {
+export function FocusLayout({trackRef, disableTileFocusToggle = false, ...htmlProps}: FocusLayoutProps) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return <ParticipantTile trackRef={trackRef} {...htmlProps} />;
+  return <ParticipantTile trackRef={trackRef} disableTileFocusToggle={disableTileFocusToggle} {...htmlProps} />;
 }

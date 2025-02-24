@@ -391,32 +391,34 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 ) */}
               </Box>
               <Box className={classes.endPrejoinContent}>
-                {Boolean(
-                  scUserContext.user &&
-                    scUserContext.user.id !== scLiveStream.host.id &&
-                    scLiveStream &&
-                    (scLiveStream.settings?.muteParticipants || (scLiveStream && scLiveStream.settings?.disableVideo))
-                ) && (
+                {scLiveStream && (
                   <Stack sx={{width: '47%'}} spacing={1} className={classes.endPrejoinContentBox}>
-                    {scLiveStream && (scLiveStream.settings?.muteParticipants || scLiveStream.settings?.disableVideo) && (
-                      <Alert variant="filled" severity="info" className={classes.preJoinAlert}>
-                        <AlertTitle>
-                          <b>Info</b>
-                        </AlertTitle>
-                        {scLiveStream.settings?.muteParticipants && (
-                          <>
-                            -{' '}
-                            <FormattedMessage id="ui.liveStreamRoom.hostDisableMicrophone" defaultMessage="ui.liveStreamRoom.hostDisableMicrophone" />
-                            <br />
-                          </>
-                        )}
-                        {scLiveStream.settings?.disableVideo && (
-                          <>
-                            - <FormattedMessage id="ui.liveStreamRoom.hostDisableVideo" defaultMessage="ui.liveStreamRoom.hostDisableVideo" />
-                          </>
-                        )}
-                      </Alert>
-                    )}
+                    {scLiveStream &&
+                      scUserContext.user &&
+                      scUserContext.user.id !== scLiveStream.host.id &&
+                      scLiveStream &&
+                      (scLiveStream.settings?.muteParticipants || scLiveStream.settings?.disableVideo) && (
+                        <Alert variant="filled" severity="info" className={classes.preJoinAlert}>
+                          <AlertTitle>
+                            <b>Info</b>
+                          </AlertTitle>
+                          {scLiveStream.settings?.muteParticipants && (
+                            <>
+                              -{' '}
+                              <FormattedMessage
+                                id="ui.liveStreamRoom.hostDisableMicrophone"
+                                defaultMessage="ui.liveStreamRoom.hostDisableMicrophone"
+                              />
+                              <br />
+                            </>
+                          )}
+                          {scLiveStream.settings?.disableVideo && (
+                            <>
+                              - <FormattedMessage id="ui.liveStreamRoom.hostDisableVideo" defaultMessage="ui.liveStreamRoom.hostDisableVideo" />
+                            </>
+                          )}
+                        </Alert>
+                      )}
                     <CopyTextField
                       className={classes.shareLink}
                       value={`${appUrl}${scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scLiveStream)}`}
