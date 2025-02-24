@@ -1,1 +1,1 @@
-export const PREFIX = 'SCEditCourseTemplate';
+export const PREFIX = 'SCEditCourse';
