@@ -83,6 +83,7 @@
   "ui.composerIconButton.composer.success": "Content published",
   "ui.composerIconButton.composer.viewContribute": "View content",
   "ui.composerIconButton.list.content": "Create a content",
+  "ui.composerIconButton.list.course": "Create a course",
   "ui.composerIconButton.list.event": "Create an event",
   "ui.composerIconButton.list.group": "Create a group",
   "ui.composerIconButton.list.liveStream": "Create a live stream",
