@@ -108,7 +108,10 @@ export function VideoConference(inProps: VideoConferenceProps) {
     {updateOnlyOn: [RoomEvent.ActiveSpeakersChanged], onlySubscribed: false}
   );
   const tracksNoParticipants = useMemo(
-    () => tracks.filter((t) => t.participant.name === scUserContext.user.username || t.source === 'screen_share'),
+    () =>
+      tracks.filter(
+        (t) => t.participant.name === scUserContext.user.username || t.participant.name === speakerFocused.username || t.source === 'screen_share'
+      ),
     [tracks, scUserContext.user]
   );
 
@@ -215,11 +218,11 @@ export function VideoConference(inProps: VideoConferenceProps) {
               <div className="lk-focus-layout-wrapper">
                 {hideParticipantsList ? (
                   <FocusLayoutContainerNoParticipants>
-                    {focusTrack && <FocusLayout trackRef={focusTrack} disableTileFocusToggle={Boolean(tracksNoParticipants.length <= 1)} />}
+                    {focusTrack && <FocusLayout trackRef={focusTrack} />}
                   </FocusLayoutContainerNoParticipants>
                 ) : (
                   <FocusLayoutContainer>
-                    {Boolean(carouselTracks.length) ? (
+                    {carouselTracks.length ? (
                       <CarouselLayout tracks={carouselTracks}>
                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                         {/* @ts-ignore */}
