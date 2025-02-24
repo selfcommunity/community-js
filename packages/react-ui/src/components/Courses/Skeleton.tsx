@@ -88,7 +88,7 @@ export default function CoursesSkeleton(inProps: CoursesSkeletonProps): JSX.Elem
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
         {[...Array(coursesNumber)].map((course, index) => (
-          <Grid item xs={12} sm={12} md={6} key={index} {...GridItemComponentProps} className={classes.item}>
+          <Grid item xs={12} sm={12} md={6} lg={3} key={index} {...GridItemComponentProps} className={classes.item}>
             {teacherView ? <CoursePlaceholder itemNumber={index + 1} actionCreate={index === 3} /> : <CourseSkeleton {...CourseSkeletonProps} />}
           </Grid>
         ))}

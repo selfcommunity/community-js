@@ -105,9 +105,6 @@ const Component = {
             minWidth: '250px',
             [theme.breakpoints.down('md')]: {
               width: '100%'
-            },
-            '& .SCCourse-placeholder-root': {
-              height: '250px'
             }
           }
         }
@@ -121,7 +118,6 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCCourses-skeleton-courses': {
-        justifyContent: 'center',
         marginTop: theme.spacing(2),
         '& .SCCourses-skeleton-item': {
           paddingTop: theme.spacing(2)
