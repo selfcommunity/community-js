@@ -59,7 +59,7 @@ const Root = styled(Box, {
 export const CoursesChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'CoursesChipRoot',
-  shouldForwardProp: (prop) => prop !== 'showForMe'
+  shouldForwardProp: (prop) => prop !== 'showForMe' && prop !== 'showMyCourses'
 })(() => ({}));
 
 export interface CoursesProps {
@@ -382,7 +382,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     // @ts-expect-error this is needed to use showForMe into SCCourses
                     showForMe={showMyCourses}
                     deleteIcon={showMyCourses ? <Icon>close</Icon> : null}
-                    onDelete={showMyCourses ? handleDeleteClick : null}
+                    onDelete={showMyCourses ? () => setShowMyCourses(false) : null}
                     disabled={loading}
                   />
                 </Grid>
