@@ -1,19 +1,19 @@
 const Component = {
   styleOverrides: {
     root: () => ({
-      '& .SCLessonCompletedDialog-wrapper': {
+      '& .SCCourseCompletedDialog-wrapper': {
         alignItems: 'center',
 
-        '& .SCLessonCompletedDialog-title': {
+        '& .SCCourseCompletedDialog-title': {
           marginTop: '60px',
           marginBottom: '27px'
         },
 
-        '& .SCLessonCompletedDialog-description-pt1': {
+        '& .SCCourseCompletedDialog-description-pt1': {
           marginTop: '27px'
         },
 
-        '& .SCLessonCompletedDialog-description-pt2': {
+        '& .SCCourseCompletedDialog-description-pt2': {
           marginTop: '11px',
           marginBottom: '53px'
         }
