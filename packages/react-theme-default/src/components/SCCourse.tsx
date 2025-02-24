@@ -194,7 +194,7 @@ const Component = {
       '& .SCCourse-create-placeholder-actions': {
         display: 'flex',
         justifyContent: 'center',
-        height: '230px'
+        height: '246px'
       }
     }),
     skeletonRoot: ({theme}: any) => ({
