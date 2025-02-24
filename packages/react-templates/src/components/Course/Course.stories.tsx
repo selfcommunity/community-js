@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CourseDashboard from './index';
+import Course from './index';
 
 export default {
-  title: 'Design System/React TEMPLATES/Course Dashboard',
-  component: CourseDashboard,
+  title: 'Design System/React TEMPLATES/Course',
+  component: Course,
   argTypes: {
     viewDashboard: {
       control: 'string'
@@ -17,18 +17,18 @@ export default {
   },
   render: (args) => (
     <div style={{maxWidth: 1280, margin: 'auto'}}>
-      <CourseDashboard {...args} />
+      <Course {...args} />
     </div>
   ) 
-} as Meta<typeof CourseDashboard>;
+} as Meta<typeof Course>;
 
-export const Student: StoryObj<typeof CourseDashboard> = {
+export const Student: StoryObj<typeof Course> = {
   args: {
     viewDashboard: false
   }
 };
 
-export const Teacher: StoryObj<typeof CourseDashboard> = {
+export const Teacher: StoryObj<typeof Course> = {
   argTypes: {
     page: {
       options: ['students', 'comments'],

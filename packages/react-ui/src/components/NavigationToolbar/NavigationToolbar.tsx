@@ -285,7 +285,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
           })}
           aria-label="Courses"
-          to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
+          to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
           component={Link}>
           <Icon>courses</Icon>
         </IconButton>

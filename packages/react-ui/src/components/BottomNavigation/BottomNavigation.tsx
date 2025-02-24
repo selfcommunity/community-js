@@ -24,6 +24,7 @@ import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
 import {iOS} from '@selfcommunity/utils';
 import ComposerIconButton from '../ComposerIconButton';
+import {COURSES_ROUTE_NAME} from '@selfcommunity/react-core/src/constants/Routes';
 
 const PREFIX = 'SCBottomNavigation';
 
@@ -159,8 +160,8 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 key="courses"
                 className={classes.action}
                 component={Link}
-                to={scRoutingContext.url(SCRoutes.COURSES_SUBSCRIBED_ROUTE_NAME, {})}
-                value={scRoutingContext.url(SCRoutes.COURSES_SUBSCRIBED_ROUTE_NAME, {})}
+                to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
                 icon={<Icon>courses</Icon>}
               />
             ) : null,

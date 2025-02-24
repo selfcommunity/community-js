@@ -87,9 +87,9 @@ export interface CourseFormProps extends BoxProps {
 
   /**
    * step name
-   * @default 'one'
+   * @default `SCCourseFormStepType.ONE`
    */
-  step: SCCourseFormStepType;
+  step?: SCCourseFormStepType;
 
   /**
    * On error callback function

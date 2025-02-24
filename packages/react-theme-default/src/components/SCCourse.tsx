@@ -62,6 +62,7 @@ const Component = {
       }
     }),
     previewRoot: ({theme}: any) => ({
+      minHeight: '290px',
       '& .SCCourse-preview-image-wrapper': {
         position: 'relative',
         '& .SCCourse-preview-image': {
@@ -101,10 +102,17 @@ const Component = {
             fontWeight: 700
           },
           '& .SCCourse-preview-name': {
-            marginBottom: theme.spacing(0.5)
+            display: '-webkit-box',
+            height: theme.spacing(5),
+            marginBottom: theme.spacing(0.5),
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            WebkitLineClamp: '2',
+            WebkitBoxOrient: 'vertical'
           }
         },
         '& .SCCourse-preview-info': {
+          height: theme.spacing(3),
           display: 'flex',
           alignItems: 'center',
           marginBottom: theme.spacing(1)
@@ -148,6 +156,7 @@ const Component = {
       }
     }),
     placeholderRoot: ({theme}: any) => ({
+      minHeight: '290px',
       '& .SCCourse-placeholder-image-wrapper': {
         position: 'relative',
         '& .SCCourse-placeholder-image': {
