@@ -4,7 +4,7 @@ import {Box, styled, useThemeProps} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
 import {useSCFetchCourse} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {EditCourse} from '@selfcommunity/react-ui';
+import {EditCourse as Edit} from '@selfcommunity/react-ui';
 import {CourseInfoViewType} from '@selfcommunity/api-services';
 
 const classes = {
@@ -16,7 +16,7 @@ const Root = styled(Box, {
   slot: 'Root'
 })(() => ({}));
 
-export interface EditCourseTemplateProps {
+export interface EditCourseProps {
   /**
    * Id of the feed object
    * @default 'course_edit'
@@ -45,9 +45,9 @@ export interface EditCourseTemplateProps {
   onTabChange: (page: 'lessons' | 'customize' | 'users' | 'options') => void;
 }
 
-export default function EditCourseTemplate(inProps: EditCourseTemplateProps) {
+export default function EditCourse(inProps: EditCourseProps) {
   // PROPS
-  const props: EditCourseTemplateProps = useThemeProps({
+  const props: EditCourseProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -59,7 +59,7 @@ export default function EditCourseTemplate(inProps: EditCourseTemplateProps) {
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <EditCourse course={scCourse} page={page} onTabChange={onTabChange} />
+      <Edit course={scCourse} page={page} onTabChange={onTabChange} />
     </Root>
   );
 }

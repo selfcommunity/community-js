@@ -16,10 +16,10 @@ const Root = styled(Box, {
   slot: 'Root'
 })(() => ({}));
 
-export interface CourseDashboardTemplateProps {
+export interface CourseProps {
   /**
    * Id of the feed object
-   * @default 'course_dashboard'
+   * @default 'course'
    */
   id?: string;
 
@@ -46,14 +46,14 @@ export interface CourseDashboardTemplateProps {
   viewDashboard?: boolean;
 }
 
-export default function CourseDashboardTemplate(inProps: CourseDashboardTemplateProps) {
+export default function Course(inProps: CourseProps) {
   // PROPS
-  const props: CourseDashboardTemplateProps = useThemeProps({
+  const props: CourseProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
 
-  const {id = 'course_dashboard', className = null, course = null, courseId = null, page, onTabChange, viewDashboard} = props;
+  const {id = 'course', className = null, course = null, courseId = null, page, onTabChange, viewDashboard} = props;
 
   // HOOKS
   const {scCourse, error} = useSCFetchCourse({

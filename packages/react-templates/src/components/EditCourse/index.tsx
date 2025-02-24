@@ -1,5 +1,5 @@
-import EditCourseTemplate, {EditCourseTemplateProps} from './EditCourse';
+import EditCourse, {EditCourseProps} from './EditCourse';
 
-export default EditCourseTemplate;
+export default EditCourse;
 
-export {EditCourseTemplateProps};
+export {EditCourseProps};
