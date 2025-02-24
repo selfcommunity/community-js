@@ -123,7 +123,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
     setLoading(true);
   }, [scCourse]);
 
-  // FETCH FIRST FOLLOWERS
+  // FETCH FIRST ENROLLED
   useDeepCompareEffectNoCheck(() => {
     if (!scCourse) {
       return;
@@ -185,7 +185,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
    * Rendering
    */
 
-  if (!participantsAvailable) {
+  if (!participantsAvailable || !scCourse.privacy) {
     return <HiddenPlaceholder />;
   }
 

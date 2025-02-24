@@ -4,11 +4,11 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
+import {SCCategoryType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, useCallback, useState} from 'react';
+import {ChangeEvent, Fragment, useCallback, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -17,6 +17,7 @@ import UploadCourseCover from './UploadCourseCover';
 import {COURSE_DESCRIPTION_MAX_LENGTH, COURSE_TITLE_MAX_LENGTH} from '../../constants/Course';
 import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseEdit from './Edit';
+import CoursePublicationDialog from './Dialog';
 
 const messages = defineMessages({
   name: {
@@ -163,6 +164,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const [field, setField] = useState(initialFieldState);
   const [_step, setStep] = useState<SCCourseFormStepType>(step);
   const [error, setError] = useState<any>({});
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -317,116 +319,133 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   );
 
   /**
+   * Handles for closing confirm dialog
+   */
+  const handleClose = useCallback(() => {
+    setOpenDialog(false);
+  }, [setOpenDialog]);
+
+  /**
    * Renders root object
    */
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      <Box className={_step === SCCourseFormStepType.ONE ? classes.stepOne : classes.stepTwo}>
-        {_step === SCCourseFormStepType.ONE && (
-          <>
-            {Object.values(SCCourseTypologyType).map((option, index) => (
-              <Card className={classNames(classes.card, {[classes.selected]: option === field.type})} key={index}>
-                <CardActionArea onClick={() => setField((prev) => ({...prev, ['type']: option}))}>
-                  <CardContent>
-                    <Typography variant="subtitle2">
-                      <FormattedMessage id={`ui.courseForm.${option}.title`} defaultMessage={`ui.courseForm.${option}.title`} />
-                    </Typography>
+    <Fragment>
+      <Root className={classNames(classes.root, className)} {...rest}>
+        <Box className={_step === SCCourseFormStepType.ONE ? classes.stepOne : classes.stepTwo}>
+          {_step === SCCourseFormStepType.ONE && (
+            <>
+              {Object.values(SCCourseTypologyType).map((option, index) => (
+                <Card className={classNames(classes.card, {[classes.selected]: option === field.type})} key={index}>
+                  <CardActionArea onClick={() => setField((prev) => ({...prev, ['type']: option}))}>
+                    <CardContent>
+                      <Typography variant="subtitle2">
+                        <FormattedMessage id={`ui.courseForm.${option}.title`} defaultMessage={`ui.courseForm.${option}.title`} />
+                      </Typography>
+                      <Typography variant="body2">
+                        <FormattedMessage id={`ui.courseForm.${option}.info`} defaultMessage={`ui.courseForm.${option}.info`} />
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              ))}
+            </>
+          )}
+          {_step === SCCourseFormStepType.TWO && (
+            <FormGroup className={classes.form}>
+              {course && (
+                <Typography variant="h5">
+                  <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
+                </Typography>
+              )}
+              <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+                <UploadCourseCover isCreationMode={true} onChange={handleChangeCover} />
+              </Paper>
+              <TextField
+                required
+                className={classes.name}
+                placeholder={`${intl.formatMessage(messages.name)}`}
+                margin="normal"
+                value={field.name}
+                name="name"
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
+                }}
+                error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
+                helperText={
+                  field.name.length > COURSE_TITLE_MAX_LENGTH ? (
+                    <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
+                  ) : error['nameError'] ? (
+                    error['nameError']
+                  ) : null
+                }
+              />
+              <TextField
+                multiline
+                className={classes.description}
+                placeholder={`${intl.formatMessage(messages.description)}`}
+                margin="normal"
+                value={field.description}
+                name="description"
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: (
                     <Typography variant="body2">
-                      <FormattedMessage id={`ui.courseForm.${option}.info`} defaultMessage={`ui.courseForm.${option}.info`} />
+                      {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
                     </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            ))}
-          </>
-        )}
-        {_step === SCCourseFormStepType.TWO && (
-          <FormGroup className={classes.form}>
-            {course && (
-              <Typography variant="h5">
-                <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
-              </Typography>
-            )}
-            <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-              <UploadCourseCover isCreationMode={true} onChange={handleChangeCover} />
-            </Paper>
-            <TextField
-              required
-              className={classes.name}
-              placeholder={`${intl.formatMessage(messages.name)}`}
-              margin="normal"
-              value={field.name}
-              name="name"
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
-              }}
-              error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
-              helperText={
-                field.name.length > COURSE_TITLE_MAX_LENGTH ? (
-                  <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
-                ) : error['nameError'] ? (
-                  error['nameError']
-                ) : null
+                  )
+                }}
+                error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
+                helperText={
+                  field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
+                    <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
+                  ) : null
+                }
+              />
+              <CategoryAutocomplete
+                defaultValue={field.categories}
+                TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
+                multiple={true}
+                onChange={handleOnChangeCategory}
+              />
+              {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
+            </FormGroup>
+          )}
+          <Box className={classes.actions}>
+            <LoadingButton
+              size="small"
+              loading={field.isSubmitting}
+              disabled={
+                _step === SCCourseFormStepType.ONE
+                  ? !field.type || Object.keys(error).length !== 0
+                  : _step === SCCourseFormStepType.TWO &&
+                    (!field.name ||
+                      Object.keys(error).length !== 0 ||
+                      field.name.length > COURSE_TITLE_MAX_LENGTH ||
+                      field.description.length > COURSE_DESCRIPTION_MAX_LENGTH)
               }
-            />
-            <TextField
-              multiline
-              className={classes.description}
-              placeholder={`${intl.formatMessage(messages.description)}`}
-              margin="normal"
-              value={field.description}
-              name="description"
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <Typography variant="body2">
-                    {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
-                  </Typography>
-                )
-              }}
-              error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
-              helperText={
-                field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
-                  <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
-                ) : null
+              variant="contained"
+              onClick={
+                _step === SCCourseFormStepType.ONE
+                  ? () => handleChangeStep(SCCourseFormStepType.TWO)
+                  : field.privacy !== SCCoursePrivacyType.DRAFT && course.privacy === SCCoursePrivacyType.DRAFT
+                  ? () => setOpenDialog(true)
+                  : handleSubmit
               }
-            />
-            <CategoryAutocomplete
-              defaultValue={field.categories}
-              TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
-              multiple={true}
-              onChange={handleOnChangeCategory}
-            />
-            {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
-          </FormGroup>
-        )}
-        <Box className={classes.actions}>
-          <LoadingButton
-            size="small"
-            loading={field.isSubmitting}
-            disabled={
-              _step === SCCourseFormStepType.ONE
-                ? !field.type || Object.keys(error).length !== 0
-                : _step === SCCourseFormStepType.TWO &&
-                  (!field.name ||
-                    Object.keys(error).length !== 0 ||
-                    field.name.length > COURSE_TITLE_MAX_LENGTH ||
-                    field.description.length > COURSE_DESCRIPTION_MAX_LENGTH)
-            }
-            variant="contained"
-            onClick={_step === SCCourseFormStepType.ONE ? () => handleChangeStep(SCCourseFormStepType.TWO) : handleSubmit}
-            color="primary">
-            {course ? (
-              <FormattedMessage id="ui.courseForm.edit.action.save" defaultMessage="ui.courseForm.edit.action.save" />
-            ) : _step === SCCourseFormStepType.ONE ? (
-              <FormattedMessage id="ui.courseForm.button.next" defaultMessage="ui.courseForm.button.next" />
-            ) : (
-              <FormattedMessage id="ui.courseForm.button.create" defaultMessage="ui.courseForm.button.create" />
-            )}
-          </LoadingButton>
+              color="primary">
+              {course ? (
+                <FormattedMessage id="ui.courseForm.edit.action.save" defaultMessage="ui.courseForm.edit.action.save" />
+              ) : _step === SCCourseFormStepType.ONE ? (
+                <FormattedMessage id="ui.courseForm.button.next" defaultMessage="ui.courseForm.button.next" />
+              ) : (
+                <FormattedMessage id="ui.courseForm.button.create" defaultMessage="ui.courseForm.button.create" />
+              )}
+            </LoadingButton>
+          </Box>
         </Box>
-      </Box>
-    </Root>
+      </Root>
+
+      {openDialog && <CoursePublicationDialog onSubmit={handleSubmit} onClose={handleClose} />}
+    </Fragment>
   );
 }

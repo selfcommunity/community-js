@@ -103,12 +103,13 @@ const Component = {
           },
           '& .SCCourse-preview-name': {
             display: '-webkit-box',
-            height: theme.spacing(5),
+            height: theme.spacing(4),
             marginBottom: theme.spacing(0.5),
             textOverflow: 'ellipsis',
             overflow: 'hidden',
             WebkitLineClamp: '2',
-            WebkitBoxOrient: 'vertical'
+            WebkitBoxOrient: 'vertical',
+            lineHeight: 1.2
           }
         },
         '& .SCCourse-preview-info': {
@@ -155,21 +156,21 @@ const Component = {
         padding: theme.spacing(2)
       }
     }),
-    placeholderRoot: ({theme}: any) => ({
+    createPlaceholderRoot: ({theme}: any) => ({
       minHeight: '290px',
-      '& .SCCourse-placeholder-image-wrapper': {
+      '& .SCCourse-create-placeholder-image-wrapper': {
         position: 'relative',
-        '& .SCCourse-placeholder-image': {
+        '& .SCCourse-create-placeholder-image': {
           height: '110px'
         },
-        '& .SCCourse-placeholder-icon': {
+        '& .SCCourse-create-placeholder-icon': {
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           color: theme.palette.common.white
         },
-        '& .SCCourse-placeholder-chip': {
+        '& .SCCourse-create-placeholder-chip': {
           backgroundColor: theme.palette.grey['600'],
           position: 'absolute',
           top: theme.spacing(2),
@@ -181,7 +182,7 @@ const Component = {
             padding: theme.spacing(0.5)
           }
         },
-        '& .SCCourse-placeholder-avatar': {
+        '& .SCCourse-create-placeholder-avatar': {
           position: 'absolute',
           bottom: theme.spacing(-2),
           left: theme.spacing(1.5),
@@ -190,40 +191,11 @@ const Component = {
           border: `#FFF solid ${theme.spacing(0.2)}`
         }
       },
-      '& .SCCourse-placeholder-content': {
-        padding: `16px ${theme.spacing(2)} 0 !important`,
-        '& .SCCourse-placeholder-creator': {
-          fontSize: '0.875rem',
-          marginBottom: theme.spacing(0.5)
-        },
-        '& .SCCourse-placeholder-name-wrapper': {
-          textDecoration: 'none',
-          color: 'inherit',
-          '& .SCCourse-placeholder-name': {
-            fontSize: '1rem',
-            marginBottom: theme.spacing(0.5)
-          }
-        },
-        '& .SCCourse-placeholder-info': {
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: theme.spacing(1)
-        },
-        [theme.breakpoints.up('sm')]: {
-          height: theme.spacing(20.5)
-        }
-      },
-      '& .SCCourse-placeholder-actions': {
-        '& .MuiIcon-root': {
-          marginRight: theme.spacing(1)
-        },
-        padding: theme.spacing(2)
-      },
-      '& .SCCourse-placeholder-create-button': {
+      '& .SCCourse-create-placeholder-actions': {
         display: 'flex',
         justifyContent: 'center',
-        marginTop: theme.spacing(10.25),
-        marginBottom: theme.spacing(10.25)
+        padding: theme.spacing(3),
+        height: '200px'
       }
     }),
     skeletonRoot: ({theme}: any) => ({

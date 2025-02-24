@@ -3,8 +3,10 @@ import {Button, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {CLAPPING} from '../../assets/courses/clapping';
 import {SCCourseType} from '@selfcommunity/types';
+import {memo} from 'react';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 
-const PREFIX = 'SCLessonCompletedDialog';
+const PREFIX = 'SCCourseCompletedDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -20,21 +22,22 @@ const Root = styled(BaseDialog, {
   overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
-export interface LessonCompletedDialogProps {
+export interface CourseCompletedDialogProps {
   course: SCCourseType;
-  open: boolean;
-  onAction?: () => void;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
-export default function LessonCompletedDialog(inProps: LessonCompletedDialogProps) {
+function CourseCompletedDialog(inProps: CourseCompletedDialogProps) {
   // PROPS
-  const props: LessonCompletedDialogProps = useThemeProps({
+  const props: CourseCompletedDialogProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
 
-  const {course, open, onAction, onClose} = props;
+  const {course, onClose} = props;
+
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
   const intl = useIntl();
@@ -42,10 +45,10 @@ export default function LessonCompletedDialog(inProps: LessonCompletedDialogProp
   return (
     <Root
       DialogContentProps={{dividers: false}}
-      open={open}
+      open
       onClose={onClose}
       actions={
-        <Button onClick={onAction} size="medium" variant="contained">
+        <Button component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})} size="medium" variant="contained">
           <Typography variant="body1">
             <FormattedMessage id="ui.course.completedDialog.btn.label" defaultMessage="ui.course.completedDialog.btn.label" />
           </Typography>
@@ -84,3 +87,5 @@ export default function LessonCompletedDialog(inProps: LessonCompletedDialogProp
     </Root>
   );
 }
+
+export default memo(CourseCompletedDialog);
