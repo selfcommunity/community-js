@@ -90,7 +90,7 @@ const Component = {
         }
       },
       '& .SCCourse-preview-content': {
-        padding: `16px ${theme.spacing(2)} 0 !important`,
+        padding: theme.spacing(2),
         '& .SCCourse-preview-creator': {
           paddingTop: 0,
           marginBottom: theme.spacing(1)
@@ -194,8 +194,7 @@ const Component = {
       '& .SCCourse-create-placeholder-actions': {
         display: 'flex',
         justifyContent: 'center',
-        padding: theme.spacing(3),
-        height: '200px'
+        height: '230px'
       }
     }),
     skeletonRoot: ({theme}: any) => ({
