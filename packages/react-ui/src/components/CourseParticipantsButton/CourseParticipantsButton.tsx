@@ -123,7 +123,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
     setLoading(true);
   }, [scCourse]);
 
-  // FETCH FIRST FOLLOWERS
+  // FETCH FIRST ENROLLED
   useDeepCompareEffectNoCheck(() => {
     if (!scCourse) {
       return;

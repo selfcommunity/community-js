@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
-    root: ({theme, followers}) => ({
+    root: ({theme, enrolled}) => ({
+      padding: 0,
       gap: theme.spacing(1),
       marginTop: '0 !important',
       minWidth: 'auto',
@@ -27,7 +28,7 @@ const Component = {
           fontSize: '0.7rem',
 
           '&:first-of-type': {
-            width: followers > 3 ? 'auto' : theme.selfcommunity.user.avatar.sizeSmall
+            width: enrolled > 3 ? 'auto' : theme.selfcommunity.user.avatar.sizeSmall
           },
 
           '&:not(:first-of-type)': {
