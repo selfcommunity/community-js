@@ -567,7 +567,7 @@
   "ui.courseStatus.draft": "DRAFT",
   "ui.courseStatus.published": "PUBLISHED",
   "ui.courseStatus.concluded": "CONCLUDED",
-  "ui.courseParticipantsButton.participants": "{total} participants",
+  "ui.courseParticipantsButton.participants": "{total, plural, =0 {# participants} one {# participant} other {# participants}}",
   "ui.courseParticipantsButton.dialogTitle": "Participants ({total})",
   "ui.courseParticipantsButton.noOtherParticipants": "No other participants",
   "ui.createCourseButton": "Create Course",
