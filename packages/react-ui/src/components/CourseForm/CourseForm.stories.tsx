@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CourseForm, { CourseFormProps } from './index';
 import { SCCourseFormStepType } from './CourseForm';
+import { SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseTypologyType, SCLanguageType } from '@selfcommunity/types';
 
 export default {
   title: 'Design System/React UI/Course Form',
@@ -9,7 +10,7 @@ export default {
 
 const template = (args) => (
   <div style={{width: 800}}>
-    <CourseForm{...args} />
+    <CourseForm {...args} />
   </div>
 );
 
@@ -27,8 +28,8 @@ export const EditForm: StoryObj<typeof CourseForm> = {
       'name': 'Scopri il Potere dei Chakra',
       'slug': 'scopri-il-potere-dei-chakra',
       'description': 'Esplora i 7 chakra, riequilibra energia e armonia interiore con tecniche pratiche.',
-      'type': 'self-paced',
-      'privacy': '',
+      'type': SCCourseTypologyType.SELF,
+      'privacy': SCCoursePrivacyType.DRAFT,
       'enforce_lessons_order': false,
       'new_comment_notification_enabled': false,
       'hide_member_count': false,
@@ -36,13 +37,13 @@ export const EditForm: StoryObj<typeof CourseForm> = {
       'meta_description': '',
       'og_title': '',
       'og_description': '',
-      'og_image': null,
+      'og_image': undefined,
       'sections_order': [1, 2, 3, 4, 5, 6, 7],
       'image_bigger': 'https://static-cache.quentrix.com/wioggmfc/upfiles/courses/bigger/scopri-il-potere-dei-chakra_4005.jpg',
       'image_big': 'https://static-cache.quentrix.com/wioggmfc/upfiles/courses/big/scopri-il-potere-dei-chakra_6270.jpg',
       'image_medium': 'https://static-cache.quentrix.com/wioggmfc/upfiles/courses/medium/scopri-il-potere-dei-chakra_7661.jpg',
       'image_small': 'https://static-cache.quentrix.com/wioggmfc/upfiles/courses/small/scopri-il-potere-dei-chakra_3092.jpg',
-      'join_status': 'creator',
+      'join_status': SCCourseJoinStatusType.CREATOR,
       'user_completion_rate': 0,
       'created_at': '2025-01-24T12:32:32.087623+01:00',
       'created_by': {
@@ -50,7 +51,7 @@ export const EditForm: StoryObj<typeof CourseForm> = {
         'username': 'team',
         'real_name': '',
         'avatar': 'https://static-cache.quentrix.com/wioggmfc/upfiles/svg/T9.svg',
-        'ext_id': null,
+        'ext_id': undefined,
         'deleted': false,
         'followings_counter': 0,
         'followers_counter': 5,
@@ -58,19 +59,19 @@ export const EditForm: StoryObj<typeof CourseForm> = {
         'discussions_counter': 4,
         'polls_counter': 4,
         'categories_counter': 2,
-        'date_joined': '2024-04-10T14:37:48.153981+02:00',
+        'date_joined': new Date('2024-04-10T14:37:48.153981+02:00'),
         'bio': '',
         'location': '',
-        'location_lat_lng': null,
-        'position_lat_lng': null,
-        'date_of_birth': null,
+        'location_lat_lng': undefined,
+        'position_lat_lng': undefined,
+        'date_of_birth': undefined,
         'description': '',
         'gender': 'Unspecified',
         'website': '',
-        'cover': null,
+        'cover': undefined,
         'tags': [],
         'reputation': 163,
-        'language': 'it',
+        'language': SCLanguageType.IT,
         'community_badge': true,
         'reg_approved': true,
         'job': 'Barbiere',
@@ -87,7 +88,7 @@ export const EditForm: StoryObj<typeof CourseForm> = {
         'name_synonyms': '',
         'slug': 'tradizioni-e-territorio',
         'slogan': 'Esplora le radici della nostra terra e scopri le tradizioni che la rendono unica, un viaggio nel cuore dell\'Italia tramite storie antiche e territori da sogno.',
-        'html_info': null,
+        'html_info': undefined,
         'seo_title': '',
         'seo_description': '',
         'auto_follow': 'none',
