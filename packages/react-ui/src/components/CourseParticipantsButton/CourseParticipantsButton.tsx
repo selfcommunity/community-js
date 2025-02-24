@@ -185,7 +185,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
    * Rendering
    */
 
-  if (!participantsAvailable) {
+  if (!participantsAvailable || !scCourse.privacy) {
     return <HiddenPlaceholder />;
   }
 

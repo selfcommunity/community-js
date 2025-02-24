@@ -32,7 +32,7 @@ import Skeleton, {CoursesSkeletonProps} from '../Courses/Skeleton';
 import {PREFIX} from './constants';
 import {SCCourseTemplateType} from '../../types/course';
 import CategoryAutocomplete from '../CategoryAutocomplete';
-import CoursePlaceholder from '../Course/Placeholder';
+import CourseCreatePlaceholder from '../Course/CreatePlaceholder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -383,7 +383,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     showForMe={showMyCourses}
                     deleteIcon={showMyCourses ? <Icon>close</Icon> : null}
                     onDelete={showMyCourses ? () => setShowMyCourses(false) : null}
-                    disabled={loading}
+                    disabled={loading || showForMe}
                   />
                 </Grid>
               )}
@@ -403,7 +403,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     showForMe={showForMe}
                     deleteIcon={showForMe ? <Icon>close</Icon> : null}
                     onDelete={showForMe ? handleDeleteClick : null}
-                    disabled={loading}
+                    disabled={loading || showMyCourses}
                   />
                 </Grid>
               )}
@@ -433,21 +433,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     <Typography variant="body1" textAlign="center">
                       <FormattedMessage id="ui.courses.empty.info" defaultMessage="ui.courses.empty.info" />
                     </Typography>
-                    <Skeleton
-                      coursesNumber={4}
-                      {...CoursesSkeletonComponentProps}
-                      CourseSkeletonProps={CourseSkeletonComponentProps}
-                      GridItemComponentProps={{md: 2}}
-                    />
+                    <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
                   </Stack>
                 ) : (
                   <Box className={classes.teacherEmptyView}>
                     <Skeleton
                       teacherView={(onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled}
-                      coursesNumber={4}
+                      coursesNumber={1}
                       {...CoursesSkeletonComponentProps}
                       CourseSkeletonProps={CourseSkeletonComponentProps}
-                      GridItemComponentProps={{md: 2}}
                     />
                   </Box>
                 )}
@@ -471,7 +465,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                         key={'placeholder-item'}
                         className={classes.itemPlaceholder}
                         {...GridItemComponentProps}>
-                        <CoursePlaceholder actionCreate={true} />
+                        <CourseCreatePlaceholder />
                       </Grid>
                     )}
                   </>
