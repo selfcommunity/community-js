@@ -19,7 +19,7 @@ import {
 import {SCUserType} from '@selfcommunity/types';
 import {ParticipantTile} from './ParticipantTile';
 import {ControlBar} from './ControlBar';
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useLivestreamCheck} from './useLiveStreamCheck';
 import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} from './FocusLayout';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
@@ -27,6 +27,7 @@ import classNames from 'classnames';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {useThemeProps} from '@mui/system';
+import NoParticipants from './NoParticipants';
 
 const PREFIX = 'SCVideoConference';
 
@@ -106,6 +107,11 @@ export function VideoConference(inProps: VideoConferenceProps) {
     ],
     {updateOnlyOn: [RoomEvent.ActiveSpeakersChanged], onlySubscribed: false}
   );
+  const tracksNoParticipants = useMemo(
+    () => tracks.filter((t) => t.participant.name === scUserContext.user.username || t.source === 'screen_share'),
+    [tracks, scUserContext.user]
+  );
+
   const participants = useParticipants();
   const layoutContext = useCreateLayoutContext();
   const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
@@ -199,7 +205,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
           <div className="lk-video-conference-inner">
             {!focusTrack ? (
               <div className="lk-grid-layout-wrapper">
-                <GridLayout tracks={tracks}>
+                <GridLayout tracks={hideParticipantsList ? tracksNoParticipants : tracks}>
                   {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                   {/* @ts-ignore */}
                   <ParticipantTile />
@@ -208,15 +214,21 @@ export function VideoConference(inProps: VideoConferenceProps) {
             ) : (
               <div className="lk-focus-layout-wrapper">
                 {hideParticipantsList ? (
-                  <FocusLayoutContainerNoParticipants>{focusTrack && <FocusLayout trackRef={focusTrack} />}</FocusLayoutContainerNoParticipants>
+                  <FocusLayoutContainerNoParticipants>
+                    {focusTrack && <FocusLayout trackRef={focusTrack} disableTileFocusToggle={Boolean(tracksNoParticipants.length <= 1)} />}
+                  </FocusLayoutContainerNoParticipants>
                 ) : (
                   <FocusLayoutContainer>
-                    <CarouselLayout tracks={carouselTracks}>
-                      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                      {/* @ts-ignore */}
-                      <ParticipantTile />
-                    </CarouselLayout>
-                    {focusTrack && <FocusLayout trackRef={focusTrack} />}
+                    {carouselTracks.length > 1 ? (
+                      <CarouselLayout tracks={carouselTracks}>
+                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                        {/* @ts-ignore */}
+                        <ParticipantTile />
+                      </CarouselLayout>
+                    ) : (
+											<NoParticipants />
+										)}
+										{focusTrack && <FocusLayout trackRef={focusTrack} />}
                   </FocusLayoutContainer>
                 )}
               </div>
