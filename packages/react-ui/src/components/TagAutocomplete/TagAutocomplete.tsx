@@ -62,7 +62,7 @@ export interface TagAutocompleteProps
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Tag Autocomplete component. Learn about the available props and the CSS API.
@@ -132,7 +132,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
     setOpen(false);
   };
 
-  const handleChange = (event: SyntheticEvent, newValue: SCTagType[]) => {
+  const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => {
     setValue(newValue);
   };
 
@@ -160,7 +160,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
         return (
-          <li {...props}>
+          <li key={props['key']} {...props}>
             <TagChip
               key={option.id}
               tag={option}
