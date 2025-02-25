@@ -80,7 +80,7 @@ const Root = styled(Box, {
 export interface EditCourseProps {
   courseId?: number;
   course?: SCCourseType;
-  page: SCCourseEditTabType;
+  tab: SCCourseEditTabType;
   onTabChange: (page: SCCourseEditTabType) => void;
   className?: HTMLAttributes<HTMLDivElement>['className'];
   [p: string]: any;
@@ -93,10 +93,10 @@ export default function EditCourse(inProps: EditCourseProps) {
     name: PREFIX
   });
 
-  const {courseId, course, page, onTabChange, className, ...rest} = props;
+  const {courseId, course, tab, onTabChange, className, ...rest} = props;
 
   // STATES
-  const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
+  const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${tab.toUpperCase()}`]);
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();

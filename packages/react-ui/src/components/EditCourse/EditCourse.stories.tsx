@@ -6,7 +6,7 @@ export default {
   title: 'Design System/React UI/Edit Course',
   component: EditCourse,
   argTypes: {
-    page: {
+    tab: {
       options: ['lessons', 'customize', 'users', 'requests', 'options'],
       control: 'inline-radio'
     }
@@ -14,7 +14,7 @@ export default {
   args: {
     courseId: 2,
     course: undefined,
-    page: SCCourseEditTabEnum.LESSONS,
+    tab: SCCourseEditTabEnum.LESSONS,
     onTabChange() {},
     className: ''
   },
