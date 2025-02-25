@@ -2,11 +2,10 @@ import {Box, CardActions, CardMedia, Icon} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import React from 'react';
 import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import CreateCourseButton from '../CreateCourseButton';
+import CreateCourseButton, {CreateCourseButtonProps} from '../CreateCourseButton';
 
 const classes = {
   root: `${PREFIX}-create-placeholder-root`,
@@ -22,6 +21,12 @@ const Root = styled(Widget, {
 })(() => ({}));
 
 export interface CourseSkeletonProps extends WidgetProps {
+  /**
+   * Props to spread to CreateCourseButton component
+   * @default {}
+   */
+  CreateCourseButtonComponentProps?: CreateCourseButtonProps;
+
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -59,7 +64,7 @@ export default function CourseCreatePlaceholder(inProps: CourseSkeletonProps): J
     props: inProps,
     name: PREFIX
   });
-  const {className, ...rest} = props;
+  const {CreateCourseButtonComponentProps = {}, className, ...rest} = props;
   // HOOK
   const {preferences}: SCPreferencesContextType = useSCPreferences();
 
@@ -77,7 +82,7 @@ export default function CourseCreatePlaceholder(inProps: CourseSkeletonProps): J
         </Icon>
       </Box>
       <CardActions className={classes.actions}>
-        <CreateCourseButton />
+        <CreateCourseButton {...CreateCourseButtonComponentProps} />
       </CardActions>
     </Root>
   );

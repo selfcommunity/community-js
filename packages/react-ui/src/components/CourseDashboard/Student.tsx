@@ -26,6 +26,7 @@ const classes = {
   root: `${PREFIX}-root`,
   studentContainer: `${PREFIX}-student-container`,
   userWrapper: `${PREFIX}-user-wrapper`,
+  actionsWrapper: `${PREFIX}-actions-wrapper`,
   user: `${PREFIX}-user`,
   avatar: `${PREFIX}-avatar`,
   progress: `${PREFIX}-progress`,
@@ -148,7 +149,7 @@ function Student(inProps: StudentCourseDashboardProps) {
     }
 
     return (
-      <Stack sx={{flexDirection: 'row', gap: '5px'}}>
+      <Stack className={classes.actionsWrapper}>
         {(scCourse?.join_status === SCCourseJoinStatusType.CREATOR || scCourse?.join_status === SCCourseJoinStatusType.MANAGER) && (
           <ActionButton
             labelId={messages.dashboard}
@@ -197,7 +198,9 @@ function Student(inProps: StudentCourseDashboardProps) {
             {scCourse ? (
               <Fragment>
                 <Typography variant="body1">{scCourse.created_by.username}</Typography>
-                <Typography variant="body1">{scCourse.created_by.role}</Typography>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.course.dashboard.header.user.creator" defaultMessage="ui.course.dashboard.header.user.creator" />
+                </Typography>
               </Fragment>
             ) : (
               <Fragment>

@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
+import {Fragment, HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import {SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
 
@@ -76,46 +76,54 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
   }
 
   return (
-    <Root className={classNames(classes.root, className)}>
-      {course.sections?.map((section: SCCourseSectionType) => (
-        <Accordion
-          key={section.id}
-          className={classes.accordion}
-          expanded={expanded === section.id}
-          onChange={handleChange(section.id)}
-          disableGutters
-          elevation={0}
-          square>
-          <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_less</Icon>}>
-            <Typography component="span" variant="body1">
-              {section.name}
-            </Typography>
-            {!isMobile && (
-              <Typography component="span" variant="body1">
-                <FormattedMessage
-                  id="ui.course.table.lessons.title"
-                  defaultMessage="ui.course.table.lessons.title"
-                  values={{
-                    lessonsNumber: section.lessons.length
-                  }}
-                />
-              </Typography>
-            )}
-          </AccordionSummary>
-          {section.lessons.map((lesson) => (
-            <AccordionDetails key={lesson.id} className={classes.details}>
-              {lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
-                <Icon fontSize="small" color="primary">
-                  circle_checked
-                </Icon>
-              ) : (
-                <Box className={classes.circle} />
-              )}
-              <Typography>{lesson.name}</Typography>
-            </AccordionDetails>
+    <Fragment>
+      {course.sections?.length > 0 ? (
+        <Root className={classNames(classes.root, className)}>
+          {course.sections.map((section: SCCourseSectionType) => (
+            <Accordion
+              key={section.id}
+              className={classes.accordion}
+              expanded={expanded === section.id}
+              onChange={handleChange(section.id)}
+              disableGutters
+              elevation={0}
+              square>
+              <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_less</Icon>}>
+                <Typography component="span" variant="body1">
+                  {section.name}
+                </Typography>
+                {!isMobile && (
+                  <Typography component="span" variant="body1">
+                    <FormattedMessage
+                      id="ui.course.table.lessons.title"
+                      defaultMessage="ui.course.table.lessons.title"
+                      values={{
+                        lessonsNumber: section.lessons.length
+                      }}
+                    />
+                  </Typography>
+                )}
+              </AccordionSummary>
+              {section.lessons.map((lesson) => (
+                <AccordionDetails key={lesson.id} className={classes.details}>
+                  {lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
+                    <Icon fontSize="small" color="primary">
+                      circle_checked
+                    </Icon>
+                  ) : (
+                    <Box className={classes.circle} />
+                  )}
+                  <Typography>{lesson.name}</Typography>
+                </AccordionDetails>
+              ))}
+            </Accordion>
           ))}
-        </Accordion>
-      ))}
-    </Root>
+        </Root>
+      ) : (
+        <Typography variant="body1">
+          <FormattedMessage id="ui.course.accordionLessons.empty" defaultMessage="ui.course.accordionLessons.empty" />
+        </Typography>
+      )}
+    </Fragment>
   );
 }

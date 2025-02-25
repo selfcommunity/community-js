@@ -2,7 +2,7 @@ import {Box, Stack, styled, Tab, Typography, useThemeProps} from '@mui/material'
 import {PREFIX} from './constants';
 import HeaderCourseDashboard from './Header';
 import {HTMLAttributes, memo, SyntheticEvent, useCallback, useState} from 'react';
-import {CourseDashboardPage, TabContentEnum, TabContentType} from './types';
+import {TabContentEnum, TabContentType} from './types';
 import classNames from 'classnames';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
@@ -41,8 +41,6 @@ const Root = styled(Box, {
 export interface TeacherCourseDashboardProps {
   courseId?: number;
   course?: SCCourseType;
-  page: CourseDashboardPage;
-  onTabChange: (page: CourseDashboardPage) => void;
   className?: HTMLAttributes<HTMLDivElement>['className'];
   [p: string]: any;
 }
@@ -54,10 +52,10 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
     name: PREFIX
   });
 
-  const {courseId, course, page, onTabChange, className, ...rest} = props;
+  const {courseId, course, className, ...rest} = props;
 
   // STATES
-  const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum[`${page.toUpperCase()}`]);
+  const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum.STUDENTS);
 
   // HOOKS
   const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: CourseInfoViewType.DASHBOARD}});
@@ -66,7 +64,6 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
   const handleTabChange = useCallback(
     (_evt: SyntheticEvent, newTabValue: TabContentType) => {
       setTabValue(newTabValue);
-      onTabChange(TabContentEnum[newTabValue]);
     },
     [setTabValue]
   );

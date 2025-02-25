@@ -4,17 +4,9 @@ import CourseDashboard from '../index';
 export default {
   title: 'Design System/React UI/Teacher Course Dashboard',
   component: CourseDashboard.Teacher,
-  argTypes: {
-    page: {
-      options: ['students', 'comments'],
-      control: 'inline-radio'
-    }
-  },
   args: {
     courseId: 2,
     course: undefined,
-    page: 'students',
-    onTabChange() {},
     className: ''
   },
   render: (args) => (
