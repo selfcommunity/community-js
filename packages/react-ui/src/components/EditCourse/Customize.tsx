@@ -45,7 +45,7 @@ function Customize(props: CustomizeProps) {
     return <Skeleton />;
   }
 
-  return <CourseForm course={course} step={SCCourseFormStepType.TWO} onSuccess={handleSuccess} onError={handleError} />;
+  return <CourseForm course={course} step={SCCourseFormStepType.CUSTOMIZATION} onSuccess={handleSuccess} onError={handleError} />;
 }
 
 export default memo(Customize);

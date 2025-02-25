@@ -14,7 +14,8 @@ export enum SCPreferenceSection {
   ADVERTISING = 'advertising',
   CONFIGURATIONS = 'configurations',
   PROVIDERS = 'providers',
-  WEBMASTER = 'webmaster'
+  WEBMASTER = 'webmaster',
+	STATIC = 'static',
 }
 
 /**
@@ -144,9 +145,12 @@ export enum SCPreferenceName {
   COURSES_ONLY_STAFF_ENABLED = 'courses_only_staff_enabled',
   LIVE_STREAM_ENABLED = 'live_stream_enabled',
   LIVE_STREAM_ONLY_STAFF_ENABLED = 'live_stream_only_staff_enabled',
+	LIVE_STREAM_VIDEO_CONFERENCE_ENABLED = 'live_stream_video_conference_enabled',
   ONBOARDING_ENABLED = 'onboarding_enabled',
   ONBOARDING_HIDDEN = 'onboarding_hidden',
-  SUBSCRIPTION_TIER = 'subscription_tier'
+  SUBSCRIPTION_TIER = 'subscription_tier',
+	ENVIRONMENT = 'env',
+	STACK_ID = 'stackid',
 }
 
 /**

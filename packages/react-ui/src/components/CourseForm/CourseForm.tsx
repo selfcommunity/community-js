@@ -63,8 +63,8 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export enum SCCourseFormStepType {
-  ONE = 'one',
-  TWO = 'two'
+  GENERAL = 'general',
+  CUSTOMIZATION = 'customization'
 }
 
 export interface CourseFormProps extends BoxProps {
@@ -88,7 +88,7 @@ export interface CourseFormProps extends BoxProps {
 
   /**
    * step name
-   * @default `SCCourseFormStepType.ONE`
+   * @default `SCCourseFormStepType.GENERAL`
    */
   step?: SCCourseFormStepType;
 
@@ -144,7 +144,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.ONE, ...rest} = props;
+  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -331,8 +331,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   return (
     <Fragment>
       <Root className={classNames(classes.root, className)} {...rest}>
-        <Box className={_step === SCCourseFormStepType.ONE ? classes.stepOne : classes.stepTwo}>
-          {_step === SCCourseFormStepType.ONE && (
+        <Box className={_step === SCCourseFormStepType.GENERAL ? classes.stepOne : classes.stepTwo}>
+          {_step === SCCourseFormStepType.GENERAL && (
             <>
               {Object.values(SCCourseTypologyType).map((option, index) => (
                 <Card className={classNames(classes.card, {[classes.selected]: option === field.type})} key={index}>
@@ -350,7 +350,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               ))}
             </>
           )}
-          {_step === SCCourseFormStepType.TWO && (
+          {_step === SCCourseFormStepType.CUSTOMIZATION && (
             <FormGroup className={classes.form}>
               {course && (
                 <Typography variant="h5">
@@ -416,9 +416,9 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               size="small"
               loading={field.isSubmitting}
               disabled={
-                _step === SCCourseFormStepType.ONE
+                _step === SCCourseFormStepType.GENERAL
                   ? !field.type || Object.keys(error).length !== 0
-                  : _step === SCCourseFormStepType.TWO &&
+                  : _step === SCCourseFormStepType.CUSTOMIZATION &&
                     (!field.name ||
                       Object.keys(error).length !== 0 ||
                       field.name.length > COURSE_TITLE_MAX_LENGTH ||
@@ -426,8 +426,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               }
               variant="contained"
               onClick={
-                _step === SCCourseFormStepType.ONE
-                  ? () => handleChangeStep(SCCourseFormStepType.TWO)
+                _step === SCCourseFormStepType.GENERAL
+                  ? () => handleChangeStep(SCCourseFormStepType.CUSTOMIZATION)
                   : field.privacy !== SCCoursePrivacyType.DRAFT && course.privacy === SCCoursePrivacyType.DRAFT
                   ? () => setOpenDialog(true)
                   : handleSubmit
@@ -435,7 +435,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               color="primary">
               {course ? (
                 <FormattedMessage id="ui.courseForm.edit.action.save" defaultMessage="ui.courseForm.edit.action.save" />
-              ) : _step === SCCourseFormStepType.ONE ? (
+              ) : _step === SCCourseFormStepType.GENERAL ? (
                 <FormattedMessage id="ui.courseForm.button.next" defaultMessage="ui.courseForm.button.next" />
               ) : (
                 <FormattedMessage id="ui.courseForm.button.create" defaultMessage="ui.courseForm.button.create" />

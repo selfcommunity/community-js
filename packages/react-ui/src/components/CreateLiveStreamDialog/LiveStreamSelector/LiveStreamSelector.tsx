@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Typography, Button, Paper, Container, Radio, Theme, Alert} from '@mui/material';
-import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {LiveStreamType} from '../types';
@@ -12,8 +11,8 @@ import LiveImage from '../../../assets/liveStream/live';
 import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../../LiveStreamRoom/constants';
 import {Link, SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
-import {SELFCOMMUNITY_PRICING} from '../../PlatformWidget/constants';
+import {SCCommunityEnvironment, SCCommunitySubscriptionTier} from '@selfcommunity/types';
+import {HUB_PROD, HUB_STAGE} from '../../PlatformWidget/constants';
 
 export const PREFIX = 'SCLiveStreamSelector';
 
@@ -119,6 +118,25 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
       preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
     [preferences]
   );
+  const isEnterpriseTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.ENTERPRISE,
+    [preferences]
+  );
+  const isStage = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.STATIC_ENVIRONMENT in preferences &&
+      preferences[SCPreferences.STATIC_ENVIRONMENT].value === SCCommunityEnvironment.STAGE,
+    [preferences]
+  );
+  const communityStackId = useMemo(
+    () => preferences && SCPreferences.STATIC_ENVIRONMENT in preferences && preferences[SCPreferences.STATIC_STACKID].value,
+    [preferences]
+  );
   const intl = useIntl();
 
   const options = [
@@ -197,7 +215,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
 
   const warning = useMemo(() => {
     let _message;
-    if (isFreeTrialTier && isCommunityOwner) {
+    if (isFreeTrialTier && isCommunityOwner && !isEnterpriseTier) {
       _message = (
         <FormattedMessage
           id="ui.liveStreamForm.selector.warningSubscriptionRequired"
@@ -205,7 +223,11 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
           values={{
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
-            link: (...chunks) => <Link to={SELFCOMMUNITY_PRICING[scContext.settings.locale.default]}>{chunks}</Link>
+            link: (...chunks) => (
+              <Link target="_blank" to={`${isStage ? HUB_STAGE : HUB_PROD}dashboard/community/${communityStackId}/subscription`}>
+                {chunks}
+              </Link>
+            )
           }}
         />
       );
