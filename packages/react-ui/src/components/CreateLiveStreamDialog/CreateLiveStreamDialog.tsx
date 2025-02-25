@@ -102,7 +102,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
 
-  const canCreateLiveStream: boolean = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  // PERMISSION
   const canCreateEvent: boolean = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
 
   // STATE
@@ -139,7 +139,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
   }, [canCreateEvent]);
 
   // user must be logged
-  if (!scUserContext.user || !canCreateLiveStream) {
+  if (!scUserContext.user) {
     return null;
   }
 
