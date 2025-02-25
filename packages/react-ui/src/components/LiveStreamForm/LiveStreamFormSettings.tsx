@@ -8,6 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import {LIVESTREAM_DEFAULT_SETTINGS} from './constants';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import UpScalingTierBadge from '../../shared/UpScalingTierBadge';
+import {CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED} from '@selfcommunity/react-core/src/constants/Preferences';
 
 export const PREFIX = 'SCLiveStreamFormSettings';
 
@@ -91,6 +92,15 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
       preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
     [preferences, features]
   );
+  const liveStreamVideoConferenceEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.LIVE_STREAM) &&
+      SCPreferences.CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED].value,
+    [preferences, features]
+  );
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
   const isCommunityOwner = useMemo(() => authUserId === 1, [authUserId]);
   const isEnterpriseTier = useMemo(
@@ -119,7 +129,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           <FormattedMessage id="ui.liveStreamForm.muteParticipants" defaultMessage="ui.liveStreamForm.muteParticipants" />
         </Typography>
       </Stack>
-      {isEnterpriseFeaturesVisible && (
+      {(isEnterpriseFeaturesVisible || liveStreamVideoConferenceEnabled) && (
         <>
           <Stack direction="row" spacing={1} alignItems="center">
             <Switch
@@ -131,7 +141,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
             <Typography className={classes.switchLabel}>
               <FormattedMessage id="ui.liveStreamForm.disableVideo" defaultMessage="ui.liveStreamForm.disableVideo" />
             </Typography>
-            <UpScalingTierBadge desiredTier={SCCommunitySubscriptionTier.ENTERPRISE} />
+            {!liveStreamVideoConferenceEnabled && <UpScalingTierBadge desiredTier={SCCommunitySubscriptionTier.ENTERPRISE} />}
           </Stack>
           <Stack direction="row" spacing={1} alignItems="center">
             <Switch
@@ -143,7 +153,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
             <Typography className={classes.switchLabel}>
               <FormattedMessage id="ui.liveStreamForm.disableShareScreen" defaultMessage="ui.liveStreamForm.disableShareScreen" />
             </Typography>
-            <UpScalingTierBadge desiredTier={SCCommunitySubscriptionTier.ENTERPRISE} />
+            {!liveStreamVideoConferenceEnabled && <UpScalingTierBadge desiredTier={SCCommunitySubscriptionTier.ENTERPRISE} />}
           </Stack>
         </>
       )}
