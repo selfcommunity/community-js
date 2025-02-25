@@ -74,7 +74,7 @@ export default function CourseFormDialog(inProps: CourseFormDialogProps): JSX.El
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, CourseFormComponentProps = {step: SCCourseFormStepType.ONE}, ...rest} = props;
+  const {className, open = true, onClose, CourseFormComponentProps = {step: SCCourseFormStepType.GENERAL}, ...rest} = props;
 
   const handleSuccess = useCallback(
     (course: SCCourseType) => {

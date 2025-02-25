@@ -22,7 +22,7 @@ export const Base: StoryObj<CourseFormProps> = {
 
 export const EditForm: StoryObj<typeof CourseForm> = {
   args: {
-    step: SCCourseFormStepType.TWO,
+    step: SCCourseFormStepType.CUSTOMIZATION,
     course: {
       'id': 1,
       'name': 'Scopri il Potere dei Chakra',
