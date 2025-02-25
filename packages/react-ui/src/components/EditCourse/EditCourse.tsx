@@ -4,7 +4,7 @@ import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import classNames from 'classnames';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
-import {CoursePage, TabContentEnum, TabContentType} from './types';
+import {TabContentEnum, TabContentType} from './types';
 import Lessons from './Lessons';
 import Customize from './Customize';
 import Users from './Users';
@@ -13,6 +13,7 @@ import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRout
 import {SCCourseType} from '@selfcommunity/types';
 import {CourseInfoViewType} from '@selfcommunity/api-services';
 import Requests from './Requests';
+import {SCCourseEditTabType} from '../../types/course';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -79,8 +80,8 @@ const Root = styled(Box, {
 export interface EditCourseProps {
   courseId?: number;
   course?: SCCourseType;
-  page: CoursePage;
-  onTabChange: (page: CoursePage) => void;
+  page: SCCourseEditTabType;
+  onTabChange: (page: SCCourseEditTabType) => void;
   className?: HTMLAttributes<HTMLDivElement>['className'];
   [p: string]: any;
 }

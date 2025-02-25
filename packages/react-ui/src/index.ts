@@ -240,7 +240,9 @@ import {
   VirtualScrollerItemProps,
   SCCourseTemplateType,
   SCLessonActionsType,
-  SCLessonModeType
+  SCLessonModeType,
+  SCCourseEditTabEnum,
+  type SCCourseEditTabType
 } from './types';
 /**
  * Constants
@@ -375,6 +377,8 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
+  SCCourseEditTabEnum,
+  SCCourseEditTabType,
   Course,
   CourseProps,
   CourseSkeleton,

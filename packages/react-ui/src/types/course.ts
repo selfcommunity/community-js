@@ -13,3 +13,13 @@ export enum SCLessonModeType {
   VIEW = 'view',
   EDIT = 'edit'
 }
+
+export type SCCourseEditTabType = 'lessons' | 'customize' | 'users' | 'requests' | 'options';
+
+export enum SCCourseEditTabEnum {
+  LESSONS = 'lessons',
+  CUSTOMIZE = 'customize',
+  USERS = 'users',
+  REQUESTS = 'requests',
+  OPTIONS = 'options'
+}

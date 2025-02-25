@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.7-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.10...@selfcommunity/react-core@0.6.7-alpha.11) (2025-02-25)
+
+
+### Bug Fixes
+
+* live stream video conference ([0e38f00](https://github.com/selfcommunity/community-js/commit/0e38f00be0a988502c67926ee3d91d5043b4bec7))
+
+
+
+
+
 ## [0.6.7-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.9...@selfcommunity/react-core@0.6.7-alpha.10) (2025-02-24)
 
 **Note:** Version bump only for package @selfcommunity/react-core
