@@ -80,7 +80,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
   });
   const {className = null, course, lesson, editMode, EditorProps = {}, onContentChange, onMediaChange, isSubmitting, ...rest} = props;
   const [loading, setLoading] = useState<boolean>(false);
-  const [completed, setCompleted] = useState<boolean>(lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
+  const [completed, setCompleted] = useState<boolean>(lesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // CONTEXT

@@ -243,7 +243,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           ...endpointQueryParams,
           ...(_categories.length && {categories: JSON.stringify(_categories)}),
           ...(query && {search: query}),
-          ...(showMyCourses && {created_by: authUserId})
+          ...(showMyCourses && {statuses: JSON.stringify(['creator'])})
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -441,7 +441,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     <Typography variant="body1" textAlign="center">
                       <FormattedMessage id="ui.courses.empty.info" defaultMessage="ui.courses.empty.info" />
                     </Typography>
-                    <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
+                    {!isMobile && (
+                      <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
+                    )}
                   </Stack>
                 ) : (
                   <Box className={classes.teacherEmptyView}>
@@ -464,15 +466,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                       </Grid>
                     ))}
                     {authUserId && courses.length % 2 !== 0 && (
-                      <Grid
-                        item
-                        xs={12}
-                        sm={12}
-                        md={6}
-                        lg={3}
-                        key={'placeholder-item'}
-                        className={classes.itemPlaceholder}
-                        {...GridItemComponentProps}>
+                      <Grid item xs={12} sm={12} md={6} lg={3} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
                         <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                       </Grid>
                     )}

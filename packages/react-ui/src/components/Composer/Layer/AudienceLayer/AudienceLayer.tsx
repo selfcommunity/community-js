@@ -105,11 +105,11 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
       : onSave(value?.length && value?.length > 0 ? value : null);
   }, [value, onSave, audience]);
 
-  const handleChange = useCallback((event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
+  const handleChange = useCallback((_event: SyntheticEvent, tags: SCTagType[]) => setValue(tags), []);
   const handleEventChange = useCallback((event: SCEventType) => setValue(event), []);
   const handleGroupChange = useCallback((group: SCGroupType) => setValue(group), []);
 
-  const handleChangeAudience = useCallback((event: SyntheticEvent, data: AudienceTypes) => setAudience(data), []);
+  const handleChangeAudience = useCallback((_event: SyntheticEvent, data: AudienceTypes) => setAudience(data), []);
   const handleAutocompleteOpen = useCallback(() => setAutocompleteOpen(true), []);
   const handleAutocompleteClose = useCallback(() => setAutocompleteOpen(false), []);
 
@@ -202,7 +202,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
               const matches = match(option.name, inputValue);
               const parts = parse(option.name, matches);
               return (
-                <li {...props}>
+                <li key={props['key']} {...props}>
                   <TagChip
                     key={option.id}
                     tag={option}
