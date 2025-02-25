@@ -189,6 +189,7 @@ import {
   MEDIA_TYPE_URL,
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
+import {SCCourseFormStepType} from './constants/Course';
 import AccordionLessons, {AccordionLessonsProps} from './shared/AccordionLessons';
 import AddUsersButton, {AddUsersButtonProps} from './shared/AddUsersButton';
 import EmptyStatus, {EmptyStatusProps} from './shared/EmptyStatus';
@@ -582,6 +583,7 @@ export {
   MEDIA_TYPE_SHARE,
   MEDIA_TYPE_URL,
   MEDIA_TYPE_VIDEO,
+  SCCourseFormStepType,
   MediaChunkUploader,
   MediaChunkUploaderProps,
   MessageUploaderUtils,

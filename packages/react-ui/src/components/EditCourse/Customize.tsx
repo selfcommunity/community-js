@@ -1,10 +1,10 @@
 import {SCCourseType} from '@selfcommunity/types';
 import CourseForm from '../CourseForm';
-import {SCCourseFormStepType} from '../CourseForm/CourseForm';
 import {memo, useCallback} from 'react';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import Skeleton from '../CourseForm/Skeleton';
+import {SCCourseFormStepType} from '../../constants/Course';
 
 interface CustomizeProps {
   course: SCCourseType | null;

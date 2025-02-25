@@ -14,7 +14,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
 import {PREFIX} from './constants';
 import UploadCourseCover from './UploadCourseCover';
-import {COURSE_DESCRIPTION_MAX_LENGTH, COURSE_TITLE_MAX_LENGTH} from '../../constants/Course';
+import {COURSE_DESCRIPTION_MAX_LENGTH, COURSE_TITLE_MAX_LENGTH, SCCourseFormStepType} from '../../constants/Course';
 import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseEdit from './Edit';
 import CoursePublicationDialog from './Dialog';
@@ -61,11 +61,6 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
-
-export enum SCCourseFormStepType {
-  GENERAL = 'general',
-  CUSTOMIZATION = 'customization'
-}
 
 export interface CourseFormProps extends BoxProps {
   /**

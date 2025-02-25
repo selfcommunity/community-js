@@ -7,7 +7,7 @@ import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {PREFIX} from './constants';
 import CourseForm, {CourseFormProps} from '../CourseForm';
 import {useCallback} from 'react';
-import {SCCourseFormStepType} from '../CourseForm/CourseForm';
+import {SCCourseFormStepType} from '../../constants/Course';
 
 const classes = {
   root: `${PREFIX}-root`
