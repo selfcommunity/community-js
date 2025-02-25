@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CourseForm, { CourseFormProps } from './index';
-import { SCCourseFormStepType } from './CourseForm';
 import { SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseTypologyType, SCLanguageType } from '@selfcommunity/types';
+import { SCCourseFormStepType } from '../../constants/Course';
 
 export default {
   title: 'Design System/React UI/Course Form',
