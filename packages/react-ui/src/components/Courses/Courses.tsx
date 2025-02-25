@@ -441,7 +441,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     <Typography variant="body1" textAlign="center">
                       <FormattedMessage id="ui.courses.empty.info" defaultMessage="ui.courses.empty.info" />
                     </Typography>
-                    <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
+                    {!isMobile && (
+                      <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
+                    )}
                   </Stack>
                 ) : (
                   <Box className={classes.teacherEmptyView}>
