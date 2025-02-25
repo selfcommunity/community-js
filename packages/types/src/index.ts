@@ -183,7 +183,8 @@ import {
   SCCourseLessonCompletionStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
-  SCCommunitySubscriptionTier
+  SCCommunitySubscriptionTier,
+  SCCommunityEnvironment
 } from './types';
 
 /**
@@ -237,7 +238,8 @@ export {
   SCCourseLessonStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
-  SCCommunitySubscriptionTier
+  SCCommunitySubscriptionTier,
+  SCCommunityEnvironment
 };
 export {
   type SCBannerType,

@@ -157,6 +157,7 @@ export const CONFIGURATIONS_ONBOARDING_ENABLED = `${SCPreferenceSection.CONFIGUR
 export const CONFIGURATIONS_ONBOARDING_HIDDEN = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.ONBOARDING_HIDDEN}`;
 export const CONFIGURATIONS_LIVE_STREAM_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.LIVE_STREAM_ENABLED}`;
 export const CONFIGURATIONS_LIVE_STREAM_ONLY_STAFF_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.LIVE_STREAM_ONLY_STAFF_ENABLED}`;
+export const CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.LIVE_STREAM_VIDEO_CONFERENCE_ENABLED}`;
 export const CONFIGURATIONS_SUBSCRIPTION_TIER = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.SUBSCRIPTION_TIER}`;
 
 /**
@@ -186,6 +187,12 @@ export const PROVIDERS_WEB_PUSH_ENABLED = `${SCPreferenceSection.PROVIDERS}.${SC
 export const WEBMASTER_META_ROBOTS = `${SCPreferenceSection.WEBMASTER}.${SCPreferenceName.META_ROBOTS}`;
 export const WEBMASTER_META_TITLE_HOME_NOT_LOGGED = `${SCPreferenceSection.WEBMASTER}.${SCPreferenceName.META_TITLE_HOME_NOT_LOGGED}`;
 export const WEBMASTER_META_DESCRIPTION = `${SCPreferenceSection.WEBMASTER}.${SCPreferenceName.META_DESCRIPTION}`;
+
+/**
+ * STATIC
+ */
+export const STATIC_ENVIRONMENT = `${SCPreferenceSection.STATIC}.${SCPreferenceName.ENVIRONMENT}`;
+export const STATIC_STACKID = `${SCPreferenceSection.STATIC}.${SCPreferenceName.STACK_ID}`;
 
 const booleanType = (value) => {
   if (value === 'True') {
@@ -319,6 +326,7 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_ONBOARDING_HIDDEN]: booleanType,
   [CONFIGURATIONS_LIVE_STREAM_ENABLED]: booleanType,
   [CONFIGURATIONS_LIVE_STREAM_ONLY_STAFF_ENABLED]: booleanType,
+  [CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED]: booleanType,
   [CONFIGURATIONS_SUBSCRIPTION_TIER]: stringType,
   [PROVIDERS_APP_URL_ON_APP_STORE]: stringType,
   [PROVIDERS_APP_URL_ON_GOOGLE_PLAY]: stringType,
@@ -340,4 +348,6 @@ export const DATA_TYPES = {
   [WEBMASTER_META_ROBOTS]: stringType,
   [WEBMASTER_META_TITLE_HOME_NOT_LOGGED]: stringType,
   [WEBMASTER_META_DESCRIPTION]: stringType,
+  [STATIC_ENVIRONMENT]: stringType,
+  [STATIC_STACKID]: stringType,
 };
