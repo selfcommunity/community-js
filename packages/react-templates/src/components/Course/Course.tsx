@@ -41,8 +41,6 @@ export interface CourseProps {
    */
   courseId?: number;
 
-  page?: 'students' | 'comments';
-  onTabChange?: (page: 'students' | 'comments') => void;
   viewDashboard?: boolean;
 }
 
@@ -53,7 +51,7 @@ export default function Course(inProps: CourseProps) {
     name: PREFIX
   });
 
-  const {id = 'course', className = null, course = null, courseId = null, page, onTabChange, viewDashboard} = props;
+  const {id = 'course', className = null, course = null, courseId = null, viewDashboard} = props;
 
   // HOOKS
   const {scCourse, error} = useSCFetchCourse({
@@ -69,7 +67,7 @@ export default function Course(inProps: CourseProps) {
   if (viewDashboard) {
     return (
       <Root id={id} className={classNames(classes.root, className)}>
-        <CourseDashboard.Teacher course={scCourse} page={page} onTabChange={onTabChange} />
+        <CourseDashboard.Teacher course={scCourse} />
       </Root>
     );
   }

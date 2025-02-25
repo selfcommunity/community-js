@@ -29,15 +29,7 @@ export const Student: StoryObj<typeof Course> = {
 };
 
 export const Teacher: StoryObj<typeof Course> = {
-  argTypes: {
-    page: {
-      options: ['students', 'comments'],
-      control: 'inline-radio'
-    }
-  },
   args: {
-    viewDashboard: true,
-    page: 'students',
-    onTabChange() {}
+    viewDashboard: true
   }
 };
