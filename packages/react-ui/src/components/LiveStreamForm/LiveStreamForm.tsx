@@ -2,7 +2,7 @@ import {LoadingButton} from '@mui/lab';
 import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
+import {SCCommunityEnvironment, SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -15,8 +15,8 @@ import {formatHttpErrorCode, LiveStreamApiClient, LiveStreamService} from '@self
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import CoverPlaceholder from '../../assets/deafultCover';
-import {Link, SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SELFCOMMUNITY_PRICING} from '../PlatformWidget/constants';
+import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {HUB_PROD, HUB_STAGE} from '../PlatformWidget/constants';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../LiveStreamRoom/constants';
 
 const classes = {
@@ -119,7 +119,6 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
   const {className, onSuccess, onError, liveStream = null, ...rest} = props;
 
   // HOOKS
-  const scContext: SCContextType = useSCContext();
   const scUserContext = useSCUser();
   const {preferences}: SCPreferencesContextType = useSCPreferences();
   const isCommunityOwner = useMemo(() => scUserContext?.user?.id === 1, [scUserContext.user]);
@@ -129,6 +128,25 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
       SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
       preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.FREE_TRIAL,
+    [preferences]
+  );
+  const isEnterpriseTier = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value &&
+      preferences[SCPreferences.CONFIGURATIONS_SUBSCRIPTION_TIER].value === SCCommunitySubscriptionTier.ENTERPRISE,
+    [preferences]
+  );
+  const isStage = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.STATIC_ENVIRONMENT in preferences &&
+      preferences[SCPreferences.STATIC_ENVIRONMENT].value === SCCommunityEnvironment.STAGE,
+    [preferences]
+  );
+  const communityStackId = useMemo(
+    () => preferences && SCPreferences.STATIC_ENVIRONMENT in preferences && preferences[SCPreferences.STATIC_STACKID].value,
     [preferences]
   );
   const intl = useIntl();
@@ -256,7 +274,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
 
   const warning = useMemo(() => {
     let _message;
-    if (isFreeTrialTier && isCommunityOwner) {
+    if (isFreeTrialTier && isCommunityOwner && !isEnterpriseTier) {
       _message = (
         <FormattedMessage
           id="ui.liveStreamForm.selector.warningSubscriptionRequired"
@@ -264,7 +282,11 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           values={{
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
-            link: (...chunks) => <Link to={SELFCOMMUNITY_PRICING[scContext.settings.locale.default]}>{chunks}</Link>
+            link: (...chunks) => (
+              <Link target="_blank" to={`${isStage ? HUB_STAGE : HUB_PROD}dashboard/community/${communityStackId}/subscription`}>
+                {chunks}
+              </Link>
+            )
           }}
         />
       );
