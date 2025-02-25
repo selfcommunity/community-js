@@ -1024,7 +1024,7 @@
   "ui.liveStreamForm.selector.next": "Successivo",
   "ui.liveStreamForm.selector.warningRemainingMinutes": "Rimangono a disposizione pochi minuti({minutes}) per fare delle dirette live.",
   "ui.liveStreamForm.selector.warningMinutesExausted": "Il tempo a disposizione per fare delle dirette live è esaurito.",
-  "ui.liveStreamForm.selector.warningSubscriptionRequired": "Al momento la community non ha sottoscritto nessun <link>piano</link>. Per poter avviare una diretta è necessario sottoscrivere un piano.",
+  "ui.liveStreamForm.selector.warningSubscriptionRequired": "Attualmente questa Community non ha un piano attivo. Per avviare una diretta, è necessario sottoscriverne uno. <link>Vedi i Piani disponibili</link>",
   "ui.liveStreamForm.view.gallery.description": "La visualizzazione predefinita dello streaming sarà impostata sul formato \"galleria\", consentendo ai partecipanti di vedere più persone contemporaneamente.",
   "ui.liveStreamForm.view.speaker.description": "La visualizzazione predefinita dello streaming sarà impostata sul formato \"relatore\", mettendo in evidenza l'organizzatore o il relatore principale per tutti i partecipanti.",
   "ui.liveStreamForm.title.error.maxLength": "Riduci questo testo a 100 caratteri o meno. Attualmente è troppo lungo",

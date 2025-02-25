@@ -5,7 +5,9 @@ const Component = {
         margin: theme.spacing(2, 5, 2, 5),
         [`& a`]: {
           color: theme.palette.common.white,
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          textDecoration: 'underline',
+          whiteSpace: 'nowrap'
         }
       },
       '& .SCLiveStreamSelector-options': {
