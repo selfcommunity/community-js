@@ -9,7 +9,8 @@ const Component = {
 
         '& .SCCourseDashboard-header-img': {
           width: '100%',
-          height: '150px',
+          minHeight: '150px',
+          height: '230px',
           borderBottomLeftRadius: '10px',
           borderBottomRightRadius: '10px',
           marginBottom: '17px',
@@ -167,6 +168,7 @@ const Component = {
 
           '& .SCCourseDashboard-user': {
             flexDirection: 'row',
+            alignItems: 'center',
             gap: '4px',
             marginTop: '6px',
             marginBottom: '6px',
@@ -175,6 +177,11 @@ const Component = {
               width: '36px',
               height: '36px'
             }
+          },
+
+          '& .SCCourseDashboard-actions-wrapper': {
+            flexDirection: 'row',
+            gap: '5px'
           }
         },
 

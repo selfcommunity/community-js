@@ -33,6 +33,7 @@ import {PREFIX} from './constants';
 import {SCCourseTemplateType} from '../../types/course';
 import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseCreatePlaceholder from '../Course/CreatePlaceholder';
+import {CreateCourseButtonProps} from '../CreateCourseButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -92,6 +93,12 @@ export interface CoursesProps {
    * @default {}
    */
   CoursesSkeletonComponentProps?: CoursesSkeletonProps;
+
+  /**
+   * Props to spread to CreateCourseButton component
+   * @default {}
+   */
+  CreateCourseButtonComponentProps?: CreateCourseButtonProps;
 
   /**
    * Props spread to grid container
@@ -171,6 +178,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     CourseComponentProps = {},
     CoursesSkeletonComponentProps = {},
     CourseSkeletonComponentProps = {template: SCCourseTemplateType.PREVIEW},
+    CreateCourseButtonComponentProps = {},
     GridContainerComponentProps = {},
     GridItemComponentProps = {},
     showFilters = true,
@@ -465,7 +473,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                         key={'placeholder-item'}
                         className={classes.itemPlaceholder}
                         {...GridItemComponentProps}>
-                        <CourseCreatePlaceholder />
+                        <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                       </Grid>
                     )}
                   </>

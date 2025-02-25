@@ -1,5 +1,5 @@
 import {Box, Button, Icon, Skeleton, Stack, Typography} from '@mui/material';
-import {SCCourseType} from '@selfcommunity/types';
+import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {memo, useMemo} from 'react';
@@ -44,12 +44,14 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   }, [course, hasAction]);
 
   const iconData = useMemo(() => {
+    const underId = course?.privacy === SCCoursePrivacyType.DRAFT ? 'draft' : course?.privacy;
+
     return [
       {
         id: 'ui.course.label',
         icon: 'public',
         key: 'privacy',
-        underId: `ui.course.privacy.${course?.privacy}`
+        underId: `ui.course.privacy.${underId}`
       },
       {
         id: 'ui.course.type',
