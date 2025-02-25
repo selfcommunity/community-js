@@ -22,7 +22,7 @@ import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -191,6 +191,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const scUserContext = useSCUser();
+
   // INTL
   const intl = useIntl();
 
@@ -241,6 +243,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_LIVE_STREAM_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
   );
+  const canCreateLiveStream: boolean = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
   const privateEnabled = useMemo(
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_PRIVATE_ENABLED].value,
     [scPreferences.preferences]
@@ -787,7 +790,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               field.isSubmitting ||
               field.name.length > EVENT_TITLE_MAX_LENGTH ||
               field.description.length > EVENT_DESCRIPTION_MAX_LENGTH ||
-              (field.location === SCEventLocationType.LIVESTREAM && !liveStreamEnabled)
+              (field.location === SCEventLocationType.LIVESTREAM && (!liveStreamEnabled || !canCreateLiveStream))
             }
             variant="contained"
             onClick={handleSubmit}

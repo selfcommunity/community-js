@@ -149,6 +149,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
     () => preferences && SCPreferences.STATIC_ENVIRONMENT in preferences && preferences[SCPreferences.STATIC_STACKID].value,
     [preferences]
   );
+  const canCreateLiveStream: boolean = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
   const intl = useIntl();
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -425,7 +426,8 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
               field.title.length > LIVE_STREAM_TITLE_MAX_LENGTH ||
               field.description.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH ||
               isFreeTrialTier ||
-              timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON
+              timeRemaining <= WARNING_THRESHOLD_EXPIRING_SOON ||
+              !canCreateLiveStream
             }
             variant="contained"
             onClick={handleSubmit}
