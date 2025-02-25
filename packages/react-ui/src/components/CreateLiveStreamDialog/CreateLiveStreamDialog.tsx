@@ -125,9 +125,12 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
     setStep(CreateLiveStreamStep.SELECT_TYPE);
   }, []);
 
-  const handleSubmit = useCallback((e: SCEventType | SCLiveStreamType) => {
-    onSuccess && onSuccess(e);
-  }, []);
+  const handleSubmit = useCallback(
+    (e: SCEventType | SCLiveStreamType) => {
+      onSuccess && onSuccess(e);
+    },
+    [onSuccess]
+  );
 
   useEffect(() => {
     if (!canCreateEvent) {
