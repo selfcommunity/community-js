@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.43...@selfcommunity/react-templates@0.4.8-alpha.44) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
 ## [0.4.8-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.42...@selfcommunity/react-templates@0.4.8-alpha.43) (2025-02-26)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

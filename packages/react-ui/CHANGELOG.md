@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.25...@selfcommunity/react-ui@0.11.0-alpha.26) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
 # [0.11.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.24...@selfcommunity/react-ui@0.11.0-alpha.25) (2025-02-26)
 
 
