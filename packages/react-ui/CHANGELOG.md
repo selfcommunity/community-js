@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.23...@selfcommunity/react-ui@0.11.0-alpha.24) (2025-02-26)
+
+
+### Bug Fixes
+
+* live stream video processor ([e193ca4](https://github.com/selfcommunity/community-js/commit/e193ca4c9e218bb18e57eb8579cf378d67df5a62))
+
+
+
+
+
 # [0.11.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.22...@selfcommunity/react-ui@0.11.0-alpha.23) (2025-02-25)
 
 
