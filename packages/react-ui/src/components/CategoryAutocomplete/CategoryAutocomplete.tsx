@@ -64,6 +64,11 @@ export interface CategoryAutocompleteProps
    * @param value
    */
   onChange?: (value: any) => void;
+  /**
+   * Feed API Query Params
+   * @default [{'limit': 10, 'offset': 0}]
+   */
+  endpointQueryParams?: Record<string, string | number | boolean>;
 }
 
 const Root = styled(Autocomplete, {
@@ -106,6 +111,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
     limitCountCategories = 0,
     checkboxSelect = false,
     disabled = false,
+    endpointQueryParams = {},
     TextFieldProps = {
       variant: 'outlined',
       label: <FormattedMessage id="ui.categoryAutocomplete.label" defaultMessage="ui.categoryAutocomplete.label" />
@@ -120,7 +126,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
   const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
-  const {categories, isLoading} = useSCFetchCategories();
+  const {categories, isLoading} = useSCFetchCategories({endpointQueryParams});
 
   useEffect(() => {
     if (value === null) {

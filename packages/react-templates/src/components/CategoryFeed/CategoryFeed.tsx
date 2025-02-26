@@ -16,7 +16,16 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  UserUtils,
+  useSCFetchCategory,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition, SCFeedTypologyType} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
@@ -149,6 +158,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
@@ -224,7 +234,15 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       }}
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={
-        <InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} feedType={SCFeedTypologyType.CATEGORY} />
+        <>
+          {((scCategory.content_only_staff && UserUtils.isStaff(scUserContext.user)) || !scCategory.content_only_staff) && (
+            <InlineComposerWidget
+              onSuccess={handleComposerSuccess}
+              defaultValue={{categories: [scCategory]}}
+              feedType={SCFeedTypologyType.CATEGORY}
+            />
+          )}
+        </>
       }
       CustomAdvProps={{categoriesId: [scCategory.id]}}
       enabledCustomAdvPositions={[
