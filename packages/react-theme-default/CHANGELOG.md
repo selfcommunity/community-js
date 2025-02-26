@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.16...@selfcommunity/react-theme-default@0.4.5-alpha.17) (2025-02-26)
+
+
+### Bug Fixes
+
+* live stream video processor ([e193ca4](https://github.com/selfcommunity/community-js/commit/e193ca4c9e218bb18e57eb8579cf378d67df5a62))
+* live stream warning ([763aada](https://github.com/selfcommunity/community-js/commit/763aadac181871190b330c1c354cd0b6ad2cd09a))
+
+
+
+
+
 ## [0.4.5-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.15...@selfcommunity/react-theme-default@0.4.5-alpha.16) (2025-02-12)
 
 
