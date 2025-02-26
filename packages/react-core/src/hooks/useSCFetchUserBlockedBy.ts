@@ -87,7 +87,7 @@ export default function useSCFetchUserBlockedBy({
    */
   useEffect(() => {
     let interval;
-    if (scUserContext.user && blockedBy !== null && sync) {
+    if (scUserContext.user && scUserContext.user.id !== user?.id && blockedBy !== null && sync) {
       interval = setInterval(() => {
         fetchUserBlockedBy(user, false);
       }, 5000);

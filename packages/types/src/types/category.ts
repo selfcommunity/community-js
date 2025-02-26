@@ -124,6 +124,11 @@ export interface SCCategoryType {
    * If the category is followed by the authenticated user
    */
   followed?: boolean;
+
+  /**
+   * Indicates who has permission to post content
+   */
+  content_only_staff?: boolean;
 }
 
 export interface SCCategoryAudienceType {

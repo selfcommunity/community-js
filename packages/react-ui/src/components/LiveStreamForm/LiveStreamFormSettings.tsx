@@ -147,7 +147,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
             <Switch
               className={classes.switch}
               checked={!settings?.disableShareScreen}
-							disabled={!isEnterpriseTier && !liveStreamVideoConferenceEnabled}
+              disabled={!isEnterpriseTier && !liveStreamVideoConferenceEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
             />
             <Typography className={classes.switchLabel}>

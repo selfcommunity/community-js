@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCategoryType} from '@selfcommunity/types';
-import {CategoryService, Endpoints} from '@selfcommunity/api-services';
+import {CategoryParams, CategoryService, Endpoints} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getCategoriesObjectCacheKey, getCategoryObjectCacheKey} from '../constants/Cache';
 import {AxiosRequestConfig} from 'axios/index';
@@ -38,9 +38,9 @@ const hydrate = (ids: number[]) => {
  :::
  * @param props
  */
-const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies}) => {
+const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies; endpointQueryParams?: CategoryParams}) => {
   // PROPS
-  const {cacheStrategy = CacheStrategies.CACHE_FIRST} = props || {};
+  const {cacheStrategy = CacheStrategies.CACHE_FIRST, endpointQueryParams = {}} = props || {};
 
   // CACHE
   const __categoriesCacheKey = getCategoriesObjectCacheKey();
@@ -53,7 +53,7 @@ const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies}) => {
    * Fetch categories
    */
   const fetchCategories = async (next: string = Endpoints.CategoryList.url()): Promise<[]> => {
-    const data: any = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
+    const data: any = await CategoryService.getAllCategories({active: true, ...endpointQueryParams}, {url: next} as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchCategories(data.next)) : data.results;
   };
 
