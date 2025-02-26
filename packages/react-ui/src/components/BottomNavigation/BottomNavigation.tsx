@@ -24,7 +24,6 @@ import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
 import {iOS} from '@selfcommunity/utils';
 import ComposerIconButton from '../ComposerIconButton';
-import {COURSES_ROUTE_NAME} from '@selfcommunity/react-core/src/constants/Routes';
 
 const PREFIX = 'SCBottomNavigation';
 

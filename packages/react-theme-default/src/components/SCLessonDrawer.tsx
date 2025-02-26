@@ -19,7 +19,7 @@ const Component = {
         backgroundColor: theme.palette.grey[200]
       },
       '& .SCLessonDrawer-header': {
-        minHeight: theme.mixins.toolbar.minHeight,
+        minHeight: '60px',
         display: 'block',
         padding: theme.spacing(1, 1, 1, 2)
       },
