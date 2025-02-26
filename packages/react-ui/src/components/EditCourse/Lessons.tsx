@@ -75,7 +75,7 @@ function Lessons(props: LessonsProps) {
   }, [course]);
 
   // MEMOS
-  const isNewRow = useMemo(() => sections.length > course?.sections.length, [course, sections]);
+  const isNewRow = useMemo(() => sections.length > course?.sections?.length, [course, sections]);
 
   // FUNCTIONS
   const getSection = useCallback((id: number) => {

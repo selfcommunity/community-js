@@ -65,7 +65,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   return (
     <Box className={classes.header}>
       {course ? (
-        <img src={course.image_big} alt={course.image_big} className={classes.img} />
+        <img src={course.image_bigger} alt={course.image_bigger} className={classes.img} />
       ) : (
         <Skeleton animation="wave" variant="rectangular" className={classes.img} />
       )}
