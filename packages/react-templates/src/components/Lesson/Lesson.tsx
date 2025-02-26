@@ -52,15 +52,20 @@ export interface LessonProps {
   /**
    * The course id
    */
-  courseId?: number;
+  courseId: string | number;
   /**
    * The section id
    */
-  sectionId: number;
+  sectionId: string | number;
+  /**
+   * The lesson object
+   * @default null
+   */
+  lesson?: SCCourseLessonType;
   /**
    * The lesson id
    */
-  lessonId?: number;
+  lessonId?: string | number;
   /**
    * Props to spread to LessonAppbar Component
    * @default {}
@@ -83,19 +88,19 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, course, courseId, sectionId, lessonId, LessonAppbarProps = {}, LessonDrawerProps = {}, ...rest} = props;
+  const {className = null, course, courseId, sectionId, lesson = null, lessonId, LessonAppbarProps = {}, LessonDrawerProps = {}, ...rest} = props;
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [_lessonId, setLessonId] = useState<number>(lessonId);
-  const [_sectionId, setSectionId] = useState<number>(sectionId);
+  const [_lessonId, setLessonId] = useState<number | string>(lessonId);
+  const [_sectionId, setSectionId] = useState<number | string>(sectionId);
   const isCourseAdmin = useMemo(
     () => course && (course.join_status === SCCourseJoinStatusType.CREATOR || course.join_status === SCCourseJoinStatusType.MANAGER),
     [course]
   );
   const {scCourse} = useSCFetchCourse({id: courseId, params: {view: isCourseAdmin ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
-  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
+  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId, sectionId: _sectionId});
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
