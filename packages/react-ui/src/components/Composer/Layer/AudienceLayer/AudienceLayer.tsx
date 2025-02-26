@@ -202,7 +202,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
               const matches = match(option.name, inputValue);
               const parts = parse(option.name, matches);
               return (
-                <li key={props['key']} {...props}>
+                <li {...props}>
                   <TagChip
                     key={option.id}
                     tag={option}

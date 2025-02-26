@@ -185,9 +185,8 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       renderOption={(props, option: SCCategoryType, {selected, inputValue}) => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
-
         return (
-          <li key={props['key']} {...props}>
+          <li {...props}>
             {checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
             <Chip
               label={
