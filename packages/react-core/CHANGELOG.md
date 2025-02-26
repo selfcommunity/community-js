@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.7-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.12...@selfcommunity/react-core@0.6.7-alpha.13) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+* fetchUserBlockedBy ([1b75354](https://github.com/selfcommunity/community-js/commit/1b75354bc0ef5503afa9133ea969b3e5f2153be3))
+
+
+
+
+
 ## [0.6.7-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.11...@selfcommunity/react-core@0.6.7-alpha.12) (2025-02-26)
 
 **Note:** Version bump only for package @selfcommunity/react-core
