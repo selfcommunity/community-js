@@ -43,9 +43,9 @@ export const COURSE_ROUTE_NAME = 'course';
 export const COURSE_EDIT_ROUTE_NAME = 'course_edit';
 export const COURSE_DASHBOARD_ROUTE_NAME = 'course_dashboard';
 export const COURSE_LESSON_ROUTE_NAME = 'course_lesson';
+export const COURSE_LESSON_EDIT_ROUTE_NAME = 'course_lesson_edit';
 export const COURSE_LESSON_COMMENT_ROUTE_NAME = 'course_lesson_comment';
 export const COURSES_ROUTE_NAME = 'courses';
-export const COURSES_SUBSCRIBED_ROUTE_NAME = 'courses_subscribed';
 export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
 export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
 export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
@@ -99,7 +99,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [COURSE_EDIT_ROUTE_NAME]: '/course/:id/:slug/edit',
   [COURSE_DASHBOARD_ROUTE_NAME]: '/course/:id/:slug/dashboard',
   [COURSE_LESSON_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/',
+  [COURSE_LESSON_EDIT_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/edit',
   [COURSE_LESSON_COMMENT_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/comment/:comment_id',
-  [COURSES_SUBSCRIBED_ROUTE_NAME]: '/courses/subscribed/',
   [LIVESTREAM_ROUTE_NAME]: '/live/:slug/',
 };

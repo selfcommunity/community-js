@@ -215,7 +215,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       scPreferences.preferences &&
       scPreferences.features &&
       scPreferences.features.includes(SCFeatureName.TAGGING) &&
-			scPreferences.features.includes(SCFeatureName.EVENT) &&
+      scPreferences.features.includes(SCFeatureName.EVENT) &&
       SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in scPreferences.preferences &&
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
@@ -280,9 +280,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {coursesEnabled && scUserContext.user && (
         <IconButton
           className={classNames(classes.courses, {
-            [classes.active]:
-              value.startsWith(scRoutingContext.url(SCRoutes.COURSES_SUBSCRIBED_ROUTE_NAME, {})) ||
-              value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
+            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
           })}
           aria-label="Courses"
           to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}

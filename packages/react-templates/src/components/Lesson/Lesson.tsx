@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType, SCMediaType} from '@selfcommunity/types';
+import {SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
@@ -46,10 +46,6 @@ export interface LessonProps {
    */
   className?: string;
   /**
-   * The course object
-   */
-  course?: SCCourseType;
-  /**
    * The course id
    */
   courseId: string | number;
@@ -77,6 +73,15 @@ export interface LessonProps {
    */
   LessonDrawerProps?: LessonDrawerProps;
   /**
+   * Opens edit mode
+   * @default false
+   */
+  editMode?: boolean;
+  /**
+   * Callback fired on edit mode close
+   */
+  handleCloseEditMode?: () => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -88,18 +93,25 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className = null, course, courseId, sectionId, lesson = null, lessonId, LessonAppbarProps = {}, LessonDrawerProps = {}, ...rest} = props;
+  const {
+    className = null,
+    courseId,
+    sectionId,
+    lesson = null,
+    lessonId,
+    LessonAppbarProps = {},
+    LessonDrawerProps = {},
+    editMode = false,
+    handleCloseEditMode,
+    ...rest
+  } = props;
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
-  const isCourseAdmin = useMemo(
-    () => course && (course.join_status === SCCourseJoinStatusType.CREATOR || course.join_status === SCCourseJoinStatusType.MANAGER),
-    [course]
-  );
-  const {scCourse} = useSCFetchCourse({id: courseId, params: {view: isCourseAdmin ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scCourse} = useSCFetchCourse({id: courseId, params: {view: editMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId, sectionId: _sectionId});
 
   // STATE
@@ -108,11 +120,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
-  const [editMode, setEditMode] = useState(isCourseAdmin);
-  const isEditMode = editMode;
-  // const isEditMode = useMemo(() => {
-  //   return value.startsWith(scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, {}));
-  // }, [value, scRoutingContext]);
 
   // HANDLERS
   /**
@@ -128,7 +135,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   };
   const handleCloseDrawer = () => {
     setActivePanel(null);
-    setEditMode(false);
+    handleCloseEditMode && handleCloseEditMode();
   };
 
   const handleLessonContentEdit = (html: string) => {
@@ -212,7 +219,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       <LessonAppbar
         showComments={scLesson.comments_enabled}
-        editMode={isEditMode}
+        editMode={editMode}
         activePanel={activePanel}
         title={scCourse.name}
         handleOpen={handleOpenDrawer}
@@ -220,7 +227,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         updating={updating}
         {...LessonAppbarProps}
       />
-      <Container open={Boolean(activePanel) || isEditMode} className={classes.containerRoot}>
+      <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
         <Box className={classes.navigation}>
           <Typography variant="body2" color="text.secondary">
             <FormattedMessage
@@ -244,7 +251,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         <LessonObject
           course={scCourse}
           lesson={scLesson}
-          editMode={isEditMode}
+          editMode={editMode}
           onContentChange={handleLessonContentEdit}
           onMediaChange={handleLessonMediaEdit}
         />
@@ -252,7 +259,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       <LessonDrawer
         course={scCourse}
         lesson={scLesson}
-        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : isEditMode}
+        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
         activePanel={activePanel}
         handleClose={handleCloseDrawer}
         handleChangeLesson={handleChangeLesson}
