@@ -129,13 +129,13 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
           <FormattedMessage id="ui.liveStreamForm.muteParticipants" defaultMessage="ui.liveStreamForm.muteParticipants" />
         </Typography>
       </Stack>
-      {(isEnterpriseFeaturesVisible || liveStreamVideoConferenceEnabled) && (
+      {liveStreamEnabled && (isEnterpriseFeaturesVisible || liveStreamVideoConferenceEnabled) && (
         <>
           <Stack direction="row" spacing={1} alignItems="center">
             <Switch
               className={classes.switch}
               checked={!settings?.disableVideo}
-              disabled={!isEnterpriseTier || !liveStreamEnabled}
+              disabled={!isEnterpriseTier && !liveStreamVideoConferenceEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableVideo']: !settings?.disableVideo}})}
             />
             <Typography className={classes.switchLabel}>
@@ -147,7 +147,7 @@ export default function LiveStreamSettingsForm(inProps: LiveStreamFormSettingsPr
             <Switch
               className={classes.switch}
               checked={!settings?.disableShareScreen}
-              disabled={!isEnterpriseTier || !liveStreamEnabled}
+							disabled={!isEnterpriseTier && !liveStreamVideoConferenceEnabled}
               onChange={() => onChange({...LIVESTREAM_DEFAULT_SETTINGS, ...settings, ...{['disableShareScreen']: !settings?.disableShareScreen}})}
             />
             <Typography className={classes.switchLabel}>
