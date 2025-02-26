@@ -252,7 +252,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
               className={classes.chip}
             />
           )}
-          <Avatar alt={scCourse.name} src={scCourse.image_medium} className={classes.previewAvatar} />
+          <Avatar alt={scCourse.name} src={scCourse.created_by.avatar} className={classes.previewAvatar} />
         </Box>
         <CardContent className={classes.previewContent}>
           <Typography variant="body2" className={classes.previewCreator}>
