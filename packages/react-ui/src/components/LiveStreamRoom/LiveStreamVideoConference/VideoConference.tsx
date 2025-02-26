@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type {MessageDecoder, MessageEncoder, TrackReferenceOrPlaceholder, WidgetState} from '@livekit/components-core';
 import {isEqualTrackRef, isTrackReference, isWeb, log} from '@livekit/components-core';
-import {RoomEvent, Track} from 'livekit-client';
+import {LocalVideoTrack, RoomEvent, Track} from 'livekit-client';
 
 import {
   CarouselLayout,
@@ -12,6 +12,7 @@ import {
   MessageFormatter,
   RoomAudioRenderer,
   useCreateLayoutContext,
+  useLocalParticipant,
   useParticipants,
   usePinnedTracks,
   useTracks
@@ -28,6 +29,10 @@ import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import NoParticipants from './NoParticipants';
+import LiveStreamSettingsMenu from './LiveStreamSettingsMenu';
+import {BackgroundBlur} from '@livekit/track-processors';
+import {isClientSideRendering} from '@selfcommunity/utils';
+import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
 
 const PREFIX = 'SCVideoConference';
 
@@ -100,6 +105,12 @@ export function VideoConference(inProps: VideoConferenceProps) {
 
   // HOOKS
   const scUserContext: SCUserContextType = useSCUser();
+
+  const [blurEnabled, setBlurEnabled] = React.useState(
+    isClientSideRendering() ? Boolean(window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT)) || false : false
+  );
+  const [processorPending, setProcessorPending] = React.useState(false);
+
   const tracks = useTracks(
     [
       {source: Track.Source.Camera, withPlaceholder: true},
@@ -115,11 +126,28 @@ export function VideoConference(inProps: VideoConferenceProps) {
     [tracks, scUserContext.user]
   );
 
+  const handleBlur = React.useCallback(
+    (event) => {
+      if (event.target) {
+        if ('checked' in event.target) {
+          setBlurEnabled(event.target?.checked);
+        } else {
+          setBlurEnabled((enabled) => !enabled);
+        }
+      } else {
+        setBlurEnabled((enabled) => !enabled);
+      }
+      window?.localStorage?.setItem(CHOICE_VIDEO_BLUR_EFFECT, (!blurEnabled).toString());
+    },
+    [setBlurEnabled, blurEnabled]
+  );
+
   const participants = useParticipants();
   const layoutContext = useCreateLayoutContext();
   const screenShareTracks = tracks.filter(isTrackReference).filter((track) => track.publication.source === Track.Source.ScreenShare);
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
+  const {cameraTrack} = useLocalParticipant();
   useLivestreamCheck();
 
   /**
@@ -201,6 +229,22 @@ export function VideoConference(inProps: VideoConferenceProps) {
     }
   }, [tracks, participants, speakerFocused]);
 
+  useEffect(() => {
+    const localCamTrack = cameraTrack?.track as LocalVideoTrack | undefined;
+    if (localCamTrack) {
+      setProcessorPending(true);
+      try {
+        if (blurEnabled && !localCamTrack.getProcessor()) {
+          localCamTrack.setProcessor(BackgroundBlur(20));
+        } else if (!blurEnabled) {
+          localCamTrack.stopProcessor();
+        }
+      } finally {
+        setProcessorPending(false);
+      }
+    }
+  }, [blurEnabled, cameraTrack]);
+
   return (
     <Root className={classNames(className, classes.root, 'lk-video-conference')} {...rest}>
       {isWeb() && (
@@ -217,9 +261,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
             ) : (
               <div className="lk-focus-layout-wrapper">
                 {hideParticipantsList ? (
-                  <FocusLayoutContainerNoParticipants>
-                    {focusTrack && <FocusLayout trackRef={focusTrack} />}
-                  </FocusLayoutContainerNoParticipants>
+                  <FocusLayoutContainerNoParticipants>{focusTrack && <FocusLayout trackRef={focusTrack} />}</FocusLayoutContainerNoParticipants>
                 ) : (
                   <FocusLayoutContainer>
                     {carouselTracks.length ? (
@@ -244,7 +286,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
                   camera: !disableCamera,
                   screenShare: !disableShareScreen
                 },
-                settings: !!SettingsComponent
+                settings: true
               }}
             />
           </div>
@@ -256,11 +298,20 @@ export function VideoConference(inProps: VideoConferenceProps) {
               messageDecoder={chatMessageDecoder}
             />
           )}
-          {SettingsComponent && (
-            <div className="lk-settings-menu-modal" style={{display: widgetState.showSettings ? 'block' : 'none'}}>
+          <div className="lk-settings-menu-modal" style={{display: widgetState.showSettings ? 'block' : 'none'}}>
+            {SettingsComponent ? (
               <SettingsComponent />
-            </div>
-          )}
+            ) : (
+              <>
+                <LiveStreamSettingsMenu
+                  onlyContentMenu
+                  actionBlurDisabled={!cameraTrack && !disableCamera}
+                  blurEnabled={blurEnabled}
+                  handleBlur={handleBlur}
+                />
+              </>
+            )}
+          </div>
         </LayoutContextProvider>
       )}
       <RoomAudioRenderer />
