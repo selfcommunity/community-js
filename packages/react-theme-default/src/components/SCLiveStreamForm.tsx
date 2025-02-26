@@ -17,7 +17,9 @@ const Component = {
         margin: theme.spacing(2, 0),
         [`& a`]: {
           color: theme.palette.common.white,
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          textDecoration: 'underline',
+          whiteSpace: 'nowrap'
         }
       },
       [`& .SCLiveStreamForm-access-view`]: {

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.2...@selfcommunity/types@0.7.7-alpha.3) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
 ## [0.7.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.1...@selfcommunity/types@0.7.7-alpha.2) (2025-02-25)
 
 

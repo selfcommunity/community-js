@@ -17,6 +17,7 @@ import {useMediaQuery} from '@mui/material';
 import {SettingsMenuToggle} from './SettingsMenuToggle';
 import {DisconnectButton} from './DisconnectButton';
 import {mergeProps} from './utils';
+import {FormattedMessage} from 'react-intl';
 
 /** @public */
 export type ControlBarControls = {
@@ -45,7 +46,7 @@ export interface ControlBarProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export function ControlBar({variation, controls, saveUserChoices = true, onDeviceError, ...props}: ControlBarProps) {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
-	
+
   const layoutContext = useMaybeLayoutContext();
   React.useEffect(() => {
     if (layoutContext?.widget.state?.showChat !== undefined) {
@@ -115,7 +116,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
               showIcon={showIcon}
               onChange={microphoneOnChange}
               onDeviceError={(error) => onDeviceError?.({source: Track.Source.Microphone, error})}>
-              {showText && 'Microphone'}
+              {showText && <FormattedMessage id="ui.liveStreamRoom.controlBar.microphone" defaultMessage="ui.liveStreamRoom.controlBar.microphone" />}
             </TrackToggle>
           </>
           <div className="lk-button-group-menu">
@@ -133,7 +134,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
               showIcon={showIcon}
               onChange={cameraOnChange}
               onDeviceError={(error) => onDeviceError?.({source: Track.Source.Camera, error})}>
-              {showText && 'Camera'}
+              {showText && <FormattedMessage id="ui.liveStreamRoom.controlBar.camera" defaultMessage="ui.liveStreamRoom.controlBar.camera" />}
             </TrackToggle>
           </>
           <div className="lk-button-group-menu">
@@ -151,7 +152,12 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
             showIcon={showIcon}
             onChange={onScreenShareChange}
             onDeviceError={(error) => onDeviceError?.({source: Track.Source.ScreenShare, error})}>
-            {showText && (isScreenShareEnabled ? 'Stop screen share' : 'Share screen')}
+            {showText &&
+              (isScreenShareEnabled ? (
+                <FormattedMessage id="ui.liveStreamRoom.controlBar.stopShareScreen" defaultMessage="ui.liveStreamRoom.controlBar.stopShareScreen" />
+              ) : (
+                <FormattedMessage id="ui.liveStreamRoom.controlBar.shareScreen" defaultMessage="ui.liveStreamRoom.controlBar.shareScreen" />
+              ))}
           </TrackToggle>
         </>
       )}
@@ -162,7 +168,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
           {/* @ts-ignore */}
           <ChatToggle>
             {showIcon && <ChatIcon />}
-            {showText && 'Chat'}
+            {showText && <FormattedMessage id="ui.liveStreamRoom.controlBar.chat" defaultMessage="ui.liveStreamRoom.controlBar.chat" />}
           </ChatToggle>
         </>
       )}
@@ -172,7 +178,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
           {/* @ts-ignore */}
           <SettingsMenuToggle>
             {showIcon && <GearIcon />}
-            {showText && 'Settings'}
+            {showText && <FormattedMessage id="ui.liveStreamRoom.controlBar.settings" defaultMessage="ui.liveStreamRoom.controlBar.settings" />}
           </SettingsMenuToggle>
         </>
       )}
@@ -182,7 +188,7 @@ export function ControlBar({variation, controls, saveUserChoices = true, onDevic
           {/* @ts-ignore */}
           <DisconnectButton>
             {showIcon && <LeaveIcon />}
-            {showText && 'Leave'}
+            {showText && <FormattedMessage id="ui.liveStreamRoom.controlBar.leave" defaultMessage="ui.liveStreamRoom.controlBar.leave" />}
           </DisconnectButton>
         </>
       )}

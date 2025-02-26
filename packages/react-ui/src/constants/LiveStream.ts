@@ -1,3 +1,5 @@
 export const LIVE_STREAM_TITLE_MAX_LENGTH = 100;
 export const LIVE_STREAM_SLUG_MAX_LENGTH = 50;
 export const LIVE_STREAM_DESCRIPTION_MAX_LENGTH = 500;
+
+export const CHOICE_VIDEO_BLUR_EFFECT = 'lk-video-blur';
