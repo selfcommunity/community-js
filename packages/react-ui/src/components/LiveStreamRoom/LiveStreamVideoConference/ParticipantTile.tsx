@@ -25,7 +25,6 @@ import {
 import ParticipantTileAvatar from './ParticipantTileAvatar';
 import ParticipantTileActions from './ParticipantTileActions';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {useLiveStream} from './LiveStreamProvider';
 
 /**
  * The `ParticipantContextIfNeeded` component only creates a `ParticipantContext`

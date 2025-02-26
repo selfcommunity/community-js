@@ -1,3 +1,5 @@
+import {alpha} from '@mui/system';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -93,6 +95,18 @@ const Component = {
         color: theme.palette.common.white,
         '&:hover': {
           backgroundColor: theme.palette.primary.dark
+        }
+      },
+      '& .lk-settings-menu-modal': {
+        minWidth: 250,
+        '& .MuiFormControlLabel-root': {
+          marginLeft: 0
+        },
+        '& div.MuiTypography-body1': {
+          color: theme.palette.common.white
+        },
+        '& .MuiSwitch-track': {
+          backgroundColor: theme.palette.grey['300']
         }
       }
     }),

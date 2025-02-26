@@ -84,6 +84,7 @@
 		"@livekit/components-react": "2.6.5",
 		"@livekit/components-styles": "1.1.4",
 		"@livekit/krisp-noise-filter": "0.2.12",
+		"@livekit/track-processors": "^0.3.3",
 		"@lottiefiles/react-lottie-player": "^3.5.4",
 		"@mui/lab": "~5.0.0-alpha.159",
 		"@mui/material": "^5.15.3",
