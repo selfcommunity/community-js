@@ -23,6 +23,8 @@ import {BackgroundBlur} from '@livekit/track-processors';
 import LiveStreamSettingsMenu from './LiveStreamSettingsMenu';
 import {isClientSideRendering} from '@selfcommunity/utils';
 import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
+import {FormattedMessage} from 'react-intl';
+import {useSnackbar} from 'notistack';
 
 /**
  * Props for the PreJoin component.
@@ -256,6 +258,8 @@ export function PreJoin({
     preventLoad: !persistUserChoices
   });
 
+  const {enqueueSnackbar} = useSnackbar();
+
   // Initialize device settings
   const [audioEnabled, setAudioEnabled] = React.useState<boolean>(initialUserChoices.audioEnabled && canUseAudio);
   const [videoEnabled, setVideoEnabled] = React.useState<boolean>(initialUserChoices.videoEnabled && canUseVideo);
@@ -264,8 +268,8 @@ export function PreJoin({
   const [username, setUsername] = React.useState(initialUserChoices.username);
 
   // Processors
-  const [blurEnabled, setBlurEnabled] = React.useState(
-    isClientSideRendering() ? Boolean(window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT)) || false : false
+	const [blurEnabled, setBlurEnabled] = React.useState(
+    isClientSideRendering() ? window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT) === 'true' : false
   );
   const [processorPending, setProcessorPending] = React.useState(false);
 
@@ -338,8 +342,9 @@ export function PreJoin({
   );
 
   const handleBlur = React.useCallback(() => {
-    setBlurEnabled((enabled) => !enabled);
-    window?.localStorage?.setItem(CHOICE_VIDEO_BLUR_EFFECT, (!blurEnabled).toString());
+    const _blur = !blurEnabled;
+    setBlurEnabled(_blur);
+    window?.localStorage?.setItem(CHOICE_VIDEO_BLUR_EFFECT, _blur.toString());
   }, [setBlurEnabled, blurEnabled]);
 
   useEffect(() => {
@@ -363,6 +368,17 @@ export function PreJoin({
         } else if (!blurEnabled) {
           videoTrack.stopProcessor();
         }
+      } catch (e) {
+        console.log(e);
+        setBlurEnabled(false);
+        window?.localStorage?.setItem(CHOICE_VIDEO_BLUR_EFFECT, false.toString());
+        enqueueSnackbar(
+          <FormattedMessage id="ui.liveStreamRoom.errorApplyVideoEffect" defaultMessage="ui.contributionActionMenu.errorApplyVideoEffect" />,
+          {
+            variant: 'warning',
+            autoHideDuration: 3000
+          }
+        );
       } finally {
         setProcessorPending(false);
       }
