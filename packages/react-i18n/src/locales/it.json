@@ -1078,6 +1078,7 @@
   "ui.liveStreamRoom.settingsMenu.noActiveRecording": "Nessuna registrazione attiva",
   "ui.liveStreamRoom.settingsMenu.startRecording": "Avvia registrazione",
   "ui.liveStreamRoom.settingsMenu.stopRecording": "Ferma registrazione",
+  "ui.liveStreamRoom.errorApplyVideoEffect": "Non è stato possibile applicare la l'effetto al video. Funzionalità non disponibile per questo browser.",
   "ui.upScalingTierBadge.go": "GO",
   "ui.upScalingTierBadge.professional": "PROFESSIONAL",
   "ui.upScalingTierBadge.enterprise": "ENTERPRISE",

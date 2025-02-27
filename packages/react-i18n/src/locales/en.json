@@ -1078,6 +1078,7 @@
   "ui.liveStreamRoom.settingsMenu.noActiveRecording": "No active recordings for this meeting",
   "ui.liveStreamRoom.settingsMenu.startRecording": "Start recording",
   "ui.liveStreamRoom.settingsMenu.stopRecording": "Stop recording",
+  "ui.liveStreamRoom.errorApplyVideoEffect": "The effect could not be applied to the video. Feature not available for this browser.",
   "ui.upScalingTierBadge.go": "GO",
   "ui.upScalingTierBadge.professional": "PROFESSIONAL",
   "ui.upScalingTierBadge.enterprise": "ENTERPRISE",
