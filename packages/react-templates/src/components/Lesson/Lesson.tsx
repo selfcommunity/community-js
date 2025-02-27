@@ -79,8 +79,14 @@ export interface LessonProps {
   editMode?: boolean;
   /**
    * Callback fired on edit mode close
+   * @default null
    */
-  handleCloseEditMode?: () => void;
+  onEditModeClose?: () => void;
+  /**
+   * Handler on lesson change
+   * @default null
+   */
+  onLessonChange?: (id) => void;
   /**
    * Any other properties
    */
@@ -102,7 +108,8 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     LessonAppbarProps = {},
     LessonDrawerProps = {},
     editMode = false,
-    handleCloseEditMode,
+    onEditModeClose = null,
+    onLessonChange = null,
     ...rest
   } = props;
 
@@ -135,7 +142,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   };
   const handleCloseDrawer = () => {
     setActivePanel(null);
-    handleCloseEditMode && handleCloseEditMode();
+    onEditModeClose && onEditModeClose();
   };
 
   const handleLessonContentEdit = (html: string) => {
@@ -150,6 +157,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     setLessonId(l.id);
     setSectionId(s.id);
     setCurrentSection(s);
+    onLessonChange && onLessonChange(l.id);
   };
 
   /**
