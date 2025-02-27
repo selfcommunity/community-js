@@ -2,7 +2,8 @@ import React, {ReactElement, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Box, BoxProps, Button, DialogTitle, IconButton, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {SCCategoryType} from '@selfcommunity/types/src/index';
+import {SCUserContextType, UserUtils, useSCUser} from '@selfcommunity/react-core';
+import {SCCategoryType} from '@selfcommunity/types';
 import {ComposerLayerProps} from '../../../../types/composer';
 import Icon from '@mui/material/Icon';
 import CategoryAutocomplete from '../../../CategoryAutocomplete';
@@ -32,6 +33,9 @@ const CategoryLayer = React.forwardRef((props: CategoryLayerProps, ref: React.Re
   // STATE
   const [value, setValue] = useState<SCCategoryType[]>(defaultValue);
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
   // HANDLERS
   const handleSave = useCallback(() => onSave(value), [value, onSave]);
   const handleChange = useCallback((categories: SCCategoryType[]) => setValue(categories), []);
@@ -50,7 +54,12 @@ const CategoryLayer = React.forwardRef((props: CategoryLayerProps, ref: React.Re
         </Button>
       </DialogTitle>
       <DialogContent className={classes.content}>
-        <CategoryAutocomplete multiple onChange={handleChange} defaultValue={defaultValue} endpointQueryParams={{can_create_content: true}} />
+        <CategoryAutocomplete
+          multiple
+          onChange={handleChange}
+          defaultValue={defaultValue}
+          {...(!UserUtils.isStaff(scUserContext.user) && {endpointQueryParams: {can_create_content: true}})}
+        />
       </DialogContent>
     </Root>
   );

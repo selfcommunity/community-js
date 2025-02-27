@@ -26,13 +26,14 @@ import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} f
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, IconButton} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import NoParticipants from './NoParticipants';
 import LiveStreamSettingsMenu from './LiveStreamSettingsMenu';
 import {BackgroundBlur} from '@livekit/track-processors';
 import {isClientSideRendering} from '@selfcommunity/utils';
 import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
+import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCVideoConference';
 
@@ -299,6 +300,9 @@ export function VideoConference(inProps: VideoConferenceProps) {
             />
           )}
           <div className="lk-settings-menu-modal" style={{display: widgetState.showSettings ? 'block' : 'none'}}>
+            <IconButton className="lk-settings-menu-modal-icon-close" onClick={() => layoutContext?.widget.dispatch?.({msg: 'toggle_settings'})}>
+              <Icon>close</Icon>
+            </IconButton>
             {SettingsComponent ? (
               <SettingsComponent />
             ) : (
