@@ -120,7 +120,7 @@ function LessonRow(props: LessonRowProps) {
           <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
 
           <MenuRow disabled={isDisabled}>
-            <MenuItem>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>

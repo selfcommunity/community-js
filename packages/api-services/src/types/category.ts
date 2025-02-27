@@ -13,4 +13,8 @@ export interface CategoryParams extends BaseSearchParams {
    * 	Filter using field deleted (only if user is administrator).
    */
   deleted?: boolean;
+  /**
+   * Excludes categories in which you cannot publish
+   */
+  can_create_content?: boolean;
 }

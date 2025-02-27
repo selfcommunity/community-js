@@ -1,16 +1,28 @@
 import type {CreateLocalTracksOptions, LocalAudioTrack, LocalTrack, LocalVideoTrack} from 'livekit-client';
-import {createLocalAudioTrack, createLocalTracks, createLocalVideoTrack, facingModeFromLocalTrack, Track, VideoPresets, Mutex} from 'livekit-client';
+import {
+  createLocalAudioTrack,
+  createLocalTracks,
+  createLocalVideoTrack,
+  facingModeFromLocalTrack,
+  Track,
+  TrackProcessor,
+  VideoPresets,
+  Mutex
+} from 'livekit-client';
 import * as React from 'react';
 import type {LocalUserChoices} from '@livekit/components-core';
 import {log} from '@livekit/components-core';
 import {defaultUserChoices} from '@livekit/components-core';
 import {MediaDeviceMenu, useMediaDevices, usePersistentUserChoices} from '@livekit/components-react';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {useSCUser} from '@selfcommunity/react-core';
 import ParticipantTileAvatar from './ParticipantTileAvatar';
 import {useEffect, useMemo} from 'react';
 import {TrackToggle} from './TrackToggle';
 import {useLiveStream} from './LiveStreamProvider';
-import {Button} from '@mui/material';
+import {BackgroundBlur} from '@livekit/track-processors';
+import LiveStreamSettingsMenu from './LiveStreamSettingsMenu';
+import {isClientSideRendering} from '@selfcommunity/utils';
+import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
 
 /**
  * Props for the PreJoin component.
@@ -38,6 +50,7 @@ export interface PreJoinProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
    * @alpha
    */
   persistUserChoices?: boolean;
+  videoProcessor?: TrackProcessor<Track.Kind.Video>;
 }
 
 /** @alpha */
@@ -204,6 +217,7 @@ export function PreJoin({
   camLabel = 'Camera',
   userLabel = 'Username',
   persistUserChoices = true,
+  videoProcessor,
   ...htmlProps
 }: PreJoinProps) {
   const {liveStream} = useLiveStream();
@@ -248,6 +262,12 @@ export function PreJoin({
   const [audioDeviceId, setAudioDeviceId] = React.useState<string>(initialUserChoices.audioDeviceId);
   const [videoDeviceId, setVideoDeviceId] = React.useState<string>(initialUserChoices.videoDeviceId);
   const [username, setUsername] = React.useState(initialUserChoices.username);
+
+  // Processors
+  const [blurEnabled, setBlurEnabled] = React.useState(
+    isClientSideRendering() ? Boolean(window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT)) || false : false
+  );
+  const [processorPending, setProcessorPending] = React.useState(false);
 
   // Save user choices to persistent storage.
   React.useEffect(() => {
@@ -317,6 +337,11 @@ export function PreJoin({
     [onValidate]
   );
 
+  const handleBlur = React.useCallback(() => {
+    setBlurEnabled((enabled) => !enabled);
+    window?.localStorage?.setItem(CHOICE_VIDEO_BLUR_EFFECT, (!blurEnabled).toString());
+  }, [setBlurEnabled, blurEnabled]);
+
   useEffect(() => {
     const newUserChoices = {
       username,
@@ -328,6 +353,21 @@ export function PreJoin({
     setUserChoices(newUserChoices);
     setIsValid(handleValidation(newUserChoices));
   }, [username, scUserContext.user, videoEnabled, handleValidation, audioEnabled, audioDeviceId, videoDeviceId]);
+
+  useEffect(() => {
+    if (videoTrack && videoEnabled) {
+      setProcessorPending(true);
+      try {
+        if (blurEnabled && !videoTrack.getProcessor()) {
+          videoTrack.setProcessor(BackgroundBlur(20));
+        } else if (!blurEnabled) {
+          videoTrack.stopProcessor();
+        }
+      } finally {
+        setProcessorPending(false);
+      }
+    }
+  }, [blurEnabled, videoTrack, videoEnabled]);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -391,6 +431,7 @@ export function PreJoin({
             />
           </div>
         </div>
+        <LiveStreamSettingsMenu actionBlurDisabled={!canUseVideo || !videoEnabled} blurEnabled={blurEnabled} handleBlur={handleBlur} />
       </div>
       <form className="lk-username-container">
         {/* <input
@@ -405,6 +446,7 @@ export function PreJoin({
         /> */}
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
+
         <button className="lk-button lk-join-button" type="submit" onClick={handleSubmit} disabled={!isValid || error}>
           {joinLabel}
         </button>
