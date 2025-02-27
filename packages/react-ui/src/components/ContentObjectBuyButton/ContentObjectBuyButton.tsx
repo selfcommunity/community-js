@@ -31,6 +31,9 @@ import {MouseEvent, ReactNode, useCallback, useEffect, useMemo, useState} from '
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import ContentObjectPricesDialog from '../ContentObjectPricesDialog';
+import {SCContentType} from '../../types/paywall';
+import ContentObjectPrices from '../ContentObjectPrices';
 
 const PREFIX = 'SCContentObjectBuyButton';
 
@@ -150,33 +153,20 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
   );
 
   // HANDLERS
-  const handleOpen = useCallback(
-    (event: MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
-    },
-    [setAnchorEl]
-  );
-
   const handleClose = useCallback(() => {
     setAnchorEl(null);
   }, [setAnchorEl]);
 
-  const handleToggleAction = useCallback(
-    (event) => {
-      setAnchorEl(null);
-
+  const handleOpen = useCallback(
+    (event: MouseEvent<HTMLElement>) => {
       if (!scUserContext.user) {
         scContext.settings.handleAnonymousAction();
-      } else if (status !== undefined) {
-        console.log('action');
+      } else {
+        setAnchorEl(event.currentTarget);
       }
     },
-    [scUserContext.user, status, scContext.settings]
+    [scUserContext.user, setAnchorEl, scContext.settings]
   );
-
-  function renderMenuItems() {
-    return <Box>Opzioni di acquisto</Box>;
-  }
 
   /**
    * Get current translated status
@@ -211,7 +201,7 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
         size="small"
         startIcon={<Icon>card_giftcard</Icon>}
         // loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
-        onClick={handleToggleAction}
+        onClick={handleOpen}
         {...rest}>
         {getStatus}
       </RequestRoot>
@@ -226,12 +216,10 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
               onOpen={handleOpen}
               anchor="bottom"
               disableSwipeToOpen>
-              {renderMenuItems()}
+              <ContentObjectPrices contentType={SCContentType.EVENT} id={scEvent.id} />
             </SwipeableDrawerRoot>
           ) : (
-            <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose}>
-              {renderMenuItems()}
-            </MenuRoot>
+            <ContentObjectPricesDialog open ContentObjectPricesComponentProps={{contentType: SCContentType.EVENT, id: scEvent.id}} />
           )}
         </>
       )}

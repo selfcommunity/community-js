@@ -145,6 +145,7 @@ import {
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
 import {SCCommunitySubscriptionTier} from './tier';
 import {SCCommunityEnvironment} from './environment';
+import {type SCContentProduct, type SCProductPrice, SCProductPriceType} from './paywall';
 
 /**
  * Exports all types
@@ -319,5 +320,8 @@ export {
   SCLiveStreamViewType,
   SCOnBoardingStepIdType,
   SCCommunitySubscriptionTier,
-	SCCommunityEnvironment
+  SCCommunityEnvironment,
+  type SCContentProduct,
+  type SCProductPrice,
+  SCProductPriceType
 };
