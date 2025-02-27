@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
+import {SCCourseLessonType, SCCourseSectionType, SCCourseType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
@@ -46,6 +46,10 @@ export interface LessonProps {
    */
   className?: string;
   /**
+   * The course object
+   */
+  course?: SCCourseType;
+  /**
    * The course id
    */
   courseId: string | number;
@@ -86,7 +90,7 @@ export interface LessonProps {
    * Handler on lesson change
    * @default null
    */
-  onLessonChange?: (id) => void;
+  onLessonChange?: (lessonId, sectionId) => void;
   /**
    * Any other properties
    */
@@ -101,6 +105,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   });
   const {
     className = null,
+    course,
     courseId,
     sectionId,
     lesson = null,
@@ -118,7 +123,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
-  const {scCourse} = useSCFetchCourse({id: courseId, params: {view: editMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: editMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId, sectionId: _sectionId});
 
   // STATE
@@ -157,7 +162,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     setLessonId(l.id);
     setSectionId(s.id);
     setCurrentSection(s);
-    onLessonChange && onLessonChange(l.id);
+    onLessonChange && onLessonChange(l.id, s.id);
   };
 
   /**
