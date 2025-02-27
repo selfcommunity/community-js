@@ -24,7 +24,7 @@ const hydrate = (ids: number[], endpointQueryParams?: CategoryParams) => {
   }
 
   if (endpointQueryParams?.can_create_content) {
-    return categories.filter((c) => c.content_only_staff);
+    return categories.filter((c) => !c.content_only_staff);
   }
 
   return categories;

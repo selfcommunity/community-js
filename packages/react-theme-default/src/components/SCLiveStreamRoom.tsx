@@ -98,12 +98,19 @@ const Component = {
         }
       },
       '& .lk-settings-menu-modal': {
-        minWidth: 250,
+        minWidth: 290,
+        paddingTop: theme.spacing(3),
+        '& .lk-settings-menu-modal-icon-close': {
+          color: theme.palette.common.white,
+          position: 'absolute',
+          top: 3,
+          right: 2
+        },
         '& .MuiFormControlLabel-root': {
           marginLeft: 0
         },
-        '& div.MuiTypography-body1': {
-          color: theme.palette.common.white
+        '& .MuiTypography-body1': {
+          color: '#FFF !important'
         },
         '& .MuiSwitch-track': {
           backgroundColor: theme.palette.grey['300']

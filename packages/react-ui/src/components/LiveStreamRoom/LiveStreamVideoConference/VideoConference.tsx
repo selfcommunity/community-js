@@ -26,13 +26,16 @@ import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} f
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, IconButton} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import NoParticipants from './NoParticipants';
 import LiveStreamSettingsMenu from './LiveStreamSettingsMenu';
 import {BackgroundBlur} from '@livekit/track-processors';
 import {isClientSideRendering} from '@selfcommunity/utils';
 import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
+import Icon from '@mui/material/Icon';
+import {useSnackbar} from 'notistack';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCVideoConference';
 
@@ -107,7 +110,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
   const scUserContext: SCUserContextType = useSCUser();
 
   const [blurEnabled, setBlurEnabled] = React.useState(
-    isClientSideRendering() ? Boolean(window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT)) || false : false
+    isClientSideRendering() ? window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT) === 'true' : false
   );
   const [processorPending, setProcessorPending] = React.useState(false);
 
@@ -148,6 +151,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
   const {cameraTrack} = useLocalParticipant();
+  const {enqueueSnackbar} = useSnackbar();
   useLivestreamCheck();
 
   /**
@@ -239,6 +243,17 @@ export function VideoConference(inProps: VideoConferenceProps) {
         } else if (!blurEnabled) {
           localCamTrack.stopProcessor();
         }
+      } catch (e) {
+        console.log(e);
+        setBlurEnabled(false);
+        window?.localStorage?.setItem(CHOICE_VIDEO_BLUR_EFFECT, false.toString());
+        enqueueSnackbar(
+          <FormattedMessage id="ui.liveStreamRoom.errorApplyVideoEffect" defaultMessage="ui.contributionActionMenu.errorApplyVideoEffect" />,
+          {
+            variant: 'warning',
+            autoHideDuration: 3000
+          }
+        );
       } finally {
         setProcessorPending(false);
       }
@@ -299,6 +314,9 @@ export function VideoConference(inProps: VideoConferenceProps) {
             />
           )}
           <div className="lk-settings-menu-modal" style={{display: widgetState.showSettings ? 'block' : 'none'}}>
+            <IconButton className="lk-settings-menu-modal-icon-close" onClick={() => layoutContext?.widget.dispatch?.({msg: 'toggle_settings'})}>
+              <Icon>close</Icon>
+            </IconButton>
             {SettingsComponent ? (
               <SettingsComponent />
             ) : (
