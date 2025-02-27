@@ -1,6 +1,6 @@
 {
 	"name": "@selfcommunity/react-core",
-	"version": "0.6.7-alpha.16",
+	"version": "0.6.7-alpha.17",
 	"description": "React Core Components useful for integrating UI Community components (react-ui).",
 	"author": "SelfCommunity <https://www.selfcommunity.com>",
 	"homepage": "https://www.selfcommunity.com",
@@ -69,7 +69,7 @@
 	},
 	"dependencies": {
 		"@selfcommunity/api-services": "^0.6.7-alpha.3",
-		"@selfcommunity/react-i18n": "^0.8.0-alpha.6",
+		"@selfcommunity/react-i18n": "^0.8.0-alpha.7",
 		"@selfcommunity/types": "^0.7.7-alpha.3",
 		"@selfcommunity/utils": "^0.2.64-alpha.1",
 		"js-cookie": "^3.0.5",
