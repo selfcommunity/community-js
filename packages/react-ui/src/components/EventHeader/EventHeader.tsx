@@ -24,6 +24,7 @@ import EventSubscribeButton, {EventSubscribeButtonProps} from '../EventSubscribe
 import User from '../User';
 import {PREFIX} from './constants';
 import EventHeaderSkeleton from './Skeleton';
+import ContentObjectBuyButton from '../ContentObjectBuyButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -301,7 +302,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
+                  <ContentObjectBuyButton event={scEvent} />
+                  {/* <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} /> */}
                   <EventActionsMenu event={scEvent} onEditSuccess={setSCEvent} {...EventActionsProps} />
                 </>
               )}
