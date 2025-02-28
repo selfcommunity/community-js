@@ -37,6 +37,20 @@ const Component = {
           }
         }
       }
+    }),
+    skeletonRoot: ({theme}) => ({
+      border: `1px solid ${theme.palette.grey['300']}`,
+      borderRadius: '5px',
+
+      '& .SCAccordionLessons-accordion': {
+        '& .SCAccordionLessons-summary': {
+          display: 'flex',
+          justifyContent: 'space-between',
+          borderBottom: `1px solid ${theme.palette.grey['300']}`,
+          padding: theme.spacing('22px', 3),
+          backgroundColor: theme.palette.grey['200']
+        }
+      }
     })
   }
 };

@@ -1,26 +1,14 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Icon,
-  Skeleton,
-  styled,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  useThemeProps
-} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {Fragment, HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import {SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {SCThemeType} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCAccordionLessons';
+import {PREFIX} from './constants';
+import AccordionLessonSkeleton from './Skeleton';
 
 const classes = {
-  root: `${PREFIX}-root`,
+  root: `${PREFIX}-skeleton-root`,
   accordion: `${PREFIX}-accordion`,
   summary: `${PREFIX}-summary`,
   details: `${PREFIX}-details`,
@@ -63,16 +51,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
   );
 
   if (!course) {
-    return (
-      <Root className={classNames(classes.root, className)}>
-        <Box className={classes.accordion}>
-          <Box className={classes.summary}>
-            <Skeleton animation="wave" variant="text" width="210px" height="21px" />
-            <Skeleton animation="wave" variant="text" width="54px" height="21px" />
-          </Box>
-        </Box>
-      </Root>
-    );
+    return <AccordionLessonSkeleton />;
   }
 
   return (
