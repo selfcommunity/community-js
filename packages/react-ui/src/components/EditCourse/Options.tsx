@@ -8,7 +8,6 @@ import {OptionsData} from './types';
 import {useSnackbar} from 'notistack';
 import SwitchForm from './Options/SwitchForm';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import OptionsSkeleton from './Options/Skeleton';
 import {LoadingButton} from '@mui/lab';
 import {SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
@@ -35,7 +34,7 @@ const OPTIONS = {
 };
 
 interface OptionsProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   setSCCourse: (course: SCCourseType) => void;
 }
 
@@ -53,7 +52,7 @@ function Options(props: OptionsProps) {
 
   // EFFECTS
   useDeepCompareEffect(() => {
-    if (!course || !tempOptions) {
+    if (!tempOptions) {
       return;
     }
 
@@ -114,10 +113,6 @@ function Options(props: OptionsProps) {
         });
       });
   }, [course, tempOptions, setCanSave, setLoading]);
-
-  if (!course) {
-    return <OptionsSkeleton />;
-  }
 
   return (
     <Fragment>

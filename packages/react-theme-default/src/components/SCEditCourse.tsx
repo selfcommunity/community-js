@@ -222,7 +222,48 @@ const Component = {
         }
       }
     }),
-    lessonsSkeletonRoot: ({theme}) => ({
+    skeletonRoot: ({theme}) => ({
+      '& .SCEditCourse-header': {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: theme.spacing(0.5),
+
+        [theme.breakpoints.down('sm')]: {
+          paddingLeft: theme.spacing(2)
+        }
+      },
+
+      '& .SCEditCourse-tab-list': {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: theme.spacing(4),
+        borderBottom: `1px solid ${theme.palette.grey['300']}`,
+        padding: theme.spacing('12px 0'),
+        marginBottom: '13px'
+      },
+
+      '& .SCEditCourse-lesson-title': {
+        marginBottom: '20px',
+
+        [theme.breakpoints.down('sm')]: {
+          display: 'none'
+        }
+      },
+
+      '& .SCEditCourse-lesson-info-wrapper': {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: theme.spacing(1),
+
+        '& .SCEditCourse-lesson-info': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: theme.spacing(1)
+        }
+      },
+
       '& .SCEditCourse-lessons-sections-wrapper': {
         flexDirection: 'row',
         alignItems: 'center',
@@ -237,15 +278,45 @@ const Component = {
         width: 'auto',
         border: `1px solid ${theme.palette.grey[300]}`,
         borderBottomLeftRadius: '5px',
-        borderBottomRightRadius: '5px'
-      }
-    }),
-    usersSkeletonRoot: ({theme}) => ({
+        borderBottomRightRadius: '5px',
+
+        '& .SCEditCourse-margin': {
+          margin: 'auto'
+        },
+
+        '& .SCEditCourse-margin-left': {
+          marginLeft: 'auto'
+        },
+
+        '& .SCEditCourse-actions-wrapper': {
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          gap: '22px'
+        }
+      },
+
       '& .SCEditCourse-users-status-wrapper': {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: '7px',
         marginBottom: theme.spacing(2)
+      },
+
+      '& .SCEditCourse-options-wrapper': {
+        gap: theme.spacing(5),
+        maxWidth: '600px',
+        margin: 'auto'
+      },
+
+      '& .SCEditCourse-options-divider': {
+        marginTop: '21px',
+        marginBottom: theme.spacing(3)
+      },
+
+      '& .SCEditCourse-options-button-wrapper': {
+        alignItems: 'flex-end',
+        maxWidth: '600px',
+        margin: 'auto'
       }
     })
   }

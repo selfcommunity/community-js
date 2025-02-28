@@ -1,4 +1,5 @@
 import EditCourse, {EditCourseProps} from './EditCourse';
-// import EditCourseSkeleton, {EditCourseSkeletonProps} from './Skeleton';
+import EditCourseSkeleton from './Skeleton';
+
 export default EditCourse;
-export {EditCourseProps};
+export {EditCourseProps, EditCourseSkeleton};
