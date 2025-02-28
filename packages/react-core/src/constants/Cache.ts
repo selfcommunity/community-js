@@ -6,14 +6,23 @@
 export const FEED_OBJECT_CACHE_PREFIX_KEY = '_fo_';
 export const getFeedObjectCacheKey = (id, type) => `${FEED_OBJECT_CACHE_PREFIX_KEY}${type}_${id}`;
 
-/** COMMMENT OBJECT **/
+/** COMMENT OBJECT **/
 export const COMMENT_OBJECT_CACHE_PREFIX_KEY = '_co_';
 export const getCommentObjectCacheKey = (id) => `${COMMENT_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
-/** COMMMENT OBJECTS **/
+/** COMMENT OBJECTS **/
 export const COMMENT_OBJECTS_CACHE_PREFIX_KEY = '_cos_';
 export const getCommentObjectsCacheKey = (id, type, next) => `${COMMENT_OBJECTS_CACHE_PREFIX_KEY}${type}_${id}_${next}`;
 export const getCommentObjectsCachePrefixKeys = (id, type) => `${COMMENT_OBJECTS_CACHE_PREFIX_KEY}${type}_${id}`;
+
+/** LESSON COMMENT OBJECT **/
+export const LESSON_COMMENT_CACHE_PREFIX_KEY = '_lco_';
+export const getLessonCommentCacheKey = (id) => `${LESSON_COMMENT_CACHE_PREFIX_KEY}${id}`;
+
+/** LESSON COMMENT OBJECTS **/
+export const LESSON_COMMENTS_CACHE_PREFIX_KEY = '_lcos_';
+export const getLessonCommentsCacheKey = (id, next) => `${LESSON_COMMENTS_CACHE_PREFIX_KEY}${id}_${next}`;
+export const getLessonCommentsCachePrefixKeys = (id) => `${LESSON_COMMENTS_CACHE_PREFIX_KEY}${id}`;
 
 /** CATEGORIES OBJECT **/
 export const CATEGORIES_OBJECT_CACHE_PREFIX_KEY = '_cas_';
@@ -22,6 +31,18 @@ export const getCategoriesObjectCacheKey = () => `${CATEGORIES_OBJECT_CACHE_PREF
 /** CATEGORY OBJECT **/
 export const CATEGORY_OBJECT_CACHE_PREFIX_KEY = '_ca_';
 export const getCategoryObjectCacheKey = (id) => `${CATEGORY_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** COURSE OBJECT **/
+export const COURSE_OBJECT_CACHE_PREFIX_KEY = '_crs_';
+export const getCourseObjectCacheKey = (id) => `${COURSE_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** COURSES OBJECT **/
+export const COURSES_OBJECT_CACHE_PREFIX_KEY = '_crss_';
+export const getCoursesObjectCacheKey = () => `${COURSES_OBJECT_CACHE_PREFIX_KEY}`;
+
+/** LESSON OBJECT **/
+export const LESSON_OBJECT_CACHE_PREFIX_KEY = '_lss_';
+export const getLessonObjectCacheKey = (id) => `${LESSON_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
 /** EVENT OBJECT **/
 export const EVENT_OBJECT_CACHE_PREFIX_KEY = '_evt_';
@@ -96,6 +117,9 @@ export const USER_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_uFoldWidget_';
 export const USER_EVENTS_STATE_CACHE_PREFIX_KEY = '_uEvents_';
 export const USER_OTHER_EVENTS_STATE_CACHE_PREFIX_KEY = '_uOtherEvents_';
 export const USER_PARTECIPANTS_EVENTS_STATE_CACHE_PREFIX_KEY = '_uPartecipantsEvents_';
+export const USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY = '_uPartecipantsCourses_';
+export const USER_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY = '_uRequestsCourses_';
+export const USER_COMMENTS_COURSES_STATE_CACHE_PREFIX_KEY = '_uCommentsCourses_';
 export const USER_INVITED_EVENTS_STATE_CACHE_PREFIX_KEY = '_uInvitedEvents_';
 export const USER_REQUESTS_EVENTS_STATE_CACHE_PREFIX_KEY = '_uRequestsEvents_';
 export const USER_LIVE_STREAM_CACHE_PREFIX_KEY = '_uUserLives_';

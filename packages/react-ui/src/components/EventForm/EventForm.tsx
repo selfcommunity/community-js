@@ -390,7 +390,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         if ('coverError' in _error) {
           __errors = {
             ...__errors,
-            ['coverError']: <FormattedMessage id="ui.ui.eventForm.cover.error" defaultMessage="ui.ui.eventForm.cover.error" />
+            ['coverError']: <FormattedMessage id="ui.eventForm.cover.error" defaultMessage="ui.eventForm.cover.error" />
           };
         }
         if ('nameError' in _error || ('nonFieldErrorsError' in _error && _error['nonFieldErrorsError'].error === 'unique')) {

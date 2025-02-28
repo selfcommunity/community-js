@@ -63,7 +63,11 @@ export enum SCNotificationTypologyType {
   USER_REQUESTED_TO_JOIN_EVENT = 'user_requested_to_join_event',
   USER_ACCEPTED_TO_JOIN_EVENT = 'user_accepted_to_join_event',
   USER_ADDED_TO_EVENT = 'user_added_to_event',
-  LIVE_STREAM_STARTED = 'live_stream_started'
+  LIVE_STREAM_STARTED = 'live_stream_started',
+  USER_INVITED_TO_JOIN_COURSE = 'user_invited_to_join_course',
+  USER_REQUESTED_TO_JOIN_COURSE = 'user_requested_to_join_course',
+  USER_ACCEPTED_TO_JOIN_COURSE = 'user_accepted_to_join_course',
+  USER_ADDED_TO_COURSE = 'user_added_to_course'
 }
 
 /**

@@ -102,7 +102,7 @@ const Component = {
         }
       }
     }),
-    attributesRoot: ({theme}: any) => ({}),
+    attributesRoot: () => ({}),
     contentDiscussionRoot: ({theme}: any) => ({
       '& .SCComposer-content-discussion-title': {
         '& .MuiInputBase-root': {
@@ -172,6 +172,34 @@ const Component = {
         }
       }
     }),
+    contentLessonRoot: ({theme}: any) => ({
+      // '& .SCComposer-content-lesson-editor': {
+      '& .SCEditor-root': {
+        '& .SCEditor-content': {
+          paddingTop: theme.spacing(1)
+        }
+        // paddingBottom: theme.spacing(2),
+        // '& .MuiInputBase-root': {
+        //   paddingLeft: 0,
+        //   paddingRight: 0,
+        //   paddingBottom: 0,
+        //   fontSize: '1.429rem',
+        //   fontWeight: theme.typography.fontWeightBold,
+        //   '& fieldset': {
+        //     display: 'none'
+        //   },
+        //   '&.MuiInputBase-adornedEnd .MuiTypography-root': {
+        //     alignSelf: 'end'
+        //   },
+        //   '&.Mui-error': {
+        //     color: theme.palette.error.main
+        //   }
+        // },
+        // '& .MuiFormHelperText-root': {
+        //   marginLeft: 0
+        // }
+      }
+    }),
     layerTransitionRoot: ({theme}: any) => ({
       position: 'absolute',
       top: 0,
@@ -205,8 +233,8 @@ const Component = {
         marginBottom: theme.spacing(4)
       }
     }),
-    layerCategoryRoot: ({theme}: any) => ({}),
-    layerGroupRoot: ({theme}: any) => ({}),
+    layerCategoryRoot: () => ({}),
+    layerGroupRoot: () => ({}),
     layerCloseRoot: ({theme}: any) => ({
       '& .SCComposer-layer-content': {
         '& .MuiTypography-root': {
@@ -225,8 +253,8 @@ const Component = {
         }
       }
     }),
-    layerLocationRoot: ({theme}: any) => ({}),
-    skeletonRoot: ({theme}: any) => ({}),
+    layerLocationRoot: () => ({}),
+    skeletonRoot: () => ({}),
     typeSwitchButtonGroupRoot: ({theme}: any) => ({
       '& .MuiToggleButton-root': {
         backgroundColor: theme.palette.common.black,

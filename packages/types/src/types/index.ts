@@ -134,6 +134,18 @@ import {
   SCEventSubscriptionStatusType
 } from './event';
 import {
+  type SCCourseType,
+  type SCCourseLessonType,
+  type SCCourseSectionType,
+  type SCCourseCommentType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType
+} from './course';
+import {
   type SCLiveStreamType,
   SCLiveStreamViewType,
   SCLiveStreamConnectionDetailsType,
@@ -311,6 +323,17 @@ export {
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
+  SCOnBoardingStepIdType,
+  type SCCourseType,
+  type SCCourseCommentType,
+  type SCCourseSectionType,
+  type SCCourseLessonType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,
@@ -318,7 +341,6 @@ export {
   type SCLiveStreamMonthlyDurationType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
-  SCOnBoardingStepIdType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
   type SCContentProduct,

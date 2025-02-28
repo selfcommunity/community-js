@@ -41,6 +41,7 @@ import classNames from 'classnames';
 import GroupForm, {GroupFormProps} from '../GroupForm';
 import CreateLiveStreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
+import CourseFormDialog, {CourseFormDialogProps} from '../CourseFormDialog';
 
 const PREFIX = 'SCComposerIconButton';
 
@@ -85,19 +86,25 @@ export interface ComposerIconButtonProps extends IconButtonProps {
   PopperProps?: PopperProps;
 
   /**
+   * Props to spread to CreateCourse component
+   * @default empty object
+   */
+  CourseFormDialogComponentProps?: CourseFormDialogProps;
+
+  /**
    * Props to spread to CreateGroup component
    * @default empty object
    */
   GroupFormProps?: GroupFormProps;
 
   /**
-   * Props to spread to CreateGroup component
+   * Props to spread to CreateEvent component
    * @default empty object
    */
   EventFormDialogComponentProps?: EventFormDialogProps;
 
   /**
-   * Props to spread to CreateGroup component
+   * Props to spread to CreateLiveStream component
    * @default empty object
    */
   CreateLiveStreamDialogComponentProps?: CreateLiveStreamDialogProps;
@@ -137,6 +144,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
     onClick,
     onClose,
     PopperProps = {},
+    CourseFormDialogComponentProps = {},
     GroupFormProps = {},
     EventFormDialogComponentProps = {},
     CreateLiveStreamDialogComponentProps = {},
@@ -146,6 +154,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
   // STATE
   const [openComposer, setOpenComposer] = useState<boolean>(false);
   const [openPopper, setOpenPopper] = useState<boolean>(false);
+  const [openCreateCourse, setOpenCreateCourse] = useState<boolean>(false);
   const [openCreateGroup, setOpenCreateGroup] = useState<boolean>(false);
   const [openCreateEvent, setOpenCreateEvent] = useState<boolean>(false);
   const [openCreateLiveStream, setOpenCreateLiveStream] = useState<boolean>(false);
@@ -175,6 +184,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
   const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // MEMOS
+  const canCreateCourse = useMemo(() => scUserContext?.user?.permission?.create_course, [scUserContext?.user?.permission]);
   const canCreateGroup = useMemo(() => scUserContext?.user?.permission?.create_group, [scUserContext?.user?.permission]);
   const canCreateEvent = useMemo(() => scUserContext?.user?.permission?.create_event, [scUserContext?.user?.permission]);
   const canCreateLive = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
@@ -215,6 +225,20 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
 
   // EFFECTS
   useEffect(() => {
+    if (canCreateCourse) {
+      setListItem((prev) => [
+        ...prev,
+        {
+          icon: 'courses',
+          text: 'ui.composerIconButton.list.course',
+          onClick: () => {
+            setOpenCreateCourse(true);
+            setOpenPopper(false);
+          }
+        }
+      ]);
+    }
+
     if (canCreateGroup) {
       setListItem((prev) => [
         ...prev,
@@ -256,7 +280,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
         }
       ]);
     }
-  }, [canCreateGroup, setListItem]);
+  }, [canCreateCourse, canCreateGroup, canCreateEvent, canCreateLiveStream, setListItem, setOpenPopper, setOpenCreateCourse, setOpenCreateGroup, setOpenCreateEvent, setOpenCreateLiveStream]);
 
   // HANDLERS
   const handleClick = useCallback(
@@ -268,7 +292,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
             autoHideDuration: 3000
           });
         } else {
-          if (canCreateGroup || canCreateEvent || canCreateLiveStream) {
+          if (canCreateCourse || canCreateGroup || canCreateEvent || canCreateLiveStream) {
             setOpenPopper(true);
           } else {
             setOpenComposer(true);
@@ -279,7 +303,17 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
       }
       onClick?.(event);
     },
-    [onClick, scContext.settings, scUserContext.user]
+    [
+      onClick,
+      scContext.settings,
+      scUserContext.user,
+      canCreateCourse,
+      canCreateGroup,
+      canCreateEvent,
+      canCreateLiveStream,
+      setOpenPopper,
+      setOpenComposer
+    ]
   );
 
   const handleCloseComposer = useCallback(() => {
@@ -290,6 +324,10 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
   const handleCloseMenu = useCallback(() => {
     setOpenPopper(false);
   }, [setOpenPopper]);
+
+  const handleCloseCreateCourse = useCallback(() => {
+    setOpenCreateCourse(false);
+  }, [setOpenCreateCourse]);
 
   const handleCloseCreateGroup = useCallback(() => {
     setOpenCreateGroup(false);
@@ -345,6 +383,7 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
           )}
         </>
       )}
+      {openCreateCourse && <CourseFormDialog open onClose={handleCloseCreateCourse} {...CourseFormDialogComponentProps} />}
       {openCreateGroup && <GroupForm open onClose={handleCloseCreateGroup} {...GroupFormProps} />}
       {openCreateEvent && <EventFormDialog open onClose={handleCloseCreateEvent} {...EventFormDialogComponentProps} />}
       {openCreateLiveStream && <CreateLiveStreamDialog open onClose={handleCloseCreateLiveStream} {...CreateLiveStreamDialogComponentProps} />}

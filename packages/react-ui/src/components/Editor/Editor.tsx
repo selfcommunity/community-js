@@ -11,7 +11,7 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MediaPlugin, MentionsPlugin, OnChangePlugin} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
@@ -21,6 +21,7 @@ import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
 import OnFocusPlugin from './plugins/OnFocusPlugin';
 import {PREFIX} from './constants';
+import {SCMediaType} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -74,7 +75,8 @@ const editorTheme: EditorThemeClasses = {
     superscript: `${PREFIX}-textSuperscript`,
     underline: `${PREFIX}-textUnderline`,
     underlineStrikethrough: `${PREFIX}-textUnderlineStrikethrough`
-  }
+  },
+  document: `${PREFIX}-document`
 };
 
 export interface EditorProps {
@@ -113,12 +115,23 @@ export interface EditorProps {
    * @default false
    */
   uploadImage?: boolean;
+  /**
+   * This editor can upload files
+   * @default false
+   */
+  uploadFile?: boolean;
 
   /**
    * Handler for change event of the editor
    * @default null
    * */
   onChange?: (value: string) => void;
+
+  /**
+   * Handler for change media in the editor
+   * @default null
+   * */
+  onMediaChange?: (medias: SCMediaType[]) => void;
 
   /**
    * Handler for blur event of the editor
@@ -131,6 +144,17 @@ export interface EditorProps {
    * @default null
    * */
   onFocus?: (event: FocusEvent) => void;
+
+  /**
+   * Action to add to actions
+   */
+  action?: React.ReactNode | null;
+
+  /**
+   * The text displayed when the editor is empty
+   * @default   <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+   */
+  placeholder?: React.ReactNode;
 }
 
 /**
@@ -174,10 +198,14 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     defaultValue = '',
     toolbar = false,
     uploadImage = false,
+    uploadFile = false,
     editable = true,
     onChange = null,
+    onMediaChange = null,
     onFocus = null,
-    onBlur = null
+    onBlur = null,
+    action = null,
+    placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
   } = props;
   const apiRef = useRef<ApiRef>();
 
@@ -187,6 +215,10 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   // HANDLERS
   const handleChange = (value) => {
     onChange && onChange(value);
+  };
+
+  const handleMediaChange = (media) => {
+    onMediaChange && onMediaChange(media);
   };
 
   const handleError = (error: Error, editor: LexicalEditor) => {
@@ -239,21 +271,23 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
       <LexicalComposer initialConfig={initialConfig}>
         {toolbar ? (
           <>
-            <ToolbarPlugin uploadImage={uploadImage} />
+            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} MediaPluginProps={{onMediaAdd: handleMediaChange}} />
             <ListPlugin />
             <HorizontalRulePlugin />
           </>
         ) : (
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
+            {uploadFile && <MediaPlugin onMediaAdd={handleMediaChange} />}
             <EmojiPlugin />
+            {action && action}
           </Stack>
         )}
         <RichTextPlugin
           contentEditable={<ContentEditable className={classes.content} />}
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
-              <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+              {placeholder}
             </Box>
           }
           ErrorBoundary={LexicalErrorBoundary}

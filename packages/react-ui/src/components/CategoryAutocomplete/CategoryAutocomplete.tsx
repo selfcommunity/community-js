@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import {Fragment, SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField, {TextFieldProps} from '@mui/material/TextField';
@@ -74,7 +74,7 @@ export interface CategoryAutocompleteProps
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Category Autocomplete component. Learn about the available props and the CSS API.
@@ -121,8 +121,6 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   // State
   const [open, setOpen] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   const [value, setValue] = useState<string | SCCategoryType | (string | SCCategoryType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
 
   // HOOKS
@@ -132,7 +130,8 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
     if (value === null) {
       return;
     }
-    onChange && onChange(value);
+
+    onChange?.(value);
   }, [value]);
 
   useEffect(() => {
@@ -151,7 +150,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
     setOpen(false);
   };
 
-  const handleChange = (event: SyntheticEvent, value) => {
+  const handleChange = (_event: SyntheticEvent, value) => {
     let newValue = null;
     if (multiple && limitCountCategories > 0) {
       const [...rest] = value;
@@ -197,13 +196,13 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
             {checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
             <Chip
               label={
-                <React.Fragment>
+                <Fragment>
                   {parts.map((part, index) => (
                     <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
                       {part.text}
                     </span>
                   ))}
-                </React.Fragment>
+                </Fragment>
               }
             />
           </li>
@@ -219,10 +218,10 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
               ...params.InputProps,
               autoComplete: 'categories', // disable autocomplete and autofill
               endAdornment: (
-                <React.Fragment>
+                <Fragment>
                   {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
                   {params.InputProps.endAdornment}
-                </React.Fragment>
+                </Fragment>
               )
             }}
           />

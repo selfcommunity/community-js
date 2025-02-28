@@ -18,7 +18,7 @@ const Component = {
       }
     }),
     popperRoot: ({theme}: any) => ({
-      zIndex: 2,
+      zIndex: 1200,
       '& .SCContributionActionsMenu-popper-root': {
         overflow: 'visible',
         filter: 'drop-shadow(0px -1px 5px rgba(0,0,0,0.10))',

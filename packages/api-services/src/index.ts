@@ -53,6 +53,7 @@ import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/
 import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
 import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} from './services/live_stream';
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
+import CourseService, {CourseApiClient, CourseApiClientInterface} from './services/course';
 
 /**
  * Types
@@ -119,9 +120,17 @@ import {
   EventSearchParams,
   LiveStreamCreateParams,
   LiveStreamSearchParams,
-	LiveStreamRemoveParticipantParams,
+  LiveStreamRemoveParticipantParams,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseInfoViewType,
+  CourseInfoParams,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
 } from './types';
 
 /**
@@ -300,10 +309,21 @@ export {
   LiveStreamApiClientInterface,
   LiveStreamCreateParams,
   LiveStreamSearchParams,
-	LiveStreamRemoveParticipantParams,
+  LiveStreamRemoveParticipantParams,
   OnBoardingService,
   OnBoardingApiClientInterface,
   OnBoardingApiClient,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseInfoParams,
+  CourseInfoViewType,
+  CourseService,
+  CourseApiClientInterface,
+  CourseApiClient,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
 };

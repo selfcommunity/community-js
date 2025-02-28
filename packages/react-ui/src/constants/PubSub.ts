@@ -4,6 +4,7 @@ import {SCUserType, SCGroupType, SCEventType} from '@selfcommunity/types';
  * Define topics for pubsub
  */
 export enum SCTopicType {
+  COURSE = 'course',
   GROUP = 'group',
   EVENT = 'event',
   CATEGORY = 'category'
@@ -16,10 +17,22 @@ export enum SCGroupEventType {
   CREATE = 'create',
   EDIT = 'edit',
   DELETE = 'delete',
+  UPDATE = 'update',
   MEMBERS = 'members',
   ADD_MEMBER = 'members.add_member',
   INVITE_MEMBER = 'members.invite_member',
   REMOVE_MEMBER = 'members.remove_member'
+}
+
+/**
+ * Course event types
+ */
+export enum SCCourseEventType {
+  CREATE = 'create',
+  EDIT = 'edit',
+  DELETE = 'delete',
+  ADD_MEMBER = 'members.add_member',
+  INVITE_MEMBER = 'members.invite_member'
 }
 
 /**
