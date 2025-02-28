@@ -52,7 +52,7 @@ export interface LessonProps {
   /**
    * The course id
    */
-  courseId: string | number;
+  courseId?: string | number;
   /**
    * The section id
    */
