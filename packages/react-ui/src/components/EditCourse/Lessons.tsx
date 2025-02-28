@@ -7,9 +7,8 @@ import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
-import {Box, Icon, Skeleton, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Box, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import Status from './Status';
-import LessonsSkeleton from './Lessons/Skeleton';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
@@ -51,7 +50,7 @@ const headerCells = [
 ];
 
 interface LessonsProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   setSCCourse: (course: SCCourseType) => void;
 }
 
@@ -69,13 +68,13 @@ function Lessons(props: LessonsProps) {
 
   // EFFECTS
   useEffect(() => {
-    if (course && course.sections) {
+    if (course.sections) {
       setSections(course.sections);
     }
   }, [course]);
 
   // MEMOS
-  const isNewRow = useMemo(() => sections.length > course?.sections?.length, [course, sections]);
+  const isNewRow = useMemo(() => sections.length > course.sections?.length, [course, sections]);
 
   // FUNCTIONS
   const getSection = useCallback((id: number) => {
@@ -205,28 +204,22 @@ function Lessons(props: LessonsProps) {
         <Stack className={classes.lessonInfo}>
           <Icon>courses</Icon>
 
-          {course ? (
-            <Typography variant="body2">
-              <FormattedMessage
-                id="ui.course.type"
-                defaultMessage="ui.course.type"
-                values={{
-                  typeOfCourse: intl.formatMessage({
-                    id: `ui.course.type.${course.type}`,
-                    defaultMessage: `ui.course.type.${course.type}`
-                  })
-                }}
-              />
-            </Typography>
-          ) : (
-            <Skeleton animation="wave" variant="text" width="150px" height="21px" />
-          )}
+          <Typography variant="body2">
+            <FormattedMessage
+              id="ui.course.type"
+              defaultMessage="ui.course.type"
+              values={{
+                typeOfCourse: intl.formatMessage({
+                  id: `ui.course.type.${course.type}`,
+                  defaultMessage: `ui.course.type.${course.type}`
+                })
+              }}
+            />
+          </Typography>
         </Stack>
 
         <Status course={course} />
       </Stack>
-
-      {!course && <LessonsSkeleton />}
 
       {sections.length === 0 && (
         <EmptyStatus

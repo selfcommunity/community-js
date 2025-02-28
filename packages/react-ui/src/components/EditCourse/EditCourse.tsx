@@ -1,4 +1,4 @@
-import {Box, Icon, IconButton, Skeleton, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
+import {Box, Icon, IconButton, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
 import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import classNames from 'classnames';
@@ -14,6 +14,7 @@ import {SCCourseType} from '@selfcommunity/types';
 import {CourseInfoViewType} from '@selfcommunity/api-services';
 import Requests from './Requests';
 import {SCCourseEditTabType} from '../../types/course';
+import EditCourseSkeleton from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -115,13 +116,17 @@ export default function EditCourse(inProps: EditCourseProps) {
     [setTabValue]
   );
 
+  if (!scCourse) {
+    return <EditCourseSkeleton tab={tab} />;
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Stack className={classes.header}>
         <IconButton href={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)} size="small">
           <Icon>arrow_back</Icon>
         </IconButton>
-        {scCourse ? <Typography variant="h5">{scCourse.name}</Typography> : <Skeleton animation="wave" variant="text" width="125px" height="21px" />}
+        <Typography variant="h5">{scCourse.name}</Typography>
       </Stack>
 
       <TabContext value={tabValue}>

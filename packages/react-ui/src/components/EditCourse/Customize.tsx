@@ -3,11 +3,10 @@ import CourseForm from '../CourseForm';
 import {memo, useCallback} from 'react';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
-import Skeleton from '../CourseForm/Skeleton';
 import {SCCourseFormStepType} from '../../constants/Course';
 
 interface CustomizeProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   setSCCourse: (course: SCCourseType) => void;
 }
 
@@ -40,10 +39,6 @@ function Customize(props: CustomizeProps) {
       autoHideDuration: 3000
     });
   }, []);
-
-  if (!course) {
-    return <Skeleton />;
-  }
 
   return <CourseForm course={course} step={SCCourseFormStepType.CUSTOMIZATION} onSuccess={handleSuccess} onError={handleError} />;
 }

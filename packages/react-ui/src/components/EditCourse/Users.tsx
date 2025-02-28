@@ -7,7 +7,6 @@ import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import Status from './Status';
-import UsersSkeleton from './Users/Skeleton';
 import {PREFIX} from './constants';
 import CourseUsersTable from '../../shared/CourseUsersTable';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
@@ -37,7 +36,7 @@ const headerCells = [
 ];
 
 interface UsersProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   endpointQueryParams?: Record<string, string | number>;
 }
 
@@ -59,7 +58,7 @@ function Users(props: UsersProps) {
       isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course?.id),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
       cacheStrategy: CacheStrategies.CACHE_FIRST,
       visibleItems: endpointQueryParams.limit
     },
@@ -95,14 +94,14 @@ function Users(props: UsersProps) {
   useEffect(() => {
     let _t: NodeJS.Timeout;
 
-    if (scUserContext.user && course) {
+    if (scUserContext.user) {
       _t = setTimeout(_init);
 
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, course, _init]);
+  }, [scUserContext.user, _init]);
 
   useEffect(() => {
     updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.ADD_MEMBER}`, handleAddUser);
@@ -143,10 +142,6 @@ function Users(props: UsersProps) {
     [course, dispatch]
   );
 
-  if (!course) {
-    return <UsersSkeleton />;
-  }
-
   return (
     <Box>
       <Typography variant="h6">
@@ -161,7 +156,6 @@ function Users(props: UsersProps) {
         <Status course={course} />
 
         <AddUsersButton
-          course={course}
           label="ui.editCourse.tab.users.addUsersButton.label"
           endpoint={{
             url: () => Endpoints.GetCourseSuggestedUsers.url({id: course.id}),
