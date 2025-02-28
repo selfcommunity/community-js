@@ -4,6 +4,9 @@ const Component = {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
+      [theme.breakpoints.up('sm')]: {
+        height: '90%'
+      },
       overflowY: 'auto',
       padding: theme.spacing(2),
       justifyContent: 'space-between',
@@ -15,9 +18,7 @@ const Component = {
             marginLeft: 'auto'
           }
         },
-        [theme.breakpoints.down('sm')]: {
-          marginTop: theme.spacing(2)
-        },
+        marginTop: theme.spacing(2),
         marginBottom: 0
       },
       '& .infinite-scroll-component__outerdiv': {
@@ -28,9 +29,6 @@ const Component = {
             '& .MuiListItem-root': {
               padding: 0
             }
-          },
-          [theme.breakpoints.up('sm')]: {
-            height: '90% !important'
           }
         }
       }
