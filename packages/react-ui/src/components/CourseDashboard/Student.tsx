@@ -1,6 +1,6 @@
 import {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {PREFIX} from './constants';
-import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {Avatar, Box, Divider, LinearProgress, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
 import {SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
@@ -13,6 +13,7 @@ import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
+import StudentSkeleton from './Student/Skeleton';
 
 const messages = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
@@ -144,10 +145,6 @@ function Student(inProps: StudentCourseDashboardProps) {
 
   // MEMOS
   const actionButton = useMemo(() => {
-    if (!scCourse) {
-      return <Skeleton animation="wave" variant="rounded" width="160px" height="28px" />;
-    }
-
     return (
       <Stack className={classes.actionsWrapper}>
         {(scCourse?.join_status === SCCourseJoinStatusType.CREATOR || scCourse?.join_status === SCCourseJoinStatusType.MANAGER) && (
@@ -159,15 +156,15 @@ function Student(inProps: StudentCourseDashboardProps) {
           />
         )}
         {(scCourse?.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED) &&
-          (scCourse?.join_status !== null || scCourse.privacy !== SCCoursePrivacyType.PRIVATE) &&
-          scCourse.user_completion_rate < 100 && (
+          (scCourse?.join_status !== null || scCourse?.privacy !== SCCoursePrivacyType.PRIVATE) &&
+          scCourse?.user_completion_rate < 100 && (
             <ActionButton
               labelId={scCourse.num_lessons_completed === 0 ? messages.start : messages.continue}
               to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse))}
             />
           )}
-        {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
-          (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
+        {scCourse?.privacy === SCCoursePrivacyType.PRIVATE &&
+          (scCourse?.join_status === null || scCourse?.join_status === SCCourseJoinStatusType.REQUESTED) && (
             <ActionButton
               labelId={sentRequest ? messages.cancel : messages.request}
               color="inherit"
@@ -180,6 +177,10 @@ function Student(inProps: StudentCourseDashboardProps) {
     );
   }, [scCourse, sentRequest, loadingRequest, handleRequest]);
 
+  if (!scCourse) {
+    return <StudentSkeleton />;
+  }
+
   return (
     <Root className={classNames(classes.root, classes.studentContainer, className)} {...rest}>
       <HeaderCourseDashboard course={scCourse} />
@@ -188,26 +189,13 @@ function Student(inProps: StudentCourseDashboardProps) {
 
       <Stack className={classes.userWrapper}>
         <Stack className={classes.user}>
-          {scCourse ? (
-            <Avatar className={classes.avatar} src={scCourse.created_by.avatar} alt={scCourse.created_by.username} />
-          ) : (
-            <Skeleton animation="wave" variant="circular" className={classes.avatar} />
-          )}
+          <Avatar className={classes.avatar} src={scCourse.created_by.avatar} alt={scCourse.created_by.username} />
 
           <Box>
-            {scCourse ? (
-              <Fragment>
-                <Typography variant="body1">{scCourse.created_by.username}</Typography>
-                <Typography variant="body1">
-                  <FormattedMessage id="ui.course.dashboard.header.user.creator" defaultMessage="ui.course.dashboard.header.user.creator" />
-                </Typography>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <Skeleton animation="wave" variant="text" width="105px" height="21px" />
-                <Skeleton animation="wave" variant="text" width="74px" height="21px" />
-              </Fragment>
-            )}
+            <Typography variant="body1">{scCourse.created_by.username}</Typography>
+            <Typography variant="body1">
+              <FormattedMessage id="ui.course.dashboard.header.user.creator" defaultMessage="ui.course.dashboard.header.user.creator" />
+            </Typography>
           </Box>
         </Stack>
 
@@ -216,22 +204,22 @@ function Student(inProps: StudentCourseDashboardProps) {
 
       <Divider />
 
-      {(scCourse?.join_status === SCCourseJoinStatusType.CREATOR ||
-        scCourse?.join_status === SCCourseJoinStatusType.MANAGER ||
-        scCourse?.join_status === SCCourseJoinStatusType.JOINED ||
-        scCourse?.privacy !== SCCoursePrivacyType.PRIVATE) && (
+      {(scCourse.join_status === SCCourseJoinStatusType.CREATOR ||
+        scCourse.join_status === SCCourseJoinStatusType.MANAGER ||
+        scCourse.join_status === SCCourseJoinStatusType.JOINED ||
+        scCourse.privacy !== SCCoursePrivacyType.PRIVATE) && (
         <Fragment>
           <Typography variant="h6" className={classes.margin}>
             <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />
           </Typography>
 
           <Stack className={classes.box}>
-            {scCourse ? <Typography variant="body1">{scCourse.description}</Typography> : <Skeleton animation="wave" variant="text" height="130px" />}
+            <Typography variant="body1">{scCourse.description}</Typography>
           </Stack>
         </Fragment>
       )}
 
-      {(scCourse?.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED) && (
+      {(scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED) && (
         <Fragment>
           <Typography variant="h6" className={classes.margin}>
             <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.description" />
@@ -239,36 +227,27 @@ function Student(inProps: StudentCourseDashboardProps) {
 
           <Stack className={classes.box}>
             <Stack className={classes.percentageWrapper}>
-              {scCourse ? (
-                <Fragment>
-                  <Typography variant="body1">
-                    <FormattedMessage
-                      id="ui.course.dashboard.student.progress.described"
-                      defaultMessage="ui.course.dashboard.student.progress.described"
-                      values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
-                    />
-                  </Typography>
+              <Typography variant="body1">
+                <FormattedMessage
+                  id="ui.course.dashboard.student.progress.described"
+                  defaultMessage="ui.course.dashboard.student.progress.described"
+                  values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
+                />
+              </Typography>
 
-                  <Typography variant="body1">
-                    <FormattedMessage
-                      id="ui.course.dashboard.student.progress.percentage"
-                      defaultMessage="ui.course.dashboard.student.progress.percentage"
-                      values={{percentage: scCourse.user_completion_rate}}
-                    />
-                  </Typography>
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <Skeleton animation="wave" variant="text" width="168px" height="19px" />
-                  <Skeleton animation="wave" variant="text" width="108px" height="19px" />
-                </Fragment>
-              )}
+              <Typography variant="body1">
+                <FormattedMessage
+                  id="ui.course.dashboard.student.progress.percentage"
+                  defaultMessage="ui.course.dashboard.student.progress.percentage"
+                  values={{percentage: scCourse.user_completion_rate}}
+                />
+              </Typography>
             </Stack>
 
             <LinearProgress className={classes.progress} variant="determinate" value={scCourse?.user_completion_rate} />
           </Stack>
 
-          {scCourse?.user_completion_rate === 100 && (
+          {scCourse.user_completion_rate === 100 && (
             <Stack className={classNames(classes.completedWrapper, classes.margin)}>
               <Typography variant="h3">
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
@@ -288,35 +267,27 @@ function Student(inProps: StudentCourseDashboardProps) {
           </Typography>
 
           <Stack className={classes.lessonsSections}>
-            {scCourse ? (
-              <Typography variant="h5">
-                <FormattedMessage
-                  id="ui.course.table.sections.title"
-                  defaultMessage="ui.course.table.sections.title"
-                  values={{
-                    sectionsNumber: scCourse.num_sections
-                  }}
-                />
-              </Typography>
-            ) : (
-              <Skeleton animation="wave" variant="text" width="58px" height="21px" />
-            )}
+            <Typography variant="h5">
+              <FormattedMessage
+                id="ui.course.table.sections.title"
+                defaultMessage="ui.course.table.sections.title"
+                values={{
+                  sectionsNumber: scCourse.num_sections
+                }}
+              />
+            </Typography>
 
             <Box className={classes.circle} />
 
-            {scCourse ? (
-              <Typography variant="h5">
-                <FormattedMessage
-                  id="ui.course.table.lessons.title"
-                  defaultMessage="ui.course.table.lessons.title"
-                  values={{
-                    lessonsNumber: scCourse.num_lessons
-                  }}
-                />
-              </Typography>
-            ) : (
-              <Skeleton animation="wave" variant="text" width="58px" height="21px" />
-            )}
+            <Typography variant="h5">
+              <FormattedMessage
+                id="ui.course.table.lessons.title"
+                defaultMessage="ui.course.table.lessons.title"
+                values={{
+                  lessonsNumber: scCourse.num_lessons
+                }}
+              />
+            </Typography>
           </Stack>
           <AccordionLessons course={scCourse} className={classes.accordion} />
         </Fragment>

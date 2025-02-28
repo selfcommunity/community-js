@@ -2,6 +2,10 @@ import {Box, Skeleton, styled, Table, TableBody, TableContainer, TableHead} from
 import CourseUsersTableRowSkeleton from './RowSkeleton';
 import {PREFIX} from './constants';
 
+const classes = {
+  root: `${PREFIX}-skeleton-root`
+};
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'SkeletonRoot',
@@ -10,7 +14,7 @@ const Root = styled(Box, {
 
 export default function CourseUsersTableSkeleton() {
   return (
-    <Root>
+    <Root className={classes.root}>
       <Skeleton animation="wave" variant="rectangular" width="100%" height="53px" />
 
       <TableContainer>

@@ -1,5 +1,6 @@
 import Course, {CourseProps} from './Course';
+import {TeacherSkeleton, StudentSkeleton} from '@selfcommunity/react-ui';
 
 export default Course;
 
-export {CourseProps};
+export {CourseProps, TeacherSkeleton, StudentSkeleton};
