@@ -1,13 +1,14 @@
 import React from 'react';
-import {Slide, Dialog} from '@mui/material';
+import {Slide, Dialog, DialogTitle} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
-import {BaseDialogProps} from '../../shared/BaseDialog';
-import ContentObjectPrices from '../ContentObjectPrices';
-import {ContentObjectPricesProps} from '../ContentObjectPrices/ContentObjectPrices';
+import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
+import ContentObjectProducts from '../ContentObjectProducts';
+import {ContentObjectPricesProps} from '../ContentObjectProducts/ContentObjectProducts';
 import {FormattedMessage} from 'react-intl';
+import DialogContent from '@mui/material/DialogContent';
 
 const PREFIX = 'SCContentObjectPricesDialog';
 
@@ -15,10 +16,12 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Dialog, {
+const Root = styled(BaseDialog, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(({theme}) => ({
+
+}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -34,7 +37,7 @@ export interface ContentObjectPricesDialogProps extends BaseDialogProps {
   disableInitialTransition?: boolean;
 }
 
-export default function ContentObjectPricesDialog(inProps: ContentObjectPricesDialogProps) {
+export default function ContentObjectProductsDialog(inProps: ContentObjectPricesDialogProps) {
   // PROPS
   const props: ContentObjectPricesDialogProps = useThemeProps({
     props: inProps,
@@ -46,14 +49,14 @@ export default function ContentObjectPricesDialog(inProps: ContentObjectPricesDi
     <Root
       maxWidth={'sm'}
       fullWidth
+      title={<FormattedMessage id="ui.contentObjectProductsDialog.title" defaultMessage="ui.contentObjectProductsDialog.title" />}
       scroll={'paper'}
-      title={'Scegli tra i seguenti prodotti'}
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
       {...rest}>
-      <ContentObjectPrices {...ContentObjectPricesComponentProps} />
+      <ContentObjectProducts {...ContentObjectPricesComponentProps} />
     </Root>
   );
 }

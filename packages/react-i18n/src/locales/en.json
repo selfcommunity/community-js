@@ -1083,5 +1083,7 @@
   "ui.upScalingTierBadge.enterprise": "ENTERPRISE",
   "ui.upScalingTierBadge.goFeature": "This setting is only available if the community has subscribed to at least a Go plan.",
   "ui.upScalingTierBadge.professionalFeature": "This setting is only available if the community has subscribed to a Professional plan.",
-  "ui.upScalingTierBadge.enterpriseFeature": "This setting is only available if the community has subscribed to an Enterprise plan."
+  "ui.upScalingTierBadge.enterpriseFeature": "This setting is only available if the community has subscribed to an Enterprise plan.",
+
+  "ui.contentObjectProductsDialog.title": "Choose a price"
 }

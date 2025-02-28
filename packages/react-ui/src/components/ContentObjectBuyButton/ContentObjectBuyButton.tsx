@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem,
   SwipeableDrawer,
+  Typography,
   useMediaQuery,
   useTheme
 } from '@mui/material';
@@ -27,13 +28,13 @@ import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserTy
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {MouseEvent, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {MouseEvent, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
-import ContentObjectPricesDialog from '../ContentObjectPricesDialog';
 import {SCContentType} from '../../types/paywall';
-import ContentObjectPrices from '../ContentObjectPrices';
+import ContentObjectProductsDialog from '../ContentObjectProductsDialog';
+import ContentObjectProducts from '../ContentObjectProducts';
 
 const PREFIX = 'SCContentObjectBuyButton';
 
@@ -56,7 +57,9 @@ const RequestRoot = styled(LoadingButton, {
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'DrawerRoot'
-})(() => ({}));
+})(({theme}) => ({
+  padding: theme.spacing(2)
+}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
@@ -128,8 +131,7 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
 
   // STATE
   const [loading, setLoading] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const open = Boolean(anchorEl);
+  const [open, setOpen] = useState<boolean>(false);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -154,18 +156,20 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
 
   // HANDLERS
   const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, [setAnchorEl]);
+    setOpen(false);
+  }, [open]);
 
   const handleOpen = useCallback(
     (event: MouseEvent<HTMLElement>) => {
-      if (!scUserContext.user) {
-        scContext.settings.handleAnonymousAction();
-      } else {
-        setAnchorEl(event.currentTarget);
+      if (!open) {
+        if (!scUserContext.user) {
+          scContext.settings.handleAnonymousAction();
+        } else {
+          setOpen(true);
+        }
       }
     },
-    [scUserContext.user, setAnchorEl, scContext.settings]
+    [scUserContext.user, open, scContext.settings]
   );
 
   /**
@@ -216,10 +220,17 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
               onOpen={handleOpen}
               anchor="bottom"
               disableSwipeToOpen>
-              <ContentObjectPrices contentType={SCContentType.EVENT} id={scEvent.id} />
+              <Typography variant="body2" component="div" marginBottom={2}>
+                <FormattedMessage id="ui.contentObjectProductsDialog.title" defaultMessage="ui.contentObjectProductsDialog.title" />
+              </Typography>
+              <ContentObjectProducts contentType={SCContentType.EVENT} id={scEvent.id} />
             </SwipeableDrawerRoot>
           ) : (
-            <ContentObjectPricesDialog open ContentObjectPricesComponentProps={{contentType: SCContentType.EVENT, id: scEvent.id}} />
+            <ContentObjectProductsDialog
+              open
+              onClose={handleClose}
+              ContentObjectPricesComponentProps={{contentType: SCContentType.EVENT, id: scEvent.id}}
+            />
           )}
         </>
       )}

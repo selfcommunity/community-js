@@ -11,7 +11,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
-import ContentObjectPricesSkeleton from './Skeleton';
+import ContentObjectProductsSkeleton from './Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -29,7 +29,7 @@ export interface ContentObjectPricesProps {
   prefetchedProducts?: SCContentProduct[];
 }
 
-export default function ContentObjectPrices(inProps: ContentObjectPricesProps) {
+export default function ContentObjectProducts(inProps: ContentObjectPricesProps) {
   // PROPS
   const props: ContentObjectPricesProps = useThemeProps({
     props: inProps,
@@ -37,7 +37,7 @@ export default function ContentObjectPrices(inProps: ContentObjectPricesProps) {
   });
   const {className, id, contentType, prefetchedProducts = [], ...rest} = props;
 
-  const [products, setProducts] = useState<SCCategoryType[]>([]);
+  const [products, setProducts] = useState<SCContentProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const isMountedRef = useIsComponentMountedRef();
 
@@ -45,8 +45,9 @@ export default function ContentObjectPrices(inProps: ContentObjectPricesProps) {
    * Fetches categories list
    */
   const fetchProducts = async (next: string = Endpoints.CategoryList.url({id, active: true})): Promise<SCContentProduct[]> => {
-    const data = await CategoryService.getAllCategories({id, active: true}, {url: next} as AxiosRequestConfig);
-    return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
+    // const data = await CategoryService.getAllCategories({id, active: true}, {url: next} as AxiosRequestConfig);
+    // return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
+    return Promise.resolve([]);
   };
 
   /**
@@ -57,7 +58,7 @@ export default function ContentObjectPrices(inProps: ContentObjectPricesProps) {
       setProducts(prefetchedProducts);
       setLoading(false);
     } else {
-      fetchProducts()
+      /* fetchProducts()
         .then((data) => {
           if (isMountedRef.current) {
             setProducts(data);
@@ -66,13 +67,13 @@ export default function ContentObjectPrices(inProps: ContentObjectPricesProps) {
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
-        });
+        }); */
     }
   }, [prefetchedProducts.length]);
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {loading ? <ContentObjectPricesSkeleton /> : <></>}
+      {loading ? <ContentObjectProductsSkeleton /> : <></>}
     </Root>
   );
 }

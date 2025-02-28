@@ -175,6 +175,7 @@ import SCTagAutocomplete from './components/SCTagAutocomplete';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
+import SCContentObjectBuyButton from './components/SCContentObjectBuyButton';
 /**
  * Style fragments - Imports - End
  */
@@ -429,7 +430,8 @@ const theme = {
     SCLiveStreamForm,
     SCLiveStreamFormSettings,
     SCLiveStreamRoom,
-    SCLiveStreamVideoConference
+    SCLiveStreamVideoConference,
+		SCContentObjectBuyButton
   },
   selfcommunity: {
     user: {
@@ -453,6 +455,20 @@ const theme = {
         sizeMedium: 60,
         sizeLarge: 90,
         sizeXLarge: 205
+      }
+    },
+    contentProduct: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
+      }
+    },
+    contentProductPrice: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
       }
     }
   }

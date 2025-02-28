@@ -21,26 +21,26 @@ const Root = styled(BaseItem, {
 })(() => ({}));
 
 /**
- * > API documentation for the Community-JS Content Object Prices Skeleton component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS ContentObjectProductSkeleton component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {ContentObjectPricesSkeleton} from '@selfcommunity/react-ui';
+ import {ContentObjectProductSkeleton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
 
- The name `SCContentObjectPricesSkeleton-skeleton-root` can be used when providing style overrides in the theme.
+ The name `SCContentObjectProductSkeleton-skeleton-root` can be used when providing style overrides in the theme.
 
  #### CSS
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCContentObjectPricesSkeleton-skeleton-root|Styles applied to the root element.|
+ |root|.SCContentObjectProductSkeleton-skeleton-root|Styles applied to the root element.|
  *
  */
-export default function ContentObjectPricesSkeleton(props): JSX.Element {
+export default function ContentObjectProductSkeleton(props): JSX.Element {
   const theme = useTheme<SCThemeType>();
   return (
     <Root
@@ -50,8 +50,8 @@ export default function ContentObjectPricesSkeleton(props): JSX.Element {
         <Skeleton
           animation="wave"
           variant="rectangular"
-          width={theme.selfcommunity.category.icon.sizeMedium}
-          height={theme.selfcommunity.category.icon.sizeMedium}
+          width={theme.selfcommunity.contentProduct.icon.sizeMedium}
+          height={theme.selfcommunity.contentProduct.icon.sizeMedium}
           className={classes.image}
         />
       }

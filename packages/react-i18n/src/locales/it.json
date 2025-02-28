@@ -1083,5 +1083,6 @@
   "ui.upScalingTierBadge.enterprise": "ENTERPRISE",
   "ui.upScalingTierBadge.goFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Go.",
   "ui.upScalingTierBadge.professionalFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Professional.",
-  "ui.upScalingTierBadge.enterpriseFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto un piano Enterprise."
+  "ui.upScalingTierBadge.enterpriseFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto un piano Enterprise.",
+  "ui.contentObjectProductsDialog.title": "Scegli tra i seguenti prezzi"
 }
