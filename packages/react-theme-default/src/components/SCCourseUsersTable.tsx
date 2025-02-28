@@ -45,7 +45,9 @@ const Component = {
         marginLeft: theme.spacing(3)
       }
     }),
-    skeletonRoot: () => ({}),
+    skeletonRoot: ({theme}) => ({
+      paddingTop: theme.spacing(3)
+    }),
     dialogRoot: ({theme}) => ({
       '& .MuiDialogContent-root': {
         [theme.breakpoints.down('md')]: {

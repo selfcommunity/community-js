@@ -1,9 +1,10 @@
-import {Skeleton, Stack, Typography} from '@mui/material';
+import {Stack, Typography} from '@mui/material';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
 import CourseParticipantsButton from '../../CourseParticipantsButton';
-import {memo, useMemo} from 'react';
+import {memo} from 'react';
+import {InfoPositionEnum, InfoPositionType} from '../types';
 
 const classes = {
   info: `${PREFIX}-info`
@@ -11,27 +12,13 @@ const classes = {
 
 interface InfoCourseDashboardProps {
   title: string;
-  course: SCCourseType | null;
-  position: 'first' | 'second';
+  course: SCCourseType;
+  position: InfoPositionType;
 }
 
 function InfoCourseDashboard(props: InfoCourseDashboardProps) {
   // PROPS
   const {title, course, position} = props;
-
-  // MEMOS
-  const children = useMemo(() => {
-    if (!course) {
-      return <Skeleton animation="wave" variant="text" width="100" height="21px" />;
-    }
-
-    switch (position) {
-      case 'first':
-        return <CourseParticipantsButton course={course} />;
-      case 'second':
-        return <Typography variant="h5">{course.avg_completion_rate}%</Typography>;
-    }
-  }, [course, position]);
 
   return (
     <Stack className={classes.info}>
@@ -39,7 +26,8 @@ function InfoCourseDashboard(props: InfoCourseDashboardProps) {
         <FormattedMessage id={title} defaultMessage={title} />
       </Typography>
 
-      {children}
+      {position === InfoPositionEnum.FIRST && <CourseParticipantsButton course={course} />}
+      {position === InfoPositionEnum.SECOND && <Typography variant="h5">{course.avg_completion_rate}%</Typography>}
     </Stack>
   );
 }

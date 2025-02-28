@@ -25,7 +25,7 @@ const headerCells = [
 ];
 
 interface StudentsProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   endpointQueryParams?: Record<string, string | number>;
 }
 
@@ -69,14 +69,14 @@ function Students(props: StudentsProps) {
   useEffect(() => {
     let _t: NodeJS.Timeout;
 
-    if (scUserContext.user && course) {
+    if (scUserContext.user) {
       _t = setTimeout(_init);
 
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, course, _init]);
+  }, [scUserContext.user, _init]);
 
   return (
     <CourseUsersTable

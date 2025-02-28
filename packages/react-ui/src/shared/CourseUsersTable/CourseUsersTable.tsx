@@ -55,7 +55,7 @@ type HeaderCellsType = {
 export interface CourseUsersTableProps {
   state: any;
   dispatch: Dispatch<any>;
-  course: SCCourseType | null;
+  course: SCCourseType;
   headerCells: HeaderCellsType[];
   mode: 'dashboard' | 'edit' | 'requests';
   emptyStatusTitle: string;
@@ -130,7 +130,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       });
   }, [state.next, dispatch]);
 
-  if (!course || !users) {
+  if (!users) {
     return <CourseUsersTableSkeleton />;
   }
 

@@ -2,7 +2,7 @@ import {Box, Stack, styled, Tab, Typography, useThemeProps} from '@mui/material'
 import {PREFIX} from './constants';
 import HeaderCourseDashboard from './Header';
 import {HTMLAttributes, memo, SyntheticEvent, useCallback, useState} from 'react';
-import {TabContentEnum, TabContentType} from './types';
+import {InfoPositionEnum, TabContentEnum, TabContentType} from './types';
 import classNames from 'classnames';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
@@ -12,6 +12,7 @@ import Students from './Teacher/Students';
 import Comments from './Teacher/Comments';
 import {useSCFetchCourse} from '@selfcommunity/react-core';
 import {CourseInfoViewType} from '@selfcommunity/api-services';
+import TeacherSkeleton from './Teacher/Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -68,13 +69,17 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
     [setTabValue]
   );
 
+  if (!scCourse) {
+    return <TeacherSkeleton />;
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <HeaderCourseDashboard course={scCourse} hasAction />
 
       <Stack className={classes.infoWrapper}>
-        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={scCourse} position="first" />
-        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.completion" course={scCourse} position="second" />
+        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={scCourse} position={InfoPositionEnum.FIRST} />
+        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.completion" course={scCourse} position={InfoPositionEnum.SECOND} />
       </Stack>
 
       <TabContext value={tabValue}>
