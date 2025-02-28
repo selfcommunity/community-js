@@ -21,7 +21,7 @@ const Component = {
       '& .SCLessonDrawer-header': {
         minHeight: '60px',
         display: 'block',
-        padding: theme.spacing(1, 1, 1, 2)
+        padding: theme.spacing(1.5)
       },
       '& .SCLessonDrawer-header-content': {
         display: 'flex',
