@@ -15,7 +15,9 @@ const Component = {
             marginLeft: 'auto'
           }
         },
-        marginTop: theme.spacing(2),
+        [theme.breakpoints.down('sm')]: {
+          marginTop: theme.spacing(2)
+        },
         marginBottom: 0
       },
       '& .infinite-scroll-component__outerdiv': {
@@ -26,6 +28,9 @@ const Component = {
             '& .MuiListItem-root': {
               padding: 0
             }
+          },
+          [theme.breakpoints.up('sm')]: {
+            height: '90% !important'
           }
         }
       }
