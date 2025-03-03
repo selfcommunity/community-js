@@ -159,6 +159,7 @@ export const CONFIGURATIONS_LIVE_STREAM_ENABLED = `${SCPreferenceSection.CONFIGU
 export const CONFIGURATIONS_LIVE_STREAM_ONLY_STAFF_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.LIVE_STREAM_ONLY_STAFF_ENABLED}`;
 export const CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.LIVE_STREAM_VIDEO_CONFERENCE_ENABLED}`;
 export const CONFIGURATIONS_SUBSCRIPTION_TIER = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.SUBSCRIPTION_TIER}`;
+export const CONFIGURATIONS_PAYMENTS_ENABLED = `${SCPreferenceSection.CONFIGURATIONS}.${SCPreferenceName.PAYMENTS_ENABLED}`;
 
 /**
  * PROVIDERS
@@ -193,6 +194,7 @@ export const WEBMASTER_META_DESCRIPTION = `${SCPreferenceSection.WEBMASTER}.${SC
  */
 export const STATIC_ENVIRONMENT = `${SCPreferenceSection.STATIC}.${SCPreferenceName.ENVIRONMENT}`;
 export const STATIC_STACKID = `${SCPreferenceSection.STATIC}.${SCPreferenceName.STACK_ID}`;
+export const STATIC_STRIPE_PUBLIC_KEY = `${SCPreferenceSection.STATIC}.${SCPreferenceName.STRIPE_PUBLIC_KEY}`;
 
 const booleanType = (value) => {
   if (value === 'True') {
@@ -328,6 +330,7 @@ export const DATA_TYPES = {
   [CONFIGURATIONS_LIVE_STREAM_ONLY_STAFF_ENABLED]: booleanType,
   [CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED]: booleanType,
   [CONFIGURATIONS_SUBSCRIPTION_TIER]: stringType,
+  [CONFIGURATIONS_PAYMENTS_ENABLED]: booleanType,
   [PROVIDERS_APP_URL_ON_APP_STORE]: stringType,
   [PROVIDERS_APP_URL_ON_GOOGLE_PLAY]: stringType,
   [PROVIDERS_FACEBOOK_SIGNIN_ENABLED]: stringType,
@@ -350,4 +353,5 @@ export const DATA_TYPES = {
   [WEBMASTER_META_DESCRIPTION]: stringType,
   [STATIC_ENVIRONMENT]: stringType,
   [STATIC_STACKID]: stringType,
+	[STATIC_STRIPE_PUBLIC_KEY]: stringType,
 };

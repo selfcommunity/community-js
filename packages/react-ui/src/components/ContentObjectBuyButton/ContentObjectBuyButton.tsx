@@ -1,40 +1,22 @@
 import {LoadingButton} from '@mui/lab';
-import {
-  Box,
-  Button,
-  Checkbox,
-  CircularProgress,
-  FormControlLabel,
-  Icon,
-  Menu,
-  MenuItem,
-  SwipeableDrawer,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
+import {Icon, SwipeableDrawer, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
+import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {
-  SCContextType,
-  SCSubscribedEventsManagerType,
-  SCThemeType,
-  SCUserContextType,
-  useSCContext,
-  useSCFetchEvent,
-  useSCUser
-} from '@selfcommunity/react-core';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType} from '@selfcommunity/types';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+  SCContentProduct,
+  SCContentType,
+  SCEventSubscriptionStatusType,
+  SCGroupSubscriptionStatusType,
+  SCPurchasableContent
+} from '@selfcommunity/types';
 import classNames from 'classnames';
-import PubSub from 'pubsub-js';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
-import {SCContentType} from '../../types/paywall';
 import ContentObjectProductsDialog from '../ContentObjectProductsDialog';
 import ContentObjectProducts from '../ContentObjectProducts';
+import {CategoryApiClient, GroupApiClient, EventApiClient} from '@selfcommunity/api-services';
+import {capitalize} from '@selfcommunity/utils';
 
 const PREFIX = 'SCContentObjectBuyButton';
 
@@ -57,13 +39,6 @@ const RequestRoot = styled(LoadingButton, {
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'DrawerRoot'
-})(({theme}) => ({
-  padding: theme.spacing(2)
-}));
-
-const MenuRoot = styled(Menu, {
-  name: PREFIX,
-  slot: 'MenuRoot'
 })(() => ({}));
 
 export interface ContentObjectBuyButtonProps {
@@ -74,23 +49,31 @@ export interface ContentObjectBuyButtonProps {
   className?: string;
 
   /**
-   * Event Object
-   * @default null
+   * Content type
    */
-  event?: SCEventType;
+  contentType: SCContentType;
 
   /**
-   * Id of the event
-   * @default null
+   * Content id
    */
-  eventId?: number;
+  id: number | string;
+
+  /**
+   * Purchasable Content
+   */
+  content?: SCPurchasableContent;
+
+  /**
+   * Prefetched products
+   */
+  prefetchedProducts?: SCContentProduct[];
 
   /**
    * onPurchase callback
    * @param user
    * @param joined
    */
-  onPurchase?: (event: SCEventType) => any;
+  onPurchase?: (contentType: SCContentType, id: number) => any;
 
   /**
    * Others properties
@@ -127,31 +110,21 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
     name: PREFIX
   });
 
-  const {className, eventId, event, user, onPurchase, ...rest} = props;
+  const {className, id, contentType, content, onPurchase, ...rest} = props;
 
   // STATE
-  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
-  const scEventsManager: SCSubscribedEventsManagerType = scUserContext.managers.events;
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // CONST
-  const authUserId = scUserContext.user ? scUserContext.user.id : null;
-
-  const {scEvent, setSCEvent} = useSCFetchEvent({
-    id: eventId,
-    event,
-    cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
-  });
-
-  const isEventAdmin = useMemo(
-    () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scEvent?.managed_by?.id]
+  const [purchased, setPurchased] = useState<boolean | null>(null);
+  const [btnLabel, setBtnLabel] = useState<ReactNode>(
+    <FormattedMessage defaultMessage={`ui.contentObjectBuyButton.buy${contentType}`} id={`ui.contentObjectBuyButton.buy${capitalize(contentType)}`} />
   );
 
   // HANDLERS
@@ -160,7 +133,7 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
   }, [open]);
 
   const handleOpen = useCallback(
-    (event: MouseEvent<HTMLElement>) => {
+    (e: MouseEvent<HTMLElement>) => {
       if (!open) {
         if (!scUserContext.user) {
           scContext.settings.handleAnonymousAction();
@@ -173,26 +146,53 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
   );
 
   /**
-   * Get current translated status
+   * Get current status
    */
-  const getStatus = useMemo((): JSX.Element => {
-    let _status: ReactNode = <>Buy event!</>;
+  const getStatus = () => {
+    switch (contentType) {
+      case SCContentType.EVENT:
+        // Get status event subscribed
+        EventApiClient.getSpecificEventInfo(id ? id : content.id).then((data) => {
+          if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
+            if (data.subscription_status === SCEventSubscriptionStatusType.GOING) {
+              setBtnLabel(<FormattedMessage defaultMessage="ui.contentObjectBuyButton.purchased" id="ui.contentObjectBuyButton.purchased" />);
+            }
+            setPurchased(data.subscription_status === SCEventSubscriptionStatusType.GOING);
+          }
+        });
+        break;
+      case SCContentType.CATEGORY:
+        // Get status category followed
+        CategoryApiClient.getSpecificCategory(id ? id : content.id).then((data) => {
+          if (data.followed) {
+            setBtnLabel(<FormattedMessage defaultMessage="ui.contentObjectBuyButton.subscribed" id="ui.contentObjectBuyButton.subscribed" />);
+          }
+          setPurchased(data.followed);
+        });
+        break;
+      case SCContentType.GROUP:
+        // Get status group subscribed
+        GroupApiClient.getSpecificGroupInfo(id ? id : content.id).then((data) => {
+          if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
+            if (data.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED) {
+              setBtnLabel(<FormattedMessage defaultMessage="ui.contentObjectBuyButton.subscribed" id="ui.contentObjectBuyButton.subscribed" />);
+            }
+            setPurchased(data.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED);
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  };
 
-    /* switch (status) {
-			case SCEventSubscriptionStatusType.REQUESTED:
-				_status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.waitingApproval" id="ui.eventSubscribeButton.waitingApproval" />;
-				break;
-			case SCEventSubscriptionStatusType.GOING:
-				_status = <FormattedMessage defaultMessage="ui.eventSubscribeButton.going" id="ui.eventSubscribeButton.going" />;
-				break;
-			default:
-				break;
-		} */
+  useEffect(() => {
+    if ((id || content) && contentType) {
+      getStatus();
+    }
+  }, [id, content, contentType]);
 
-    return _status;
-  }, [status, scEvent]);
-
-  if (!scEvent || (isEventAdmin && user?.id === scUserContext.user.id) || (isEventAdmin && !user?.id)) {
+  if ((!id && !content) || !scUserContext.user) {
     return null;
   }
 
@@ -204,10 +204,11 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
         color="secondary"
         size="small"
         startIcon={<Icon>card_giftcard</Icon>}
-        // loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
+        loading={scUserContext.user && purchased !== null ? Boolean(purchased) : null}
         onClick={handleOpen}
+        disabled={purchased}
         {...rest}>
-        {getStatus}
+        {btnLabel}
       </RequestRoot>
       {open && (
         <>
@@ -220,16 +221,18 @@ export default function ContentObjectBuyButton(inProps: ContentObjectBuyButtonPr
               onOpen={handleOpen}
               anchor="bottom"
               disableSwipeToOpen>
-              <Typography variant="body2" component="div" marginBottom={2}>
-                <FormattedMessage id="ui.contentObjectProductsDialog.title" defaultMessage="ui.contentObjectProductsDialog.title" />
+              <Typography variant="h5" component="div" marginBottom={2}>
+                <b>
+                  <FormattedMessage id="ui.contentObjectProductsDialog.title" defaultMessage="ui.contentObjectProductsDialog.title" />
+                </b>
               </Typography>
-              <ContentObjectProducts contentType={SCContentType.EVENT} id={scEvent.id} />
+              <ContentObjectProducts contentType={SCContentType.EVENT} id={id} />
             </SwipeableDrawerRoot>
           ) : (
             <ContentObjectProductsDialog
               open
               onClose={handleClose}
-              ContentObjectPricesComponentProps={{contentType: SCContentType.EVENT, id: scEvent.id}}
+              ContentObjectPricesComponentProps={{contentType, id: id, ...(content && {content})}}
             />
           )}
         </>

@@ -1290,5 +1290,14 @@
   "ui.upScalingTierBadge.goFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Go.",
   "ui.upScalingTierBadge.professionalFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Professional.",
   "ui.upScalingTierBadge.enterpriseFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto un piano Enterprise.",
-  "ui.contentObjectProductsDialog.title": "Scegli tra i seguenti prezzi"
+
+  "ui.contentObjectBuyButton.buy": "Acquista",
+  "ui.contentObjectBuyButton.buyEvent": "Acquista evento",
+  "ui.contentObjectBuyButton.buyGroup": "Iscriviti al gruppo",
+  "ui.contentObjectBuyButton.buyCategory": "Iscriviti",
+  "ui.contentObjectBuyButton.buyCourse": "Acquista il corso",
+  "ui.contentObjectBuyButton.purchased": "Acquistato",
+  "ui.contentObjectBuyButton.subscribed": "Iscritto",
+  "ui.contentObjectProductsDialog.title": "Scegli tra i seguenti prezzi",
+  "ui.contentObjectProduct.action.buy": "Acquista"
 }

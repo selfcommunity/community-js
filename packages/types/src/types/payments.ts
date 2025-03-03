@@ -17,7 +17,7 @@ export interface SCContentProduct {
   /**
    * Active or not
    */
-  active: boolean;
+  active?: boolean;
 
   /**
    * Stripe product id
@@ -28,6 +28,11 @@ export interface SCContentProduct {
    * Stripe default price id
    */
   stripe_default_price_id?: string;
+
+  /**
+   * Stripe prices
+   */
+  prices: SCProductPrice[];
 }
 
 export interface SCProductPrice {
@@ -44,7 +49,7 @@ export interface SCProductPrice {
   /**
    * Active or not
    */
-  active: boolean;
+  active?: boolean;
 
   /**
    * Stripe price id
@@ -72,4 +77,26 @@ export interface SCProductPrice {
  */
 export enum SCProductPriceType {
   EUR = 'EUR'
+}
+
+/**
+ * Paywalls Content types
+ */
+export enum SCContentType {
+  EVENT = 'event',
+  COURSE = 'course',
+  CATEGORY = 'category',
+  GROUP = 'group'
+}
+
+export interface SCPurchasableContent {
+	id: number | string;
+  paywalls: SCContentProduct[];
+}
+
+export interface SCCheckoutSession {
+  /**
+   * Client secret
+   */
+  client_secret: string;
 }

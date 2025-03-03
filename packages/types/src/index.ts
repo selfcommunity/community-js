@@ -131,7 +131,9 @@ import {
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
   type SCContentProduct,
-  type SCProductPrice
+  type SCProductPrice,
+  type SCCheckoutSession,
+  type SCPurchasableContent
 } from './types';
 
 /**
@@ -187,7 +189,8 @@ import {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-  SCProductPriceType
+  SCProductPriceType,
+  SCContentType
 } from './types';
 
 /**
@@ -243,7 +246,8 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-  SCProductPriceType
+  SCProductPriceType,
+  SCContentType
 };
 export {
   type SCBannerType,
@@ -375,5 +379,7 @@ export {
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
   type SCContentProduct,
-  type SCProductPrice
+  type SCProductPrice,
+  type SCCheckoutSession,
+  type SCPurchasableContent
 };

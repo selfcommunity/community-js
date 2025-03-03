@@ -74,7 +74,9 @@
 		"pdfjs-dist": "3.11.174",
 		"react": "^17.0.2 || 18",
 		"react-dom": "17 || 18",
-		"react-intl": "^6.4.7"
+		"react-intl": "^6.4.7",
+		"@stripe/react-stripe-js": "^3.1.1",
+		"@stripe/stripe-js": "^5.7.0"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.3",

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Slide, Dialog, DialogTitle} from '@mui/material';
+import {Slide} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -8,7 +8,6 @@ import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import ContentObjectProducts from '../ContentObjectProducts';
 import {ContentObjectPricesProps} from '../ContentObjectProducts/ContentObjectProducts';
 import {FormattedMessage} from 'react-intl';
-import DialogContent from '@mui/material/DialogContent';
 
 const PREFIX = 'SCContentObjectPricesDialog';
 
@@ -19,9 +18,7 @@ const classes = {
 const Root = styled(BaseDialog, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({
-
-}));
+})(({theme}) => ({}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -43,7 +40,7 @@ export default function ContentObjectProductsDialog(inProps: ContentObjectPrices
     props: inProps,
     name: PREFIX
   });
-  const {className, ContentObjectPricesComponentProps = {}, disableInitialTransition = false, ...rest} = props;
+  const {className, ContentObjectPricesComponentProps, disableInitialTransition = false, ...rest} = props;
 
   return (
     <Root

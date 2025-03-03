@@ -1,10 +1,10 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Grid} from '@mui/material';
-import BaseItem from '../../shared/BaseItem';
+import {Box, Grid, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 import ContentObjectProductSkeleton from '../ContentObjectProduct/Skeleton';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -15,7 +15,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(() => ({
-	overflow: 'hidden',
+  overflow: 'hidden'
 }));
 
 /**
@@ -41,10 +41,14 @@ const Root = styled(Box, {
 export default function ContentObjectProductsSkeleton(inProps): JSX.Element {
   const {className, ContentObjectProductSkeletonProps = {}, ...rest} = inProps;
 
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container spacing={{xs: 3}} className={classes.products}>
-        {[...Array(5)].map((product, index) => (
+        {[...Array(isMobile ? 1 : 2)].map((product, index) => (
           <Grid item xs={12} key={index}>
             <ContentObjectProductSkeleton elevation={0} variant={'outlined'} {...ContentObjectProductSkeletonProps} />
           </Grid>

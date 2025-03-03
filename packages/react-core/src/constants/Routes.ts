@@ -50,6 +50,7 @@ export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
 export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
 export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
 export const LIVESTREAM_ROUTE_NAME = 'live';
+export const CHECKOUT_PAYMENT = 'checkout_payment';
 
 /**
  * Default Routes
@@ -102,4 +103,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [COURSE_LESSON_EDIT_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/edit',
   [COURSE_LESSON_COMMENT_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/comment/:comment_id',
   [LIVESTREAM_ROUTE_NAME]: '/live/:slug/',
+  [CHECKOUT_PAYMENT]: '/checkout/:content_type/:content_id/price/:price_id',
 };

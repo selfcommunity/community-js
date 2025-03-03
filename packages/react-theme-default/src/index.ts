@@ -200,6 +200,10 @@ import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
 import SCContentObjectBuyButton from './components/SCContentObjectBuyButton';
+import SCContentObjectProducts from './components/SCContentObjectProducts';
+import SCContentObjectProduct from './components/SCContentObjectProduct';
+import SCContentObjectProductPrice from './components/SCContentObjectProductPrice';
+
 /**
  * Style fragments - Imports - End
  */
@@ -479,7 +483,10 @@ const theme = {
     SCLiveStreamFormSettings,
     SCLiveStreamRoom,
     SCLiveStreamVideoConference,
-		SCContentObjectBuyButton
+    SCContentObjectBuyButton,
+    SCContentObjectProducts,
+    SCContentObjectProduct,
+    SCContentObjectProductPrice
   },
   selfcommunity: {
     user: {

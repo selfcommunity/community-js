@@ -3,15 +3,15 @@ import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {SCContentType} from '../../types/paywall';
-import {CategoryService, Endpoints} from '@selfcommunity/api-services';
-import {SCCategoryType, SCContentProduct} from '@selfcommunity/types';
-import {AxiosRequestConfig} from 'axios';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
+import {SCContentProduct, SCContentType} from '@selfcommunity/types';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import ContentObjectProductsSkeleton from './Skeleton';
+import ContentObjectProduct from '../ContentObjectProduct';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {AxiosRequestConfig} from 'axios';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -24,8 +24,8 @@ const Root = styled(Box, {
 
 export interface ContentObjectPricesProps {
   className?: string;
-  contentType?: SCContentType;
-  id?: number | string;
+  contentType: SCContentType;
+  id: number | string;
   prefetchedProducts?: SCContentProduct[];
 }
 
@@ -44,10 +44,9 @@ export default function ContentObjectProducts(inProps: ContentObjectPricesProps)
   /**
    * Fetches categories list
    */
-  const fetchProducts = async (next: string = Endpoints.CategoryList.url({id, active: true})): Promise<SCContentProduct[]> => {
-    // const data = await CategoryService.getAllCategories({id, active: true}, {url: next} as AxiosRequestConfig);
-    // return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
-    return Promise.resolve([]);
+  const fetchProducts = async (next: string = Endpoints.GetContentProducts.url({})): Promise<SCContentProduct[]> => {
+    const data = await PaymentApiClient.getContentProducts({content_id: id, content_type: contentType}, {url: next} as AxiosRequestConfig);
+    return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
   };
 
   /**
@@ -58,7 +57,7 @@ export default function ContentObjectProducts(inProps: ContentObjectPricesProps)
       setProducts(prefetchedProducts);
       setLoading(false);
     } else {
-      /* fetchProducts()
+      fetchProducts()
         .then((data) => {
           if (isMountedRef.current) {
             setProducts(data);
@@ -67,13 +66,21 @@ export default function ContentObjectProducts(inProps: ContentObjectPricesProps)
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
-        }); */
+        });
     }
   }, [prefetchedProducts.length]);
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {loading ? <ContentObjectProductsSkeleton /> : <></>}
+      {loading ? (
+        <ContentObjectProductsSkeleton />
+      ) : (
+        <>
+          {products.map((p, i) => (
+            <ContentObjectProduct product={p} key={i} contentType={contentType} contentId={id} />
+          ))}
+        </>
+      )}
     </Root>
   );
 }

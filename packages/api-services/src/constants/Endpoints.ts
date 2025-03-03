@@ -1589,7 +1589,22 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetUserJoinedCourses: {
     url: urlReplacer('/api/v2/user/$(id)/courses/'),
     method: 'GET'
-  }
+  },
+	/**
+	 * Payments/Paywalls
+	 */
+	GetContentProducts: {
+		url: urlReplacer('/api/v2/payments/products/'),
+		method: 'GET'
+	},
+	GetProductPrices: {
+		url: urlReplacer('/api/v2/payments/product/$(id)/prices/'),
+		method: 'GET'
+	},
+	CheckoutCreateSession: {
+		url: urlReplacer('/api/v2/payments/checkout_session_create/'),
+		method: 'POST'
+	},
 };
 
 export default Endpoints;

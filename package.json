@@ -112,7 +112,9 @@
 		"react-lazyload": "^3.2.0",
 		"seamless-scroll-polyfill": "^2.1.8",
 		"use-deep-compare-effect": "^1.8.1",
-		"validate-color": "^2.2.4"
+		"validate-color": "^2.2.4",
+		"@stripe/react-stripe-js": "^3.1.1",
+		"@stripe/stripe-js": "^5.7.0"
 	},
 	"prettier": {
 		"trailingComma": "all",

@@ -1,10 +1,12 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Button, useTheme} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionSummary, Button, Icon, Typography, useMediaQuery, useTheme} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
+import classNames from 'classnames';
+import ContentObjectProductPriceSkeleton from '../ContentObjectProductPrice/Skeleton';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -15,7 +17,7 @@ const classes = {
   action: `${PREFIX}-action`
 };
 
-const Root = styled(BaseItem, {
+const Root = styled(Accordion, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(() => ({}));
@@ -41,31 +43,33 @@ const Root = styled(BaseItem, {
  *
  */
 export default function ContentObjectProductSkeleton(props): JSX.Element {
+  // HOOKS
   const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Root
-      className={classes.root}
-      {...props}
-      image={
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={theme.selfcommunity.contentProduct.icon.sizeMedium}
-          height={theme.selfcommunity.contentProduct.icon.sizeMedium}
-          className={classes.image}
+    <Root defaultExpanded square className={classNames(classes.root)}>
+      <AccordionSummary aria-controls="panel1-content" id="panel1-header">
+        <BaseItem
+          elevation={0}
+          image={
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              width={theme.selfcommunity.contentProduct.icon.sizeSmall}
+              height={theme.selfcommunity.contentProduct.icon.sizeSmall}
+              className={classes.image}
+            />
+          }
+          primary={<Skeleton animation="wave" height={10} width={isMobile ? 70 : 120} className={classes.primary} />}
+          secondary={<Skeleton animation="wave" height={10} width={isMobile ? 40 : 70} className={classes.secondary} />}
         />
-      }
-      primary={<Skeleton animation="wave" height={10} width={120} className={classes.primary} />}
-      secondary={<Skeleton animation="wave" height={10} width={70} className={classes.secondary} />}
-      actions={
-        props.actions !== undefined ? (
-          props.actions
-        ) : (
-          <Button size="small" variant="outlined" disabled className={classes.button}>
-            <Skeleton animation="wave" height={10} width={50} className={classes.action} />
-          </Button>
-        )
-      }
-    />
+      </AccordionSummary>
+      <AccordionDetails>
+        <ContentObjectProductPriceSkeleton />
+        <ContentObjectProductPriceSkeleton />
+        <ContentObjectProductPriceSkeleton />
+      </AccordionDetails>
+    </Root>
   );
 }
