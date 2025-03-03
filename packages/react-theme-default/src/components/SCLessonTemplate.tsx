@@ -1,8 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({
-      backgroundColor: theme.palette.common.white
-    }),
+    root: () => ({}),
     containerRoot: ({theme, open}: any) => ({
       display: 'flex',
       flexDirection: 'column',
@@ -13,8 +11,6 @@ const Component = {
       }),
       marginRight: 0,
       ...(open && {
-        [theme.breakpoints.down('md')]: {marginRight: '100vw', width: '100%'},
-        [theme.breakpoints.up('sm')]: {marginRight: '300px'},
         width: `calc(100% - 300px)`
       }),
       '& .SCLessonTemplate-navigation-title': {
