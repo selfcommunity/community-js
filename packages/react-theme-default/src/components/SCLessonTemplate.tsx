@@ -1,6 +1,8 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({}),
+    root: ({theme}: any) => ({
+      backgroundColor: theme.palette.common.white
+    }),
     containerRoot: ({theme, open}: any) => ({
       display: 'flex',
       flexDirection: 'column',
