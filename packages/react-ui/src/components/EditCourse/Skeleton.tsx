@@ -20,7 +20,7 @@ const Root = styled(Box, {
 })(() => ({}));
 
 interface EditCourseSkeletonProps {
-  tab: SCCourseEditTabType;
+  tab?: SCCourseEditTabType;
 }
 
 function EditCourseSkeleton(props: EditCourseSkeletonProps) {

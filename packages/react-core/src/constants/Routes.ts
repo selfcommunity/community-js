@@ -96,7 +96,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [EVENTS_HIGHLIGHT_ROUTE_NAME]: '/events/highlight/',
   [COURSE_ROUTE_NAME]: '/course/:id/:slug/',
   [COURSES_ROUTE_NAME]: '/courses/',
-  [COURSE_EDIT_ROUTE_NAME]: '/course/:id/:slug/edit',
+  [COURSE_EDIT_ROUTE_NAME]: '/course/:id/:slug/edit/:tab',
   [COURSE_DASHBOARD_ROUTE_NAME]: '/course/:id/:slug/dashboard',
   [COURSE_LESSON_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/',
   [COURSE_LESSON_EDIT_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/edit',
