@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
 import CourseParticipantsButton from '../../CourseParticipantsButton';
 import {memo} from 'react';
-import {InfoPositionEnum, InfoPositionType} from '../types';
+import {InfoPositionType} from '../types';
 
 const classes = {
   info: `${PREFIX}-info`
@@ -26,8 +26,8 @@ function InfoCourseDashboard(props: InfoCourseDashboardProps) {
         <FormattedMessage id={title} defaultMessage={title} />
       </Typography>
 
-      {position === InfoPositionEnum.FIRST && <CourseParticipantsButton course={course} />}
-      {position === InfoPositionEnum.SECOND && <Typography variant="h5">{course.avg_completion_rate}%</Typography>}
+      {position === InfoPositionType.FIRST && <CourseParticipantsButton course={course} />}
+      {position === InfoPositionType.SECOND && <Typography variant="h5">{course.avg_completion_rate}%</Typography>}
     </Stack>
   );
 }

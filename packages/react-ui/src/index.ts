@@ -246,8 +246,7 @@ import {
   SCCourseTemplateType,
   SCLessonActionsType,
   SCLessonModeType,
-  SCCourseEditTabEnum,
-  type SCCourseEditTabType
+  SCCourseEditTabType
 } from './types';
 /**
  * Constants
@@ -382,7 +381,6 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
-  SCCourseEditTabEnum,
   SCCourseEditTabType,
   Course,
   CourseProps,
