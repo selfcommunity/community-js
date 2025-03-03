@@ -17,7 +17,7 @@ import EventInviteButton from '../EventInviteButton';
 import InviteUserEventButton from '../InviteUserEventButton';
 import User, {UserProps, UserSkeleton} from '../User';
 import {PREFIX} from './constants';
-import {TabContentEnum, TabContentType} from './types';
+import {TabContentType} from './types';
 
 const classes = {
   actionButton: `${PREFIX}-action-button`,
@@ -79,7 +79,7 @@ export default function TabContentComponent(props: TabComponentProps) {
 
   // CONSTS
   const users: SCUserType[] = useMemo(
-    () => (tabValue === TabContentEnum.REQUESTS ? actionProps?.users : state.results),
+    () => (tabValue === TabContentType.REQUESTS ? actionProps?.users : state.results),
     [tabValue, actionProps?.users, state.results]
   );
 
@@ -125,16 +125,16 @@ export default function TabContentComponent(props: TabComponentProps) {
   }, [setOpenDialog]);
 
   const handleToggleMember = useCallback(() => {
-    handleRefresh?.(TabContentEnum.PARTICIPANTS);
+    handleRefresh?.(TabContentType.PARTICIPANTS);
   }, [handleRefresh]);
 
   const handleInviteMember = useCallback(() => {
-    handleRefresh?.(TabContentEnum.INVITED);
+    handleRefresh?.(TabContentType.INVITED);
   }, [handleRefresh]);
 
   const getActionsComponent = useCallback(
     (userId: number) => {
-      if (tabValue === TabContentEnum.INVITED && actionProps) {
+      if (tabValue === TabContentType.INVITED && actionProps) {
         const _handleInvitations = (invited: boolean) => {
           if (invited) {
             actionProps.setCount?.((prev) => prev - 1);
@@ -144,7 +144,7 @@ export default function TabContentComponent(props: TabComponentProps) {
         };
 
         return <InviteUserEventButton event={actionProps.scEvent} userId={userId} handleInvitations={_handleInvitations} />;
-      } else if (tabValue === TabContentEnum.REQUESTS && actionProps) {
+      } else if (tabValue === TabContentType.REQUESTS && actionProps) {
         const handleConfirm = (id: number | null) => {
           if (id) {
             actionProps.setCount((prev) => prev - 1);
@@ -176,13 +176,13 @@ export default function TabContentComponent(props: TabComponentProps) {
     [tabValue, actionProps]
   );
 
-  if (tabValue === TabContentEnum.PARTICIPANTS && actionProps?.count === 0) {
+  if (tabValue === TabContentType.PARTICIPANTS && actionProps?.count === 0) {
     return (
       <Typography variant="body1">
         <FormattedMessage id="ui.eventMembersWidget.noParticipants" defaultMessage="ui.eventMembersWidget.noParticipants" />
       </Typography>
     );
-  } else if (tabValue === TabContentEnum.INVITED && state.count === 0 && actionProps) {
+  } else if (tabValue === TabContentType.INVITED && state.count === 0 && actionProps) {
     const date = actionProps.scEvent.end_date || actionProps.scEvent.start_date;
     const disabled = new Date(date).getTime() < new Date().getTime();
 
@@ -195,7 +195,7 @@ export default function TabContentComponent(props: TabComponentProps) {
     return (
       <EventInviteButton event={actionProps.scEvent} className={classes.eventButton} handleInvitations={handleInvitations} disabled={disabled} />
     );
-  } else if (tabValue === TabContentEnum.REQUESTS && actionProps?.count === 0) {
+  } else if (tabValue === TabContentType.REQUESTS && actionProps?.count === 0) {
     return (
       <Typography variant="body1">
         <FormattedMessage id="ui.eventMembersWidget.noOtherRequests" defaultMessage="ui.eventMembersWidget.noOtherRequests" />
