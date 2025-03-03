@@ -18,7 +18,7 @@ export const useDisabled = () => {
     return () => {
       updateDragStatus.current && PubSub.unsubscribe(updateDragStatus.current);
     };
-  }, []);
+  }, [setIsDisabled]);
 
   return {isDisabled};
 };
