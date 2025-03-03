@@ -4,7 +4,7 @@ import LessonsSkeleton from './Lessons/Skeleton';
 import UsersSkeleton from './Users/Skeleton';
 import CourseFormSkeleton from '../CourseForm/Skeleton';
 import OptionsSkeleton from './Options/Skeleton';
-import {SCCourseEditTabEnum, SCCourseEditTabType} from '../../types';
+import {SCCourseEditTabType} from '../../types';
 import {memo} from 'react';
 
 const classes = {
@@ -40,11 +40,11 @@ function EditCourseSkeleton(props: EditCourseSkeletonProps) {
         ))}
       </Stack>
 
-      {tab === SCCourseEditTabEnum.LESSONS && <LessonsSkeleton />}
-      {tab === SCCourseEditTabEnum.CUSTOMIZE && <CourseFormSkeleton />}
-      {tab === SCCourseEditTabEnum.USERS && <UsersSkeleton />}
-      {tab === SCCourseEditTabEnum.REQUESTS && <UsersSkeleton />}
-      {tab === SCCourseEditTabEnum.OPTIONS && <OptionsSkeleton />}
+      {tab === SCCourseEditTabType.LESSONS && <LessonsSkeleton />}
+      {tab === SCCourseEditTabType.CUSTOMIZE && <CourseFormSkeleton />}
+      {tab === SCCourseEditTabType.USERS && <UsersSkeleton />}
+      {tab === SCCourseEditTabType.REQUESTS && <UsersSkeleton />}
+      {tab === SCCourseEditTabType.OPTIONS && <OptionsSkeleton />}
     </Root>
   );
 }

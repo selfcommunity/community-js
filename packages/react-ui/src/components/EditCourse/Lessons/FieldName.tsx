@@ -9,7 +9,7 @@ import {useSnackbar} from 'notistack';
 import {SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {EndpointType, http} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
-import {ActionLessonEnum, ActionLessonType} from '../types';
+import {ActionLessonType} from '../types';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../../constants/PubSub';
 
@@ -65,7 +65,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
         }
       })
       .then((response: AxiosResponse<SCCourseType>) => {
-        handleManageRow(response.data, isNewRow ? ActionLessonEnum.ADD : ActionLessonEnum.RENAME);
+        handleManageRow(response.data, isNewRow ? ActionLessonType.ADD : ActionLessonType.RENAME);
         setName(null);
         setLoading(false);
         handleDisableEditMode();
@@ -94,7 +94,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
 
   const handleClose = useCallback(() => {
     if (isNewRow) {
-      handleManageRow(row, ActionLessonEnum.DELETE);
+      handleManageRow(row, ActionLessonType.DELETE);
       PubSub.publish(`${SCTopicType.COURSE}.${SCGroupEventType.UPDATE}`, false);
     } else {
       setName(null);

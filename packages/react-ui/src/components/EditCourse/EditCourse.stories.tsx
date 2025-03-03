@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import EditCourse from './index';
-import { SCCourseEditTabEnum } from '../../types/course';
+import { SCCourseEditTabType } from '../../types/course';
 
 export default {
   title: 'Design System/React UI/Edit Course',
@@ -14,8 +14,9 @@ export default {
   args: {
     courseId: 2,
     course: undefined,
-    tab: SCCourseEditTabEnum.LESSONS,
+    tab: SCCourseEditTabType.LESSONS,
     onTabChange() {},
+    onTabSelect: undefined,
     className: ''
   },
   render: (args) => (

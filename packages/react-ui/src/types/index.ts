@@ -8,10 +8,7 @@ import {VirtualScrollerItemProps} from './virtualScroller';
 import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} from './user';
 import {PlatformWidgetActionType} from './platformWidget';
 import {SCEventTemplateType} from './event';
-import {SCCourseTemplateType, SCLessonActionsType, SCLessonModeType, SCCourseEditTabEnum} from './course';
-import type {SCCourseEditTabType} from './course';
-
-export type {SCCourseEditTabType};
+import {SCCourseTemplateType, SCLessonActionsType, SCLessonModeType, SCCourseEditTabType} from './course';
 
 export {
   SCFeedWidgetType,
@@ -31,5 +28,5 @@ export {
   SCCourseTemplateType,
   SCLessonActionsType,
   SCLessonModeType,
-  SCCourseEditTabEnum
+  SCCourseEditTabType
 };

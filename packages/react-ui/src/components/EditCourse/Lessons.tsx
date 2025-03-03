@@ -12,7 +12,7 @@ import Status from './Status';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
-import {ActionLessonEnum, ActionLessonType} from './types';
+import {ActionLessonType} from './types';
 import {useDisabled} from './hooks';
 
 const classes = {
@@ -123,14 +123,14 @@ function Lessons(props: LessonsProps) {
   const handleManageSection = useCallback(
     (section: SCCourseSectionType, type: ActionLessonType) => {
       switch (type) {
-        case ActionLessonEnum.ADD:
+        case ActionLessonType.ADD:
           setSCCourse({
             ...course,
             num_sections: course.num_sections + 1,
             sections: [...course.sections, section]
           });
           break;
-        case ActionLessonEnum.RENAME:
+        case ActionLessonType.RENAME:
           setSCCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
@@ -145,7 +145,7 @@ function Lessons(props: LessonsProps) {
             })
           });
           break;
-        case ActionLessonEnum.DELETE:
+        case ActionLessonType.DELETE:
           setSCCourse({
             ...course,
             num_sections: course.num_sections - 1,
@@ -153,7 +153,7 @@ function Lessons(props: LessonsProps) {
             sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
           });
           break;
-        case ActionLessonEnum.UPDATE:
+        case ActionLessonType.UPDATE:
           setSCCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
@@ -168,12 +168,12 @@ function Lessons(props: LessonsProps) {
             })
           });
           break;
-        case type.endsWith(ActionLessonEnum.UPDATE) && type: {
+        case type.endsWith(ActionLessonType.UPDATE) && type: {
           let numLessons = course.num_lessons;
 
-          if (type === ActionLessonEnum.ADD_UPDATE) {
+          if (type === ActionLessonType.ADD_UPDATE) {
             numLessons = course.num_lessons + 1;
-          } else if (type === ActionLessonEnum.DELETE_UPDATE) {
+          } else if (type === ActionLessonType.DELETE_UPDATE) {
             numLessons = course.num_lessons - 1;
           }
 
