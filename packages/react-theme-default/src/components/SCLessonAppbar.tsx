@@ -9,6 +9,11 @@ const Component = {
           whiteSpace: 'nowrap'
         }
       },
+      '& .SCLessonAppbar-start-items': {
+        flexGrow: 1,
+        display: 'flex',
+        alignItems: 'center'
+      },
       boxShadow: 'none',
       borderBottom: `1px solid ${theme.palette.grey[300]}`,
       '& .MuiToolbar-root': {
