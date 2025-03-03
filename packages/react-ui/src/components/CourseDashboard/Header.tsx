@@ -4,6 +4,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {memo, useMemo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {SCCourseEditTabType} from '../../types';
 
 const classes = {
   header: `${PREFIX}-header`,
@@ -13,8 +14,22 @@ const classes = {
   iconWrapper: `${PREFIX}-header-icon-wrapper`
 };
 
+type DataUrlEditDashboard = {
+  id: number;
+  slug: string;
+  tab: SCCourseEditTabType;
+};
+
+function getUrlEditDashboard(course: SCCourseType): DataUrlEditDashboard {
+  return {
+    id: course.id,
+    slug: course.slug,
+    tab: SCCourseEditTabType.LESSONS
+  };
+}
+
 interface HeaderCourseDashboardProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   hasAction?: boolean;
 }
 
@@ -29,7 +44,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   const intl = useIntl();
 
   const iconData = useMemo(() => {
-    const underId = course?.privacy === SCCoursePrivacyType.DRAFT ? 'draft' : course?.privacy;
+    const underId = course.privacy === SCCoursePrivacyType.DRAFT ? 'draft' : course.privacy;
 
     return [
       {
@@ -42,7 +57,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
         id: 'ui.course.type',
         icon: 'courses',
         key: 'typeOfCourse',
-        underId: `ui.course.type.${course?.type}`
+        underId: `ui.course.type.${course.type}`
       }
     ];
   }, [course]);
@@ -78,7 +93,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
         {hasAction && (
           <Button
             component={Link}
-            to={scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, course)}
+            to={scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, getUrlEditDashboard(course))}
             size="small"
             color="primary"
             variant="contained">
