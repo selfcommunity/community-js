@@ -14,7 +14,7 @@ import {useSnackbar} from 'notistack';
 import LessonReleaseMenu from '../../LessonReleaseMenu';
 import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
-import {ActionLessonEnum, ActionLessonType} from '../types';
+import {ActionLessonType} from '../types';
 import {useDisabled} from '../hooks';
 
 const classes = {
@@ -95,7 +95,7 @@ function SectionRow(props: SectionRowProps) {
       };
 
       CourseService.patchCourseSection(course.id, section.id, data)
-        .then(() => handleManageSection(tempSection, ActionLessonEnum.UPDATE))
+        .then(() => handleManageSection(tempSection, ActionLessonType.UPDATE))
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
 
@@ -123,7 +123,7 @@ function SectionRow(props: SectionRowProps) {
           num_lessons: section.lessons.length
         };
 
-        handleManageSection(tempSection, ActionLessonEnum.DELETE);
+        handleManageSection(tempSection, ActionLessonType.DELETE);
 
         enqueueSnackbar(
           <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,
@@ -146,16 +146,16 @@ function SectionRow(props: SectionRowProps) {
   const handleManageLesson = useCallback(
     (lesson: SCCourseLessonType, type: ActionLessonType) => {
       switch (type) {
-        case ActionLessonEnum.ADD: {
+        case ActionLessonType.ADD: {
           const tempSection: SCCourseSectionType = {
             ...section,
             lessons: section.lessons ? [...section.lessons, lesson] : [lesson]
           };
 
-          handleManageSection(tempSection, ActionLessonEnum.ADD_UPDATE);
+          handleManageSection(tempSection, ActionLessonType.ADD_UPDATE);
           break;
         }
-        case ActionLessonEnum.RENAME: {
+        case ActionLessonType.RENAME: {
           const tempSection: SCCourseSectionType = {
             ...section,
             lessons: section.lessons.map((prevLesson) => {
@@ -170,16 +170,16 @@ function SectionRow(props: SectionRowProps) {
             })
           };
 
-          handleManageSection(tempSection, ActionLessonEnum.RENAME_UPDATE);
+          handleManageSection(tempSection, ActionLessonType.RENAME_UPDATE);
           break;
         }
-        case ActionLessonEnum.DELETE: {
+        case ActionLessonType.DELETE: {
           const tempSection: SCCourseSectionType = {
             ...section,
             lessons: section.lessons.filter((prevLesson) => prevLesson.id !== lesson.id)
           };
 
-          handleManageSection(tempSection, ActionLessonEnum.DELETE_UPDATE);
+          handleManageSection(tempSection, ActionLessonType.DELETE_UPDATE);
         }
       }
     },

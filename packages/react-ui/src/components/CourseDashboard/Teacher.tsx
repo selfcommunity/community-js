@@ -2,7 +2,7 @@ import {Box, Stack, styled, Tab, Typography, useThemeProps} from '@mui/material'
 import {PREFIX} from './constants';
 import HeaderCourseDashboard from './Header';
 import {HTMLAttributes, memo, SyntheticEvent, useCallback, useState} from 'react';
-import {TabContentEnum, TabContentType} from './types';
+import {InfoPositionType, TabContentType} from './types';
 import classNames from 'classnames';
 import {SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
@@ -12,6 +12,7 @@ import Students from './Teacher/Students';
 import Comments from './Teacher/Comments';
 import {useSCFetchCourse} from '@selfcommunity/react-core';
 import {CourseInfoViewType} from '@selfcommunity/api-services';
+import TeacherSkeleton from './Teacher/Skeleton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -24,11 +25,11 @@ const classes = {
 const TAB_DATA = [
   {
     label: 'ui.course.dashboard.teacher.tab.students',
-    value: TabContentEnum.STUDENTS
+    value: TabContentType.STUDENTS
   },
   {
     label: 'ui.course.dashboard.teacher.tab.comments',
-    value: TabContentEnum.COMMENTS
+    value: TabContentType.COMMENTS
   }
 ];
 
@@ -55,7 +56,7 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
   const {courseId, course, className, ...rest} = props;
 
   // STATES
-  const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum.STUDENTS);
+  const [tabValue, setTabValue] = useState<TabContentType>(TabContentType.STUDENTS);
 
   // HOOKS
   const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: CourseInfoViewType.DASHBOARD}});
@@ -68,13 +69,17 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
     [setTabValue]
   );
 
+  if (!scCourse) {
+    return <TeacherSkeleton />;
+  }
+
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <HeaderCourseDashboard course={scCourse} hasAction />
 
       <Stack className={classes.infoWrapper}>
-        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={scCourse} position="first" />
-        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.completion" course={scCourse} position="second" />
+        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.students" course={scCourse} position={InfoPositionType.FIRST} />
+        <InfoCourseDashboard title="ui.course.dashboard.teacher.info.completion" course={scCourse} position={InfoPositionType.SECOND} />
       </Stack>
 
       <TabContext value={tabValue}>
@@ -93,11 +98,11 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
           ))}
         </TabList>
 
-        <TabPanel className={classes.tabPanel} value={TabContentEnum.STUDENTS}>
+        <TabPanel className={classes.tabPanel} value={TabContentType.STUDENTS}>
           <Students course={scCourse} />
         </TabPanel>
 
-        <TabPanel className={classes.tabPanel} value={TabContentEnum.COMMENTS}>
+        <TabPanel className={classes.tabPanel} value={TabContentType.COMMENTS}>
           <Comments course={scCourse} />
         </TabPanel>
       </TabContext>

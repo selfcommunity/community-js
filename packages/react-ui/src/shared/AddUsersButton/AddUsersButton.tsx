@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCCourseType, SCUserType} from '@selfcommunity/types';
+import {SCUserType} from '@selfcommunity/types';
 import BaseDialog from '../BaseDialog';
 import {Endpoints, EndpointType, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
@@ -54,7 +54,6 @@ const DialogRoot = styled(BaseDialog, {
 })(() => ({}));
 
 export interface AddUsersButtonProps extends ButtonProps {
-  course: SCCourseType | null;
   label: string;
 
   /**
@@ -95,7 +94,6 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
   });
 
   const {
-    course,
     label,
     variant = 'outlined',
     color = 'inherit',
@@ -145,7 +143,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
           });
         });
     },
-    [setLoading, course, endpoint, endpointQueryParams, setSuggested]
+    [setLoading, endpoint, endpointQueryParams, setSuggested]
   );
 
   // EFFECTS

@@ -2,7 +2,7 @@ import React from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {AppBar, Icon, IconButton, Toolbar, Typography} from '@mui/material';
+import {AppBar, Icon, IconButton, Toolbar, Typography, Box} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
 import {FormattedMessage} from 'react-intl';
@@ -10,6 +10,8 @@ import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
+  startItems: `${PREFIX}-start-items`,
+  endItems: `${PREFIX}-end-items`,
   title: `${PREFIX}-title`
 };
 
@@ -72,12 +74,14 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
   return (
     <Root position="fixed" open={Boolean(activePanel)} className={classNames(classes.root, className)} {...rest}>
       <Toolbar>
-        <IconButton edge="start" onClick={onArrowBackClick}>
-          <Icon>arrow_back</Icon>
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-          {title}
-        </Typography>
+        <Box className={classes.startItems}>
+          <IconButton edge="start" onClick={onArrowBackClick}>
+            <Icon>arrow_back</Icon>
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {title}
+          </Typography>
+        </Box>
         {editMode ? (
           <>
             <IconButton onClick={() => handleOpen(SCLessonActionsType.SETTINGS)} color="primary">
@@ -88,7 +92,7 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
             </LoadingButton>
           </>
         ) : (
-          <>
+          <Box className={classes.endItems}>
             {showComments && (
               <IconButton onClick={() => handleOpen(SCLessonActionsType.COMMENTS)}>
                 <Icon>chat_bubble_outline</Icon>
@@ -97,7 +101,7 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
             <IconButton onClick={() => handleOpen(SCLessonActionsType.LESSONS)}>
               <Icon>courses</Icon>
             </IconButton>
-          </>
+          </Box>
         )}
       </Toolbar>
     </Root>

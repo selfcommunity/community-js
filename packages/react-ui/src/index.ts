@@ -45,7 +45,12 @@ import ConnectionUserButton from './components/ConnectionUserButton';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
 import CourseContentMenu, {CourseContentMenuProps} from './components/CourseContentMenu';
-import CourseDashboard, {TeacherCourseDashboardProps, StudentCourseDashboardProps} from './components/CourseDashboard';
+import CourseDashboard, {
+  TeacherCourseDashboardProps,
+  TeacherSkeleton,
+  StudentCourseDashboardProps,
+  StudentSkeleton
+} from './components/CourseDashboard';
 import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from './components/Course';
 import CourseJoinButton, {CourseJoinButtonProps} from './components/CourseJoinButton';
 import Courses, {CoursesProps, CoursesSkeleton, CoursesSkeletonProps} from './components/Courses';
@@ -59,7 +64,7 @@ import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomA
 import EditEventButton, {EditEventButtonProps} from './components/EditEventButton';
 import EditGroupButton, {EditGroupButtonProps} from './components/EditGroupButton';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
-import EditCourse, {EditCourseProps} from './components/EditCourse';
+import EditCourse, {EditCourseProps, EditCourseSkeleton} from './components/EditCourse';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from './components/Event';
 import EventHeader, {EventHeaderProps, EventHeaderSkeleton} from './components/EventHeader';
 import EventInfoWidget, {EventInfoWidgetProps} from './components/EventInfoWidget';
@@ -190,7 +195,7 @@ import {
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
 import {SCCourseFormStepType} from './constants/Course';
-import AccordionLessons, {AccordionLessonsProps} from './shared/AccordionLessons';
+import AccordionLessons, {AccordionLessonsProps, AccordionLessonsSkeleton} from './shared/AccordionLessons';
 import AddUsersButton, {AddUsersButtonProps} from './shared/AddUsersButton';
 import EmptyStatus, {EmptyStatusProps} from './shared/EmptyStatus';
 import LiveStream, {LiveStreamProps, LiveStreamSkeletonProps, LiveStreamSkeleton} from './components/LiveStream';
@@ -241,8 +246,7 @@ import {
   SCCourseTemplateType,
   SCLessonActionsType,
   SCLessonModeType,
-  SCCourseEditTabEnum,
-  type SCCourseEditTabType
+  SCCourseEditTabType
 } from './types';
 /**
  * Constants
@@ -377,7 +381,6 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
-  SCCourseEditTabEnum,
   SCCourseEditTabType,
   Course,
   CourseProps,
@@ -395,7 +398,9 @@ export {
   CourseContentMenuProps,
   CourseDashboard,
   TeacherCourseDashboardProps,
+  TeacherSkeleton,
   StudentCourseDashboardProps,
+  StudentSkeleton,
   CreateEventButton,
   CreateEventButtonProps,
   CreateEventWidget,
@@ -434,6 +439,7 @@ export {
   EmailTextField,
   EditCourse,
   EditCourseProps,
+  EditCourseSkeleton,
   Event,
   EventActionsMenu,
   EventActionsMenuProps,
@@ -526,6 +532,7 @@ export {
   /* SC UI SHARED */
   AccordionLessons,
   AccordionLessonsProps,
+  AccordionLessonsSkeleton,
   AddUsersButton,
   AddUsersButtonProps,
   CourseUsersTable,

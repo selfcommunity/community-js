@@ -1,6 +1,9 @@
-export type TabContentType = '1' | '2';
+export enum TabContentType {
+  STUDENTS = 'students',
+  COMMENTS = 'comments'
+}
 
-export enum TabContentEnum {
-  STUDENTS = '1',
-  COMMENTS = '2'
+export enum InfoPositionType {
+  FIRST = 'first',
+  SECOND = 'second'
 }

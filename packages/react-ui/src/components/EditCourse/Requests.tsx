@@ -5,7 +5,6 @@ import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Status from './Status';
-import UsersSkeleton from './Users/Skeleton';
 import CourseUsersTable from '../../shared/CourseUsersTable';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
@@ -33,7 +32,7 @@ const headerCells = [
 ];
 
 interface RequestsProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   endpointQueryParams?: Record<string, string | number>;
 }
 
@@ -54,7 +53,7 @@ function Requests(props: RequestsProps) {
       isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course?.id),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
       cacheStrategy: CacheStrategies.CACHE_FIRST,
       visibleItems: endpointQueryParams.limit
     },
@@ -87,14 +86,14 @@ function Requests(props: RequestsProps) {
   useEffect(() => {
     let _t: NodeJS.Timeout;
 
-    if (scUserContext.user && course) {
+    if (scUserContext.user) {
       _t = setTimeout(_init);
 
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, course, _init]);
+  }, [scUserContext.user, _init]);
 
   useEffect(() => {
     updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.REMOVE_MEMBER}`, handleRemoveUser);
@@ -114,10 +113,6 @@ function Requests(props: RequestsProps) {
     },
     [dispatch]
   );
-
-  if (!course) {
-    return <UsersSkeleton />;
-  }
 
   return (
     <Box>

@@ -52,7 +52,7 @@ export interface LessonProps {
   /**
    * The course id
    */
-  courseId: string | number;
+  courseId?: string | number;
   /**
    * The section id
    */
@@ -92,6 +92,11 @@ export interface LessonProps {
    */
   onLessonChange?: (lessonId, sectionId) => void;
   /**
+   * Handler on panel change
+   * @default null
+   */
+  onActivePanelChange?: (panel) => void;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -115,6 +120,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     editMode = false,
     onEditModeClose = null,
     onLessonChange = null,
+    onActivePanelChange = null,
     ...rest
   } = props;
 
@@ -144,10 +150,12 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
 
   const handleOpenDrawer = (panel: SCLessonActionsType) => {
     setActivePanel((prevPanel) => (prevPanel === panel ? null : panel));
+    onActivePanelChange && onActivePanelChange(panel);
   };
   const handleCloseDrawer = () => {
     setActivePanel(null);
     onEditModeClose && onEditModeClose();
+    onActivePanelChange && onActivePanelChange(null);
   };
 
   const handleLessonContentEdit = (html: string) => {

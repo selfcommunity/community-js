@@ -24,7 +24,7 @@ const classes = {
 };
 
 interface CommentsProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   endpointQueryParams?: Record<string, string | number>;
 }
 
@@ -81,7 +81,7 @@ function Comments(props: CommentsProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_COMMENTS_COURSES_STATE_CACHE_PREFIX_KEY, course?.id),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_COMMENTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
       cacheStrategy: CacheStrategies.CACHE_FIRST,
       visibleItems: endpointQueryParams.limit
     },
@@ -114,14 +114,14 @@ function Comments(props: CommentsProps) {
   useEffect(() => {
     let _t: NodeJS.Timeout;
 
-    if (scUserContext.user && course) {
+    if (scUserContext.user) {
       _t = setTimeout(_init);
 
       return () => {
         clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, course, _init]);
+  }, [scUserContext.user, _init]);
 
   // HANDLERS
   const handleNext = useCallback(() => {

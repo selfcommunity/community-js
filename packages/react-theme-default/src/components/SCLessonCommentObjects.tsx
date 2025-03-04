@@ -4,11 +4,20 @@ const Component = {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
+      [theme.breakpoints.up('sm')]: {
+        height: '90%'
+      },
       overflowY: 'auto',
-      padding: theme.spacing(2),
+      padding: theme.spacing(2, 2, 3, 2),
       justifyContent: 'space-between',
       '& .SCCommentObjectReply-root': {
         backgroundColor: 'transparent',
+        '& .SCEditor-root': {
+          paddingTop: theme.spacing(2)
+        },
+        '& .SCEditor-content': {
+          minHeight: '50px'
+        },
         '& .SCEditor-actions': {
           left: theme.spacing(1),
           '& .SCCommentObjectReply-icon-reply': {
