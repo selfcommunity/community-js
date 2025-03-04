@@ -3,7 +3,7 @@ import {AccordionDetails, AccordionSummary, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {SCPaymentProduct, SCContentType} from '@selfcommunity/types';
+import {SCPaymentProduct, SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import PaymentProductSkeleton from './Skeleton';
 import Accordion from '@mui/material/Accordion';
@@ -22,8 +22,9 @@ export interface PaymentProductProps {
   className?: string;
   id?: number | string;
   product?: SCPaymentProduct;
-  contentType: SCContentType;
-  contentId: number | string;
+  contentType?: SCContentType;
+  contentId?: number | string;
+  content?: SCPurchasableContent;
 }
 
 export default function PaymentProduct(inProps: PaymentProductProps) {
@@ -32,7 +33,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, id, product, contentType, contentId, ...rest} = props;
+  const {className, id, product, contentType, contentId, content, ...rest} = props;
 
   if (!product) {
     return <PaymentProductSkeleton />;
@@ -51,8 +52,8 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {product.prices.map((price, index) => (
-          <PaymentProductPrice price={price} key={index} contentType={contentType} contentId={contentId} />
+        {product.payment_prices.map((price, index) => (
+          <PaymentProductPrice price={price} key={index} contentType={contentType} {...(content ? {content} : {contentId})} />
         ))}
       </AccordionDetails>
     </Root>

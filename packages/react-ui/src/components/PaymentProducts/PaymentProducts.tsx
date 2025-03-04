@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
-import {SCPaymentProduct, SCContentType} from '@selfcommunity/types';
+import {SCPaymentProduct, SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import PaymentProductsSkeleton from './Skeleton';
@@ -22,20 +22,22 @@ const Root = styled(Box, {
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface PaymentProductPricesProps {
+export interface PaymentProductsProps {
   className?: string;
-  contentType: SCContentType;
-  id: number | string;
+  id?: number | string;
+  contentType?: SCContentType;
+  contentId?: number | string;
+  content?: SCPurchasableContent;
   prefetchedProducts?: SCPaymentProduct[];
 }
 
-export default function PaymentProducts(inProps: PaymentProductPricesProps) {
+export default function PaymentProducts(inProps: PaymentProductsProps) {
   // PROPS
-  const props: PaymentProductPricesProps = useThemeProps({
+  const props: PaymentProductsProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, id, contentType, prefetchedProducts = [], ...rest} = props;
+  const {className, id, contentId, contentType, content, prefetchedProducts = [], ...rest} = props;
 
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,7 +47,9 @@ export default function PaymentProducts(inProps: PaymentProductPricesProps) {
    * Fetches categories list
    */
   const fetchProducts = async (next: string = Endpoints.GetContentProducts.url({})): Promise<SCPaymentProduct[]> => {
-    const data = await PaymentApiClient.getPaymentProducts({content_id: id, content_type: contentType}, {url: next} as AxiosRequestConfig);
+    const data = await PaymentApiClient.getPaymentProducts(id !== undefined ? {id} : {content_id: contentId, content_type: contentType}, {
+      url: next
+    } as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
   };
 
@@ -56,7 +60,7 @@ export default function PaymentProducts(inProps: PaymentProductPricesProps) {
     if (prefetchedProducts.length) {
       setProducts(prefetchedProducts);
       setLoading(false);
-    } else {
+    } else if (id !== undefined || (contentId !== undefined && contentType)) {
       fetchProducts()
         .then((data) => {
           if (isMountedRef.current) {
@@ -67,6 +71,9 @@ export default function PaymentProducts(inProps: PaymentProductPricesProps) {
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
+    } else if (content && contentType) {
+      setProducts(content.paywalls);
+      setLoading(false);
     }
   }, [prefetchedProducts.length]);
 
@@ -77,7 +84,7 @@ export default function PaymentProducts(inProps: PaymentProductPricesProps) {
       ) : (
         <>
           {products.map((p, i) => (
-            <PaymentProduct product={p} key={i} contentType={contentType} contentId={id} />
+            <PaymentProduct product={p} key={i} contentType={contentType} {...(content ? {content} : {contentId})} />
           ))}
         </>
       )}

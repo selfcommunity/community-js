@@ -44,6 +44,7 @@ export enum SCFeatureName {
   GROUPING = 'grouping',
   EVENT = 'event',
   LIVE_STREAM = 'live_stream',
+	PAYMENTS = 'payments',
   COURSE = 'course'
 }
 

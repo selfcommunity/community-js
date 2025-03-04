@@ -8,7 +8,10 @@ import {
   SCContentType,
   SCEventSubscriptionStatusType,
   SCGroupSubscriptionStatusType,
-  SCPurchasableContent
+  SCPurchasableContent,
+  SCGroupType,
+  SCCategoryType,
+  SCEventType
 } from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
@@ -56,7 +59,7 @@ export interface BuyButtonProps {
   /**
    * Content id
    */
-  id: number | string;
+  contentId?: number | string;
 
   /**
    * Purchasable Content
@@ -110,7 +113,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     name: PREFIX
   });
 
-  const {className, id, contentType, content, onPurchase, ...rest} = props;
+  const {className, contentId, contentType, content, onPurchase, ...rest} = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -152,7 +155,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     switch (contentType) {
       case SCContentType.EVENT:
         // Get status event subscribed
-        EventApiClient.getSpecificEventInfo(id ? id : content.id).then((data) => {
+        EventApiClient.getSpecificEventInfo(contentId ? contentId : (content as SCEventType).id).then((data) => {
           if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
             if (data.subscription_status === SCEventSubscriptionStatusType.GOING) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.purchased" id="ui.buyButton.purchased" />);
@@ -163,7 +166,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
         break;
       case SCContentType.CATEGORY:
         // Get status category followed
-        CategoryApiClient.getSpecificCategory(id ? id : content.id).then((data) => {
+        CategoryApiClient.getSpecificCategory(contentId ? contentId : (content as SCCategoryType).id).then((data) => {
           if (data.followed) {
             setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
           }
@@ -172,7 +175,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
         break;
       case SCContentType.GROUP:
         // Get status group subscribed
-        GroupApiClient.getSpecificGroupInfo(id ? id : content.id).then((data) => {
+        GroupApiClient.getSpecificGroupInfo(contentId ? contentId : (content as SCGroupType).id).then((data) => {
           if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
             if (data.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
@@ -187,12 +190,12 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
   };
 
   useEffect(() => {
-    if ((id || content) && contentType) {
+    if ((contentId || content) && contentType) {
       getStatus();
     }
-  }, [id, content, contentType]);
+  }, [contentId, content, contentType]);
 
-  if ((!id && !content) || !scUserContext.user) {
+  if ((!contentId && !content) || !scUserContext.user) {
     return null;
   }
 
@@ -226,10 +229,10 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
                   <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
                 </b>
               </Typography>
-              <PaymentProducts contentType={SCContentType.EVENT} id={id} />
+              <PaymentProducts contentType={contentType} {...(content ? {content} : {contentId})} />
             </SwipeableDrawerRoot>
           ) : (
-            <PaymentProductsDialog open onClose={handleClose} PaymentProductPricesComponentProps={{contentType, id: id, ...(content && {content})}} />
+            <PaymentProductsDialog open onClose={handleClose} PaymentProductsComponentProps={{contentType, ...(content ? {content} : {contentId})}} />
           )}
         </>
       )}

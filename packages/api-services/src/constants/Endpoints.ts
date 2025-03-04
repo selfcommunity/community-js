@@ -1602,11 +1602,11 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   GetCheckoutSession: {
-    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    url: urlReplacer('/api/v2/payments/checkout_session'),
     method: 'GET'
   },
   CheckoutCreateSession: {
-    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    url: urlReplacer('/api/v2/payments/checkout_session'),
     method: 'POST'
   }
 };

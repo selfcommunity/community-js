@@ -1,6 +1,7 @@
 import {SCUserType} from './user';
 import {SCCategoryType} from './category';
 import {SCMediaType} from './media';
+import {SCPaymentProduct, SCPurchasableContent} from './payments';
 
 /**
  * SCCoursePrivacyType enum
@@ -36,7 +37,7 @@ export enum SCCourseJoinStatusType {
  * Interface SCCourseType.
  * Course Schema.
  */
-export interface SCCourseType {
+export interface SCCourseType extends SCPurchasableContent {
   /**
    * The ID of the course.
    */
@@ -239,6 +240,10 @@ export interface SCCourseCommentType {
       name: string;
     };
   };
+  /**
+   * Paywalls
+   */
+  paywalls?: SCPaymentProduct[];
 }
 
 /**

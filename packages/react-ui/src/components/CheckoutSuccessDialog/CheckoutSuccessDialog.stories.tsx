@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CheckoutSuccessDialog from './index';
-import {SCContentType} from '@selfcommunity/types';
 
 export default {
 	title: 'Design System/React UI/Payments/CheckoutSuccessDialog',
@@ -15,10 +14,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof CheckoutSuccessDialog> = {
 	args: {
-		CheckoutSuccessDialogProps: {
-			id: 1,
-			contentType: SCContentType.EVENT
-		}
+			checkoutSessionId: "1",
 	},
 	render: template
 };

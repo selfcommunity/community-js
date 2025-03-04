@@ -5,13 +5,16 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
 import {loadStripe, Stripe, StripeElementsOptions} from '@stripe/stripe-js';
-import {PaymentApiClient} from '@selfcommunity/api-services';
+import {PaymentApiClient, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
 import {PREFIX} from './constants';
-import {SCContentType} from '@selfcommunity/types/src/types';
+import {SCCategoryType, SCContentType, SCPurchasableContent} from '@selfcommunity/types/src/types';
 import {IntlShape, useIntl} from 'react-intl';
 import {getDefaultAppearanceStyle, getDefaultLocale} from '../../utils/payment';
 import {SCPreferences, SCPreferencesContextType, SCThemeType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {actionWidgetTypes} from '../../utils/widget';
+import {Logger} from '@selfcommunity/utils/src/utils/logger';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -25,9 +28,10 @@ const Root = styled(Box, {
 export interface CheckoutProps {
   className?: string;
   clientSecret?: string;
-  contentType: SCContentType;
-  contentId: number;
-  priceId?: string;
+  contentType?: SCContentType;
+  contentId?: number;
+  content?: SCPurchasableContent;
+  priceId?: number;
 }
 
 export default function Checkout(inProps: CheckoutProps) {
@@ -36,9 +40,11 @@ export default function Checkout(inProps: CheckoutProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, contentType, contentId, priceId, ...rest} = props;
+  const {className, contentType, contentId, content, priceId, ...rest} = props;
 
   const {preferences}: SCPreferencesContextType = useSCPreferences();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [initialized, setInitialized] = useState<boolean>(false);
 
   // MEMO
   const stripePublicKey = useMemo(
@@ -58,22 +64,36 @@ export default function Checkout(inProps: CheckoutProps) {
   const fetchClientSecret = useCallback(() => {
     // Create a Checkout Session
     // TODO: During session create check customer_email or customer to force email prefilled and disabled changes
-    PaymentApiClient.checkoutCreateSession({
-      content_type: contentType,
-      content_id: contentId,
-      price_id: priceId
-    })
-      .then((r) => setClientSecret(r.client_secret))
-      .catch((error) => {
-        console.error('Error fetching session client secret:', error);
-      });
-  }, [contentType, contentId, priceId]);
-
-  useEffect(() => {
-    if (contentType && contentId && priceId && !clientSecret && Boolean(stripePromise)) {
-      fetchClientSecret();
+    if (!loading) {
+      console.log('fetching client secret...');
+      setInitialized(true);
+      setLoading(true);
+      PaymentApiClient.checkoutCreateSession({
+        content_type: contentType,
+        content_id: content ? content.id : contentId,
+        payment_price_id: priceId
+      })
+        .then((r) => {
+          console.log(r);
+          setClientSecret(r.client_secret);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching session client secret:', error);
+        });
     }
-  }, [fetchClientSecret, stripePromise]);
+  }, [contentType, contentId, content, priceId, loading]);
+
+  // EFFECTS
+  useEffect(() => {
+    let _t;
+    if (scUserContext.user && contentType && (contentId || content) && priceId && !clientSecret && Boolean(stripePromise) && !initialized) {
+      _t = setTimeout(fetchClientSecret);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
+    }
+  }, [scUserContext.user, clientSecret, stripePromise, contentType, contentId, content, priceId, loading, initialized]);
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   if (!stripePromise || !clientSecret || !scUserContext.user) {

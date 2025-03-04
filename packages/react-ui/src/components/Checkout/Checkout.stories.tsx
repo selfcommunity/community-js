@@ -8,7 +8,7 @@ export default {
 } as Meta<typeof Checkout>;
 
 const template = (args) => (
-	<div style={{ maxWidth: 400 }}>
+	<div style={{ maxWidth: 800 }}>
 		<Checkout {...args} />
 	</div>
 );
@@ -17,7 +17,7 @@ export const Base: StoryObj<typeof Checkout> = {
 	args: {
 			contentId: 1,
 			contentType: SCContentType.EVENT,
-			priceId: ''
+			priceId: 1
 	},
 	render: template
 };

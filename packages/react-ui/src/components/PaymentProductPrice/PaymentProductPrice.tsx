@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContentType, SCPaymentPrice, SCPaymentPriceCurrencyType} from '@selfcommunity/types';
+import {SCContentType, SCPaymentPrice, SCPaymentPriceCurrencyType, SCPurchasableContent} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import PaymentProductPriceSkeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
@@ -27,8 +27,9 @@ export interface PaymentProductProps {
   className?: string;
   id?: number | string;
   price?: SCPaymentPrice;
-  contentType: SCContentType;
-  contentId: number | string;
+  contentType?: SCContentType;
+  contentId?: number | string;
+  content?: SCPurchasableContent;
   actions?: React.ReactNode;
   onHandleActionBuy?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
 }
@@ -39,7 +40,7 @@ export default function PaymentProductPrice(inProps: PaymentProductProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, id, price, contentType, contentId, actions, onHandleActionBuy, ...rest} = props;
+  const {className, id, price, contentType, contentId, content, actions, onHandleActionBuy, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -100,8 +101,8 @@ export default function PaymentProductPrice(inProps: PaymentProductProps) {
               {...(onHandleActionBuy && {onClick: handleActionBuy})}
               to={scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
                 content_type: contentType.toLowerCase(),
-                content_id: contentId,
-                priceId: price.id
+                content_id: content ? content.id : contentId,
+								price_id: price.id
               })}>
               <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
             </Button>

@@ -1298,5 +1298,11 @@
   "ui.buyButton.purchased": "Purchased",
   "ui.buyButton.subscribed": "Subscribed",
   "ui.paymentProductsDialog.title": "Choose a price",
-  "ui.paymentProduct.action.buy": "Buy"
+  "ui.paymentProduct.action.buy": "Buy",
+  "ui.checkoutSuccessDialog.title": "Compliments!",
+  "ui.checkoutSuccessDialog.buy": "You purchased:",
+  "ui.checkoutSuccessDialog.event.button": "Go to the event",
+  "ui.checkoutSuccessDialog.category.button": "Go to the category",
+  "ui.checkoutSuccessDialog.group.button": "Go to the group",
+  "ui.checkoutSuccessDialog.course.button": "View course"
 }

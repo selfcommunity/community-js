@@ -1,26 +1,29 @@
 import React, {useEffect, useState} from 'react';
-import {Slide} from '@mui/material';
+import {Box, Button, CircularProgress, Dialog, DialogContent, DialogProps, DialogTitle, Slide, Stack, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
-import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {SCContentType} from '@selfcommunity/types';
+import {CLAPPING} from '../../assets/courses/clapping';
+import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import Event from '../Event';
+import {SCEventTemplateType} from '@selfcommunity/react-ui';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {SCContentType} from '@selfcommunity/types';
-import animatedProgress from '../../assets/onBoarding/progress/category_progress.json';
-import {Player} from '@lottiefiles/react-lottie-player';
 
 const PREFIX = 'SCCheckoutSuccessDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
-  animationSuccess: `${PREFIX}-animation-success`
+  img: `${PREFIX}-img`,
+  event: `${PREFIX}-event`,
+  btn: `${PREFIX}-btn`
 };
 
-const Root = styled(BaseDialog, {
+const Root = styled(Dialog, {
   slot: 'Root',
   name: PREFIX
 })(({theme}) => ({}));
@@ -33,7 +36,7 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
-export interface CheckoutSuccessDialogProps extends BaseDialogProps {
+export interface CheckoutSuccessDialogProps extends DialogProps {
   className?: string;
   checkoutSessionId: string;
   disableInitialTransition?: boolean;
@@ -48,40 +51,89 @@ export default function CheckoutSuccessDialog(inProps: CheckoutSuccessDialogProp
   const {className, checkoutSessionId, disableInitialTransition = false, ...rest} = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [contentType, setContentType] = useState<SCContentType | null>(null);
-  const [contentId, setContentId] = useState<number | string | null>(null);
+  const [contentId, setContentId] = useState<number | null>(null);
+
+  // HOOKS
+  const intl = useIntl();
+
+  // CONTEXT
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   useEffect(() => {
-    /* PaymentApiClient.getCheckoutSession(checkoutSessionId)
-      .then((r) => {
-        // setContentType(r.content_type);
-        // setContentId(r.id);
+    PaymentApiClient.getCheckoutSession(checkoutSessionId)
+      .then((r: any) => {
+        setContentType(r.content_type);
+        setContentId(r.id);
         setLoading(false);
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);
-      }); */
+      });
   }, []);
 
   const renderTitle = () => {
-    return <Player autoplay loop src={animatedProgress} className={classes.animationSuccess} controls={false} />;
+    return <>{!loading && <FormattedMessage id="ui.checkoutSuccessDialog.title" defaultMessage="ui.checkoutSuccessDialog.title" />}</>;
   };
 
   const renderContent = () => {
-    return <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />;
+    let route = SCRoutes.GROUP_ROUTE_NAME;
+    if (contentType === SCContentType.EVENT) {
+      route = SCRoutes.EVENT_ROUTE_NAME;
+    } else if (contentType === SCContentType.CATEGORY) {
+      route = SCRoutes.CATEGORY_ROUTE_NAME;
+    } else if (contentType === SCContentType.COURSE) {
+      route = SCRoutes.COURSE_ROUTE_NAME;
+    }
+    return (
+      <Stack spacing={2} justifyContent="center" alignItems="center">
+        <img
+          src={CLAPPING}
+          className={classes.img}
+          alt={intl.formatMessage({
+            id: 'ui.checkoutSuccessDialog.buy',
+            defaultMessage: 'ui.checkoutSuccessDialog.buy'
+          })}
+          width={100}
+          height={100}
+        />
+        <Typography variant="body2" color="textSecondary">
+          <FormattedMessage id="ui.checkoutSuccessDialog.buy" defaultMessage="ui.checkoutSuccessDialog.buy" />
+        </Typography>
+        <Box style={{width: '100%'}}>
+          {contentType === SCContentType.EVENT && (
+            <Event eventId={contentId} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
+          )}
+        </Box>
+        <Button size="medium" variant={'contained'} to={scRoutingContext.url(route, {id: contentId})} component={Link} className={classes.btn}>
+          {contentType === SCContentType.EVENT && (
+            <FormattedMessage id="ui.checkoutSuccessDialog.event.button" defaultMessage="ui.checkoutSuccessDialog.event.button" />
+          )}
+          {contentType === SCContentType.GROUP && (
+            <FormattedMessage id="ui.checkoutSuccessDialog.group.button" defaultMessage="ui.checkoutSuccessDialog.group.button" />
+          )}
+          {contentType === SCContentType.CATEGORY && (
+            <FormattedMessage id="ui.checkoutSuccessDialog.category.button" defaultMessage="ui.checkoutSuccessDialog.category.button" />
+          )}
+          {contentType === SCContentType.COURSE && (
+            <FormattedMessage id="ui.checkoutSuccessDialog.course.button" defaultMessage="ui.checkoutSuccessDialog.course.button" />
+          )}
+        </Button>
+      </Stack>
+    );
   };
 
   return (
     <Root
       maxWidth={'sm'}
       fullWidth
-      title={renderTitle()}
       scroll={'paper'}
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
       {...rest}>
-      {renderContent()}
+      <DialogTitle>{renderTitle()}</DialogTitle>
+      <DialogContent>{loading ? <CircularProgress /> : renderContent()}</DialogContent>
     </Root>
   );
 }

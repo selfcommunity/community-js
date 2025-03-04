@@ -4,6 +4,7 @@
  */
 import {SCUserType} from './user';
 import {SCLiveStreamType} from './liveStream';
+import {SCPaymentProduct, SCPurchasableContent} from './payments';
 
 /**
  * SCEventPrivacyType enum
@@ -65,7 +66,7 @@ export enum SCEventDateFilterType {
   PAST = 'past'
 }
 
-export interface SCEventType {
+export interface SCEventType extends SCPurchasableContent {
   /**
    * The ID of the event.
    */

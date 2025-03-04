@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import PaymentProducts from '../PaymentProducts';
-import {PaymentProductPricesProps} from '../PaymentProducts/PaymentProducts';
+import {PaymentProductsProps} from '../PaymentProducts';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPaymentProductsDialog';
@@ -30,7 +30,7 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
 
 export interface PaymentProductPricesDialogProps extends BaseDialogProps {
   className?: string;
-  PaymentProductPricesComponentProps: PaymentProductPricesProps;
+  PaymentProductsComponentProps: PaymentProductsProps;
   disableInitialTransition?: boolean;
 }
 
@@ -40,7 +40,7 @@ export default function PaymentProductsDialog(inProps: PaymentProductPricesDialo
     props: inProps,
     name: PREFIX
   });
-  const {className, PaymentProductPricesComponentProps, disableInitialTransition = false, ...rest} = props;
+  const {className, PaymentProductsComponentProps, disableInitialTransition = false, ...rest} = props;
 
   return (
     <Root
@@ -53,7 +53,7 @@ export default function PaymentProductsDialog(inProps: PaymentProductPricesDialo
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
       {...rest}>
-      <PaymentProducts {...PaymentProductPricesComponentProps} />
+      <PaymentProducts {...PaymentProductsComponentProps} />
     </Root>
   );
 }

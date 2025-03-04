@@ -152,7 +152,7 @@ export enum SCPreferenceName {
   PAYMENTS_ENABLED = 'payments_enabled',
   ENVIRONMENT = 'env',
   STACK_ID = 'stackid',
-	STRIPE_PUBLIC_KEY = 'stripe_public_key',
+  STRIPE_PUBLIC_KEY = 'stripe_public_key'
 }
 
 /**

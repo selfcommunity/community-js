@@ -8,7 +8,11 @@ export interface ContentProductsParams extends BaseGetParams {
   /**
    * Content id
    */
-  content_id: number | string;
+  id?: number | string;
+  /**
+   * Content id
+   */
+  content_id?: number | string;
   /**
    * Content type
    */
@@ -27,5 +31,5 @@ export interface CheckoutCreateSessionParams {
   /**
    * Price id
    */
-  price_id: string;
+  payment_price_id: number;
 }

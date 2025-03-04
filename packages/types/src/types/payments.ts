@@ -32,7 +32,7 @@ export interface SCPaymentProduct {
   /**
    * Stripe prices
    */
-  prices: SCPaymentPrice[];
+  payment_prices: SCPaymentPrice[];
 }
 
 export interface SCPaymentPrice {
@@ -90,11 +90,15 @@ export enum SCContentType {
 }
 
 export interface SCPurchasableContent {
-  id: number | string;
-  paywalls: SCPaymentProduct[];
+  id?: number;
+  paywalls?: SCPaymentProduct[];
 }
 
 export interface SCCheckoutSession {
+  /**
+   * Session id
+   */
+  id?: string;
   /**
    * Client secret
    */

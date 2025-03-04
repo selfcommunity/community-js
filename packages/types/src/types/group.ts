@@ -3,6 +3,7 @@
  * Group Schema.
  */
 import {SCUserType} from './user';
+import {SCPurchasableContent} from './payments';
 
 /**
  * SCGroupPrivacyType enum
@@ -21,7 +22,7 @@ export enum SCGroupSubscriptionStatusType {
   INVITED = 'invited'
 }
 
-export interface SCGroupType {
+export interface SCGroupType extends SCPurchasableContent {
   /**
    * The ID of the group.
    */

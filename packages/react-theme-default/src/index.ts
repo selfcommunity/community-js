@@ -203,6 +203,7 @@ import SCBuyButton from './components/SCBuyButton';
 import SCPaymentProducts from './components/SCPaymentProducts';
 import SCPaymentProduct from './components/SCPaymentProduct';
 import SCPaymentProductPrice from './components/SCPaymentProductPrice';
+import SCCheckoutSuccessDialog from './components/SCCheckoutSuccessDialog';
 
 /**
  * Style fragments - Imports - End
@@ -486,7 +487,8 @@ const theme = {
     SCBuyButton,
     SCPaymentProducts,
     SCPaymentProduct,
-    SCPaymentProductPrice
+    SCPaymentProductPrice,
+    SCCheckoutSuccessDialog
   },
   selfcommunity: {
     user: {

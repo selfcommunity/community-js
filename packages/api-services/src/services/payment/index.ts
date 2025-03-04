@@ -84,7 +84,7 @@ export class PaymentApiClient {
    * @param config
    */
   static getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
-    return apiRequest({...config, url: `${Endpoints.CheckoutSession.url({id})}`, method: Endpoints.CheckoutSession.method});
+    return apiRequest({...config, url: `${Endpoints.GetCheckoutSession.url({id})}`, method: Endpoints.GetCheckoutSession.method});
   }
 }
 

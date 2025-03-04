@@ -151,16 +151,15 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
 
   const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
 
-  /* const isPaymentsEnabled = useMemo(
+  const isPaymentsEnabled = useMemo(
     () =>
       preferences &&
       features &&
-      features.includes(SCFeatureName.LIVE_STREAM) &&
+      features.includes(SCFeatureName.PAYMENTS) &&
       SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
     [preferences]
-  ); */
-	const isPaymentsEnabled = true;
+  );
 
   /**
    * Handles callback subscribe/unsubscribe event
@@ -314,7 +313,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
               ) : (
                 <>
                   {isPaymentsEnabled ? (
-                    <BuyButton id={scEvent.id} contentType={SCContentType.EVENT} />
+                    <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
                   ) : (
                     <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
                   )}
