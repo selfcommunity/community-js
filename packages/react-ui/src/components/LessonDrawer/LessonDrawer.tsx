@@ -110,7 +110,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
         <LessonCommentObjects lessonObject={lesson} {...LessonCommentObjectsProps} />
       ) : (
         <ScrollContainer>
-          <CourseContentMenu course={course} lesson={LessonEditFormProps.lesson} onLessonClick={handleChangeLesson} />
+          <CourseContentMenu course={course} lesson={lesson} onLessonClick={handleChangeLesson} />
         </ScrollContainer>
       )}
     </Root>
