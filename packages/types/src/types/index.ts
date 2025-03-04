@@ -158,9 +158,9 @@ import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnB
 import {SCCommunitySubscriptionTier} from './tier';
 import {SCCommunityEnvironment} from './environment';
 import {
-  type SCContentProduct,
-  type SCProductPrice,
-  SCProductPriceType,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+	SCPaymentPriceCurrencyType,
   SCContentType,
   type SCCheckoutSession,
   type SCPurchasableContent
@@ -350,9 +350,9 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-  type SCContentProduct,
-  type SCProductPrice,
-  SCProductPriceType,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+	SCPaymentPriceCurrencyType,
   SCContentType,
   type SCCheckoutSession,
   type SCPurchasableContent

@@ -130,8 +130,8 @@ import {
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
-  type SCContentProduct,
-  type SCProductPrice,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
   type SCCheckoutSession,
   type SCPurchasableContent
 } from './types';
@@ -189,7 +189,7 @@ import {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-  SCProductPriceType,
+  SCPaymentPriceCurrencyType,
   SCContentType
 } from './types';
 
@@ -246,7 +246,7 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-  SCProductPriceType,
+  SCPaymentPriceCurrencyType,
   SCContentType
 };
 export {
@@ -378,8 +378,8 @@ export {
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
-  type SCContentProduct,
-  type SCProductPrice,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
   type SCCheckoutSession,
   type SCPurchasableContent
 };

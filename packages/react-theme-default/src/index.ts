@@ -199,10 +199,10 @@ import SCTagAutocomplete from './components/SCTagAutocomplete';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
-import SCContentObjectBuyButton from './components/SCContentObjectBuyButton';
-import SCContentObjectProducts from './components/SCContentObjectProducts';
-import SCContentObjectProduct from './components/SCContentObjectProduct';
-import SCContentObjectProductPrice from './components/SCContentObjectProductPrice';
+import SCBuyButton from './components/SCBuyButton';
+import SCPaymentProducts from './components/SCPaymentProducts';
+import SCPaymentProduct from './components/SCPaymentProduct';
+import SCPaymentProductPrice from './components/SCPaymentProductPrice';
 
 /**
  * Style fragments - Imports - End
@@ -483,10 +483,10 @@ const theme = {
     SCLiveStreamFormSettings,
     SCLiveStreamRoom,
     SCLiveStreamVideoConference,
-    SCContentObjectBuyButton,
-    SCContentObjectProducts,
-    SCContentObjectProduct,
-    SCContentObjectProductPrice
+    SCBuyButton,
+    SCPaymentProducts,
+    SCPaymentProduct,
+    SCPaymentProductPrice
   },
   selfcommunity: {
     user: {

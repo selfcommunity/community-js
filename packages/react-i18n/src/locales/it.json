@@ -1291,13 +1291,13 @@
   "ui.upScalingTierBadge.professionalFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto almeno un piano Professional.",
   "ui.upScalingTierBadge.enterpriseFeature": "Questa impostazione è disponibile solo se la community ha sottoscritto un piano Enterprise.",
 
-  "ui.contentObjectBuyButton.buy": "Acquista",
-  "ui.contentObjectBuyButton.buyEvent": "Acquista evento",
-  "ui.contentObjectBuyButton.buyGroup": "Iscriviti al gruppo",
-  "ui.contentObjectBuyButton.buyCategory": "Iscriviti",
-  "ui.contentObjectBuyButton.buyCourse": "Acquista il corso",
-  "ui.contentObjectBuyButton.purchased": "Acquistato",
-  "ui.contentObjectBuyButton.subscribed": "Iscritto",
-  "ui.contentObjectProductsDialog.title": "Scegli tra i seguenti prezzi",
-  "ui.contentObjectProduct.action.buy": "Acquista"
+  "ui.buyButton.buy": "Acquista",
+  "ui.buyButton.buyEvent": "Acquista evento",
+  "ui.buyButton.buyGroup": "Iscriviti al gruppo",
+  "ui.buyButton.buyCategory": "Iscriviti",
+  "ui.buyButton.buyCourse": "Acquista il corso",
+  "ui.buyButton.purchased": "Acquistato",
+  "ui.buyButton.subscribed": "Iscritto",
+  "ui.paymentProductsDialog.title": "Scegli tra i seguenti prezzi",
+  "ui.paymentProduct.action.buy": "Acquista"
 }

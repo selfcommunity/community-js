@@ -1290,13 +1290,13 @@
   "ui.upScalingTierBadge.professionalFeature": "This setting is only available if the community has subscribed to a Professional plan.",
   "ui.upScalingTierBadge.enterpriseFeature": "This setting is only available if the community has subscribed to an Enterprise plan.",
 
-  "ui.contentObjectBuyButton.buy": "Buy",
-  "ui.contentObjectBuyButton.buyEvent": "Buy event",
-  "ui.contentObjectBuyButton.buyGroup": "Subscribe to group",
-  "ui.contentObjectBuyButton.buyCategory": "Subscribe to category",
-  "ui.contentObjectBuyButton.buyCourse": "Buy course",
-  "ui.contentObjectBuyButton.purchased": "Purchased",
-  "ui.contentObjectBuyButton.subscribed": "Subscribed",
-  "ui.contentObjectProductsDialog.title": "Choose a price",
-  "ui.contentObjectProduct.action.buy": "Buy"
+  "ui.buyButton.buy": "Buy",
+  "ui.buyButton.buyEvent": "Buy event",
+  "ui.buyButton.buyGroup": "Subscribe to group",
+  "ui.buyButton.buyCategory": "Subscribe to category",
+  "ui.buyButton.buyCourse": "Buy course",
+  "ui.buyButton.purchased": "Purchased",
+  "ui.buyButton.subscribed": "Subscribed",
+  "ui.paymentProductsDialog.title": "Choose a price",
+  "ui.paymentProduct.action.buy": "Buy"
 }

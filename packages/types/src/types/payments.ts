@@ -1,4 +1,4 @@
-export interface SCContentProduct {
+export interface SCPaymentProduct {
   /**
    * Id product
    */
@@ -32,10 +32,10 @@ export interface SCContentProduct {
   /**
    * Stripe prices
    */
-  prices: SCProductPrice[];
+  prices: SCPaymentPrice[];
 }
 
-export interface SCProductPrice {
+export interface SCPaymentPrice {
   /**
    * Id product
    */
@@ -64,7 +64,7 @@ export interface SCProductPrice {
   /**
    * Currency
    */
-  currency?: SCProductPriceType;
+  currency?: SCPaymentPriceCurrencyType;
 
   /**
    * Recurring interval
@@ -73,9 +73,9 @@ export interface SCProductPrice {
 }
 
 /**
- * SCProductPriceType enum
+ * SCCurrencyPriceType enum
  */
-export enum SCProductPriceType {
+export enum SCPaymentPriceCurrencyType {
   EUR = 'EUR'
 }
 
@@ -90,8 +90,8 @@ export enum SCContentType {
 }
 
 export interface SCPurchasableContent {
-	id: number | string;
-  paywalls: SCContentProduct[];
+  id: number | string;
+  paywalls: SCPaymentProduct[];
 }
 
 export interface SCCheckoutSession {

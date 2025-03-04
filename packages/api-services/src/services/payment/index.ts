@@ -1,4 +1,4 @@
-import {SCContentProduct, SCProductPrice} from '@selfcommunity/types';
+import {SCPaymentProduct, SCPaymentPrice} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
 import {BaseGetParams, SCPaginatedResponse} from '../../types';
@@ -13,7 +13,7 @@ export interface PaymentApiClientInterface {
    * @param params
    * @param config
    */
-  getContentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCContentProduct>>;
+  getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>>;
 
   /**
    * Get prices related to a product
@@ -21,7 +21,7 @@ export interface PaymentApiClientInterface {
    * @param params
    * @param config
    */
-  getProductPrices(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCProductPrice>>;
+  getPaymentProductPrices(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentPrice>>;
 
   /**
    * Create session checkout with price_id for an object of type <content_type> and id <content_id>
@@ -31,6 +31,13 @@ export interface PaymentApiClientInterface {
    * @param config
    */
   checkoutCreateSession(content_id: number | string, content_type: number | string, price_id: string, config?: AxiosRequestConfig): Promise<any>;
+
+  /**
+   * This endpoint retrieve checkout session
+   * @param id
+   * @param config
+   */
+  getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession>;
 }
 
 /**
@@ -42,7 +49,7 @@ export class PaymentApiClient {
    * @param params
    * @param config
    */
-  static getContentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCContentProduct>> {
+  static getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetContentProducts.url({})}?${p.toString()}`, method: Endpoints.GetContentProducts.method});
   }
@@ -53,7 +60,11 @@ export class PaymentApiClient {
    * @param params
    * @param config
    */
-  static getProductPrices(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCProductPrice>> {
+  static getPaymentProductPrices(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCPaymentPrice>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetProductPrices.url({id})}?${p.toString()}`, method: Endpoints.GetProductPrices.method});
   }
@@ -65,6 +76,15 @@ export class PaymentApiClient {
    */
   static checkoutCreateSession(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
     return apiRequest({...config, url: Endpoints.CheckoutCreateSession.url({}), method: Endpoints.CheckoutCreateSession.method, data});
+  }
+
+  /**
+   * This endpoint retrieve checkout session
+   * @param id
+   * @param config
+   */
+  static getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
+    return apiRequest({...config, url: `${Endpoints.CheckoutSession.url({id})}`, method: Endpoints.CheckoutSession.method});
   }
 }
 
@@ -81,14 +101,14 @@ export class PaymentApiClient {
  2. Create a function and put the service inside it!
  The async function `searchCourses` will return the events matching the search query.
 
- async getContentProducts() {
-         return await PaymentService.getContentProducts({...});
+ async getPaymentProducts() {
+         return await PaymentService.getPaymentProducts({...});
         }
  ```
  ```jsx
  In case of required `params`, just add them inside the brackets.
 
- async getProductPrices(eventId) {
+ async getPaymentPrices(eventId) {
          return await PaymentService.getProductPrices(id);
        }
  ```
@@ -104,17 +124,20 @@ export class PaymentApiClient {
  :::
  */
 export default class PaymentService {
-  static async getJoinedCourses(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCContentProduct>> {
-    return PaymentApiClient.getContentProducts(params, config);
+  static async getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+    return PaymentApiClient.getPaymentProducts(params, config);
   }
-  static async getProductPrices(
+  static async getPaymentProductPrices(
     id: number | string,
     params?: ContentProductsParams,
     config?: AxiosRequestConfig
-  ): Promise<SCPaginatedResponse<SCProductPrice>> {
-    return PaymentApiClient.getProductPrices(id, params, config);
+  ): Promise<SCPaginatedResponse<SCPaymentPrice>> {
+    return PaymentApiClient.getPaymentProductPrices(id, params, config);
   }
-  static async createCourse(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
+  static async checkoutCreateSession(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
     return PaymentApiClient.checkoutCreateSession(data, config);
+  }
+  static async getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
+    return PaymentApiClient.getCheckoutSession(id, config);
   }
 }
