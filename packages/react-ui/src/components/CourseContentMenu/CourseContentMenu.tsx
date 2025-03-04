@@ -56,7 +56,7 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
   const {className = null, lesson, course, onLessonClick, ...rest} = props;
 
   //STATE
-  const [expandedSections, setExpandedSections] = useState<number[]>(lesson?.course_id ? [lesson.course_id] : []);
+  const [expandedSections, setExpandedSections] = useState<number[]>(lesson?.section_id ? [lesson.section_id] : []);
 
   //HANDLERS
   const handleToggle = useCallback(
