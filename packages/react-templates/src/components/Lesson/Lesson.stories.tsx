@@ -14,9 +14,19 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof Lesson> = {
   args: {
+    courseId: 2,
+    sectionId: 9,
+    lessonId: 25
+  },
+  render: template,
+};
+
+export const EditMode: StoryObj<typeof Lesson> = {
+  args: {
     courseId: 1,
     sectionId: 1,
-    lessonId: 1
+    lessonId: 1,
+    editMode: true
   },
   render: template,
 };
