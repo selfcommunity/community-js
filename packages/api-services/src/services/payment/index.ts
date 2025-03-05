@@ -6,7 +6,7 @@ import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams} from '../../types/payment';
 import {SCCheckoutSession} from '@selfcommunity/types';
-import {SCCheckoutSessionDetail} from '@selfcommunity/types/src/types/payments';
+import {SCCheckoutSessionDetail} from '@selfcommunity/types';
 
 export interface PaymentApiClientInterface {
   /**
