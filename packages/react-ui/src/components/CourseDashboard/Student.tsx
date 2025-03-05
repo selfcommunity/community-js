@@ -54,12 +54,16 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
   };
 
   course.sections.some((section: SCCourseSectionType) => {
-    Object.assign(data, {
-      section_id: section.id,
-      lesson_id: section.lessons[section.num_lessons_completed].id
-    });
+    const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons;
 
-    return section.num_lessons_completed < section.num_lessons;
+    if (isNextLessonInThisSection) {
+      Object.assign(data, {
+        section_id: section.id,
+        lesson_id: section.lessons[section.num_lessons_completed].id
+      });
+    }
+
+    return isNextLessonInThisSection;
   });
 
   return data;

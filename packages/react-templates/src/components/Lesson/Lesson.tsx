@@ -230,7 +230,9 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
 
   const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
   const isNextDisabled =
-    !scCourse?.sections || (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1);
+    !scCourse?.sections ||
+    (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1) ||
+    scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked;
 
   if (!scLesson || !scCourse) {
     return <HiddenPlaceholder />;

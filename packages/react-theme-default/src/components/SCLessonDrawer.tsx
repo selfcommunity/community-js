@@ -30,6 +30,11 @@ const Component = {
       },
       '& .SCLessonDrawer-header-edit': {
         justifyContent: 'space-between'
+      },
+      '& .SCScrollContainer-root:hover': {
+        '& .Mui-disabled': {
+          opacity: '0.38 !important'
+        }
       }
     })
   }
