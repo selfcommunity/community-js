@@ -1,7 +1,7 @@
 import {SCUserType} from './user';
 import {SCCategoryType} from './category';
 import {SCMediaType} from './media';
-import {SCPaymentProduct, SCPurchasableContent} from './payments';
+import {SCPaymentProduct, SCPurchasableContent} from './payment';
 
 /**
  * SCCoursePrivacyType enum

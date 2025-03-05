@@ -4,7 +4,7 @@ import {styled, useTheme} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
-import {loadStripe, Stripe, StripeElementsOptions} from '@stripe/stripe-js';
+import {loadStripe, Stripe} from '@stripe/stripe-js';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
 import {PREFIX} from './constants';

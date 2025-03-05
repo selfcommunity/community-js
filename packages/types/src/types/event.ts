@@ -4,7 +4,7 @@
  */
 import {SCUserType} from './user';
 import {SCLiveStreamType} from './liveStream';
-import {SCPaymentProduct, SCPurchasableContent} from './payments';
+import {SCPurchasableContent} from './payment';
 
 /**
  * SCEventPrivacyType enum

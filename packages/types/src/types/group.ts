@@ -3,7 +3,7 @@
  * Group Schema.
  */
 import {SCUserType} from './user';
-import {SCPurchasableContent} from './payments';
+import {SCPurchasableContent} from './payment';
 
 /**
  * SCGroupPrivacyType enum
