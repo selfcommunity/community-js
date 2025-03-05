@@ -82,6 +82,11 @@ export interface LessonProps {
    */
   editMode?: boolean;
   /**
+   * if the logged-in user is the  editor
+   * @default false
+   */
+  isEditor?: boolean;
+  /**
    * Callback fired on edit mode close
    * @default null
    */
@@ -117,6 +122,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     lessonId,
     LessonAppbarProps = {},
     LessonDrawerProps = {},
+    isEditor = false,
     editMode = false,
     onEditModeClose = null,
     onLessonChange = null,
@@ -129,7 +135,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
-  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: editMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId, sectionId: _sectionId});
 
   // STATE
@@ -138,8 +144,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
-
-  const isEditMode = useMemo(() => editMode && activePanel === SCLessonActionsType.SETTINGS, [editMode, activePanel]);
 
   // HANDLERS
   /**
@@ -246,7 +250,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       <LessonAppbar
         showComments={scLesson.comments_enabled}
-        editMode={isEditMode}
+        editMode={editMode}
         activePanel={activePanel}
         title={scCourse.name}
         handleOpen={handleOpenDrawer}
@@ -254,7 +258,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         updating={updating}
         {...LessonAppbarProps}
       />
-      <Container open={Boolean(activePanel) || isEditMode} className={classes.containerRoot}>
+      <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
         <Box className={classes.navigation}>
           <Typography variant="body2" color="text.secondary">
             <FormattedMessage
@@ -278,7 +282,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         <LessonObject
           course={scCourse}
           lesson={scLesson}
-          editMode={isEditMode}
+          editMode={editMode}
           onContentChange={handleLessonContentEdit}
           onMediaChange={handleLessonMediaEdit}
         />
@@ -286,7 +290,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       <LessonDrawer
         course={scCourse}
         lesson={scLesson}
-        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : isEditMode}
+        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
         activePanel={activePanel}
         handleClose={handleCloseDrawer}
         handleChangeLesson={handleChangeLesson}
