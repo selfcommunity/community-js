@@ -139,6 +139,8 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [lessonContent, setLessonContent] = useState<string>('');
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
 
+  const isEditMode = useMemo(() => editMode && activePanel === SCLessonActionsType.SETTINGS, [editMode, activePanel]);
+
   // HANDLERS
   /**
    * Handles lesson settings change
@@ -242,7 +244,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       <LessonAppbar
         showComments={scLesson.comments_enabled}
-        editMode={editMode}
+        editMode={isEditMode}
         activePanel={activePanel}
         title={scCourse.name}
         handleOpen={handleOpenDrawer}
@@ -250,7 +252,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         updating={updating}
         {...LessonAppbarProps}
       />
-      <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
+      <Container open={Boolean(activePanel) || isEditMode} className={classes.containerRoot}>
         <Box className={classes.navigation}>
           <Typography variant="body2" color="text.secondary">
             <FormattedMessage
@@ -274,7 +276,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         <LessonObject
           course={scCourse}
           lesson={scLesson}
-          editMode={editMode}
+          editMode={isEditMode}
           onContentChange={handleLessonContentEdit}
           onMediaChange={handleLessonMediaEdit}
         />
@@ -282,7 +284,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       <LessonDrawer
         course={scCourse}
         lesson={scLesson}
-        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
+        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : isEditMode}
         activePanel={activePanel}
         handleClose={handleCloseDrawer}
         handleChangeLesson={handleChangeLesson}
