@@ -121,7 +121,7 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
       .then(() => {
         setCompleted(!completed);
         setLoading(false);
-        if (course.avg_completion_rate === 100) {
+        if (course.num_lessons - course.num_lessons_completed === 1) {
           setOpenDialog(true);
         }
       })
