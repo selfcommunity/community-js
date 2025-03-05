@@ -17,7 +17,8 @@ const Component = {
       '& .SCLessonTemplate-navigation-title': {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: theme.spacing(1)
       }
     })
   }
