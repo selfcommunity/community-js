@@ -1,5 +1,5 @@
 import {SCTagType} from './tag';
-import {SCPaymentProduct, SCPurchasableContent} from './payments';
+import {SCPurchasableContent} from './payment';
 
 /**
  * Interface SCCategoryType.
