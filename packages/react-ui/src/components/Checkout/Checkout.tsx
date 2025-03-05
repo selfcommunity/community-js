@@ -1,26 +1,30 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {styled, useTheme} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
 import {loadStripe, Stripe, StripeElementsOptions} from '@stripe/stripe-js';
-import {PaymentApiClient, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
+import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
 import {PREFIX} from './constants';
-import {SCCategoryType, SCContentType, SCPurchasableContent} from '@selfcommunity/types/src/types';
+import {SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {IntlShape, useIntl} from 'react-intl';
-import {getDefaultAppearanceStyle, getDefaultLocale} from '../../utils/payment';
+import {getDefaultLocale} from '../../utils/payment';
 import {SCPreferences, SCPreferencesContextType, SCThemeType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {actionWidgetTypes} from '../../utils/widget';
-import {Logger} from '@selfcommunity/utils';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {SCEventTemplateType} from '@selfcommunity/react-ui';
+import {SCCourseTemplateType, SCEventTemplateType} from '@selfcommunity/react-ui';
 import Event from '../Event';
+import Category from '../Category';
+import Course from '../Course';
+import Group from '../Group';
 
 const classes = {
   root: `${PREFIX}-root`,
-  event: `${PREFIX}-event`
+  content: `${PREFIX}-content`,
+  contentObject: `${PREFIX}-content-object`,
+  contentDesc: `${PREFIX}-content-desc`,
+  checkout: `${PREFIX}-checkout`,
+  object: `${PREFIX}-object`
 };
 
 const Root = styled(Box, {
@@ -28,14 +32,44 @@ const Root = styled(Box, {
   name: PREFIX
 })(({theme}) => ({
   position: 'relative',
-  [`& .${classes.event}`]: {
-    [theme.breakpoints.down(1024)]: {
-      display: 'none'
+  backgroundColor: theme.palette.background.paper,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  [`& .${classes.content}`]: {
+    width: '100%',
+    maxWidth: 860,
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 0,
+    [theme.breakpoints.down(1034)]: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
-    maxWidth: 300,
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    left: theme.spacing(10)
+    [`& .${classes.contentObject}`]: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'flex-start'
+    },
+    [`& .${classes.contentDesc}`]: {
+      [theme.breakpoints.down(1034)]: {
+        display: 'none'
+      },
+      maxWidth: 600,
+      padding: theme.spacing(4)
+    }
+  },
+  [`& .${classes.checkout}`]: {
+    width: '100%',
+    bottom: theme.spacing(2)
+  },
+  [`& .${classes.object}`]: {
+    marginTop: theme.spacing(2),
+    minWidth: 395
   }
 }));
 
@@ -60,6 +94,10 @@ export default function Checkout(inProps: CheckoutProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
 
+  // CONTEXT
+  const scUserContext = useSCUser();
+  const intl: IntlShape = useIntl();
+
   // MEMO
   const stripePublicKey = useMemo(
     () => preferences && SCPreferences.STATIC_STRIPE_PUBLIC_KEY in preferences && preferences[SCPreferences.STATIC_STRIPE_PUBLIC_KEY].value,
@@ -72,17 +110,15 @@ export default function Checkout(inProps: CheckoutProps) {
       preferences[SCPreferences.CONFIGURATIONS_STRIPE_CONNECTED_ACCOUNT_ID].value,
     [preferences]
   );
-  console.log(stripePublicKey);
   const stripePromise: Promise<Stripe> | null =
-    stripePublicKey && stripeConnectedAccountId ? loadStripe(stripePublicKey, {stripeAccount: stripeConnectedAccountId}) : null;
-
-  // CONTEXT
-  const scUserContext = useSCUser();
-  const theme: SCThemeType = useTheme<SCThemeType>();
-  const intl: IntlShape = useIntl();
+    stripePublicKey && stripeConnectedAccountId && loadStripe
+      ? loadStripe(stripePublicKey, {stripeAccount: stripeConnectedAccountId, locale: getDefaultLocale(intl).locale})
+      : null;
 
   // STATE
   const [clientSecret, setClientSecret] = useState<string | null>(props.clientSecret);
+
+  const isContentObject = useMemo(() => contentType && contentId !== undefined, [contentType, contentId]);
 
   const fetchClientSecret = useCallback(() => {
     // Create a Checkout Session
@@ -123,20 +159,66 @@ export default function Checkout(inProps: CheckoutProps) {
     return <CheckoutSkeleton />;
   }
 
-  const elementsOptions: StripeElementsOptions = {
-    ...getDefaultAppearanceStyle(theme),
-    ...{clientSecret, customer_email: scUserContext.user.email},
-    ...getDefaultLocale(intl)
+  const renderContentObject = () => {
+    let _c = null;
+    if (isContentObject) {
+      switch (contentType) {
+        case SCContentType.EVENT:
+          _c = (
+            <Event
+              eventId={contentId}
+              template={SCEventTemplateType.PREVIEW}
+              actions={<></>}
+              hideEventParticipants
+              hideEventPlanner
+              variant="outlined"
+              className={classes.object}
+            />
+          );
+          break;
+        case SCContentType.CATEGORY:
+          _c = <Category categoryId={contentId} actions={<></>} variant="outlined" className={classes.object} />;
+          break;
+        case SCContentType.COURSE:
+          return (
+            <Course
+              courseId={contentId}
+              template={SCCourseTemplateType.PREVIEW}
+              actions={<></>}
+              hideEventParticipants
+              hideEventPlanner
+              variant="outlined"
+              className={classes.object}
+            />
+          );
+          break;
+        case SCContentType.GROUP:
+          _c = <Group courseId={contentId} actions={<></>} hideEventParticipants hideEventPlanner variant="outlined" className={classes.object} />;
+          break;
+      }
+    }
+    return _c;
   };
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <div id="checkout">
+      {isContentObject && (
+        <Box className={classes.content}>
+          <Box className={classes.contentObject}>{renderContentObject()}</Box>
+          <Box className={classes.contentDesc}>
+            <Typography variant="body2" color="textSecondary">
+              A Gold Ticket for event access is a premium pass that offers exclusive benefits beyond standard entry. It typically includes priority
+              admission, access to VIP areas, reserved seating, and additional perks such as meet-and-greet opportunities, complimentary refreshments,
+              or exclusive merchandise.
+            </Typography>
+          </Box>
+        </Box>
+      )}
+      <Box id="checkout" className={classes.checkout}>
         <EmbeddedCheckoutProvider stripe={stripePromise} options={{clientSecret}}>
           <EmbeddedCheckout />
         </EmbeddedCheckoutProvider>
-        <Event eventId={1} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
-      </div>
+      </Box>
     </Root>
   );
 }

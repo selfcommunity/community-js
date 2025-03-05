@@ -196,7 +196,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     }
   }, [contentId, content, contentType]);
 
-  if ((!contentId && !content) || !scUserContext.user) {
+  if (!contentId && !content) {
     return null;
   }
 
@@ -205,12 +205,11 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
       <RequestRoot
         className={classNames(classes.requestRoot, className)}
         variant="contained"
-        color="secondary"
+        color={purchased ? 'inherit' : 'secondary'}
         size="small"
         startIcon={<Icon>card_giftcard</Icon>}
-        loading={scUserContext.user && purchased !== null ? Boolean(purchased) : null}
+        loading={scUserContext.user === undefined || purchased === null}
         onClick={handleOpen}
-        disabled={purchased}
         {...rest}>
         {btnLabel}
       </RequestRoot>
@@ -226,7 +225,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
               anchor="bottom"
               disableSwipeToOpen>
               {purchased ? (
-                <PaymentDetailDialog open disableInitialTransition />
+                <PaymentDetailDialog open disableInitialTransition onClose={handleClose} />
               ) : (
                 <>
                   <Typography variant="h5" component="div" marginBottom={2}>
@@ -241,7 +240,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           ) : (
             <>
               {purchased ? (
-                <PaymentDetailDialog open />
+                <PaymentDetailDialog open onClose={handleClose} />
               ) : (
                 <PaymentProductsDialog
                   open

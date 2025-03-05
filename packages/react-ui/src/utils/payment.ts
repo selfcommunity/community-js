@@ -1,7 +1,7 @@
 import {SCThemeType} from '@selfcommunity/react-core';
 import {Appearance} from '@stripe/stripe-js';
 import {IntlShape} from 'react-intl';
-import {SCPaymentPriceCurrencyType} from '@selfcommunity/types';
+import {SCLanguageType, SCPaymentPriceCurrencyType} from '@selfcommunity/types';
 
 const getDefaultAppearanceStyle = (theme: SCThemeType): {appearance: Appearance} => ({
   appearance: {
@@ -38,9 +38,11 @@ const getDefaultAppearanceStyle = (theme: SCThemeType): {appearance: Appearance}
   }
 });
 
-const getDefaultLocale = (intl: IntlShape): {} => ({
-  locale: intl.locale
-});
+const getDefaultLocale = (intl: IntlShape): {locale: SCLanguageType} => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return {locale: intl.locale};
+};
 
 const getDefaultPaymentMethodConfiguration = (): {
   payment_method_configuration?: string;
