@@ -4,8 +4,9 @@ import Endpoints from '../../constants/Endpoints';
 import {BaseGetParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
-import {CheckoutCreateSessionParams, ContentProductsParams} from '../../types/payment';
+import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams} from '../../types/payment';
 import {SCCheckoutSession} from '@selfcommunity/types';
+import {SCCheckoutSessionDetail} from '@selfcommunity/types/src/types/payments';
 
 export interface PaymentApiClientInterface {
   /**
@@ -25,19 +26,24 @@ export interface PaymentApiClientInterface {
 
   /**
    * Create session checkout with price_id for an object of type <content_type> and id <content_id>
-   * @param content_id
-   * @param content_type
-   * @param price_id
+   * @param data
    * @param config
    */
-  checkoutCreateSession(content_id: number | string, content_type: number | string, price_id: string, config?: AxiosRequestConfig): Promise<any>;
+  checkoutCreateSession(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<any>;
 
   /**
    * This endpoint retrieve checkout session
-   * @param id
+   * @param params
    * @param config
    */
-  getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession>;
+  getCheckoutSession(params?: CheckoutSessionParams, config?: AxiosRequestConfig): Promise<SCCheckoutSessionDetail>;
+
+  /**
+   * Complete session checkout
+   * @param data
+   * @param config
+   */
+  checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any>;
 }
 
 /**
@@ -70,7 +76,7 @@ export class PaymentApiClient {
   }
 
   /**
-   * This endpoint creates a course.
+   * This endpoint creates a checkout session.
    * @param data
    * @param config
    */
@@ -80,11 +86,21 @@ export class PaymentApiClient {
 
   /**
    * This endpoint retrieve checkout session
-   * @param id
+   * @param params
    * @param config
    */
-  static getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
-    return apiRequest({...config, url: `${Endpoints.GetCheckoutSession.url({id})}`, method: Endpoints.GetCheckoutSession.method});
+  static getCheckoutSession(params?: CheckoutSessionParams, config?: AxiosRequestConfig): Promise<SCCheckoutSessionDetail> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetCheckoutSession.url({})}?${p.toString()}`, method: Endpoints.GetCheckoutSession.method});
+  }
+
+  /**
+   * This endpoint complete checkout session
+   * @param data
+   * @param config
+   */
+  static checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.CheckoutSessionComplete.url({}), method: Endpoints.CheckoutSessionComplete.method, data});
   }
 }
 
@@ -99,7 +115,7 @@ export class PaymentApiClient {
  ```
  ```jsx
  2. Create a function and put the service inside it!
- The async function `searchCourses` will return the events matching the search query.
+ The async function `getPaymentProducts` will return the events matching the search query.
 
  async getPaymentProducts() {
          return await PaymentService.getPaymentProducts({...});
@@ -137,7 +153,10 @@ export default class PaymentService {
   static async checkoutCreateSession(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
     return PaymentApiClient.checkoutCreateSession(data, config);
   }
-  static async getCheckoutSession(id: string, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
-    return PaymentApiClient.getCheckoutSession(id, config);
+  static async getCheckoutSession(params?: CheckoutSessionParams, config?: AxiosRequestConfig): Promise<SCCheckoutSessionDetail> {
+    return PaymentApiClient.getCheckoutSession(params, config);
+  }
+  static async checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any> {
+    return PaymentApiClient.checkoutCompleteSession(data, config);
   }
 }

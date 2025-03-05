@@ -8,7 +8,7 @@ export default {
 } as Meta<typeof Checkout>;
 
 const template = (args) => (
-	<div style={{ maxWidth: 800 }}>
+	<div style={{ maxWidth: 1024 }}>
 		<Checkout {...args} />
 	</div>
 );

@@ -20,6 +20,7 @@ import PaymentProductsDialog from '../PaymentProductsDialog';
 import PaymentProducts from '../PaymentProducts';
 import {CategoryApiClient, GroupApiClient, EventApiClient} from '@selfcommunity/api-services';
 import {capitalize} from '@selfcommunity/utils';
+import PaymentDetailDialog from '../PaymentDetailDialog';
 
 const PREFIX = 'SCBuyButton';
 
@@ -224,15 +225,31 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
               onOpen={handleOpen}
               anchor="bottom"
               disableSwipeToOpen>
-              <Typography variant="h5" component="div" marginBottom={2}>
-                <b>
-                  <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
-                </b>
-              </Typography>
-              <PaymentProducts contentType={contentType} {...(content ? {content} : {contentId})} />
+              {purchased ? (
+                <PaymentDetailDialog open disableInitialTransition />
+              ) : (
+                <>
+                  <Typography variant="h5" component="div" marginBottom={2}>
+                    <b>
+                      <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
+                    </b>
+                  </Typography>
+                  <PaymentProducts contentType={contentType} {...(content ? {content} : {contentId})} />
+                </>
+              )}
             </SwipeableDrawerRoot>
           ) : (
-            <PaymentProductsDialog open onClose={handleClose} PaymentProductsComponentProps={{contentType, ...(content ? {content} : {contentId})}} />
+            <>
+              {purchased ? (
+                <PaymentDetailDialog open />
+              ) : (
+                <PaymentProductsDialog
+                  open
+                  onClose={handleClose}
+                  PaymentProductsComponentProps={{contentType, ...(content ? {content} : {contentId})}}
+                />
+              )}
+            </>
           )}
         </>
       )}

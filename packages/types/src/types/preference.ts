@@ -150,6 +150,7 @@ export enum SCPreferenceName {
   ONBOARDING_HIDDEN = 'onboarding_hidden',
   SUBSCRIPTION_TIER = 'subscription_tier',
   PAYMENTS_ENABLED = 'payments_enabled',
+  STRIPE_CONNECTED_ACCOUNT_ID = 'stripe_connected_account_id',
   ENVIRONMENT = 'env',
   STACK_ID = 'stackid',
   STRIPE_PUBLIC_KEY = 'stripe_public_key'

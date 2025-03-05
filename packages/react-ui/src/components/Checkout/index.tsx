@@ -1,2 +1,3 @@
-import Checkout from './Checkout';
+import Checkout, {CheckoutProps} from './Checkout';
 export default Checkout;
+export {CheckoutProps};

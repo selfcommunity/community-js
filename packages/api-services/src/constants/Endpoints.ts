@@ -526,6 +526,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/live_stream/'),
     method: 'GET'
   },
+  GetOrderHistory: {
+    url: urlReplacer('/api/v2/user/$(id)/order/'),
+    method: 'GET'
+  },
+  GetOrderDetail: {
+    url: urlReplacer('/api/v2/user/$(id)/order/$(order)/'),
+    method: 'GET'
+  },
   /**
    * Broadcast Messages
    */
@@ -1602,11 +1610,15 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   GetCheckoutSession: {
-    url: urlReplacer('/api/v2/payments/checkout_session'),
+    url: urlReplacer('/api/v2/payments/checkout_session/'),
     method: 'GET'
   },
   CheckoutCreateSession: {
-    url: urlReplacer('/api/v2/payments/checkout_session'),
+    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    method: 'POST'
+  },
+  CheckoutSessionComplete: {
+    url: urlReplacer('/api/v2/payments/checkout_session/complete/'),
     method: 'POST'
   }
 };

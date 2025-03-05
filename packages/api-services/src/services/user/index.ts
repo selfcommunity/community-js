@@ -98,6 +98,8 @@ export interface UserApiClientInterface {
   createProviderAssociation(data: SCUserProviderAssociationType, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType>;
   deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any>;
   getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>>;
+  getOrderHistory(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<any[]>;
+  getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<any>;
 }
 
 /**
@@ -655,6 +657,32 @@ export class UserApiClient {
   static getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     return apiRequest({...config, url: Endpoints.GetLiveStream.url({id}), method: Endpoints.UserFeed.method, params});
   }
+
+  /**
+   * This endpoint retrieve all order history of authenticated user
+   *
+   * @param params
+   * @param config
+   */
+  static getOrderHistory(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.GetOrderHistory.url({}),
+      method: Endpoints.GetOrderHistory.method,
+      params
+    });
+  }
+
+  /**
+   * This endpoint retrieve detail of an order
+   * @param id
+   * @param order
+   * @param params
+   * @param config
+   */
+  static getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.GetOrderDetail.url({id, order}), method: Endpoints.GetOrderDetail.method, params});
+  }
 }
 
 /**
@@ -870,5 +898,11 @@ export default class UserService {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     return UserApiClient.getUserLiveStream(id, params, config);
+  }
+  static async getOrderHistory(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
+    return UserApiClient.getOrderHistory(params, config);
+  }
+  static async getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
+    return UserApiClient.getOrderDetail(id, order, params, config);
   }
 }

@@ -1,6 +1,7 @@
 import {SCThemeType} from '@selfcommunity/react-core';
 import {Appearance} from '@stripe/stripe-js';
 import {IntlShape} from 'react-intl';
+import {SCPaymentPriceCurrencyType} from '@selfcommunity/types';
 
 const getDefaultAppearanceStyle = (theme: SCThemeType): {appearance: Appearance} => ({
   appearance: {
@@ -49,4 +50,10 @@ const getDefaultPaymentMethodConfiguration = (): {
   paymentMethodTypes: ['card']
 });
 
-export {getDefaultAppearanceStyle, getDefaultLocale, getDefaultPaymentMethodConfiguration};
+const getConvertedAmount = (amountInCents: number, currency?: SCPaymentPriceCurrencyType) => {
+  const amountInEuro = amountInCents / 100;
+  const formattedAmount = amountInEuro.toFixed(2);
+  return formattedAmount + currency ? (currency === SCPaymentPriceCurrencyType.EUR ? '€' : '$') : ' €';
+};
+
+export {getDefaultAppearanceStyle, getDefaultLocale, getDefaultPaymentMethodConfiguration, getConvertedAmount};

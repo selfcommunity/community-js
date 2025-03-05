@@ -1305,5 +1305,7 @@
   "ui.checkoutSuccessDialog.event.button": "Vai all'evento",
   "ui.checkoutSuccessDialog.category.button": "Vai alla categoria",
   "ui.checkoutSuccessDialog.group.button": "Vai al gruppo",
-  "ui.checkoutSuccessDialog.course.button": "Vai al corso"
+  "ui.checkoutSuccessDialog.course.button": "Vai al corso",
+  "ui.paymentDetailDialog.title": "Dettaglio acquisto",
+  "ui.paymentDetailDialog.content": "Contenuto acquistato."
 }

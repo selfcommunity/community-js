@@ -1,2 +1,3 @@
-import PaymentProduct from './PaymentProduct';
+import PaymentProduct, {PaymentProductProps} from './PaymentProduct';
 export default PaymentProduct;
+export {PaymentProductProps};

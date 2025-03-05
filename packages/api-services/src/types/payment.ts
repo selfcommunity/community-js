@@ -33,3 +33,10 @@ export interface CheckoutCreateSessionParams {
    */
   payment_price_id: number;
 }
+
+export interface CheckoutSessionParams {
+  /**
+   *	Session Id
+   */
+  session_id: string;
+}

@@ -13,17 +13,31 @@ import {IntlShape, useIntl} from 'react-intl';
 import {getDefaultAppearanceStyle, getDefaultLocale} from '../../utils/payment';
 import {SCPreferences, SCPreferencesContextType, SCThemeType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes} from '../../utils/widget';
-import {Logger} from '@selfcommunity/utils/src/utils/logger';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import {SCEventTemplateType} from '@selfcommunity/react-ui';
+import Event from '../Event';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  event: `${PREFIX}-event`
 };
 
 const Root = styled(Box, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(({theme}) => ({
+  position: 'relative',
+  [`& .${classes.event}`]: {
+    [theme.breakpoints.down(1024)]: {
+      display: 'none'
+    },
+    maxWidth: 300,
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    left: theme.spacing(10)
+  }
+}));
 
 export interface CheckoutProps {
   className?: string;
@@ -51,7 +65,16 @@ export default function Checkout(inProps: CheckoutProps) {
     () => preferences && SCPreferences.STATIC_STRIPE_PUBLIC_KEY in preferences && preferences[SCPreferences.STATIC_STRIPE_PUBLIC_KEY].value,
     [preferences]
   );
-  const stripePromise: Promise<Stripe> | null = stripePublicKey ? loadStripe(stripePublicKey) : null;
+  const stripeConnectedAccountId = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_STRIPE_CONNECTED_ACCOUNT_ID in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_STRIPE_CONNECTED_ACCOUNT_ID].value,
+    [preferences]
+  );
+  console.log(stripePublicKey);
+  const stripePromise: Promise<Stripe> | null =
+    stripePublicKey && stripeConnectedAccountId ? loadStripe(stripePublicKey, {stripeAccount: stripeConnectedAccountId}) : null;
 
   // CONTEXT
   const scUserContext = useSCUser();
@@ -109,9 +132,10 @@ export default function Checkout(inProps: CheckoutProps) {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <div id="checkout">
-        <EmbeddedCheckoutProvider stripe={stripePromise} options={elementsOptions}>
+        <EmbeddedCheckoutProvider stripe={stripePromise} options={{clientSecret}}>
           <EmbeddedCheckout />
         </EmbeddedCheckoutProvider>
+        <Event eventId={1} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
       </div>
     </Root>
   );

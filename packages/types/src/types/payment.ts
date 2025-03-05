@@ -94,6 +94,11 @@ export interface SCPurchasableContent {
   paywalls?: SCPaymentProduct[];
 }
 
+export interface SCCheckoutSessionDetail {
+  status?: string;
+  metadata?: {content_id: string; content_type: SCContentType};
+}
+
 export interface SCCheckoutSession {
   /**
    * Session id
@@ -103,4 +108,9 @@ export interface SCCheckoutSession {
    * Client secret
    */
   client_secret: string;
+}
+
+export enum SCCheckoutSessionStatus {
+  COMPLETE = 'complete',
+  OPEN = 'open'
 }

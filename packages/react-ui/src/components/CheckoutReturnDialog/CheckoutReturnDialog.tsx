@@ -5,7 +5,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {SCContentType} from '@selfcommunity/types';
+import {SCCheckoutSessionStatus, SCContentType} from '@selfcommunity/types';
 import {CLAPPING} from '../../assets/courses/clapping';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import Event from '../Event';
@@ -36,15 +36,15 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
-export interface CheckoutSuccessDialogProps extends DialogProps {
+export interface CheckoutReturnDialogProps extends DialogProps {
   className?: string;
   checkoutSessionId: string;
   disableInitialTransition?: boolean;
 }
 
-export default function CheckoutSuccessDialog(inProps: CheckoutSuccessDialogProps) {
+export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps) {
   // PROPS
-  const props: CheckoutSuccessDialogProps = useThemeProps({
+  const props: CheckoutReturnDialogProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -60,11 +60,17 @@ export default function CheckoutSuccessDialog(inProps: CheckoutSuccessDialogProp
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   useEffect(() => {
-    PaymentApiClient.getCheckoutSession(checkoutSessionId)
-      .then((r: any) => {
-        setContentType(r.content_type);
-        setContentId(r.id);
-        setLoading(false);
+    PaymentApiClient.getCheckoutSession({session_id: checkoutSessionId})
+      .then((r) => {
+        setContentType(r.metadata.content_type);
+        setContentId(parseInt(r.metadata.content_id));
+        if (r.status === SCCheckoutSessionStatus.COMPLETE) {
+          PaymentApiClient.checkoutCompleteSession({session_id: checkoutSessionId}).then((r) => {
+            setLoading(false);
+          });
+        } else if (r.status === SCCheckoutSessionStatus.OPEN) {
+          Logger.info(SCOPE_SC_UI, 'Status session: open. Payment is in status pending!');
+        }
       })
       .catch((e) => {
         Logger.error(SCOPE_SC_UI, e);

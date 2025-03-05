@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContentType, SCPaymentPrice, SCPaymentPriceCurrencyType, SCPurchasableContent} from '@selfcommunity/types';
@@ -23,7 +23,7 @@ const Root = styled(BaseItem, {
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface PaymentProductProps {
+export interface PaymentProductPriceProps {
   className?: string;
   id?: number | string;
   price?: SCPaymentPrice;
@@ -34,9 +34,9 @@ export interface PaymentProductProps {
   onHandleActionBuy?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
 }
 
-export default function PaymentProductPrice(inProps: PaymentProductProps) {
+export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
   // PROPS
-  const props: PaymentProductProps = useThemeProps({
+  const props: PaymentProductPriceProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
@@ -92,20 +92,22 @@ export default function PaymentProductPrice(inProps: PaymentProductProps) {
       actions={
         actions ?? (
           <Box className={classes.action}>
-            <Button
-              size="small"
-              color="error"
-              variant="contained"
-              component={Link}
-              startIcon={<Icon>card_giftcard</Icon>}
-              {...(onHandleActionBuy && {onClick: handleActionBuy})}
-              to={scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
-                content_type: contentType.toLowerCase(),
-                content_id: content ? content.id : contentId,
-								price_id: price.id
-              })}>
-              <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
-            </Button>
+            <Zoom in style={{transitionDelay: '200ms'}}>
+              <Button
+                size="small"
+                color="error"
+                variant="contained"
+                component={Link}
+                startIcon={<Icon>card_giftcard</Icon>}
+                {...(onHandleActionBuy && {onClick: handleActionBuy})}
+                to={scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
+                  content_type: contentType.toLowerCase(),
+                  content_id: content ? content.id : contentId,
+                  price_id: price.id
+                })}>
+                <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
+              </Button>
+            </Zoom>
           </Box>
         )
       }

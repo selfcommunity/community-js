@@ -160,11 +160,13 @@ import {SCCommunityEnvironment} from './environment';
 import {
   type SCPaymentProduct,
   type SCPaymentPrice,
-	SCPaymentPriceCurrencyType,
+  SCPaymentPriceCurrencyType,
   SCContentType,
   type SCCheckoutSession,
-  type SCPurchasableContent
-} from './payments';
+  type SCPurchasableContent,
+  SCCheckoutSessionStatus,
+  type SCCheckoutSessionDetail
+} from './payment';
 
 /**
  * Exports all types
@@ -352,8 +354,10 @@ export {
   SCCommunityEnvironment,
   type SCPaymentProduct,
   type SCPaymentPrice,
-	SCPaymentPriceCurrencyType,
+  SCPaymentPriceCurrencyType,
   SCContentType,
   type SCCheckoutSession,
-  type SCPurchasableContent
+  type SCPurchasableContent,
+  SCCheckoutSessionStatus,
+  type SCCheckoutSessionDetail
 };

@@ -5,8 +5,6 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import PaymentProducts from '../PaymentProducts';
-import {PaymentProductsProps} from '../PaymentProducts';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCPaymentProductsDialog';
@@ -28,32 +26,31 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
-export interface PaymentProductDialogProps extends BaseDialogProps {
+export interface PaymentDetailDialogProps extends BaseDialogProps {
   className?: string;
-  PaymentProductsComponentProps: PaymentProductsProps;
   disableInitialTransition?: boolean;
 }
 
-export default function PaymentProductsDialog(inProps: PaymentProductDialogProps) {
+export default function PaymentDetailDialog(inProps: PaymentDetailDialogProps) {
   // PROPS
-  const props: PaymentProductDialogProps = useThemeProps({
+  const props: PaymentDetailDialogProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, PaymentProductsComponentProps, disableInitialTransition = false, ...rest} = props;
+  const {className, disableInitialTransition = false, ...rest} = props;
 
   return (
     <Root
       maxWidth={'sm'}
       fullWidth
-      title={<FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />}
+      title={<FormattedMessage id="ui.paymentDetailDialog.title" defaultMessage="ui.paymentDetailDialog.title" />}
       scroll={'paper'}
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
       {...rest}>
-      <PaymentProducts {...PaymentProductsComponentProps} />
+			<FormattedMessage id="ui.paymentDetailDialog.content" defaultMessage="ui.paymentDetailDialog.content" />
     </Root>
   );
 }
