@@ -3,7 +3,9 @@ const Component = {
     root: ({theme}: any) => ({
       display: 'flex',
       flexDirection: 'column',
-      padding: theme.spacing(1),
+      [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(1)
+      },
       '& .SCLessonObject-content': {
         padding: `${theme.spacing(2)} !important`,
         '& .SCLessonObject-text': {
