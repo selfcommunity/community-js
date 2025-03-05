@@ -69,6 +69,12 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
   return data;
 }
 
+function getIsNextLessonAvailable(course: SCCourseType): boolean {
+  return course.sections.some(
+    (section: SCCourseSectionType) => section.num_lessons_completed < section.num_lessons && section.lessons[section.num_lessons_completed].locked
+  );
+}
+
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
@@ -165,6 +171,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             <ActionButton
               labelId={scCourse.num_lessons_completed === 0 ? messages.start : messages.continue}
               to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse))}
+              disabled={getIsNextLessonAvailable(scCourse)}
             />
           )}
         {scCourse?.privacy === SCCoursePrivacyType.PRIVATE &&
