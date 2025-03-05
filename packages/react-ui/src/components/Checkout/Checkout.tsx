@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Box, Typography} from '@mui/material';
-import {styled, useTheme} from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
@@ -11,12 +11,13 @@ import {PREFIX} from './constants';
 import {SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {IntlShape, useIntl} from 'react-intl';
 import {getDefaultLocale} from '../../utils/payment';
-import {SCPreferences, SCPreferencesContextType, SCThemeType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SCCourseTemplateType, SCEventTemplateType} from '@selfcommunity/react-ui';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import Event from '../Event';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
+import {SCEventTemplateType} from '../../types/event';
+import {SCCourseTemplateType} from '../../types/course';
 
 const classes = {
   root: `${PREFIX}-root`,

@@ -9,17 +9,21 @@ import {SCCheckoutSessionStatus, SCContentType} from '@selfcommunity/types';
 import {CLAPPING} from '../../assets/courses/clapping';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import Event from '../Event';
-import {SCEventTemplateType} from '@selfcommunity/react-ui';
+import {SCEventTemplateType} from '../../types/event';
+import {SCCourseTemplateType} from '../../types/course';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import Category from '../Category';
+import Course from '../Course';
+import Group from '../Group';
 
 const PREFIX = 'SCCheckoutSuccessDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
   img: `${PREFIX}-img`,
-  event: `${PREFIX}-event`,
+  object: `${PREFIX}-object`,
   btn: `${PREFIX}-btn`
 };
 
@@ -107,7 +111,24 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
         </Typography>
         <Box style={{width: '100%'}}>
           {contentType === SCContentType.EVENT && (
-            <Event eventId={contentId} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.event} />
+            <Event eventId={contentId} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.object} />
+          )}
+          {contentType === SCContentType.CATEGORY && (
+            <Category categoryId={contentId} actions={<></>} variant="outlined" className={classes.object} />
+          )}
+          {contentType === SCContentType.COURSE && (
+            <Course
+              courseId={contentId}
+              template={SCCourseTemplateType.PREVIEW}
+              actions={<></>}
+              hideEventParticipants
+              hideEventPlanner
+              variant="outlined"
+              className={classes.object}
+            />
+          )}
+          {contentType === SCContentType.GROUP && (
+            <Group courseId={contentId} actions={<></>} hideEventParticipants hideEventPlanner variant="outlined" className={classes.object} />
           )}
         </Box>
         <Button size="medium" variant={'contained'} to={scRoutingContext.url(route, {id: contentId})} component={Link} className={classes.btn}>
