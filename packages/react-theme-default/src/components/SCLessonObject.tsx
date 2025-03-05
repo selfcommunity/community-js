@@ -3,6 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       display: 'flex',
       flexDirection: 'column',
+      padding: theme.spacing(1),
       '& .SCLessonObject-content': {
         padding: `${theme.spacing(2)} !important`,
         '& .SCLessonObject-text': {
@@ -35,7 +36,9 @@ const Component = {
       },
       '& .SCWidget-root': {
         marginBottom: theme.spacing(3),
-        boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.2)'
+        [theme.breakpoints.down('md')]: {
+          boxShadow: 'none'
+        }
       },
       '& .SCLessonObject-button': {
         alignSelf: 'center'
