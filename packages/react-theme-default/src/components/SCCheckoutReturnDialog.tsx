@@ -14,6 +14,9 @@ const Component = {
         '& .SCWidget-root': {
           minWidth: 310
         }
+      },
+      '& .SCCheckoutSuccessDialog-content-object': {
+        width: '100%'
       }
     })
   }

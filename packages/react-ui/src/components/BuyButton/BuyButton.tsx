@@ -191,10 +191,12 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
   };
 
   useEffect(() => {
-    if ((contentId || content) && contentType) {
+    if ((contentId || content) && contentType && scUserContext.user) {
       getStatus();
+    } else if (scUserContext.user === null) {
+      setPurchased(false);
     }
-  }, [contentId, content, contentType]);
+  }, [contentId, content, contentType, scUserContext.user]);
 
   if (!contentId && !content) {
     return null;

@@ -18,11 +18,12 @@ import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 
-const PREFIX = 'SCCheckoutSuccessDialog';
+const PREFIX = 'SCCheckoutReturnDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
   img: `${PREFIX}-img`,
+  contentObject: `${PREFIX}-content-object`,
   object: `${PREFIX}-object`,
   btn: `${PREFIX}-btn`
 };
@@ -86,13 +87,79 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   };
 
   const renderContent = () => {
-    let route = SCRoutes.GROUP_ROUTE_NAME;
+    let footer;
     if (contentType === SCContentType.EVENT) {
-      route = SCRoutes.EVENT_ROUTE_NAME;
+      footer = (
+        <>
+          <Box className={classes.contentObject}>
+            <Event eventId={contentId} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.object} />
+          </Box>
+          <Button
+            size="medium"
+            variant={'contained'}
+            to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {id: contentId})}
+            component={Link}
+            className={classes.btn}>
+            <FormattedMessage id="ui.checkoutSuccessDialog.event.button" defaultMessage="ui.checkoutSuccessDialog.event.button" />
+          </Button>
+        </>
+      );
     } else if (contentType === SCContentType.CATEGORY) {
-      route = SCRoutes.CATEGORY_ROUTE_NAME;
+      footer = (
+        <>
+          <Box className={classes.contentObject}>
+            <Category categoryId={contentId} actions={<></>} variant="outlined" className={classes.object} />
+          </Box>
+          <Button
+            size="medium"
+            variant={'contained'}
+            to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: contentId})}
+            component={Link}
+            className={classes.btn}>
+            <FormattedMessage id="ui.checkoutSuccessDialog.category.button" defaultMessage="ui.checkoutSuccessDialog.category.button" />
+          </Button>
+        </>
+      );
     } else if (contentType === SCContentType.COURSE) {
-      route = SCRoutes.COURSE_ROUTE_NAME;
+      footer = (
+        <>
+          <Box className={classes.contentObject}>
+            <Course
+              courseId={contentId}
+              template={SCCourseTemplateType.PREVIEW}
+              actions={<></>}
+              hideEventParticipants
+              hideEventPlanner
+              variant="outlined"
+              className={classes.object}
+            />
+          </Box>
+          <Button
+            size="medium"
+            variant={'contained'}
+            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, {id: contentId})}
+            component={Link}
+            className={classes.btn}>
+            <FormattedMessage id="ui.checkoutSuccessDialog.course.button" defaultMessage="ui.checkoutSuccessDialog.course.button" />
+          </Button>
+        </>
+      );
+    } else if (contentType === SCContentType.GROUP) {
+      footer = (
+        <>
+          <Box className={classes.contentObject}>
+            <Group courseId={contentId} actions={<></>} hideEventParticipants hideEventPlanner variant="outlined" className={classes.object} />
+          </Box>
+          <Button
+            size="medium"
+            variant={'contained'}
+            to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, {id: contentId})}
+            component={Link}
+            className={classes.btn}>
+            <FormattedMessage id="ui.checkoutSuccessDialog.category.button" defaultMessage="ui.checkoutSuccessDialog.category.button" />
+          </Button>
+        </>
+      );
     }
     return (
       <Stack spacing={2} justifyContent="center" alignItems="center">
@@ -109,42 +176,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
         <Typography variant="body2" color="textSecondary">
           <FormattedMessage id="ui.checkoutSuccessDialog.buy" defaultMessage="ui.checkoutSuccessDialog.buy" />
         </Typography>
-        <Box style={{width: '100%'}}>
-          {contentType === SCContentType.EVENT && (
-            <Event eventId={contentId} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.object} />
-          )}
-          {contentType === SCContentType.CATEGORY && (
-            <Category categoryId={contentId} actions={<></>} variant="outlined" className={classes.object} />
-          )}
-          {contentType === SCContentType.COURSE && (
-            <Course
-              courseId={contentId}
-              template={SCCourseTemplateType.PREVIEW}
-              actions={<></>}
-              hideEventParticipants
-              hideEventPlanner
-              variant="outlined"
-              className={classes.object}
-            />
-          )}
-          {contentType === SCContentType.GROUP && (
-            <Group courseId={contentId} actions={<></>} hideEventParticipants hideEventPlanner variant="outlined" className={classes.object} />
-          )}
-        </Box>
-        <Button size="medium" variant={'contained'} to={scRoutingContext.url(route, {id: contentId})} component={Link} className={classes.btn}>
-          {contentType === SCContentType.EVENT && (
-            <FormattedMessage id="ui.checkoutSuccessDialog.event.button" defaultMessage="ui.checkoutSuccessDialog.event.button" />
-          )}
-          {contentType === SCContentType.GROUP && (
-            <FormattedMessage id="ui.checkoutSuccessDialog.group.button" defaultMessage="ui.checkoutSuccessDialog.group.button" />
-          )}
-          {contentType === SCContentType.CATEGORY && (
-            <FormattedMessage id="ui.checkoutSuccessDialog.category.button" defaultMessage="ui.checkoutSuccessDialog.category.button" />
-          )}
-          {contentType === SCContentType.COURSE && (
-            <FormattedMessage id="ui.checkoutSuccessDialog.course.button" defaultMessage="ui.checkoutSuccessDialog.course.button" />
-          )}
-        </Button>
+        {footer}
       </Stack>
     );
   };

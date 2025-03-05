@@ -9,7 +9,7 @@ import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
 import {PREFIX} from './constants';
 import {SCContentType, SCPurchasableContent} from '@selfcommunity/types';
-import {IntlShape, useIntl} from 'react-intl';
+import {FormattedMessage, IntlShape, useIntl} from 'react-intl';
 import {getDefaultLocale} from '../../utils/payment';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import Event from '../Event';
@@ -31,48 +31,7 @@ const classes = {
 const Root = styled(Box, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({
-  position: 'relative',
-  backgroundColor: theme.palette.background.paper,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  [`& .${classes.content}`]: {
-    width: '100%',
-    maxWidth: 860,
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: 0,
-    [theme.breakpoints.down(1034)]: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    },
-    [`& .${classes.contentObject}`]: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'flex-start'
-    },
-    [`& .${classes.contentDesc}`]: {
-      [theme.breakpoints.down(1034)]: {
-        display: 'none'
-      },
-      maxWidth: 600,
-      padding: theme.spacing(4)
-    }
-  },
-  [`& .${classes.checkout}`]: {
-    width: '100%',
-    bottom: theme.spacing(2)
-  },
-  [`& .${classes.object}`]: {
-    marginTop: theme.spacing(2),
-    minWidth: 395
-  }
-}));
+})(({theme}) => ({}));
 
 export interface CheckoutProps {
   className?: string;
@@ -123,7 +82,6 @@ export default function Checkout(inProps: CheckoutProps) {
 
   const fetchClientSecret = useCallback(() => {
     // Create a Checkout Session
-    // TODO: During session create check customer_email or customer to force email prefilled and disabled changes
     if (!loading) {
       console.log('fetching client secret...');
       setInitialized(true);
@@ -207,10 +165,11 @@ export default function Checkout(inProps: CheckoutProps) {
         <Box className={classes.content}>
           <Box className={classes.contentObject}>{renderContentObject()}</Box>
           <Box className={classes.contentDesc}>
+            <Typography variant="h5" mb={1}>
+              <b><FormattedMessage id="ui.checkout.contentDesc.title" defaultMessage="ui.checkout.contentDesc.title" /></b>
+            </Typography>
             <Typography variant="body2" color="textSecondary">
-              A Gold Ticket for event access is a premium pass that offers exclusive benefits beyond standard entry. It typically includes priority
-              admission, access to VIP areas, reserved seating, and additional perks such as meet-and-greet opportunities, complimentary refreshments,
-              or exclusive merchandise.
+              <FormattedMessage id="ui.checkout.contentDesc.subTitle" defaultMessage="ui.checkout.contentDesc.subTitle" />
             </Typography>
           </Box>
         </Box>
