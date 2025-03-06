@@ -89,6 +89,8 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                     <Icon fontSize="small" color="primary">
                       circle_checked
                     </Icon>
+                  ) : lesson.locked ? (
+                    <Icon>private</Icon>
                   ) : (
                     <Box className={classes.circle} />
                   )}
