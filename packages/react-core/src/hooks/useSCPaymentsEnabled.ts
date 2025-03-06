@@ -1,7 +1,8 @@
 import {useMemo} from 'react';
 import {SCFeatureName} from '@selfcommunity/types';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
+import * as SCPreferences from '../constants/Preferences';
+import {SCPreferencesContextType} from '../types';
 /**
  :::info
  This custom hook is used to check if the payments are enabled
