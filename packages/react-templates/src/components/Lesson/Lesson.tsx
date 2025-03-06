@@ -155,7 +155,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [completed, setCompleted] = useState<boolean>(scLesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
   const currentData = useMemo(() => {
     if (!scCourse || !scLesson) return null;
-    return getCurrentSectionAndLessonIndex(scCourse, _sectionId, _lessonId);
+    return getCurrentSectionAndLessonIndex(scCourse, scLesson.section_id, scLesson.id);
   }, [scCourse, scLesson]);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
