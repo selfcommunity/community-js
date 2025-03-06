@@ -11,13 +11,14 @@ import {PREFIX} from './constants';
 import {SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {FormattedMessage, IntlShape, useIntl} from 'react-intl';
 import {getDefaultLocale} from '../../utils/payment';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {useSCUser} from '@selfcommunity/react-core';
 import Event from '../Event';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
+import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -50,7 +51,6 @@ export default function Checkout(inProps: CheckoutProps) {
   });
   const {className, contentType, contentId, content, priceId, ...rest} = props;
 
-  const {preferences}: SCPreferencesContextType = useSCPreferences();
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
 
@@ -58,20 +58,10 @@ export default function Checkout(inProps: CheckoutProps) {
   const scUserContext = useSCUser();
   const intl: IntlShape = useIntl();
 
-  // MEMO
-  const stripePublicKey = useMemo(
-    () => preferences && SCPreferences.STATIC_STRIPE_PUBLIC_KEY in preferences && preferences[SCPreferences.STATIC_STRIPE_PUBLIC_KEY].value,
-    [preferences]
-  );
-  const stripeConnectedAccountId = useMemo(
-    () =>
-      preferences &&
-      SCPreferences.CONFIGURATIONS_STRIPE_CONNECTED_ACCOUNT_ID in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_STRIPE_CONNECTED_ACCOUNT_ID].value,
-    [preferences]
-  );
+  // HOOKS
+  const {isPaymentsEnabled, stripePublicKey, stripeConnectedAccountId} = useSCPaymentsEnabled();
   const stripePromise: Promise<Stripe> | null =
-    stripePublicKey && stripeConnectedAccountId && loadStripe
+    isPaymentsEnabled && stripePublicKey && stripeConnectedAccountId && loadStripe
       ? loadStripe(stripePublicKey, {stripeAccount: stripeConnectedAccountId, locale: getDefaultLocale(intl).locale})
       : null;
 
@@ -112,6 +102,10 @@ export default function Checkout(inProps: CheckoutProps) {
       };
     }
   }, [scUserContext.user, clientSecret, stripePromise, contentType, contentId, content, priceId, loading, initialized]);
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   if (!stripePromise || !clientSecret || !scUserContext.user) {
@@ -166,7 +160,9 @@ export default function Checkout(inProps: CheckoutProps) {
           <Box className={classes.contentObject}>{renderContentObject()}</Box>
           <Box className={classes.contentDesc}>
             <Typography variant="h5" mb={1}>
-              <b><FormattedMessage id="ui.checkout.contentDesc.title" defaultMessage="ui.checkout.contentDesc.title" /></b>
+              <b>
+                <FormattedMessage id="ui.checkout.contentDesc.title" defaultMessage="ui.checkout.contentDesc.title" />
+              </b>
             </Typography>
             <Typography variant="body2" color="textSecondary">
               <FormattedMessage id="ui.checkout.contentDesc.subTitle" defaultMessage="ui.checkout.contentDesc.subTitle" />

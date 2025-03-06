@@ -24,6 +24,7 @@ import {
   SCThemeType,
   SCUserContextType,
   UserUtils,
+  useSCPaymentsEnabled,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -35,6 +36,7 @@ import {PreferenceService, UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {SCPreferenceName} from '@selfcommunity/types';
+import {USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME} from '@selfcommunity/react-core/src/constants/Routes';
 
 const PREFIX = 'SCNavigationSettingsIconButton';
 
@@ -135,6 +137,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -284,6 +287,19 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.settings" defaultMessage="ui.navigationSettingsIconButton.settings" />
           </ListItemButton>
         </ListItem>,
+        ...(isPaymentsEnabled
+          ? [
+              <Divider key="payments_divider" />,
+              <ListItem className={classes.item} key="paymentsHistoryOrder">
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, scUserContext.user)}>
+                  <FormattedMessage
+                    id="ui.navigationSettingsIconButton.historyOrders"
+                    defaultMessage="ui.navigationSettingsIconButton.historyOrders"
+                  />
+                </ListItemButton>
+              </ListItem>
+            ]
+          : []),
         <Divider key="divider" />,
         <ListItem className={classes.item} key="logout">
           <ListItemButton onClick={handleLogout}>
@@ -398,6 +414,18 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           to={scRoutingContext.url(SCRoutes.USER_PROFILE_SETTINGS_ROUTE_NAME, scUserContext.user)}>
           <FormattedMessage id="ui.navigationSettingsIconButton.settings" defaultMessage="ui.navigationSettingsIconButton.settings" />
         </MenuItem>,
+        ...(isPaymentsEnabled
+          ? [
+              <Divider key="payments_divider" />,
+              <MenuItem
+                className={classes.item}
+                key="historyOrders"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, {})}>
+                <FormattedMessage id="ui.navigationSettingsIconButton.historyOrders" defaultMessage="ui.navigationSettingsIconButton.historyOrders" />
+              </MenuItem>
+            ]
+          : []),
         <Divider key="divider" />,
         <MenuItem className={classes.item} key="logout" onClick={handleLogout}>
           <FormattedMessage id="ui.navigationSettingsIconButton.logout" defaultMessage="ui.navigationSettingsIconButton.logout" />

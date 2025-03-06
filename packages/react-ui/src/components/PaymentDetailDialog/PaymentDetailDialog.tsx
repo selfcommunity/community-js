@@ -4,6 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
+import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {FormattedMessage} from 'react-intl';
 
@@ -38,6 +39,13 @@ export default function PaymentDetailDialog(inProps: PaymentDetailDialogProps) {
     name: PREFIX
   });
   const {className, disableInitialTransition = false, ...rest} = props;
+
+	// HOOKS
+	const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+	if (!isPaymentsEnabled) {
+		return null;
+	}
 
   return (
     <Root

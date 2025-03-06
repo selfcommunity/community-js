@@ -1620,6 +1620,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   CheckoutSessionComplete: {
     url: urlReplacer('/api/v2/payments/checkout_session/complete/'),
     method: 'POST'
+  },
+  GetPaymentOrders: {
+    url: urlReplacer('/api/v2/payments/order/'),
+    method: 'GET'
   }
 };
 

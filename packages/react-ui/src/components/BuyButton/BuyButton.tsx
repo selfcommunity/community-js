@@ -11,14 +11,18 @@ import {
   SCPurchasableContent,
   SCGroupType,
   SCCategoryType,
-  SCEventType
+  SCEventType,
+  SCCourseType,
+  SCCourseJoinStatusType,
+  SCPaymentOrder,
+  SCPaymentPrice
 } from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import PaymentProductsDialog from '../PaymentProductsDialog';
 import PaymentProducts from '../PaymentProducts';
-import {CategoryApiClient, GroupApiClient, EventApiClient} from '@selfcommunity/api-services';
+import {CategoryApiClient, GroupApiClient, EventApiClient, CourseApiClient} from '@selfcommunity/api-services';
 import {capitalize} from '@selfcommunity/utils';
 import PaymentDetailDialog from '../PaymentDetailDialog';
 
@@ -127,6 +131,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
 
   // CONST
   const [purchased, setPurchased] = useState<boolean | null>(null);
+  const [paymentOrder, setPaymentOrder] = useState<SCPaymentOrder | null>(null);
   const [btnLabel, setBtnLabel] = useState<ReactNode>(
     <FormattedMessage defaultMessage={`ui.buyButton.buy${contentType}`} id={`ui.buyButton.buy${capitalize(contentType)}`} />
   );
@@ -150,6 +155,17 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
   );
 
   /**
+   * Handle update order
+   * Price param is the new price selected
+   */
+  const handleUpdatePaymentOrder = useCallback(
+    (price: SCPaymentPrice) => {
+      // TODO: update order/subscription when will be recurring payment
+    },
+    [paymentOrder, purchased]
+  );
+
+  /**
    * Get current status
    */
   const getStatus = () => {
@@ -161,6 +177,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
             if (data.subscription_status === SCEventSubscriptionStatusType.GOING) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.purchased" id="ui.buyButton.purchased" />);
             }
+            if (data.payment_order) {
+              setPaymentOrder(data.payment_order);
+            }
             setPurchased(data.subscription_status === SCEventSubscriptionStatusType.GOING);
           }
         });
@@ -170,6 +189,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
         CategoryApiClient.getSpecificCategory(contentId ? contentId : (content as SCCategoryType).id).then((data) => {
           if (data.followed) {
             setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
+          }
+          if (data.payment_order) {
+            setPaymentOrder(data.payment_order);
           }
           setPurchased(data.followed);
         });
@@ -181,7 +203,24 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
             if (data.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
             }
+            if (data.payment_order) {
+              setPaymentOrder(data.payment_order);
+            }
             setPurchased(data.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED);
+          }
+        });
+        break;
+      case SCContentType.COURSE:
+        // Get status course joined
+        CourseApiClient.getCourseStatus(contentId ? contentId : (content as SCCourseType).id).then((data) => {
+          if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
+            if (data.subscription_status === SCCourseJoinStatusType.JOINED) {
+              setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
+            }
+            if (data.payment_order) {
+              setPaymentOrder(data.payment_order);
+            }
+            setPurchased(data.subscription_status === SCCourseJoinStatusType.JOINED);
           }
         });
         break;
@@ -235,7 +274,11 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
                       <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
                     </b>
                   </Typography>
-                  <PaymentProducts contentType={contentType} {...(content ? {content} : {contentId})} />
+                  <PaymentProducts
+                    contentType={contentType}
+                    {...(content ? {content} : {contentId})}
+                    {...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})}
+                  />
                 </>
               )}
             </SwipeableDrawerRoot>
@@ -247,7 +290,11 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
                 <PaymentProductsDialog
                   open
                   onClose={handleClose}
-                  PaymentProductsComponentProps={{contentType, ...(content ? {content} : {contentId})}}
+                  PaymentProductsComponentProps={{
+                    contentType,
+                    ...(content ? {content} : {contentId}),
+                    ...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})
+                  }}
                 />
               )}
             </>

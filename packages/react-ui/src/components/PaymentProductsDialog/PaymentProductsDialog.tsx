@@ -8,6 +8,7 @@ import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import PaymentProducts from '../PaymentProducts';
 import {PaymentProductsProps} from '../PaymentProducts';
 import {FormattedMessage} from 'react-intl';
+import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCPaymentProductsDialog';
 
@@ -41,6 +42,13 @@ export default function PaymentProductsDialog(inProps: PaymentProductDialogProps
     name: PREFIX
   });
   const {className, PaymentProductsComponentProps, disableInitialTransition = false, ...rest} = props;
+
+  // HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   return (
     <Root
