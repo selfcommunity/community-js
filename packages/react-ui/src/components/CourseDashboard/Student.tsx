@@ -3,7 +3,13 @@ import {PREFIX} from './constants';
 import {Avatar, Box, Divider, LinearProgress, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
-import {SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {
+  SCCourseJoinStatusType,
+  SCCourseLessonCompletionStatusType,
+  SCCoursePrivacyType,
+  SCCourseSectionType,
+  SCCourseType
+} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import {CLAPPING} from '../../assets/courses/clapping';
@@ -59,7 +65,7 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
     if (isNextLessonInThisSection) {
       Object.assign(data, {
         section_id: section.id,
-        lesson_id: section.lessons[section.num_lessons_completed].id
+        lesson_id: section.lessons.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED).id
       });
     }
 
