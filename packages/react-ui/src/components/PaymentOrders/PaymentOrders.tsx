@@ -21,9 +21,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 // import InvoicePdfViewButton from '../../../../../../../../@customization/components/ui/InvoicePdfViewButton';
 import {useInView} from 'react-intersection-observer';
 import {getConvertedAmount} from '../../utils/payment';
-import {UserService} from '@selfcommunity/api-services';
+import {PaymentService, UserService} from '@selfcommunity/api-services';
 
-const PREFIX = 'SCPaymentInvoices';
+const PREFIX = 'SCPaymentOrders';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -51,11 +51,11 @@ const Root = styled(Box, {
   }
 }));
 
-export interface PaymentInvoicesProps {
+export interface PaymentOrdersProps {
   portal?: string;
 }
 
-export default function Invoices({portal}: PaymentInvoicesProps) {
+export default function PaymentOrders({portal}: PaymentOrdersProps) {
   // HOOKS
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [invoices, setInvoices] = useState<any[]>([]);
@@ -80,8 +80,9 @@ export default function Invoices({portal}: PaymentInvoicesProps) {
     const loadItems = async () => {
       const startingAfterId = invoices.length ? invoices[invoices.length - 1].id : undefined;
       try {
-        const history = await UserService.getOrderHistory();
+        const history = await PaymentService.getPaymentsOrder();
         if (history) {
+					console.log(history);
           /* setHasMore(res.invoices.has_more);
 						setInvoices(invoices.concat(res.invoices.data));
 						setIsLoadingPage(false);

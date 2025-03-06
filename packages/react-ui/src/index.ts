@@ -210,7 +210,7 @@ import PaymentProductsDialog, {PaymentProductDialogProps} from './components/Pay
 import PaymentProducts, {PaymentProductsProps} from './components/PaymentProducts';
 import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
 import PaymentDetailDialog, {PaymentDetailDialogProps} from './components/PaymentDetailDialog';
-import PaymentInvoices, {PaymentInvoicesProps} from './components/PaymentInvoices';
+import PaymentInvoices, {PaymentInvoicesProps} from './components/PaymentOrders';
 import PaymentProductPrice, {PaymentProductPriceProps} from './components/PaymentProductPrice';
 import Checkout, {CheckoutProps} from './components/Checkout';
 import CheckoutReturnDialog, {CheckoutReturnDialogProps} from './components/CheckoutReturnDialog';

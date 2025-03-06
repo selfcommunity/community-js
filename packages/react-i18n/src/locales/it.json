@@ -1300,6 +1300,8 @@
   "ui.buyButton.subscribed": "Iscritto",
   "ui.paymentProductsDialog.title": "Scegli tra i seguenti prezzi",
   "ui.paymentProduct.action.buy": "Acquista",
+  "ui.paymentProduct.action.purchased": "Acquistato",
+  "ui.paymentProduct.action.purchasedAt": "Contenuto acquistato il {purchasedAt}.",
   "ui.checkout.contentDesc.title": "Acquista il tuo contenuto",
   "ui.checkout.contentDesc.subTitle": "Sei a un passo dall’accesso al tuo contenuto esclusivo! Completa il pagamento in sicurezza e ricevi immediatamente l’accesso.",
   "ui.checkoutSuccessDialog.title": "Complimenti!",

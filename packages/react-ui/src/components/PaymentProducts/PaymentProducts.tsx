@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
-import {SCPaymentProduct, SCContentType, SCPurchasableContent} from '@selfcommunity/types';
+import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
 import {useIsComponentMountedRef} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import PaymentProductsSkeleton from './Skeleton';
@@ -29,6 +29,8 @@ export interface PaymentProductsProps {
   contentId?: number | string;
   content?: SCPurchasableContent;
   prefetchedProducts?: SCPaymentProduct[];
+  paymentOrder?: SCPaymentOrder;
+  onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
 }
 
 export default function PaymentProducts(inProps: PaymentProductsProps) {
@@ -37,14 +39,14 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, id, contentId, contentType, content, prefetchedProducts = [], ...rest} = props;
+  const {className, id, contentId, contentType, content, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
 
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const isMountedRef = useIsComponentMountedRef();
 
   /**
-   * Fetches categories list
+   * Fetches products list
    */
   const fetchProducts = async (next: string = Endpoints.GetContentProducts.url({})): Promise<SCPaymentProduct[]> => {
     const data = await PaymentApiClient.getPaymentProducts(id !== undefined ? {id} : {content_id: contentId, content_type: contentType}, {
@@ -84,7 +86,13 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
       ) : (
         <>
           {products.map((p, i) => (
-            <PaymentProduct product={p} key={i} contentType={contentType} {...(content ? {content} : {contentId})} />
+            <PaymentProduct
+              product={p}
+              key={i}
+              contentType={contentType}
+              {...(content ? {content} : {contentId})}
+              {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder, defaultExpanded: paymentOrder.payment_price.payment_product_id === p.id})}
+            />
           ))}
         </>
       )}

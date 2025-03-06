@@ -1299,6 +1299,8 @@
   "ui.buyButton.subscribed": "Subscribed",
   "ui.paymentProductsDialog.title": "Choose a price",
   "ui.paymentProduct.action.buy": "Buy",
+  "ui.paymentProduct.action.purchased": "Purchased",
+  "ui.paymentProduct.action.purchasedAt": "Contenut purchased at {purchasedAt}.",
   "ui.checkout.contentDesc.title": "Purchase Your Content",
   "ui.checkout.contentDesc.subTitle": "You're just one step away from accessing your exclusive content! Complete your payment securely and get instant access.",
   "ui.checkoutSuccessDialog.title": "Compliments!",

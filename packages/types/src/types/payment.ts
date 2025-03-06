@@ -70,6 +70,11 @@ export interface SCPaymentPrice {
    * Recurring interval
    */
   recurring_interval?: string;
+
+  /**
+   * Payment product associated
+   */
+  payment_product_id?: number;
 }
 
 /**
@@ -91,6 +96,7 @@ export enum SCContentType {
 
 export interface SCPurchasableContent {
   id?: number;
+  payment_order?: SCPaymentOrder;
   paywalls?: SCPaymentProduct[];
 }
 
@@ -113,4 +119,15 @@ export interface SCCheckoutSession {
 export enum SCCheckoutSessionStatus {
   COMPLETE = 'complete',
   OPEN = 'open'
+}
+
+export interface SCPaymentOrder {
+  /**
+   * Order id
+   */
+  id: number;
+  /**
+   * Price
+   */
+  payment_price?: SCPaymentPrice;
 }

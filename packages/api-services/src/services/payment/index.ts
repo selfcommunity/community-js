@@ -5,8 +5,8 @@ import {BaseGetParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams} from '../../types/payment';
-import {SCCheckoutSession} from '@selfcommunity/types';
-import {SCCheckoutSessionDetail} from '@selfcommunity/types';
+import {SCCheckoutSession, SCPaymentOrder, SCCheckoutSessionDetail} from '@selfcommunity/types';
+
 
 export interface PaymentApiClientInterface {
   /**
@@ -44,6 +44,13 @@ export interface PaymentApiClientInterface {
    * @param config
    */
   checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any>;
+
+  /**
+   * This endpoint retrive order history of authenticated user
+   * @param params
+   * @param config
+   */
+  getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>>;
 }
 
 /**
@@ -102,6 +109,15 @@ export class PaymentApiClient {
   static checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.CheckoutSessionComplete.url({}), method: Endpoints.CheckoutSessionComplete.method, data});
   }
+
+  /**
+   * This endpoint retrive order history of authenticated user
+   * @param params
+   * @param config
+   */
+  static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    return apiRequest({...config, url: Endpoints.GetPaymentOrders.url({}), method: Endpoints.GetPaymentOrders.method});
+  }
 }
 
 /**
@@ -158,5 +174,8 @@ export default class PaymentService {
   }
   static async checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any> {
     return PaymentApiClient.checkoutCompleteSession(data, config);
+  }
+  static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    return PaymentApiClient.getPaymentsOrder(params, config);
   }
 }

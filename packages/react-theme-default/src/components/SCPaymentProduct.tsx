@@ -12,7 +12,10 @@ const Component = {
           },
           '& .MuiTypography-body1': {
             fontWeight: 200,
-            color: theme.palette.grey[600]
+            color: theme.palette.grey[600],
+            [theme.breakpoints.down('sm')]: {
+              fontSize: theme.typography.pxToRem(12)
+            }
           }
         },
         '& .MuiAccordionDetails-root': {
