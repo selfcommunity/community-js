@@ -55,7 +55,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
   const formattedPrice = useMemo(() => {
     return (
       <b>
-        {(price.unit_amount / 1000).toFixed(2)}
+        {(price.unit_amount / 100).toFixed(2)}
         {price.currency === SCPaymentPriceCurrencyType.EUR && '€'}
       </b>
     );
