@@ -155,7 +155,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [completed, setCompleted] = useState<boolean>(scLesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
   const currentData = useMemo(() => {
     if (!scCourse || !scLesson) return null;
-    return getCurrentSectionAndLessonIndex(scCourse, scLesson.section_id, scLesson.id);
+    return getCurrentSectionAndLessonIndex(scCourse, _sectionId, _lessonId);
   }, [scCourse, scLesson]);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
@@ -282,7 +282,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         };
         setSCCourse(updatedCourse);
         //TODO: fix it
-        if (course.num_lessons - course.num_lessons_completed === 1) {
+        if (scCourse.num_lessons - scCourse.num_lessons_completed === 1) {
           setOpenDialog(true);
         }
       })
