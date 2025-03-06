@@ -1,9 +1,9 @@
-import {Fragment, useCallback, useMemo, useState} from 'react';
+import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType, SCMediaType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
@@ -49,26 +49,17 @@ export interface LessonProps {
    */
   className?: string;
   /**
-   * The course object
-   */
-  course?: SCCourseType;
-  /**
    * The course id
    */
-  courseId?: string | number;
+  courseId: string | number;
   /**
    * The section id
    */
   sectionId: string | number;
   /**
-   * The lesson object
-   * @default null
-   */
-  lesson?: SCCourseLessonType;
-  /**
    * The lesson id
    */
-  lessonId?: string | number;
+  lessonId: string | number;
   /**
    * Props to spread to LessonAppbar Component
    * @default {}
@@ -118,10 +109,8 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   });
   const {
     className = null,
-    course,
     courseId,
     sectionId,
-    lesson = null,
     lessonId,
     LessonAppbarProps = {},
     LessonDrawerProps = {},
@@ -138,12 +127,8 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
-  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId: courseId ?? lesson.course_id, sectionId: _sectionId});
-  const {scCourse, setSCCourse} = useSCFetchCourse({
-    id: courseId ?? lesson.course_id,
-    course,
-    params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}
-  });
+  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
+  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
@@ -155,11 +140,11 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [completed, setCompleted] = useState<boolean>(scLesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
   const currentData = useMemo(() => {
     if (!scCourse || !scLesson) return null;
-    return getCurrentSectionAndLessonIndex(scCourse, scLesson.section_id, scLesson.id);
-  }, [scCourse, scLesson]);
+    return getCurrentSectionAndLessonIndex(scCourse, sectionId, lessonId);
+  }, [scCourse, sectionId, lessonId]);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
-  const [currentSection, setCurrentSection] = useState(scCourse?.sections?.[currentSectionIndex] || null);
+  const [currentSection, setCurrentSection] = useState<SCCourseSectionType | null>(null);
   const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
   const isNextDisabled =
     !scCourse?.sections ||
@@ -168,6 +153,12 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       ? currentSection.lessons[currentLessonIndex + 1]?.locked
       : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (scCourse?.sections && currentData) {
+      setCurrentSection(scCourse.sections[currentData.currentSectionIndex] || null);
+    }
+  }, [scCourse, currentData]);
 
   // HANDLERS
   /**
@@ -375,7 +366,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           {...LessonDrawerProps}
         />
       </Root>
-      {openDialog && <CourseCompletedDialog course={course} onClose={handleCloseDialog} />}
+      {openDialog && <CourseCompletedDialog course={scCourse} onClose={handleCloseDialog} />}
     </Fragment>
   );
 }
