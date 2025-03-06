@@ -19,6 +19,10 @@ const Component = {
         alignItems: 'center',
         justifyContent: 'space-between',
         marginBottom: theme.spacing(1)
+      },
+      '& .SCLessonTemplate-button': {
+        alignSelf: 'center',
+        marginTop: 'auto'
       }
     })
   }
