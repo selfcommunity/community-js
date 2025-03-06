@@ -5,7 +5,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
 import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
-import {useIsComponentMountedRef} from '@selfcommunity/react-core';
+import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import PaymentProductsSkeleton from './Skeleton';
 import PaymentProduct from '../PaymentProduct';
@@ -41,8 +41,12 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
   });
   const {className, id, contentId, contentType, content, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
 
+  // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  // HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
   const isMountedRef = useIsComponentMountedRef();
 
   /**
@@ -78,6 +82,10 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
       setLoading(false);
     }
   }, [prefetchedProducts.length]);
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>

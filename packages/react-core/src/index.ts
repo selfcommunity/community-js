@@ -107,6 +107,7 @@ import useSCGoogleApiLoader from './hooks/useSCGoogleApiLoader';
 import useSCFetchCourse from './hooks/useSCFetchCourse';
 import useSCFetchCourses from './hooks/useSCFetchCourses';
 import useSCFetchLesson from './hooks/useSCFetchLesson';
+import useSCPaymentsEnabled from './hooks/useSCPaymentsEnabled';
 
 /**
  * Routing component
@@ -239,4 +240,5 @@ export {
   useSCFetchCourse,
   useSCFetchCourses,
   useSCFetchLesson,
+	useSCPaymentsEnabled,
 };

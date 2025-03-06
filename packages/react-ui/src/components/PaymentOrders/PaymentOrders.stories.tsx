@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof PaymentOrders>;
 
 const template = (args) => (
-	<div style={{ maxWidth: 400 }}>
+	<div style={{ maxWidth: 1280 }}>
 		<PaymentOrders {...args} />
 	</div>
 );

@@ -6,7 +6,7 @@ import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentPriceCurrencyTyp
 import {PREFIX} from './constants';
 import PaymentProductPriceSkeleton from './Skeleton';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import BaseItem from '../../shared/BaseItem';
 
 const classes = {
@@ -50,6 +50,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const intl = useIntl();
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const formattedPrice = useMemo(() => {
     return (
@@ -68,6 +69,10 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
     },
     [onHandleActionBuy, price, contentType, contentId]
   );
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   if (!price) {
     return <PaymentProductPriceSkeleton />;

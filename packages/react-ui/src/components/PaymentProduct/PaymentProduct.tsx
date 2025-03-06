@@ -3,6 +3,7 @@ import {AccordionDetails, AccordionSummary, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
+import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import PaymentProductSkeleton from './Skeleton';
@@ -36,6 +37,13 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     name: PREFIX
   });
   const {className, id, product, contentType, contentId, content, paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+
+	// HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   if (!product) {
     return <PaymentProductSkeleton />;

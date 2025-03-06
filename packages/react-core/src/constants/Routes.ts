@@ -25,6 +25,7 @@ export const USER_PROFILE_CONNECTIONS_REQUESTS_SENT_ROUTE_NAME = 'user_connectio
 export const USER_PROFILE_CATEGORIES_ROUTE_NAME = 'user_categories';
 export const USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME = 'user_followed_posts';
 export const USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME = 'user_followed_discussions';
+export const USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME = 'user_payments_history_orders';
 export const LOYALTY_ROUTE_NAME = 'loyalty';
 export const INCUBATOR_ROUTE_NAME = 'incubator';
 export const SIGNIN_ROUTE_NAME = 'signin';
@@ -78,6 +79,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PROFILE_CATEGORIES_ROUTE_NAME]: '/user/:id/categories/',
   [USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME]: '/user/:id/posts/followed/',
   [USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME]: '/user/:id/discussions/followed/',
+  [USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME]: '/user/:id/history_orders/',
   [LOYALTY_ROUTE_NAME]: '/loyalty/',
   [INCUBATOR_ROUTE_NAME]: '/incubator/:id/',
   [SIGNIN_ROUTE_NAME]: '/signin/',

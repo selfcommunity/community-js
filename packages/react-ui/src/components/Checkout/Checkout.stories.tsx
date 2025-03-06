@@ -15,7 +15,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof Checkout> = {
 	args: {
-			contentId: 1,
+			contentId: 3,
 			contentType: SCContentType.EVENT,
 			priceId: 1
 	},

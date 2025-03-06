@@ -7,6 +7,7 @@ import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCCheckoutSessionStatus, SCContentType} from '@selfcommunity/types';
 import {CLAPPING} from '../../assets/courses/clapping';
+import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import Event from '../Event';
 import {SCEventTemplateType} from '../../types/event';
@@ -17,6 +18,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
+import Grow from '@mui/material/Grow';
 
 const PREFIX = 'SCCheckoutReturnDialog';
 
@@ -59,6 +61,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   const [contentId, setContentId] = useState<number | null>(null);
 
   // HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
   const intl = useIntl();
 
   // CONTEXT
@@ -83,7 +86,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   }, []);
 
   const renderTitle = () => {
-    return <>{!loading && <FormattedMessage id="ui.checkoutSuccessDialog.title" defaultMessage="ui.checkoutSuccessDialog.title" />}</>;
+    return <>{!loading && <FormattedMessage id="ui.checkoutReturnDialog.title" defaultMessage="ui.checkoutReturnDialog.title" />}</>;
   };
 
   const renderContent = () => {
@@ -100,7 +103,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {id: contentId})}
             component={Link}
             className={classes.btn}>
-            <FormattedMessage id="ui.checkoutSuccessDialog.event.button" defaultMessage="ui.checkoutSuccessDialog.event.button" />
+            <FormattedMessage id="ui.checkoutReturnDialog.event.button" defaultMessage="ui.checkoutReturnDialog.event.button" />
           </Button>
         </>
       );
@@ -116,7 +119,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: contentId})}
             component={Link}
             className={classes.btn}>
-            <FormattedMessage id="ui.checkoutSuccessDialog.category.button" defaultMessage="ui.checkoutSuccessDialog.category.button" />
+            <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
         </>
       );
@@ -140,7 +143,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, {id: contentId})}
             component={Link}
             className={classes.btn}>
-            <FormattedMessage id="ui.checkoutSuccessDialog.course.button" defaultMessage="ui.checkoutSuccessDialog.course.button" />
+            <FormattedMessage id="ui.checkoutReturnDialog.course.button" defaultMessage="ui.checkoutReturnDialog.course.button" />
           </Button>
         </>
       );
@@ -156,30 +159,36 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, {id: contentId})}
             component={Link}
             className={classes.btn}>
-            <FormattedMessage id="ui.checkoutSuccessDialog.category.button" defaultMessage="ui.checkoutSuccessDialog.category.button" />
+            <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
         </>
       );
     }
     return (
       <Stack spacing={2} justifyContent="center" alignItems="center">
-        <img
-          src={CLAPPING}
-          className={classes.img}
-          alt={intl.formatMessage({
-            id: 'ui.checkoutSuccessDialog.buy',
-            defaultMessage: 'ui.checkoutSuccessDialog.buy'
-          })}
-          width={100}
-          height={100}
-        />
+        <Grow in style={{transitionDelay: '300ms'}}>
+          <img
+            src={CLAPPING}
+            className={classes.img}
+            alt={intl.formatMessage({
+              id: 'ui.checkoutReturnDialog.buy',
+              defaultMessage: 'ui.checkoutReturnDialog.buy'
+            })}
+            width={100}
+            height={100}
+          />
+        </Grow>
         <Typography variant="body2" color="textSecondary">
-          <FormattedMessage id="ui.checkoutSuccessDialog.buy" defaultMessage="ui.checkoutSuccessDialog.buy" />
+          <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
         </Typography>
         {footer}
       </Stack>
     );
   };
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   return (
     <Root
