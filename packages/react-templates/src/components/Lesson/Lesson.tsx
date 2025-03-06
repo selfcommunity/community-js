@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useMemo, useState} from 'react';
+import {Fragment, useCallback, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
@@ -281,8 +281,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           num_lessons_completed: c ? scCourse.num_lessons_completed - 1 : scCourse.num_lessons_completed + 1
         };
         setSCCourse(updatedCourse);
-        //TODO: fix it
-        if (scCourse.num_lessons - scCourse.num_lessons_completed === 1) {
+        if (updatedCourse.num_lessons === updatedCourse.num_lessons_completed) {
           setOpenDialog(true);
         }
       })
