@@ -421,7 +421,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
                 className={classes.item}
                 key="historyOrders"
                 component={Link}
-                to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, {})}>
+                to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, scUserContext.user)}>
                 <FormattedMessage id="ui.navigationSettingsIconButton.historyOrders" defaultMessage="ui.navigationSettingsIconButton.historyOrders" />
               </MenuItem>
             ]

@@ -79,7 +79,7 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PROFILE_CATEGORIES_ROUTE_NAME]: '/user/:id/categories/',
   [USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME]: '/user/:id/posts/followed/',
   [USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME]: '/user/:id/discussions/followed/',
-  [USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME]: '/user/:id/history_orders/',
+  [USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME]: '/user/:id/:username/history_orders/',
   [LOYALTY_ROUTE_NAME]: '/loyalty/',
   [INCUBATOR_ROUTE_NAME]: '/incubator/:id/',
   [SIGNIN_ROUTE_NAME]: '/signin/',
