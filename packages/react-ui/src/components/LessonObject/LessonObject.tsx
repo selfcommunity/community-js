@@ -1,8 +1,8 @@
-import {Fragment, useCallback, useMemo, useState} from 'react';
+import {useCallback} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Icon, Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import CardContent from '@mui/material/CardContent';
@@ -10,12 +10,8 @@ import {getContributionHtml} from '../../utils/contribution';
 import Widget from '../Widget';
 import ContentLesson from '../Composer/Content/ContentLesson';
 import {EditorProps} from '../Editor';
-import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseType, SCMediaType} from '@selfcommunity/types';
-import {FormattedMessage} from 'react-intl';
+import {SCCourseLessonType, SCCourseType, SCMediaType} from '@selfcommunity/types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
-import {CourseService} from '@selfcommunity/api-services';
-import {LoadingButton} from '@mui/lab';
-import CourseCompletedDialog from '../CourseCompletedDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -24,8 +20,7 @@ const classes = {
   title: `${PREFIX}-title`,
   text: `${PREFIX}-text`,
   navigation: `${PREFIX}-navigation`,
-  editor: `${PREFIX}-editor`,
-  button: `${PREFIX}-button`
+  editor: `${PREFIX}-editor`
 };
 
 const Root = styled(Box, {
@@ -79,18 +74,9 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     name: PREFIX
   });
   const {className = null, course, lesson, editMode, EditorProps = {}, onContentChange, onMediaChange, isSubmitting, ...rest} = props;
-  const [loading, setLoading] = useState<boolean>(false);
-  const [completed, setCompleted] = useState<boolean>(lesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-
-  //HOOKS
-  const isCourseAdmin = useMemo(
-    () => course && (course.join_status === SCCourseJoinStatusType.CREATOR || course.join_status === SCCourseJoinStatusType.MANAGER),
-    [course]
-  );
 
   // HANDLERS
 
@@ -112,84 +98,41 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
     [onMediaChange]
   );
 
-  function toggleLessonCompletion(completed) {
-    setLoading(true);
-    const service = completed
-      ? () => CourseService.markLessonIncomplete(course.id, lesson.section_id, lesson.id)
-      : () => CourseService.markLessonComplete(course.id, lesson.section_id, lesson.id);
-    service()
-      .then(() => {
-        setCompleted(!completed);
-        setLoading(false);
-        if (course.num_lessons - course.num_lessons_completed === 1) {
-          setOpenDialog(true);
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
-  }
-
-  const handleCloseDialog = useCallback(() => {
-    setOpenDialog(false);
-  }, [setOpenDialog]);
-
   // RENDER
   if (!course || !lesson) {
     return <HiddenPlaceholder />;
   }
 
   return (
-    <Fragment>
-      <Root className={classNames(className, classes.root)} {...rest}>
-        <Widget>
-          <CardContent classes={{root: editMode ? classes.contentEdit : classes.content}}>
-            {editMode ? (
-              <ContentLesson
-                value={lesson}
-                //error={{error}}
-                onChange={handleChangeLesson}
-                onMediaChange={handleChangeMedia}
-                disabled={isSubmitting}
-                EditorProps={{
-                  toolbar: true,
-                  uploadImage: false,
-                  uploadFile: true,
-                  ...EditorProps
-                }}
-              />
-            ) : (
-              <Typography
-                component="div"
-                gutterBottom
-                className={classes.text}
-                dangerouslySetInnerHTML={{
-                  __html: getContributionHtml(lesson.html, scRoutingContext.url)
-                }}
-              />
-            )}
-          </CardContent>
-        </Widget>
-        {!isCourseAdmin && (
-          <LoadingButton
-            className={classes.button}
-            loading={loading}
-            size="small"
-            variant={completed ? 'outlined' : 'contained'}
-            startIcon={!completed && <Icon>arrow_next</Icon>}
-            endIcon={completed && <Icon>circle_checked</Icon>}
-            onClick={() => toggleLessonCompletion(completed)}>
-            {completed ? (
-              <FormattedMessage id="ui.lessonObject.button.completed" defaultMessage="ui.lessonObject.button.completed" />
-            ) : (
-              <FormattedMessage id="ui.lessonObject.button.complete" defaultMessage="ui.lessonObject.button.complete" />
-            )}
-          </LoadingButton>
-        )}
-      </Root>
-
-      {openDialog && <CourseCompletedDialog course={course} onClose={handleCloseDialog} />}
-    </Fragment>
+    <Root className={classNames(className, classes.root)} {...rest}>
+      <Widget>
+        <CardContent classes={{root: editMode ? classes.contentEdit : classes.content}}>
+          {editMode ? (
+            <ContentLesson
+              value={lesson}
+              //error={{error}}
+              onChange={handleChangeLesson}
+              onMediaChange={handleChangeMedia}
+              disabled={isSubmitting}
+              EditorProps={{
+                toolbar: true,
+                uploadImage: false,
+                uploadFile: true,
+                ...EditorProps
+              }}
+            />
+          ) : (
+            <Typography
+              component="div"
+              gutterBottom
+              className={classes.text}
+              dangerouslySetInnerHTML={{
+                __html: getContributionHtml(lesson.html, scRoutingContext.url)
+              }}
+            />
+          )}
+        </CardContent>
+      </Widget>
+    </Root>
   );
 }

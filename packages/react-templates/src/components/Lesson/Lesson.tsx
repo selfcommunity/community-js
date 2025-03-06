@@ -1,12 +1,13 @@
-import React, {useMemo, useState} from 'react';
+import React, {Fragment, useCallback, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseLessonType, SCCourseSectionType, SCCourseType, SCMediaType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
+  CourseCompletedDialog,
   getCurrentSectionAndLessonIndex,
   HiddenPlaceholder,
   LessonAppbar,
@@ -18,12 +19,14 @@ import {
 } from '@selfcommunity/react-ui';
 import {CourseInfoViewType, CourseService} from '@selfcommunity/api-services';
 import {FormattedMessage} from 'react-intl';
+import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
   containerRoot: `${PREFIX}-container-root`,
   navigation: `${PREFIX}-navigation`,
-  navigationTitle: `${PREFIX}-navigation-title`
+  navigationTitle: `${PREFIX}-navigation-title`,
+  button: `${PREFIX}-button`
 };
 
 const Root = styled(Box, {
@@ -135,8 +138,12 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
-  const {scCourse} = useSCFetchCourse({id: courseId, course, params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
-  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId, sectionId: _sectionId});
+  const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, lesson, courseId: courseId ?? lesson.course_id, sectionId: _sectionId});
+  const {scCourse, setSCCourse} = useSCFetchCourse({
+    id: courseId ?? lesson.course_id,
+    course,
+    params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}
+  });
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
@@ -144,6 +151,23 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [completed, setCompleted] = useState<boolean>(scLesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
+  const currentData = useMemo(() => {
+    if (!scCourse || !scLesson) return null;
+    return getCurrentSectionAndLessonIndex(scCourse, scLesson.section_id, scLesson.id);
+  }, [scCourse, scLesson]);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
+  const [currentSection, setCurrentSection] = useState(scCourse?.sections?.[currentSectionIndex] || null);
+  const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
+  const isNextDisabled =
+    !scCourse?.sections ||
+    (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1) ||
+    (currentLessonIndex < currentSection?.lessons?.length - 1
+      ? currentSection.lessons[currentLessonIndex + 1]?.locked
+      : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // HANDLERS
   /**
@@ -197,14 +221,9 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       });
   };
 
-  const currentData = useMemo(() => {
-    if (!scCourse || !scLesson) return null;
-    return getCurrentSectionAndLessonIndex(scCourse, scLesson.section_id, scLesson.id);
-  }, [scCourse, scLesson]);
-
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
-  const [currentSection, setCurrentSection] = useState(scCourse?.sections?.[currentSectionIndex] || null);
+  /**
+   * Handles prev lesson navigation
+   */
 
   const handlePrev = () => {
     if (currentLessonIndex > 0) {
@@ -221,6 +240,9 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     }
   };
 
+  /**
+   * Handles next lesson navigation
+   */
   const handleNext = () => {
     if (currentLessonIndex < currentSection.lessons.length - 1) {
       const newLessonIndex = currentLessonIndex + 1;
@@ -234,69 +256,127 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     }
   };
 
-  const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
-  const isNextDisabled =
-    !scCourse?.sections ||
-    (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1) ||
-    (currentLessonIndex < currentSection?.lessons?.length - 1
-      ? currentSection.lessons[currentLessonIndex + 1]?.locked
-      : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
+  /**
+   * Handles toggle lesson complete/uncompleted
+   */
+  const toggleLessonCompletion = (c: boolean) => {
+    setLoading(true);
+    const service = completed
+      ? () => CourseService.markLessonIncomplete(scLesson.course_id, scLesson.section_id, scLesson.id)
+      : () => CourseService.markLessonComplete(scLesson.course_id, scLesson.section_id, scLesson.id);
+    service()
+      .then(() => {
+        setCompleted(!c);
+        setLoading(false);
+        const updatedCourse = {
+          ...scCourse,
+          sections: scCourse.sections.map((section: SCCourseSectionType) => ({
+            ...section,
+            lessons: section.lessons.map((lesson: SCCourseLessonType) =>
+              lesson.id === scLesson.id
+                ? {...lesson, completion_status: c ? SCCourseLessonCompletionStatusType.UNCOMPLETED : SCCourseLessonCompletionStatusType.COMPLETED}
+                : lesson
+            )
+          })),
+          num_lessons_completed: c ? scCourse.num_lessons_completed - 1 : scCourse.num_lessons_completed + 1
+        };
+        setSCCourse(updatedCourse);
+        //TODO: fix it
+        if (course.num_lessons - course.num_lessons_completed === 1) {
+          setOpenDialog(true);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
+
+  /**
+   * Handles complete lesson dialog close
+   */
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false);
+  }, [setOpenDialog]);
+
+  /**
+   * Rendering
+   */
 
   if (!scLesson || !scCourse) {
     return <HiddenPlaceholder />;
   }
 
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      <LessonAppbar
-        showComments={scLesson.comments_enabled}
-        editMode={editMode}
-        activePanel={activePanel}
-        title={scCourse.name}
-        handleOpen={handleOpenDrawer}
-        onSave={handleLessonUpdate}
-        updating={updating}
-        {...LessonAppbarProps}
-      />
-      <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
-        <Box className={classes.navigation}>
-          <Typography variant="body2" color="text.secondary">
-            <FormattedMessage
-              id="templates.lesson.number"
-              defaultMessage="templates.lesson.number"
-              values={{from: currentLessonIndex + 1, to: currentSection?.lessons?.length}}
-            />
-          </Typography>
-        </Box>
-        <Box className={classes.navigationTitle}>
-          <Typography variant="h5">{scLesson.name}</Typography>
-          <Box>
-            <IconButton onClick={handlePrev} disabled={isPrevDisabled}>
-              <Icon>arrow_back</Icon>
-            </IconButton>
-            <IconButton onClick={handleNext} disabled={isNextDisabled}>
-              <Icon>arrow_next</Icon>
-            </IconButton>
+    <Fragment>
+      <Root className={classNames(classes.root, className)} {...rest}>
+        <LessonAppbar
+          showComments={scLesson.comments_enabled}
+          editMode={editMode}
+          activePanel={activePanel}
+          title={scCourse.name}
+          handleOpen={handleOpenDrawer}
+          onSave={handleLessonUpdate}
+          updating={updating}
+          {...LessonAppbarProps}
+        />
+        <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
+          <Box className={classes.navigation}>
+            <Typography variant="body2" color="text.secondary">
+              <FormattedMessage
+                id="templates.lesson.number"
+                defaultMessage="templates.lesson.number"
+                values={{from: currentLessonIndex + 1, to: currentSection?.lessons?.length}}
+              />
+            </Typography>
           </Box>
-        </Box>
-        <LessonObject
+          <Box className={classes.navigationTitle}>
+            <Typography variant="h5">{scLesson.name}</Typography>
+            <Box>
+              <IconButton onClick={handlePrev} disabled={isPrevDisabled}>
+                <Icon>arrow_back</Icon>
+              </IconButton>
+              <IconButton onClick={handleNext} disabled={isNextDisabled}>
+                <Icon>arrow_next</Icon>
+              </IconButton>
+            </Box>
+          </Box>
+          <LessonObject
+            course={scCourse}
+            lesson={scLesson}
+            editMode={editMode}
+            onContentChange={handleLessonContentEdit}
+            onMediaChange={handleLessonMediaEdit}
+          />
+          {!isEditor && (
+            <LoadingButton
+              className={classes.button}
+              loading={loading}
+              size="small"
+              variant={completed ? 'outlined' : 'contained'}
+              startIcon={!completed && <Icon>arrow_next</Icon>}
+              endIcon={completed && <Icon>circle_checked</Icon>}
+              onClick={() => toggleLessonCompletion(completed)}>
+              {completed ? (
+                <FormattedMessage id="templates.lesson.button.completed" defaultMessage="templates.lesson.button.completed" />
+              ) : (
+                <FormattedMessage id="templates.lesson.button.complete" defaultMessage="templates.lesson.button.complete" />
+              )}
+            </LoadingButton>
+          )}
+        </Container>
+        <LessonDrawer
           course={scCourse}
           lesson={scLesson}
-          editMode={editMode}
-          onContentChange={handleLessonContentEdit}
-          onMediaChange={handleLessonMediaEdit}
+          editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
+          activePanel={activePanel}
+          handleClose={handleCloseDrawer}
+          handleChangeLesson={handleChangeLesson}
+          LessonEditFormProps={{lesson: scLesson, onSave: handleLessonUpdate, updating: updating, onSettingsChange: handleSettingsChange}}
+          {...LessonDrawerProps}
         />
-      </Container>
-      <LessonDrawer
-        course={scCourse}
-        lesson={scLesson}
-        editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
-        activePanel={activePanel}
-        handleClose={handleCloseDrawer}
-        handleChangeLesson={handleChangeLesson}
-        LessonEditFormProps={{lesson: scLesson, onSave: handleLessonUpdate, updating: updating, onSettingsChange: handleSettingsChange}}
-        {...LessonDrawerProps}
-      />
-    </Root>
+      </Root>
+      {openDialog && <CourseCompletedDialog course={course} onClose={handleCloseDialog} />}
+    </Fragment>
   );
 }
