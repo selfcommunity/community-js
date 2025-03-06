@@ -71,7 +71,7 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 
 function getIsNextLessonAvailable(course: SCCourseType): boolean {
   return course.sections.some(
-    (section: SCCourseSectionType) => section.num_lessons_completed < section.num_lessons && section.lessons[section.num_lessons_completed].locked
+    (section: SCCourseSectionType) => section.num_lessons_completed < section.num_lessons && !section.lessons[section.num_lessons_completed].locked
   );
 }
 
