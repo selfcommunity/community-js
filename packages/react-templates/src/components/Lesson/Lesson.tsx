@@ -282,7 +282,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         };
         setSCCourse(updatedCourse);
         //TODO: fix it
-        if (course.num_lessons - course.num_lessons_completed === 1) {
+        if (scCourse.num_lessons - scCourse.num_lessons_completed === 1) {
           setOpenDialog(true);
         }
       })
