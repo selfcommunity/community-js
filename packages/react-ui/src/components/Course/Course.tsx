@@ -13,7 +13,6 @@ import {PREFIX} from './constants';
 import CourseSkeleton, {CourseSkeletonProps} from './Skeleton';
 import BaseItem from '../../shared/BaseItem';
 import {isCourseCompleted, isCourseNew} from '../../utils/course';
-import CourseJoinButton from '../CourseJoinButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -171,14 +170,6 @@ export default function Course(inProps: CourseProps): JSX.Element {
     [scCourse]
   );
 
-  //HANDLERS
-  /**
-   * Handles callback join course
-   */
-  const handleJoinCourse = (course, status) => {
-    setSCCourse({...course, join_status: status});
-  };
-
   /**
    * Renders course object
    */
@@ -280,13 +271,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            {!scCourse.join_status ? (
-              <CourseJoinButton course={scCourse} onJoin={handleJoinCourse} />
-            ) : (
-              <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
-                <FormattedMessage defaultMessage="ui.course.see.preview" id="ui.course.see.preview" />
-              </Button>
-            )}
+            <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+              <FormattedMessage defaultMessage="ui.course.see.preview" id="ui.course.see.preview" />
+            </Button>
           </CardActions>
         )}
       </PreviewRoot>

@@ -108,10 +108,7 @@ export default function CourseJoinButton(inProps: CourseJoinButtonProps): JSX.El
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
 
-  const isCourseAdmin = useMemo(
-    () => scCourse && (scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER),
-    [scCourse]
-  );
+  const isCourseAdmin = useMemo(() => scCourse && scCourse.join_status === SCCourseJoinStatusType.CREATOR, [scCourse]);
 
   useEffect(() => {
     /**

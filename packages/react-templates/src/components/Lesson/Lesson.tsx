@@ -154,6 +154,16 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
+  //EFFECTS
+
+  useEffect(() => {
+    setLessonId(lessonId);
+  }, [lessonId]);
+
+  useEffect(() => {
+    setSectionId(sectionId);
+  }, [sectionId]);
+
   useEffect(() => {
     if (scCourse?.sections && currentData) {
       setCurrentSection(scCourse.sections[currentData.currentSectionIndex] || null);
