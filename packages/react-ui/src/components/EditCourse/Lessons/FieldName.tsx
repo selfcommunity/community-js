@@ -23,7 +23,7 @@ interface FieldNameProps<T> {
   endpoint: EndpointType;
   row: T;
   isNewRow: boolean;
-  handleManageRow: (section: SCCourseSectionType, type: ActionLessonType) => void;
+  handleManageRow: (section: SCCourseSectionType, type: ActionLessonType, newRow?: boolean) => void;
   editMode: boolean;
   handleDisableEditMode: () => void;
 }
@@ -94,7 +94,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
 
   const handleClose = useCallback(() => {
     if (isNewRow) {
-      handleManageRow(row, ActionLessonType.DELETE);
+      handleManageRow(row, ActionLessonType.DELETE, true);
       PubSub.publish(`${SCTopicType.COURSE}.${SCGroupEventType.UPDATE}`, false);
     } else {
       setName(null);
