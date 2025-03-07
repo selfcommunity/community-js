@@ -94,12 +94,13 @@ const Component = {
         }
       },
       '& .SCCourse-preview-content': {
-        padding: theme.spacing(2),
+        padding: theme.spacing(1, 2, 2, 2),
         '& .SCCourse-preview-creator': {
-          paddingTop: 0,
-          marginBottom: theme.spacing(1),
           textDecoration: 'none',
-          color: 'inherit'
+          color: 'inherit',
+          '& .MuiTypography-root': {
+            marginBottom: theme.spacing(1)
+          }
         },
         '& .SCCourse-preview-name-wrapper': {
           textDecoration: 'none',
