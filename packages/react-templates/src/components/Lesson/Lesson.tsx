@@ -348,7 +348,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             onContentChange={handleLessonContentEdit}
             onMediaChange={handleLessonMediaEdit}
           />
-          {!isEditor && (
+          {!isEditor && !editMode && (
             <LoadingButton
               className={classes.button}
               loading={loading}
