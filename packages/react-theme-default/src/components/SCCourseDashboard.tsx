@@ -177,7 +177,7 @@ const Component = {
               color: 'inherit'
             },
             '& .MuiBadge-root': {
-              marginRight: theme.spacing(0.5),
+              marginRight: theme.spacing(0.5)
             }
           },
 

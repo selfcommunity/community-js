@@ -4,7 +4,8 @@ const Component = {
     containerRoot: ({theme, open}: any) => ({
       display: 'flex',
       flexDirection: 'column',
-      overflow: 'hidden',
+      paddingBottom: theme.mixins.toolbar.minHeight,
+      //overflow: 'hidden',
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
