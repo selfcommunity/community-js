@@ -76,10 +76,10 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 }
 
 function getIsNextLessonLocked(course: SCCourseType): boolean {
-  return course.sections.some((section: SCCourseSectionType) => {
+  return course.sections.every((section: SCCourseSectionType) => {
     return (
       section.num_lessons_completed < section.num_lessons &&
-      section.lessons.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED)?.locked
+      section.lessons?.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED)?.locked
     );
   });
 }
