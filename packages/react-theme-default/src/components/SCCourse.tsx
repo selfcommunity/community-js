@@ -87,13 +87,19 @@ const Component = {
           width: theme.selfcommunity.user.avatar.sizeMedium,
           height: theme.selfcommunity.user.avatar.sizeMedium,
           border: `#FFF solid ${theme.spacing(0.2)}`
+        },
+        '.MuiBadge-badge': {
+          left: theme.spacing(3),
+          top: theme.spacing(-0.5)
         }
       },
       '& .SCCourse-preview-content': {
         padding: theme.spacing(2),
         '& .SCCourse-preview-creator': {
           paddingTop: 0,
-          marginBottom: theme.spacing(1)
+          marginBottom: theme.spacing(1),
+          textDecoration: 'none',
+          color: 'inherit'
         },
         '& .SCCourse-preview-name-wrapper': {
           textDecoration: 'none',

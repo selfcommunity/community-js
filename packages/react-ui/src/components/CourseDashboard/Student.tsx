@@ -13,13 +13,14 @@ import {
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import {CLAPPING} from '../../assets/courses/clapping';
-import {SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
+import {SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting, Link} from '@selfcommunity/react-core';
 import AccordionLessons from '../../shared/AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import StudentSkeleton from './Student/Skeleton';
+import UserAvatar from '../../shared/UserAvatar';
 
 const messages = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
@@ -209,10 +210,22 @@ function Student(inProps: StudentCourseDashboardProps) {
 
       <Stack className={classes.userWrapper}>
         <Stack className={classes.user}>
-          <Avatar className={classes.avatar} src={scCourse.created_by.avatar} alt={scCourse.created_by.username} />
+          <Link
+            {...(!scCourse.created_by.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+            })}>
+            <UserAvatar hide={!scCourse.created_by.community_badge} smaller={true}>
+              <Avatar className={classes.avatar} src={scCourse.created_by.avatar} alt={scCourse.created_by.username} />
+            </UserAvatar>
+          </Link>
 
           <Box>
-            <Typography variant="body1">{scCourse.created_by.username}</Typography>
+            <Link
+              {...(!scCourse.created_by.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+              })}>
+              <Typography variant="body1">{scCourse.created_by.username}</Typography>
+            </Link>
             <Typography variant="body1">
               <FormattedMessage id="ui.course.dashboard.header.user.creator" defaultMessage="ui.course.dashboard.header.user.creator" />
             </Typography>
