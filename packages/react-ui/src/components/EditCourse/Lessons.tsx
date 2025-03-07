@@ -121,7 +121,7 @@ function Lessons(props: LessonsProps) {
   }, [setSections]);
 
   const handleManageSection = useCallback(
-    (section: SCCourseSectionType, type: ActionLessonType) => {
+    (section: SCCourseSectionType, type: ActionLessonType, newRow = false) => {
       switch (type) {
         case ActionLessonType.ADD:
           setCourse({
@@ -145,14 +145,22 @@ function Lessons(props: LessonsProps) {
             })
           });
           break;
-        case ActionLessonType.DELETE:
-          setCourse({
-            ...course,
-            num_sections: course.num_sections - 1,
-            num_lessons: course.num_lessons - section.num_lessons,
-            sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
-          });
+        case ActionLessonType.DELETE: {
+          if (newRow) {
+            setCourse({
+              ...course,
+              sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
+            });
+          } else {
+            setCourse({
+              ...course,
+              num_sections: course.num_sections - 1,
+              num_lessons: course.num_lessons - section.num_lessons,
+              sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
+            });
+          }
           break;
+        }
         case ActionLessonType.UPDATE:
           setCourse({
             ...course,
@@ -169,29 +177,42 @@ function Lessons(props: LessonsProps) {
           });
           break;
         case type.endsWith(ActionLessonType.UPDATE) && type: {
-          let numLessons = course.num_lessons;
+          if (newRow) {
+            setCourse({
+              ...course,
+              sections: course.sections.map((prevSection: SCCourseSectionType) => {
+                if (prevSection.id === section.id) {
+                  return section;
+                }
 
-          if (type === ActionLessonType.ADD_UPDATE) {
-            numLessons = course.num_lessons + 1;
-          } else if (type === ActionLessonType.DELETE_UPDATE) {
-            numLessons = course.num_lessons - 1;
+                return prevSection;
+              })
+            });
+          } else {
+            let numLessons: number | undefined = course.num_lessons;
+
+            if (type === ActionLessonType.ADD_UPDATE) {
+              numLessons = course.num_lessons + 1;
+            } else if (type === ActionLessonType.DELETE_UPDATE) {
+              numLessons = course.num_lessons - 1;
+            }
+
+            setCourse({
+              ...course,
+              num_lessons: numLessons,
+              sections: course.sections.map((prevSection: SCCourseSectionType) => {
+                if (prevSection.id === section.id) {
+                  return section;
+                }
+
+                return prevSection;
+              })
+            });
           }
-
-          setCourse({
-            ...course,
-            num_lessons: numLessons,
-            sections: course.sections.map((prevSection: SCCourseSectionType) => {
-              if (prevSection.id === section.id) {
-                return section;
-              }
-
-              return prevSection;
-            })
-          });
         }
       }
     },
-    [course, setSections]
+    [course]
   );
 
   return (

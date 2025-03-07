@@ -46,7 +46,7 @@ interface LessonRowProps {
   section: SCCourseSectionType;
   lesson: SCCourseLessonType;
   isNewRow: boolean;
-  handleManageLesson: (lesson: SCCourseLessonType, type: ActionLessonType) => void;
+  handleManageLesson: (lesson: SCCourseLessonType, type: ActionLessonType, newRow?: boolean) => void;
 }
 
 function LessonRow(props: LessonRowProps) {
