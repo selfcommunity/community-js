@@ -51,12 +51,12 @@ const headerCells = [
 
 interface LessonsProps {
   course: SCCourseType;
-  setSCCourse: (course: SCCourseType) => void;
+  setCourse: (course: SCCourseType) => void;
 }
 
 function Lessons(props: LessonsProps) {
   // PROPS
-  const {course, setSCCourse} = props;
+  const {course, setCourse} = props;
 
   // STATES
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
@@ -103,7 +103,7 @@ function Lessons(props: LessonsProps) {
       };
 
       CourseService.patchCourse(course.id, data)
-        .then(() => setSCCourse({...course, sections: tempSections}))
+        .then(() => setCourse({...course, sections: tempSections}))
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
 
@@ -124,14 +124,14 @@ function Lessons(props: LessonsProps) {
     (section: SCCourseSectionType, type: ActionLessonType) => {
       switch (type) {
         case ActionLessonType.ADD:
-          setSCCourse({
+          setCourse({
             ...course,
             num_sections: course.num_sections + 1,
             sections: [...course.sections, section]
           });
           break;
         case ActionLessonType.RENAME:
-          setSCCourse({
+          setCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
               if (prevSection.id === section.id) {
@@ -146,7 +146,7 @@ function Lessons(props: LessonsProps) {
           });
           break;
         case ActionLessonType.DELETE:
-          setSCCourse({
+          setCourse({
             ...course,
             num_sections: course.num_sections - 1,
             num_lessons: course.num_lessons - section.num_lessons,
@@ -154,7 +154,7 @@ function Lessons(props: LessonsProps) {
           });
           break;
         case ActionLessonType.UPDATE:
-          setSCCourse({
+          setCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
               if (prevSection.id === section.id) {
@@ -177,7 +177,7 @@ function Lessons(props: LessonsProps) {
             numLessons = course.num_lessons - 1;
           }
 
-          setSCCourse({
+          setCourse({
             ...course,
             num_lessons: numLessons,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {

@@ -25,6 +25,7 @@ import UserAvatar from '../../shared/UserAvatar';
 const messages = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
   request: 'ui.course.dashboard.student.button.request',
+  review: 'ui.course.dashboard.student.button.review',
   cancel: 'ui.course.dashboard.student.button.cancel',
   start: 'ui.course.dashboard.student.button.start',
   continue: 'ui.course.dashboard.student.button.continue'
@@ -59,6 +60,15 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
     id: course.id,
     slug: course.slug
   };
+
+  if (course.user_completion_rate === 100) {
+    Object.assign(data, {
+      section_id: course.sections[0].id,
+      lesson_id: course.sections[0].lessons[0].id
+    });
+
+    return data;
+  }
 
   course.sections.some((section: SCCourseSectionType) => {
     const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons;
@@ -165,9 +175,13 @@ function Student(inProps: StudentCourseDashboardProps) {
 
   // MEMOS
   const actionButton = useMemo(() => {
+    if (!scCourse) {
+      return <></>;
+    }
+
     return (
       <Stack className={classes.actionsWrapper}>
-        {(scCourse?.join_status === SCCourseJoinStatusType.CREATOR || scCourse?.join_status === SCCourseJoinStatusType.MANAGER) && (
+        {(scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER) && (
           <ActionButton
             labelId={messages.dashboard}
             to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}
@@ -175,17 +189,21 @@ function Student(inProps: StudentCourseDashboardProps) {
             variant="outlined"
           />
         )}
-        {(scCourse?.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED) &&
-          (scCourse?.join_status !== null || scCourse?.privacy !== SCCoursePrivacyType.PRIVATE) &&
-          scCourse?.user_completion_rate < 100 && (
-            <ActionButton
-              labelId={scCourse.num_lessons_completed === 0 ? messages.start : messages.continue}
-              to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse))}
-              disabled={getIsNextLessonLocked(scCourse)}
-            />
-          )}
-        {scCourse?.privacy === SCCoursePrivacyType.PRIVATE &&
-          (scCourse?.join_status === null || scCourse?.join_status === SCCourseJoinStatusType.REQUESTED) && (
+        {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+          (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED)) ||
+          (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
+          <ActionButton
+            labelId={
+              scCourse.user_completion_rate === 0 ? messages.start : scCourse.user_completion_rate === 100 ? messages.review : messages.continue
+            }
+            to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse))}
+            disabled={getIsNextLessonLocked(scCourse)}
+            color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
+            variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
+          />
+        )}
+        {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+          (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
             <ActionButton
               labelId={sentRequest ? messages.cancel : messages.request}
               color="inherit"
@@ -237,10 +255,11 @@ function Student(inProps: StudentCourseDashboardProps) {
 
       <Divider />
 
-      {(scCourse.join_status === SCCourseJoinStatusType.CREATOR ||
-        scCourse.join_status === SCCourseJoinStatusType.MANAGER ||
-        scCourse.join_status === SCCourseJoinStatusType.JOINED ||
-        scCourse.privacy !== SCCoursePrivacyType.PRIVATE) && (
+      {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+        (scCourse.join_status === SCCourseJoinStatusType.CREATOR ||
+          scCourse.join_status === SCCourseJoinStatusType.MANAGER ||
+          scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
+        scCourse.privacy === SCCoursePrivacyType.OPEN) && (
         <Fragment>
           <Typography variant="h6" className={classes.margin}>
             <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />
@@ -252,7 +271,9 @@ function Student(inProps: StudentCourseDashboardProps) {
         </Fragment>
       )}
 
-      {(scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED) && (
+      {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+        (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
+        (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
         <Fragment>
           <Typography variant="h6" className={classes.margin}>
             <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.description" />

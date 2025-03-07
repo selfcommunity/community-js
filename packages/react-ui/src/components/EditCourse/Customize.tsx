@@ -7,12 +7,12 @@ import {SCCourseFormStepType} from '../../constants/Course';
 
 interface CustomizeProps {
   course: SCCourseType;
-  setSCCourse: (course: SCCourseType) => void;
+  setCourse: (course: SCCourseType) => void;
 }
 
 function Customize(props: CustomizeProps) {
   // PROPS
-  const {course, setSCCourse} = props;
+  const {course, setCourse} = props;
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -20,7 +20,7 @@ function Customize(props: CustomizeProps) {
   // HANDLERS
   const handleSuccess = useCallback(
     (data: SCCourseType) => {
-      setSCCourse(data);
+      setCourse(data);
 
       enqueueSnackbar(
         <FormattedMessage id="ui.editCourse.tab.customize.snackbar.save" defaultMessage="ui.editCourse.tab.customize.snackbar.save" />,
@@ -30,7 +30,7 @@ function Customize(props: CustomizeProps) {
         }
       );
     },
-    [setSCCourse]
+    [setCourse]
   );
 
   const handleError = useCallback(() => {
