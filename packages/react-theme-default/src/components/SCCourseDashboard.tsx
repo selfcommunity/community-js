@@ -171,6 +171,13 @@ const Component = {
             '& .SCCourseDashboard-avatar': {
               width: '36px',
               height: '36px'
+            },
+            '& a': {
+              textDecoration: 'none',
+              color: 'inherit'
+            },
+            '& .MuiBadge-root': {
+              marginRight: theme.spacing(0.5),
             }
           },
 
