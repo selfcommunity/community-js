@@ -163,7 +163,7 @@ const Component = {
       },
       '& .SCCourse-preview-actions': {
         justifyContent: 'center',
-        padding: theme.spacing(1, 2, 2, 2)
+        padding: theme.spacing(2)
       }
     }),
     createPlaceholderRoot: ({theme}: any) => ({
@@ -206,7 +206,7 @@ const Component = {
       '& .SCCourse-create-placeholder-actions': {
         display: 'flex',
         justifyContent: 'center',
-        height: '248px'
+        height: '258px'
       }
     }),
     skeletonRoot: ({theme}: any) => ({
