@@ -167,6 +167,7 @@ const Component = {
       }
     }),
     createPlaceholderRoot: ({theme}: any) => ({
+      height: '100%',
       [theme.breakpoints.up('sm')]: {
         minHeight: '376px'
       },
@@ -211,6 +212,7 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCCourse-skeleton-preview-root': {
+        height: '100%',
         [theme.breakpoints.up('sm')]: {
           minHeight: '376px'
         },
