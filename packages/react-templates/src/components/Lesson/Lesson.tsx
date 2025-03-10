@@ -157,14 +157,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   //EFFECTS
 
   useEffect(() => {
-    setLessonId(lessonId);
-  }, [lessonId]);
-
-  useEffect(() => {
-    setSectionId(sectionId);
-  }, [sectionId]);
-
-  useEffect(() => {
     if (scCourse?.sections && currentData) {
       setCurrentSection(scCourse.sections[currentData.currentSectionIndex] || null);
     }
