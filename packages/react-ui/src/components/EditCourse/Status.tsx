@@ -26,8 +26,8 @@ export default function Status(props: StatusProps) {
             {id: 'ui.editCourse.tab.lessons.status', defaultMessage: 'ui.editCourse.tab.lessons.status'},
             {
               status: intl.formatMessage({
-                id: `ui.course.privacy.${course.privacy === '' ? SCCoursePrivacyType.DRAFT : course.privacy}`,
-                defaultMessage: `ui.course.privacy.${course.privacy === '' ? SCCoursePrivacyType.DRAFT : course.privacy}`
+                id: `ui.course.privacy.${course.privacy === SCCoursePrivacyType.DRAFT ? 'draft' : course.privacy}`,
+                defaultMessage: `ui.course.privacy.${course.privacy === SCCoursePrivacyType.DRAFT ? 'draft' : course.privacy}`
               }),
               b: (chunks) => (
                 <Typography component="b" fontWeight="bold">
