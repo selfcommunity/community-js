@@ -224,7 +224,7 @@ const Component = {
         },
         '& .SCCourse-skeleton-preview-content': {
           padding: `${theme.spacing(1.5, 2, 2, 2)} !important`,
-          minHeight: 160
+          minHeight: 184
         },
         '& .SCCourse-skeleton-preview-actions': {
           display: 'flex',
