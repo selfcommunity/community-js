@@ -62,7 +62,10 @@ const Component = {
       }
     }),
     previewRoot: ({theme}: any) => ({
-      minHeight: '290px',
+      height: '100%',
+      [theme.breakpoints.up('sm')]: {
+        minHeight: '376px'
+      },
       '& .SCCourse-preview-image-wrapper': {
         position: 'relative',
         '& .SCCourse-preview-image': {
@@ -94,7 +97,7 @@ const Component = {
         }
       },
       '& .SCCourse-preview-content': {
-        padding: theme.spacing(1, 2, 2, 2),
+        padding: theme.spacing(1.5, 2, 2, 2),
         '& .SCCourse-preview-creator': {
           textDecoration: 'none',
           color: 'inherit',
@@ -160,11 +163,13 @@ const Component = {
       },
       '& .SCCourse-preview-actions': {
         justifyContent: 'center',
-        padding: theme.spacing(2)
+        padding: theme.spacing(1, 2, 2, 2)
       }
     }),
     createPlaceholderRoot: ({theme}: any) => ({
-      minHeight: '290px',
+      [theme.breakpoints.up('sm')]: {
+        minHeight: '376px'
+      },
       '& .SCCourse-create-placeholder-image-wrapper': {
         position: 'relative',
         '& .SCCourse-create-placeholder-image': {
@@ -201,23 +206,28 @@ const Component = {
       '& .SCCourse-create-placeholder-actions': {
         display: 'flex',
         justifyContent: 'center',
-        height: '246px'
+        height: '248px'
       }
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCCourse-skeleton-preview-root': {
+        [theme.breakpoints.up('sm')]: {
+          minHeight: '376px'
+        },
         '& .SCCourse-skeleton-preview-avatar': {
           position: 'absolute',
-          bottom: '-20px',
+          bottom: theme.spacing(-2),
           left: theme.spacing(1.5),
+          width: theme.selfcommunity.user.avatar.sizeMedium,
+          height: theme.selfcommunity.user.avatar.sizeMedium,
           border: `#FFF solid ${theme.spacing(0.2)}`
         },
         '& .SCCourse-skeleton-preview-content': {
-          padding: `16px ${theme.spacing(2)} 0 !important`
+          padding: `${theme.spacing(1.5, 2, 2, 2)} !important`,
+          minHeight: 160
         },
         '& .SCCourse-skeleton-preview-actions': {
           display: 'flex',
-          marginTop: theme.spacing(4),
           justifyContent: 'center',
           padding: theme.spacing(2)
         }
