@@ -65,7 +65,7 @@ export default function useSCFetchLesson({
           return Promise.resolve(res.data);
         });
     },
-    []
+    [courseId, sectionId, id]
   );
 
   /**
@@ -84,7 +84,7 @@ export default function useSCFetchLesson({
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [id, courseId, authUserId, sectionId]);
+  }, [__lessonId, courseId, sectionId]);
 
   useDeepCompareEffectNoCheck(() => {
     if (lesson) {

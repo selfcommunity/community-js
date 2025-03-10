@@ -163,10 +163,11 @@ const Component = {
       },
       '& .SCCourse-preview-actions': {
         justifyContent: 'center',
-        padding: theme.spacing(1, 2, 2, 2)
+        padding: theme.spacing(2)
       }
     }),
     createPlaceholderRoot: ({theme}: any) => ({
+      height: '100%',
       [theme.breakpoints.up('sm')]: {
         minHeight: '376px'
       },
@@ -206,11 +207,12 @@ const Component = {
       '& .SCCourse-create-placeholder-actions': {
         display: 'flex',
         justifyContent: 'center',
-        height: '248px'
+        height: '258px'
       }
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCCourse-skeleton-preview-root': {
+        height: '100%',
         [theme.breakpoints.up('sm')]: {
           minHeight: '376px'
         },
@@ -224,7 +226,7 @@ const Component = {
         },
         '& .SCCourse-skeleton-preview-content': {
           padding: `${theme.spacing(1.5, 2, 2, 2)} !important`,
-          minHeight: 160
+          minHeight: 184
         },
         '& .SCCourse-skeleton-preview-actions': {
           display: 'flex',
