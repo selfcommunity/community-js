@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {AccordionDetails, AccordionSummary, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -38,8 +38,20 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
   });
   const {className, id, product, contentType, contentId, content, paymentOrder, onUpdatePaymentOrder, ...rest} = props;
 
-	// HOOKS
+  // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  // CONST
+  const productPaymentPriceIds = useMemo(() => {
+    if (product) {
+      return product.payment_prices.map((p) => p.id);
+    }
+    return [];
+  }, [product]);
+  const isProductExpanded = useMemo(
+    () => !paymentOrder || (paymentOrder && paymentOrder.payment_price && productPaymentPriceIds.indexOf(paymentOrder.payment_price.id) > -1),
+    [paymentOrder, productPaymentPriceIds]
+  );
 
   if (!isPaymentsEnabled) {
     return null;
@@ -50,7 +62,12 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
   }
 
   return (
-    <Root defaultExpanded square className={classNames(classes.root, className)} {...rest}>
+    <Root
+      disabled={!productPaymentPriceIds.length}
+      defaultExpanded={isProductExpanded && productPaymentPriceIds.length > 0}
+      square
+      className={classNames(classes.root, className)}
+      {...rest}>
       <AccordionSummary aria-controls="panel1-content" id="panel1-header">
         <Typography variant="h5" component="div">
           <b>{product.name}</b>

@@ -99,7 +99,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
               key={i}
               contentType={contentType}
               {...(content ? {content} : {contentId})}
-              {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder, defaultExpanded: paymentOrder.payment_price.payment_product_id === p.id})}
+              {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
             />
           ))}
         </>

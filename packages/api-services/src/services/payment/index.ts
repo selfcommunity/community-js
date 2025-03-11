@@ -5,7 +5,7 @@ import {BaseGetParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams} from '../../types/payment';
-import {SCCheckoutSession, SCPaymentOrder, SCCheckoutSessionDetail} from '@selfcommunity/types';
+import {SCCheckoutSession, SCPaymentOrder, SCCheckoutSessionDetail, SCCheckoutSessionComplete} from '@selfcommunity/types';
 
 
 export interface PaymentApiClientInterface {
@@ -43,7 +43,7 @@ export interface PaymentApiClientInterface {
    * @param data
    * @param config
    */
-  checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any>;
+  checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSessionComplete>;
 
   /**
    * This endpoint retrive order history of authenticated user
@@ -106,7 +106,7 @@ export class PaymentApiClient {
    * @param data
    * @param config
    */
-  static checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any> {
+  static checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSessionComplete> {
     return apiRequest({...config, url: Endpoints.CheckoutSessionComplete.url({}), method: Endpoints.CheckoutSessionComplete.method, data});
   }
 
@@ -172,7 +172,7 @@ export default class PaymentService {
   static async getCheckoutSession(params?: CheckoutSessionParams, config?: AxiosRequestConfig): Promise<SCCheckoutSessionDetail> {
     return PaymentApiClient.getCheckoutSession(params, config);
   }
-  static async checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<any> {
+  static async checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSessionComplete> {
     return PaymentApiClient.checkoutCompleteSession(data, config);
   }
   static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {

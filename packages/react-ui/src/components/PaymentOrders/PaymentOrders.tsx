@@ -22,6 +22,8 @@ import {PaymentService} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {getConvertedAmount} from '../../utils/payment';
+import Event from '../Event';
 
 const PREFIX = 'SCPaymentOrders';
 
@@ -126,16 +128,16 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
     return (
       <TableRow ref={ref}>
         <TableCell component="th" scope="row">
-          <Skeleton variant="text" height={40} width={110} />
+          <Skeleton variant="text" height={40} width={20} />
         </TableCell>
         <TableCell component="th" scope="row">
-          <Skeleton variant="text" height={40} width={60} />
+          <Skeleton variant="text" height={40} width={30} />
         </TableCell>
         <TableCell component="th" scope="row">
-          <Skeleton variant="text" height={40} width={130} />
+          <Skeleton variant="text" height={80} width={250} />
         </TableCell>
         <TableCell component="th" scope="row">
-          <Skeleton variant="text" height={40} width={150} />
+          <Skeleton variant="text" height={40} width={65} />
         </TableCell>
         <TableCell component="th" scope="row">
           <Skeleton variant="text" height={40} width={65} />
@@ -164,19 +166,19 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   <TableCell width="5%">
                     <FormattedMessage id="ui.paymentOrders.number" defaultMessage="ui.paymentOrders.number" />
                   </TableCell>
-                  <TableCell width="10%">
+                  <TableCell width="7%">
                     <FormattedMessage id="ui.paymentOrders.contentType" defaultMessage="ui.paymentOrders.contentType" />
                   </TableCell>
-                  <TableCell width="20%">
+                  <TableCell width="38%">
                     <FormattedMessage id="ui.paymentOrders.content" defaultMessage="ui.paymentOrders.content" />
                   </TableCell>
                   <TableCell width="10%">
                     <FormattedMessage id="ui.paymentOrders.price" defaultMessage="ui.paymentOrders.price" />
                   </TableCell>
-                  <TableCell width="15%">
+                  <TableCell width="12%">
                     <FormattedMessage id="ui.paymentOrders.createdAt" defaultMessage="ui.paymentOrders.createdAt" />
                   </TableCell>
-                  <TableCell width="15%">
+                  <TableCell width="13%">
                     <FormattedMessage id="ui.paymentOrders.expired_at" defaultMessage="ui.paymentOrders.expired_at" />
                   </TableCell>
                   <TableCell width="10%">
@@ -194,8 +196,10 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <b>{order.id}</b>
                     </TableCell>
                     <TableCell scope="row">{order.content_type}</TableCell>
-                    <TableCell scope="row">{order.content_name}</TableCell>
-                    <TableCell scope="row">{order.payment_price}</TableCell>
+                    <TableCell scope="row">
+                      <Event event={order[order.content_type]} actions={<></>} />
+                    </TableCell>
+                    <TableCell scope="row">{getConvertedAmount(order.payment_price)}</TableCell>
                     <TableCell scope="row">
                       {order.created_at &&
                         intl.formatDate(new Date(order.created_at), {
