@@ -54,7 +54,13 @@ export default function PaymentProductsDialog(inProps: PaymentProductDialogProps
     <Root
       maxWidth={'sm'}
       fullWidth
-      title={<FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />}
+      title={
+        PaymentProductsComponentProps && PaymentProductsComponentProps.paymentOrder ? (
+          <FormattedMessage id="ui.paymentProductsDialog.title.purchased" defaultMessage="ui.paymentProductsDialog.title.purchased" />
+        ) : (
+          <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
+        )
+      }
       scroll={'paper'}
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}

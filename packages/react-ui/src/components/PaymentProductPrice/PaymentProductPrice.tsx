@@ -8,13 +8,16 @@ import PaymentProductPriceSkeleton from './Skeleton';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import BaseItem from '../../shared/BaseItem';
+import classNames from 'classnames';
 
 const classes = {
   root: `${PREFIX}-root`,
   image: `${PREFIX}-image`,
   primary: `${PREFIX}-primary`,
   secondary: `${PREFIX}-secondary`,
+  purchasedAt: `${PREFIX}-purchased-at`,
   button: `${PREFIX}-button`,
+  buttonPurchased: `${PREFIX}-button-purchased`,
   action: `${PREFIX}-action`
 };
 
@@ -99,7 +102,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
           )}
           <>
             {paymentOrder && (
-              <Typography component="p" variant="body2" className={classes.secondary}>
+              <Typography component="p" variant="body2" className={classNames(classes.secondary, classes.purchasedAt)}>
                 <FormattedMessage
                   defaultMessage="ui.paymentProduct.action.purchasedAt"
                   id="ui.paymentProduct.action.purchasedAt"
@@ -118,11 +121,12 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
             <Zoom in style={{transitionDelay: '200ms'}}>
               <Button
                 size="small"
-                color="error"
+                color={paymentOrder && paymentOrder.payment_price.id === price.id ? 'secondary' : 'error'}
+                className={classNames(classes.button, {[classes.buttonPurchased]: paymentOrder && paymentOrder.payment_price.id === price.id})}
+                {...(paymentOrder && {disabled: true})}
                 variant="contained"
                 component={Link}
                 startIcon={<Icon>card_giftcard</Icon>}
-                {...(paymentOrder && {disabled: true})}
                 {...(onHandleActionBuy && {onClick: handleActionBuy})}
                 to={scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
                   content_type: contentType.toLowerCase(),

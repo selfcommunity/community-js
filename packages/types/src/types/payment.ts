@@ -1,3 +1,9 @@
+import {SCUserType} from './user';
+import {SCEventType} from './event';
+import {SCCourseType} from './course';
+import {SCGroupType} from './group';
+import {SCCategoryType} from './category';
+
 export interface SCPaymentProduct {
   /**
    * Id product
@@ -103,6 +109,20 @@ export interface SCPurchasableContent {
 export interface SCCheckoutSessionDetail {
   status?: string;
   metadata?: {content_id: string; content_type: SCContentType};
+}
+
+export interface SCCheckoutSessionComplete {
+  id: number;
+  content_id: number;
+  content_type: SCContentType;
+  event?: SCEventType;
+  course?: SCCourseType;
+  group?: SCGroupType;
+  category?: SCCategoryType;
+  created_at: Date;
+  expire_at: Date;
+  payment_price: SCPaymentPrice;
+  user: SCUserType;
 }
 
 export interface SCCheckoutSession {

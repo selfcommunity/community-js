@@ -14,7 +14,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof CheckoutReturnDialog> = {
 	args: {
-			checkoutSessionId: "cs_test_a1sAMyyMSFyGz2KqUfxTmdk0KWiR2IPnNndctw8SM8kQyMCPVFAgLDH12b",
+			checkoutSessionId: "cs_test_b11NlEcFaRPRLYyysKYE3wokc5bB81ptvFXVhvZPCykTPbl8hCBtFd4SkF",
 	},
 	render: template
 };

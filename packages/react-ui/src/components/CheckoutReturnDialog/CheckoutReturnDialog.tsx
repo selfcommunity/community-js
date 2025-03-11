@@ -5,7 +5,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {SCCheckoutSessionStatus, SCContentType} from '@selfcommunity/types';
+import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType} from '@selfcommunity/types';
 import {CLAPPING} from '../../assets/courses/clapping';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -59,6 +59,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   const [loading, setLoading] = useState<boolean>(true);
   const [contentType, setContentType] = useState<SCContentType | null>(null);
   const [contentId, setContentId] = useState<number | null>(null);
+  const [content, setContent] = useState<SCEventType | SCGroupType | SCCourseType | SCCategoryType | null>(null);
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -70,10 +71,11 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   useEffect(() => {
     PaymentApiClient.getCheckoutSession({session_id: checkoutSessionId})
       .then((r) => {
-        setContentType(r.metadata.content_type);
-        setContentId(parseInt(r.metadata.content_id));
         if (r.status === SCCheckoutSessionStatus.COMPLETE) {
           PaymentApiClient.checkoutCompleteSession({session_id: checkoutSessionId}).then((r) => {
+            setContentType(r.content_type);
+            setContentId(r.content_id);
+            setContent(r[r.content_type]);
             setLoading(false);
           });
         } else if (r.status === SCCheckoutSessionStatus.OPEN) {
@@ -95,12 +97,18 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
       footer = (
         <>
           <Box className={classes.contentObject}>
-            <Event eventId={contentId} template={SCEventTemplateType.PREVIEW} actions={<></>} variant="outlined" className={classes.object} />
+            <Event
+              event={content as SCEventType}
+              template={SCEventTemplateType.PREVIEW}
+              actions={<></>}
+              variant="outlined"
+              className={classes.object}
+            />
           </Box>
           <Button
             size="medium"
             variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, {id: contentId})}
+            to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, content)}
             component={Link}
             className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.event.button" defaultMessage="ui.checkoutReturnDialog.event.button" />
@@ -111,12 +119,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
       footer = (
         <>
           <Box className={classes.contentObject}>
-            <Category categoryId={contentId} actions={<></>} variant="outlined" className={classes.object} />
+            <Category category={content as SCCategoryType} actions={<></>} variant="outlined" className={classes.object} />
           </Box>
           <Button
             size="medium"
             variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, {id: contentId})}
+            to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, content)}
             component={Link}
             className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
@@ -128,7 +136,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
         <>
           <Box className={classes.contentObject}>
             <Course
-              courseId={contentId}
+              course={content as SCCourseType}
               template={SCCourseTemplateType.PREVIEW}
               actions={<></>}
               hideEventParticipants
@@ -140,7 +148,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
           <Button
             size="medium"
             variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, {id: contentId})}
+            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, content)}
             component={Link}
             className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.course.button" defaultMessage="ui.checkoutReturnDialog.course.button" />
@@ -151,12 +159,19 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
       footer = (
         <>
           <Box className={classes.contentObject}>
-            <Group courseId={contentId} actions={<></>} hideEventParticipants hideEventPlanner variant="outlined" className={classes.object} />
+            <Group
+              group={content as SCGroupType}
+              actions={<></>}
+              hideEventParticipants
+              hideEventPlanner
+              variant="outlined"
+              className={classes.object}
+            />
           </Box>
           <Button
             size="medium"
             variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, {id: contentId})}
+            to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, content)}
             component={Link}
             className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />

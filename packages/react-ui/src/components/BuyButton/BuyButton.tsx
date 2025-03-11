@@ -265,38 +265,34 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
               onOpen={handleOpen}
               anchor="bottom"
               disableSwipeToOpen>
-              {purchased ? (
-                <PaymentDetailDialog open disableInitialTransition onClose={handleClose} />
-              ) : (
-                <>
-                  <Typography variant="h5" component="div" marginBottom={2}>
-                    <b>
+              <>
+                <Typography variant="h5" component="div" marginBottom={2}>
+                  <b>
+                    {paymentOrder ? (
+                      <FormattedMessage id="ui.paymentProductsDialog.title.purchased" defaultMessage="ui.paymentProductsDialog.title.purchased" />
+                    ) : (
                       <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
-                    </b>
-                  </Typography>
-                  <PaymentProducts
-                    contentType={contentType}
-                    {...(content ? {content} : {contentId})}
-                    {...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})}
-                  />
-                </>
-              )}
+                    )}
+                  </b>
+                </Typography>
+                <PaymentProducts
+                  contentType={contentType}
+                  {...(content ? {content} : {contentId})}
+                  {...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})}
+                />
+              </>
             </SwipeableDrawerRoot>
           ) : (
             <>
-              {purchased ? (
-                <PaymentDetailDialog open onClose={handleClose} />
-              ) : (
-                <PaymentProductsDialog
-                  open
-                  onClose={handleClose}
-                  PaymentProductsComponentProps={{
-                    contentType,
-                    ...(content ? {content} : {contentId}),
-                    ...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})
-                  }}
-                />
-              )}
+              <PaymentProductsDialog
+                open
+                onClose={handleClose}
+                PaymentProductsComponentProps={{
+                  contentType,
+                  ...(content ? {content} : {contentId}),
+                  ...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})
+                }}
+              />
             </>
           )}
         </>

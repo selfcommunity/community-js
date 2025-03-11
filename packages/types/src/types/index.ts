@@ -166,6 +166,7 @@ import {
   type SCPurchasableContent,
   SCCheckoutSessionStatus,
   type SCCheckoutSessionDetail,
+	type SCCheckoutSessionComplete,
   type SCPaymentOrder
 } from './payment';
 
@@ -361,5 +362,6 @@ export {
   type SCPurchasableContent,
   SCCheckoutSessionStatus,
   type SCCheckoutSessionDetail,
+	type SCCheckoutSessionComplete,
   type SCPaymentOrder
 };
