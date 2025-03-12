@@ -1,6 +1,10 @@
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: '56px'
+      },
+
       '& .SCCourseDashboard-header': {
         [theme.breakpoints.down('sm')]: {
           paddingLeft: '14px',
@@ -182,8 +186,13 @@ const Component = {
           },
 
           '& .SCCourseDashboard-actions-wrapper': {
-            flexDirection: 'row',
-            gap: '5px'
+            margin: '6px 0',
+            gap: '5px',
+
+            [theme.breakpoints.up('sm')]: {
+              flexDirection: 'row',
+              margin: 0
+            }
           }
         },
 
