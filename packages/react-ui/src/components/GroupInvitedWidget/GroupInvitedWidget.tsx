@@ -292,7 +292,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
   };
 
   // RENDER
-  if ((!state.count && state.initialized) || !contentAvailability || !scGroup || !state.count || !state.results.length || !isGroupAdmin) {
+  if ((!state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scGroup || !isGroupAdmin) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
