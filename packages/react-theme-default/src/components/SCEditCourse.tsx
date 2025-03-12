@@ -1,6 +1,10 @@
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: '56px'
+      },
+
       '& .SCEditCourse-header': {
         flexDirection: 'row',
         alignItems: 'center',
