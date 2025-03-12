@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.30...@selfcommunity/react-ui@0.11.0-alpha.31) (2025-03-12)
+
+
+### Bug Fixes
+
+* group request/invited list bug. Linear issue: https://linear.app/quentral/issue/QUE-1257/in-un-gruppo-chiuso-non-e-possibile-accettare-un-richiedente ([edd8726](https://github.com/selfcommunity/community-js/commit/edd8726c8a1ed02dfc5d2f17e1bf4aa9de098e51))
+
+
+
+
+
 # [0.11.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.29...@selfcommunity/react-ui@0.11.0-alpha.30) (2025-02-27)
 
 

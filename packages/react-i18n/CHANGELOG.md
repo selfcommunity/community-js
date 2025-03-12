@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.7...@selfcommunity/react-i18n@0.8.0-alpha.8) (2025-03-12)
+
+
+### Bug Fixes
+
+* added missing translation string. Linear issue: https://linear.app/quentral/issue/QUE-1254/manca-la-stringa-dellerrore-del-composer-link ([6660c95](https://github.com/selfcommunity/community-js/commit/6660c9559df666ecc8a76781ce6272c07e965e43))
+
+
+
+
+
 # [0.8.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.6...@selfcommunity/react-i18n@0.8.0-alpha.7) (2025-02-27)
 
 
