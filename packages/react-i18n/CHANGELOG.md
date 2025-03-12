@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.6...@selfcommunity/react-i18n@0.8.0-alpha.7) (2025-02-27)
+
+
+### Bug Fixes
+
+* live stream video processor (safari/iOS) ([3fc316f](https://github.com/selfcommunity/community-js/commit/3fc316f236bfe3931bdae2071ae131ce404e22c4))
+
+
+
+
+
 # [0.8.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.5...@selfcommunity/react-i18n@0.8.0-alpha.6) (2025-02-27)
 
 
