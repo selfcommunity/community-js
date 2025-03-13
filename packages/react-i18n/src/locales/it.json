@@ -531,7 +531,7 @@
   "ui.courseForm.edit.publication.option.private.title": "Privato",
   "ui.courseForm.edit.publication.option.private.access": "<icon>private</icon>Accesso: chiuso. Solo gli utenti invitati da te, o da gli altri amministratori, potranno accedere a questo Corso.",
   "ui.courseForm.edit.publication.option.private.visibility": "<icon>visibility</icon>Visibilità: solo utenti invitati. Gli utenti non invitati vedranno la schermata di blocco.",
-  "ui.courseForm.edit.publication.option.secret.title": "Secret",
+  "ui.courseForm.edit.publication.option.secret.title": "Segreto",
   "ui.courseForm.edit.publication.option.secret.access": "<icon>private</icon>Accesso: chiuso. Solo gli utenti invitati da te, o da gli altri amministratori, potranno accedere a questo Corso.",
   "ui.courseForm.edit.publication.option.secret.visibility": "<icon>visibility</icon>Visibilità: solo utenti invitati. Gli utenti non invitati non vedranno che questo Corso esiste.",
   "ui.courseForm.edit.action.save": "Salva Modifiche",
