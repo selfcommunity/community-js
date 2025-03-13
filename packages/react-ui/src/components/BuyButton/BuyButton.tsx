@@ -24,7 +24,6 @@ import PaymentProductsDialog from '../PaymentProductsDialog';
 import PaymentProducts from '../PaymentProducts';
 import {CategoryApiClient, GroupApiClient, EventApiClient, CourseApiClient} from '@selfcommunity/api-services';
 import {capitalize} from '@selfcommunity/utils';
-import PaymentDetailDialog from '../PaymentDetailDialog';
 
 const PREFIX = 'SCBuyButton';
 

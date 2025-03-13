@@ -1,21 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCFollowedCategoriesManagerType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
+  useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
+import {SCCategoryAutoFollowType, SCCategoryType, SCContentType, SCFeatureName} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCCategoryAutoFollowType} from '@selfcommunity/types';
+import BuyButton from '../BuyButton';
 
 const PREFIX = 'SCCategoryFollowButton';
 
@@ -55,6 +58,12 @@ export interface CategoryFollowButtonProps {
   onFollow?: (category: SCCategoryType, followed: boolean) => any;
 
   /**
+   * Disable action if feature payments is enabled and the content is paid item
+   */
+
+  disableBuyContentIfPaidContent?: boolean;
+
+  /**
    * Others properties
    */
   [p: string]: any;
@@ -89,17 +98,30 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     name: PREFIX
   });
 
-  const {className, categoryId, category, onFollow, ...rest} = props;
+  const {className, categoryId, category, onFollow, disableBuyContentIfPaidContent, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const scCategoriesManager: SCFollowedCategoriesManagerType = scUserContext.managers.categories;
 
+  // PREFERENCES
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const {scCategory, setSCCategory} = useSCFetchCategory({
+  const isPaymentsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.PAYMENTS) &&
+      SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
+    [preferences]
+  );
+
+  const {scCategory} = useSCFetchCategory({
     id: categoryId,
     category,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
@@ -137,6 +159,10 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
 
   if (!scCategory || (scCategory && followed && scCategory.auto_follow === SCCategoryAutoFollowType.FORCED)) {
     return null;
+  }
+
+  if (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !followed) {
+    return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;
   }
 
   return (
