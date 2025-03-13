@@ -9,6 +9,8 @@
   "templates.lesson.number": "Lezione {from} di {to}",
   "templates.lesson.button.completed": "Completata",
   "templates.lesson.button.complete": "Ho completato la lezione",
+  "templates.lesson.save.success": "Salvataggio completato!",
+  "templates.lesson.save.error": "Si è verificato un errore!",
   "templates.loyaltyProgramDetail.button.more": "Scopri di più",
   "templates.loyaltyProgramDetail.button.request": "Richiedi Ora",
   "templates.loyaltyProgramDetail.community": "Partecipare alla Community ti premia!",
