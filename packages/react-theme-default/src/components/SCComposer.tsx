@@ -173,31 +173,23 @@ const Component = {
       }
     }),
     contentLessonRoot: ({theme}: any) => ({
-      // '& .SCComposer-content-lesson-editor': {
+      padding: theme.spacing(2),
       '& .SCEditor-root': {
         '& .SCEditor-content': {
-          paddingTop: theme.spacing(1)
+          paddingTop: theme.spacing(1.5)
         }
-        // paddingBottom: theme.spacing(2),
-        // '& .MuiInputBase-root': {
-        //   paddingLeft: 0,
-        //   paddingRight: 0,
-        //   paddingBottom: 0,
-        //   fontSize: '1.429rem',
-        //   fontWeight: theme.typography.fontWeightBold,
-        //   '& fieldset': {
-        //     display: 'none'
-        //   },
-        //   '&.MuiInputBase-adornedEnd .MuiTypography-root': {
-        //     alignSelf: 'end'
-        //   },
-        //   '&.Mui-error': {
-        //     color: theme.palette.error.main
-        //   }
-        // },
-        // '& .MuiFormHelperText-root': {
-        //   marginLeft: 0
-        // }
+      },
+      '& .SCComposer-content-lesson-medias': {
+        '& .SCMediaFile-preview-root': {
+          marginBottom: theme.spacing(1),
+          '& .SCMediaFile-media': {
+            height: '60px !important',
+            maxWidth: 140
+          }
+        },
+        '& .SCMediaLink-preview-root': {
+          marginBottom: theme.spacing(1)
+        }
       }
     }),
     layerTransitionRoot: ({theme}: any) => ({

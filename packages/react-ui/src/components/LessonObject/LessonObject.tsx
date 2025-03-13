@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -12,6 +12,9 @@ import ContentLesson from '../Composer/Content/ContentLesson';
 import {EditorProps} from '../Editor';
 import {SCCourseLessonType, SCCourseType, SCMediaType} from '@selfcommunity/types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import DisplayComponent from '../../shared/Media/Link/DisplayComponent';
+import LessonFilePreview from '../../shared/LessonFilePreview';
+import {MediaTypes} from '@selfcommunity/api-services';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -19,6 +22,7 @@ const classes = {
   contentEdit: `${PREFIX}-content-edit`,
   title: `${PREFIX}-title`,
   text: `${PREFIX}-text`,
+  mediasSection: `${PREFIX}-medias-section`,
   navigation: `${PREFIX}-navigation`,
   editor: `${PREFIX}-editor`
 };
@@ -116,20 +120,31 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
               disabled={isSubmitting}
               EditorProps={{
                 toolbar: true,
-                uploadImage: false,
-                uploadFile: true,
                 ...EditorProps
               }}
             />
           ) : (
-            <Typography
-              component="div"
-              gutterBottom
-              className={classes.text}
-              dangerouslySetInnerHTML={{
-                __html: getContributionHtml(lesson.html, scRoutingContext.url)
-              }}
-            />
+            <>
+              <Typography
+                component="div"
+                gutterBottom
+                className={classes.text}
+                dangerouslySetInnerHTML={{
+                  __html: getContributionHtml(lesson.html, scRoutingContext.url)
+                }}
+              />
+              {lesson.medias && lesson.medias.length > 0 && (
+                <Box className={classes.mediasSection}>
+                  {lesson.medias.map((media) =>
+                    media.type === MediaTypes.URL ? (
+                      <DisplayComponent key={media.id} medias={[media]} />
+                    ) : (
+                      <LessonFilePreview key={media.id} media={media} />
+                    )
+                  )}
+                </Box>
+              )}
+            </>
           )}
         </CardContent>
       </Widget>

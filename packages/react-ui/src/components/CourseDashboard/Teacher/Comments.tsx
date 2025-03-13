@@ -1,6 +1,6 @@
 import {Avatar, Box, Button, Divider, Skeleton, Stack, Typography} from '@mui/material';
 import {SCCourseCommentType, SCCourseType} from '@selfcommunity/types';
-import {memo, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {Fragment, memo, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {FormattedMessage} from 'react-intl';
@@ -173,7 +173,7 @@ function Comments(props: CommentsProps) {
                   <Typography variant="body2">{new Date(comment.created_at).toLocaleDateString()}</Typography>
                 </Stack>
 
-                <Typography variant="body1">{comment.html}</Typography>
+                <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} />
               </Box>
             </Stack>
           ))}
@@ -203,27 +203,33 @@ function Comments(props: CommentsProps) {
 
   return (
     <Box className={classes.container}>
-      <Typography variant="body1">
-        <FormattedMessage
-          id="ui.course.dashboard.teacher.tab.comments.number"
-          defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
-          values={{commentsNumber: state.count}}
-        />
-      </Typography>
-
-      {renderComments}
-
-      {isLoadingComments && <CommentSkeleton id={1} />}
-
-      {state.results.length > 0 && (
-        <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!state.next} onClick={handleNext}>
-          <Typography variant="body2">
+      {state.count > 0 ? (
+        <Fragment>
+          <Typography variant="body1">
             <FormattedMessage
-              id="ui.course.dashboard.teacher.tab.comments.btn.label"
-              defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
+              id="ui.course.dashboard.teacher.tab.comments.number"
+              defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
+              values={{commentsNumber: state.count}}
             />
           </Typography>
-        </LoadingButton>
+
+          {renderComments}
+
+          {isLoadingComments && <CommentSkeleton id={1} />}
+
+          <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!state.next} onClick={handleNext}>
+            <Typography variant="body2">
+              <FormattedMessage
+                id="ui.course.dashboard.teacher.tab.comments.btn.label"
+                defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
+              />
+            </Typography>
+          </LoadingButton>
+        </Fragment>
+      ) : (
+        <Typography variant="body2">
+          <FormattedMessage id="ui.course.dashboard.teacher.tab.comments.empty" defaultMessage="ui.course.dashboard.teacher.tab.comments.empty" />
+        </Typography>
       )}
     </Box>
   );

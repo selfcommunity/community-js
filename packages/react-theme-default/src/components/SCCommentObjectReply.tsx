@@ -26,7 +26,14 @@ const Component = {
       },
       '& .SCCommentObjectReply-comment': {
         overflow: 'visible',
-        borderRadius: theme.shape.borderRadius * 0.5
+        borderRadius: theme.shape.borderRadius * 0.5,
+        '& .SCCommentObjectReply-media': {
+          maxWidth: 200,
+          padding: theme.spacing(1),
+          '& .SCMediaFile-media': {
+            height: '40px !important'
+          }
+        }
       },
       '& .SCCommentObjectReply-actions': {
         marginLeft: theme.spacing(),

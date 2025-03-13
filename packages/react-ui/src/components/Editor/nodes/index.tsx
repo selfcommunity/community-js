@@ -6,7 +6,6 @@ import {MentionNode} from './MentionNode';
 import {HashtagNode} from './HashtagNode';
 import {TextNode} from 'lexical';
 import {HorizontalRuleNode} from '@lexical/react/LexicalHorizontalRuleNode';
-import {DocNode} from './DocNode';
 
 const nodes = [
   HorizontalRuleNode,
@@ -19,8 +18,7 @@ const nodes = [
   AutoLinkNode,
   LinkNode,
   ImageNode,
-  MentionNode,
-  DocNode
+  MentionNode
 ];
 
 export default nodes;

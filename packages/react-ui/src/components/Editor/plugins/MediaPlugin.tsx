@@ -14,7 +14,6 @@ import {asUploadButton} from '@rpldy/upload-button';
 import {useSnackbar} from 'notistack';
 import {$createImageNode, ImageNode} from '../nodes/ImageNode';
 import {PREFIX} from '../constants';
-import {$createDocNode, DocNode} from '../nodes/DocNode';
 import {INSERT_IMAGE_COMMAND, InsertImagePayload} from './ImagePlugin';
 import classNames from 'classnames';
 
@@ -43,7 +42,8 @@ const classes = {
 
 export interface MediaPluginProps {
   className?: string;
-  onMediaAdd?: (medias: SCMediaType[]) => void | null;
+  onMediaAdd?: (media: SCMediaType) => void | null;
+  isUploading?: (boolean) => void;
 }
 
 const Root = styled(Box, {
@@ -52,12 +52,11 @@ const Root = styled(Box, {
 })(() => ({}));
 
 export default function MediaPlugin(props: MediaPluginProps) {
-  const {className = '', onMediaAdd = null} = props;
+  const {className = '', onMediaAdd = null, isUploading} = props;
 
   // STATE
   const [uploading, setUploading] = useState<Record<string, SCMediaChunkType>>({});
   const [mediaType, setMediaType] = useState('');
-  const [uploadedMedia, setUploadedMedia] = useState<SCMediaType[]>([]);
   const [editor] = useLexicalComposerContext();
 
   // CONTEXT
@@ -92,35 +91,6 @@ export default function MediaPlugin(props: MediaPluginProps) {
     );
   }, [editor]);
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    if (!editor.hasNodes([DocNode])) {
-      return;
-    }
-
-    editor.registerCommand(
-      INSERT_DOC_COMMAND,
-      (payload: InsertDocPayload) => {
-        const docNode = $createDocNode({
-          src: payload.src,
-          name: payload.name,
-          type: payload.type
-        });
-
-        $insertNodeToNearestRoot(docNode);
-        return true;
-      },
-      COMMAND_PRIORITY_EDITOR
-    );
-  }, [editor]);
-
-  useEffect(() => {
-    if (uploadedMedia.length > 0) {
-      onMediaAdd && onMediaAdd(uploadedMedia);
-    }
-  }, [uploadedMedia, onMediaAdd]);
-
   // HANDLERS
   const handleFileUploadFilter = (file: File): boolean => {
     if (file.type.startsWith('image/')) {
@@ -149,12 +119,13 @@ export default function MediaPlugin(props: MediaPluginProps) {
       };
       editor.focus();
       editor.dispatchCommand(INSERT_DOC_COMMAND, data);
-      setUploadedMedia((prev) => [...prev, media]);
+      onMediaAdd && onMediaAdd(media);
     }
   };
 
   const handleUploadProgress = (chunks: any) => {
     setUploading({...chunks});
+    isUploading && isUploading(Object.keys(chunks).length !== 0);
   };
 
   const handleUploadError = (chunk: SCMediaChunkType, error: string) => {
@@ -166,7 +137,7 @@ export default function MediaPlugin(props: MediaPluginProps) {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  if (!scUserContext.user || !editor.hasNodes([ImageNode, DocNode])) {
+  if (!scUserContext.user || !editor.hasNodes([ImageNode])) {
     return null;
   }
 
@@ -180,7 +151,8 @@ export default function MediaPlugin(props: MediaPluginProps) {
         }}
         chunkSize={204800}
         accept="image/*,application/*"
-        fileFilter={handleFileUploadFilter}>
+        fileFilter={handleFileUploadFilter}
+        multiple>
         <MediaChunkUploader type={mediaType} onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
         <UploadButton
           className={className}

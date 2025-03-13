@@ -129,6 +129,10 @@ const Component = {
               paddingRight: 0
             },
 
+            '& .MuiTableCell-root': {
+              textWrapMode: 'nowrap'
+            },
+
             '& .SCEditCourse-table-header': {
               '& .SCEditCourse-table-header-typography': {
                 textTransform: 'uppercase'

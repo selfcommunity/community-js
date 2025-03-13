@@ -17,7 +17,6 @@ const Component = {
             },
             padding: '0 !important'
           },
-          // '& .SCEditor-paragraph': {}
           '& > div:has(> a)': {
             borderRadius: '5px',
             padding: theme.spacing(1),
@@ -26,6 +25,21 @@ const Component = {
           '& > div:has(> a) > a:first-of-type': {
             textDecoration: 'none',
             color: 'inherit'
+          }
+        },
+        '& .SCLessonObject-medias-section': {
+          display: 'flex',
+          '& .SCLessonFilePreview-root': {
+            marginBottom: theme.spacing(1)
+          },
+          '& .SCMediaLink-display-root': {
+            marginBottom: theme.spacing(1),
+
+            '& > div > div': {
+              [theme.breakpoints.down('md')]: {
+                height: '240px !important'
+              }
+            }
           }
         }
       },

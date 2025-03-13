@@ -20,6 +20,7 @@ import {
 import {CourseInfoViewType, CourseService} from '@selfcommunity/api-services';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
+import {useSnackbar} from 'notistack';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -129,6 +130,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
   const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {enqueueSnackbar} = useSnackbar();
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
@@ -207,9 +209,17 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       .then((data: SCCourseLessonType) => {
         setUpdating(false);
         setSCLesson(data);
+        enqueueSnackbar(<FormattedMessage id="templates.lesson.save.success" defaultMessage="templates.lesson.save.success" />, {
+          variant: 'success',
+          autoHideDuration: 3000
+        });
       })
       .catch((error) => {
         setUpdating(false);
+        enqueueSnackbar(<FormattedMessage id="templates.lesson.save.error" defaultMessage="templates.lesson.save.error" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
         console.log(error);
       });
   };
