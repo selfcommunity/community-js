@@ -10,7 +10,14 @@ import {
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {
+  SCContentType,
+  SCEventLocationType,
+  SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
+  SCEventType,
+  SCFeatureName
+} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -312,7 +319,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  {isPaymentsEnabled ? (
+                  {isPaymentsEnabled && scEvent.paywalls.length > 0 && scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED ? (
                     <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
                   ) : (
                     <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />

@@ -1,12 +1,18 @@
-import {SCPaymentProduct, SCPaymentPrice} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
 import {BaseGetParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
-import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams} from '../../types/payment';
-import {SCCheckoutSession, SCPaymentOrder, SCCheckoutSessionDetail, SCCheckoutSessionComplete} from '@selfcommunity/types';
-
+import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams, CustomerPortalCreateSessionParams} from '../../types/payment';
+import {
+  SCCheckoutSession,
+  SCPaymentOrder,
+  SCCheckoutSessionDetail,
+  SCCheckoutSessionComplete,
+  SCPaymentProduct,
+  SCPaymentPrice,
+  SCPaymentsCustomerPortalSession
+} from '@selfcommunity/types';
 
 export interface PaymentApiClientInterface {
   /**
@@ -51,6 +57,16 @@ export interface PaymentApiClientInterface {
    * @param config
    */
   getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>>;
+
+  /**
+   * This endpoint retrive customer portal
+   * @param data
+   * @param config
+   */
+  getPaymentsCustomerPortal(
+    data: CustomerPortalCreateSessionParams | FormData,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaymentsCustomerPortalSession>;
 }
 
 /**
@@ -118,6 +134,18 @@ export class PaymentApiClient {
   static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
     return apiRequest({...config, url: Endpoints.GetPaymentOrders.url({}), method: Endpoints.GetPaymentOrders.method});
   }
+
+  /**
+   * This endpoint retrive customer portal
+   * @param data
+   * @param config
+   */
+  static getPaymentsCustomerPortal(
+    data: CustomerPortalCreateSessionParams | FormData,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaymentsCustomerPortalSession> {
+    return apiRequest({...config, url: Endpoints.CreateCustomerPortalSession.url({}), method: Endpoints.CreateCustomerPortalSession.method, data});
+  }
 }
 
 /**
@@ -177,5 +205,11 @@ export default class PaymentService {
   }
   static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
     return PaymentApiClient.getPaymentsOrder(params, config);
+  }
+  static getPaymentsCustomerPortal(
+    data: CustomerPortalCreateSessionParams | FormData,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaymentsCustomerPortalSession> {
+    return PaymentApiClient.getPaymentsCustomerPortal(data, config);
   }
 }

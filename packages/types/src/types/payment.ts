@@ -151,3 +151,7 @@ export interface SCPaymentOrder {
    */
   payment_price?: SCPaymentPrice;
 }
+
+export interface SCPaymentsCustomerPortalSession {
+  url: string;
+}

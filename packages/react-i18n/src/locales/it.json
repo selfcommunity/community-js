@@ -831,6 +831,7 @@
   "ui.navigationSettingsIconButton.profile": "Profilo",
   "ui.navigationSettingsIconButton.settings": "Impostazioni",
   "ui.navigationSettingsIconButton.historyOrders": "I miei ordini",
+  "ui.navigationSettingsIconButton.myPaymentMethods": "I miei metodi di pagamento",
   "ui.notification.collapsedFor.collapsedForAdvertising": "Un tuo contributo è stato nascosto dopo che la Community lo ha segnalato come \"spam\". Vedi il regolamento per ulteriori informazioni.",
   "ui.notification.collapsedFor.collapsedForAdvertisingSnippet": "Contributo nascosto perchè segnalato come \"spam\"",
   "ui.notification.collapsedFor.collapsedForAggressive": "Un tuo contributo è stato nascosto dopo che la Community lo ha segnalato come \"aggressivo\". Vedi il regolamento per ulteriori informazioni.",
@@ -1294,8 +1295,8 @@
 
   "ui.buyButton.buy": "Acquista",
   "ui.buyButton.buyEvent": "Acquista evento",
-  "ui.buyButton.buyGroup": "Iscriviti al gruppo",
-  "ui.buyButton.buyCategory": "Iscriviti",
+  "ui.buyButton.buyGroup": "Acquista",
+  "ui.buyButton.buyCategory": "Acquista",
   "ui.buyButton.buyCourse": "Acquista il corso",
   "ui.buyButton.purchased": "Acquistato",
   "ui.buyButton.subscribed": "Iscritto",
@@ -1323,5 +1324,5 @@
   "ui.paymentOrders.status": "Stato",
   "ui.paymentOrders.actions": "Azioni",
   "ui.paymentOrders.actions.pay": "Paga",
-  "ui.paymentOrders.actions.noOrders": "Nessun ordine trovato al momento"
+  "ui.paymentOrders.noOrders": "Nessun ordine trovato al momento"
 }

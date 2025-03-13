@@ -36,7 +36,6 @@ import {PreferenceService, UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {SCPreferenceName} from '@selfcommunity/types';
-import {USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME} from '@selfcommunity/react-core/src/constants/Routes';
 
 const PREFIX = 'SCNavigationSettingsIconButton';
 
@@ -297,6 +296,14 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
                     defaultMessage="ui.navigationSettingsIconButton.historyOrders"
                   />
                 </ListItemButton>
+              </ListItem>,
+              <ListItem className={classes.item} key="myPaymentMethods">
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PAYMENT_METHODS_ROUTE_NAME, scUserContext.user)}>
+                  <FormattedMessage
+                    id="ui.navigationSettingsIconButton.myPaymentMethods"
+                    defaultMessage="ui.navigationSettingsIconButton.myPaymentMethods"
+                  />
+                </ListItemButton>
               </ListItem>
             ]
           : []),
@@ -423,6 +430,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, scUserContext.user)}>
                 <FormattedMessage id="ui.navigationSettingsIconButton.historyOrders" defaultMessage="ui.navigationSettingsIconButton.historyOrders" />
+              </MenuItem>,
+              <MenuItem
+                className={classes.item}
+                key="myPaymentMethods"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PAYMENT_METHODS_ROUTE_NAME, scUserContext.user)}>
+                <FormattedMessage
+                  id="ui.navigationSettingsIconButton.myPaymentMethods"
+                  defaultMessage="ui.navigationSettingsIconButton.myPaymentMethods"
+                />
               </MenuItem>
             ]
           : []),

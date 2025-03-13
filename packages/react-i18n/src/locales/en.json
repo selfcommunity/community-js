@@ -830,6 +830,7 @@
   "ui.navigationSettingsIconButton.profile": "Profile",
   "ui.navigationSettingsIconButton.settings": "Settings",
   "ui.navigationSettingsIconButton.historyOrders": "My orders",
+  "ui.navigationSettingsIconButton.myPaymentMethods": "My payment methods",
   "ui.notification.collapsedFor.collapsedForAdvertising": "A contribution of yours has been hidden because several users have flagged it as \"spam\". View the website rules for more info.",
   "ui.notification.collapsedFor.collapsedForAdvertisingSnippet": "Contribution hidden because flagged it as \"spam\"",
   "ui.notification.collapsedFor.collapsedForAggressive": "A contribution of yours has been hidden because several users have flagged it as \"aggressive\". View the website rules for more info.",
@@ -1293,8 +1294,8 @@
 
   "ui.buyButton.buy": "Buy",
   "ui.buyButton.buyEvent": "Buy event",
-  "ui.buyButton.buyGroup": "Subscribe to group",
-  "ui.buyButton.buyCategory": "Subscribe to category",
+  "ui.buyButton.buyGroup": "Buy",
+  "ui.buyButton.buyCategory": "Buy",
   "ui.buyButton.buyCourse": "Buy course",
   "ui.buyButton.purchased": "Purchased",
   "ui.buyButton.subscribed": "Subscribed",
@@ -1322,5 +1323,5 @@
   "ui.paymentOrders.status": "Status",
   "ui.paymentOrders.actions": "Actions",
   "ui.paymentOrders.actions.pay": "Pay",
-  "ui.paymentOrders.actions.noOrders": "No orders at the moment"
+  "ui.paymentOrders.noOrders": "No orders at the moment"
 }
